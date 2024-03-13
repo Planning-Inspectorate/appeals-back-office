@@ -17,15 +17,18 @@ export const buildNsipProjectPayload = (projectEntity) => {
 	// @ts-ignore
 	return {
 		caseId: projectEntity.id,
-		caseReference: projectEntity.reference ?? undefined,
-		projectName: projectEntity.title ?? undefined,
-		projectDescription: projectEntity.description ?? undefined,
+		caseReference: projectEntity.reference,
+		projectName: projectEntity.title,
+		projectDescription: projectEntity.description,
 		publishStatus: projectEntity.CasePublishedState?.[0]?.isPublished ? 'published' : 'unpublished',
 		sourceSystem,
 		...application,
 		...sectorAndType,
-		applicantId: projectEntity.applicant?.id?.toString(),
-		...projectTeam
+		applicantId: projectEntity.applicant?.id?.toString() ?? null,
+		...projectTeam,
+
+		// null value fields added fo schema validation
+		migrationStatus: null
 	};
 };
 
@@ -56,15 +59,18 @@ const mapApplicationDetails = (projectEntity) => {
 		projectLocation: appDetails?.locationDescription,
 		projectEmailAddress: appDetails?.caseEmail,
 		regions,
-		// TODO: transboundary
 		...gridReference,
 		// For MVP we're not supporting Welsh Language
 		welshLanguage: false,
 		mapZoomLevel,
-		// TODO: secretaryOfState
+		secretaryOfState: null,
 		anticipatedDateOfSubmission: appDetails.submissionAtInternal,
 		anticipatedSubmissionDateNonSpecific: appDetails.submissionAtPublished,
-		...pick(appDetails, keyDateNames)
+		...pick(appDetails, keyDateNames),
+		// TODO: Mar 2024 missing fields from Full Fat Schema
+		notificationDateForEventsDeveloper: null,
+		transboundary: null,
+		decision: null
 	};
 };
 
@@ -105,22 +111,10 @@ const mapSectorAndType = (projectEntity) => {
  * leadInspectorId: number | null,
  * inspectorIds: number[],
  * environmentalServicesOfficerId: number | null,
- * legalOfficerId: number | null } | {
- * nsipOfficerIds: number[],
- * nsipAdministrationOfficerIds: number[],
- * inspectorIds: number[],
- * }}
+ * legalOfficerId: number | null } }
  */
 const mapProjectTeam = (projectEntity) => {
 	const projectTeam = projectEntity?.ProjectTeam;
-
-	if (!projectTeam) {
-		return {
-			nsipOfficerIds: [],
-			nsipAdministrationOfficerIds: [],
-			inspectorIds: []
-		};
-	}
 
 	const teamMembers = {
 		operationsLeadId: null,
@@ -134,37 +128,39 @@ const mapProjectTeam = (projectEntity) => {
 		legalOfficerId: null
 	};
 
-	projectTeam.forEach((member) => {
-		switch (member.role) {
-			case 'operations_lead':
-				teamMembers.operationsLeadId = member.userId;
-				break;
-			case 'operations_manager':
-				teamMembers.operationsManagerId = member.userId;
-				break;
-			case 'case_manager':
-				teamMembers.caseManagerId = member.userId;
-				break;
-			case 'NSIP_officer':
-				teamMembers.nsipOfficerIds.push(member.userId);
-				break;
-			case 'NSIP_administration_officer':
-				teamMembers.nsipAdministrationOfficerIds.push(member.userId);
-				break;
-			case 'lead_inspector':
-				teamMembers.leadInspectorId = member.userId;
-				break;
-			case 'inspector':
-				teamMembers.inspectorIds.push(member.userId);
-				break;
-			case 'environmental_services':
-				teamMembers.environmentalServicesOfficerId = member.userId;
-				break;
-			case 'legal_officer':
-				teamMembers.legalOfficerId = member.userId;
-				break;
-		}
-	});
+	if (projectTeam) {
+		projectTeam.forEach((member) => {
+			switch (member.role) {
+				case 'operations_lead':
+					teamMembers.operationsLeadId = member.userId;
+					break;
+				case 'operations_manager':
+					teamMembers.operationsManagerId = member.userId;
+					break;
+				case 'case_manager':
+					teamMembers.caseManagerId = member.userId;
+					break;
+				case 'NSIP_officer':
+					teamMembers.nsipOfficerIds.push(member.userId);
+					break;
+				case 'NSIP_administration_officer':
+					teamMembers.nsipAdministrationOfficerIds.push(member.userId);
+					break;
+				case 'lead_inspector':
+					teamMembers.leadInspectorId = member.userId;
+					break;
+				case 'inspector':
+					teamMembers.inspectorIds.push(member.userId);
+					break;
+				case 'environmental_services':
+					teamMembers.environmentalServicesOfficerId = member.userId;
+					break;
+				case 'legal_officer':
+					teamMembers.legalOfficerId = member.userId;
+					break;
+			}
+		});
+	}
 
 	return teamMembers;
 };
