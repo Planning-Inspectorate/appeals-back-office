@@ -28,3 +28,44 @@ export const validateNsipDocument = (/** @type {any} */ payload) => {
 export const removeUndefined = (/** @type {any} */ payload) => {
 	return JSON.parse(JSON.stringify(payload));
 };
+
+/**
+ * validate that a service bus event message payload is valid to the matching schema in data-model repo
+ *
+ * @param {string} schemaName
+ * @param {object} events
+ * @returns {Promise<boolean>}
+ */
+export const validateMessageToSchema = async (schemaName, events) => {
+	const { schemas } = await loadAllSchemas();
+	const ajv = new Ajv({ schemas, allErrors: true, verbose: true });
+
+	addAjvFormats(ajv);
+
+	const schema = schemas[schemaName];
+
+	if (!schema) {
+		console.log(`No valid schema found for '${schemaName}'`);
+		return false;
+	}
+	const validator = ajv.compile(schema);
+
+	let isAllValid = true;
+	if (events instanceof Array) {
+		for (const eachEvent of events) {
+			const isValid = validator(eachEvent);
+			if (!isValid) {
+				isAllValid = false;
+				console.log(`Message in array fails schema validation ${schemaName}: `, validator.errors);
+			}
+		}
+	} else {
+		const isValid = validator(events);
+		if (!isValid) {
+			isAllValid = false;
+			console.log(`Message fails schema validation: ${schemaName}`, validator.errors);
+		}
+	}
+
+	return isAllValid;
+};

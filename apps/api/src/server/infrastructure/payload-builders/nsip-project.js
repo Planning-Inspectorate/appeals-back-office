@@ -1,6 +1,7 @@
 import { pick } from 'lodash-es';
 import { allKeyDateNames } from '../../applications/key-dates/key-dates.utils.js';
 import { sourceSystem } from './constants.js';
+import { mapKeyDatesToISOStrings } from '#utils/mapping/map-key-dates.js';
 
 /**
  * @param {import('@pins/applications.api').Schema.Case} projectEntity
@@ -9,9 +10,7 @@ import { sourceSystem } from './constants.js';
  */
 export const buildNsipProjectPayload = (projectEntity) => {
 	const application = mapApplicationDetails(projectEntity);
-
 	const sectorAndType = mapSectorAndType(projectEntity);
-
 	const projectTeam = mapProjectTeam(projectEntity);
 
 	// @ts-ignore
@@ -54,6 +53,10 @@ const mapApplicationDetails = (projectEntity) => {
 	const gridReference =
 		projectEntity?.gridReference && pick(projectEntity?.gridReference, ['easting', 'northing']);
 
+	const keyDates = projectEntity?.ApplicationDetails
+		? mapKeyDatesToISOStrings(projectEntity?.ApplicationDetails)
+		: {};
+
 	return {
 		stage,
 		projectLocation: appDetails?.locationDescription,
@@ -64,9 +67,11 @@ const mapApplicationDetails = (projectEntity) => {
 		welshLanguage: false,
 		mapZoomLevel,
 		secretaryOfState: null,
-		anticipatedDateOfSubmission: appDetails.submissionAtInternal,
+		anticipatedDateOfSubmission: appDetails.submissionAtInternal
+			? appDetails.submissionAtInternal.toISOString()
+			: null,
 		anticipatedSubmissionDateNonSpecific: appDetails.submissionAtPublished,
-		...pick(appDetails, keyDateNames),
+		...pick(keyDates, keyDateNames),
 		// TODO: Mar 2024 missing fields from Full Fat Schema
 		notificationDateForEventsDeveloper: null,
 		transboundary: null,

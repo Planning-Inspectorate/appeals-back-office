@@ -7,13 +7,22 @@ const createdCase = { id: 1, reference: 'TEST', applicant: { id: 4 } };
 
 const expectedNsipProjectPayload = {
 	caseId: 1,
+	projectName: undefined,
+	projectDescription: undefined,
 	caseReference: 'TEST',
 	sourceSystem: 'back-office-applications',
 	publishStatus: 'unpublished',
 	applicantId: '4',
 	nsipOfficerIds: [],
 	nsipAdministrationOfficerIds: [],
-	inspectorIds: []
+	inspectorIds: [],
+	operationsLeadId: null,
+	operationsManagerId: null,
+	caseManagerId: null,
+	leadInspectorId: null,
+	environmentalServicesOfficerId: null,
+	legalOfficerId: null,
+	migrationStatus: null
 };
 
 jest.useFakeTimers({ doNotFake: ['performance'], now: 1_649_319_144_000 });

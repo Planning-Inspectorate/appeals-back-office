@@ -73,7 +73,7 @@ const validateMessageToSchema = async (schemaName, events) => {
 			const isValid = validator(eachEvent);
 			if (!isValid) {
 				isAllValid = false;
-				console.log(`Message fails schema validation ${schemaName}: `, validator.errors);
+				console.log(`Message in array fails schema validation ${schemaName}: `, validator.errors);
 			}
 		}
 	} else {
