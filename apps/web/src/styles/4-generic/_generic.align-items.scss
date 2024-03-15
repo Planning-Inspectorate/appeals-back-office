@@ -1,9 +1,0 @@
-$align-items-attrs: (
-	flex-end: 'flex-end'
-);
-
-@each $key, $val in $align-items-attrs {
-	.align-items--#{$key} {
-		align-items: #{$val};
-	}
-}

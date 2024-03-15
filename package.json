@@ -30,13 +30,7 @@
 		"dev:appeals": "turbo run dev --filter=./appeals/* --no-cache --parallel --continue",
 		"test:appeals": "turbo run test --filter=./appeals/*",
 		"web:appeals": "npm run dev --workspace=@pins/appeals.web",
-		"api:appeals": "npm run dev --workspace=@pins/appeals.api",
-		"dev:applications": "turbo run dev --filter=./apps/* --no-cache --parallel --continue",
-		"test:applications": "turbo run test --filter=./apps/*",
-		"web:applications": "npm run dev --workspace=@pins/applications.web",
-		"api:applications": "npm run dev --workspace=@pins/applications.api",
-		"api:test:applications": "npm run start:test --workspace=@pins/applications.api-testing",
-		"e2e:smokeTests":"npm run cy:run --workspace=@pins/e2e -- --spec cypress/e2e/back-office-applications/smokeTests.spec.js"
+		"api:appeals": "npm run dev --workspace=@pins/appeals.api"
 	},
 	"dependencies": {
 		"@badeball/cypress-cucumber-preprocessor": "20.0.1",
