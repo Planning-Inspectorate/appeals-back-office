@@ -12,7 +12,7 @@ import { mapDocumentVersionDetails } from '#utils/mapping/map-document-details.j
 import * as documentRepository from '#repositories/document.repository.js';
 import * as documentVersionRepository from '#repositories/document-metadata.repository.js';
 import * as documentActivityLogRepository from '#repositories/document-activity-log.repository.js';
-import { getS51AdviceFolder } from '#repositories/folder.repository.js';
+import { getFolderWithParents, getS51AdviceFolder } from '#repositories/folder.repository.js';
 import { getStorageLocation } from '#utils/document-storage.js';
 import BackOfficeAppError from '#utils/app-error.js';
 import logger from '#utils/logger.js';
@@ -34,6 +34,7 @@ import { isTrainingCase } from '../application.validators.js';
  * @typedef {import('@prisma/client').DocumentVersion} DocumentVersion
  * @typedef {import('@prisma/client').Document} Document
  * @typedef {import('@prisma/client').Document & {documentName: string}} DocumentWithDocumentName
+ * @typedef {import('@prisma/client').Prisma.DocumentVersionGetPayload<{include: {Document: {include: {folder: {include: {case: {include: {CaseStatus: true}}}}}}}}> } DocumentVersionWithDocumentAndFolder
  * @typedef {import('@pins/applications.api').Schema.DocumentDetails} DocumentDetails
  * @typedef {import('@pins/applications.api').Schema.DocumentVersionWithDocument} DocumentVersionWithDocument
  * @typedef {import('@pins/applications.api').Api.DocumentAndBlobInfoManyResponse} DocumentAndBlobInfoManyResponse
@@ -328,7 +329,16 @@ export const createDocuments = async (documentsToUpload, caseId, isS51) => {
 			caseForDocuments.ApplicationDetails?.subSector?.sector?.name
 		)
 	) {
-		const events = upsertedDocuments.map(buildNsipDocumentPayload);
+		const events = upsertedDocuments.map(async (documentVersion) => {
+			// get the folder path and file name, needed for payload
+			const filePath = await buildDocumentFolderPath(
+				documentVersion.Document.folderId,
+				documentVersion.Document.folder.case.reference,
+				documentVersion.fileName ?? ''
+			);
+
+			return buildNsipDocumentPayload(documentVersion, filePath);
+		});
 		await eventClient.sendEvents(NSIP_DOCUMENT, events, EventType.Create);
 	}
 
@@ -443,9 +453,16 @@ export const createDocumentVersion = async (documentToUpload, caseId, documentId
 		// 1st fix the doc latestversionId in the payload to match (saves having to get the whole doc+version again after the doc update)
 		// @ts-ignore
 		createdVersionWithDocInfo.Document.latestVersionId = thisVersionId;
+		// get the folder path and file name, needed for payload
+		const filePath = await buildDocumentFolderPath(
+			createdVersionWithDocInfo.Document.folderId,
+			createdVersionWithDocInfo.Document.folder.case.reference,
+			createdVersionWithDocInfo.filename
+		);
+
 		await eventClient.sendEvents(
 			NSIP_DOCUMENT,
-			[buildNsipDocumentPayload(createdVersionWithDocInfo)],
+			[buildNsipDocumentPayload(createdVersionWithDocInfo, filePath)],
 			EventType.Update
 		);
 	}
@@ -485,9 +502,21 @@ export const upsertDocumentVersionAndReturnDetails = async (
 			caseWithThisDocument.ApplicationDetails?.subSector?.sector?.name
 		)
 	) {
+		// get the full folder path and filename
+		console.log('document version:', documentVersion);
+		console.log(JSON.stringify({ 'documentVersion full:': documentVersion }, null, 2));
+
+		console.log('case:', caseWithThisDocument);
+		console.log('case in doc:', documentVersion.Document.folder.case);
+		const filePath = await buildDocumentFolderPath(
+			documentVersion.Document.folderId,
+			caseWithThisDocument.reference,
+			documentVersion.fileName ?? ''
+		);
+
 		await eventClient.sendEvents(
 			NSIP_DOCUMENT,
-			[buildNsipDocumentPayload(documentVersion)],
+			[buildNsipDocumentPayload(documentVersion, filePath)],
 			EventType.Update
 		);
 	}
@@ -614,17 +643,28 @@ export const publishDocumentVersions = async (documentVersionIds) => {
 		)
 	);
 
-	const events = (
-		await filterAsync(async (doc) => {
-			try {
-				await verifyNotTrainingAttachment(doc.documentGuid);
-				return true;
-			} catch (/** @type {*} */ err) {
-				logger.info('Blocked sending event for document:', err.message);
-				return false;
-			}
-		}, publishedDocuments)
-	).map(buildNsipDocumentPayload);
+	const events = await Promise.all(
+		(
+			await filterAsync(async (doc) => {
+				try {
+					await verifyNotTrainingAttachment(doc.documentGuid);
+					return true;
+				} catch (/** @type {*} */ err) {
+					logger.info('Blocked sending event for document:', err.message);
+					return false;
+				}
+			}, publishedDocuments)
+		).map(async (documentVersion) => {
+			// get the folder path and file name, needed for payload
+			const filePath = await buildDocumentFolderPath(
+				documentVersion.Document.folderId,
+				documentVersion.Document.folder.case.reference,
+				documentVersion.fileName ?? ''
+			);
+
+			return buildNsipDocumentPayload(documentVersion, filePath);
+		})
+	);
 
 	if (events.length) {
 		await eventClient.sendEvents(
@@ -710,9 +750,16 @@ export const markDocumentVersionAsPublished = async ({
 	try {
 		await verifyNotTrainingAttachment(guid);
 
+		// get the folder path and file name, needed for payload
+		const filePath = await buildDocumentFolderPath(
+			publishedDocument.Document.folderId,
+			publishedDocument.Document.folder.case.reference,
+			publishedDocument.filename
+		);
+
 		await eventClient.sendEvents(
 			NSIP_DOCUMENT,
-			[buildNsipDocumentPayload(publishedDocument)],
+			[buildNsipDocumentPayload(publishedDocument, filePath)],
 			EventType.Publish
 		);
 	} catch (/** @type {*} */ err) {
@@ -737,9 +784,16 @@ export const markDocumentVersionAsUnpublished = async ({ guid, version }) => {
 	try {
 		await verifyNotTrainingAttachment(guid);
 
+		// get the folder path and file name, needed for payload
+		const filePath = await buildDocumentFolderPath(
+			publishedDocument.Document.folderId,
+			publishedDocument.Document.folder.case.reference,
+			publishedDocument.filename
+		);
+
 		await eventClient.sendEvents(
 			NSIP_DOCUMENT,
-			[buildNsipDocumentPayload(publishedDocument)],
+			[buildNsipDocumentPayload(publishedDocument, filePath)],
 			EventType.Unpublish
 		);
 	} catch (/** @type {*} */ err) {
@@ -878,19 +932,31 @@ export const handleUpdateDocuments = async (guids, publishedStatus, redactedStat
 
 		results.push(formattedResponse);
 	}
-
+	console.log('all updated docs: ', updatedDocuments);
+	console.log('all updated docs 0: ', updatedDocuments[0].Document.folder.case);
 	// broadcast an update event for each of the updated documents
-	const events = (
-		await filterAsync(async (doc) => {
-			try {
-				await verifyNotTrainingAttachment(doc.documentGuid);
-				return true;
-			} catch (/** @type {*} */ err) {
-				logger.info('Blocked sending event for document:', err.message);
-				return false;
-			}
-		}, updatedDocuments)
-	).map(buildNsipDocumentPayload);
+	const events = await Promise.all(
+		(
+			await filterAsync(async (doc) => {
+				try {
+					await verifyNotTrainingAttachment(doc.documentGuid);
+					return true;
+				} catch (/** @type {*} */ err) {
+					logger.info('Blocked sending event for document:', err.message);
+					return false;
+				}
+			}, updatedDocuments)
+		).map(async (documentVersion) => {
+			// get the folder path and file name, needed for payload
+			const filePath = await buildDocumentFolderPath(
+				documentVersion.Document.folderId,
+				documentVersion.Document.folder.case.reference,
+				documentVersion.fileName ?? ''
+			);
+
+			return buildNsipDocumentPayload(documentVersion, filePath);
+		})
+	);
 
 	if (events.length) {
 		await eventClient.sendEvents(NSIP_DOCUMENT, events, EventType.Update);
@@ -954,17 +1020,28 @@ export const unpublishDocuments = async (guids) => {
 		)
 	);
 
-	const events = (
-		await filterAsync(async (doc) => {
-			try {
-				await verifyNotTrainingAttachment(doc.documentGuid);
-				return true;
-			} catch (/** @type {*} */ err) {
-				logger.info('Blocked sending event for document:', err.message);
-				return false;
-			}
-		}, unpublishedDocuments)
-	).map(buildNsipDocumentPayload);
+	const events = await Promise.all(
+		(
+			await filterAsync(async (doc) => {
+				try {
+					await verifyNotTrainingAttachment(doc.documentGuid);
+					return true;
+				} catch (/** @type {*} */ err) {
+					logger.info('Blocked sending event for document:', err.message);
+					return false;
+				}
+			}, unpublishedDocuments)
+		).map(async (documentVersionFullDetails) => {
+			// get the folder path and file name, needed for payload
+			const filePath = await buildDocumentFolderPath(
+				documentVersionFullDetails.Document.folderId,
+				documentVersionFullDetails.Document.folder.case.reference,
+				documentVersionFullDetails.fileName ?? ''
+			);
+
+			return buildNsipDocumentPayload(documentVersionFullDetails, filePath);
+		})
+	);
 
 	if (events.length) {
 		await eventClient.sendEvents(NSIP_DOCUMENT, events, EventType.Update, {
@@ -1059,9 +1136,16 @@ export const deleteDocument = async (guid, caseId) => {
 	try {
 		await verifyNotTrainingAttachment(guid);
 
+		// get the folder path and file name, needed for payload
+		const filePath = await buildDocumentFolderPath(
+			documentToDelete.Document.folderId,
+			documentToDelete.Document.folder.case.reference,
+			documentToDelete.filename
+		);
+
 		await eventClient.sendEvents(
 			NSIP_DOCUMENT,
-			[buildNsipDocumentPayload(documentToDelete)],
+			[buildNsipDocumentPayload(documentToDelete, filePath)],
 			EventType.Delete
 		);
 	} catch (/** @type {*} */ err) {
@@ -1093,9 +1177,16 @@ export const revertDocumentStatusToPrevious = async (
 	try {
 		await verifyNotTrainingAttachment(guid);
 
+		// get the folder path and file name, needed for payload
+		const filePath = await buildDocumentFolderPath(
+			updatedDocument.Document.folderId,
+			updatedDocument.Document.folder.case.reference,
+			updatedDocument.filename
+		);
+
 		await eventClient.sendEvents(
 			NSIP_DOCUMENT,
-			[buildNsipDocumentPayload(updatedDocument)],
+			[buildNsipDocumentPayload(updatedDocument, filePath)],
 			EventType.Update
 		);
 	} catch (/** @type {*} */ err) {
@@ -1103,4 +1194,28 @@ export const revertDocumentStatusToPrevious = async (
 	}
 
 	return updatedDocument;
+};
+
+/**
+ *
+ * @param {number} folderId
+ * @param {string |null} caseRef
+ * @param {string} filename
+ * @returns {Promise<string>}
+ */
+export const buildDocumentFolderPath = async (folderId, caseRef, filename) => {
+	console.log(`buildDocumentFolderPath for ${folderId}, ${caseRef}, ${filename}`);
+	let parentFolders = await getFolderWithParents(folderId);
+	let folderPath = `${caseRef}`;
+
+	// tree is traversed in order, we want it reversed
+	if (parentFolders) {
+		parentFolders = parentFolders.reverse();
+	}
+	for (const aFolder of parentFolders) {
+		folderPath = folderPath + '/' + aFolder.displayNameEn;
+	}
+	folderPath = `${folderPath}/${filename}`;
+
+	return folderPath;
 };

@@ -4,6 +4,7 @@ const { databaseConnector } = await import('#utils/database-connector.js');
 import { EventType } from '@pins/event-client';
 import { NSIP_DOCUMENT } from '#infrastructure/topics.js';
 import { buildNsipDocumentPayload } from '../document.js';
+import { buildDocumentFolderPath } from '../document.service.js';
 const { eventClient } = await import('#infrastructure/event-client.js');
 
 const application = {
@@ -122,8 +123,16 @@ describe('Create documents', () => {
 		]);
 
 		const blobPath = `/application/${application.reference}/${guid}/1`;
+
+		// get the folder path and file name, needed for payload
+		const filePath = await buildDocumentFolderPath(
+			upsertedDocVersionResponse.Document.folderId,
+			upsertedDocVersionResponse.Document.folder.case.reference,
+			upsertedDocVersionResponse.filename
+		);
+
 		// @ts-ignore
-		const eventPayload = buildNsipDocumentPayload(upsertedDocVersionResponse);
+		const eventPayload = buildNsipDocumentPayload(upsertedDocVersionResponse, filePath);
 
 		// THEN
 		expect(response.status).toEqual(200);

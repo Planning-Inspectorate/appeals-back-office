@@ -5,12 +5,32 @@ import { databaseConnector } from '#utils/database-connector.js';
  * @typedef {import('@prisma/client').DocumentVersion} DocumentVersion
  * @typedef {import('@pins/applications.api').Schema.DocumentVersionWithDocument} DocumentVersionWithDocument
  * @typedef {import('@pins/applications.api').Schema.DocumentUpdateInput} DocumentUpdateInput
+ * @typedef {import('@prisma/client').Prisma.DocumentVersionGetPayload<{include: {Document: {include: {folder: {include: {case: {include: {CaseStatus: true}}}}}}}}> } DocumentVersionWithDocumentAndFolder
+ *
  */
 
 /**
+ * shared include clause for a DocumentVersion with Document with folder with Case with CaseStatus
+ */
+const includeClauseDocVersionFull = {
+	Document: {
+		include: {
+			folder: {
+				include: {
+					case: {
+						include: {
+							CaseStatus: true
+						}
+					}
+				}
+			}
+		}
+	}
+};
 
+/**
  * @param {DocumentVersion} metadata
- * @returns {import('@prisma/client').PrismaPromise<DocumentVersion>}
+ * @returns {import('@prisma/client').PrismaPromise<DocumentVersionWithDocumentAndFolder>}
  */
 export const upsert = ({ documentGuid, version = 1, transcriptGuid, ...metadata }) => {
 	return databaseConnector.documentVersion.upsert({
@@ -29,27 +49,12 @@ export const upsert = ({ documentGuid, version = 1, transcriptGuid, ...metadata 
 			version
 		},
 
-		include: {
-			Document: {
-				include: {
-					folder: {
-						include: {
-							// TODO: This will never work for nested folders, need to refactor to use new denormalised Case
-							case: {
-								include: {
-									CaseStatus: true
-								}
-							}
-						}
-					}
-				}
-			}
-		}
+		include: includeClauseDocVersionFull
 	});
 };
 
 /**
-
+ *
  * @param {{guid: string, status: string, version?: number }} documentStatusUpdate
  * @returns {import('@prisma/client').PrismaPromise<DocumentVersion>}
  */
@@ -186,24 +191,15 @@ export const getAllByDocumentGuid = (guid) => {
  *
  * @param {string} documentGuid
  * @param {import('@pins/applications.api').Schema.DocumentVersionUpdateInput} documentDetails
- * @returns {import('@prisma/client').PrismaPromise<DocumentVersionWithDocument>}
+ * @returns {import('@prisma/client').PrismaPromise<DocumentVersionWithDocumentAndFolder>}
  */
 export const update = (documentGuid, { version = 1, ...documentDetails }) => {
 	return databaseConnector.documentVersion.update({
 		where: { documentGuid_version: { documentGuid, version } },
-		include: {
-			Document: {
-				include: {
-					case: true
-				}
-			}
-		},
+		include: includeClauseDocVersionFull,
 		data: documentDetails
 	});
 };
-
-// update DocumentVersion
-// join Document on document.latestVersionId =
 
 /**
  * TODO: Might be worth having an identifier for DocumentVersion that isn't a composite of the documentId and versionNo.

@@ -1,8 +1,9 @@
 import { buildNsipDocumentPayload } from '../document.js';
 import { validateNsipDocument } from '#utils/schema-test-utils.js';
+import { buildDocumentFolderPath } from '../document.service.js';
 
 describe('validateNsipDocument', () => {
-	test('validateNsipDocument maps NSIP Document to NSIP Document Payload', () => {
+	test('validateNsipDocument maps NSIP Document to NSIP Document Payload', async () => {
 		// 1. Arrange
 		const nsipDocument = {
 			Document: {
@@ -47,8 +48,16 @@ describe('validateNsipDocument', () => {
 			redactedStatus: 'not_redacted'
 		};
 		// 2. Act
+
+		// get the folder path and file name, needed for payload
+		const filePath = await buildDocumentFolderPath(
+			nsipDocument.Document.folderId,
+			nsipDocument.Document.folder.case.reference,
+			nsipDocument.filename
+		);
+
 		// @ts-ignore
-		const result = buildNsipDocumentPayload(nsipDocument);
+		const result = buildNsipDocumentPayload(nsipDocument, filePath);
 
 		// 3. Assert
 		// @ts-ignore

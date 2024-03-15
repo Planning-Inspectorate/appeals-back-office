@@ -68,19 +68,17 @@ const validateMessageToSchema = async (schemaName, events) => {
 	const validator = ajv.compile(schema);
 
 	let isAllValid = true;
-	if (events instanceof Array) {
-		for (const eachEvent of events) {
-			const isValid = validator(eachEvent);
-			if (!isValid) {
-				isAllValid = false;
-				console.log(`Message in array fails schema validation ${schemaName}: `, validator.errors);
-			}
-		}
-	} else {
-		const isValid = validator(events);
+	const eventsToValidate = events instanceof Array ? events : [events];
+
+	for (const eachEvent of eventsToValidate) {
+		const isValid = validator(eachEvent);
 		if (!isValid) {
 			isAllValid = false;
-			console.log(`Message fails schema validation: ${schemaName}`, validator.errors);
+			console.log(
+				`Message in fails schema validation ${schemaName}: `,
+				validator.errors?.map(({ message }) => message)
+			);
+			console.log('Schema payload: ', eachEvent);
 		}
 	}
 

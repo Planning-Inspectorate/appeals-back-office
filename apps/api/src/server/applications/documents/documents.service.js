@@ -2,6 +2,7 @@ import { EventType } from '@pins/event-client';
 import { eventClient } from '#infrastructure/event-client.js';
 import { NSIP_DOCUMENT } from '#infrastructure/topics.js';
 import { buildNsipDocumentPayload } from '../application/documents/document.js';
+import { buildDocumentFolderPath } from '../application/documents/document.service.js';
 import * as documentRepository from '#repositories/document.repository.js';
 import * as documentVersionRepository from '#repositories/document-metadata.repository.js';
 import logger from '#utils/logger.js';
@@ -38,9 +39,16 @@ export const updateStatus = async (guid, status) => {
 		updatedDocument.publishedStatus === 'published' ? EventType.Publish : EventType.Update;
 
 	try {
+		console.log('uipdated docuent:', updatedDocument);
+		const filePath = await buildDocumentFolderPath(
+			updatedDocument.Document.folderId,
+			updatedDocument.Document.folder.case.reference,
+			updatedDocument.filename
+		);
+
 		await eventClient.sendEvents(
 			NSIP_DOCUMENT,
-			[buildNsipDocumentPayload(updatedDocument)],
+			[buildNsipDocumentPayload(updatedDocument, filePath)],
 			eventType
 		);
 	} catch (err) {
