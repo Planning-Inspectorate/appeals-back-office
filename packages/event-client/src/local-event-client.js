@@ -76,9 +76,11 @@ const validateMessageToSchema = async (schemaName, events) => {
 			isAllValid = false;
 			console.log(
 				`Message in fails schema validation ${schemaName}: `,
-				validator.errors?.map(({ message }) => message)
+				validator.errors?.map(
+					({ instancePath, keyword, message, params }) =>
+						`${instancePath}: keyword:${keyword} - ${message} - params:${JSON.stringify(params)}`
+				)
 			);
-			console.log('Schema payload: ', eachEvent);
 		}
 	}
 
