@@ -240,3 +240,119 @@ exports[`other-appeals GET /other-appeals/add should render the "What is the app
     </form>
 </main>"
 `;
+
+exports[`other-appeals GET /other-appeals/manage should render the "Do you want to remove the relationship?" page 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Do you want to remove the relationship between appeal 2 and appeal 351062?</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <form action="" method="POST" novalidate>
+                <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset">
+                        <div class="govuk-radios" data-module="govuk-radios">
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="removeAppealRelationship" name="removeAppealRelationship"
+                                type="radio" value="yes">
+                                <label class="govuk-label govuk-radios__label" for="removeAppealRelationship">Yes</label>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="removeAppealRelationship-2" name="removeAppealRelationship"
+                                type="radio" value="no">
+                                <label class="govuk-label govuk-radios__label" for="removeAppealRelationship-2">No</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <button class="govuk-button" data-module="govuk-button">Continue</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`other-appeals GET /other-appeals/manage should render the "Do you want to remove the relationship?" page with the error if the answer was not provided 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#removeAppealRelationship">You must answer if you want to remove the relationship</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Do you want to remove the relationship between appeal 2 and appeal 351062?</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <form action="" method="POST" novalidate>
+                <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset">
+                        <div class="govuk-radios" data-module="govuk-radios">
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="removeAppealRelationship" name="removeAppealRelationship"
+                                type="radio" value="yes">
+                                <label class="govuk-label govuk-radios__label" for="removeAppealRelationship">Yes</label>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="removeAppealRelationship-2" name="removeAppealRelationship"
+                                type="radio" value="no">
+                                <label class="govuk-label govuk-radios__label" for="removeAppealRelationship-2">No</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <button class="govuk-button" data-module="govuk-button">Continue</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`other-appeals GET /other-appeals/manage should render the "Manage related appeals" page 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Manage related appeals</h1>
+        </div>
+    </div>
+    <h2 class="govuk-!-margin-top-6">Related appeals</h2>
+    <table class="govuk-table">
+        <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">Appeal ID</th>
+                <th scope="col" class="govuk-table__header">Appeal type</th>
+                <th scope="col" class="govuk-table__header">Action</th>
+            </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/2" aria-label="Appeal 2">2</a>
+                </td>
+                <td class="govuk-table__cell"></td>
+                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/other-appeals/remove/2/100">Remove</a>
+                </td>
+            </tr>
+            <tr class="govuk-table__row">
+                <td class="govuk-table__cell">3 (Horizon)</td>
+                <td class="govuk-table__cell"></td>
+                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/other-appeals/remove/3/101">Remove</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</main>"
+`;

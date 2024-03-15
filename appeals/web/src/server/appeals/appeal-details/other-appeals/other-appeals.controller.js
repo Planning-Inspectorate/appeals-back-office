@@ -1,13 +1,20 @@
-import { addOtherAppealsPage, confirmOtherAppealsPage } from './other-appeals.mapper.js';
+import {
+	addOtherAppealsPage,
+	confirmOtherAppealsPage,
+	manageOtherAppealsPage,
+	removeAppealRelationshipPage
+} from './other-appeals.mapper.js';
 import {
 	getLinkableAppealSummaryFromReference,
 	postAssociateAppeal,
 	postAssociateLegacyAppeal
 } from './other-appeals.service.js';
+import { postUnlinkRequest } from '../manage-linked-appeals/manage-linked-appeals.service.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { HTTPError } from 'got';
+import { getAppealDetailsFromId } from '../appeal-details.service.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -216,5 +223,92 @@ const renderConfirmOtherAppeals = async (request, response, errors = undefined) 
 
 			logger.error(error, errorMessage);
 		}
+	}
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const getManageOtherAppeals = async (request, response) => {
+	const mappedPageContent = manageOtherAppealsPage(request.currentAppeal, request);
+
+	return response.render('patterns/display-page.pattern.njk', {
+		pageContent: mappedPageContent
+	});
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const getRemoveOtherAppeals = async (request, response) => {
+	return renderRemoveOtherAppeals(request, response);
+};
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+const renderRemoveOtherAppeals = async (request, response) => {
+	const { relatedAppealShortReference } = request.params;
+
+	if (!relatedAppealShortReference) {
+		return response.render('app/500.njk');
+	}
+
+	const mappedPageContent = removeAppealRelationshipPage(
+		request.currentAppeal,
+		relatedAppealShortReference
+	);
+
+	return response.render('patterns/display-page.pattern.njk', {
+		pageContent: mappedPageContent,
+		errors: request.errors
+	});
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const postRemoveOtherAppeals = async (request, response) => {
+	const { errors } = request;
+
+	if (errors) {
+		return renderRemoveOtherAppeals(request, response);
+	}
+
+	try {
+		const { appealId, relatedAppealShortReference, relationshipId } = request.params;
+		const { removeAppealRelationship } = request.body;
+
+		if (removeAppealRelationship === 'no') {
+			return response.redirect(`/appeals-service/appeal-details/${appealId}/other-appeals/manage`);
+		} else if (removeAppealRelationship === 'yes') {
+			const appealRelationshipId = parseInt(relationshipId, 10);
+
+			await postUnlinkRequest(request.apiClient, appealId, appealRelationshipId);
+
+			addNotificationBannerToSession(
+				request.session,
+				'otherAppealRemoved',
+				appealId,
+				`<p class="govuk-notification-banner__heading">You have removed the relationship between this appeal and appeal ${relatedAppealShortReference}</p>`
+			);
+
+			const appealData = await getAppealDetailsFromId(request.apiClient, appealId);
+
+			if (appealData.otherAppeals.length > 0) {
+				return response.redirect(
+					`/appeals-service/appeal-details/${appealId}/other-appeals/manage`
+				);
+			} else {
+				return response.redirect(`/appeals-service/appeal-details/${appealId}`);
+			}
+		}
+	} catch (error) {
+		return response.render('app/500.njk');
 	}
 };

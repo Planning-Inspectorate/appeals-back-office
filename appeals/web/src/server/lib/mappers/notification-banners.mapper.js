@@ -104,6 +104,10 @@ export const notificationBannerDefinitions = {
 		pages: ['appealDetails'],
 		type: 'success'
 	},
+	otherAppealRemoved: {
+		pages: ['appealDetails', 'manageRelatedAppeals'],
+		type: 'success'
+	},
 	neighbouringSiteAdded: {
 		type: 'success',
 		pages: ['appealDetails']

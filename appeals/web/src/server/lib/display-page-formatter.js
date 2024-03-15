@@ -82,7 +82,7 @@ export const formatListOfLinkedAppeals = (listOfAppeals) => {
 					: `<li><span class="govuk-body">${shortAppealReference}</span> ${relationshipText}</li>`;
 		}
 
-		return `<ul class="govuk-list">${formattedLinks}</ul>`;
+		return `<ul class="govuk-list govuk-list--bullet">${formattedLinks}</ul>`;
 	}
 
 	return '<span>No appeals</span>';
@@ -110,7 +110,7 @@ export const formatListOfRelatedAppeals = (listOfAppeals) => {
 					: `<li><span class="govuk-body">${shortAppealReference}</span></li>`;
 		}
 
-		return `<ul class="govuk-list">${formattedLinks}</ul>`;
+		return `<ul class="govuk-list govuk-list--bullet">${formattedLinks}</ul>`;
 	}
 
 	return '<span>No appeals</span>';

@@ -354,7 +354,7 @@ export async function initialiseAndMapAppealData(
 	if (appealDetails.otherAppeals.length) {
 		otherAppealsItems.push({
 			text: 'Manage',
-			href: `${currentRoute}/change-appeal-details/other-appeals`
+			href: `${currentRoute}/other-appeals/manage`
 		});
 	}
 
