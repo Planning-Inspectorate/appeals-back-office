@@ -59,6 +59,7 @@ interface RelatedAppeal {
 	appealId: number | null;
 	appealReference: string;
 	linkingDate: Date;
+	appealType?: string;
 	relationshipId: number;
 	externalSource: boolean;
 }

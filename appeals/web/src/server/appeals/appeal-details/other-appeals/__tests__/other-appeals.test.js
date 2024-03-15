@@ -19,9 +19,9 @@ const appealDataWithOtherAppeals = {
 			relationshipId: 100
 		},
 		{
-			appealId: 3,
+			appealId: null,
 			appealReference: 'TEST-3',
-			externalSource: false,
+			externalSource: true,
 			linkingDate: '2024-02-27T15:44:22.247Z',
 			relationshipId: 101
 		}
@@ -133,6 +133,50 @@ describe('other-appeals', () => {
 				.post(`${baseUrl}/1/other-appeals/confirm`)
 				.send({ relateAppealsAnswer: 'yes' });
 			expect(confirmationPageResponse.statusCode).toBe(302);
+		});
+	});
+
+	describe('GET /other-appeals/manage', () => {
+		it('should render the "Manage related appeals" page', async () => {
+			const response = await request.get(`${baseUrl}/1/other-appeals/manage`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+		});
+
+		it('should render the "Do you want to remove the relationship?" page', async () => {
+			const response = await request.get(`${baseUrl}/1/other-appeals/remove/2/1`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+		});
+
+		it('should render the "Do you want to remove the relationship?" page with the error if the answer was not provided', async () => {
+			const response = await request
+				.post(`${baseUrl}/1/other-appeals/remove/2/1`)
+				.send({ removeAppealRelationship: '' });
+
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+		});
+
+		it('should redirect back to "Manage related appeals" page if the answer was provided (answer no)', async () => {
+			const response = await request
+				.post(`${baseUrl}/1/other-appeals/remove/2/1`)
+				.send({ removeAppealRelationship: 'no' });
+
+			expect(response.statusCode).toBe(302);
+		});
+
+		it('should redirect back to "Manage related appeals" page if the answer was provided (answer yes)', async () => {
+			nock('http://test/').get('/appeals/1').reply(200, appealDataWithOtherAppeals).persist();
+			nock('http://test/').delete('/appeals/1/unlink-appeal').reply(200, { success: true });
+
+			const response = await request
+				.post(`${baseUrl}/1/other-appeals/remove/2/1`)
+				.send({ removeAppealRelationship: 'yes' });
+
+			expect(response.statusCode).toBe(302);
 		});
 	});
 });

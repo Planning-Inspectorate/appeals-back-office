@@ -11,3 +11,10 @@ export const validateRelateAppealAnswer = createValidator(
 		.notEmpty()
 		.withMessage('You must answer if you want to relate appeals')
 );
+
+export const validateRemoveRelateAppealAnswer = createValidator(
+	body('removeAppealRelationship')
+		.trim()
+		.notEmpty()
+		.withMessage('You must answer if you want to remove the relationship')
+);
