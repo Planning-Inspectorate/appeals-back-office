@@ -83,7 +83,7 @@ export const buildNsipDocumentPayload = (docVersionWithFullDetails, filePath = '
 	let payload = {
 		documentId: document.guid,
 		caseRef: caseReference,
-		documentReference: document.reference,
+		documentReference: document.documentReference,
 		path: filePath,
 		caseType: NSIP_CASETYPE,
 		version: docVersionWithFullDetails.version,
