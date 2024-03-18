@@ -1,6 +1,4 @@
 parameters:
-- name: appsFolderNames
-  type: object
 - name: appealsFolderNames
   type: object
 
@@ -14,20 +12,8 @@ steps:
   - script: |
       source ~/.bashrc
       shopt -s extglob
-      appsFolders=(echo ${{ join(' ',parameters.appsFolderNames) }})
       appealsFolders=(echo ${{ join(' ',parameters.appealsFolderNames) }})
 
-      for folder in ${appsFolders[@]}; do
-        echo $folder
-        mkdir -p $(Build.Repository.LocalPath)/apps/functions/$folder/node_modules/@pins
-        if [ -d $(Build.Repository.LocalPath)/node_modules/@pins ]; then
-          cp -r -n -L $(Build.Repository.LocalPath)/node_modules/@pins/!(functions-*|appeals.*|applications.*) $(Build.Repository.LocalPath)/apps/functions/$folder/node_modules/@pins
-        fi
-        cp -r -n -L $(Build.Repository.LocalPath)/node_modules/!(@pins) $(Build.Repository.LocalPath)/apps/functions/$folder/node_modules/
-        if [ -d $(Build.Repository.LocalPath)/apps/functions/node_modules ]; then
-          cp -r -n -L $(Build.Repository.LocalPath)/apps/functions/node_modules/* $(Build.Repository.LocalPath)/apps/functions/$folder/node_modules/
-        fi
-      done
       for folder in ${appealsFolders[@]}; do
         echo $folder
         mkdir -p $(Build.Repository.LocalPath)/appeals/functions/$folder/node_modules/@pins
