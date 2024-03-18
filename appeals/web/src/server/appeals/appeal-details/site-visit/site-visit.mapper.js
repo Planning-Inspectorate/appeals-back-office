@@ -626,8 +626,10 @@ export function mapPostScheduleOrManageSiteVisitConfirmationPageType(
 		oldApiVisitType.toLowerCase() !== updateOrCreateSiteVisitParameters.apiVisitType.toLowerCase();
 	const dateTimeChanged =
 		oldVisitDateString !== updateOrCreateSiteVisitParameters.visitDate ||
-		oldVisitStartTime !== updateOrCreateSiteVisitParameters.visitStartTime ||
-		oldVisitEndTime !== updateOrCreateSiteVisitParameters.visitEndTime;
+		(!(oldVisitStartTime === null && updateOrCreateSiteVisitParameters.visitStartTime === '') &&
+			oldVisitStartTime !== updateOrCreateSiteVisitParameters.visitStartTime) ||
+		(!(oldVisitEndTime === null && updateOrCreateSiteVisitParameters.visitEndTime === '') &&
+			oldVisitEndTime !== updateOrCreateSiteVisitParameters.visitEndTime);
 
 	/** @type {ScheduleOrManageSiteVisitConfirmationPageType} */
 	let confirmationPageTypeToRender = 'unchanged';
