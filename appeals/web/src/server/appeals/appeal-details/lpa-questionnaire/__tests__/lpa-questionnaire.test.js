@@ -26,6 +26,7 @@ import { createTestEnvironment } from '#testing/index.js';
 import { textInputCharacterLimits } from '../../../appeal.constants.js';
 import usersService from '#appeals/appeal-users/users-service.js';
 import { cloneDeep } from 'lodash-es';
+import { addDays } from 'date-fns';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -140,7 +141,7 @@ describe('LPA Questionnaire review', () => {
 		});
 	});
 
-	describe('GET /appeals-service/appeal-details/1/lpa-questionnaire/2/incomplete', () => {
+	describe('GET /appeals-service/appeal-details/1/lpa-questionnaire/1/incomplete', () => {
 		beforeEach(() => {
 			nock('http://test/')
 				.get('/appeals/lpa-questionnaire-incomplete-reasons')
@@ -177,7 +178,7 @@ describe('LPA Questionnaire review', () => {
 		});
 	});
 
-	describe('POST /appeals-service/appeal-details/1/lpa-questionnaire/2/incomplete', () => {
+	describe('POST /appeals-service/appeal-details/1/lpa-questionnaire/1/incomplete', () => {
 		/**
 		 * @type {import("superagent").Response}
 		 */
@@ -351,7 +352,7 @@ describe('LPA Questionnaire review', () => {
 		});
 	});
 
-	describe('GET /appeals-service/appeal-details/1/lpa-questionnaire/2/incomplete/date', () => {
+	describe('GET /appeals-service/appeal-details/1/lpa-questionnaire/1/incomplete/date', () => {
 		beforeEach(() => {
 			nock('http://test/')
 				.get('/appeals/lpa-questionnaire-incomplete-reasons')
@@ -391,7 +392,7 @@ describe('LPA Questionnaire review', () => {
 		});
 	});
 
-	describe('POST /appeals-service/appeal-details/1/lpa-questionnaire/2/incomplete/date', () => {
+	describe('POST /appeals-service/appeal-details/1/lpa-questionnaire/1/incomplete/date', () => {
 		/**
 		 * @type {import("superagent").Response}
 		 */
@@ -593,7 +594,7 @@ describe('LPA Questionnaire review', () => {
 		});
 	});
 
-	describe('GET /appeals-service/appeal-details/1/lpa-questionnaire/2/check-your-answers', () => {
+	describe('GET /appeals-service/appeal-details/1/lpa-questionnaire/1/check-your-answers', () => {
 		beforeEach(async () => {
 			nock('http://test/')
 				.get('/appeals/lpa-questionnaire-incomplete-reasons')
@@ -638,7 +639,7 @@ describe('LPA Questionnaire review', () => {
 		});
 	});
 
-	describe('POST /appeals-service/appeal-details/1/lpa-questionnaire/2/check-your-answers', () => {
+	describe('POST /appeals-service/appeal-details/1/lpa-questionnaire/1/check-your-answers', () => {
 		afterEach(() => {
 			nock.cleanAll();
 		});
@@ -669,7 +670,7 @@ describe('LPA Questionnaire review', () => {
 		});
 	});
 
-	describe('GET /appeals-service/appeal-details/1/lpa-questionnaire/2/incomplete/confirmation', () => {
+	describe('GET /appeals-service/appeal-details/1/lpa-questionnaire/1/incomplete/confirmation', () => {
 		afterEach(() => {
 			nock.cleanAll();
 		});
@@ -713,7 +714,7 @@ describe('LPA Questionnaire review', () => {
 		});
 	});
 
-	describe('GET /appeals-service/appeal-details/1/lpa-questionnaire/2/confirmation', () => {
+	describe('GET /appeals-service/appeal-details/1/lpa-questionnaire/1/confirmation', () => {
 		it('should render the 500 error page if required data is not present in the session', async () => {
 			const response = await request.get(`${baseUrl}/confirmation`);
 			const element = parseHtml(response.text);
@@ -962,25 +963,12 @@ describe('LPA Questionnaire review', () => {
 		});
 	});
 
-	describe('POST /lpa-questionnaire/2/add-document-details/:folderId/', () => {
+	describe('POST /lpa-questionnaire/1/add-document-details/:folderId/', () => {
 		beforeEach(() => {
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses);
-			nock('http://test/')
-				.get('/appeals/1/document-folders/1')
-				.reply(200, {
-					folderId: 23,
-					path: 'lpa_questionnaire/conservationAreaMap',
-					caseId: '1',
-					documents: [
-						{
-							id: '4541e025-00e1-4458-aac6-d1b51f6ae0a7',
-							receivedDate: '2023-02-01',
-							redactionStatus: 2
-						}
-					]
-				});
+			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
 			nock('http://test/')
 				.patch('/appeals/1/documents')
 				.reply(200, {
@@ -1215,6 +1203,27 @@ describe('LPA Questionnaire review', () => {
 							day: '29',
 							month: '2',
 							year: '2023'
+						},
+						redactionStatus: 'unredacted'
+					}
+				]
+			});
+
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+		});
+
+		it('should re-render the document details page with the expected error message if receivedDate is a date in the future', async () => {
+			const futureDate = addDays(new Date(), 1);
+			const response = await request.post(`${baseUrl}/add-document-details/1`).send({
+				items: [
+					{
+						documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
+						receivedDate: {
+							day: futureDate.getDate(),
+							month: futureDate.getMonth() + 1,
+							year: futureDate.getFullYear()
 						},
 						redactionStatus: 'unredacted'
 					}
