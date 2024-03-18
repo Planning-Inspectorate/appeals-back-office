@@ -120,7 +120,7 @@ extends:
               nodeVersion: 18
               script: npm ci --only=prod --workspace=@pins/functions-bo-appeals-casedata-import --workspace=@pins/functions-bo-appeals-user-import --workspace=@pins/functions-bo-appeals-document-processing
 
-					# merge node modules
+          # merge node modules
           - template: azure-pipelines-package-function-merge.yml@self
             parameters:
               appealsFolderNames:
