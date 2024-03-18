@@ -1481,20 +1481,7 @@ describe('appellant-case', () => {
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses);
-			nock('http://test/')
-				.get('/appeals/1/document-folders/1')
-				.reply(200, {
-					folderId: 23,
-					path: 'appellant_case/appealStatement',
-					caseId: '1',
-					documents: [
-						{
-							id: '4541e025-00e1-4458-aac6-d1b51f6ae0a7',
-							receivedDate: '2023-02-01',
-							redactionStatus: 2
-						}
-					]
-				});
+			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
 			nock('http://test/')
 				.patch('/appeals/1/documents')
 				.reply(200, {
