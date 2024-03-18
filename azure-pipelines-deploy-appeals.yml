@@ -40,7 +40,7 @@ resources:
       type: github
       endpoint: Planning-Inspectorate
       name: Planning-Inspectorate/common-pipeline-templates
-      ref: refs/tags/release/3.4.0
+      ref: refs/tags/release/3.11.0
   pipelines:
     - pipeline: build
       source: Back Office Build
@@ -52,6 +52,7 @@ resources:
 extends:
   template: stages/wrapper_cd.yml@templates
   parameters:
+    variableGroupPrefix: 'cd'
     deploymentStages:
       - name: Deploy Appeals
         deploymentJobs:
