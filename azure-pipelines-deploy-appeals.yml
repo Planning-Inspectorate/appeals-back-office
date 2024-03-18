@@ -43,7 +43,7 @@ resources:
       ref: refs/tags/release/3.11.0
   pipelines:
     - pipeline: build
-      source: Back Office Build
+      source: Build
       trigger:
         branches:
           include:
