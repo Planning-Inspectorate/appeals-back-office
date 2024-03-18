@@ -91,7 +91,7 @@ extends:
           - name: Deploy Function - Appeals Casedata Import
             artifact:
               name: function-appeals-casedata-import
-              sourcePipeline: Back Office Build
+              sourcePipeline: Build
             condition: eq(${{ parameters.deployFunctionAppealsCasedataImport }}, 'true')
             steps:
               - template: ../steps/function_app_deploy.yml
@@ -101,7 +101,7 @@ extends:
           - name: Deploy Function - Appeals User Import
             artifact:
               name: function-appeals-user-import
-              sourcePipeline: Back Office Build
+              sourcePipeline: Build
             condition: eq(${{ parameters.deployFunctionAppealsUserImport }}, 'true')
             steps:
               - template: ../steps/function_app_deploy.yml
@@ -111,7 +111,7 @@ extends:
           - name: Deploy Function - Appeals Document Processing
             artifact:
               name: function-appeals-document-processing
-              sourcePipeline: Back Office Build
+              sourcePipeline: Build
             condition: eq(${{ parameters.deployFunctionAppealsDocProcessing }}, 'true')
             steps:
               - template: ../steps/function_app_deploy.yml
