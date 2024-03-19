@@ -1,8 +1,40 @@
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
+import logger from '#lib/logger.js';
+import { getLinkableAppealSummaryFromReference } from './other-appeals.service.js';
 
 export const validateAddOtherAppealsReference = createValidator(
-	body('addOtherAppealsReference').trim().notEmpty().withMessage('Enter an appeal reference')
+	body('addOtherAppealsReference')
+		.trim()
+		.notEmpty()
+		.withMessage('Enter an appeal reference')
+		.custom(async (reference, { req }) => {
+			try {
+				const linkableAppealSummary = await getLinkableAppealSummaryFromReference(
+					req.apiClient,
+					reference
+				).catch((error) => {
+					console.log('reference validator error:');
+					console.log(error);
+					if (error.response.statusCode === 404) {
+						return Promise.reject();
+					} else if (error.response.statusCode === 500) {
+						req.body.problemWithHorizon = true;
+						return true; // avoids failing validation chain (scenario where Horizon is down is handled by rendering a special error page instead of a validation error)
+					}
+				});
+
+				req.session.linkableAppeal = {
+					linkableAppealSummary
+				};
+
+				return Promise.resolve();
+			} catch (error) {
+				logger.error(error);
+				throw new Error('error when attempting to validate linkable appeal reference');
+			}
+		})
+		.withMessage('Enter a valid appeal reference')
 );
 
 export const validateRelateAppealAnswer = createValidator(

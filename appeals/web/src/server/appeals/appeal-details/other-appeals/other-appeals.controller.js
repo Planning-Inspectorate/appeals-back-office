@@ -4,11 +4,7 @@ import {
 	manageOtherAppealsPage,
 	removeAppealRelationshipPage
 } from './other-appeals.mapper.js';
-import {
-	getLinkableAppealSummaryFromReference,
-	postAssociateAppeal,
-	postAssociateLegacyAppeal
-} from './other-appeals.service.js';
+import { postAssociateAppeal, postAssociateLegacyAppeal } from './other-appeals.service.js';
 import { postUnlinkRequest } from '../manage-linked-appeals/manage-linked-appeals.service.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import logger from '#lib/logger.js';
@@ -30,32 +26,30 @@ export const getAddOtherAppeals = async (request, response) => {
  */
 export const postAddOtherAppeals = async (request, response) => {
 	const addOtherAppealsReference = request.body.addOtherAppealsReference.trim();
-
-	const { errors } = request;
-
-	if (errors) {
-		return renderAddOtherAppeals(request, response, addOtherAppealsReference, errors);
-	}
+	const {
+		errors,
+		params: { appealId }
+	} = request;
 
 	if (addOtherAppealsReference === undefined) {
 		return response.render('app/500.njk');
 	}
 
-	try {
-		await getLinkableAppealSummaryFromReference(request.apiClient, addOtherAppealsReference);
-	} catch (error) {
-		if (error instanceof HTTPError && error.response.statusCode === 404) {
-			request.errors = {
-				addOtherAppealsReference: {
-					value: addOtherAppealsReference,
-					msg: 'Appeal reference could not be found',
-					param: 'addOtherAppealsReference',
-					location: 'body'
-				}
-			};
+	if (errors) {
+		return renderAddOtherAppeals(request, response, addOtherAppealsReference, errors);
+	}
 
-			return renderAddOtherAppeals(request, response, addOtherAppealsReference);
-		}
+	if (request.body.problemWithHorizon) {
+		return response.render('app/500.njk', {
+			titleCopy: 'Sorry, there is a problem with Horizon',
+			additionalCtas: [
+				{
+					href: `/appeals-service/appeal-details/${appealId}`,
+					text: 'Go back to case overview'
+				}
+			],
+			hideDefaultCta: true
+		});
 	}
 
 	request.session.appealId = request.currentAppeal.appealId;
@@ -116,7 +110,11 @@ export const postConfirmOtherAppeals = async (request, response) => {
 	const { relateAppealsAnswer } = request.body;
 
 	if (
-		!objectContainsAllKeys(request.session, ['appealId', 'relatedAppealReference']) ||
+		!objectContainsAllKeys(request.session, [
+			'appealId',
+			'relatedAppealReference',
+			'linkableAppeal'
+		]) ||
 		request.session.appealId !== request.currentAppeal.appealId ||
 		!relateAppealsAnswer
 	) {
@@ -134,10 +132,7 @@ export const postConfirmOtherAppeals = async (request, response) => {
 		);
 	} else if (relateAppealsAnswer === 'yes') {
 		try {
-			const relatedAppealDetails = await getLinkableAppealSummaryFromReference(
-				request.apiClient,
-				request.session.relatedAppealReference
-			);
+			const relatedAppealDetails = request.session.linkableAppeal.linkableAppealSummary;
 
 			if (!relatedAppealDetails.appealId) {
 				delete request.session.appealId;
@@ -192,19 +187,16 @@ export const postConfirmOtherAppeals = async (request, response) => {
  */
 const renderConfirmOtherAppeals = async (request, response, errors = undefined) => {
 	if (
-		!objectContainsAllKeys(request.session, ['appealId', 'relatedAppealReference']) ||
+		!objectContainsAllKeys(request.session, ['appealId', 'linkableAppeal']) ||
 		request.session.appealId !== request.currentAppeal.appealId
 	) {
 		return response.render('app/500.njk');
 	}
 
-	const { relatedAppealReference } = request.session;
+	const { linkableAppeal } = request.session;
 
 	try {
-		const relatedAppealDetails = await getLinkableAppealSummaryFromReference(
-			request.apiClient,
-			relatedAppealReference
-		);
+		const relatedAppealDetails = linkableAppeal.linkableAppealSummary;
 
 		const mappedPageContent = confirmOtherAppealsPage(request.currentAppeal, relatedAppealDetails);
 
