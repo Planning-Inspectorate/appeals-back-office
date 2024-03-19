@@ -83,6 +83,19 @@ export const postAddLinkedAppeal = async (request, response) => {
 		params: { appealId }
 	} = request;
 
+	if (request.body.problemWithHorizon) {
+		return response.render('app/500.njk', {
+			titleCopy: 'Sorry, there is a problem with Horizon',
+			additionalCtas: [
+				{
+					href: `/appeals-service/appeal-details/${appealId}`,
+					text: 'Go back to case overview'
+				}
+			],
+			hideDefaultCta: true
+		});
+	}
+
 	return response.redirect(
 		`/appeals-service/appeal-details/${appealId}/linked-appeals/add/check-and-confirm`
 	);
