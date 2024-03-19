@@ -219,7 +219,12 @@ export async function appellantCasePage(
 	}
 
 	if (getDocumentsForVirusStatus(appellantCaseData, 'not_checked').length > 0) {
-		addNotificationBannerToSession(session, 'notCheckedDocument', appealDetails?.appealId);
+		addNotificationBannerToSession(
+			session,
+			'notCheckedDocument',
+			appealDetails?.appealId,
+			`<p class="govuk-notification-banner__heading">Virus scan in progress</p></br><a class="govuk-notification-banner__link" href="${currentRoute}">Refresh page to see if scan has finished</a>`
+		);
 	}
 
 	await addDraftDocumentsNotificationBanner(
