@@ -361,6 +361,53 @@ describe('linked-appeals', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 		});
 
+		it('should render the check and confirm page with appropriate warning text, no radio options, and a button linking back to the add linked appeal reference page with label text of "return to search", if the appeals are not already linked and the linking target is a child appeal and the linking candidate is a lead appeal', async () => {
+			nock.cleanAll();
+			nock('http://test/')
+				.get('/appeals/1')
+				.reply(200, {
+					...appealData,
+					isParentAppeal: false,
+					isChildAppeal: true,
+					linkedAppeals: [linkedAppealBackOffice]
+				});
+			nock('http://test/')
+				.get(`/appeals/${linkableAppealSummaryBackOffice.appealId}`)
+				.reply(200, {
+					...appealData,
+					appealId: linkableAppealSummaryBackOffice.appealId,
+					appealReference: linkableAppealSummaryBackOffice.appealReference,
+					isParentAppeal: true,
+					isChildAppeal: false,
+					linkedAppeals: [
+						{
+							...linkedAppealBackOffice,
+							appealId: 5555,
+							isParentAppeal: true
+						}
+					]
+				});
+			nock('http://test/')
+				.get('/appeals/linkable-appeal/123')
+				.reply(200, linkableAppealSummaryBackOffice);
+
+			const addLinkedAppealReferenceResponse = await request
+				.post(`${baseUrl}/1${linkedAppealsPath}/add`)
+				.send({
+					'appeal-reference': '123'
+				});
+
+			expect(addLinkedAppealReferenceResponse.statusCode).toBe(302);
+			expect(addLinkedAppealReferenceResponse.text).toEqual(
+				'Found. Redirecting to /appeals-service/appeal-details/1/linked-appeals/add/check-and-confirm'
+			);
+
+			const response = await request.get(`${baseUrl}/1${linkedAppealsPath}/add/check-and-confirm`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+		});
+
 		it('should render the check and confirm page with lead and cancel radio options, and a submit button with label text of "Continue", if the linking candidate is a lead and the target has no existing linked appeals', async () => {
 			nock.cleanAll();
 			nock('http://test/')

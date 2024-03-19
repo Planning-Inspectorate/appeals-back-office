@@ -438,7 +438,17 @@ export function addLinkedAppealCheckAndConfirmPage(
 	}
 	// target is a child
 	else if (appealData.isChildAppeal) {
-		pageContent.pageComponents?.unshift(alreadyHasLeadWarningTextComponent);
+		if (candidateIsLead) {
+			pageContent.pageComponents?.unshift({
+				type: 'warning-text',
+				parameters: {
+					text: 'The appeal you are trying to link to is already a lead appeal.'
+				}
+			});
+		} else {
+			pageContent.pageComponents?.unshift(alreadyHasLeadWarningTextComponent);
+		}
+
 		pageContent.submitButtonProperties = {
 			text: 'Return to search',
 			href: `/appeals-service/appeal-details/${appealData.appealId}/linked-appeals/add`
