@@ -10,7 +10,7 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
                 <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=".">Refresh page to see if scan has finished</a>
+                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2">Refresh page to see if scan has finished</a>
                 </div>
             </div>
             <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
@@ -358,7 +358,7 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
                 <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=".">Refresh page to see if scan has finished</a>
+                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2">Refresh page to see if scan has finished</a>
                 </div>
             </div>
             <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
@@ -729,7 +729,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
                 <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=".">Refresh page to see if scan has finished</a>
+                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2">Refresh page to see if scan has finished</a>
                 </div>
             </div>
             <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
@@ -1102,7 +1102,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
                 <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=".">Refresh page to see if scan has finished</a>
+                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2">Refresh page to see if scan has finished</a>
                 </div>
             </div>
             <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
@@ -2822,7 +2822,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
                 <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=".">Refresh page to see if scan has finished</a>
+                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/1/">Refresh page to see if scan has finished</a>
                 </div>
             </div>
         </div>
@@ -3576,7 +3576,7 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
                 <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=".">Refresh page to see if scan has finished</a>
+                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2">Refresh page to see if scan has finished</a>
                 </div>
             </div>
             <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"

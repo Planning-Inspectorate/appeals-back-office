@@ -474,7 +474,8 @@ export function manageFolderPage(backLinkUrl, viewAndEditUrl, folder, redactionS
 		addNotificationBannerToSession(
 			request.session,
 			'notCheckedDocument',
-			parseInt(folder.caseId.toString(), 10)
+			parseInt(folder.caseId.toString(), 10),
+			`<p class="govuk-notification-banner__heading">Virus scan in progress</p></br><a class="govuk-notification-banner__link" href="${request.originalUrl}">Refresh page to see if scan has finished</a>`
 		);
 	}
 
@@ -772,7 +773,8 @@ export async function manageDocumentPage(
 		addNotificationBannerToSession(
 			session,
 			'notCheckedDocument',
-			parseInt(appealId.toString(), 10)
+			parseInt(appealId.toString(), 10),
+			`<p class="govuk-notification-banner__heading">Virus scan in progress</p></br><a class="govuk-notification-banner__link" href="${request.originalUrl}">Refresh page to see if scan has finished</a>`
 		);
 	}
 
