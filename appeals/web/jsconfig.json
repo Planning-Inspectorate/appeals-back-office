@@ -3,8 +3,7 @@
 	"include": [
 		"**/*.js",
 		"src/server/appeals/validation/validation.types.d.ts",
-		"src/server/appeals/appeal-documents/appeal-documents.types.d.ts",
-		"src/server/app/auth/auth.permissions.d.ts"
+		"src/server/appeals/appeal-documents/appeal-documents.types.d.ts"
 	],
 	"exclude": ["src/server/static", "scripts", "coverage"],
 	"files": ["typings.d.ts", "types-session.d.ts"],
