@@ -66,3 +66,6 @@ dump.rdb
 
 # Dummy data
 dummy_user_data.json
+
+# Infrastructure terraform
+.terraform
