@@ -36,7 +36,6 @@ describe('appeal-details', () => {
 					rootElement: notificationBannerElement
 				}).innerHTML;
 				expect(notificationBannerElementHTML).toMatchSnapshot();
-				console.log(notificationBannerElementHTML);
 				expect(notificationBannerElementHTML).toContain('Success');
 				expect(notificationBannerElementHTML).toContain('This appeal is awaiting transfer');
 				expect(notificationBannerElementHTML).toContain(
