@@ -843,7 +843,7 @@ describe('linked-appeals', () => {
 			);
 		});
 
-		it('should call the unlink API and redirect to the unlink-appeal page', async () => {
+		it('should redirect to appeal details page when confirmation value is "yes"', async () => {
 			nock('http://test/').delete('/appeals/1/unlink-appeal').reply(200, { success: true });
 			const response = await request
 				.post(`${baseUrl}/1${linkedAppealsPath}/${unlinkAppealPath}/2/1/1`)

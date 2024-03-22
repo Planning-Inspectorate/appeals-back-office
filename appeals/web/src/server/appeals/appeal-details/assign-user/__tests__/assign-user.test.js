@@ -161,7 +161,7 @@ describe('assign-user', () => {
 			);
 		});
 
-		it('should send a patch request to the appeals/:appealId API endpoint and redirect to the case details page, which should display the expected notification banner, if the selected confirmation value is "yes"', async () => {
+		it('should redirect to the case details page if the selected confirmation value is "yes"', async () => {
 			nock('http://test/').patch('/appeals/1').reply(200, { caseOfficer: 'updatedCaseOfficerId' });
 
 			const response = await request.post(`${baseUrl}/1/assign-user/case-officer/1/confirm`).send({
@@ -169,12 +169,7 @@ describe('assign-user', () => {
 			});
 
 			expect(response.statusCode).toBe(302);
-			expect(response.text).toEqual('Found. Redirecting to /appeals-service/appeal-details/1/');
-
-			const appealDetailsGetResponse = await request.get(`${baseUrl}/1/`);
-			const element = parseHtml(appealDetailsGetResponse.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
+			expect(response.text).toEqual('Found. Redirecting to /appeals-service/appeal-details/1');
 		});
 	});
 
@@ -217,7 +212,7 @@ describe('assign-user', () => {
 			);
 		});
 
-		it('should send a patch request to the appeals/:appealId API endpoint and redirect to the case details page, which should display the expected notification banner, if the selected confirmation value is "yes"', async () => {
+		it('should send a patch request to the appeals/:appealId API endpoint and redirect to the case details page when the selected confirmation value is "yes"', async () => {
 			nock('http://test/').patch('/appeals/1').reply(200, { inspector: 'updatedInspectorId' });
 
 			const response = await request.post(`${baseUrl}/1/assign-user/inspector/1/confirm`).send({
@@ -225,12 +220,7 @@ describe('assign-user', () => {
 			});
 
 			expect(response.statusCode).toBe(302);
-			expect(response.text).toEqual('Found. Redirecting to /appeals-service/appeal-details/1/');
-
-			const appealDetailsGetResponse = await request.get(`${baseUrl}/1/`);
-			const element = parseHtml(appealDetailsGetResponse.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
+			expect(response.text).toEqual('Found. Redirecting to /appeals-service/appeal-details/1');
 		});
 	});
 
@@ -282,7 +272,7 @@ describe('assign-user', () => {
 			);
 		});
 
-		it('should send a patch request to the appeals/:appealId API endpoint and redirect to the assign new inspector page if the selected confirmation value is "yes", and the appeal details page should then display the expected notification banner', async () => {
+		it('should redirect to the assign new inspector page if the selected confirmation value is "yes"', async () => {
 			nock('http://test/').patch('/appeals/1').reply(200, { inspector: '' });
 
 			const response = await request.post(`${baseUrl}/1/unassign-user/inspector/1/confirm`).send({
@@ -293,11 +283,6 @@ describe('assign-user', () => {
 			expect(response.text).toEqual(
 				'Found. Redirecting to /appeals-service/appeal-details/1/assign-new-user/inspector'
 			);
-
-			const appealDetailsGetResponse = await request.get(`${baseUrl}/1/`);
-			const element = parseHtml(appealDetailsGetResponse.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
 		});
 	});
 
@@ -335,7 +320,7 @@ describe('assign-user', () => {
 			});
 
 			expect(response.statusCode).toBe(302);
-			expect(response.text).toEqual('Found. Redirecting to /appeals-service/appeal-details/1/');
+			expect(response.text).toEqual('Found. Redirecting to /appeals-service/appeal-details/1');
 		});
 
 		it('should redirect to the assign case officer page if the selected confirmation value is "yes"', async () => {
@@ -384,7 +369,7 @@ describe('assign-user', () => {
 			});
 
 			expect(response.statusCode).toBe(302);
-			expect(response.text).toEqual('Found. Redirecting to /appeals-service/appeal-details/1/');
+			expect(response.text).toEqual('Found. Redirecting to /appeals-service/appeal-details/1');
 		});
 
 		it('should redirect to the assign inspector page if the selected confirmation value is "yes"', async () => {

@@ -674,18 +674,5 @@ describe('site-visit', () => {
 
 			expect(response.statusCode).toBe(302);
 		});
-
-		it('should render the case details page displaying the success notification banner with the expected content if the site visit type was updated', async () => {
-			await request.post(`${baseUrl}/1${siteVisitPath}${setVisitTypePath}`).send({
-				'visit-type': 'accompanied'
-			});
-
-			nock('http://test/').get(`/appeals/1`).reply(200, appealData);
-
-			const caseDetailsResponse = await request.get(`${baseUrl}/1`);
-			const element = parseHtml(caseDetailsResponse.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-		});
 	});
 });

@@ -211,7 +211,7 @@ export const postAssignOrUnassignUserCheckAndConfirm = async (
 					? `/appeals-service/appeal-details/${appealId}/assign-new-user/${
 							isInspector ? 'inspector' : 'case-officer'
 					  }`
-					: `/appeals-service/appeal-details/${appealId}/`
+					: `/appeals-service/appeal-details/${appealId}`
 			);
 		}
 
@@ -333,7 +333,7 @@ export const postAssignNewUser = async (request, response, isInspector = false) 
 			);
 		}
 
-		return response.redirect(`/appeals-service/appeal-details/${appealId}/`);
+		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {
 		logger.error(error, error instanceof Error ? error.message : 'Something went wrong');
 
