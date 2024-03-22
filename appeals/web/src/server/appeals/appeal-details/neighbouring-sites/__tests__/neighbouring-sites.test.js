@@ -215,14 +215,7 @@ describe('neighbouring-sites', () => {
 				postCode: 'E1 8RU'
 			};
 			const appealId = appealData.appealId.toString();
-			const addNeighbouringSiteResponse = await request
-				.post(`${baseUrl}/${appealId}/neighbouring-sites/add`)
-				.send(validData)
-				.expect(302);
-
-			expect(addNeighbouringSiteResponse.headers.location).toBe(
-				`${baseUrl}/${appealId}/neighbouring-sites/add/check-and-confirm`
-			);
+			await request.post(`${baseUrl}/${appealId}/neighbouring-sites/add`).send(validData);
 
 			const response = await request.get(
 				`${baseUrl}/${appealId}/neighbouring-sites/add/check-and-confirm`
@@ -230,6 +223,44 @@ describe('neighbouring-sites', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+		});
+	});
+
+	describe('POST /add/check-and-confirm', () => {
+		it('should redirect to the appeals details page', async () => {
+			const appealReference = '1';
+
+			nock.cleanAll();
+			nock('http://test/')
+				.post(`/appeals/${appealReference}/neighbouring-sites`)
+				.reply(200, {
+					siteId: 1,
+					address: {
+						addressLine1: '1 Grove Cottage',
+						addressLine2: 'Shotesham Road',
+						country: 'United Kingdom',
+						county: 'Devon',
+						postcode: 'NR35 2ND',
+						town: 'Woodton'
+					}
+				});
+			nock('http://test/').get(`/appeals/${appealData.appealId}`).reply(200, appealData);
+			await request.post(`${baseUrl}/1/neighbouring-sites/add`).send({
+				addressLine1: '1 Grove Cottage',
+				addressLine2: null,
+				county: 'Devon',
+				postCode: 'NR35 2ND',
+				town: 'Woodton'
+			});
+
+			const addLinkedAppealCheckAndConfirmPostResponse = await request.post(
+				`${baseUrl}/1/neighbouring-sites/add/check-and-confirm`
+			);
+
+			expect(addLinkedAppealCheckAndConfirmPostResponse.statusCode).toBe(302);
+			expect(addLinkedAppealCheckAndConfirmPostResponse.text).toEqual(
+				'Found. Redirecting to /appeals-service/appeal-details/1'
+			);
 		});
 	});
 
@@ -524,6 +555,33 @@ describe('neighbouring-sites', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+		});
+	});
+
+	describe('POST /change/:siteId/check-and-confirm', () => {
+		it('should redirect to the appeals details page', async () => {
+			const appealReference = '1';
+
+			nock.cleanAll();
+			nock('http://test/').patch(`/appeals/${appealReference}/neighbouring-sites`).reply(200, {
+				siteId: 1
+			});
+			nock('http://test/').get(`/appeals/${appealData.appealId}`).reply(200, appealData);
+
+			await request.post(`${baseUrl}/1/neighbouring-sites/change/1`).send({
+				addressLine1: '2 Grove Cottage',
+				addressLine2: null,
+				county: 'Devon',
+				postCode: 'NR35 2ND',
+				town: 'Woodton'
+			});
+
+			const response = await request.post(
+				`${baseUrl}/1/neighbouring-sites/change/1/check-and-confirm`
+			);
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toEqual('Found. Redirecting to /appeals-service/appeal-details/1');
 		});
 	});
 });
