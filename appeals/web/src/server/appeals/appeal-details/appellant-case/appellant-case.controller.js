@@ -143,11 +143,12 @@ export const postAppellantCase = async (request, response) => {
 			appealDetails.appellantCaseId !== null &&
 			appealDetails.appellantCaseId !== undefined
 		) {
-			const { appealId, appellantCaseId, appealReference } = appealDetails;
+			const { appealId, appellantCaseId, appealReference, createdAt } = appealDetails;
 
 			request.session.appealId = appealId;
 			request.session.appellantCaseId = appellantCaseId;
 			request.session.appealReference = appealReference;
+			request.session.createdAt = createdAt;
 
 			if (reviewOutcome === 'valid') {
 				await appellantCaseService.setReviewOutcomeForAppellantCase(
@@ -158,7 +159,7 @@ export const postAppellantCase = async (request, response) => {
 				);
 
 				return response.redirect(
-					`/appeals-service/appeal-details/${appealId}/appellant-case/${reviewOutcome}/confirmation`
+					`/appeals-service/appeal-details/${appealId}/appellant-case/${reviewOutcome}/date`
 				);
 			} else {
 				return response.redirect(

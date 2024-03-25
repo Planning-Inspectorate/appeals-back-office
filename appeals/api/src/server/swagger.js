@@ -241,6 +241,7 @@ export const spec = {
 				visitEndTime: '12:00',
 				visitType: 'Accompanied'
 			},
+			createdAt: '2022-05-17T23:00:00.000Z',
 			startedAt: '2022-05-17T23:00:00.000Z',
 			validAt: '2022-05-17T23:00:00.000Z',
 			documentationSummary: {

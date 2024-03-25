@@ -227,6 +227,7 @@ const formatAppeal = (
 				visitEndTime: appeal.siteVisit?.visitEndTime || null,
 				visitType: appeal.siteVisit?.siteVisitType?.name || null
 			},
+			createdAt: appeal.createdAt,
 			startedAt: appeal.startedAt,
 			validAt: appeal.validAt,
 			documentationSummary: {

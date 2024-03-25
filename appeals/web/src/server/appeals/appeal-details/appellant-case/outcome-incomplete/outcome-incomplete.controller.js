@@ -104,7 +104,7 @@ const renderUpdateDueDate = async (request, response) => {
 
 	const mappedPageContent = updateDueDatePage(appealId, appealReference);
 
-	return response.render('appeals/appeal/update-due-date.njk', {
+	return response.render('appeals/appeal/update-date.njk', {
 		pageContent: mappedPageContent,
 		errors
 	});

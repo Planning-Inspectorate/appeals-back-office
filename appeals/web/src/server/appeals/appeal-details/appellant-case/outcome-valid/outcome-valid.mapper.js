@@ -1,6 +1,35 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 
 /**
+ * @param {number} appealId
+ * @param {string} appealReference
+ * @returns {PageContent}
+ */
+export function updateValidDatePage(appealId, appealReference) {
+	/** @type {PageContent} */
+	const pageContent = {
+		title: 'Enter valid date for case',
+		backLinkUrl: `/appeals-service/appeal-details/${appealId}/appellant-case`,
+		preHeading: `Appeal ${appealShortReference(appealReference)}`,
+		heading: 'Enter valid date for case ',
+		submitButtonProperties: {
+			text: 'Confirm',
+			type: 'submit'
+		},
+		pageComponents: [
+			{
+				type: 'html',
+				parameters: {
+					html: `<p class="govuk-body">This is the date all case documentation was received and the appeal was valid.</p>`
+				}
+			}
+		]
+	};
+
+	return pageContent;
+}
+
+/**
  *
  * @param {string} appealId
  * @param {string} appealReference

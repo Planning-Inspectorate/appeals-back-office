@@ -995,6 +995,33 @@ export async function initialiseAndMapAppealData(
 	};
 
 	/** @type {Instructions} */
+	mappedData.appeal.validAt = {
+		id: 'valid-date',
+		display: {
+			summaryListItem: {
+				key: {
+					text: 'Valid date'
+				},
+				value: {
+					html: dateToDisplayDate(appealDetails.validAt) || ''
+				},
+				actions: {
+					items: [
+						appealDetails.validAt
+							? {
+									text: 'Change',
+									href: `${currentRoute}/appellant-case/valid/date`,
+									visuallyHiddenText:
+										'The date all case documentation was received and the appeal was valid'
+							  }
+							: {}
+					]
+				}
+			}
+		}
+	};
+
+	/** @type {Instructions} */
 	mappedData.appeal.startedAt = {
 		id: 'start-date',
 		display: {

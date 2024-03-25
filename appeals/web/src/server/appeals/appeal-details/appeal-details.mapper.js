@@ -11,7 +11,10 @@ import {
 	mapVirusCheckStatus
 } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { generateIssueDecisionUrl } from '#appeals/appeal-details/issue-decision/issue-decision.mapper.js';
+import {
+	generateIssueDecisionUrl,
+	generateStartTimetableUrl
+} from '#appeals/appeal-details/issue-decision/issue-decision.mapper.js';
 
 export const pageHeading = 'Case details';
 
@@ -107,31 +110,41 @@ export async function appealDetailsPage(appealDetails, currentRoute, session) {
 		}
 	};
 
-	/** @type {PageComponent} */
+	/** @type {PageComponent[]} */
 	const caseTimetable = appealDetails.startedAt
-		? {
-				type: 'summary-list',
-				parameters: {
-					rows: [
-						mappedData.appeal.startedAt.display.summaryListItem,
-						mappedData.appeal.lpaQuestionnaireDueDate.display.summaryListItem,
-						mappedData.appeal.siteVisitDate.display.summaryListItem,
-						...(appealDetails.appealType === 'Full planning'
-							? [
-									mappedData.appeal.issueDeterminationDate?.display.summaryListItem,
-									mappedData.appeal.completeDate?.display.summaryListItem
-							  ]
-							: [])
-					].filter(isDefined)
+		? [
+				{
+					type: 'summary-list',
+					parameters: {
+						rows: [
+							mappedData.appeal.validAt.display.summaryListItem,
+							mappedData.appeal.startedAt.display.summaryListItem,
+							mappedData.appeal.lpaQuestionnaireDueDate.display.summaryListItem,
+							mappedData.appeal.siteVisitDate.display.summaryListItem,
+							...(appealDetails.appealType === 'Full planning'
+								? [
+										mappedData.appeal.issueDeterminationDate?.display.summaryListItem,
+										mappedData.appeal.completeDate?.display.summaryListItem
+								  ]
+								: [])
+						].filter(isDefined)
+					}
 				}
-		  }
-		: {
-				type: 'inset-text',
-				parameters: {
-					html: `<p class="govuk-body">Case not started</p><a href="/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case" class="govuk-link">Review appeal</a>`
+		  ]
+		: [
+				{
+					type: 'summary-list',
+					parameters: {
+						rows: [mappedData.appeal.validAt.display.summaryListItem].filter(isDefined)
+					}
+				},
+				{
+					type: 'inset-text',
+					parameters: {
+						html: `<p class="govuk-body">Case not started</p><a href="/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case" class="govuk-link">Review appeal</a>`
+					}
 				}
-		  };
-
+		  ];
 	/** @type {PageComponent} */
 	const caseDocumentation = {
 		type: 'table',
@@ -187,7 +200,7 @@ export async function appealDetailsPage(appealDetails, currentRoute, session) {
 		caseSummary,
 		caseOverview,
 		siteDetails,
-		caseTimetable,
+		caseTimetable[0],
 		caseDocumentation,
 		caseContacts,
 		caseTeam
@@ -217,7 +230,7 @@ export async function appealDetailsPage(appealDetails, currentRoute, session) {
 				},
 				{
 					heading: { text: 'Case timetable' },
-					content: { html: '', pageComponents: [caseTimetable] }
+					content: { html: '', pageComponents: caseTimetable }
 				},
 				{
 					heading: { text: 'Case documentation' },
@@ -356,6 +369,16 @@ function mapStatusDependentNotifications(appealDetails, session, accordionCompon
 				`<p class="govuk-notification-banner__heading">Ready for decision</p><p><a class="govuk-notification-banner__link" href="${generateIssueDecisionUrl(
 					appealDetails.appealId
 				)}">Issue decision</a></p>`
+			);
+			break;
+		case 'lpa_questionnaire_due':
+			addNotificationBannerToSession(
+				session,
+				'appealValidAndReadyToStart',
+				appealDetails.appealId,
+				`<p class="govuk-notification-banner__heading">Appeal valid</p><p><a class="govuk-notification-banner__link" href="${generateStartTimetableUrl(
+					appealDetails.appealId
+				)}">Start case</a></p>`
 			);
 			break;
 		case 'awaiting_transfer':

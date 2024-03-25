@@ -719,6 +719,20 @@ describe('appeal-details', () => {
 
 			expect(element.innerHTML).toMatchSnapshot();
 		});
+
+		it('should render a "Appeal valid" notification banner with a link to start case when status is "lpa questionnaire due"', async () => {
+			const appealId = 2;
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId, appealStatus: 'lpa_questionnaire_due' });
+
+			const response = await request.get(`${baseUrl}/${appealId}`);
+
+			expect(response.statusCode).toBe(200);
+			const element = parseHtml(response.text, { rootElement: '.govuk-notification-banner' });
+			expect(element.innerHTML).toContain('<a');
+			expect(element.innerHTML).toMatchSnapshot();
+		});
 	});
 
 	it('should not render a back button', async () => {
