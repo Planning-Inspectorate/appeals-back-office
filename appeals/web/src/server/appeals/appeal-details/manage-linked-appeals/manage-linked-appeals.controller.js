@@ -29,12 +29,36 @@ export const getManageLinkedAppeals = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 const renderManageLinkedAppeals = async (request, response) => {
-	const { errors } = request;
-	const { appealId, parentId, relationshipId } = request.params;
-	const validId = parentId !== 'null' && parentId ? parentId : appealId;
-	const appealData = await getAppealDetailsFromId(request.apiClient, validId);
+	const {
+		errors,
+		params: { appealId }
+	} = request;
 
-	const mappedPageContent = manageLinkedAppealsPage(appealData, relationshipId, appealId, parentId);
+	const appealData = await getAppealDetailsFromId(request.apiClient, appealId);
+	let leadAppealData;
+	let leadLinkedAppeal;
+
+	if (appealData.isChildAppeal === true) {
+		leadLinkedAppeal = appealData.linkedAppeals.find((linkedAppeal) => linkedAppeal.isParentAppeal);
+
+		if (leadLinkedAppeal && leadLinkedAppeal.appealId) {
+			leadAppealData = await getAppealDetailsFromId(
+				request.apiClient,
+				`${leadLinkedAppeal.appealId}`
+			);
+		}
+
+		if (!leadLinkedAppeal || !leadAppealData) {
+			return response.render('app/500.njk');
+		}
+	}
+
+	const mappedPageContent = manageLinkedAppealsPage(
+		appealData,
+		appealId,
+		leadLinkedAppeal,
+		leadAppealData
+	);
 
 	return response.render('patterns/display-page.pattern.njk', {
 		pageContent: mappedPageContent,
