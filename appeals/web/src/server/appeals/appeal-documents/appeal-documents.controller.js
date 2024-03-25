@@ -242,6 +242,13 @@ export const postDocumentDetails = async (request, response, backButtonUrl, next
 };
 
 /**
+ * @typedef {Object} DocumentDetailsItem
+ * @property {string} documentId
+ * @property {import('#appeals/appeals.types.js').DayMonthYear} receivedDate
+ * @property {import('@pins/appeals.api').Schema.DocumentRedactionStatus} redactionStatus
+ */
+
+/**
  *
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
@@ -250,6 +257,8 @@ export const postDocumentDetails = async (request, response, backButtonUrl, next
 export const renderChangeDocumentDetails = async (request, response, backButtonUrl) => {
 	const { currentFolder, body, errors } = request;
 	const { appealId, documentId } = request.params;
+
+	/** @type {DocumentDetailsItem[]} */
 	let items = body?.items;
 
 	const redactionStatuses = await getDocumentRedactionStatuses(request.apiClient);
@@ -271,9 +280,9 @@ export const renderChangeDocumentDetails = async (request, response, backButtonU
 				{
 					documentId: documentId,
 					receivedDate: {
-						day: receivedDate.getDate().toString(),
-						month: (receivedDate.getMonth() + 1).toString(),
-						year: receivedDate.getFullYear().toString()
+						day: receivedDate.getDate(),
+						month: receivedDate.getMonth() + 1,
+						year: receivedDate.getFullYear()
 					},
 					redactionStatus: redactionStatus
 				}

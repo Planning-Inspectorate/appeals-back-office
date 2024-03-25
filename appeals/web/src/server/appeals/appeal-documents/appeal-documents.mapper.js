@@ -1314,12 +1314,14 @@ export const folderPathToFolderNameText = (folderPath) => {
 /**
  * @param {string} backLinkUrl
  * @param {FolderInfo & {id: string}} folder - API type needs to be updated here (should be Folder, but there are worse problems with that type)
- * @param {Object<string, any>} bodyItems
+ * @param {import('./appeal-documents.controller.js').DocumentDetailsItem[]} bodyItems
  * @param {RedactionStatus[]} redactionStatuses
  * @returns {PageContent}
  */
 export function changeDocumentDetailsPage(backLinkUrl, folder, bodyItems, redactionStatuses) {
-	const latestDocuments = folder.documents;
+	const filteredDocuments = folder.documents.filter((document) =>
+		bodyItems.find((item) => item.documentId === document.id)
+	);
 
 	/** @type {PageContent} */
 	const pageContent = {
@@ -1328,11 +1330,11 @@ export function changeDocumentDetailsPage(backLinkUrl, folder, bodyItems, redact
 		backLinkUrl: backLinkUrl?.replace('{{folderId}}', folder.id),
 		preHeading: 'Change document details',
 		heading: `${folderPathToFolderNameText(folder.path)} documents`,
-		pageComponents: latestDocuments.flatMap((document, index) => {
+		pageComponents: filteredDocuments.flatMap((document, index) => {
 			return mapDocumentDetailsPageComponentsForDocument(
 				document,
 				index,
-				latestDocuments,
+				filteredDocuments,
 				bodyItems,
 				redactionStatuses
 			);
