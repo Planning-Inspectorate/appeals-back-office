@@ -95,7 +95,7 @@ const renderUpdateDueDate = async (request, response) => {
 		lpaQCurrentDueDate
 	);
 
-	return response.render('appeals/appeal/update-due-date.njk', {
+	return response.render('appeals/appeal/update-date.njk', {
 		pageContent: mappedPageContent,
 		errors
 	});

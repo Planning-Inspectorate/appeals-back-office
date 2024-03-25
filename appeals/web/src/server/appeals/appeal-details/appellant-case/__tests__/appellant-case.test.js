@@ -40,6 +40,7 @@ const incompleteOutcomePagePath = '/incomplete';
 const updateDueDatePagePath = '/date';
 const checkYourAnswersPagePath = '/check-your-answers';
 const confirmationPagePath = '/confirmation';
+const validDatePagePath = '/date';
 
 const invalidReasonsWithoutText = appellantCaseInvalidReasons.filter(
 	(reason) => reason.hasText === false
@@ -1159,6 +1160,207 @@ describe('appellant-case', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+		});
+	});
+
+	describe('GET /appellant-case/valid/date', () => {
+		it('should render the 500 error page if required data is not present in the session', async () => {
+			const response = await request.get(
+				`${baseUrl}/1${appellantCasePagePath}${validOutcomePagePath}${validDatePagePath}`
+			);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+		});
+
+		it('should render the valid due date page if required data is present in the session', async () => {
+			await request.post(`${baseUrl}/1${appellantCasePagePath}`).send({
+				reviewOutcome: 'valid'
+			});
+
+			const response = await request.get(
+				`${baseUrl}/1${appellantCasePagePath}${validOutcomePagePath}${validDatePagePath}`
+			);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+		});
+	});
+
+	describe('POST /appellant-case/valid/date', () => {
+		beforeEach(async () => {
+			nock.cleanAll();
+			nock('http://test/').get(`/appeals/${appealData.appealId}`).reply(200, appealData).persist();
+			nock('http://test/').patch(`/appeals/${appealData.appealId}`).reply(200);
+			nock('http://test/')
+				.patch('/appeals/1/appellant-cases/0')
+				.reply(200, { validationOutcome: 'valid' });
+
+			await request.post(`${baseUrl}/1${appellantCasePagePath}`).send({
+				reviewOutcome: 'valid'
+			});
+		});
+
+		afterEach(() => {
+			nock.cleanAll();
+		});
+
+		it('should re-render the valid date page with the expected error message if no date was provided', async () => {
+			const response = await request
+				.post(`${baseUrl}/1${appellantCasePagePath}${validOutcomePagePath}${validDatePagePath}`)
+				.send({
+					'due-date-day': '',
+					'due-date-month': '',
+					'due-date-year': ''
+				});
+
+			expect(response.statusCode).toBe(200);
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+		});
+
+		it('should re-render the valid date page with the expected error message if provided date is not in the past', async () => {
+			const response = await request
+				.post(`${baseUrl}/1${appellantCasePagePath}${validOutcomePagePath}${validDatePagePath}`)
+				.send({
+					'due-date-day': '1',
+					'due-date-month': '1',
+					'due-date-year': '3000'
+				});
+
+			expect(response.statusCode).toBe(200);
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+		});
+
+		it('should re-render the valid date page with the expected error message if an invalid day was provided', async () => {
+			let response = await request
+				.post(`${baseUrl}/1${appellantCasePagePath}${validOutcomePagePath}${validDatePagePath}`)
+				.send({
+					'due-date-day': '0',
+					'due-date-month': '1',
+					'due-date-year': '3000'
+				});
+
+			expect(response.statusCode).toBe(200);
+			let element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+
+			response = await request
+				.post(`${baseUrl}/1${appellantCasePagePath}${validOutcomePagePath}${validDatePagePath}`)
+				.send({
+					'due-date-day': '32',
+					'due-date-month': '1',
+					'due-date-year': '3000'
+				});
+
+			expect(response.statusCode).toBe(200);
+			element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+
+			response = await request
+				.post(`${baseUrl}/1${appellantCasePagePath}${validOutcomePagePath}${validDatePagePath}`)
+				.send({
+					'due-date-day': 'first',
+					'due-date-month': '1',
+					'due-date-year': '3000'
+				});
+
+			expect(response.statusCode).toBe(200);
+			element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+		});
+
+		describe('Post to update date page with various invalid months', () => {
+			const testCases = [
+				{ day: '1', month: '0', year: '3000', description: 'month "0"' },
+				{ day: '1', month: '13', year: '3000', description: 'month "13"' },
+				{ day: '1', month: 'dec', year: '3000', description: 'month "dec"' }
+			];
+			testCases.forEach(({ day, month, year, description }) => {
+				it(`should re-render the update date page with the expected error message if an invalid ${description} was provided`, async () => {
+					const response = await request
+						.post(`${baseUrl}/1${appellantCasePagePath}${validOutcomePagePath}${validDatePagePath}`)
+						.send({
+							'due-date-day': day,
+							'due-date-month': month,
+							'due-date-year': year
+						});
+
+					expect(response.statusCode).toBe(200);
+					const element = parseHtml(response.text);
+					expect(element.innerHTML).toMatchSnapshot();
+				});
+			});
+		});
+
+		it('should re-render the valid date page with the expected error message if an invalid year "23" was provided', async () => {
+			const response = await request
+				.post(`${baseUrl}/1${appellantCasePagePath}${validOutcomePagePath}${validDatePagePath}`)
+				.send({
+					'due-date-day': '1',
+					'due-date-month': '1',
+					'due-date-year': '23'
+				});
+
+			expect(response.statusCode).toBe(200);
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+		});
+
+		it('should re-render the valid date page with the expected error message if an invalid year "abc" was provided', async () => {
+			const response = await request
+				.post(`${baseUrl}/1${appellantCasePagePath}${validOutcomePagePath}${validDatePagePath}`)
+				.send({
+					'due-date-day': '1',
+					'due-date-month': '1',
+					'due-date-year': 'abc'
+				});
+
+			expect(response.statusCode).toBe(200);
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+		});
+
+		it('should re-render the valid date page with the expected error message if an invalid date was provided', async () => {
+			const response = await request
+				.post(`${baseUrl}/1${appellantCasePagePath}${validOutcomePagePath}${validDatePagePath}`)
+				.send({
+					'due-date-day': '29',
+					'due-date-month': '2',
+					'due-date-year': '3000'
+				});
+
+			expect(response.statusCode).toBe(200);
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+		});
+
+		it('should re-render the valid date page with the expected error message if date was in past but prior to the date the case was received', async () => {
+			const response = await request
+				.post(`${baseUrl}/1${appellantCasePagePath}${validOutcomePagePath}${validDatePagePath}`)
+				.send({
+					'due-date-day': '20',
+					'due-date-month': '5',
+					'due-date-year': '2023'
+				});
+
+			expect(response.statusCode).toBe(200);
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+		});
+
+		it('should redirect to the confirm page if a valid date was provided', async () => {
+			const response = await request
+				.post(`${baseUrl}/1${appellantCasePagePath}${validOutcomePagePath}${validDatePagePath}`)
+				.send({
+					'due-date-day': '22',
+					'due-date-month': '5',
+					'due-date-year': '2023'
+				});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.headers.location).toContain(confirmationPagePath);
 		});
 	});
 

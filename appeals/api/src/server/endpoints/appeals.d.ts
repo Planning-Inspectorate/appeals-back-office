@@ -123,6 +123,7 @@ interface RepositoryGetByIdResultItem {
 	resubmitTypeId?: number;
 	siteVisit: Schema.SiteVisit | null;
 	specialisms: Schema.AppealSpecialism[];
+	createdAt: Date | null;
 	startedAt: Date | null;
 	updatedAt: Date | null;
 	validAt: Date | null;
@@ -294,6 +295,7 @@ interface SingleAppealDetailsResponse {
 		visitEndTime: string | null;
 		visitType: string | null;
 	};
+	createdAt: Date | null;
 	startedAt: Date | null;
 	validAt: Date | null;
 }

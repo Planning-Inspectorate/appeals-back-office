@@ -176,6 +176,7 @@ export const appealData = {
 		visitStartTime: '09:38',
 		visitType: 'Accompanied'
 	},
+	createdAt: '2023-05-21T10:27:06.626Z',
 	startedAt: '2023-05-23T10:27:06.626Z',
 	validAt: '2023-05-23T10:27:06.626Z',
 	documentationSummary: {

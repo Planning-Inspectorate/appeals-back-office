@@ -478,3 +478,11 @@ export function mapDecisionOutcome(outcome) {
 export function generateIssueDecisionUrl(appealId) {
 	return `/appeals-service/appeal-details/${appealId}/issue-decision/decision`;
 }
+
+/**
+ * @param {string|number} appealId
+ * @returns {string}
+ */
+export function generateStartTimetableUrl(appealId) {
+	return `/appeals-service/appeal-details/${appealId}/appellant-case`;
+}

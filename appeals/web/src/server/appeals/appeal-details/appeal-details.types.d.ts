@@ -407,6 +407,7 @@ export interface WebDocumentationSummary extends DocumentationSummary {
 export interface WebAppeal extends SingleAppealDetailsResponse {
 	appealTimetable: WebAppealTimetable | null;
 	siteAddress?: Address;
+	createdAt: string | null;
 	startedAt: string | null;
 	validAt: string | null;
 	documentationSummary: WebDocumentationSummary;

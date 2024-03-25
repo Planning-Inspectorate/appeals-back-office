@@ -181,6 +181,20 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 </div>"
 `;
 
+exports[`appeal-details GET /:appealId should render a "Appeal valid" notification banner with a link to start case when status is "lpa questionnaire due" 1`] = `
+"<div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
+data-module="govuk-notification-banner">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
+    </div>
+    <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">Appeal valid</p>
+        <p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/2/appellant-case">Start case</a>
+        </p>
+    </div>
+</div>"
+`;
+
 exports[`appeal-details GET /:appealId should render a Decision inset panel when the appealStatus is complete 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
@@ -327,6 +341,11 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                 <div id="accordion-default1-content-3" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-3">
                     <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Valid date</dt>
+                            <dd class="govuk-summary-list__value">23 May 2023</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/valid/date"> Change<span class="govuk-visually-hidden"> The date all case documentation was received and the appeal was valid</span></a>
+                            </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Start date</dt>
                             <dd class="govuk-summary-list__value">23 May 2023</dd>
                         </div>
@@ -590,6 +609,11 @@ exports[`appeal-details GET /:appealId should render a Issue a decision action b
                 <div id="accordion-default1-content-3" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-3">
                     <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Valid date</dt>
+                            <dd class="govuk-summary-list__value">23 May 2023</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/valid/date"> Change<span class="govuk-visually-hidden"> The date all case documentation was received and the appeal was valid</span></a>
+                            </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Start date</dt>
                             <dd class="govuk-summary-list__value">23 May 2023</dd>
                         </div>
@@ -849,6 +873,11 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                 <div id="accordion-default1-content-3" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-3">
                     <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Valid date</dt>
+                            <dd class="govuk-summary-list__value">23 May 2023</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/valid/date"> Change<span class="govuk-visually-hidden"> The date all case documentation was received and the appeal was valid</span></a>
+                            </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Start date</dt>
                             <dd class="govuk-summary-list__value">23 May 2023</dd>
                         </div>
@@ -1109,6 +1138,11 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                 <div id="accordion-default1-content-3" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-3">
                     <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Valid date</dt>
+                            <dd class="govuk-summary-list__value">23 May 2023</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/valid/date"> Change<span class="govuk-visually-hidden"> The date all case documentation was received and the appeal was valid</span></a>
+                            </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Start date</dt>
                             <dd class="govuk-summary-list__value">23 May 2023</dd>
                         </div>
@@ -1385,6 +1419,11 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
                 <div id="accordion-default1-content-3" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-3">
                     <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Valid date</dt>
+                            <dd class="govuk-summary-list__value">23 May 2023</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/valid/date"> Change<span class="govuk-visually-hidden"> The date all case documentation was received and the appeal was valid</span></a>
+                            </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Start date</dt>
                             <dd class="govuk-summary-list__value">23 May 2023</dd>
                         </div>
@@ -1633,6 +1672,11 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                 <div id="accordion-default1-content-3" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-3">
                     <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Valid date</dt>
+                            <dd class="govuk-summary-list__value">23 May 2023</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/valid/date"> Change<span class="govuk-visually-hidden"> The date all case documentation was received and the appeal was valid</span></a>
+                            </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Start date</dt>
                             <dd class="govuk-summary-list__value">23 May 2023</dd>
                         </div>
@@ -1881,6 +1925,11 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                 <div id="accordion-default1-content-3" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-3">
                     <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Valid date</dt>
+                            <dd class="govuk-summary-list__value">23 May 2023</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/valid/date"> Change<span class="govuk-visually-hidden"> The date all case documentation was received and the appeal was valid</span></a>
+                            </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Start date</dt>
                             <dd class="govuk-summary-list__value">23 May 2023</dd>
                         </div>
@@ -2130,6 +2179,11 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                 <div id="accordion-default1-content-3" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-3">
                     <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Valid date</dt>
+                            <dd class="govuk-summary-list__value">23 May 2023</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/valid/date"> Change<span class="govuk-visually-hidden"> The date all case documentation was received and the appeal was valid</span></a>
+                            </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Start date</dt>
                             <dd class="govuk-summary-list__value">23 May 2023</dd>
                         </div>
@@ -2379,6 +2433,11 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                 <div id="accordion-default1-content-3" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-3">
                     <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Valid date</dt>
+                            <dd class="govuk-summary-list__value">23 May 2023</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/valid/date"> Change<span class="govuk-visually-hidden"> The date all case documentation was received and the appeal was valid</span></a>
+                            </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Start date</dt>
                             <dd class="govuk-summary-list__value">23 May 2023</dd>
                         </div>
@@ -2642,6 +2701,11 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                 <div id="accordion-default1-content-3" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-3">
                     <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Valid date</dt>
+                            <dd class="govuk-summary-list__value">23 May 2023</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/valid/date"> Change<span class="govuk-visually-hidden"> The date all case documentation was received and the appeal was valid</span></a>
+                            </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Start date</dt>
                             <dd class="govuk-summary-list__value">23 May 2023</dd>
                         </div>
@@ -3046,6 +3110,11 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                 <div id="accordion-default1-content-3" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-3">
                     <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Valid date</dt>
+                            <dd class="govuk-summary-list__value">23 May 2023</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/valid/date"> Change<span class="govuk-visually-hidden"> The date all case documentation was received and the appeal was valid</span></a>
+                            </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Start date</dt>
                             <dd class="govuk-summary-list__value">23 May 2023</dd>
                         </div>
@@ -3294,6 +3363,11 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                 <div id="accordion-default1-content-3" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-3">
                     <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Valid date</dt>
+                            <dd class="govuk-summary-list__value">23 May 2023</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/valid/date"> Change<span class="govuk-visually-hidden"> The date all case documentation was received and the appeal was valid</span></a>
+                            </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Start date</dt>
                             <dd class="govuk-summary-list__value">23 May 2023</dd>
                         </div>
@@ -3542,6 +3616,11 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                 <div id="accordion-default3-content-3" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default3-heading-3">
                     <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Valid date</dt>
+                            <dd class="govuk-summary-list__value">23 May 2023</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/appellant-case/valid/date"> Change<span class="govuk-visually-hidden"> The date all case documentation was received and the appeal was valid</span></a>
+                            </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Start date</dt>
                             <dd class="govuk-summary-list__value">23 May 2023</dd>
                         </div>
@@ -3810,6 +3889,11 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                 <div id="accordion-default2-content-3" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default2-heading-3">
                     <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Valid date</dt>
+                            <dd class="govuk-summary-list__value">23 May 2023</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/valid/date"> Change<span class="govuk-visually-hidden"> The date all case documentation was received and the appeal was valid</span></a>
+                            </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Start date</dt>
                             <dd class="govuk-summary-list__value">23 May 2023</dd>
                         </div>
@@ -4057,6 +4141,13 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                 </div>
                 <div id="accordion-default1-content-3" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-3">
+                    <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Valid date</dt>
+                            <dd class="govuk-summary-list__value">23 May 2023</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/valid/date"> Change<span class="govuk-visually-hidden"> The date all case documentation was received and the appeal was valid</span></a>
+                            </dd>
+                        </div>
+                    </dl>
                     <div class="govuk-inset-text">
                         <p class="govuk-body">Case not started</p><a href="/appeals-service/appeal-details/1/appellant-case"
                         class="govuk-link">Review appeal</a>
@@ -4433,6 +4524,11 @@ exports[`appeal-details should not render a back button 1`] = `
                             <div id="accordion-default2-content-3" class="govuk-accordion__section-content"
                             aria-labelledby="accordion-default2-heading-3">
                                 <dl class="govuk-summary-list">
+                                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Valid date</dt>
+                                        <dd class="govuk-summary-list__value">23 May 2023</dd>
+                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/valid/date"> Change<span class="govuk-visually-hidden"> The date all case documentation was received and the appeal was valid</span></a>
+                                        </dd>
+                                    </div>
                                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Start date</dt>
                                         <dd class="govuk-summary-list__value">23 May 2023</dd>
                                     </div>

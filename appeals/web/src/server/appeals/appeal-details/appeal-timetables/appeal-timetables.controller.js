@@ -36,7 +36,7 @@ const renderUpdateDueDate = async (request, response, apiErrors) => {
 
 	let errors = request.errors || apiErrors;
 
-	return response.render('appeals/appeal/update-due-date.njk', {
+	return response.render('appeals/appeal/update-date.njk', {
 		pageContent: mappedPageContent,
 		errors
 	});

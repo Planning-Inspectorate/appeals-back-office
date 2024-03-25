@@ -16,6 +16,8 @@
 			{%- for component in pageContent.pageComponents -%}
 				{%- if component.type === 'inset-text' -%}
 					{{ govukInsetText(component.parameters) }}
+				{%- else -%}
+				{%- include "../components/page-component.njk" -%}
 				{%- endif -%}
 			{%- endfor -%}
 		</div>
