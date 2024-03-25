@@ -1,4 +1,5 @@
 import logger from '#lib/logger.js';
+import config from '#environment/config.js';
 import { buildHtmSpan } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { appealShortReference } from './nunjucks-filters/appeals.js';
 import { mapDocumentInfoVirusCheckStatus } from '#appeals/appeal-documents/appeal-documents.mapper.js';
@@ -355,5 +356,5 @@ export function generateHorizonAppealUrl(appealId) {
 		return '';
 	}
 
-	return `https://horizonweb.planninginspectorate.gov.uk/otcs/llisapi.dll?func=ll&objId=${appealId}`;
+	return `${config.horizonAppealBaseUrl}${appealId}`;
 }

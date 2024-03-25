@@ -931,7 +931,7 @@ exports[`linked-appeals GET /linked-appeals/manage should render the manage link
         </thead>
         <tbody class="govuk-table__body">
             <tr class="govuk-table__row">
-                <td class="govuk-table__cell"><a class="govuk-link" href="https://horizonweb.planninginspectorate.gov.uk/otcs/llisapi.dll?func=ll&objId=3">76215416</a>
+                <td class="govuk-table__cell"><a class="govuk-link" href="https://test-horizon-url.gov.uk?appealId=3">76215416</a>
                 </td>
                 <td class="govuk-table__cell">Commercial</td>
                 <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/unlink-appeal/3/3047/2">Unlink</a>
@@ -969,7 +969,7 @@ exports[`linked-appeals GET /linked-appeals/manage should render the manage link
                 </td>
             </tr>
             <tr class="govuk-table__row">
-                <td class="govuk-table__cell"><a class="govuk-link" href="https://horizonweb.planninginspectorate.gov.uk/otcs/llisapi.dll?func=ll&objId=3">76215416</a>
+                <td class="govuk-table__cell"><a class="govuk-link" href="https://test-horizon-url.gov.uk?appealId=3">76215416</a>
                 </td>
                 <td class="govuk-table__cell">Commercial</td>
                 <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/unlink-appeal/3/3047/1">Unlink</a>
