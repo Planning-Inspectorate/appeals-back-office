@@ -772,6 +772,7 @@ describe('appeals routes', () => {
 						visitEndTime: householdAppeal.siteVisit.visitEndTime,
 						visitType: householdAppeal.siteVisit.siteVisitType.name
 					},
+					createdAt: householdAppeal.createdAt.toISOString(),
 					startedAt: householdAppeal.startedAt.toISOString(),
 					validAt: householdAppeal.validAt.toISOString()
 				});
@@ -878,6 +879,7 @@ describe('appeals routes', () => {
 						visitEndTime: fullPlanningAppeal.siteVisit.visitEndTime,
 						visitType: fullPlanningAppeal.siteVisit.siteVisitType.name
 					},
+					createdAt: householdAppeal.createdAt.toISOString(),
 					startedAt: fullPlanningAppeal.startedAt.toISOString(),
 					validAt: householdAppeal.validAt.toISOString()
 				});
@@ -1414,6 +1416,7 @@ describe('appeals routes', () => {
 						visitEndTime: householdAppeal.siteVisit.visitEndTime,
 						visitType: householdAppeal.siteVisit.siteVisitType.name
 					},
+					createdAt: householdAppeal.createdAt.toISOString(),
 					startedAt: householdAppeal.startedAt.toISOString(),
 					validAt: householdAppeal.validAt.toISOString()
 				});
@@ -1520,6 +1523,7 @@ describe('appeals routes', () => {
 						visitEndTime: fullPlanningAppeal.siteVisit.visitEndTime,
 						visitType: fullPlanningAppeal.siteVisit.siteVisitType.name
 					},
+					createdAt: fullPlanningAppeal.startedAt.toISOString(),
 					startedAt: fullPlanningAppeal.startedAt.toISOString(),
 					validAt: fullPlanningAppeal.validAt.toISOString()
 				});

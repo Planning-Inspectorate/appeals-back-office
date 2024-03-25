@@ -28,7 +28,6 @@ export const householdAppeal = {
 			valid: true
 		}
 	],
-	createdAt: new Date(2022, 1, 23),
 	addressId: 1,
 	lpa: {
 		name: 'Maidstone Borough Council',
@@ -48,6 +47,7 @@ export const householdAppeal = {
 		lastName: 'Smith',
 		email: 'test@136s7.com'
 	},
+	createdAt: new Date(2022, 4, 18),
 	startedAt: new Date(2022, 4, 18),
 	validAt: new Date(2022, 4, 20),
 	address: {
