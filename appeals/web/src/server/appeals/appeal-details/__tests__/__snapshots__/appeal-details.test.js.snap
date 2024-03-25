@@ -765,7 +765,7 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                             </dd>
                             <dd class="govuk-summary-list__actions">
                                 <ul class="govuk-summary-list__actions-list">
-                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/manage/3048/5464"> Manage<span class="govuk-visually-hidden"> linked appeals</span></a>
+                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/manage"> Manage<span class="govuk-visually-hidden"> linked appeals</span></a>
                                     </li>
                                     <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/add"> Add<span class="govuk-visually-hidden"> linked appeals</span></a>
                                     </li>

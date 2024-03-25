@@ -21,10 +21,6 @@ router
 router.route('/manage').get(asyncRoute(controller.getManageLinkedAppeals));
 
 router
-	.route('/manage/:relationshipId/:parentId')
-	.get(asyncRoute(controller.getManageLinkedAppeals));
-
-router
 	.route('/unlink-appeal/:childId/:relationshipId/:backLinkAppealId')
 	.get(asyncRoute(controller.getUnlinkAppeal))
 	.post(validators.validateUnlinkAppeal, asyncRoute(controller.postUnlinkAppeal));

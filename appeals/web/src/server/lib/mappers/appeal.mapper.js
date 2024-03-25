@@ -1341,14 +1341,6 @@ export function generateLinkedAppealsManageLinkHref(appealDetails) {
 	const baseUrl = `/appeals-service/appeal-details/${appealDetails.appealId}/linked-appeals`;
 
 	if (appealDetails.linkedAppeals.length > 0) {
-		if (appealDetails.isChildAppeal === true) {
-			const parentAppeal = appealDetails.linkedAppeals.find((link) => link.isParentAppeal === true);
-
-			if (parentAppeal) {
-				return `${baseUrl}/manage/${parentAppeal.relationshipId}/${parentAppeal.appealId}`;
-			}
-		}
-
 		return `${baseUrl}/manage`;
 	}
 

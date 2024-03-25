@@ -32,12 +32,14 @@ const leadAppealDataWithLinkedAppeals = {
 			relationshipId: 3046
 		},
 		{
-			appealId: null,
+			appealId: 3,
 			appealReference: '76215416',
 			isParentAppeal: false,
 			linkingDate: new Date('2024-02-09T09:41:13.611Z'),
 			appealType: 'Unknown',
-			relationshipId: 3047
+			relationshipId: 3047,
+			externalSource: true,
+			externalAppealType: 'Commercial'
 		}
 	]
 };
@@ -47,20 +49,12 @@ const childAppealDataWithLinkedAppeals = {
 	isChildAppeal: true,
 	linkedAppeals: [
 		{
-			appealId: 2,
+			appealId: 3,
 			appealReference: 'APP/Q9999/D/21/725284',
-			isParentAppeal: false,
+			isParentAppeal: true,
 			linkingDate: new Date('2024-02-09T09:41:13.611Z'),
 			appealType: 'Householder',
 			relationshipId: 3048
-		},
-		{
-			appealId: null,
-			appealReference: '76215416',
-			isParentAppeal: false,
-			linkingDate: new Date('2024-02-09T09:41:13.611Z'),
-			appealType: 'Unknown',
-			relationshipId: 3049
 		}
 	]
 };
@@ -71,20 +65,29 @@ describe('linked-appeals', () => {
 	});
 	afterEach(teardown);
 
-	describe('GET /change-appeal-type/appeal-type', () => {
-		it('should render the decision page lead', async () => {
+	describe('GET /linked-appeals/manage', () => {
+		it('should render the manage linked appeals page with the expected content when the appeal is a lead', async () => {
 			nock('http://test/').get('/appeals/1').reply(200, leadAppealDataWithLinkedAppeals);
 			const response = await request.get(`${baseUrl}/1${linkedAppealsPath}/${managePath}`);
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Manage linked appeals');
+			expect(element.innerHTML).toContain('Child appeals of');
+			expect(element.innerHTML).not.toContain('Lead appeal of');
+			expect(element.innerHTML).not.toContain('Other child appeals of');
 		});
-		it('should render the decision page child', async () => {
+		it('should render the manage linked appeals page with the expected content when the appeal is a child', async () => {
 			nock('http://test/').get('/appeals/2').reply(200, childAppealDataWithLinkedAppeals);
-			const response = await request.get(`${baseUrl}/1${linkedAppealsPath}/${managePath}/3049/2`);
+			nock('http://test/').get('/appeals/3').reply(200, leadAppealDataWithLinkedAppeals);
+			const response = await request.get(`${baseUrl}/2${linkedAppealsPath}/${managePath}`);
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Manage linked appeals');
+			expect(element.innerHTML).toContain('Lead appeal of');
+			expect(element.innerHTML).toContain('Other child appeals of');
+			expect(element.innerHTML).not.toContain('Child appeals of');
 		});
 	});
 

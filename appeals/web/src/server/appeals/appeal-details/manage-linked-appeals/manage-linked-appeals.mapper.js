@@ -3,6 +3,7 @@ import { appealShortReference, linkedAppealStatus } from '#lib/appeals-formatter
 import { appealSiteToAddressString } from '#lib/address-formatter.js';
 import { appealStatusToStatusTag } from '#lib/nunjucks-filters/status-tag.js';
 import { dateToDisplayDate } from '#lib/dates.js';
+import { generateHorizonAppealUrl } from '#lib/display-page-formatter.js';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
@@ -13,24 +14,15 @@ import { dateToDisplayDate } from '#lib/dates.js';
 /**
  *
  * @param {Appeal} appealData
- * @param {string} relationshipId
  * @param {string} appealId
- * @param {string} parentId
+ * @param {import('@pins/appeals.api/src/server/endpoints/appeals.js').LinkedAppeal} [leadLinkedAppeal]
+ * @param {Appeal} [leadAppealData]
  * @returns {PageContent}
  */
-export function manageLinkedAppealsPage(appealData, relationshipId, appealId, parentId) {
-	const isChildAppeal = parentId !== undefined;
-	const isHorizonLeadAppeal =
-		appealData.appealType === 'Horizon' &&
-		!parentId &&
-		appealData.linkedAppeals.every((link) => link.isParentAppeal);
-
-	const matchingLinkedAppeal = appealData.linkedAppeals.find(
-		(linkedAppeal) => linkedAppeal.relationshipId === Number(relationshipId)
-	);
-	const shortAppealReference = matchingLinkedAppeal
-		? appealShortReference(matchingLinkedAppeal.appealReference)
-		: appealShortReference(appealData.appealReference);
+export function manageLinkedAppealsPage(appealData, appealId, leadLinkedAppeal, leadAppealData) {
+	const isChildAppeal = appealData.isChildAppeal === true;
+	const shortAppealReference = appealShortReference(appealData.appealReference);
+	const isChildOfHorizonAppeal = isChildAppeal && leadLinkedAppeal?.externalSource;
 
 	/** @type {PageComponent[]} **/
 	const pageComponents = [];
@@ -48,9 +40,9 @@ export function manageLinkedAppealsPage(appealData, relationshipId, appealId, pa
 	};
 	pageComponents.push(appealStatusTagComponent);
 
-	if (isChildAppeal && !isHorizonLeadAppeal) {
+	if (isChildAppeal) {
 		/** @type {PageComponent} */
-		let leadAppealTable = {
+		const leadAppealTable = {
 			wrapperHtml: {
 				opening: `<h2 class="govuk-!-margin-top-6">Lead appeal of ${shortAppealReference}</h2>`,
 				closing: ''
@@ -62,17 +54,24 @@ export function manageLinkedAppealsPage(appealData, relationshipId, appealId, pa
 				rows: [
 					[
 						{
-							html: `<a class="govuk-link" href="/appeals-service/appeal-details/${
-								appealData.appealId
-							}" aria-label="Appeal ${numberToAccessibleDigitLabel(
-								appealShortReference(appealData.appealReference) || ''
-							)}">${appealShortReference(appealData.appealReference)}</a>`
+							html: isChildOfHorizonAppeal
+								? `<a class="govuk-link" href="${generateHorizonAppealUrl(
+										leadLinkedAppeal?.appealId
+								  )}">${leadLinkedAppeal?.appealReference}</a>`
+								: `<a class="govuk-link" href="/appeals-service/appeal-details/${
+										leadLinkedAppeal?.appealId
+								  }" aria-label="Appeal ${numberToAccessibleDigitLabel(
+										appealShortReference(leadLinkedAppeal?.appealReference) || ''
+								  )}">${appealShortReference(leadLinkedAppeal?.appealReference)}</a>`
 						},
 						{
-							text: appealData.appealType
+							text:
+								(isChildOfHorizonAppeal
+									? leadLinkedAppeal.externalAppealType
+									: leadLinkedAppeal?.appealType) || 'Unknown'
 						},
 						{
-							html: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealData.appealId}/linked-appeals/unlink-appeal/${appealId}/${matchingLinkedAppeal?.relationshipId}/${appealId}">Unlink</a>`
+							html: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealData.appealId}/linked-appeals/unlink-appeal/${appealId}/${leadLinkedAppeal?.relationshipId}/${appealId}">Unlink</a>`
 						}
 					]
 				]
@@ -81,30 +80,43 @@ export function manageLinkedAppealsPage(appealData, relationshipId, appealId, pa
 		pageComponents.push(leadAppealTable);
 	}
 
-	const childAppealsRows = appealData.linkedAppeals
-		.filter(
-			(linkedAppeal) => !linkedAppeal.isParentAppeal && linkedAppeal.appealId !== Number(appealId)
-		)
-		.map((linkedAppeal) => {
-			return [
-				{
-					html: `<a class="govuk-link" href="/appeals-service/appeal-details/${
-						linkedAppeal.appealId
-					}" aria-label="Appeal ${numberToAccessibleDigitLabel(
-						appealShortReference(linkedAppeal.appealReference) || ''
-					)}">${appealShortReference(linkedAppeal.appealReference)}</a>`
-				},
-				{
-					text: linkedAppeal.appealType
-				},
-				{
-					html: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealData.appealId}/linked-appeals/unlink-appeal/${linkedAppeal.appealId}/${linkedAppeal.relationshipId}/${appealId}">Unlink</a>`
-				}
-			];
-		});
+	const sourceOfLinkedChildAppeals = isChildAppeal
+		? leadAppealData?.linkedAppeals
+		: appealData.linkedAppeals;
+	const childAppealsRows = sourceOfLinkedChildAppeals
+		? sourceOfLinkedChildAppeals
+				.filter(
+					(linkedAppeal) =>
+						!linkedAppeal.isParentAppeal && linkedAppeal.appealId !== Number(appealId)
+				)
+				.map((linkedAppeal) => {
+					return [
+						{
+							html: linkedAppeal.externalSource
+								? `<a class="govuk-link" href="${generateHorizonAppealUrl(
+										linkedAppeal?.appealId
+								  )}">${linkedAppeal?.appealReference}</a>`
+								: `<a class="govuk-link" href="/appeals-service/appeal-details/${
+										linkedAppeal?.appealId
+								  }" aria-label="Appeal ${numberToAccessibleDigitLabel(
+										appealShortReference(linkedAppeal?.appealReference) || ''
+								  )}">${appealShortReference(linkedAppeal?.appealReference)}</a>`
+						},
+						{
+							text:
+								(linkedAppeal.externalSource
+									? linkedAppeal.externalAppealType
+									: linkedAppeal.appealType) || 'Unknown'
+						},
+						{
+							html: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealData.appealId}/linked-appeals/unlink-appeal/${linkedAppeal.appealId}/${linkedAppeal.relationshipId}/${appealId}">Unlink</a>`
+						}
+					];
+				})
+		: [];
 
 	const childAppealsHeading = isChildAppeal
-		? `Other child appeals of ${appealShortReference(appealData.appealReference)}`
+		? `Other child appeals of ${appealShortReference(leadAppealData?.appealReference)}`
 		: `Child appeals of ${shortAppealReference}`;
 
 	/** @type {PageComponent} */
