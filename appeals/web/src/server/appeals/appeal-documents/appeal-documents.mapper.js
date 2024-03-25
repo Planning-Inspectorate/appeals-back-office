@@ -684,8 +684,8 @@ function mapDocumentNameHtmlProperty(document, documentVersion) {
 								document.caseId,
 								document.guid,
 								documentVersion.version
-						  )}">${document.name || ''}</a>`
-						: document.name || ''
+						  )}">${documentVersion.originalFilename || ''}</a>`
+						: documentVersion.originalFilename || ''
 			}
 		});
 	} else {
@@ -693,7 +693,7 @@ function mapDocumentNameHtmlProperty(document, documentVersion) {
 			type: 'html',
 			wrapperHtml: linkWrapperHtml,
 			parameters: {
-				html: `<span class="govuk-body">${document.name || ''}</span>`.trim()
+				html: `<span class="govuk-body">${documentVersion.originalFilename || ''}</span>`.trim()
 			}
 		});
 	}
