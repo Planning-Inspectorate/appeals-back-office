@@ -32,6 +32,7 @@ export interface EnvironmentConfig extends BaseEnvironmentConfig {
 	blobStorageUrl: string;
 	blobStorageDefaultContainer: string;
 	blobEmulatorSasUrl: string;
+	horizonAppealBaseUrl: string;
 	useBlobEmulator: boolean;
 	cwd: string;
 	logLevelFile: LevelWithSilent;
