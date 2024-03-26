@@ -48,6 +48,7 @@ const updateAppellantCaseById = async (req, res) => {
 	} = req;
 	const appellantCaseId = Number(params.appellantCaseId);
 	const azureAdUserId = String(req.get('azureAdUserId'));
+	const { validAt, ...data } = body;
 
 	try {
 		validationOutcome
@@ -55,9 +56,9 @@ const updateAppellantCaseById = async (req, res) => {
 					appeal,
 					appellantCaseId,
 					azureAdUserId,
-					data: body,
-					notifyClient: req.notifyClient,
-					validationOutcome
+					data,
+					validationOutcome,
+					validAt
 			  })
 			: await appellantCaseRepository.updateAppellantCaseById(appellantCaseId, {
 					applicantFirstName,

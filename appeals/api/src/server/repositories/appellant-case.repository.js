@@ -1,6 +1,5 @@
 import { databaseConnector } from '#utils/database-connector.js';
-import appealRepository from '#repositories/appeal.repository.js';
-import appealTimetablesRepository from '#repositories/appeal-timetable.repository.js';
+import appealRepository from './appeal.repository.js';
 import commonRepository from './common.repository.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAppellantCaseRequest} UpdateAppellantCaseRequest */
@@ -31,8 +30,7 @@ const updateAppellantCaseValidationOutcome = ({
 	incompleteReasons,
 	invalidReasons,
 	appealId,
-	timetable,
-	startedAt
+	validAt
 }) => {
 	const transaction = [
 		updateAppellantCaseById(appellantCaseId, {
@@ -66,10 +64,9 @@ const updateAppellantCaseValidationOutcome = ({
 		);
 	}
 
-	if (appealId && startedAt && timetable) {
+	if (appealId && validAt) {
 		transaction.push(
-			appealRepository.updateAppealById(appealId, { startedAt: startedAt.toISOString() }),
-			appealTimetablesRepository.upsertAppealTimetableById(appealId, timetable)
+			appealRepository.updateAppealById(appealId, { validAt: validAt.toISOString() })
 		);
 	}
 

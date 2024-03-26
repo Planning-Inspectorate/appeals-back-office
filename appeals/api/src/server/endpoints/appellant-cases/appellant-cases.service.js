@@ -1,20 +1,12 @@
-import { calculateTimetable, recalculateDateIfNotBusinessDay } from '#utils/business-days.js';
 import {
 	isOutcomeIncomplete,
 	isOutcomeInvalid,
 	isOutcomeValid
 } from '#utils/check-validation-outcome.js';
 import { broadcastAppealState } from '#endpoints/integrations/integrations.service.js';
-import joinDateAndTime from '#utils/join-date-and-time.js';
-import { format } from 'date-fns';
-import {
-	AUDIT_TRAIL_CASE_TIMELINE_CREATED,
-	AUDIT_TRAIL_SUBMISSION_INCOMPLETE,
-	DEFAULT_DATE_FORMAT_DATABASE,
-	//DEFAULT_DATE_FORMAT_DISPLAY,
-	ERROR_NOT_FOUND
-} from '#endpoints/constants.js';
-//import config from '#config/config.js';
+
+import { AUDIT_TRAIL_SUBMISSION_INCOMPLETE, ERROR_NOT_FOUND } from '#endpoints/constants.js';
+
 import appellantCaseRepository from '#repositories/appellant-case.repository.js';
 import transitionState from '../../state/transition-state.js';
 import appealRepository from '#repositories/appeal.repository.js';
@@ -50,54 +42,18 @@ const updateAppellantCaseValidationOutcome = async ({
 	appellantCaseId,
 	azureAdUserId,
 	data,
-	//notifyClient,
-	validationOutcome
+	validationOutcome,
+	validAt
 }) => {
-	const {
-		appealStatus,
-		appealType,
-		//appellant,
-		//agent,
-		id: appealId
-		//reference
-	} = appeal;
+	const { appealStatus, appealType, id: appealId } = appeal;
 	const { appealDueDate, incompleteReasons, invalidReasons } = data;
-
-	let startedAt = undefined;
-	let timetable = undefined;
-
-	if (isOutcomeValid(validationOutcome.name) && appealType) {
-		startedAt = await recalculateDateIfNotBusinessDay(
-			joinDateAndTime(format(new Date(), DEFAULT_DATE_FORMAT_DATABASE))
-		);
-		timetable = await calculateTimetable(appealType.shorthand, startedAt);
-
-		// Disable temporarily, until templates are created
-		/*
-		await notifyClient.sendEmail(
-			config.govNotify.template.validAppellantCase,
-			appellant?.email || agent?.email,
-			{
-				appeal_reference: reference,
-				appeal_type: appealType.shorthand,
-				date_started: format(startedAt, DEFAULT_DATE_FORMAT_DISPLAY)
-			}
-		);
-		*/
-
-		await createAuditTrail({
-			appealId,
-			azureAdUserId,
-			details: AUDIT_TRAIL_CASE_TIMELINE_CREATED
-		});
-	}
 
 	await appellantCaseRepository.updateAppellantCaseValidationOutcome({
 		appellantCaseId,
 		validationOutcomeId: validationOutcome.id,
 		...(isOutcomeIncomplete(validationOutcome.name) && { incompleteReasons }),
 		...(isOutcomeInvalid(validationOutcome.name) && { invalidReasons }),
-		...(isOutcomeValid(validationOutcome.name) && { appealId, startedAt, timetable })
+		...(isOutcomeValid(validationOutcome.name) && { appealId, validAt })
 	});
 
 	if (!isOutcomeIncomplete(validationOutcome.name)) {

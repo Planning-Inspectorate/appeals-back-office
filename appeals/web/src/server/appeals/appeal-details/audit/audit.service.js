@@ -106,6 +106,10 @@ const tryMapDocument = async (appealId, log, docInfo, lpaqId) => {
 const tryMapStatus = async (log) => {
 	let result = log;
 	result = result.replace(
+		'progressed to validation',
+		'progressed to <strong class="govuk-tag govuk-tag--orange single-line govuk-!-margin-bottom-4">Validation</strong>'
+	);
+	result = result.replace(
 		'progressed to ready_to_start',
 		'progressed to <strong class="govuk-tag govuk-tag--turquoise single-line govuk-!-margin-bottom-4">Ready to start</strong>'
 	);

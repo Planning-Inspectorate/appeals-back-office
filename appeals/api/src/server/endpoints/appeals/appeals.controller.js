@@ -23,7 +23,8 @@ import {
 	STATE_TARGET_LPA_QUESTIONNAIRE_DUE,
 	STATE_TARGET_ISSUE_DETERMINATION,
 	STATE_TARGET_AWAITING_TRANSFER,
-	STATE_TARGET_COMPLETE
+	STATE_TARGET_COMPLETE,
+	STATE_TARGET_VALIDATION
 } from '../constants.js';
 import {
 	formatAppeal,
@@ -228,7 +229,7 @@ const updateAppealById = async (req, res) => {
 					appeal.appealType,
 					azureUserId || AUDIT_TRAIL_SYSTEM_UUID,
 					appeal.appealStatus,
-					STATE_TARGET_READY_TO_START
+					STATE_TARGET_VALIDATION
 				);
 			}
 		} else {

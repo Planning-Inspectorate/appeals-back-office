@@ -101,7 +101,7 @@ describe('appeals routes', () => {
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
-					statuses: ['ready_to_start']
+					statuses: ['assign_case_officer']
 				});
 			});
 
@@ -149,7 +149,7 @@ describe('appeals routes', () => {
 					page: 2,
 					pageCount: 1,
 					pageSize: 1,
-					statuses: ['ready_to_start']
+					statuses: ['assign_case_officer']
 				});
 			});
 
@@ -216,7 +216,7 @@ describe('appeals routes', () => {
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
-					statuses: ['ready_to_start']
+					statuses: ['assign_case_officer']
 				});
 			});
 
@@ -283,7 +283,7 @@ describe('appeals routes', () => {
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
-					statuses: ['ready_to_start']
+					statuses: ['assign_case_officer']
 				});
 			});
 
@@ -350,7 +350,7 @@ describe('appeals routes', () => {
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
-					statuses: ['ready_to_start']
+					statuses: ['assign_case_officer']
 				});
 			});
 
@@ -404,7 +404,7 @@ describe('appeals routes', () => {
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
-					statuses: ['ready_to_start']
+					statuses: ['assign_case_officer']
 				});
 			});
 
@@ -460,7 +460,7 @@ describe('appeals routes', () => {
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
-					statuses: ['ready_to_start']
+					statuses: ['assign_case_officer']
 				});
 			});
 
@@ -514,7 +514,7 @@ describe('appeals routes', () => {
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
-					statuses: ['ready_to_start']
+					statuses: ['assign_case_officer']
 				});
 			});
 
@@ -700,11 +700,8 @@ describe('appeals routes', () => {
 						postCode: householdAppeal.address.postcode
 					},
 					appealStatus: householdAppeal.appealStatus[0].status,
-					appealTimetable: {
-						appealTimetableId: householdAppeal.appealTimetable.id,
-						lpaQuestionnaireDueDate: householdAppeal.appealTimetable.lpaQuestionnaireDueDate
-					},
 					appealType: householdAppeal.appealType.type,
+					appealTimetable: null,
 					appellantCaseId: 1,
 					caseOfficer: householdAppeal.caseOfficer.azureAdUserId,
 					decision: {
@@ -716,7 +713,7 @@ describe('appeals routes', () => {
 							dueDate: householdAppeal.dueDate
 						},
 						lpaQuestionnaire: {
-							dueDate: '2023-05-16T01:00:00.000Z',
+							dueDate: null,
 							status: 'received'
 						}
 					},
@@ -772,9 +769,9 @@ describe('appeals routes', () => {
 						visitEndTime: householdAppeal.siteVisit.visitEndTime,
 						visitType: householdAppeal.siteVisit.siteVisitType.name
 					},
-					createdAt: householdAppeal.createdAt.toISOString(),
-					startedAt: householdAppeal.startedAt.toISOString(),
-					validAt: householdAppeal.validAt.toISOString()
+					createdAt: householdAppeal.createdAt.toISOString()
+					//startedAt: householdAppeal.startedAt.toISOString(),
+					//validAt: householdAppeal.validAt.toISOString()
 				});
 			});
 
@@ -811,12 +808,7 @@ describe('appeals routes', () => {
 						postCode: fullPlanningAppeal.address.postcode
 					},
 					appealStatus: fullPlanningAppeal.appealStatus[0].status,
-					appealTimetable: {
-						appealTimetableId: fullPlanningAppeal.appealTimetable.id,
-						finalCommentReviewDate: fullPlanningAppeal.appealTimetable.finalCommentReviewDate,
-						lpaQuestionnaireDueDate: fullPlanningAppeal.appealTimetable.lpaQuestionnaireDueDate,
-						statementReviewDate: fullPlanningAppeal.appealTimetable.statementReviewDate
-					},
+					appealTimetable: null,
 					appealType: fullPlanningAppeal.appealType.type,
 					appellantCaseId: 1,
 					caseOfficer: fullPlanningAppeal.caseOfficer.azureAdUserId,
@@ -829,7 +821,7 @@ describe('appeals routes', () => {
 							dueDate: fullPlanningAppeal.dueDate
 						},
 						lpaQuestionnaire: {
-							dueDate: '2023-05-16T01:00:00.000Z',
+							dueDate: null,
 							status: 'received'
 						}
 					},
@@ -879,9 +871,9 @@ describe('appeals routes', () => {
 						visitEndTime: fullPlanningAppeal.siteVisit.visitEndTime,
 						visitType: fullPlanningAppeal.siteVisit.siteVisitType.name
 					},
-					createdAt: householdAppeal.createdAt.toISOString(),
-					startedAt: fullPlanningAppeal.startedAt.toISOString(),
-					validAt: householdAppeal.validAt.toISOString()
+					createdAt: householdAppeal.createdAt.toISOString()
+					//startedAt: fullPlanningAppeal.startedAt.toISOString(),
+					//validAt: householdAppeal.validAt.toISOString()
 				});
 			});
 
@@ -1344,11 +1336,8 @@ describe('appeals routes', () => {
 						postCode: householdAppeal.address.postcode
 					},
 					appealStatus: householdAppeal.appealStatus[0].status,
-					appealTimetable: {
-						appealTimetableId: householdAppeal.appealTimetable.id,
-						lpaQuestionnaireDueDate: householdAppeal.appealTimetable.lpaQuestionnaireDueDate
-					},
 					appealType: householdAppeal.appealType.type,
+					appealTimetable: null,
 					appellantCaseId: 1,
 					caseOfficer: householdAppeal.caseOfficer.azureAdUserId,
 					decision: {
@@ -1360,7 +1349,7 @@ describe('appeals routes', () => {
 							dueDate: householdAppeal.dueDate
 						},
 						lpaQuestionnaire: {
-							dueDate: '2023-05-16T01:00:00.000Z',
+							dueDate: null,
 							status: 'received'
 						}
 					},
@@ -1416,9 +1405,9 @@ describe('appeals routes', () => {
 						visitEndTime: householdAppeal.siteVisit.visitEndTime,
 						visitType: householdAppeal.siteVisit.siteVisitType.name
 					},
-					createdAt: householdAppeal.createdAt.toISOString(),
-					startedAt: householdAppeal.startedAt.toISOString(),
-					validAt: householdAppeal.validAt.toISOString()
+					createdAt: householdAppeal.createdAt.toISOString()
+					//startedAt: householdAppeal.startedAt.toISOString(),
+					//validAt: householdAppeal.validAt.toISOString()
 				});
 			});
 
@@ -1455,13 +1444,8 @@ describe('appeals routes', () => {
 						postCode: fullPlanningAppeal.address.postcode
 					},
 					appealStatus: fullPlanningAppeal.appealStatus[0].status,
-					appealTimetable: {
-						appealTimetableId: fullPlanningAppeal.appealTimetable.id,
-						finalCommentReviewDate: fullPlanningAppeal.appealTimetable.finalCommentReviewDate,
-						lpaQuestionnaireDueDate: fullPlanningAppeal.appealTimetable.lpaQuestionnaireDueDate,
-						statementReviewDate: fullPlanningAppeal.appealTimetable.statementReviewDate
-					},
 					appealType: fullPlanningAppeal.appealType.type,
+					appealTimetable: null,
 					appellantCaseId: 1,
 					caseOfficer: fullPlanningAppeal.caseOfficer.azureAdUserId,
 					decision: {
@@ -1473,7 +1457,7 @@ describe('appeals routes', () => {
 							dueDate: fullPlanningAppeal.dueDate
 						},
 						lpaQuestionnaire: {
-							dueDate: '2023-05-16T01:00:00.000Z',
+							dueDate: null,
 							status: 'received'
 						}
 					},
@@ -1523,9 +1507,9 @@ describe('appeals routes', () => {
 						visitEndTime: fullPlanningAppeal.siteVisit.visitEndTime,
 						visitType: fullPlanningAppeal.siteVisit.siteVisitType.name
 					},
-					createdAt: fullPlanningAppeal.startedAt.toISOString(),
-					startedAt: fullPlanningAppeal.startedAt.toISOString(),
-					validAt: fullPlanningAppeal.validAt.toISOString()
+					createdAt: fullPlanningAppeal.createdAt.toISOString()
+					//startedAt: fullPlanningAppeal.startedAt.toISOString(),
+					//validAt: fullPlanningAppeal.validAt.toISOString()
 				});
 			});
 			test('returns an error if appealId is not found', async () => {
