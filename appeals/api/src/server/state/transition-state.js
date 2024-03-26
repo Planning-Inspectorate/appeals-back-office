@@ -20,12 +20,15 @@ import { AUDIT_TRAIL_PROGRESSED_TO_STATUS } from '#endpoints/constants.js';
  */
 const transitionState = async (appealId, appealType, azureAdUserId, currentState, trigger) => {
 	const currentStatus = currentState[0].status;
+
 	const stateMachine = createStateMachine(appealType?.shorthand, currentStatus);
 	const stateMachineService = interpret(stateMachine);
 
-	stateMachineService.onTransition((/** @type {{value: StateValue}} */ state) =>
-		logger.debug(`Appeal ${appealId} transitioned to ${state.value}`)
-	);
+	stateMachineService.onTransition((/** @type {{value: StateValue}} */ state) => {
+		if (state.value !== currentStatus) {
+			logger.debug(`Appeal ${appealId} transitioned from ${currentStatus} to ${state.value}`);
+		}
+	});
 	stateMachineService.start();
 	stateMachineService.send({ type: trigger });
 

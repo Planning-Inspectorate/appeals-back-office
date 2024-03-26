@@ -519,8 +519,7 @@ interface UpdateAppellantCaseValidationOutcome {
 	incompleteReasons?: IncompleteInvalidReasons;
 	invalidReasons?: IncompleteInvalidReasons;
 	appealId?: number;
-	timetable?: TimetableDeadlineDate;
-	startedAt?: Date;
+	validAt?: Date;
 }
 
 interface UpdateLPAQuestionnaireRequest {
@@ -579,8 +578,8 @@ interface UpdateAppellantCaseValidationOutcomeParams {
 		incompleteReasons: IncompleteInvalidReasons;
 		invalidReasons: IncompleteInvalidReasons;
 	};
-	notifyClient: NotifyClient;
 	validationOutcome: ValidationOutcome;
+	validAt: Date;
 }
 
 interface UpdateTimetableRequest {

@@ -22,6 +22,16 @@ const validateFPATimetableDate = (value, { req }) => {
 	return true;
 };
 
+const createAppealTimetableValidator = composeMiddleware(
+	validateIdParameter('appealId'),
+	validateDateParameter({
+		parameterName: 'startDate',
+		mustBeFutureDate: true,
+		mustBeBusinessDay: true
+	}),
+	validationErrorHandler
+);
+
 const patchAppealTimetableValidator = composeMiddleware(
 	validateIdParameter('appealId'),
 	validateIdParameter('appealTimetableId'),
@@ -50,4 +60,4 @@ const patchAppealTimetableValidator = composeMiddleware(
 	validationErrorHandler
 );
 
-export { patchAppealTimetableValidator };
+export { createAppealTimetableValidator, patchAppealTimetableValidator };

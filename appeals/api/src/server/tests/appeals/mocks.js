@@ -24,7 +24,7 @@ export const householdAppeal = {
 	reference: '1345264',
 	appealStatus: [
 		{
-			status: 'ready_to_start',
+			status: 'assign_case_officer',
 			valid: true
 		}
 	],
@@ -48,8 +48,6 @@ export const householdAppeal = {
 		email: 'test@136s7.com'
 	},
 	createdAt: new Date(2022, 4, 18),
-	startedAt: new Date(2022, 4, 18),
-	validAt: new Date(2022, 4, 20),
 	address: {
 		addressLine1: '96 The Avenue',
 		addressLine2: 'Leftfield',
@@ -58,14 +56,6 @@ export const householdAppeal = {
 		id: 1,
 		postcode: 'MD21 5XY',
 		addressTown: 'Maidstone'
-	},
-	appealTimetable: {
-		appealId: 1,
-		finalCommentReviewDate: null,
-		id: 1,
-		issueDeterminationDate: null,
-		lpaQuestionnaireDueDate: '2023-05-16T01:00:00.000Z',
-		statementReviewDate: null
 	},
 	appealType: {
 		id: 2,
@@ -221,14 +211,6 @@ export const householdAppeal = {
 export const fullPlanningAppeal = {
 	...householdAppeal,
 	id: 2,
-	appealTimetable: {
-		id: 2,
-		appealId: 2,
-		finalCommentReviewDate: '2023-06-28T01:00:00.000Z',
-		issueDeterminationDate: null,
-		lpaQuestionnaireDueDate: '2023-05-16T01:00:00.000Z',
-		statementReviewDate: '2023-06-14T01:00:00.000Z'
-	},
 	appealType: {
 		id: 1,
 		type: 'full planning',
