@@ -180,6 +180,39 @@ describe('linked-appeals', () => {
 			const element = parseHtml(response.text, { rootElement: 'body' });
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, {
+				rootElement: 'body',
+				skipPrettyPrint: true
+			});
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<h1 class="govuk-heading-l">Details of the appeal you&#39;re linking to</h1>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<dt class="govuk-summary-list__key"> Appeal reference</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<dt class="govuk-summary-list__key"> Appeal status</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<dt class="govuk-summary-list__key"> Appeal type</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<dt class="govuk-summary-list__key"> Site address</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<dt class="govuk-summary-list__key"> Local planning authority</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<dt class="govuk-summary-list__key"> Appellant name</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<dt class="govuk-summary-list__key"> Agent name</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<dt class="govuk-summary-list__key"> Submission date</dt>'
+			);
 		});
 
 		it('should render the check and confirm page with appropriate warning text, no radio options, and a button linking back to the add linked appeal reference page with label text of "return to search", if the target and candidate are the same appeal (trying to link appeal to itself)', async () => {
@@ -208,6 +241,21 @@ describe('linked-appeals', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'This is the appeal you are currently reviewing.'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'data-module="govuk-button"> Return to search</a>'
+			);
+			expect(unprettifiedElement.innerHTML).not.toContain('Yes, make this the lead appeal for');
+			expect(unprettifiedElement.innerHTML).not.toContain('Yes, this is a child appeal of');
+			expect(unprettifiedElement.innerHTML).not.toContain('No, return to search');
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'data-module="govuk-button"> Continue</button>'
+			);
 		});
 
 		it('should render the check and confirm page with appropriate warning text, no radio options, and a button linking back to the add linked appeal reference page with label text of "return to search", if the appeals are already linked', async () => {
@@ -250,16 +298,143 @@ describe('linked-appeals', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Appeals already linked.');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'data-module="govuk-button"> Return to search</a>'
+			);
+			expect(unprettifiedElement.innerHTML).not.toContain('Yes, make this the lead appeal for');
+			expect(unprettifiedElement.innerHTML).not.toContain('Yes, this is a child appeal of');
+			expect(unprettifiedElement.innerHTML).not.toContain('No, return to search');
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'data-module="govuk-button"> Continue</button>'
+			);
 		});
 
-		it('should render the check and confirm page with appropriate warning text, no radio options, and a button linking back to the add linked appeal reference page with label text of "return to search", if the linking candidate is a child (already has a lead)', async () => {
+		it('should render the check and confirm page with lead, child and cancel radio options, and a submit button with label text of "Continue", if neither the linking target nor the candidate have existing linked appeals', async () => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData);
+			nock('http://test/')
+				.get('/appeals/1')
+				.reply(200, {
+					...appealData,
+					isParentAppeal: false,
+					isChildAppeal: false,
+					linkedAppeals: []
+				});
 			nock('http://test/')
 				.get(`/appeals/${linkableAppealSummaryBackOffice.appealId}`)
 				.reply(200, {
 					...appealData,
 					appealId: linkableAppealSummaryBackOffice.appealId,
+					appealReference: linkableAppealSummaryBackOffice.appealReference,
+					isParentAppeal: false,
+					isChildAppeal: false,
+					linkedAppeals: []
+				});
+			nock('http://test/')
+				.get('/appeals/linkable-appeal/123')
+				.reply(200, linkableAppealSummaryBackOffice);
+
+			const addLinkedAppealReferenceResponse = await request
+				.post(`${baseUrl}/1${linkedAppealsPath}/add`)
+				.send({
+					'appeal-reference': '123'
+				});
+
+			expect(addLinkedAppealReferenceResponse.statusCode).toBe(302);
+			expect(addLinkedAppealReferenceResponse.text).toEqual(
+				'Found. Redirecting to /appeals-service/appeal-details/1/linked-appeals/add/check-and-confirm'
+			);
+
+			const response = await request.get(`${baseUrl}/1${linkedAppealsPath}/add/check-and-confirm`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Is this the appeal you want to link?');
+			expect(unprettifiedElement.innerHTML).toContain('Yes, make this the lead appeal for');
+			expect(unprettifiedElement.innerHTML).toContain('Yes, this is a child appeal of');
+			expect(unprettifiedElement.innerHTML).toContain('No, return to search');
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'data-module="govuk-button"> Return to search</a>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'data-module="govuk-button"> Continue</button>'
+			);
+		});
+
+		it('should render the check and confirm page with lead and cancel radio options, and a submit button with label text of "Continue", if the linking candidate is a lead and the target has no existing linked appeals', async () => {
+			nock.cleanAll();
+			nock('http://test/')
+				.get('/appeals/1')
+				.reply(200, {
+					...appealData,
+					isParentAppeal: false,
+					isChildAppeal: false,
+					linkedAppeals: []
+				});
+			nock('http://test/')
+				.get(`/appeals/${linkableAppealSummaryBackOffice.appealId}`)
+				.reply(200, {
+					...appealData,
+					appealId: linkableAppealSummaryBackOffice.appealId,
+					appealReference: linkableAppealSummaryBackOffice.appealReference,
+					isParentAppeal: true,
+					isChildAppeal: false,
+					linkedAppeals: [linkedAppealBackOffice]
+				});
+			nock('http://test/')
+				.get('/appeals/linkable-appeal/123')
+				.reply(200, linkableAppealSummaryBackOffice);
+
+			const addLinkedAppealReferenceResponse = await request
+				.post(`${baseUrl}/1${linkedAppealsPath}/add`)
+				.send({
+					'appeal-reference': '123'
+				});
+
+			expect(addLinkedAppealReferenceResponse.statusCode).toBe(302);
+			expect(addLinkedAppealReferenceResponse.text).toEqual(
+				'Found. Redirecting to /appeals-service/appeal-details/1/linked-appeals/add/check-and-confirm'
+			);
+
+			const response = await request.get(`${baseUrl}/1${linkedAppealsPath}/add/check-and-confirm`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Is this the appeal you want to link?');
+			expect(unprettifiedElement.innerHTML).toContain('Yes, make this the lead appeal for');
+			expect(unprettifiedElement.innerHTML).not.toContain('Yes, this is a child appeal of');
+			expect(unprettifiedElement.innerHTML).toContain('No, return to search');
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'data-module="govuk-button"> Return to search</a>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'data-module="govuk-button"> Continue</button>'
+			);
+		});
+
+		it('should render the check and confirm page with appropriate warning text, no radio options, and a button linking back to the add linked appeal reference page with label text of "return to search", if the linking target has no linked appeals and the linking candidate is a child appeal', async () => {
+			nock.cleanAll();
+			nock('http://test/')
+				.get('/appeals/1')
+				.reply(200, {
+					...appealData,
+					isParentAppeal: false,
+					isChildAppeal: false,
+					linkedAppeals: []
+				});
+			nock('http://test/')
+				.get(`/appeals/${linkableAppealSummaryBackOffice.appealId}`)
+				.reply(200, {
+					...appealData,
 					appealReference: linkableAppealSummaryBackOffice.appealReference,
 					isParentAppeal: false,
 					isChildAppeal: true,
@@ -284,23 +459,40 @@ describe('linked-appeals', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Link your case to the lead of this appeal.');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'data-module="govuk-button"> Return to search</a>'
+			);
+			expect(unprettifiedElement.innerHTML).not.toContain('Yes, make this the lead appeal for');
+			expect(unprettifiedElement.innerHTML).not.toContain('Yes, this is a child appeal of');
+			expect(unprettifiedElement.innerHTML).not.toContain('No, return to search');
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'data-module="govuk-button"> Continue</button>'
+			);
 		});
 
-		it('should render the check and confirm page with appropriate warning text, no radio options, and a button linking back to the add linked appeal reference page with label text of "return to search", if the linking target is a child (already has a lead)', async () => {
+		it('should render the check and confirm page with child and cancel radio options, and a submit button with label text of "Continue", if the linking target is a lead and the candidate has no existing linked appeals', async () => {
 			nock.cleanAll();
 			nock('http://test/')
 				.get('/appeals/1')
 				.reply(200, {
 					...appealData,
-					isParentAppeal: false,
-					isChildAppeal: true,
+					isParentAppeal: true,
+					isChildAppeal: false,
 					linkedAppeals: [linkedAppealBackOffice]
 				});
 			nock('http://test/')
 				.get(`/appeals/${linkableAppealSummaryBackOffice.appealId}`)
 				.reply(200, {
 					...appealData,
-					appealReference: linkableAppealSummaryBackOffice.appealReference
+					appealId: linkableAppealSummaryBackOffice.appealId,
+					appealReference: linkableAppealSummaryBackOffice.appealReference,
+					isParentAppeal: false,
+					isChildAppeal: false,
+					linkedAppeals: []
 				});
 			nock('http://test/')
 				.get('/appeals/linkable-appeal/123')
@@ -321,6 +513,19 @@ describe('linked-appeals', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Is this the appeal you want to link?');
+			expect(unprettifiedElement.innerHTML).not.toContain('Yes, make this the lead appeal for');
+			expect(unprettifiedElement.innerHTML).toContain('Yes, this is a child appeal of');
+			expect(unprettifiedElement.innerHTML).toContain('No, return to search');
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'data-module="govuk-button"> Return to search</a>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'data-module="govuk-button"> Continue</button>'
+			);
 		});
 
 		it('should render the check and confirm page with appropriate warning text, no radio options, and a button linking back to the add linked appeal reference page with label text of "return to search", if the linking target and candidate are both lead appeals', async () => {
@@ -362,6 +567,133 @@ describe('linked-appeals', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Appeals are both lead appeals and cannot be linked.'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'data-module="govuk-button"> Return to search</a>'
+			);
+			expect(unprettifiedElement.innerHTML).not.toContain('Yes, make this the lead appeal for');
+			expect(unprettifiedElement.innerHTML).not.toContain('Yes, this is a child appeal of');
+			expect(unprettifiedElement.innerHTML).not.toContain('No, return to search');
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'data-module="govuk-button"> Continue</button>'
+			);
+		});
+
+		it('should render the check and confirm page with appropriate warning text, no radio options, and a button linking back to the add linked appeal reference page with label text of "return to search", if the linking target is a lead and the linking candidate is a child of another appeal', async () => {
+			nock.cleanAll();
+			nock('http://test/')
+				.get('/appeals/1')
+				.reply(200, {
+					...appealData,
+					isParentAppeal: true,
+					isChildAppeal: false,
+					linkedAppeals: [linkedAppealBackOffice]
+				});
+			nock('http://test/')
+				.get(`/appeals/${linkableAppealSummaryBackOffice.appealId}`)
+				.reply(200, {
+					...appealData,
+					appealId: linkableAppealSummaryBackOffice.appealId,
+					appealReference: linkableAppealSummaryBackOffice.appealReference,
+					isParentAppeal: false,
+					isChildAppeal: true,
+					linkedAppeals: [linkedAppealBackOffice]
+				});
+			nock('http://test/')
+				.get('/appeals/linkable-appeal/123')
+				.reply(200, linkableAppealSummaryBackOffice);
+
+			const addLinkedAppealReferenceResponse = await request
+				.post(`${baseUrl}/1${linkedAppealsPath}/add`)
+				.send({
+					'appeal-reference': '123'
+				});
+
+			expect(addLinkedAppealReferenceResponse.statusCode).toBe(302);
+			expect(addLinkedAppealReferenceResponse.text).toEqual(
+				'Found. Redirecting to /appeals-service/appeal-details/1/linked-appeals/add/check-and-confirm'
+			);
+
+			const response = await request.get(`${baseUrl}/1${linkedAppealsPath}/add/check-and-confirm`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Appeal already linked to another lead appeal. Cannot be linked.'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'data-module="govuk-button"> Return to search</a>'
+			);
+			expect(unprettifiedElement.innerHTML).not.toContain('Yes, make this the lead appeal for');
+			expect(unprettifiedElement.innerHTML).not.toContain('Yes, this is a child appeal of');
+			expect(unprettifiedElement.innerHTML).not.toContain('No, return to search');
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'data-module="govuk-button"> Continue</button>'
+			);
+		});
+
+		it('should render the check and confirm page with appropriate warning text, no radio options, and a button linking back to the add linked appeal reference page with label text of "return to search", if the linking target is a child and the linking candidate has no existing linked appeals', async () => {
+			nock.cleanAll();
+			nock('http://test/')
+				.get('/appeals/1')
+				.reply(200, {
+					...appealData,
+					isParentAppeal: false,
+					isChildAppeal: true,
+					linkedAppeals: [linkedAppealBackOffice]
+				});
+			nock('http://test/')
+				.get(`/appeals/${linkableAppealSummaryBackOffice.appealId}`)
+				.reply(200, {
+					...appealData,
+					appealId: linkableAppealSummaryBackOffice.appealId,
+					appealReference: linkableAppealSummaryBackOffice.appealReference,
+					isParentAppeal: false,
+					isChildAppeal: false,
+					linkedAppeals: []
+				});
+			nock('http://test/')
+				.get('/appeals/linkable-appeal/123')
+				.reply(200, linkableAppealSummaryBackOffice);
+
+			const addLinkedAppealReferenceResponse = await request
+				.post(`${baseUrl}/1${linkedAppealsPath}/add`)
+				.send({
+					'appeal-reference': '123'
+				});
+
+			expect(addLinkedAppealReferenceResponse.statusCode).toBe(302);
+			expect(addLinkedAppealReferenceResponse.text).toEqual(
+				'Found. Redirecting to /appeals-service/appeal-details/1/linked-appeals/add/check-and-confirm'
+			);
+
+			const response = await request.get(`${baseUrl}/1${linkedAppealsPath}/add/check-and-confirm`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Link this appeal to your case&#39;s lead appeal.'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'data-module="govuk-button"> Return to search</a>'
+			);
+			expect(unprettifiedElement.innerHTML).not.toContain('Yes, make this the lead appeal for');
+			expect(unprettifiedElement.innerHTML).not.toContain('Yes, this is a child appeal of');
+			expect(unprettifiedElement.innerHTML).not.toContain('No, return to search');
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'data-module="govuk-button"> Continue</button>'
+			);
 		});
 
 		it('should render the check and confirm page with appropriate warning text, no radio options, and a button linking back to the add linked appeal reference page with label text of "return to search", if the appeals are not already linked and the linking target is a child appeal and the linking candidate is a lead appeal', async () => {
@@ -409,17 +741,32 @@ describe('linked-appeals', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Appeal already a lead appeal. Cannot be linked.'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'data-module="govuk-button"> Return to search</a>'
+			);
+			expect(unprettifiedElement.innerHTML).not.toContain('Yes, make this the lead appeal for');
+			expect(unprettifiedElement.innerHTML).not.toContain('Yes, this is a child appeal of');
+			expect(unprettifiedElement.innerHTML).not.toContain('No, return to search');
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'data-module="govuk-button"> Continue</button>'
+			);
 		});
 
-		it('should render the check and confirm page with lead and cancel radio options, and a submit button with label text of "Continue", if the linking candidate is a lead and the target has no existing linked appeals', async () => {
+		it('should render the check and confirm page with appropriate warning text, no radio options, and a button linking back to the add linked appeal reference page with label text of "return to search", if the linking target is a child appeal and the linking candidate is a child appeal', async () => {
 			nock.cleanAll();
 			nock('http://test/')
 				.get('/appeals/1')
 				.reply(200, {
 					...appealData,
 					isParentAppeal: false,
-					isChildAppeal: false,
-					linkedAppeals: []
+					isChildAppeal: true,
+					linkedAppeals: [linkedAppealBackOffice]
 				});
 			nock('http://test/')
 				.get(`/appeals/${linkableAppealSummaryBackOffice.appealId}`)
@@ -427,8 +774,8 @@ describe('linked-appeals', () => {
 					...appealData,
 					appealId: linkableAppealSummaryBackOffice.appealId,
 					appealReference: linkableAppealSummaryBackOffice.appealReference,
-					isParentAppeal: true,
-					isChildAppeal: false,
+					isParentAppeal: false,
+					isChildAppeal: true,
 					linkedAppeals: [linkedAppealBackOffice]
 				});
 			nock('http://test/')
@@ -450,88 +797,21 @@ describe('linked-appeals', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-		});
 
-		it('should render the check and confirm page with child and cancel radio options, and a submit button with label text of "Continue", if the linking target is a lead and the candidate has no existing linked appeals', async () => {
-			nock.cleanAll();
-			nock('http://test/')
-				.get('/appeals/1')
-				.reply(200, {
-					...appealData,
-					isParentAppeal: true,
-					isChildAppeal: false,
-					linkedAppeals: [linkedAppealBackOffice]
-				});
-			nock('http://test/')
-				.get(`/appeals/${linkableAppealSummaryBackOffice.appealId}`)
-				.reply(200, {
-					...appealData,
-					appealId: linkableAppealSummaryBackOffice.appealId,
-					appealReference: linkableAppealSummaryBackOffice.appealReference,
-					isParentAppeal: false,
-					isChildAppeal: false,
-					linkedAppeals: []
-				});
-			nock('http://test/')
-				.get('/appeals/linkable-appeal/123')
-				.reply(200, linkableAppealSummaryBackOffice);
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			const addLinkedAppealReferenceResponse = await request
-				.post(`${baseUrl}/1${linkedAppealsPath}/add`)
-				.send({
-					'appeal-reference': '123'
-				});
-
-			expect(addLinkedAppealReferenceResponse.statusCode).toBe(302);
-			expect(addLinkedAppealReferenceResponse.text).toEqual(
-				'Found. Redirecting to /appeals-service/appeal-details/1/linked-appeals/add/check-and-confirm'
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Appeal already linked to another lead appeal. Cannot be linked.'
 			);
-
-			const response = await request.get(`${baseUrl}/1${linkedAppealsPath}/add/check-and-confirm`);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-		});
-
-		it('should render the check and confirm page with lead, child and cancel radio options, and a submit button with label text of "Continue", if neither the linking target nor the candidate have existing linked appeals', async () => {
-			nock.cleanAll();
-			nock('http://test/')
-				.get('/appeals/1')
-				.reply(200, {
-					...appealData,
-					isParentAppeal: false,
-					isChildAppeal: false,
-					linkedAppeals: []
-				});
-			nock('http://test/')
-				.get(`/appeals/${linkableAppealSummaryBackOffice.appealId}`)
-				.reply(200, {
-					...appealData,
-					appealId: linkableAppealSummaryBackOffice.appealId,
-					appealReference: linkableAppealSummaryBackOffice.appealReference,
-					isParentAppeal: false,
-					isChildAppeal: false,
-					linkedAppeals: []
-				});
-			nock('http://test/')
-				.get('/appeals/linkable-appeal/123')
-				.reply(200, linkableAppealSummaryBackOffice);
-
-			const addLinkedAppealReferenceResponse = await request
-				.post(`${baseUrl}/1${linkedAppealsPath}/add`)
-				.send({
-					'appeal-reference': '123'
-				});
-
-			expect(addLinkedAppealReferenceResponse.statusCode).toBe(302);
-			expect(addLinkedAppealReferenceResponse.text).toEqual(
-				'Found. Redirecting to /appeals-service/appeal-details/1/linked-appeals/add/check-and-confirm'
+			expect(unprettifiedElement.innerHTML).toContain(
+				'data-module="govuk-button"> Return to search</a>'
 			);
-
-			const response = await request.get(`${baseUrl}/1${linkedAppealsPath}/add/check-and-confirm`);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
+			expect(unprettifiedElement.innerHTML).not.toContain('Yes, make this the lead appeal for');
+			expect(unprettifiedElement.innerHTML).not.toContain('Yes, this is a child appeal of');
+			expect(unprettifiedElement.innerHTML).not.toContain('No, return to search');
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'data-module="govuk-button"> Continue</button>'
+			);
 		});
 	});
 

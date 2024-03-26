@@ -284,20 +284,12 @@ export function addLinkedAppealCheckAndConfirmPage(
 	const candidateIsLead = linkCandidateAppealData && linkCandidateAppealData.isParentAppeal;
 	const candidateIsChild = linkCandidateAppealData && linkCandidateAppealData.isChildAppeal;
 
-	/** @type {PageComponent} */
-	const alreadyHasLeadWarningTextComponent = {
-		type: 'warning-text',
-		parameters: {
-			text: 'The appeal you are trying to link to already has a lead appeal.'
-		}
-	};
-
 	// candidate and target are the same appeal
 	if (appealData.appealReference === linkCandidateAppealData?.appealReference) {
 		pageContent.pageComponents?.unshift({
 			type: 'warning-text',
 			parameters: {
-				text: `You cannot link an appeal to itself.`
+				text: 'This is the appeal you are currently reviewing.'
 			}
 		});
 		pageContent.submitButtonProperties = {
@@ -314,7 +306,7 @@ export function addLinkedAppealCheckAndConfirmPage(
 		pageContent.pageComponents?.unshift({
 			type: 'warning-text',
 			parameters: {
-				text: `The appeals are already linked.`
+				text: 'Appeals already linked.'
 			}
 		});
 		pageContent.submitButtonProperties = {
@@ -351,7 +343,7 @@ export function addLinkedAppealCheckAndConfirmPage(
 						},
 						{
 							value: 'cancel',
-							text: `No, return to search`
+							text: 'No, return to search'
 						}
 					]
 				}
@@ -368,6 +360,12 @@ export function addLinkedAppealCheckAndConfirmPage(
 				parameters: {
 					name: 'confirmation',
 					id: 'confirmation',
+					fieldset: {
+						legend: {
+							text: 'Is this the appeal you want to link?',
+							classes: 'govuk-fieldset__legend--m'
+						}
+					},
 					items: [
 						{
 							value: 'lead',
@@ -378,7 +376,7 @@ export function addLinkedAppealCheckAndConfirmPage(
 						},
 						{
 							value: 'cancel',
-							text: `No, return to search`
+							text: 'No, return to search'
 						}
 					]
 				}
@@ -390,7 +388,12 @@ export function addLinkedAppealCheckAndConfirmPage(
 		}
 		// candidate is a child
 		else if (candidateIsChild) {
-			pageContent.pageComponents?.unshift(alreadyHasLeadWarningTextComponent);
+			pageContent.pageComponents?.unshift({
+				type: 'warning-text',
+				parameters: {
+					text: 'Link your case to the lead of this appeal.'
+				}
+			});
 			pageContent.submitButtonProperties = {
 				text: 'Return to search',
 				href: `/appeals-service/appeal-details/${appealData.appealId}/linked-appeals/add`
@@ -406,6 +409,12 @@ export function addLinkedAppealCheckAndConfirmPage(
 				parameters: {
 					name: 'confirmation',
 					id: 'confirmation',
+					fieldset: {
+						legend: {
+							text: 'Is this the appeal you want to link?',
+							classes: 'govuk-fieldset__legend--m'
+						}
+					},
 					items: [
 						{
 							value: 'child',
@@ -431,7 +440,7 @@ export function addLinkedAppealCheckAndConfirmPage(
 			pageContent.pageComponents?.unshift({
 				type: 'warning-text',
 				parameters: {
-					text: `Appeal ${shortAppealReference} and the appeal you are trying to link to it are both lead appeals, and cannot be linked.`
+					text: 'Appeals are both lead appeals and cannot be linked.'
 				}
 			});
 			pageContent.submitButtonProperties = {
@@ -439,9 +448,14 @@ export function addLinkedAppealCheckAndConfirmPage(
 				href: `/appeals-service/appeal-details/${appealData.appealId}/linked-appeals/add`
 			};
 		}
-		// candidate is a child
+		// candidate is a child (of another appeal, because "candidate is already linked to target" scenario has already been ruled out by prior check)
 		else {
-			pageContent.pageComponents?.unshift(alreadyHasLeadWarningTextComponent);
+			pageContent.pageComponents?.unshift({
+				type: 'warning-text',
+				parameters: {
+					text: 'Appeal already linked to another lead appeal. Cannot be linked.'
+				}
+			});
 			pageContent.submitButtonProperties = {
 				text: 'Return to search',
 				href: `/appeals-service/appeal-details/${appealData.appealId}/linked-appeals/add`
@@ -450,15 +464,31 @@ export function addLinkedAppealCheckAndConfirmPage(
 	}
 	// target is a child
 	else if (appealData.isChildAppeal) {
-		if (candidateIsLead) {
+		// candidate has no linked appeals
+		if (!linkCandidateAppealData || linkCandidateAppealData.linkedAppeals.length === 0) {
 			pageContent.pageComponents?.unshift({
 				type: 'warning-text',
 				parameters: {
-					text: 'The appeal you are trying to link to is already a lead appeal.'
+					text: `Link this appeal to your case's lead appeal.`
 				}
 			});
+		}
+		// candidate is a lead (of another appeal, because "candidate is already linked to target" scenario has already been ruled out by prior check)
+		else if (candidateIsLead) {
+			pageContent.pageComponents?.unshift({
+				type: 'warning-text',
+				parameters: {
+					text: 'Appeal already a lead appeal. Cannot be linked.'
+				}
+			});
+			// candidate is a child (of another appeal, because "candidate is already linked to target" scenario has already been ruled out by prior check)
 		} else {
-			pageContent.pageComponents?.unshift(alreadyHasLeadWarningTextComponent);
+			pageContent.pageComponents?.unshift({
+				type: 'warning-text',
+				parameters: {
+					text: 'Appeal already linked to another lead appeal. Cannot be linked.'
+				}
+			});
 		}
 
 		pageContent.submitButtonProperties = {
