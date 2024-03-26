@@ -17,7 +17,7 @@ pr:
       - main
   paths:
     include:
-      - apps/e2e/cypress/e2e/back-office-appeals
+      - appeals/e2e/cypress/e2e/back-office-appeals
 trigger: none
 
 jobs:
@@ -33,19 +33,19 @@ jobs:
 
       - task: ShellScript@2
         inputs:
-          scriptPath: 'apps/e2e/install-chromium.sh'
+          scriptPath: 'appeals/e2e/install-chromium.sh'
         displayName: 'Install Chromium'
         condition: eq(variables['agent.os'], 'Linux')
 
       - task: Npm@1
         inputs:
           command: "install"
-          workingDir: $(System.DefaultWorkingDirectory)/apps/e2e
+          workingDir: $(System.DefaultWorkingDirectory)/appeals/e2e
         displayName: "Install Dependencies"
 
       - task: ShellScript@2
         inputs:
-          scriptPath: 'apps/e2e/run-tests.sh'
+          scriptPath: 'appeals/e2e/run-tests.sh'
         env:
           BASE_URL: $(APPEALS_BASE_URL)
           CASE_TEAM_EMAIL: $(CASE_TEAM_APPEALS_EMAIL)
@@ -57,7 +57,7 @@ jobs:
 
       - task: PublishBuildArtifacts@1
         inputs:
-          pathToPublish: 'apps/e2e/cypress/screenshots'
+          pathToPublish: 'appeals/e2e/cypress/screenshots'
           artifactName: 'FailedTests'
         displayName: "Publish Failed Tests Artifacts"
         condition: failed()
