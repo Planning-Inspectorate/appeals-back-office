@@ -1,1 +1,2 @@
 /appeals/api/src/server/utils/db-client/*
+/appeals/e2e/**/*.js

@@ -1,0 +1,8 @@
+.env
+.environment
+/failed-tests
+/cypress/videos
+/cypress/screenshots
+/cypress/support/browserAuthData
+cucumber-messages.ndjson
+/reports/report.html
