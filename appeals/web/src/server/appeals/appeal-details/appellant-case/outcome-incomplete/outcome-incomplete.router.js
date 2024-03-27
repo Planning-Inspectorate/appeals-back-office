@@ -1,6 +1,7 @@
 import { Router as createRouter } from 'express';
 import * as controller from './outcome-incomplete.controller.js';
 import * as validators from './outcome-incomplete.validators.js';
+import { validateAppeal } from '#appeals/appeal-details/appeal-details.middleware.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -15,8 +16,9 @@ router
 
 router
 	.route('/date')
-	.get(controller.getUpdateDueDate)
+	.get(validateAppeal, controller.getUpdateDueDate)
 	.post(
+		validateAppeal,
 		validators.validateDueDateFields,
 		validators.validateDueDateValid,
 		validators.validateDueDateInFuture,

@@ -14,10 +14,8 @@
 			<span class="govuk-caption-xl govuk-!-margin-bottom-1">{{ pageContent.preHeading }}</span>
 			<h1 class="govuk-fieldset__legend--xl govuk-!-margin-top-0">{{ pageContent.heading }}</h1>
 			{%- for component in pageContent.pageComponents -%}
-				{%- if component.type === 'inset-text' -%}
-					{{ govukInsetText(component.parameters) }}
-				{%- else -%}
-				{%- include "../components/page-component.njk" -%}
+				{%- if component.type !== 'date-input' -%}
+					{%- include "../components/page-component.njk" -%}
 				{%- endif -%}
 			{%- endfor -%}
 		</div>
@@ -26,13 +24,22 @@
 
 {%- block pageContent -%}
 	<form method="post" novalidate="novalidate">
-		{{ govukDateInput({
-			id: "due-date",
-			namePrefix: "due-date",
-			hint: {
-				text: "For example, 27 3 2007"
-			}
-		}) }}
+		{%- set renderedDateInputPageComponent = false -%}
+		{%- for component in pageContent.pageComponents -%}
+			{%- if component.type === 'date-input' -%}
+				{%- include "../components/page-component.njk" -%}
+				{%- set renderedDateInputPageComponent = true -%}
+			{%- endif -%}
+		{%- endfor -%}
+		{%- if not renderedDateInputPageComponent -%}
+			{{ govukDateInput({
+				id: "due-date",
+				namePrefix: "due-date",
+				hint: {
+					text: "For example, 27 3 2007"
+				}
+			}) }}
+		{%- endif -%}
 		{% if pageContent.skipButtonUrl %}
 			<p class="govuk-body">If the existing due date still applies, please skip to the confirmation screen.</p>
 		{% endif %}
