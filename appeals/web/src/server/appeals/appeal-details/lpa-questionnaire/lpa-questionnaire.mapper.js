@@ -6,7 +6,11 @@ import {
 	mapDocumentManageUrl,
 	buildDocumentUploadUrlTemplate
 } from '#lib/mappers/lpaQuestionnaire.mapper.js';
-import { dayMonthYearToApiDateString, webDateToDisplayDate } from '../../../lib/dates.js';
+import {
+	dayMonthYearToApiDateString,
+	webDateToDisplayDate,
+	apiDateStringToDayMonthYear
+} from '../../../lib/dates.js';
 import {
 	mapReasonOptionsToCheckboxItemParameters,
 	mapReasonsToReasonsListHtml
@@ -239,35 +243,82 @@ export async function lpaQuestionnairePage(
 }
 
 /**
- * @param {number} appealId
- * @param {string} appealReference
+ * @param {Appeal} appealData
  * @param {number} lpaQuestionnaireId
- * @param {string} [currentDueDate]
+ * @param {number} [dueDateDay]
+ * @param {number} [dueDateMonth]
+ * @param {number} [dueDateYear]
  * @returns {PageContent}
  */
-export function updateDueDatePage(appealId, appealReference, lpaQuestionnaireId, currentDueDate) {
+export function updateDueDatePage(
+	appealData,
+	lpaQuestionnaireId,
+	dueDateDay,
+	dueDateMonth,
+	dueDateYear
+) {
+	let existingDueDateDayMonthYear;
+
+	if (
+		dueDateDay === undefined &&
+		dueDateMonth === undefined &&
+		dueDateYear === undefined &&
+		appealData.documentationSummary.lpaQuestionnaire?.dueDate
+	) {
+		existingDueDateDayMonthYear = apiDateStringToDayMonthYear(
+			appealData.documentationSummary.lpaQuestionnaire?.dueDate
+		);
+	} else {
+		/** @type {DayMonthYear} */
+		existingDueDateDayMonthYear = {
+			day: dueDateDay,
+			month: dueDateMonth,
+			year: dueDateYear
+		};
+	}
+
 	/** @type {PageContent} */
 	const pageContent = {
 		title: 'Check answers',
-		backLinkUrl: `/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/incomplete`,
-		preHeading: `Appeal ${appealShortReference(appealReference)}`,
+		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${lpaQuestionnaireId}/incomplete`,
+		preHeading: `Appeal ${appealShortReference(appealData.appealReference)}`,
 		heading: 'Update LPA questionnaire due date',
 		submitButtonProperties: {
 			text: 'Save and continue',
 			type: 'submit'
 		},
-		pageComponents: []
-	};
-
-	if (currentDueDate) {
-		pageContent.pageComponents?.push({
-			type: 'inset-text',
-			parameters: {
-				text: `The current due date for the LPA questionnaire is ${currentDueDate}`
+		pageComponents: [
+			{
+				type: 'date-input',
+				parameters: {
+					id: 'due-date',
+					namePrefix: 'due-date',
+					hint: {
+						text: 'For example, 27 3 2007'
+					},
+					...(existingDueDateDayMonthYear && {
+						items: [
+							{
+								name: 'day',
+								classes: 'govuk-input--width-2',
+								value: existingDueDateDayMonthYear.day
+							},
+							{
+								name: 'month',
+								classes: 'govuk-input--width-2',
+								value: existingDueDateDayMonthYear.month
+							},
+							{
+								name: 'year',
+								classes: 'govuk-input--width-4',
+								value: existingDueDateDayMonthYear.year
+							}
+						]
+					})
+				}
 			}
-		});
-		pageContent.skipButtonUrl = `/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/check-your-answers`;
-	}
+		]
+	};
 
 	return pageContent;
 }

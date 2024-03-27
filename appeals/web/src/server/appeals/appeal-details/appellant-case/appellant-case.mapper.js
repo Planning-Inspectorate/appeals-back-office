@@ -1,6 +1,10 @@
 import config from '#environment/config.js';
 import { inputInstructionIsRadiosInputInstruction } from '#lib/mappers/global-mapper-formatter.js';
-import { dayMonthYearToApiDateString, webDateToDisplayDate } from '#lib/dates.js';
+import {
+	apiDateStringToDayMonthYear,
+	dayMonthYearToApiDateString,
+	webDateToDisplayDate
+} from '#lib/dates.js';
 import { capitalize } from 'lodash-es';
 import {
 	mapReasonOptionsToCheckboxItemParameters,
@@ -326,23 +330,74 @@ export function getValidationOutcomeFromAppellantCase(appellantCaseData) {
 }
 
 /**
- * @param {number} appealId
- * @param {string} appealReference
+ * @param {Appeal} appealData
+ * @param {number} [dueDateDay]
+ * @param {number} [dueDateMonth]
+ * @param {number} [dueDateYear]
  * @returns {PageContent}
  */
-export function updateDueDatePage(appealId, appealReference) {
+export function updateDueDatePage(appealData, dueDateDay, dueDateMonth, dueDateYear) {
+	let existingDueDateDayMonthYear;
+
+	if (
+		dueDateDay === undefined &&
+		dueDateMonth === undefined &&
+		dueDateYear === undefined &&
+		appealData.documentationSummary.appellantCase?.dueDate
+	) {
+		existingDueDateDayMonthYear = apiDateStringToDayMonthYear(
+			appealData.documentationSummary.appellantCase?.dueDate
+		);
+	} else {
+		/** @type {DayMonthYear} */
+		existingDueDateDayMonthYear = {
+			day: dueDateDay,
+			month: dueDateMonth,
+			year: dueDateYear
+		};
+	}
+
 	/** @type {PageContent} */
 	const pageContent = {
 		title: 'Check answers',
-		backLinkUrl: `/appeals-service/appeal-details/${appealId}/appellant-case/incomplete/`,
-		preHeading: `Appeal ${appealShortReference(appealReference)}`,
+		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/appellant-case/incomplete/`,
+		preHeading: `Appeal ${appealShortReference(appealData.appealReference)}`,
 		heading: 'Update appeal due date',
 		submitButtonProperties: {
 			text: 'Save and continue',
 			type: 'submit'
 		},
-		skipButtonUrl: `/appeals-service/appeal-details/${appealId}/appellant-case/check-your-answers`,
-		pageComponents: []
+		pageComponents: [
+			{
+				type: 'date-input',
+				parameters: {
+					id: 'due-date',
+					namePrefix: 'due-date',
+					hint: {
+						text: 'For example, 27 3 2007'
+					},
+					...(existingDueDateDayMonthYear && {
+						items: [
+							{
+								name: 'day',
+								classes: 'govuk-input--width-2',
+								value: existingDueDateDayMonthYear.day
+							},
+							{
+								name: 'month',
+								classes: 'govuk-input--width-2',
+								value: existingDueDateDayMonthYear.month
+							},
+							{
+								name: 'year',
+								classes: 'govuk-input--width-4',
+								value: existingDueDateDayMonthYear.year
+							}
+						]
+					})
+				}
+			}
+		]
 	};
 
 	return pageContent;

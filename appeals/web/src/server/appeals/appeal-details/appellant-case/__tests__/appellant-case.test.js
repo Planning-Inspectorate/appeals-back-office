@@ -436,16 +436,7 @@ describe('appellant-case', () => {
 			nock.cleanAll();
 		});
 
-		it('should render the 500 error page if required data is not present in the session', async () => {
-			const response = await request.get(
-				`${baseUrl}/1${appellantCasePagePath}${incompleteOutcomePagePath}`
-			);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-		});
-
-		it('should render the incomplete reason page if required data is present in the session', async () => {
+		it('should render the incomplete reason page', async () => {
 			// post to appellant case page controller is necessary to set required data in the session
 			const appellantCasePostResponse = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}`)
@@ -659,25 +650,37 @@ describe('appellant-case', () => {
 			nock('http://test/')
 				.get('/appeals/appellant-case-incomplete-reasons')
 				.reply(200, appellantCaseIncompleteReasons);
+			nock('http://test/')
+				.get(`/appeals/1`)
+				.reply(200, {
+					...appealData,
+					appealId: 1
+				});
 		});
 
 		afterEach(() => {
 			nock.cleanAll();
 		});
 
-		it('should render the 500 error page if required data is not present in the session', async () => {
-			const response = await request.get(
-				`${baseUrl}/1${appellantCasePagePath}${incompleteOutcomePagePath}${updateDueDatePagePath}`
-			);
-			const element = parseHtml(response.text);
+		it('should render the update due date page without pre-populated date values, if required data is present in the session, and there is no existing due date', async () => {
+			nock('http://test/')
+				.get(`/appeals/2`)
+				.reply(200, {
+					...appealData,
+					appealId: 2,
+					documentationSummary: {
+						...appealData.documentationSummary,
+						appellantCase: {
+							...appealData.documentationSummary.appellantCase,
+							dueDate: null
+						}
+					}
+				})
+				.persist();
 
-			expect(element.innerHTML).toMatchSnapshot();
-		});
-
-		it('should render the update due date page if required data is present in the session', async () => {
 			// post to appellant case page controller is necessary to set required data in the session
 			const appellantCasePostResponse = await request
-				.post(`${baseUrl}/1${appellantCasePagePath}`)
+				.post(`${baseUrl}/2${appellantCasePagePath}`)
 				.send({
 					reviewOutcome: 'incomplete'
 				});
@@ -686,7 +689,7 @@ describe('appellant-case', () => {
 
 			// post to incomplete reason page controller is necessary to set required data in the session
 			const incompleteReasonPostResponse = await request
-				.post(`${baseUrl}/1${appellantCasePagePath}/${incompleteOutcomePagePath}`)
+				.post(`${baseUrl}/2${appellantCasePagePath}/${incompleteOutcomePagePath}`)
 				.send({
 					incompleteReason: incompleteReasonsWithoutTextIds[0]
 				});
@@ -694,11 +697,84 @@ describe('appellant-case', () => {
 			expect(incompleteReasonPostResponse.statusCode).toBe(302);
 
 			const response = await request.get(
-				`${baseUrl}/1${appellantCasePagePath}${incompleteOutcomePagePath}${updateDueDatePagePath}`
+				`${baseUrl}/2${appellantCasePagePath}${incompleteOutcomePagePath}${updateDueDatePagePath}`
 			);
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="due-date-day" type="text" inputmode="numeric">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="due-date-month" type="text" inputmode="numeric">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="due-date-year" type="text" inputmode="numeric">'
+			);
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'name="due-date-day" type="text" value="'
+			);
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'name="due-date-month" type="text" value="'
+			);
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'name="due-date-year" type="text" value="'
+			);
+		});
+
+		it('should render the update due date page with correct pre-populated date values, if required data is present in the session, and there is an existing due date', async () => {
+			nock('http://test/')
+				.get(`/appeals/2`)
+				.reply(200, {
+					...appealData,
+					appealId: 2,
+					documentationSummary: {
+						...appealData.documentationSummary,
+						appellantCase: {
+							...appealData.documentationSummary.appellantCase,
+							dueDate: '2024-10-02T10:27:06.626Z'
+						}
+					}
+				})
+				.persist();
+
+			// post to appellant case page controller is necessary to set required data in the session
+			const appellantCasePostResponse = await request
+				.post(`${baseUrl}/2${appellantCasePagePath}`)
+				.send({
+					reviewOutcome: 'incomplete'
+				});
+
+			expect(appellantCasePostResponse.statusCode).toBe(302);
+
+			// post to incomplete reason page controller is necessary to set required data in the session
+			const incompleteReasonPostResponse = await request
+				.post(`${baseUrl}/2${appellantCasePagePath}/${incompleteOutcomePagePath}`)
+				.send({
+					incompleteReason: incompleteReasonsWithoutTextIds[0]
+				});
+
+			expect(incompleteReasonPostResponse.statusCode).toBe(302);
+
+			const response = await request.get(
+				`${baseUrl}/2${appellantCasePagePath}${incompleteOutcomePagePath}${updateDueDatePagePath}`
+			);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('name="due-date-day" type="text" value="2"');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="due-date-month" type="text" value="10"'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="due-date-year" type="text" value="2024"'
+			);
 		});
 	});
 
@@ -716,6 +792,12 @@ describe('appellant-case', () => {
 			nock('http://test/')
 				.get('/appeals/appellant-case-incomplete-reasons')
 				.reply(200, appellantCaseIncompleteReasons);
+			nock('http://test/')
+				.get(`/appeals/1`)
+				.reply(200, {
+					...appealData,
+					appealId: 1
+				});
 
 			// post to appellant case page controller is necessary to set required data in the session
 			appellantCasePostResponse = await request.post(`${baseUrl}/1${appellantCasePagePath}`).send({

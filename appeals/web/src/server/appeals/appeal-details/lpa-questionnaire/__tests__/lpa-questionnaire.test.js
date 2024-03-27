@@ -357,6 +357,12 @@ describe('LPA Questionnaire review', () => {
 			nock('http://test/')
 				.get('/appeals/lpa-questionnaire-incomplete-reasons')
 				.reply(200, lpaQuestionnaireIncompleteReasons);
+			nock('http://test/')
+				.get(`/appeals/1`)
+				.reply(200, {
+					...appealData,
+					appealId: 1
+				});
 		});
 
 		afterEach(() => {
@@ -370,25 +376,111 @@ describe('LPA Questionnaire review', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 		});
 
-		it('should render the update due date page if required data is present in the session', async () => {
+		it('should render the update due date page without pre-populated date values, if required data is present in the session, and there is no existing due date', async () => {
+			nock('http://test/')
+				.get(`/appeals/2`)
+				.reply(200, {
+					...appealData,
+					appealId: 2,
+					documentationSummary: {
+						...appealData.documentationSummary,
+						lpaQuestionnaire: {
+							...appealData.documentationSummary.lpaQuestionnaire,
+							dueDate: null
+						}
+					}
+				})
+				.persist();
+
+			const localBaseUrl = '/appeals-service/appeal-details/2/lpa-questionnaire/2';
+
 			// post to LPA questionnaire page controller is necessary to set required data in the session
-			const lpaQPostResponse = await request.post(baseUrl).send({
+			const lpaQPostResponse = await request.post(localBaseUrl).send({
 				'review-outcome': 'incomplete'
 			});
 
 			expect(lpaQPostResponse.statusCode).toBe(302);
 
 			// post to incomplete reason page controller is necessary to set required data in the session
-			const incompleteReasonPostResponse = await request.post(`${baseUrl}/incomplete`).send({
+			const incompleteReasonPostResponse = await request.post(`${localBaseUrl}/incomplete`).send({
 				incompleteReason: incompleteReasonIds
 			});
 
 			expect(incompleteReasonPostResponse.statusCode).toBe(302);
 
-			const response = await request.get(`${baseUrl}/incomplete/date`);
+			const response = await request.get(`${localBaseUrl}/incomplete/date`);
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="due-date-day" type="text" inputmode="numeric">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="due-date-month" type="text" inputmode="numeric">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="due-date-year" type="text" inputmode="numeric">'
+			);
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'name="due-date-day" type="text" value="'
+			);
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'name="due-date-month" type="text" value="'
+			);
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'name="due-date-year" type="text" value="'
+			);
+		});
+
+		it('should render the update due date page with correct pre-populated date values, if required data is present in the session, and there is an existing due date', async () => {
+			nock('http://test/')
+				.get(`/appeals/2`)
+				.reply(200, {
+					...appealData,
+					appealId: 2,
+					documentationSummary: {
+						...appealData.documentationSummary,
+						lpaQuestionnaire: {
+							...appealData.documentationSummary.lpaQuestionnaire,
+							dueDate: '2024-10-11T10:27:06.626Z'
+						}
+					}
+				})
+				.persist();
+
+			const localBaseUrl = '/appeals-service/appeal-details/2/lpa-questionnaire/2';
+
+			// post to LPA questionnaire page controller is necessary to set required data in the session
+			const lpaQPostResponse = await request.post(localBaseUrl).send({
+				'review-outcome': 'incomplete'
+			});
+
+			expect(lpaQPostResponse.statusCode).toBe(302);
+
+			// post to incomplete reason page controller is necessary to set required data in the session
+			const incompleteReasonPostResponse = await request.post(`${localBaseUrl}/incomplete`).send({
+				incompleteReason: incompleteReasonIds
+			});
+
+			expect(incompleteReasonPostResponse.statusCode).toBe(302);
+
+			const response = await request.get(`${localBaseUrl}/incomplete/date`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('name="due-date-day" type="text" value="11"');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="due-date-month" type="text" value="10"'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="due-date-year" type="text" value="2024"'
+			);
 		});
 	});
 
@@ -406,6 +498,12 @@ describe('LPA Questionnaire review', () => {
 			nock('http://test/')
 				.get('/appeals/lpa-questionnaire-incomplete-reasons')
 				.reply(200, lpaQuestionnaireIncompleteReasons);
+			nock('http://test/')
+				.get(`/appeals/1`)
+				.reply(200, {
+					...appealData,
+					appealId: 1
+				});
 
 			// post to LPA questionnaire page controller is necessary to set required data in the session
 			lpaQPostResponse = await request.post(baseUrl).send({

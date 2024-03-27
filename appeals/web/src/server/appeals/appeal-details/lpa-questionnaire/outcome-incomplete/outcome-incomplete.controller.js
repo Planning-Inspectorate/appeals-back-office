@@ -6,7 +6,6 @@ import {
 } from '../lpa-questionnaire.mapper.js';
 import { getLPAQuestionnaireIncompleteReasonOptions } from '../lpa-questionnaire.service.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
-import { dateToDisplayDate } from '#lib/dates.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { getNotValidReasonsTextFromRequestBody } from '#lib/mappers/validation-outcome-reasons.mapper.js';
 import { decisionIncompleteConfirmationPage } from './outcome-incomplete.mapper.js';
@@ -75,24 +74,28 @@ const renderIncompleteReason = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 const renderUpdateDueDate = async (request, response) => {
-	const { errors } = request;
-	const lpaQCurrentDueDateIso =
-		request.currentAppeal?.documentationSummary?.lpaQuestionnaire?.dueDate;
-	const lpaQCurrentDueDate = lpaQCurrentDueDateIso && dateToDisplayDate(lpaQCurrentDueDateIso);
+	const { body, currentAppeal, errors } = request;
 
-	if (
-		!objectContainsAllKeys(request.session, ['appealId', 'appealReference', 'lpaQuestionnaireId'])
-	) {
+	let postedDueDateDay, postedDueDateMonth, postedDueDateYear;
+
+	if (objectContainsAllKeys(body, ['due-date-day', 'due-date-month', 'due-date-year'])) {
+		postedDueDateDay = parseInt(body['due-date-day'], 10);
+		postedDueDateMonth = parseInt(body['due-date-month'], 10);
+		postedDueDateYear = parseInt(body['due-date-year'], 10);
+	}
+
+	if (!objectContainsAllKeys(request.session, ['lpaQuestionnaireId'])) {
 		return response.render('app/500.njk');
 	}
 
-	const { appealId, appealReference, lpaQuestionnaireId } = request.session;
+	const { lpaQuestionnaireId } = request.session;
 
 	const mappedPageContent = updateDueDatePage(
-		appealId,
-		appealReference,
+		currentAppeal,
 		lpaQuestionnaireId,
-		lpaQCurrentDueDate
+		postedDueDateDay,
+		postedDueDateMonth,
+		postedDueDateYear
 	);
 
 	return response.render('appeals/appeal/update-date.njk', {

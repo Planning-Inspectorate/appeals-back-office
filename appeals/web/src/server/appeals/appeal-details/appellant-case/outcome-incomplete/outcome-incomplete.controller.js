@@ -94,15 +94,22 @@ const renderIncompleteReason = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 const renderUpdateDueDate = async (request, response) => {
-	const { errors } = request;
+	const { body, currentAppeal, errors } = request;
 
-	if (!objectContainsAllKeys(request.session, ['appealId', 'appealReference'])) {
-		return response.render('app/500.njk');
+	let postedDueDateDay, postedDueDateMonth, postedDueDateYear;
+
+	if (objectContainsAllKeys(body, ['due-date-day', 'due-date-month', 'due-date-year'])) {
+		postedDueDateDay = parseInt(body['due-date-day'], 10);
+		postedDueDateMonth = parseInt(body['due-date-month'], 10);
+		postedDueDateYear = parseInt(body['due-date-year'], 10);
 	}
 
-	const { appealId, appealReference } = request.session;
-
-	const mappedPageContent = updateDueDatePage(appealId, appealReference);
+	const mappedPageContent = updateDueDatePage(
+		currentAppeal,
+		postedDueDateDay,
+		postedDueDateMonth,
+		postedDueDateYear
+	);
 
 	return response.render('appeals/appeal/update-date.njk', {
 		pageContent: mappedPageContent,
@@ -178,10 +185,6 @@ export const getUpdateDueDate = async (request, response) => {
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const postUpdateDueDate = async (request, response) => {
-	if (request.errors) {
-		return renderUpdateDueDate(request, response);
-	}
-
 	if (!objectContainsAllKeys(request.session, 'webAppellantCaseReviewOutcome')) {
 		return response.render('app/500.njk');
 	}
@@ -190,6 +193,10 @@ export const postUpdateDueDate = async (request, response) => {
 
 	if (!objectContainsAllKeys(body, ['due-date-day', 'due-date-month', 'due-date-year'])) {
 		return response.render('app/500.njk');
+	}
+
+	if (request.errors) {
+		return renderUpdateDueDate(request, response);
 	}
 
 	try {
