@@ -1,7 +1,7 @@
 {%- extends "app/layouts/app-two-column.layout.njk" -%}
 {%- from "govuk/components/button/macro.njk" import govukButton -%}
 
-{%- set pageTitle = (pageContent.title + ' - ' if pageContent.title else '') + "GOV.UK" -%}
+{%- set pageTitle = pageContent.title if pageContent.title else '' -%}
 {%- set backLinkUrl = pageContent.backLinkUrl -%}
 {%- set backLinkText = pageContent.backLinkText -%}
 
