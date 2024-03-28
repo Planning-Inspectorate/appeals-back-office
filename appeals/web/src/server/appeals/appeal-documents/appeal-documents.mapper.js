@@ -69,6 +69,7 @@ export function documentUploadPage(
 		multiple: !documentId,
 		documentStage: documentStage,
 		serviceName: documentName || pageHeadingText,
+		pageTitle: 'Upload documents',
 		appealShortReference: appealShortReference(appealReference),
 		pageHeadingText: pageHeadingText,
 		documentType: documentType,

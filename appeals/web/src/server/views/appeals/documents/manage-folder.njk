@@ -4,7 +4,7 @@
 
 {%- set backLinkUrl = pageContent.backLinkUrl -%}
 {%- set backLinkText = pageContent.backLinkText -%}
-{%- set pageTitle = (pageContent.title + ' - ' if pageContent.title else '') + "GOV.UK" -%}
+{%- set pageTitle = pageContent.title if pageContent.title else '' -%}
 
 {%- set errorSummaryPageComponents = []-%}
 {%- set notificationBannerPageComponents = []-%}

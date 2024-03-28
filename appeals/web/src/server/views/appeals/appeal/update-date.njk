@@ -4,7 +4,7 @@
 {%- from "govuk/components/button/macro.njk" import govukButton -%}
 {%- from "govuk/components/inset-text/macro.njk" import govukInsetText -%}
 
-{%- set pageTitle = (pageContent.title if pageContent.title else "Update due date") + " - GOV.UK" -%}
+{%- set pageTitle = pageContent.title if pageContent.title else "Update due date" -%}
 {%- set backLinkText = pageContent.backLinkText -%}
 {%- set backLinkUrl = pageContent.backLinkUrl -%}
 

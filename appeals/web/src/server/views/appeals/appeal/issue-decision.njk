@@ -7,7 +7,7 @@
 
 {%- set backLinkUrl = pageContent.backLinkUrl -%}
 {%- set backLinkText = pageContent.backLinkText -%}
-{%- set pageTitle = (pageContent.title if pageContent.title else 'Change') + ' - GOV.UK' -%}
+{%- set pageTitle = pageContent.title if pageContent.title else 'Change' -%}
 
 {%- block pageHeading -%}
 	<div class="govuk-grid-row">

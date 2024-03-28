@@ -5,7 +5,7 @@
 {% set serviceName = 'Planning inspectorate' %}
 
 {% block pageTitle %}
-	{{ pageTitle | default('GOV.UK') }} – {{ serviceName }}
+	{{ pageTitle + ' - ' if pageTitle else '' }}{{ serviceName }}
 {% endblock %}
 
 {%- block pageHeading -%}

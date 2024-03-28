@@ -4,7 +4,7 @@
 {%- from "govuk/components/button/macro.njk" import govukButton -%}
 {%- from "../components/add-another-reason.njk" import addAnotherReason -%}
 
-{%- set pageTitle = "Why is the appeal " + notValidStatus + " - GOV.UK" -%}
+{%- set pageTitle = "Why is the appeal " + notValidStatus -%}
 
 {%- set backLinkUrl -%}
 	/appeals-service/appeal-details/{{ appeal.id }}/appellant-case

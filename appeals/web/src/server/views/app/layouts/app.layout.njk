@@ -2,7 +2,7 @@
 {# see https://design-system.service.gov.uk/styles/page-template/#options #}
 {# to match the scss $govuk-assets-path variable in main.scss #}
 {% set assetPath = "" %}
-{% set serviceName = 'Planning inspectorate' %}
+{% set serviceName = 'Casework Back Office System' %}
 
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
@@ -17,7 +17,7 @@
 {% endblock %}
 
 {% block pageTitle %}
-  {{ pageTitle | default('GOV.UK') }} – {{ serviceName }}
+  {{ pageTitle + ' - ' if pageTitle else '' }}{{ serviceName }}
 {% endblock %}
 
 {% block header %}

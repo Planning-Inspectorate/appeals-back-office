@@ -1,7 +1,7 @@
 {%- extends "app/layouts/app.layout.njk" -%}
 {%- from "govuk/components/panel/macro.njk" import govukPanel -%}
 
-{%- set pageTitle = (pageContent.title + ' - ' if pageContent.title else '') + "GOV.UK" -%}
+{%- set pageTitle = pageContent.title if pageContent.title else '' -%}
 
 {%- block main -%}
 	<main class="govuk-main-wrapper {{ mainClasses }}" id="main-content" role="main" {% if mainLang %} lang="{{ mainLang }}" {% endif %}>
