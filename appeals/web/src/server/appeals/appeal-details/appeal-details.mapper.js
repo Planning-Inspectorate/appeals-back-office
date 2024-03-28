@@ -371,7 +371,7 @@ function mapStatusDependentNotifications(appealDetails, session, accordionCompon
 				)}">Issue decision</a></p>`
 			);
 			break;
-		case 'lpa_questionnaire_due':
+		case 'validation':
 			addNotificationBannerToSession(
 				session,
 				'appealValidAndReadyToStart',

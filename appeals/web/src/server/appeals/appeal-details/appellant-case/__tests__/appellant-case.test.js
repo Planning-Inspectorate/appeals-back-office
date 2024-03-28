@@ -1221,23 +1221,17 @@ describe('appellant-case', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 		});
 
-		it('should render the outcome valid confirmation page if required data is present in the session', async () => {
-			const mockedAppellantCasesEndpoint = nock('http://test/')
-				.patch('/appeals/1/appellant-cases/0')
-				.reply(200, { validationOutcome: 'incomplete' });
-
-			// post to appellant case page controller is necessary to set required data in the session
+		it('should render the date valid page if required data is present in the session', async () => {
 			const appellantCasePostResponse = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}`)
 				.send({
 					reviewOutcome: 'valid'
 				});
 
-			expect(mockedAppellantCasesEndpoint.isDone()).toBe(true);
 			expect(appellantCasePostResponse.statusCode).toBe(302);
 
 			const response = await request.get(
-				`${baseUrl}/1${appellantCasePagePath}${validOutcomePagePath}${confirmationPagePath}`
+				`${baseUrl}/1${appellantCasePagePath}${validOutcomePagePath}${validDatePagePath}`
 			);
 			const element = parseHtml(response.text);
 

@@ -720,11 +720,11 @@ describe('appeal-details', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 		});
 
-		it('should render a "Appeal valid" notification banner with a link to start case when status is "lpa questionnaire due"', async () => {
+		it('should render a "Appeal valid" notification banner with a link to start case when status is "VALIDATION"', async () => {
 			const appealId = 2;
 			nock('http://test/')
 				.get(`/appeals/${appealId}`)
-				.reply(200, { ...appealData, appealId, appealStatus: 'lpa_questionnaire_due' });
+				.reply(200, { ...appealData, appealId, appealStatus: 'validation' });
 
 			const response = await request.get(`${baseUrl}/${appealId}`);
 

@@ -181,7 +181,7 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 </div>"
 `;
 
-exports[`appeal-details GET /:appealId should render a "Appeal valid" notification banner with a link to start case when status is "lpa questionnaire due" 1`] = `
+exports[`appeal-details GET /:appealId should render a "Appeal valid" notification banner with a link to start case when status is "VALIDATION" 1`] = `
 "<div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
 data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">

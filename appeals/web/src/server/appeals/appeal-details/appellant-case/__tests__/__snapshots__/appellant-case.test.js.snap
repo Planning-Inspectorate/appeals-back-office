@@ -3524,25 +3524,46 @@ exports[`appellant-case GET /appellant-case/valid/confirmation should render the
 </main>"
 `;
 
-exports[`appellant-case GET /appellant-case/valid/confirmation should render the outcome valid confirmation page if required data is present in the session 1`] = `
+exports[`appellant-case GET /appellant-case/valid/confirmation should render the date valid page if required data is present in the session 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-width-container">
-        <div class="govuk-grid-row">
-            <div class="govuk-grid-column-two-thirds govuk-!-padding-top-2">
-                <div class="govuk-panel govuk-panel--confirmation">
-                    <h1 class="govuk-panel__title"> Appeal valid</h1>
-                    <div class="govuk-panel__body">Appeal reference
-                        <br><strong>351062</strong>
-                    </div>
-                </div><span class="govuk-body">The timetable is now created and published.</span>
-                <h2>What happens next</h2>
-                <p class="govuk-body">We've sent the start letter email to the Appellant and LPA.</p>
-                <p class="govuk-body">The case has been published on the Appeals Casework Portal.</p>
-                <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1">Go back to case details</a>
-                </p>
-            </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full"><span class="govuk-caption-xl govuk-!-margin-bottom-1">Appeal 351062</span>
+            <h1             class="govuk-fieldset__legend--xl govuk-!-margin-top-0">Enter valid date for case</h1>
+                <p class="govuk-body">This is the date all case documentation was received and the appeal was
+                    valid.</p>
         </div>
     </div>
+    <form method="post" novalidate="novalidate">
+        <div class="govuk-form-group">
+            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+            <div class="govuk-date-input" id="due-date">
+                <div class="govuk-date-input__item">
+                    <div class="govuk-form-group">
+                        <label class="govuk-label govuk-date-input__label" for="due-date-day">Day</label>
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                        id="due-date-day" name="due-date-day" type="text" inputmode="numeric">
+                    </div>
+                </div>
+                <div class="govuk-date-input__item">
+                    <div class="govuk-form-group">
+                        <label class="govuk-label govuk-date-input__label" for="due-date-month">Month</label>
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                        id="due-date-month" name="due-date-month" type="text" inputmode="numeric">
+                    </div>
+                </div>
+                <div class="govuk-date-input__item">
+                    <div class="govuk-form-group">
+                        <label class="govuk-label govuk-date-input__label" for="due-date-year">Year</label>
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                        id="due-date-year" name="due-date-year" type="text" inputmode="numeric">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="govuk-button-group">
+            <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+        </div>
+    </form>
 </main>"
 `;
 
