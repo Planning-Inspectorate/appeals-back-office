@@ -26,14 +26,13 @@ exports[`documents upload should render upload form if appeal ID and folder ID a
                 aria-live="polite"></ul>
             </div>
     </div>
-    <div class="govuk-inset-text">Saving files will default them to ‘Unredacted’ and ‘Not checked’</div>
-    <div     class="display--flex">
+    <div class="display--flex">
         <button class="govuk-button pins-file-upload__submit" data-module="govuk-button"
-        id="submit-button-1">Save and continue</button>
+        id="submit-button-1">Continue</button>
         <div class="progress-hook"></div>
-        </div>
-        </form>
-        </div>
+    </div>
+    </form>
+    </div>
 </main>"
 `;
 
@@ -62,13 +61,12 @@ exports[`documents upload should render upload form if appeal ID, folder ID and 
                 aria-live="polite"></ul>
             </div>
     </div>
-    <div class="govuk-inset-text">Saving files will default them to ‘Unredacted’ and ‘Not checked’</div>
-    <div     class="display--flex">
+    <div class="display--flex">
         <button class="govuk-button pins-file-upload__submit" data-module="govuk-button"
-        id="submit-button-1">Save and continue</button>
+        id="submit-button-1">Continue</button>
         <div class="progress-hook"></div>
-        </div>
-        </form>
-        </div>
+    </div>
+    </form>
+    </div>
 </main>"
 `;
