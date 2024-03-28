@@ -275,7 +275,7 @@ export function mapAppealStatusToActionRequiredHtml(
 			}
 			return 'Awaiting LPA Questionnaire';
 		case 'issue_determination':
-			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/issue-decision/decision">Submit decision</a>`;
+			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/issue-decision/decision">Issue decision</a>`;
 		case 'awaiting_transfer':
 			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/change-appeal-type/add-horizon-reference">Update Horizon reference</a>`;
 		default:
