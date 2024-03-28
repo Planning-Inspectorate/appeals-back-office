@@ -171,8 +171,6 @@ exports[`linked-appeals GET /linked-appeals/add should render the add linked app
                         </ul>
                     </nav>
                 </div>
-                <div class="pins-column--right"><span class="font-weight--700"></span><a href="/" class="govuk-link">Go to Dashboard</a>
-                </div>
             </div>
         </div>
         </header>
@@ -344,8 +342,6 @@ exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render 
                             </li>
                         </ul>
                     </nav>
-                </div>
-                <div class="pins-column--right"><span class="font-weight--700"></span><a href="/" class="govuk-link">Go to Dashboard</a>
                 </div>
             </div>
         </div>
