@@ -1773,14 +1773,13 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/ should rend
                 aria-live="polite"></ul>
             </div>
     </div>
-    <div class="govuk-inset-text">Saving files will default them to ‘Unredacted’ and ‘Not checked’</div>
-    <div     class="display--flex">
+    <div class="display--flex">
         <button class="govuk-button pins-file-upload__submit" data-module="govuk-button"
-        id="submit-button-1">Save and continue</button>
+        id="submit-button-1">Continue</button>
         <div class="progress-hook"></div>
-        </div>
-        </form>
-        </div>
+    </div>
+    </form>
+    </div>
 </main>"
 `;
 
@@ -1810,29 +1809,28 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/ should rend
                 aria-live="polite"></ul>
             </div>
     </div>
-    <div class="govuk-inset-text">Saving files will default them to ‘Unredacted’ and ‘Not checked’</div>
-    <div     class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+    <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
         <strong         class="govuk-warning-text__text"><span class="govuk-warning-text__assistive">Warning</span> Additional documents
             should only be used when no other document folder is suitable. Please check
             the box below to confirm the document cannot be placed anywhere else before
             proceeding.</strong>
+    </div>
+    <div class="govuk-form-group">
+        <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="additionalDocumentsConfirmation"
+                name="additionalDocumentsConfirmation" type="checkbox" value="confirm">
+                <label class="govuk-label govuk-checkboxes__label" for="additionalDocumentsConfirmation">This document doesn&#39;t belong anywhere else</label>
             </div>
-            <div class="govuk-form-group">
-                <div class="govuk-checkboxes" data-module="govuk-checkboxes">
-                    <div class="govuk-checkboxes__item">
-                        <input class="govuk-checkboxes__input" id="additionalDocumentsConfirmation"
-                        name="additionalDocumentsConfirmation" type="checkbox" value="confirm">
-                        <label class="govuk-label govuk-checkboxes__label" for="additionalDocumentsConfirmation">This document doesn&#39;t belong anywhere else</label>
-                    </div>
-                </div>
-            </div>
-            <div class="display--flex">
-                <button class="govuk-button pins-file-upload__submit" data-module="govuk-button"
-                id="submit-button-1">Save and continue</button>
-                <div class="progress-hook"></div>
-            </div>
-            </form>
-            </div>
+        </div>
+    </div>
+    <div class="display--flex">
+        <button class="govuk-button pins-file-upload__submit" data-module="govuk-button"
+        id="submit-button-1">Continue</button>
+        <div class="progress-hook"></div>
+    </div>
+    </form>
+    </div>
 </main>"
 `;
 
@@ -1862,29 +1860,28 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/ should rend
                 aria-live="polite"></ul>
             </div>
     </div>
-    <div class="govuk-inset-text">Saving files will default them to ‘Unredacted’ and ‘Not checked’</div>
-    <div     class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+    <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
         <strong         class="govuk-warning-text__text"><span class="govuk-warning-text__assistive">Warning</span> Additional documents
             should only be used when no other document folder is suitable. Please check
             the box below to confirm the document cannot be placed anywhere else before
             proceeding.</strong>
+    </div>
+    <div class="govuk-form-group">
+        <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="additionalDocumentsConfirmation"
+                name="additionalDocumentsConfirmation" type="checkbox" value="confirm">
+                <label class="govuk-label govuk-checkboxes__label" for="additionalDocumentsConfirmation">This document doesn&#39;t belong anywhere else</label>
             </div>
-            <div class="govuk-form-group">
-                <div class="govuk-checkboxes" data-module="govuk-checkboxes">
-                    <div class="govuk-checkboxes__item">
-                        <input class="govuk-checkboxes__input" id="additionalDocumentsConfirmation"
-                        name="additionalDocumentsConfirmation" type="checkbox" value="confirm">
-                        <label class="govuk-label govuk-checkboxes__label" for="additionalDocumentsConfirmation">This document doesn&#39;t belong anywhere else</label>
-                    </div>
-                </div>
-            </div>
-            <div class="display--flex">
-                <button class="govuk-button pins-file-upload__submit" data-module="govuk-button"
-                id="submit-button-1">Save and continue</button>
-                <div class="progress-hook"></div>
-            </div>
-            </form>
-            </div>
+        </div>
+    </div>
+    <div class="display--flex">
+        <button class="govuk-button pins-file-upload__submit" data-module="govuk-button"
+        id="submit-button-1">Continue</button>
+        <div class="progress-hook"></div>
+    </div>
+    </form>
+    </div>
 </main>"
 `;
 
@@ -1914,29 +1911,28 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/ should rend
                 aria-live="polite"></ul>
             </div>
     </div>
-    <div class="govuk-inset-text">Saving files will default them to ‘Unredacted’ and ‘Not checked’</div>
-    <div     class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+    <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
         <strong         class="govuk-warning-text__text"><span class="govuk-warning-text__assistive">Warning</span> Additional documents
             should only be used when no other document folder is suitable. Please check
             the box below to confirm the document cannot be placed anywhere else before
             proceeding.</strong>
+    </div>
+    <div class="govuk-form-group">
+        <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="additionalDocumentsConfirmation"
+                name="additionalDocumentsConfirmation" type="checkbox" value="confirm">
+                <label class="govuk-label govuk-checkboxes__label" for="additionalDocumentsConfirmation">This document doesn&#39;t belong anywhere else</label>
             </div>
-            <div class="govuk-form-group">
-                <div class="govuk-checkboxes" data-module="govuk-checkboxes">
-                    <div class="govuk-checkboxes__item">
-                        <input class="govuk-checkboxes__input" id="additionalDocumentsConfirmation"
-                        name="additionalDocumentsConfirmation" type="checkbox" value="confirm">
-                        <label class="govuk-label govuk-checkboxes__label" for="additionalDocumentsConfirmation">This document doesn&#39;t belong anywhere else</label>
-                    </div>
-                </div>
-            </div>
-            <div class="display--flex">
-                <button class="govuk-button pins-file-upload__submit" data-module="govuk-button"
-                id="submit-button-1">Save and continue</button>
-                <div class="progress-hook"></div>
-            </div>
-            </form>
-            </div>
+        </div>
+    </div>
+    <div class="display--flex">
+        <button class="govuk-button pins-file-upload__submit" data-module="govuk-button"
+        id="submit-button-1">Continue</button>
+        <div class="progress-hook"></div>
+    </div>
+    </form>
+    </div>
 </main>"
 `;
 
@@ -1981,14 +1977,13 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/ should rend
                 aria-live="polite"></ul>
             </div>
     </div>
-    <div class="govuk-inset-text">Saving files will default them to ‘Unredacted’ and ‘Not checked’</div>
-    <div     class="display--flex">
+    <div class="display--flex">
         <button class="govuk-button pins-file-upload__submit" data-module="govuk-button"
-        id="submit-button-1">Save and continue</button>
+        id="submit-button-1">Continue</button>
         <div class="progress-hook"></div>
-        </div>
-        </form>
-        </div>
+    </div>
+    </form>
+    </div>
 </main>"
 `;
 
@@ -2018,14 +2013,13 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId 
                 aria-live="polite"></ul>
             </div>
     </div>
-    <div class="govuk-inset-text">Saving files will default them to ‘Unredacted’ and ‘Not checked’</div>
-    <div     class="display--flex">
+    <div class="display--flex">
         <button class="govuk-button pins-file-upload__submit" data-module="govuk-button"
-        id="submit-button-1">Save and continue</button>
+        id="submit-button-1">Continue</button>
         <div class="progress-hook"></div>
-        </div>
-        </form>
-        </div>
+    </div>
+    </form>
+    </div>
 </main>"
 `;
 
@@ -2055,29 +2049,28 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId 
                 aria-live="polite"></ul>
             </div>
     </div>
-    <div class="govuk-inset-text">Saving files will default them to ‘Unredacted’ and ‘Not checked’</div>
-    <div     class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+    <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
         <strong         class="govuk-warning-text__text"><span class="govuk-warning-text__assistive">Warning</span> Additional documents
             should only be used when no other document folder is suitable. Please check
             the box below to confirm the document cannot be placed anywhere else before
             proceeding.</strong>
+    </div>
+    <div class="govuk-form-group">
+        <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="additionalDocumentsConfirmation"
+                name="additionalDocumentsConfirmation" type="checkbox" value="confirm">
+                <label class="govuk-label govuk-checkboxes__label" for="additionalDocumentsConfirmation">This document doesn&#39;t belong anywhere else</label>
             </div>
-            <div class="govuk-form-group">
-                <div class="govuk-checkboxes" data-module="govuk-checkboxes">
-                    <div class="govuk-checkboxes__item">
-                        <input class="govuk-checkboxes__input" id="additionalDocumentsConfirmation"
-                        name="additionalDocumentsConfirmation" type="checkbox" value="confirm">
-                        <label class="govuk-label govuk-checkboxes__label" for="additionalDocumentsConfirmation">This document doesn&#39;t belong anywhere else</label>
-                    </div>
-                </div>
-            </div>
-            <div class="display--flex">
-                <button class="govuk-button pins-file-upload__submit" data-module="govuk-button"
-                id="submit-button-1">Save and continue</button>
-                <div class="progress-hook"></div>
-            </div>
-            </form>
-            </div>
+        </div>
+    </div>
+    <div class="display--flex">
+        <button class="govuk-button pins-file-upload__submit" data-module="govuk-button"
+        id="submit-button-1">Continue</button>
+        <div class="progress-hook"></div>
+    </div>
+    </form>
+    </div>
 </main>"
 `;
 
@@ -2107,29 +2100,28 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId 
                 aria-live="polite"></ul>
             </div>
     </div>
-    <div class="govuk-inset-text">Saving files will default them to ‘Unredacted’ and ‘Not checked’</div>
-    <div     class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+    <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
         <strong         class="govuk-warning-text__text"><span class="govuk-warning-text__assistive">Warning</span> Additional documents
             should only be used when no other document folder is suitable. Please check
             the box below to confirm the document cannot be placed anywhere else before
             proceeding.</strong>
+    </div>
+    <div class="govuk-form-group">
+        <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="additionalDocumentsConfirmation"
+                name="additionalDocumentsConfirmation" type="checkbox" value="confirm">
+                <label class="govuk-label govuk-checkboxes__label" for="additionalDocumentsConfirmation">This document doesn&#39;t belong anywhere else</label>
             </div>
-            <div class="govuk-form-group">
-                <div class="govuk-checkboxes" data-module="govuk-checkboxes">
-                    <div class="govuk-checkboxes__item">
-                        <input class="govuk-checkboxes__input" id="additionalDocumentsConfirmation"
-                        name="additionalDocumentsConfirmation" type="checkbox" value="confirm">
-                        <label class="govuk-label govuk-checkboxes__label" for="additionalDocumentsConfirmation">This document doesn&#39;t belong anywhere else</label>
-                    </div>
-                </div>
-            </div>
-            <div class="display--flex">
-                <button class="govuk-button pins-file-upload__submit" data-module="govuk-button"
-                id="submit-button-1">Save and continue</button>
-                <div class="progress-hook"></div>
-            </div>
-            </form>
-            </div>
+        </div>
+    </div>
+    <div class="display--flex">
+        <button class="govuk-button pins-file-upload__submit" data-module="govuk-button"
+        id="submit-button-1">Continue</button>
+        <div class="progress-hook"></div>
+    </div>
+    </form>
+    </div>
 </main>"
 `;
 
@@ -2159,29 +2151,28 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId 
                 aria-live="polite"></ul>
             </div>
     </div>
-    <div class="govuk-inset-text">Saving files will default them to ‘Unredacted’ and ‘Not checked’</div>
-    <div     class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+    <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
         <strong         class="govuk-warning-text__text"><span class="govuk-warning-text__assistive">Warning</span> Additional documents
             should only be used when no other document folder is suitable. Please check
             the box below to confirm the document cannot be placed anywhere else before
             proceeding.</strong>
+    </div>
+    <div class="govuk-form-group">
+        <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="additionalDocumentsConfirmation"
+                name="additionalDocumentsConfirmation" type="checkbox" value="confirm">
+                <label class="govuk-label govuk-checkboxes__label" for="additionalDocumentsConfirmation">This document doesn&#39;t belong anywhere else</label>
             </div>
-            <div class="govuk-form-group">
-                <div class="govuk-checkboxes" data-module="govuk-checkboxes">
-                    <div class="govuk-checkboxes__item">
-                        <input class="govuk-checkboxes__input" id="additionalDocumentsConfirmation"
-                        name="additionalDocumentsConfirmation" type="checkbox" value="confirm">
-                        <label class="govuk-label govuk-checkboxes__label" for="additionalDocumentsConfirmation">This document doesn&#39;t belong anywhere else</label>
-                    </div>
-                </div>
-            </div>
-            <div class="display--flex">
-                <button class="govuk-button pins-file-upload__submit" data-module="govuk-button"
-                id="submit-button-1">Save and continue</button>
-                <div class="progress-hook"></div>
-            </div>
-            </form>
-            </div>
+        </div>
+    </div>
+    <div class="display--flex">
+        <button class="govuk-button pins-file-upload__submit" data-module="govuk-button"
+        id="submit-button-1">Continue</button>
+        <div class="progress-hook"></div>
+    </div>
+    </form>
+    </div>
 </main>"
 `;
 
@@ -2226,14 +2217,13 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId 
                 aria-live="polite"></ul>
             </div>
     </div>
-    <div class="govuk-inset-text">Saving files will default them to ‘Unredacted’ and ‘Not checked’</div>
-    <div     class="display--flex">
+    <div class="display--flex">
         <button class="govuk-button pins-file-upload__submit" data-module="govuk-button"
-        id="submit-button-1">Save and continue</button>
+        id="submit-button-1">Continue</button>
         <div class="progress-hook"></div>
-        </div>
-        </form>
-        </div>
+    </div>
+    </form>
+    </div>
 </main>"
 `;
 

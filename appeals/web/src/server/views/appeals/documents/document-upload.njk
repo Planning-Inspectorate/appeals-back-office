@@ -28,7 +28,7 @@
 		{%- include "../../app/includes/late-entry-information.njk" -%}
 	{%- endif -%}
 	{{ fileUploader({
-		text: 'Save and continue',
+		text: 'Continue',
 		formId: 1,
 		caseId: appealId,
 		folderId: folderId,
@@ -40,7 +40,6 @@
 		blobStorageContainer: blobStorageContainer,
 		nextPageUrl: nextPageUrl if nextPageUrl else (['/appeals-service/appeal-details/', caseId] | join),
 		allowedTypes: allowedTypes if allowedTypes else (['pdf','doc','docx','ppt','pptx','xls','xlsx','jpg','jpeg','mpeg','mp3','mp4','mov','png','tif','tiff' ]),
-		disclaimerText: "Saving files will default them to ‘Unredacted’ and ‘Not checked’",
 		multiple: multiple,
 		displayCorrectFolderConfirmationContent: displayCorrectFolderConfirmationContent
 	}) }}
