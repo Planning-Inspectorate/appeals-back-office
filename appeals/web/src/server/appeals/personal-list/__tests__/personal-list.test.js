@@ -239,7 +239,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 		expect(result).toEqual('LPA Questionnaire Overdue');
 	});
 
-	it('should return "Submit decision" link for issue_determination status', () => {
+	it('should return "Issue decision" link for issue_determination status', () => {
 		const result = mapAppealStatusToActionRequiredHtml(
 			appealId,
 			'issue_determination',
@@ -250,7 +250,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			false
 		);
 		expect(result).toEqual(
-			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/issue-decision/decision">Submit decision</a>`
+			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/issue-decision/decision">Issue decision</a>`
 		);
 	});
 

@@ -22,12 +22,6 @@ export function issueDecisionPage(appealDetails, inspectorDecision) {
 		type: 'radios',
 		parameters: {
 			name: 'decision',
-			fieldset: {
-				legend: {
-					text: 'Issue your decision',
-					classes: 'govuk-fieldset__legend--m'
-				}
-			},
 			items: [
 				{
 					value: 'Allowed',
@@ -92,7 +86,7 @@ export function decisionLetterUploadPage(appealData, folderId, folderPath, appea
 		multiple: false,
 		documentStage: documentStage,
 		pageTitle: `Appeal ${shortAppealReference}`,
-		pageHeadingText: 'Upload your decision letter',
+		pageHeadingText: 'Upload decision letter',
 		caseInfoText: `Appeal ${shortAppealReference}`,
 		documentType: documentType,
 		nextPageUrl: `/appeals-service/appeal-details/${appealData.appealId}/issue-decision/decision-letter-date`,
@@ -114,7 +108,7 @@ export function dateDecisionLetterPage(
 	decisionLetterMonth,
 	decisionLetterYear
 ) {
-	const title = `Tell us the date on your decision letter`;
+	const title = 'Enter date of decision letter';
 
 	/** @type {PageComponent} */
 	const selectDateComponent = {
@@ -233,14 +227,10 @@ export function checkAndConfirmPage(request, appealData, session, decisionLetter
 	};
 
 	/** @type {PageComponent} */
-	const insetHtmlComponent = {
-		type: 'html',
+	const warningTextComponent = {
+		type: 'warning-text',
 		parameters: {
-			html: `<div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-					<strong class="govuk-warning-text__text">
-						<span class="govuk-warning-text__assistive">Warning</span> You are about to send the decision to all parties and close the appeal. Please make sure you have reviewed the decision information
-					</strong>
-				</div>`
+			text: 'You are about to send the decision to relevant parties and close the appeal. Make sure you have reviewed the decision information.'
 		}
 	};
 
@@ -262,8 +252,8 @@ export function checkAndConfirmPage(request, appealData, session, decisionLetter
 		backLinkText: 'Back',
 		preHeading: `Appeal ${appealShortReference(appealData.appealReference)}`,
 		heading: title,
-		submitButtonText: 'Submit this decision',
-		pageComponents: [summaryListComponent, insetHtmlComponent, insetConfirmComponent]
+		submitButtonText: 'Submit decision',
+		pageComponents: [summaryListComponent, warningTextComponent, insetConfirmComponent]
 	};
 
 	if (pageContent.pageComponents) {
@@ -290,7 +280,10 @@ export function invalidReasonPage(appealData, invalidReason) {
 			name: 'decisionInvalidReason',
 			rows: '15',
 			maxlength: 1000,
-			value: invalidReason || ''
+			value: invalidReason || '',
+			hint: {
+				text: 'This information will be shared with all parties.'
+			}
 		}
 	};
 	return {
@@ -335,7 +328,7 @@ export function checkAndConfirmInvalidPage(request, appealData, session) {
 				},
 				{
 					key: {
-						text: 'Why the appeal is invalid'
+						text: 'Reasons'
 					},
 					value: {
 						html: displayPageFormatter.formatFreeTextForDisplay(session.invalidReason)
@@ -354,14 +347,10 @@ export function checkAndConfirmInvalidPage(request, appealData, session) {
 	};
 
 	/** @type {PageComponent} */
-	const insetHtmlComponent = {
-		type: 'html',
+	const warningTextComponent = {
+		type: 'warning-text',
 		parameters: {
-			html: `<div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-					<strong class="govuk-warning-text__text">
-						<span class="govuk-warning-text__assistive">Warning</span> Submit your decision to inform all parties and close the appeal. Make sure you have reviewed the decision before submitting.
-					</strong>
-				</div>`
+			text: 'You are about to send the decision to relevant parties and close the appeal. Make sure you have reviewed the decision information.'
 		}
 	};
 
@@ -384,7 +373,7 @@ export function checkAndConfirmInvalidPage(request, appealData, session) {
 		preHeading: `Appeal ${appealShortReference(appealData.appealReference)}`,
 		heading: title,
 		submitButtonText: 'Submit this decision',
-		pageComponents: [summaryListComponent, insetHtmlComponent, insetConfirmComponent]
+		pageComponents: [summaryListComponent, warningTextComponent, insetConfirmComponent]
 	};
 
 	if (pageContent.pageComponents) {
@@ -402,12 +391,6 @@ export function checkAndConfirmInvalidPage(request, appealData, session) {
  */
 export function decisionConfirmationPage(appealData, appealIsInvalid) {
 	const title = appealIsInvalid ? 'Appeal Invalid' : 'Decision sent';
-	const details = appealIsInvalid
-		? `<span class="govuk-body">All parties have been informed of the decision.</span>`
-		: `<span class="govuk-body">We have sent the decision to the relevant appeal parties.</span>`;
-	const whatHappensNext = appealIsInvalid
-		? `<p class="govuk-body">The appeal has been closed.</p>`
-		: `<p class="govuk-body">The appeal will be closed.</p>`;
 
 	/** @type {PageContent} */
 	const pageContent = {
@@ -426,7 +409,7 @@ export function decisionConfirmationPage(appealData, appealIsInvalid) {
 			{
 				type: 'html',
 				parameters: {
-					html: details
+					html: '<span class="govuk-body">Relevant parties have been informed.</span>'
 				}
 			},
 			{
@@ -438,13 +421,13 @@ export function decisionConfirmationPage(appealData, appealIsInvalid) {
 			{
 				type: 'html',
 				parameters: {
-					html: whatHappensNext
+					html: '<p class="govuk-body">The appeal will be closed.</p>'
 				}
 			},
 			{
 				type: 'html',
 				parameters: {
-					html: `<p class="govuk-body"><a href="/appeals-service/appeals-list" class="govuk-link">Back to your list</a></p>`
+					html: '<p class="govuk-body"><a href="/appeals-service/appeals-list" class="govuk-link">Go back to your list</a></p>'
 				}
 			}
 		]
