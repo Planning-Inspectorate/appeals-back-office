@@ -202,7 +202,7 @@ describe('linked-appeals', () => {
 				'<dt class="govuk-summary-list__key"> Site address</dt>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<dt class="govuk-summary-list__key"> Local planning authority</dt>'
+				'<dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<dt class="govuk-summary-list__key"> Appellant name</dt>'

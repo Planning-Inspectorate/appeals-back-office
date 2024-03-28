@@ -110,7 +110,7 @@ export function confirmOtherAppealsPage(currentAppeal, relatedAppeal) {
 					],
 					[
 						{
-							html: '<strong>Local planning authority</strong>'
+							html: '<strong>Local planning authority (LPA)</strong>'
 						},
 						{
 							html: relatedAppeal.localPlanningDepartment || ''

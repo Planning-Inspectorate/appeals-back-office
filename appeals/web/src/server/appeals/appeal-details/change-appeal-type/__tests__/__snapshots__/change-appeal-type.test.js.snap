@@ -135,7 +135,7 @@ exports[`change-appeal-type GET /change-appeal-type/check-transfer should render
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
                     <dd                     class="govuk-summary-list__value">Wiltshire Council</dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant name</dt>
@@ -352,7 +352,7 @@ exports[`change-appeal-type POST /change-appeal-type/check-transfer should re-re
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
                     <dd                     class="govuk-summary-list__value">Wiltshire Council</dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant name</dt>

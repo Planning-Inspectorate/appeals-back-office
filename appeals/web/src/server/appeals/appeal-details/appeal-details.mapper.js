@@ -170,7 +170,12 @@ export async function appealDetailsPage(appealDetails, currentRoute, session) {
 			rows: [
 				mappedData.appeal.appellant.display.summaryListItem,
 				mappedData.appeal.agent.display.summaryListItem,
-				mappedData.appeal.localPlanningAuthority.display.summaryListItem
+				{
+					...mappedData.appeal.localPlanningAuthority.display.summaryListItem,
+					key: {
+						text: 'LPA'
+					}
+				}
 			].filter(isDefined)
 		}
 	};

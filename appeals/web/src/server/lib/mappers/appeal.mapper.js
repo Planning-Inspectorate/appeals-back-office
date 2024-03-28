@@ -577,7 +577,7 @@ export async function initialiseAndMapAppealData(
 		display: {
 			summaryListItem: {
 				key: {
-					text: 'Planning authority'
+					text: 'Local planning authority (LPA)'
 				},
 				value: {
 					text: appealDetails.localPlanningDepartment
@@ -587,7 +587,7 @@ export async function initialiseAndMapAppealData(
 						{
 							text: 'Change',
 							href: `${currentRoute}/change-appeal-details/local-planning-authority`,
-							visuallyHiddenText: 'planning authority'
+							visuallyHiddenText: 'local planning authority (LPA)'
 						}
 					]
 				}
