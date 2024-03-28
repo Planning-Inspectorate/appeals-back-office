@@ -32,16 +32,15 @@ export const postValidDate = async (request, response) => {
 			return renderValidDatePage(request, response, errorMessage);
 		}
 
-		const reviewOutcome = 'valid';
-		const { appealId } = request.session;
+		const { appealId, appellantCaseId, createdAt } = request.session;
 		const validDate = new Date(
 			updatedValidDateYear,
 			updatedValidDateMonth - 1,
 			updatedValidDateDay
 		);
-		const receivedDate = new Date(request.session.createdAt);
+		const receivedDate = new Date(createdAt).setHours(0, 0, 0, 0);
 
-		if (validDate < receivedDate) {
+		if (validDate < new Date(receivedDate)) {
 			let errorMessage = [
 				{ msg: 'The valid date must be on or after the date the case was received.' }
 			];
@@ -49,9 +48,10 @@ export const postValidDate = async (request, response) => {
 			return renderValidDatePage(request, response, errorMessage);
 		}
 
-		await outcomeValidService.setAppealValidDate(
+		await outcomeValidService.setReviewOutcomeValidForAppellantCase(
 			request.apiClient,
 			appealId,
+			appellantCaseId,
 			dayMonthYearToApiDateString({
 				day: updatedValidDateDay,
 				month: updatedValidDateMonth,
@@ -60,7 +60,7 @@ export const postValidDate = async (request, response) => {
 		);
 
 		return response.redirect(
-			`/appeals-service/appeal-details/${appealId}/appellant-case/${reviewOutcome}/confirmation`
+			`/appeals-service/appeal-details/${appealId}/appellant-case/valid/confirmation`
 		);
 	} catch (error) {
 		logger.error(

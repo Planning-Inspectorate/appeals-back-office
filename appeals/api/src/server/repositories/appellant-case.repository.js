@@ -66,7 +66,7 @@ const updateAppellantCaseValidationOutcome = ({
 
 	if (appealId && validAt) {
 		transaction.push(
-			appealRepository.updateAppealById(appealId, { validAt: validAt.toISOString() })
+			appealRepository.updateAppealById(appealId, { validAt: new Date(validAt).toISOString() })
 		);
 	}
 

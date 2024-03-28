@@ -151,13 +151,6 @@ export const postAppellantCase = async (request, response) => {
 			request.session.createdAt = createdAt;
 
 			if (reviewOutcome === 'valid') {
-				await appellantCaseService.setReviewOutcomeForAppellantCase(
-					request.apiClient,
-					appealId,
-					appellantCaseId,
-					mapWebReviewOutcomeToApiReviewOutcome('valid')
-				);
-
 				return response.redirect(
 					`/appeals-service/appeal-details/${appealId}/appellant-case/${reviewOutcome}/date`
 				);
