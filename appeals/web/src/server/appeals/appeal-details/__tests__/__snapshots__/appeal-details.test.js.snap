@@ -212,8 +212,8 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
                 <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
             </div>
-            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning authority</dt>
-                <dd class="govuk-summary-list__value">Wiltshire Council</dd>
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
+                <dd                 class="govuk-summary-list__value">Wiltshire Council</dd>
             </div>
         </dl>
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default1">
@@ -419,9 +419,9 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning authority</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA</dt>
                             <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> planning authority</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> local planning authority (LPA)</span></a>
                             </dd>
                         </div>
                     </dl>
@@ -480,8 +480,8 @@ exports[`appeal-details GET /:appealId should render a Issue a decision action b
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
             <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
         </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning authority</dt>
-            <dd class="govuk-summary-list__value">Wiltshire Council</dd>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
+            <dd             class="govuk-summary-list__value">Wiltshire Council</dd>
         </div>
         </dl>
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default1">
@@ -687,9 +687,9 @@ exports[`appeal-details GET /:appealId should render a Issue a decision action b
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning authority</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA</dt>
                             <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> planning authority</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> local planning authority (LPA)</span></a>
                             </dd>
                         </div>
                     </dl>
@@ -734,8 +734,8 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
                 <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
             </div>
-            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning authority</dt>
-                <dd class="govuk-summary-list__value">Wiltshire Council</dd>
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
+                <dd                 class="govuk-summary-list__value">Wiltshire Council</dd>
             </div>
         </dl>
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default1">
@@ -951,9 +951,9 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning authority</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA</dt>
                             <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> planning authority</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> local planning authority (LPA)</span></a>
                             </dd>
                         </div>
                     </dl>
@@ -998,8 +998,8 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
                 <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
             </div>
-            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning authority</dt>
-                <dd class="govuk-summary-list__value">Wiltshire Council</dd>
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
+                <dd                 class="govuk-summary-list__value">Wiltshire Council</dd>
             </div>
         </dl>
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default1">
@@ -1216,9 +1216,9 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning authority</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA</dt>
                             <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> planning authority</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> local planning authority (LPA)</span></a>
                             </dd>
                         </div>
                     </dl>
@@ -1277,8 +1277,8 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
                 <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
             </div>
-            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning authority</dt>
-                <dd class="govuk-summary-list__value">Wiltshire Council</dd>
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
+                <dd                 class="govuk-summary-list__value">Wiltshire Council</dd>
             </div>
         </dl>
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default1">
@@ -1497,9 +1497,9 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning authority</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA</dt>
                             <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> planning authority</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> local planning authority (LPA)</span></a>
                             </dd>
                         </div>
                     </dl>
@@ -1543,8 +1543,8 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
             <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
         </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning authority</dt>
-            <dd class="govuk-summary-list__value">Wiltshire Council</dd>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
+            <dd             class="govuk-summary-list__value">Wiltshire Council</dd>
         </div>
         </dl>
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default1">
@@ -1750,9 +1750,9 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning authority</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA</dt>
                             <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> planning authority</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> local planning authority (LPA)</span></a>
                             </dd>
                         </div>
                     </dl>
@@ -1796,8 +1796,8 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
             <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
         </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning authority</dt>
-            <dd class="govuk-summary-list__value">Wiltshire Council</dd>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
+            <dd             class="govuk-summary-list__value">Wiltshire Council</dd>
         </div>
         </dl>
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default1">
@@ -2004,9 +2004,9 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning authority</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA</dt>
                             <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> planning authority</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> local planning authority (LPA)</span></a>
                             </dd>
                         </div>
                     </dl>
@@ -2050,8 +2050,8 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
             <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
         </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning authority</dt>
-            <dd class="govuk-summary-list__value">Wiltshire Council</dd>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
+            <dd             class="govuk-summary-list__value">Wiltshire Council</dd>
         </div>
         </dl>
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default1">
@@ -2258,9 +2258,9 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning authority</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA</dt>
                             <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> planning authority</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> local planning authority (LPA)</span></a>
                             </dd>
                         </div>
                     </dl>
@@ -2304,8 +2304,8 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
             <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
         </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning authority</dt>
-            <dd class="govuk-summary-list__value">Wiltshire Council</dd>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
+            <dd             class="govuk-summary-list__value">Wiltshire Council</dd>
         </div>
         </dl>
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default1">
@@ -2512,9 +2512,9 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning authority</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA</dt>
                             <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> planning authority</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> local planning authority (LPA)</span></a>
                             </dd>
                         </div>
                     </dl>
@@ -2559,8 +2559,8 @@ exports[`appeal-details GET /:appealId should render the case reference for each
             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
                 <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
             </div>
-            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning authority</dt>
-                <dd class="govuk-summary-list__value">Wiltshire Council</dd>
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
+                <dd                 class="govuk-summary-list__value">Wiltshire Council</dd>
             </div>
         </dl>
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default1">
@@ -2779,9 +2779,9 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning authority</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA</dt>
                             <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> planning authority</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> local planning authority (LPA)</span></a>
                             </dd>
                         </div>
                     </dl>
@@ -2966,8 +2966,8 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
                 <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
             </div>
-            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning authority</dt>
-                <dd class="govuk-summary-list__value">Wiltshire Council</dd>
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
+                <dd                 class="govuk-summary-list__value">Wiltshire Council</dd>
             </div>
         </dl>
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default1">
@@ -3186,9 +3186,9 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning authority</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA</dt>
                             <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> planning authority</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> local planning authority (LPA)</span></a>
                             </dd>
                         </div>
                     </dl>
@@ -3232,8 +3232,8 @@ exports[`appeal-details GET /:appealId should render the received appeal details
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
             <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
         </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning authority</dt>
-            <dd class="govuk-summary-list__value">Wiltshire Council</dd>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
+            <dd             class="govuk-summary-list__value">Wiltshire Council</dd>
         </div>
         </dl>
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default1">
@@ -3439,9 +3439,9 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning authority</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA</dt>
                             <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> planning authority</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> local planning authority (LPA)</span></a>
                             </dd>
                         </div>
                     </dl>
@@ -3485,8 +3485,8 @@ exports[`appeal-details GET /:appealId should render the received appeal details
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
             <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
         </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning authority</dt>
-            <dd class="govuk-summary-list__value">Wiltshire Council</dd>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
+            <dd             class="govuk-summary-list__value">Wiltshire Council</dd>
         </div>
         </dl>
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default3">
@@ -3692,9 +3692,9 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/change-appeal-details/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning authority</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA</dt>
                             <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> planning authority</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> local planning authority (LPA)</span></a>
                             </dd>
                         </div>
                     </dl>
@@ -3739,8 +3739,8 @@ exports[`appeal-details GET /:appealId should render the received appeal details
             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
                 <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
             </div>
-            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning authority</dt>
-                <dd class="govuk-summary-list__value">Wiltshire Council</dd>
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
+                <dd                 class="govuk-summary-list__value">Wiltshire Council</dd>
             </div>
         </dl>
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default2">
@@ -3965,9 +3965,9 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning authority</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA</dt>
                             <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> planning authority</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> local planning authority (LPA)</span></a>
                             </dd>
                         </div>
                     </dl>
@@ -4011,8 +4011,8 @@ exports[`appeal-details GET /:appealId should render the received appeal details
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
             <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
         </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning authority</dt>
-            <dd class="govuk-summary-list__value">Wiltshire Council</dd>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
+            <dd             class="govuk-summary-list__value">Wiltshire Council</dd>
         </div>
         </dl>
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default1">
@@ -4204,9 +4204,9 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning authority</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA</dt>
                             <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> planning authority</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> local planning authority (LPA)</span></a>
                             </dd>
                         </div>
                     </dl>
@@ -4391,8 +4391,8 @@ exports[`appeal-details should not render a back button 1`] = `
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning authority</dt>
-                        <dd class="govuk-summary-list__value">Wiltshire Council</dd>
+                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
+                        <dd                         class="govuk-summary-list__value">Wiltshire Council</dd>
                     </div>
                     </dl>
                     <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default2">
@@ -4598,9 +4598,9 @@ exports[`appeal-details should not render a back button 1`] = `
                                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                                         </dd>
                                     </div>
-                                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning authority</dt>
+                                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA</dt>
                                         <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> planning authority</span></a>
+                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> local planning authority (LPA)</span></a>
                                         </dd>
                                     </div>
                                 </dl>

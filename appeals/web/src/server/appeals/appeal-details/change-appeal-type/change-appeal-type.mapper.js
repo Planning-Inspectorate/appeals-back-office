@@ -194,7 +194,7 @@ export async function checkTransferPage(
 						},
 						{
 							key: {
-								text: 'Local planning authority'
+								text: 'Local planning authority (LPA)'
 							},
 							value: {
 								text: appealDetails.localPlanningDepartment

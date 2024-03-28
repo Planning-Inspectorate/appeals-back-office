@@ -368,7 +368,7 @@ exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render 
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
                                 <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                             </div>
-                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
                                 <dd                                 class="govuk-summary-list__value">Wiltshire Council</dd>
                             </div>
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant name</dt>
@@ -448,7 +448,7 @@ exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render 
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
                     <dd                     class="govuk-summary-list__value">Wiltshire Council</dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant name</dt>
@@ -495,7 +495,7 @@ exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render 
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
                     <dd                     class="govuk-summary-list__value">Wiltshire Council</dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant name</dt>
@@ -542,7 +542,7 @@ exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render 
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
                     <dd                     class="govuk-summary-list__value">Wiltshire Council</dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant name</dt>
@@ -589,7 +589,7 @@ exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render 
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
                     <dd                     class="govuk-summary-list__value">Wiltshire Council</dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant name</dt>
@@ -636,7 +636,7 @@ exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render 
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
                     <dd                     class="govuk-summary-list__value">Wiltshire Council</dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant name</dt>
@@ -683,7 +683,7 @@ exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render 
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
                     <dd                     class="govuk-summary-list__value">Wiltshire Council</dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant name</dt>
@@ -730,7 +730,7 @@ exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render 
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
                     <dd                     class="govuk-summary-list__value">Wiltshire Council</dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant name</dt>
@@ -777,7 +777,7 @@ exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render 
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
                     <dd                     class="govuk-summary-list__value">Wiltshire Council</dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant name</dt>
@@ -820,7 +820,7 @@ exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render 
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
                     <dd                     class="govuk-summary-list__value">Wiltshire Council</dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant name</dt>
@@ -882,7 +882,7 @@ exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render 
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
                     <dd                     class="govuk-summary-list__value">Wiltshire Council</dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant name</dt>
@@ -944,7 +944,7 @@ exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render 
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
                     <dd                     class="govuk-summary-list__value">Wiltshire Council</dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant name</dt>
@@ -1224,7 +1224,7 @@ exports[`linked-appeals POST /linked-appeals/add/check-and-confirm should re-ren
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
                     <dd                     class="govuk-summary-list__value">Wiltshire Council</dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant name</dt>

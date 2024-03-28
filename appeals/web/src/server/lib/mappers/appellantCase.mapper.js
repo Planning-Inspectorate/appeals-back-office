@@ -231,7 +231,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		display: {
 			summaryListItem: {
 				key: {
-					text: 'Local planning authority'
+					text: 'Local planning authority (LPA)'
 				},
 				value: {
 					text: appellantCaseData.localPlanningDepartment
@@ -240,7 +240,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 					items: [
 						{
 							text: 'Change',
-							visuallyHiddenText: 'Local planning authority',
+							visuallyHiddenText: 'local planning authority (LPA)',
 							href: `${currentRoute}/change-appeal-details/local-planning-authority`
 						}
 					]
@@ -248,7 +248,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 			}
 		},
 		input: {
-			displayName: 'Local planning authority',
+			displayName: 'Local planning authority (LPA)',
 			instructions: [
 				{
 					type: 'input',

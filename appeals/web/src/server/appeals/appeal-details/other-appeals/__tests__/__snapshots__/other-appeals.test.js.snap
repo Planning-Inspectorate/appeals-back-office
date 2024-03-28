@@ -47,7 +47,7 @@ exports[`other-appeals GET /other-appeals/confirm should render the "Related app
                                 <td class="govuk-table__cell"></td>
                             </tr>
                             <tr class="govuk-table__row">
-                                <td class="govuk-table__cell"><strong>Local planning authority</strong>
+                                <td class="govuk-table__cell"><strong>Local planning authority (LPA)</strong>
                                 </td>
                                 <td class="govuk-table__cell">Bristol City Council</td>
                             </tr>
@@ -313,7 +313,7 @@ exports[`other-appeals POST /other-appeals/confirm should re-render the "Related
                                 <td class="govuk-table__cell"></td>
                             </tr>
                             <tr class="govuk-table__row">
-                                <td class="govuk-table__cell"><strong>Local planning authority</strong>
+                                <td class="govuk-table__cell"><strong>Local planning authority (LPA)</strong>
                                 </td>
                                 <td class="govuk-table__cell">Bristol City Council</td>
                             </tr>

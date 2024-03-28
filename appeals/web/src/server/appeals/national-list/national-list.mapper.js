@@ -222,7 +222,7 @@ export function nationalListPage(
 								text: 'Site address'
 							},
 							{
-								text: 'Local planning authority'
+								text: 'Local planning authority (LPA)'
 							},
 							{
 								text: 'Appeal type'
