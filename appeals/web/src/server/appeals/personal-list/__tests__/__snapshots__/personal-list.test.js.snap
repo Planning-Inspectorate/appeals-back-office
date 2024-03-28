@@ -730,7 +730,7 @@ exports[`personal-list GET / should render the second page of the personal list 
                 <td class="govuk-table__cell"><strong><a class="govuk-link" href="/appeals-service/appeal-details/168" aria-label="Appeal 7 0 0 9 1 0">700910</a></strong>
                 </td>
                 <td class="govuk-table__cell"></td>
-                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/168/issue-decision/decision">Submit decision</a>
+                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/168/issue-decision/decision">Issue decision</a>
                 </td>
                 <td class="govuk-table__cell">7 January 2024</td>
                 <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--pink single-line">Issue decision</strong>
