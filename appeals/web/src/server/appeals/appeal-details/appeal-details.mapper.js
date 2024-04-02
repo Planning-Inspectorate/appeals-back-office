@@ -373,7 +373,7 @@ function mapStatusDependentNotifications(appealDetails, session, accordionCompon
 				)}">Issue decision</a></p>`
 			);
 			break;
-		case 'validation':
+		case 'ready_to_start':
 			addNotificationBannerToSession(
 				session,
 				'appealValidAndReadyToStart',

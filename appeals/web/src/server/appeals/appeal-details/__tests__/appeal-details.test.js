@@ -559,7 +559,7 @@ describe('appeal-details', () => {
 				.get(`/appeals/${appealId}`)
 				.reply(200, {
 					...appealData,
-					appealStatus: 'ready_to_start',
+					appealStatus: 'validation',
 					documentationSummary: {
 						appellantCase: {
 							status: 'incomplete',
@@ -587,7 +587,7 @@ describe('appeal-details', () => {
 				.get(`/appeals/${appealId}`)
 				.reply(200, {
 					...appealData,
-					appealStatus: 'ready_to_start',
+					appealStatus: 'validation',
 					documentationSummary: {
 						appellantCase: {
 							status: 'incomplete',
@@ -610,7 +610,7 @@ describe('appeal-details', () => {
 				.get(`/appeals/${appealId}`)
 				.reply(200, {
 					...appealData,
-					appealStatus: 'ready_to_start',
+					appealStatus: 'validation',
 					documentationSummary: {
 						appellantCase: {
 							status: 'incomplete',
@@ -720,11 +720,11 @@ describe('appeal-details', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 		});
 
-		it('should render a "Appeal valid" notification banner with a link to start case when status is "VALIDATION"', async () => {
+		it('should render a "Appeal valid" notification banner with a link to start case when status is "READY_TO_START"', async () => {
 			const appealId = 2;
 			nock('http://test/')
 				.get(`/appeals/${appealId}`)
-				.reply(200, { ...appealData, appealId, appealStatus: 'validation' });
+				.reply(200, { ...appealData, appealId, appealStatus: 'ready_to_start' });
 
 			const response = await request.get(`${baseUrl}/${appealId}`);
 
