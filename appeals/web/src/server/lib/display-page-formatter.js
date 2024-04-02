@@ -356,5 +356,7 @@ export function generateHorizonAppealUrl(appealId) {
 		return '';
 	}
 
-	return `${config.horizonAppealBaseUrl}${appealId}`;
+	return config.horizonAppealBaseUrl && config.horizonAppealBaseUrl.length
+		? `${config.horizonAppealBaseUrl}${appealId}`
+		: '';
 }
