@@ -805,22 +805,34 @@ export interface SingleAppellantCaseResponse {
 	};
 }
 
-export interface UpdateAppealRequest {
-	/** @example "2023-05-09" */
-	startedAt?: string;
+export interface UpdateCaseTeamRequest {
 	/** @example "13de469c-8de6-4908-97cd-330ea73df618" */
 	caseOfficer?: string;
 	/** @example "f7ea429b-65d8-4c44-8fc2-7f1a34069855" */
 	inspector?: string;
 }
 
-export interface UpdateAppealResponse {
-	/** @example "2023-05-09T01:00:00.000Z" */
-	startedAt?: string;
+export interface UpdateCaseTeamResponse {
 	/** @example "13de469c-8de6-4908-97cd-330ea73df618" */
 	caseOfficer?: string;
 	/** @example "f7ea429b-65d8-4c44-8fc2-7f1a34069855" */
 	inspector?: string;
+}
+
+export interface StartCaseRequest {
+	/** @example "2023-05-09" */
+	startDate?: string;
+}
+
+export interface StartCaseResponse {
+	/** @example "2023-08-09" */
+	finalCommentReviewDate?: string;
+	/** @example "2023-08-10" */
+	issueDeterminationDate?: string;
+	/** @example "2023-08-11" */
+	lpaQuestionnaireDueDate?: string;
+	/** @example "2023-08-12" */
+	statementReviewDate?: string;
 }
 
 export interface SingleLPAQuestionnaireResponse {

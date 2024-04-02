@@ -339,15 +339,22 @@ export const spec = {
 				isVisible: false
 			}
 		},
-		UpdateAppealRequest: {
-			startedAt: '2023-05-09',
+		UpdateCaseTeamRequest: {
 			caseOfficer: '13de469c-8de6-4908-97cd-330ea73df618',
 			inspector: 'f7ea429b-65d8-4c44-8fc2-7f1a34069855'
 		},
-		UpdateAppealResponse: {
-			startedAt: '2023-05-09T01:00:00.000Z',
+		UpdateCaseTeamResponse: {
 			caseOfficer: '13de469c-8de6-4908-97cd-330ea73df618',
 			inspector: 'f7ea429b-65d8-4c44-8fc2-7f1a34069855'
+		},
+		StartCaseRequest: {
+			startDate: '2023-05-09'
+		},
+		StartCaseResponse: {
+			finalCommentReviewDate: '2023-08-09',
+			issueDeterminationDate: '2023-08-10',
+			lpaQuestionnaireDueDate: '2023-08-11',
+			statementReviewDate: '2023-08-12'
 		},
 		SingleLPAQuestionnaireResponse: {
 			affectsListedBuildingDetails: [

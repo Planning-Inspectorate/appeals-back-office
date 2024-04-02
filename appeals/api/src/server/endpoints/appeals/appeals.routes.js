@@ -149,7 +149,7 @@ router.patch(
 	/*
 		#swagger.tags = ['Appeals']
 		#swagger.path = '/appeals/{appealId}'
-		#swagger.description = 'Updates a single appeal by id'
+		#swagger.description = 'Updates case team members for a single appeal'
 		#swagger.parameters['azureAdUserId'] = {
 			in: 'header',
 			required: true,
@@ -158,12 +158,12 @@ router.patch(
 		#swagger.requestBody = {
 			in: 'body',
 			description: 'Appeal details to update',
-			schema: { $ref: '#/definitions/UpdateAppealRequest' },
+			schema: { $ref: '#/definitions/UpdateCaseTeamRequest' },
 			required: true
 		}
 		#swagger.responses[200] = {
 			description: 'Updates a single appeal by id',
-			schema: { $ref: '#/definitions/UpdateAppealResponse' }
+			schema: { $ref: '#/definitions/UpdateCaseTeamResponse' }
 		}
 		#swagger.responses[400] = {}
 		#swagger.responses[500] = {}

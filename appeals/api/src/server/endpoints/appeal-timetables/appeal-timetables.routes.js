@@ -24,12 +24,12 @@ router.post(
 		#swagger.requestBody = {
 			in: 'body',
 			description: 'Appeal and optional start date (defaults to the current date, if omitted)',
-			schema: { $ref: '#/definitions/UpdateAppealTimetableRequest' },
+			schema: { $ref: '#/definitions/StartCaseRequest' },
 			required: true
 		}
 		#swagger.responses[200] = {
 			description: 'Creates an appeal timetable and start the appeal',
-			schema: { $ref: '#/definitions/UpdateAppealTimetableResponse' }
+			schema: { $ref: '#/definitions/StartCaseResponse' }
 		}
 		#swagger.responses[400] = {}
 		#swagger.responses[500] = {}
