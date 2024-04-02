@@ -181,7 +181,7 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 </div>"
 `;
 
-exports[`appeal-details GET /:appealId should render a "Appeal valid" notification banner with a link to start case when status is "VALIDATION" 1`] = `
+exports[`appeal-details GET /:appealId should render a "Appeal valid" notification banner with a link to start case when status is "READY_TO_START" 1`] = `
 "<div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
 data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
@@ -1803,7 +1803,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
         <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
             <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Case details</h1>
         </div>
-    </div><strong class="govuk-tag govuk-tag--turquoise single-line govuk-!-margin-bottom-4">Ready to start</strong>
+    </div><strong class="govuk-tag govuk-tag--orange single-line govuk-!-margin-bottom-4">Validation</strong>
     <dl     class="govuk-summary-list govuk-summary-list--no-border">
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
             <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
@@ -2059,7 +2059,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
         <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
             <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Case details</h1>
         </div>
-    </div><strong class="govuk-tag govuk-tag--turquoise single-line govuk-!-margin-bottom-4">Ready to start</strong>
+    </div><strong class="govuk-tag govuk-tag--orange single-line govuk-!-margin-bottom-4">Validation</strong>
     <dl     class="govuk-summary-list govuk-summary-list--no-border">
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
             <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
@@ -2315,7 +2315,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
         <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
             <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Case details</h1>
         </div>
-    </div><strong class="govuk-tag govuk-tag--turquoise single-line govuk-!-margin-bottom-4">Ready to start</strong>
+    </div><strong class="govuk-tag govuk-tag--orange single-line govuk-!-margin-bottom-4">Validation</strong>
     <dl     class="govuk-summary-list govuk-summary-list--no-border">
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
             <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
