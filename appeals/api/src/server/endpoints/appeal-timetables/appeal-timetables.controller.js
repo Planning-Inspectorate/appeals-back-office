@@ -1,5 +1,6 @@
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { broadcastAppealState } from '#endpoints/integrations/integrations.service.js';
+import appealRepository from '#repositories/appeal.repository.js';
 import appealTimetableRepository from '#repositories/appeal-timetable.repository.js';
 import { calculateTimetable, recalculateDateIfNotBusinessDay } from '#utils/business-days.js';
 import joinDateAndTime from '#utils/join-date-and-time.js';
@@ -29,45 +30,53 @@ const startAppeal = async (req, res) => {
 		let startDate = body.startDate;
 
 		if (!startDate) {
-			startDate = new Date();
+			startDate = format(new Date(), DEFAULT_DATE_FORMAT_DATABASE);
 		}
 
-		const startedAt = await recalculateDateIfNotBusinessDay(
-			joinDateAndTime(format(new Date(), DEFAULT_DATE_FORMAT_DATABASE))
-		);
+		const startedAt = await recalculateDateIfNotBusinessDay(joinDateAndTime(startDate));
 
 		const azureAdUserId = req.get('azureAdUserId');
 		const timetable = await calculateTimetable(appeal.appealType.shorthand, startedAt);
-		// @ts-ignore
-		await appealTimetableRepository.upsertAppealTimetableById(appeal.id, timetable);
-		await createAuditTrail({
-			appealId: appeal.id,
-			azureAdUserId,
-			details: AUDIT_TRAIL_CASE_TIMELINE_CREATED
-		});
+		if (timetable) {
+			await Promise.all([
+				await appealTimetableRepository.upsertAppealTimetableById(appeal.id, timetable),
+				await appealRepository.updateAppealById(appeal.id, { startedAt: startedAt.toISOString() })
+			]);
 
-		/*
-		await notifyClient.sendEmail(
-			config.govNotify.template.validAppellantCase,
-			appellant?.email || agent?.email,
-			{
-				appeal_reference: reference,
-				appeal_type: appealType.shorthand,
-				date_started: format(startedAt, DEFAULT_DATE_FORMAT_DISPLAY)
-			}
+			await createAuditTrail({
+				appealId: appeal.id,
+				azureAdUserId,
+				details: AUDIT_TRAIL_CASE_TIMELINE_CREATED
+			});
+
+			/*
+			await notifyClient.sendEmail(
+				config.govNotify.template.validAppellantCase,
+				appellant?.email || agent?.email,
+				{
+					appeal_reference: reference,
+					appeal_type: appealType.shorthand,
+					date_started: format(startedAt, DEFAULT_DATE_FORMAT_DISPLAY)
+				}
+			);
+			*/
+
+			await transitionState(
+				appeal.id,
+				appeal.appealType,
+				azureAdUserId || AUDIT_TRAIL_SYSTEM_UUID,
+				appeal.appealStatus,
+				STATE_TARGET_LPA_QUESTIONNAIRE_DUE
+			);
+
+			await broadcastAppealState(appeal.id);
+			return res.send(timetable);
+		}
+
+		logger.error(
+			`Could not create timetable with a start date ${startedAt} for case ${appeal.reference}`
 		);
-		*/
-
-		await transitionState(
-			appeal.id,
-			appeal.appealType,
-			azureAdUserId || AUDIT_TRAIL_SYSTEM_UUID,
-			appeal.appealStatus,
-			STATE_TARGET_LPA_QUESTIONNAIRE_DUE
-		);
-
-		await broadcastAppealState(appeal.id);
-		return res.send(timetable);
+		return res.status(500);
 	}
 };
 
