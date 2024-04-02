@@ -135,13 +135,10 @@ export async function appealDetailsPage(appealDetails, currentRoute, session) {
 				{
 					type: 'summary-list',
 					parameters: {
-						rows: [mappedData.appeal.validAt.display.summaryListItem].filter(isDefined)
-					}
-				},
-				{
-					type: 'inset-text',
-					parameters: {
-						html: `<p class="govuk-body">Case not started</p><a href="/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case" class="govuk-link">Review appeal</a>`
+						rows: [
+							mappedData.appeal.validAt.display.summaryListItem,
+							mappedData.appeal.startedAt.display.summaryListItem
+						].filter(isDefined)
 					}
 				}
 		  ];

@@ -1030,10 +1030,22 @@ export async function initialiseAndMapAppealData(
 					text: 'Start date'
 				},
 				value: {
-					html: dateToDisplayDate(appealDetails.startedAt) || ''
+					html: appealDetails.validAt
+						? appealDetails.startedAt
+							? dateToDisplayDate(appealDetails.startedAt) || ''
+							: 'Not added'
+						: ''
 				},
 				actions: {
-					items: []
+					items: [
+						appealDetails.validAt
+							? {
+									text: appealDetails.startedAt ? 'Change' : 'Add',
+									href: `${currentRoute}/start-case/date`,
+									visuallyHiddenText: 'The date the case was started'
+							  }
+							: {}
+					]
 				}
 			}
 		}
