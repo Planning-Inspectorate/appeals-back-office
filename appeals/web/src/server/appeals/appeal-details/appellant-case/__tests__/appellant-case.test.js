@@ -1285,9 +1285,9 @@ describe('appellant-case', () => {
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}${validOutcomePagePath}${validDatePagePath}`)
 				.send({
-					'due-date-day': '',
-					'due-date-month': '',
-					'due-date-year': ''
+					'valid-date-day': '',
+					'valid-date-month': '',
+					'valid-date-year': ''
 				});
 
 			expect(response.statusCode).toBe(200);
@@ -1299,9 +1299,9 @@ describe('appellant-case', () => {
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}${validOutcomePagePath}${validDatePagePath}`)
 				.send({
-					'due-date-day': '1',
-					'due-date-month': '1',
-					'due-date-year': '3000'
+					'valid-date-day': '1',
+					'valid-date-month': '1',
+					'valid-date-year': '3000'
 				});
 
 			expect(response.statusCode).toBe(200);
@@ -1313,9 +1313,9 @@ describe('appellant-case', () => {
 			let response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}${validOutcomePagePath}${validDatePagePath}`)
 				.send({
-					'due-date-day': '0',
-					'due-date-month': '1',
-					'due-date-year': '3000'
+					'valid-date-day': '0',
+					'valid-date-month': '1',
+					'valid-date-year': '3000'
 				});
 
 			expect(response.statusCode).toBe(200);
@@ -1325,9 +1325,9 @@ describe('appellant-case', () => {
 			response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}${validOutcomePagePath}${validDatePagePath}`)
 				.send({
-					'due-date-day': '32',
-					'due-date-month': '1',
-					'due-date-year': '3000'
+					'valid-date-day': '32',
+					'valid-date-month': '1',
+					'valid-date-year': '3000'
 				});
 
 			expect(response.statusCode).toBe(200);
@@ -1337,9 +1337,9 @@ describe('appellant-case', () => {
 			response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}${validOutcomePagePath}${validDatePagePath}`)
 				.send({
-					'due-date-day': 'first',
-					'due-date-month': '1',
-					'due-date-year': '3000'
+					'valid-date-day': 'first',
+					'valid-date-month': '1',
+					'valid-date-year': '3000'
 				});
 
 			expect(response.statusCode).toBe(200);
@@ -1358,9 +1358,9 @@ describe('appellant-case', () => {
 					const response = await request
 						.post(`${baseUrl}/1${appellantCasePagePath}${validOutcomePagePath}${validDatePagePath}`)
 						.send({
-							'due-date-day': day,
-							'due-date-month': month,
-							'due-date-year': year
+							'valid-date-day': day,
+							'valid-date-month': month,
+							'valid-date-year': year
 						});
 
 					expect(response.statusCode).toBe(200);
@@ -1374,9 +1374,9 @@ describe('appellant-case', () => {
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}${validOutcomePagePath}${validDatePagePath}`)
 				.send({
-					'due-date-day': '1',
-					'due-date-month': '1',
-					'due-date-year': '23'
+					'valid-date-day': '1',
+					'valid-date-month': '1',
+					'valid-date-year': '23'
 				});
 
 			expect(response.statusCode).toBe(200);
@@ -1388,9 +1388,9 @@ describe('appellant-case', () => {
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}${validOutcomePagePath}${validDatePagePath}`)
 				.send({
-					'due-date-day': '1',
-					'due-date-month': '1',
-					'due-date-year': 'abc'
+					'valid-date-day': '1',
+					'valid-date-month': '1',
+					'valid-date-year': 'abc'
 				});
 
 			expect(response.statusCode).toBe(200);
@@ -1402,9 +1402,9 @@ describe('appellant-case', () => {
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}${validOutcomePagePath}${validDatePagePath}`)
 				.send({
-					'due-date-day': '29',
-					'due-date-month': '2',
-					'due-date-year': '3000'
+					'valid-date-day': '29',
+					'valid-date-month': '2',
+					'valid-date-year': '3000'
 				});
 
 			expect(response.statusCode).toBe(200);
@@ -1416,9 +1416,9 @@ describe('appellant-case', () => {
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}${validOutcomePagePath}${validDatePagePath}`)
 				.send({
-					'due-date-day': '20',
-					'due-date-month': '5',
-					'due-date-year': '2023'
+					'valid-date-day': '20',
+					'valid-date-month': '5',
+					'valid-date-year': '2023'
 				});
 
 			expect(response.statusCode).toBe(200);
@@ -1430,9 +1430,9 @@ describe('appellant-case', () => {
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}${validOutcomePagePath}${validDatePagePath}`)
 				.send({
-					'due-date-day': '22',
-					'due-date-month': '5',
-					'due-date-year': '2023'
+					'valid-date-day': '22',
+					'valid-date-month': '5',
+					'valid-date-year': '2023'
 				});
 
 			expect(response.statusCode).toBe(302);
