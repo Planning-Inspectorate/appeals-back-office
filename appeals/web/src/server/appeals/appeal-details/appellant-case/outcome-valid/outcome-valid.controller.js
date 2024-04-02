@@ -85,10 +85,10 @@ const renderValidDatePage = async (request, response, apiErrors) => {
 		return response.render('app/500.njk');
 	}
 	const { appealId, appealReference } = request.session;
+	const dateValidDay = request.body['valid-date-day'];
+	const dateValidMonth = request.body['valid-date-month'];
+	const dateValidYear = request.body['valid-date-year'];
 
-	let dateValidDay = request.body['valid-date-day'];
-	let dateValidMonth = request.body['valid-date-month'];
-	let dateValidYear = request.body['valid-date-year'];
 	let errors = request.errors || apiErrors;
 
 	const mappedPageContent = updateValidDatePage(
