@@ -236,12 +236,12 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/UpdateAppealTimetableResponse"
+									"$ref": "#/components/schemas/StartCaseResponse"
 								}
 							},
 							"application/xml": {
 								"schema": {
-									"$ref": "#/components/schemas/UpdateAppealTimetableResponse"
+									"$ref": "#/components/schemas/StartCaseResponse"
 								}
 							}
 						}
@@ -260,12 +260,12 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/UpdateAppealTimetableRequest"
+								"$ref": "#/components/schemas/StartCaseRequest"
 							}
 						},
 						"application/xml": {
 							"schema": {
-								"$ref": "#/components/schemas/UpdateAppealTimetableRequest"
+								"$ref": "#/components/schemas/StartCaseRequest"
 							}
 						}
 					}
@@ -2927,7 +2927,7 @@
 			},
 			"patch": {
 				"tags": ["Appeals"],
-				"description": "Updates a single appeal by id",
+				"description": "Updates case team members for a single appeal",
 				"parameters": [
 					{
 						"name": "appealId",
@@ -2953,12 +2953,12 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/UpdateAppealResponse"
+									"$ref": "#/components/schemas/UpdateCaseTeamResponse"
 								}
 							},
 							"application/xml": {
 								"schema": {
-									"$ref": "#/components/schemas/UpdateAppealResponse"
+									"$ref": "#/components/schemas/UpdateCaseTeamResponse"
 								}
 							}
 						}
@@ -2977,12 +2977,12 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/UpdateAppealRequest"
+								"$ref": "#/components/schemas/UpdateCaseTeamRequest"
 							}
 						},
 						"application/xml": {
 							"schema": {
-								"$ref": "#/components/schemas/UpdateAppealRequest"
+								"$ref": "#/components/schemas/UpdateCaseTeamRequest"
 							}
 						}
 					}
@@ -4733,6 +4733,10 @@
 							}
 						}
 					},
+					"createdAt": {
+						"type": "string",
+						"example": "2022-05-17T23:00:00.000Z"
+					},
 					"startedAt": {
 						"type": "string",
 						"example": "2022-05-17T23:00:00.000Z"
@@ -5060,13 +5064,9 @@
 					"name": "SingleAppellantCaseResponse"
 				}
 			},
-			"UpdateAppealRequest": {
+			"UpdateCaseTeamRequest": {
 				"type": "object",
 				"properties": {
-					"startedAt": {
-						"type": "string",
-						"example": "2023-05-09"
-					},
 					"caseOfficer": {
 						"type": "string",
 						"example": "13de469c-8de6-4908-97cd-330ea73df618"
@@ -5077,16 +5077,12 @@
 					}
 				},
 				"xml": {
-					"name": "UpdateAppealRequest"
+					"name": "UpdateCaseTeamRequest"
 				}
 			},
-			"UpdateAppealResponse": {
+			"UpdateCaseTeamResponse": {
 				"type": "object",
 				"properties": {
-					"startedAt": {
-						"type": "string",
-						"example": "2023-05-09T01:00:00.000Z"
-					},
 					"caseOfficer": {
 						"type": "string",
 						"example": "13de469c-8de6-4908-97cd-330ea73df618"
@@ -5097,7 +5093,43 @@
 					}
 				},
 				"xml": {
-					"name": "UpdateAppealResponse"
+					"name": "UpdateCaseTeamResponse"
+				}
+			},
+			"StartCaseRequest": {
+				"type": "object",
+				"properties": {
+					"startDate": {
+						"type": "string",
+						"example": "2023-05-09"
+					}
+				},
+				"xml": {
+					"name": "StartCaseRequest"
+				}
+			},
+			"StartCaseResponse": {
+				"type": "object",
+				"properties": {
+					"finalCommentReviewDate": {
+						"type": "string",
+						"example": "2023-08-09"
+					},
+					"issueDeterminationDate": {
+						"type": "string",
+						"example": "2023-08-10"
+					},
+					"lpaQuestionnaireDueDate": {
+						"type": "string",
+						"example": "2023-08-11"
+					},
+					"statementReviewDate": {
+						"type": "string",
+						"example": "2023-08-12"
+					}
+				},
+				"xml": {
+					"name": "StartCaseResponse"
 				}
 			},
 			"SingleLPAQuestionnaireResponse": {
