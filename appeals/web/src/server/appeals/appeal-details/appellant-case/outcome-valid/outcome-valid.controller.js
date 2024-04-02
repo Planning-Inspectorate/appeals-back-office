@@ -18,9 +18,9 @@ export const postValidDate = async (request, response) => {
 	}
 
 	try {
-		const updatedValidDateDay = parseInt(body['due-date-day'], 10);
-		const updatedValidDateMonth = parseInt(body['due-date-month'], 10);
-		const updatedValidDateYear = parseInt(body['due-date-year'], 10);
+		const updatedValidDateDay = parseInt(body['valid-date-day'], 10);
+		const updatedValidDateMonth = parseInt(body['valid-date-month'], 10);
+		const updatedValidDateYear = parseInt(body['valid-date-year'], 10);
 
 		if (
 			Number.isNaN(updatedValidDateDay) ||
@@ -86,11 +86,20 @@ const renderValidDatePage = async (request, response, apiErrors) => {
 	}
 	const { appealId, appealReference } = request.session;
 
-	const mappedPageContent = updateValidDatePage(appealId, appealReference);
-
+	let dateValidDay = request.body['valid-date-day'];
+	let dateValidMonth = request.body['valid-date-month'];
+	let dateValidYear = request.body['valid-date-year'];
 	let errors = request.errors || apiErrors;
 
-	return response.render('appeals/appeal/update-date.njk', {
+	const mappedPageContent = updateValidDatePage(
+		appealId,
+		appealReference,
+		dateValidDay,
+		dateValidMonth,
+		dateValidYear
+	);
+
+	return response.render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
 		errors
 	});
