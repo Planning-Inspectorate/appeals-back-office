@@ -674,5 +674,28 @@ describe('site-visit', () => {
 
 			expect(response.statusCode).toBe(302);
 		});
+
+		it('should allow rearranging a site visit to remove previously set times', async () => {
+			nock('http://test/')
+				.get('/appeals/1/site-visits/0')
+				.reply(200, { ...siteVisitData, visitStartTime: '10:00', visitEndTime: '11:00' });
+
+			nock('http://test/')
+				.patch('/appeals/1/site-visits/0')
+				.reply(200, { ...siteVisitData, visitStartTime: '', visitEndTime: '' });
+
+			let response = await request.post(`${baseUrl}/1${siteVisitPath}/manage-visit`).send({
+				'visit-type': 'unaccompanied',
+				'visit-date-day': '1',
+				'visit-date-month': '1',
+				'visit-date-year': '3000',
+				'visit-start-time-hour': '',
+				'visit-start-time-minute': '',
+				'visit-end-time-hour': '',
+				'visit-end-time-minute': ''
+			});
+
+			expect(response.statusCode).toBe(302);
+		});
 	});
 });

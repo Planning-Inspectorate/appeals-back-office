@@ -86,8 +86,8 @@ const updateSiteVisit = async (req, res) => {
 	try {
 		await siteVisitRepository.updateSiteVisitById(Number(siteVisitId), {
 			...(visitDate && { visitDate }),
-			...(visitEndTime && { visitEndTime }),
-			...(visitStartTime && { visitStartTime }),
+			...(visitEndTime !== undefined && { visitEndTime }),
+			...(visitStartTime !== undefined && { visitStartTime }),
 			...(visitType && { siteVisitTypeId: visitType?.id })
 		});
 
