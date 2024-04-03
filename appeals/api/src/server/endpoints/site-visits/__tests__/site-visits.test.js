@@ -845,6 +845,8 @@ describe('site visit routes', () => {
 					where: { id: siteVisit.id },
 					data: {
 						visitDate: siteVisit.visitDate,
+						visitEndTime: '',
+						visitStartTime: '',
 						siteVisitTypeId: siteVisit.siteVisitType.id
 					}
 				});
