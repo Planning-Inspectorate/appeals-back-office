@@ -1,4 +1,4 @@
-import { dateToDisplayDate } from '#lib/dates.js';
+import { dateToDisplayDate, apiDateStringToDayMonthYear } from '#lib/dates.js';
 import { capitalize } from 'lodash-es';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 
@@ -43,6 +43,8 @@ export const routeToObjectMapper = {
 export const mapUpdateDueDatePage = (appealTimetables, timetableType, appealDetails) => {
 	const currentDueDateIso = appealTimetables && appealTimetables[timetableType];
 	const currentDueDate = currentDueDateIso && dateToDisplayDate(currentDueDateIso);
+	const currentDueDateDayMonthYear =
+		currentDueDateIso && apiDateStringToDayMonthYear(currentDueDateIso);
 	const changeOrScheduleText = currentDueDate ? 'Change' : 'Schedule';
 	const timetableTypeText = getTimetableTypeText(timetableType);
 
@@ -56,7 +58,37 @@ export const mapUpdateDueDatePage = (appealTimetables, timetableType, appealDeta
 			text: 'Continue',
 			type: 'submit'
 		},
-		pageComponents: []
+		pageComponents: [
+			{
+				type: 'date-input',
+				parameters: {
+					id: 'due-date',
+					namePrefix: 'due-date',
+					hint: {
+						text: 'For example, 27 3 2007'
+					},
+					...(currentDueDateDayMonthYear && {
+						items: [
+							{
+								name: 'day',
+								classes: 'govuk-input--width-2',
+								value: currentDueDateDayMonthYear.day
+							},
+							{
+								name: 'month',
+								classes: 'govuk-input--width-2',
+								value: currentDueDateDayMonthYear.month
+							},
+							{
+								name: 'year',
+								classes: 'govuk-input--width-4',
+								value: currentDueDateDayMonthYear.year
+							}
+						]
+					})
+				}
+			}
+		]
 	};
 
 	if (currentDueDate) {

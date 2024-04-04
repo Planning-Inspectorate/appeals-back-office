@@ -16,21 +16,21 @@ exports[`Appeal Timetables should render "Change Final Comment Review Date" page
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-day">Day</label>
                         <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                        id="due-date-day" name="due-date-day" type="text" inputmode="numeric">
+                        id="due-date-day" name="due-date-day" type="text" value="9" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-month">Month</label>
                         <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                        id="due-date-month" name="due-date-month" type="text" inputmode="numeric">
+                        id="due-date-month" name="due-date-month" type="text" value="8" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-year">Year</label>
                         <input class="govuk-input govuk-date-input__input govuk-input--width-4"
-                        id="due-date-year" name="due-date-year" type="text" inputmode="numeric">
+                        id="due-date-year" name="due-date-year" type="text" value="2023" inputmode="numeric">
                     </div>
                 </div>
             </div>
@@ -73,21 +73,21 @@ exports[`Appeal Timetables should render "Change Final Comment Review Date" with
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-day">Day</label>
                         <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                        id="due-date-day" name="due-date-day" type="text" inputmode="numeric">
+                        id="due-date-day" name="due-date-day" type="text" value="9" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-month">Month</label>
                         <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                        id="due-date-month" name="due-date-month" type="text" inputmode="numeric">
+                        id="due-date-month" name="due-date-month" type="text" value="8" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-year">Year</label>
                         <input class="govuk-input govuk-date-input__input govuk-input--width-4"
-                        id="due-date-year" name="due-date-year" type="text" inputmode="numeric">
+                        id="due-date-year" name="due-date-year" type="text" value="2023" inputmode="numeric">
                     </div>
                 </div>
             </div>
@@ -136,21 +136,21 @@ exports[`Appeal Timetables should render "Change Final Comment Review Date" with
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-day">Day</label>
                         <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                        id="due-date-day" name="due-date-day" type="text" inputmode="numeric">
+                        id="due-date-day" name="due-date-day" type="text" value="9" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-month">Month</label>
                         <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                        id="due-date-month" name="due-date-month" type="text" inputmode="numeric">
+                        id="due-date-month" name="due-date-month" type="text" value="8" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-year">Year</label>
                         <input class="govuk-input govuk-date-input__input govuk-input--width-4"
-                        id="due-date-year" name="due-date-year" type="text" inputmode="numeric">
+                        id="due-date-year" name="due-date-year" type="text" value="2023" inputmode="numeric">
                     </div>
                 </div>
             </div>
@@ -178,21 +178,21 @@ exports[`Appeal Timetables should render "Change LPA questionnaire Date" page 1`
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-day">Day</label>
                         <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                        id="due-date-day" name="due-date-day" type="text" inputmode="numeric">
+                        id="due-date-day" name="due-date-day" type="text" value="9" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-month">Month</label>
                         <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                        id="due-date-month" name="due-date-month" type="text" inputmode="numeric">
+                        id="due-date-month" name="due-date-month" type="text" value="8" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-year">Year</label>
                         <input class="govuk-input govuk-date-input__input govuk-input--width-4"
-                        id="due-date-year" name="due-date-year" type="text" inputmode="numeric">
+                        id="due-date-year" name="due-date-year" type="text" value="2023" inputmode="numeric">
                     </div>
                 </div>
             </div>
@@ -220,21 +220,21 @@ exports[`Appeal Timetables should render "Change issue determination" page 1`] =
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-day">Day</label>
                         <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                        id="due-date-day" name="due-date-day" type="text" inputmode="numeric">
+                        id="due-date-day" name="due-date-day" type="text" value="9" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-month">Month</label>
                         <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                        id="due-date-month" name="due-date-month" type="text" inputmode="numeric">
+                        id="due-date-month" name="due-date-month" type="text" value="8" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-year">Year</label>
                         <input class="govuk-input govuk-date-input__input govuk-input--width-4"
-                        id="due-date-year" name="due-date-year" type="text" inputmode="numeric">
+                        id="due-date-year" name="due-date-year" type="text" value="2023" inputmode="numeric">
                     </div>
                 </div>
             </div>
@@ -262,21 +262,21 @@ exports[`Appeal Timetables should render "Change statement review Date" page 1`]
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-day">Day</label>
                         <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                        id="due-date-day" name="due-date-day" type="text" inputmode="numeric">
+                        id="due-date-day" name="due-date-day" type="text" value="9" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-month">Month</label>
                         <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                        id="due-date-month" name="due-date-month" type="text" inputmode="numeric">
+                        id="due-date-month" name="due-date-month" type="text" value="8" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-year">Year</label>
                         <input class="govuk-input govuk-date-input__input govuk-input--width-4"
-                        id="due-date-year" name="due-date-year" type="text" inputmode="numeric">
+                        id="due-date-year" name="due-date-year" type="text" value="2023" inputmode="numeric">
                     </div>
                 </div>
             </div>
