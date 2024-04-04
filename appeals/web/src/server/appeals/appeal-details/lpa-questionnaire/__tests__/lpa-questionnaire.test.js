@@ -50,7 +50,7 @@ describe('LPA Questionnaire review', () => {
 		it('should render the LPA Questionnaire page with the expected content', async () => {
 			nock('http://test/')
 				.get('/appeals/1/lpa-questionnaires/2')
-				.reply(200, lpaQuestionnaireDataIncompleteOutcome);
+				.reply(200, lpaQuestionnaireDataNotValidated);
 
 			const response = await request.get(baseUrl);
 			const element = parseHtml(response.text);
@@ -96,11 +96,13 @@ describe('LPA Questionnaire review', () => {
 		});
 
 		it('should render an error when a file has a virus', async () => {
-			//Create a document with virus scan still in progress
+			//Create a document with failed virus check
 			let updatedLPAQuestionnaireData = cloneDeep(lpaQuestionnaireDataIncompleteOutcome);
-			updatedLPAQuestionnaireData.documents.conservationAreaMap.documents.push(
-				notCheckedDocumentFolderInfoDocuments
-			);
+			updatedLPAQuestionnaireData.documents.conservationAreaMap.documents.push({
+				...notCheckedDocumentFolderInfoDocuments,
+				// @ts-ignore
+				virusCheckStatus: 'failed_virus_check'
+			});
 			nock('http://test/')
 				.get('/appeals/1/lpa-questionnaires/2')
 				.reply(200, updatedLPAQuestionnaireData);
@@ -146,31 +148,16 @@ describe('LPA Questionnaire review', () => {
 			nock('http://test/')
 				.get('/appeals/lpa-questionnaire-incomplete-reasons')
 				.reply(200, lpaQuestionnaireIncompleteReasons);
+			nock('http://test/')
+				.get('/appeals/1/lpa-questionnaires/2')
+				.reply(200, lpaQuestionnaireDataIncompleteOutcome);
 		});
 
 		afterEach(() => {
 			nock.cleanAll();
 		});
 
-		it('should render the 500 error page if required data is not present in the session', async () => {
-			const response = await request.get(`${baseUrl}/incomplete`);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-		});
-
-		it('should render the incomplete reason page if required data is present in the session', async () => {
-			// post to LPA questionnaire page controller is necessary to set required data in the session
-			nock('http://test/')
-				.get('/appeals/1/lpa-questionnaires/2')
-				.reply(200, lpaQuestionnaireDataIncompleteOutcome);
-
-			const lpaQuestionnairePostResponse = await request.post(baseUrl).send({
-				'review-outcome': 'incomplete'
-			});
-
-			expect(lpaQuestionnairePostResponse.statusCode).toBe(302);
-
+		it('should render the incomplete reason page', async () => {
 			const response = await request.get(`${baseUrl}/incomplete`);
 			const element = parseHtml(response.text);
 
@@ -179,11 +166,6 @@ describe('LPA Questionnaire review', () => {
 	});
 
 	describe('POST /appeals-service/appeal-details/1/lpa-questionnaire/1/incomplete', () => {
-		/**
-		 * @type {import("superagent").Response}
-		 */
-		let lpaQPostResponse;
-
 		beforeEach(async () => {
 			nock('http://test/')
 				.get('/appeals/lpa-questionnaire-incomplete-reasons')
@@ -192,11 +174,6 @@ describe('LPA Questionnaire review', () => {
 			nock('http://test/')
 				.get('/appeals/1/lpa-questionnaires/2')
 				.reply(200, lpaQuestionnaireDataIncompleteOutcome);
-
-			// post to LPA questionnaire page controller is necessary to set required data in the session
-			lpaQPostResponse = await request.post(baseUrl).send({
-				'review-outcome': 'incomplete'
-			});
 		});
 
 		afterEach(() => {
@@ -204,8 +181,6 @@ describe('LPA Questionnaire review', () => {
 		});
 
 		it('should re-render the incomplete reason page with the expected error message if no incomplete reason was provided', async () => {
-			expect(lpaQPostResponse.statusCode).toBe(302);
-
 			const response = await request.post(`${baseUrl}/incomplete`).send({});
 
 			const element = parseHtml(response.text);
@@ -214,8 +189,6 @@ describe('LPA Questionnaire review', () => {
 		});
 
 		it('should re-render the incomplete reason page with the expected error message if a single incomplete reason with text was provided but the matching text property is an empty string', async () => {
-			expect(lpaQPostResponse.statusCode).toBe(302);
-
 			const response = await request.post(`${baseUrl}/incomplete`).send({
 				incompleteReason: incompleteReasonsWithTextIds[0],
 				[`incompleteReason-${incompleteReasonsWithTextIds[0]}`]: ''
@@ -227,8 +200,6 @@ describe('LPA Questionnaire review', () => {
 		});
 
 		it('should re-render the incomplete reason page with the expected error message if a single incomplete reason with text was provided but the matching text property is an empty array', async () => {
-			expect(lpaQPostResponse.statusCode).toBe(302);
-
 			const response = await request.post(`${baseUrl}/incomplete`).send({
 				incompleteReason: incompleteReasonsWithTextIds[0],
 				[`incompleteReason-${incompleteReasonsWithTextIds[0]}`]: []
@@ -240,8 +211,6 @@ describe('LPA Questionnaire review', () => {
 		});
 
 		it('should re-render the incomplete reason page with the expected error message if multiple incomplete reasons with text were provided but any of the matching text properties are empty strings', async () => {
-			expect(lpaQPostResponse.statusCode).toBe(302);
-
 			const response = await request.post(`${baseUrl}/incomplete`).send({
 				incompleteReason: [incompleteReasonsWithTextIds[0], incompleteReasonsWithTextIds[1]],
 				[`incompleteReason-${incompleteReasonsWithTextIds[0]}`]: 'test reason text 1',
@@ -254,8 +223,6 @@ describe('LPA Questionnaire review', () => {
 		});
 
 		it('should re-render the incomplete reason page with the expected error message if multiple incomplete reasons with text were provided but any of the matching text properties are empty arrays', async () => {
-			expect(lpaQPostResponse.statusCode).toBe(302);
-
 			const response = await request.post(`${baseUrl}/incomplete`).send({
 				incompleteReason: [incompleteReasonsWithTextIds[0], incompleteReasonsWithTextIds[1]],
 				[`incompleteReason-${incompleteReasonsWithTextIds[0]}`]: [],
@@ -271,8 +238,6 @@ describe('LPA Questionnaire review', () => {
 		});
 
 		it('should re-render the incomplete reason page with the expected error message if a single incomplete reason with text was provided but the matching text property exceeds the character limit', async () => {
-			expect(lpaQPostResponse.statusCode).toBe(302);
-
 			const response = await request.post(`${baseUrl}/incomplete`).send({
 				incompleteReason: incompleteReasonsWithTextIds[0],
 				[`incompleteReason-${incompleteReasonsWithTextIds[0]}`]: 'a'.repeat(
@@ -286,8 +251,6 @@ describe('LPA Questionnaire review', () => {
 		});
 
 		it('should re-render the incomplete reason page with the expected error message if multiple incomplete reasons with text were provided but any of the matching text properties exceed the character limit', async () => {
-			expect(lpaQPostResponse.statusCode).toBe(302);
-
 			const response = await request.post(`${baseUrl}/incomplete`).send({
 				incompleteReason: [incompleteReasonsWithTextIds[0], incompleteReasonsWithTextIds[1]],
 				[`incompleteReason-${incompleteReasonsWithTextIds[0]}`]: 'test reason text 1',
@@ -302,8 +265,6 @@ describe('LPA Questionnaire review', () => {
 		});
 
 		it('should redirect to the check and confirm page if a single incomplete reason without text was provided', async () => {
-			expect(lpaQPostResponse.statusCode).toBe(302);
-
 			const response = await request.post(`${baseUrl}/incomplete`).send({
 				incompleteReason: incompleteReasonsWithoutTextIds[0]
 			});
@@ -312,8 +273,6 @@ describe('LPA Questionnaire review', () => {
 		});
 
 		it('should redirect to the check and confirm page if a single incomplete reason with text within the character limit was provided', async () => {
-			expect(lpaQPostResponse.statusCode).toBe(302);
-
 			const response = await request.post(`${baseUrl}/incomplete`).send({
 				incompleteReason: incompleteReasonsWithTextIds[0],
 				[`incompleteReason-${incompleteReasonsWithTextIds[0]}`]: 'a'.repeat(
@@ -325,8 +284,6 @@ describe('LPA Questionnaire review', () => {
 		});
 
 		it('should redirect to the check and confirm page if multiple incomplete reasons without text were provided', async () => {
-			expect(lpaQPostResponse.statusCode).toBe(302);
-
 			const response = await request.post(`${baseUrl}/incomplete`).send({
 				incompleteReason: [incompleteReasonsWithoutTextIds[0], incompleteReasonsWithoutTextIds[1]]
 			});
@@ -335,8 +292,6 @@ describe('LPA Questionnaire review', () => {
 		});
 
 		it('should redirect to the check and confirm page if multiple incomplete reasons with text within the character limit were provided', async () => {
-			expect(lpaQPostResponse.statusCode).toBe(302);
-
 			const response = await request.post(`${baseUrl}/incomplete`).send({
 				incompleteReason: [incompleteReasonsWithTextIds[0], incompleteReasonsWithTextIds[1]],
 				[`incompleteReason-${incompleteReasonsWithTextIds[0]}`]: [
@@ -369,14 +324,7 @@ describe('LPA Questionnaire review', () => {
 			nock.cleanAll();
 		});
 
-		it('should render the 500 error page if required data is not present in the session', async () => {
-			const response = await request.get(`${baseUrl}/incomplete/date`);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-		});
-
-		it('should render the update due date page without pre-populated date values, if required data is present in the session, and there is no existing due date', async () => {
+		it('should render the update due date page without pre-populated date values, if there is no existing due date', async () => {
 			nock('http://test/')
 				.get(`/appeals/2`)
 				.reply(200, {
@@ -392,23 +340,9 @@ describe('LPA Questionnaire review', () => {
 				})
 				.persist();
 
-			const localBaseUrl = '/appeals-service/appeal-details/2/lpa-questionnaire/2';
-
-			// post to LPA questionnaire page controller is necessary to set required data in the session
-			const lpaQPostResponse = await request.post(localBaseUrl).send({
-				'review-outcome': 'incomplete'
-			});
-
-			expect(lpaQPostResponse.statusCode).toBe(302);
-
-			// post to incomplete reason page controller is necessary to set required data in the session
-			const incompleteReasonPostResponse = await request.post(`${localBaseUrl}/incomplete`).send({
-				incompleteReason: incompleteReasonIds
-			});
-
-			expect(incompleteReasonPostResponse.statusCode).toBe(302);
-
-			const response = await request.get(`${localBaseUrl}/incomplete/date`);
+			const response = await request.get(
+				'/appeals-service/appeal-details/2/lpa-questionnaire/2/incomplete/date'
+			);
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
@@ -435,7 +369,7 @@ describe('LPA Questionnaire review', () => {
 			);
 		});
 
-		it('should render the update due date page with correct pre-populated date values, if required data is present in the session, and there is an existing due date', async () => {
+		it('should render the update due date page with correct pre-populated date values, if there is an existing due date', async () => {
 			nock('http://test/')
 				.get(`/appeals/2`)
 				.reply(200, {
@@ -451,23 +385,9 @@ describe('LPA Questionnaire review', () => {
 				})
 				.persist();
 
-			const localBaseUrl = '/appeals-service/appeal-details/2/lpa-questionnaire/2';
-
-			// post to LPA questionnaire page controller is necessary to set required data in the session
-			const lpaQPostResponse = await request.post(localBaseUrl).send({
-				'review-outcome': 'incomplete'
-			});
-
-			expect(lpaQPostResponse.statusCode).toBe(302);
-
-			// post to incomplete reason page controller is necessary to set required data in the session
-			const incompleteReasonPostResponse = await request.post(`${localBaseUrl}/incomplete`).send({
-				incompleteReason: incompleteReasonIds
-			});
-
-			expect(incompleteReasonPostResponse.statusCode).toBe(302);
-
-			const response = await request.get(`${localBaseUrl}/incomplete/date`);
+			const response = await request.get(
+				'/appeals-service/appeal-details/2/lpa-questionnaire/2/incomplete/date'
+			);
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
@@ -504,23 +424,33 @@ describe('LPA Questionnaire review', () => {
 					...appealData,
 					appealId: 1
 				});
-
-			// post to LPA questionnaire page controller is necessary to set required data in the session
-			lpaQPostResponse = await request.post(baseUrl).send({
-				'review-outcome': 'incomplete'
-			});
-
-			// post to incomplete reason page controller is necessary to set required data in the session
-			incompleteReasonPostResponse = await request.post(`${baseUrl}/incomplete`).send({
-				incompleteReason: incompleteReasonIds
-			});
 		});
 
 		afterEach(() => {
 			nock.cleanAll();
 		});
 
+		it('should render the 500 error page if required data is not present in the session', async () => {
+			const response = await request.post(`${baseUrl}/incomplete/date`).send({
+				'due-date-day': '1',
+				'due-date-month': '12',
+				'due-date-year': '3000'
+			});
+
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+		});
+
 		it('should re-render the update date page with the expected error message if no date was provided', async () => {
+			// prerequisites to set session data
+			lpaQPostResponse = await request.post(baseUrl).send({
+				'review-outcome': 'incomplete'
+			});
+			incompleteReasonPostResponse = await request.post(`${baseUrl}/incomplete`).send({
+				incompleteReason: incompleteReasonIds
+			});
+
 			expect(lpaQPostResponse.statusCode).toBe(302);
 			expect(incompleteReasonPostResponse.statusCode).toBe(302);
 
@@ -536,6 +466,14 @@ describe('LPA Questionnaire review', () => {
 		});
 
 		it('should re-render the update date page with the expected error message if provided date is not in the future', async () => {
+			// prerequisites to set session data
+			lpaQPostResponse = await request.post(baseUrl).send({
+				'review-outcome': 'incomplete'
+			});
+			incompleteReasonPostResponse = await request.post(`${baseUrl}/incomplete`).send({
+				incompleteReason: incompleteReasonIds
+			});
+
 			expect(lpaQPostResponse.statusCode).toBe(302);
 			expect(incompleteReasonPostResponse.statusCode).toBe(302);
 
@@ -551,6 +489,14 @@ describe('LPA Questionnaire review', () => {
 		});
 
 		it('should re-render the update date page with the expected error message if an invalid day was provided', async () => {
+			// prerequisites to set session data
+			lpaQPostResponse = await request.post(baseUrl).send({
+				'review-outcome': 'incomplete'
+			});
+			incompleteReasonPostResponse = await request.post(`${baseUrl}/incomplete`).send({
+				incompleteReason: incompleteReasonIds
+			});
+
 			expect(lpaQPostResponse.statusCode).toBe(302);
 			expect(incompleteReasonPostResponse.statusCode).toBe(302);
 
@@ -592,6 +538,14 @@ describe('LPA Questionnaire review', () => {
 		});
 
 		it('should re-render the update date page with the expected error message if an invalid month was provided', async () => {
+			// prerequisites to set session data
+			lpaQPostResponse = await request.post(baseUrl).send({
+				'review-outcome': 'incomplete'
+			});
+			incompleteReasonPostResponse = await request.post(`${baseUrl}/incomplete`).send({
+				incompleteReason: incompleteReasonIds
+			});
+
 			expect(lpaQPostResponse.statusCode).toBe(302);
 			expect(incompleteReasonPostResponse.statusCode).toBe(302);
 
@@ -633,6 +587,14 @@ describe('LPA Questionnaire review', () => {
 		});
 
 		it('should re-render the update date page with the expected error message if an invalid year was provided', async () => {
+			// prerequisites to set session data
+			lpaQPostResponse = await request.post(baseUrl).send({
+				'review-outcome': 'incomplete'
+			});
+			incompleteReasonPostResponse = await request.post(`${baseUrl}/incomplete`).send({
+				incompleteReason: incompleteReasonIds
+			});
+
 			expect(lpaQPostResponse.statusCode).toBe(302);
 			expect(incompleteReasonPostResponse.statusCode).toBe(302);
 
@@ -662,6 +624,14 @@ describe('LPA Questionnaire review', () => {
 		});
 
 		it('should re-render the update date page with the expected error message if an invalid date was provided', async () => {
+			// prerequisites to set session data
+			lpaQPostResponse = await request.post(baseUrl).send({
+				'review-outcome': 'incomplete'
+			});
+			incompleteReasonPostResponse = await request.post(`${baseUrl}/incomplete`).send({
+				incompleteReason: incompleteReasonIds
+			});
+
 			expect(lpaQPostResponse.statusCode).toBe(302);
 			expect(incompleteReasonPostResponse.statusCode).toBe(302);
 
@@ -679,6 +649,14 @@ describe('LPA Questionnaire review', () => {
 		});
 
 		it('should redirect to the check and confirm page if a valid date was provided', async () => {
+			// prerequisites to set session data
+			lpaQPostResponse = await request.post(baseUrl).send({
+				'review-outcome': 'incomplete'
+			});
+			incompleteReasonPostResponse = await request.post(`${baseUrl}/incomplete`).send({
+				incompleteReason: incompleteReasonIds
+			});
+
 			expect(lpaQPostResponse.statusCode).toBe(302);
 			expect(incompleteReasonPostResponse.statusCode).toBe(302);
 
@@ -795,6 +773,17 @@ describe('LPA Questionnaire review', () => {
 
 			expect(incompleteReasonPostResponse.statusCode).toBe(302);
 
+			// post to update date
+			nock('http://test/').post('/appeals/validate-business-date').reply(200, { success: true });
+
+			const updateDueDatePostResponse = await request.post(`${baseUrl}/incomplete/date`).send({
+				'due-date-day': '2',
+				'due-date-month': '10',
+				'due-date-year': '3000'
+			});
+
+			expect(updateDueDatePostResponse.statusCode).toBe(302);
+
 			const mockedlpaQuestionnairesEndpoint = nock('http://test/')
 				.patch('/appeals/1/lpa-questionnaires/2')
 				.reply(200, { validationOutcome: 'incomplete' });
@@ -813,25 +802,7 @@ describe('LPA Questionnaire review', () => {
 	});
 
 	describe('GET /appeals-service/appeal-details/1/lpa-questionnaire/1/confirmation', () => {
-		it('should render the 500 error page if required data is not present in the session', async () => {
-			const response = await request.get(`${baseUrl}/confirmation`);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-		});
-
-		it('should render the confirmation page with the expected content if required data is present in the session', async () => {
-			// post to LPA questionnaire page controller is necessary to set required data in the session
-			nock('http://test/')
-				.patch('/appeals/1/lpa-questionnaires/2')
-				.reply(200, { validationOutcome: 'incomplete' });
-
-			const lpaQPostResponse = await request.post(baseUrl).send({
-				'review-outcome': 'complete'
-			});
-
-			expect(lpaQPostResponse.statusCode).toBe(302);
-
+		it('should render the confirmation page with the expected content', async () => {
 			const response = await request.get(`${baseUrl}/confirmation`);
 			const element = parseHtml(response.text);
 

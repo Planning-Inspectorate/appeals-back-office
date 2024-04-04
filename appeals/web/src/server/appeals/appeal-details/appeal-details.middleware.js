@@ -6,10 +6,20 @@ import { getAppealDetailsFromId } from './appeal-details.service.js';
  */
 export const validateAppeal = async (req, res, next) => {
 	const { appealId } = req.params;
-	const appeal = await getAppealDetailsFromId(req.apiClient, appealId);
-	if (!appeal) {
-		return res.status(404).render('app/404');
+
+	try {
+		const appeal = await getAppealDetailsFromId(req.apiClient, appealId);
+		if (!appeal) {
+			return res.status(404).render('app/404');
+		}
+		req.currentAppeal = appeal;
+		next();
+	} catch (/** @type {any} */ error) {
+		switch (error?.response?.statusCode) {
+			case 404:
+				return res.status(404).render('app/404');
+			default:
+				return res.status(500).render('app/500');
+		}
 	}
-	req.currentAppeal = appeal;
-	next();
 };

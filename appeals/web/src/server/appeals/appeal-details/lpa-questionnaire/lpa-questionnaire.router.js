@@ -6,6 +6,7 @@ import * as validators from './lpa-questionnaire.validators.js';
 import * as documentsValidators from '../../appeal-documents/appeal-documents.validators.js';
 import outcomeIncompleteRouter from './outcome-incomplete/outcome-incomplete.router.js';
 import { assertGroupAccess } from '../../../app/auth/auth.guards.js';
+import { validateAppeal } from '../appeal-details.middleware.js';
 import {
 	validateCaseFolderId,
 	validateCaseDocumentId
@@ -16,8 +17,9 @@ const router = createRouter({ mergeParams: true });
 
 router
 	.route('/:lpaQuestionnaireId')
-	.get(asyncRoute(controller.getLpaQuestionnaire))
+	.get(validateAppeal, asyncRoute(controller.getLpaQuestionnaire))
 	.post(
+		validateAppeal,
 		validators.validateReviewOutcome,
 		assertGroupAccess(config.referenceData.appeals.caseOfficerGroupId),
 		asyncRoute(controller.postLpaQuestionnaire)
@@ -26,13 +28,16 @@ router
 router.use('/:lpaQuestionnaireId/incomplete', outcomeIncompleteRouter);
 router
 	.route('/:lpaQuestionnaireId/check-your-answers')
-	.get(asyncRoute(controller.getCheckAndConfirm))
+	.get(validateAppeal, asyncRoute(controller.getCheckAndConfirm))
 	.post(
+		validateAppeal,
 		assertGroupAccess(config.referenceData.appeals.caseOfficerGroupId),
 		asyncRoute(controller.postCheckAndConfirm)
 	);
 
-router.route('/:lpaQuestionnaireId/confirmation').get(asyncRoute(controller.getConfirmation));
+router
+	.route('/:lpaQuestionnaireId/confirmation')
+	.get(validateAppeal, asyncRoute(controller.getConfirmation));
 router.use('/:lpaQuestionnaireId/change-lpa-questionnaire', changePageRouter);
 
 router

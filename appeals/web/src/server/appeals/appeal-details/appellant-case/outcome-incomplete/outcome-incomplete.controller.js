@@ -3,7 +3,6 @@ import {
 	mapInvalidOrIncompleteReasonOptionsToCheckboxItemParameters,
 	updateDueDatePage
 } from '../appellant-case.mapper.js';
-import * as appealDetailsService from '../../appeal-details.service.js';
 import * as appellantCaseService from '../appellant-case.service.js';
 import { decisionIncompleteConfirmationPage } from './outcome-incomplete.mapper.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
@@ -16,33 +15,19 @@ import { getNotValidReasonsTextFromRequestBody } from '#lib/mappers/validation-o
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 const renderIncompleteReason = async (request, response) => {
-	const { errors, body } = request;
+	const {
+		errors,
+		body,
+		currentAppeal: { appealId, appealReference, appellantCaseId }
+	} = request;
 
-	if (!objectContainsAllKeys(request.session, ['appealId', 'appealReference'])) {
-		return response.render('app/500.njk');
-	}
-
-	const { appealId, appealReference } = request.session;
-
-	const appealDetails = await appealDetailsService
-		.getAppealDetailsFromId(request.apiClient, request.params.appealId)
-		.catch((error) => logger.error(error));
-
-	if (
-		!appealDetails ||
-		appealDetails.appellantCaseId === null ||
-		appealDetails.appellantCaseId === undefined
-	) {
+	if (appellantCaseId === null || appellantCaseId === undefined) {
 		return response.render('app/404.njk');
 	}
 
 	const [appellantCaseResponse, incompleteReasonOptions] = await Promise.all([
 		appellantCaseService
-			.getAppellantCaseFromAppealId(
-				request.apiClient,
-				appealDetails.appealId,
-				appealDetails.appellantCaseId
-			)
+			.getAppellantCaseFromAppealId(request.apiClient, appealId, appellantCaseId)
 			.catch((error) => logger.error(error)),
 		appellantCaseService.getAppellantCaseNotValidReasonOptionsForOutcome(
 			request.apiClient,
@@ -123,11 +108,10 @@ const renderUpdateDueDate = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 const renderDecisionIncompleteConfirmationPage = async (request, response) => {
-	if (!objectContainsAllKeys(request.session, ['appealId', 'appealReference'])) {
-		return response.render('app/500.njk');
-	}
+	const {
+		currentAppeal: { appealId, appealReference }
+	} = request;
 
-	const { appealId, appealReference } = request.session;
 	const pageContent = decisionIncompleteConfirmationPage(appealId, appealReference);
 
 	response.render('appeals/confirmation.njk', {
@@ -142,19 +126,16 @@ export const getIncompleteReason = async (request, response) => {
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const postIncompleteReason = async (request, response) => {
-	const { errors } = request;
+	const {
+		errors,
+		currentAppeal: { appealId }
+	} = request;
 
 	if (errors) {
 		return renderIncompleteReason(request, response);
 	}
 
 	try {
-		if (!objectContainsAllKeys(request.session, 'appealId')) {
-			return response.render('app/500.njk');
-		}
-
-		const { appealId } = request.session;
-
 		/** @type {import('../appellant-case.types.js').AppellantCaseSessionValidationOutcome} */
 		request.session.webAppellantCaseReviewOutcome = {
 			appealId,
@@ -189,7 +170,10 @@ export const postUpdateDueDate = async (request, response) => {
 		return response.render('app/500.njk');
 	}
 
-	const { body } = request;
+	const {
+		body,
+		currentAppeal: { appealId }
+	} = request;
 
 	if (!objectContainsAllKeys(body, ['due-date-day', 'due-date-month', 'due-date-year'])) {
 		return response.render('app/500.njk');
@@ -219,7 +203,7 @@ export const postUpdateDueDate = async (request, response) => {
 		};
 
 		return response.redirect(
-			`/appeals-service/appeal-details/${request.session.appealId}/appellant-case/check-your-answers`
+			`/appeals-service/appeal-details/${appealId}/appellant-case/check-your-answers`
 		);
 	} catch (error) {
 		logger.error(

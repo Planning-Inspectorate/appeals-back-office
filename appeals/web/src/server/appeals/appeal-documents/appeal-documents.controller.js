@@ -255,8 +255,12 @@ export const postDocumentDetails = async (request, response, backButtonUrl, next
  * @param {string} backButtonUrl
  */
 export const renderChangeDocumentDetails = async (request, response, backButtonUrl) => {
-	const { currentFolder, body, errors } = request;
-	const { appealId, documentId } = request.params;
+	const {
+		currentFolder,
+		body,
+		errors,
+		params: { appealId, documentId }
+	} = request;
 
 	/** @type {DocumentDetailsItem[]} */
 	let items = body?.items;

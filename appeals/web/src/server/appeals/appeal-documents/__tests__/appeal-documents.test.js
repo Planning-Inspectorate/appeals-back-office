@@ -2,6 +2,7 @@ import nock from 'nock';
 import supertest from 'supertest';
 import { parseHtml } from '@pins/platform';
 import { createTestEnvironment } from '#testing/index.js';
+import { appellantCaseDataNotValidated } from '#testing/app/fixtures/referencedata.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -25,7 +26,12 @@ const getControllerEndpoint = (
 };
 
 describe('documents upload', () => {
-	beforeEach(installMockApi);
+	beforeEach(() => {
+		installMockApi();
+		nock('http://test/')
+			.get('/appeals/1/appellant-cases/0')
+			.reply(200, appellantCaseDataNotValidated);
+	});
 	afterEach(teardown);
 
 	it('should return 404 if appeal ID is not found', async () => {
@@ -33,6 +39,7 @@ describe('documents upload', () => {
 		nock('http://test/').get(`/appeals/${invalidAppealId}/document-folders/1`).reply(404);
 
 		const response = await request.get(getControllerEndpoint(invalidAppealId, invalidFolderId));
+
 		expect(response.statusCode).toBe(404);
 	});
 

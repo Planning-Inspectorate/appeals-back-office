@@ -361,44 +361,6 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
                     <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2">Refresh page to see if scan has finished</a>
                 </div>
             </div>
-            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-            data-module="govuk-notification-banner">
-                <div class="govuk-notification-banner__header">
-                    <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> LPA Questionnaire is incomplete</h3>
-                </div>
-                <div class="govuk-notification-banner__content">
-                    <details class="govuk-details" data-module="govuk-details">
-                        <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Policies are missing</span>
-                        </summary>
-                        <div class="govuk-details__text">
-                            <ul class="govuk-!-margin-top-0">
-                                <li>test reason 1</li>
-                            </ul>
-                        </div>
-                    </details>
-                    <details class="govuk-details" data-module="govuk-details">
-                        <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Other documents or information are missing</span>
-                        </summary>
-                        <div class="govuk-details__text">
-                            <ul class="govuk-!-margin-top-0">
-                                <li>test reason 2</li>
-                                <li>test reason 3</li>
-                            </ul>
-                        </div>
-                    </details>
-                    <details class="govuk-details" data-module="govuk-details">
-                        <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Other</span>
-                        </summary>
-                        <div class="govuk-details__text">
-                            <ul class="govuk-!-margin-top-0">
-                                <li>test reason 4</li>
-                                <li>test reason 5</li>
-                                <li>test reason 6</li>
-                            </ul>
-                        </div>
-                    </details>
-                </div>
-            </div>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1096,6 +1058,21 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#constraints-summary">One or more documents in this LPA questionnaire contains a virus. Upload a different version of each document that contains a virus.</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
             data-module="govuk-notification-banner">
                 <div class="govuk-notification-banner__header">
@@ -1195,7 +1172,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                         <ul class="govuk-list">
                             <li><span><div class="govuk-body govuk-!-margin-bottom-2">conservationAreaMap.docx</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
                             </li>
-                            <li><span><div class="govuk-body govuk-!-margin-bottom-2">applicationForm.docx</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                            <li><span><div class="govuk-body govuk-!-margin-bottom-2">applicationForm.docx</div><strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong></span>
                             </li>
                         </ul>
                         </dd>
@@ -1524,20 +1501,7 @@ exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-ques
 </main>"
 `;
 
-exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-questionnaire/1/confirmation should render the 500 error page if required data is not present in the session 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
-            <p class="govuk-body">Try again later.</p>
-            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
-                the problem persists.</p>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-questionnaire/1/confirmation should render the confirmation page with the expected content if required data is present in the session 1`] = `
+exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-questionnaire/1/confirmation should render the confirmation page with the expected content 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-width-container">
         <div class="govuk-grid-row">
@@ -1559,20 +1523,7 @@ exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-ques
 </main>"
 `;
 
-exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-questionnaire/1/incomplete should render the 500 error page if required data is not present in the session 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
-            <p class="govuk-body">Try again later.</p>
-            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
-                the problem persists.</p>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-questionnaire/1/incomplete should render the incomplete reason page if required data is present in the session 1`] = `
+exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-questionnaire/1/incomplete should render the incomplete reason page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
@@ -1755,28 +1706,16 @@ exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-ques
                 <h2>What happens next</h2>
                 <p class="govuk-body">We’ve sent an email to the appellant and LPA to confirm their questionnaire
                     is incomplete, and let them know what to do to complete it.</p>
-                <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1">Go back to case details</a>
-                </p>
+                <p class="govuk-body">We also let them know the due date has changed to the 2 October 3000.</p>
+                <p                 class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1">Go back to case details</a>
+                    </p>
             </div>
         </div>
     </div>
 </main>"
 `;
 
-exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-questionnaire/1/incomplete/date should render the 500 error page if required data is not present in the session 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
-            <p class="govuk-body">Try again later.</p>
-            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
-                the problem persists.</p>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-questionnaire/1/incomplete/date should render the update due date page with correct pre-populated date values, if required data is present in the session, and there is an existing due date 1`] = `
+exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-questionnaire/1/incomplete/date should render the update due date page with correct pre-populated date values, if there is an existing due date 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-xl govuk-!-margin-bottom-1">Appeal 351062</span>
@@ -1818,7 +1757,7 @@ exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-ques
 </main>"
 `;
 
-exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-questionnaire/1/incomplete/date should render the update due date page without pre-populated date values, if required data is present in the session, and there is no existing due date 1`] = `
+exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-questionnaire/1/incomplete/date should render the update due date page without pre-populated date values, if there is no existing due date 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-xl govuk-!-margin-bottom-1">Appeal 351062</span>
@@ -5803,6 +5742,19 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
             <button type="submit" class="govuk-button" data-module="govuk-button">Save and continue</button>
         </div>
     </form>
+</main>"
+`;
+
+exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-questionnaire/1/incomplete/date should render the 500 error page if required data is not present in the session 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+            <p class="govuk-body">Try again later.</p>
+            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
+                the problem persists.</p>
+        </div>
+    </div>
 </main>"
 `;
 

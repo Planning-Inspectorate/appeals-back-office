@@ -7,8 +7,9 @@ const router = createRouter({ mergeParams: true });
 
 router
 	.route('/')
-	.get(controller.getIncompleteReason)
+	.get(validateAppeal, controller.getIncompleteReason)
 	.post(
+		validateAppeal,
 		validators.validateIncompleteReason,
 		validators.validateIncompleteReasonTextItems,
 		controller.postIncompleteReason
@@ -26,6 +27,6 @@ router
 		controller.postUpdateDueDate
 	);
 
-router.route('/confirmation').get(controller.getConfirmation);
+router.route('/confirmation').get(validateAppeal, controller.getConfirmation);
 
 export default router;

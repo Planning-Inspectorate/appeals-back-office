@@ -15,7 +15,7 @@ export function getAppellantCaseFromAppealId(apiClient, appealId, appellantCaseI
 
 /**
  * @param {import('got').Got} apiClient
- * @param {number} appealId
+ * @param {number|string} appealId
  * @param {number} appellantCaseId
  * @param {import('./appellant-case.types.js').AppellantCaseValidationOutcomeRequest} reviewOutcome
  * @returns {Promise<SingleAppellantCaseResponse>}

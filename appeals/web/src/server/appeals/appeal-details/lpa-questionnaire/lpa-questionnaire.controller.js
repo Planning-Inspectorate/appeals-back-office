@@ -27,35 +27,34 @@ import {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 const renderLpaQuestionnaire = async (request, response, errors = null) => {
-	const [lpaQuestionnaire, appealDetails] = await Promise.all([
-		lpaQuestionnaireService.getLpaQuestionnaireFromId(
-			request.apiClient,
-			request.params.appealId,
-			request.params.lpaQuestionnaireId
-		),
-		appealDetailsService.getAppealDetailsFromId(request.apiClient, request.params.appealId)
-	]);
+	const {
+		currentAppeal,
+		params: { lpaQuestionnaireId },
+		session
+	} = request;
 
-	if (!lpaQuestionnaire || !appealDetails) {
+	const lpaQuestionnaire = await lpaQuestionnaireService.getLpaQuestionnaireFromId(
+		request.apiClient,
+		currentAppeal.appealId,
+		lpaQuestionnaireId
+	);
+
+	if (!lpaQuestionnaire) {
 		return response.render('app/404.njk');
 	}
 
-	const session = request.session;
+	const mappedPageContent = await lpaQuestionnairePage(
+		lpaQuestionnaire,
+		currentAppeal,
+		request.originalUrl,
+		session,
+		request.apiClient
+	);
 
-	if (lpaQuestionnaire && appealDetails) {
-		const mappedPageContent = await lpaQuestionnairePage(
-			lpaQuestionnaire,
-			appealDetails,
-			request.originalUrl,
-			session,
-			request.apiClient
-		);
-
-		return response.render('patterns/display-page.pattern.njk', {
-			pageContent: mappedPageContent,
-			errors
-		});
-	}
+	return response.render('patterns/display-page.pattern.njk', {
+		pageContent: mappedPageContent,
+		errors
+	});
 };
 
 /**
@@ -73,7 +72,8 @@ export const postLpaQuestionnaire = async (request, response) => {
 		params: { appealId, lpaQuestionnaireId },
 		body,
 		errors,
-		apiClient
+		apiClient,
+		currentAppeal
 	} = request;
 
 	if (errors) {
@@ -82,16 +82,8 @@ export const postLpaQuestionnaire = async (request, response) => {
 
 	try {
 		const reviewOutcome = body['review-outcome'];
-		const appealDetails = await appealDetailsService
-			.getAppealDetailsFromId(apiClient, request.params.appealId)
-			.catch((error) => logger.error(error));
 
-		if (appealDetails) {
-			const { appealReference } = appealDetails;
-
-			request.session.appealId = appealId;
-			request.session.appealReference = appealReference;
-
+		if (currentAppeal) {
 			if (reviewOutcome === 'complete') {
 				await lpaQuestionnaireService.setReviewOutcomeForLpaQuestionnaire(
 					apiClient,
@@ -103,8 +95,6 @@ export const postLpaQuestionnaire = async (request, response) => {
 					`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/confirmation`
 				);
 			} else if (reviewOutcome === 'incomplete') {
-				request.session.lpaQuestionnaireId = lpaQuestionnaireId;
-
 				return response.redirect(
 					`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/incomplete`
 				);
@@ -130,11 +120,9 @@ export const postLpaQuestionnaire = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const renderLpaQuestionnaireReviewCompletePage = async (request, response) => {
-	if (!objectContainsAllKeys(request.session, ['appealId', 'appealReference'])) {
-		return response.render('app/500.njk');
-	}
-
-	const { appealId, appealReference } = request.session;
+	const {
+		currentAppeal: { appealId, appealReference }
+	} = request;
 	const pageContent = reviewCompletePage(appealId, appealReference);
 
 	return response.render('appeals/confirmation.njk', {
@@ -149,19 +137,15 @@ export const renderLpaQuestionnaireReviewCompletePage = async (request, response
  */
 const renderCheckAndConfirm = async (request, response) => {
 	try {
-		if (
-			!objectContainsAllKeys(request.session, [
-				'appealId',
-				'appealReference',
-				'lpaQuestionnaireId',
-				'webLPAQuestionnaireReviewOutcome'
-			])
-		) {
+		if (!objectContainsAllKeys(request.session, 'webLPAQuestionnaireReviewOutcome')) {
 			return response.render('app/500.njk');
 		}
 
-		const { appealId, appealReference, lpaQuestionnaireId, webLPAQuestionnaireReviewOutcome } =
-			request.session;
+		const {
+			currentAppeal,
+			params: { lpaQuestionnaireId },
+			session: { webLPAQuestionnaireReviewOutcome }
+		} = request;
 
 		const reasonOptions = await lpaQuestionnaireService.getLPAQuestionnaireIncompleteReasonOptions(
 			request.apiClient
@@ -171,8 +155,8 @@ const renderCheckAndConfirm = async (request, response) => {
 		}
 
 		const mappedPageContent = checkAndConfirmPage(
-			appealId,
-			appealReference,
+			currentAppeal.appealId,
+			currentAppeal.appealReference,
 			lpaQuestionnaireId,
 			reasonOptions,
 			'incomplete',
@@ -205,21 +189,19 @@ export const getCheckAndConfirm = async (request, response) => {
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const postCheckAndConfirm = async (request, response) => {
 	try {
-		if (
-			!objectContainsAllKeys(request.session, [
-				'appealId',
-				'lpaQuestionnaireId',
-				'webLPAQuestionnaireReviewOutcome'
-			])
-		) {
+		if (!objectContainsAllKeys(request.session, 'webLPAQuestionnaireReviewOutcome')) {
 			return response.render('app/500.njk');
 		}
 
-		const { appealId, lpaQuestionnaireId, webLPAQuestionnaireReviewOutcome } = request.session;
+		const {
+			currentAppeal,
+			params: { lpaQuestionnaireId },
+			session: { webLPAQuestionnaireReviewOutcome }
+		} = request;
 
 		await lpaQuestionnaireService.setReviewOutcomeForLpaQuestionnaire(
 			request.apiClient,
-			appealId,
+			currentAppeal.appealId,
 			lpaQuestionnaireId,
 			mapWebValidationOutcomeToApiValidationOutcome(
 				'incomplete',
@@ -237,7 +219,7 @@ export const postCheckAndConfirm = async (request, response) => {
 		delete request.session.webLPAQuestionnaireReviewOutcome;
 
 		return response.redirect(
-			`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/incomplete/confirmation`
+			`/appeals-service/appeal-details/${currentAppeal.appealId}/lpa-questionnaire/${lpaQuestionnaireId}/incomplete/confirmation`
 		);
 	} catch (error) {
 		logger.error(

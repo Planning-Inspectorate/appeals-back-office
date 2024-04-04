@@ -276,14 +276,6 @@ export const appellantCaseDataNotValidated = {
 					caseId: 111,
 					isLateEntry: false,
 					virusCheckStatus: 'checked'
-				},
-				{
-					id: 'a78446aa-167a-4bef-89b7-18bcb0da11c2',
-					name: 'test-doc.jpeg',
-					folderId: 3420,
-					caseId: 111,
-					isLateEntry: false,
-					virusCheckStatus: 'not_checked'
 				}
 			]
 		}

@@ -21,9 +21,7 @@ import {
 	documentFileVersionsInfoChecked,
 	documentFileMultipleVersionsInfoWithLatestAsLateEntry,
 	activeDirectoryUsersData,
-	notCheckedDocumentFolderInfoDocuments,
 	appealData,
-	scanFailedDocumentFolderInfoDocuments,
 	appellantCaseDataInvalidOutcome
 } from '#testing/app/fixtures/referencedata.js';
 import { cloneDeep } from 'lodash-es';
@@ -66,6 +64,9 @@ describe('appellant-case', () => {
 
 	describe('GET /appellant-case', () => {
 		beforeEach(() => {
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, appellantCaseDataNotValidated);
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses);
@@ -111,13 +112,28 @@ describe('appellant-case', () => {
 		});
 
 		it('should render a notification banner when a file is unscanned', async () => {
-			//Create a document with virus scan still in progress
-			let updatedAppellantCaseData = cloneDeep(appellantCaseDataIncompleteOutcome);
-			updatedAppellantCaseData.documents.applicationForm.documents.push(
-				// @ts-ignore
-				notCheckedDocumentFolderInfoDocuments
-			);
-			nock('http://test/').get('/appeals/1/appellant-cases/0').reply(200, updatedAppellantCaseData);
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, {
+					...appellantCaseDataNotValidated,
+					documents: {
+						...appellantCaseDataNotValidated.documents,
+						additionalDocuments: {
+							...appellantCaseDataNotValidated.documents.additionalDocuments,
+							documents: [
+								...appellantCaseDataNotValidated.documents.additionalDocuments.documents,
+								{
+									id: 'a78446aa-167a-4bef-89b7-18bcb0da11c2',
+									name: 'test-doc.jpeg',
+									folderId: 3420,
+									caseId: 111,
+									isLateEntry: false,
+									virusCheckStatus: 'not_checked'
+								}
+							]
+						}
+					}
+				});
 
 			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
 			const element = parseHtml(response.text);
@@ -125,13 +141,28 @@ describe('appellant-case', () => {
 		});
 
 		it('should render an error when a file has a virus', async () => {
-			//Create a document with virus scan still in progress
-			let updatedAppellantCaseData = cloneDeep(appellantCaseDataIncompleteOutcome);
-			updatedAppellantCaseData.documents.applicationForm.documents.push(
-				// @ts-ignore
-				scanFailedDocumentFolderInfoDocuments
-			);
-			nock('http://test/').get('/appeals/1/appellant-cases/0').reply(200, updatedAppellantCaseData);
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, {
+					...appellantCaseDataNotValidated,
+					documents: {
+						...appellantCaseDataNotValidated.documents,
+						additionalDocuments: {
+							...appellantCaseDataNotValidated.documents.additionalDocuments,
+							documents: [
+								...appellantCaseDataNotValidated.documents.additionalDocuments.documents,
+								{
+									id: 'a78446aa-167a-4bef-89b7-18bcb0da11c2',
+									name: 'test-doc.jpeg',
+									folderId: 3420,
+									caseId: 111,
+									isLateEntry: false,
+									virusCheckStatus: 'failed_virus_check'
+								}
+							]
+						}
+					}
+				});
 
 			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
 			const element = parseHtml(response.text);
@@ -143,7 +174,7 @@ describe('appellant-case', () => {
 		beforeEach(() => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
-				.reply(200, appellantCaseDataIncompleteOutcome);
+				.reply(200, appellantCaseDataNotValidated);
 		});
 
 		afterEach(() => {
@@ -200,6 +231,9 @@ describe('appellant-case', () => {
 	describe('GET /appellant-case/invalid', () => {
 		beforeEach(() => {
 			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, appellantCaseDataNotValidated);
+			nock('http://test/')
 				.get('/appeals/appellant-case-invalid-reasons')
 				.reply(200, appellantCaseInvalidReasons);
 		});
@@ -208,25 +242,7 @@ describe('appellant-case', () => {
 			nock.cleanAll();
 		});
 
-		it('should render the 500 error page if required data is not present in the session', async () => {
-			const response = await request.get(
-				`${baseUrl}/1${appellantCasePagePath}${invalidOutcomePagePath}`
-			);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-		});
-
-		it('should render the invalid reason page if required data is present in the session', async () => {
-			// post to appellant case page controller is necessary to set required data in the session
-			const appellantCasePostResponse = await request
-				.post(`${baseUrl}/1${appellantCasePagePath}`)
-				.send({
-					reviewOutcome: 'invalid'
-				});
-
-			expect(appellantCasePostResponse.statusCode).toBe(302);
-
+		it('should render the invalid reason page', async () => {
 			const response = await request.get(
 				`${baseUrl}/1${appellantCasePagePath}${invalidOutcomePagePath}`
 			);
@@ -237,20 +253,13 @@ describe('appellant-case', () => {
 	});
 
 	describe('POST /appellant-case/invalid', () => {
-		/**
-		 * @type {import("superagent").Response}
-		 */
-		let appellantCasePostResponse;
-
 		beforeEach(async () => {
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, appellantCaseDataNotValidated);
 			nock('http://test/')
 				.get('/appeals/appellant-case-invalid-reasons')
 				.reply(200, appellantCaseInvalidReasons);
-
-			// post to appellant case page controller is necessary to set required data in the session
-			appellantCasePostResponse = await request.post(`${baseUrl}/1${appellantCasePagePath}`).send({
-				reviewOutcome: 'invalid'
-			});
 		});
 
 		afterEach(() => {
@@ -258,8 +267,6 @@ describe('appellant-case', () => {
 		});
 
 		it('should re-render the invalid reason page with the expected error message if no invalid reason was provided', async () => {
-			expect(appellantCasePostResponse.statusCode).toBe(302);
-
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}${invalidOutcomePagePath}`)
 				.send({});
@@ -270,8 +277,6 @@ describe('appellant-case', () => {
 		});
 
 		it('should re-render the invalid reason page with the expected error message if a single invalid reason with text was provided but the matching text property is an empty string', async () => {
-			expect(appellantCasePostResponse.statusCode).toBe(302);
-
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}${invalidOutcomePagePath}`)
 				.send({
@@ -285,8 +290,6 @@ describe('appellant-case', () => {
 		});
 
 		it('should re-render the invalid reason page with the expected error message if a single invalid reason with text was provided but the matching text property is an empty array', async () => {
-			expect(appellantCasePostResponse.statusCode).toBe(302);
-
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}${invalidOutcomePagePath}`)
 				.send({
@@ -300,8 +303,6 @@ describe('appellant-case', () => {
 		});
 
 		it('should re-render the invalid reason page with the expected error message if multiple invalid reasons with text were provided but any of the matching text properties are empty strings', async () => {
-			expect(appellantCasePostResponse.statusCode).toBe(302);
-
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}${invalidOutcomePagePath}`)
 				.send({
@@ -316,8 +317,6 @@ describe('appellant-case', () => {
 		});
 
 		it('should re-render the invalid reason page with the expected error message if multiple invalid reasons with text were provided but any of the matching text properties are empty arays', async () => {
-			expect(appellantCasePostResponse.statusCode).toBe(302);
-
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}${invalidOutcomePagePath}`)
 				.send({
@@ -332,8 +331,6 @@ describe('appellant-case', () => {
 		});
 
 		it('should re-render the invalid reason page with the expected error message if a single invalid reason with text was provided but the matching text property exceeds the character limit', async () => {
-			expect(appellantCasePostResponse.statusCode).toBe(302);
-
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}${invalidOutcomePagePath}`)
 				.send({
@@ -349,8 +346,6 @@ describe('appellant-case', () => {
 		});
 
 		it('should re-render the invalid reason page with the expected error message if multiple invalid reasons with text were provided but any of the matching text properties exceed the character limit', async () => {
-			expect(appellantCasePostResponse.statusCode).toBe(302);
-
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}${invalidOutcomePagePath}`)
 				.send({
@@ -367,8 +362,6 @@ describe('appellant-case', () => {
 		});
 
 		it('should redirect to the check and confirm page if a single invalid reason without text was provided', async () => {
-			expect(appellantCasePostResponse.statusCode).toBe(302);
-
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}${invalidOutcomePagePath}`)
 				.send({
@@ -379,8 +372,6 @@ describe('appellant-case', () => {
 		});
 
 		it('should redirect to the check and confirm page if a single invalid reason with text within the character limit was provided', async () => {
-			expect(appellantCasePostResponse.statusCode).toBe(302);
-
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}${invalidOutcomePagePath}`)
 				.send({
@@ -394,8 +385,6 @@ describe('appellant-case', () => {
 		});
 
 		it('should redirect to the check and confirm page if multiple invalid reasons without text were provided', async () => {
-			expect(appellantCasePostResponse.statusCode).toBe(302);
-
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}${invalidOutcomePagePath}`)
 				.send({
@@ -406,8 +395,6 @@ describe('appellant-case', () => {
 		});
 
 		it('should redirect to the check and confirm page if multiple invalid reasons with text within the character limit were provided', async () => {
-			expect(appellantCasePostResponse.statusCode).toBe(302);
-
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}${invalidOutcomePagePath}`)
 				.send({
@@ -428,6 +415,9 @@ describe('appellant-case', () => {
 	describe('GET /appellant-case/incomplete', () => {
 		beforeEach(() => {
 			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, appellantCaseDataNotValidated);
+			nock('http://test/')
 				.get('/appeals/appellant-case-incomplete-reasons')
 				.reply(200, appellantCaseIncompleteReasons);
 		});
@@ -437,15 +427,6 @@ describe('appellant-case', () => {
 		});
 
 		it('should render the incomplete reason page', async () => {
-			// post to appellant case page controller is necessary to set required data in the session
-			const appellantCasePostResponse = await request
-				.post(`${baseUrl}/1${appellantCasePagePath}`)
-				.send({
-					reviewOutcome: 'incomplete'
-				});
-
-			expect(appellantCasePostResponse.statusCode).toBe(302);
-
 			const response = await request.get(
 				`${baseUrl}/1${appellantCasePagePath}${incompleteOutcomePagePath}`
 			);
@@ -456,20 +437,13 @@ describe('appellant-case', () => {
 	});
 
 	describe('POST /appellant-case/incomplete', () => {
-		/**
-		 * @type {import("superagent").Response}
-		 */
-		let appellantCasePostResponse;
-
 		beforeEach(async () => {
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, appellantCaseDataNotValidated);
 			nock('http://test/')
 				.get('/appeals/appellant-case-incomplete-reasons')
 				.reply(200, appellantCaseIncompleteReasons);
-
-			// post to appellant case page controller is necessary to set required data in the session
-			appellantCasePostResponse = await request.post(`${baseUrl}/1${appellantCasePagePath}`).send({
-				reviewOutcome: 'incomplete'
-			});
 		});
 
 		afterEach(() => {
@@ -477,8 +451,6 @@ describe('appellant-case', () => {
 		});
 
 		it('should re-render the incomplete reason page with the expected error message if no incomplete reason was provided', async () => {
-			expect(appellantCasePostResponse.statusCode).toBe(302);
-
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}${incompleteOutcomePagePath}`)
 				.send({});
@@ -489,8 +461,6 @@ describe('appellant-case', () => {
 		});
 
 		it('should re-render the incomplete reason page with the expected error message if a single incomplete reason with text was provided but the matching text property is an empty string', async () => {
-			expect(appellantCasePostResponse.statusCode).toBe(302);
-
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}${incompleteOutcomePagePath}`)
 				.send({
@@ -504,8 +474,6 @@ describe('appellant-case', () => {
 		});
 
 		it('should re-render the incomplete reason page with the expected error message if a single incomplete reason with text was provided but the matching text property is an empty array', async () => {
-			expect(appellantCasePostResponse.statusCode).toBe(302);
-
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}${incompleteOutcomePagePath}`)
 				.send({
@@ -519,8 +487,6 @@ describe('appellant-case', () => {
 		});
 
 		it('should re-render the incomplete reason page with the expected error message if multiple incomplete reasons with text were provided but any of the matching text properties are empty strings', async () => {
-			expect(appellantCasePostResponse.statusCode).toBe(302);
-
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}${incompleteOutcomePagePath}`)
 				.send({
@@ -535,8 +501,6 @@ describe('appellant-case', () => {
 		});
 
 		it('should re-render the incomplete reason page with the expected error message if multiple incomplete reasons with text were provided but any of the matching text properties are empty arrays', async () => {
-			expect(appellantCasePostResponse.statusCode).toBe(302);
-
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}${incompleteOutcomePagePath}`)
 				.send({
@@ -551,8 +515,6 @@ describe('appellant-case', () => {
 		});
 
 		it('should re-render the incomplete reason page with the expected error message if a single incomplete reason with text was provided but the matching text property exceeds the character limit', async () => {
-			expect(appellantCasePostResponse.statusCode).toBe(302);
-
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}${incompleteOutcomePagePath}`)
 				.send({
@@ -568,8 +530,6 @@ describe('appellant-case', () => {
 		});
 
 		it('should re-render the incomplete reason page with the expected error message if multiple incomplete reasons with text were provided but any of the matching text properties exceed the character limit', async () => {
-			expect(appellantCasePostResponse.statusCode).toBe(302);
-
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}${incompleteOutcomePagePath}`)
 				.send({
@@ -586,8 +546,6 @@ describe('appellant-case', () => {
 		});
 
 		it('should redirect to the check and confirm page if a single incomplete reason without text was provided', async () => {
-			expect(appellantCasePostResponse.statusCode).toBe(302);
-
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}${incompleteOutcomePagePath}`)
 				.send({
@@ -598,8 +556,6 @@ describe('appellant-case', () => {
 		});
 
 		it('should redirect to the check and confirm page a single incomplete reason with text within the character limit was provided', async () => {
-			expect(appellantCasePostResponse.statusCode).toBe(302);
-
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}${incompleteOutcomePagePath}`)
 				.send({
@@ -614,8 +570,6 @@ describe('appellant-case', () => {
 		});
 
 		it('should redirect to the check and confirm page if multiple incomplete reasons without text were provided', async () => {
-			expect(appellantCasePostResponse.statusCode).toBe(302);
-
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}${incompleteOutcomePagePath}`)
 				.send({
@@ -626,8 +580,6 @@ describe('appellant-case', () => {
 		});
 
 		it('should redirect to the check and confirm page if multiple incomplete reasons with text within the character limit were provided', async () => {
-			expect(appellantCasePostResponse.statusCode).toBe(302);
-
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}${incompleteOutcomePagePath}`)
 				.send({
@@ -648,9 +600,6 @@ describe('appellant-case', () => {
 	describe('GET /appellant-case/incomplete/date', () => {
 		beforeEach(() => {
 			nock('http://test/')
-				.get('/appeals/appellant-case-incomplete-reasons')
-				.reply(200, appellantCaseIncompleteReasons);
-			nock('http://test/')
 				.get(`/appeals/1`)
 				.reply(200, {
 					...appealData,
@@ -662,7 +611,7 @@ describe('appellant-case', () => {
 			nock.cleanAll();
 		});
 
-		it('should render the update due date page without pre-populated date values, if required data is present in the session, and there is no existing due date', async () => {
+		it('should render the update due date page without pre-populated date values if there is no existing due date', async () => {
 			nock('http://test/')
 				.get(`/appeals/2`)
 				.reply(200, {
@@ -677,24 +626,6 @@ describe('appellant-case', () => {
 					}
 				})
 				.persist();
-
-			// post to appellant case page controller is necessary to set required data in the session
-			const appellantCasePostResponse = await request
-				.post(`${baseUrl}/2${appellantCasePagePath}`)
-				.send({
-					reviewOutcome: 'incomplete'
-				});
-
-			expect(appellantCasePostResponse.statusCode).toBe(302);
-
-			// post to incomplete reason page controller is necessary to set required data in the session
-			const incompleteReasonPostResponse = await request
-				.post(`${baseUrl}/2${appellantCasePagePath}/${incompleteOutcomePagePath}`)
-				.send({
-					incompleteReason: incompleteReasonsWithoutTextIds[0]
-				});
-
-			expect(incompleteReasonPostResponse.statusCode).toBe(302);
 
 			const response = await request.get(
 				`${baseUrl}/2${appellantCasePagePath}${incompleteOutcomePagePath}${updateDueDatePagePath}`
@@ -725,7 +656,7 @@ describe('appellant-case', () => {
 			);
 		});
 
-		it('should render the update due date page with correct pre-populated date values, if required data is present in the session, and there is an existing due date', async () => {
+		it('should render the update due date page with correct pre-populated date values if there is an existing due date', async () => {
 			nock('http://test/')
 				.get(`/appeals/2`)
 				.reply(200, {
@@ -740,24 +671,6 @@ describe('appellant-case', () => {
 					}
 				})
 				.persist();
-
-			// post to appellant case page controller is necessary to set required data in the session
-			const appellantCasePostResponse = await request
-				.post(`${baseUrl}/2${appellantCasePagePath}`)
-				.send({
-					reviewOutcome: 'incomplete'
-				});
-
-			expect(appellantCasePostResponse.statusCode).toBe(302);
-
-			// post to incomplete reason page controller is necessary to set required data in the session
-			const incompleteReasonPostResponse = await request
-				.post(`${baseUrl}/2${appellantCasePagePath}/${incompleteOutcomePagePath}`)
-				.send({
-					incompleteReason: incompleteReasonsWithoutTextIds[0]
-				});
-
-			expect(incompleteReasonPostResponse.statusCode).toBe(302);
 
 			const response = await request.get(
 				`${baseUrl}/2${appellantCasePagePath}${incompleteOutcomePagePath}${updateDueDatePagePath}`
@@ -779,36 +692,12 @@ describe('appellant-case', () => {
 	});
 
 	describe('POST /appellant-case/incomplete/date', () => {
-		/**
-		 * @type {import("superagent").Response}
-		 */
-		let appellantCasePostResponse;
-		/**
-		 * @type {import("superagent").Response}
-		 */
-		let incompleteReasonPostResponse;
-
 		beforeEach(async () => {
-			nock('http://test/')
-				.get('/appeals/appellant-case-incomplete-reasons')
-				.reply(200, appellantCaseIncompleteReasons);
 			nock('http://test/')
 				.get(`/appeals/1`)
 				.reply(200, {
 					...appealData,
 					appealId: 1
-				});
-
-			// post to appellant case page controller is necessary to set required data in the session
-			appellantCasePostResponse = await request.post(`${baseUrl}/1${appellantCasePagePath}`).send({
-				reviewOutcome: 'incomplete'
-			});
-
-			// post to incomplete reason page controller is necessary to set required data in the session
-			incompleteReasonPostResponse = await request
-				.post(`${baseUrl}/1${appellantCasePagePath}/${incompleteOutcomePagePath}`)
-				.send({
-					incompleteReason: incompleteReasonsWithoutTextIds[0]
 				});
 		});
 
@@ -816,8 +705,35 @@ describe('appellant-case', () => {
 			nock.cleanAll();
 		});
 
+		it('should render a 500 error page if required data is not present in the session', async () => {
+			const response = await request
+				.post(
+					`${baseUrl}/1${appellantCasePagePath}${incompleteOutcomePagePath}${updateDueDatePagePath}`
+				)
+				.send({
+					'due-date-day': '',
+					'due-date-month': '',
+					'due-date-year': ''
+				});
+
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+		});
+
 		it('should re-render the update date page with the expected error message if no date was provided', async () => {
-			expect(appellantCasePostResponse.statusCode).toBe(302);
+			// post to incomplete reason page controller is necessary to set required data in the session
+			const incompleteReasonPostResponse = await request
+				.post(`${baseUrl}/1${appellantCasePagePath}/${incompleteOutcomePagePath}`)
+				.send({
+					incompleteReason: [incompleteReasonsWithTextIds[0], incompleteReasonsWithTextIds[1]],
+					[`incompleteReason-${incompleteReasonsWithTextIds[0]}`]: [
+						'test reason text 1',
+						'test reason text 2'
+					],
+					[`incompleteReason-${incompleteReasonsWithTextIds[1]}`]: 'test reason text 1'
+				});
+
 			expect(incompleteReasonPostResponse.statusCode).toBe(302);
 
 			const response = await request
@@ -836,7 +752,18 @@ describe('appellant-case', () => {
 		});
 
 		it('should re-render the update date page with the expected error message if provided date is not in the future', async () => {
-			expect(appellantCasePostResponse.statusCode).toBe(302);
+			// post to incomplete reason page controller is necessary to set required data in the session
+			const incompleteReasonPostResponse = await request
+				.post(`${baseUrl}/1${appellantCasePagePath}/${incompleteOutcomePagePath}`)
+				.send({
+					incompleteReason: [incompleteReasonsWithTextIds[0], incompleteReasonsWithTextIds[1]],
+					[`incompleteReason-${incompleteReasonsWithTextIds[0]}`]: [
+						'test reason text 1',
+						'test reason text 2'
+					],
+					[`incompleteReason-${incompleteReasonsWithTextIds[1]}`]: 'test reason text 1'
+				});
+
 			expect(incompleteReasonPostResponse.statusCode).toBe(302);
 
 			const response = await request
@@ -855,7 +782,18 @@ describe('appellant-case', () => {
 		});
 
 		it('should re-render the update date page with the expected error message if an invalid day was provided', async () => {
-			expect(appellantCasePostResponse.statusCode).toBe(302);
+			// post to incomplete reason page controller is necessary to set required data in the session
+			const incompleteReasonPostResponse = await request
+				.post(`${baseUrl}/1${appellantCasePagePath}/${incompleteOutcomePagePath}`)
+				.send({
+					incompleteReason: [incompleteReasonsWithTextIds[0], incompleteReasonsWithTextIds[1]],
+					[`incompleteReason-${incompleteReasonsWithTextIds[0]}`]: [
+						'test reason text 1',
+						'test reason text 2'
+					],
+					[`incompleteReason-${incompleteReasonsWithTextIds[1]}`]: 'test reason text 1'
+				});
+
 			expect(incompleteReasonPostResponse.statusCode).toBe(302);
 
 			let response = await request
@@ -908,7 +846,18 @@ describe('appellant-case', () => {
 		});
 
 		it('should re-render the update date page with the expected error message if an invalid month was provided', async () => {
-			expect(appellantCasePostResponse.statusCode).toBe(302);
+			// post to incomplete reason page controller is necessary to set required data in the session
+			const incompleteReasonPostResponse = await request
+				.post(`${baseUrl}/1${appellantCasePagePath}/${incompleteOutcomePagePath}`)
+				.send({
+					incompleteReason: [incompleteReasonsWithTextIds[0], incompleteReasonsWithTextIds[1]],
+					[`incompleteReason-${incompleteReasonsWithTextIds[0]}`]: [
+						'test reason text 1',
+						'test reason text 2'
+					],
+					[`incompleteReason-${incompleteReasonsWithTextIds[1]}`]: 'test reason text 1'
+				});
+
 			expect(incompleteReasonPostResponse.statusCode).toBe(302);
 
 			let response = await request
@@ -961,7 +910,18 @@ describe('appellant-case', () => {
 		});
 
 		it('should re-render the update date page with the expected error message if an invalid year was provided', async () => {
-			expect(appellantCasePostResponse.statusCode).toBe(302);
+			// post to incomplete reason page controller is necessary to set required data in the session
+			const incompleteReasonPostResponse = await request
+				.post(`${baseUrl}/1${appellantCasePagePath}/${incompleteOutcomePagePath}`)
+				.send({
+					incompleteReason: [incompleteReasonsWithTextIds[0], incompleteReasonsWithTextIds[1]],
+					[`incompleteReason-${incompleteReasonsWithTextIds[0]}`]: [
+						'test reason text 1',
+						'test reason text 2'
+					],
+					[`incompleteReason-${incompleteReasonsWithTextIds[1]}`]: 'test reason text 1'
+				});
+
 			expect(incompleteReasonPostResponse.statusCode).toBe(302);
 
 			let response = await request
@@ -998,7 +958,18 @@ describe('appellant-case', () => {
 		});
 
 		it('should re-render the update date page with the expected error message if an invalid date was provided', async () => {
-			expect(appellantCasePostResponse.statusCode).toBe(302);
+			// post to incomplete reason page controller is necessary to set required data in the session
+			const incompleteReasonPostResponse = await request
+				.post(`${baseUrl}/1${appellantCasePagePath}/${incompleteOutcomePagePath}`)
+				.send({
+					incompleteReason: [incompleteReasonsWithTextIds[0], incompleteReasonsWithTextIds[1]],
+					[`incompleteReason-${incompleteReasonsWithTextIds[0]}`]: [
+						'test reason text 1',
+						'test reason text 2'
+					],
+					[`incompleteReason-${incompleteReasonsWithTextIds[1]}`]: 'test reason text 1'
+				});
+
 			expect(incompleteReasonPostResponse.statusCode).toBe(302);
 
 			const response = await request
@@ -1019,7 +990,18 @@ describe('appellant-case', () => {
 		});
 
 		it('should redirect to the check and confirm page if a valid date was provided', async () => {
-			expect(appellantCasePostResponse.statusCode).toBe(302);
+			// post to incomplete reason page controller is necessary to set required data in the session
+			const incompleteReasonPostResponse = await request
+				.post(`${baseUrl}/1${appellantCasePagePath}/${incompleteOutcomePagePath}`)
+				.send({
+					incompleteReason: [incompleteReasonsWithTextIds[0], incompleteReasonsWithTextIds[1]],
+					[`incompleteReason-${incompleteReasonsWithTextIds[0]}`]: [
+						'test reason text 1',
+						'test reason text 2'
+					],
+					[`incompleteReason-${incompleteReasonsWithTextIds[1]}`]: 'test reason text 1'
+				});
+
 			expect(incompleteReasonPostResponse.statusCode).toBe(302);
 
 			const response = await request
@@ -1060,15 +1042,6 @@ describe('appellant-case', () => {
 		});
 
 		it('should render the check your answers page with the expected content if outcome is "invalid" and required data is present in the session', async () => {
-			// post to appellant case page controller is necessary to set required data in the session
-			const appellantCasePostResponse = await request
-				.post(`${baseUrl}/1${appellantCasePagePath}`)
-				.send({
-					reviewOutcome: 'invalid'
-				});
-
-			expect(appellantCasePostResponse.statusCode).toBe(302);
-
 			// post to invalid reason page controller is necessary to set required data in the session
 			const invalidReasonPostResponse = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}/${invalidOutcomePagePath}`)
@@ -1092,15 +1065,6 @@ describe('appellant-case', () => {
 		});
 
 		it('should render the check your answers page with the expected content if outcome is "incomplete" and required data is present in the session', async () => {
-			// post to appellant case page controller is necessary to set required data in the session
-			const appellantCasePostResponse = await request
-				.post(`${baseUrl}/1${appellantCasePagePath}`)
-				.send({
-					reviewOutcome: 'incomplete'
-				});
-
-			expect(appellantCasePostResponse.statusCode).toBe(302);
-
 			// post to incomplete reason page controller is necessary to set required data in the session
 			const incompleteReasonPostResponse = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}/${incompleteOutcomePagePath}`)
@@ -1149,15 +1113,6 @@ describe('appellant-case', () => {
 		});
 
 		it('should send a patch request to the appellant-cases API endpoint and redirect to the decision invalid confirmation page, if posted outcome was "invalid"', async () => {
-			// post to appellant case page controller is necessary to set required data in the session
-			const appellantCasePostResponse = await request
-				.post(`${baseUrl}/1${appellantCasePagePath}`)
-				.send({
-					reviewOutcome: 'invalid'
-				});
-
-			expect(appellantCasePostResponse.statusCode).toBe(302);
-
 			// post to invalid reason page controller is necessary to set required data in the session
 			const invalidReasonPostResponse = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}/${invalidOutcomePagePath}`)
@@ -1180,15 +1135,6 @@ describe('appellant-case', () => {
 		});
 
 		it('should send a patch request to the appellant-cases API endpoint and redirect to the decision incomplete confirmation page, if posted outcome was "incomplete"', async () => {
-			// post to appellant case page controller is necessary to set required data in the session
-			const appellantCasePostResponse = await request
-				.post(`${baseUrl}/1${appellantCasePagePath}`)
-				.send({
-					reviewOutcome: 'incomplete'
-				});
-
-			expect(appellantCasePostResponse.statusCode).toBe(302);
-
 			// post to incomplete reason page controller is necessary to set required data in the session
 			const incompleteReasonPostResponse = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}/${incompleteOutcomePagePath}`)
@@ -1212,16 +1158,7 @@ describe('appellant-case', () => {
 	});
 
 	describe('GET /appellant-case/valid/confirmation', () => {
-		it('should render the 500 error page if required data is not present in the session', async () => {
-			const response = await request.get(
-				`${baseUrl}/1${appellantCasePagePath}${validOutcomePagePath}${confirmationPagePath}`
-			);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-		});
-
-		it('should render the date valid page if required data is present in the session', async () => {
+		it('should render the date valid page', async () => {
 			const appellantCasePostResponse = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}`)
 				.send({
@@ -1240,20 +1177,7 @@ describe('appellant-case', () => {
 	});
 
 	describe('GET /appellant-case/valid/date', () => {
-		it('should render the 500 error page if required data is not present in the session', async () => {
-			const response = await request.get(
-				`${baseUrl}/1${appellantCasePagePath}${validOutcomePagePath}${validDatePagePath}`
-			);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-		});
-
-		it('should render the valid due date page if required data is present in the session', async () => {
-			await request.post(`${baseUrl}/1${appellantCasePagePath}`).send({
-				reviewOutcome: 'valid'
-			});
-
+		it('should render the valid due date page', async () => {
 			const response = await request.get(
 				`${baseUrl}/1${appellantCasePagePath}${validOutcomePagePath}${validDatePagePath}`
 			);
@@ -1347,7 +1271,7 @@ describe('appellant-case', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 		});
 
-		describe('Post to update date page with various invalid months', () => {
+		describe('should re-render the update date page with the expected error message if an invalid month was provided', () => {
 			const testCases = [
 				{ day: '1', month: '0', year: '3000', description: 'month "0"' },
 				{ day: '1', month: '13', year: '3000', description: 'month "13"' },
@@ -1441,25 +1365,7 @@ describe('appellant-case', () => {
 	});
 
 	describe('GET /appellant-case/invalid/confirmation', () => {
-		it('should render the 500 error page if required data is not present in the session', async () => {
-			const response = await request.get(
-				`${baseUrl}/1${appellantCasePagePath}${invalidOutcomePagePath}${confirmationPagePath}`
-			);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-		});
-
-		it('should render the outcome invalid confirmation page if required data is present in the session', async () => {
-			// post to appellant case page controller is necessary to set required data in the session
-			const appellantCasePostResponse = await request
-				.post(`${baseUrl}/1${appellantCasePagePath}`)
-				.send({
-					reviewOutcome: 'invalid'
-				});
-
-			expect(appellantCasePostResponse.statusCode).toBe(302);
-
+		it('should render the outcome invalid confirmation page', async () => {
 			const response = await request.get(
 				`${baseUrl}/1${appellantCasePagePath}${invalidOutcomePagePath}${confirmationPagePath}`
 			);
@@ -1470,25 +1376,7 @@ describe('appellant-case', () => {
 	});
 
 	describe('GET /appellant-case/incomplete/confirmation', () => {
-		it('should render the 500 error page if required data is not present in the session', async () => {
-			const response = await request.get(
-				`${baseUrl}/1${appellantCasePagePath}${incompleteOutcomePagePath}${confirmationPagePath}`
-			);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-		});
-
-		it('should render the outcome incomplete confirmation page if required data is present in the session', async () => {
-			// post to appellant case page controller is necessary to set required data in the session
-			const appellantCasePostResponse = await request
-				.post(`${baseUrl}/1${appellantCasePagePath}`)
-				.send({
-					reviewOutcome: 'incomplete'
-				});
-
-			expect(appellantCasePostResponse.statusCode).toBe(302);
-
+		it('should render the outcome incomplete confirmation page', async () => {
 			const response = await request.get(
 				`${baseUrl}/1${appellantCasePagePath}${incompleteOutcomePagePath}${confirmationPagePath}`
 			);

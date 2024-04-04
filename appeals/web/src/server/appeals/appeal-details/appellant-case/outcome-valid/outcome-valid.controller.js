@@ -1,6 +1,5 @@
 import { dayMonthYearToApiDateString } from '#lib/dates.js';
 import logger from '#lib/logger.js';
-import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { decisionValidConfirmationPage, updateValidDatePage } from './outcome-valid.mapper.js';
 import * as outcomeValidService from './outcome-valid.service.js';
 
@@ -11,7 +10,7 @@ export const getValidDate = async (request, response) => {
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const postValidDate = async (request, response) => {
-	const { errors, body } = request;
+	const { errors, body, currentAppeal } = request;
 
 	if (errors) {
 		return renderValidDatePage(request, response);
@@ -32,7 +31,7 @@ export const postValidDate = async (request, response) => {
 			return renderValidDatePage(request, response, errorMessage);
 		}
 
-		const { appealId, appellantCaseId, createdAt } = request.session;
+		const { appealId, appellantCaseId, createdAt } = currentAppeal;
 		const validDate = new Date(
 			updatedValidDateYear,
 			updatedValidDateMonth - 1,
@@ -81,10 +80,10 @@ export const postValidDate = async (request, response) => {
  * @param {object} [apiErrors]
  */
 const renderValidDatePage = async (request, response, apiErrors) => {
-	if (!objectContainsAllKeys(request.session, ['appealId', 'appealReference'])) {
-		return response.render('app/500.njk');
-	}
-	const { appealId, appealReference } = request.session;
+	const {
+		currentAppeal: { appealId, appealReference }
+	} = request;
+
 	const dateValidDay = request.body['valid-date-day'];
 	const dateValidMonth = request.body['valid-date-month'];
 	const dateValidYear = request.body['valid-date-year'];
@@ -116,11 +115,10 @@ export const getConfirmation = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 const renderDecisionValidConfirmationPage = async (request, response) => {
-	if (!objectContainsAllKeys(request.session, ['appealId', 'appealReference'])) {
-		return response.render('app/500.njk');
-	}
+	const {
+		currentAppeal: { appealId, appealReference }
+	} = request;
 
-	const { appealId, appealReference } = request.session;
 	const pageContent = decisionValidConfirmationPage(appealId, appealReference);
 
 	response.render('appeals/confirmation.njk', {
