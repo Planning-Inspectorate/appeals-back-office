@@ -320,6 +320,20 @@ export function updateDueDatePage(
 		]
 	};
 
+	if (existingDueDateDayMonthYear) {
+		pageContent.pageComponents?.push({
+			type: 'inset-text',
+			parameters: {
+				text: `The current due date for the LPA questionnaire is ${webDateToDisplayDate({
+					day: existingDueDateDayMonthYear.day || 0,
+					month: existingDueDateDayMonthYear.month || 0,
+					year: existingDueDateDayMonthYear.year || 0
+				})}`,
+				classes: 'govuk-!-margin-bottom-7'
+			}
+		});
+	}
+
 	return pageContent;
 }
 
