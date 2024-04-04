@@ -3,55 +3,6 @@
 exports[`appellant-case GET /appellant-case should render the appellant case page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-            data-module="govuk-notification-banner">
-                <div class="govuk-notification-banner__header">
-                    <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
-                </div>
-                <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/1/appellant-case">Refresh page to see if scan has finished</a>
-                </div>
-            </div>
-            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-            data-module="govuk-notification-banner">
-                <div class="govuk-notification-banner__header">
-                    <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Appeal is incomplete</h3>
-                </div>
-                <div class="govuk-notification-banner__content">
-                    <details class="govuk-details" data-module="govuk-details">
-                        <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Incorrect name and/or missing documents</span>
-                        </summary>
-                        <div class="govuk-details__text">
-                            <ul class="govuk-!-margin-top-0">
-                                <li>Appellant name is not the same on the application form and appeal form</li>
-                            </ul>
-                        </div>
-                    </details>
-                    <details class="govuk-details" data-module="govuk-details">
-                        <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Attachments and/or appendices have not been included to the full statement of case</span>
-                        </summary>
-                        <div class="govuk-details__text">
-                            <ul class="govuk-!-margin-top-0">
-                                <li>test reason 1</li>
-                            </ul>
-                        </div>
-                    </details>
-                    <details class="govuk-details" data-module="govuk-details">
-                        <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Other</span>
-                        </summary>
-                        <div class="govuk-details__text">
-                            <ul class="govuk-!-margin-top-0">
-                                <li>test reason 2</li>
-                                <li>test reason 3</li>
-                            </ul>
-                        </div>
-                    </details>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
             <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Appellant case</h1>
         </div>
@@ -197,14 +148,6 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         <ul class="govuk-list">
                             <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/preview'
                                 target="'_blank'" class="govuk-link">ph0.jpeg</a>
-                            </li>
-                        </ul>
-                        </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
-                    <dd                     class="govuk-summary-list__value">
-                        <ul class="govuk-list">
-                            <li><span><div class="govuk-body govuk-!-margin-bottom-2">test-doc.jpeg</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
                             </li>
                         </ul>
                         </dd>
@@ -255,15 +198,6 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
                 <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/1/appellant-case">Refresh page to see if scan has finished</a>
-                </div>
-            </div>
-            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-            data-module="govuk-notification-banner">
-                <div class="govuk-notification-banner__header">
-                    <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
-                </div>
-                <div class="govuk-notification-banner__content">
                     <p class="govuk-notification-banner__heading">Some document details were not entered during upload.</p>
                     <p class="govuk-body">Default settings have been added but may be incorrect. You need to review
                         and change (if applicable) the details for:</p>
@@ -271,42 +205,6 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         <li><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-document-details/2864">New supporting documents</a>
                         </li>
                     </ul>
-                </div>
-            </div>
-            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-            data-module="govuk-notification-banner">
-                <div class="govuk-notification-banner__header">
-                    <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Appeal is incomplete</h3>
-                </div>
-                <div class="govuk-notification-banner__content">
-                    <details class="govuk-details" data-module="govuk-details">
-                        <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Incorrect name and/or missing documents</span>
-                        </summary>
-                        <div class="govuk-details__text">
-                            <ul class="govuk-!-margin-top-0">
-                                <li>Appellant name is not the same on the application form and appeal form</li>
-                            </ul>
-                        </div>
-                    </details>
-                    <details class="govuk-details" data-module="govuk-details">
-                        <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Attachments and/or appendices have not been included to the full statement of case</span>
-                        </summary>
-                        <div class="govuk-details__text">
-                            <ul class="govuk-!-margin-top-0">
-                                <li>test reason 1</li>
-                            </ul>
-                        </div>
-                    </details>
-                    <details class="govuk-details" data-module="govuk-details">
-                        <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Other</span>
-                        </summary>
-                        <div class="govuk-details__text">
-                            <ul class="govuk-!-margin-top-0">
-                                <li>test reason 2</li>
-                                <li>test reason 3</li>
-                            </ul>
-                        </div>
-                    </details>
                 </div>
             </div>
         </div>
@@ -457,14 +355,6 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         <ul class="govuk-list">
                             <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/preview'
                                 target="'_blank'" class="govuk-link">ph0.jpeg</a>
-                            </li>
-                        </ul>
-                        </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
-                    <dd                     class="govuk-summary-list__value">
-                        <ul class="govuk-list">
-                            <li><span><div class="govuk-body govuk-!-margin-bottom-2">test-doc.jpeg</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
                             </li>
                         </ul>
                         </dd>
@@ -518,42 +408,6 @@ exports[`appellant-case GET /appellant-case with unchecked documents should rend
                     <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/1/appellant-case">Refresh page to see if scan has finished</a>
                 </div>
             </div>
-            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-            data-module="govuk-notification-banner">
-                <div class="govuk-notification-banner__header">
-                    <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Appeal is incomplete</h3>
-                </div>
-                <div class="govuk-notification-banner__content">
-                    <details class="govuk-details" data-module="govuk-details">
-                        <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Incorrect name and/or missing documents</span>
-                        </summary>
-                        <div class="govuk-details__text">
-                            <ul class="govuk-!-margin-top-0">
-                                <li>Appellant name is not the same on the application form and appeal form</li>
-                            </ul>
-                        </div>
-                    </details>
-                    <details class="govuk-details" data-module="govuk-details">
-                        <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Attachments and/or appendices have not been included to the full statement of case</span>
-                        </summary>
-                        <div class="govuk-details__text">
-                            <ul class="govuk-!-margin-top-0">
-                                <li>test reason 1</li>
-                            </ul>
-                        </div>
-                    </details>
-                    <details class="govuk-details" data-module="govuk-details">
-                        <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Other</span>
-                        </summary>
-                        <div class="govuk-details__text">
-                            <ul class="govuk-!-margin-top-0">
-                                <li>test reason 2</li>
-                                <li>test reason 3</li>
-                            </ul>
-                        </div>
-                    </details>
-                </div>
-            </div>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -649,19 +503,8 @@ exports[`appellant-case GET /appellant-case with unchecked documents should rend
         <div class="govuk-summary-card__content">
             <dl class="govuk-summary-list" id="appeal-summary">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
-                    <dd class="govuk-summary-list__value">
-                        <ul class="govuk-list">
-                            <li><span><div class="govuk-body govuk-!-margin-bottom-2">applicationForm.docx</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
-                            </li>
-                        </ul>
-                    </dd>
-                    <dd class="govuk-summary-list__actions">
-                        <ul class="govuk-summary-list__actions-list">
-                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/manage-documents/1/"> Manage<span class="govuk-visually-hidden"> Application form</span></a>
-                            </li>
-                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"> Add<span class="govuk-visually-hidden"> Application form</span></a>
-                            </li>
-                        </ul>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"> Add<span class="govuk-visually-hidden"> Application form</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
@@ -779,55 +622,6 @@ exports[`appellant-case GET /appellant-case with unchecked documents should rend
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-            data-module="govuk-notification-banner">
-                <div class="govuk-notification-banner__header">
-                    <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
-                </div>
-                <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/1/appellant-case">Refresh page to see if scan has finished</a>
-                </div>
-            </div>
-            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-            data-module="govuk-notification-banner">
-                <div class="govuk-notification-banner__header">
-                    <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Appeal is incomplete</h3>
-                </div>
-                <div class="govuk-notification-banner__content">
-                    <details class="govuk-details" data-module="govuk-details">
-                        <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Incorrect name and/or missing documents</span>
-                        </summary>
-                        <div class="govuk-details__text">
-                            <ul class="govuk-!-margin-top-0">
-                                <li>Appellant name is not the same on the application form and appeal form</li>
-                            </ul>
-                        </div>
-                    </details>
-                    <details class="govuk-details" data-module="govuk-details">
-                        <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Attachments and/or appendices have not been included to the full statement of case</span>
-                        </summary>
-                        <div class="govuk-details__text">
-                            <ul class="govuk-!-margin-top-0">
-                                <li>test reason 1</li>
-                            </ul>
-                        </div>
-                    </details>
-                    <details class="govuk-details" data-module="govuk-details">
-                        <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Other</span>
-                        </summary>
-                        <div class="govuk-details__text">
-                            <ul class="govuk-!-margin-top-0">
-                                <li>test reason 2</li>
-                                <li>test reason 3</li>
-                            </ul>
-                        </div>
-                    </details>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
             <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Appellant case</h1>
         </div>
@@ -920,19 +714,8 @@ exports[`appellant-case GET /appellant-case with unchecked documents should rend
         <div class="govuk-summary-card__content">
             <dl class="govuk-summary-list" id="appeal-summary">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
-                    <dd class="govuk-summary-list__value">
-                        <ul class="govuk-list">
-                            <li><span><div class="govuk-body govuk-!-margin-bottom-2">applicationForm.docx</div><strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong></span>
-                            </li>
-                        </ul>
-                    </dd>
-                    <dd class="govuk-summary-list__actions">
-                        <ul class="govuk-summary-list__actions-list">
-                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/manage-documents/1/"> Manage<span class="govuk-visually-hidden"> Application form</span></a>
-                            </li>
-                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"> Add<span class="govuk-visually-hidden"> Application form</span></a>
-                            </li>
-                        </ul>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"> Add<span class="govuk-visually-hidden"> Application form</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
@@ -991,7 +774,7 @@ exports[`appellant-case GET /appellant-case with unchecked documents should rend
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><span><div class="govuk-body govuk-!-margin-bottom-2">test-doc.jpeg</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                            <li><span><div class="govuk-body govuk-!-margin-bottom-2">test-doc.jpeg</div><strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong></span>
                             </li>
                         </ul>
                         </dd>
@@ -2485,20 +2268,7 @@ exports[`appellant-case GET /appellant-case/incomplete should render the incompl
 </main>"
 `;
 
-exports[`appellant-case GET /appellant-case/incomplete/confirmation should render the 500 error page if required data is not present in the session 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
-            <p class="govuk-body">Try again later.</p>
-            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
-                the problem persists.</p>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`appellant-case GET /appellant-case/incomplete/confirmation should render the outcome incomplete confirmation page if required data is present in the session 1`] = `
+exports[`appellant-case GET /appellant-case/incomplete/confirmation should render the outcome incomplete confirmation page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-width-container">
         <div class="govuk-grid-row">
@@ -2521,7 +2291,7 @@ exports[`appellant-case GET /appellant-case/incomplete/confirmation should rende
 </main>"
 `;
 
-exports[`appellant-case GET /appellant-case/incomplete/date should render the update due date page with correct pre-populated date values, if required data is present in the session, and there is an existing due date 1`] = `
+exports[`appellant-case GET /appellant-case/incomplete/date should render the update due date page with correct pre-populated date values if there is an existing due date 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-xl govuk-!-margin-bottom-1">Appeal 351062</span>
@@ -2562,7 +2332,7 @@ exports[`appellant-case GET /appellant-case/incomplete/date should render the up
 </main>"
 `;
 
-exports[`appellant-case GET /appellant-case/incomplete/date should render the update due date page without pre-populated date values, if required data is present in the session, and there is no existing due date 1`] = `
+exports[`appellant-case GET /appellant-case/incomplete/date should render the update due date page without pre-populated date values if there is no existing due date 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-xl govuk-!-margin-bottom-1">Appeal 351062</span>
@@ -2603,20 +2373,7 @@ exports[`appellant-case GET /appellant-case/incomplete/date should render the up
 </main>"
 `;
 
-exports[`appellant-case GET /appellant-case/invalid should render the 500 error page if required data is not present in the session 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
-            <p class="govuk-body">Try again later.</p>
-            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
-                the problem persists.</p>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`appellant-case GET /appellant-case/invalid should render the invalid reason page if required data is present in the session 1`] = `
+exports[`appellant-case GET /appellant-case/invalid should render the invalid reason page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
@@ -2699,20 +2456,7 @@ exports[`appellant-case GET /appellant-case/invalid should render the invalid re
 </main>"
 `;
 
-exports[`appellant-case GET /appellant-case/invalid/confirmation should render the 500 error page if required data is not present in the session 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
-            <p class="govuk-body">Try again later.</p>
-            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
-                the problem persists.</p>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`appellant-case GET /appellant-case/invalid/confirmation should render the outcome invalid confirmation page if required data is present in the session 1`] = `
+exports[`appellant-case GET /appellant-case/invalid/confirmation should render the outcome invalid confirmation page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-width-container">
         <div class="govuk-grid-row">
@@ -3501,20 +3245,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
 </main>"
 `;
 
-exports[`appellant-case GET /appellant-case/valid/confirmation should render the 500 error page if required data is not present in the session 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
-            <p class="govuk-body">Try again later.</p>
-            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
-                the problem persists.</p>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`appellant-case GET /appellant-case/valid/confirmation should render the date valid page if required data is present in the session 1`] = `
+exports[`appellant-case GET /appellant-case/valid/confirmation should render the date valid page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -3561,20 +3292,7 @@ exports[`appellant-case GET /appellant-case/valid/confirmation should render the
 </main>"
 `;
 
-exports[`appellant-case GET /appellant-case/valid/date should render the 500 error page if required data is not present in the session 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
-            <p class="govuk-body">Try again later.</p>
-            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
-                the problem persists.</p>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`appellant-case GET /appellant-case/valid/date should render the valid due date page if required data is present in the session 1`] = `
+exports[`appellant-case GET /appellant-case/valid/date should render the valid due date page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -3634,55 +3352,6 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                             </li>
                         </ul>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-            data-module="govuk-notification-banner">
-                <div class="govuk-notification-banner__header">
-                    <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
-                </div>
-                <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/1/appellant-case">Refresh page to see if scan has finished</a>
-                </div>
-            </div>
-            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-            data-module="govuk-notification-banner">
-                <div class="govuk-notification-banner__header">
-                    <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Appeal is incomplete</h3>
-                </div>
-                <div class="govuk-notification-banner__content">
-                    <details class="govuk-details" data-module="govuk-details">
-                        <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Incorrect name and/or missing documents</span>
-                        </summary>
-                        <div class="govuk-details__text">
-                            <ul class="govuk-!-margin-top-0">
-                                <li>Appellant name is not the same on the application form and appeal form</li>
-                            </ul>
-                        </div>
-                    </details>
-                    <details class="govuk-details" data-module="govuk-details">
-                        <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Attachments and/or appendices have not been included to the full statement of case</span>
-                        </summary>
-                        <div class="govuk-details__text">
-                            <ul class="govuk-!-margin-top-0">
-                                <li>test reason 1</li>
-                            </ul>
-                        </div>
-                    </details>
-                    <details class="govuk-details" data-module="govuk-details">
-                        <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Other</span>
-                        </summary>
-                        <div class="govuk-details__text">
-                            <ul class="govuk-!-margin-top-0">
-                                <li>test reason 2</li>
-                                <li>test reason 3</li>
-                            </ul>
-                        </div>
-                    </details>
                 </div>
             </div>
         </div>
@@ -3833,14 +3502,6 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                         <ul class="govuk-list">
                             <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/preview'
                                 target="'_blank'" class="govuk-link">ph0.jpeg</a>
-                            </li>
-                        </ul>
-                        </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
-                    <dd                     class="govuk-summary-list__value">
-                        <ul class="govuk-list">
-                            <li><span><div class="govuk-body govuk-!-margin-bottom-2">test-doc.jpeg</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
                             </li>
                         </ul>
                         </dd>
@@ -7511,6 +7172,19 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
 </main>"
 `;
 
+exports[`appellant-case POST /appellant-case/incomplete/date should render a 500 error page if required data is not present in the session 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+            <p class="govuk-body">Try again later.</p>
+            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
+                the problem persists.</p>
+        </div>
+    </div>
+</main>"
+`;
+
 exports[`appellant-case POST /appellant-case/invalid should re-render the invalid reason page with the expected error message if a single invalid reason with text was provided but the matching text property exceeds the character limit 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
@@ -8188,7 +7862,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
 </main>"
 `;
 
-exports[`appellant-case POST /appellant-case/valid/date Post to update date page with various invalid months should re-render the update date page with the expected error message if an invalid month "0" was provided 1`] = `
+exports[`appellant-case POST /appellant-case/valid/date should re-render the update date page with the expected error message if an invalid month was provided should re-render the update date page with the expected error message if an invalid month "0" was provided 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -8248,7 +7922,7 @@ exports[`appellant-case POST /appellant-case/valid/date Post to update date page
 </main>"
 `;
 
-exports[`appellant-case POST /appellant-case/valid/date Post to update date page with various invalid months should re-render the update date page with the expected error message if an invalid month "13" was provided 1`] = `
+exports[`appellant-case POST /appellant-case/valid/date should re-render the update date page with the expected error message if an invalid month was provided should re-render the update date page with the expected error message if an invalid month "13" was provided 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -8308,7 +7982,7 @@ exports[`appellant-case POST /appellant-case/valid/date Post to update date page
 </main>"
 `;
 
-exports[`appellant-case POST /appellant-case/valid/date Post to update date page with various invalid months should re-render the update date page with the expected error message if an invalid month "dec" was provided 1`] = `
+exports[`appellant-case POST /appellant-case/valid/date should re-render the update date page with the expected error message if an invalid month was provided should re-render the update date page with the expected error message if an invalid month "dec" was provided 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">

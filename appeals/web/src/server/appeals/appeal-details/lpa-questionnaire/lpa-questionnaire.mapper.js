@@ -244,7 +244,7 @@ export async function lpaQuestionnairePage(
 
 /**
  * @param {Appeal} appealData
- * @param {number} lpaQuestionnaireId
+ * @param {string|number} lpaQuestionnaireId
  * @param {number} [dueDateDay]
  * @param {number} [dueDateMonth]
  * @param {number} [dueDateYear]
@@ -340,7 +340,7 @@ export function updateDueDatePage(
 /**
  * @param {number} appealId
  * @param {string} appealReference
- * @param {number} lpaQuestionnaireId
+ * @param {string|number} lpaQuestionnaireId
  * @param {NotValidReasonOption[]} incompleteReasonOptions
  * @param {LPAQuestionnaireValidationOutcome} validationOutcome
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session

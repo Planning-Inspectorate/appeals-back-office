@@ -8,6 +8,7 @@ import outcomeValidRouter from './outcome-valid/outcome-valid.router.js';
 import outcomeInvalidRouter from './outcome-invalid/outcome-invalid.router.js';
 import outcomeIncompleteRouter from './outcome-incomplete/outcome-incomplete.router.js';
 import { assertGroupAccess } from '#app/auth/auth.guards.js';
+import { validateAppeal } from '../appeal-details.middleware.js';
 import {
 	validateCaseFolderId,
 	validateCaseDocumentId
@@ -17,8 +18,9 @@ const router = createRouter({ mergeParams: true });
 
 router
 	.route('/')
-	.get(asyncRoute(controller.getAppellantCase))
+	.get(validateAppeal, asyncRoute(controller.getAppellantCase))
 	.post(
+		validateAppeal,
 		validators.validateReviewOutcome,
 		assertGroupAccess(config.referenceData.appeals.caseOfficerGroupId),
 		asyncRoute(controller.postAppellantCase)
@@ -30,23 +32,34 @@ router.use('/incomplete', outcomeIncompleteRouter);
 
 router
 	.route('/check-your-answers')
-	.get(asyncRoute(controller.getCheckAndConfirm))
+	.get(validateAppeal, asyncRoute(controller.getCheckAndConfirm))
 	.post(
+		validateAppeal,
 		assertGroupAccess(config.referenceData.appeals.caseOfficerGroupId),
 		asyncRoute(controller.postCheckAndConfirm)
 	);
 
 router
 	.route('/add-documents/:folderId')
-	.get(validateCaseFolderId, validateCaseDocumentId, asyncRoute(controller.getAddDocuments));
+	.get(
+		validateAppeal,
+		validateCaseFolderId,
+		validateCaseDocumentId,
+		asyncRoute(controller.getAddDocuments)
+	);
 
 router
 	.route('/add-documents/:folderId/:documentId')
-	.get(validateCaseFolderId, validateCaseDocumentId, asyncRoute(controller.getAddDocumentsVersion));
+	.get(
+		validateAppeal,
+		validateCaseFolderId,
+		validateCaseDocumentId,
+		asyncRoute(controller.getAddDocumentsVersion)
+	);
 
 router
 	.route('/add-document-details/:folderId')
-	.get(validateCaseFolderId, asyncRoute(controller.getAddDocumentDetails))
+	.get(validateAppeal, validateCaseFolderId, asyncRoute(controller.getAddDocumentDetails))
 	.post(
 		validateCaseFolderId,
 		documentsValidators.validateDocumentDetailsBodyFormat,
@@ -60,7 +73,7 @@ router
 
 router
 	.route('/add-document-details/:folderId/:documentId')
-	.get(validateCaseFolderId, asyncRoute(controller.getAddDocumentVersionDetails))
+	.get(validateAppeal, validateCaseFolderId, asyncRoute(controller.getAddDocumentVersionDetails))
 	.post(
 		validateCaseFolderId,
 		documentsValidators.validateDocumentDetailsBodyFormat,

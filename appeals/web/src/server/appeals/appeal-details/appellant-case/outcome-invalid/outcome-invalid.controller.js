@@ -1,9 +1,7 @@
 import logger from '#lib/logger.js';
-import * as appealDetailsService from '../../appeal-details.service.js';
 import * as appellantCaseService from '../appellant-case.service.js';
 import { mapInvalidOrIncompleteReasonOptionsToCheckboxItemParameters } from '../appellant-case.mapper.js';
 import { decisionInvalidConfirmationPage } from './outcome-invalid.mapper.js';
-import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { getNotValidReasonsTextFromRequestBody } from '#lib/mappers/validation-outcome-reasons.mapper.js';
 
@@ -13,22 +11,12 @@ import { getNotValidReasonsTextFromRequestBody } from '#lib/mappers/validation-o
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 const renderInvalidReason = async (request, response) => {
-	const { errors, body } = request;
-
-	if (!objectContainsAllKeys(request.session, ['appealId', 'appealReference'])) {
-		return response.render('app/500.njk');
-	}
-
-	const { appealId, appealReference } = request.session;
-
-	const appealDetails = await appealDetailsService
-		.getAppealDetailsFromId(request.apiClient, request.params.appealId)
-		.catch((error) => logger.error(error));
+	const { errors, body, currentAppeal } = request;
 
 	if (
-		!appealDetails ||
-		appealDetails.appellantCaseId === null ||
-		appealDetails.appellantCaseId === undefined
+		!currentAppeal ||
+		currentAppeal.appellantCaseId === null ||
+		currentAppeal.appellantCaseId === undefined
 	) {
 		return response.render('app/404.njk');
 	}
@@ -37,8 +25,8 @@ const renderInvalidReason = async (request, response) => {
 		appellantCaseService
 			.getAppellantCaseFromAppealId(
 				request.apiClient,
-				appealDetails?.appealId,
-				appealDetails?.appellantCaseId
+				currentAppeal.appealId,
+				currentAppeal.appellantCaseId
 			)
 			.catch((error) => logger.error(error)),
 		appellantCaseService.getAppellantCaseNotValidReasonOptionsForOutcome(
@@ -53,7 +41,7 @@ const renderInvalidReason = async (request, response) => {
 
 	if (
 		request.session.webAppellantCaseReviewOutcome &&
-		(request.session.webAppellantCaseReviewOutcome.appealId !== appealId ||
+		(request.session.webAppellantCaseReviewOutcome.appealId !== currentAppeal.appealId ||
 			request.session.webAppellantCaseReviewOutcome.validationOutcome !== 'invalid')
 	) {
 		delete request.session.webAppellantCaseReviewOutcome;
@@ -70,8 +58,8 @@ const renderInvalidReason = async (request, response) => {
 
 		return response.render('appeals/appeal/appellant-case-invalid-incomplete.njk', {
 			appeal: {
-				id: appealId,
-				shortReference: appealShortReference(appealReference)
+				id: currentAppeal.appealId,
+				shortReference: appealShortReference(currentAppeal.appealReference)
 			},
 			notValidStatus: 'invalid',
 			reasonOptions: mappedInvalidReasonOptions,
@@ -88,11 +76,10 @@ const renderInvalidReason = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 const renderDecisionInvalidConfirmationPage = async (request, response) => {
-	if (!objectContainsAllKeys(request.session, ['appealId', 'appealReference'])) {
-		return response.render('app/500.njk');
-	}
+	const {
+		currentAppeal: { appealId, appealReference }
+	} = request;
 
-	const { appealId, appealReference } = request.session;
 	const pageContent = decisionInvalidConfirmationPage(appealId, appealReference);
 
 	response.render('appeals/confirmation.njk', {
@@ -114,11 +101,9 @@ export const postInvalidReason = async (request, response) => {
 	}
 
 	try {
-		if (!objectContainsAllKeys(request.session, 'appealId')) {
-			return response.render('app/500.njk');
-		}
-
-		const { appealId } = request.session;
+		const {
+			currentAppeal: { appealId }
+		} = request;
 
 		/** @type {import('../appellant-case.types.js').AppellantCaseSessionValidationOutcome} */
 		request.session.webAppellantCaseReviewOutcome = {

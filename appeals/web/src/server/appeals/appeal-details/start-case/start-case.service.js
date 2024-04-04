@@ -8,7 +8,6 @@
  * @returns {Promise<Appeal>}
  */
 export async function setStartDate(apiClient, appealId, todayApiDateString) {
-	console.log('todayApiDateString', todayApiDateString);
 	return await apiClient
 		.post(`appeals/${appealId}/appeal-timetables`, {
 			json: { startDate: todayApiDateString }

@@ -16,18 +16,18 @@ import { decisionIncompleteConfirmationPage } from './outcome-incomplete.mapper.
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 const renderIncompleteReason = async (request, response) => {
-	const { errors, body, session } = request;
-
-	if (!objectContainsAllKeys(session, ['appealId', 'appealReference', 'lpaQuestionnaireId'])) {
-		return response.render('app/500.njk');
-	}
-
-	const { appealId, appealReference, lpaQuestionnaireId } = session;
+	const {
+		errors,
+		body,
+		session,
+		currentAppeal,
+		params: { lpaQuestionnaireId }
+	} = request;
 
 	const [lpaQuestionnaireResponse, incompleteReasonOptions] = await Promise.all([
 		lpaQuestionnaireService.getLpaQuestionnaireFromId(
 			request.apiClient,
-			appealId,
+			currentAppeal.appealId,
 			lpaQuestionnaireId
 		),
 		getLPAQuestionnaireIncompleteReasonOptions(request.apiClient)
@@ -39,7 +39,7 @@ const renderIncompleteReason = async (request, response) => {
 
 	if (
 		session.webLPAQuestionnaireReviewOutcome &&
-		(session.webLPAQuestionnaireReviewOutcome.appealId !== appealId ||
+		(session.webLPAQuestionnaireReviewOutcome.appealId !== currentAppeal.appealId ||
 			session.webLPAQuestionnaireReviewOutcome.lpaQuestionnaireId !== lpaQuestionnaireId ||
 			session.webLPAQuestionnaireReviewOutcome.validationOutcome !== 'incomplete')
 	) {
@@ -56,8 +56,8 @@ const renderIncompleteReason = async (request, response) => {
 
 		return response.render('appeals/appeal/lpa-questionnaire-incomplete.njk', {
 			appeal: {
-				id: appealId,
-				shortReference: appealShortReference(appealReference)
+				id: currentAppeal.appealId,
+				shortReference: appealShortReference(currentAppeal.appealReference)
 			},
 			lpaQuestionnaireId,
 			reasonOptions: mappedIncompleteReasonOptions,
@@ -74,7 +74,12 @@ const renderIncompleteReason = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 const renderUpdateDueDate = async (request, response) => {
-	const { body, currentAppeal, errors } = request;
+	const {
+		body,
+		currentAppeal,
+		errors,
+		params: { lpaQuestionnaireId }
+	} = request;
 
 	let postedDueDateDay, postedDueDateMonth, postedDueDateYear;
 
@@ -83,12 +88,6 @@ const renderUpdateDueDate = async (request, response) => {
 		postedDueDateMonth = parseInt(body['due-date-month'], 10);
 		postedDueDateYear = parseInt(body['due-date-year'], 10);
 	}
-
-	if (!objectContainsAllKeys(request.session, ['lpaQuestionnaireId'])) {
-		return response.render('app/500.njk');
-	}
-
-	const { lpaQuestionnaireId } = request.session;
 
 	const mappedPageContent = updateDueDatePage(
 		currentAppeal,
@@ -110,15 +109,16 @@ const renderUpdateDueDate = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const renderDecisionIncompleteConfirmationPage = async (request, response) => {
-	if (!objectContainsAllKeys(request.session, ['appealId', 'appealReference'])) {
+	const { currentAppeal, session } = request;
+
+	if (!objectContainsAllKeys(session, 'lpaQuestionnaireUpdatedDueDate')) {
 		return response.render('app/500.njk');
 	}
 
-	const { appealId, appealReference } = request.session;
 	const pageContent = decisionIncompleteConfirmationPage(
-		appealId,
-		appealReference,
-		request.session.lpaQuestionnaireUpdatedDueDate
+		currentAppeal.appealId,
+		currentAppeal.appealReference,
+		session.lpaQuestionnaireUpdatedDueDate
 	);
 
 	response.render('appeals/confirmation.njk', {
@@ -133,25 +133,21 @@ export const getIncompleteReason = async (request, response) => {
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const postIncompleteReason = async (request, response) => {
-	const { errors } = request;
+	const { errors, currentAppeal } = request;
 
 	if (errors) {
 		return renderIncompleteReason(request, response);
 	}
 
 	try {
-		if (
-			!objectContainsAllKeys(request.session, ['appealId', 'appealReference', 'lpaQuestionnaireId'])
-		) {
-			return response.render('app/500.njk');
-		}
-
-		const { appealId, appealReference, lpaQuestionnaireId } = request.session;
+		const {
+			params: { lpaQuestionnaireId }
+		} = request;
 
 		/** @type {import('../lpa-questionnaire.types.js').LPAQuestionnaireSessionValidationOutcome} */
 		request.session.webLPAQuestionnaireReviewOutcome = {
-			appealId,
-			appealReference,
+			appealId: currentAppeal.appealId,
+			appealReference: currentAppeal.appealReference,
 			lpaQuestionnaireId,
 			validationOutcome: 'incomplete',
 			reasons: request.body.incompleteReason,
@@ -159,7 +155,7 @@ export const postIncompleteReason = async (request, response) => {
 		};
 
 		return response.redirect(
-			`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/incomplete/date`
+			`/appeals-service/appeal-details/${currentAppeal.appealId}/lpa-questionnaire/${lpaQuestionnaireId}/incomplete/date`
 		);
 	} catch (error) {
 		logger.error(
@@ -180,22 +176,21 @@ export const getUpdateDueDate = async (request, response) => {
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const postUpdateDueDate = async (request, response) => {
-	if (request.errors) {
-		return renderUpdateDueDate(request, response);
-	}
+	const {
+		errors,
+		body,
+		session,
+		currentAppeal,
+		params: { lpaQuestionnaireId }
+	} = request;
 
-	if (
-		!objectContainsAllKeys(request.session, [
-			'webLPAQuestionnaireReviewOutcome',
-			'appealId',
-			'lpaQuestionnaireId'
-		])
-	) {
+	if (!objectContainsAllKeys(session, 'webLPAQuestionnaireReviewOutcome')) {
 		return response.render('app/500.njk');
 	}
 
-	const { appealId, lpaQuestionnaireId } = request.session;
-	const { body } = request;
+	if (errors) {
+		return renderUpdateDueDate(request, response);
+	}
 
 	if (!objectContainsAllKeys(body, ['due-date-day', 'due-date-month', 'due-date-year'])) {
 		return response.render('app/500.njk');
@@ -221,7 +216,7 @@ export const postUpdateDueDate = async (request, response) => {
 		};
 
 		return response.redirect(
-			`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/check-your-answers`
+			`/appeals-service/appeal-details/${currentAppeal.appealId}/lpa-questionnaire/${lpaQuestionnaireId}/check-your-answers`
 		);
 	} catch (error) {
 		logger.error(

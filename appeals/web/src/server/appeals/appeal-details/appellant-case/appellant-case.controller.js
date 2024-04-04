@@ -1,5 +1,4 @@
 import logger from '#lib/logger.js';
-import * as appealDetailsService from '../appeal-details.service.js';
 import * as appellantCaseService from './appellant-case.service.js';
 import {
 	appellantCasePage,
@@ -26,28 +25,24 @@ import {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 const renderAppellantCase = async (request, response) => {
-	const { errors } = request;
-
-	const appealDetails = await appealDetailsService
-		.getAppealDetailsFromId(request.apiClient, request.params.appealId)
-		.catch((error) => logger.error(error));
+	const { errors, currentAppeal } = request;
 
 	if (
-		appealDetails &&
-		appealDetails.appellantCaseId !== null &&
-		appealDetails.appellantCaseId !== undefined
+		currentAppeal &&
+		currentAppeal.appellantCaseId !== null &&
+		currentAppeal.appellantCaseId !== undefined
 	) {
 		const appellantCaseResponse = await appellantCaseService
 			.getAppellantCaseFromAppealId(
 				request.apiClient,
-				appealDetails?.appealId,
-				appealDetails?.appellantCaseId
+				currentAppeal.appealId,
+				currentAppeal.appellantCaseId
 			)
 			.catch((error) => logger.error(error));
 
 		const mappedPageContent = await appellantCasePage(
 			appellantCaseResponse,
-			appealDetails,
+			currentAppeal,
 			request.originalUrl,
 			request.session,
 			request.apiClient
@@ -69,18 +64,14 @@ const renderAppellantCase = async (request, response) => {
  */
 const renderCheckAndConfirm = async (request, response) => {
 	try {
-		if (
-			!objectContainsAllKeys(request.session, [
-				'appealId',
-				'appealReference',
-				'appellantCaseId',
-				'webAppellantCaseReviewOutcome'
-			])
-		) {
+		if (!objectContainsAllKeys(request.session, 'webAppellantCaseReviewOutcome')) {
 			return response.render('app/500.njk');
 		}
 
-		const { appealId, appealReference, webAppellantCaseReviewOutcome } = request.session;
+		const {
+			currentAppeal,
+			session: { webAppellantCaseReviewOutcome }
+		} = request;
 
 		const reasonOptions =
 			await appellantCaseService.getAppellantCaseNotValidReasonOptionsForOutcome(
@@ -92,8 +83,8 @@ const renderCheckAndConfirm = async (request, response) => {
 		}
 
 		const mappedPageContent = checkAndConfirmPage(
-			appealId,
-			appealReference,
+			currentAppeal.appealId,
+			currentAppeal.appealReference,
 			reasonOptions,
 			webAppellantCaseReviewOutcome.validationOutcome,
 			request.session,
@@ -126,7 +117,8 @@ export const getAppellantCase = async (request, response) => {
 export const postAppellantCase = async (request, response) => {
 	const {
 		body: { reviewOutcome },
-		errors
+		errors,
+		currentAppeal
 	} = request;
 
 	if (errors) {
@@ -134,29 +126,18 @@ export const postAppellantCase = async (request, response) => {
 	}
 
 	try {
-		const appealDetails = await appealDetailsService
-			.getAppealDetailsFromId(request.apiClient, request.params.appealId)
-			.catch((error) => logger.error(error));
-
 		if (
-			appealDetails &&
-			appealDetails.appellantCaseId !== null &&
-			appealDetails.appellantCaseId !== undefined
+			currentAppeal &&
+			currentAppeal.appellantCaseId !== null &&
+			currentAppeal.appellantCaseId !== undefined
 		) {
-			const { appealId, appellantCaseId, appealReference, createdAt } = appealDetails;
-
-			request.session.appealId = appealId;
-			request.session.appellantCaseId = appellantCaseId;
-			request.session.appealReference = appealReference;
-			request.session.createdAt = createdAt;
-
 			if (reviewOutcome === 'valid') {
 				return response.redirect(
-					`/appeals-service/appeal-details/${appealId}/appellant-case/${reviewOutcome}/date`
+					`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/${reviewOutcome}/date`
 				);
 			} else {
 				return response.redirect(
-					`/appeals-service/appeal-details/${appealId}/appellant-case/${reviewOutcome}`
+					`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/${reviewOutcome}`
 				);
 			}
 		}
@@ -181,13 +162,21 @@ export const getCheckAndConfirm = async (request, response) => {
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const postCheckAndConfirm = async (request, response) => {
+	if (!objectContainsAllKeys(request.session, 'webAppellantCaseReviewOutcome')) {
+		return response.render('app/500.njk');
+	}
+
 	try {
-		const { appealId, appellantCaseId, webAppellantCaseReviewOutcome } = request.session;
+		const {
+			currentAppeal,
+			params: { appealId },
+			session: { webAppellantCaseReviewOutcome }
+		} = request;
 
 		await appellantCaseService.setReviewOutcomeForAppellantCase(
 			request.apiClient,
 			appealId,
-			appellantCaseId,
+			currentAppeal.appellantCaseId,
 			mapWebReviewOutcomeToApiReviewOutcome(
 				webAppellantCaseReviewOutcome.validationOutcome,
 				webAppellantCaseReviewOutcome.reasons,
@@ -221,15 +210,13 @@ export const postCheckAndConfirm = async (request, response) => {
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const getAddDocuments = async (request, response) => {
-	const appealDetails = await appealDetailsService
-		.getAppealDetailsFromId(request.apiClient, request.params.appealId)
-		.catch((error) => logger.error(error));
+	const { currentAppeal } = request;
 
-	if (!appealDetails) {
+	if (!currentAppeal) {
 		return response.status(404).render('app/404');
 	}
 
-	const appellantCaseDetails = await getAppellantCaseDetails(request, response, appealDetails);
+	const appellantCaseDetails = await getAppellantCaseDetails(request, response, currentAppeal);
 	if (!appellantCaseDetails) {
 		return response.status(404).render('app/404');
 	}
@@ -237,7 +224,7 @@ export const getAddDocuments = async (request, response) => {
 	renderDocumentUpload(
 		request,
 		response,
-		appealDetails,
+		currentAppeal,
 		`/appeals-service/appeal-details/${request.params.appealId}/appellant-case/`,
 		`/appeals-service/appeal-details/${request.params.appealId}/appellant-case/add-document-details/{{folderId}}`,
 		getValidationOutcomeFromAppellantCase(appellantCaseDetails) === 'valid'
@@ -246,15 +233,13 @@ export const getAddDocuments = async (request, response) => {
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const getAddDocumentDetails = async (request, response) => {
-	const appealDetails = await appealDetailsService
-		.getAppealDetailsFromId(request.apiClient, request.params.appealId)
-		.catch((error) => logger.error(error));
+	const { currentAppeal } = request;
 
-	if (!appealDetails) {
+	if (!currentAppeal) {
 		return response.status(404).render('app/404');
 	}
 
-	const appellantCaseDetails = await getAppellantCaseDetails(request, response, appealDetails);
+	const appellantCaseDetails = await getAppellantCaseDetails(request, response, currentAppeal);
 	if (!appellantCaseDetails) {
 		return response.status(404).render('app/404');
 	}
@@ -300,15 +285,13 @@ export const getManageDocument = async (request, response) => {
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const getAddDocumentsVersion = async (request, response) => {
-	const appealDetails = await appealDetailsService
-		.getAppealDetailsFromId(request.apiClient, request.params.appealId)
-		.catch((error) => logger.error(error));
+	const { currentAppeal } = request;
 
-	if (!appealDetails) {
+	if (!currentAppeal) {
 		return response.status(404).render('app/404');
 	}
 
-	const appellantCaseDetails = await getAppellantCaseDetails(request, response, appealDetails);
+	const appellantCaseDetails = await getAppellantCaseDetails(request, response, currentAppeal);
 	if (!appellantCaseDetails) {
 		return response.status(404).render('app/404');
 	}
@@ -316,7 +299,7 @@ export const getAddDocumentsVersion = async (request, response) => {
 	renderDocumentUpload(
 		request,
 		response,
-		appealDetails,
+		currentAppeal,
 		`/appeals-service/appeal-details/${request.params.appealId}/appellant-case/manage-documents/${request.params.folderId}/${request.params.documentId}`,
 		`/appeals-service/appeal-details/${request.params.appealId}/appellant-case/add-document-details/${request.params.folderId}/${request.params.documentId}`,
 		getValidationOutcomeFromAppellantCase(appellantCaseDetails) === 'valid'
@@ -325,15 +308,13 @@ export const getAddDocumentsVersion = async (request, response) => {
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const getAddDocumentVersionDetails = async (request, response) => {
-	const appealDetails = await appealDetailsService
-		.getAppealDetailsFromId(request.apiClient, request.params.appealId)
-		.catch((error) => logger.error(error));
+	const { currentAppeal } = request;
 
-	if (!appealDetails) {
+	if (!currentAppeal) {
 		return response.status(404).render('app/404');
 	}
 
-	const appellantCaseDetails = await getAppellantCaseDetails(request, response, appealDetails);
+	const appellantCaseDetails = await getAppellantCaseDetails(request, response, currentAppeal);
 	if (!appellantCaseDetails) {
 		return response.status(404).render('app/404');
 	}
@@ -404,8 +385,8 @@ async function getAppellantCaseDetails(request, response, appealDetails) {
 	return await appellantCaseService
 		.getAppellantCaseFromAppealId(
 			request.apiClient,
-			appealDetails?.appealId,
-			appealDetails?.appellantCaseId
+			appealDetails.appealId,
+			appealDetails.appellantCaseId
 		)
 		.catch((error) => logger.error(error));
 }

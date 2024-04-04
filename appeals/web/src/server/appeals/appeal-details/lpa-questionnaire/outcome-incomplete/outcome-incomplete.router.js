@@ -8,8 +8,9 @@ const router = createRouter({ mergeParams: true });
 
 router
 	.route('/')
-	.get(asyncRoute(controller.getIncompleteReason))
+	.get(validateAppeal, asyncRoute(controller.getIncompleteReason))
 	.post(
+		validateAppeal,
 		validators.validateIncompleteReason,
 		validators.validateIncompleteReasonTextItems,
 		asyncRoute(controller.postIncompleteReason)
@@ -27,6 +28,6 @@ router
 		asyncRoute(controller.postUpdateDueDate)
 	);
 
-router.route('/confirmation').get(asyncRoute(controller.getConfirmation));
+router.route('/confirmation').get(validateAppeal, asyncRoute(controller.getConfirmation));
 
 export default router;
