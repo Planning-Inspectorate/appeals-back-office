@@ -73,6 +73,19 @@ describe('assign-user', () => {
 
 			expect(element.innerHTML).toMatchSnapshot();
 		});
+
+		it('should re-render the assign case officer page with "No matches for" if no search results are found', async () => {
+			// @ts-ignore
+			usersService.getUsersByRole = jest.fn().mockResolvedValue([]);
+
+			const searchTerm = 'bob';
+			const response = await request
+				.post(`${baseUrl}/1/assign-user/case-officer`)
+				.send({ searchTerm });
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+		});
 	});
 
 	describe('GET /assign-user/inspector', () => {
@@ -116,6 +129,19 @@ describe('assign-user', () => {
 			const response = await request.post(`${baseUrl}/1/assign-user/inspector`).send({
 				searchTerm: 'john'
 			});
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+		});
+
+		it('should re-render the assign inspector page with "No matches for" if no search results are found', async () => {
+			// @ts-ignore
+			usersService.getUsersByRole = jest.fn().mockResolvedValue([]);
+
+			const searchTerm = 'bob';
+			const response = await request
+				.post(`${baseUrl}/1/assign-user/inspector`)
+				.send({ searchTerm });
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();

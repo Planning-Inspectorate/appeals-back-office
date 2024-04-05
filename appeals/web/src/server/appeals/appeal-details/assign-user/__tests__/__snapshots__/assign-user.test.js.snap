@@ -397,6 +397,38 @@ exports[`assign-user POST /assign-new-user/inspector should re-render the assign
 </main>"
 `;
 
+exports[`assign-user POST /assign-user/case-officer should re-render the assign case officer page with "No matches for" if no search results are found 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+                    <h1                     class="govuk-heading-xl govuk-!-margin-bottom-10">Find a case officer</h1>
+                </div>
+            </div>
+            <form name="assignUserSearch" method="post" novalidate="novalidate" class="govuk-!-margin-bottom-5">
+                <div class="govuk-form-group">
+                    <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
+                    for="searchTerm">Search by name or email. A first name or surname may be enough to find
+                        the correct person.</label>
+                    <input class="govuk-input" id="searchTerm" name="searchTerm"
+                    type="text" value="bob">
+                </div>
+                <button class="govuk-button" data-module="govuk-button">Search</button>
+            </form>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full govuk-!-margin-bottom-5">
+                    <h2 class="govuk-heading-m">Search results</h2>
+                    <p class="govuk-body">No matches for <strong>bob</strong>
+                    </p>
+                    <dl class="govuk-summary-list"></dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
 exports[`assign-user POST /assign-user/case-officer should re-render the assign case officer page with a list of search results if a valid search term is provided 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
@@ -619,6 +651,38 @@ exports[`assign-user POST /assign-user/case-officer/1/confirm should re-render t
                 </div>
                 <button class="govuk-button" data-module="govuk-button">Continue</button>
             </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`assign-user POST /assign-user/inspector should re-render the assign inspector page with "No matches for" if no search results are found 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+                    <h1                     class="govuk-heading-xl govuk-!-margin-bottom-10">Find an inspector</h1>
+                </div>
+            </div>
+            <form name="assignUserSearch" method="post" novalidate="novalidate" class="govuk-!-margin-bottom-5">
+                <div class="govuk-form-group">
+                    <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
+                    for="searchTerm">Search by name or email. A first name or surname may be enough to find
+                        the correct person.</label>
+                    <input class="govuk-input" id="searchTerm" name="searchTerm"
+                    type="text" value="bob">
+                </div>
+                <button class="govuk-button" data-module="govuk-button">Search</button>
+            </form>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full govuk-!-margin-bottom-5">
+                    <h2 class="govuk-heading-m">Search results</h2>
+                    <p class="govuk-body">No matches for <strong>bob</strong>
+                    </p>
+                    <dl class="govuk-summary-list"></dl>
+                </div>
+            </div>
         </div>
     </div>
 </main>"
