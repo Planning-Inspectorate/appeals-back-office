@@ -62,11 +62,14 @@ export async function assignUserPage(
 		}
 	};
 
+	const searchResultsSummaryListSubtitle =
+		searchResults && searchResults.length > 0 ? 'Matches' : 'No matches';
+
 	/** @type {PageComponent} */
 	const searchResultsPageComponent = {
 		type: 'summary-list',
 		wrapperHtml: {
-			opening: `<div class="govuk-grid-row"><div class="govuk-grid-column-full govuk-!-margin-bottom-5"><h2 class="govuk-heading-m">Search results</h2><p class="govuk-body">Matches for <strong>${searchTerm}</strong></p>`,
+			opening: `<div class="govuk-grid-row"><div class="govuk-grid-column-full govuk-!-margin-bottom-5"><h2 class="govuk-heading-m">Search results</h2><p class="govuk-body">${searchResultsSummaryListSubtitle} for <strong>${searchTerm}</strong></p>`,
 			closing: '</div></div>'
 		},
 		parameters: {
