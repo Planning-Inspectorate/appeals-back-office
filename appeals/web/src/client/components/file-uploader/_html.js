@@ -47,13 +47,13 @@ export const buildRegularListItem = (uploadedFile) => {
 	const li = document.createElement('li');
 
 	li.classList.add('pins-file-upload__file-row');
-	li.id = uploadedFile.fileRowId || '';
+	li.id = CSS.escape(uploadedFile.fileRowId || '');
 	li.innerHTML = `<p class="govuk-heading-s">
 		<span class="govuk-visually-hidden">File name: </span>
 		${uploadedFile.name} (${renderSizeInMainUnit(uploadedFile.size)})
 		</p>
 				<button
-				id="button-remove-${uploadedFile.fileRowId}"
+				id="button-remove-${uploadedFile.fileRowId || ''}"
 				type="button" class="govuk-link pins-file-upload__remove" aria-label="Remove added file from list">
 					Remove
 				</button>`;

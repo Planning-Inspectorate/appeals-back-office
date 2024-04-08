@@ -18,7 +18,14 @@ const initFilesListModule = () => {
 	 * @param {*} changeEvent
 	 */
 	const changePageSize = (changeEvent) => {
-		window.location.assign(`.?number=1&size=${changeEvent.target.value}`);
+		const pageSize = changeEvent.target.value;
+
+		if (/^\d+$/.test(pageSize) && parseInt(pageSize, 10) > 0) {
+			const newUrl = `.?number=1&size=${encodeURIComponent(pageSize)}`;
+			window.location.assign(newUrl);
+		} else {
+			console.error('Invalid page size input');
+		}
 	};
 
 	/**
