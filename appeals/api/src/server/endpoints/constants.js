@@ -243,12 +243,15 @@ export const CONFIG_APPEAL_FOLDER_PATHS = [
 
 	// ------------------------------------------------
 	// Decision letter
-	'appeal_decision/decisionLetter'
+	'appeal_decision/decisionLetter',
+	'appeal_costs/lpa',
+	'appeal_costs/appellant'
 ];
 
 export const CONFIG_APPEAL_STAGES = {
 	// stage mapping for ODW
 	appellantCase: 'appellant_case',
 	lpaQuestionnaire: 'lpa_questionnaire',
-	decision: 'appeal_decision'
+	decision: 'appeal_decision',
+	costs: 'appeal_costs'
 };

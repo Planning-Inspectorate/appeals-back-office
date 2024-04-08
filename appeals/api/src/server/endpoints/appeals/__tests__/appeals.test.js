@@ -704,6 +704,7 @@ describe('appeals routes', () => {
 					appealTimetable: null,
 					appellantCaseId: 1,
 					caseOfficer: householdAppeal.caseOfficer.azureAdUserId,
+					costs: {},
 					decision: {
 						folderId: savedFolder.id
 					},
@@ -812,6 +813,7 @@ describe('appeals routes', () => {
 					appealType: fullPlanningAppeal.appealType.type,
 					appellantCaseId: 1,
 					caseOfficer: fullPlanningAppeal.caseOfficer.azureAdUserId,
+					costs: {},
 					decision: {
 						folderId: savedFolder.id
 					},
@@ -1340,6 +1342,7 @@ describe('appeals routes', () => {
 					appealTimetable: null,
 					appellantCaseId: 1,
 					caseOfficer: householdAppeal.caseOfficer.azureAdUserId,
+					costs: {},
 					decision: {
 						folderId: savedFolder.id
 					},
@@ -1448,6 +1451,7 @@ describe('appeals routes', () => {
 					appealTimetable: null,
 					appellantCaseId: 1,
 					caseOfficer: fullPlanningAppeal.caseOfficer.azureAdUserId,
+					costs: {},
 					decision: {
 						folderId: savedFolder.id
 					},

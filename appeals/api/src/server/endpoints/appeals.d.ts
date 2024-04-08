@@ -246,6 +246,20 @@ interface SingleAppealDetailsResponse {
 		email: string;
 	};
 	caseOfficer: string | null;
+	costs: {
+		appellantFolder: {
+			id: number;
+			path: string;
+			caseId: number;
+			documents: DocumentInfo[];
+		};
+		lpaFolder: {
+			id: number;
+			path: string;
+			caseId: number;
+			documents: DocumentInfo[];
+		};
+	};
 	decision: {
 		folderId: number;
 		outcome?: string;

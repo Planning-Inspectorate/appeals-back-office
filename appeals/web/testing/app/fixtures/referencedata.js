@@ -98,6 +98,20 @@ export const appealData = {
 		email: 'test3@example.com'
 	},
 	caseOfficer: null,
+	costs: {
+		appellantFolder: {
+			caseId: 1,
+			id: 1000,
+			path: 'appeal_costs/appellant',
+			documents: []
+		},
+		lpaFolder: {
+			caseId: 1,
+			id: 1000,
+			path: 'appeal_costs/lpa',
+			documents: []
+		}
+	},
 	decision: {
 		folderId: 123,
 		outcome: 'dismissed',
