@@ -50,7 +50,9 @@ const groupIds = [
 	allowedGroups.caseOfficerGroupId,
 	allowedGroups.inspectorGroupId,
 	allowedGroups.customerServiceGroupId,
-	allowedGroups.legalGroupId
+	allowedGroups.legalGroupId,
+	allowedGroups.padsGroupId,
+	allowedGroups.readerGroupId
 ];
 
 router.use(assertGroupAccess(...groupIds));

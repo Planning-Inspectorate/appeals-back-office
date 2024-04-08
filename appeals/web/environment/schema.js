@@ -64,7 +64,9 @@ export default baseSchema
 						caseOfficerGroupId: joi.string(),
 						inspectorGroupId: joi.string(),
 						legalGroupId: joi.string(),
-						customerServiceGroupId: joi.string()
+						customerServiceGroupId: joi.string(),
+						padsGroupId: joi.string().optional(),
+						readerGroupId: joi.string().optional()
 					})
 					.options({ presence: 'required' })
 			})

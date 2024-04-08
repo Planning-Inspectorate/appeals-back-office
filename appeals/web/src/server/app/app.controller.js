@@ -22,14 +22,9 @@ export const viewHomepage = async (request, response) => {
 
 	if (appealGroupIds.length === 0) {
 		return response.render('app/403');
-	} else if (
-		appealGroupIds.includes(config.referenceData.appeals.caseOfficerGroupId) ||
-		appealGroupIds.includes(config.referenceData.appeals.inspectorGroupId)
-	) {
-		return response.redirect('/appeals-service/personal-list');
 	}
 
-	response.render('app/dashboard');
+	return response.redirect('/appeals-service/personal-list');
 };
 
 /** @type {import('express').RequestHandler} */

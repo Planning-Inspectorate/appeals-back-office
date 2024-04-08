@@ -63,6 +63,8 @@ export interface EnvironmentConfig extends BaseEnvironmentConfig {
 			inspectorGroupId: string;
 			legalGroupId: string;
 			customerServiceGroupId: string;
+			padsGroupId: string;
+			readerGroupId: string;
 		};
 	};
 	featureFlags: {

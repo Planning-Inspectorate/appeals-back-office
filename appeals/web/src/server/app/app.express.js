@@ -136,7 +136,7 @@ app.use(
 				res.status(403);
 				return res.render(`app/403.njk`, { error });
 			case 404:
-				res.status(403);
+				res.status(404);
 				return res.render(`app/404.njk`, { error });
 			default:
 				res.status(500);
