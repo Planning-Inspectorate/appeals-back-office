@@ -1,3 +1,5 @@
+import { CurrentPermissionSet } from '#environment/permissions';
+
 export interface CheckboxRadioConditionalHtmlParameter {
 	html?: string;
 }
@@ -29,6 +31,7 @@ declare global {
 			currentFolder: Schema.Folder;
 			currentAppeal: Appeal;
 			apiClient: import('got').Got;
+			permissions: CurrentPermissionSet;
 		}
 	}
 }

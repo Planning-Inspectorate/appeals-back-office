@@ -105,3 +105,44 @@ export function assertGroupAccess(...groupIds) {
 		res.render('app/403');
 	};
 }
+
+/**
+ * Assert that the user's authenticated account has access to the provided groups.
+ *
+ * @param  {string} permission The primary permissions to check for
+ * @param  {string|undefined} appealPermission A special fallback permission, when passed it is used to check access to the current appeal
+ * @returns {import('express').RequestHandler}
+ */
+export function assertUserHasPermission(permission, appealPermission = undefined) {
+	return (req, res, next) => {
+		const account = authSession.getAccount(req.session);
+		const permissions = req.session.permissions;
+
+		if (permissions && permissions[permission]) {
+			return next();
+		}
+
+		if (req.currentAppeal && permissions && appealPermission && permissions[appealPermission]) {
+			if (assertInspectorIsAssignedToAppeal(account?.localAccountId, req.currentAppeal.inspector)) {
+				return next();
+			}
+		}
+
+		res.render('app/403');
+	};
+}
+
+/**
+ * Assert that the user is assigned as an inspector to the case.
+ *
+ * @param  {string|undefined} userId
+ * @param  {string|null} inspector
+ * @returns {boolean}
+ */
+const assertInspectorIsAssignedToAppeal = (userId, inspector) => {
+	if (userId && inspector) {
+		return inspector === userId;
+	}
+
+	return false;
+};

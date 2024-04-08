@@ -20,10 +20,23 @@ import appealTypeChangeRouter from './change-appeal-type/change-appeal-type.rout
 import linkedAppealsRouter from './manage-linked-appeals/manage-linked-appeals.router.js';
 import otherAppealsRouter from './other-appeals/other-appeals.router.js';
 import neighbouringSitesRouter from './neighbouring-sites/neighbouring-sites.router.js';
+import { validateAppeal } from './appeal-details.middleware.js';
+import { assertUserHasPermission } from '#app/auth/auth.guards.js';
+import { permissionNames } from '#environment/permissions.js';
 
 const router = createRouter();
 
-router.route('/:appealId').get(asyncRoute(controller.viewAppealDetails));
+router
+	.route('/:appealId')
+	.get(
+		validateAppeal,
+		assertUserHasPermission(
+			permissionNames.viewCaseDetails,
+			permissionNames.viewAssignedCaseDetails
+		),
+		asyncRoute(controller.viewAppealDetails)
+	);
+
 router.use('/:appealId/start-case', startDateRouter);
 router.use('/:appealId/documents', appealDocumentsRouter);
 router.use('/:appealId/lpa-questionnaire', lpaQuestionnaireRouter);
