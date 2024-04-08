@@ -135,7 +135,10 @@ const getMyAppeals = async (req, res) => {
  */
 const getAppeal = async (req, res) => {
 	const { appeal } = req;
-	const folders = await getFoldersForAppeal(appeal, CONFIG_APPEAL_STAGES.decision);
+	const [decisionFolders, costsFolders] = await Promise.all([
+		getFoldersForAppeal(appeal, CONFIG_APPEAL_STAGES.decision),
+		getFoldersForAppeal(appeal, CONFIG_APPEAL_STAGES.costs)
+	]);
 
 	let transferAppealTypeInfo;
 	if (appeal.resubmitTypeId && appeal.transferredCaseId) {
@@ -172,7 +175,8 @@ const getAppeal = async (req, res) => {
 
 	const formattedAppeal = formatAppeal(
 		appeal,
-		folders,
+		decisionFolders,
+		costsFolders,
 		transferAppealTypeInfo,
 		decisionInfo,
 		formattedAppealWithLinkedTypes

@@ -92,7 +92,8 @@ const formatMyAppeals = (appeal, linkedAppeals) => ({
 
 /**
  * @param {RepositoryGetByIdResultItem} appeal
- * @param {Folder[]} folders
+ * @param {Folder[]} decisionFolders
+ * @param {Folder[]} costsFolders
  * @param {{ transferredAppealType: string, transferredAppealReference: string } | null} transferAppealTypeInfo
  * @param {{ letterDate: Date|null, virusCheckStatus: string|null } | null} decisionInfo
  * @param { RepositoryGetAllResultItem[] | null} referencedAppeals
@@ -100,7 +101,8 @@ const formatMyAppeals = (appeal, linkedAppeals) => ({
  */
 const formatAppeal = (
 	appeal,
-	folders,
+	decisionFolders,
+	costsFolders,
 	transferAppealTypeInfo = null,
 	decisionInfo = null,
 	referencedAppeals = null
@@ -160,19 +162,23 @@ const formatAppeal = (
 			}),
 			appellantCaseId: appeal.appellantCase?.id || 0,
 			caseOfficer: appeal.caseOfficer?.azureAdUserId || null,
+			costs: {
+				appellantFolder: costsFolders.find((f) => f.path.endsWith('appellant')),
+				lpaFolder: costsFolders.find((f) => f.path.endsWith('lpa'))
+			},
 			decision:
 				decisionInfo &&
 				appeal.inspectorDecision?.outcome &&
 				appeal.inspectorDecision?.decisionLetterGuid
 					? {
-							folderId: folders[0].id,
+							folderId: decisionFolders[0].id,
 							outcome: appeal.inspectorDecision.outcome,
 							documentId: appeal.inspectorDecision?.decisionLetterGuid,
 							letterDate: decisionInfo.letterDate,
 							virusCheckStatus: decisionInfo.virusCheckStatus
 					  }
 					: {
-							folderId: folders[0].id
+							folderId: decisionFolders[0].id
 					  },
 			healthAndSafety: {
 				appellantCase: {
