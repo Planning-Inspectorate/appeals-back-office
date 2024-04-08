@@ -147,7 +147,7 @@ const clientActions = (uploadForm) => {
 		for (const selectedFile of newFiles) {
 			const fileRowId = `file_row_${selectedFile.lastModified}_${selectedFile.size}`;
 			const fileCannotBeAdded = checkSelectedFile(selectedFile);
-			const fileRow = uploadForm.querySelector(`#${fileRowId}`);
+			const fileRow = uploadForm.querySelector(`#${CSS.escape(fileRowId)}`);
 
 			if (fileCannotBeAdded) {
 				const error = {

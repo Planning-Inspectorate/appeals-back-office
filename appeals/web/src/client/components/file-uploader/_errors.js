@@ -57,7 +57,7 @@ export const showErrors = (error, uploadForm) => {
 		);
 
 		for (const wrongFile of error.details) {
-			const fileRow = uploadForm.querySelector(`#${wrongFile.fileRowId}`);
+			const fileRow = uploadForm.querySelector(`#${CSS.escape(wrongFile.fileRowId)}`);
 
 			if (fileRow && fileRow.children.length === 2) {
 				fileRow.children[0].classList.add('colour--red');
