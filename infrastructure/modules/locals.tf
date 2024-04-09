@@ -1,0 +1,3 @@
+locals {
+  location = "uk-south"
+}

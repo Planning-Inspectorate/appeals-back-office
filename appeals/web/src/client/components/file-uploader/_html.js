@@ -44,31 +44,57 @@ const renderSizeInMainUnit = (sizesInBytes) => {
  * @returns {HTMLElement}
  */
 export const buildRegularListItem = (uploadedFile) => {
-	const li = document.createElement('li');
+	const uploadedFileFileRowId = uploadedFile.fileRowId;
+	const uploadedFileName = uploadedFile.name || '';
+	const uploadedFileSize = uploadedFile.size;
 
-	li.classList.add('pins-file-upload__file-row');
-	li.id = CSS.escape(uploadedFile.fileRowId || '');
-	li.innerHTML = `<p class="govuk-heading-s">
-		<span class="govuk-visually-hidden">File name: </span>
-		${uploadedFile.name} (${renderSizeInMainUnit(uploadedFile.size)})
-		</p>
-				<button
-				id="button-remove-${uploadedFile.fileRowId || ''}"
-				type="button" class="govuk-link pins-file-upload__remove" aria-label="Remove added file from list">
-					Remove
-				</button>`;
+	const li = document.createElement('li');
+	li.className = 'pins-file-upload__file-row';
+	li.id = `file_row_${uploadedFileFileRowId}_${uploadedFileSize}`;
+
+	const p = document.createElement('p');
+	p.className = 'govuk-heading-s';
+
+	const span = document.createElement('span');
+	span.className = 'govuk-visually-hidden';
+	span.textContent = 'File name: ';
+	p.appendChild(span);
+
+	const fileNameText = document.createTextNode(
+		`${uploadedFileName} (${renderSizeInMainUnit(uploadedFileSize)})`
+	);
+	p.appendChild(fileNameText);
+
+	const button = document.createElement('button');
+	button.id = `button-remove-${li.id}`;
+	button.type = 'button';
+	button.className = 'govuk-link pins-file-upload__remove';
+	button.setAttribute('aria-label', 'Remove added file from list');
+	button.textContent = 'Remove';
+
+	li.appendChild(p);
+	li.appendChild(button);
 
 	return li;
 };
 
 /**
- * @param {AnError} error
- * @returns {string}
+ * Creates an HTML element for displaying an error message related to file upload.
+ * @param {{message: string, fileRowId: string, name: string}} error
+ * @returns {HTMLElement}
  */
 export const buildErrorListItem = (error) => {
-	return `<li class="pins-file-upload__file-row error-row" id="${error.fileRowId}">
-				<p class="govuk-heading-s colour--red">${errorMessage(error.message, error.name)}</p>
-				</li>`;
+	const li = document.createElement('li');
+	li.className = 'pins-file-upload__file-row error-row';
+	li.id = error.fileRowId;
+
+	const p = document.createElement('p');
+	p.className = 'govuk-heading-s colour--red';
+	p.textContent = errorMessage(error.message, error.name);
+
+	li.appendChild(p);
+
+	return li;
 };
 
 /**
