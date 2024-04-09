@@ -4,33 +4,46 @@ import { buildProgressMessage, errorMessage } from './_html.js';
 
 /**
  * @param {string[]} messages
- * @returns {string}
+ * @returns {HTMLElement}
  */
 const buildTopErrorsMarkup = (messages) => {
-	const errorsTopOpen = `<div class="govuk-error-summary pins-file-upload__errors-top" aria-labelledby="error-summary-title-{{ params.formId }}" role="alert" data-module="govuk-error-summary">
-		<h2 class="govuk-error-summary__title" id="error-summary-title-{{ params.formId }}">
-			There is a problem
-		</h2>
-		<div class="govuk-error-summary__body ">
-			<ul class="govuk-list govuk-error-summary__list">`;
+	const div = document.createElement('div');
+	div.className = 'govuk-error-summary pins-file-upload__errors-top';
+	div.setAttribute('aria-labelledby', 'error-summary-title-{{ params.formId }}');
+	div.setAttribute('role', 'alert');
+	div.setAttribute('data-module', 'govuk-error-summary');
 
-	const errorTopClose = `</ul></div></div>`;
+	const h2 = document.createElement('h2');
+	h2.className = 'govuk-error-summary__title';
+	h2.id = 'error-summary-title-{{ params.formId }}';
+	h2.textContent = 'There is a problem';
 
-	let errorsLists = '';
+	const ul = document.createElement('ul');
+	ul.className = 'govuk-list govuk-error-summary__list';
 
-	for (const message of messages) {
-		errorsLists += `<li><a href="#">${message}</a></li>`;
-	}
+	messages.forEach((message) => {
+		const li = document.createElement('li');
+		const a = document.createElement('a');
+		a.href = '#';
+		a.textContent = message;
+		li.appendChild(a);
+		ul.appendChild(li);
+	});
 
-	return errorsTopOpen + errorsLists + errorTopClose;
+	div.appendChild(h2);
+	div.appendChild(ul);
+	return div;
 };
 
 /**
  * @param {string} message
- * @returns {string}
+ * @returns {HTMLElement}
  */
 const buildMiddleErrorsMarkup = (message) => {
-	return `<p class='font-weight--700 colour--red'>${message}</p>`;
+	const p = document.createElement('p');
+	p.className = 'font-weight--700 colour--red';
+	p.textContent = message;
+	return p;
 };
 
 /**
@@ -48,8 +61,8 @@ export const showErrors = (error, uploadForm) => {
 	buildProgressMessage({ show: false }, uploadForm);
 	formContainer.classList.remove('error');
 
-	let topErrorsMarkup = '';
-	let middleErrorsMarkup = '';
+	topHook.textContent = '';
+	middleHook.textContent = '';
 
 	if (error.message === 'FILE_SPECIFIC_ERRORS' && error.details) {
 		const messages = error.details.map((wrongFile) =>
@@ -59,24 +72,25 @@ export const showErrors = (error, uploadForm) => {
 		for (const wrongFile of error.details) {
 			const fileRow = uploadForm.querySelector(`#${CSS.escape(wrongFile.fileRowId)}`);
 
-			if (fileRow && fileRow.children.length === 2) {
+			if (fileRow && fileRow.children.length > 1) {
 				fileRow.children[0].classList.add('colour--red');
 				fileRow.children[0].textContent = errorMessage(wrongFile.message || '', wrongFile.name);
-				fileRow.children[1].remove();
+				if (fileRow.children[1]) fileRow.children[1].remove();
 			}
 		}
-		topErrorsMarkup = buildTopErrorsMarkup(messages);
+		const topErrorsElement = buildTopErrorsMarkup(messages);
+		topHook.appendChild(topErrorsElement);
 	} else {
 		formContainer.classList.add('error');
 
 		const replaceValue = error.details ? error.details[0].message : null;
 
-		topErrorsMarkup = buildTopErrorsMarkup([errorMessage(error.message, replaceValue)]);
-		middleErrorsMarkup = buildMiddleErrorsMarkup(errorMessage(error.message, replaceValue));
-	}
+		const topErrorsElement = buildTopErrorsMarkup([errorMessage(error.message, replaceValue)]);
+		topHook.appendChild(topErrorsElement);
 
-	topHook.innerHTML = topErrorsMarkup;
-	middleHook.innerHTML = middleErrorsMarkup;
+		const middleErrorsElement = buildMiddleErrorsMarkup(errorMessage(error.message, replaceValue));
+		middleHook.appendChild(middleErrorsElement);
+	}
 };
 
 /**
@@ -91,11 +105,10 @@ export const hideErrors = (uploadForm) => {
 	if (!formContainer || !topHook || !middleHook || !filesRows) return;
 
 	const errorRows = filesRows.querySelectorAll('.error-row');
-
 	for (const errorRow of errorRows) {
 		errorRow.remove();
 	}
-	topHook.innerHTML = '';
-	middleHook.innerHTML = '';
+	topHook.textContent = '';
+	middleHook.textContent = '';
 	formContainer.classList.remove('error');
 };
