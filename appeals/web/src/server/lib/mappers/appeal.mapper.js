@@ -13,6 +13,8 @@ import {
 import { convert24hTo12hTimeStringFormat } from '#lib/times.js';
 import { linkedAppealStatus } from '#lib/appeals-formatter.js';
 import { generateIssueDecisionUrl } from '#appeals/appeal-details/issue-decision/issue-decision.mapper.js';
+import { mapActionComponent } from './component-permissions.mapper.js';
+import { permissionNames } from '#environment/permissions.js';
 
 /**
  * @param {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} appealDetails
@@ -66,11 +68,11 @@ export async function initialiseAndMapAppealData(
 				},
 				actions: {
 					items: [
-						{
+						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
 							href: `${currentRoute}/change-appeal-type/appeal-type`,
 							visuallyHiddenText: 'Appeal type'
-						}
+						})
 					]
 				}
 			}
@@ -111,11 +113,11 @@ export async function initialiseAndMapAppealData(
 				},
 				actions: {
 					items: [
-						{
+						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
 							href: `${currentRoute}/change-appeal-details/case-procedure`,
 							visuallyHiddenText: 'Case procedure'
-						}
+						})
 					]
 				}
 			}
@@ -169,11 +171,11 @@ export async function initialiseAndMapAppealData(
 				},
 				actions: {
 					items: [
-						{
+						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
 							href: `${currentRoute}/change-appeal-details/appellant`,
 							visuallyHiddenText: 'Appellant'
-						}
+						})
 					]
 				}
 			}
@@ -239,11 +241,11 @@ export async function initialiseAndMapAppealData(
 				},
 				actions: {
 					items: [
-						{
+						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
 							href: `${currentRoute}/change-appeal-details/agent`,
 							visuallyHiddenText: 'Agent'
-						}
+						})
 					]
 				}
 			}
@@ -307,20 +309,21 @@ export async function initialiseAndMapAppealData(
 				},
 				actions: {
 					items: [
-						...(appealDetails.linkedAppeals.length > 0
-							? [
-									{
+						mapActionComponent(
+							permissionNames.updateCase,
+							session,
+							appealDetails.linkedAppeals.length > 0
+								? {
 										text: 'Manage',
 										href: generateLinkedAppealsManageLinkHref(appealDetails),
-										visuallyHiddenText: 'linked appeals'
-									}
-							  ]
-							: []),
-						{
-							text: 'Add',
-							href: `/appeals-service/appeal-details/${appealDetails.appealId}/linked-appeals/add`,
-							visuallyHiddenText: 'linked appeals'
-						}
+										visuallyHiddenText: 'Linked appeals'
+								  }
+								: {
+										text: 'Add',
+										href: `/appeals-service/appeal-details/${appealDetails.appealId}/linked-appeals/add`,
+										visuallyHiddenText: 'Linked appeals'
+								  }
+						)
 					]
 				}
 			}
@@ -352,16 +355,22 @@ export async function initialiseAndMapAppealData(
 	const otherAppealsItems = [];
 
 	if (appealDetails.otherAppeals.length) {
-		otherAppealsItems.push({
-			text: 'Manage',
-			href: `${currentRoute}/other-appeals/manage`
-		});
+		otherAppealsItems.push(
+			mapActionComponent(permissionNames.updateCase, session, {
+				text: 'Manage',
+				href: `${currentRoute}/other-appeals/manage`,
+				visuallyHiddenText: 'Related appeals'
+			})
+		);
 	}
 
-	otherAppealsItems.push({
-		text: 'Add',
-		href: `${currentRoute}/other-appeals/add`
-	});
+	otherAppealsItems.push(
+		mapActionComponent(permissionNames.updateCase, session, {
+			text: 'Add',
+			href: `${currentRoute}/other-appeals/add`,
+			visuallyHiddenText: 'Related appeals'
+		})
+	);
 
 	/** @type {Instructions} */
 	mappedData.appeal.otherAppeals = {
@@ -422,11 +431,11 @@ export async function initialiseAndMapAppealData(
 				},
 				actions: {
 					items: [
-						{
+						mapActionComponent(permissionNames.updateCase, session, {
 							text: appealDetails.allocationDetails ? 'Change' : 'Add',
 							href: `${currentRoute}/allocation-details/allocation-level`,
-							visuallyHiddenText: 'allocation level'
-						}
+							visuallyHiddenText: 'Allocation level'
+						})
 					]
 				}
 			}

@@ -518,7 +518,7 @@ describe('appeal-details', () => {
 		it('should render a page not found when the appealId is not valid/does not exist', async () => {
 			const appealIdThatDoesNotExist = 0;
 
-			nock('http://test/').get(`/appeals/${appealIdThatDoesNotExist}`).reply(500);
+			nock('http://test/').get(`/appeals/${appealIdThatDoesNotExist}`).reply(404);
 
 			const response = await request.get(`${baseUrl}/${appealIdThatDoesNotExist}`);
 			const element = parseHtml(response.text);

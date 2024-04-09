@@ -237,13 +237,13 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Linked appeals</dt>
                             <dd class="govuk-summary-list__value"><span>No appeals</span>
                             </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/add"> Add<span class="govuk-visually-hidden"> linked appeals</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/add"> Add<span class="govuk-visually-hidden"> Linked appeals</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Related appeals</dt>
                             <dd class="govuk-summary-list__value"><span>No appeals</span>
                             </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/other-appeals/add"> Add</a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/other-appeals/add"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Allocation level</dt>
@@ -255,7 +255,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                                     <li>Architecture design</li>
                                 </ul>
                             </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> allocation level</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> LPA application reference</dt>
@@ -507,13 +507,13 @@ exports[`appeal-details GET /:appealId should render a Issue a decision action b
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Linked appeals</dt>
                             <dd class="govuk-summary-list__value"><span>No appeals</span>
                             </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/add"> Add<span class="govuk-visually-hidden"> linked appeals</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/add"> Add<span class="govuk-visually-hidden"> Linked appeals</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Related appeals</dt>
                             <dd class="govuk-summary-list__value"><span>No appeals</span>
                             </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/other-appeals/add"> Add</a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/other-appeals/add"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Allocation level</dt>
@@ -525,7 +525,7 @@ exports[`appeal-details GET /:appealId should render a Issue a decision action b
                                     <li>Architecture design</li>
                                 </ul>
                             </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> allocation level</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> LPA application reference</dt>
@@ -767,19 +767,13 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                                     <li><span class="govuk-body">76215416</span> (Lead)</li>
                                 </ul>
                             </dd>
-                            <dd class="govuk-summary-list__actions">
-                                <ul class="govuk-summary-list__actions-list">
-                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/manage"> Manage<span class="govuk-visually-hidden"> linked appeals</span></a>
-                                    </li>
-                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/add"> Add<span class="govuk-visually-hidden"> linked appeals</span></a>
-                                    </li>
-                                </ul>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/manage"> Manage<span class="govuk-visually-hidden"> Linked appeals</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Related appeals</dt>
                             <dd class="govuk-summary-list__value"><span>No appeals</span>
                             </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/other-appeals/add"> Add</a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/other-appeals/add"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Allocation level</dt>
@@ -791,7 +785,7 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                                     <li>Architecture design</li>
                                 </ul>
                             </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> allocation level</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> LPA application reference</dt>
@@ -1034,19 +1028,13 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                                     <li><a href="/appeals-service/appeal-details/5451" class="govuk-link" aria-label="Appeal 7 2 1 0 8 6">721086</a> (Child)</li>
                                 </ul>
                             </dd>
-                            <dd class="govuk-summary-list__actions">
-                                <ul class="govuk-summary-list__actions-list">
-                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/manage"> Manage<span class="govuk-visually-hidden"> linked appeals</span></a>
-                                    </li>
-                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/add"> Add<span class="govuk-visually-hidden"> linked appeals</span></a>
-                                    </li>
-                                </ul>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/manage"> Manage<span class="govuk-visually-hidden"> Linked appeals</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Related appeals</dt>
                             <dd class="govuk-summary-list__value"><span>No appeals</span>
                             </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/other-appeals/add"> Add</a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/other-appeals/add"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Allocation level</dt>
@@ -1058,7 +1046,7 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                                     <li>Architecture design</li>
                                 </ul>
                             </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> allocation level</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> LPA application reference</dt>
@@ -1263,11 +1251,10 @@ exports[`appeal-details GET /:appealId should render a page not found when the a
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <h1 class="govuk-heading-xl">Page not found</h1>
-            <p class="govuk-body">If you typed the web address, check it is correct.</p>
-            <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
-            <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
-                the problem persists</p>
+            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+            <p class="govuk-body">Try again later.</p>
+            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
+                the problem persists.</p>
         </div>
     </div>
 </main>"
@@ -1317,19 +1304,13 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
                                     <li><a href="/appeals-service/appeal-details/5451" class="govuk-link" aria-label="Appeal 7 2 1 0 8 6">721086</a> (Child)</li>
                                 </ul>
                             </dd>
-                            <dd class="govuk-summary-list__actions">
-                                <ul class="govuk-summary-list__actions-list">
-                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/manage"> Manage<span class="govuk-visually-hidden"> linked appeals</span></a>
-                                    </li>
-                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/add"> Add<span class="govuk-visually-hidden"> linked appeals</span></a>
-                                    </li>
-                                </ul>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/manage"> Manage<span class="govuk-visually-hidden"> Linked appeals</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Related appeals</dt>
                             <dd class="govuk-summary-list__value"><span>No appeals</span>
                             </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/other-appeals/add"> Add</a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/other-appeals/add"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Allocation level</dt>
@@ -1341,7 +1322,7 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
                                     <li>Architecture design</li>
                                 </ul>
                             </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> allocation level</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> LPA application reference</dt>
@@ -1578,13 +1559,13 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Linked appeals</dt>
                             <dd class="govuk-summary-list__value"><span>No appeals</span>
                             </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/add"> Add<span class="govuk-visually-hidden"> linked appeals</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/add"> Add<span class="govuk-visually-hidden"> Linked appeals</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Related appeals</dt>
                             <dd class="govuk-summary-list__value"><span>No appeals</span>
                             </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/other-appeals/add"> Add</a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/other-appeals/add"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Allocation level</dt>
@@ -1596,7 +1577,7 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                                     <li>Architecture design</li>
                                 </ul>
                             </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> allocation level</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> LPA application reference</dt>
@@ -1833,13 +1814,13 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Linked appeals</dt>
                             <dd class="govuk-summary-list__value"><span>No appeals</span>
                             </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/add"> Add<span class="govuk-visually-hidden"> linked appeals</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/add"> Add<span class="govuk-visually-hidden"> Linked appeals</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Related appeals</dt>
                             <dd class="govuk-summary-list__value"><span>No appeals</span>
                             </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/other-appeals/add"> Add</a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/other-appeals/add"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Allocation level</dt>
@@ -1851,7 +1832,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                                     <li>Architecture design</li>
                                 </ul>
                             </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> allocation level</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> LPA application reference</dt>
@@ -2089,13 +2070,13 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Linked appeals</dt>
                             <dd class="govuk-summary-list__value"><span>No appeals</span>
                             </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/add"> Add<span class="govuk-visually-hidden"> linked appeals</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/add"> Add<span class="govuk-visually-hidden"> Linked appeals</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Related appeals</dt>
                             <dd class="govuk-summary-list__value"><span>No appeals</span>
                             </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/other-appeals/add"> Add</a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/other-appeals/add"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Allocation level</dt>
@@ -2107,7 +2088,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                                     <li>Architecture design</li>
                                 </ul>
                             </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> allocation level</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> LPA application reference</dt>
@@ -2345,13 +2326,13 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Linked appeals</dt>
                             <dd class="govuk-summary-list__value"><span>No appeals</span>
                             </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/add"> Add<span class="govuk-visually-hidden"> linked appeals</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/add"> Add<span class="govuk-visually-hidden"> Linked appeals</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Related appeals</dt>
                             <dd class="govuk-summary-list__value"><span>No appeals</span>
                             </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/other-appeals/add"> Add</a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/other-appeals/add"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Allocation level</dt>
@@ -2363,7 +2344,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                                     <li>Architecture design</li>
                                 </ul>
                             </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> allocation level</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> LPA application reference</dt>
@@ -2609,19 +2590,13 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                                     <li><a href="/appeals-service/appeal-details/5451" class="govuk-link" aria-label="Appeal 7 2 1 0 8 6">721086</a> (Child)</li>
                                 </ul>
                             </dd>
-                            <dd class="govuk-summary-list__actions">
-                                <ul class="govuk-summary-list__actions-list">
-                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/manage"> Manage<span class="govuk-visually-hidden"> linked appeals</span></a>
-                                    </li>
-                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/add"> Add<span class="govuk-visually-hidden"> linked appeals</span></a>
-                                    </li>
-                                </ul>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/manage"> Manage<span class="govuk-visually-hidden"> Linked appeals</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Related appeals</dt>
                             <dd class="govuk-summary-list__value"><span>No appeals</span>
                             </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/other-appeals/add"> Add</a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/other-appeals/add"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Allocation level</dt>
@@ -2633,7 +2608,7 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                                     <li>Architecture design</li>
                                 </ul>
                             </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> allocation level</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> LPA application reference</dt>
@@ -3018,19 +2993,13 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                                     <li><a href="/appeals-service/appeal-details/5451" class="govuk-link" aria-label="Appeal 7 2 1 0 8 6">721086</a> (Child)</li>
                                 </ul>
                             </dd>
-                            <dd class="govuk-summary-list__actions">
-                                <ul class="govuk-summary-list__actions-list">
-                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/manage"> Manage<span class="govuk-visually-hidden"> linked appeals</span></a>
-                                    </li>
-                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/add"> Add<span class="govuk-visually-hidden"> linked appeals</span></a>
-                                    </li>
-                                </ul>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/manage"> Manage<span class="govuk-visually-hidden"> Linked appeals</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Related appeals</dt>
                             <dd class="govuk-summary-list__value"><span>No appeals</span>
                             </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/other-appeals/add"> Add</a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/other-appeals/add"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Allocation level</dt>
@@ -3042,7 +3011,7 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                                     <li>Architecture design</li>
                                 </ul>
                             </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> allocation level</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> LPA application reference</dt>
@@ -3279,13 +3248,13 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Linked appeals</dt>
                             <dd class="govuk-summary-list__value"><span>No appeals</span>
                             </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/add"> Add<span class="govuk-visually-hidden"> linked appeals</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/add"> Add<span class="govuk-visually-hidden"> Linked appeals</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Related appeals</dt>
                             <dd class="govuk-summary-list__value"><span>No appeals</span>
                             </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/other-appeals/add"> Add</a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/other-appeals/add"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Allocation level</dt>
@@ -3297,7 +3266,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                     <li>Architecture design</li>
                                 </ul>
                             </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> allocation level</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> LPA application reference</dt>
@@ -3534,13 +3503,13 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Linked appeals</dt>
                             <dd class="govuk-summary-list__value"><span>No appeals</span>
                             </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/linked-appeals/add"> Add<span class="govuk-visually-hidden"> linked appeals</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/linked-appeals/add"> Add<span class="govuk-visually-hidden"> Linked appeals</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Related appeals</dt>
                             <dd class="govuk-summary-list__value"><span>No appeals</span>
                             </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/other-appeals/add"> Add</a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/other-appeals/add"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Allocation level</dt>
@@ -3552,7 +3521,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                     <li>Architecture design</li>
                                 </ul>
                             </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> allocation level</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> LPA application reference</dt>
@@ -3793,13 +3762,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                     <li><a href="/appeals-service/appeal-details/1" class="govuk-link" aria-label="Appeal 7 2 5 2 8 4">725284</a> (Child)</li>
                                 </ul>
                             </dd>
-                            <dd class="govuk-summary-list__actions">
-                                <ul class="govuk-summary-list__actions-list">
-                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/linked-appeals/manage"> Manage<span class="govuk-visually-hidden"> linked appeals</span></a>
-                                    </li>
-                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/linked-appeals/add"> Add<span class="govuk-visually-hidden"> linked appeals</span></a>
-                                    </li>
-                                </ul>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/linked-appeals/manage"> Manage<span class="govuk-visually-hidden"> Linked appeals</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Related appeals</dt>
@@ -3811,9 +3774,9 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             </dd>
                             <dd class="govuk-summary-list__actions">
                                 <ul class="govuk-summary-list__actions-list">
-                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/other-appeals/manage"> Manage</a>
+                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/other-appeals/manage"> Manage<span class="govuk-visually-hidden"> Related appeals</span></a>
                                     </li>
-                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/other-appeals/add"> Add</a>
+                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/other-appeals/add"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                                     </li>
                                 </ul>
                             </dd>
@@ -3827,7 +3790,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                     <li>Architecture design</li>
                                 </ul>
                             </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> allocation level</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> LPA application reference</dt>
@@ -4064,13 +4027,13 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Linked appeals</dt>
                             <dd class="govuk-summary-list__value"><span>No appeals</span>
                             </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/add"> Add<span class="govuk-visually-hidden"> linked appeals</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/add"> Add<span class="govuk-visually-hidden"> Linked appeals</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Related appeals</dt>
                             <dd class="govuk-summary-list__value"><span>No appeals</span>
                             </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/other-appeals/add"> Add</a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/other-appeals/add"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Allocation level</dt>
@@ -4082,7 +4045,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                     <li>Architecture design</li>
                                 </ul>
                             </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> allocation level</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> LPA application reference</dt>
@@ -4445,13 +4408,13 @@ exports[`appeal-details should not render a back button 1`] = `
                                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Linked appeals</dt>
                                         <dd class="govuk-summary-list__value"><span>No appeals</span>
                                         </dd>
-                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/linked-appeals/add"> Add<span class="govuk-visually-hidden"> linked appeals</span></a>
+                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/linked-appeals/add"> Add<span class="govuk-visually-hidden"> Linked appeals</span></a>
                                         </dd>
                                     </div>
                                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Related appeals</dt>
                                         <dd class="govuk-summary-list__value"><span>No appeals</span>
                                         </dd>
-                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/other-appeals/add"> Add</a>
+                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/other-appeals/add"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                                         </dd>
                                     </div>
                                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Allocation level</dt>
@@ -4463,7 +4426,7 @@ exports[`appeal-details should not render a back button 1`] = `
                                                 <li>Architecture design</li>
                                             </ul>
                                         </dd>
-                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> allocation level</span></a>
+                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                                         </dd>
                                     </div>
                                     <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> LPA application reference</dt>
