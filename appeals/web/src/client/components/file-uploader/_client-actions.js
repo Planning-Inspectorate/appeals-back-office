@@ -147,7 +147,6 @@ const clientActions = (uploadForm) => {
 		for (const selectedFile of newFiles) {
 			const fileRowId = `file_row_${selectedFile.lastModified}_${selectedFile.size}`;
 			const fileCannotBeAdded = checkSelectedFile(selectedFile);
-			const fileRow = uploadForm.querySelector(`#${CSS.escape(fileRowId)}`);
 
 			if (fileCannotBeAdded) {
 				const error = {
@@ -156,17 +155,23 @@ const clientActions = (uploadForm) => {
 					fileRowId
 				};
 
-				filesRows.innerHTML += buildErrorListItem(error);
+				const errorElement = buildErrorListItem(error);
+				filesRows.appendChild(errorElement);
 				wrongFiles.push(error);
-			} else if (!fileRow) {
-				selectedFile.fileRowId = fileRowId;
-				globalDataTransfer.items.add(selectedFile);
-				filesRows.append(buildRegularListItem(selectedFile));
+			} else {
+				// Process file if no error
+				const existingFileRow = uploadForm.querySelector(`#${CSS.escape(fileRowId)}`);
+				if (!existingFileRow) {
+					selectedFile.fileRowId = fileRowId;
+					globalDataTransfer.items.add(selectedFile);
 
-				const removeButton = [...filesRows.querySelectorAll(`.pins-file-upload__remove`)].pop();
+					const regularListItem = buildRegularListItem(selectedFile);
+					filesRows.appendChild(regularListItem);
 
-				if (removeButton) {
-					removeButton.addEventListener('click', removeFileRow);
+					const removeButton = regularListItem.querySelector(`.pins-file-upload__remove`);
+					if (removeButton) {
+						removeButton.addEventListener('click', removeFileRow);
+					}
 				}
 			}
 		}
