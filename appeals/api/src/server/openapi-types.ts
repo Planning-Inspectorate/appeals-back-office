@@ -1834,3 +1834,58 @@ export interface ExistsOnHorizonResponse {
 	 */
 	caseFound?: boolean;
 }
+
+export interface UpdateServiceUserRequest {
+	serviceUser?: {
+		/**
+		 * ID in back-office
+		 * @example 12345
+		 */
+		serviceUserId: number;
+		/**
+		 * Type of user
+		 * @example "agent"
+		 */
+		userType: string;
+		/**
+		 * User's organisation (optional)
+		 * @example "Planning Support LTD"
+		 */
+		organisationName?: string;
+		/**
+		 * User's first name
+		 * @example "Harry"
+		 */
+		firstName: string;
+		/**
+		 * User's middle name (optional)
+		 * @example "James"
+		 */
+		middleName?: string;
+		/**
+		 * User's last name
+		 * @example "Potter"
+		 */
+		lastName: string;
+		/**
+		 * User's email address (optional)
+		 * @example "harry.potter@magic.com"
+		 */
+		email?: string;
+		/**
+		 * User's phone number (optional)
+		 * @example "01179123456"
+		 */
+		phoneNumber?: string;
+		/**
+		 * User's addressId in back-office (optional)
+		 * @example 13
+		 */
+		addressId?: number;
+	};
+}
+
+export interface UpdateServiceUserResponse {
+	/** @example 1 */
+	serviceUserId?: number;
+}

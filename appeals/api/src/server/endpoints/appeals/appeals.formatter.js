@@ -111,6 +111,7 @@ const formatAppeal = (
 		const formattedAppeal = {
 			...(appeal.agent && {
 				agent: {
+					serviceUserId: appeal.agent.id,
 					firstName: appeal.agent.firstName || '',
 					lastName: appeal.agent.lastName || '',
 					email: appeal.agent.email
@@ -118,6 +119,7 @@ const formatAppeal = (
 			}),
 			...(appeal.appellant && {
 				appellant: {
+					serviceUserId: appeal.appellant.id,
 					firstName: appeal.appellant.firstName || '',
 					lastName: appeal.appellant.lastName || '',
 					email: appeal.appellant?.email || null
