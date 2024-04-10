@@ -868,6 +868,79 @@ export const spec = {
 					example: true
 				}
 			}
+		},
+		UpdateServiceUserRequest: {
+			type: 'object',
+			properties: {
+				serviceUser: {
+					type: 'object',
+					properties: {
+						serviceUserId: {
+							type: 'number',
+							required: true,
+							description: 'ID in back-office',
+							example: 12345
+						},
+						userType: {
+							type: 'string',
+							required: true,
+							description: 'Type of user',
+							example: 'agent'
+						},
+						organisationName: {
+							type: 'string',
+							required: false,
+							description: "User's organisation (optional)",
+							example: 'Planning Support LTD'
+						},
+						firstName: {
+							type: 'string',
+							required: true,
+							description: "User's first name",
+							example: 'Harry'
+						},
+						middleName: {
+							type: 'string',
+							required: false,
+							description: "User's middle name (optional)",
+							example: 'James'
+						},
+						lastName: {
+							type: 'string',
+							required: true,
+							description: "User's last name",
+							example: 'Potter'
+						},
+						email: {
+							type: 'string',
+							required: false,
+							description: "User's email address (optional)",
+							example: 'harry.potter@magic.com'
+						},
+						phoneNumber: {
+							type: 'string',
+							required: false,
+							description: "User's phone number (optional)",
+							example: '01179123456'
+						},
+						addressId: {
+							type: 'number',
+							required: false,
+							description: "User's addressId in back-office (optional)",
+							example: 13
+						}
+					}
+				}
+			}
+		},
+		UpdateServiceUserResponse: {
+			type: 'object',
+			properties: {
+				serviceUserId: {
+					type: 'number',
+					example: 1
+				}
+			}
 		}
 	},
 	components: {}

@@ -953,133 +953,6 @@
 				}
 			}
 		},
-		"/appeals/{appealId}/appellants/{appellantId}": {
-			"get": {
-				"tags": ["Appellants"],
-				"description": "Gets a single appellant by id",
-				"parameters": [
-					{
-						"name": "appealId",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"name": "appellantId",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"name": "azureAdUserId",
-						"in": "header",
-						"required": true,
-						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Gets a single appellant by id",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/SingleAppellantResponse"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/SingleAppellantResponse"
-								}
-							}
-						}
-					},
-					"400": {
-						"description": "Bad Request"
-					},
-					"404": {
-						"description": "Not Found"
-					}
-				}
-			},
-			"patch": {
-				"tags": ["Appellants"],
-				"description": "Updates a single appellant by id",
-				"parameters": [
-					{
-						"name": "appealId",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"name": "appellantId",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"name": "azureAdUserId",
-						"in": "header",
-						"required": true,
-						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Updates a single appellant by id",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/UpdateAppellantResponse"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/UpdateAppellantResponse"
-								}
-							}
-						}
-					},
-					"400": {
-						"description": "Bad Request"
-					},
-					"404": {
-						"description": "Not Found"
-					}
-				},
-				"requestBody": {
-					"in": "body",
-					"description": "Appellant details to update",
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/UpdateAppellantRequest"
-							}
-						},
-						"application/xml": {
-							"schema": {
-								"$ref": "#/components/schemas/UpdateAppellantRequest"
-							}
-						}
-					}
-				}
-			}
-		},
 		"/appeals/{appealId}/audit-trails": {
 			"get": {
 				"tags": ["Audit Trails"],
@@ -3320,6 +3193,71 @@
 						"application/xml": {
 							"schema": {
 								"$ref": "#/components/schemas/NeighbouringSiteDeleteRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/appeals/{appealId}/service-user": {
+			"patch": {
+				"tags": ["Service Users"],
+				"description": "Updates a single service user by id",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Updates a single service user by id",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UpdateServiceUserResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/UpdateServiceUserResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Service user to update",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateServiceUserRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateServiceUserRequest"
 							}
 						}
 					}
@@ -7361,6 +7299,79 @@
 						"type": "boolean",
 						"description": "Case found status in Horizon",
 						"example": true
+					}
+				}
+			},
+			"UpdateServiceUserRequest": {
+				"type": "object",
+				"properties": {
+					"serviceUser": {
+						"type": "object",
+						"properties": {
+							"serviceUserId": {
+								"type": "number",
+								"required": true,
+								"description": "ID in back-office",
+								"example": 12345
+							},
+							"userType": {
+								"type": "string",
+								"required": true,
+								"description": "Type of user",
+								"example": "agent"
+							},
+							"organisationName": {
+								"type": "string",
+								"required": false,
+								"description": "User's organisation (optional)",
+								"example": "Planning Support LTD"
+							},
+							"firstName": {
+								"type": "string",
+								"required": true,
+								"description": "User's first name",
+								"example": "Harry"
+							},
+							"middleName": {
+								"type": "string",
+								"required": false,
+								"description": "User's middle name (optional)",
+								"example": "James"
+							},
+							"lastName": {
+								"type": "string",
+								"required": true,
+								"description": "User's last name",
+								"example": "Potter"
+							},
+							"email": {
+								"type": "string",
+								"required": false,
+								"description": "User's email address (optional)",
+								"example": "harry.potter@magic.com"
+							},
+							"phoneNumber": {
+								"type": "string",
+								"required": false,
+								"description": "User's phone number (optional)",
+								"example": "01179123456"
+							},
+							"addressId": {
+								"type": "number",
+								"required": false,
+								"description": "User's addressId in back-office (optional)",
+								"example": 13
+							}
+						}
+					}
+				}
+			},
+			"UpdateServiceUserResponse": {
+				"type": "object",
+				"properties": {
+					"serviceUserId": {
+						"type": "number",
+						"example": 1
 					}
 				}
 			}
