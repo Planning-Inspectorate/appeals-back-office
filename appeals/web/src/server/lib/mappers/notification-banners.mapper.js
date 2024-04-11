@@ -122,6 +122,10 @@ export const notificationBannerDefinitions = {
 	},
 	appealValidAndReadyToStart: {
 		pages: ['appealDetails']
+	},
+	serviceUserUpdated: {
+		pages: ['appealDetails', 'appellantCase'],
+		type: 'success'
 	}
 };
 

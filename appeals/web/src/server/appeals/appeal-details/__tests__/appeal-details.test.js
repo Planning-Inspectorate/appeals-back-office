@@ -433,6 +433,28 @@ describe('appeal-details', () => {
 				expect(notificationBannerElementHTML).toMatchSnapshot();
 				expect(notificationBannerElementHTML).toContain('Site visit type has been selected');
 			});
+
+			it('should render a success notification banner when a service user was updated', async () => {
+				nock('http://test/').get(`/appeals/1`).reply(200, appealData);
+				nock('http://test/').patch(`/appeals/1/service-user`).reply(200, {
+					serviceUserId: 1
+				});
+				const validData = {
+					firstName: 'Jessica',
+					lastName: 'Jones',
+					emailAddress: ''
+				};
+				await request.post(`${baseUrl}/1/service-user/change/agent`).send(validData);
+
+				const caseDetailsResponse = await request.get(`${baseUrl}/1`);
+
+				const notificationBannerElementHTML = parseHtml(caseDetailsResponse.text, {
+					rootElement: notificationBannerElement
+				}).innerHTML;
+
+				expect(notificationBannerElementHTML).toMatchSnapshot();
+				expect(notificationBannerElementHTML).toContain('Agent details updated');
+			});
 		});
 		it('should render the received appeal details for a valid appealId with multiple linked/other appeals', async () => {
 			const appealId = appealData.appealId.toString();

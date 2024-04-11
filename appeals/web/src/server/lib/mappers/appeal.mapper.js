@@ -173,7 +173,7 @@ export async function initialiseAndMapAppealData(
 					items: [
 						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
-							href: `${currentRoute}/change-appeal-details/appellant`,
+							href: `${currentRoute}/service-user/change/appellant`,
 							visuallyHiddenText: 'Appellant'
 						})
 					]
@@ -243,7 +243,7 @@ export async function initialiseAndMapAppealData(
 					items: [
 						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
-							href: `${currentRoute}/change-appeal-details/agent`,
+							href: `${currentRoute}/service-user/change/agent`,
 							visuallyHiddenText: 'Agent'
 						})
 					]

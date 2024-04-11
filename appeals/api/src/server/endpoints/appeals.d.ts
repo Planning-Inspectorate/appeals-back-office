@@ -236,11 +236,13 @@ interface SingleAppealDetailsResponse {
 	resubmitTypeId?: number;
 	appellantCaseId: number;
 	appellant?: {
+		id: number;
 		firstName: string;
 		lastName: string;
 		email?: string | null;
 	};
 	agent?: {
+		id: number;
 		firstName: string;
 		lastName: string;
 		email: string;

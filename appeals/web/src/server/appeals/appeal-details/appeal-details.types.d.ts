@@ -420,3 +420,14 @@ export interface WebAppeal extends SingleAppealDetailsResponse {
 		visitType: string | null;
 	};
 }
+
+export interface WebServiceUser {
+	id: number;
+	organisationName?: string | null;
+	firstName: string;
+	middleName?: string | null;
+	lastName: string;
+	email?: string | null;
+	phoneNumber?: string | null;
+	addressId?: number | null;
+}

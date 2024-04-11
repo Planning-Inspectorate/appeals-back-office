@@ -88,11 +88,13 @@ export const appealData = {
 	appealType: 'Householder',
 	appellantCaseId: 0,
 	agent: {
+		id: 1,
 		firstName: 'Fiona',
 		lastName: 'Shell',
 		email: 'test2@example.com'
 	},
 	appellant: {
+		id: 2,
 		firstName: 'Roger',
 		lastName: 'Simmons',
 		email: 'test3@example.com'
