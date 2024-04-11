@@ -680,11 +680,13 @@ describe('appeals routes', () => {
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
 					agent: {
+						serviceUserId: householdAppeal.agent.id,
 						firstName: householdAppeal.agent.firstName,
 						lastName: householdAppeal.agent.lastName,
 						email: householdAppeal.agent.email
 					},
 					appellant: {
+						serviceUserId: householdAppeal.appellant.id,
 						firstName: householdAppeal.appellant.firstName,
 						lastName: householdAppeal.appellant.lastName,
 						email: householdAppeal.appellant.email
@@ -789,11 +791,13 @@ describe('appeals routes', () => {
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
 					agent: {
+						serviceUserId: fullPlanningAppeal.agent.id,
 						firstName: fullPlanningAppeal.agent.firstName,
 						lastName: fullPlanningAppeal.agent.lastName,
 						email: fullPlanningAppeal.agent.email
 					},
 					appellant: {
+						serviceUserId: fullPlanningAppeal.appellant.id,
 						firstName: fullPlanningAppeal.appellant.firstName,
 						lastName: fullPlanningAppeal.appellant.lastName,
 						email: fullPlanningAppeal.appellant.email
@@ -1318,11 +1322,13 @@ describe('appeals routes', () => {
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
 					agent: {
+						serviceUserId: householdAppeal.agent.id,
 						firstName: householdAppeal.agent.firstName,
 						lastName: householdAppeal.agent.lastName,
 						email: householdAppeal.agent.email
 					},
 					appellant: {
+						serviceUserId: householdAppeal.appellant.id,
 						firstName: householdAppeal.appellant.firstName,
 						lastName: householdAppeal.appellant.lastName,
 						email: householdAppeal.appellant.email
@@ -1427,11 +1433,13 @@ describe('appeals routes', () => {
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
 					agent: {
+						serviceUserId: fullPlanningAppeal.agent.id,
 						firstName: fullPlanningAppeal.agent.firstName,
 						lastName: fullPlanningAppeal.agent.lastName,
 						email: fullPlanningAppeal.agent.email
 					},
 					appellant: {
+						serviceUserId: fullPlanningAppeal.appellant.id,
 						firstName: fullPlanningAppeal.appellant.firstName,
 						lastName: fullPlanningAppeal.appellant.lastName,
 						email: fullPlanningAppeal.appellant.email
