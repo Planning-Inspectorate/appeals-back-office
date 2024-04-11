@@ -20,6 +20,7 @@ import appealTypeChangeRouter from './change-appeal-type/change-appeal-type.rout
 import linkedAppealsRouter from './manage-linked-appeals/manage-linked-appeals.router.js';
 import otherAppealsRouter from './other-appeals/other-appeals.router.js';
 import neighbouringSitesRouter from './neighbouring-sites/neighbouring-sites.router.js';
+import serviceUserRouter from './service-user/service-user.router.js';
 import { validateAppeal } from './appeal-details.middleware.js';
 import { assertUserHasPermission } from '#app/auth/auth.guards.js';
 import { permissionNames } from '#environment/permissions.js';
@@ -54,4 +55,5 @@ router.use('/:appealId/linked-appeals', linkedAppealsRouter);
 router.use('/:appealId/other-appeals', otherAppealsRouter);
 router.use('/:appealId/audit', auditRouter);
 router.use('/:appealId/neighbouring-sites', neighbouringSitesRouter);
+router.use('/:appealId/service-user', serviceUserRouter);
 export default router;

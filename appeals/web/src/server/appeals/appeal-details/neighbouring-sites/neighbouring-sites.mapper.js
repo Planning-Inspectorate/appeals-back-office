@@ -4,7 +4,7 @@ import {
 	errorAddressLine1,
 	errorPostcode,
 	errorTown
-} from '#lib/error-handlers/address-error-handler.js';
+} from '#lib/error-handlers/change-screen-error-handlers.js';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
