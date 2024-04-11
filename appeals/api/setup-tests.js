@@ -129,6 +129,8 @@ const mockAuditTrailCreate = jest.fn().mockResolvedValue({});
 const mockDocumentVersionAuditCreate = jest.fn().mockResolvedValue({});
 const mockAppealTypes = jest.fn().mockResolvedValue({});
 const mockNeighbouringSites = jest.fn().mockResolvedValue({});
+const mockServiceUserUpdate = jest.fn().mockResolvedValue({});
+const mockServiceUserFindUnique = jest.fn().mockResolvedValue({});
 
 class MockPrismaClient {
 	get address() {
@@ -536,8 +538,21 @@ class MockPrismaClient {
 		};
 	}
 
+	get serviceUser() {
+		return {
+			update: mockServiceUserUpdate,
+			findUnique: mockServiceUserFindUnique
+		};
+	}
+
 	$transaction(queries = []) {
-		return Promise.all(queries);
+		if (typeof queries === 'function') {
+			// transactions can be a function, run with an instance of the client
+			return queries(this);
+		} else {
+			// or just an array of queries to run
+			return Promise.all(queries);
+		}
 	}
 }
 

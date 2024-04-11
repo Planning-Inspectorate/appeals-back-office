@@ -15,8 +15,6 @@ export const updateServiceUserById = async (req, res) => {
 	const { serviceUser } = req.body;
 	const { appealId } = req.params;
 
-	console.log(serviceUser);
-
 	const {
 		serviceUserId,
 		userType,

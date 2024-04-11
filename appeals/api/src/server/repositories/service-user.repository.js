@@ -2,20 +2,27 @@ import { databaseConnector } from '#utils/database-connector.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.ServiceUser} ServiceUser */
 /**
- * @typedef {import('#db-client').Prisma.PrismaPromise<T>} PrismaPromise
- * @template T
- */
+
 
 /**
  * Updates a service user's details
  * @param { number } id
- * @param {{organisationName: string | null, firstName: string, middleName: string | null, lastName: string, email: string | null, phoneNumber: string | null, addressId: number | null }} data
- * @returns {PrismaPromise<ServiceUser>}
+ * @param {import('#db-client').Prisma.ServiceUserUncheckedUpdateInput} data
+ * @returns {Promise<ServiceUser | null>}
  */
-const updateServiceUserById = (id, data) =>
-	databaseConnector.serviceUser.update({
-		where: { id },
-		data
+const updateServiceUserById = (id, data) => {
+	const transaction = databaseConnector.$transaction(async (tx) => {
+		const serviceUserInfo = await tx.serviceUser.findUnique({ where: { id: id } });
+		if (!serviceUserInfo) {
+			return serviceUserInfo;
+		}
+
+		return await tx.serviceUser.update({
+			where: { id },
+			data
+		});
 	});
 
+	return transaction;
+};
 export default { updateServiceUserById };

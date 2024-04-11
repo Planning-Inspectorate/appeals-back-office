@@ -7,14 +7,17 @@ import {
 import validateNumberParameter, {
 	validateRequiredNumberParameter
 } from '#common/validators/number-parameter.js';
+import { validateEmailParameter } from '#common/validators/email-parameter.js';
+import { validateUserType } from '#common/validators/user-type-parameter.js';
 
 export const updateServiceUserValidator = composeMiddleware(
 	validateRequiredNumberParameter('serviceUser.serviceUserId'),
+	validateUserType('serviceUser.userType'),
 	validateRequiredStringParameter('serviceUser.firstName'),
 	validateRequiredStringParameter('serviceUser.lastName'),
 	validateStringParameterAllowingEmpty('serviceUser.organisationName'),
 	validateStringParameterAllowingEmpty('serviceUser.middleName'),
-	validateStringParameterAllowingEmpty('serviceUser.email'),
+	validateEmailParameter('serviceUser.email'),
 	validateStringParameterAllowingEmpty('serviceUser.phoneNumber'),
 	validateNumberParameter('serviceUser.addressId'),
 	validationErrorHandler
