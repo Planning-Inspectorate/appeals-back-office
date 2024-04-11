@@ -318,3 +318,15 @@ export const linkedAppeals = [
 		externalSource: true
 	}
 ];
+
+export const serviceUser = {
+	id: 1,
+	organisationName: 'Fury LTD',
+	firstName: 'Nick',
+	middleName: null,
+	lastName: 'Fury',
+	email: 'nick.fury@mail.com',
+	website: null,
+	phoneNumber: null,
+	addressId: null
+};

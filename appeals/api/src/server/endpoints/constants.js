@@ -125,6 +125,7 @@ export const ERROR_INVALID_APPEAL_STATE = 'The action is invalid on the current 
 export const ERROR_CASE_OUTCOME_MUST_BE_ONE_OF = `The case outcome must be one of ${CASE_OUTCOME_ALLOWED}, ${CASE_OUTCOME_DISMISSED}, ${CASE_OUTCOME_SPLIT_DECISION}`;
 export const ERROR_LINKING_APPEALS =
 	'The appeals cannot be linked as the lead or child are already linked to other appeals.';
+export const ERROR_INVALID_EMAIL = 'must be a valid email';
 
 export const ERROR_INVALID_POSTCODE = 'needs to be a valid and include spaces';
 
