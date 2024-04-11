@@ -78,10 +78,9 @@ exports[`assign-user GET /assign-user/case-officer should render the assign case
             <form name="assignUserSearch" method="post" novalidate="novalidate" class="govuk-!-margin-bottom-5">
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="searchTerm">Search by name or email. A first name or surname may be enough to find
-                        the correct person.</label>
-                    <input class="govuk-input" id="searchTerm" name="searchTerm"
-                    type="text">
+                    for="searchTerm">Search by name or email address</label>
+                    <input class="govuk-input" id="searchTerm"
+                    name="searchTerm" type="text">
                 </div>
                 <button class="govuk-button" data-module="govuk-button">Search</button>
             </form>
@@ -96,7 +95,8 @@ exports[`assign-user GET /assign-user/case-officer/1/confirm should render the c
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-1">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Assign Smith, John to this case?</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Assign this case officer</h1>
+                        <h2> John.Smith@planninginspectorate.gov.uk</h2>
                 </div>
             </div>
             <form name="confirmAssignOrUnassignUser" method="post" novalidate="novalidate">
@@ -133,10 +133,9 @@ exports[`assign-user GET /assign-user/inspector should render the assign inspect
             <form name="assignUserSearch" method="post" novalidate="novalidate" class="govuk-!-margin-bottom-5">
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="searchTerm">Search by name or email. A first name or surname may be enough to find
-                        the correct person.</label>
-                    <input class="govuk-input" id="searchTerm" name="searchTerm"
-                    type="text">
+                    for="searchTerm">Search by name or email address</label>
+                    <input class="govuk-input" id="searchTerm"
+                    name="searchTerm" type="text">
                 </div>
                 <button class="govuk-button" data-module="govuk-button">Search</button>
             </form>
@@ -151,7 +150,8 @@ exports[`assign-user GET /assign-user/inspector/1/confirm should render the conf
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-1">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Assign Smith, John to this case?</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Assign this case officer</h1>
+                        <h2> John.Smith@planninginspectorate.gov.uk</h2>
                 </div>
             </div>
             <form name="confirmAssignOrUnassignUser" method="post" novalidate="novalidate">
@@ -196,7 +196,8 @@ exports[`assign-user GET /unassign-user/inspector/1/confirm should render the co
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-1">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Remove Smith, John from this case?</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Remove this case officer</h1>
+                        <h2> John.Smith@planninginspectorate.gov.uk</h2>
                 </div>
             </div>
             <form name="confirmAssignOrUnassignUser" method="post" novalidate="novalidate">
@@ -230,7 +231,7 @@ exports[`assign-user POST /assign-new-user/case-officer should re-render the ass
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#confirm">Confirmation must be provided</a>
+                            <li><a href="#confirm">Select yes if you would like to assign this case officer</a>
                             </li>
                         </ul>
                     </div>
@@ -318,7 +319,7 @@ exports[`assign-user POST /assign-new-user/inspector should re-render the assign
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#confirm">Confirmation must be provided</a>
+                            <li><a href="#confirm">Select yes if you would like to assign this case officer</a>
                             </li>
                         </ul>
                     </div>
@@ -409,16 +410,15 @@ exports[`assign-user POST /assign-user/case-officer should re-render the assign 
             <form name="assignUserSearch" method="post" novalidate="novalidate" class="govuk-!-margin-bottom-5">
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="searchTerm">Search by name or email. A first name or surname may be enough to find
-                        the correct person.</label>
-                    <input class="govuk-input" id="searchTerm" name="searchTerm"
-                    type="text" value="bob">
+                    for="searchTerm">Search by name or email address</label>
+                    <input class="govuk-input" id="searchTerm"
+                    name="searchTerm" type="text" value="bob">
                 </div>
                 <button class="govuk-button" data-module="govuk-button">Search</button>
             </form>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full govuk-!-margin-bottom-5">
-                    <h2 class="govuk-heading-m">Search results</h2>
+                    <h2 class="govuk-heading-m">Results</h2>
                     <p class="govuk-body">No matches for <strong>bob</strong>
                     </p>
                     <dl class="govuk-summary-list"></dl>
@@ -441,16 +441,15 @@ exports[`assign-user POST /assign-user/case-officer should re-render the assign 
             <form name="assignUserSearch" method="post" novalidate="novalidate" class="govuk-!-margin-bottom-5">
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="searchTerm">Search by name or email. A first name or surname may be enough to find
-                        the correct person.</label>
-                    <input class="govuk-input" id="searchTerm" name="searchTerm"
-                    type="text" value="john">
+                    for="searchTerm">Search by name or email address</label>
+                    <input class="govuk-input" id="searchTerm"
+                    name="searchTerm" type="text" value="john">
                 </div>
                 <button class="govuk-button" data-module="govuk-button">Search</button>
             </form>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full govuk-!-margin-bottom-5">
-                    <h2 class="govuk-heading-m">Search results</h2>
+                    <h2 class="govuk-heading-m">Results</h2>
                     <p class="govuk-body">Matches for <strong>john</strong>
                     </p>
                     <dl class="govuk-summary-list">
@@ -476,7 +475,7 @@ exports[`assign-user POST /assign-user/case-officer should re-render the assign 
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#searchTerm">Search term (name or email address) must be provided</a>
+                            <li><a href="#searchTerm">Enter a name or email address</a>
                             </li>
                         </ul>
                     </div>
@@ -490,10 +489,9 @@ exports[`assign-user POST /assign-user/case-officer should re-render the assign 
             <form name="assignUserSearch" method="post" novalidate="novalidate" class="govuk-!-margin-bottom-5">
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="searchTerm">Search by name or email. A first name or surname may be enough to find
-                        the correct person.</label>
-                    <input class="govuk-input" id="searchTerm" name="searchTerm"
-                    type="text">
+                    for="searchTerm">Search by name or email address</label>
+                    <input class="govuk-input" id="searchTerm"
+                    name="searchTerm" type="text">
                 </div>
                 <button class="govuk-button" data-module="govuk-button">Search</button>
             </form>
@@ -525,10 +523,9 @@ exports[`assign-user POST /assign-user/case-officer should re-render the assign 
             <form name="assignUserSearch" method="post" novalidate="novalidate" class="govuk-!-margin-bottom-5">
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="searchTerm">Search by name or email. A first name or surname may be enough to find
-                        the correct person.</label>
-                    <input class="govuk-input" id="searchTerm" name="searchTerm"
-                    type="text" value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
+                    for="searchTerm">Search by name or email address</label>
+                    <input class="govuk-input" id="searchTerm"
+                    name="searchTerm" type="text" value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
                 </div>
                 <button class="govuk-button" data-module="govuk-button">Search</button>
             </form>
@@ -560,10 +557,9 @@ exports[`assign-user POST /assign-user/case-officer should re-render the assign 
             <form name="assignUserSearch" method="post" novalidate="novalidate" class="govuk-!-margin-bottom-5">
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="searchTerm">Search by name or email. A first name or surname may be enough to find
-                        the correct person.</label>
-                    <input class="govuk-input" id="searchTerm" name="searchTerm"
-                    type="text" value="a">
+                    for="searchTerm">Search by name or email address</label>
+                    <input class="govuk-input" id="searchTerm"
+                    name="searchTerm" type="text" value="a">
                 </div>
                 <button class="govuk-button" data-module="govuk-button">Search</button>
             </form>
@@ -581,7 +577,7 @@ exports[`assign-user POST /assign-user/case-officer/1/confirm should re-render t
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#confirm">Confirmation must be provided</a>
+                            <li><a href="#confirm">Select yes if you would like to assign this case officer</a>
                             </li>
                         </ul>
                     </div>
@@ -589,7 +585,8 @@ exports[`assign-user POST /assign-user/case-officer/1/confirm should re-render t
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-1">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Assign Smith, John to this case?</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Assign this case officer</h1>
+                        <h2> John.Smith@planninginspectorate.gov.uk</h2>
                 </div>
             </div>
             <form name="confirmAssignOrUnassignUser" method="post" novalidate="novalidate">
@@ -631,7 +628,8 @@ exports[`assign-user POST /assign-user/case-officer/1/confirm should re-render t
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-1">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Assign Smith, John to this case?</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Assign this case officer</h1>
+                        <h2> John.Smith@planninginspectorate.gov.uk</h2>
                 </div>
             </div>
             <form name="confirmAssignOrUnassignUser" method="post" novalidate="novalidate">
@@ -668,16 +666,15 @@ exports[`assign-user POST /assign-user/inspector should re-render the assign ins
             <form name="assignUserSearch" method="post" novalidate="novalidate" class="govuk-!-margin-bottom-5">
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="searchTerm">Search by name or email. A first name or surname may be enough to find
-                        the correct person.</label>
-                    <input class="govuk-input" id="searchTerm" name="searchTerm"
-                    type="text" value="bob">
+                    for="searchTerm">Search by name or email address</label>
+                    <input class="govuk-input" id="searchTerm"
+                    name="searchTerm" type="text" value="bob">
                 </div>
                 <button class="govuk-button" data-module="govuk-button">Search</button>
             </form>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full govuk-!-margin-bottom-5">
-                    <h2 class="govuk-heading-m">Search results</h2>
+                    <h2 class="govuk-heading-m">Results</h2>
                     <p class="govuk-body">No matches for <strong>bob</strong>
                     </p>
                     <dl class="govuk-summary-list"></dl>
@@ -700,16 +697,15 @@ exports[`assign-user POST /assign-user/inspector should re-render the assign ins
             <form name="assignUserSearch" method="post" novalidate="novalidate" class="govuk-!-margin-bottom-5">
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="searchTerm">Search by name or email. A first name or surname may be enough to find
-                        the correct person.</label>
-                    <input class="govuk-input" id="searchTerm" name="searchTerm"
-                    type="text" value="john">
+                    for="searchTerm">Search by name or email address</label>
+                    <input class="govuk-input" id="searchTerm"
+                    name="searchTerm" type="text" value="john">
                 </div>
                 <button class="govuk-button" data-module="govuk-button">Search</button>
             </form>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full govuk-!-margin-bottom-5">
-                    <h2 class="govuk-heading-m">Search results</h2>
+                    <h2 class="govuk-heading-m">Results</h2>
                     <p class="govuk-body">Matches for <strong>john</strong>
                     </p>
                     <dl class="govuk-summary-list">
@@ -735,7 +731,7 @@ exports[`assign-user POST /assign-user/inspector should re-render the assign ins
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#searchTerm">Search term (name or email address) must be provided</a>
+                            <li><a href="#searchTerm">Enter a name or email address</a>
                             </li>
                         </ul>
                     </div>
@@ -749,10 +745,9 @@ exports[`assign-user POST /assign-user/inspector should re-render the assign ins
             <form name="assignUserSearch" method="post" novalidate="novalidate" class="govuk-!-margin-bottom-5">
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="searchTerm">Search by name or email. A first name or surname may be enough to find
-                        the correct person.</label>
-                    <input class="govuk-input" id="searchTerm" name="searchTerm"
-                    type="text">
+                    for="searchTerm">Search by name or email address</label>
+                    <input class="govuk-input" id="searchTerm"
+                    name="searchTerm" type="text">
                 </div>
                 <button class="govuk-button" data-module="govuk-button">Search</button>
             </form>
@@ -784,10 +779,9 @@ exports[`assign-user POST /assign-user/inspector should re-render the assign ins
             <form name="assignUserSearch" method="post" novalidate="novalidate" class="govuk-!-margin-bottom-5">
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="searchTerm">Search by name or email. A first name or surname may be enough to find
-                        the correct person.</label>
-                    <input class="govuk-input" id="searchTerm" name="searchTerm"
-                    type="text" value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
+                    for="searchTerm">Search by name or email address</label>
+                    <input class="govuk-input" id="searchTerm"
+                    name="searchTerm" type="text" value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
                 </div>
                 <button class="govuk-button" data-module="govuk-button">Search</button>
             </form>
@@ -819,10 +813,9 @@ exports[`assign-user POST /assign-user/inspector should re-render the assign ins
             <form name="assignUserSearch" method="post" novalidate="novalidate" class="govuk-!-margin-bottom-5">
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="searchTerm">Search by name or email. A first name or surname may be enough to find
-                        the correct person.</label>
-                    <input class="govuk-input" id="searchTerm" name="searchTerm"
-                    type="text" value="a">
+                    for="searchTerm">Search by name or email address</label>
+                    <input class="govuk-input" id="searchTerm"
+                    name="searchTerm" type="text" value="a">
                 </div>
                 <button class="govuk-button" data-module="govuk-button">Search</button>
             </form>
@@ -840,7 +833,7 @@ exports[`assign-user POST /assign-user/inspector/1/confirm should re-render the 
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#confirm">Confirmation must be provided</a>
+                            <li><a href="#confirm">Select yes if you would like to assign this case officer</a>
                             </li>
                         </ul>
                     </div>
@@ -848,7 +841,8 @@ exports[`assign-user POST /assign-user/inspector/1/confirm should re-render the 
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-1">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Assign Smith, John to this case?</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Assign this case officer</h1>
+                        <h2> John.Smith@planninginspectorate.gov.uk</h2>
                 </div>
             </div>
             <form name="confirmAssignOrUnassignUser" method="post" novalidate="novalidate">
@@ -890,7 +884,8 @@ exports[`assign-user POST /assign-user/inspector/1/confirm should re-render the 
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-1">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Assign Smith, John to this case?</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Assign this case officer</h1>
+                        <h2> John.Smith@planninginspectorate.gov.uk</h2>
                 </div>
             </div>
             <form name="confirmAssignOrUnassignUser" method="post" novalidate="novalidate">
@@ -924,7 +919,7 @@ exports[`assign-user POST /unassign-user/inspector/1/confirm should re-render th
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#confirm">Confirmation must be provided</a>
+                            <li><a href="#confirm">Select yes if you would like to assign this case officer</a>
                             </li>
                         </ul>
                     </div>
@@ -932,7 +927,8 @@ exports[`assign-user POST /unassign-user/inspector/1/confirm should re-render th
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-1">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Remove Smith, John from this case?</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Remove this case officer</h1>
+                        <h2> John.Smith@planninginspectorate.gov.uk</h2>
                 </div>
             </div>
             <form name="confirmAssignOrUnassignUser" method="post" novalidate="novalidate">
@@ -974,7 +970,8 @@ exports[`assign-user POST /unassign-user/inspector/1/confirm should re-render th
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-1">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Remove Smith, John from this case?</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Remove this case officer</h1>
+                        <h2> John.Smith@planninginspectorate.gov.uk</h2>
                 </div>
             </div>
             <form name="confirmAssignOrUnassignUser" method="post" novalidate="novalidate">
