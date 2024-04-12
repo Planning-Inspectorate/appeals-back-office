@@ -82,7 +82,7 @@ export async function appealDetailsPage(appealDetails, currentRoute, session) {
 				mappedData.appeal?.linkedAppeals?.display.summaryListItem,
 				mappedData.appeal?.otherAppeals?.display.summaryListItem,
 				mappedData.appeal?.allocationDetails?.display.summaryListItem,
-				removeSummaryListActions(mappedData.appeal?.lpaReference?.display.summaryListItem),
+				mappedData.appeal?.lpaReference?.display.summaryListItem,
 				mappedData.appeal?.decision?.display.summaryListItem
 			].filter(isDefined)
 		}

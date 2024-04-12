@@ -387,13 +387,17 @@ const getAppealById = async (id) => {
  * @param {UpdateAppealRequest} data
  * @returns {PrismaPromise<object>}
  */
-const updateAppealById = (id, { dueDate, startedAt, validAt, caseOfficer, inspector }) =>
+const updateAppealById = (
+	id,
+	{ dueDate, startedAt, validAt, caseOfficer, inspector, planningApplicationReference }
+) =>
 	databaseConnector.appeal.update({
 		where: { id },
 		data: {
 			...(dueDate && { dueDate }),
 			...(startedAt && { startedAt }),
 			...(validAt && { validAt }),
+			...(planningApplicationReference && { planningApplicationReference }),
 			...(hasValueOrIsNull(caseOfficer) && { caseOfficerUserId: caseOfficer }),
 			...(hasValueOrIsNull(inspector) && { inspectorUserId: inspector }),
 			updatedAt: new Date()

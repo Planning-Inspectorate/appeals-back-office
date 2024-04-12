@@ -173,7 +173,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 						{
 							text: 'Change',
 							visuallyHiddenText: 'LPA application reference',
-							href: `${currentRoute}/change-appeal-details/application-reference`
+							href: `${currentRoute}/lpa-reference/change`
 						}
 					]
 				}

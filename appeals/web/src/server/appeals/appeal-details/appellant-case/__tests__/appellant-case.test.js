@@ -100,6 +100,28 @@ describe('appellant-case', () => {
 
 			expect(element.innerHTML).toMatchSnapshot();
 		});
+
+		it('should render a "Planning application reference" success notification banner when the planning application reference is updated', async () => {
+			const appealId = appealData.appealId.toString();
+			nock('http://test/').patch(`/appeals/${appealId}`).reply(200, {
+				planningApplicationReference: '12345/A/67890'
+			});
+
+			const validData = {
+				planningApplicationReference: '12345/A/67890'
+			};
+
+			await request
+				.post(`${baseUrl}/${appealId}/appellant-case/lpa-reference/change`)
+				.send(validData);
+
+			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
+			const notificationBannerElementHTML = parseHtml(response.text).innerHTML;
+
+			expect(notificationBannerElementHTML).toMatchSnapshot();
+			expect(notificationBannerElementHTML).toContain('Success');
+			expect(notificationBannerElementHTML).toContain('Planning application reference updated');
+		});
 	});
 
 	describe('GET /appellant-case with unchecked documents', () => {
