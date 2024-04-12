@@ -14,37 +14,38 @@ describe('service-user', () => {
 
 	describe('GET /change/:userType', () => {
 		it('should render the change service user page for an agent', async () => {
-			const appealId = appealData.appealId.toString();
+			const appealId = appealData.appealId;
 			const response = await request.get(`${baseUrl}/${appealId}/service-user/change/agent`);
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain(`Update agent details`);
+			expect(element.innerHTML).toContain('Update agent details');
 		});
 
 		it('should render the change service user page for an appellant', async () => {
-			const appealId = appealData.appealId.toString();
+			const appealId = appealData.appealId;
 			const response = await request.get(`${baseUrl}/${appealId}/service-user/change/appellant`);
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain(`Update appellant details`);
+			expect(element.innerHTML).toContain('Update appellant details');
 		});
 
-		it('should fail to render the change page when the service user type is not a valid string', async () => {
-			const appealId = appealData.appealId.toString();
+		it('should render the 500 error page when the service user type is not a valid string', async () => {
+			const appealId = appealData.appealId;
 			const response = await request.get(`${baseUrl}/${appealId}/service-user/change/fail`);
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).not.toContain(`Update appellant details`);
-			expect(element.innerHTML).not.toContain(`Update agent details`);
+			expect(element.innerHTML).not.toContain('Update appellant details');
+			expect(element.innerHTML).not.toContain('Update agent details');
+			expect(element.innerHTML).toContain('Sorry, there is a problem with the service');
 		});
 	});
 
 	describe('POST /change/:userType', () => {
-		it('should re-render changeServiceUser if firstName is null', async () => {
-			const appealId = appealData.appealId.toString();
+		it('should re-render changeServiceUser with the error "Enter a first Name" if firstName is null', async () => {
+			const appealId = appealData.appealId;
 			const invalidData = {
 				firstName: null,
 				lastName: 'Jones',
@@ -62,8 +63,8 @@ describe('service-user', () => {
 			expect(element.innerHTML).toContain('Enter a first name');
 			expect(element.innerHTML).toContain('govuk-error-summary');
 		});
-		it('should re-render changeServiceUser if firstName is empty', async () => {
-			const appealId = appealData.appealId.toString();
+		it('should re-render changeServiceUser with the error "Enter a first Name" if firstName is empty', async () => {
+			const appealId = appealData.appealId;
 			const invalidData = {
 				firstName: '',
 				lastName: 'Jones',
@@ -81,8 +82,8 @@ describe('service-user', () => {
 			expect(element.innerHTML).toContain('Enter a first name');
 			expect(element.innerHTML).toContain('govuk-error-summary');
 		});
-		it('should re-render changeServiceUser if firstName is undefined', async () => {
-			const appealId = appealData.appealId.toString();
+		it('should re-render changeServiceUser with the error "Enter a first Name" if firstName is undefined', async () => {
+			const appealId = appealData.appealId;
 			const invalidData = {
 				lastName: 'Jones',
 				emailAddress: 'null.jones@email.com'
@@ -99,8 +100,8 @@ describe('service-user', () => {
 			expect(element.innerHTML).toContain('Enter a first name');
 			expect(element.innerHTML).toContain('govuk-error-summary');
 		});
-		it('should re-render changeServiceUser if lastName is null', async () => {
-			const appealId = appealData.appealId.toString();
+		it('should re-render changeServiceUser with the error "Enter a last Name" if lastName is null', async () => {
+			const appealId = appealData.appealId;
 			const invalidData = {
 				firstName: 'Jessica',
 				lastName: null,
@@ -118,8 +119,8 @@ describe('service-user', () => {
 			expect(element.innerHTML).toContain('Enter a last name');
 			expect(element.innerHTML).toContain('govuk-error-summary');
 		});
-		it('should re-render changeServiceUser if lastName is empty', async () => {
-			const appealId = appealData.appealId.toString();
+		it('should re-render changeServiceUser with the error "Enter a last Name" if lastName is empty', async () => {
+			const appealId = appealData.appealId;
 			const invalidData = {
 				firstName: 'Jessica',
 				lastName: '',
@@ -137,8 +138,8 @@ describe('service-user', () => {
 			expect(element.innerHTML).toContain('Enter a last name');
 			expect(element.innerHTML).toContain('govuk-error-summary');
 		});
-		it('should re-render changeServiceUser if lastName is undefined', async () => {
-			const appealId = appealData.appealId.toString();
+		it('should re-render changeServiceUser with the error "Enter a last Name" if lastName is undefined', async () => {
+			const appealId = appealData.appealId;
 			const invalidData = {
 				firstName: 'Jessica',
 				emailAddress: 'jessica.null@email.com'
@@ -155,8 +156,8 @@ describe('service-user', () => {
 			expect(element.innerHTML).toContain('Enter a last name');
 			expect(element.innerHTML).toContain('govuk-error-summary');
 		});
-		it('should re-render changeServiceUser if email is not an email', async () => {
-			const appealId = appealData.appealId.toString();
+		it('should re-render changeServiceUser with the error "Enter a valid email" if email is not an email', async () => {
+			const appealId = appealData.appealId;
 			const invalidData = {
 				firstName: 'Jessica',
 				lastName: 'Jones',
@@ -175,7 +176,7 @@ describe('service-user', () => {
 			expect(element.innerHTML).toContain('govuk-error-summary');
 		});
 		it('should re-direct to appeals details if firstName, lastName, and email are valid', async () => {
-			const appealId = appealData.appealId.toString();
+			const appealId = appealData.appealId;
 			nock('http://test/').patch(`/appeals/${appealId}/service-user`).reply(200, {
 				serviceUserId: 1
 			});
@@ -192,7 +193,7 @@ describe('service-user', () => {
 			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
 		});
 		it('should re-direct to appeals details if firstName, lastName are valid, and email is empty', async () => {
-			const appealId = appealData.appealId.toString();
+			const appealId = appealData.appealId;
 			nock('http://test/').patch(`/appeals/${appealId}/service-user`).reply(200, {
 				serviceUserId: 1
 			});

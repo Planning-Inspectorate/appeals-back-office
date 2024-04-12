@@ -7,18 +7,15 @@
  * @param {{firstName: string; lastName: string; emailAddress: string;}} data
  * @returns {Promise<{}>}
  */
-export function updateServiceUser(apiClient, appealId, serviceUserId, userType, data) {
-	const formattedServiceUser = {
-		serviceUserId,
-		userType,
-		firstName: data.firstName,
-		lastName: data.lastName,
-		email: data.emailAddress ?? null
-	};
-
-	return apiClient.patch(`appeals/${appealId}/service-user`, {
+export const updateServiceUser = (apiClient, appealId, serviceUserId, userType, data) =>
+	apiClient.patch(`appeals/${appealId}/service-user`, {
 		json: {
-			serviceUser: { ...formattedServiceUser }
+			serviceUser: {
+				serviceUserId,
+				userType,
+				firstName: data.firstName,
+				lastName: data.lastName,
+				email: data.emailAddress ?? null
+			}
 		}
 	});
-}

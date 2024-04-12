@@ -1,6 +1,6 @@
-import { getAppealDetailsFromId } from '#appeals/appeal-details/appeal-details.service.js';
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { capitalize } from 'lodash';
 import { changeServiceUserPage } from './service-user.mapper.js';
 import { updateServiceUser } from './service-user.service.js';
 
@@ -19,11 +19,11 @@ export const getChangeServiceUser = async (request, response) => {
 const renderChangeServiceUser = async (request, response) => {
 	const {
 		errors,
-		params: { appealId, userType }
+		params: { userType }
 	} = request;
 
-	const appealDetails = await getAppealDetailsFromId(request.apiClient, appealId);
-	if (userType in appealDetails) {
+	const appealDetails = request.currentAppeal;
+	if (appealDetails && userType in appealDetails) {
 		const mappedPageContents = changeServiceUserPage(
 			appealDetails,
 			request.session.updatedServiceUser,
@@ -55,7 +55,7 @@ export const postChangeServiceUser = async (request, response) => {
 		params: { appealId, userType }
 	} = request;
 
-	const appealDetails = await getAppealDetailsFromId(request.apiClient, appealId);
+	const appealDetails = request.currentAppeal;
 
 	if (request.errors) {
 		return renderChangeServiceUser(request, response);
@@ -76,9 +76,7 @@ export const postChangeServiceUser = async (request, response) => {
 			request.session,
 			'serviceUserUpdated',
 			appealId,
-			`<p class="govuk-notification-banner__heading">${
-				userType.charAt(0).toUpperCase() + userType.slice(1)
-			} details updated</p>`
+			`<p class="govuk-notification-banner__heading">${capitalize(userType)}details updated</p>`
 		);
 
 		delete request.session.updatedServiceUser;

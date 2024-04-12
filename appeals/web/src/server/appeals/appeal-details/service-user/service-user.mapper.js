@@ -8,6 +8,7 @@ import {
 	errorFirstName,
 	errorLastName
 } from '#lib/error-handlers/change-screen-error-handlers.js';
+import { capitalize } from 'lodash';
 
 /**
  *
@@ -42,7 +43,7 @@ export const changeServiceUserPage = (appealData, userDetailsInSession, userType
 					type: 'text',
 					label: {
 						isPageHeading: false,
-						text: `${userType.charAt(0).toUpperCase() + userType.slice(1)}'s first name`
+						text: `${capitalize(userType)}'s first name`
 					},
 					value: serviceUserDetails?.firstName ?? '',
 					errorMessage: errorFirstName(errors)
@@ -56,7 +57,7 @@ export const changeServiceUserPage = (appealData, userDetailsInSession, userType
 					type: 'text',
 					label: {
 						isPageHeading: false,
-						text: `${userType.charAt(0).toUpperCase() + userType.slice(1)}'s last name`
+						text: `${capitalize(userType)}'s last name`
 					},
 					value: serviceUserDetails?.lastName ?? '',
 					errorMessage: errorLastName(errors)
@@ -70,7 +71,7 @@ export const changeServiceUserPage = (appealData, userDetailsInSession, userType
 					type: 'text',
 					label: {
 						isPageHeading: false,
-						text: `${userType.charAt(0).toUpperCase() + userType.slice(1)}'s email address`
+						text: `${capitalize(userType)}'s email address`
 					},
 					value: serviceUserDetails?.email ?? '',
 					errorMessage: errorEmail(errors)
