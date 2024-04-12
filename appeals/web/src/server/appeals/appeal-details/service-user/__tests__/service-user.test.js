@@ -44,7 +44,7 @@ describe('service-user', () => {
 	});
 
 	describe('POST /change/:userType', () => {
-		it('should re-render changeServiceUser with the error "Enter a first Name" if firstName is null', async () => {
+		it('should re-render changeServiceUser with the error "Enter first Name" if firstName is null', async () => {
 			const appealId = appealData.appealId;
 			const invalidData = {
 				firstName: null,
@@ -60,10 +60,10 @@ describe('service-user', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Enter a first name');
+			expect(element.innerHTML).toContain('Enter first name');
 			expect(element.innerHTML).toContain('govuk-error-summary');
 		});
-		it('should re-render changeServiceUser with the error "Enter a first Name" if firstName is empty', async () => {
+		it('should re-render changeServiceUser with the error "Enter first name" if firstName is empty', async () => {
 			const appealId = appealData.appealId;
 			const invalidData = {
 				firstName: '',
@@ -79,10 +79,10 @@ describe('service-user', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Enter a first name');
+			expect(element.innerHTML).toContain('Enter first name');
 			expect(element.innerHTML).toContain('govuk-error-summary');
 		});
-		it('should re-render changeServiceUser with the error "Enter a first Name" if firstName is undefined', async () => {
+		it('should re-render changeServiceUser with the error "Enter first name" if firstName is undefined', async () => {
 			const appealId = appealData.appealId;
 			const invalidData = {
 				lastName: 'Jones',
@@ -97,10 +97,10 @@ describe('service-user', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Enter a first name');
+			expect(element.innerHTML).toContain('Enter first name');
 			expect(element.innerHTML).toContain('govuk-error-summary');
 		});
-		it('should re-render changeServiceUser with the error "Enter a last Name" if lastName is null', async () => {
+		it('should re-render changeServiceUser with the error "Enter last name" if lastName is null', async () => {
 			const appealId = appealData.appealId;
 			const invalidData = {
 				firstName: 'Jessica',
@@ -116,10 +116,10 @@ describe('service-user', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Enter a last name');
+			expect(element.innerHTML).toContain('Enter last name');
 			expect(element.innerHTML).toContain('govuk-error-summary');
 		});
-		it('should re-render changeServiceUser with the error "Enter a last Name" if lastName is empty', async () => {
+		it('should re-render changeServiceUser with the error "Enter last name" if lastName is empty', async () => {
 			const appealId = appealData.appealId;
 			const invalidData = {
 				firstName: 'Jessica',
@@ -135,10 +135,10 @@ describe('service-user', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Enter a last name');
+			expect(element.innerHTML).toContain('Enter last name');
 			expect(element.innerHTML).toContain('govuk-error-summary');
 		});
-		it('should re-render changeServiceUser with the error "Enter a last Name" if lastName is undefined', async () => {
+		it('should re-render changeServiceUser with the error "Enter last name" if lastName is undefined', async () => {
 			const appealId = appealData.appealId;
 			const invalidData = {
 				firstName: 'Jessica',
@@ -153,7 +153,7 @@ describe('service-user', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Enter a last name');
+			expect(element.innerHTML).toContain('Enter last name');
 			expect(element.innerHTML).toContain('govuk-error-summary');
 		});
 		it('should re-render changeServiceUser with the error "Enter a valid email" if email is not an email', async () => {

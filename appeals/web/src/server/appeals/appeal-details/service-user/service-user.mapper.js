@@ -4,7 +4,7 @@
 
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import {
-	errorEmail,
+	errorEmailAllowEmpty,
 	errorFirstName,
 	errorLastName
 } from '#lib/error-handlers/change-screen-error-handlers.js';
@@ -74,7 +74,7 @@ export const changeServiceUserPage = (appealData, userDetailsInSession, userType
 						text: `${capitalize(userType)}'s email address`
 					},
 					value: serviceUserDetails?.email ?? '',
-					errorMessage: errorEmail(errors)
+					errorMessage: errorEmailAllowEmpty(errors)
 				}
 			}
 		]
