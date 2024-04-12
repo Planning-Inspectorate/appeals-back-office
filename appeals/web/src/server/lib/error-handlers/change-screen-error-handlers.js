@@ -26,7 +26,7 @@ export const errorPostcode = (/** @type {Error}*/ errors) => {
 export const errorFirstName = (/** @type {Error}*/ errors) => {
 	return errors?.firstName
 		? {
-				text: 'Enter a first name'
+				text: 'Enter first name'
 		  }
 		: undefined;
 };
@@ -34,15 +34,23 @@ export const errorFirstName = (/** @type {Error}*/ errors) => {
 export const errorLastName = (/** @type {Error}*/ errors) => {
 	return errors?.lastName
 		? {
-				text: 'Enter a last name'
+				text: 'Enter last name'
 		  }
 		: undefined;
 };
 
 export const errorEmail = (/** @type {Error}*/ errors) => {
-	return errors?.lastName
+	return errors?.emailAddress
 		? {
 				text: 'Enter a valid email'
+		  }
+		: undefined;
+};
+
+export const errorEmailAllowEmpty = (/** @type {Error}*/ errors) => {
+	return errors?.emailAddress
+		? {
+				text: 'Enter a valid email or leave empty'
 		  }
 		: undefined;
 };
