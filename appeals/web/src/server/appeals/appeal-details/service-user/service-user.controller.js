@@ -1,6 +1,6 @@
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { capitalize } from 'lodash';
+import { capitalize } from 'lodash-es';
 import { changeServiceUserPage } from './service-user.mapper.js';
 import { updateServiceUser } from './service-user.service.js';
 
@@ -76,7 +76,7 @@ export const postChangeServiceUser = async (request, response) => {
 			request.session,
 			'serviceUserUpdated',
 			appealId,
-			`<p class="govuk-notification-banner__heading">${capitalize(userType)}details updated</p>`
+			`<p class="govuk-notification-banner__heading">${capitalize(userType)} details updated</p>`
 		);
 
 		delete request.session.updatedServiceUser;

@@ -8,7 +8,7 @@ import {
 	errorFirstName,
 	errorLastName
 } from '#lib/error-handlers/change-screen-error-handlers.js';
-import { capitalize } from 'lodash';
+import { capitalize } from 'lodash-es';
 
 /**
  *
