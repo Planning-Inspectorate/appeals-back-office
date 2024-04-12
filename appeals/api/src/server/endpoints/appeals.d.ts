@@ -609,6 +609,7 @@ interface UpdateAppealRequest {
 	dueDate?: string;
 	startedAt?: string;
 	validAt?: string;
+	planningApplicationReference?: string;
 	caseOfficer?: number | null;
 	inspector?: number | null;
 }

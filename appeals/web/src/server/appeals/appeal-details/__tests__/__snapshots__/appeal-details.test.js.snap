@@ -270,8 +270,10 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> LPA application reference</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-reference/change"> Change<span class="govuk-visually-hidden"> L P A reference</span></a>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision</dt>
                             <dd class="govuk-summary-list__value">dismissed</dd>
@@ -540,8 +542,10 @@ exports[`appeal-details GET /:appealId should render a Issue a decision action b
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> LPA application reference</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-reference/change"> Change<span class="govuk-visually-hidden"> L P A reference</span></a>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision</dt>
                             <dd class="govuk-summary-list__value">dismissed</dd>
@@ -800,8 +804,10 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> LPA application reference</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-reference/change"> Change<span class="govuk-visually-hidden"> L P A reference</span></a>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision</dt>
                             <dd class="govuk-summary-list__value">dismissed</dd>
@@ -1061,8 +1067,10 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> LPA application reference</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-reference/change"> Change<span class="govuk-visually-hidden"> L P A reference</span></a>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision</dt>
                             <dd class="govuk-summary-list__value">dismissed</dd>
@@ -1337,8 +1345,10 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> LPA application reference</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-reference/change"> Change<span class="govuk-visually-hidden"> L P A reference</span></a>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision</dt>
                             <dd class="govuk-summary-list__value">dismissed</dd>
@@ -1592,8 +1602,10 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> LPA application reference</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-reference/change"> Change<span class="govuk-visually-hidden"> L P A reference</span></a>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision</dt>
                             <dd class="govuk-summary-list__value">dismissed</dd>
@@ -1847,8 +1859,10 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> LPA application reference</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-reference/change"> Change<span class="govuk-visually-hidden"> L P A reference</span></a>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision</dt>
                             <dd class="govuk-summary-list__value">dismissed</dd>
@@ -2103,8 +2117,10 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> LPA application reference</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-reference/change"> Change<span class="govuk-visually-hidden"> L P A reference</span></a>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision</dt>
                             <dd class="govuk-summary-list__value">dismissed</dd>
@@ -2359,8 +2375,10 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> LPA application reference</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-reference/change"> Change<span class="govuk-visually-hidden"> L P A reference</span></a>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision</dt>
                             <dd class="govuk-summary-list__value">dismissed</dd>
@@ -2623,8 +2641,10 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> LPA application reference</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-reference/change"> Change<span class="govuk-visually-hidden"> L P A reference</span></a>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision</dt>
                             <dd class="govuk-summary-list__value">dismissed</dd>
@@ -3026,8 +3046,10 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> LPA application reference</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-reference/change"> Change<span class="govuk-visually-hidden"> L P A reference</span></a>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision</dt>
                             <dd class="govuk-summary-list__value">dismissed</dd>
@@ -3281,8 +3303,10 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> LPA application reference</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-reference/change"> Change<span class="govuk-visually-hidden"> L P A reference</span></a>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision</dt>
                             <dd class="govuk-summary-list__value">dismissed</dd>
@@ -3536,8 +3560,10 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> LPA application reference</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/lpa-reference/change"> Change<span class="govuk-visually-hidden"> L P A reference</span></a>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision</dt>
                             <dd class="govuk-summary-list__value">dismissed</dd>
@@ -3805,8 +3831,10 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> LPA application reference</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-reference/change"> Change<span class="govuk-visually-hidden"> L P A reference</span></a>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision</dt>
                             <dd class="govuk-summary-list__value">dismissed</dd>
@@ -4060,8 +4088,10 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> LPA application reference</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-reference/change"> Change<span class="govuk-visually-hidden"> L P A reference</span></a>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision</dt>
                             <dd class="govuk-summary-list__value">dismissed</dd>
@@ -4441,8 +4471,10 @@ exports[`appeal-details should not render a back button 1`] = `
                                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                                         </dd>
                                     </div>
-                                    <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> LPA application reference</dt>
+                                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                                         <dd                                         class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-reference/change"> Change<span class="govuk-visually-hidden"> L P A reference</span></a>
+                                            </dd>
                                     </div>
                                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision</dt>
                                         <dd class="govuk-summary-list__value">dismissed</dd>

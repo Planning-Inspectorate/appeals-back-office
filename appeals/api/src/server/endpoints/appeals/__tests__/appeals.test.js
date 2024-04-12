@@ -5,6 +5,7 @@ import {
 	AUDIT_TRAIL_ASSIGNED_INSPECTOR,
 	AUDIT_TRAIL_REMOVED_CASE_OFFICER,
 	AUDIT_TRAIL_REMOVED_INSPECTOR,
+	ERROR_CANNOT_BE_EMPTY_STRING,
 	ERROR_FAILED_TO_SAVE_DATA,
 	ERROR_LENGTH_BETWEEN_2_AND_8_CHARACTERS,
 	ERROR_MUST_BE_BOOLEAN,
@@ -12,6 +13,7 @@ import {
 	ERROR_MUST_BE_GREATER_THAN_ZERO,
 	ERROR_MUST_BE_NUMBER,
 	ERROR_MUST_BE_SET_AS_HEADER,
+	ERROR_MUST_BE_STRING,
 	ERROR_MUST_BE_UUID,
 	ERROR_MUST_BE_VALID_APPEAL_STATE,
 	ERROR_MUST_NOT_BE_IN_FUTURE,
@@ -939,6 +941,32 @@ describe('appeals routes', () => {
 				});
 			});
 
+			test('updates the planning application reference', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+
+				const response = await request
+					.patch(`/appeals/${householdAppeal.id}`)
+					.send({
+						planningApplicationReference: '1234/A/567890'
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
+					data: {
+						planningApplicationReference: '1234/A/567890',
+						updatedAt: expect.any(Date)
+					},
+					where: {
+						id: householdAppeal.id
+					}
+				});
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual({
+					planningApplicationReference: '1234/A/567890'
+				});
+			});
+
 			test('assigns a case officer to an appeal', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
@@ -1269,7 +1297,7 @@ describe('appeals routes', () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 
 				// @ts-ignore
-				databaseConnector.appeal.update.mockImplementation(() => {
+				databaseConnector.appeal.update.mockImplementationOnce(() => {
 					throw new Error(ERROR_FAILED_TO_SAVE_DATA);
 				});
 
@@ -1284,6 +1312,54 @@ describe('appeals routes', () => {
 				expect(response.body).toEqual({
 					errors: {
 						body: ERROR_FAILED_TO_SAVE_DATA
+					}
+				});
+			});
+
+			test('returns an error if the planning application reference is not a string', async () => {
+				const response = await request
+					.patch(`/appeals/${householdAppeal.id}`)
+					.send({
+						planningApplicationReference: 123
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						planningApplicationReference: ERROR_MUST_BE_STRING
+					}
+				});
+			});
+
+			test('returns an error if the planning application reference is empty', async () => {
+				const response = await request
+					.patch(`/appeals/${householdAppeal.id}`)
+					.send({
+						planningApplicationReference: ''
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						planningApplicationReference: ERROR_CANNOT_BE_EMPTY_STRING
+					}
+				});
+			});
+
+			test('returns an error if the planning application reference null', async () => {
+				const response = await request
+					.patch(`/appeals/${householdAppeal.id}`)
+					.send({
+						planningApplicationReference: null
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						planningApplicationReference: ERROR_MUST_BE_STRING
 					}
 				});
 			});

@@ -498,7 +498,7 @@ export async function initialiseAndMapAppealData(
 					items: [
 						{
 							text: 'Change',
-							href: `${currentRoute}/change-appeal-details/lpa-reference`,
+							href: `${currentRoute}/lpa-reference/change`,
 							visuallyHiddenText: 'L P A reference'
 						}
 					]

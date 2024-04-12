@@ -1,0 +1,88 @@
+import logger from '#lib/logger.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { getAppealDetailsFromId } from '../appeal-details.service.js';
+import { changeLpaReferencePage } from './change-lpa-reference.mapper.js';
+import { changeLpaReference } from './change-lpa-reference.service.js';
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const getChangeLpaReference = async (request, response) => {
+	return renderChangeLpaReference(request, response);
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+const renderChangeLpaReference = async (request, response) => {
+	const {
+		errors,
+		params: { appealId }
+	} = request;
+	const currentUrl = request.originalUrl;
+
+	const origin = currentUrl.split('/').slice(0, -2).join('/');
+
+	console.log(origin);
+
+	//const linkSuffix =  ? `$`
+
+	const appealsDetails = await getAppealDetailsFromId(request.apiClient, appealId);
+
+	const mappedPageContents = changeLpaReferencePage(
+		appealsDetails,
+		request.session.planningApplicationReference,
+		origin,
+		errors
+	);
+
+	return response.render('patterns/change-page.pattern.njk', {
+		pageContent: mappedPageContents,
+		errors
+	});
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const postChangeLpaReference = async (request, response) => {
+	request.session.planningApplicationReference = request.body['planningApplicationReference'];
+
+	if (request.errors) {
+		return renderChangeLpaReference(request, response);
+	}
+
+	const {
+		params: { appealId }
+	} = request;
+
+	const currentUrl = request.originalUrl;
+
+	const origin = currentUrl.split('/').slice(0, -2).join('/');
+
+	try {
+		await changeLpaReference(
+			request.apiClient,
+			appealId,
+			request.session.planningApplicationReference
+		);
+
+		addNotificationBannerToSession(
+			request.session,
+			'lpaReferenceUpdated',
+			appealId,
+			`<p class="govuk-notification-banner__heading">Planning application reference updated</p>` //TODO: Check with content designer
+		);
+
+		delete request.session.planningApplicationReference;
+
+		return response.redirect(origin);
+	} catch (error) {
+		logger.error(error);
+	}
+
+	return response.render('app/500.njk');
+};

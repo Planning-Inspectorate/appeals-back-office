@@ -13,6 +13,7 @@ import {
 	validateCaseFolderId,
 	validateCaseDocumentId
 } from '../../appeal-documents/appeal-documents.middleware.js';
+import changeLpaReferenceRouter from '../change-lpa-reference/change-lpa-reference.router.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -29,6 +30,9 @@ router
 router.use('/valid', outcomeValidRouter);
 router.use('/invalid', outcomeInvalidRouter);
 router.use('/incomplete', outcomeIncompleteRouter);
+
+//Change pages
+router.use('/lpa-reference', changeLpaReferenceRouter);
 
 router
 	.route('/check-your-answers')

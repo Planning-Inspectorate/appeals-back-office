@@ -126,6 +126,10 @@ export const notificationBannerDefinitions = {
 	serviceUserUpdated: {
 		pages: ['appealDetails', 'appellantCase'],
 		type: 'success'
+	},
+	lpaReferenceUpdated: {
+		type: 'success',
+		pages: ['appealDetails', 'appellantCase', 'lpaQuestionnaire']
 	}
 };
 
