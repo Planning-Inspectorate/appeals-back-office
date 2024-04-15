@@ -30,8 +30,6 @@ router
 router.use('/valid', outcomeValidRouter);
 router.use('/invalid', outcomeInvalidRouter);
 router.use('/incomplete', outcomeIncompleteRouter);
-
-//Change pages
 router.use('/lpa-reference', changeLpaReferenceRouter);
 
 router

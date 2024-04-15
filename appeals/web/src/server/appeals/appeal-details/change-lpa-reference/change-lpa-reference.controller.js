@@ -25,10 +25,6 @@ const renderChangeLpaReference = async (request, response) => {
 
 	const origin = currentUrl.split('/').slice(0, -2).join('/');
 
-	console.log(origin);
-
-	//const linkSuffix =  ? `$`
-
 	const appealsDetails = await getAppealDetailsFromId(request.apiClient, appealId);
 
 	const mappedPageContents = changeLpaReferencePage(
@@ -74,7 +70,7 @@ export const postChangeLpaReference = async (request, response) => {
 			request.session,
 			'lpaReferenceUpdated',
 			appealId,
-			`<p class="govuk-notification-banner__heading">LPA application reference updated</p>` //TODO: Check with content designer
+			`<p class="govuk-notification-banner__heading">LPA application reference updated</p>`
 		);
 
 		delete request.session.planningApplicationReference;
