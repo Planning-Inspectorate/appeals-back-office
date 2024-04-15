@@ -10,6 +10,7 @@ import {
 	siteVisitData
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
+import { logger } from '@azure/storage-blob';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -480,7 +481,7 @@ describe('appeal-details', () => {
 					expect(notificationBannerElementHTML).toMatchSnapshot();
 					expect(notificationBannerElementHTML).toContain('LPA application reference updated');
 				} catch (error) {
-					console.log('There are no notification banner elements in the html', error);
+					logger.error('There are no notification banner elements in the html', error);
 				}
 			});
 		});
