@@ -6,7 +6,7 @@ import { validateAppeal } from '../appeal-details.middleware.js';
 const router = createRouter({ mergeParams: true });
 
 router
-	.route('/date')
+	.route('/add')
 	.get(validateAppeal, asyncRoute(controller.getStartDate))
 	.post(validateAppeal, asyncRoute(controller.postStartDate));
 

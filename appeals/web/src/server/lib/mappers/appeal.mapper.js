@@ -1030,6 +1030,23 @@ export async function initialiseAndMapAppealData(
 		}
 	};
 
+	let startedAtActionLink = {};
+
+	if (appealDetails.validAt) {
+		if (appealDetails.startedAt) {
+			startedAtActionLink = {
+				text: 'Change',
+				href: `${currentRoute}/#`
+			};
+		} else {
+			startedAtActionLink = {
+				text: 'Add',
+				href: `${currentRoute}/start-case/add`,
+				visuallyHiddenText: 'The date the case was started'
+			};
+		}
+	}
+
 	/** @type {Instructions} */
 	mappedData.appeal.startedAt = {
 		id: 'start-date',
@@ -1046,15 +1063,7 @@ export async function initialiseAndMapAppealData(
 						: ''
 				},
 				actions: {
-					items: [
-						appealDetails.validAt
-							? {
-									text: appealDetails.startedAt ? 'Change' : 'Add',
-									href: `${currentRoute}/start-case/date`,
-									visuallyHiddenText: 'The date the case was started'
-							  }
-							: {}
-					]
+					items: [startedAtActionLink]
 				}
 			}
 		}
