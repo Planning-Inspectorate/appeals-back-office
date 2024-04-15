@@ -6,12 +6,12 @@ exports[`change-lpa-reference GET /change should render changeLpaReference page 
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change the planning application reference</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change the LPA application reference</h1>
                 </div>
             </div>
             <form method="POST" novalidate="novalidate">
                 <div class="govuk-form-group">
-                    <label class="govuk-label" for="planning-application-reference">Planning application reference</label>
+                    <label class="govuk-label" for="planning-application-reference">LPA application reference</label>
                     <input class="govuk-input" id="planning-application-reference"
                     name="planningApplicationReference" type="text" value="48269/APP/2021/1482">
                 </div>
@@ -28,12 +28,12 @@ exports[`change-lpa-reference GET /change should render changeLpaReference page 
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change the planning application reference</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change the LPA application reference</h1>
                 </div>
             </div>
             <form method="POST" novalidate="novalidate">
                 <div class="govuk-form-group">
-                    <label class="govuk-label" for="planning-application-reference">Planning application reference</label>
+                    <label class="govuk-label" for="planning-application-reference">LPA application reference</label>
                     <input class="govuk-input" id="planning-application-reference"
                     name="planningApplicationReference" type="text" value="48269/APP/2021/1482">
                 </div>
@@ -53,7 +53,7 @@ exports[`change-lpa-reference POST /change should re-render changeLpaReference p
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#planningApplicationReference">Enter the planning application reference</a>
+                            <li><a href="#planningApplicationReference">Enter the LPA application reference</a>
                             </li>
                         </ul>
                     </div>
@@ -61,14 +61,14 @@ exports[`change-lpa-reference POST /change should re-render changeLpaReference p
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change the planning application reference</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change the LPA application reference</h1>
                 </div>
             </div>
             <form method="POST" novalidate="novalidate">
                 <div class="govuk-form-group govuk-form-group--error">
-                    <label class="govuk-label" for="planning-application-reference">Planning application reference</label>
+                    <label class="govuk-label" for="planning-application-reference">LPA application reference</label>
                     <p id="planning-application-reference-error"
-                    class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the planning application
+                    class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the LPA application
                         reference</p>
                     <input class="govuk-input govuk-input--error" id="planning-application-reference"
                     name="planningApplicationReference" type="text" aria-describedby="planning-application-reference-error">

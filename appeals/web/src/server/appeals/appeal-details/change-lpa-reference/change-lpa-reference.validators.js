@@ -5,5 +5,5 @@ export const validateChangeLpaReference = createValidator(
 	body('planningApplicationReference')
 		.trim()
 		.notEmpty()
-		.withMessage('Enter the planning application reference')
+		.withMessage('Enter the LPA application reference')
 );

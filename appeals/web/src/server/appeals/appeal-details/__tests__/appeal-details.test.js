@@ -457,6 +457,32 @@ describe('appeal-details', () => {
 					console.log('There are no notification banner elements in the html', error);
 				}
 			});
+
+			it('should render a success notification banner when the lpa application reference was updated', async () => {
+				const appealId = appealData.appealId.toString();
+				nock('http://test/').patch(`/appeals/${appealId}`).reply(200, {
+					planningApplicationReference: '12345/A/67890'
+				});
+
+				const validData = {
+					planningApplicationReference: '12345/A/67890'
+				};
+
+				await request
+					.post(`${baseUrl}/${appealId}/appellant-case/lpa-reference/change`)
+					.send(validData);
+
+				const caseDetailsResponse = await request.get(`${baseUrl}/1`);
+				try {
+					const notificationBannerElementHTML = parseHtml(caseDetailsResponse.text, {
+						rootElement: notificationBannerElement
+					}).innerHTML;
+					expect(notificationBannerElementHTML).toMatchSnapshot();
+					expect(notificationBannerElementHTML).toContain('LPA application reference updated');
+				} catch (error) {
+					console.log('There are no notification banner elements in the html', error);
+				}
+			});
 		});
 		it('should render the received appeal details for a valid appealId with multiple linked/other appeals', async () => {
 			const appealId = appealData.appealId.toString();

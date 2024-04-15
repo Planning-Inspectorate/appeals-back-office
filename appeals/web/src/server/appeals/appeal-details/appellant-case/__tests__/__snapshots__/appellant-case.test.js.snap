@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`appellant-case GET /appellant-case should render a "Planning application reference" success notification banner when the planning application reference is updated 1`] = `
+exports[`appellant-case GET /appellant-case should render a "LPA application reference" success notification banner when the planning application reference is updated 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -10,7 +10,7 @@ exports[`appellant-case GET /appellant-case should render a "Planning applicatio
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
                 </div>
                 <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">Planning application reference updated</p>
+                    <p class="govuk-notification-banner__heading">LPA application reference updated</p>
                 </div>
             </div>
         </div>

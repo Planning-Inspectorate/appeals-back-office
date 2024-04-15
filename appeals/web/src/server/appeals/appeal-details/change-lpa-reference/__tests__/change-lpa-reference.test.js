@@ -20,7 +20,7 @@ describe('change-lpa-reference', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change the planning application reference');
+			expect(elementInnerHtml).toContain('Change the LPA application reference');
 		});
 
 		it('should render changeLpaReference page when loaded from appellant case', async () => {
@@ -32,7 +32,7 @@ describe('change-lpa-reference', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change the planning application reference');
+			expect(elementInnerHtml).toContain('Change the LPA application reference');
 		});
 	});
 
@@ -52,7 +52,7 @@ describe('change-lpa-reference', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Enter the planning application reference');
+			expect(elementInnerHtml).toContain('Enter the LPA application reference');
 			expect(elementInnerHtml).toContain('govuk-error-summary');
 		});
 
