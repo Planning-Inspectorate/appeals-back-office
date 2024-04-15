@@ -101,7 +101,7 @@ describe('appellant-case', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 		});
 
-		it('should render a "Planning application reference" success notification banner when the planning application reference is updated', async () => {
+		it('should render a "LPA application reference" success notification banner when the planning application reference is updated', async () => {
 			const appealId = appealData.appealId.toString();
 			nock('http://test/').patch(`/appeals/${appealId}`).reply(200, {
 				planningApplicationReference: '12345/A/67890'
@@ -120,7 +120,7 @@ describe('appellant-case', () => {
 
 			expect(notificationBannerElementHTML).toMatchSnapshot();
 			expect(notificationBannerElementHTML).toContain('Success');
-			expect(notificationBannerElementHTML).toContain('Planning application reference updated');
+			expect(notificationBannerElementHTML).toContain('LPA application reference updated');
 		});
 	});
 
