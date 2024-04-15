@@ -467,5 +467,5 @@ export function generateIssueDecisionUrl(appealId) {
  * @returns {string}
  */
 export function generateStartTimetableUrl(appealId) {
-	return `/appeals-service/appeal-details/${appealId}/start-case/date`;
+	return `/appeals-service/appeal-details/${appealId}/start-case/add`;
 }

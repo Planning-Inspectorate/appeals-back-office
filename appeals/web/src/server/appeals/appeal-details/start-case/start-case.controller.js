@@ -14,7 +14,11 @@ export const getStartDate = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 const renderStartDatePage = async (request, response) => {
-	const { appealId, appealReference } = request.currentAppeal;
+	const { appealId, appealReference, startedAt } = request.currentAppeal;
+
+	if (startedAt) {
+		return response.render('app/500.njk');
+	}
 
 	const now = new Date();
 	const today = dateToDisplayDate(now);
