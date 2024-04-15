@@ -58,7 +58,7 @@ export const errorEmailAllowEmpty = (/** @type {Error}*/ errors) => {
 export const errorPlanningApplicationReference = (/** @type {Error}*/ errors) => {
 	return errors?.planningApplicationReference
 		? {
-				text: 'Enter the planning application reference' //TODO: Check with content that this is the correct wording
+				text: 'Enter the LPA application reference'
 		  }
 		: undefined;
 };
