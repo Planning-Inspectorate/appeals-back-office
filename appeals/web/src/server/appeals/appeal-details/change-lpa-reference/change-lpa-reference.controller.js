@@ -74,7 +74,7 @@ export const postChangeLpaReference = async (request, response) => {
 			request.session,
 			'lpaReferenceUpdated',
 			appealId,
-			`<p class="govuk-notification-banner__heading">Planning application reference updated</p>` //TODO: Check with content designer
+			`<p class="govuk-notification-banner__heading">LPA application reference updated</p>` //TODO: Check with content designer
 		);
 
 		delete request.session.planningApplicationReference;
