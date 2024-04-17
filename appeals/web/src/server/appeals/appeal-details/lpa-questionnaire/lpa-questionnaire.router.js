@@ -12,6 +12,7 @@ import {
 	validateCaseDocumentId
 } from '../../appeal-documents/appeal-documents.middleware.js';
 import changePageRouter from '../../change-page/change-page.router.js';
+import changeInspectorAccessRouter from '../inspector-access/inspector-access.router.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -111,5 +112,7 @@ router
 		documentsValidators.validateDocumentDeleteAnswer,
 		asyncRoute(controller.postDeleteDocument)
 	);
+
+router.use('/:lpaQuestionnaireId/inspector-access', changeInspectorAccessRouter);
 
 export default router;

@@ -53,7 +53,7 @@ export const formatListOfNotificationMethodsToHtml = (notificationMethods) => {
  */
 export const formatAnswerAndDetails = (answer, details) => {
 	if (!details) {
-		return '';
+		details = '';
 	}
 	return answer === 'Yes'
 		? `${buildHtmSpan(answer)}<br>${buildHtmSpan(details)}`

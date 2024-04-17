@@ -17,27 +17,32 @@ export const getChangeLpaReference = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 const renderChangeLpaReference = async (request, response) => {
-	const {
-		errors,
-		params: { appealId }
-	} = request;
-	const currentUrl = request.originalUrl;
+	try {
+		const {
+			errors,
+			params: { appealId }
+		} = request;
+		const currentUrl = request.originalUrl;
 
-	const origin = currentUrl.split('/').slice(0, -2).join('/');
+		const origin = currentUrl.split('/').slice(0, -2).join('/');
 
-	const appealsDetails = await getAppealDetailsFromId(request.apiClient, appealId);
+		const appealsDetails = await getAppealDetailsFromId(request.apiClient, appealId);
 
-	const mappedPageContents = changeLpaReferencePage(
-		appealsDetails,
-		request.session.planningApplicationReference,
-		origin,
-		errors
-	);
+		const mappedPageContents = changeLpaReferencePage(
+			appealsDetails,
+			request.session.planningApplicationReference,
+			origin,
+			errors
+		);
 
-	return response.render('patterns/change-page.pattern.njk', {
-		pageContent: mappedPageContents,
-		errors
-	});
+		return response.render('patterns/change-page.pattern.njk', {
+			pageContent: mappedPageContents,
+			errors
+		});
+	} catch (error) {
+		logger.error(error);
+		return response.render('app/500.njk');
+	}
 };
 
 /**

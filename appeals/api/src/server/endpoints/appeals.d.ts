@@ -520,6 +520,8 @@ interface UpdateAppellantCaseRequest {
 	applicantSurname?: string;
 	areAllOwnersKnown?: boolean;
 	hasAdvertisedAppeal?: boolean;
+	doesSiteRequireInspectorAccess?: boolean;
+	inspectorAccessDetails?: string;
 	hasAttemptedToIdentifyOwners?: boolean;
 	hasHealthAndSafetyIssues?: boolean;
 	healthAndSafetyIssues?: string;
@@ -543,6 +545,7 @@ interface UpdateLPAQuestionnaireRequest {
 	designatedSites?: number[];
 	doesAffectAListedBuilding?: boolean;
 	doesAffectAScheduledMonument?: boolean;
+	doesSiteRequireInspectorAccess?: boolean;
 	hasCompletedAnEnvironmentalStatement?: boolean;
 	hasProtectedSpecies?: boolean;
 	hasTreePreservationOrder?: boolean;
@@ -555,6 +558,7 @@ interface UpdateLPAQuestionnaireRequest {
 	isPublicRightOfWay?: boolean;
 	isSensitiveArea?: boolean;
 	isTheSiteWithinAnAONB?: boolean;
+	inspectorAccessDetails?: string;
 	lpaQuestionnaireValidationOutcomeId?: number;
 	meetsOrExceedsThresholdOrCriteriaInColumn2?: boolean;
 	scheduleTypeId?: number;

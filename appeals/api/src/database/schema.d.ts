@@ -60,6 +60,7 @@ export interface AppellantCase extends schema.AppellantCase {
 	appellantCaseValidationOutcome: AppellantCaseValidationOutcome | null;
 	appellantCaseIncompleteReasonsOnAppellantCases: AppellantCaseIncompleteReasonOnAppellantCase[];
 	appellantCaseInvalidReasonsOnAppellantCases: AppellantCaseInvalidReasonOnAppellantCase[];
+	inspectorAccessDetails: string;
 }
 
 export interface Folder extends schema.Folder {

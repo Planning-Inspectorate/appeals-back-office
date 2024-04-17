@@ -1,6 +1,5 @@
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
- * @typedef {{ address: import("@pins/appeals.api/src/server/endpoints/appeals.js").AppealSite; siteId: string; }} NeighbouringSitesItem
  */
 
 import { appealShortReference } from '#lib/appeals-formatter.js';

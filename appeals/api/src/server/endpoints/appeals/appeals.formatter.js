@@ -185,22 +185,22 @@ const formatAppeal = (
 			healthAndSafety: {
 				appellantCase: {
 					details: appeal.appellantCase?.healthAndSafetyIssues || null,
-					hasIssues: appeal.appellantCase?.hasHealthAndSafetyIssues || null
+					hasIssues: appeal.appellantCase?.hasHealthAndSafetyIssues
 				},
 				lpaQuestionnaire: {
 					details: appeal.lpaQuestionnaire?.healthAndSafetyDetails || null,
-					hasIssues: appeal.lpaQuestionnaire?.doesSiteHaveHealthAndSafetyIssues || null
+					hasIssues: appeal.lpaQuestionnaire?.doesSiteHaveHealthAndSafetyIssues
 				}
 			},
 			inspector: appeal.inspector?.azureAdUserId || null,
 			inspectorAccess: {
 				appellantCase: {
-					details: appeal.appellantCase?.visibilityRestrictions || null,
-					isRequired: !appeal.appellantCase?.isSiteVisibleFromPublicRoad
+					details: appeal.appellantCase?.inspectorAccessDetails || null,
+					isRequired: appeal.appellantCase?.doesSiteRequireInspectorAccess
 				},
 				lpaQuestionnaire: {
 					details: appeal.lpaQuestionnaire?.inspectorAccessDetails || null,
-					isRequired: appeal.lpaQuestionnaire?.doesSiteRequireInspectorAccess || null
+					isRequired: appeal.lpaQuestionnaire?.doesSiteRequireInspectorAccess
 				}
 			},
 			otherAppeals: formatRelatedAppeals(appeal.relatedAppeals || [], appeal.id, referencedAppeals),
@@ -224,7 +224,7 @@ const formatAppeal = (
 						firstName: contact.firstName,
 						lastName: contact.lastName
 					})) || null,
-				isAffected: appeal.lpaQuestionnaire?.isAffectingNeighbouringSites || null
+				isAffected: appeal.lpaQuestionnaire?.isAffectingNeighbouringSites
 			},
 			planningApplicationReference: appeal.planningApplicationReference,
 			procedureType: appeal.lpaQuestionnaire?.procedureType?.name || 'Written',

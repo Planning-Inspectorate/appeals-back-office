@@ -735,8 +735,8 @@ describe('appeals routes', () => {
 					inspector: householdAppeal.inspector.azureAdUserId,
 					inspectorAccess: {
 						appellantCase: {
-							details: householdAppeal.appellantCase.visibilityRestrictions,
-							isRequired: !householdAppeal.appellantCase.isSiteVisibleFromPublicRoad
+							details: householdAppeal.appellantCase.inspectorAccessDetails,
+							isRequired: householdAppeal.appellantCase.doesSiteRequireInspectorAccess
 						},
 						lpaQuestionnaire: {
 							details: householdAppeal.lpaQuestionnaire.inspectorAccessDetails,
@@ -846,8 +846,8 @@ describe('appeals routes', () => {
 					inspector: fullPlanningAppeal.inspector.azureAdUserId,
 					inspectorAccess: {
 						appellantCase: {
-							details: fullPlanningAppeal.appellantCase.visibilityRestrictions,
-							isRequired: !fullPlanningAppeal.appellantCase.isSiteVisibleFromPublicRoad
+							details: fullPlanningAppeal.appellantCase.inspectorAccessDetails,
+							isRequired: fullPlanningAppeal.appellantCase.doesSiteRequireInspectorAccess
 						},
 						lpaQuestionnaire: {
 							details: fullPlanningAppeal.lpaQuestionnaire.inspectorAccessDetails,
@@ -1451,8 +1451,8 @@ describe('appeals routes', () => {
 					inspector: householdAppeal.inspector.azureAdUserId,
 					inspectorAccess: {
 						appellantCase: {
-							details: householdAppeal.appellantCase.visibilityRestrictions,
-							isRequired: !householdAppeal.appellantCase.isSiteVisibleFromPublicRoad
+							details: householdAppeal.appellantCase.inspectorAccessDetails,
+							isRequired: householdAppeal.appellantCase.doesSiteRequireInspectorAccess
 						},
 						lpaQuestionnaire: {
 							details: householdAppeal.lpaQuestionnaire.inspectorAccessDetails,
@@ -1562,8 +1562,8 @@ describe('appeals routes', () => {
 					inspector: fullPlanningAppeal.inspector.azureAdUserId,
 					inspectorAccess: {
 						appellantCase: {
-							details: fullPlanningAppeal.appellantCase.visibilityRestrictions,
-							isRequired: !fullPlanningAppeal.appellantCase.isSiteVisibleFromPublicRoad
+							details: fullPlanningAppeal.appellantCase.inspectorAccessDetails,
+							isRequired: fullPlanningAppeal.appellantCase.doesSiteRequireInspectorAccess
 						},
 						lpaQuestionnaire: {
 							details: fullPlanningAppeal.lpaQuestionnaire.inspectorAccessDetails,

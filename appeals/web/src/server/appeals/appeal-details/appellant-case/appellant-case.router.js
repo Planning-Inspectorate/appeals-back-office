@@ -14,6 +14,7 @@ import {
 	validateCaseDocumentId
 } from '../../appeal-documents/appeal-documents.middleware.js';
 import changeLpaReferenceRouter from '../change-lpa-reference/change-lpa-reference.router.js';
+import inspectorAccessRouter from '../inspector-access/inspector-access.router.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -31,6 +32,7 @@ router.use('/valid', outcomeValidRouter);
 router.use('/invalid', outcomeInvalidRouter);
 router.use('/incomplete', outcomeIncompleteRouter);
 router.use('/lpa-reference', changeLpaReferenceRouter);
+router.use('/inspector-access', inspectorAccessRouter);
 
 router
 	.route('/check-your-answers')

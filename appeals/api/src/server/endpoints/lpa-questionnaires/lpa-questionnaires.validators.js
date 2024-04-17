@@ -64,6 +64,11 @@ const patchLPAQuestionnaireValidator = composeMiddleware(
 	validateBooleanParameter('includesScreeningOption'),
 	validateBooleanWithConditionalStringParameters('isSensitiveArea', 'sensitiveAreaDetails', true),
 	validateBooleanParameter('meetsOrExceedsThresholdOrCriteriaInColumn2'),
+	validateBooleanWithConditionalStringParameters(
+		'doesSiteRequireInspectorAccess',
+		'inspectorAccessDetails',
+		true
+	),
 	validationErrorHandler
 );
 
