@@ -25,6 +25,7 @@ import { validateAppeal } from './appeal-details.middleware.js';
 import { assertUserHasPermission } from '#app/auth/auth.guards.js';
 import { permissionNames } from '#environment/permissions.js';
 import changeLpaReferenceRouter from './change-lpa-reference/change-lpa-reference.router.js';
+import changeInspectorAccessRouter from './inspector-access/inspector-access.router.js';
 
 const router = createRouter();
 
@@ -58,4 +59,5 @@ router.use('/:appealId/audit', auditRouter);
 router.use('/:appealId/neighbouring-sites', neighbouringSitesRouter);
 router.use('/:appealId/service-user', serviceUserRouter);
 router.use('/:appealId/lpa-reference', changeLpaReferenceRouter);
+router.use('/:appealId/inspector-access', changeInspectorAccessRouter);
 export default router;

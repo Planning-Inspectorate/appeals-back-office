@@ -83,6 +83,8 @@ export const householdAppeal = {
 		isSiteFullyOwned: false,
 		isSitePartiallyOwned: true,
 		isSiteVisibleFromPublicRoad: false,
+		doesSiteRequireInspectorAccess: true,
+		inspectorAccessDetails: 'Small dog big character',
 		knowledgeOfOtherLandowners: {
 			name: 'Some'
 		},

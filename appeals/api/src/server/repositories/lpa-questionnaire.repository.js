@@ -23,10 +23,12 @@ const updateLPAQuestionnaireById = (id, data) => {
 			data: {
 				doesAffectAListedBuilding: data.doesAffectAListedBuilding,
 				doesAffectAScheduledMonument: data.doesAffectAScheduledMonument,
+				doesSiteRequireInspectorAccess: data.doesSiteRequireInspectorAccess,
 				hasCompletedAnEnvironmentalStatement: data.hasCompletedAnEnvironmentalStatement,
 				hasProtectedSpecies: data.hasProtectedSpecies,
 				hasTreePreservationOrder: data.hasTreePreservationOrder,
 				includesScreeningOption: data.includesScreeningOption,
+				inspectorAccessDetails: data.inspectorAccessDetails,
 				isConservationArea: data.isConservationArea,
 				isEnvironmentalStatementRequired: data.isEnvironmentalStatementRequired,
 				isGypsyOrTravellerSite: data.isGypsyOrTravellerSite,

@@ -633,7 +633,7 @@ export async function initialiseAndMapAppealData(
 				},
 				value: {
 					html: displayPageFormatter.formatAnswerAndDetails(
-						convertFromBooleanToYesNo(appealDetails.inspectorAccess.lpaQuestionnaire.isRequired) ||
+						convertFromBooleanToYesNo(appealDetails.inspectorAccess.lpaQuestionnaire.isRequired) ??
 							'No answer provided',
 						appealDetails.inspectorAccess.lpaQuestionnaire.details
 					)
@@ -642,7 +642,7 @@ export async function initialiseAndMapAppealData(
 					items: [
 						{
 							text: 'Change',
-							href: `${currentRoute}/change-appeal-details/lpa-inspector-access/`,
+							href: `${currentRoute}/inspector-access/change/lpa`,
 							visuallyHiddenText: 'inspection access (L P A answer)'
 						}
 					]
@@ -692,7 +692,7 @@ export async function initialiseAndMapAppealData(
 				},
 				value: {
 					html: displayPageFormatter.formatAnswerAndDetails(
-						convertFromBooleanToYesNo(appealDetails.inspectorAccess.appellantCase.isRequired) ||
+						convertFromBooleanToYesNo(appealDetails.inspectorAccess.appellantCase.isRequired) ??
 							'No answer provided',
 						appealDetails.inspectorAccess.appellantCase.details
 					)
@@ -701,7 +701,7 @@ export async function initialiseAndMapAppealData(
 					items: [
 						{
 							text: 'Change',
-							href: `${currentRoute}/change-appeal-details/appellant-case-inspector-access`,
+							href: `${currentRoute}/inspector-access/change/appellant`,
 							visuallyHiddenText: 'inspection access (appellant answer)'
 						}
 					]

@@ -31,6 +31,7 @@ import { addDays } from 'date-fns';
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details/1/lpa-questionnaire/2';
+const notificationBannerElement = '.govuk-notification-banner';
 
 const incompleteReasonIds = lpaQuestionnaireIncompleteReasons.map((reason) => reason.id);
 const incompleteReasonsWithText = lpaQuestionnaireIncompleteReasons.filter(
@@ -72,6 +73,36 @@ describe('LPA Questionnaire review', () => {
 
 			expect(element.innerHTML).toMatchSnapshot();
 		});
+
+		it('should render a "Inspector access (lpa) updated" success notification banner when the inspector access (lpa) is updated', async () => {
+			const appealId = appealData.appealId;
+			const lpaQuestionnaireId = appealData.lpaQuestionnaireId;
+			const validData = {
+				inspectorAccessRadio: 'yes',
+				inspectorAccessDetails: 'Details'
+			};
+
+			nock('http://test/')
+				.get('/appeals/1/lpa-questionnaires/2')
+				.reply(200, lpaQuestionnaireDataNotValidated);
+
+			nock('http://test/')
+				.patch(`/appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`)
+				.reply(200, {
+					...validData
+				});
+
+			await request.post(`${baseUrl}/inspector-access/change/lpa`).send(validData);
+
+			const response = await request.get(`${baseUrl}`);
+			const notificationBannerElementHTML = parseHtml(response.text, {
+				rootElement: notificationBannerElement
+			}).innerHTML;
+
+			expect(notificationBannerElementHTML).toMatchSnapshot();
+			expect(notificationBannerElementHTML).toContain('Success');
+			expect(notificationBannerElementHTML).toContain('Inspector access (lpa) updated');
+		}, 10000);
 	});
 
 	describe('GET / with unchecked documents', () => {

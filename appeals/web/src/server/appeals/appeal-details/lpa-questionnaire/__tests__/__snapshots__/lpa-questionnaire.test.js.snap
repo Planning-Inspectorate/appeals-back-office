@@ -1,5 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`LPA Questionnaire review GET / should render a "Inspector access (lpa) updated" success notification banner when the inspector access (lpa) is updated 1`] = `
+"<div class="govuk-notification-banner govuk-notification-banner--success"
+role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
+    </div>
+    <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">Inspector access (lpa) updated</p>
+    </div>
+</div>"
+`;
+
 exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page with draft documents notification banner with links to add metadata page for each folder containing draft documents, and no links for folders with only non-draft documents 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
@@ -228,8 +240,10 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
         <div class="govuk-summary-card__content">
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site access required</dt>
-                    <dd class="govuk-summary-list__value">Yes</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/change-lpa-questionnaire/does-site-require-inspector-access"> Change<span class="govuk-visually-hidden"> Site access required</span></a>
+                    <dd class="govuk-summary-list__value"><span>Yes</span>
+                        <br><span>The entrance is at the back of the property</span>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/inspector-access/change/lpa"> Change<span class="govuk-visually-hidden"> Site access required</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Affects neighbouring sites</dt>
@@ -561,8 +575,10 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
         <div class="govuk-summary-card__content">
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site access required</dt>
-                    <dd class="govuk-summary-list__value">Yes</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/change-lpa-questionnaire/does-site-require-inspector-access"> Change<span class="govuk-visually-hidden"> Site access required</span></a>
+                    <dd class="govuk-summary-list__value"><span>Yes</span>
+                        <br><span>The entrance is at the back of the property</span>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/inspector-access/change/lpa"> Change<span class="govuk-visually-hidden"> Site access required</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Affects neighbouring sites</dt>
@@ -934,8 +950,10 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
         <div class="govuk-summary-card__content">
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site access required</dt>
-                    <dd class="govuk-summary-list__value">Yes</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/change-lpa-questionnaire/does-site-require-inspector-access"> Change<span class="govuk-visually-hidden"> Site access required</span></a>
+                    <dd class="govuk-summary-list__value"><span>Yes</span>
+                        <br><span>The entrance is at the back of the property</span>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/inspector-access/change/lpa"> Change<span class="govuk-visually-hidden"> Site access required</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Affects neighbouring sites</dt>
@@ -1322,8 +1340,10 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
         <div class="govuk-summary-card__content">
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site access required</dt>
-                    <dd class="govuk-summary-list__value">Yes</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/change-lpa-questionnaire/does-site-require-inspector-access"> Change<span class="govuk-visually-hidden"> Site access required</span></a>
+                    <dd class="govuk-summary-list__value"><span>Yes</span>
+                        <br><span>The entrance is at the back of the property</span>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/inspector-access/change/lpa"> Change<span class="govuk-visually-hidden"> Site access required</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Affects neighbouring sites</dt>
@@ -3786,8 +3806,10 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
         <div class="govuk-summary-card__content">
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site access required</dt>
-                    <dd class="govuk-summary-list__value">Yes</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/change-lpa-questionnaire/does-site-require-inspector-access"> Change<span class="govuk-visually-hidden"> Site access required</span></a>
+                    <dd class="govuk-summary-list__value"><span>Yes</span>
+                        <br><span>The entrance is at the back of the property</span>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/inspector-access/change/lpa"> Change<span class="govuk-visually-hidden"> Site access required</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Affects neighbouring sites</dt>

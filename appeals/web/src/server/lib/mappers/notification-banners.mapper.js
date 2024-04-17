@@ -130,6 +130,10 @@ export const notificationBannerDefinitions = {
 	lpaReferenceUpdated: {
 		type: 'success',
 		pages: ['appealDetails', 'appellantCase', 'lpaQuestionnaire']
+	},
+	inspectorAccessUpdated: {
+		type: 'success',
+		pages: ['appealDetails', 'appellantCase', 'lpaQuestionnaire']
 	}
 };
 

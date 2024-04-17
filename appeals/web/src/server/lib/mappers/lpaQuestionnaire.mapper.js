@@ -822,14 +822,17 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 					text: 'Site access required'
 				},
 				value: {
-					text: convertFromBooleanToYesNo(data.doesSiteRequireInspectorAccess) || ''
+					html: displayPageFormatter.formatAnswerAndDetails(
+						convertFromBooleanToYesNo(data.doesSiteRequireInspectorAccess) ?? 'No answer provided',
+						data.inspectorAccessDetails
+					)
 				},
 				actions: {
 					items: [
 						{
 							text: 'Change',
 							visuallyHiddenText: 'Site access required',
-							href: `${currentRoute}/change-lpa-questionnaire/does-site-require-inspector-access`
+							href: `${currentRoute}/inspector-access/change/lpa`
 						}
 					]
 				}

@@ -157,6 +157,7 @@ model AppellantCase {
   hasAttemptedToIdentifyOwners                   Boolean?
   hasDesignAndAccessStatement                    Boolean?
   hasHealthAndSafetyIssues                       Boolean?
+  doesSiteRequireInspectorAccess                 Boolean?
   hasNewPlansOrDrawings                          Boolean?
   hasNewSupportingDocuments                      Boolean?
   hasOtherTenants                                Boolean?

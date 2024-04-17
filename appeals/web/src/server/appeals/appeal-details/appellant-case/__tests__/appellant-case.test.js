@@ -39,6 +39,7 @@ const updateDueDatePagePath = '/date';
 const checkYourAnswersPagePath = '/check-your-answers';
 const confirmationPagePath = '/confirmation';
 const validDatePagePath = '/date';
+const notificationBannerElement = '.govuk-notification-banner';
 
 const invalidReasonsWithoutText = appellantCaseInvalidReasons.filter(
 	(reason) => reason.hasText === false
@@ -121,6 +122,34 @@ describe('appellant-case', () => {
 			expect(notificationBannerElementHTML).toMatchSnapshot();
 			expect(notificationBannerElementHTML).toContain('Success');
 			expect(notificationBannerElementHTML).toContain('LPA application reference updated');
+		});
+
+		it('should render a "Inspector access (appellant) updated" success notification banner when the inspector access (appellant) is updated', async () => {
+			const appealId = appealData.appealId;
+			const appellantCaseId = appealData.appellantCaseId;
+			const validData = {
+				inspectorAccessRadio: 'yes',
+				inspectorAccessDetails: 'Details'
+			};
+
+			nock('http://test/')
+				.patch(`/appeals/${appealId}/appellant-cases/${appellantCaseId}`)
+				.reply(200, {
+					...validData
+				});
+
+			await request
+				.post(`${baseUrl}/${appealId}/appellant-case/inspector-access/change/appellant`)
+				.send(validData);
+
+			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
+			const notificationBannerElementHTML = parseHtml(response.text, {
+				rootElement: notificationBannerElement
+			}).innerHTML;
+
+			expect(notificationBannerElementHTML).toMatchSnapshot();
+			expect(notificationBannerElementHTML).toContain('Success');
+			expect(notificationBannerElementHTML).toContain('Inspector access (appellant) updated');
 		});
 	});
 
