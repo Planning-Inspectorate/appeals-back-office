@@ -17,7 +17,8 @@ exports[`site-visit GET /site-visit/manage-visit should render the manage visit 
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                        <dd                         class="govuk-summary-list__value"></dd>
+                        <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
+                            </dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
@@ -123,7 +124,8 @@ exports[`site-visit GET /site-visit/schedule-visit should render the schedule vi
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                        <dd                         class="govuk-summary-list__value"></dd>
+                        <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
+                            </dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
@@ -366,7 +368,8 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                        <dd                         class="govuk-summary-list__value"></dd>
+                        <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
+                            </dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
@@ -487,7 +490,8 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                        <dd                         class="govuk-summary-list__value"></dd>
+                        <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
+                            </dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
@@ -610,7 +614,8 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                        <dd                         class="govuk-summary-list__value"></dd>
+                        <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
+                            </dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
@@ -733,7 +738,8 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                        <dd                         class="govuk-summary-list__value"></dd>
+                        <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
+                            </dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
@@ -856,7 +862,8 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                        <dd                         class="govuk-summary-list__value"></dd>
+                        <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
+                            </dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
@@ -979,7 +986,8 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                        <dd                         class="govuk-summary-list__value"></dd>
+                        <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
+                            </dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
@@ -1102,7 +1110,8 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                        <dd                         class="govuk-summary-list__value"></dd>
+                        <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
+                            </dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
@@ -1223,7 +1232,8 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                        <dd                         class="govuk-summary-list__value"></dd>
+                        <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
+                            </dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
@@ -1344,7 +1354,8 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                        <dd                         class="govuk-summary-list__value"></dd>
+                        <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
+                            </dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
@@ -1465,7 +1476,8 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                        <dd                         class="govuk-summary-list__value"></dd>
+                        <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
+                            </dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
@@ -1588,7 +1600,8 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                        <dd                         class="govuk-summary-list__value"></dd>
+                        <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
+                            </dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
@@ -1709,7 +1722,8 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                        <dd                         class="govuk-summary-list__value"></dd>
+                        <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
+                            </dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
@@ -1830,7 +1844,8 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                        <dd                         class="govuk-summary-list__value"></dd>
+                        <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
+                            </dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
@@ -1967,7 +1982,8 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                        <dd                         class="govuk-summary-list__value"></dd>
+                        <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
+                            </dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
@@ -2088,7 +2104,8 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                        <dd                         class="govuk-summary-list__value"></dd>
+                        <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
+                            </dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
@@ -2209,7 +2226,8 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                        <dd                         class="govuk-summary-list__value"></dd>
+                        <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
+                            </dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
@@ -2332,7 +2350,8 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                        <dd                         class="govuk-summary-list__value"></dd>
+                        <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
+                            </dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
@@ -2455,7 +2474,8 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                        <dd                         class="govuk-summary-list__value"></dd>
+                        <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
+                            </dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
@@ -2578,7 +2598,8 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                        <dd                         class="govuk-summary-list__value"></dd>
+                        <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
+                            </dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
@@ -2701,7 +2722,8 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                        <dd                         class="govuk-summary-list__value"></dd>
+                        <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
+                            </dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
@@ -2824,7 +2846,8 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                        <dd                         class="govuk-summary-list__value"></dd>
+                        <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
+                            </dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
@@ -2945,7 +2968,8 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                        <dd                         class="govuk-summary-list__value"></dd>
+                        <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
+                            </dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
@@ -3066,7 +3090,8 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                        <dd                         class="govuk-summary-list__value"></dd>
+                        <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
+                            </dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
@@ -3187,7 +3212,8 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                        <dd                         class="govuk-summary-list__value"></dd>
+                        <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
+                            </dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
@@ -3310,7 +3336,8 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                        <dd                         class="govuk-summary-list__value"></dd>
+                        <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
+                            </dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
@@ -3431,7 +3458,8 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                        <dd                         class="govuk-summary-list__value"></dd>
+                        <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
+                            </dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
@@ -3552,7 +3580,8 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                        <dd                         class="govuk-summary-list__value"></dd>
+                        <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
+                            </dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
@@ -3689,7 +3718,8 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                        <dd                         class="govuk-summary-list__value"></dd>
+                        <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
+                            </dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
