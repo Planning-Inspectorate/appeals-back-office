@@ -48,10 +48,10 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
         </div>
     </div>
     <dl class="govuk-summary-list govuk-summary-list--no-border">
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+        <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
             <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
         </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
+        <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
             <dd             class="govuk-summary-list__value">Wiltshire Council</dd>
         </div>
     </dl>
@@ -383,10 +383,10 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
         </div>
     </div>
     <dl class="govuk-summary-list govuk-summary-list--no-border">
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+        <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
             <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
         </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
+        <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
             <dd             class="govuk-summary-list__value">Wiltshire Council</dd>
         </div>
     </dl>
@@ -756,10 +756,10 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
         </div>
     </div>
     <dl class="govuk-summary-list govuk-summary-list--no-border">
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+        <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
             <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
         </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
+        <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
             <dd             class="govuk-summary-list__value">Wiltshire Council</dd>
         </div>
     </dl>
@@ -1146,10 +1146,10 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
         </div>
     </div>
     <dl class="govuk-summary-list govuk-summary-list--no-border">
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+        <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
             <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
         </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
+        <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
             <dd             class="govuk-summary-list__value">Wiltshire Council</dd>
         </div>
     </dl>
@@ -2595,12 +2595,13 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
         <form class="govuk-grid-column-two-thirds">
             <div class="pins-file-upload__container">
                 <div class="govuk-body colour--secondary pins-file-upload__instructions">
-                    <label for="upload-file-1">Choose a single file to upload.</label><span>Files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total of your uploaded files must be smaller than 1 GB.</span>
+                    <label for="upload-file-1">Choose a single or multiple files to upload.</label><span>Files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total of your uploaded files must be smaller than 1 GB.</span>
                     <div                     class="middle-errors-hook"></div>
             </div>
             <div class="pins-file-upload__upload display--flex">
                 <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
-                type="file" name="files" value="Choose file" aria-controls="file-list-1">
+                type="file" name="files" value="Choose file" aria-controls="file-list-1"
+                multiple>
                 <button type='button' class="pins-file-upload__button govuk-button">Choose file</button><span role="status" aria-live="assertive" class='govuk-body pins-file-upload__counter'> No file chosen</span>
             </div>
             <div id="file-list-1">
@@ -2631,12 +2632,13 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
         <form class="govuk-grid-column-two-thirds">
             <div class="pins-file-upload__container">
                 <div class="govuk-body colour--secondary pins-file-upload__instructions">
-                    <label for="upload-file-1">Choose a single file to upload.</label><span>Files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total of your uploaded files must be smaller than 1 GB.</span>
+                    <label for="upload-file-1">Choose a single or multiple files to upload.</label><span>Files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total of your uploaded files must be smaller than 1 GB.</span>
                     <div                     class="middle-errors-hook"></div>
             </div>
             <div class="pins-file-upload__upload display--flex">
                 <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
-                type="file" name="files" value="Choose file" aria-controls="file-list-1">
+                type="file" name="files" value="Choose file" aria-controls="file-list-1"
+                multiple>
                 <button type='button' class="pins-file-upload__button govuk-button">Choose file</button><span role="status" aria-live="assertive" class='govuk-body pins-file-upload__counter'> No file chosen</span>
             </div>
             <div id="file-list-1">
@@ -2682,12 +2684,13 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
         <form class="govuk-grid-column-two-thirds">
             <div class="pins-file-upload__container">
                 <div class="govuk-body colour--secondary pins-file-upload__instructions">
-                    <label for="upload-file-1">Choose a single file to upload.</label><span>Files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total of your uploaded files must be smaller than 1 GB.</span>
+                    <label for="upload-file-1">Choose a single or multiple files to upload.</label><span>Files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total of your uploaded files must be smaller than 1 GB.</span>
                     <div                     class="middle-errors-hook"></div>
             </div>
             <div class="pins-file-upload__upload display--flex">
                 <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
-                type="file" name="files" value="Choose file" aria-controls="file-list-1">
+                type="file" name="files" value="Choose file" aria-controls="file-list-1"
+                multiple>
                 <button type='button' class="pins-file-upload__button govuk-button">Choose file</button><span role="status" aria-live="assertive" class='govuk-body pins-file-upload__counter'> No file chosen</span>
             </div>
             <div id="file-list-1">
@@ -2748,12 +2751,13 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
         <form class="govuk-grid-column-two-thirds">
             <div class="pins-file-upload__container">
                 <div class="govuk-body colour--secondary pins-file-upload__instructions">
-                    <label for="upload-file-1">Choose a single file to upload.</label><span>Files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total of your uploaded files must be smaller than 1 GB.</span>
+                    <label for="upload-file-1">Choose a single or multiple files to upload.</label><span>Files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total of your uploaded files must be smaller than 1 GB.</span>
                     <div                     class="middle-errors-hook"></div>
             </div>
             <div class="pins-file-upload__upload display--flex">
                 <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
-                type="file" name="files" value="Choose file" aria-controls="file-list-1">
+                type="file" name="files" value="Choose file" aria-controls="file-list-1"
+                multiple>
                 <button type='button' class="pins-file-upload__button govuk-button">Choose file</button><span role="status" aria-live="assertive" class='govuk-body pins-file-upload__counter'> No file chosen</span>
             </div>
             <div id="file-list-1">
@@ -3614,10 +3618,10 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
         </div>
     </div>
     <dl class="govuk-summary-list govuk-summary-list--no-border">
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+        <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
             <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
         </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
+        <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
             <dd             class="govuk-summary-list__value">Wiltshire Council</dd>
         </div>
     </dl>

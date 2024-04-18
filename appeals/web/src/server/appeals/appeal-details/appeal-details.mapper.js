@@ -154,7 +154,9 @@ export async function appealDetailsPage(appealDetails, currentRoute, session) {
 			],
 			rows: [
 				mappedData.appeal.appellantCase.display.tableItem,
-				mappedData.appeal.lpaQuestionnaire.display.tableItem
+				mappedData.appeal.lpaQuestionnaire.display.tableItem,
+				mappedData.appeal.costsAppellant.display.tableItem,
+				mappedData.appeal.costsLpa.display.tableItem
 			].filter(isDefined),
 			firstCellIsHeader: true
 		}

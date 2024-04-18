@@ -27,6 +27,9 @@ import { isInternalUrl } from '#lib/url-utilities.js';
  * @param {string} backButtonUrl
  * @param {string} [nextPageUrl]
  * @param {boolean} [isLateEntry]
+ * @param {string} [pageHeadingTextOverride]
+ * @param {boolean} [allowMultipleFiles]
+ * @param {string} [documentType]
  */
 export const renderDocumentUpload = async (
 	request,
@@ -34,20 +37,28 @@ export const renderDocumentUpload = async (
 	appealDetails,
 	backButtonUrl,
 	nextPageUrl,
-	isLateEntry = false
+	isLateEntry = false,
+	pageHeadingTextOverride,
+	allowMultipleFiles = true,
+	documentType
 ) => {
-	const { appealId, documentId } = request.params;
-	const { currentFolder, errors } = request;
+	const {
+		currentFolder,
+		errors,
+		params: { appealId, documentId }
+	} = request;
 
 	if (!appealDetails || !currentFolder) {
 		return response.status(404).render('app/404');
 	}
 
 	let documentName;
+	let _documentType = documentType;
 
 	if (documentId) {
 		const fileInfo = await getFileInfo(request.apiClient, appealId, documentId);
 		documentName = fileInfo?.latestDocumentVersion.fileName;
+		_documentType = fileInfo?.latestDocumentVersion.documentType;
 	}
 
 	const mappedPageContent = documentUploadPage(
@@ -60,7 +71,10 @@ export const renderDocumentUpload = async (
 		backButtonUrl,
 		nextPageUrl,
 		isLateEntry,
-		errors
+		errors,
+		pageHeadingTextOverride,
+		allowMultipleFiles,
+		_documentType
 	);
 
 	return response.render('appeals/documents/document-upload.njk', mappedPageContent);
@@ -72,12 +86,14 @@ export const renderDocumentUpload = async (
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  * @param {string} backButtonUrl
  * @param {boolean} [isLateEntry]
+ * @param {string} [pageHeadingTextOverride]
  */
 export const renderDocumentDetails = async (
 	request,
 	response,
 	backButtonUrl,
-	isLateEntry = false
+	isLateEntry = false,
+	pageHeadingTextOverride
 ) => {
 	const { currentFolder, body, errors } = request;
 
@@ -95,7 +111,8 @@ export const renderDocumentDetails = async (
 		backButtonUrl,
 		currentFolder,
 		body?.items,
-		redactionStatuses
+		redactionStatuses,
+		pageHeadingTextOverride
 	);
 	const isAdditionalDocument = currentFolder.path.split('/')[1] === 'additionalDocuments';
 
@@ -112,8 +129,15 @@ export const renderDocumentDetails = async (
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  * @param {string} backButtonUrl
  * @param {string} viewAndEditUrl
+ * @param {string} [pageHeadingTextOverride]
  */
-export const renderManageFolder = async (request, response, backButtonUrl, viewAndEditUrl) => {
+export const renderManageFolder = async (
+	request,
+	response,
+	backButtonUrl,
+	viewAndEditUrl,
+	pageHeadingTextOverride
+) => {
 	const { currentFolder, errors } = request;
 
 	if (!currentFolder) {
@@ -131,7 +155,8 @@ export const renderManageFolder = async (request, response, backButtonUrl, viewA
 		viewAndEditUrl,
 		currentFolder,
 		redactionStatuses,
-		request
+		request,
+		pageHeadingTextOverride
 	);
 
 	return response.render('appeals/documents/manage-folder.njk', {
@@ -200,8 +225,17 @@ export const renderManageDocument = async (
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  * @param {string} backButtonUrl
  * @param {string} [nextPageUrl]
+ * @param {string} [pageHeadingTextOverride]
+ * @param {function} [successCallback]
  */
-export const postDocumentDetails = async (request, response, backButtonUrl, nextPageUrl) => {
+export const postDocumentDetails = async (
+	request,
+	response,
+	backButtonUrl,
+	nextPageUrl,
+	pageHeadingTextOverride,
+	successCallback
+) => {
 	try {
 		const {
 			body,
@@ -211,7 +245,13 @@ export const postDocumentDetails = async (request, response, backButtonUrl, next
 		} = request;
 
 		if (errors) {
-			return renderDocumentDetails(request, response, backButtonUrl);
+			return renderDocumentDetails(
+				request,
+				response,
+				backButtonUrl,
+				false,
+				pageHeadingTextOverride
+			);
 		}
 
 		const redactionStatuses = await getDocumentRedactionStatuses(apiClient);
@@ -226,6 +266,11 @@ export const postDocumentDetails = async (request, response, backButtonUrl, next
 					'documentAdded',
 					Number.parseInt(appealId, 10)
 				);
+
+				if (successCallback) {
+					successCallback(request);
+				}
+
 				return response.redirect(nextPageUrl || `/appeals-service/appeal-details/${appealId}/`);
 			}
 		}
@@ -454,9 +499,19 @@ export const postDocumentDelete = async (
 			Number.parseInt(appealId, 10)
 		);
 		return response.redirect(returnUrlProcessed);
-	} else if (body['delete-file-answer'] === 'yes-and-upload-new-document') {
-		await deleteDocument(apiClient, appealId, documentId, versionId);
-		return response.redirect(uploadNewDocumentVersionUrlProcessed);
+	} else if (body['delete-file-answer'] === 'yes-and-upload-another-document') {
+		const fileVersionsInfo = await getFileVersionsInfo(request.apiClient, appealId, documentId);
+
+		if (fileVersionsInfo?.documentVersion) {
+			const deletingOnlyVersion =
+				fileVersionsInfo?.documentVersion?.filter((version) => version.isDeleted === false).length <
+				2;
+
+			await deleteDocument(apiClient, appealId, documentId, versionId);
+			return response.redirect(
+				deletingOnlyVersion ? returnUrlProcessed : uploadNewDocumentVersionUrlProcessed
+			);
+		}
 	}
 
 	return response.render('app/500.njk');
