@@ -253,7 +253,7 @@ export function manageOtherAppealsPage(appealData, request) {
 		},
 		type: 'table',
 		parameters: {
-			head: [{ text: 'Appeal ID' }, { text: 'Appeal type' }, { text: 'Action' }],
+			head: [{ text: 'Appeal Reference' }, { text: 'Appeal type' }, { text: 'Action' }],
 			firstCellIsHeader: false,
 			rows: otherAppealsRows
 		}
