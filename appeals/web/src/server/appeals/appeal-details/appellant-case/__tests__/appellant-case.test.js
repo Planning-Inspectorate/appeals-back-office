@@ -2159,7 +2159,7 @@ describe('appellant-case', () => {
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 		});
 
-		it('should render the delete document page with single document verson', async () => {
+		it('should render the delete document page with the expected content when there is a single document version', async () => {
 			nock('http://test/')
 				.get('/appeals/1/documents/1/versions')
 				.reply(200, documentFileVersionsInfoChecked);
@@ -2172,7 +2172,7 @@ describe('appellant-case', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 		});
 
-		it('should render the delete document page with multiple document versons', async () => {
+		it('should render the delete document page with the expected content when there are multiple document versions', async () => {
 			const multipleVersionsDocument = cloneDeep(documentFileVersionsInfoChecked);
 			multipleVersionsDocument.documentVersion.push(multipleVersionsDocument.documentVersion[0]);
 

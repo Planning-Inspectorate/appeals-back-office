@@ -13,22 +13,22 @@ exports[`site-visit GET /site-visit/manage-visit should render the manage visit 
             </summary>
             <div class="govuk-details__text">
                 <dl class="govuk-summary-list govuk-summary-list--no-border">
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
+                    <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
+                    <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
                             <br><span>Dogs on site</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
                         <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
                     </div>
                 </dl>
@@ -120,22 +120,22 @@ exports[`site-visit GET /site-visit/schedule-visit should render the schedule vi
             </summary>
             <div class="govuk-details__text">
                 <dl class="govuk-summary-list govuk-summary-list--no-border">
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
+                    <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
+                    <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
                             <br><span>Dogs on site</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
                         <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
                     </div>
                 </dl>
@@ -364,22 +364,22 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
             </summary>
             <div class="govuk-details__text">
                 <dl class="govuk-summary-list govuk-summary-list--no-border">
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
+                    <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
+                    <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
                             <br><span>Dogs on site</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
                         <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
                     </div>
                 </dl>
@@ -486,22 +486,22 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
             </summary>
             <div class="govuk-details__text">
                 <dl class="govuk-summary-list govuk-summary-list--no-border">
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
+                    <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
+                    <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
                             <br><span>Dogs on site</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
                         <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
                     </div>
                 </dl>
@@ -610,22 +610,22 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
             </summary>
             <div class="govuk-details__text">
                 <dl class="govuk-summary-list govuk-summary-list--no-border">
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
+                    <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
+                    <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
                             <br><span>Dogs on site</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
                         <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
                     </div>
                 </dl>
@@ -734,22 +734,22 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
             </summary>
             <div class="govuk-details__text">
                 <dl class="govuk-summary-list govuk-summary-list--no-border">
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
+                    <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
+                    <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
                             <br><span>Dogs on site</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
                         <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
                     </div>
                 </dl>
@@ -858,22 +858,22 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
             </summary>
             <div class="govuk-details__text">
                 <dl class="govuk-summary-list govuk-summary-list--no-border">
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
+                    <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
+                    <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
                             <br><span>Dogs on site</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
                         <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
                     </div>
                 </dl>
@@ -982,22 +982,22 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
             </summary>
             <div class="govuk-details__text">
                 <dl class="govuk-summary-list govuk-summary-list--no-border">
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
+                    <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
+                    <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
                             <br><span>Dogs on site</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
                         <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
                     </div>
                 </dl>
@@ -1106,22 +1106,22 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
             </summary>
             <div class="govuk-details__text">
                 <dl class="govuk-summary-list govuk-summary-list--no-border">
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
+                    <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
+                    <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
                             <br><span>Dogs on site</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
                         <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
                     </div>
                 </dl>
@@ -1228,22 +1228,22 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
             </summary>
             <div class="govuk-details__text">
                 <dl class="govuk-summary-list govuk-summary-list--no-border">
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
+                    <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
+                    <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
                             <br><span>Dogs on site</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
                         <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
                     </div>
                 </dl>
@@ -1350,22 +1350,22 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
             </summary>
             <div class="govuk-details__text">
                 <dl class="govuk-summary-list govuk-summary-list--no-border">
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
+                    <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
+                    <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
                             <br><span>Dogs on site</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
                         <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
                     </div>
                 </dl>
@@ -1472,22 +1472,22 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
             </summary>
             <div class="govuk-details__text">
                 <dl class="govuk-summary-list govuk-summary-list--no-border">
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
+                    <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
+                    <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
                             <br><span>Dogs on site</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
                         <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
                     </div>
                 </dl>
@@ -1596,22 +1596,22 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
             </summary>
             <div class="govuk-details__text">
                 <dl class="govuk-summary-list govuk-summary-list--no-border">
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
+                    <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
+                    <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
                             <br><span>Dogs on site</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
                         <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
                     </div>
                 </dl>
@@ -1718,22 +1718,22 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
             </summary>
             <div class="govuk-details__text">
                 <dl class="govuk-summary-list govuk-summary-list--no-border">
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
+                    <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
+                    <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
                             <br><span>Dogs on site</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
                         <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
                     </div>
                 </dl>
@@ -1840,22 +1840,22 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
             </summary>
             <div class="govuk-details__text">
                 <dl class="govuk-summary-list govuk-summary-list--no-border">
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
+                    <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
+                    <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
                             <br><span>Dogs on site</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
                         <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
                     </div>
                 </dl>
@@ -1978,22 +1978,22 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
             </summary>
             <div class="govuk-details__text">
                 <dl class="govuk-summary-list govuk-summary-list--no-border">
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
+                    <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
+                    <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
                             <br><span>Dogs on site</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
                         <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
                     </div>
                 </dl>
@@ -2100,22 +2100,22 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
             </summary>
             <div class="govuk-details__text">
                 <dl class="govuk-summary-list govuk-summary-list--no-border">
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
+                    <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
+                    <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
                             <br><span>Dogs on site</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
                         <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
                     </div>
                 </dl>
@@ -2222,22 +2222,22 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
             </summary>
             <div class="govuk-details__text">
                 <dl class="govuk-summary-list govuk-summary-list--no-border">
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
+                    <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
+                    <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
                             <br><span>Dogs on site</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
                         <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
                     </div>
                 </dl>
@@ -2346,22 +2346,22 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
             </summary>
             <div class="govuk-details__text">
                 <dl class="govuk-summary-list govuk-summary-list--no-border">
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
+                    <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
+                    <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
                             <br><span>Dogs on site</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
                         <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
                     </div>
                 </dl>
@@ -2470,22 +2470,22 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
             </summary>
             <div class="govuk-details__text">
                 <dl class="govuk-summary-list govuk-summary-list--no-border">
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
+                    <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
+                    <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
                             <br><span>Dogs on site</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
                         <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
                     </div>
                 </dl>
@@ -2594,22 +2594,22 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
             </summary>
             <div class="govuk-details__text">
                 <dl class="govuk-summary-list govuk-summary-list--no-border">
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
+                    <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
+                    <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
                             <br><span>Dogs on site</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
                         <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
                     </div>
                 </dl>
@@ -2718,22 +2718,22 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
             </summary>
             <div class="govuk-details__text">
                 <dl class="govuk-summary-list govuk-summary-list--no-border">
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
+                    <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
+                    <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
                             <br><span>Dogs on site</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
                         <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
                     </div>
                 </dl>
@@ -2842,22 +2842,22 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
             </summary>
             <div class="govuk-details__text">
                 <dl class="govuk-summary-list govuk-summary-list--no-border">
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
+                    <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
+                    <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
                             <br><span>Dogs on site</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
                         <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
                     </div>
                 </dl>
@@ -2964,22 +2964,22 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
             </summary>
             <div class="govuk-details__text">
                 <dl class="govuk-summary-list govuk-summary-list--no-border">
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
+                    <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
+                    <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
                             <br><span>Dogs on site</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
                         <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
                     </div>
                 </dl>
@@ -3086,22 +3086,22 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
             </summary>
             <div class="govuk-details__text">
                 <dl class="govuk-summary-list govuk-summary-list--no-border">
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
+                    <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
+                    <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
                             <br><span>Dogs on site</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
                         <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
                     </div>
                 </dl>
@@ -3208,22 +3208,22 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
             </summary>
             <div class="govuk-details__text">
                 <dl class="govuk-summary-list govuk-summary-list--no-border">
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
+                    <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
+                    <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
                             <br><span>Dogs on site</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
                         <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
                     </div>
                 </dl>
@@ -3332,22 +3332,22 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
             </summary>
             <div class="govuk-details__text">
                 <dl class="govuk-summary-list govuk-summary-list--no-border">
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
+                    <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
+                    <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
                             <br><span>Dogs on site</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
                         <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
                     </div>
                 </dl>
@@ -3454,22 +3454,22 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
             </summary>
             <div class="govuk-details__text">
                 <dl class="govuk-summary-list govuk-summary-list--no-border">
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
+                    <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
+                    <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
                             <br><span>Dogs on site</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
                         <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
                     </div>
                 </dl>
@@ -3576,22 +3576,22 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
             </summary>
             <div class="govuk-details__text">
                 <dl class="govuk-summary-list govuk-summary-list--no-border">
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
+                    <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
+                    <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
                             <br><span>Dogs on site</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
                         <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
                     </div>
                 </dl>
@@ -3714,22 +3714,22 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
             </summary>
             <div class="govuk-details__text">
                 <dl class="govuk-summary-list govuk-summary-list--no-border">
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
+                    <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>No answer provided</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
+                    <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                         <dd                         class="govuk-summary-list__value"><span>Yes</span>
                             <br><span>Dogs on site</span>
                             </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
                         <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
+                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
                         <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
                     </div>
                 </dl>

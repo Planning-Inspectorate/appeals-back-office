@@ -50,7 +50,8 @@ export async function initialiseAndMapAppealData(
 				},
 				value: {
 					text: appealDetails.appealReference
-				}
+				},
+				classes: 'appeal-appeal-reference'
 			}
 		}
 	};
@@ -74,7 +75,8 @@ export async function initialiseAndMapAppealData(
 							visuallyHiddenText: 'Appeal type'
 						})
 					]
-				}
+				},
+				classes: 'appeal-appeal-type'
 			}
 		},
 		input: {
@@ -119,7 +121,8 @@ export async function initialiseAndMapAppealData(
 							visuallyHiddenText: 'Case procedure'
 						})
 					]
-				}
+				},
+				classes: 'appeal-case-procedure'
 			}
 		},
 		input: {
@@ -177,7 +180,8 @@ export async function initialiseAndMapAppealData(
 							visuallyHiddenText: 'Appellant'
 						})
 					]
-				}
+				},
+				classes: 'appeal-appellant'
 			}
 		},
 		input: {
@@ -247,7 +251,8 @@ export async function initialiseAndMapAppealData(
 							visuallyHiddenText: 'Agent'
 						})
 					]
-				}
+				},
+				classes: 'appeal-agent'
 			}
 		},
 		input: {
@@ -325,7 +330,8 @@ export async function initialiseAndMapAppealData(
 								  }
 						)
 					]
-				}
+				},
+				classes: 'appeal-linked-appeals'
 			}
 		},
 		input: {
@@ -387,7 +393,8 @@ export async function initialiseAndMapAppealData(
 				},
 				actions: {
 					items: otherAppealsItems
-				}
+				},
+				classes: 'appeal-other-appeals'
 			}
 		},
 		input: {
@@ -437,7 +444,8 @@ export async function initialiseAndMapAppealData(
 							visuallyHiddenText: 'Allocation level'
 						})
 					]
-				}
+				},
+				classes: 'appeal-allocation-details'
 			}
 		},
 		input: {
@@ -502,7 +510,8 @@ export async function initialiseAndMapAppealData(
 							visuallyHiddenText: 'L P A reference'
 						}
 					]
-				}
+				},
+				classes: 'appeal-lpa-reference'
 			}
 		}
 	};
@@ -529,7 +538,8 @@ export async function initialiseAndMapAppealData(
 									visuallyHiddenText: 'site address'
 								}
 						  ]
-				}
+				},
+				classes: 'appeal-decision'
 			}
 		},
 		input: {
@@ -572,7 +582,8 @@ export async function initialiseAndMapAppealData(
 							visuallyHiddenText: 'site address'
 						}
 					]
-				}
+				},
+				classes: 'appeal-site-address'
 			}
 		},
 		input: {
@@ -599,7 +610,8 @@ export async function initialiseAndMapAppealData(
 							visuallyHiddenText: 'local planning authority (LPA)'
 						}
 					]
-				}
+				},
+				classes: 'appeal-local-planning-authority'
 			}
 		}
 	};
@@ -614,7 +626,8 @@ export async function initialiseAndMapAppealData(
 				},
 				value: {
 					text: appealDetails.appealStatus
-				}
+				},
+				classes: 'appeal-appeal-status'
 			},
 			statusTag: {
 				status: appealDetails?.appealStatus || '',
@@ -646,7 +659,8 @@ export async function initialiseAndMapAppealData(
 							visuallyHiddenText: 'inspection access (L P A answer)'
 						}
 					]
-				}
+				},
+				classes: 'appeal-lpa-inspector-access'
 			}
 		},
 		input: {
@@ -705,7 +719,8 @@ export async function initialiseAndMapAppealData(
 							visuallyHiddenText: 'inspection access (appellant answer)'
 						}
 					]
-				}
+				},
+				classes: 'appeal-appellant-inspector-access'
 			}
 		},
 		input: {
@@ -762,7 +777,8 @@ export async function initialiseAndMapAppealData(
 							visuallyHiddenText: 'could a neighbouring site be affected'
 						}
 					]
-				}
+				},
+				classes: 'appeal-neighbouring-site-is-affected'
 			}
 		},
 		input: {
@@ -813,7 +829,8 @@ export async function initialiseAndMapAppealData(
 									visuallyHiddenText: `neighbour address ${i + 1}`
 								}
 							]
-						}
+						},
+						classes: `appeal-neighbouring-site-address appeal-neighbouring-site-address-${i}`
 					}
 				},
 				input: {
@@ -854,7 +871,8 @@ export async function initialiseAndMapAppealData(
 							visuallyHiddenText: 'Neighbouring sites (inspector and or third party request)'
 						}
 					]
-				}
+				},
+				classes: 'appeal-neighbouring-sites-inspector'
 			}
 		}
 	};
@@ -882,7 +900,8 @@ export async function initialiseAndMapAppealData(
 							visuallyHiddenText: 'potential safety risks (L P A answer)'
 						}
 					]
-				}
+				},
+				classes: 'appeal-lpa-health-and-safety'
 			}
 		},
 		input: {
@@ -941,7 +960,8 @@ export async function initialiseAndMapAppealData(
 							visuallyHiddenText: 'potential safety risks (appellant answer)'
 						}
 					]
-				}
+				},
+				classes: 'appeal-appellant-health-and-safety'
 			}
 		},
 		input: {
@@ -998,7 +1018,8 @@ export async function initialiseAndMapAppealData(
 							visuallyHiddenText: 'visit type'
 						}
 					]
-				}
+				},
+				classes: 'appeal-visit-type'
 			}
 		}
 	};
@@ -1025,7 +1046,8 @@ export async function initialiseAndMapAppealData(
 							  }
 							: {}
 					]
-				}
+				},
+				classes: 'appeal-valid-date'
 			}
 		}
 	};
@@ -1064,7 +1086,8 @@ export async function initialiseAndMapAppealData(
 				},
 				actions: {
 					items: [startedAtActionLink]
-				}
+				},
+				classes: 'appeal-start-date'
 			}
 		}
 	};
@@ -1090,7 +1113,8 @@ export async function initialiseAndMapAppealData(
 							visuallyHiddenText: 'L P A questionnaire due'
 						}
 					]
-				}
+				},
+				classes: 'appeal-lpa-questionnaire-due-date'
 			}
 		}
 	};
@@ -1116,7 +1140,8 @@ export async function initialiseAndMapAppealData(
 							visuallyHiddenText: 'statement review due date'
 						}
 					]
-				}
+				},
+				classes: 'appeal-statement-review-due-date'
 			}
 		}
 	};
@@ -1142,7 +1167,8 @@ export async function initialiseAndMapAppealData(
 							visuallyHiddenText: 'final comment review due date'
 						}
 					]
-				}
+				},
+				classes: 'appeal-final-comment-review-due-date'
 			}
 		}
 	};
@@ -1173,7 +1199,8 @@ export async function initialiseAndMapAppealData(
 							visuallyHiddenText: 'site visit'
 						}
 					]
-				}
+				},
+				classes: 'appeal-site-visit'
 			}
 		}
 	};
@@ -1213,7 +1240,8 @@ export async function initialiseAndMapAppealData(
 							visuallyHiddenText: 'case officer'
 						}
 					]
-				}
+				},
+				classes: 'appeal-case-officer'
 			}
 		}
 	};
@@ -1253,7 +1281,8 @@ export async function initialiseAndMapAppealData(
 							visuallyHiddenText: 'inspector'
 						}
 					]
-				}
+				},
+				classes: 'appeal-inspector'
 			}
 		}
 	};
@@ -1311,6 +1340,78 @@ export async function initialiseAndMapAppealData(
 		}
 	};
 
+	const appealHasAppellantCostsDocuments = appealDetails?.costs?.appellantFolder?.documents?.filter(
+		(document) => document.isDeleted === false
+	).length;
+
+	/** @type {Instructions} */
+	mappedData.appeal.costsAppellant = {
+		id: 'costs-appellant',
+		display: {
+			tableItem: [
+				{
+					text: 'Costs (appellant)',
+					classes: 'appeal-costs-appellant-documentation'
+				},
+				{
+					text: appealHasAppellantCostsDocuments ? 'Received' : '',
+					classes: 'appeal-costs-appellant-status'
+				},
+				{
+					text: '',
+					classes: 'appeal-costs-appellant-due-date'
+				},
+				{
+					html: `<ul class="govuk-summary-list__actions-list">
+						${
+							appealHasAppellantCostsDocuments
+								? `<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="${currentRoute}/costs/appellant/manage-documents/${appealDetails?.costs?.appellantFolder?.id}">Manage</a></li>`
+								: ''
+						}<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="${currentRoute}/costs/appellant/select-document-type/${
+						appealDetails?.costs?.appellantFolder?.id
+					}">Add</a></li></ul>`,
+					classes: 'appeal-costs-appellant-actions'
+				}
+			]
+		}
+	};
+
+	const appealHasLPACostsDocuments = appealDetails?.costs?.lpaFolder?.documents?.filter(
+		(document) => document.isDeleted === false
+	).length;
+
+	/** @type {Instructions} */
+	mappedData.appeal.costsLpa = {
+		id: 'costs-lpa',
+		display: {
+			tableItem: [
+				{
+					text: 'Costs (LPA)',
+					classes: 'appeal-costs-lpa-documentation'
+				},
+				{
+					text: appealHasLPACostsDocuments ? 'Received' : '',
+					classes: 'appeal-costs-lpa-status'
+				},
+				{
+					text: '',
+					classes: 'appeal-costs-lpa-due-date'
+				},
+				{
+					html: `<ul class="govuk-summary-list__actions-list">
+						${
+							appealHasLPACostsDocuments
+								? `<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="${currentRoute}/costs/lpa/manage-documents/${appealDetails?.costs?.lpaFolder?.id}">Manage</a></li>`
+								: ''
+						}<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="${currentRoute}/costs/lpa/select-document-type/${
+						appealDetails?.costs?.lpaFolder?.id
+					}">Add</a></li></ul>`,
+					classes: 'appeal-costs-lpa-actions'
+				}
+			]
+		}
+	};
+
 	/** @type {Instructions} */
 	mappedData.appeal.issueDeterminationDate = {
 		id: 'issue-determination',
@@ -1331,7 +1432,8 @@ export async function initialiseAndMapAppealData(
 							href: `${currentRoute}/appeal-timetables/issue-determination`
 						}
 					]
-				}
+				},
+				classes: 'appeal-issue-determination'
 			}
 		}
 	};
@@ -1355,7 +1457,8 @@ export async function initialiseAndMapAppealData(
 							href: `${currentRoute}/change-appeal-details/complete-date`
 						}
 					]
-				}
+				},
+				classes: 'appeal-complete-date'
 			}
 		}
 	};

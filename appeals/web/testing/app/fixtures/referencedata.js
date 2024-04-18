@@ -103,13 +103,13 @@ export const appealData = {
 	costs: {
 		appellantFolder: {
 			caseId: 1,
-			id: 1000,
+			id: 1,
 			path: 'appeal_costs/appellant',
 			documents: []
 		},
 		lpaFolder: {
 			caseId: 1,
-			id: 1000,
+			id: 2,
 			path: 'appeal_costs/lpa',
 			documents: []
 		}
@@ -1723,6 +1723,91 @@ export const linkableAppeal = {
 	agentName: 'Mr John Smith (Smith Planning Agency)',
 	submissionDate: '2014-11-14T00:00:00+00:00',
 	source: 'back-office'
+};
+
+export const costsFolderInfoAppellant = {
+	caseId: 1,
+	documents: [
+		{
+			id: '15d19184-155b-4b6c-bba6-2bd2a61ca9a3',
+			name: 'test-pdf-documentFolderInfo.pdf',
+			latestDocumentVersion: {
+				draft: true,
+				dateReceived: '2023-02-01T01:00:00.000Z',
+				redactionStatus: 1,
+				size: 129363,
+				mime: 'application/pdf',
+				virusCheckStatus: 'checked',
+				isLateEntry: false
+			}
+		},
+		{
+			id: '47d8f073-c837-4f07-9161-c1a5626eba56',
+			name: 'sample-20s-documentFolderInfo.mp4',
+			latestDocumentVersion: {
+				draft: false,
+				dateReceived: '2024-03-02T01:00:00.000Z',
+				redactionStatus: 2,
+				size: 11815175,
+				mime: 'video/mp4',
+				virusCheckStatus: 'checked',
+				isLateEntry: false
+			}
+		}
+	],
+	id: 3864,
+	path: 'appeal_costs/appellant'
+};
+
+export const costsFolderInfoLpa = {
+	...costsFolderInfoAppellant,
+	path: 'appeal_costs/lpa'
+};
+
+export const appealCostsDocumentItem = {
+	guid: 'd2197025-5edb-4477-8e98-2a1bf13ed2ea',
+	name: '_821df3b2-08ea-4f56-b8e7-97c3502cd73a_test-doc-alternate.docx',
+	folderId: 1,
+	createdAt: '2024-04-09T13:10:07.517Z',
+	isDeleted: false,
+	latestVersionId: 1,
+	caseId: 1,
+	latestDocumentVersion: {
+		documentGuid: 'd2197025-5edb-4477-8e98-2a1bf13ed2ea',
+		version: 1,
+		lastModified: null,
+		documentType: 'appellant',
+		published: false,
+		draft: true,
+		sourceSystem: 'back-office-appeals',
+		origin: null,
+		originalFilename: 'test-doc-alternate.docx',
+		fileName: 'test-doc-alternate.docx',
+		representative: null,
+		description: null,
+		owner: null,
+		author: null,
+		securityClassification: null,
+		mime: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+		horizonDataID: null,
+		fileMD5: null,
+		path: null,
+		virusCheckStatus: 'checked',
+		size: 656030,
+		stage: 'appeal_costs',
+		blobStorageContainer: 'document-service-uploads',
+		blobStoragePath:
+			'appeal/6014692/d2197025-5edb-4477-8e98-2a1bf13ed2ea/v1/test-doc-alternate.docx',
+		dateCreated: '2024-04-09T13:10:07.517Z',
+		datePublished: null,
+		dateReceived: '2024-04-09T13:10:07.562Z',
+		isDeleted: false,
+		isLateEntry: false,
+		redactionStatusId: 2,
+		redacted: false,
+		documentURI:
+			'https://127.0.0.1:10000/devstoreaccount1/document-service-uploads/document-service-uploads/appeal/6014692/d2197025-5edb-4477-8e98-2a1bf13ed2ea/v1/test-doc-alternate.docx'
+	}
 };
 
 export const baseSession = {

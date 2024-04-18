@@ -37,6 +37,9 @@ import { addNotificationBannerToSession } from '#lib/session-utilities.js';
  * @param {string|undefined} nextPageUrl
  * @param {boolean} isLateEntry
  * @param {import('@pins/express').ValidationErrors|undefined} errors
+ * @param {string} [pageHeadingTextOverride]
+ * @param {boolean} [allowMultipleFiles]
+ * @param {string} [documentType]
  * @returns {import('#appeals/appeal-documents/appeal-documents.types.js').DocumentUploadPageParameters}
  */
 export function documentUploadPage(
@@ -49,13 +52,17 @@ export function documentUploadPage(
 	backButtonUrl,
 	nextPageUrl,
 	isLateEntry,
-	errors
+	errors,
+	pageHeadingTextOverride,
+	allowMultipleFiles,
+	documentType
 ) {
 	const isAdditionalDocument = folderPath.split('/')[1] === 'additionalDocuments';
-	const pageHeadingText = mapAddDocumentsPageHeading(isAdditionalDocument, documentId);
+	const pageHeadingText =
+		pageHeadingTextOverride || mapAddDocumentsPageHeading(isAdditionalDocument, documentId);
 	const pathComponents = folderPath.split('/');
 	const documentStage = pathComponents[0];
-	const documentType = pathComponents[1];
+	const documentTypeComputed = documentType || pathComponents[1];
 
 	return {
 		backButtonUrl: backButtonUrl?.replace('{{folderId}}', folderId),
@@ -66,13 +73,13 @@ export function documentUploadPage(
 		blobStorageHost:
 			config.useBlobEmulator === true ? config.blobEmulatorSasUrl : config.blobStorageUrl,
 		blobStorageContainer: config.blobStorageDefaultContainer,
-		multiple: !documentId,
+		multiple: allowMultipleFiles !== undefined ? allowMultipleFiles : !documentId,
 		documentStage: documentStage,
 		serviceName: documentName || pageHeadingText,
-		pageTitle: 'Upload documents',
+		pageTitle: pageHeadingTextOverride || 'Upload documents',
 		appealShortReference: appealShortReference(appealReference),
 		pageHeadingText: pageHeadingText,
-		documentType: documentType,
+		documentType: documentTypeComputed,
 		nextPageUrl:
 			nextPageUrl?.replace('{{folderId}}', folderId) ||
 			backButtonUrl?.replace('{{folderId}}', folderId),
@@ -223,20 +230,27 @@ export function mapAddDocumentsPageHeading(isAdditionalDocument, documentId) {
  * @param {FolderInfo & {id: string}} folder - API type needs to be updated here (should be Folder, but there are worse problems with that type)
  * @param {Object<string, any>} bodyItems
  * @param {RedactionStatus[]} redactionStatuses
+ * @param {string} [pageHeadingTextOverride]
  * @returns {PageContent}
  */
-export function addDocumentDetailsPage(backLinkUrl, folder, bodyItems, redactionStatuses) {
+export function addDocumentDetailsPage(
+	backLinkUrl,
+	folder,
+	bodyItems,
+	redactionStatuses,
+	pageHeadingTextOverride
+) {
 	const incompleteDocuments = folder.documents.filter(
 		(document) => document.latestDocumentVersion?.draft === true
 	);
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: 'Add document details',
+		title: pageHeadingTextOverride || 'Add document details',
 		backLinkText: 'Back',
 		backLinkUrl: backLinkUrl?.replace('{{folderId}}', folder.id),
 		preHeading: 'Add document details',
-		heading: `${folderPathToFolderNameText(folder.path)} documents`,
+		heading: pageHeadingTextOverride || `${folderPathToFolderNameText(folder.path)} documents`,
 		pageComponents: incompleteDocuments.flatMap((document, index) => {
 			return mapDocumentDetailsPageComponentsForDocument(
 				document,
@@ -468,9 +482,17 @@ function mapFolderDocumentActionsHtmlProperty(folder, document, viewAndEditUrl) 
  * @param {DocumentFolder} folder - API type needs to be updated (should be Folder, but there are worse problems with that type)
  * @param {RedactionStatus[]} redactionStatuses
  * @param {import('@pins/express/types/express.js').Request} request
+ * @param {string} [pageHeadingTextOverride]
  * @returns {PageContent}
  */
-export function manageFolderPage(backLinkUrl, viewAndEditUrl, folder, redactionStatuses, request) {
+export function manageFolderPage(
+	backLinkUrl,
+	viewAndEditUrl,
+	folder,
+	redactionStatuses,
+	request,
+	pageHeadingTextOverride
+) {
 	if (getDocumentsForVirusStatus(folder, 'not_checked').length > 0) {
 		addNotificationBannerToSession(
 			request.session,
@@ -511,7 +533,7 @@ export function manageFolderPage(backLinkUrl, viewAndEditUrl, folder, redactionS
 		backLinkText: 'Back',
 		backLinkUrl: backLinkUrl?.replace('{{folderId}}', folder.id),
 		preHeading: 'Manage folder',
-		heading: `${folderPathToFolderNameText(folder.path)} documents`,
+		heading: pageHeadingTextOverride || `${folderPathToFolderNameText(folder.path)} documents`,
 		pageComponents: [
 			...notificationBannerComponents,
 			...errorSummaryPageComponents,

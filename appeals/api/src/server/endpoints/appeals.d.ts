@@ -253,13 +253,13 @@ interface SingleAppealDetailsResponse {
 			id: number;
 			path: string;
 			caseId: number;
-			documents: DocumentInfo[];
+			documents: Schema.Document[];
 		};
 		lpaFolder: {
 			id: number;
 			path: string;
 			caseId: number;
-			documents: DocumentInfo[];
+			documents: Schema.Document[];
 		};
 	};
 	decision: {

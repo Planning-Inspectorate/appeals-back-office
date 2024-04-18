@@ -57,7 +57,7 @@ export const notificationBannerDefinitions = {
 		text: 'Document details updated'
 	},
 	documentDeleted: {
-		pages: ['appellantCase', 'lpaQuestionnaire'],
+		pages: ['appealDetails', 'appellantCase', 'lpaQuestionnaire'],
 		type: 'success',
 		text: 'Document removed'
 	},
@@ -122,6 +122,11 @@ export const notificationBannerDefinitions = {
 	},
 	appealValidAndReadyToStart: {
 		pages: ['appealDetails']
+	},
+	costsDocumentAdded: {
+		pages: ['appealDetails'],
+		type: 'success',
+		text: 'Costs document uploaded'
 	},
 	serviceUserUpdated: {
 		pages: ['appealDetails', 'appellantCase'],
