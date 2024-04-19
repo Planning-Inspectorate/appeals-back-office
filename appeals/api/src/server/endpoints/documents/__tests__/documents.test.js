@@ -24,6 +24,7 @@ import * as controller from '../documents.controller.js';
 import { request } from '../../../app-test.js';
 import joinDateAndTime from '#utils/join-date-and-time.js';
 import {
+	AUDIT_TRAIL_DOCUMENT_REDACTED,
 	AUDIT_TRAIL_DOCUMENT_UPLOADED,
 	ERROR_DOCUMENT_REDACTION_STATUSES_MUST_BE_ONE_OF,
 	ERROR_MUST_BE_CORRECT_DATE_FORMAT,
@@ -114,6 +115,11 @@ describe('/appeals/:appealId/documents', () => {
 			databaseConnector.documentRedactionStatus.findMany.mockResolvedValue(
 				documentRedactionStatuses
 			);
+			databaseConnector.document.findUnique.mockResolvedValue(documentCreated);
+			databaseConnector.user.upsert.mockResolvedValue({
+				id: 1,
+				azureAdUserId
+			});
 
 			const response = await request
 				.patch(`/appeals/${householdAppeal.id}/documents`)
@@ -121,6 +127,17 @@ describe('/appeals/:appealId/documents', () => {
 				.set('azureAdUserId', azureAdUserId);
 
 			expect(databaseConnector.documentVersion.update).toHaveBeenCalledTimes(2);
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(2);
+
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+				data: {
+					appealId: householdAppeal.id,
+					details: stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_REDACTED, [documentUpdated.name, 1]),
+					loggedAt: expect.any(Date),
+					userId: householdAppeal.caseOfficer.id
+				}
+			});
+
 			expect(response.status).toEqual(200);
 			expect(response.body).toEqual({
 				documents: [
@@ -379,11 +396,19 @@ describe('/appeals/:appealId/documents', () => {
 					}
 				}
 			});
-			expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(2);
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(4);
 			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 				data: {
 					appealId: householdAppeal.id,
 					details: stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_UPLOADED, [documentUpdated.name, 1]),
+					loggedAt: expect.any(Date),
+					userId: householdAppeal.caseOfficer.id
+				}
+			});
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+				data: {
+					appealId: householdAppeal.id,
+					details: stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_REDACTED, [documentUpdated.name, 1]),
 					loggedAt: expect.any(Date),
 					userId: householdAppeal.caseOfficer.id
 				}
