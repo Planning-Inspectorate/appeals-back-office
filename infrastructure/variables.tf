@@ -10,8 +10,8 @@ variable "location" {
   type        = string
 }
 
-variable "tags" {
-  default     = {}
-  description = "A collection of tags to assign to taggable resources"
-  type        = map(string)
-}
+# variable "tags" {
+#   default     = {}
+#   description = "A collection of tags to assign to taggable resources"
+#   type        = map(string)
+# }
