@@ -39,6 +39,7 @@
 16/04/24
 
 - Checkov == 3.2.65 - need to update the agent too
+- UK South due to availablilty zones
 
 ## Notes
 

@@ -1,4 +1,4 @@
-resource "azurerm_resource_group" "example" {
-  name     = "example-resources"
-  location = "UK West"
+resource "azurerm_resource_group" "terraform-boa-test" {
+  name     = ""
+  location = local.location
 }

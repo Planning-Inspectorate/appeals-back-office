@@ -1,3 +1,3 @@
 locals {
-  location = "uk-south"
+  location = "uksouth"
 }
