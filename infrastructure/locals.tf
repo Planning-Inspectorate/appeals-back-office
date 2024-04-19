@@ -10,6 +10,8 @@ locals {
       CreatedBy   = "Terraform"
       Environment = var.environment
       ServiceName = local.prj
+      env         = "dev"
+      location    = "uksouth"
       test        = "appeals-back-office-test"
     }
   )
