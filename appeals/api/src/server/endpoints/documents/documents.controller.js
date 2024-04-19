@@ -4,7 +4,8 @@ import {
 	ERROR_FAILED_TO_SAVE_DATA,
 	ERROR_FAILED_TO_ADD_DOCUMENTS,
 	ERROR_DOCUMENT_NAME_ALREADY_EXISTS,
-	ERROR_NOT_FOUND
+	ERROR_NOT_FOUND,
+	AUDIT_TRAIL_DOCUMENT_REDACTED
 } from '#endpoints/constants.js';
 import logger from '#utils/logger.js';
 import * as service from './documents.service.js';
@@ -201,12 +202,31 @@ const getStorageInfo = (docs) => {
  * @param {Response} res
  */
 const updateDocuments = async (req, res) => {
-	const { body } = req;
+	const { body, appeal } = req;
 	try {
 		const documents = body.documents;
 		for (const document of documents) {
 			const latestDocument = await documentRepository.getDocumentById(document.id);
 			document.latestVersion = latestDocument?.latestDocumentVersion?.version;
+
+			if (latestDocument && latestDocument.name) {
+				const auditTrail = await createAuditTrail({
+					appealId: appeal.id,
+					azureAdUserId: req.get('azureAdUserId'),
+					details: stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_REDACTED, [
+						latestDocument.name,
+						document.latestVersion
+					])
+				});
+				if (auditTrail) {
+					await service.addDocumentAudit(
+						latestDocument.guid,
+						document.latestVersion,
+						auditTrail,
+						'Update'
+					);
+				}
+			}
 		}
 		await documentRepository.updateDocuments(documents);
 	} catch (error) {
