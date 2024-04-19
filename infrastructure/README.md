@@ -52,6 +52,8 @@ The SP for each environment will have storage blob contributor on its relevant s
 
 - Resource locks on the storage or containers that host the state file
 
+- Terraform Resource naming <https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming>
+
 ---------------------------------------------------------------------------------------------------------
 
 ## Usage
