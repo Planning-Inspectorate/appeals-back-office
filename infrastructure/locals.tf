@@ -1,8 +1,9 @@
 locals {
   org          = "pins"
-  service_name = "appeals-back-office" # Or rename to "prj"?
+  service_name = "appeals-back-office"
   env          = "dev"
   location     = "uks"
+  region       = "uksouth"
 
   tags = merge(
     var.tags,
@@ -10,9 +11,8 @@ locals {
       CreatedBy   = "Terraform"
       Environment = var.environment
       ServiceName = local.service_name
-      env         = "dev"
-      location    = "uksouth"
-      test        = "appeals-back-office-test"
+      env         = local.env
+      location    = local.location
     }
   )
 

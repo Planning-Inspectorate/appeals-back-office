@@ -1,6 +1,6 @@
 resource "azurerm_resource_group" "terraform_boa_test" {
   name     = "${local.org}-rg-${local.service_name}-${local.env}-${local.location}-001"
-  location = local.location
+  location = local.region
 
   tags = local.tags
 }
