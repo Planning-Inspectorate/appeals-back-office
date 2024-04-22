@@ -4,3 +4,5 @@ module "azure_region" {
 
   azure_region = var.location
 }
+
+
