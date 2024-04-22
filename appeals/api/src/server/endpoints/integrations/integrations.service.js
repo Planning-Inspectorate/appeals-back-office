@@ -13,6 +13,7 @@ import {
 	loadAppeal
 } from '#repositories/integrations.repository.js';
 import { databaseConnector } from '#utils/database-connector.js';
+import { ODW_SYSTEM_ID } from '#endpoints/constants.js';
 
 export const importAppellantCase = async (
 	/** @type {any} */ data,
@@ -154,7 +155,10 @@ export const produceServiceUsersUpdate = async (
 	}
 	if (users.length > 0) {
 		const topic = producers.boServiceUser;
-		const res = await eventClient.sendEvents(topic, users, updateType, { entityType: roleName });
+		const res = await eventClient.sendEvents(topic, users, updateType, {
+			entityType: roleName,
+			sourceSystem: ODW_SYSTEM_ID
+		});
 		if (res) {
 			return true;
 		}

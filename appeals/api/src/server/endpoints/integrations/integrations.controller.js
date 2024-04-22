@@ -26,7 +26,9 @@ import {
 	AUDIT_TRAIL_APPELLANT_IMPORT_MSG,
 	AUDIT_TRAIL_LPAQ_IMPORT_MSG,
 	AUDIT_TRAIL_DOCUMENT_IMPORTED,
-	AUDIT_TRAIL_SYSTEM_UUID
+	AUDIT_TRAIL_SYSTEM_UUID,
+	ODW_APPELLANT_SVCUSR,
+	ODW_AGENT_SVCUSR
 } from '#endpoints/constants.js';
 
 /** @typedef {import('express').Request} Request */
@@ -58,18 +60,18 @@ export const postAppealSubmission = async (req, res) => {
 			dbSavedResult,
 			// @ts-ignore
 			dbSavedResult.appeal.appellant,
-			'appellant'
+			ODW_APPELLANT_SVCUSR
 		);
 		if (appellantTopic) {
-			await produceServiceUsersUpdate([appellantTopic], EventType.Create, 'appellant');
+			await produceServiceUsersUpdate([appellantTopic], EventType.Create, ODW_APPELLANT_SVCUSR);
 		}
 	}
 
 	if (dbSavedResult.appeal.agentId) {
 		// @ts-ignore
-		const agentTopic = mapServiceUser(dbSavedResult, dbSavedResult.appeal.agent, 'agent');
+		const agentTopic = mapServiceUser(dbSavedResult, dbSavedResult.appeal.agent, ODW_AGENT_SVCUSR);
 		if (agentTopic) {
-			await produceServiceUsersUpdate([agentTopic], EventType.Create, 'agent');
+			await produceServiceUsersUpdate([agentTopic], EventType.Create, ODW_AGENT_SVCUSR);
 		}
 	}
 
