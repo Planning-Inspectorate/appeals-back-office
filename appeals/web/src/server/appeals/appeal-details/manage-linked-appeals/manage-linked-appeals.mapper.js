@@ -49,7 +49,7 @@ export function manageLinkedAppealsPage(appealData, appealId, leadLinkedAppeal, 
 			},
 			type: 'table',
 			parameters: {
-				head: [{ text: 'Appeal ID' }, { text: 'Appeal type' }, { text: 'Action' }],
+				head: [{ text: 'Appeal Ref' }, { text: 'Appeal type' }, { text: 'Action' }],
 				firstCellIsHeader: false,
 				rows: [
 					[
@@ -127,7 +127,7 @@ export function manageLinkedAppealsPage(appealData, appealId, leadLinkedAppeal, 
 		},
 		type: 'table',
 		parameters: {
-			head: [{ text: 'Appeal ID' }, { text: 'Appeal type' }, { text: 'Action' }],
+			head: [{ text: 'Appeal Ref' }, { text: 'Appeal type' }, { text: 'Action' }],
 			firstCellIsHeader: false,
 			rows: childAppealsRows
 		}
