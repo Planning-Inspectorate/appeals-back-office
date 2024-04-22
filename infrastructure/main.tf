@@ -1,4 +1,4 @@
-resource "azurerm_resource_group" "terraform_boa_test" {
+resource "azurerm_resource_group" "terraform_appeals_back_office" {
   name     = "${local.org}-rg-${local.resource_suffix}-001"
   location = local.region
 
