@@ -2,8 +2,9 @@ locals {
   org          = "pins"
   service_name = "appeals-back-office"
   env          = "dev"
-  location     = "uks"
   region       = "uksouth"
+
+  resource_suffix = "${local.service_name}-${var.environment}-${module.azure_region.location_short}"
 
   tags = merge(
     var.tags,
@@ -12,8 +13,10 @@ locals {
       Environment = var.environment
       ServiceName = local.service_name
       env         = local.env
-      location    = local.location
+      location    = var.location
     }
   )
 
 }
+
+#   location            = module.azure_region.location_cli

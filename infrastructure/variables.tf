@@ -5,11 +5,11 @@ variable "environment" {
   type        = string
 }
 
-# variable "location" {
-#   description = "The short-format Azure region into which resources will be deployed"
-#   type        = string
-#   default     = "uksouth"
-# }
+variable "location" {
+  description = "The short-format Azure region into which resources will be deployed"
+  type        = string
+  default     = "uksouth"
+}
 
 variable "tags" {
   default     = {}
