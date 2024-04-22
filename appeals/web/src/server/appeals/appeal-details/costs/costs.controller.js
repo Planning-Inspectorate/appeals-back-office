@@ -1,4 +1,4 @@
-import { addDocumentTypePage } from './costs.mapper.js';
+import { addDocumentTypePage, decisionCheckAndConfirmPage } from './costs.mapper.js';
 import {
 	renderDocumentUpload,
 	renderDocumentDetails,
@@ -64,7 +64,7 @@ export const postSelectDocumentType = async (request, response) => {
 		currentAppeal,
 		currentFolder,
 		body,
-		params: { costsApplicant }
+		params: { costsCategory }
 	} = request;
 
 	if (!currentAppeal) {
@@ -83,7 +83,7 @@ export const postSelectDocumentType = async (request, response) => {
 	session.costsDocumentType = documentType;
 
 	return response.redirect(
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsApplicant}/upload-documents/${currentFolder?.id}`
+		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/upload-documents/${currentFolder?.id}`
 	);
 };
 
@@ -93,7 +93,7 @@ export const getDocumentUpload = async (request, response) => {
 		session,
 		currentAppeal,
 		currentFolder,
-		params: { costsApplicant }
+		params: { costsCategory }
 	} = request;
 
 	if (!currentAppeal) {
@@ -102,19 +102,33 @@ export const getDocumentUpload = async (request, response) => {
 	if (!currentFolder) {
 		return response.status(404).render('app/500');
 	}
-	if (!objectContainsAllKeys(session, 'costsDocumentType')) {
+	if (costsCategory !== 'decision' && !objectContainsAllKeys(session, 'costsDocumentType')) {
 		return response.status(404).render('app/500');
+	}
+
+	let uploadPageHeadingText = '';
+
+	switch (costsCategory) {
+		case 'lpa':
+			uploadPageHeadingText = 'Upload LPA costs document';
+			break;
+		case 'decision':
+			uploadPageHeadingText = 'Upload costs decision';
+			break;
+		default:
+			uploadPageHeadingText = `Upload ${costsCategory} costs document`;
+			break;
 	}
 
 	renderDocumentUpload(
 		request,
 		response,
 		currentAppeal,
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsApplicant}/select-document-type/${currentFolder.id}`,
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsApplicant}/add-document-details/${currentFolder.id}`,
+		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/select-document-type/${currentFolder.id}`,
+		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/add-document-details/${currentFolder.id}`,
 		false,
-		`Upload ${costsApplicant === 'lpa' ? 'LPA' : costsApplicant} costs document`,
-		false,
+		uploadPageHeadingText,
+		costsCategory === 'decision',
 		session.costsDocumentType
 	);
 };
@@ -124,7 +138,7 @@ export const getDocumentVersionUpload = async (request, response) => {
 	const {
 		currentAppeal,
 		currentFolder,
-		params: { costsApplicant }
+		params: { costsCategory }
 	} = request;
 
 	if (!currentAppeal) {
@@ -138,8 +152,8 @@ export const getDocumentVersionUpload = async (request, response) => {
 		request,
 		response,
 		currentAppeal,
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsApplicant}/select-document-type/${currentFolder.id}`,
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsApplicant}/add-document-details/${currentFolder.id}`,
+		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/select-document-type/${currentFolder.id}`,
+		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/add-document-details/${currentFolder.id}`,
 		false,
 		undefined, // TODO: should the upload new version page have a custom title, and if so what should it be?
 		false
@@ -152,7 +166,7 @@ export const getAddDocumentDetails = async (request, response) => {
 		session,
 		currentAppeal,
 		currentFolder,
-		params: { costsApplicant }
+		params: { costsCategory }
 	} = request;
 
 	if (!currentAppeal) {
@@ -162,10 +176,10 @@ export const getAddDocumentDetails = async (request, response) => {
 		return response.status(404).render('app/500');
 	}
 
-	let costsApplicantLabel = capitalize(costsApplicant);
+	let costsCategoryLabel = capitalize(costsCategory);
 
-	if (costsApplicant === 'lpa') {
-		costsApplicantLabel = 'LPA';
+	if (costsCategory === 'lpa') {
+		costsCategoryLabel = 'LPA';
 	}
 
 	addNotificationBannerToSession(
@@ -173,15 +187,17 @@ export const getAddDocumentDetails = async (request, response) => {
 		'costsDocumentAdded',
 		currentAppeal.appealId,
 		'',
-		`${costsApplicantLabel} costs document uploaded`
+		`${costsCategoryLabel} costs document uploaded`
 	);
 
 	renderDocumentDetails(
 		request,
 		response,
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsApplicant}/upload-documents/${currentFolder?.id}`,
+		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/upload-documents/${currentFolder?.id}`,
 		false,
-		`${costsApplicantLabel} costs document`
+		costsCategory === 'decision'
+			? 'Costs decision document'
+			: `${costsCategoryLabel} costs document`
 	);
 };
 
@@ -190,7 +206,7 @@ export const postAddDocumentDetails = async (request, response) => {
 	const {
 		currentAppeal,
 		currentFolder,
-		params: { costsApplicant }
+		params: { costsCategory }
 	} = request;
 
 	if (!currentAppeal) {
@@ -200,18 +216,20 @@ export const postAddDocumentDetails = async (request, response) => {
 		return response.status(404).render('app/500');
 	}
 
-	let costsApplicantLabel = capitalize(costsApplicant);
+	let costsCategoryLabel = capitalize(costsCategory);
 
-	if (costsApplicant === 'lpa') {
-		costsApplicantLabel = 'LPA';
+	if (costsCategory === 'lpa') {
+		costsCategoryLabel = 'LPA';
 	}
 
 	postDocumentDetails(
 		request,
 		response,
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsApplicant}/upload-documents/${currentFolder?.id}`,
-		`/appeals-service/appeal-details/${request.params.appealId}`,
-		`${costsApplicantLabel} costs document`,
+		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/upload-documents/${currentFolder?.id}`,
+		costsCategory === 'decision'
+			? `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/decision/check-and-confirm/${currentFolder?.id}`
+			: `/appeals-service/appeal-details/${request.params.appealId}`,
+		`${costsCategoryLabel} costs document`,
 		(/** @type {import('@pins/express/types/express.js').Request} */ request) => {
 			if (request.session.costsDocumentType) {
 				delete request.session.costsDocumentType;
@@ -225,7 +243,7 @@ export const getManageFolder = async (request, response) => {
 	const {
 		currentAppeal,
 		currentFolder,
-		params: { costsApplicant }
+		params: { costsCategory }
 	} = request;
 
 	if (!currentAppeal) {
@@ -235,18 +253,20 @@ export const getManageFolder = async (request, response) => {
 		return response.status(404).render('app/500');
 	}
 
-	let costsApplicantLabel = capitalize(costsApplicant);
+	let costsCategoryLabel = capitalize(costsCategory);
 
-	if (costsApplicant === 'lpa') {
-		costsApplicantLabel = 'LPA';
+	if (costsCategory === 'lpa') {
+		costsCategoryLabel = 'LPA';
 	}
 
 	renderManageFolder(
 		request,
 		response,
 		`/appeals-service/appeal-details/${request.params.appealId}`,
-		`/appeals-service/appeal-details/${request.params.appealId}/costs/${costsApplicant}/manage-documents/${currentFolder.id}/{{documentId}}`,
-		`${costsApplicantLabel} costs documents`
+		`/appeals-service/appeal-details/${request.params.appealId}/costs/${costsCategory}/manage-documents/${currentFolder.id}/{{documentId}}`,
+		costsCategory === 'decision'
+			? 'Costs decision documents'
+			: `${costsCategoryLabel} costs documents`
 	);
 };
 
@@ -255,7 +275,7 @@ export const getManageDocument = async (request, response) => {
 	const {
 		currentAppeal,
 		currentFolder,
-		params: { costsApplicant }
+		params: { costsCategory }
 	} = request;
 
 	if (!currentAppeal) {
@@ -268,9 +288,9 @@ export const getManageDocument = async (request, response) => {
 	renderManageDocument(
 		request,
 		response,
-		`/appeals-service/appeal-details/${request.params.appealId}/costs/${costsApplicant}/manage-documents/${currentFolder.id}`,
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsApplicant}/upload-documents/${currentFolder?.id}/{{documentId}}`,
-		`/appeals-service/appeal-details/${request.params.appealId}/costs/${costsApplicant}/manage-documents/${currentFolder.id}/{{documentId}}/{{versionId}}/delete`
+		`/appeals-service/appeal-details/${request.params.appealId}/costs/${costsCategory}/manage-documents/${currentFolder.id}`,
+		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/upload-documents/${currentFolder?.id}/{{documentId}}`,
+		`/appeals-service/appeal-details/${request.params.appealId}/costs/${costsCategory}/manage-documents/${currentFolder.id}/{{documentId}}/{{versionId}}/delete`
 	);
 };
 
@@ -278,7 +298,7 @@ export const getManageDocument = async (request, response) => {
 export const getDeleteCostsDocument = async (request, response) => {
 	const {
 		currentFolder,
-		params: { costsApplicant }
+		params: { costsCategory }
 	} = request;
 
 	if (!currentFolder) {
@@ -288,7 +308,7 @@ export const getDeleteCostsDocument = async (request, response) => {
 	renderDeleteDocument(
 		request,
 		response,
-		`/appeals-service/appeal-details/${request.params.appealId}/costs/${costsApplicant}/manage-documents/${currentFolder.id}/{{documentId}}`
+		`/appeals-service/appeal-details/${request.params.appealId}/costs/${costsCategory}/manage-documents/${currentFolder.id}/{{documentId}}`
 	);
 };
 
@@ -297,7 +317,7 @@ export const postDeleteCostsDocument = async (request, response) => {
 	const {
 		currentAppeal,
 		currentFolder,
-		params: { costsApplicant }
+		params: { costsCategory }
 	} = request;
 
 	if (!currentAppeal) {
@@ -311,6 +331,60 @@ export const postDeleteCostsDocument = async (request, response) => {
 		request,
 		response,
 		`/appeals-service/appeal-details/${request.params.appealId}`,
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsApplicant}/upload-documents/${currentFolder?.id}/{{documentId}}`
+		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/upload-documents/${currentFolder?.id}/{{documentId}}`
 	);
+};
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const renderDecisionCheckAndConfirm = async (request, response) => {
+	const { errors, currentAppeal, currentFolder } = request;
+
+	if (!currentAppeal) {
+		return response.status(404).render('app/404');
+	}
+	if (!currentFolder) {
+		return response.status(404).render('app/500');
+	}
+
+	const mappedPageContent = decisionCheckAndConfirmPage(request.currentAppeal, currentFolder);
+
+	return response.render('patterns/check-and-confirm-page.pattern.njk', {
+		pageContent: mappedPageContent,
+		errors
+	});
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const getDecisionCheckAndConfirm = async (request, response) => {
+	renderDecisionCheckAndConfirm(request, response);
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const postDecisionCheckAndConfirm = async (request, response) => {
+	const { session, errors, currentAppeal, currentFolder } = request;
+
+	if (!currentAppeal) {
+		return response.status(404).render('app/404');
+	}
+	if (!currentFolder) {
+		return response.status(404).render('app/500');
+	}
+
+	if (errors) {
+		return renderDecisionCheckAndConfirm(request, response);
+	}
+
+	addNotificationBannerToSession(
+		session,
+		'costsDocumentAdded',
+		currentAppeal.appealId,
+		'',
+		`Costs decision uploaded`
+	);
+
+	return response.redirect(`/appeals-service/appeal-details/${currentAppeal.appealId}`);
 };

@@ -8,13 +8,13 @@ import {
 	validateCaseDocumentId
 } from '../../appeal-documents/appeal-documents.middleware.js';
 import * as documentsValidators from '../../appeal-documents/appeal-documents.validators.js';
-import { validateAddDocumentType } from './costs.validators.js';
+import { validateAddDocumentType, validatePostDecisionConfirmation } from './costs.validators.js';
 import { assertGroupAccess } from '#app/auth/auth.guards.js';
 
 const router = createRouter({ mergeParams: true });
 
 router
-	.route('/:costsApplicant/select-document-type/:folderId')
+	.route('/:costsCategory/select-document-type/:folderId')
 	.get(validateAppeal, asyncRoute(controller.getSelectDocumentType))
 	.post(
 		validateAppeal,
@@ -24,15 +24,15 @@ router
 	);
 
 router
-	.route('/:costsApplicant/upload-documents/:folderId')
+	.route('/:costsCategory/upload-documents/:folderId')
 	.get(validateAppeal, validateCaseFolderId, asyncRoute(controller.getDocumentUpload));
 
 router
-	.route('/:costsApplicant/upload-documents/:folderId/:documentId')
+	.route('/:costsCategory/upload-documents/:folderId/:documentId')
 	.get(validateAppeal, validateCaseFolderId, asyncRoute(controller.getDocumentVersionUpload));
 
 router
-	.route('/:costsApplicant/add-document-details/:folderId')
+	.route('/:costsCategory/add-document-details/:folderId')
 	.get(validateAppeal, validateCaseFolderId, asyncRoute(controller.getAddDocumentDetails))
 	.post(
 		validateAppeal,
@@ -47,15 +47,15 @@ router
 	);
 
 router
-	.route('/:costsApplicant/manage-documents/:folderId')
+	.route('/:costsCategory/manage-documents/:folderId')
 	.get(validateAppeal, validateCaseFolderId, asyncRoute(controller.getManageFolder));
 
 router
-	.route('/:costsApplicant/manage-documents/:folderId/:documentId')
+	.route('/:costsCategory/manage-documents/:folderId/:documentId')
 	.get(validateAppeal, validateCaseFolderId, asyncRoute(controller.getManageDocument));
 
 router
-	.route('/:costsApplicant/manage-documents/:folderId/:documentId/:versionId/delete')
+	.route('/:costsCategory/manage-documents/:folderId/:documentId/:versionId/delete')
 	.get(
 		validateAppeal,
 		validateCaseFolderId,
@@ -68,6 +68,16 @@ router
 		validateCaseDocumentId,
 		documentsValidators.validateDocumentDeleteAnswer,
 		asyncRoute(controller.postDeleteCostsDocument)
+	);
+
+router
+	.route('/decision/check-and-confirm/:folderId')
+	.get(validateAppeal, validateCaseFolderId, asyncRoute(controller.getDecisionCheckAndConfirm))
+	.post(
+		validateAppeal,
+		validateCaseFolderId,
+		validatePostDecisionConfirmation,
+		asyncRoute(controller.postDecisionCheckAndConfirm)
 	);
 
 export default router;

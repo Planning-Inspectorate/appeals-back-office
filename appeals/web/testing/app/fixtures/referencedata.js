@@ -112,6 +112,12 @@ export const appealData = {
 			id: 2,
 			path: 'appeal_costs/lpa',
 			documents: []
+		},
+		decisionFolder: {
+			caseId: 1,
+			id: 3,
+			path: 'appeal_costs/decision',
+			documents: []
 		}
 	},
 	decision: {
