@@ -110,15 +110,15 @@ export const notificationBannerDefinitions = {
 	},
 	neighbouringSiteAdded: {
 		type: 'success',
-		pages: ['appealDetails']
+		pages: ['appealDetails', 'lpaQuestionnaire']
 	},
 	neighbouringSiteUpdated: {
 		type: 'success',
-		pages: ['appealDetails']
+		pages: ['appealDetails', 'lpaQuestionnaire']
 	},
 	neighbouringSiteRemoved: {
 		type: 'success',
-		pages: ['appealDetails']
+		pages: ['appealDetails', 'lpaQuestionnaire']
 	},
 	appealValidAndReadyToStart: {
 		pages: ['appealDetails']
@@ -139,6 +139,10 @@ export const notificationBannerDefinitions = {
 	inspectorAccessUpdated: {
 		type: 'success',
 		pages: ['appealDetails', 'appellantCase', 'lpaQuestionnaire']
+	},
+	neighbouringSiteAffected: {
+		type: 'success',
+		pages: ['appealDetails', 'lpaQuestionnaire']
 	}
 };
 

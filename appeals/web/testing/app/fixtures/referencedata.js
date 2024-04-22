@@ -146,35 +146,26 @@ export const appealData = {
 	linkedAppeals: [],
 	localPlanningDepartment: 'Wiltshire Council',
 	lpaQuestionnaireId: 1,
-	neighbouringSite: {
-		contacts: [
-			{
-				address: {
-					addressLine1: '21 The Pavement',
-					county: 'Wandsworth',
-					postCode: 'SW4 0HY'
-				},
-				firstName: 'Haley',
-				lastName: 'Eland'
-			},
-			{
-				address: {
-					addressLine1: 'FOR TRAINERS ONLY',
-					addressLine2: '96 The Avenue',
-					county: 'Kent',
-					postCode: 'MD21 5XY'
-				},
-				firstName: 'Fiona',
-				lastName: 'Burgess'
-			}
-		],
-		isAffected: true
-	},
+
+	isAffectingNeighbouringSites: true,
+
 	neighbouringSites: [
 		{
 			siteId: 1,
+			source: 'lpa',
 			address: {
 				addressLine1: '1 Grove Cottage',
+				addressLine2: 'Shotesham Road',
+				town: 'Woodton',
+				county: 'Devon',
+				postCode: 'NR35 2ND'
+			}
+		},
+		{
+			siteId: 2,
+			source: 'back-office',
+			address: {
+				addressLine1: '2 Grove Cottage',
 				addressLine2: 'Shotesham Road',
 				town: 'Woodton',
 				county: 'Devon',
@@ -317,6 +308,367 @@ export const appellantCaseDataNotValidated = {
 		details: null,
 		isVisible: true
 	}
+};
+export const lpaQuestionnaireData = {
+	affectsListedBuildingDetails: [
+		{
+			listEntry: '123456'
+		}
+	],
+	appealId: 1,
+	appealReference: 'APP/Q9999/D/21/30498',
+	appealSite: {
+		addressLine1: '92 Huntsmoor Road',
+		town: 'Tadley',
+		postCode: 'RG26 4BX'
+	},
+	communityInfrastructureLevyAdoptionDate: '2023-05-09T01:00:00.000Z',
+	designatedSites: [
+		{
+			name: 'pSPA',
+			description: 'potential special protection area'
+		},
+		{
+			name: 'SAC',
+			description: 'special area of conservation'
+		}
+	],
+	developmentDescription: '',
+	documents: {
+		conservationAreaMap: {
+			folderId: 1,
+			path: 'lpa_questionnaire/conservationAreaMap',
+			documents: [
+				{
+					id: '9635631c-507c-4af2-98a1-da007e8bb56a',
+					name: 'conservationAreaMap.docx',
+					folderId: 1,
+					caseId: 1
+				}
+			]
+		},
+		notifyingParties: {
+			folderId: 2,
+			path: 'lpa_questionnaire/notifyingParties',
+			documents: [
+				{
+					id: '9635631c-507c-4af2-98a1-da007e8bb56b',
+					name: 'notifyingParties.docx',
+					folderId: 2,
+					caseId: 1
+				}
+			]
+		},
+		siteNotices: {
+			folderId: 3,
+			path: 'lpa_questionnaire/siteNotices',
+			documents: [
+				{
+					id: '9635631c-507c-4af2-98a1-da007e8bb56c',
+					name: 'siteNotices.docx',
+					folderId: 3,
+					caseId: 1
+				}
+			]
+		},
+		lettersToNeighbours: {
+			folderId: 4,
+			path: 'lpa_questionnaire/lettersToNeighbours',
+			documents: [
+				{
+					id: '9635631c-507c-4af2-98a1-da007e8bb56d',
+					name: 'lettersToNeighbours.docx',
+					folderId: 4,
+					caseId: 1
+				}
+			]
+		},
+		pressAdvert: {
+			folderId: 5,
+			path: 'lpa_questionnaire/pressAdvert',
+			documents: [
+				{
+					id: '9635631c-507c-4af2-98a1-da007e8bb56e',
+					name: 'pressAdvert.docx',
+					folderId: 5,
+					caseId: 1
+				}
+			]
+		},
+		representations: {
+			folderId: 6,
+			path: 'lpa_questionnaire/representations',
+			documents: [
+				{
+					id: '9635631c-507c-4af2-98a1-da007e8bb56f',
+					name: 'representations.docx',
+					folderId: 6,
+					caseId: 1
+				}
+			]
+		},
+		officersReport: {
+			folderId: 7,
+			path: 'lpa_questionnaire/officersReport',
+			documents: [
+				{
+					id: '9635631c-507c-4af2-98a1-da007e8bb56g',
+					name: 'officersReport.docx',
+					folderId: 7,
+					caseId: 1
+				}
+			]
+		},
+		communityInfrastructureLevy: {
+			folderId: 8,
+			path: 'lpa_questionnaire/communityInfrastructureLevy',
+			documents: [
+				{
+					id: '9635631c-507c-4af2-98a1-da007e8bb56h',
+					name: 'communityInfrastructureLevy.docx',
+					folderId: 8,
+					caseId: 1
+				}
+			]
+		},
+		consultationResponses: {
+			folderId: 9,
+			path: 'lpa_questionnaire/consultationResponses',
+			documents: [
+				{
+					id: '9635631c-507c-4af2-98a1-da007e8bb56i',
+					name: 'consultationResponses.docx',
+					folderId: 9,
+					caseId: 1
+				}
+			]
+		},
+		definitiveMapAndStatement: {
+			folderId: 10,
+			path: 'lpa_questionnaire/definitiveMapAndStatement',
+			documents: [
+				{
+					id: '9635631c-507c-4af2-98a1-da007e8bb56j',
+					name: 'definitiveMapAndStatement.docx',
+					folderId: 10,
+					caseId: 1
+				}
+			]
+		},
+		emergingPlans: {
+			folderId: 11,
+			path: 'lpa_questionnaire/emergingPlans',
+			documents: [
+				{
+					id: '9635631c-507c-4af2-98a1-da007e8bb56k',
+					name: 'emergingPlans.docx',
+					folderId: 11,
+					caseId: 1
+				}
+			]
+		},
+		environmentalStatementResponses: {
+			folderId: 12,
+			path: 'lpa_questionnaire/environmentalStatementResponses',
+			documents: [
+				{
+					id: '9635631c-507c-4af2-98a1-da007e8bb56l',
+					name: 'environmentalStatementResponses.docx',
+					folderId: 12,
+					caseId: 1
+				}
+			]
+		},
+		issuedScreeningOption: {
+			folderId: 13,
+			path: 'lpa_questionnaire/issuedScreeningOption',
+			documents: [
+				{
+					id: '9635631c-507c-4af2-98a1-da007e8bb56m',
+					name: 'issuedScreeningOption.docx',
+					folderId: 13,
+					caseId: 1
+				}
+			]
+		},
+		otherRelevantPolicies: {
+			folderId: 14,
+			path: 'lpa_questionnaire/otherRelevantPolicies',
+			documents: [
+				{
+					id: '9635631c-507c-4af2-98a1-da007e8bb56n',
+					name: 'otherRelevantPolicies.docx',
+					folderId: 14,
+					caseId: 1
+				}
+			]
+		},
+		policiesFromStatutoryDevelopment: {
+			folderId: 15,
+			path: 'lpa_questionnaire/policiesFromStatutoryDevelopment',
+			documents: [
+				{
+					id: '9635631c-507c-4af2-98a1-da007e8bb56o',
+					name: 'policiesFromStatutoryDevelopment.docx',
+					folderId: 15,
+					caseId: 1
+				}
+			]
+		},
+		relevantPartiesNotification: {
+			folderId: 16,
+			path: 'lpa_questionnaire/relevantPartiesNotification',
+			documents: [
+				{
+					id: '9635631c-507c-4af2-98a1-da007e8bb56p',
+					name: 'relevantPartiesNotification.docx',
+					folderId: 16,
+					caseId: 1
+				}
+			]
+		},
+		responsesOrAdvice: {
+			folderId: 17,
+			path: 'lpa_questionnaire/responsesOrAdvice',
+			documents: [
+				{
+					id: '9635631c-507c-4af2-98a1-da007e8bb56q',
+					name: 'responsesOrAdvice.docx',
+					folderId: 17,
+					caseId: 1
+				}
+			]
+		},
+		screeningDirection: {
+			folderId: 18,
+			path: 'lpa_questionnaire/screeningDirection',
+			documents: [
+				{
+					id: '9635631c-507c-4af2-98a1-da007e8bb56r',
+					name: 'screeningDirection.docx',
+					folderId: 18,
+					caseId: 1
+				}
+			]
+		},
+		supplementaryPlanningDocuments: {
+			folderId: 19,
+			path: 'lpa_questionnaire/supplementaryPlanningDocuments',
+			documents: [
+				{
+					id: '9635631c-507c-4af2-98a1-da007e8bb56s',
+					name: 'supplementaryPlanningDocuments.docx',
+					folderId: 19,
+					caseId: 1
+				}
+			]
+		},
+		treePreservationOrder: {
+			folderId: 20,
+			path: 'lpa_questionnaire/treePreservationOrder',
+			documents: [
+				{
+					id: '9635631c-507c-4af2-98a1-da007e8bb56t',
+					name: 'treePreservationOrder.docx',
+					folderId: 20,
+					caseId: 1
+				}
+			]
+		},
+		additionalDocuments: {
+			folderId: 21,
+			path: 'lpa_questionnaire/additionalDocuments',
+			documents: [
+				{
+					id: '00c43c8c-829a-4aa8-883a-fd6fc1f52c3d',
+					name: 'ph1.jpeg',
+					folderId: 3420,
+					caseId: 111,
+					isLateEntry: true,
+					virusCheckStatus: 'checked'
+				},
+				{
+					id: 'a78446aa-167a-4bef-89b7-18bcb0da11c1',
+					name: 'ph0.jpeg',
+					folderId: 3420,
+					caseId: 111,
+					isLateEntry: false,
+					virusCheckStatus: 'checked'
+				},
+				{
+					id: 'a78446aa-167a-4bef-89b7-18bcb0da11c2',
+					name: 'test-doc.jpeg',
+					folderId: 3420,
+					caseId: 111,
+					isLateEntry: false,
+					virusCheckStatus: 'checked'
+				}
+			]
+		}
+	},
+	doesAffectAListedBuilding: true,
+	doesAffectAScheduledMonument: true,
+	doesSiteHaveHealthAndSafetyIssues: true,
+	doesSiteRequireInspectorAccess: true,
+	extraConditions: 'Some extra conditions',
+	hasCommunityInfrastructureLevy: true,
+	hasCompletedAnEnvironmentalStatement: true,
+	hasEmergingPlan: true,
+	hasExtraConditions: true,
+	hasOtherAppeals: null,
+	hasProtectedSpecies: true,
+	hasRepresentationsFromOtherParties: true,
+	hasResponsesOrStandingAdviceToUpload: true,
+	hasStatementOfCase: true,
+	hasStatutoryConsultees: true,
+	hasSupplementaryPlanningDocuments: true,
+	hasTreePreservationOrder: true,
+	healthAndSafetyDetails: 'There is no mobile signal at the property',
+	inCAOrrelatesToCA: true,
+	includesScreeningOption: true,
+	inquiryDays: 2,
+	inspectorAccessDetails: 'The entrance is at the back of the property',
+	isAffectingNeighbouringSites: true,
+	isCommunityInfrastructureLevyFormallyAdopted: true,
+	isCorrectAppealType: true,
+	isEnvironmentalStatementRequired: true,
+	isGypsyOrTravellerSite: true,
+	isListedBuilding: true,
+	isPublicRightOfWay: true,
+	isSensitiveArea: true,
+	isSiteVisible: true,
+	isTheSiteWithinAnAONB: true,
+	listedBuildingDetails: [
+		{
+			listEntry: '123456'
+		},
+		{
+			listEntry: '123457'
+		}
+	],
+	localPlanningDepartment: 'Dorset Council',
+	lpaNotificationMethods: [
+		{
+			name: 'A site notice'
+		},
+		{
+			name: 'Letter/email to interested parties'
+		}
+	],
+	lpaQuestionnaireId: 2,
+	meetsOrExceedsThresholdOrCriteriaInColumn2: true,
+	otherAppeals: [
+		{
+			appealId: 2,
+			appealReference: 'APP/Q9999/D/21/725284'
+		}
+	],
+	procedureType: 'Written',
+	scheduleType: 'Schedule 2',
+	sensitiveAreaDetails: 'The area is prone to flooding',
+	siteWithinGreenBelt: true,
+	statutoryConsulteesDetails: 'Some other people need to be consulted',
+	validation: null
 };
 
 export const appellantCaseDataNotValidatedWithDocuments = {
@@ -757,33 +1109,6 @@ export const lpaQuestionnaireDataNotValidated = {
 	],
 	lpaQuestionnaireId: 2,
 	meetsOrExceedsThresholdOrCriteriaInColumn2: true,
-	neighbouringSiteContacts: [
-		{
-			address: {
-				addressLine1: '19 Beauchamp Road',
-				town: 'Bristol',
-				postCode: 'BS7 8LQ'
-			},
-			contactId: 103,
-			email: 'test5@example.com',
-			firstName: 'Ryan',
-			lastName: 'Marshall',
-			telephone: '01234567891'
-		},
-		{
-			address: {
-				addressLine1: '96 The Avenue',
-				addressLine2: 'Maidstone',
-				county: 'Kent',
-				postCode: 'MD21 5XY'
-			},
-			contactId: 104,
-			email: 'test9@example.com',
-			firstName: 'Eva',
-			lastName: 'Sharma',
-			telephone: '01234567891'
-		}
-	],
 	otherAppeals: [
 		{
 			appealId: 2,

@@ -1,6 +1,5 @@
 import formatAddress from '#utils/format-address.js';
 import formatValidationOutcomeResponse from '#utils/format-validation-outcome-response.js';
-import formatNeighbouringSiteContacts from '#utils/format-neighbouring-site-contacts.js';
 import { mapFoldersLayoutForAppealSection } from '../documents/documents.mapper.js';
 import { CONFIG_APPEAL_STAGES } from '#endpoints/constants.js';
 
@@ -90,9 +89,6 @@ const formatLpaQuestionnaire = (appeal, folders = null) => {
 				lpaQuestionnaireId: lpaQuestionnaire.id,
 				meetsOrExceedsThresholdOrCriteriaInColumn2:
 					lpaQuestionnaire.meetsOrExceedsThresholdOrCriteriaInColumn2,
-				neighbouringSiteContacts: formatNeighbouringSiteContacts(
-					lpaQuestionnaire.neighbouringSiteContact
-				),
 				otherAppeals: [],
 				procedureType: lpaQuestionnaire.procedureType?.name,
 				scheduleType: lpaQuestionnaire.scheduleType?.name,

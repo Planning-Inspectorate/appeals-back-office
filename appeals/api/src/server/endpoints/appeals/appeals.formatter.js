@@ -138,9 +138,11 @@ const formatAppeal = (
 			neighbouringSites: appeal.neighbouringSites?.map((site) => {
 				return {
 					siteId: site.id,
+					source: site.source,
 					address: formatAddress(site.address)
 				};
 			}),
+			isAffectingNeighbouringSites: appeal.lpaQuestionnaire?.isAffectingNeighbouringSites,
 			appealStatus: appeal.appealStatus[0].status,
 			...(transferAppealTypeInfo && {
 				transferStatus: {
@@ -217,15 +219,6 @@ const formatAppeal = (
 				0,
 			localPlanningDepartment: appeal.lpa.name,
 			lpaQuestionnaireId: appeal.lpaQuestionnaire?.id || null,
-			neighbouringSite: {
-				contacts:
-					appeal.lpaQuestionnaire?.neighbouringSiteContact?.map((contact) => ({
-						address: formatAddress(contact.address),
-						firstName: contact.firstName,
-						lastName: contact.lastName
-					})) || null,
-				isAffected: appeal.lpaQuestionnaire?.isAffectingNeighbouringSites
-			},
 			planningApplicationReference: appeal.planningApplicationReference,
 			procedureType: appeal.lpaQuestionnaire?.procedureType?.name || 'Written',
 			siteVisit: {

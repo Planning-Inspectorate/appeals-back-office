@@ -89,20 +89,10 @@ exports[`appeal-details GET /:appealId Costs should render an LPA costs row in t
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
                             <dd                             class="govuk-summary-list__value">Yes</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/change-appeal-details/neighbouring-site-is-affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/neighbouring-sites/change/affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
-                            <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/change-appeal-details/neighbouring-site-address-0"> Change<span class="govuk-visually-hidden"> neighbour address 1</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
-                            <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/change-appeal-details/neighbouring-site-address-1"> Change<span class="govuk-visually-hidden"> neighbour address 2</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list govuk-list--bullet">
                                     <li>1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -110,9 +100,24 @@ exports[`appeal-details GET /:appealId Costs should render an LPA costs row in t
                                 </dd>
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/3/neighbouring-sites/manage"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A)</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/3/neighbouring-sites/add/lpa"> Add<span class="govuk-visually-hidden"> Neighbouring sites (LPA)</span></a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                            <dd                             class="govuk-summary-list__value">
+                                <ul class="govuk-list govuk-list--bullet">
+                                    <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
+                                </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/3/neighbouring-sites/manage"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
                                         </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/3/neighbouring-sites/add"> Add<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/3/neighbouring-sites/add/back-office"> Add<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
                                         </li>
                                     </ul>
                                 </dd>
@@ -373,20 +378,10 @@ exports[`appeal-details GET /:appealId Costs should render an LPA costs row in t
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
                             <dd                             class="govuk-summary-list__value">Yes</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/neighbouring-site-is-affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/change/affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
-                            <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/neighbouring-site-address-0"> Change<span class="govuk-visually-hidden"> neighbour address 1</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
-                            <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/neighbouring-site-address-1"> Change<span class="govuk-visually-hidden"> neighbour address 2</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list govuk-list--bullet">
                                     <li>1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -394,9 +389,24 @@ exports[`appeal-details GET /:appealId Costs should render an LPA costs row in t
                                 </dd>
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A)</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/lpa"> Add<span class="govuk-visually-hidden"> Neighbouring sites (LPA)</span></a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                            <dd                             class="govuk-summary-list__value">
+                                <ul class="govuk-list govuk-list--bullet">
+                                    <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
+                                </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
                                         </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add"> Add<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/back-office"> Add<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
                                         </li>
                                     </ul>
                                 </dd>
@@ -655,20 +665,10 @@ exports[`appeal-details GET /:appealId Costs should render an appellant costs ro
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
                             <dd                             class="govuk-summary-list__value">Yes</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/change-appeal-details/neighbouring-site-is-affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/neighbouring-sites/change/affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
-                            <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/change-appeal-details/neighbouring-site-address-0"> Change<span class="govuk-visually-hidden"> neighbour address 1</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
-                            <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/change-appeal-details/neighbouring-site-address-1"> Change<span class="govuk-visually-hidden"> neighbour address 2</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list govuk-list--bullet">
                                     <li>1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -676,9 +676,24 @@ exports[`appeal-details GET /:appealId Costs should render an appellant costs ro
                                 </dd>
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/3/neighbouring-sites/manage"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A)</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/3/neighbouring-sites/add/lpa"> Add<span class="govuk-visually-hidden"> Neighbouring sites (LPA)</span></a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                            <dd                             class="govuk-summary-list__value">
+                                <ul class="govuk-list govuk-list--bullet">
+                                    <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
+                                </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/3/neighbouring-sites/manage"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
                                         </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/3/neighbouring-sites/add"> Add<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/3/neighbouring-sites/add/back-office"> Add<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
                                         </li>
                                     </ul>
                                 </dd>
@@ -939,20 +954,10 @@ exports[`appeal-details GET /:appealId Costs should render an appellant costs ro
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
                             <dd                             class="govuk-summary-list__value">Yes</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/neighbouring-site-is-affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/change/affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
-                            <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/neighbouring-site-address-0"> Change<span class="govuk-visually-hidden"> neighbour address 1</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
-                            <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/neighbouring-site-address-1"> Change<span class="govuk-visually-hidden"> neighbour address 2</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list govuk-list--bullet">
                                     <li>1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -960,9 +965,24 @@ exports[`appeal-details GET /:appealId Costs should render an appellant costs ro
                                 </dd>
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A)</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/lpa"> Add<span class="govuk-visually-hidden"> Neighbouring sites (LPA)</span></a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                            <dd                             class="govuk-summary-list__value">
+                                <ul class="govuk-list govuk-list--bullet">
+                                    <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
+                                </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
                                         </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add"> Add<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/back-office"> Add<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
                                         </li>
                                     </ul>
                                 </dd>
@@ -1167,38 +1187,38 @@ exports[`appeal-details GET /:appealId Notification banners should render a "Hor
 </div>"
 `;
 
-exports[`appeal-details GET /:appealId Notification banners should render a "Inspector or third party neighbouring site added" success notification banner when an inspector/3rd party neighbouring site was added 1`] = `
+exports[`appeal-details GET /:appealId Notification banners should render a "Neighbouring site added" success notification banner when an inspector/3rd party neighbouring site was added 1`] = `
 "<div class="govuk-notification-banner govuk-notification-banner--success"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
     </div>
     <div class="govuk-notification-banner__content">
-        <p class="govuk-notification-banner__heading">Inspector or third party neighbouring site added</p>
+        <p class="govuk-notification-banner__heading">Neighbouring site added</p>
     </div>
 </div>"
 `;
 
-exports[`appeal-details GET /:appealId Notification banners should render a "Inspector or third party neighbouring site removed" success notification banner when an inspector/3rd party neighbouring site was removed 1`] = `
+exports[`appeal-details GET /:appealId Notification banners should render a "Neighbouring site removed" success notification banner when an inspector/3rd party neighbouring site was removed 1`] = `
 "<div class="govuk-notification-banner govuk-notification-banner--success"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
     </div>
     <div class="govuk-notification-banner__content">
-        <p class="govuk-notification-banner__heading">Inspector or third party neighbouring site removed</p>
+        <p class="govuk-notification-banner__heading">Neighbouring site removed</p>
     </div>
 </div>"
 `;
 
-exports[`appeal-details GET /:appealId Notification banners should render a "Inspector or third party neighbouring site updated" success notification banner when an inspector/3rd party neighbouring site was updated 1`] = `
+exports[`appeal-details GET /:appealId Notification banners should render a "Neighbouring site updated" success notification banner when an inspector/3rd party neighbouring site was updated 1`] = `
 "<div class="govuk-notification-banner govuk-notification-banner--success"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
     </div>
     <div class="govuk-notification-banner__content">
-        <p class="govuk-notification-banner__heading">Inspector or third party neighbouring site updated</p>
+        <p class="govuk-notification-banner__heading">Neighbouring site updated</p>
     </div>
 </div>"
 `;
@@ -1309,6 +1329,18 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
     </div>
     <div class="govuk-notification-banner__content">
         <p class="govuk-notification-banner__heading">LPA application reference updated</p>
+    </div>
+</div>"
+`;
+
+exports[`appeal-details GET /:appealId Notification banners should render a success notification banner when the neighbouring site affected value is updated 1`] = `
+"<div class="govuk-notification-banner govuk-notification-banner--success"
+role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
+    </div>
+    <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">Neighbouring site affected status updated</p>
     </div>
 </div>"
 `;
@@ -1470,20 +1502,10 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
                             <dd                             class="govuk-summary-list__value">Yes</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/neighbouring-site-is-affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/change/affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
-                            <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/neighbouring-site-address-0"> Change<span class="govuk-visually-hidden"> neighbour address 1</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
-                            <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/neighbouring-site-address-1"> Change<span class="govuk-visually-hidden"> neighbour address 2</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list govuk-list--bullet">
                                     <li>1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -1491,9 +1513,24 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                                 </dd>
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A)</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/lpa"> Add<span class="govuk-visually-hidden"> Neighbouring sites (LPA)</span></a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                            <dd                             class="govuk-summary-list__value">
+                                <ul class="govuk-list govuk-list--bullet">
+                                    <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
+                                </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
                                         </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add"> Add<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/back-office"> Add<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
                                         </li>
                                     </ul>
                                 </dd>
@@ -1767,20 +1804,10 @@ exports[`appeal-details GET /:appealId should render a Issue a decision action b
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
                             <dd                             class="govuk-summary-list__value">Yes</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/neighbouring-site-is-affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/change/affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
-                            <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/neighbouring-site-address-0"> Change<span class="govuk-visually-hidden"> neighbour address 1</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
-                            <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/neighbouring-site-address-1"> Change<span class="govuk-visually-hidden"> neighbour address 2</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list govuk-list--bullet">
                                     <li>1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -1788,9 +1815,24 @@ exports[`appeal-details GET /:appealId should render a Issue a decision action b
                                 </dd>
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A)</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/lpa"> Add<span class="govuk-visually-hidden"> Neighbouring sites (LPA)</span></a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                            <dd                             class="govuk-summary-list__value">
+                                <ul class="govuk-list govuk-list--bullet">
+                                    <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
+                                </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
                                         </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add"> Add<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/back-office"> Add<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
                                         </li>
                                     </ul>
                                 </dd>
@@ -2054,20 +2096,10 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
                             <dd                             class="govuk-summary-list__value">Yes</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/neighbouring-site-is-affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/change/affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
-                            <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/neighbouring-site-address-0"> Change<span class="govuk-visually-hidden"> neighbour address 1</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
-                            <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/neighbouring-site-address-1"> Change<span class="govuk-visually-hidden"> neighbour address 2</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list govuk-list--bullet">
                                     <li>1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -2075,9 +2107,24 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                                 </dd>
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/manage"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A)</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add/lpa"> Add<span class="govuk-visually-hidden"> Neighbouring sites (LPA)</span></a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                            <dd                             class="govuk-summary-list__value">
+                                <ul class="govuk-list govuk-list--bullet">
+                                    <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
+                                </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/manage"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
                                         </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add"> Add<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add/back-office"> Add<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
                                         </li>
                                     </ul>
                                 </dd>
@@ -2342,20 +2389,10 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
                             <dd                             class="govuk-summary-list__value">Yes</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/neighbouring-site-is-affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/change/affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
-                            <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/neighbouring-site-address-0"> Change<span class="govuk-visually-hidden"> neighbour address 1</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
-                            <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/neighbouring-site-address-1"> Change<span class="govuk-visually-hidden"> neighbour address 2</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list govuk-list--bullet">
                                     <li>1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -2363,9 +2400,24 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                                 </dd>
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/manage"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A)</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add/lpa"> Add<span class="govuk-visually-hidden"> Neighbouring sites (LPA)</span></a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                            <dd                             class="govuk-summary-list__value">
+                                <ul class="govuk-list govuk-list--bullet">
+                                    <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
+                                </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/manage"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
                                         </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add"> Add<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add/back-office"> Add<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
                                         </li>
                                     </ul>
                                 </dd>
@@ -2645,20 +2697,10 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
                             <dd                             class="govuk-summary-list__value">Yes</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/neighbouring-site-is-affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/change/affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
-                            <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/neighbouring-site-address-0"> Change<span class="govuk-visually-hidden"> neighbour address 1</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
-                            <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/neighbouring-site-address-1"> Change<span class="govuk-visually-hidden"> neighbour address 2</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list govuk-list--bullet">
                                     <li>1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -2666,9 +2708,24 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
                                 </dd>
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/manage"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A)</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add/lpa"> Add<span class="govuk-visually-hidden"> Neighbouring sites (LPA)</span></a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                            <dd                             class="govuk-summary-list__value">
+                                <ul class="govuk-list govuk-list--bullet">
+                                    <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
+                                </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/manage"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
                                         </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add"> Add<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add/back-office"> Add<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
                                         </li>
                                     </ul>
                                 </dd>
@@ -2927,20 +2984,10 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
                             <dd                             class="govuk-summary-list__value">Yes</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/neighbouring-site-is-affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/change/affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
-                            <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/neighbouring-site-address-0"> Change<span class="govuk-visually-hidden"> neighbour address 1</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
-                            <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/neighbouring-site-address-1"> Change<span class="govuk-visually-hidden"> neighbour address 2</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list govuk-list--bullet">
                                     <li>1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -2948,9 +2995,24 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                                 </dd>
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/manage"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A)</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add/lpa"> Add<span class="govuk-visually-hidden"> Neighbouring sites (LPA)</span></a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                            <dd                             class="govuk-summary-list__value">
+                                <ul class="govuk-list govuk-list--bullet">
+                                    <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
+                                </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/manage"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
                                         </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add"> Add<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add/back-office"> Add<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
                                         </li>
                                     </ul>
                                 </dd>
@@ -3209,20 +3271,10 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
                             <dd                             class="govuk-summary-list__value">Yes</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/neighbouring-site-is-affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/change/affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
-                            <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/neighbouring-site-address-0"> Change<span class="govuk-visually-hidden"> neighbour address 1</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
-                            <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/neighbouring-site-address-1"> Change<span class="govuk-visually-hidden"> neighbour address 2</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list govuk-list--bullet">
                                     <li>1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -3230,9 +3282,24 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                                 </dd>
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A)</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/lpa"> Add<span class="govuk-visually-hidden"> Neighbouring sites (LPA)</span></a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                            <dd                             class="govuk-summary-list__value">
+                                <ul class="govuk-list govuk-list--bullet">
+                                    <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
+                                </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
                                         </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add"> Add<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/back-office"> Add<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
                                         </li>
                                     </ul>
                                 </dd>
@@ -3492,20 +3559,10 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
                             <dd                             class="govuk-summary-list__value">Yes</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/neighbouring-site-is-affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/change/affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
-                            <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/neighbouring-site-address-0"> Change<span class="govuk-visually-hidden"> neighbour address 1</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
-                            <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/neighbouring-site-address-1"> Change<span class="govuk-visually-hidden"> neighbour address 2</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list govuk-list--bullet">
                                     <li>1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -3513,9 +3570,24 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                                 </dd>
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A)</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/lpa"> Add<span class="govuk-visually-hidden"> Neighbouring sites (LPA)</span></a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                            <dd                             class="govuk-summary-list__value">
+                                <ul class="govuk-list govuk-list--bullet">
+                                    <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
+                                </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
                                         </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add"> Add<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/back-office"> Add<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
                                         </li>
                                     </ul>
                                 </dd>
@@ -3775,20 +3847,10 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
                             <dd                             class="govuk-summary-list__value">Yes</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/neighbouring-site-is-affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/change/affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
-                            <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/neighbouring-site-address-0"> Change<span class="govuk-visually-hidden"> neighbour address 1</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
-                            <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/neighbouring-site-address-1"> Change<span class="govuk-visually-hidden"> neighbour address 2</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list govuk-list--bullet">
                                     <li>1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -3796,9 +3858,24 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                                 </dd>
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A)</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/lpa"> Add<span class="govuk-visually-hidden"> Neighbouring sites (LPA)</span></a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                            <dd                             class="govuk-summary-list__value">
+                                <ul class="govuk-list govuk-list--bullet">
+                                    <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
+                                </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
                                         </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add"> Add<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/back-office"> Add<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
                                         </li>
                                     </ul>
                                 </dd>
@@ -4066,20 +4143,10 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
                             <dd                             class="govuk-summary-list__value">Yes</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/neighbouring-site-is-affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/change/affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
-                            <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/neighbouring-site-address-0"> Change<span class="govuk-visually-hidden"> neighbour address 1</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
-                            <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/neighbouring-site-address-1"> Change<span class="govuk-visually-hidden"> neighbour address 2</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list govuk-list--bullet">
                                     <li>1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -4087,9 +4154,24 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                                 </dd>
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/manage"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A)</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add/lpa"> Add<span class="govuk-visually-hidden"> Neighbouring sites (LPA)</span></a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                            <dd                             class="govuk-summary-list__value">
+                                <ul class="govuk-list govuk-list--bullet">
+                                    <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
+                                </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/manage"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
                                         </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add"> Add<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add/back-office"> Add<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
                                         </li>
                                     </ul>
                                 </dd>
@@ -4496,20 +4578,10 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
                             <dd                             class="govuk-summary-list__value">Yes</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/neighbouring-site-is-affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/change/affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
-                            <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/neighbouring-site-address-0"> Change<span class="govuk-visually-hidden"> neighbour address 1</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
-                            <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/neighbouring-site-address-1"> Change<span class="govuk-visually-hidden"> neighbour address 2</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list govuk-list--bullet">
                                     <li>1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -4517,9 +4589,24 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                                 </dd>
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/manage"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A)</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add/lpa"> Add<span class="govuk-visually-hidden"> Neighbouring sites (LPA)</span></a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                            <dd                             class="govuk-summary-list__value">
+                                <ul class="govuk-list govuk-list--bullet">
+                                    <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
+                                </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/manage"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
                                         </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add"> Add<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add/back-office"> Add<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
                                         </li>
                                     </ul>
                                 </dd>
@@ -4778,20 +4865,10 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
                             <dd                             class="govuk-summary-list__value">Yes</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/neighbouring-site-is-affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/change/affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
-                            <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/neighbouring-site-address-0"> Change<span class="govuk-visually-hidden"> neighbour address 1</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
-                            <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/neighbouring-site-address-1"> Change<span class="govuk-visually-hidden"> neighbour address 2</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list govuk-list--bullet">
                                     <li>1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -4799,9 +4876,24 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                 </dd>
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/manage"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A)</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add/lpa"> Add<span class="govuk-visually-hidden"> Neighbouring sites (LPA)</span></a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                            <dd                             class="govuk-summary-list__value">
+                                <ul class="govuk-list govuk-list--bullet">
+                                    <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
+                                </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/manage"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
                                         </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add"> Add<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add/back-office"> Add<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
                                         </li>
                                     </ul>
                                 </dd>
@@ -5060,20 +5152,10 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
                             <dd                             class="govuk-summary-list__value">Yes</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/change-appeal-details/neighbouring-site-is-affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/neighbouring-sites/change/affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
-                            <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/change-appeal-details/neighbouring-site-address-0"> Change<span class="govuk-visually-hidden"> neighbour address 1</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
-                            <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/change-appeal-details/neighbouring-site-address-1"> Change<span class="govuk-visually-hidden"> neighbour address 2</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list govuk-list--bullet">
                                     <li>1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -5081,9 +5163,24 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                 </dd>
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/3/neighbouring-sites/manage"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A)</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/3/neighbouring-sites/add/lpa"> Add<span class="govuk-visually-hidden"> Neighbouring sites (LPA)</span></a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                            <dd                             class="govuk-summary-list__value">
+                                <ul class="govuk-list govuk-list--bullet">
+                                    <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
+                                </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/3/neighbouring-sites/manage"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
                                         </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/3/neighbouring-sites/add"> Add<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/3/neighbouring-sites/add/back-office"> Add<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
                                         </li>
                                     </ul>
                                 </dd>
@@ -5356,20 +5453,10 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
                             <dd                             class="govuk-summary-list__value">Yes</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/neighbouring-site-is-affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/change/affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
-                            <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/neighbouring-site-address-0"> Change<span class="govuk-visually-hidden"> neighbour address 1</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
-                            <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/neighbouring-site-address-1"> Change<span class="govuk-visually-hidden"> neighbour address 2</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list govuk-list--bullet">
                                     <li>1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -5377,9 +5464,24 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                 </dd>
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A)</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/lpa"> Add<span class="govuk-visually-hidden"> Neighbouring sites (LPA)</span></a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                            <dd                             class="govuk-summary-list__value">
+                                <ul class="govuk-list govuk-list--bullet">
+                                    <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
+                                </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
                                         </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add"> Add<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/back-office"> Add<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
                                         </li>
                                     </ul>
                                 </dd>
@@ -5638,20 +5740,10 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
                             <dd                             class="govuk-summary-list__value">Yes</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/neighbouring-site-is-affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/change/affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
-                            <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/neighbouring-site-address-0"> Change<span class="govuk-visually-hidden"> neighbour address 1</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
-                            <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/neighbouring-site-address-1"> Change<span class="govuk-visually-hidden"> neighbour address 2</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list govuk-list--bullet">
                                     <li>1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -5659,9 +5751,24 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                 </dd>
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A)</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/lpa"> Add<span class="govuk-visually-hidden"> Neighbouring sites (LPA)</span></a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                            <dd                             class="govuk-summary-list__value">
+                                <ul class="govuk-list govuk-list--bullet">
+                                    <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
+                                </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
                                         </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add"> Add<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/back-office"> Add<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
                                         </li>
                                     </ul>
                                 </dd>
@@ -6046,20 +6153,10 @@ exports[`appeal-details should not render a back button 1`] = `
                                     </div>
                                     <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
                                         <dd                                         class="govuk-summary-list__value">Yes</dd>
-                                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/neighbouring-site-is-affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
+                                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/change/affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
                                             </dd>
                                     </div>
-                                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-0"><dt class="govuk-summary-list__key"> Neighbour address 1</dt>
-                                        <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/neighbouring-site-address-0"> Change<span class="govuk-visually-hidden"> neighbour address 1</span></a>
-                                        </dd>
-                                    </div>
-                                    <div class="govuk-summary-list__row appeal-neighbouring-site-address appeal-neighbouring-site-address-1"><dt class="govuk-summary-list__key"> Neighbour address 2</dt>
-                                        <dd class="govuk-summary-list__value">FOR TRAINERS ONLY, 96 The Avenue, Kent, MD21 5XY</dd>
-                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/neighbouring-site-address-1"> Change<span class="govuk-visually-hidden"> neighbour address 2</span></a>
-                                        </dd>
-                                    </div>
-                                    <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                    <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                                         <dd                                         class="govuk-summary-list__value">
                                             <ul class="govuk-list govuk-list--bullet">
                                                 <li>1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -6067,9 +6164,24 @@ exports[`appeal-details should not render a back button 1`] = `
                                             </dd>
                                             <dd class="govuk-summary-list__actions">
                                                 <ul class="govuk-summary-list__actions-list">
+                                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A)</span></a>
+                                                    </li>
+                                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/lpa"> Add<span class="govuk-visually-hidden"> Neighbouring sites (LPA)</span></a>
+                                                    </li>
+                                                </ul>
+                                            </dd>
+                                    </div>
+                                    <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                        <dd                                         class="govuk-summary-list__value">
+                                            <ul class="govuk-list govuk-list--bullet">
+                                                <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
+                                            </ul>
+                                            </dd>
+                                            <dd class="govuk-summary-list__actions">
+                                                <ul class="govuk-summary-list__actions-list">
                                                     <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
                                                     </li>
-                                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add"> Add<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
+                                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/back-office"> Add<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
                                                     </li>
                                                 </ul>
                                             </dd>

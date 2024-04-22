@@ -211,21 +211,7 @@ export const spec = {
 			],
 			localPlanningDepartment: 'Wiltshire Council',
 			lpaQuestionnaireId: 1,
-			neighbouringSite: {
-				contacts: [
-					{
-						address: {
-							addressLine1: '1 Grove Cottage',
-							addressLine2: 'Shotesham Road',
-							postCode: 'NR35 2ND',
-							town: 'Woodton'
-						},
-						firstName: 'Fiona',
-						lastName: 'Burgess'
-					}
-				],
-				isAffected: true
-			},
+			isAffectingNeighbouringSites: true,
 			otherAppeals: [
 				{
 					appealId: 1,
@@ -443,19 +429,6 @@ export const spec = {
 			],
 			lpaQuestionnaireId: 1,
 			meetsOrExceedsThresholdOrCriteriaInColumn2: true,
-			neighbouringSiteContacts: [
-				{
-					address: {
-						addressLine1: '44 Rivervale',
-						town: 'Bridport',
-						postCode: 'DT6 5RN'
-					},
-					email: 'eva.sharma@example.com',
-					firstName: 'Eva',
-					lastName: 'Sharma',
-					telephone: '01234567891'
-				}
-			],
 			otherAppeals: [
 				{
 					appealId: 1,

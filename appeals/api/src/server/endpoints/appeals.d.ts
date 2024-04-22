@@ -205,7 +205,6 @@ interface SingleLPAQuestionnaireResponse {
 	lpaNotificationMethods?: LPANotificationMethodDetails[] | null;
 	lpaQuestionnaireId?: number;
 	meetsOrExceedsThresholdOrCriteriaInColumn2?: boolean | null;
-	neighbouringSiteContacts: NeighbouringSiteContactsResponse[] | null;
 	otherAppeals: string[];
 	procedureType?: string;
 	scheduleType?: string;
@@ -213,12 +212,6 @@ interface SingleLPAQuestionnaireResponse {
 	siteWithinGreenBelt?: boolean | null;
 	statutoryConsulteesDetails?: string | null;
 	validation: ValidationOutcomeResponse | null;
-}
-
-interface NeighbouringSiteContactsResponse {
-	address: AppealSite;
-	firstName: string | null;
-	lastName: string | null;
 }
 
 interface SingleAppealDetailsResponse {
@@ -297,10 +290,7 @@ interface SingleAppealDetailsResponse {
 	otherAppeals: RelatedAppeal[];
 	localPlanningDepartment: string;
 	lpaQuestionnaireId: number | null;
-	neighbouringSite: {
-		contacts: NeighbouringSiteContactsResponse[] | null;
-		isAffected: boolean | null;
-	};
+	isAffectingNeighbouringSites: boolean | null;
 	neighbouringSites: Schema.NeighbouringSite[] | null;
 	planningApplicationReference: string;
 	procedureType: string | null;
@@ -551,6 +541,7 @@ interface UpdateLPAQuestionnaireRequest {
 	hasTreePreservationOrder?: boolean;
 	includesScreeningOption?: boolean;
 	incompleteReasons?: IncompleteInvalidReasons;
+	isAffectingNeighbouringSites?: boolean;
 	isConservationArea?: boolean;
 	isEnvironmentalStatementRequired?: boolean;
 	isGypsyOrTravellerSite?: boolean;

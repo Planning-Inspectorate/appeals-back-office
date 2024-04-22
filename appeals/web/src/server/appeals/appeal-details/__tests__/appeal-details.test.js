@@ -133,7 +133,7 @@ describe('appeal-details', () => {
 				//expect(insetTextElementHTML).toMatch("<a href=")
 			});
 
-			it('should render a "Inspector or third party neighbouring site added" success notification banner when an inspector/3rd party neighbouring site was added', async () => {
+			it('should render a "Neighbouring site added" success notification banner when an inspector/3rd party neighbouring site was added', async () => {
 				const appealReference = '1';
 
 				nock.cleanAll();
@@ -152,7 +152,7 @@ describe('appeal-details', () => {
 					});
 				nock('http://test/').get(`/appeals/${appealData.appealId}`).reply(200, appealData);
 
-				await request.post(`${baseUrl}/1/neighbouring-sites/add`).send({
+				await request.post(`${baseUrl}/1/neighbouring-sites/add/back-office`).send({
 					addressLine1: '1 Grove Cottage',
 					addressLine2: null,
 					county: 'Devon',
@@ -160,20 +160,18 @@ describe('appeal-details', () => {
 					town: 'Woodton'
 				});
 
-				await request.post(`${baseUrl}/1/neighbouring-sites/add/check-and-confirm`);
+				await request.post(`${baseUrl}/1/neighbouring-sites/add/back-office/check-and-confirm`);
 
 				const response = await request.get(`${baseUrl}/${appealData.appealId}`);
 				const notificationBannerElementHTML = parseHtml(response.text, {
 					rootElement: notificationBannerElement
 				}).innerHTML;
 				expect(notificationBannerElementHTML).toMatchSnapshot();
-				expect(notificationBannerElementHTML).toContain(
-					'Inspector or third party neighbouring site added'
-				);
+				expect(notificationBannerElementHTML).toContain('Neighbouring site added');
 				expect(notificationBannerElementHTML).toContain('Success');
 			});
 
-			it('should render a "Inspector or third party neighbouring site updated" success notification banner when an inspector/3rd party neighbouring site was updated', async () => {
+			it('should render a "Neighbouring site updated" success notification banner when an inspector/3rd party neighbouring site was updated', async () => {
 				const appealReference = '1';
 
 				nock.cleanAll();
@@ -182,7 +180,7 @@ describe('appeal-details', () => {
 				});
 				nock('http://test/').get(`/appeals/${appealData.appealId}`).reply(200, appealData);
 
-				await request.post(`${baseUrl}/1/neighbouring-sites/change/1`).send({
+				await request.post(`${baseUrl}/1/neighbouring-sites/change/site/1`).send({
 					addressLine1: '2 Grove Cottage',
 					addressLine2: null,
 					county: 'Devon',
@@ -190,20 +188,18 @@ describe('appeal-details', () => {
 					town: 'Woodton'
 				});
 
-				await request.post(`${baseUrl}/1/neighbouring-sites/change/1/check-and-confirm`);
+				await request.post(`${baseUrl}/1/neighbouring-sites/change/site/1/check-and-confirm`);
 
 				const response = await request.get(`${baseUrl}/${appealData.appealId}`);
 				const notificationBannerElementHTML = parseHtml(response.text, {
 					rootElement: notificationBannerElement
 				}).innerHTML;
 				expect(notificationBannerElementHTML).toMatchSnapshot();
-				expect(notificationBannerElementHTML).toContain(
-					'Inspector or third party neighbouring site updated'
-				);
+				expect(notificationBannerElementHTML).toContain('Neighbouring site updated');
 				expect(notificationBannerElementHTML).toContain('Success');
 			});
 
-			it('should render a "Inspector or third party neighbouring site removed" success notification banner when an inspector/3rd party neighbouring site was removed', async () => {
+			it('should render a "Neighbouring site removed" success notification banner when an inspector/3rd party neighbouring site was removed', async () => {
 				const appealReference = '1';
 
 				nock.cleanAll();
@@ -212,7 +208,7 @@ describe('appeal-details', () => {
 				});
 				nock('http://test/').get(`/appeals/${appealData.appealId}`).reply(200, appealData);
 
-				await request.post(`${baseUrl}/1/neighbouring-sites/remove/1`).send({
+				await request.post(`${baseUrl}/1/neighbouring-sites/remove/site/1`).send({
 					'remove-neighbouring-site': 'yes'
 				});
 
@@ -223,9 +219,7 @@ describe('appeal-details', () => {
 				}).innerHTML;
 				expect(notificationBannerElementHTML).toMatchSnapshot();
 				expect(notificationBannerElementHTML).toContain('Success');
-				expect(notificationBannerElementHTML).toContain(
-					'Inspector or third party neighbouring site removed'
-				);
+				expect(notificationBannerElementHTML).toContain('Neighbouring site removed');
 			});
 
 			it('should render a "This appeal is now the lead for appeal" success notification banner when the appeal was successfully linked as the lead of a back-office appeal', async () => {
@@ -505,7 +499,7 @@ describe('appeal-details', () => {
 					expect(notificationBannerElementHTML).toMatchSnapshot();
 					expect(notificationBannerElementHTML).toContain('Agent details updated');
 				} catch (error) {
-					console.log('There are no notification banner elements in the html', error);
+					logger.error('There are no notification banner elements in the html', error);
 				}
 			});
 
@@ -530,6 +524,34 @@ describe('appeal-details', () => {
 					}).innerHTML;
 					expect(notificationBannerElementHTML).toMatchSnapshot();
 					expect(notificationBannerElementHTML).toContain('LPA application reference updated');
+				} catch (error) {
+					logger.error('There are no notification banner elements in the html', error);
+				}
+			});
+
+			it('should render a success notification banner when the neighbouring site affected value is updated', async () => {
+				const appealId = appealData.appealId;
+				const lpaQuestionnaireId = appealData.lpaQuestionnaireId;
+
+				nock('http://test/')
+					.patch(`/appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`)
+					.reply(200, {});
+
+				await request.get(`${baseUrl}/${appealId}/neighbouring-sites/change/affected`);
+
+				await request
+					.post(`${baseUrl}/${appealId}/neighbouring-sites/change/affected`)
+					.send({ neighbouringSiteAffected: 'yes' });
+
+				const caseDetailsResponse = await request.get(`${baseUrl}/1`);
+				try {
+					const notificationBannerElementHTML = parseHtml(caseDetailsResponse.text, {
+						rootElement: notificationBannerElement
+					}).innerHTML;
+					expect(notificationBannerElementHTML).toMatchSnapshot();
+					expect(notificationBannerElementHTML).toContain(
+						'Neighbouring site affected status updated'
+					);
 				} catch (error) {
 					logger.error('There are no notification banner elements in the html', error);
 				}

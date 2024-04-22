@@ -1,6 +1,5 @@
 import isFPA from '#utils/is-fpa.js';
 import formatValidationOutcomeResponse from '#utils/format-validation-outcome-response.js';
-import formatNeighbouringSiteContacts from '#utils/format-neighbouring-site-contacts.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.RepositoryGetByIdResultItem} RepositoryGetByIdResultItem */
 /** @typedef {import('@pins/appeals.api').Appeals.SingleLPAQuestionnaireResponse} SingleLPAQuestionnaireResponse */
@@ -103,9 +102,6 @@ export const baseExpectedLPAQuestionnaireResponse = (appeal) => ({
 	lpaQuestionnaireId: appeal.lpaQuestionnaire?.id,
 	meetsOrExceedsThresholdOrCriteriaInColumn2:
 		appeal.lpaQuestionnaire?.meetsOrExceedsThresholdOrCriteriaInColumn2,
-	neighbouringSiteContacts: formatNeighbouringSiteContacts(
-		appeal.lpaQuestionnaire?.neighbouringSiteContact
-	),
 	procedureType: appeal.lpaQuestionnaire?.procedureType?.name,
 	scheduleType: appeal.lpaQuestionnaire?.scheduleType?.name,
 	siteWithinGreenBelt: appeal.lpaQuestionnaire?.siteWithinGreenBelt,

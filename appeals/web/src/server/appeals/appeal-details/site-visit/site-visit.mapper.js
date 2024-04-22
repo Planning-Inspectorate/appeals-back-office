@@ -2,7 +2,6 @@ import { initialiseAndMapAppealData } from '#lib/mappers/appeal.mapper.js';
 import { removeSummaryListActions } from '#lib/mappers/mapper-utilities.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
-import { isDefined } from '#lib/ts-utilities.js';
 import { capitalize } from 'lodash-es';
 import {
 	dateToDisplayDate,
@@ -105,10 +104,6 @@ export async function scheduleOrManageSiteVisitPage(
 	/**
 	 * @type {(SummaryListRowProperties)[]}
 	 */
-	const neighbouringSitesSummaryLists = Object.keys(mappedData.appeal)
-		.filter((key) => key.indexOf('neighbouringSiteAddress') >= 0)
-		.map((key) => mappedData.appeal[key].display.summaryListItem)
-		.filter(isDefined);
 
 	/** @type {PageComponent} */
 	const siteInformationComponent = {
@@ -125,7 +120,8 @@ export async function scheduleOrManageSiteVisitPage(
 							mappedData.appeal.siteAddress.display.summaryListItem,
 							mappedData.appeal.lpaHealthAndSafety.display.summaryListItem,
 							mappedData.appeal.appellantHealthAndSafety.display.summaryListItem,
-							...neighbouringSitesSummaryLists
+							mappedData.appeal.lpaNeighbouringSites.display.summaryListItem,
+							mappedData.appeal.inspectorNeighbouringSites.display.summaryListItem
 						].map((row) => removeSummaryListActions(row))
 					}
 				}

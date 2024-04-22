@@ -87,7 +87,10 @@ export async function lpaQuestionnairePage(
 
 	switch (appealType) {
 		case 'Householder':
-			appealTypeSpecificPageComponents = householderLpaQuestionnairePage(mappedLpaqDetails);
+			appealTypeSpecificPageComponents = householderLpaQuestionnairePage(
+				mappedLpaqDetails,
+				mappedAppealDetails
+			);
 			break;
 		default:
 			break;
@@ -517,9 +520,10 @@ function mapNotificationBannerComponentParameters(session, lpaqData, appealId) {
 /**
  *
  * @param {{lpaq: MappedInstructions}} mappedLPAQData
+ * @param {{appeal: MappedInstructions}} mappedAppealDetails
  * @returns {PageComponent[]}
  */
-const householderLpaQuestionnairePage = (mappedLPAQData) => {
+const householderLpaQuestionnairePage = (mappedLPAQData, mappedAppealDetails) => {
 	/** @type {PageComponent[]} */
 	const pageComponents = [];
 
@@ -594,12 +598,6 @@ const householderLpaQuestionnairePage = (mappedLPAQData) => {
 		}
 	});
 
-	/** @type {SummaryListRowProperties[]} */
-	const neighbouringSitesSummaryLists = Object.keys(mappedLPAQData.lpaq)
-		.filter((key) => key.indexOf('neighbouringSiteAddress') >= 0)
-		.map((key) => mappedLPAQData.lpaq[key].display.summaryListItem)
-		.filter(isDefined);
-
 	pageComponents.push({
 		/** @type {'summary-list'} */
 		type: 'summary-list',
@@ -612,7 +610,7 @@ const householderLpaQuestionnairePage = (mappedLPAQData) => {
 			rows: [
 				mappedLPAQData.lpaq?.siteAccess?.display.summaryListItem,
 				mappedLPAQData.lpaq?.isAffectingNeighbouringSites?.display.summaryListItem,
-				...neighbouringSitesSummaryLists,
+				mappedAppealDetails.appeal.lpaNeighbouringSites?.display.summaryListItem,
 				mappedLPAQData.lpaq?.lpaHealthAndSafety?.display.summaryListItem
 			].filter(isDefined)
 		}

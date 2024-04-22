@@ -176,26 +176,6 @@ export const householdAppeal = {
 			}
 		],
 		meetsOrExceedsThresholdOrCriteriaInColumn2: null,
-		neighbouringSiteContact: [
-			{
-				addressId: 1,
-				firstName: 'Eva',
-				id: 1,
-				lastName: 'Sharma',
-				lpaQuestionnaireId: 1,
-				telephone: '01234567891',
-				email: 'eva.sharma@example.com',
-				address: {
-					id: 1,
-					addressLine1: '44 Rivervale',
-					addressLine2: null,
-					addressTown: 'Bridport',
-					postcode: 'DT6 5RN',
-					addressCounty: null,
-					addressCountry: null
-				}
-			}
-		],
 		procedureType: {
 			name: 'Written'
 		},

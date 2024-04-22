@@ -2,6 +2,7 @@ import { getAppealDetailsFromId } from '../appeal-details.service.js';
 import {
 	addNeighbouringSiteCheckAndConfirmPage,
 	addNeighbouringSitePage,
+	changeNeighbouringSiteAffectedPage,
 	changeNeighbouringSiteCheckAndConfirmPage,
 	changeNeighbouringSitePage,
 	manageNeighbouringSitesPage,
@@ -11,6 +12,7 @@ import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import {
 	addNeighbouringSite,
 	changeNeighbouringSite,
+	changeNeighbouringSiteAffected,
 	removeNeighbouringSite
 } from './neighbouring-sites.service.js';
 import logger from '#lib/logger.js';
@@ -31,13 +33,21 @@ export const getAddNeighbouringSite = async (request, response) => {
 const renderAddNeighbouringSite = async (request, response) => {
 	const {
 		errors,
-		params: { appealId }
+		params: { appealId, source }
 	} = request;
+
+	const currentUrl = request.originalUrl;
+
+	//Removes /neighbouring-sites/change/affected from the route to take us back to origin (ie LPA questionnaire page or appeals details)
+	const origin = currentUrl.split('/').slice(0, -3).join('/');
 
 	const appealsDetails = await getAppealDetailsFromId(request.apiClient, appealId);
 
 	const mappedPageContents = addNeighbouringSitePage(
 		appealsDetails,
+		// @ts-ignore
+		source,
+		origin,
 		request.session.neighbouringSite,
 		errors
 	);
@@ -61,16 +71,19 @@ export const postAddNeighbouringSite = async (request, response) => {
 		postCode: request.body['postCode']
 	};
 
+	const currentUrl = request.originalUrl;
+
+	//Removes /neighbouring-sites/change/affected from the route to take us back to origin (ie LPA questionnaire page or appeals details)
+	const origin = currentUrl.split('/').slice(0, -3).join('/');
+
 	if (request.errors) {
 		return renderAddNeighbouringSite(request, response);
 	}
 	const {
-		params: { appealId }
+		params: { source }
 	} = request;
 
-	return response.redirect(
-		`/appeals-service/appeal-details/${appealId}/neighbouring-sites/add/check-and-confirm`
-	);
+	return response.redirect(`${origin}/neighbouring-sites/add/${source}/check-and-confirm`);
 };
 
 /**
@@ -88,7 +101,7 @@ export const getAddNeighbouringSiteCheckAndConfirm = async (request, response) =
 const renderAddNeighbouringSiteCheckAndConfirm = async (request, response) => {
 	const {
 		errors,
-		params: { appealId }
+		params: { appealId, source }
 	} = request;
 
 	if (!objectContainsAllKeys(request.session, 'neighbouringSite')) {
@@ -101,8 +114,16 @@ const renderAddNeighbouringSiteCheckAndConfirm = async (request, response) => {
 		return response.render('app/404.njk');
 	}
 
+	const currentUrl = request.originalUrl;
+
+	//Removes /neighbouring-sites/change/affected from the route to take us back to origin (ie LPA questionnaire page or appeals details)
+	const origin = currentUrl.split('/').slice(0, -4).join('/');
+
 	const mappedPageContent = addNeighbouringSiteCheckAndConfirmPage(
 		appealData,
+		// @ts-ignore
+		source,
+		origin,
 		request.session.neighbouringSite
 	);
 
@@ -122,26 +143,35 @@ export const postAddNeighbouringSiteCheckAndConfirm = async (request, response) 
 	}
 
 	const {
-		params: { appealId }
+		params: { appealId, source }
 	} = request;
 
 	if (request.errors) {
 		return renderAddNeighbouringSiteCheckAndConfirm(request, response);
 	}
 
-	try {
-		await addNeighbouringSite(request.apiClient, appealId, request.session.neighbouringSite);
+	const currentUrl = request.originalUrl;
 
+	//Removes /neighbouring-sites/change/affected from the route to take us back to origin (ie LPA questionnaire page or appeals details)
+	const origin = currentUrl.split('/').slice(0, -4).join('/');
+
+	try {
+		await addNeighbouringSite(
+			request.apiClient,
+			appealId,
+			source,
+			request.session.neighbouringSite
+		);
 		addNotificationBannerToSession(
 			request.session,
 			'neighbouringSiteAdded',
 			appealId,
-			`<p class="govuk-notification-banner__heading">Inspector or third party neighbouring site added</p>`
+			`<p class="govuk-notification-banner__heading">Neighbouring site added</p>`
 		);
 
 		delete request.session.neighbouringSite;
 
-		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
+		return response.redirect(origin);
 	} catch (error) {
 		logger.error(error);
 	}
@@ -190,9 +220,14 @@ const renderRemoveNeighbouringSite = async (request, response) => {
 		params: { appealId, siteId }
 	} = request;
 
+	const currentUrl = request.originalUrl;
+
+	//Removes /neighbouring-sites/change/affected from the route to take us back to origin (ie LPA questionnaire page or appeals details)
+	const origin = currentUrl.split('/').slice(0, -4).join('/');
+
 	const appealsDetails = await getAppealDetailsFromId(request.apiClient, appealId);
 
-	const mappedPageContents = removeNeighbouringSitePage(appealsDetails, siteId);
+	const mappedPageContents = removeNeighbouringSitePage(appealsDetails, origin, siteId);
 
 	return response.render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContents,
@@ -219,19 +254,22 @@ export const postRemoveNeighbouringSite = async (request, response) => {
 		return response.render('app/500.njk');
 	}
 
+	const currentUrl = request.originalUrl;
+
+	//Removes /neighbouring-sites/change/affected from the route to take us back to origin (ie LPA questionnaire page or appeals details)
+	const origin = currentUrl.split('/').slice(0, -4).join('/');
+
 	if (body['remove-neighbouring-site'] === 'no') {
-		return response.redirect(
-			`/appeals-service/appeal-details/${appealId}/neighbouring-sites/manage`
-		);
+		return response.redirect(`${origin}/neighbouring-sites/manage`);
 	} else if (body['remove-neighbouring-site'] === 'yes') {
 		await removeNeighbouringSite(request.apiClient, appealId, siteId);
 		addNotificationBannerToSession(
 			request.session,
 			'neighbouringSiteRemoved',
 			appealId,
-			`<p class="govuk-notification-banner__heading">Inspector or third party neighbouring site removed</p>`
+			`<p class="govuk-notification-banner__heading">Neighbouring site removed</p>`
 		);
-		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
+		return response.redirect(origin);
 	}
 	return response.render('app/500.njk');
 };
@@ -290,7 +328,7 @@ export const postChangeNeighbouringSite = async (request, response) => {
 	} = request;
 
 	return response.redirect(
-		`/appeals-service/appeal-details/${appealId}/neighbouring-sites/change/${siteId}/check-and-confirm`
+		`/appeals-service/appeal-details/${appealId}/neighbouring-sites/change/site/${siteId}/check-and-confirm`
 	);
 };
 
@@ -358,17 +396,99 @@ export const postChangeNeighbouringSiteCheckAndConfirm = async (request, respons
 			request.session.neighbouringSite,
 			siteId
 		);
-
 		addNotificationBannerToSession(
 			request.session,
 			'neighbouringSiteUpdated',
 			appealId,
-			`<p class="govuk-notification-banner__heading">Inspector or third party neighbouring site updated</p>`
+			`<p class="govuk-notification-banner__heading">Neighbouring site updated</p>`
 		);
 
 		delete request.session.neighbouringSite;
 
 		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
+	} catch (error) {
+		logger.error(error);
+	}
+
+	return response.render('app/500.njk');
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const getChangeNeighbouringSiteAffected = async (request, response) => {
+	return renderChangeNeighbouringSiteAffected(request, response);
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+const renderChangeNeighbouringSiteAffected = async (request, response) => {
+	const {
+		errors,
+		params: { appealId }
+	} = request;
+
+	const appealData = await getAppealDetailsFromId(request.apiClient, appealId);
+
+	const currentUrl = request.originalUrl;
+
+	//Removes /neighbouring-sites/change/affected from the route to take us back to origin (ie LPA questionnaire page or appeals details)
+	const origin = currentUrl.split('/').slice(0, -3).join('/');
+
+	if (!appealData) {
+		return response.render('app/404.njk');
+	}
+
+	const mappedPageContent = changeNeighbouringSiteAffectedPage(appealData, origin);
+
+	return response.render('patterns/change-page.pattern.njk', {
+		pageContent: mappedPageContent,
+		errors
+	});
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const postChangeNeighbouringSiteAffected = async (request, response) => {
+	const {
+		params: { appealId },
+		body: { neighbouringSiteAffected }
+	} = request;
+
+	if (request.errors) {
+		return renderChangeNeighbouringSiteAffected(request, response);
+	}
+
+	try {
+		const appealData = await getAppealDetailsFromId(request.apiClient, appealId);
+		const lpaQuestionnaireId = appealData.lpaQuestionnaireId?.toString();
+
+		//Removes /neighbouring-sites/change/affected from the route to take us back to origin (ie LPA questionnaire page or appeals details)
+		const currentUrl = request.originalUrl;
+		const origin = currentUrl.split('/').slice(0, -3).join('/');
+
+		await changeNeighbouringSiteAffected(
+			request.apiClient,
+			appealId,
+			lpaQuestionnaireId,
+			neighbouringSiteAffected
+		);
+
+		addNotificationBannerToSession(
+			request.session,
+			'neighbouringSiteAffected',
+			appealId,
+			`<p class="govuk-notification-banner__heading">Neighbouring site affected status updated</p>`
+		);
+
+		delete request.session.neighbouringSite;
+
+		return response.redirect(origin);
 	} catch (error) {
 		logger.error(error);
 	}

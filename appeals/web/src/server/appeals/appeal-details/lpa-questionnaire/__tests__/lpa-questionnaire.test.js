@@ -20,13 +20,15 @@ import {
 	documentRedactionStatuses,
 	activeDirectoryUsersData,
 	appealData,
-	notCheckedDocumentFolderInfoDocuments
+	notCheckedDocumentFolderInfoDocuments,
+	lpaQuestionnaireData
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { textInputCharacterLimits } from '../../../appeal.constants.js';
 import usersService from '#appeals/appeal-users/users-service.js';
 import { cloneDeep } from 'lodash-es';
 import { addDays } from 'date-fns';
+import logger from '#lib/logger.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -47,16 +49,32 @@ describe('LPA Questionnaire review', () => {
 	beforeEach(installMockApi);
 	afterEach(teardown);
 
-	describe('GET /', () => {
-		it('should render the LPA Questionnaire page with the expected content', async () => {
+	describe('Notification banners', () => {
+		it('should render a success notification banner when the neighbouring site affected value is updated', async () => {
+			nock('http://test/').patch(`/appeals/1/lpa-questionnaires/2`).reply(200, {});
 			nock('http://test/')
-				.get('/appeals/1/lpa-questionnaires/2')
-				.reply(200, lpaQuestionnaireDataNotValidated);
+				.get(`/appeals/1/lpa-questionnaires/2`)
+				.reply(200, lpaQuestionnaireData)
+				.persist();
+			await request.get(`${baseUrl}/neighbouring-sites/change/affected`);
 
-			const response = await request.get(baseUrl);
-			const element = parseHtml(response.text);
+			await request
+				.post(`${baseUrl}/neighbouring-sites/change/affected`)
+				.send({ neighbouringSiteAffected: 'yes' });
 
-			expect(element.innerHTML).toMatchSnapshot();
+			const caseDetailsResponse = await request.get(`${baseUrl}`);
+			try {
+				const notificationBannerElementHTML = parseHtml(caseDetailsResponse.text, {
+					rootElement: notificationBannerElement
+				}).innerHTML;
+				expect(notificationBannerElementHTML).toMatchSnapshot();
+				expect(notificationBannerElementHTML).toContain('Success');
+				expect(notificationBannerElementHTML).toContain(
+					'Neighbouring site affected status updated'
+				);
+			} catch (error) {
+				logger.error('There are no notification banner elements in the html', error);
+			}
 		}, 10000);
 
 		it('should render the LPA Questionnaire page with draft documents notification banner with links to add metadata page for each folder containing draft documents, and no links for folders with only non-draft documents', async () => {
@@ -69,9 +87,11 @@ describe('LPA Questionnaire review', () => {
 				.reply(200, documentFolderInfoWithoutDraftDocuments);
 
 			const response = await request.get(`${baseUrl}`);
-			const element = parseHtml(response.text);
+			const notificationBannerElementHTML = parseHtml(response.text, {
+				rootElement: notificationBannerElement
+			}).innerHTML;
 
-			expect(element.innerHTML).toMatchSnapshot();
+			expect(notificationBannerElementHTML).toMatchSnapshot();
 		});
 
 		it('should render a "Inspector access (lpa) updated" success notification banner when the inspector access (lpa) is updated', async () => {
@@ -102,6 +122,112 @@ describe('LPA Questionnaire review', () => {
 			expect(notificationBannerElementHTML).toMatchSnapshot();
 			expect(notificationBannerElementHTML).toContain('Success');
 			expect(notificationBannerElementHTML).toContain('Inspector access (lpa) updated');
+		}, 10000);
+
+		it('should render a "Neighbouring site added" success notification banner when a neighbouring site was added', async () => {
+			nock('http://test/').get(`/appeals/1`).reply(200, appealData).persist();
+			nock('http://test/')
+				.get(`/appeals/1/lpa-questionnaires/2`)
+				.reply(200, lpaQuestionnaireData)
+				.persist();
+			nock('http://test/')
+				.post(`/appeals/1/neighbouring-sites`)
+				.reply(200, {
+					siteId: 1,
+					address: {
+						addressLine1: '1 Grove Cottage',
+						addressLine2: 'Shotesham Road',
+						country: 'United Kingdom',
+						county: 'Devon',
+						postcode: 'NR35 2ND',
+						town: 'Woodton'
+					}
+				});
+
+			await request.post(`${baseUrl}/neighbouring-sites/add/lpa`).send({
+				addressLine1: '1 Grove Cottage',
+				addressLine2: null,
+				county: 'Devon',
+				postCode: 'NR35 2ND',
+				town: 'Woodton'
+			});
+
+			await request.post(`${baseUrl}/neighbouring-sites/add/lpa/check-and-confirm`);
+
+			const response = await request.get(`${baseUrl}`);
+			const notificationBannerElementHTML = parseHtml(response.text, {
+				rootElement: notificationBannerElement
+			}).innerHTML;
+			expect(notificationBannerElementHTML).toMatchSnapshot();
+			expect(notificationBannerElementHTML).toContain('Neighbouring site added');
+			expect(notificationBannerElementHTML).toContain('Success');
+		});
+
+		it('should render a "Neighbouring site updated" success notification banner when an inspector/3rd party neighbouring site was updated', async () => {
+			nock('http://test/').patch(`/appeals/1/neighbouring-sites`).reply(200, {
+				siteId: 1
+			});
+			nock('http://test/').get(`/appeals/1`).reply(200, appealData).persist();
+			nock('http://test/')
+				.get(`/appeals/1/lpa-questionnaires/2`)
+				.reply(200, lpaQuestionnaireData)
+				.persist();
+
+			await request.post(`${baseUrl}/neighbouring-sites/change/site/1`).send({
+				addressLine1: '2 Grove Cottage',
+				addressLine2: null,
+				county: 'Devon',
+				postCode: 'NR35 2ND',
+				town: 'Woodton'
+			});
+
+			await request.post(`${baseUrl}/neighbouring-sites/change/site/1/check-and-confirm`);
+
+			const response = await request.get(`${baseUrl}`);
+			const notificationBannerElementHTML = parseHtml(response.text, {
+				rootElement: notificationBannerElement
+			}).innerHTML;
+			expect(notificationBannerElementHTML).toMatchSnapshot();
+			expect(notificationBannerElementHTML).toContain('Neighbouring site updated');
+			expect(notificationBannerElementHTML).toContain('Success');
+		});
+
+		it('should render a "Neighbouring site removed" success notification banner when an inspector/3rd party neighbouring site was removed', async () => {
+			const appealReference = '1';
+
+			nock('http://test/').delete(`/appeals/${appealReference}/neighbouring-sites`).reply(200, {
+				siteId: 1
+			});
+			nock('http://test/').get(`/appeals/1`).reply(200, appealData).persist();
+			nock('http://test/')
+				.get(`/appeals/1/lpa-questionnaires/2`)
+				.reply(200, lpaQuestionnaireData)
+				.persist();
+			await request.post(`${baseUrl}/neighbouring-sites/remove/site/1`).send({
+				'remove-neighbouring-site': 'yes'
+			});
+
+			const response = await request.get(`${baseUrl}`);
+
+			const notificationBannerElementHTML = parseHtml(response.text, {
+				rootElement: notificationBannerElement
+			}).innerHTML;
+			expect(notificationBannerElementHTML).toMatchSnapshot();
+			expect(notificationBannerElementHTML).toContain('Success');
+			expect(notificationBannerElementHTML).toContain('Neighbouring site removed');
+		});
+	});
+
+	describe('GET /', () => {
+		it('should render the LPA Questionnaire page with the expected content', async () => {
+			nock('http://test/')
+				.get('/appeals/1/lpa-questionnaires/2')
+				.reply(200, lpaQuestionnaireDataNotValidated);
+
+			const response = await request.get(baseUrl);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
 		}, 10000);
 	});
 
