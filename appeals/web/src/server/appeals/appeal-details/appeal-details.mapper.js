@@ -88,11 +88,6 @@ export async function appealDetailsPage(appealDetails, currentRoute, session) {
 		}
 	};
 
-	const neighbouringSitesSummaryLists = Object.keys(mappedData.appeal)
-		.filter((key) => key.indexOf('neighbouringSiteAddress') >= 0)
-		.map((key) => mappedData.appeal[key].display.summaryListItem)
-		.filter(isDefined);
-
 	/** @type {PageComponent} */
 	const siteDetails = {
 		type: 'summary-list',
@@ -101,7 +96,7 @@ export async function appealDetailsPage(appealDetails, currentRoute, session) {
 				mappedData.appeal.lpaInspectorAccess.display.summaryListItem,
 				mappedData.appeal.appellantInspectorAccess.display.summaryListItem,
 				mappedData.appeal.neighbouringSiteIsAffected.display.summaryListItem,
-				...neighbouringSitesSummaryLists,
+				mappedData.appeal.lpaNeighbouringSites.display.summaryListItem,
 				mappedData.appeal.inspectorNeighbouringSites.display.summaryListItem,
 				mappedData.appeal.lpaHealthAndSafety.display.summaryListItem,
 				mappedData.appeal.appellantHealthAndSafety.display.summaryListItem,

@@ -23,7 +23,6 @@ import {
 import { savedFolder } from '#tests/documents/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { householdAppeal, fullPlanningAppeal, linkedAppeals } from '#tests/appeals/mocks.js';
-import formatAddress from '#utils/format-address.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { getIdsOfReferencedAppeals, mapAppealToDueDate } from '../appeals.formatter.js';
 import { mapAppealStatuses } from '../appeals.controller.js';
@@ -757,14 +756,7 @@ describe('appeals routes', () => {
 					otherAppeals: [],
 					localPlanningDepartment: householdAppeal.lpa.name,
 					lpaQuestionnaireId: householdAppeal.lpaQuestionnaire.id,
-					neighbouringSite: {
-						contacts: householdAppeal.lpaQuestionnaire.neighbouringSiteContact.map((contact) => ({
-							address: formatAddress(contact.address),
-							firstName: contact.firstName,
-							lastName: contact.lastName
-						})),
-						isAffected: householdAppeal.lpaQuestionnaire.isAffectingNeighbouringSites
-					},
+					isAffectingNeighbouringSites: true,
 					planningApplicationReference: householdAppeal.planningApplicationReference,
 					procedureType: householdAppeal.lpaQuestionnaire.procedureType.name,
 					siteVisit: {
@@ -860,16 +852,7 @@ describe('appeals routes', () => {
 					otherAppeals: [],
 					localPlanningDepartment: fullPlanningAppeal.lpa.name,
 					lpaQuestionnaireId: fullPlanningAppeal.lpaQuestionnaire.id,
-					neighbouringSite: {
-						contacts: fullPlanningAppeal.lpaQuestionnaire.neighbouringSiteContact.map(
-							(contact) => ({
-								address: formatAddress(contact.address),
-								firstName: contact.firstName,
-								lastName: contact.lastName
-							})
-						),
-						isAffected: fullPlanningAppeal.lpaQuestionnaire.isAffectingNeighbouringSites
-					},
+					isAffectingNeighbouringSites: true,
 					planningApplicationReference: fullPlanningAppeal.planningApplicationReference,
 					procedureType: fullPlanningAppeal.lpaQuestionnaire.procedureType.name,
 					siteVisit: {
@@ -1473,14 +1456,7 @@ describe('appeals routes', () => {
 					otherAppeals: [],
 					localPlanningDepartment: householdAppeal.lpa.name,
 					lpaQuestionnaireId: householdAppeal.lpaQuestionnaire.id,
-					neighbouringSite: {
-						contacts: householdAppeal.lpaQuestionnaire.neighbouringSiteContact.map((contact) => ({
-							address: formatAddress(contact.address),
-							firstName: contact.firstName,
-							lastName: contact.lastName
-						})),
-						isAffected: householdAppeal.lpaQuestionnaire.isAffectingNeighbouringSites
-					},
+					isAffectingNeighbouringSites: true,
 					planningApplicationReference: householdAppeal.planningApplicationReference,
 					procedureType: householdAppeal.lpaQuestionnaire.procedureType.name,
 					siteVisit: {
@@ -1576,16 +1552,7 @@ describe('appeals routes', () => {
 					otherAppeals: [],
 					localPlanningDepartment: fullPlanningAppeal.lpa.name,
 					lpaQuestionnaireId: fullPlanningAppeal.lpaQuestionnaire.id,
-					neighbouringSite: {
-						contacts: fullPlanningAppeal.lpaQuestionnaire.neighbouringSiteContact.map(
-							(contact) => ({
-								address: formatAddress(contact.address),
-								firstName: contact.firstName,
-								lastName: contact.lastName
-							})
-						),
-						isAffected: fullPlanningAppeal.lpaQuestionnaire.isAffectingNeighbouringSites
-					},
+					isAffectingNeighbouringSites: true,
 					planningApplicationReference: fullPlanningAppeal.planningApplicationReference,
 					procedureType: fullPlanningAppeal.lpaQuestionnaire.procedureType.name,
 					siteVisit: {

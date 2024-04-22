@@ -11,14 +11,16 @@ import { databaseConnector } from '#utils/database-connector.js';
  * Adds a neighbouring site with an address to an existing appeal
  * @param {number} appealId
  * @param {{addressLine1: string, addressLine2?: string | null, postcode: string, addressCounty?: string | null, addressTown?: string | undefined}} address
+ * @param {string} source
  * @returns {Promise<NeighbouringSite>}
  */
-const addSite = async (appealId, address) => {
+const addSite = async (appealId, source, address) => {
 	return databaseConnector.neighbouringSite.create({
 		data: {
 			appeal: {
 				connect: { id: appealId }
 			},
+			source,
 			address: {
 				create: {
 					...address

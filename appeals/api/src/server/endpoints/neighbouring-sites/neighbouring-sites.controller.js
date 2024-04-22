@@ -19,9 +19,9 @@ import formatAddress from '#utils/format-address.js';
  */
 export const addNeighbouringSite = async (req, res) => {
 	const { appeal } = req;
-	const { addressLine1, addressLine2, town, county, postcode } = req.body;
+	const { source, addressLine1, addressLine2, town, county, postcode } = req.body;
 
-	const result = await neighbouringSitesRepository.addSite(appeal.id, {
+	const result = await neighbouringSitesRepository.addSite(appeal.id, source, {
 		addressLine1,
 		addressLine2,
 		addressTown: town,

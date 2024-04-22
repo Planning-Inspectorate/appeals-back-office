@@ -73,15 +73,6 @@ describe('appeal-mapper', () => {
 
 			expect(isDateInCorrectFormat(mappedDateHtml)).toBe(true);
 		});
-		it('should create as many neighbouringSiteAddress objects as there are in the appealData', async () => {
-			const neighbouringSitesSummaryListsKeys = Object.keys(validMappedData.appeal).filter(
-				(key) => key.indexOf('neighbouringSiteAddress') >= 0
-			);
-
-			expect(neighbouringSitesSummaryListsKeys.length).toEqual(
-				appealData.neighbouringSite.contacts?.length
-			);
-		});
 	});
 });
 
@@ -107,17 +98,6 @@ describe('lpaQuestionnaire-mapper', () => {
 		});
 		it('should have an id that is unique', async () => {
 			expect(areIdsDefinedAndUnique(validMappedData.lpaq)).toBe(true);
-		});
-	});
-	describe('Test 2: Value transformation', () => {
-		it('should create as many neighbouringSiteAddress objects as there are in the appealData', async () => {
-			const neighbouringSitesSummaryListsKeys = Object.keys(validMappedData.lpaq).filter(
-				(key) => key.indexOf('neighbouringSiteAddress') >= 0
-			);
-
-			expect(neighbouringSitesSummaryListsKeys.length).toEqual(
-				lpaQuestionnaireDataIncompleteOutcome.neighbouringSiteContacts.length
-			);
 		});
 	});
 });

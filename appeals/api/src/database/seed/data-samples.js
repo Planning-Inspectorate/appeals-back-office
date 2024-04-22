@@ -107,20 +107,6 @@ export const agentsList = personList.map(({ firstName, lastName, company, email 
 	email
 }));
 
-/**
- * An array of neighbouring site contacts.
- *
- * @type {Pick<NeighbouringSiteContact, 'firstName' | 'lastName' | 'email' | 'telephone'>[]}
- */
-export const neighbouringSiteContactsList = personList.map(
-	({ firstName, lastName, email, telephone }) => ({
-		firstName,
-		lastName,
-		email,
-		telephone
-	})
-);
-
 export const localPlanningDepartmentList = [
 	{ lpaCode: 'MAID', name: 'Maidstone Borough Council' },
 	{ lpaCode: 'BARN', name: 'Barnsley Metropolitan Borough Council' },

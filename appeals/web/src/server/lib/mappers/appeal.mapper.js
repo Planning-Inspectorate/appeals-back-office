@@ -766,14 +766,14 @@ export async function initialiseAndMapAppealData(
 				},
 				value: {
 					html:
-						convertFromBooleanToYesNo(appealDetails.neighbouringSite.isAffected) ||
+						convertFromBooleanToYesNo(appealDetails.isAffectingNeighbouringSites) ||
 						'No answer provided'
 				},
 				actions: {
 					items: [
 						{
 							text: 'Change',
-							href: `${currentRoute}/change-appeal-details/neighbouring-site-is-affected`,
+							href: `${currentRoute}/neighbouring-sites/change/affected`,
 							visuallyHiddenText: 'could a neighbouring site be affected'
 						}
 					]
@@ -792,12 +792,12 @@ export async function initialiseAndMapAppealData(
 							{
 								text: 'Yes',
 								value: 'yes',
-								checked: appealDetails.neighbouringSite.isAffected
+								checked: appealDetails.isAffectingNeighbouringSites
 							},
 							{
 								text: 'No',
 								value: 'no',
-								checked: !appealDetails.neighbouringSite.isAffected
+								checked: !appealDetails.isAffectingNeighbouringSites
 							}
 						]
 					}
@@ -806,39 +806,44 @@ export async function initialiseAndMapAppealData(
 		}
 	};
 
-	if (
-		appealDetails.neighbouringSite.contacts &&
-		appealDetails.neighbouringSite.contacts.length > 0
-	) {
-		for (let i = 0; i < appealDetails.neighbouringSite.contacts.length; i++) {
-			mappedData.appeal[`neighbouringSiteAddress${i}`] = {
-				id: `neighbouring-site-address-${i}`,
-				display: {
-					summaryListItem: {
-						key: {
-							text: `Neighbour address ${i + 1}`
-						},
-						value: {
-							html: appealSiteToAddressString(appealDetails.neighbouringSite.contacts[i].address)
-						},
-						actions: {
-							items: [
-								{
-									text: 'Change',
-									href: `${currentRoute}/change-appeal-details/neighbouring-site-address-${i}`,
-									visuallyHiddenText: `neighbour address ${i + 1}`
-								}
-							]
-						},
-						classes: `appeal-neighbouring-site-address appeal-neighbouring-site-address-${i}`
-					}
+	/** @type {Instructions} */
+	mappedData.appeal.lpaNeighbouringSites = {
+		id: 'neighbouring-sites-lpa',
+		display: {
+			summaryListItem: {
+				key: {
+					text: 'Neighbouring sites (LPA)'
 				},
-				input: {
-					instructions: mapAddressInput(appealDetails.neighbouringSite.contacts[i].address)
-				}
-			};
+				value: {
+					html:
+						appealDetails.neighbouringSites && appealDetails.neighbouringSites.length > 0
+							? displayPageFormatter.formatListOfAddresses(
+									appealDetails.neighbouringSites.filter((site) => site.source === 'lpa')
+							  )
+							: 'None'
+				},
+				actions: {
+					items: [
+						...(appealDetails.neighbouringSites && appealDetails.neighbouringSites.length > 0
+							? [
+									{
+										text: 'Manage',
+										href: `${currentRoute}/neighbouring-sites/manage`,
+										visuallyHiddenText: 'Neighbouring sites (L P A)'
+									}
+							  ]
+							: []),
+						{
+							text: 'Add',
+							href: `${currentRoute}/neighbouring-sites/add/lpa`,
+							visuallyHiddenText: 'Neighbouring sites (LPA)'
+						}
+					]
+				},
+				classes: 'appeal-neighbouring-sites-inspector'
+			}
 		}
-	}
+	};
 
 	/** @type {Instructions} */
 	mappedData.appeal.inspectorNeighbouringSites = {
@@ -851,7 +856,9 @@ export async function initialiseAndMapAppealData(
 				value: {
 					html:
 						appealDetails.neighbouringSites && appealDetails.neighbouringSites.length > 0
-							? displayPageFormatter.formatListOfAddresses(appealDetails.neighbouringSites)
+							? displayPageFormatter.formatListOfAddresses(
+									appealDetails.neighbouringSites.filter((site) => site.source === 'back-office')
+							  )
 							: 'None'
 				},
 				actions: {
@@ -867,7 +874,7 @@ export async function initialiseAndMapAppealData(
 							: []),
 						{
 							text: 'Add',
-							href: `${currentRoute}/neighbouring-sites/add`,
+							href: `${currentRoute}/neighbouring-sites/add/back-office`,
 							visuallyHiddenText: 'Neighbouring sites (inspector and or third party request)'
 						}
 					]

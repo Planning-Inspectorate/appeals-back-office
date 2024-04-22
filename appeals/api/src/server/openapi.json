@@ -4576,51 +4576,9 @@
 						"type": "number",
 						"example": 1
 					},
-					"neighbouringSite": {
-						"type": "object",
-						"properties": {
-							"contacts": {
-								"type": "array",
-								"items": {
-									"type": "object",
-									"properties": {
-										"address": {
-											"type": "object",
-											"properties": {
-												"addressLine1": {
-													"type": "string",
-													"example": "1 Grove Cottage"
-												},
-												"addressLine2": {
-													"type": "string",
-													"example": "Shotesham Road"
-												},
-												"postCode": {
-													"type": "string",
-													"example": "NR35 2ND"
-												},
-												"town": {
-													"type": "string",
-													"example": "Woodton"
-												}
-											}
-										},
-										"firstName": {
-											"type": "string",
-											"example": "Fiona"
-										},
-										"lastName": {
-											"type": "string",
-											"example": "Burgess"
-										}
-									}
-								}
-							},
-							"isAffected": {
-								"type": "boolean",
-								"example": true
-							}
-						}
+					"isAffectingNeighbouringSites": {
+						"type": "boolean",
+						"example": true
 					},
 					"otherAppeals": {
 						"type": "array",
@@ -6005,47 +5963,6 @@
 					"meetsOrExceedsThresholdOrCriteriaInColumn2": {
 						"type": "boolean",
 						"example": true
-					},
-					"neighbouringSiteContacts": {
-						"type": "array",
-						"items": {
-							"type": "object",
-							"properties": {
-								"address": {
-									"type": "object",
-									"properties": {
-										"addressLine1": {
-											"type": "string",
-											"example": "44 Rivervale"
-										},
-										"town": {
-											"type": "string",
-											"example": "Bridport"
-										},
-										"postCode": {
-											"type": "string",
-											"example": "DT6 5RN"
-										}
-									}
-								},
-								"email": {
-									"type": "string",
-									"example": "eva.sharma@example.com"
-								},
-								"firstName": {
-									"type": "string",
-									"example": "Eva"
-								},
-								"lastName": {
-									"type": "string",
-									"example": "Sharma"
-								},
-								"telephone": {
-									"type": "string",
-									"example": "01234567891"
-								}
-							}
-						}
 					},
 					"otherAppeals": {
 						"type": "array",

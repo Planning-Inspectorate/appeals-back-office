@@ -13,8 +13,11 @@ import {
 } from '../../appeal-documents/appeal-documents.middleware.js';
 import changePageRouter from '../../change-page/change-page.router.js';
 import changeInspectorAccessRouter from '../inspector-access/inspector-access.router.js';
+import neighbouringSitesRouter from '../neighbouring-sites/neighbouring-sites.router.js';
 
 const router = createRouter({ mergeParams: true });
+
+router.use('/:lpaQuestionnaireId/neighbouring-sites', neighbouringSitesRouter);
 
 router
 	.route('/:lpaQuestionnaireId')

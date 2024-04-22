@@ -94,11 +94,6 @@ export type AppealNeighbouringSiteContact = {
 	telephone: string;
 };
 
-export type AppealNeighbouringSite = {
-	contacts: AppealNeighbouringSiteContact[];
-	isAffected: boolean;
-};
-
 export interface LpaQuestionnaire {
 	constraints: LpaQuestionnaireFullAppealConstraints;
 	environmentalImpact: LpaQuestionnaireFullAppealEnvironmentalImpact;
@@ -291,10 +286,6 @@ export type DesignatedSite =
 
 export type ScheduleTypeOption = 'Yes, schedule 1' | 'Yes, schedule 2' | 'No';
 
-interface NeighbouringSiteContactsResponse {
-	address: Address;
-}
-
 export interface SingleLPAQuestionnaireResponse {
 	affectsListedBuildingDetails: ListedBuildingDetailsResponse | null;
 	appealId: number;
@@ -364,7 +355,6 @@ export interface SingleLPAQuestionnaireResponse {
 	lpaNotificationMethods?: LPANotificationMethodDetails[] | null;
 	lpaQuestionnaireId: number;
 	meetsOrExceedsThresholdOrCriteriaInColumn2?: boolean | null;
-	neighbouringSiteContacts: NeighbouringSiteContactsResponse[] | null;
 	otherAppeals: LinkedAppeal[];
 	procedureType?: string;
 	scheduleType?: string;

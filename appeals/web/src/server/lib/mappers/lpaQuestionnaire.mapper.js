@@ -1,7 +1,6 @@
 import { convertFromBooleanToYesNo } from '../boolean-formatter.js';
-import { addressToString } from '#lib/address-formatter.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
-import { conditionalFormatter, mapAddressInput } from './global-mapper-formatter.js';
+import { conditionalFormatter } from './global-mapper-formatter.js';
 import { isFolderInfo } from '#lib/ts-utilities.js';
 
 /**
@@ -879,7 +878,7 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 						{
 							text: 'Change',
 							visuallyHiddenText: 'Affects neighbouring sites',
-							href: `${currentRoute}/change-lpa-questionnaire/is-affecting-neighbouring-sites`
+							href: `${currentRoute}/neighbouring-sites/change/affected`
 						}
 					]
 				}
@@ -909,37 +908,6 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 			]
 		}
 	};
-
-	if (data.neighbouringSiteContacts && data.neighbouringSiteContacts.length > 0) {
-		for (let i = 0; i < data.neighbouringSiteContacts.length; i++) {
-			mappedData.lpaq[`neighbouringSiteAddress${i}`] = {
-				id: `neighbouring-site-address-${i}`,
-				display: {
-					summaryListItem: {
-						key: {
-							text: `Neighbour address ${i + 1}`
-						},
-						value: {
-							html: addressToString(data.neighbouringSiteContacts[i].address)
-						},
-						actions: {
-							items: [
-								{
-									text: 'Change',
-									visuallyHiddenText: `Neighbour address ${i + 1}`,
-									href: `${currentRoute}/change-lpa-questionnaire/neighbouring-site-address-${i}`
-								}
-							]
-						}
-					}
-				},
-				input: {
-					displayName: `Neighbour address ${i + 1}`,
-					instructions: mapAddressInput(data.neighbouringSiteContacts[i].address)
-				}
-			};
-		}
-	}
 
 	/** @type {Instructions} */
 	mappedData.lpaq.lpaHealthAndSafety = {

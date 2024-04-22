@@ -613,26 +613,8 @@ export interface SingleAppealResponse {
 	localPlanningDepartment?: string;
 	/** @example 1 */
 	lpaQuestionnaireId?: number;
-	neighbouringSite?: {
-		contacts?: {
-			address?: {
-				/** @example "1 Grove Cottage" */
-				addressLine1?: string;
-				/** @example "Shotesham Road" */
-				addressLine2?: string;
-				/** @example "NR35 2ND" */
-				postCode?: string;
-				/** @example "Woodton" */
-				town?: string;
-			};
-			/** @example "Fiona" */
-			firstName?: string;
-			/** @example "Burgess" */
-			lastName?: string;
-		}[];
-		/** @example true */
-		isAffected?: boolean;
-	};
+	/** @example true */
+	isAffectingNeighbouringSites?: boolean;
 	otherAppeals?: {
 		/** @example 1 */
 		appealId?: number;
@@ -1246,24 +1228,6 @@ export interface SingleLPAQuestionnaireResponse {
 	lpaQuestionnaireId?: number;
 	/** @example true */
 	meetsOrExceedsThresholdOrCriteriaInColumn2?: boolean;
-	neighbouringSiteContacts?: {
-		address?: {
-			/** @example "44 Rivervale" */
-			addressLine1?: string;
-			/** @example "Bridport" */
-			town?: string;
-			/** @example "DT6 5RN" */
-			postCode?: string;
-		};
-		/** @example "eva.sharma@example.com" */
-		email?: string;
-		/** @example "Eva" */
-		firstName?: string;
-		/** @example "Sharma" */
-		lastName?: string;
-		/** @example "01234567891" */
-		telephone?: string;
-	}[];
 	otherAppeals?: {
 		/** @example 1 */
 		appealId?: number;

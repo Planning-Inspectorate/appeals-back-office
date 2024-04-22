@@ -14,8 +14,7 @@ import {
 	incompleteValidationDecisionSample,
 	invalidValidationDecisionSample,
 	localPlanningDepartmentList,
-	lpaQuestionnaireList,
-	neighbouringSiteContactsList
+	lpaQuestionnaireList
 } from './data-samples.js';
 import isFPA from '#utils/is-fpa.js';
 import { calculateTimetable } from '#utils/business-days.js';
@@ -403,7 +402,6 @@ export async function seedTestData(databaseConnector) {
 	const lpaQuestionnaires = await databaseConnector.lPAQuestionnaire.findMany();
 	const designatedSites = await databaseConnector.designatedSite.findMany();
 	const lpaNotificationMethods = await databaseConnector.lPANotificationMethods.findMany();
-	const addresses = await databaseConnector.address.findMany();
 
 	for (const lpaQuestionnaire of lpaQuestionnaires) {
 		await databaseConnector.designatedSitesOnLPAQuestionnaires.createMany({
@@ -427,25 +425,17 @@ export async function seedTestData(databaseConnector) {
 				notificationMethodId: lpaNotificationMethods[item].id
 			}))
 		});
-
-		if (lpaQuestionnaire.isAffectingNeighbouringSites) {
-			await databaseConnector.neighbouringSiteContact.createMany({
-				data: [1, 2].map(() => ({
-					...neighbouringSiteContactsList[pickRandom(neighbouringSiteContactsList)],
-					addressId: addresses[pickRandom(addresses)].id,
-					lpaQuestionnaireId: lpaQuestionnaire.id
-				}))
-			});
-		}
 	}
 
 	const appealWithNeighbouringSitesId = appeals[10].id;
 	await neighbouringSitesRepository.addSite(
 		appealWithNeighbouringSitesId,
+		'back-office',
 		addressesList[pickRandom(addressesList)]
 	);
 	await neighbouringSitesRepository.addSite(
 		appealWithNeighbouringSitesId,
+		'lpa',
 		addressesList[pickRandom(addressesList)]
 	);
 
