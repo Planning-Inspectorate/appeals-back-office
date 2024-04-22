@@ -1,9 +1,10 @@
-// @ts-nocheck
-// TODO: schemas (PINS data model)
-// TODO: local data model for service user
-
 import { ODW_SYSTEM_ID } from '#endpoints/constants.js';
 
+/**
+ *
+ * @param {*} data
+ * @returns
+ */
 export const mapServiceUserIn = (data) => {
 	if (data) {
 		const serviceUser = {
@@ -17,27 +18,39 @@ export const mapServiceUserIn = (data) => {
 	}
 };
 
+/**
+ *
+ * @param {*} data
+ * @param {'Appellant' | 'Agent'} serviceUserType
+ * @param {string} caseReference
+ * @returns {import('pins-data-model').Schemas.ServiceUser | null}
+ */
 export const mapServiceUserOut = (data, serviceUserType, caseReference) => {
 	if (data) {
 		const user = {
+			id: data.id.toString(),
+			organisation: data.organisationName ?? null,
+			organisationType: null,
+			salutation: null,
+			firstName: data.firstName ?? null,
+			lastName: data.lastName ?? null,
+			emailAddress: data.email ?? null,
+			webAddress: data.website ?? null,
+			telephoneNumber: data.phoneNumber ?? null,
+			addressLine1: data.address?.addressLine1 ?? null,
+			addressLine2: data.address?.addressLine2 ?? null,
+			addressTown: data.address?.addressTown ?? null,
+			addressCounty: data.address?.addressCounty ?? null,
+			postcode: data.address?.postcode ?? null,
+			addressCountry: data.address?.addressCountry ?? null,
+			sourceSuid: data.id.toString(),
+			caseReference,
 			sourceSystem: ODW_SYSTEM_ID,
-			sourceSuid: data.id,
-			id: data.id,
-			firstName: data.firstName,
-			lastName: data.lastName,
-			emailAddress: data.email,
-			serviceUserType: serviceUserType,
-			caseReference: caseReference,
-			company: data.organisationName
+			serviceUserType,
+			role: data.jobTitle ?? null,
+			otherPhoneNumber: null,
+			faxNumber: null
 		};
-
-		if (data.address) {
-			user.addressLine1 = data.address.addressLine1;
-			user.addressLine2 = data.address.addressLine2;
-			user.addressPostcode = data.address.postcode;
-			user.addressTown = data.address.addressTown;
-			user.addressCounty = data.address.addressCounty;
-		}
 
 		return user;
 	}
