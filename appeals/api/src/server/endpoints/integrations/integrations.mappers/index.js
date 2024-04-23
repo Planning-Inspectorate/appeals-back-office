@@ -99,9 +99,8 @@ export const mapDocument = (doc) => {
 	return mappers.mapDocumentOut(doc);
 };
 
-export const mapServiceUser = (appeal, user, userType) => {
-	if (appeal && user) {
-		const caseReference = appeal.reference;
+export const mapServiceUser = (caseReference, user, userType) => {
+	if (caseReference && user && userType) {
 		return mappers.mapServiceUserOut(user, userType, caseReference);
 	}
 };
