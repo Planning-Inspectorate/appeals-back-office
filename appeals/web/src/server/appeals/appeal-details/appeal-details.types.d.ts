@@ -85,15 +85,6 @@ export type AppealHealthAndSafety = {
 	lpaQuestionnaire: AppealHealthAndSafetyEntry;
 };
 
-export type AppealNeighbouringSiteContact = {
-	address: Address;
-	contactId: number;
-	email: string;
-	firstName: string;
-	lastName: string;
-	telephone: string;
-};
-
 export interface LpaQuestionnaire {
 	constraints: LpaQuestionnaireFullAppealConstraints;
 	environmentalImpact: LpaQuestionnaireFullAppealEnvironmentalImpact;
