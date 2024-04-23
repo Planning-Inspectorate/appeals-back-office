@@ -5,14 +5,19 @@ variable "environment" {
   type        = string
 }
 
-variable "location" {
-  description = "The short-format Azure region into which resources will be deployed"
-  type        = string
-  default     = "uksouth"
-}
+# variable "location" {
+#   description = "The short-format Azure region into which resources will be deployed"
+#   type        = string
+#   default     = "uksouth"
+# }
 
 variable "tags" {
   default     = {}
   description = "A collection of tags to assign to taggable resources"
   type        = map(string)
+}
+
+variable "vnet_address_space" {
+  description = "The VNET address space"
+  type        = string
 }
