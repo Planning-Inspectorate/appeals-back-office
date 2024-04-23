@@ -331,11 +331,6 @@ const getAppealById = async (id) => {
 						}
 					},
 					lpaQuestionnaireValidationOutcome: true,
-					neighbouringSiteContact: {
-						include: {
-							address: true
-						}
-					},
 					procedureType: true,
 					scheduleType: true
 				}
@@ -563,11 +558,6 @@ const getAppealByAppealReference = async (appealReference) => {
 						}
 					},
 					lpaQuestionnaireValidationOutcome: true,
-					neighbouringSiteContact: {
-						include: {
-							address: true
-						}
-					},
 					procedureType: true,
 					scheduleType: true
 				}

@@ -10,7 +10,6 @@ import {
 /**
  * @typedef {import('@pins/appeals.api').Schema.LPAQuestionnaire} LPAQuestionnaire
  * @typedef {import('@pins/appeals.api').Schema.AppellantCase} AppellantCase
- * @typedef {import('@pins/appeals.api').Schema.NeighbouringSiteContact} NeighbouringSiteContact
  * @typedef {import('@pins/appeals.api').Appeals.AppealSite} AppealSite
  */
 
