@@ -3,16 +3,16 @@ import {
 	mapQuestionnaireSubmission,
 	mapDocumentSubmission,
 	mapAppeal,
-	mapDocument,
-	mapServiceUser
+	mapDocument
 } from './integrations.mappers/index.js';
+
+import { broadcastServiceUser } from './integration.broadcasters.js';
 
 import {
 	importAppellantCase,
 	importLPAQuestionnaire,
 	importDocument,
 	produceAppealUpdate,
-	produceServiceUsersUpdate,
 	produceDocumentUpdate,
 	produceBlobMoveRequest
 } from './integrations.service.js';
@@ -53,26 +53,16 @@ export const postAppealSubmission = async (req, res) => {
 	});
 
 	const appealTopic = mapAppeal(dbSavedResult.appeal);
-	await produceAppealUpdate(appealTopic, EventType.Create);
+	//await produceAppealUpdate(appealTopic, EventType.Create);
 
-	if (dbSavedResult.appeal.appellantId) {
-		const appellantTopic = mapServiceUser(
-			dbSavedResult,
-			// @ts-ignore
-			dbSavedResult.appeal.appellant,
-			ODW_APPELLANT_SVCUSR
-		);
-		if (appellantTopic) {
-			await produceServiceUsersUpdate([appellantTopic], EventType.Create, ODW_APPELLANT_SVCUSR);
-		}
+	const { reference, appellantId, agentId } = dbSavedResult.appeal;
+
+	if (appellantId) {
+		await broadcastServiceUser(appellantId, EventType.Create, ODW_APPELLANT_SVCUSR, reference);
 	}
 
-	if (dbSavedResult.appeal.agentId) {
-		// @ts-ignore
-		const agentTopic = mapServiceUser(dbSavedResult, dbSavedResult.appeal.agent, ODW_AGENT_SVCUSR);
-		if (agentTopic) {
-			await produceServiceUsersUpdate([agentTopic], EventType.Create, ODW_AGENT_SVCUSR);
-		}
+	if (agentId) {
+		await broadcastServiceUser(agentId, EventType.Create, ODW_AGENT_SVCUSR, reference);
 	}
 
 	const documentsToMove = documents.map((d) => {
@@ -97,7 +87,7 @@ export const postAppealSubmission = async (req, res) => {
 		}
 	}
 
-	await produceDocumentUpdate(documentsTopic, EventType.Create);
+	//await produceDocumentUpdate(documentsTopic, EventType.Create);
 
 	return res.send(appealTopic);
 };

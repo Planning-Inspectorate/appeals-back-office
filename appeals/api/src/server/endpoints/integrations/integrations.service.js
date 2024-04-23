@@ -81,15 +81,15 @@ export const produceAppealUpdate = async (
 		return false;
 	}
 
-	const validationResult = await validateFromSchema(schemas.appeal, appeal);
-	if (validationResult !== true && validationResult.errors) {
-		const errorDetails = validationResult.errors?.map(
-			(e) => `${e.instancePath || '/'}: ${e.message}`
-		);
+	// const validationResult = await validateFromSchema(schemas.appeal, appeal);
+	// if (validationResult !== true && validationResult.errors) {
+	// 	const errorDetails = validationResult.errors?.map(
+	// 		(e) => `${e.instancePath || '/'}: ${e.message}`
+	// 	);
 
-		pino.error(`Error validating appeal: ${errorDetails[0]}`);
-		return false;
-	}
+	// 	pino.error(`Error validating appeal: ${errorDetails[0]}`);
+	// 	return false;
+	// }
 
 	const topic = producers.boCaseData;
 	const res = await eventClient.sendEvents(topic, [appeal], updateType);
@@ -153,7 +153,17 @@ export const produceServiceUsersUpdate = async (
 	if (!config.serviceBusEnabled) {
 		return false;
 	}
-	if (users.length > 0) {
+	if (users.length === 1) {
+		const validationResult = await validateFromSchema(schemas.serviceUser, users[0]);
+		if (validationResult !== true && validationResult.errors) {
+			const errorDetails = validationResult.errors?.map(
+				(e) => `${e.instancePath || '/'}: ${e.message}`
+			);
+
+			pino.error(`Error validating service user: ${errorDetails[0]}`);
+			return false;
+		}
+
 		const topic = producers.boServiceUser;
 		const res = await eventClient.sendEvents(topic, users, updateType, {
 			entityType: roleName,
