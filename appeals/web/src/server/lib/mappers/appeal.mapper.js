@@ -1423,7 +1423,7 @@ export async function initialiseAndMapAppealData(
 			tableItem: [
 				{
 					text: 'Costs decision',
-					classes: 'appeal-costs-decision'
+					classes: 'appeal-costs-decision-documentation'
 				},
 				{
 					text: appealHasCostsDecisionDocuments ? 'Uploaded' : '',

@@ -10,6 +10,7 @@ import {
 	siteVisitData,
 	costsFolderInfoAppellant,
 	costsFolderInfoLpa,
+	costsFolderInfoDecision,
 	documentRedactionStatuses,
 	appealCostsDocumentItem
 } from '#testing/app/fixtures/referencedata.js';
@@ -459,7 +460,7 @@ describe('appeal-details', () => {
 				}).innerHTML;
 
 				expect(notificationBannerElementHTML).toMatchSnapshot();
-				expect(notificationBannerElementHTML).toContain('Appellant costs document uploaded');
+				expect(notificationBannerElementHTML).toContain('Appellant costs document uploaded</p>');
 			});
 
 			it('should render a success notification banner when an LPA costs document was uploaded', async () => {
@@ -482,7 +483,37 @@ describe('appeal-details', () => {
 				}).innerHTML;
 
 				expect(notificationBannerElementHTML).toMatchSnapshot();
-				expect(notificationBannerElementHTML).toContain('LPA costs document uploaded');
+				expect(notificationBannerElementHTML).toContain('LPA costs document uploaded</p>');
+			});
+
+			it('should render a success notification banner when a costs decision document was uploaded', async () => {
+				nock('http://test/')
+					.get('/appeals/1/document-folders/3')
+					.reply(200, costsFolderInfoDecision)
+					.persist();
+				nock('http://test/')
+					.get('/appeals/document-redaction-statuses')
+					.reply(200, documentRedactionStatuses);
+
+				const checkAndConfirmResponse = await request
+					.post(`${baseUrl}/1/costs/decision/check-and-confirm/3`)
+					.send({
+						confirm: 'yes'
+					});
+
+				expect(checkAndConfirmResponse.statusCode).toBe(302);
+				expect(checkAndConfirmResponse.text).toEqual(
+					`Found. Redirecting to /appeals-service/appeal-details/1`
+				);
+
+				const caseDetailsResponse = await request.get(`${baseUrl}/1`);
+
+				const notificationBannerElementHTML = parseHtml(caseDetailsResponse.text, {
+					rootElement: notificationBannerElement
+				}).innerHTML;
+
+				expect(notificationBannerElementHTML).toMatchSnapshot();
+				expect(notificationBannerElementHTML).toContain('Costs decision uploaded</p>');
 			});
 
 			it('should render a success notification banner when a service user was updated', async () => {
@@ -921,6 +952,48 @@ describe('appeal-details', () => {
 				);
 			});
 
+			it('should render a costs decision row in the case documentation accordion with empty status and received columns, and "add" action button, if the costs decision documents folder is empty', async () => {
+				const appealId = 2;
+				nock('http://test/').get(`/appeals/${appealId}`).reply(200, appealData);
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.statusCode).toBe(200);
+
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+
+				const decisionCostsDocumentationElement = parseHtml(response.text, {
+					rootElement: '.appeal-costs-decision-documentation'
+				});
+				const decisionCostsStatusElement = parseHtml(response.text, {
+					rootElement: '.appeal-costs-decision-status'
+				});
+				const decisionCostsDueDateElement = parseHtml(response.text, {
+					rootElement: '.appeal-costs-decision-due-date'
+				});
+				const decisionCostsActionsElement = parseHtml(response.text, {
+					rootElement: '.appeal-costs-decision-actions'
+				});
+
+				expect(decisionCostsDocumentationElement.innerHTML).toEqual(
+					'<th scope="row" class="govuk-table__header appeal-costs-decision-documentation">Costs decision</th>'
+				);
+				expect(decisionCostsStatusElement.innerHTML).toEqual(
+					'<td class="govuk-table__cell appeal-costs-decision-status"></td>'
+				);
+				expect(decisionCostsDueDateElement.innerHTML).toEqual(
+					'<td class="govuk-table__cell appeal-costs-decision-due-date"></td>'
+				);
+				expect(decisionCostsActionsElement.innerHTML).not.toContain(
+					'/costs/decision/manage-documents/3">Manage</a>'
+				);
+				expect(decisionCostsActionsElement.innerHTML).toContain(
+					'/costs/decision/upload-documents/3">Add</a>'
+				);
+			});
+
 			it('should render an appellant costs row in the case documentation accordion with "Received" status, empty received column, and "add" and "manage" action buttons, if there are documents in the appellant costs documents folder', async () => {
 				const appealId = 3;
 				nock('http://test/')
@@ -1026,6 +1099,60 @@ describe('appeal-details', () => {
 				);
 				expect(lpaCostsActionsElement.innerHTML).toContain(
 					'/costs/lpa/select-document-type/2">Add</a>'
+				);
+			});
+
+			it('should render a costs decision row in the case documentation accordion with "Uploaded" status, empty received column, and "add" and "manage" action buttons, if there are documents in the costs decision documents folder', async () => {
+				const appealId = 3;
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealData,
+						costs: {
+							decisionFolder: {
+								caseId: 1,
+								id: 3,
+								path: 'appeal_costs/decision',
+								documents: [appealCostsDocumentItem]
+							}
+						}
+					});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.statusCode).toBe(200);
+
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+
+				const decisionCostsDocumentationElement = parseHtml(response.text, {
+					rootElement: '.appeal-costs-decision-documentation'
+				});
+				const decisionCostsStatusElement = parseHtml(response.text, {
+					rootElement: '.appeal-costs-decision-status'
+				});
+				const decisionCostsDueDateElement = parseHtml(response.text, {
+					rootElement: '.appeal-costs-decision-due-date'
+				});
+				const decisionCostsActionsElement = parseHtml(response.text, {
+					rootElement: '.appeal-costs-decision-actions'
+				});
+
+				expect(decisionCostsDocumentationElement.innerHTML).toEqual(
+					'<th scope="row" class="govuk-table__header appeal-costs-decision-documentation">Costs decision</th>'
+				);
+				expect(decisionCostsStatusElement.innerHTML).toEqual(
+					'<td class="govuk-table__cell appeal-costs-decision-status">Uploaded</td>'
+				);
+				expect(decisionCostsDueDateElement.innerHTML).toEqual(
+					'<td class="govuk-table__cell appeal-costs-decision-due-date"></td>'
+				);
+				expect(decisionCostsActionsElement.innerHTML).toContain(
+					'/costs/decision/manage-documents/3">Manage</a>'
+				);
+				expect(decisionCostsActionsElement.innerHTML).toContain(
+					'/costs/decision/upload-documents/3">Add</a>'
 				);
 			});
 		});

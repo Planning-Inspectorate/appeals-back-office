@@ -71,7 +71,7 @@ export const postSelectDocumentType = async (request, response) => {
 		return response.status(404).render('app/404');
 	}
 	if (!currentFolder) {
-		return response.status(404).render('app/500');
+		return response.status(404).render('app/404');
 	}
 
 	if (errors) {
@@ -100,10 +100,10 @@ export const getDocumentUpload = async (request, response) => {
 		return response.status(404).render('app/404');
 	}
 	if (!currentFolder) {
-		return response.status(404).render('app/500');
+		return response.status(404).render('app/404');
 	}
 	if (costsCategory !== 'decision' && !objectContainsAllKeys(session, 'costsDocumentType')) {
-		return response.status(404).render('app/500');
+		return response.status(500).render('app/500');
 	}
 
 	let uploadPageHeadingText = '';
@@ -145,7 +145,7 @@ export const getDocumentVersionUpload = async (request, response) => {
 		return response.status(404).render('app/404');
 	}
 	if (!currentFolder) {
-		return response.status(404).render('app/500');
+		return response.status(404).render('app/404');
 	}
 
 	renderDocumentUpload(
@@ -173,13 +173,18 @@ export const getAddDocumentDetails = async (request, response) => {
 		return response.status(404).render('app/404');
 	}
 	if (!currentFolder) {
-		return response.status(404).render('app/500');
+		return response.status(404).render('app/404');
 	}
 
-	let costsCategoryLabel = capitalize(costsCategory);
+	let costsCategoryLabel = `${capitalize(costsCategory)} costs document`;
 
-	if (costsCategory === 'lpa') {
-		costsCategoryLabel = 'LPA';
+	switch (costsCategory) {
+		case 'lpa':
+			costsCategoryLabel = 'LPA costs document';
+			break;
+		case 'decision':
+			costsCategoryLabel = 'Costs decision document';
+			break;
 	}
 
 	addNotificationBannerToSession(
@@ -187,7 +192,7 @@ export const getAddDocumentDetails = async (request, response) => {
 		'costsDocumentAdded',
 		currentAppeal.appealId,
 		'',
-		`${costsCategoryLabel} costs document uploaded`
+		`${costsCategoryLabel} uploaded`
 	);
 
 	renderDocumentDetails(
@@ -195,9 +200,7 @@ export const getAddDocumentDetails = async (request, response) => {
 		response,
 		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/upload-documents/${currentFolder?.id}`,
 		false,
-		costsCategory === 'decision'
-			? 'Costs decision document'
-			: `${costsCategoryLabel} costs document`
+		costsCategoryLabel
 	);
 };
 
@@ -213,13 +216,18 @@ export const postAddDocumentDetails = async (request, response) => {
 		return response.status(404).render('app/404');
 	}
 	if (!currentFolder) {
-		return response.status(404).render('app/500');
+		return response.status(404).render('app/404');
 	}
 
-	let costsCategoryLabel = capitalize(costsCategory);
+	let costsCategoryLabel = `${capitalize(costsCategory)} costs document`;
 
-	if (costsCategory === 'lpa') {
-		costsCategoryLabel = 'LPA';
+	switch (costsCategory) {
+		case 'lpa':
+			costsCategoryLabel = 'LPA costs document';
+			break;
+		case 'decision':
+			costsCategoryLabel = 'Costs decision document';
+			break;
 	}
 
 	postDocumentDetails(
@@ -229,7 +237,7 @@ export const postAddDocumentDetails = async (request, response) => {
 		costsCategory === 'decision'
 			? `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/decision/check-and-confirm/${currentFolder?.id}`
 			: `/appeals-service/appeal-details/${request.params.appealId}`,
-		`${costsCategoryLabel} costs document`,
+		costsCategoryLabel,
 		(/** @type {import('@pins/express/types/express.js').Request} */ request) => {
 			if (request.session.costsDocumentType) {
 				delete request.session.costsDocumentType;
@@ -250,13 +258,18 @@ export const getManageFolder = async (request, response) => {
 		return response.status(404).render('app/404');
 	}
 	if (!currentFolder) {
-		return response.status(404).render('app/500');
+		return response.status(404).render('app/404');
 	}
 
-	let costsCategoryLabel = capitalize(costsCategory);
+	let costsCategoryLabel = `${capitalize(costsCategory)} costs documents`;
 
-	if (costsCategory === 'lpa') {
-		costsCategoryLabel = 'LPA';
+	switch (costsCategory) {
+		case 'lpa':
+			costsCategoryLabel = 'LPA costs documents';
+			break;
+		case 'decision':
+			costsCategoryLabel = 'Costs decision documents';
+			break;
 	}
 
 	renderManageFolder(
@@ -264,9 +277,7 @@ export const getManageFolder = async (request, response) => {
 		response,
 		`/appeals-service/appeal-details/${request.params.appealId}`,
 		`/appeals-service/appeal-details/${request.params.appealId}/costs/${costsCategory}/manage-documents/${currentFolder.id}/{{documentId}}`,
-		costsCategory === 'decision'
-			? 'Costs decision documents'
-			: `${costsCategoryLabel} costs documents`
+		costsCategoryLabel
 	);
 };
 
@@ -282,7 +293,7 @@ export const getManageDocument = async (request, response) => {
 		return response.status(404).render('app/404');
 	}
 	if (!currentFolder) {
-		return response.status(404).render('app/500');
+		return response.status(404).render('app/404');
 	}
 
 	renderManageDocument(
@@ -302,7 +313,7 @@ export const getDeleteCostsDocument = async (request, response) => {
 	} = request;
 
 	if (!currentFolder) {
-		return response.status(404).render('app/500');
+		return response.status(404).render('app/404');
 	}
 
 	renderDeleteDocument(
@@ -324,7 +335,7 @@ export const postDeleteCostsDocument = async (request, response) => {
 		return response.status(404).render('app/404');
 	}
 	if (!currentFolder) {
-		return response.status(404).render('app/500');
+		return response.status(404).render('app/404');
 	}
 
 	postDocumentDelete(
@@ -347,7 +358,7 @@ export const renderDecisionCheckAndConfirm = async (request, response) => {
 		return response.status(404).render('app/404');
 	}
 	if (!currentFolder) {
-		return response.status(404).render('app/500');
+		return response.status(404).render('app/404');
 	}
 
 	const mappedPageContent = decisionCheckAndConfirmPage(request.currentAppeal, currentFolder);
@@ -371,7 +382,7 @@ export const postDecisionCheckAndConfirm = async (request, response) => {
 		return response.status(404).render('app/404');
 	}
 	if (!currentFolder) {
-		return response.status(404).render('app/500');
+		return response.status(404).render('app/404');
 	}
 
 	if (errors) {
