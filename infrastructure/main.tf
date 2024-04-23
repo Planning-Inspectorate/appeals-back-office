@@ -32,3 +32,4 @@ resource "azurerm_virtual_network" "appeals_back_office_vnet1" {
 
 # Do we want to add a unique string to ensure each resource's name is unique?
 # /24 is definitely enough ips?
+# figure out exactly all the resources needed and how many of each
