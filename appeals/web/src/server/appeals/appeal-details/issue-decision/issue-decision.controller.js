@@ -34,6 +34,9 @@ export const postIssueDecision = async (request, response) => {
 		const { decision } = request.body;
 		const { errors } = request;
 
+		console.log('postIssueDecision decision:');
+		console.log(decision);
+
 		if (errors) {
 			return renderIssueDecision(request, response);
 		}

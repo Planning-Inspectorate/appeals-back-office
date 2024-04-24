@@ -429,6 +429,12 @@ export function decisionConfirmationPage(appealData, appealIsInvalid) {
 				parameters: {
 					html: '<p class="govuk-body"><a href="/appeals-service/appeals-list" class="govuk-link">Go back to your list</a></p>'
 				}
+			},
+			{
+				type: 'html',
+				parameters: {
+					html: `<p class="govuk-body"><a href="/appeals-service/appeal-details/${appealData.appealId}/costs/decision/upload-documents/${appealData.costs.decisionFolder.id}" class="govuk-link">Add costs decision</a></p>`
+				}
 			}
 		]
 	};
