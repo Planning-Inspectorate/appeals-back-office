@@ -64,15 +64,15 @@ resource "azurerm_key_vault" "appeals_back_office_kv" {
 # /24 is definitely enough ips?
 # figure out exactly all the resources needed and how many of each
 # Create a legal hold - for apply_blob_container_legal_hold; means we don't have to run a script and module - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_container
-  # resource "azurerm_storage_container" "my_container" {
-  #   name                  = "myblobcontainer"
-  #   storage_account_name  = azurerm_storage_account.my_account.name
-  #   container_access_type = "private"
+# resource "azurerm_storage_container" "my_container" {
+#   name                  = "myblobcontainer"
+#   storage_account_name  = azurerm_storage_account.my_account.name
+#   container_access_type = "private"
 
-  #   legal_hold {
-  #     tags = ["litigation", "compliance"]
-  #   }
-  # }
+#   legal_hold {
+#     tags = ["litigation", "compliance"]
+#   }
+# }
 # networks.tf & private-link-synapse need configuring - could be left to last as is just a private link + subnet currently
 # secrets.tf not edited
 # redis-cache.tf not edited
