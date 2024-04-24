@@ -63,6 +63,7 @@ export interface AppellantCase extends schema.AppellantCase {
 }
 
 export interface Folder extends schema.Folder {
+	id: number;
 	documents?: schema.Document[] | null;
 }
 

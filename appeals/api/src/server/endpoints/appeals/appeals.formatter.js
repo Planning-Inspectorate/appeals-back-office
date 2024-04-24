@@ -168,7 +168,8 @@ const formatAppeal = (
 			caseOfficer: appeal.caseOfficer?.azureAdUserId || null,
 			costs: {
 				appellantFolder: costsFolders.find((f) => f.path.endsWith('appellant')),
-				lpaFolder: costsFolders.find((f) => f.path.endsWith('lpa'))
+				lpaFolder: costsFolders.find((f) => f.path.endsWith('lpa')),
+				decisionFolder: costsFolders.find((f) => f.path.endsWith('decision'))
 			},
 			decision:
 				decisionInfo &&

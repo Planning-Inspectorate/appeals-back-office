@@ -254,6 +254,12 @@ interface SingleAppealDetailsResponse {
 			caseId: number;
 			documents: Schema.Document[];
 		};
+		decisionFolder: {
+			id: number;
+			path: string;
+			caseId: number;
+			documents: Schema.Document[];
+		};
 	};
 	decision: {
 		folderId: number;

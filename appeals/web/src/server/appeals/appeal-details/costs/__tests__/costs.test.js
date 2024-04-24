@@ -7,6 +7,7 @@ import {
 	appealData,
 	costsFolderInfoAppellant,
 	costsFolderInfoLpa,
+	costsFolderInfoDecision,
 	documentFileInfo,
 	documentRedactionStatuses,
 	activeDirectoryUsersData,
@@ -26,29 +27,25 @@ describe('costs', () => {
 	beforeEach(installMockApi);
 	afterEach(teardown);
 
-	describe('GET /costs/:costsApplicant/select-document-type/:folderId', () => {
-		it('should render the select document type page (appellant)', async () => {
-			const response = await request.get(
-				`${baseUrl}/1/costs/appellant/select-document-type/${appealData.costs.appellantFolder.id}`
-			);
-			const element = parseHtml(response.text);
+	describe('GET /costs/:costsCategory/select-document-type/:folderId', () => {
+		const costsCategories = ['appellant', 'lpa'];
 
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('What is the document type?</h1>');
-		});
+		for (const costsCategory of costsCategories) {
+			it(`should render the select document type page (${costsCategory})`, async () => {
+				const response = await request.get(
+					`${baseUrl}/1/costs/appellant/select-document-type/${appealData.costs.appellantFolder.id}`
+				);
+				const element = parseHtml(response.text);
 
-		it('should render the select document type page (LPA)', async () => {
-			const response = await request.get(
-				`${baseUrl}/1/costs/appellant/select-document-type/${appealData.costs.appellantFolder.id}`
-			);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('What is the document type?</h1>');
-		});
+				expect(element.innerHTML).toMatchSnapshot();
+				expect(element.innerHTML).toContain('What is the document type?</h1>');
+			});
+		}
 	});
 
-	describe('POST /costs/:costsApplicant/select-document-type/:folderId', () => {
+	describe('POST /costs/:costsCategory/select-document-type/:folderId', () => {
+		const costsCategories = ['appellant', 'lpa'];
+
 		beforeEach(() => {
 			nock('http://test/')
 				.get('/appeals/1/document-folders/1')
@@ -56,76 +53,47 @@ describe('costs', () => {
 			nock('http://test/').get('/appeals/1/document-folders/2').reply(200, costsFolderInfoLpa);
 		});
 
-		it('should re-render the select document type page with the expected error message when no document type was selected (appellant)', async () => {
-			const response = await request
-				.post(
-					`${baseUrl}/1/costs/appellant/select-document-type/${appealData.costs.appellantFolder.id}`
-				)
-				.send({});
+		for (const costsCategory of costsCategories) {
+			// @ts-ignore
+			const costsFolder = appealData.costs[`${costsCategory}Folder`];
 
-			const element = parseHtml(response.text);
+			it(`should re-render the select document type page with the expected error message when no document type was selected (${costsCategory})`, async () => {
+				const response = await request
+					.post(`${baseUrl}/1/costs/${costsCategory}/select-document-type/${costsFolder.id}`)
+					.send({});
 
-			expect(element.innerHTML).toMatchSnapshot();
+				const element = parseHtml(response.text);
 
-			expect(element.innerHTML).toContain('What is the document type?</h1>');
-			expect(element.innerHTML).toContain('govuk-error-summary');
+				expect(element.innerHTML).toMatchSnapshot();
 
-			const errorSummaryElement = parseHtml(response.text, { rootElement: '.govuk-error-summary' });
+				expect(element.innerHTML).toContain('What is the document type?</h1>');
+				expect(element.innerHTML).toContain('govuk-error-summary');
 
-			expect(errorSummaryElement.innerHTML).toContain('There is a problem');
-			expect(errorSummaryElement.innerHTML).toContain('Select a document type');
-		});
-
-		it('should re-render the select document type page with the expected error message when no document type was selected (LPA)', async () => {
-			const response = await request
-				.post(`${baseUrl}/1/costs/lpa/select-document-type/${appealData.costs.lpaFolder.id}`)
-				.send({});
-
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-
-			expect(element.innerHTML).toContain('What is the document type?</h1>');
-			expect(element.innerHTML).toContain('govuk-error-summary');
-
-			const errorSummaryElement = parseHtml(response.text, { rootElement: '.govuk-error-summary' });
-
-			expect(errorSummaryElement.innerHTML).toContain('There is a problem');
-			expect(errorSummaryElement.innerHTML).toContain('Select a document type');
-		});
-
-		it('should redirect to the upload documents page when a document type was selected (appellant)', async () => {
-			const response = await request
-				.post(
-					`${baseUrl}/1/costs/appellant/select-document-type/${appealData.costs.appellantFolder.id}`
-				)
-				.send({
-					'costs-document-type': '1'
+				const errorSummaryElement = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary'
 				});
 
-			expect(response.statusCode).toBe(302);
-			expect(response.text).toEqual(
-				'Found. Redirecting to /appeals-service/appeal-details/1/costs/appellant/upload-documents/3864'
-			);
-		});
+				expect(errorSummaryElement.innerHTML).toContain('There is a problem');
+				expect(errorSummaryElement.innerHTML).toContain('Select a document type');
+			});
 
-		it('should redirect to the upload documents page when a document type was selected (LPA)', async () => {
-			const response = await request
-				.post(`${baseUrl}/1/costs/lpa/select-document-type/${appealData.costs.lpaFolder.id}`)
-				.send({
-					'costs-document-type': '1'
-				});
+			it(`should redirect to the upload documents page when a document type was selected (${costsCategory})`, async () => {
+				const response = await request
+					.post(`${baseUrl}/1/costs/${costsCategory}/select-document-type/${costsFolder.id}`)
+					.send({
+						'costs-document-type': '1'
+					});
 
-			expect(response.statusCode).toBe(302);
-			expect(response.text).toEqual(
-				'Found. Redirecting to /appeals-service/appeal-details/1/costs/lpa/upload-documents/3864'
-			);
-		});
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toEqual(
+					`Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/upload-documents/3864`
+				);
+			});
+		}
 	});
 
-	describe('GET /costs/:costsApplicant/upload-documents/:folderId', () => {
-		/** @type {import('superagent').Response} */
-		let selectDocumentTypeResponse;
+	describe('GET /costs/:costsCategory/upload-documents/:folderId', () => {
+		const costsCategoriesRequiringSession = ['appellant', 'lpa'];
 
 		beforeEach(async () => {
 			nock('http://test/')
@@ -136,24 +104,61 @@ describe('costs', () => {
 				.get('/appeals/1/document-folders/2')
 				.reply(200, costsFolderInfoLpa)
 				.persist();
-
-			selectDocumentTypeResponse = await request
-				.post(
-					`${baseUrl}/1/costs/appellant/select-document-type/${appealData.costs.appellantFolder.id}`
-				)
-				.send({
-					'costs-document-type': '1'
-				});
+			nock('http://test/')
+				.get('/appeals/1/document-folders/3')
+				.reply(200, costsFolderInfoDecision)
+				.persist();
 		});
 
-		it('should render the upload documents page (appellant)', async () => {
-			expect(selectDocumentTypeResponse.statusCode).toBe(302);
-			expect(selectDocumentTypeResponse.text).toContain(
-				'Found. Redirecting to /appeals-service/appeal-details/1/costs/appellant/upload-documents/3864'
-			);
+		for (const costsCategory of costsCategoriesRequiringSession) {
+			// @ts-ignore
+			const costsFolder = appealData.costs[`${costsCategory}Folder`];
 
+			it(`should render a 500 error page if required data is not present in the session (${costsCategory})`, async () => {
+				const response = await request.get(
+					`${baseUrl}/1/costs/appellant/upload-documents/${costsFolder.id}`
+				);
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain(
+					'Sorry, there is a problem with the service</h1>'
+				);
+			});
+
+			it(`should render the upload documents page (${costsCategory})`, async () => {
+				const selectDocumentTypeResponse = await request
+					.post(`${baseUrl}/1/costs/${costsCategory}/select-document-type/${costsFolder.id}`)
+					.send({
+						'costs-document-type': '1'
+					});
+
+				expect(selectDocumentTypeResponse.statusCode).toBe(302);
+				expect(selectDocumentTypeResponse.text).toContain(
+					`Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/upload-documents/3864`
+				);
+
+				const response = await request.get(
+					`${baseUrl}/1/costs/${costsCategory}/upload-documents/${costsFolder.id}`
+				);
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain(
+					`Upload ${costsCategory === 'appellant' ? costsCategory : 'LPA'} costs document</h1>`
+				);
+			});
+		}
+
+		it('should render the upload documents page (decision)', async () => {
 			const response = await request.get(
-				`${baseUrl}/1/costs/appellant/upload-documents/${appealData.costs.appellantFolder.id}`
+				`${baseUrl}/1/costs/decision/upload-documents/${appealData.costs.decisionFolder.id}`
 			);
 			const element = parseHtml(response.text);
 
@@ -161,31 +166,12 @@ describe('costs', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Upload appellant costs document</h1>');
-		});
-
-		it('should render the upload documents page (LPA)', async () => {
-			expect(selectDocumentTypeResponse.statusCode).toBe(302);
-			expect(selectDocumentTypeResponse.text).toContain(
-				'Found. Redirecting to /appeals-service/appeal-details/1/costs/appellant/upload-documents/3864'
-			);
-
-			const response = await request.get(
-				`${baseUrl}/1/costs/lpa/upload-documents/${appealData.costs.lpaFolder.id}`
-			);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain('Upload LPA costs document</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('Upload costs decision</h1>');
 		});
 	});
 
-	describe('GET /costs/:costsApplicant/upload-documents/:folderId/:documentId', () => {
-		/** @type {import('superagent').Response} */
-		let selectDocumentTypeResponse;
+	describe('GET /costs/:costsCategory/upload-documents/:folderId/:documentId', () => {
+		const costsCategories = ['appellant', 'lpa', 'decision'];
 
 		beforeEach(async () => {
 			nock('http://test/')
@@ -195,50 +181,33 @@ describe('costs', () => {
 			nock('http://test/')
 				.get('/appeals/1/document-folders/2')
 				.reply(200, costsFolderInfoLpa)
+				.persist();
+			nock('http://test/')
+				.get('/appeals/1/document-folders/3')
+				.reply(200, costsFolderInfoDecision)
 				.persist();
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
-
-			selectDocumentTypeResponse = await request
-				.post(
-					`${baseUrl}/1/costs/appellant/select-document-type/${appealData.costs.appellantFolder.id}`
-				)
-				.send({
-					'costs-document-type': '1'
-				});
 		});
 
-		it('should render the upload document version page (appellant)', async () => {
-			expect(selectDocumentTypeResponse.statusCode).toBe(302);
-			expect(selectDocumentTypeResponse.text).toContain(
-				'Found. Redirecting to /appeals-service/appeal-details/1/costs/appellant/upload-documents/3864'
-			);
+		for (const costsCategory of costsCategories) {
+			// @ts-ignore
+			const costsFolder = appealData.costs[`${costsCategory}Folder`];
 
-			const response = await request.get(
-				`${baseUrl}/1/costs/appellant/upload-documents/${appealData.costs.appellantFolder.id}/1`
-			);
-			const element = parseHtml(response.text);
+			it(`should render the upload document version page (${costsCategory})`, async () => {
+				const response = await request.get(
+					`${baseUrl}/1/costs/${costsCategory}/upload-documents/${costsFolder.id}/1`
+				);
+				const element = parseHtml(response.text);
 
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Upload an updated document</h1>');
-		});
-
-		it('should render the upload document version page (LPA)', async () => {
-			expect(selectDocumentTypeResponse.statusCode).toBe(302);
-			expect(selectDocumentTypeResponse.text).toContain(
-				'Found. Redirecting to /appeals-service/appeal-details/1/costs/appellant/upload-documents/3864'
-			);
-
-			const response = await request.get(
-				`${baseUrl}/1/costs/lpa/upload-documents/${appealData.costs.lpaFolder.id}/1`
-			);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Upload an updated document</h1>');
-		});
+				expect(element.innerHTML).toMatchSnapshot();
+				expect(element.innerHTML).toContain('Upload an updated document</h1>');
+			});
+		}
 	});
 
-	describe('GET /costs/:costsApplicant/add-document-details/:folderId', () => {
+	describe('GET /costs/:costsCategory/add-document-details/:folderId', () => {
+		const costsCategories = ['appellant', 'lpa', 'decision'];
+
 		beforeEach(async () => {
 			nock('http://test/')
 				.get('/appeals/1/document-folders/1')
@@ -249,44 +218,53 @@ describe('costs', () => {
 				.reply(200, costsFolderInfoLpa)
 				.persist();
 			nock('http://test/')
+				.get('/appeals/1/document-folders/3')
+				.reply(200, costsFolderInfoDecision)
+				.persist();
+			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses);
 		});
 
-		it('should render the document details page with one item per unpublished document (appellant)', async () => {
-			const response = await request.get(
-				`${baseUrl}/1/costs/appellant/add-document-details/${appealData.costs.appellantFolder.id}`
-			);
-			const element = parseHtml(response.text);
+		for (const costsCategory of costsCategories) {
+			// @ts-ignore
+			const costsFolder = appealData.costs[`${costsCategory}Folder`];
 
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('test-pdf-documentFolderInfo.pdf');
-			expect(element.innerHTML).not.toContain('sample-20s-documentFolderInfo.mp4');
+			it(`should render the document details page with one item per unpublished document (${costsCategory})`, async () => {
+				let expectedH1Text = '';
 
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+				switch (costsCategory) {
+					case 'appellant':
+						expectedH1Text = 'Appellant costs document';
+						break;
+					case 'lpa':
+						expectedH1Text = 'LPA costs document';
+						break;
+					case 'decision':
+						expectedH1Text = 'Costs decision document';
+						break;
+				}
 
-			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
-			expect(unprettifiedElement.innerHTML).toContain('Appellant costs document</h1>');
-		});
+				const response = await request.get(
+					`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.id}`
+				);
+				const element = parseHtml(response.text);
 
-		it('should render the document details page with one item per unpublished document (LPA)', async () => {
-			const response = await request.get(
-				`${baseUrl}/1/costs/lpa/add-document-details/${appealData.costs.lpaFolder.id}`
-			);
-			const element = parseHtml(response.text);
+				expect(element.innerHTML).toMatchSnapshot();
+				expect(element.innerHTML).toContain('test-pdf-documentFolderInfo.pdf');
+				expect(element.innerHTML).not.toContain('sample-20s-documentFolderInfo.mp4');
 
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('test-pdf-documentFolderInfo.pdf');
-			expect(element.innerHTML).not.toContain('sample-20s-documentFolderInfo.mp4');
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
-			expect(unprettifiedElement.innerHTML).toContain('LPA costs document</h1>');
-		});
+				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain(`${expectedH1Text}</h1>`);
+			});
+		}
 	});
 
-	describe('POST /costs/appellant/add-document-details/:folderId', () => {
+	describe('POST /costs/:costsCategory/add-document-details/:folderId', () => {
+		const costsCategories = ['appellant', 'lpa', 'decision'];
+
 		beforeEach(() => {
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
@@ -294,415 +272,8 @@ describe('costs', () => {
 			nock('http://test/')
 				.get('/appeals/1/document-folders/1')
 				.reply(200, costsFolderInfoAppellant);
-			nock('http://test/')
-				.patch('/appeals/1/documents')
-				.reply(200, {
-					documents: [
-						{
-							id: '4541e025-00e1-4458-aac6-d1b51f6ae0a7',
-							receivedDate: '2023-02-01',
-							redactionStatus: 2
-						}
-					]
-				});
-		});
-
-		afterEach(() => {
-			nock.cleanAll();
-		});
-
-		it('should re-render the document details page with the expected error message if the request body is in an incorrect format', async () => {
-			const response = await request
-				.post(`${baseUrl}/1/costs/appellant/add-document-details/1`)
-				.send({});
-
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
-			expect(unprettifiedElement.innerHTML).toContain('Appellant costs document</h1>');
-
-			const errorSummaryElement = parseHtml(response.text, { rootElement: '.govuk-error-summary' });
-
-			expect(errorSummaryElement.innerHTML).toContain('There is a problem with the service');
-		});
-
-		it('should re-render the document details page with the expected error message if receivedDate day is empty', async () => {
-			const response = await request
-				.post(`${baseUrl}/1/costs/appellant/add-document-details/1`)
-				.send({
-					items: [
-						{
-							documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
-							receivedDate: {
-								day: '',
-								month: '2',
-								year: '2030'
-							},
-							redactionStatus: 'unredacted'
-						}
-					]
-				});
-
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
-			expect(unprettifiedElement.innerHTML).toContain('Appellant costs document</h1>');
-
-			const errorSummaryElement = parseHtml(response.text, { rootElement: '.govuk-error-summary' });
-
-			expect(errorSummaryElement.innerHTML).toContain('Received date day cannot be empty');
-		});
-
-		it('should re-render the document details page with the expected error message if receivedDate day is non-numeric', async () => {
-			const response = await request
-				.post(`${baseUrl}/1/costs/appellant/add-document-details/1`)
-				.send({
-					items: [
-						{
-							documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
-							receivedDate: {
-								day: 'a',
-								month: '2',
-								year: '2030'
-							},
-							redactionStatus: 'unredacted'
-						}
-					]
-				});
-
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
-			expect(unprettifiedElement.innerHTML).toContain('Appellant costs document</h1>');
-
-			const errorSummaryElement = parseHtml(response.text, { rootElement: '.govuk-error-summary' });
-
-			expect(errorSummaryElement.innerHTML).toContain('Received date day must be a number');
-		});
-
-		it('should re-render the document details page with the expected error message if receivedDate day is less than 1', async () => {
-			const response = await request
-				.post(`${baseUrl}/1/costs/appellant/add-document-details/1`)
-				.send({
-					items: [
-						{
-							documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
-							receivedDate: {
-								day: '0',
-								month: '2',
-								year: '2030'
-							},
-							redactionStatus: 'unredacted'
-						}
-					]
-				});
-
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
-			expect(unprettifiedElement.innerHTML).toContain('Appellant costs document</h1>');
-
-			const errorSummaryElement = parseHtml(response.text, { rootElement: '.govuk-error-summary' });
-
-			expect(errorSummaryElement.innerHTML).toContain('Received date day must be between 1 and 31');
-		});
-
-		it('should re-render the document details page with the expected error message if receivedDate day is greater than 31', async () => {
-			const response = await request
-				.post(`${baseUrl}/1/costs/appellant/add-document-details/1`)
-				.send({
-					items: [
-						{
-							documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
-							receivedDate: {
-								day: '32',
-								month: '2',
-								year: '2030'
-							},
-							redactionStatus: 'unredacted'
-						}
-					]
-				});
-
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
-			expect(unprettifiedElement.innerHTML).toContain('Appellant costs document</h1>');
-
-			const errorSummaryElement = parseHtml(response.text, { rootElement: '.govuk-error-summary' });
-
-			expect(errorSummaryElement.innerHTML).toContain('Received date day must be between 1 and 31');
-		});
-
-		it('should re-render the document details page with the expected error message if receivedDate month is empty', async () => {
-			const response = await request
-				.post(`${baseUrl}/1/costs/appellant/add-document-details/1`)
-				.send({
-					items: [
-						{
-							documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
-							receivedDate: {
-								day: '1',
-								month: '',
-								year: '2030'
-							},
-							redactionStatus: 'unredacted'
-						}
-					]
-				});
-
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
-			expect(unprettifiedElement.innerHTML).toContain('Appellant costs document</h1>');
-
-			const errorSummaryElement = parseHtml(response.text, { rootElement: '.govuk-error-summary' });
-
-			expect(errorSummaryElement.innerHTML).toContain('Received date month cannot be empty');
-		});
-
-		it('should re-render the document details page with the expected error message if receivedDate month is non-numeric', async () => {
-			const response = await request
-				.post(`${baseUrl}/1/costs/appellant/add-document-details/1`)
-				.send({
-					items: [
-						{
-							documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
-							receivedDate: {
-								day: '1',
-								month: 'a',
-								year: '2030'
-							},
-							redactionStatus: 'unredacted'
-						}
-					]
-				});
-
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
-			expect(unprettifiedElement.innerHTML).toContain('Appellant costs document</h1>');
-
-			const errorSummaryElement = parseHtml(response.text, { rootElement: '.govuk-error-summary' });
-
-			expect(errorSummaryElement.innerHTML).toContain('Received date month must be a number');
-		});
-
-		it('should re-render the document details page with the expected error message if receivedDate month is less than 1', async () => {
-			const response = await request
-				.post(`${baseUrl}/1/costs/appellant/add-document-details/1`)
-				.send({
-					items: [
-						{
-							documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
-							receivedDate: {
-								day: '1',
-								month: '0',
-								year: '2030'
-							},
-							redactionStatus: 'unredacted'
-						}
-					]
-				});
-
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
-			expect(unprettifiedElement.innerHTML).toContain('Appellant costs document</h1>');
-
-			const errorSummaryElement = parseHtml(response.text, { rootElement: '.govuk-error-summary' });
-
-			expect(errorSummaryElement.innerHTML).toContain(
-				'Received date month must be between 1 and 12'
-			);
-		});
-
-		it('should re-render the document details page with the expected error message if receivedDate month is greater than 12', async () => {
-			const response = await request
-				.post(`${baseUrl}/1/costs/appellant/add-document-details/1`)
-				.send({
-					items: [
-						{
-							documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
-							receivedDate: {
-								day: '1',
-								month: '13',
-								year: '2030'
-							},
-							redactionStatus: 'unredacted'
-						}
-					]
-				});
-
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
-			expect(unprettifiedElement.innerHTML).toContain('Appellant costs document</h1>');
-
-			const errorSummaryElement = parseHtml(response.text, { rootElement: '.govuk-error-summary' });
-
-			expect(errorSummaryElement.innerHTML).toContain(
-				'Received date month must be between 1 and 12'
-			);
-		});
-
-		it('should re-render the document details page with the expected error message if receivedDate year is empty', async () => {
-			const response = await request
-				.post(`${baseUrl}/1/costs/appellant/add-document-details/1`)
-				.send({
-					items: [
-						{
-							documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
-							receivedDate: {
-								day: '1',
-								month: '2',
-								year: ''
-							},
-							redactionStatus: 'unredacted'
-						}
-					]
-				});
-
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
-			expect(unprettifiedElement.innerHTML).toContain('Appellant costs document</h1>');
-
-			const errorSummaryElement = parseHtml(response.text, { rootElement: '.govuk-error-summary' });
-
-			expect(errorSummaryElement.innerHTML).toContain('Received date year cannot be empty');
-		});
-
-		it('should re-render the document details page with the expected error message if receivedDate year is non-numeric', async () => {
-			const response = await request
-				.post(`${baseUrl}/1/costs/appellant/add-document-details/1`)
-				.send({
-					items: [
-						{
-							documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
-							receivedDate: {
-								day: '1',
-								month: '2',
-								year: 'a'
-							},
-							redactionStatus: 'unredacted'
-						}
-					]
-				});
-
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
-			expect(unprettifiedElement.innerHTML).toContain('Appellant costs document</h1>');
-
-			const errorSummaryElement = parseHtml(response.text, { rootElement: '.govuk-error-summary' });
-
-			expect(errorSummaryElement.innerHTML).toContain('Received date year must be a number');
-		});
-
-		it('should re-render the document details page with the expected error message if receivedDate is not a valid date', async () => {
-			const response = await request
-				.post(`${baseUrl}/1/costs/appellant/add-document-details/1`)
-				.send({
-					items: [
-						{
-							documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
-							receivedDate: {
-								day: '29',
-								month: '2',
-								year: '2023'
-							},
-							redactionStatus: 'unredacted'
-						}
-					]
-				});
-
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
-			expect(unprettifiedElement.innerHTML).toContain('Appellant costs document</h1>');
-
-			const errorSummaryElement = parseHtml(response.text, { rootElement: '.govuk-error-summary' });
-
-			expect(errorSummaryElement.innerHTML).toContain('Received date must be a valid date');
-		});
-
-		it('should send a patch request to the appeal documents endpoint and redirect to the appeal details page, if complete and valid document details were provided', async () => {
-			const response = await request
-				.post(`${baseUrl}/1/costs/appellant/add-document-details/1`)
-				.send({
-					items: [
-						{
-							documentId: '4541e025-00e1-4458-aac6-d1b51f6ae0a7',
-							receivedDate: {
-								day: '1',
-								month: '2',
-								year: '2023'
-							},
-							redactionStatus: 'unredacted'
-						}
-					]
-				});
-
-			expect(response.statusCode).toBe(302);
-			expect(response.text).toEqual('Found. Redirecting to /appeals-service/appeal-details/1');
-		});
-	});
-
-	describe('POST /costs/lpa/add-document-details/:folderId', () => {
-		beforeEach(() => {
-			nock('http://test/')
-				.get('/appeals/document-redaction-statuses')
-				.reply(200, documentRedactionStatuses);
 			nock('http://test/').get('/appeals/1/document-folders/2').reply(200, costsFolderInfoLpa);
+			nock('http://test/').get('/appeals/1/document-folders/3').reply(200, costsFolderInfoDecision);
 			nock('http://test/')
 				.patch('/appeals/1/documents')
 				.reply(200, {
@@ -720,367 +291,443 @@ describe('costs', () => {
 			nock.cleanAll();
 		});
 
-		it('should re-render the document details page with the expected error message if the request body is in an incorrect format', async () => {
-			const response = await request.post(`${baseUrl}/1/costs/lpa/add-document-details/2`).send({});
+		for (const costsCategory of costsCategories) {
+			let expectedH1Text = '';
 
-			const element = parseHtml(response.text);
+			switch (costsCategory) {
+				case 'appellant':
+					expectedH1Text = 'Appellant costs document';
+					break;
+				case 'lpa':
+					expectedH1Text = 'LPA costs document';
+					break;
+				case 'decision':
+					expectedH1Text = 'Costs decision document';
+					break;
+			}
 
-			expect(element.innerHTML).toMatchSnapshot();
+			it(`should re-render the document details page with the expected error message if the request body is in an incorrect format (${costsCategory})`, async () => {
+				const response = await request
+					.post(`${baseUrl}/1/costs/${costsCategory}/add-document-details/1`)
+					.send({});
 
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+				const element = parseHtml(response.text);
 
-			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
-			expect(unprettifiedElement.innerHTML).toContain('LPA costs document</h1>');
+				expect(element.innerHTML).toMatchSnapshot();
 
-			const errorSummaryElement = parseHtml(response.text, { rootElement: '.govuk-error-summary' });
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(errorSummaryElement.innerHTML).toContain('There is a problem with the service');
-		});
+				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain(`${expectedH1Text}</h1>`);
 
-		it('should re-render the document details page with the expected error message if receivedDate day is empty', async () => {
-			const response = await request.post(`${baseUrl}/1/costs/lpa/add-document-details/2`).send({
-				items: [
-					{
-						documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
-						receivedDate: {
-							day: '',
-							month: '2',
-							year: '2030'
-						},
-						redactionStatus: 'unredacted'
-					}
-				]
+				const errorSummaryElement = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary'
+				});
+
+				expect(errorSummaryElement.innerHTML).toContain('There is a problem with the service');
 			});
 
-			const element = parseHtml(response.text);
+			it(`should re-render the document details page with the expected error message if receivedDate day is empty (${costsCategory})`, async () => {
+				const response = await request
+					.post(`${baseUrl}/1/costs/${costsCategory}/add-document-details/1`)
+					.send({
+						items: [
+							{
+								documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
+								receivedDate: {
+									day: '',
+									month: '2',
+									year: '2030'
+								},
+								redactionStatus: 'unredacted'
+							}
+						]
+					});
 
-			expect(element.innerHTML).toMatchSnapshot();
+				const element = parseHtml(response.text);
 
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+				expect(element.innerHTML).toMatchSnapshot();
 
-			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
-			expect(unprettifiedElement.innerHTML).toContain('LPA costs document</h1>');
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			const errorSummaryElement = parseHtml(response.text, { rootElement: '.govuk-error-summary' });
+				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain(`${expectedH1Text}</h1>`);
 
-			expect(errorSummaryElement.innerHTML).toContain('Received date day cannot be empty');
-		});
+				const errorSummaryElement = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary'
+				});
 
-		it('should re-render the document details page with the expected error message if receivedDate day is non-numeric', async () => {
-			const response = await request.post(`${baseUrl}/1/costs/lpa/add-document-details/2`).send({
-				items: [
-					{
-						documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
-						receivedDate: {
-							day: 'a',
-							month: '2',
-							year: '2030'
-						},
-						redactionStatus: 'unredacted'
-					}
-				]
+				expect(errorSummaryElement.innerHTML).toContain('Received date day cannot be empty');
 			});
 
-			const element = parseHtml(response.text);
+			it(`should re-render the document details page with the expected error message if receivedDate day is non-numeric (${costsCategory})`, async () => {
+				const response = await request
+					.post(`${baseUrl}/1/costs/${costsCategory}/add-document-details/1`)
+					.send({
+						items: [
+							{
+								documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
+								receivedDate: {
+									day: 'a',
+									month: '2',
+									year: '2030'
+								},
+								redactionStatus: 'unredacted'
+							}
+						]
+					});
 
-			expect(element.innerHTML).toMatchSnapshot();
+				const element = parseHtml(response.text);
 
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+				expect(element.innerHTML).toMatchSnapshot();
 
-			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
-			expect(unprettifiedElement.innerHTML).toContain('LPA costs document</h1>');
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			const errorSummaryElement = parseHtml(response.text, { rootElement: '.govuk-error-summary' });
+				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain(`${expectedH1Text}</h1>`);
 
-			expect(errorSummaryElement.innerHTML).toContain('Received date day must be a number');
-		});
+				const errorSummaryElement = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary'
+				});
 
-		it('should re-render the document details page with the expected error message if receivedDate day is less than 1', async () => {
-			const response = await request.post(`${baseUrl}/1/costs/lpa/add-document-details/2`).send({
-				items: [
-					{
-						documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
-						receivedDate: {
-							day: '0',
-							month: '2',
-							year: '2030'
-						},
-						redactionStatus: 'unredacted'
-					}
-				]
+				expect(errorSummaryElement.innerHTML).toContain('Received date day must be a number');
 			});
 
-			const element = parseHtml(response.text);
+			it(`should re-render the document details page with the expected error message if receivedDate day is less than 1 (${costsCategory})`, async () => {
+				const response = await request
+					.post(`${baseUrl}/1/costs/${costsCategory}/add-document-details/1`)
+					.send({
+						items: [
+							{
+								documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
+								receivedDate: {
+									day: '0',
+									month: '2',
+									year: '2030'
+								},
+								redactionStatus: 'unredacted'
+							}
+						]
+					});
 
-			expect(element.innerHTML).toMatchSnapshot();
+				const element = parseHtml(response.text);
 
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+				expect(element.innerHTML).toMatchSnapshot();
 
-			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
-			expect(unprettifiedElement.innerHTML).toContain('LPA costs document</h1>');
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			const errorSummaryElement = parseHtml(response.text, { rootElement: '.govuk-error-summary' });
+				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain(`${expectedH1Text}</h1>`);
 
-			expect(errorSummaryElement.innerHTML).toContain('Received date day must be between 1 and 31');
-		});
+				const errorSummaryElement = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary'
+				});
 
-		it('should re-render the document details page with the expected error message if receivedDate day is greater than 31', async () => {
-			const response = await request.post(`${baseUrl}/1/costs/lpa/add-document-details/2`).send({
-				items: [
-					{
-						documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
-						receivedDate: {
-							day: '32',
-							month: '2',
-							year: '2030'
-						},
-						redactionStatus: 'unredacted'
-					}
-				]
+				expect(errorSummaryElement.innerHTML).toContain(
+					'Received date day must be between 1 and 31'
+				);
 			});
 
-			const element = parseHtml(response.text);
+			it(`should re-render the document details page with the expected error message if receivedDate day is greater than 31 (${costsCategory})`, async () => {
+				const response = await request
+					.post(`${baseUrl}/1/costs/${costsCategory}/add-document-details/1`)
+					.send({
+						items: [
+							{
+								documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
+								receivedDate: {
+									day: '32',
+									month: '2',
+									year: '2030'
+								},
+								redactionStatus: 'unredacted'
+							}
+						]
+					});
 
-			expect(element.innerHTML).toMatchSnapshot();
+				const element = parseHtml(response.text);
 
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+				expect(element.innerHTML).toMatchSnapshot();
 
-			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
-			expect(unprettifiedElement.innerHTML).toContain('LPA costs document</h1>');
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			const errorSummaryElement = parseHtml(response.text, { rootElement: '.govuk-error-summary' });
+				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain(`${expectedH1Text}</h1>`);
 
-			expect(errorSummaryElement.innerHTML).toContain('Received date day must be between 1 and 31');
-		});
+				const errorSummaryElement = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary'
+				});
 
-		it('should re-render the document details page with the expected error message if receivedDate month is empty', async () => {
-			const response = await request.post(`${baseUrl}/1/costs/lpa/add-document-details/2`).send({
-				items: [
-					{
-						documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
-						receivedDate: {
-							day: '1',
-							month: '',
-							year: '2030'
-						},
-						redactionStatus: 'unredacted'
-					}
-				]
+				expect(errorSummaryElement.innerHTML).toContain(
+					'Received date day must be between 1 and 31'
+				);
 			});
 
-			const element = parseHtml(response.text);
+			it(`should re-render the document details page with the expected error message if receivedDate month is empty (${costsCategory})`, async () => {
+				const response = await request
+					.post(`${baseUrl}/1/costs/${costsCategory}/add-document-details/1`)
+					.send({
+						items: [
+							{
+								documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
+								receivedDate: {
+									day: '1',
+									month: '',
+									year: '2030'
+								},
+								redactionStatus: 'unredacted'
+							}
+						]
+					});
 
-			expect(element.innerHTML).toMatchSnapshot();
+				const element = parseHtml(response.text);
 
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+				expect(element.innerHTML).toMatchSnapshot();
 
-			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
-			expect(unprettifiedElement.innerHTML).toContain('LPA costs document</h1>');
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			const errorSummaryElement = parseHtml(response.text, { rootElement: '.govuk-error-summary' });
+				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain(`${expectedH1Text}</h1>`);
 
-			expect(errorSummaryElement.innerHTML).toContain('Received date month cannot be empty');
-		});
+				const errorSummaryElement = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary'
+				});
 
-		it('should re-render the document details page with the expected error message if receivedDate month is non-numeric', async () => {
-			const response = await request.post(`${baseUrl}/1/costs/lpa/add-document-details/2`).send({
-				items: [
-					{
-						documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
-						receivedDate: {
-							day: '1',
-							month: 'a',
-							year: '2030'
-						},
-						redactionStatus: 'unredacted'
-					}
-				]
+				expect(errorSummaryElement.innerHTML).toContain('Received date month cannot be empty');
 			});
 
-			const element = parseHtml(response.text);
+			it(`should re-render the document details page with the expected error message if receivedDate month is non-numeric (${costsCategory})`, async () => {
+				const response = await request
+					.post(`${baseUrl}/1/costs/${costsCategory}/add-document-details/1`)
+					.send({
+						items: [
+							{
+								documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
+								receivedDate: {
+									day: '1',
+									month: 'a',
+									year: '2030'
+								},
+								redactionStatus: 'unredacted'
+							}
+						]
+					});
 
-			expect(element.innerHTML).toMatchSnapshot();
+				const element = parseHtml(response.text);
 
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+				expect(element.innerHTML).toMatchSnapshot();
 
-			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
-			expect(unprettifiedElement.innerHTML).toContain('LPA costs document</h1>');
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			const errorSummaryElement = parseHtml(response.text, { rootElement: '.govuk-error-summary' });
+				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain(`${expectedH1Text}</h1>`);
 
-			expect(errorSummaryElement.innerHTML).toContain('Received date month must be a number');
-		});
+				const errorSummaryElement = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary'
+				});
 
-		it('should re-render the document details page with the expected error message if receivedDate month is less than 1', async () => {
-			const response = await request.post(`${baseUrl}/1/costs/lpa/add-document-details/2`).send({
-				items: [
-					{
-						documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
-						receivedDate: {
-							day: '1',
-							month: '0',
-							year: '2030'
-						},
-						redactionStatus: 'unredacted'
-					}
-				]
+				expect(errorSummaryElement.innerHTML).toContain('Received date month must be a number');
 			});
 
-			const element = parseHtml(response.text);
+			it(`should re-render the document details page with the expected error message if receivedDate month is less than 1 (${costsCategory})`, async () => {
+				const response = await request
+					.post(`${baseUrl}/1/costs/${costsCategory}/add-document-details/1`)
+					.send({
+						items: [
+							{
+								documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
+								receivedDate: {
+									day: '1',
+									month: '0',
+									year: '2030'
+								},
+								redactionStatus: 'unredacted'
+							}
+						]
+					});
 
-			expect(element.innerHTML).toMatchSnapshot();
+				const element = parseHtml(response.text);
 
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+				expect(element.innerHTML).toMatchSnapshot();
 
-			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
-			expect(unprettifiedElement.innerHTML).toContain('LPA costs document</h1>');
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			const errorSummaryElement = parseHtml(response.text, { rootElement: '.govuk-error-summary' });
+				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain(`${expectedH1Text}</h1>`);
 
-			expect(errorSummaryElement.innerHTML).toContain(
-				'Received date month must be between 1 and 12'
-			);
-		});
+				const errorSummaryElement = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary'
+				});
 
-		it('should re-render the document details page with the expected error message if receivedDate month is greater than 12', async () => {
-			const response = await request.post(`${baseUrl}/1/costs/lpa/add-document-details/2`).send({
-				items: [
-					{
-						documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
-						receivedDate: {
-							day: '1',
-							month: '13',
-							year: '2030'
-						},
-						redactionStatus: 'unredacted'
-					}
-				]
+				expect(errorSummaryElement.innerHTML).toContain(
+					'Received date month must be between 1 and 12'
+				);
 			});
 
-			const element = parseHtml(response.text);
+			it(`should re-render the document details page with the expected error message if receivedDate month is greater than 12 (${costsCategory})`, async () => {
+				const response = await request
+					.post(`${baseUrl}/1/costs/${costsCategory}/add-document-details/1`)
+					.send({
+						items: [
+							{
+								documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
+								receivedDate: {
+									day: '1',
+									month: '13',
+									year: '2030'
+								},
+								redactionStatus: 'unredacted'
+							}
+						]
+					});
 
-			expect(element.innerHTML).toMatchSnapshot();
+				const element = parseHtml(response.text);
 
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+				expect(element.innerHTML).toMatchSnapshot();
 
-			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
-			expect(unprettifiedElement.innerHTML).toContain('LPA costs document</h1>');
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			const errorSummaryElement = parseHtml(response.text, { rootElement: '.govuk-error-summary' });
+				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain(`${expectedH1Text}</h1>`);
 
-			expect(errorSummaryElement.innerHTML).toContain(
-				'Received date month must be between 1 and 12'
-			);
-		});
+				const errorSummaryElement = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary'
+				});
 
-		it('should re-render the document details page with the expected error message if receivedDate year is empty', async () => {
-			const response = await request.post(`${baseUrl}/1/costs/lpa/add-document-details/2`).send({
-				items: [
-					{
-						documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
-						receivedDate: {
-							day: '1',
-							month: '2',
-							year: ''
-						},
-						redactionStatus: 'unredacted'
-					}
-				]
+				expect(errorSummaryElement.innerHTML).toContain(
+					'Received date month must be between 1 and 12'
+				);
 			});
 
-			const element = parseHtml(response.text);
+			it(`should re-render the document details page with the expected error message if receivedDate year is empty (${costsCategory})`, async () => {
+				const response = await request
+					.post(`${baseUrl}/1/costs/${costsCategory}/add-document-details/1`)
+					.send({
+						items: [
+							{
+								documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
+								receivedDate: {
+									day: '1',
+									month: '2',
+									year: ''
+								},
+								redactionStatus: 'unredacted'
+							}
+						]
+					});
 
-			expect(element.innerHTML).toMatchSnapshot();
+				const element = parseHtml(response.text);
 
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+				expect(element.innerHTML).toMatchSnapshot();
 
-			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
-			expect(unprettifiedElement.innerHTML).toContain('LPA costs document</h1>');
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			const errorSummaryElement = parseHtml(response.text, { rootElement: '.govuk-error-summary' });
+				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain(`${expectedH1Text}</h1>`);
 
-			expect(errorSummaryElement.innerHTML).toContain('Received date year cannot be empty');
-		});
+				const errorSummaryElement = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary'
+				});
 
-		it('should re-render the document details page with the expected error message if receivedDate year is non-numeric', async () => {
-			const response = await request.post(`${baseUrl}/1/costs/lpa/add-document-details/2`).send({
-				items: [
-					{
-						documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
-						receivedDate: {
-							day: '1',
-							month: '2',
-							year: 'a'
-						},
-						redactionStatus: 'unredacted'
-					}
-				]
+				expect(errorSummaryElement.innerHTML).toContain('Received date year cannot be empty');
 			});
 
-			const element = parseHtml(response.text);
+			it(`should re-render the document details page with the expected error message if receivedDate year is non-numeric (${costsCategory})`, async () => {
+				const response = await request
+					.post(`${baseUrl}/1/costs/${costsCategory}/add-document-details/1`)
+					.send({
+						items: [
+							{
+								documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
+								receivedDate: {
+									day: '1',
+									month: '2',
+									year: 'a'
+								},
+								redactionStatus: 'unredacted'
+							}
+						]
+					});
 
-			expect(element.innerHTML).toMatchSnapshot();
+				const element = parseHtml(response.text);
 
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+				expect(element.innerHTML).toMatchSnapshot();
 
-			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
-			expect(unprettifiedElement.innerHTML).toContain('LPA costs document</h1>');
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			const errorSummaryElement = parseHtml(response.text, { rootElement: '.govuk-error-summary' });
+				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain(`${expectedH1Text}</h1>`);
 
-			expect(errorSummaryElement.innerHTML).toContain('Received date year must be a number');
-		});
+				const errorSummaryElement = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary'
+				});
 
-		it('should re-render the document details page with the expected error message if receivedDate is not a valid date', async () => {
-			const response = await request.post(`${baseUrl}/1/costs/lpa/add-document-details/2`).send({
-				items: [
-					{
-						documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
-						receivedDate: {
-							day: '29',
-							month: '2',
-							year: '2023'
-						},
-						redactionStatus: 'unredacted'
-					}
-				]
+				expect(errorSummaryElement.innerHTML).toContain('Received date year must be a number');
 			});
 
-			const element = parseHtml(response.text);
+			it(`should re-render the document details page with the expected error message if receivedDate is not a valid date (${costsCategory})`, async () => {
+				const response = await request
+					.post(`${baseUrl}/1/costs/${costsCategory}/add-document-details/1`)
+					.send({
+						items: [
+							{
+								documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
+								receivedDate: {
+									day: '29',
+									month: '2',
+									year: '2023'
+								},
+								redactionStatus: 'unredacted'
+							}
+						]
+					});
 
-			expect(element.innerHTML).toMatchSnapshot();
+				const element = parseHtml(response.text);
 
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+				expect(element.innerHTML).toMatchSnapshot();
 
-			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
-			expect(unprettifiedElement.innerHTML).toContain('LPA costs document</h1>');
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			const errorSummaryElement = parseHtml(response.text, { rootElement: '.govuk-error-summary' });
+				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain(`${expectedH1Text}</h1>`);
 
-			expect(errorSummaryElement.innerHTML).toContain('Received date must be a valid date');
-		});
+				const errorSummaryElement = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary'
+				});
 
-		it('should send a patch request to the appeal documents endpoint and redirect to the appeal details page, if complete and valid document details were provided', async () => {
-			const response = await request.post(`${baseUrl}/1/costs/lpa/add-document-details/2`).send({
-				items: [
-					{
-						documentId: '4541e025-00e1-4458-aac6-d1b51f6ae0a7',
-						receivedDate: {
-							day: '1',
-							month: '2',
-							year: '2023'
-						},
-						redactionStatus: 'unredacted'
-					}
-				]
+				expect(errorSummaryElement.innerHTML).toContain('Received date must be a valid date');
 			});
 
-			expect(response.statusCode).toBe(302);
-			expect(response.text).toEqual('Found. Redirecting to /appeals-service/appeal-details/1');
-		});
+			it(`should send a patch request to the appeal documents endpoint and redirect to the appeal details page, if complete and valid document details were provided (${costsCategory})`, async () => {
+				const response = await request
+					.post(`${baseUrl}/1/costs/${costsCategory}/add-document-details/1`)
+					.send({
+						items: [
+							{
+								documentId: '4541e025-00e1-4458-aac6-d1b51f6ae0a7',
+								receivedDate: {
+									day: '1',
+									month: '2',
+									year: '2023'
+								},
+								redactionStatus: 'unredacted'
+							}
+						]
+					});
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toEqual(
+					costsCategory === 'decision'
+						? 'Found. Redirecting to /appeals-service/appeal-details/1/costs/decision/check-and-confirm/3864'
+						: 'Found. Redirecting to /appeals-service/appeal-details/1'
+				);
+			});
+		}
 	});
 
-	describe('GET /costs/:costsApplicant/manage-documents/:folderId', () => {
+	describe('GET /costs/:costsCategory/manage-documents/:folderId', () => {
+		const costsCategories = ['appellant', 'lpa', 'decision'];
+
 		beforeEach(() => {
 			// @ts-ignore
 			usersService.getUserByRoleAndId = jest.fn().mockResolvedValue(activeDirectoryUsersData[0]);
@@ -1088,6 +735,7 @@ describe('costs', () => {
 				.get('/appeals/1/document-folders/1')
 				.reply(200, costsFolderInfoAppellant);
 			nock('http://test/').get('/appeals/1/document-folders/2').reply(200, costsFolderInfoLpa);
+			nock('http://test/').get('/appeals/1/document-folders/3').reply(200, costsFolderInfoDecision);
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
@@ -1097,48 +745,50 @@ describe('costs', () => {
 			nock.cleanAll();
 		});
 
-		it('should render a 404 error page if the folderId is not valid (appellant)', async () => {
-			const response = await request.get(`${baseUrl}/1/costs/appellant/manage-documents/99`);
-			const element = parseHtml(response.text);
+		for (const costsCategory of costsCategories) {
+			let expectedH1Text = '';
 
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Page not found</h1>');
-		});
+			switch (costsCategory) {
+				case 'appellant':
+					expectedH1Text = 'Appellant costs documents';
+					break;
+				case 'lpa':
+					expectedH1Text = 'LPA costs documents';
+					break;
+				case 'decision':
+					expectedH1Text = 'Costs decision documents';
+					break;
+			}
 
-		it('should render a 404 error page if the folderId is not valid (lpa)', async () => {
-			const response = await request.get(`${baseUrl}/1/costs/lpa/manage-documents/99`);
-			const element = parseHtml(response.text);
+			it(`should render a 404 error page if the folderId is not valid (${costsCategory})`, async () => {
+				const response = await request.get(
+					`${baseUrl}/1/costs/${costsCategory}/manage-documents/99`
+				);
+				const element = parseHtml(response.text);
 
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Page not found</h1>');
-		});
+				expect(element.innerHTML).toMatchSnapshot();
+				expect(element.innerHTML).toContain('Page not found</h1>');
+			});
 
-		it('should render the manage folder page with one document item for each document present in the folder if the folderId is valid (appellant)', async () => {
-			const response = await request.get(`${baseUrl}/1/costs/appellant/manage-documents/1`);
-			const element = parseHtml(response.text);
+			it(`should render the manage folder page with one document item for each document present in the folder if the folderId is valid (${costsCategory})`, async () => {
+				const response = await request.get(
+					`${baseUrl}/1/costs/${costsCategory}/manage-documents/1`
+				);
+				const element = parseHtml(response.text);
 
-			expect(element.innerHTML).toMatchSnapshot();
+				expect(element.innerHTML).toMatchSnapshot();
 
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Manage folder</span><h1');
-			expect(unprettifiedElement.innerHTML).toContain('Appellant costs documents</h1>');
-		});
-
-		it('should render the manage folder page with one document item for each document present in the folder if the folderId is valid (lpa)', async () => {
-			const response = await request.get(`${baseUrl}/1/costs/lpa/manage-documents/1`);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain('Manage folder</span><h1');
-			expect(unprettifiedElement.innerHTML).toContain('LPA costs documents</h1>');
-		});
+				expect(unprettifiedElement.innerHTML).toContain('Manage folder</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain(`${expectedH1Text}</h1>`);
+			});
+		}
 	});
 
-	describe('GET /costs/:costsApplicant/manage-documents/:folderId/:documentId', () => {
+	describe('GET /costs/:costsCategory/manage-documents/:folderId/:documentId', () => {
+		const costsCategories = ['appellant', 'lpa', 'decision'];
+
 		beforeEach(() => {
 			// @ts-ignore
 			usersService.getUsersByRole = jest.fn().mockResolvedValue(activeDirectoryUsersData);
@@ -1154,131 +804,158 @@ describe('costs', () => {
 				.get('/appeals/1/document-folders/1')
 				.reply(200, costsFolderInfoAppellant);
 			nock('http://test/').get('/appeals/1/document-folders/2').reply(200, costsFolderInfoLpa);
+			nock('http://test/').get('/appeals/1/document-folders/3').reply(200, costsFolderInfoDecision);
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 		});
 
-		it('should render a 404 error page if the folderId is not valid', async () => {
-			nock('http://test/')
-				.get('/appeals/1/documents/1/versions')
-				.reply(200, documentFileVersionsInfo);
+		for (const costsCategory of costsCategories) {
+			it(`should render a 404 error page if the folderId is not valid (${costsCategory})`, async () => {
+				nock('http://test/')
+					.get('/appeals/1/documents/1/versions')
+					.reply(200, documentFileVersionsInfo);
 
-			const response = await request.get(`${baseUrl}/1/costs/appellant/manage-documents/99/1`);
-			const element = parseHtml(response.text);
+				const response = await request.get(
+					`${baseUrl}/1/costs/${costsCategory}/manage-documents/99/1`
+				);
+				const element = parseHtml(response.text);
 
-			expect(element.innerHTML).toMatchSnapshot();
+				expect(element.innerHTML).toMatchSnapshot();
 
-			const h1Element = parseHtml(response.text, { rootElement: 'h1' });
+				const h1Element = parseHtml(response.text, { rootElement: 'h1' });
 
-			expect(h1Element.innerHTML).toContain('Page not found');
-		});
+				expect(h1Element.innerHTML).toContain('Page not found');
+			});
 
-		it('should render a 404 error page if the documentId is not valid', async () => {
-			nock('http://test/')
-				.get('/appeals/1/documents/1/versions')
-				.reply(200, documentFileVersionsInfo);
+			it(`should render a 404 error page if the documentId is not valid (${costsCategory})`, async () => {
+				nock('http://test/')
+					.get('/appeals/1/documents/1/versions')
+					.reply(200, documentFileVersionsInfo);
 
-			const response = await request.get(`${baseUrl}/1/costs/appellant/manage-documents/1/99`);
-			const element = parseHtml(response.text);
+				const response = await request.get(
+					`${baseUrl}/1/costs/${costsCategory}/manage-documents/1/99`
+				);
+				const element = parseHtml(response.text);
 
-			expect(element.innerHTML).toMatchSnapshot();
+				expect(element.innerHTML).toMatchSnapshot();
 
-			const h1Element = parseHtml(response.text, { rootElement: 'h1' });
+				const h1Element = parseHtml(response.text, { rootElement: 'h1' });
 
-			expect(h1Element.innerHTML).toContain('Page not found');
-		});
+				expect(h1Element.innerHTML).toContain('Page not found');
+			});
 
-		it('should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is null', async () => {
-			nock('http://test/')
-				.get('/appeals/1/documents/1/versions')
-				.reply(200, documentFileVersionsInfo);
+			it(`should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is null (${costsCategory})`, async () => {
+				nock('http://test/')
+					.get('/appeals/1/documents/1/versions')
+					.reply(200, documentFileVersionsInfo);
 
-			const response = await request.get(`${baseUrl}/1/costs/appellant/manage-documents/1/1`);
-			const element = parseHtml(response.text);
+				const response = await request.get(
+					`${baseUrl}/1/costs/${costsCategory}/manage-documents/1/1`
+				);
+				const element = parseHtml(response.text);
 
-			expect(element.innerHTML).toMatchSnapshot();
+				expect(element.innerHTML).toMatchSnapshot();
 
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFileVersionsInfo.pdf</h1>');
-			expect(unprettifiedElement.innerHTML).toContain(
-				'<strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>'
-			);
-			expect(unprettifiedElement.innerHTML).not.toContain('Upload a new version');
-			expect(unprettifiedElement.innerHTML).not.toContain('Remove current version');
-		});
+				expect(unprettifiedElement.innerHTML).toContain(
+					'test-pdf-documentFileVersionsInfo.pdf</h1>'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>'
+				);
+				expect(unprettifiedElement.innerHTML).not.toContain('Upload a new version');
+				expect(unprettifiedElement.innerHTML).not.toContain('Remove current version');
+			});
 
-		it('should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "not_checked"', async () => {
-			nock('http://test/')
-				.get('/appeals/1/documents/1/versions')
-				.reply(200, documentFileVersionsInfoNotChecked);
+			it(`should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "not_checked" (${costsCategory})`, async () => {
+				nock('http://test/')
+					.get('/appeals/1/documents/1/versions')
+					.reply(200, documentFileVersionsInfoNotChecked);
 
-			const response = await request.get(`${baseUrl}/1/costs/appellant/manage-documents/1/1`);
-			const element = parseHtml(response.text);
+				const response = await request.get(
+					`${baseUrl}/1/costs/${costsCategory}/manage-documents/1/1`
+				);
+				const element = parseHtml(response.text);
 
-			expect(element.innerHTML).toMatchSnapshot();
+				expect(element.innerHTML).toMatchSnapshot();
 
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFileVersionsInfo.pdf</h1>');
-			expect(unprettifiedElement.innerHTML).toContain(
-				'<strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>'
-			);
-			expect(unprettifiedElement.innerHTML).not.toContain('Upload a new version');
-			expect(unprettifiedElement.innerHTML).not.toContain('Remove current version');
-		});
+				expect(unprettifiedElement.innerHTML).toContain(
+					'test-pdf-documentFileVersionsInfo.pdf</h1>'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>'
+				);
+				expect(unprettifiedElement.innerHTML).not.toContain('Upload a new version');
+				expect(unprettifiedElement.innerHTML).not.toContain('Remove current version');
+			});
 
-		it('should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "failed_virus_check"', async () => {
-			nock('http://test/')
-				.get('/appeals/1/documents/1/versions')
-				.reply(200, documentFileVersionsInfoVirusFound);
+			it(`should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "failed_virus_check" (${costsCategory})`, async () => {
+				nock('http://test/')
+					.get('/appeals/1/documents/1/versions')
+					.reply(200, documentFileVersionsInfoVirusFound);
 
-			const response = await request.get(`${baseUrl}/1/costs/appellant/manage-documents/1/1`);
+				const response = await request.get(
+					`${baseUrl}/1/costs/${costsCategory}/manage-documents/1/1`
+				);
 
-			const element = parseHtml(response.text);
+				const element = parseHtml(response.text);
 
-			expect(element.innerHTML).toMatchSnapshot();
+				expect(element.innerHTML).toMatchSnapshot();
 
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFileVersionsInfo.pdf</h1>');
-			expect(unprettifiedElement.innerHTML).toContain(
-				'<strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong>'
-			);
-			expect(unprettifiedElement.innerHTML).toContain('Upload a new version');
-			expect(unprettifiedElement.innerHTML).toContain('Remove current version');
+				expect(unprettifiedElement.innerHTML).toContain(
+					'test-pdf-documentFileVersionsInfo.pdf</h1>'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong>'
+				);
+				expect(unprettifiedElement.innerHTML).toContain('Upload a new version');
+				expect(unprettifiedElement.innerHTML).toContain('Remove current version');
 
-			const errorSummaryElement = parseHtml(response.text, { rootElement: '.govuk-error-summary' });
+				const errorSummaryElement = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary'
+				});
 
-			expect(errorSummaryElement.innerHTML).toContain(
-				'The selected file contains a virus. Upload a different version.'
-			);
-		});
+				expect(errorSummaryElement.innerHTML).toContain(
+					'The selected file contains a virus. Upload a different version.'
+				);
+			});
 
-		it('should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "checked"', async () => {
-			nock('http://test/')
-				.get('/appeals/1/documents/1/versions')
-				.reply(200, documentFileVersionsInfoChecked);
+			it(`should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "checked" (${costsCategory})`, async () => {
+				nock('http://test/')
+					.get('/appeals/1/documents/1/versions')
+					.reply(200, documentFileVersionsInfoChecked);
 
-			const response = await request.get(`${baseUrl}/1/costs/appellant/manage-documents/1/1`);
-			const element = parseHtml(response.text);
+				const response = await request.get(
+					`${baseUrl}/1/costs/${costsCategory}/manage-documents/1/1`
+				);
+				const element = parseHtml(response.text);
 
-			expect(element.innerHTML).toMatchSnapshot();
+				expect(element.innerHTML).toMatchSnapshot();
 
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFileVersionsInfo.pdf</h1>');
-			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>'
-			);
-			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong>'
-			);
-			expect(unprettifiedElement.innerHTML).toContain('Upload a new version');
-			expect(unprettifiedElement.innerHTML).toContain('Remove current version');
-		});
+				expect(unprettifiedElement.innerHTML).toContain(
+					'test-pdf-documentFileVersionsInfo.pdf</h1>'
+				);
+				expect(unprettifiedElement.innerHTML).not.toContain(
+					'<strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>'
+				);
+				expect(unprettifiedElement.innerHTML).not.toContain(
+					'<strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong>'
+				);
+				expect(unprettifiedElement.innerHTML).toContain('Upload a new version');
+				expect(unprettifiedElement.innerHTML).toContain('Remove current version');
+			});
+		}
 	});
 
-	describe('GET /costs/:costsApplicant/manage-documents/:folderId/:documentId/:versionId/delete', () => {
+	describe('GET /costs/:costsCategory/manage-documents/:folderId/:documentId/:versionId/delete', () => {
+		const costsCategories = ['appellant', 'lpa', 'decision'];
+
 		beforeEach(() => {
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
@@ -1287,93 +964,98 @@ describe('costs', () => {
 				.get('/appeals/1/document-folders/1')
 				.reply(200, costsFolderInfoAppellant);
 			nock('http://test/').get('/appeals/1/document-folders/2').reply(200, costsFolderInfoLpa);
+			nock('http://test/').get('/appeals/1/document-folders/3').reply(200, costsFolderInfoDecision);
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 		});
 
-		it('should render the delete document page with the expected content when there is a single document version', async () => {
-			nock('http://test/')
-				.get('/appeals/1/documents/1/versions')
-				.reply(200, documentFileVersionsInfoChecked);
+		for (const costsCategory of costsCategories) {
+			it(`should render the delete document page with the expected content when there is a single document version (${costsCategory})`, async () => {
+				nock('http://test/')
+					.get('/appeals/1/documents/1/versions')
+					.reply(200, documentFileVersionsInfoChecked);
 
-			const response = await request.get(
-				`${baseUrl}/1/costs/appellant/manage-documents/1/1/1/delete`
-			);
+				const response = await request.get(
+					`${baseUrl}/1/costs/${costsCategory}/manage-documents/1/1/1/delete`
+				);
 
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
+				const element = parseHtml(response.text);
+				expect(element.innerHTML).toMatchSnapshot();
 
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain(
-				'Are you sure you want to remove this version?</h1>'
-			);
-			expect(unprettifiedElement.innerHTML).toContain('class="govuk-warning-text"');
+				expect(unprettifiedElement.innerHTML).toContain(
+					'Are you sure you want to remove this version?</h1>'
+				);
+				expect(unprettifiedElement.innerHTML).toContain('class="govuk-warning-text"');
 
-			const warningTextElement = parseHtml(response.text, {
-				rootElement: '.govuk-warning-text',
-				skipPrettyPrint: true
+				const warningTextElement = parseHtml(response.text, {
+					rootElement: '.govuk-warning-text',
+					skipPrettyPrint: true
+				});
+
+				expect(warningTextElement.innerHTML).toContain(
+					'Removing the only version of a document will delete the document from the case'
+				);
+
+				const radiosElement = parseHtml(response.text, {
+					rootElement: '.govuk-radios',
+					skipPrettyPrint: true
+				});
+
+				expect(radiosElement.innerHTML).toContain(
+					'name="delete-file-answer" type="radio" value="yes"'
+				);
+				expect(radiosElement.innerHTML).toContain(
+					'name="delete-file-answer" type="radio" value="yes-and-upload-another-document"'
+				);
+				expect(radiosElement.innerHTML).toContain(
+					'name="delete-file-answer" type="radio" value="no"'
+				);
 			});
 
-			expect(warningTextElement.innerHTML).toContain(
-				'Removing the only version of a document will delete the document from the case'
-			);
+			it(`should render the delete document page with the expected content when there are multiple document versions (${costsCategory})`, async () => {
+				const multipleVersionsDocument = cloneDeep(documentFileVersionsInfoChecked);
+				multipleVersionsDocument.documentVersion.push(multipleVersionsDocument.documentVersion[0]);
 
-			const radiosElement = parseHtml(response.text, {
-				rootElement: '.govuk-radios',
-				skipPrettyPrint: true
+				nock('http://test/')
+					.get('/appeals/1/documents/1/versions')
+					.reply(200, multipleVersionsDocument);
+
+				const response = await request.get(
+					`${baseUrl}/1/costs/${costsCategory}/manage-documents/1/1/1/delete`
+				);
+
+				const element = parseHtml(response.text);
+				expect(element.innerHTML).toMatchSnapshot();
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain(
+					'Are you sure you want to remove this version?</h1>'
+				);
+				expect(unprettifiedElement.innerHTML).not.toContain('class="govuk-warning-text"');
+
+				const radiosElement = parseHtml(response.text, {
+					rootElement: '.govuk-radios',
+					skipPrettyPrint: true
+				});
+
+				expect(radiosElement.innerHTML).toContain(
+					'name="delete-file-answer" type="radio" value="yes"'
+				);
+				expect(radiosElement.innerHTML).toContain(
+					'name="delete-file-answer" type="radio" value="no"'
+				);
+				expect(radiosElement.innerHTML).not.toContain(
+					'name="delete-file-answer" type="radio" value="yes-and-upload-another-document"'
+				);
 			});
-
-			expect(radiosElement.innerHTML).toContain(
-				'name="delete-file-answer" type="radio" value="yes"'
-			);
-			expect(radiosElement.innerHTML).toContain(
-				'name="delete-file-answer" type="radio" value="yes-and-upload-another-document"'
-			);
-			expect(radiosElement.innerHTML).toContain(
-				'name="delete-file-answer" type="radio" value="no"'
-			);
-		});
-
-		it('should render the delete document page with the expected content when there are multiple document versions', async () => {
-			const multipleVersionsDocument = cloneDeep(documentFileVersionsInfoChecked);
-			multipleVersionsDocument.documentVersion.push(multipleVersionsDocument.documentVersion[0]);
-
-			nock('http://test/')
-				.get('/appeals/1/documents/1/versions')
-				.reply(200, multipleVersionsDocument);
-
-			const response = await request.get(
-				`${baseUrl}/1/costs/appellant/manage-documents/1/1/1/delete`
-			);
-
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
-
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain(
-				'Are you sure you want to remove this version?</h1>'
-			);
-			expect(unprettifiedElement.innerHTML).not.toContain('class="govuk-warning-text"');
-
-			const radiosElement = parseHtml(response.text, {
-				rootElement: '.govuk-radios',
-				skipPrettyPrint: true
-			});
-
-			expect(radiosElement.innerHTML).toContain(
-				'name="delete-file-answer" type="radio" value="yes"'
-			);
-			expect(radiosElement.innerHTML).toContain(
-				'name="delete-file-answer" type="radio" value="no"'
-			);
-			expect(radiosElement.innerHTML).not.toContain(
-				'name="delete-file-answer" type="radio" value="yes-and-upload-another-document"'
-			);
-		});
+		}
 	});
 
-	describe('POST /costs/:costsApplicant/manage-documents/:folderId/:documentId/:versionId/delete', () => {
+	describe('POST /costs/:costsCategory/manage-documents/:folderId/:documentId/:versionId/delete', () => {
+		const costsCategories = ['appellant', 'lpa', 'decision'];
+
 		beforeEach(() => {
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
@@ -1382,6 +1064,7 @@ describe('costs', () => {
 				.get('/appeals/1/document-folders/1')
 				.reply(200, costsFolderInfoAppellant);
 			nock('http://test/').get('/appeals/1/document-folders/2').reply(200, costsFolderInfoLpa);
+			nock('http://test/').get('/appeals/1/document-folders/3').reply(200, costsFolderInfoDecision);
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 			nock('http://test/').delete('/appeals/1/documents/1/1').reply(200, {
 				guid: '15d19184-155b-4b6c-bba6-2bd2a61ca9a3',
@@ -1396,93 +1079,197 @@ describe('costs', () => {
 			});
 		});
 
-		it('should re-render the delete document page with the expected error message if answer was not provided', async () => {
+		for (const costsCategory of costsCategories) {
+			it(`should re-render the delete document page with the expected error message if answer was not provided (${costsCategory})`, async () => {
+				nock('http://test/')
+					.get('/appeals/1/documents/1/versions')
+					.reply(200, documentFileVersionsInfo);
+
+				const response = await request
+					.post(`${baseUrl}/1/costs/${costsCategory}/manage-documents/1/1/1/delete`)
+					.send({});
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain(
+					'Are you sure you want to remove this version?</h1>'
+				);
+				expect(unprettifiedElement.innerHTML).toContain('class="govuk-error-summary"');
+
+				const errorSummaryElement = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary'
+				});
+
+				expect(errorSummaryElement.innerHTML).toContain('Answer must be provided');
+			});
+
+			it(`should not send an API request to delete the document, and should redirect to the case details page, if answer "no" was provided`, async () => {
+				nock('http://test/')
+					.get('/appeals/1/documents/1/versions')
+					.reply(200, documentFileVersionsInfo);
+
+				const response = await request
+					.post(`${baseUrl}/1/costs/${costsCategory}/manage-documents/1/1/1/delete`)
+					.send({
+						'delete-file-answer': 'no'
+					});
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toEqual('Found. Redirecting to /appeals-service/appeal-details/1');
+			});
+
+			it(`should send an API request to delete the document, and redirect to the case details page, if answer "yes" was provided`, async () => {
+				nock('http://test/')
+					.get('/appeals/1/documents/1/versions')
+					.reply(200, documentFileVersionsInfo);
+
+				const response = await request
+					.post(`${baseUrl}/1/costs/${costsCategory}/manage-documents/1/1/1/delete`)
+					.send({
+						'delete-file-answer': 'yes'
+					});
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toEqual('Found. Redirecting to /appeals-service/appeal-details/1');
+			});
+
+			it(`should send an API request to delete the document, and redirect to the upload new document page, if answer "yes, and upload another document" was provided, and there is more than one version of the document`, async () => {
+				const multipleVersionsDocument = cloneDeep(documentFileVersionsInfo);
+				multipleVersionsDocument.documentVersion.push(multipleVersionsDocument.documentVersion[0]);
+
+				nock('http://test/')
+					.get('/appeals/1/documents/1/versions')
+					.reply(200, multipleVersionsDocument);
+
+				const response = await request
+					.post(`${baseUrl}/1/costs/${costsCategory}/manage-documents/1/1/1/delete`)
+					.send({
+						'delete-file-answer': 'yes-and-upload-another-document'
+					});
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toEqual(
+					`Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/upload-documents/3864/1`
+				);
+			});
+
+			it(`should send an API request to delete the document, and redirect to the case details page, if answer "yes, and upload another document" was provided, and there is only one version of the document`, async () => {
+				nock('http://test/')
+					.get('/appeals/1/documents/1/versions')
+					.reply(200, documentFileVersionsInfo);
+
+				const response = await request
+					.post(`${baseUrl}/1/costs/${costsCategory}/manage-documents/1/1/1/delete`)
+					.send({
+						'delete-file-answer': 'yes-and-upload-another-document'
+					});
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toEqual('Found. Redirecting to /appeals-service/appeal-details/1');
+			});
+		}
+	});
+
+	describe('GET /costs/decision/check-and-confirm/:folderId', () => {
+		beforeEach(async () => {
+			nock('http://test/')
+				.get('/appeals/1/document-folders/3')
+				.reply(200, costsFolderInfoDecision)
+				.persist();
+		});
+
+		it('should render a 404 error page if the folderId is not valid', async () => {
 			nock('http://test/')
 				.get('/appeals/1/documents/1/versions')
 				.reply(200, documentFileVersionsInfo);
 
-			const response = await request
-				.post(`${baseUrl}/1/costs/appellant/manage-documents/1/1/1/delete`)
-				.send({});
+			const response = await request.get(`${baseUrl}/1/costs/decision/check-and-confirm/99`);
+
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
+			expect(unprettifiedElement.innerHTML).toContain('Page not found</h1>');
+		});
+
+		it('should render the check and confirm costs decision page if the folderId is valid', async () => {
+			nock('http://test/')
+				.get('/appeals/1/documents/1/versions')
+				.reply(200, documentFileVersionsInfo);
+
+			const response = await request.get(`${baseUrl}/1/costs/decision/check-and-confirm/3`);
+
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Check your answers</h1>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Are you sure you want to remove this version?</h1>'
+				'Warning</span> You must email the relevant parties to inform them of the decision.'
 			);
-			expect(unprettifiedElement.innerHTML).toContain('class="govuk-error-summary"');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="confirm" type="checkbox" value="yes">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'for="confirm"> I will email the relevant parties'
+			);
+		});
+	});
 
-			const errorSummaryElement = parseHtml(response.text, { rootElement: '.govuk-error-summary' });
-
-			expect(errorSummaryElement.innerHTML).toContain('Answer must be provided');
+	describe('POST /costs/decision/check-and-confirm/:folderId', () => {
+		beforeEach(async () => {
+			nock('http://test/')
+				.get('/appeals/1/document-folders/3')
+				.reply(200, costsFolderInfoDecision)
+				.persist();
 		});
 
-		it('should not send an API request to delete the document, and should redirect to the case details page, if answer "no" was provided', async () => {
-			nock('http://test/')
-				.get('/appeals/1/documents/1/versions')
-				.reply(200, documentFileVersionsInfo);
+		it('should render a 404 error page if the folderId is not valid', async () => {
+			const response = await request.post(`${baseUrl}/1/costs/decision/check-and-confirm/99`).send({
+				confirm: 'yes'
+			});
 
-			const response = await request
-				.post(`${baseUrl}/1/costs/appellant/manage-documents/1/1/1/delete`)
-				.send({
-					'delete-file-answer': 'no'
-				});
+			const element = parseHtml(response.text);
 
-			expect(response.statusCode).toBe(302);
-			expect(response.text).toEqual('Found. Redirecting to /appeals-service/appeal-details/1');
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Page not found</h1>');
 		});
 
-		it('should send an API request to delete the document, and redirect to the case details page, if answer "yes" was provided', async () => {
-			nock('http://test/')
-				.get('/appeals/1/documents/1/versions')
-				.reply(200, documentFileVersionsInfo);
-
+		it('should re-render the check and confirm costs decision page with the expected error message if confirmation was not provided', async () => {
 			const response = await request
-				.post(`${baseUrl}/1/costs/appellant/manage-documents/1/1/1/delete`)
-				.send({
-					'delete-file-answer': 'yes'
-				});
+				.post(`${baseUrl}/1/costs/decision/check-and-confirm/3`)
+				.send({});
 
-			expect(response.statusCode).toBe(302);
-			expect(response.text).toEqual('Found. Redirecting to /appeals-service/appeal-details/1');
-		});
+			const element = parseHtml(response.text);
 
-		it('should send an API request to delete the document, and redirect to the upload new document page, if answer "yes, and upload another document" was provided, and there is more than one version of the document', async () => {
-			const multipleVersionsDocument = cloneDeep(documentFileVersionsInfo);
-			multipleVersionsDocument.documentVersion.push(multipleVersionsDocument.documentVersion[0]);
+			expect(element.innerHTML).toMatchSnapshot();
 
-			nock('http://test/')
-				.get('/appeals/1/documents/1/versions')
-				.reply(200, multipleVersionsDocument);
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			const response = await request
-				.post(`${baseUrl}/1/costs/appellant/manage-documents/1/1/1/delete`)
-				.send({
-					'delete-file-answer': 'yes-and-upload-another-document'
-				});
-
-			expect(response.statusCode).toBe(302);
-			expect(response.text).toEqual(
-				'Found. Redirecting to /appeals-service/appeal-details/1/costs/appellant/upload-documents/3864/1'
+			expect(unprettifiedElement.innerHTML).toContain('Check your answers</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Select that you will email the relevant parties</a></li>'
 			);
 		});
 
-		it('should send an API request to delete the document, and redirect to the case details page, if answer "yes, and upload another document" was provided, and there is only one version of the document', async () => {
-			nock('http://test/')
-				.get('/appeals/1/documents/1/versions')
-				.reply(200, documentFileVersionsInfo);
-
-			const response = await request
-				.post(`${baseUrl}/1/costs/appellant/manage-documents/1/1/1/delete`)
-				.send({
-					'delete-file-answer': 'yes-and-upload-another-document'
-				});
+		it('should redirect to the case details page if confirmation was provided', async () => {
+			const response = await request.post(`${baseUrl}/1/costs/decision/check-and-confirm/3`).send({
+				confirm: 'yes'
+			});
 
 			expect(response.statusCode).toBe(302);
-			expect(response.text).toEqual('Found. Redirecting to /appeals-service/appeal-details/1');
+			expect(response.text).toEqual(`Found. Redirecting to /appeals-service/appeal-details/1`);
 		});
 	});
 });
