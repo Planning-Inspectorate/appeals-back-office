@@ -214,20 +214,16 @@ const updateDocuments = async (req, res) => {
 
 			if (latestDocument && latestDocument.name) {
 				if (document.redactionStatus !== latestDocument?.latestDocumentVersion?.redactionStatusId) {
-					if (
-						document.redactionStatus !== latestDocument?.latestDocumentVersion?.redactionStatusId
-					) {
-						const auditTrailMessage = getAuditMessage(document.redactionStatus);
-						if (auditTrailMessage) {
-							await logAuditTrail(
-								latestDocument.name,
-								document.latestVersion,
-								auditTrailMessage,
-								req,
-								appeal.id,
-								latestDocument.guid
-							);
-						}
+					const auditTrailMessage = getAuditMessage(document.redactionStatus);
+					if (auditTrailMessage) {
+						await logAuditTrail(
+							latestDocument.name,
+							document.latestVersion,
+							auditTrailMessage,
+							req,
+							appeal.id,
+							latestDocument.guid
+						);
 					}
 				}
 				if (
