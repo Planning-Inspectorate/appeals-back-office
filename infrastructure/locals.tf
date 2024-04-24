@@ -2,6 +2,7 @@ locals {
   org          = "pins"
   service_name = "appeals-back-office"
   location     = "uksouth"
+  tenant_id    = "5878df98-6f88-48ab-9322-998ce557088d"
 
   resource_suffix = "${local.service_name}-${var.environment}-${module.azure_region.location_short}"
 
