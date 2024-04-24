@@ -36,8 +36,8 @@ exports[`appellant-case GET /appellant-case should render a "LPA application ref
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
             <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
         </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
-            <dd             class="govuk-summary-list__value">Worthing Borough Council</dd>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA</dt>
+            <dd class="govuk-summary-list__value">Worthing Borough Council</dd>
         </div>
     </dl>
     <div class="govuk-summary-card">
@@ -224,8 +224,8 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
             <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
         </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
-            <dd             class="govuk-summary-list__value">Worthing Borough Council</dd>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA</dt>
+            <dd class="govuk-summary-list__value">Worthing Borough Council</dd>
         </div>
     </dl>
     <div class="govuk-summary-card">
@@ -431,8 +431,8 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
             <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
         </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
-            <dd             class="govuk-summary-list__value">Worthing Borough Council</dd>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA</dt>
+            <dd class="govuk-summary-list__value">Worthing Borough Council</dd>
         </div>
     </dl>
     <div class="govuk-summary-card">
@@ -632,8 +632,8 @@ exports[`appellant-case GET /appellant-case with unchecked documents should rend
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
             <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
         </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
-            <dd             class="govuk-summary-list__value">Worthing Borough Council</dd>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA</dt>
+            <dd class="govuk-summary-list__value">Worthing Borough Council</dd>
         </div>
     </dl>
     <div class="govuk-summary-card">
@@ -843,8 +843,8 @@ exports[`appellant-case GET /appellant-case with unchecked documents should rend
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
             <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
         </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
-            <dd             class="govuk-summary-list__value">Worthing Borough Council</dd>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA</dt>
+            <dd class="govuk-summary-list__value">Worthing Borough Council</dd>
         </div>
     </dl>
     <div class="govuk-summary-card">
@@ -3583,8 +3583,8 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
             <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
         </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
-            <dd             class="govuk-summary-list__value">Worthing Borough Council</dd>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA</dt>
+            <dd class="govuk-summary-list__value">Worthing Borough Council</dd>
         </div>
     </dl>
     <div class="govuk-summary-card">

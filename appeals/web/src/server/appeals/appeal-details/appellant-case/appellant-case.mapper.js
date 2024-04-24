@@ -72,7 +72,14 @@ export async function appellantCasePage(
 					? [mappedAppellantCaseData.siteAddress.display.summaryListItem]
 					: []),
 				...(mappedAppellantCaseData.localPlanningAuthority.display.summaryListItem
-					? [mappedAppellantCaseData.localPlanningAuthority.display.summaryListItem]
+					? [
+							{
+								...mappedAppellantCaseData.localPlanningAuthority.display.summaryListItem,
+								key: {
+									text: 'LPA'
+								}
+							}
+					  ]
 					: [])
 			]
 		}
