@@ -73,7 +73,14 @@ export async function lpaQuestionnairePage(
 					? [mappedAppealDetails.appeal.siteAddress.display.summaryListItem]
 					: []),
 				...(mappedAppealDetails.appeal.localPlanningAuthority.display.summaryListItem
-					? [mappedAppealDetails.appeal.localPlanningAuthority.display.summaryListItem]
+					? [
+							{
+								...mappedAppealDetails.appeal.localPlanningAuthority.display.summaryListItem,
+								key: {
+									text: 'LPA'
+								}
+							}
+					  ]
 					: [])
 			]
 		}
