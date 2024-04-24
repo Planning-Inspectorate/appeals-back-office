@@ -11,7 +11,8 @@ import {
 	costsFolderInfoAppellant,
 	costsFolderInfoLpa,
 	documentRedactionStatuses,
-	appealCostsDocumentItem
+	appealCostsDocumentItem,
+	linkedAppealsWithExternalLead
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { logger } from '@azure/storage-blob';
@@ -773,6 +774,34 @@ describe('appeal-details', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+		});
+
+		it('should not render action links to the manage linked appeals page or the add linked appeal page in the linked appeals row, if the appeal is linked as a child of an external lead appeal', async () => {
+			nock.cleanAll();
+			nock('http://test/')
+				.get(`/appeals/${appealData.appealId}`)
+				.reply(200, {
+					...appealData,
+					linkedAppeals: linkedAppealsWithExternalLead
+				});
+
+			const response = await request.get(`${baseUrl}/${appealData.appealId}`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, {
+				rootElement: '.appeal-linked-appeals',
+				skipPrettyPrint: true
+			});
+
+			expect(unprettifiedElement.innerHTML).toContain('Linked appeals</dt>');
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'href="/appeals-service/appeal-details/1/linked-appeals/add"'
+			);
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'href="/appeals-service/appeal-details/1/linked-appeals/manage"'
+			);
 		});
 
 		it('should render the case reference for each linked appeal in the linked appeals row, each linking to the respective case details page, if there are linked appeals', async () => {
