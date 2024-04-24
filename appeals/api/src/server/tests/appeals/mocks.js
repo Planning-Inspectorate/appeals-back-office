@@ -16,6 +16,41 @@ export const auditTrails = [
 		user: {
 			azureAdUserId
 		}
+	},
+	{
+		details: 'Document blank.pdf uploaded (version 1)',
+		loggedAt: new Date().toISOString(),
+		user: {
+			azureAdUserId
+		}
+	},
+	{
+		details: 'Version 1 of document blank.pdf received',
+		loggedAt: new Date().toISOString(),
+		user: {
+			azureAdUserId
+		}
+	},
+	{
+		details: 'Document blank.pdf (version 1) marked as redacted',
+		loggedAt: new Date().toISOString(),
+		user: {
+			azureAdUserId
+		}
+	},
+	{
+		details: 'Document blank.pdf (version 1) marked as unredacted',
+		loggedAt: new Date().toISOString(),
+		user: {
+			azureAdUserId
+		}
+	},
+	{
+		details: 'Document blank.pdf (version 1) marked as requiring no redaction',
+		loggedAt: new Date().toISOString(),
+		user: {
+			azureAdUserId
+		}
 	}
 ];
 
