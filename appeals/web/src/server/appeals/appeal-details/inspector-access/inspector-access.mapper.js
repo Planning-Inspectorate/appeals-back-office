@@ -37,7 +37,7 @@ export const changeInspectorAccessPage = (appealData, storedSessionData, origin,
 					id: 'inspector-access-radio',
 					fieldSet: {
 						legend: {
-							text: `Was inspector access identified as required by the ${formattedSource}?`, //Check with content
+							text: `Was inspector access identified as required by the ${formattedSource}?`,
 							isPageHeading: false,
 							classes: 'govuk-fieldset__legend--l'
 						}

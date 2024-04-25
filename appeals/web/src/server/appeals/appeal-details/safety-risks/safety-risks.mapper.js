@@ -36,7 +36,7 @@ export const changeSafetyRisksPage = (appealData, storedSessionData, backLinkUrl
 					id: 'safety-risk-radio',
 					fieldSet: {
 						legend: {
-							text: `Was health and safety risks identified by the ${formattedSource}?`,
+							text: `Were health and safety risks identified by the ${formattedSource}?`,
 							isPageHeading: false,
 							classes: 'govuk-fieldset__legend--l'
 						}
