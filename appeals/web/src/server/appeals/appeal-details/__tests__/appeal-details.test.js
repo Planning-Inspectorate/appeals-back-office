@@ -805,6 +805,18 @@ describe('appeal-details', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const linkedAppealsRowElement = parseHtml(response.text, {
+				rootElement: '.appeal-linked-appeals',
+				skipPrettyPrint: true
+			});
+
+			expect(linkedAppealsRowElement.innerHTML).toContain(
+				'href="/appeals-service/appeal-details/1/linked-appeals/manage"> Manage<span class="govuk-visually-hidden"> Linked appeals</span></a>'
+			);
+			expect(linkedAppealsRowElement.innerHTML).toContain(
+				'href="/appeals-service/appeal-details/1/linked-appeals/add"> Add<span class="govuk-visually-hidden"> Linked appeals</span></a>'
+			);
 		});
 
 		it('should not render action links to the manage linked appeals page or the add linked appeal page in the linked appeals row, if the appeal is linked as a child of an external lead appeal', async () => {
