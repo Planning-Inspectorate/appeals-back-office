@@ -14,10 +14,15 @@ import {
 import changePageRouter from '../../change-page/change-page.router.js';
 import changeInspectorAccessRouter from '../inspector-access/inspector-access.router.js';
 import neighbouringSitesRouter from '../neighbouring-sites/neighbouring-sites.router.js';
+import safetyRisksRouter from '../safety-risks/safety-risks.router.js';
 
 const router = createRouter({ mergeParams: true });
 
 router.use('/:lpaQuestionnaireId/neighbouring-sites', neighbouringSitesRouter);
+router.use('/:lpaQuestionnaireId/incomplete', outcomeIncompleteRouter);
+router.use('/:lpaQuestionnaireId/change-lpa-questionnaire', changePageRouter);
+router.use('/:lpaQuestionnaireId/inspector-access', changeInspectorAccessRouter);
+router.use('/:lpaQuestionnaireId/safety-risks', safetyRisksRouter);
 
 router
 	.route('/:lpaQuestionnaireId')
@@ -28,8 +33,6 @@ router
 		assertGroupAccess(config.referenceData.appeals.caseOfficerGroupId),
 		asyncRoute(controller.postLpaQuestionnaire)
 	);
-
-router.use('/:lpaQuestionnaireId/incomplete', outcomeIncompleteRouter);
 router
 	.route('/:lpaQuestionnaireId/check-your-answers')
 	.get(validateAppeal, asyncRoute(controller.getCheckAndConfirm))
@@ -42,7 +45,6 @@ router
 router
 	.route('/:lpaQuestionnaireId/confirmation')
 	.get(validateAppeal, asyncRoute(controller.getConfirmation));
-router.use('/:lpaQuestionnaireId/change-lpa-questionnaire', changePageRouter);
 
 router
 	.route('/:lpaQuestionnaireId/add-documents/:folderId')
@@ -115,7 +117,5 @@ router
 		documentsValidators.validateDocumentDeleteAnswer,
 		asyncRoute(controller.postDeleteDocument)
 	);
-
-router.use('/:lpaQuestionnaireId/inspector-access', changeInspectorAccessRouter);
 
 export default router;

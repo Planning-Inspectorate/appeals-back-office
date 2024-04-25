@@ -124,6 +124,36 @@ describe('appellant-case', () => {
 			expect(notificationBannerElementHTML).toContain('LPA application reference updated');
 		});
 
+		it('should render a "Site health and safety risks updated" success notification banner when the planning application reference is updated', async () => {
+			const appealId = appealData.appealId;
+			const appellantCaseId = appealData.appellantCaseId;
+			const validData = {
+				safetyRisksRadio: 'yes',
+				safetyRisksDetails: 'Details'
+			};
+
+			nock('http://test/')
+				.patch(`/appeals/${appealId}/appellant-cases/${appellantCaseId}`)
+				.reply(200, {
+					...validData
+				});
+
+			await request
+				.post(`${baseUrl}/${appealId}/appellant-case/safety-risks/change/appellant`)
+				.send(validData);
+
+			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
+			const notificationBannerElementHTML = parseHtml(response.text, {
+				rootElement: notificationBannerElement
+			}).innerHTML;
+
+			expect(notificationBannerElementHTML).toMatchSnapshot();
+			expect(notificationBannerElementHTML).toContain('Success');
+			expect(notificationBannerElementHTML).toContain(
+				'Site health and safety risks (appellant answer) updated'
+			);
+		});
+
 		it('should render a "Inspector access (appellant) updated" success notification banner when the inspector access (appellant) is updated', async () => {
 			const appealId = appealData.appealId;
 			const appellantCaseId = appealData.appellantCaseId;

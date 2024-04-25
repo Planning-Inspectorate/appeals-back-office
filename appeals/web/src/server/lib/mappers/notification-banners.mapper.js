@@ -143,6 +143,10 @@ export const notificationBannerDefinitions = {
 	neighbouringSiteAffected: {
 		type: 'success',
 		pages: ['appealDetails', 'lpaQuestionnaire']
+	},
+	siteHealthAndSafetyUpdated: {
+		type: 'success',
+		pages: ['appealDetails', 'appellantCase', 'lpaQuestionnaire']
 	}
 };
 

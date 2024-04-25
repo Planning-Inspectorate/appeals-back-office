@@ -919,7 +919,8 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 				},
 				value: {
 					html: displayPageFormatter.formatAnswerAndDetails(
-						convertFromBooleanToYesNo(data.doesSiteHaveHealthAndSafetyIssues) || '',
+						convertFromBooleanToYesNo(data.doesSiteHaveHealthAndSafetyIssues) ||
+							'No answer provided',
 						data.healthAndSafetyDetails
 					)
 				},
@@ -927,41 +928,13 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 					items: [
 						{
 							text: 'Change',
-							visuallyHiddenText: 'Potential safety risks',
-							href: `${currentRoute}/change-lpa-questionnaire/health-and-safety`
+							href: `${currentRoute}/safety-risks/change/lpa`,
+							visuallyHiddenText: 'potential safety risks'
 						}
 					]
-				}
+				},
+				classes: 'lpa-health-and-safety'
 			}
-		},
-		input: {
-			displayName: 'Health and safety',
-			instructions: [
-				{
-					type: 'radios',
-					properties: {
-						name: 'healthAndSafety',
-						items: [
-							{
-								text: 'Yes',
-								value: 'yes',
-								conditional: conditionalFormatter(
-									'health-and-safety-text',
-									'healthAndSafetyText',
-									'Tell us why the inspector will need to enter the appeal site',
-									displayPageFormatter.nullToEmptyString(data.healthAndSafetyDetails)
-								),
-								checked: data.doesSiteHaveHealthAndSafetyIssues || false
-							},
-							{
-								text: 'No',
-								value: 'no',
-								checked: !data.doesSiteHaveHealthAndSafetyIssues
-							}
-						]
-					}
-				}
-			]
 		}
 	};
 

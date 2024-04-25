@@ -8,36 +8,35 @@ import { conditionalFormatter } from '#lib/mappers/global-mapper-formatter.js';
 /**
  * @param {Appeal} appealData
  * @param {{radio: string, details: string}} storedSessionData
- * @param {string} origin
+ * @param {string} backLinkUrl
  * @param {string} source
  * @returns {PageContent}
  */
-export const changeInspectorAccessPage = (appealData, storedSessionData, origin, source) => {
+export const changeSafetyRisksPage = (appealData, storedSessionData, backLinkUrl, source) => {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
-
 	const sourceKey = source === 'lpa' ? 'lpaQuestionnaire' : 'appellantCase';
 	const formattedSource = source === 'lpa' ? 'LPA' : source;
 
 	const currentRadioValue =
-		storedSessionData?.radio ?? appealData.inspectorAccess[sourceKey].isRequired ?? '';
+		storedSessionData?.radio ?? appealData.healthAndSafety[sourceKey].hasIssues ?? '';
 	const currentDetailsValue =
-		storedSessionData?.details ?? appealData.inspectorAccess[sourceKey].details ?? '';
+		storedSessionData?.details ?? appealData.healthAndSafety[sourceKey].details ?? '';
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: `Change the inspector access (${formattedSource} answer)`,
-		backLinkUrl: origin,
+		title: `Change the site health and safety risks (${formattedSource} answer)`,
+		backLinkUrl: backLinkUrl,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: `Change the inspector access (${formattedSource} answer)`,
+		heading: `Change the site health and safety risks (${formattedSource} answer)`,
 		pageComponents: [
 			{
 				type: 'radios',
 				parameters: {
-					name: 'inspectorAccessRadio',
-					id: 'inspector-access-radio',
+					name: 'safetyRisksRadio',
+					id: 'safety-risk-radio',
 					fieldSet: {
 						legend: {
-							text: `Was inspector access identified as required by the ${formattedSource}?`, //Check with content
+							text: `Was health and safety risks identified by the ${formattedSource}?`,
 							isPageHeading: false,
 							classes: 'govuk-fieldset__legend--l'
 						}
@@ -47,9 +46,9 @@ export const changeInspectorAccessPage = (appealData, storedSessionData, origin,
 							value: 'yes',
 							text: 'Yes',
 							conditional: conditionalFormatter(
-								'inspector-access-details',
-								'inspectorAccessDetails',
-								`Inspector access (${formattedSource} details)`,
+								'safety-risk-details',
+								'safetyRisksDetails',
+								`Health and safety risks (${formattedSource} details)`,
 								currentDetailsValue
 							),
 							checked: currentRadioValue
@@ -64,5 +63,6 @@ export const changeInspectorAccessPage = (appealData, storedSessionData, origin,
 			}
 		]
 	};
+
 	return pageContent;
 };

@@ -124,6 +124,38 @@ describe('LPA Questionnaire review', () => {
 			expect(notificationBannerElementHTML).toContain('Inspector access (lpa) updated');
 		}, 10000);
 
+		it('should render a "Safety risks updated" success notification banner when the safety risks (lpa) is updated', async () => {
+			const appealId = appealData.appealId;
+			const lpaQuestionnaireId = appealData.lpaQuestionnaireId;
+			const validData = {
+				safetyRisksRadio: 'yes',
+				safetyRisksDetails: 'Details'
+			};
+
+			nock('http://test/')
+				.get('/appeals/1/lpa-questionnaires/2')
+				.reply(200, lpaQuestionnaireDataNotValidated);
+
+			nock('http://test/')
+				.patch(`/appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`)
+				.reply(200, {
+					...validData
+				});
+
+			await request.post(`${baseUrl}/safety-risks/change/lpa`).send(validData);
+
+			const response = await request.get(`${baseUrl}`);
+			const notificationBannerElementHTML = parseHtml(response.text, {
+				rootElement: notificationBannerElement
+			}).innerHTML;
+
+			expect(notificationBannerElementHTML).toMatchSnapshot();
+			expect(notificationBannerElementHTML).toContain('Success');
+			expect(notificationBannerElementHTML).toContain(
+				'Site health and safety risks (LPA answer) updated'
+			);
+		}, 10000);
+
 		it('should render a "Neighbouring site added" success notification banner when a neighbouring site was added', async () => {
 			nock('http://test/').get(`/appeals/1`).reply(200, appealData).persist();
 			nock('http://test/')

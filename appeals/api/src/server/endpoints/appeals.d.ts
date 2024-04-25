@@ -542,9 +542,11 @@ interface UpdateLPAQuestionnaireRequest {
 	doesAffectAListedBuilding?: boolean;
 	doesAffectAScheduledMonument?: boolean;
 	doesSiteRequireInspectorAccess?: boolean;
+	doesSiteHaveHealthAndSafetyIssues?: boolean;
 	hasCompletedAnEnvironmentalStatement?: boolean;
 	hasProtectedSpecies?: boolean;
 	hasTreePreservationOrder?: boolean;
+	healthAndSafetyDetails?: string;
 	includesScreeningOption?: boolean;
 	incompleteReasons?: IncompleteInvalidReasons;
 	isAffectingNeighbouringSites?: boolean;

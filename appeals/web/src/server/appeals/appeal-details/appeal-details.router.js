@@ -27,6 +27,7 @@ import { assertUserHasPermission } from '#app/auth/auth.guards.js';
 import { permissionNames } from '#environment/permissions.js';
 import changeLpaReferenceRouter from './change-lpa-reference/change-lpa-reference.router.js';
 import changeInspectorAccessRouter from './inspector-access/inspector-access.router.js';
+import safetyRisksRouter from './safety-risks/safety-risks.router.js';
 
 const router = createRouter();
 
@@ -63,4 +64,5 @@ router.use('/:appealId/costs', costsRouter);
 router.use('/:appealId/service-user', serviceUserRouter);
 router.use('/:appealId/lpa-reference', changeLpaReferenceRouter);
 router.use('/:appealId/inspector-access', changeInspectorAccessRouter);
+router.use('/:appealId/safety-risks', safetyRisksRouter);
 export default router;

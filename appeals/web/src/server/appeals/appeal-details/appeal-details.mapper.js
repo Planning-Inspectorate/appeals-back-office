@@ -78,11 +78,11 @@ export async function appealDetailsPage(appealDetails, currentRoute, session) {
 		parameters: {
 			rows: [
 				mappedData.appeal.appealType.display.summaryListItem,
-				mappedData.appeal?.caseProcedure?.display.summaryListItem,
+				removeSummaryListActions(mappedData.appeal?.caseProcedure?.display.summaryListItem),
 				mappedData.appeal?.linkedAppeals?.display.summaryListItem,
 				mappedData.appeal?.otherAppeals?.display.summaryListItem,
 				mappedData.appeal?.allocationDetails?.display.summaryListItem,
-				mappedData.appeal?.lpaReference?.display.summaryListItem,
+				removeSummaryListActions(mappedData.appeal?.lpaReference?.display.summaryListItem),
 				mappedData.appeal?.decision?.display.summaryListItem
 			].filter(isDefined)
 		}
@@ -165,12 +165,12 @@ export async function appealDetailsPage(appealDetails, currentRoute, session) {
 			rows: [
 				mappedData.appeal.appellant.display.summaryListItem,
 				mappedData.appeal.agent.display.summaryListItem,
-				{
+				removeSummaryListActions({
 					...mappedData.appeal.localPlanningAuthority.display.summaryListItem,
 					key: {
 						text: 'LPA'
 					}
-				}
+				})
 			].filter(isDefined)
 		}
 	};

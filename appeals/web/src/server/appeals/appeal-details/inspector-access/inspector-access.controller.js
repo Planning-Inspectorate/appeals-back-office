@@ -35,8 +35,7 @@ const renderChangeInspectorAccess = async (request, response) => {
 			appealDetails,
 			request.session.inspectorAccess,
 			origin,
-			source,
-			errors
+			source
 		);
 
 		delete request.session.inspectorAccess;

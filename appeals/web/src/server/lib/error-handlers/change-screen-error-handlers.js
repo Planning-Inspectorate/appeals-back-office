@@ -62,11 +62,3 @@ export const errorPlanningApplicationReference = (/** @type {Error}*/ errors) =>
 		  }
 		: undefined;
 };
-
-export const errorInspectorAccessRadio = (/** @type {Error}*/ errors) => {
-	return errors?.planningApplicationReference
-		? {
-				text: 'Select one option'
-		  }
-		: undefined;
-};

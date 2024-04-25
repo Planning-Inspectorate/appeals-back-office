@@ -16,7 +16,6 @@ import {
 	linkedAppealsWithExternalLead
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
-import { logger } from '@azure/storage-blob';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -524,15 +523,12 @@ describe('appeal-details', () => {
 				await request.post(`${baseUrl}/1/service-user/change/agent`).send(validData);
 
 				const caseDetailsResponse = await request.get(`${baseUrl}/1`);
-				try {
-					const notificationBannerElementHTML = parseHtml(caseDetailsResponse.text, {
-						rootElement: notificationBannerElement
-					}).innerHTML;
-					expect(notificationBannerElementHTML).toMatchSnapshot();
-					expect(notificationBannerElementHTML).toContain('Agent details updated');
-				} catch (error) {
-					logger.error('There are no notification banner elements in the html', error);
-				}
+
+				const notificationBannerElementHTML = parseHtml(caseDetailsResponse.text, {
+					rootElement: notificationBannerElement
+				}).innerHTML;
+				expect(notificationBannerElementHTML).toMatchSnapshot();
+				expect(notificationBannerElementHTML).toContain('Agent details updated');
 			});
 
 			it('should render a success notification banner when the lpa application reference was updated', async () => {
@@ -550,15 +546,63 @@ describe('appeal-details', () => {
 					.send(validData);
 
 				const caseDetailsResponse = await request.get(`${baseUrl}/1`);
-				try {
-					const notificationBannerElementHTML = parseHtml(caseDetailsResponse.text, {
-						rootElement: notificationBannerElement
-					}).innerHTML;
-					expect(notificationBannerElementHTML).toMatchSnapshot();
-					expect(notificationBannerElementHTML).toContain('LPA application reference updated');
-				} catch (error) {
-					logger.error('There are no notification banner elements in the html', error);
-				}
+
+				const notificationBannerElementHTML = parseHtml(caseDetailsResponse.text, {
+					rootElement: notificationBannerElement
+				}).innerHTML;
+				expect(notificationBannerElementHTML).toMatchSnapshot();
+				expect(notificationBannerElementHTML).toContain('LPA application reference updated');
+			});
+			it('should render a success notification banner when the inspector access was updated', async () => {
+				const appealId = appealData.appealId;
+				const appellantCaseId = appealData.appellantCaseId;
+				const validData = {
+					inspectorAccessRadio: 'yes',
+					inspectorAccessDetails: 'Details'
+				};
+
+				nock('http://test/')
+					.patch(`/appeals/${appealId}/appellant-cases/${appellantCaseId}`)
+					.reply(200, {
+						...validData
+					});
+
+				await request
+					.post(`${baseUrl}/${appealId}/inspector-access/change/appellant`)
+					.send(validData);
+
+				const caseDetailsResponse = await request.get(`${baseUrl}/1`);
+				const notificationBannerElementHTML = parseHtml(caseDetailsResponse.text, {
+					rootElement: notificationBannerElement
+				}).innerHTML;
+				expect(notificationBannerElementHTML).toMatchSnapshot();
+				expect(notificationBannerElementHTML).toContain('Inspector access (appellant) updated');
+			});
+
+			it('should render a success notification banner when the safety risks was updated', async () => {
+				const appealId = appealData.appealId;
+				const appellantCaseId = appealData.appellantCaseId;
+				const validData = {
+					safetyRisksRadio: 'yes',
+					safetyRisksDetails: 'Details'
+				};
+
+				nock('http://test/')
+					.patch(`/appeals/${appealId}/appellant-cases/${appellantCaseId}`)
+					.reply(200, {
+						...validData
+					});
+
+				await request.post(`${baseUrl}/${appealId}/safety-risks/change/appellant`).send(validData);
+
+				const caseDetailsResponse = await request.get(`${baseUrl}/1`);
+				const notificationBannerElementHTML = parseHtml(caseDetailsResponse.text, {
+					rootElement: notificationBannerElement
+				}).innerHTML;
+				expect(notificationBannerElementHTML).toMatchSnapshot();
+				expect(notificationBannerElementHTML).toContain(
+					'Site health and safety risks (appellant answer) updated'
+				);
 			});
 
 			it('should render a success notification banner when the neighbouring site affected value is updated', async () => {
@@ -576,17 +620,13 @@ describe('appeal-details', () => {
 					.send({ neighbouringSiteAffected: 'yes' });
 
 				const caseDetailsResponse = await request.get(`${baseUrl}/1`);
-				try {
-					const notificationBannerElementHTML = parseHtml(caseDetailsResponse.text, {
-						rootElement: notificationBannerElement
-					}).innerHTML;
-					expect(notificationBannerElementHTML).toMatchSnapshot();
-					expect(notificationBannerElementHTML).toContain(
-						'Neighbouring site affected status updated'
-					);
-				} catch (error) {
-					logger.error('There are no notification banner elements in the html', error);
-				}
+				const notificationBannerElementHTML = parseHtml(caseDetailsResponse.text, {
+					rootElement: notificationBannerElement
+				}).innerHTML;
+				expect(notificationBannerElementHTML).toMatchSnapshot();
+				expect(notificationBannerElementHTML).toContain(
+					'Neighbouring site affected status updated'
+				);
 			});
 		});
 
