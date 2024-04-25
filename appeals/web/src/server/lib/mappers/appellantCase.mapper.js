@@ -512,101 +512,60 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 	};
 
 	/** @type {Instructions} */
-	mappedData.visibility = {
-		id: 'visibility',
+	mappedData.inspectorAccess = {
+		id: 'inspector-access',
 		display: {
 			summaryListItem: {
 				key: {
-					text: 'Visibility'
+					text: 'Inspection access required'
 				},
 				value: {
-					text: convertFromBooleanToYesNo(appellantCaseData.visibility.isVisible) || ''
+					html: displayPageFormatter.formatAnswerAndDetails(
+						convertFromBooleanToYesNo(appealDetails.inspectorAccess.appellantCase.isRequired) ??
+							'No answer provided',
+						appealDetails.inspectorAccess.appellantCase.details
+					)
 				},
 				actions: {
 					items: [
 						{
 							text: 'Change',
-							visuallyHiddenText: 'Visibility',
-							href: `${currentRoute}/change-appeal-details/visibility`
+							href: `${currentRoute}/inspector-access/change/appellant`,
+							visuallyHiddenText: 'Inspector access required'
 						}
 					]
-				}
+				},
+				classes: 'appellantcase-inspector-access'
 			}
-		},
-		input: {
-			displayName: 'Visibility',
-			instructions: [
-				{
-					type: 'radios',
-					properties: {
-						name: 'visibility',
-						items: [
-							{
-								text: 'Yes',
-								value: 'yes',
-								checked: appellantCaseData.visibility.isVisible
-							},
-							{
-								text: 'No',
-								value: 'no',
-								checked: !appellantCaseData.visibility.isVisible
-							}
-						]
-					}
-				}
-			]
-		},
-		submitApi: '#',
-		inputItemApi: '#'
+		}
 	};
 
 	/** @type {Instructions} */
 	mappedData.healthAndSafetyIssues = {
-		id: 'site-health-and-safety-issues',
+		id: 'appellant-case-health-and-safety',
 		display: {
 			summaryListItem: {
 				key: {
 					text: 'Potential safety risks'
 				},
 				value: {
-					text: convertFromBooleanToYesNo(appellantCaseData.healthAndSafety.hasIssues) || ''
+					html: displayPageFormatter.formatAnswerAndDetails(
+						convertFromBooleanToYesNo(appealDetails.healthAndSafety.appellantCase.hasIssues) ||
+							'No answer provided',
+						appealDetails.healthAndSafety.appellantCase.details
+					)
 				},
 				actions: {
 					items: [
 						{
 							text: 'Change',
-							visuallyHiddenText: 'Potential safety risks',
-							href: `${currentRoute}/change-appeal-details/site-health-and-safety-issues`
+							href: `${currentRoute}/safety-risks/change/appellant`,
+							visuallyHiddenText: 'potential safety risks'
 						}
 					]
 				}
 			}
-		},
-		input: {
-			displayName: 'Potential safety risks',
-			instructions: [
-				{
-					type: 'radios',
-					properties: {
-						name: 'site-health-and-safety-issues',
-						items: [
-							{
-								text: 'Yes',
-								value: 'yes',
-								checked: appellantCaseData.healthAndSafety.hasIssues
-							},
-							{
-								text: 'No',
-								value: 'no',
-								checked: !appellantCaseData.healthAndSafety.hasIssues
-							}
-						]
-					}
-				}
-			]
-		},
-		submitApi: '#',
-		inputItemApi: '#'
+		}
 	};
 
 	/** @type {Instructions} */

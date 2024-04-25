@@ -8,70 +8,72 @@ const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details';
 
-describe('inspector-access', () => {
+describe('safety-risks', () => {
 	beforeEach(installMockApi);
 	afterEach(teardown);
 
 	describe('GET /change/:source', () => {
-		it('should render changeInspectorAccess page for the lpa answer when source is lpa from appeals details', async () => {
+		it('should render changeSafetyRisksAccess page for the LPA answer when source is LPA from appeals details', async () => {
 			const appealId = appealData.appealId;
-			const response = await request.get(`${baseUrl}/${appealId}/inspector-access/change/lpa`);
+			const response = await request.get(`${baseUrl}/${appealId}/safety-risks/change/lpa`);
 
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change the inspector access (LPA answer)');
+			expect(elementInnerHtml).toContain('Change the site health and safety risks (LPA answer)');
 		});
 
-		it('should render changeInspectorAccess page for the appellant answer when source is appellant from appeals details', async () => {
+		it('should render changeSafetyRisksAccess page for the appellant answer when source is appellant from appeals details', async () => {
 			const appealId = appealData.appealId;
-			const response = await request.get(
-				`${baseUrl}/${appealId}/inspector-access/change/appellant`
+			const response = await request.get(`${baseUrl}/${appealId}/safety-risks/change/appellant`);
+
+			const elementInnerHtml = parseHtml(response.text).innerHTML;
+
+			expect(elementInnerHtml).toMatchSnapshot();
+			expect(elementInnerHtml).toContain(
+				'Change the site health and safety risks (appellant answer)'
 			);
-
-			const elementInnerHtml = parseHtml(response.text).innerHTML;
-
-			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change the inspector access (appellant answer)');
 		});
 
-		it('should render changeInspectorAccess page for the lpa answer when source is lpa from lpa questionnaire', async () => {
+		it('should render changeSafetyRisksAccess page for the LPA answer when source is LPA from LPA questionnaire', async () => {
 			const appealId = appealData.appealId;
 			const lpaQuestionnaireId = appealData.lpaQuestionnaireId;
 			const response = await request.get(
-				`${baseUrl}/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/inspector-access/change/lpa`
+				`${baseUrl}/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/safety-risks/change/lpa`
 			);
 
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change the inspector access (LPA answer)');
+			expect(elementInnerHtml).toContain('Change the site health and safety risks (LPA answer)');
 		});
 
-		it('should render changeInspectorAccess page for the appellant answer when source is appellant from appellant case', async () => {
+		it('should render changeSafetyRisksAccess page for the appellant answer when source is appellant from appellant case', async () => {
 			const appealId = appealData.appealId;
 
 			const response = await request.get(
-				`${baseUrl}/${appealId}/appellant-case/inspector-access/change/appellant`
+				`${baseUrl}/${appealId}/appellant-case/safety-risks/change/appellant`
 			);
 
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change the inspector access (appellant answer)');
+			expect(elementInnerHtml).toContain(
+				'Change the site health and safety risks (appellant answer)'
+			);
 		});
 	});
 
 	describe('POST /change/:source', () => {
-		it('should re-render changeInspectorAccess page with an error when isRequired is "yes" but details is empty', async () => {
+		it('should re-render changeSafetyRisksAccess page with an error when isRequired is "yes" but details is empty', async () => {
 			const appealId = appealData.appealId.toString();
 
 			const invalidData = {
-				inspectorAccessRadio: 'yes',
-				inspectorAccessDetails: ''
+				safetyRisksRadio: 'yes',
+				safetyRisksDetails: ''
 			};
 			const response = await request
-				.post(`${baseUrl}/${appealId}/inspector-access/change/lpa`)
+				.post(`${baseUrl}/${appealId}/safety-risks/change/lpa`)
 				.send(invalidData);
 
 			expect(response.statusCode).toBe(200);
@@ -79,16 +81,16 @@ describe('inspector-access', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Provide details when inspector access is required');
+			expect(elementInnerHtml).toContain('Provide details of health and safety risks');
 			expect(elementInnerHtml).toContain('govuk-error-summary');
 		});
 
-		it('should re-direct to appeals-details page when data is valid for lpa and came from appeal-details', async () => {
+		it('should re-direct to appeals-details page when data is valid for LPA and came from appeal-details', async () => {
 			const appealId = appealData.appealId;
 			const lpaQuestionnaireId = appealData.lpaQuestionnaireId;
 			const validData = {
-				inspectorAccessRadio: 'yes',
-				inspectorAccessDetails: 'Details'
+				safetyRisksRadio: 'yes',
+				safetyRisksDetails: 'Details'
 			};
 
 			nock('http://test/')
@@ -98,7 +100,7 @@ describe('inspector-access', () => {
 				});
 
 			const response = await request
-				.post(`${baseUrl}/${appealId}/inspector-access/change/lpa`)
+				.post(`${baseUrl}/${appealId}/safety-risks/change/lpa`)
 				.send(validData);
 
 			expect(response.statusCode).toBe(302);
@@ -110,8 +112,8 @@ describe('inspector-access', () => {
 			const appealId = appealData.appealId;
 			const appellantCaseId = appealData.appellantCaseId;
 			const validData = {
-				inspectorAccessRadio: 'yes',
-				inspectorAccessDetails: 'Details'
+				safetyRisksRadio: 'yes',
+				safetyRisksDetails: 'Details'
 			};
 
 			nock('http://test/')
@@ -121,7 +123,7 @@ describe('inspector-access', () => {
 				});
 
 			const response = await request
-				.post(`${baseUrl}/${appealId}/inspector-access/change/appellant`)
+				.post(`${baseUrl}/${appealId}/safety-risks/change/appellant`)
 				.send(validData);
 
 			expect(response.statusCode).toBe(302);
@@ -133,8 +135,8 @@ describe('inspector-access', () => {
 			const appealId = appealData.appealId;
 			const appellantCaseId = appealData.appellantCaseId;
 			const validData = {
-				inspectorAccessRadio: 'yes',
-				inspectorAccessDetails: 'Details'
+				safetyRisksRadio: 'yes',
+				safetyRisksDetails: 'Details'
 			};
 
 			nock('http://test/')
@@ -144,7 +146,7 @@ describe('inspector-access', () => {
 				});
 
 			const response = await request
-				.post(`${baseUrl}/${appealId}/appellant-case/inspector-access/change/appellant`)
+				.post(`${baseUrl}/${appealId}/appellant-case/safety-risks/change/appellant`)
 				.send(validData);
 
 			expect(response.statusCode).toBe(302);
@@ -154,12 +156,12 @@ describe('inspector-access', () => {
 			);
 		});
 
-		it('should re-direct to lpaq page when data is valid for lpa and came from lpa-questionnaire', async () => {
+		it('should re-direct to lpaq page when data is valid for LPA and came from lpa-questionnaire', async () => {
 			const appealId = appealData.appealId;
 			const lpaQuestionnaireId = appealData.lpaQuestionnaireId;
 			const validData = {
-				inspectorAccessRadio: 'yes',
-				inspectorAccessDetails: 'Details'
+				safetyRisksRadio: 'yes',
+				safetyRisksDetails: 'Details'
 			};
 
 			nock('http://test/')
@@ -170,7 +172,7 @@ describe('inspector-access', () => {
 
 			const response = await request
 				.post(
-					`${baseUrl}/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/inspector-access/change/lpa`
+					`${baseUrl}/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/safety-risks/change/lpa`
 				)
 				.send(validData);
 

@@ -133,7 +133,7 @@ export async function appellantCasePage(
 				mappedAppellantCaseData.allOwnersKnown.display.summaryListItem,
 				mappedAppellantCaseData.attemptedToIdentifyOwners.display.summaryListItem,
 				mappedAppellantCaseData.advertisedAppeal.display.summaryListItem,
-				mappedAppellantCaseData.visibility.display.summaryListItem,
+				mappedAppellantCaseData.inspectorAccess.display.summaryListItem,
 				mappedAppellantCaseData.healthAndSafetyIssues.display.summaryListItem
 			]
 		}

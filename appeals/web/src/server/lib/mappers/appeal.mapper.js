@@ -907,44 +907,13 @@ export async function initialiseAndMapAppealData(
 					items: [
 						{
 							text: 'Change',
-							href: `${currentRoute}/change-appeal-details/lpa-health-and-safety`,
+							href: `${currentRoute}/safety-risks/change/lpa`,
 							visuallyHiddenText: 'potential safety risks (L P A answer)'
 						}
 					]
 				},
 				classes: 'appeal-lpa-health-and-safety'
 			}
-		},
-		input: {
-			displayName: 'Potential safety risks (LPA answer)',
-			instructions: [
-				{
-					type: 'radios',
-					properties: {
-						name: 'lpaHealthAndSafety',
-						items: [
-							{
-								text: 'Yes',
-								value: 'yes',
-								conditional: conditionalFormatter(
-									'lpa-health-and-safety-text',
-									'lpaHealthAndSafetyText',
-									'Tell us why the inspector will need to enter the appeal site',
-									displayPageFormatter.nullToEmptyString(
-										appealDetails.healthAndSafety.lpaQuestionnaire.details
-									)
-								),
-								checked: appealDetails.healthAndSafety.lpaQuestionnaire.hasIssues
-							},
-							{
-								text: 'No',
-								value: 'no',
-								checked: !appealDetails.healthAndSafety.lpaQuestionnaire.hasIssues
-							}
-						]
-					}
-				}
-			]
 		}
 	};
 
@@ -967,44 +936,13 @@ export async function initialiseAndMapAppealData(
 					items: [
 						{
 							text: 'Change',
-							href: `${currentRoute}/change-appeal-details/appellant-case-health-and-safety`,
+							href: `${currentRoute}/safety-risks/change/appellant`,
 							visuallyHiddenText: 'potential safety risks (appellant answer)'
 						}
 					]
 				},
 				classes: 'appeal-appellant-health-and-safety'
 			}
-		},
-		input: {
-			displayName: 'Potential safety risks (appellant answer)',
-			instructions: [
-				{
-					type: 'radios',
-					properties: {
-						name: 'appellantCaseHealthAndSafety',
-						items: [
-							{
-								text: 'Yes',
-								value: 'yes',
-								conditional: conditionalFormatter(
-									'appellant-case-health-and-safety-text',
-									'appellantCaseHealthAndSafetyText',
-									'Tell us why the inspector will need to enter the appeal site',
-									displayPageFormatter.nullToEmptyString(
-										appealDetails.healthAndSafety.appellantCase.details
-									)
-								),
-								checked: appealDetails.healthAndSafety.appellantCase.hasIssues
-							},
-							{
-								text: 'No',
-								value: 'no',
-								checked: !appealDetails.healthAndSafety.appellantCase.hasIssues
-							}
-						]
-					}
-				}
-			]
 		}
 	};
 

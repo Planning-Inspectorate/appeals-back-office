@@ -181,6 +181,18 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 </div>"
 `;
 
+exports[`appeal-details GET /:appealId Notification banners should render a success notification banner when the inspector access was updated 1`] = `
+"<div class="govuk-notification-banner govuk-notification-banner--success"
+role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
+    </div>
+    <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">Inspector access (appellant) updated</p>
+    </div>
+</div>"
+`;
+
 exports[`appeal-details GET /:appealId Notification banners should render a success notification banner when the lpa application reference was updated 1`] = `
 "<div class="govuk-notification-banner govuk-notification-banner--success"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
@@ -201,6 +213,18 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
     </div>
     <div class="govuk-notification-banner__content">
         <p class="govuk-notification-banner__heading">Neighbouring site affected status updated</p>
+    </div>
+</div>"
+`;
+
+exports[`appeal-details GET /:appealId Notification banners should render a success notification banner when the safety risks was updated 1`] = `
+"<div class="govuk-notification-banner govuk-notification-banner--success"
+role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
+    </div>
+    <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">Site health and safety risks (appellant answer) updated</p>
     </div>
 </div>"
 `;
@@ -282,10 +306,8 @@ exports[`appeal-details GET /:appealId should not render action links to the man
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-type/appeal-type"> Change<span class="govuk-visually-hidden"> Appeal type</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-case-procedure"><dt class="govuk-summary-list__key"> Case procedure</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-case-procedure"><dt class="govuk-summary-list__key"> Case procedure</dt>
                             <dd class="govuk-summary-list__value">Written</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/case-procedure"> Change<span class="govuk-visually-hidden"> Case procedure</span></a>
-                            </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-linked-appeals"><dt class="govuk-summary-list__key"> Linked appeals</dt>
                             <dd class="govuk-summary-list__value">
@@ -316,10 +338,8 @@ exports[`appeal-details GET /:appealId should not render action links to the man
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-reference/change"> Change<span class="govuk-visually-hidden"> L P A reference</span></a>
-                                </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
                             <dd class="govuk-summary-list__value">dismissed</dd>
@@ -384,14 +404,14 @@ exports[`appeal-details GET /:appealId should not render action links to the man
                         <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/lpa-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/safety-risks/change/lpa"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>Yes</span>
                                 <br><span>Dogs on site</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/safety-risks/change/appellant"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
@@ -522,10 +542,8 @@ exports[`appeal-details GET /:appealId should not render action links to the man
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/service-user/change/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                             <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> local planning authority (LPA)</span></a>
-                            </dd>
                         </div>
                     </dl>
                 </div>
@@ -605,10 +623,8 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-type/appeal-type"> Change<span class="govuk-visually-hidden"> Appeal type</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-case-procedure"><dt class="govuk-summary-list__key"> Case procedure</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-case-procedure"><dt class="govuk-summary-list__key"> Case procedure</dt>
                             <dd class="govuk-summary-list__value">Written</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/case-procedure"> Change<span class="govuk-visually-hidden"> Case procedure</span></a>
-                            </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-linked-appeals"><dt class="govuk-summary-list__key"> Linked appeals</dt>
                             <dd class="govuk-summary-list__value"><span>No appeals</span>
@@ -634,10 +650,8 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-reference/change"> Change<span class="govuk-visually-hidden"> L P A reference</span></a>
-                                </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
                             <dd class="govuk-summary-list__value">dismissed</dd>
@@ -702,14 +716,14 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                         <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/lpa-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/lpa"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>Yes</span>
                                 <br><span>Dogs on site</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/appellant"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
@@ -840,10 +854,8 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/service-user/change/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                             <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> local planning authority (LPA)</span></a>
-                            </dd>
                         </div>
                     </dl>
                 </div>
@@ -918,10 +930,8 @@ exports[`appeal-details GET /:appealId should render a Issue a decision action b
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-type/appeal-type"> Change<span class="govuk-visually-hidden"> Appeal type</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-case-procedure"><dt class="govuk-summary-list__key"> Case procedure</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-case-procedure"><dt class="govuk-summary-list__key"> Case procedure</dt>
                             <dd class="govuk-summary-list__value">Written</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/case-procedure"> Change<span class="govuk-visually-hidden"> Case procedure</span></a>
-                            </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-linked-appeals"><dt class="govuk-summary-list__key"> Linked appeals</dt>
                             <dd class="govuk-summary-list__value"><span>No appeals</span>
@@ -947,10 +957,8 @@ exports[`appeal-details GET /:appealId should render a Issue a decision action b
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-reference/change"> Change<span class="govuk-visually-hidden"> L P A reference</span></a>
-                                </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
                             <dd class="govuk-summary-list__value">dismissed</dd>
@@ -1015,14 +1023,14 @@ exports[`appeal-details GET /:appealId should render a Issue a decision action b
                         <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/lpa-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/lpa"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>Yes</span>
                                 <br><span>Dogs on site</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/appellant"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
@@ -1153,10 +1161,8 @@ exports[`appeal-details GET /:appealId should render a Issue a decision action b
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/service-user/change/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                             <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> local planning authority (LPA)</span></a>
-                            </dd>
                         </div>
                     </dl>
                 </div>
@@ -1217,10 +1223,8 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-type/appeal-type"> Change<span class="govuk-visually-hidden"> Appeal type</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-case-procedure"><dt class="govuk-summary-list__key"> Case procedure</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-case-procedure"><dt class="govuk-summary-list__key"> Case procedure</dt>
                             <dd class="govuk-summary-list__value">Written</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/case-procedure"> Change<span class="govuk-visually-hidden"> Case procedure</span></a>
-                            </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-linked-appeals"><dt class="govuk-summary-list__key"> Linked appeals</dt>
                             <dd class="govuk-summary-list__value">
@@ -1255,10 +1259,8 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-reference/change"> Change<span class="govuk-visually-hidden"> L P A reference</span></a>
-                                </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
                             <dd class="govuk-summary-list__value">dismissed</dd>
@@ -1323,14 +1325,14 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                         <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/lpa-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/safety-risks/change/lpa"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>Yes</span>
                                 <br><span>Dogs on site</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/safety-risks/change/appellant"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
@@ -1461,10 +1463,8 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/service-user/change/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                             <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> local planning authority (LPA)</span></a>
-                            </dd>
                         </div>
                     </dl>
                 </div>
@@ -1525,10 +1525,8 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-type/appeal-type"> Change<span class="govuk-visually-hidden"> Appeal type</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-case-procedure"><dt class="govuk-summary-list__key"> Case procedure</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-case-procedure"><dt class="govuk-summary-list__key"> Case procedure</dt>
                             <dd class="govuk-summary-list__value">Written</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/case-procedure"> Change<span class="govuk-visually-hidden"> Case procedure</span></a>
-                            </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-linked-appeals"><dt class="govuk-summary-list__key"> Linked appeals</dt>
                             <dd class="govuk-summary-list__value">
@@ -1565,10 +1563,8 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-reference/change"> Change<span class="govuk-visually-hidden"> L P A reference</span></a>
-                                </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
                             <dd class="govuk-summary-list__value">dismissed</dd>
@@ -1633,14 +1629,14 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                         <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/lpa-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/safety-risks/change/lpa"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>Yes</span>
                                 <br><span>Dogs on site</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/safety-risks/change/appellant"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
@@ -1771,10 +1767,8 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/service-user/change/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                             <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> local planning authority (LPA)</span></a>
-                            </dd>
                         </div>
                     </dl>
                 </div>
@@ -1848,10 +1842,8 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-type/appeal-type"> Change<span class="govuk-visually-hidden"> Appeal type</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-case-procedure"><dt class="govuk-summary-list__key"> Case procedure</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-case-procedure"><dt class="govuk-summary-list__key"> Case procedure</dt>
                             <dd class="govuk-summary-list__value">Written</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/case-procedure"> Change<span class="govuk-visually-hidden"> Case procedure</span></a>
-                            </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-linked-appeals"><dt class="govuk-summary-list__key"> Linked appeals</dt>
                             <dd class="govuk-summary-list__value">
@@ -1889,10 +1881,8 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-reference/change"> Change<span class="govuk-visually-hidden"> L P A reference</span></a>
-                                </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
                             <dd class="govuk-summary-list__value">dismissed</dd>
@@ -1957,14 +1947,14 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
                         <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/lpa-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/safety-risks/change/lpa"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>Yes</span>
                                 <br><span>Dogs on site</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/safety-risks/change/appellant"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
@@ -2095,10 +2085,8 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/service-user/change/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                             <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> local planning authority (LPA)</span></a>
-                            </dd>
                         </div>
                     </dl>
                 </div>
@@ -2158,10 +2146,8 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-type/appeal-type"> Change<span class="govuk-visually-hidden"> Appeal type</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-case-procedure"><dt class="govuk-summary-list__key"> Case procedure</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-case-procedure"><dt class="govuk-summary-list__key"> Case procedure</dt>
                             <dd class="govuk-summary-list__value">Written</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/case-procedure"> Change<span class="govuk-visually-hidden"> Case procedure</span></a>
-                            </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-linked-appeals"><dt class="govuk-summary-list__key"> Linked appeals</dt>
                             <dd class="govuk-summary-list__value"><span>No appeals</span>
@@ -2187,10 +2173,8 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-reference/change"> Change<span class="govuk-visually-hidden"> L P A reference</span></a>
-                                </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
                             <dd class="govuk-summary-list__value">dismissed</dd>
@@ -2255,14 +2239,14 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                         <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/lpa-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/safety-risks/change/lpa"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>Yes</span>
                                 <br><span>Dogs on site</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/safety-risks/change/appellant"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
@@ -2393,10 +2377,8 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/service-user/change/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                             <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> local planning authority (LPA)</span></a>
-                            </dd>
                         </div>
                     </dl>
                 </div>
@@ -2456,10 +2438,8 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-type/appeal-type"> Change<span class="govuk-visually-hidden"> Appeal type</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-case-procedure"><dt class="govuk-summary-list__key"> Case procedure</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-case-procedure"><dt class="govuk-summary-list__key"> Case procedure</dt>
                             <dd class="govuk-summary-list__value">Written</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/case-procedure"> Change<span class="govuk-visually-hidden"> Case procedure</span></a>
-                            </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-linked-appeals"><dt class="govuk-summary-list__key"> Linked appeals</dt>
                             <dd class="govuk-summary-list__value"><span>No appeals</span>
@@ -2485,10 +2465,8 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-reference/change"> Change<span class="govuk-visually-hidden"> L P A reference</span></a>
-                                </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
                             <dd class="govuk-summary-list__value">dismissed</dd>
@@ -2553,14 +2531,14 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                         <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/lpa-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/lpa"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>Yes</span>
                                 <br><span>Dogs on site</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/appellant"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
@@ -2692,10 +2670,8 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/service-user/change/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                             <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> local planning authority (LPA)</span></a>
-                            </dd>
                         </div>
                     </dl>
                 </div>
@@ -2755,10 +2731,8 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-type/appeal-type"> Change<span class="govuk-visually-hidden"> Appeal type</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-case-procedure"><dt class="govuk-summary-list__key"> Case procedure</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-case-procedure"><dt class="govuk-summary-list__key"> Case procedure</dt>
                             <dd class="govuk-summary-list__value">Written</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/case-procedure"> Change<span class="govuk-visually-hidden"> Case procedure</span></a>
-                            </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-linked-appeals"><dt class="govuk-summary-list__key"> Linked appeals</dt>
                             <dd class="govuk-summary-list__value"><span>No appeals</span>
@@ -2784,10 +2758,8 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-reference/change"> Change<span class="govuk-visually-hidden"> L P A reference</span></a>
-                                </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
                             <dd class="govuk-summary-list__value">dismissed</dd>
@@ -2852,14 +2824,14 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                         <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/lpa-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/lpa"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>Yes</span>
                                 <br><span>Dogs on site</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/appellant"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
@@ -2991,10 +2963,8 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/service-user/change/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                             <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> local planning authority (LPA)</span></a>
-                            </dd>
                         </div>
                     </dl>
                 </div>
@@ -3054,10 +3024,8 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-type/appeal-type"> Change<span class="govuk-visually-hidden"> Appeal type</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-case-procedure"><dt class="govuk-summary-list__key"> Case procedure</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-case-procedure"><dt class="govuk-summary-list__key"> Case procedure</dt>
                             <dd class="govuk-summary-list__value">Written</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/case-procedure"> Change<span class="govuk-visually-hidden"> Case procedure</span></a>
-                            </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-linked-appeals"><dt class="govuk-summary-list__key"> Linked appeals</dt>
                             <dd class="govuk-summary-list__value"><span>No appeals</span>
@@ -3083,10 +3051,8 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-reference/change"> Change<span class="govuk-visually-hidden"> L P A reference</span></a>
-                                </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
                             <dd class="govuk-summary-list__value">dismissed</dd>
@@ -3151,14 +3117,14 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                         <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/lpa-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/lpa"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>Yes</span>
                                 <br><span>Dogs on site</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/appellant"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
@@ -3290,10 +3256,8 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/service-user/change/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                             <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> local planning authority (LPA)</span></a>
-                            </dd>
                         </div>
                     </dl>
                 </div>
@@ -3354,10 +3318,8 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-type/appeal-type"> Change<span class="govuk-visually-hidden"> Appeal type</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-case-procedure"><dt class="govuk-summary-list__key"> Case procedure</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-case-procedure"><dt class="govuk-summary-list__key"> Case procedure</dt>
                             <dd class="govuk-summary-list__value">Written</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/case-procedure"> Change<span class="govuk-visually-hidden"> Case procedure</span></a>
-                            </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-linked-appeals"><dt class="govuk-summary-list__key"> Linked appeals</dt>
                             <dd class="govuk-summary-list__value">
@@ -3395,10 +3357,8 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-reference/change"> Change<span class="govuk-visually-hidden"> L P A reference</span></a>
-                                </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
                             <dd class="govuk-summary-list__value">dismissed</dd>
@@ -3463,14 +3423,14 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                         <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/lpa-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/safety-risks/change/lpa"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>Yes</span>
                                 <br><span>Dogs on site</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/safety-risks/change/appellant"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
@@ -3601,10 +3561,8 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/service-user/change/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                             <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> local planning authority (LPA)</span></a>
-                            </dd>
                         </div>
                     </dl>
                 </div>
@@ -3805,10 +3763,8 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-type/appeal-type"> Change<span class="govuk-visually-hidden"> Appeal type</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-case-procedure"><dt class="govuk-summary-list__key"> Case procedure</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-case-procedure"><dt class="govuk-summary-list__key"> Case procedure</dt>
                             <dd class="govuk-summary-list__value">Written</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/case-procedure"> Change<span class="govuk-visually-hidden"> Case procedure</span></a>
-                            </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-linked-appeals"><dt class="govuk-summary-list__key"> Linked appeals</dt>
                             <dd class="govuk-summary-list__value">
@@ -3846,10 +3802,8 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-reference/change"> Change<span class="govuk-visually-hidden"> L P A reference</span></a>
-                                </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
                             <dd class="govuk-summary-list__value">dismissed</dd>
@@ -3914,14 +3868,14 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                         <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/lpa-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/safety-risks/change/lpa"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>Yes</span>
                                 <br><span>Dogs on site</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/safety-risks/change/appellant"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
@@ -4052,10 +4006,8 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/service-user/change/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                             <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> local planning authority (LPA)</span></a>
-                            </dd>
                         </div>
                     </dl>
                 </div>
@@ -4115,10 +4067,8 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-type/appeal-type"> Change<span class="govuk-visually-hidden"> Appeal type</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-case-procedure"><dt class="govuk-summary-list__key"> Case procedure</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-case-procedure"><dt class="govuk-summary-list__key"> Case procedure</dt>
                             <dd class="govuk-summary-list__value">Written</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/case-procedure"> Change<span class="govuk-visually-hidden"> Case procedure</span></a>
-                            </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-linked-appeals"><dt class="govuk-summary-list__key"> Linked appeals</dt>
                             <dd class="govuk-summary-list__value"><span>No appeals</span>
@@ -4144,10 +4094,8 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-reference/change"> Change<span class="govuk-visually-hidden"> L P A reference</span></a>
-                                </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
                             <dd class="govuk-summary-list__value">dismissed</dd>
@@ -4212,14 +4160,14 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                         <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/lpa-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/safety-risks/change/lpa"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>Yes</span>
                                 <br><span>Dogs on site</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/safety-risks/change/appellant"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
@@ -4350,10 +4298,8 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/service-user/change/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                             <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> local planning authority (LPA)</span></a>
-                            </dd>
                         </div>
                     </dl>
                 </div>
@@ -4413,10 +4359,8 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/change-appeal-type/appeal-type"> Change<span class="govuk-visually-hidden"> Appeal type</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-case-procedure"><dt class="govuk-summary-list__key"> Case procedure</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-case-procedure"><dt class="govuk-summary-list__key"> Case procedure</dt>
                             <dd class="govuk-summary-list__value">Written</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/change-appeal-details/case-procedure"> Change<span class="govuk-visually-hidden"> Case procedure</span></a>
-                            </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-linked-appeals"><dt class="govuk-summary-list__key"> Linked appeals</dt>
                             <dd class="govuk-summary-list__value"><span>No appeals</span>
@@ -4442,10 +4386,8 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/lpa-reference/change"> Change<span class="govuk-visually-hidden"> L P A reference</span></a>
-                                </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
                             <dd class="govuk-summary-list__value">dismissed</dd>
@@ -4510,14 +4452,14 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                         <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/change-appeal-details/lpa-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/safety-risks/change/lpa"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>Yes</span>
                                 <br><span>Dogs on site</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/change-appeal-details/appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/safety-risks/change/appellant"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
@@ -4648,10 +4590,8 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/service-user/change/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                             <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> local planning authority (LPA)</span></a>
-                            </dd>
                         </div>
                     </dl>
                 </div>
@@ -4712,10 +4652,8 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-type/appeal-type"> Change<span class="govuk-visually-hidden"> Appeal type</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-case-procedure"><dt class="govuk-summary-list__key"> Case procedure</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-case-procedure"><dt class="govuk-summary-list__key"> Case procedure</dt>
                             <dd class="govuk-summary-list__value">Written</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/case-procedure"> Change<span class="govuk-visually-hidden"> Case procedure</span></a>
-                            </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-linked-appeals"><dt class="govuk-summary-list__key"> Linked appeals</dt>
                             <dd class="govuk-summary-list__value">
@@ -4760,10 +4698,8 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-reference/change"> Change<span class="govuk-visually-hidden"> L P A reference</span></a>
-                                </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
                             <dd class="govuk-summary-list__value">dismissed</dd>
@@ -4828,14 +4764,14 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                         <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/lpa-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/lpa"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>Yes</span>
                                 <br><span>Dogs on site</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/appellant"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
@@ -4966,10 +4902,8 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/service-user/change/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                             <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> local planning authority (LPA)</span></a>
-                            </dd>
                         </div>
                     </dl>
                 </div>
@@ -5029,10 +4963,8 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-type/appeal-type"> Change<span class="govuk-visually-hidden"> Appeal type</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-case-procedure"><dt class="govuk-summary-list__key"> Case procedure</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-case-procedure"><dt class="govuk-summary-list__key"> Case procedure</dt>
                             <dd class="govuk-summary-list__value">Written</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/case-procedure"> Change<span class="govuk-visually-hidden"> Case procedure</span></a>
-                            </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-linked-appeals"><dt class="govuk-summary-list__key"> Linked appeals</dt>
                             <dd class="govuk-summary-list__value"><span>No appeals</span>
@@ -5058,10 +4990,8 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-reference/change"> Change<span class="govuk-visually-hidden"> L P A reference</span></a>
-                                </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
                             <dd class="govuk-summary-list__value">dismissed</dd>
@@ -5126,14 +5056,14 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                         <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/lpa-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/lpa"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>Yes</span>
                                 <br><span>Dogs on site</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/appellant"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
@@ -5249,10 +5179,8 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/service-user/change/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                             <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> local planning authority (LPA)</span></a>
-                            </dd>
                         </div>
                     </dl>
                 </div>
@@ -5453,10 +5381,8 @@ exports[`appeal-details should not render a back button 1`] = `
                                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-type/appeal-type"> Change<span class="govuk-visually-hidden"> Appeal type</span></a>
                                         </dd>
                                     </div>
-                                    <div class="govuk-summary-list__row appeal-case-procedure"><dt class="govuk-summary-list__key"> Case procedure</dt>
+                                    <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-case-procedure"><dt class="govuk-summary-list__key"> Case procedure</dt>
                                         <dd class="govuk-summary-list__value">Written</dd>
-                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/case-procedure"> Change<span class="govuk-visually-hidden"> Case procedure</span></a>
-                                        </dd>
                                     </div>
                                     <div class="govuk-summary-list__row appeal-linked-appeals"><dt class="govuk-summary-list__key"> Linked appeals</dt>
                                         <dd class="govuk-summary-list__value"><span>No appeals</span>
@@ -5482,10 +5408,8 @@ exports[`appeal-details should not render a back button 1`] = `
                                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
                                         </dd>
                                     </div>
-                                    <div class="govuk-summary-list__row appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
+                                    <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                                         <dd                                         class="govuk-summary-list__value">48269/APP/2021/1482</dd>
-                                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-reference/change"> Change<span class="govuk-visually-hidden"> L P A reference</span></a>
-                                            </dd>
                                     </div>
                                     <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
                                         <dd class="govuk-summary-list__value">dismissed</dd>
@@ -5550,14 +5474,14 @@ exports[`appeal-details should not render a back button 1`] = `
                                     <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                                         <dd                                         class="govuk-summary-list__value"><span>No answer provided</span>
                                             </dd>
-                                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/lpa-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
+                                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/lpa"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
                                             </dd>
                                     </div>
                                     <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                                         <dd                                         class="govuk-summary-list__value"><span>Yes</span>
                                             <br><span>Dogs on site</span>
                                             </dd>
-                                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
+                                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/appellant"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
                                             </dd>
                                     </div>
                                     <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
@@ -5688,10 +5612,8 @@ exports[`appeal-details should not render a back button 1`] = `
                                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/service-user/change/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                                         </dd>
                                     </div>
-                                    <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
+                                    <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                                         <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"> Change<span class="govuk-visually-hidden"> local planning authority (LPA)</span></a>
-                                        </dd>
                                     </div>
                                 </dl>
                             </div>

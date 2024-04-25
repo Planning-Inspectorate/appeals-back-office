@@ -15,8 +15,16 @@ import {
 } from '../../appeal-documents/appeal-documents.middleware.js';
 import changeLpaReferenceRouter from '../change-lpa-reference/change-lpa-reference.router.js';
 import inspectorAccessRouter from '../inspector-access/inspector-access.router.js';
+import safetyRisksRouter from '../safety-risks/safety-risks.router.js';
 
 const router = createRouter({ mergeParams: true });
+
+router.use('/valid', outcomeValidRouter);
+router.use('/invalid', outcomeInvalidRouter);
+router.use('/incomplete', outcomeIncompleteRouter);
+router.use('/lpa-reference', changeLpaReferenceRouter);
+router.use('/inspector-access', inspectorAccessRouter);
+router.use('/safety-risks', safetyRisksRouter);
 
 router
 	.route('/')
@@ -27,12 +35,6 @@ router
 		assertGroupAccess(config.referenceData.appeals.caseOfficerGroupId),
 		asyncRoute(controller.postAppellantCase)
 	);
-
-router.use('/valid', outcomeValidRouter);
-router.use('/invalid', outcomeInvalidRouter);
-router.use('/incomplete', outcomeIncompleteRouter);
-router.use('/lpa-reference', changeLpaReferenceRouter);
-router.use('/inspector-access', inspectorAccessRouter);
 
 router
 	.route('/check-your-answers')
