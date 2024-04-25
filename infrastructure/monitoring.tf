@@ -1,11 +1,11 @@
-# resource "azurerm_application_insights" "back_office_app_insights" {
-#   name                 = "${local.org}ai-${local.service_name}-${local.resource_suffix}-app-insights"
-#   location             = module.azure_region.location
-#   resource_group_name  = azurerm_resource_group.appeals_back_office_rg1.name
-#   workspace_id         = azurerm_log_analytics_workspace.back_office.id
-#   application_type     = "web"
-#   daily_data_cap_in_gb = 10
-# }
+resource "azurerm_application_insights" "back_office_app_insights" {
+  name                 = "${local.org}ai-${local.service_name}-${local.resource_suffix}-app-insights"
+  location             = module.azure_region.location
+  resource_group_name  = azurerm_resource_group.appeals_back_office_rg1.name
+  workspace_id         = azurerm_log_analytics_workspace.back_office.id
+  application_type     = "web"
+  daily_data_cap_in_gb = 10
+}
 
 # resource "azurerm_application_insights" "back_office_appeals_insights" {
 #   name                 = "${local.org}-ai-${local.service_name}-${local.resource_suffix}-appeals-insights"
@@ -16,15 +16,15 @@
 #   daily_data_cap_in_gb = 10
 # }
 
-# resource "azurerm_log_analytics_workspace" "back_office" {
-#   name                = "pins-log-${local.service_name}-${local.resource_suffix}"
-#   location            = module.azure_region.location
-#   resource_group_name = azurerm_resource_group.appeals_back_office_rg1.name
-#   sku                 = "PerGB2018"
-#   retention_in_days   = 30
+resource "azurerm_log_analytics_workspace" "back_office" {
+  name                = "pins-log-${local.service_name}-${local.resource_suffix}"
+  location            = module.azure_region.location
+  resource_group_name = azurerm_resource_group.appeals_back_office_rg1.name
+  sku                 = "PerGB2018"
+  retention_in_days   = 30
 
-#   tags = local.tags
-# }
+  tags = local.tags
+}
 
 # # resource "azurerm_monitor_diagnostic_setting" "back_office_sql_database" {
 # #   name                       = "SQLDatabaseAudit"

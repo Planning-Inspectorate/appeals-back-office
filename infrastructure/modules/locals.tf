@@ -1,3 +1,3 @@
-# locals {
-#   location = "uk-south"
-# }
+locals {
+  location = "uk-south"
+}
