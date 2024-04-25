@@ -33,7 +33,7 @@ resource "azurerm_subnet" "back_office_ingress" {
 
 
 resource "azurerm_key_vault" "appeals_back_office_kv" {
-  name                        = "${local.org}-appeals-bo-kv1"
+  name                        = "${local.org}-kv-appeals-bo"
   location                    = module.azure_region.location
   resource_group_name         = azurerm_resource_group.appeals_back_office_rg1.name
   enabled_for_disk_encryption = true
