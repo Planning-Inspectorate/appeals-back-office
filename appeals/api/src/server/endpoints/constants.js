@@ -20,12 +20,18 @@ export const AUDIT_TRAIL_ASSIGNED_INSPECTOR =
 export const AUDIT_TRAIL_CASE_TIMELINE_CREATED = 'The case timeline was created';
 export const AUDIT_TRAIL_CASE_TIMELINE_UPDATED = 'The case timeline was updated';
 export const AUDIT_TRAIL_DOCUMENT_UPLOADED =
-	'The document {replacement0} was uploaded (v{replacement1})';
+	'Document {replacement0} uploaded (version {replacement1})';
 export const AUDIT_TRAIL_DOCUMENT_IMPORTED = 'The document {replacement0} was received';
 export const AUDIT_TRAIL_DOCUMENT_DELETED =
 	'Version {replacement1} of document {replacement0} was removed';
 export const AUDIT_TRAIL_DOCUMENT_REDACTED =
-	'Version {replacement1} of document {replacement0} was redacted';
+	'Document {replacement0} (version {replacement1}) marked as redacted';
+export const AUDIT_TRAIL_DOCUMENT_UNREDACTED =
+	'Document {replacement0} (version {replacement1}) marked as unredacted';
+export const AUDIT_TRAIL_DOCUMENT_NO_REDACTION_REQUIRED =
+	'Document {replacement0} (version {replacement1}) marked as requiring no redaction';
+export const AUDIT_TRAIL_DOCUMENT_DATE_CHANGED =
+	'Document {replacement0} (version {replacement1}) received';
 export const AUDIT_TRAIL_LPAQ_IMPORT_MSG = 'The LPA questionnaire was received';
 export const AUDIT_TRAIL_PROGRESSED_TO_STATUS = 'The case has progressed to {replacement0}';
 export const AUDIT_TRAIL_SUBMISSION_INCOMPLETE = 'The {replacement0} was marked as incomplete';

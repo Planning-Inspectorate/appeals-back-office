@@ -5,7 +5,10 @@ import {
 	ERROR_FAILED_TO_ADD_DOCUMENTS,
 	ERROR_DOCUMENT_NAME_ALREADY_EXISTS,
 	ERROR_NOT_FOUND,
-	AUDIT_TRAIL_DOCUMENT_REDACTED
+	AUDIT_TRAIL_DOCUMENT_REDACTED,
+	AUDIT_TRAIL_DOCUMENT_UNREDACTED,
+	AUDIT_TRAIL_DOCUMENT_NO_REDACTION_REQUIRED,
+	AUDIT_TRAIL_DOCUMENT_DATE_CHANGED
 } from '#endpoints/constants.js';
 import logger from '#utils/logger.js';
 import * as service from './documents.service.js';
@@ -210,20 +213,31 @@ const updateDocuments = async (req, res) => {
 			document.latestVersion = latestDocument?.latestDocumentVersion?.version;
 
 			if (latestDocument && latestDocument.name) {
-				const auditTrail = await createAuditTrail({
-					appealId: appeal.id,
-					azureAdUserId: req.get('azureAdUserId'),
-					details: stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_REDACTED, [
+				if (document.redactionStatus !== latestDocument?.latestDocumentVersion?.redactionStatusId) {
+					const auditTrailMessage = getAuditMessage(document.redactionStatus);
+					if (auditTrailMessage) {
+						await logAuditTrail(
+							latestDocument.name,
+							document.latestVersion,
+							auditTrailMessage,
+							req,
+							appeal.id,
+							latestDocument.guid
+						);
+					}
+				}
+				if (
+					document.receivedDate &&
+					latestDocument?.latestDocumentVersion?.lastModified !== document.receivedDate
+				) {
+					const dateChangeMessage = AUDIT_TRAIL_DOCUMENT_DATE_CHANGED;
+					await logAuditTrail(
 						latestDocument.name,
-						document.latestVersion
-					])
-				});
-				if (auditTrail) {
-					await service.addDocumentAudit(
-						latestDocument.guid,
 						document.latestVersion,
-						auditTrail,
-						'Update'
+						dateChangeMessage,
+						req,
+						appeal.id,
+						latestDocument.guid
 					);
 				}
 			}
@@ -267,6 +281,55 @@ const updateDocumentsAvCheckStatus = async (req, res) => {
 
 	res.send(body);
 };
+
+/**
+ * @param {number} redactionStatus
+ * @returns {string|null}
+ */
+function getAuditMessage(redactionStatus) {
+	switch (redactionStatus) {
+		case 1:
+			return AUDIT_TRAIL_DOCUMENT_REDACTED;
+		case 2:
+			return AUDIT_TRAIL_DOCUMENT_UNREDACTED;
+		case 3:
+			return AUDIT_TRAIL_DOCUMENT_NO_REDACTION_REQUIRED;
+		default:
+			return null;
+	}
+}
+
+/**
+ *
+ * @param {string} documentName
+ * @param {number} documentVersion
+ * @param {string} messageKey
+ * @param {Request} req
+ * @param {number} appealId
+ * @param {string} documentGuid
+ * @param {string} action
+ */
+async function logAuditTrail(
+	documentName,
+	documentVersion,
+	messageKey,
+	req,
+	appealId,
+	documentGuid,
+	action = 'Update'
+) {
+	const details = stringTokenReplacement(messageKey, [documentName, documentVersion]);
+
+	const auditTrail = await createAuditTrail({
+		appealId: appealId,
+		azureAdUserId: req.get('azureAdUserId'),
+		details: details
+	});
+
+	if (auditTrail) {
+		await service.addDocumentAudit(documentGuid, documentVersion, auditTrail, action);
+	}
+}
 
 export {
 	addDocuments,

@@ -127,7 +127,7 @@ describe('/appeals/:appealId/documents', () => {
 				.set('azureAdUserId', azureAdUserId);
 
 			expect(databaseConnector.documentVersion.update).toHaveBeenCalledTimes(2);
-			expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(2);
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(4);
 
 			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 				data: {
@@ -396,7 +396,7 @@ describe('/appeals/:appealId/documents', () => {
 					}
 				}
 			});
-			expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(4);
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(6);
 			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 				data: {
 					appealId: householdAppeal.id,

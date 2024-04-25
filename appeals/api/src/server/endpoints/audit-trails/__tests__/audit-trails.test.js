@@ -27,13 +27,13 @@ describe('audit trails routes', () => {
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(200);
-				expect(response.body).toEqual([
-					{
-						azureAdUserId: auditTrails[0].user.azureAdUserId,
-						details: auditTrails[0].details,
-						loggedDate: auditTrails[0].loggedAt
-					}
-				]);
+				const expectedResponse = auditTrails.map((trail) => ({
+					azureAdUserId: trail.user.azureAdUserId,
+					details: trail.details,
+					loggedDate: trail.loggedAt
+				}));
+
+				expect(response.body).toEqual(expectedResponse);
 			});
 
 			test('returns an empty array if audit trail entries are not found', async () => {

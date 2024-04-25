@@ -1955,15 +1955,6 @@ export const linkedAppeals = [
 		relationshipId: 3048
 	},
 	{
-		appealId: null,
-		appealReference: '76215416',
-		appealType: 'Unknown',
-		externalSource: true,
-		isParentAppeal: true,
-		linkingDate: '2024-02-21T10:15:10.436Z',
-		relationshipId: 3049
-	},
-	{
 		appealId: 5451,
 		appealReference: 'TEST-721086',
 		appealType: 'Householder',
@@ -1971,6 +1962,19 @@ export const linkedAppeals = [
 		isParentAppeal: false,
 		linkingDate: '2024-02-21T11:10:15.491Z',
 		relationshipId: 3057
+	}
+];
+
+export const linkedAppealsWithExternalLead = [
+	...linkedAppeals,
+	{
+		appealId: null,
+		appealReference: '76215416',
+		appealType: 'Unknown',
+		externalSource: true,
+		isParentAppeal: true,
+		linkingDate: '2024-02-21T10:15:10.436Z',
+		relationshipId: 3049
 	}
 ];
 
