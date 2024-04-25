@@ -1,4 +1,3 @@
-import config from '#environment/config.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 
 /**
@@ -40,53 +39,73 @@ export function addDocumentTypePage(appealDetails, documentTypes) {
 }
 
 /**
+ *
  * @param {import('../appeal-details.types.js').WebAppeal} appealDetails
- * @param {string} costsApplicant
- * @param {string} folderId
- * @param {string} folderPath
- * @param {string} documentType
- * @param {import('@pins/express').ValidationErrors|undefined} errors
- * @returns {import('#appeals/appeal-documents/appeal-documents.types.js').DocumentUploadPageParameters}
+ * @param {import('@pins/appeals.api').Schema.Folder} decisionDocumentFolder
+ * @returns {PageContent}
  */
-export function documentUploadPage(
-	appealDetails,
-	costsApplicant,
-	folderId,
-	folderPath,
-	documentType,
-	errors
-) {
-	const pathComponents = folderPath.split('/');
-	const documentStage = pathComponents[0];
+export function decisionCheckAndConfirmPage(appealDetails, decisionDocumentFolder) {
+	const shortAppealReference = appealShortReference(appealDetails.appealReference);
 
-	let costsApplicantLabel = '';
-
-	switch (costsApplicant) {
-		case 'appellant':
-			costsApplicantLabel = 'Appellant ';
-			break;
-		case 'lpa':
-			costsApplicantLabel = 'LPA ';
-			break;
-	}
-
-	const pageTitleText = `Upload ${costsApplicantLabel}costs document`;
-
-	return {
-		backButtonUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/costs/${costsApplicant}/add`,
-		appealId: `${appealDetails.appealId}`,
-		folderId: folderId,
-		useBlobEmulator: config.useBlobEmulator,
-		blobStorageHost:
-			config.useBlobEmulator === true ? config.blobEmulatorSasUrl : config.blobStorageUrl,
-		blobStorageContainer: config.blobStorageDefaultContainer,
-		multiple: false,
-		documentStage: documentStage,
-		pageTitle: pageTitleText,
-		appealShortReference: appealShortReference(appealDetails.appealReference),
-		pageHeadingText: pageTitleText,
-		documentType: documentType,
-		nextPageUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/costs/${costsApplicant}/add-document-details/`,
-		errors
+	/** @type {PageComponent} */
+	const summaryListComponent = {
+		type: 'summary-list',
+		parameters: {
+			rows: [
+				{
+					key: {
+						text: 'Costs decision'
+					},
+					value: {
+						html: `<ul class="govuk-list"><li>${(decisionDocumentFolder.documents || [])
+							.map(
+								(document) =>
+									`<a class="govuk-link" href="/documents/${appealDetails.appealId}/download/${document.id}/preview/">${document.name}</a>`
+							)
+							.join('</li><li>')}</li></ul>`
+					},
+					actions: {
+						items: [
+							{
+								text: 'Change',
+								href: `/appeals-service/appeal-details/${appealDetails.appealId}/costs/decision/upload-documents/${decisionDocumentFolder.id}`
+							}
+						]
+					}
+				}
+			]
+		}
 	};
+
+	/** @type {PageContent} */
+	const pageContent = {
+		title: `Check your answers - ${shortAppealReference}`,
+		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/costs/decision/upload-documents/${decisionDocumentFolder.id}`,
+		heading: 'Check your answers',
+		pageComponents: [
+			...(decisionDocumentFolder.documents && decisionDocumentFolder.documents.length > 0
+				? [summaryListComponent]
+				: []),
+			{
+				type: 'warning-text',
+				parameters: {
+					text: 'You must email the relevant parties to inform them of the decision.'
+				}
+			},
+			{
+				type: 'checkboxes',
+				parameters: {
+					name: 'confirm',
+					items: [
+						{
+							text: 'I will email the relevant parties',
+							value: 'yes'
+						}
+					]
+				}
+			}
+		]
+	};
+
+	return pageContent;
 }

@@ -257,7 +257,8 @@ export const CONFIG_APPEAL_FOLDER_PATHS = [
 	// Decision letter
 	'appeal_decision/decisionLetter',
 	'appeal_costs/lpa',
-	'appeal_costs/appellant'
+	'appeal_costs/appellant',
+	'appeal_costs/decision'
 ];
 
 export const CONFIG_APPEAL_STAGES = {

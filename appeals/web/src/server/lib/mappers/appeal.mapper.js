@@ -1424,6 +1424,42 @@ export async function initialiseAndMapAppealData(
 		}
 	};
 
+	const appealHasCostsDecisionDocuments = appealDetails?.costs?.decisionFolder?.documents?.filter(
+		(document) => document.isDeleted === false
+	).length;
+
+	/** @type {Instructions} */
+	mappedData.appeal.costsDecision = {
+		id: 'costs-decision',
+		display: {
+			tableItem: [
+				{
+					text: 'Costs decision',
+					classes: 'appeal-costs-decision-documentation'
+				},
+				{
+					text: appealHasCostsDecisionDocuments ? 'Uploaded' : '',
+					classes: 'appeal-costs-decision-status'
+				},
+				{
+					text: '',
+					classes: 'appeal-costs-decision-due-date'
+				},
+				{
+					html: `<ul class="govuk-summary-list__actions-list">
+						${
+							appealHasCostsDecisionDocuments
+								? `<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="${currentRoute}/costs/decision/manage-documents/${appealDetails?.costs?.decisionFolder?.id}">Manage</a></li>`
+								: ''
+						}<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="${currentRoute}/costs/decision/upload-documents/${
+						appealDetails?.costs?.decisionFolder?.id
+					}">Add</a></li></ul>`,
+					classes: 'appeal-costs-decision-actions'
+				}
+			]
+		}
+	};
+
 	/** @type {Instructions} */
 	mappedData.appeal.issueDeterminationDate = {
 		id: 'issue-determination',
