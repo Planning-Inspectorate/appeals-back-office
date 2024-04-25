@@ -112,6 +112,12 @@ export const appealData = {
 			id: 2,
 			path: 'appeal_costs/lpa',
 			documents: []
+		},
+		decisionFolder: {
+			caseId: 1,
+			id: 3,
+			path: 'appeal_costs/decision',
+			documents: []
 		}
 	},
 	decision: {
@@ -2091,6 +2097,11 @@ export const costsFolderInfoAppellant = {
 export const costsFolderInfoLpa = {
 	...costsFolderInfoAppellant,
 	path: 'appeal_costs/lpa'
+};
+
+export const costsFolderInfoDecision = {
+	...costsFolderInfoAppellant,
+	path: 'appeal_costs/decision'
 };
 
 export const appealCostsDocumentItem = {
