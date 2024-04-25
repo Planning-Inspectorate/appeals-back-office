@@ -25,7 +25,7 @@ export const auditTrails = [
 		}
 	},
 	{
-		details: 'Version 1 of document blank.pdf received',
+		details: 'Version 1 of document blank.pdf received date changed',
 		loggedAt: new Date().toISOString(),
 		user: {
 			azureAdUserId

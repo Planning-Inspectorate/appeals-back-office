@@ -31,7 +31,7 @@ export const AUDIT_TRAIL_DOCUMENT_UNREDACTED =
 export const AUDIT_TRAIL_DOCUMENT_NO_REDACTION_REQUIRED =
 	'Document {replacement0} (version {replacement1}) marked as requiring no redaction';
 export const AUDIT_TRAIL_DOCUMENT_DATE_CHANGED =
-	'Document {replacement0} (version {replacement1}) received';
+	'Document {replacement0} (version {replacement1}) received date changed';
 export const AUDIT_TRAIL_LPAQ_IMPORT_MSG = 'The LPA questionnaire was received';
 export const AUDIT_TRAIL_PROGRESSED_TO_STATUS = 'The case has progressed to {replacement0}';
 export const AUDIT_TRAIL_SUBMISSION_INCOMPLETE = 'The {replacement0} was marked as incomplete';
