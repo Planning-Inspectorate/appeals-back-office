@@ -125,3 +125,46 @@
 #   description = "The public URL for the Back Office frontend web app"
 #   type        = string
 # }
+
+resource "azurerm_storage_account" "back_office_sql_server" {
+  #TODO: Customer Managed Keys
+  #checkov:skip=CKV2_AZURE_1: Customer Managed Keys not implemented yet
+  #checkov:skip=CKV2_AZURE_18: Customer Managed Keys not implemented yet
+  #TODO: Logging
+  #checkov:skip=CKV_AZURE_33: Not using queues, could implement example commented out
+  #checkov:skip=CKV2_AZURE_21: Logging not implemented yet
+  #TODO: Access restrictions
+  #checkov:skip=CKV_AZURE_35: Network access restrictions
+  #checkov:skip=CKV_AZURE_59: TODO: Ensure that Storage accounts disallow public access
+
+  name                             = replace("pinsstsqlapps${local.resource_suffix}", "-", "")
+  resource_group_name              = azurerm_resource_group.appeals_back_office_rg1.name
+  location                         = module.azure_region.location
+  account_tier                     = "Standard"
+  account_replication_type         = "GRS"
+  min_tls_version                  = "TLS1_2"
+  enable_https_traffic_only        = true
+  allow_nested_items_to_be_public  = false
+  cross_tenant_replication_enabled = false
+
+  # network_rules {
+  #   default_action             = "Deny"
+  #   ip_rules                   = ["127.0.0.1"]
+  #   virtual_network_subnet_ids = [azurerm_subnet.back_office_ingress.id]
+  #   bypass                     = ["AzureServices"]
+  # }
+
+  identity {
+    type = "SystemAssigned"
+  }
+
+  tags = local.tags
+}
+
+resource "azurerm_storage_container" "back_office_sql_server" {
+  #TODO: Logging
+  #checkov:skip=CKV2_AZURE_21 Logging not implemented yet
+  name                  = "sqlvulnerabilityassessment"
+  storage_account_name  = azurerm_storage_account.back_office_sql_server.name
+  container_access_type = "private"
+}
