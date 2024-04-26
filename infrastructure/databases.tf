@@ -148,105 +148,105 @@ resource "azurerm_mssql_database" "back_office" {
   tags = local.tags
 }
 
-resource "azurerm_key_vault_secret" "back_office_sql_server_password_appeals_app" {
-  #checkov:skip=CKV_AZURE_41: TODO: Secret rotation
-  content_type = "text/plain"
-  key_vault_id = var.key_vault_id
-  name         = "back-office-sql-server-password-appeals-app"
-  value        = random_password.back_office_sql_server_password_appeals_app.result
+# resource "azurerm_key_vault_secret" "back_office_sql_server_password_appeals_app" {
+#   #checkov:skip=CKV_AZURE_41: TODO: Secret rotation
+#   content_type = "text/plain"
+#   key_vault_id = var.key_vault_id
+#   name         = "back-office-sql-server-password-appeals-app"
+#   value        = random_password.back_office_sql_server_password_appeals_app.result
 
-  tags = local.tags
-}
+#   tags = local.tags
+# }
 
-resource "azurerm_key_vault_secret" "back_office_sql_server_username" {
-  #checkov:skip=CKV_AZURE_41: TODO: Secret rotation
-  content_type = "text/plain"
-  key_vault_id = var.key_vault_id
-  name         = "back-office-sql-server-username"
-  value        = azurerm_mssql_server.back_office.administrator_login
+# resource "azurerm_key_vault_secret" "back_office_sql_server_username" {
+#   #checkov:skip=CKV_AZURE_41: TODO: Secret rotation
+#   content_type = "text/plain"
+#   key_vault_id = var.key_vault_id
+#   name         = "back-office-sql-server-username"
+#   value        = azurerm_mssql_server.back_office.administrator_login
 
-  tags = local.tags
-}
+#   tags = local.tags
+# }
 
-resource "azurerm_key_vault_secret" "back_office_sql_server_username_appeals_app" {
-  #checkov:skip=CKV_AZURE_41: TODO: Secret rotation
-  content_type = "text/plain"
-  key_vault_id = var.key_vault_id
-  name         = "back-office-sql-server-username-appeals-app"
-  value        = local.sql_server_username_appeals_app
+# resource "azurerm_key_vault_secret" "back_office_sql_server_username_appeals_app" {
+#   #checkov:skip=CKV_AZURE_41: TODO: Secret rotation
+#   content_type = "text/plain"
+#   key_vault_id = var.key_vault_id
+#   name         = "back-office-sql-server-username-appeals-app"
+#   value        = local.sql_server_username_appeals_app
 
-  tags = local.tags
-}
+#   tags = local.tags
+# }
 
-resource "azurerm_key_vault_secret" "back_office_appeals_sql_connection_string" {
-  #checkov:skip=CKV_AZURE_41: TODO: Secret rotation
-  content_type = "text/plain"
-  key_vault_id = var.key_vault_id
-  name         = "back-office-appeals-sql-connection-string"
-  value        = local.appeals_sql_connection_string
+# resource "azurerm_key_vault_secret" "back_office_appeals_sql_connection_string" {
+#   #checkov:skip=CKV_AZURE_41: TODO: Secret rotation
+#   content_type = "text/plain"
+#   key_vault_id = var.key_vault_id
+#   name         = "back-office-appeals-sql-connection-string"
+#   value        = local.appeals_sql_connection_string
 
-  tags = local.tags
-}
+#   tags = local.tags
+# }
 
-resource "azurerm_key_vault_secret" "back_office_appeals_sql_connection_string_app" {
-  #checkov:skip=CKV_AZURE_41: TODO: Secret rotation
-  content_type = "text/plain"
-  key_vault_id = var.key_vault_id
-  name         = "back-office-appeals-sql-connection-string-app"
-  value        = local.appeals_sql_connection_string_app
+# resource "azurerm_key_vault_secret" "back_office_appeals_sql_connection_string_app" {
+#   #checkov:skip=CKV_AZURE_41: TODO: Secret rotation
+#   content_type = "text/plain"
+#   key_vault_id = var.key_vault_id
+#   name         = "back-office-appeals-sql-connection-string-app"
+#   value        = local.appeals_sql_connection_string_app
 
-  tags = local.tags
-}
+#   tags = local.tags
+# }
 
-resource "azurerm_key_vault_secret" "back_office_sql_server_password" {
-  #checkov:skip=CKV_AZURE_41: TODO: Secret rotation
-  content_type = "text/plain"
-  key_vault_id = var.key_vault_id
-  name         = "back-office-sql-server-password"
-  value        = azurerm_mssql_server.back_office.administrator_login_password
+# resource "azurerm_key_vault_secret" "back_office_sql_server_password" {
+#   #checkov:skip=CKV_AZURE_41: TODO: Secret rotation
+#   content_type = "text/plain"
+#   key_vault_id = var.key_vault_id
+#   name         = "back-office-sql-server-password"
+#   value        = azurerm_mssql_server.back_office.administrator_login_password
 
-  tags = local.tags
-}
+#   tags = local.tags
+# }
 
-resource "azurerm_key_vault_secret" "back_office_sql_server_password_app" {
-  #checkov:skip=CKV_AZURE_41: TODO: Secret rotation
-  content_type = "text/plain"
-  key_vault_id = var.key_vault_id
-  name         = "back-office-sql-server-password-app"
-  value        = random_password.back_office_sql_server_password_app.result
+# resource "azurerm_key_vault_secret" "back_office_sql_server_password_app" {
+#   #checkov:skip=CKV_AZURE_41: TODO: Secret rotation
+#   content_type = "text/plain"
+#   key_vault_id = var.key_vault_id
+#   name         = "back-office-sql-server-password-app"
+#   value        = random_password.back_office_sql_server_password_app.result
 
-  tags = local.tags
-}
+#   tags = local.tags
+# }
 
-resource "azurerm_key_vault_secret" "back_office_sql_connection_string" {
-  #checkov:skip=CKV_AZURE_41: TODO: Secret rotation
-  content_type = "text/plain"
-  key_vault_id = var.key_vault_id
-  name         = "back-office-sql-server-connection-string"
-  value        = local.sql_connection_string
+# resource "azurerm_key_vault_secret" "back_office_sql_connection_string" {
+#   #checkov:skip=CKV_AZURE_41: TODO: Secret rotation
+#   content_type = "text/plain"
+#   key_vault_id = var.key_vault_id
+#   name         = "back-office-sql-server-connection-string"
+#   value        = local.sql_connection_string
 
-  tags = local.tags
-}
+#   tags = local.tags
+# }
 
-resource "azurerm_key_vault_secret" "back_office_sql_server_username_app" {
-  #checkov:skip=CKV_AZURE_41: TODO: Secret rotation
-  content_type = "text/plain"
-  key_vault_id = var.key_vault_id
-  name         = "back-office-sql-server-username-app"
-  value        = local.sql_server_username_app
+# resource "azurerm_key_vault_secret" "back_office_sql_server_username_app" {
+#   #checkov:skip=CKV_AZURE_41: TODO: Secret rotation
+#   content_type = "text/plain"
+#   key_vault_id = var.key_vault_id
+#   name         = "back-office-sql-server-username-app"
+#   value        = local.sql_server_username_app
 
-  tags = local.tags
-}
+#   tags = local.tags
+# }
 
-resource "azurerm_key_vault_secret" "back_office_sql_connection_string_app" {
-  #checkov:skip=CKV_AZURE_41: TODO: Secret rotation
-  content_type = "text/plain"
-  key_vault_id = var.key_vault_id
-  name         = "back-office-sql-server-connection-string-app"
-  value        = local.sql_connection_string_app
+# resource "azurerm_key_vault_secret" "back_office_sql_connection_string_app" {
+#   #checkov:skip=CKV_AZURE_41: TODO: Secret rotation
+#   content_type = "text/plain"
+#   key_vault_id = var.key_vault_id
+#   name         = "back-office-sql-server-connection-string-app"
+#   value        = local.sql_connection_string_app
 
-  tags = local.tags
-}
+#   tags = local.tags
+# }
 
 
 # resource "azurerm_private_endpoint" "back_office_sql_server" {
