@@ -531,14 +531,22 @@ exports[`appeal-details GET /:appealId should not render action links to the man
                 aria-labelledby="accordion-default1-heading-5">
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
-                            <dd class="govuk-summary-list__value">Roger Simmons
-                                <br>test3@example.com</dd>
+                            <dd class="govuk-summary-list__value">
+                                <ul class="govuk-list">
+                                    <li>Roger Simmons</li>
+                                    <li>test3@example.com</li>
+                                </ul>
+                            </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/service-user/change/appellant"> Change<span class="govuk-visually-hidden"> Appellant</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent</dt>
-                            <dd class="govuk-summary-list__value">Fiona Shell
-                                <br>test2@example.com</dd>
+                            <dd class="govuk-summary-list__value">
+                                <ul class="govuk-list">
+                                    <li>Fiona Shell</li>
+                                    <li>test2@example.com</li>
+                                </ul>
+                            </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/service-user/change/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
@@ -843,14 +851,22 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                 aria-labelledby="accordion-default1-heading-5">
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
-                            <dd class="govuk-summary-list__value">Roger Simmons
-                                <br>test3@example.com</dd>
+                            <dd class="govuk-summary-list__value">
+                                <ul class="govuk-list">
+                                    <li>Roger Simmons</li>
+                                    <li>test3@example.com</li>
+                                </ul>
+                            </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/service-user/change/appellant"> Change<span class="govuk-visually-hidden"> Appellant</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent</dt>
-                            <dd class="govuk-summary-list__value">Fiona Shell
-                                <br>test2@example.com</dd>
+                            <dd class="govuk-summary-list__value">
+                                <ul class="govuk-list">
+                                    <li>Fiona Shell</li>
+                                    <li>test2@example.com</li>
+                                </ul>
+                            </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/service-user/change/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
@@ -1150,14 +1166,22 @@ exports[`appeal-details GET /:appealId should render a Issue a decision action b
                 aria-labelledby="accordion-default1-heading-5">
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
-                            <dd class="govuk-summary-list__value">Roger Simmons
-                                <br>test3@example.com</dd>
+                            <dd class="govuk-summary-list__value">
+                                <ul class="govuk-list">
+                                    <li>Roger Simmons</li>
+                                    <li>test3@example.com</li>
+                                </ul>
+                            </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/service-user/change/appellant"> Change<span class="govuk-visually-hidden"> Appellant</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent</dt>
-                            <dd class="govuk-summary-list__value">Fiona Shell
-                                <br>test2@example.com</dd>
+                            <dd class="govuk-summary-list__value">
+                                <ul class="govuk-list">
+                                    <li>Fiona Shell</li>
+                                    <li>test2@example.com</li>
+                                </ul>
+                            </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/service-user/change/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
@@ -1452,14 +1476,22 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                 aria-labelledby="accordion-default1-heading-5">
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
-                            <dd class="govuk-summary-list__value">Roger Simmons
-                                <br>test3@example.com</dd>
+                            <dd class="govuk-summary-list__value">
+                                <ul class="govuk-list">
+                                    <li>Roger Simmons</li>
+                                    <li>test3@example.com</li>
+                                </ul>
+                            </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/service-user/change/appellant"> Change<span class="govuk-visually-hidden"> Appellant</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent</dt>
-                            <dd class="govuk-summary-list__value">Fiona Shell
-                                <br>test2@example.com</dd>
+                            <dd class="govuk-summary-list__value">
+                                <ul class="govuk-list">
+                                    <li>Fiona Shell</li>
+                                    <li>test2@example.com</li>
+                                </ul>
+                            </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/service-user/change/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
@@ -1756,14 +1788,22 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                 aria-labelledby="accordion-default1-heading-5">
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
-                            <dd class="govuk-summary-list__value">Roger Simmons
-                                <br>test3@example.com</dd>
+                            <dd class="govuk-summary-list__value">
+                                <ul class="govuk-list">
+                                    <li>Roger Simmons</li>
+                                    <li>test3@example.com</li>
+                                </ul>
+                            </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/service-user/change/appellant"> Change<span class="govuk-visually-hidden"> Appellant</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent</dt>
-                            <dd class="govuk-summary-list__value">Fiona Shell
-                                <br>test2@example.com</dd>
+                            <dd class="govuk-summary-list__value">
+                                <ul class="govuk-list">
+                                    <li>Fiona Shell</li>
+                                    <li>test2@example.com</li>
+                                </ul>
+                            </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/service-user/change/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
@@ -2074,14 +2114,22 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
                 aria-labelledby="accordion-default1-heading-5">
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
-                            <dd class="govuk-summary-list__value">Roger Simmons
-                                <br>test3@example.com</dd>
+                            <dd class="govuk-summary-list__value">
+                                <ul class="govuk-list">
+                                    <li>Roger Simmons</li>
+                                    <li>test3@example.com</li>
+                                </ul>
+                            </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/service-user/change/appellant"> Change<span class="govuk-visually-hidden"> Appellant</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent</dt>
-                            <dd class="govuk-summary-list__value">Fiona Shell
-                                <br>test2@example.com</dd>
+                            <dd class="govuk-summary-list__value">
+                                <ul class="govuk-list">
+                                    <li>Fiona Shell</li>
+                                    <li>test2@example.com</li>
+                                </ul>
+                            </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/service-user/change/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
@@ -2366,14 +2414,22 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                 aria-labelledby="accordion-default1-heading-5">
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
-                            <dd class="govuk-summary-list__value">Roger Simmons
-                                <br>test3@example.com</dd>
+                            <dd class="govuk-summary-list__value">
+                                <ul class="govuk-list">
+                                    <li>Roger Simmons</li>
+                                    <li>test3@example.com</li>
+                                </ul>
+                            </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/service-user/change/appellant"> Change<span class="govuk-visually-hidden"> Appellant</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent</dt>
-                            <dd class="govuk-summary-list__value">Fiona Shell
-                                <br>test2@example.com</dd>
+                            <dd class="govuk-summary-list__value">
+                                <ul class="govuk-list">
+                                    <li>Fiona Shell</li>
+                                    <li>test2@example.com</li>
+                                </ul>
+                            </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/service-user/change/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
@@ -2659,14 +2715,22 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                 aria-labelledby="accordion-default1-heading-5">
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
-                            <dd class="govuk-summary-list__value">Roger Simmons
-                                <br>test3@example.com</dd>
+                            <dd class="govuk-summary-list__value">
+                                <ul class="govuk-list">
+                                    <li>Roger Simmons</li>
+                                    <li>test3@example.com</li>
+                                </ul>
+                            </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/service-user/change/appellant"> Change<span class="govuk-visually-hidden"> Appellant</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent</dt>
-                            <dd class="govuk-summary-list__value">Fiona Shell
-                                <br>test2@example.com</dd>
+                            <dd class="govuk-summary-list__value">
+                                <ul class="govuk-list">
+                                    <li>Fiona Shell</li>
+                                    <li>test2@example.com</li>
+                                </ul>
+                            </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/service-user/change/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
@@ -2952,14 +3016,22 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                 aria-labelledby="accordion-default1-heading-5">
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
-                            <dd class="govuk-summary-list__value">Roger Simmons
-                                <br>test3@example.com</dd>
+                            <dd class="govuk-summary-list__value">
+                                <ul class="govuk-list">
+                                    <li>Roger Simmons</li>
+                                    <li>test3@example.com</li>
+                                </ul>
+                            </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/service-user/change/appellant"> Change<span class="govuk-visually-hidden"> Appellant</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent</dt>
-                            <dd class="govuk-summary-list__value">Fiona Shell
-                                <br>test2@example.com</dd>
+                            <dd class="govuk-summary-list__value">
+                                <ul class="govuk-list">
+                                    <li>Fiona Shell</li>
+                                    <li>test2@example.com</li>
+                                </ul>
+                            </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/service-user/change/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
@@ -3245,14 +3317,22 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                 aria-labelledby="accordion-default1-heading-5">
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
-                            <dd class="govuk-summary-list__value">Roger Simmons
-                                <br>test3@example.com</dd>
+                            <dd class="govuk-summary-list__value">
+                                <ul class="govuk-list">
+                                    <li>Roger Simmons</li>
+                                    <li>test3@example.com</li>
+                                </ul>
+                            </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/service-user/change/appellant"> Change<span class="govuk-visually-hidden"> Appellant</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent</dt>
-                            <dd class="govuk-summary-list__value">Fiona Shell
-                                <br>test2@example.com</dd>
+                            <dd class="govuk-summary-list__value">
+                                <ul class="govuk-list">
+                                    <li>Fiona Shell</li>
+                                    <li>test2@example.com</li>
+                                </ul>
+                            </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/service-user/change/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
@@ -3550,14 +3630,22 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                 aria-labelledby="accordion-default1-heading-5">
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
-                            <dd class="govuk-summary-list__value">Roger Simmons
-                                <br>test3@example.com</dd>
+                            <dd class="govuk-summary-list__value">
+                                <ul class="govuk-list">
+                                    <li>Roger Simmons</li>
+                                    <li>test3@example.com</li>
+                                </ul>
+                            </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/service-user/change/appellant"> Change<span class="govuk-visually-hidden"> Appellant</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent</dt>
-                            <dd class="govuk-summary-list__value">Fiona Shell
-                                <br>test2@example.com</dd>
+                            <dd class="govuk-summary-list__value">
+                                <ul class="govuk-list">
+                                    <li>Fiona Shell</li>
+                                    <li>test2@example.com</li>
+                                </ul>
+                            </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/service-user/change/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
@@ -3995,14 +4083,22 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                 aria-labelledby="accordion-default1-heading-5">
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
-                            <dd class="govuk-summary-list__value">Roger Simmons
-                                <br>test3@example.com</dd>
+                            <dd class="govuk-summary-list__value">
+                                <ul class="govuk-list">
+                                    <li>Roger Simmons</li>
+                                    <li>test3@example.com</li>
+                                </ul>
+                            </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/service-user/change/appellant"> Change<span class="govuk-visually-hidden"> Appellant</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent</dt>
-                            <dd class="govuk-summary-list__value">Fiona Shell
-                                <br>test2@example.com</dd>
+                            <dd class="govuk-summary-list__value">
+                                <ul class="govuk-list">
+                                    <li>Fiona Shell</li>
+                                    <li>test2@example.com</li>
+                                </ul>
+                            </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/service-user/change/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
@@ -4287,14 +4383,22 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                 aria-labelledby="accordion-default1-heading-5">
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
-                            <dd class="govuk-summary-list__value">Roger Simmons
-                                <br>test3@example.com</dd>
+                            <dd class="govuk-summary-list__value">
+                                <ul class="govuk-list">
+                                    <li>Roger Simmons</li>
+                                    <li>test3@example.com</li>
+                                </ul>
+                            </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/service-user/change/appellant"> Change<span class="govuk-visually-hidden"> Appellant</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent</dt>
-                            <dd class="govuk-summary-list__value">Fiona Shell
-                                <br>test2@example.com</dd>
+                            <dd class="govuk-summary-list__value">
+                                <ul class="govuk-list">
+                                    <li>Fiona Shell</li>
+                                    <li>test2@example.com</li>
+                                </ul>
+                            </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/service-user/change/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
@@ -4579,14 +4683,22 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                 aria-labelledby="accordion-default3-heading-5">
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
-                            <dd class="govuk-summary-list__value">Roger Simmons
-                                <br>test3@example.com</dd>
+                            <dd class="govuk-summary-list__value">
+                                <ul class="govuk-list">
+                                    <li>Roger Simmons</li>
+                                    <li>test3@example.com</li>
+                                </ul>
+                            </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/service-user/change/appellant"> Change<span class="govuk-visually-hidden"> Appellant</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent</dt>
-                            <dd class="govuk-summary-list__value">Fiona Shell
-                                <br>test2@example.com</dd>
+                            <dd class="govuk-summary-list__value">
+                                <ul class="govuk-list">
+                                    <li>Fiona Shell</li>
+                                    <li>test2@example.com</li>
+                                </ul>
+                            </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/service-user/change/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
@@ -4891,14 +5003,22 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                 aria-labelledby="accordion-default2-heading-5">
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
-                            <dd class="govuk-summary-list__value">Roger Simmons
-                                <br>test3@example.com</dd>
+                            <dd class="govuk-summary-list__value">
+                                <ul class="govuk-list">
+                                    <li>Roger Simmons</li>
+                                    <li>test3@example.com</li>
+                                </ul>
+                            </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/service-user/change/appellant"> Change<span class="govuk-visually-hidden"> Appellant</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent</dt>
-                            <dd class="govuk-summary-list__value">Fiona Shell
-                                <br>test2@example.com</dd>
+                            <dd class="govuk-summary-list__value">
+                                <ul class="govuk-list">
+                                    <li>Fiona Shell</li>
+                                    <li>test2@example.com</li>
+                                </ul>
+                            </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/service-user/change/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
@@ -5168,14 +5288,22 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                 aria-labelledby="accordion-default1-heading-5">
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
-                            <dd class="govuk-summary-list__value">Roger Simmons
-                                <br>test3@example.com</dd>
+                            <dd class="govuk-summary-list__value">
+                                <ul class="govuk-list">
+                                    <li>Roger Simmons</li>
+                                    <li>test3@example.com</li>
+                                </ul>
+                            </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/service-user/change/appellant"> Change<span class="govuk-visually-hidden"> Appellant</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent</dt>
-                            <dd class="govuk-summary-list__value">Fiona Shell
-                                <br>test2@example.com</dd>
+                            <dd class="govuk-summary-list__value">
+                                <ul class="govuk-list">
+                                    <li>Fiona Shell</li>
+                                    <li>test2@example.com</li>
+                                </ul>
+                            </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/service-user/change/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                             </dd>
                         </div>
@@ -5601,14 +5729,22 @@ exports[`appeal-details should not render a back button 1`] = `
                             aria-labelledby="accordion-default2-heading-5">
                                 <dl class="govuk-summary-list">
                                     <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
-                                        <dd class="govuk-summary-list__value">Roger Simmons
-                                            <br>test3@example.com</dd>
+                                        <dd class="govuk-summary-list__value">
+                                            <ul class="govuk-list">
+                                                <li>Roger Simmons</li>
+                                                <li>test3@example.com</li>
+                                            </ul>
+                                        </dd>
                                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/service-user/change/appellant"> Change<span class="govuk-visually-hidden"> Appellant</span></a>
                                         </dd>
                                     </div>
                                     <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent</dt>
-                                        <dd class="govuk-summary-list__value">Fiona Shell
-                                            <br>test2@example.com</dd>
+                                        <dd class="govuk-summary-list__value">
+                                            <ul class="govuk-list">
+                                                <li>Fiona Shell</li>
+                                                <li>test2@example.com</li>
+                                            </ul>
+                                        </dd>
                                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/service-user/change/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                                         </dd>
                                     </div>

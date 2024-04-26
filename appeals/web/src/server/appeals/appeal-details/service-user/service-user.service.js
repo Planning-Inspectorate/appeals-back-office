@@ -1,10 +1,11 @@
+/** @typedef {{firstName: string; lastName: string; organisationName: string | null | undefined; email: string | null | undefined; phoneNumber: string | null | undefined;}} WebServiceUser*/
 /**
  *
  * @param {import('got').Got} apiClient
  * @param {string} appealId
  * @param {number} serviceUserId
  * @param {string} userType
- * @param {{firstName: string; lastName: string; organisationName: string; email: string; phoneNumber: string;}} data
+ * @param {WebServiceUser} data
  * @returns {Promise<{}>}
  */
 export const updateServiceUser = (apiClient, appealId, serviceUserId, userType, data) =>

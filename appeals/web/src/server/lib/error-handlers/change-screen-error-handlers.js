@@ -39,7 +39,7 @@ export const errorLastName = (/** @type {Error}*/ errors) => {
 		: undefined;
 };
 
-export const errorOrgNameAllowEmpty = (/** @type {Error}*/ errors) => {
+export const errorOrganisationNameAllowEmpty = (/** @type {Error}*/ errors) => {
 	return errors?.orgName
 		? {
 				text: 'Enter an organisation or company name, or leave empty'

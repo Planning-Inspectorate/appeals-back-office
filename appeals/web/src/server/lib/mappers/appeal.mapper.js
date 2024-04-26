@@ -15,6 +15,7 @@ import { linkedAppealStatus } from '#lib/appeals-formatter.js';
 import { generateIssueDecisionUrl } from '#appeals/appeal-details/issue-decision/issue-decision.mapper.js';
 import { mapActionComponent } from './component-permissions.mapper.js';
 import { permissionNames } from '#environment/permissions.js';
+import { formatServiceUserAsHtmlList } from '#lib/service-user-formatter.js';
 
 /**
  * @param {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} appealDetails
@@ -167,17 +168,7 @@ export async function initialiseAndMapAppealData(
 				},
 				value: {
 					html: appealDetails.appellant
-						? `${appealDetails.appellant?.firstName + ' ' || ''}${
-								appealDetails.appellant?.lastName || ''
-						  }${
-								appealDetails.appellant?.organisationName
-									? '<br>' + appealDetails.appellant?.organisationName
-									: ''
-						  }${appealDetails.appellant?.email ? '<br>' + appealDetails.appellant?.email : ''}${
-								appealDetails.appellant?.phoneNumber
-									? '<br>' + appealDetails.appellant?.phoneNumber
-									: ''
-						  }`
+						? formatServiceUserAsHtmlList(appealDetails.appellant)
 						: 'No appellant'
 				},
 				actions: {
@@ -203,15 +194,7 @@ export async function initialiseAndMapAppealData(
 					text: 'Agent'
 				},
 				value: {
-					html: appealDetails.agent
-						? `${appealDetails.agent?.firstName + ' ' || ''}${appealDetails.agent?.lastName || ''}${
-								appealDetails.agent?.organisationName
-									? '<br>' + appealDetails.agent?.organisationName
-									: ''
-						  }${appealDetails.agent?.email ? '<br>' + appealDetails.agent?.email : ''}${
-								appealDetails.agent?.phoneNumber ? '<br>' + appealDetails.agent?.phoneNumber : ''
-						  }`
-						: 'No agent'
+					html: appealDetails.agent ? formatServiceUserAsHtmlList(appealDetails.agent) : 'No agent'
 				},
 				actions: {
 					items: [
