@@ -1,3 +1,7 @@
+# Taken private endpoints out for time being
+
+
+
 locals {
   # TODO: Let's create database-specific users and passwords instead for connection strings
   # Also, let's store this in Key Vault rather than just spitting it into env variables!
@@ -125,26 +129,26 @@ resource "azurerm_key_vault_secret" "back_office_appeals_sql_connection_string_a
   tags = local.tags
 }
 
-resource "azurerm_private_endpoint" "back_office_sql_server" {
-  name                = "pins-pe-${local.service_name}-sql-${local.resource_suffix}"
-  resource_group_name = azurerm_resource_group.appeals_back_office_rg1.name
-  location            = module.azure_region.location
-  subnet_id           = azurerm_subnet.back_office_ingress.id
+# resource "azurerm_private_endpoint" "back_office_sql_server" {
+#   name                = "pins-pe-${local.service_name}-sql-${local.resource_suffix}"
+#   resource_group_name = azurerm_resource_group.appeals_back_office_rg1.name
+#   location            = module.azure_region.location
+#   subnet_id           = azurerm_subnet.back_office_ingress.id
 
-  private_dns_zone_group {
-    name                 = "sqlserverprivatednszone"
-    private_dns_zone_ids = [data.azurerm_private_dns_zone.database.id]
-  }
+#   private_dns_zone_group {
+#     name                 = "sqlserverprivatednszone"
+#     private_dns_zone_ids = [data.azurerm_private_dns_zone.database.id]
+#   }
 
-  private_service_connection {
-    name                           = "privateendpointconnection"
-    private_connection_resource_id = azurerm_mssql_server.back_office.id
-    subresource_names              = ["sqlServer"]
-    is_manual_connection           = false
-  }
+#   private_service_connection {
+#     name                           = "privateendpointconnection"
+#     private_connection_resource_id = azurerm_mssql_server.back_office.id
+#     subresource_names              = ["sqlServer"]
+#     is_manual_connection           = false
+#   }
 
-  tags = local.tags
-}
+#   tags = local.tags
+# }
 
 resource "azurerm_mssql_database" "back_office_appeals" {
   name        = "pins-sqldb-${local.service_name}-appeals-${local.resource_suffix}"

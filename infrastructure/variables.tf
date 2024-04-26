@@ -35,6 +35,11 @@ variable "monitoring_alerts_enabled" {
   type        = bool
 }
 
+variable "sql_database_configuration" {
+  description = "A map of database configuration options"
+  type        = map(string)
+}
+
 variable "sql_server_azuread_administrator" {
   description = "A map describing the AzureAD account used for the SQL server administrator"
   type        = map(string)

@@ -15,7 +15,7 @@ locals {
     }
   )
 
-  tech_emails = [for rec in data.azurerm_monitor_action_group.tech.email_receiver : rec.email_address]
+  # tech_emails = [for rec in data.azurerm_monitor_action_group.tech.email_receiver : rec.email_address] # Tied to monitoring.tf
 
 }
 
