@@ -10,6 +10,6 @@ data "azurerm_key_vault_secret" "environment_key_vault" {
 
 output "kv_secret_value" {
   description = "The ID of the key vault so App Services can pull secret values"
-  value     = data.azurerm_key_vault_secret.environment_key_vault.value
-  sensitive = true
+  value       = data.azurerm_key_vault_secret.environment_key_vault.value
+  sensitive   = true
 }
