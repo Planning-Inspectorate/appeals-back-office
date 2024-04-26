@@ -168,8 +168,16 @@ export async function initialiseAndMapAppealData(
 				value: {
 					html: appealDetails.appellant
 						? `${appealDetails.appellant?.firstName + ' ' || ''}${
-								appealDetails.appellant?.lastName + '<br>' || ''
-						  }${appealDetails.appellant?.email || ''}`
+								appealDetails.appellant?.lastName || ''
+						  }${
+								appealDetails.appellant?.organisationName
+									? '<br>' + appealDetails.appellant?.organisationName
+									: ''
+						  }${appealDetails.appellant?.email ? '<br>' + appealDetails.appellant?.email : ''}${
+								appealDetails.appellant?.phoneNumber
+									? '<br>' + appealDetails.appellant?.phoneNumber
+									: ''
+						  }`
 						: 'No appellant'
 				},
 				actions: {
@@ -183,49 +191,7 @@ export async function initialiseAndMapAppealData(
 				},
 				classes: 'appeal-appellant'
 			}
-		},
-		input: {
-			displayName: 'Appellant',
-			instructions: [
-				{
-					type: 'input',
-					properties: {
-						id: 'appellant-firstName',
-						name: 'appellant-firstName',
-						value: displayPageFormatter.nullToEmptyString(appealDetails.appellant?.firstName),
-						label: {
-							text: 'First name',
-							isPageHeading: false
-						}
-					}
-				},
-				{
-					type: 'input',
-					properties: {
-						id: 'appellant-lastName',
-						name: 'appellant-lastName',
-						value: displayPageFormatter.nullToEmptyString(appealDetails.appellant?.lastName),
-						label: {
-							text: 'Last name',
-							isPageHeading: false
-						}
-					}
-				},
-				{
-					type: 'input',
-					properties: {
-						id: 'appellant-email',
-						name: 'appellant-email',
-						value: displayPageFormatter.nullToEmptyString(appealDetails.appellant?.email),
-						label: {
-							text: 'Email address',
-							isPageHeading: false
-						}
-					}
-				}
-			]
-		},
-		submitApi: '#'
+		}
 	};
 
 	/** @type {Instructions} */
@@ -238,9 +204,13 @@ export async function initialiseAndMapAppealData(
 				},
 				value: {
 					html: appealDetails.agent
-						? `${appealDetails.agent?.firstName + ' ' || ''}${
-								appealDetails.agent?.lastName + '<br>' || ''
-						  }${appealDetails.agent?.email || ''}`
+						? `${appealDetails.agent?.firstName + ' ' || ''}${appealDetails.agent?.lastName || ''}${
+								appealDetails.agent?.organisationName
+									? '<br>' + appealDetails.agent?.organisationName
+									: ''
+						  }${appealDetails.agent?.email ? '<br>' + appealDetails.agent?.email : ''}${
+								appealDetails.agent?.phoneNumber ? '<br>' + appealDetails.agent?.phoneNumber : ''
+						  }`
 						: 'No agent'
 				},
 				actions: {
@@ -254,49 +224,7 @@ export async function initialiseAndMapAppealData(
 				},
 				classes: 'appeal-agent'
 			}
-		},
-		input: {
-			displayName: 'Agent',
-			instructions: [
-				{
-					type: 'input',
-					properties: {
-						id: 'agent-firstName',
-						name: 'agent-firstName',
-						value: displayPageFormatter.nullToEmptyString(appealDetails.agent?.firstName),
-						label: {
-							text: 'First name',
-							isPageHeading: false
-						}
-					}
-				},
-				{
-					type: 'input',
-					properties: {
-						id: 'agent-lastName',
-						name: 'agent-lastName',
-						value: displayPageFormatter.nullToEmptyString(appealDetails.agent?.lastName),
-						label: {
-							text: 'Last name',
-							isPageHeading: false
-						}
-					}
-				},
-				{
-					type: 'input',
-					properties: {
-						id: 'agent-email',
-						name: 'agent-email',
-						value: displayPageFormatter.nullToEmptyString(appealDetails.agent?.email),
-						label: {
-							text: 'Email address',
-							isPageHeading: false
-						}
-					}
-				}
-			]
-		},
-		submitApi: '#'
+		}
 	};
 
 	/** @type {Instructions} */

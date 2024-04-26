@@ -6,7 +6,9 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 import {
 	errorEmailAllowEmpty,
 	errorFirstName,
-	errorLastName
+	errorLastName,
+	errorOrgNameAllowEmpty,
+	errorPhoneNumberAllowEmpty
 } from '#lib/error-handlers/change-screen-error-handlers.js';
 import { capitalize } from 'lodash-es';
 
@@ -16,9 +18,16 @@ import { capitalize } from 'lodash-es';
  * @param {string} userType
  * @param {import('../appeal-details.types.js').WebServiceUser} userDetailsInSession
  * @param {import('@pins/express').ValidationErrors | undefined } errors
+ * @param {string} backLinkUrl
  * @returns {PageContent}
  */
-export const changeServiceUserPage = (appealData, userDetailsInSession, userType, errors) => {
+export const changeServiceUserPage = (
+	appealData,
+	userDetailsInSession,
+	userType,
+	backLinkUrl,
+	errors
+) => {
 	// @ts-ignore
 	let serviceUserDetails = appealData[userType];
 
@@ -31,7 +40,7 @@ export const changeServiceUserPage = (appealData, userDetailsInSession, userType
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `Update ${userType} details`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}`,
+		backLinkUrl: backLinkUrl,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: `Update ${userType} details`,
 		pageComponents: [
@@ -66,6 +75,20 @@ export const changeServiceUserPage = (appealData, userDetailsInSession, userType
 			{
 				type: 'input',
 				parameters: {
+					id: 'org-name',
+					name: 'orgName',
+					type: 'text',
+					label: {
+						isPageHeading: false,
+						text: `${capitalize(userType)}'s company or organisation name`
+					},
+					value: serviceUserDetails?.organisationName ?? '',
+					errorMessage: errorOrgNameAllowEmpty(errors)
+				}
+			},
+			{
+				type: 'input',
+				parameters: {
 					id: 'email-address',
 					name: 'emailAddress',
 					type: 'text',
@@ -75,6 +98,20 @@ export const changeServiceUserPage = (appealData, userDetailsInSession, userType
 					},
 					value: serviceUserDetails?.email ?? '',
 					errorMessage: errorEmailAllowEmpty(errors)
+				}
+			},
+			{
+				type: 'input',
+				parameters: {
+					id: 'phone-number',
+					name: 'phoneNumber',
+					type: 'text',
+					label: {
+						isPageHeading: false,
+						text: `${capitalize(userType)}'s phone number`
+					},
+					value: serviceUserDetails?.phoneNumber ?? '',
+					errorMessage: errorPhoneNumberAllowEmpty(errors)
 				}
 			}
 		]

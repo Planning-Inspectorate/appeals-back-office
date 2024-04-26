@@ -22,12 +22,15 @@ const renderChangeServiceUser = async (request, response) => {
 		params: { userType }
 	} = request;
 
+	const backLinkUrl = request.originalUrl.split('/').slice(0, -3).join('/');
+
 	const appealDetails = request.currentAppeal;
 	if (appealDetails && userType in appealDetails) {
 		const mappedPageContents = changeServiceUserPage(
 			appealDetails,
 			request.session.updatedServiceUser,
 			userType,
+			backLinkUrl,
 			errors
 		);
 
@@ -48,7 +51,9 @@ export const postChangeServiceUser = async (request, response) => {
 	request.session.updatedServiceUser = {
 		firstName: request.body['firstName'],
 		lastName: request.body['lastName'],
-		email: request.body['emailAddress']
+		organisationName: request.body['orgName'],
+		email: request.body['emailAddress'],
+		phoneNumber: request.body['phoneNumber']
 	};
 
 	const {
@@ -60,10 +65,15 @@ export const postChangeServiceUser = async (request, response) => {
 	if (request.errors) {
 		return renderChangeServiceUser(request, response);
 	}
-
+	const backToMenuUrl = request.originalUrl.split('/').slice(0, -3).join('/');
 	try {
 		// @ts-ignore
-		const serviceUserId = appealDetails[userType]?.id;
+		const serviceUserId = appealDetails[userType]?.serviceUserId;
+
+		if (!serviceUserId) {
+			return response.render('app/404.njk');
+		}
+
 		await updateServiceUser(
 			request.apiClient,
 			appealId,
@@ -81,7 +91,7 @@ export const postChangeServiceUser = async (request, response) => {
 
 		delete request.session.updatedServiceUser;
 
-		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
+		return response.redirect(backToMenuUrl);
 	} catch (error) {
 		logger.error(error);
 	}

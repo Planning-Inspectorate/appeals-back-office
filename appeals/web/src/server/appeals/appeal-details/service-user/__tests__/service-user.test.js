@@ -192,7 +192,7 @@ describe('service-user', () => {
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
 		});
-		it('should re-direct to appeals details if firstName, lastName are valid, and email is empty', async () => {
+		it('should re-direct to appeals details if firstName, lastName are valid, and organisation, phone number, and email is empty', async () => {
 			const appealId = appealData.appealId;
 			nock('http://test/').patch(`/appeals/${appealId}/service-user`).reply(200, {
 				serviceUserId: 1
@@ -200,6 +200,8 @@ describe('service-user', () => {
 			const validData = {
 				firstName: 'Jessica',
 				lastName: 'Jones',
+				organisationName: '',
+				phoneNumber: '',
 				emailAddress: ''
 			};
 			const response = await request
@@ -208,6 +210,28 @@ describe('service-user', () => {
 
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
+		});
+
+		it('should re-direct to appellant case if firstName, lastName are valid, and organisation, phone number, and email is empty', async () => {
+			const appealId = appealData.appealId;
+			nock('http://test/').patch(`/appeals/${appealId}/service-user`).reply(200, {
+				serviceUserId: 1
+			});
+			const validData = {
+				firstName: 'Jessica',
+				lastName: 'Jones',
+				organisationName: '',
+				phoneNumber: '',
+				emailAddress: ''
+			};
+			const response = await request
+				.post(`${baseUrl}/${appealId}/appellant-case/service-user/change/agent`)
+				.send(validData);
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/appellant-case'
+			);
 		});
 	});
 });

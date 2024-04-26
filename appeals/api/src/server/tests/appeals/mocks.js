@@ -74,13 +74,17 @@ export const householdAppeal = {
 		id: 1,
 		firstName: 'Lee',
 		lastName: 'Thornton',
-		email: 'test@1367.com'
+		email: 'test@1367.com',
+		phoneNumber: '01234 567 890',
+		organisationName: 'Thornton LTD'
 	},
 	agent: {
 		id: 1,
 		firstName: 'John',
 		lastName: 'Smith',
-		email: 'test@136s7.com'
+		email: 'test@136s7.com',
+		phoneNumber: '09876 543 210',
+		organisationName: 'Smith Inc.'
 	},
 	createdAt: new Date(2022, 4, 18),
 	address: {

@@ -46,14 +46,16 @@ exports[`appellant-case GET /appellant-case should render a "LPA application ref
         </div>
         <div class="govuk-summary-card__content">
             <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant name</dt>
-                    <dd class="govuk-summary-list__value">Fiona Burgess</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/appellant-name"> Change<span class="govuk-visually-hidden"> Appellant name</span></a>
+                <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
+                    <dd class="govuk-summary-list__value">Roger Simmons
+                        <br>test3@example.com</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/service-user/change/appellant"> Change<span class="govuk-visually-hidden"> Appellant</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agent name</dt>
-                    <dd class="govuk-summary-list__value">Fiona Shell</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/agent-name"> Change<span class="govuk-visually-hidden"> Agent name</span></a>
+                <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent</dt>
+                    <dd class="govuk-summary-list__value">Fiona Shell
+                        <br>test2@example.com</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/service-user/change/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA application reference</dt>
@@ -228,6 +230,18 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 </div>"
 `;
 
+exports[`appellant-case GET /appellant-case should render a success notification banner when a service user was updated 1`] = `
+"<div class="govuk-notification-banner govuk-notification-banner--success"
+role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
+    </div>
+    <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">Agent details updated</p>
+    </div>
+</div>"
+`;
+
 exports[`appellant-case GET /appellant-case should render the appellant case page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
@@ -249,14 +263,16 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
         </div>
         <div class="govuk-summary-card__content">
             <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant name</dt>
-                    <dd class="govuk-summary-list__value">Fiona Burgess</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/appellant-name"> Change<span class="govuk-visually-hidden"> Appellant name</span></a>
+                <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
+                    <dd class="govuk-summary-list__value">Roger Simmons
+                        <br>test3@example.com</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/service-user/change/appellant"> Change<span class="govuk-visually-hidden"> Appellant</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agent name</dt>
-                    <dd class="govuk-summary-list__value">Fiona Shell</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/agent-name"> Change<span class="govuk-visually-hidden"> Agent name</span></a>
+                <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent</dt>
+                    <dd class="govuk-summary-list__value">Fiona Shell
+                        <br>test2@example.com</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/service-user/change/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA application reference</dt>
@@ -459,14 +475,16 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
         </div>
         <div class="govuk-summary-card__content">
             <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant name</dt>
-                    <dd class="govuk-summary-list__value">Fiona Burgess</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/appellant-name"> Change<span class="govuk-visually-hidden"> Appellant name</span></a>
+                <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
+                    <dd class="govuk-summary-list__value">Roger Simmons
+                        <br>test3@example.com</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/service-user/change/appellant"> Change<span class="govuk-visually-hidden"> Appellant</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agent name</dt>
-                    <dd class="govuk-summary-list__value">Fiona Shell</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/agent-name"> Change<span class="govuk-visually-hidden"> Agent name</span></a>
+                <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent</dt>
+                    <dd class="govuk-summary-list__value">Fiona Shell
+                        <br>test2@example.com</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/service-user/change/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA application reference</dt>
@@ -663,14 +681,16 @@ exports[`appellant-case GET /appellant-case with unchecked documents should rend
         </div>
         <div class="govuk-summary-card__content">
             <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant name</dt>
-                    <dd class="govuk-summary-list__value">Fiona Burgess</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/appellant-name"> Change<span class="govuk-visually-hidden"> Appellant name</span></a>
+                <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
+                    <dd class="govuk-summary-list__value">Roger Simmons
+                        <br>test3@example.com</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/service-user/change/appellant"> Change<span class="govuk-visually-hidden"> Appellant</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agent name</dt>
-                    <dd class="govuk-summary-list__value">Fiona Shell</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/agent-name"> Change<span class="govuk-visually-hidden"> Agent name</span></a>
+                <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent</dt>
+                    <dd class="govuk-summary-list__value">Fiona Shell
+                        <br>test2@example.com</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/service-user/change/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA application reference</dt>
@@ -877,14 +897,16 @@ exports[`appellant-case GET /appellant-case with unchecked documents should rend
         </div>
         <div class="govuk-summary-card__content">
             <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant name</dt>
-                    <dd class="govuk-summary-list__value">Fiona Burgess</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/appellant-name"> Change<span class="govuk-visually-hidden"> Appellant name</span></a>
+                <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
+                    <dd class="govuk-summary-list__value">Roger Simmons
+                        <br>test3@example.com</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/service-user/change/appellant"> Change<span class="govuk-visually-hidden"> Appellant</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agent name</dt>
-                    <dd class="govuk-summary-list__value">Fiona Shell</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/agent-name"> Change<span class="govuk-visually-hidden"> Agent name</span></a>
+                <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent</dt>
+                    <dd class="govuk-summary-list__value">Fiona Shell
+                        <br>test2@example.com</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/service-user/change/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA application reference</dt>
@@ -3620,14 +3642,16 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
         </div>
         <div class="govuk-summary-card__content">
             <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant name</dt>
-                    <dd class="govuk-summary-list__value">Fiona Burgess</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/appellant-name"> Change<span class="govuk-visually-hidden"> Appellant name</span></a>
+                <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
+                    <dd class="govuk-summary-list__value">Roger Simmons
+                        <br>test3@example.com</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/service-user/change/appellant"> Change<span class="govuk-visually-hidden"> Appellant</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agent name</dt>
-                    <dd class="govuk-summary-list__value">Fiona Shell</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/agent-name"> Change<span class="govuk-visually-hidden"> Agent name</span></a>
+                <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent</dt>
+                    <dd class="govuk-summary-list__value">Fiona Shell
+                        <br>test2@example.com</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/service-user/change/agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA application reference</dt>
