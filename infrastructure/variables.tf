@@ -24,10 +24,10 @@ variable "environment" {
   type        = string
 }
 
-variable "key_vault_id" {
-  description = "The ID of the key vault so the App Service can pull secret values"
-  type        = string
-}
+# variable "key_vault_id" {
+#   description = "The ID of the key vault so the App Service can pull secret values"
+#   type        = string
+# }
 
 variable "monitoring_alerts_enabled" {
   default     = false
