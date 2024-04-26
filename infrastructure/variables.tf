@@ -1,5 +1,18 @@
 # Put vars in alphabetical order a-z
 
+variable "action_group_names" {
+  description = "The names of the Azure Monitor action groups for different alert types"
+  type = object({
+    bo_appeals_tech                 = string,
+    bo_appeals_service_manager      = string,
+    bo_applications_tech            = string,
+    bo_applications_service_manager = string,
+    iap                             = string,
+    its                             = string,
+    info_sec                        = string
+  })
+}
+
 variable "database_public_access_enabled" {
   description = "A switch indicating if databases should have public access enabled"
   type        = bool
@@ -20,6 +33,11 @@ variable "monitoring_alerts_enabled" {
   default     = false
   description = "Indicates whether Azure Monitor alerts are enabled for App Service"
   type        = bool
+}
+
+variable "sql_server_azuread_administrator" {
+  description = "A map describing the AzureAD account used for the SQL server administrator"
+  type        = map(string)
 }
 
 variable "tags" {
