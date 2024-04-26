@@ -24,9 +24,10 @@ variable "environment" {
   type        = string
 }
 
-variable "key_vault_id" {
+variable "kv_secret_values" {
   description = "The ID of the key vault so the App Service can pull secret values"
   type        = string
+  default     = data.azurerm_key_vault_secret.environment_key_vault.value
 }
 
 variable "monitoring_alerts_enabled" {

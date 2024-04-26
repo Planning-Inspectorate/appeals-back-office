@@ -1,4 +1,3 @@
-
 resource "azurerm_resource_group" "appeals_back_office_rg1" {
   name     = "${local.org}-rg-${local.resource_suffix}-001"
   location = module.azure_region.location #.location_cli

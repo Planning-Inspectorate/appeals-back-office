@@ -1,7 +1,8 @@
 # # unsure on this one
 
+# Will this name need changing for each env
 resource "azurerm_key_vault" "appeals_back_office_kv" {
-  name                        = "${local.org}-kv-appeals-bo"
+  name                        = "${local.org}-kv-appeals-bo-${var.environment}"
   location                    = module.azure_region.location
   resource_group_name         = azurerm_resource_group.appeals_back_office_rg1.name
   enabled_for_disk_encryption = true
