@@ -4,6 +4,8 @@ pr:
   branches:
     include:
       - '*'
+    exclude:
+      - infrastructure
 
 resources:
   repositories:
