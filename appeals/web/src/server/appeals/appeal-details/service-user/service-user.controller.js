@@ -33,13 +33,11 @@ const renderChangeServiceUser = async (request, response) => {
 			backLinkUrl,
 			errors
 		);
-
 		return response.render('patterns/change-page.pattern.njk', {
 			pageContent: mappedPageContents,
 			errors
 		});
 	}
-
 	return response.render('app/500.njk');
 };
 
@@ -51,7 +49,7 @@ export const postChangeServiceUser = async (request, response) => {
 	request.session.updatedServiceUser = {
 		firstName: request.body['firstName'],
 		lastName: request.body['lastName'],
-		organisationName: request.body['orgName'],
+		organisationName: request.body['organisationName'],
 		email: request.body['emailAddress'],
 		phoneNumber: request.body['phoneNumber']
 	};

@@ -228,22 +228,8 @@ interface SingleAppealDetailsResponse {
 	appealType?: string;
 	resubmitTypeId?: number;
 	appellantCaseId: number;
-	appellant?: {
-		serviceUserId: number;
-		firstName: string;
-		lastName: string;
-		email?: string | null;
-		organisationName?: string | null;
-		phoneNumber?: string | null;
-	};
-	agent?: {
-		serviceUserId: number;
-		firstName: string;
-		lastName: string;
-		email?: string;
-		organisationName?: string | null;
-		phoneNumber?: string | null;
-	};
+	appellant?: ServiceUserResponse;
+	agent?: ServiceUserResponse;
 	caseOfficer: string | null;
 	costs: {
 		appellantFolder: {
@@ -714,6 +700,15 @@ type IncompleteInvalidReasons = {
 	text?: string[];
 }[];
 
+type ServiceUserResponse = {
+	serviceUserId: number;
+	firstName: string;
+	lastName: string;
+	email?: string | null;
+	organisationName?: string | null;
+	phoneNumber?: string | null;
+};
+
 type AssignedUser = 'caseOfficer' | 'inspector';
 
 export {
@@ -765,5 +760,6 @@ export {
 	ValidationOutcomeResponse,
 	SetAppealDecisionRequest,
 	SetInvalidAppealDecisionRequest,
-	AppealRelationshipRequest
+	AppealRelationshipRequest,
+	ServiceUserResponse
 };

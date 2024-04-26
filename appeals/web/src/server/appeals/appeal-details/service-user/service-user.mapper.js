@@ -7,7 +7,7 @@ import {
 	errorEmailAllowEmpty,
 	errorFirstName,
 	errorLastName,
-	errorOrgNameAllowEmpty,
+	errorOrganisationNameAllowEmpty,
 	errorPhoneNumberAllowEmpty
 } from '#lib/error-handlers/change-screen-error-handlers.js';
 import { capitalize } from 'lodash-es';
@@ -75,15 +75,15 @@ export const changeServiceUserPage = (
 			{
 				type: 'input',
 				parameters: {
-					id: 'org-name',
-					name: 'orgName',
+					id: 'organisation-name',
+					name: 'organisationName',
 					type: 'text',
 					label: {
 						isPageHeading: false,
 						text: `${capitalize(userType)}'s company or organisation name`
 					},
 					value: serviceUserDetails?.organisationName ?? '',
-					errorMessage: errorOrgNameAllowEmpty(errors)
+					errorMessage: errorOrganisationNameAllowEmpty(errors)
 				}
 			},
 			{

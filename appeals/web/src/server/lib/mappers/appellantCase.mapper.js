@@ -5,6 +5,7 @@ import { mapAddressInput } from './global-mapper-formatter.js';
 import { isFolderInfo } from '#lib/ts-utilities.js';
 import { mapActionComponent } from './component-permissions.mapper.js';
 import { permissionNames } from '#environment/permissions.js';
+import { formatServiceUserAsHtmlList } from '#lib/service-user-formatter.js';
 
 /**
  * @typedef {import('@pins/appeals.api').Appeals.FolderInfo} FolderInfo
@@ -38,17 +39,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 				},
 				value: {
 					html: appealDetails.appellant
-						? `${appealDetails.appellant?.firstName + ' ' || ''}${
-								appealDetails.appellant?.lastName || ''
-						  }${
-								appealDetails.appellant?.organisationName
-									? '<br>' + appealDetails.appellant?.organisationName
-									: ''
-						  }${appealDetails.appellant?.email ? '<br>' + appealDetails.appellant?.email : ''}${
-								appealDetails.appellant?.phoneNumber
-									? '<br>' + appealDetails.appellant?.phoneNumber
-									: ''
-						  }`
+						? formatServiceUserAsHtmlList(appealDetails.appellant)
 						: 'No appellant'
 				},
 				actions: {
@@ -73,15 +64,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 					text: 'Agent'
 				},
 				value: {
-					html: appealDetails.agent
-						? `${appealDetails.agent?.firstName + ' ' || ''}${appealDetails.agent?.lastName || ''}${
-								appealDetails.agent?.organisationName
-									? '<br>' + appealDetails.agent?.organisationName
-									: ''
-						  }${appealDetails.agent?.email ? '<br>' + appealDetails.agent?.email : ''}${
-								appealDetails.agent?.phoneNumber ? '<br>' + appealDetails.agent?.phoneNumber : ''
-						  }`
-						: 'No agent'
+					html: appealDetails.agent ? formatServiceUserAsHtmlList(appealDetails.agent) : 'No agent'
 				},
 				actions: {
 					items: [

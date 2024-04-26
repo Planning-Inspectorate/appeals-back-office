@@ -34,9 +34,9 @@ exports[`service-user GET /change/:userType should render the change service use
                     name="lastName" type="text" value="Shell">
                 </div>
                 <div class="govuk-form-group">
-                    <label class="govuk-label" for="org-name">Agent&#39;s company or organisation name</label>
+                    <label class="govuk-label" for="organisation-name">Agent&#39;s company or organisation name</label>
                     <input class="govuk-input"
-                    id="org-name" name="orgName" type="text">
+                    id="organisation-name" name="organisationName" type="text">
                 </div>
                 <div class="govuk-form-group">
                     <label class="govuk-label" for="email-address">Agent&#39;s email address</label>
@@ -76,9 +76,9 @@ exports[`service-user GET /change/:userType should render the change service use
                     name="lastName" type="text" value="Simmons">
                 </div>
                 <div class="govuk-form-group">
-                    <label class="govuk-label" for="org-name">Appellant&#39;s company or organisation name</label>
+                    <label class="govuk-label" for="organisation-name">Appellant&#39;s company or organisation name</label>
                     <input class="govuk-input"
-                    id="org-name" name="orgName" type="text">
+                    id="organisation-name" name="organisationName" type="text">
                 </div>
                 <div class="govuk-form-group">
                     <label class="govuk-label" for="email-address">Appellant&#39;s email address</label>
@@ -129,9 +129,9 @@ exports[`service-user POST /change/:userType should re-render changeServiceUser 
                     name="lastName" type="text" value="Jones">
                 </div>
                 <div class="govuk-form-group">
-                    <label class="govuk-label" for="org-name">Agent&#39;s company or organisation name</label>
+                    <label class="govuk-label" for="organisation-name">Agent&#39;s company or organisation name</label>
                     <input class="govuk-input"
-                    id="org-name" name="orgName" type="text">
+                    id="organisation-name" name="organisationName" type="text">
                 </div>
                 <div class="govuk-form-group govuk-form-group--error">
                     <label class="govuk-label" for="email-address">Agent&#39;s email address</label>
@@ -185,9 +185,9 @@ exports[`service-user POST /change/:userType should re-render changeServiceUser 
                     name="lastName" type="text" value="Jones">
                 </div>
                 <div class="govuk-form-group">
-                    <label class="govuk-label" for="org-name">Agent&#39;s company or organisation name</label>
+                    <label class="govuk-label" for="organisation-name">Agent&#39;s company or organisation name</label>
                     <input class="govuk-input"
-                    id="org-name" name="orgName" type="text">
+                    id="organisation-name" name="organisationName" type="text">
                 </div>
                 <div class="govuk-form-group">
                     <label class="govuk-label" for="email-address">Agent&#39;s email address</label>
@@ -239,9 +239,9 @@ exports[`service-user POST /change/:userType should re-render changeServiceUser 
                     name="lastName" type="text" value="Jones">
                 </div>
                 <div class="govuk-form-group">
-                    <label class="govuk-label" for="org-name">Agent&#39;s company or organisation name</label>
+                    <label class="govuk-label" for="organisation-name">Agent&#39;s company or organisation name</label>
                     <input class="govuk-input"
-                    id="org-name" name="orgName" type="text">
+                    id="organisation-name" name="organisationName" type="text">
                 </div>
                 <div class="govuk-form-group">
                     <label class="govuk-label" for="email-address">Agent&#39;s email address</label>
@@ -293,9 +293,9 @@ exports[`service-user POST /change/:userType should re-render changeServiceUser 
                     name="lastName" type="text" value="Jones">
                 </div>
                 <div class="govuk-form-group">
-                    <label class="govuk-label" for="org-name">Agent&#39;s company or organisation name</label>
+                    <label class="govuk-label" for="organisation-name">Agent&#39;s company or organisation name</label>
                     <input class="govuk-input"
-                    id="org-name" name="orgName" type="text">
+                    id="organisation-name" name="organisationName" type="text">
                 </div>
                 <div class="govuk-form-group">
                     <label class="govuk-label" for="email-address">Agent&#39;s email address</label>
@@ -347,9 +347,9 @@ exports[`service-user POST /change/:userType should re-render changeServiceUser 
                     aria-describedby="last-name-error">
                 </div>
                 <div class="govuk-form-group">
-                    <label class="govuk-label" for="org-name">Agent&#39;s company or organisation name</label>
+                    <label class="govuk-label" for="organisation-name">Agent&#39;s company or organisation name</label>
                     <input class="govuk-input"
-                    id="org-name" name="orgName" type="text">
+                    id="organisation-name" name="organisationName" type="text">
                 </div>
                 <div class="govuk-form-group">
                     <label class="govuk-label" for="email-address">Agent&#39;s email address</label>
@@ -401,9 +401,9 @@ exports[`service-user POST /change/:userType should re-render changeServiceUser 
                     aria-describedby="last-name-error">
                 </div>
                 <div class="govuk-form-group">
-                    <label class="govuk-label" for="org-name">Agent&#39;s company or organisation name</label>
+                    <label class="govuk-label" for="organisation-name">Agent&#39;s company or organisation name</label>
                     <input class="govuk-input"
-                    id="org-name" name="orgName" type="text">
+                    id="organisation-name" name="organisationName" type="text">
                 </div>
                 <div class="govuk-form-group">
                     <label class="govuk-label" for="email-address">Agent&#39;s email address</label>
@@ -455,9 +455,9 @@ exports[`service-user POST /change/:userType should re-render changeServiceUser 
                     aria-describedby="last-name-error">
                 </div>
                 <div class="govuk-form-group">
-                    <label class="govuk-label" for="org-name">Agent&#39;s company or organisation name</label>
+                    <label class="govuk-label" for="organisation-name">Agent&#39;s company or organisation name</label>
                     <input class="govuk-input"
-                    id="org-name" name="orgName" type="text">
+                    id="organisation-name" name="organisationName" type="text">
                 </div>
                 <div class="govuk-form-group">
                     <label class="govuk-label" for="email-address">Agent&#39;s email address</label>
