@@ -181,6 +181,28 @@ describe('appellant-case', () => {
 			expect(notificationBannerElementHTML).toContain('Success');
 			expect(notificationBannerElementHTML).toContain('Inspector access (appellant) updated');
 		});
+
+		it('should render a success notification banner when a service user was updated', async () => {
+			nock('http://test/').patch(`/appeals/1/service-user`).reply(200, {
+				serviceUserId: 1
+			});
+			const validData = {
+				firstName: 'Jessica',
+				lastName: 'Jones',
+				organisationName: 'Jones Inc',
+				phoneNumber: '01234 567 890',
+				emailAddress: 'jones@mail.com'
+			};
+			await request.post(`${baseUrl}/1/appellant-case/service-user/change/agent`).send(validData);
+
+			const caseDetailsResponse = await request.get(`${baseUrl}/1/appellant-case`);
+
+			const notificationBannerElementHTML = parseHtml(caseDetailsResponse.text, {
+				rootElement: notificationBannerElement
+			}).innerHTML;
+			expect(notificationBannerElementHTML).toMatchSnapshot();
+			expect(notificationBannerElementHTML).toContain('Agent details updated');
+		});
 	});
 
 	describe('GET /appellant-case with unchecked documents', () => {

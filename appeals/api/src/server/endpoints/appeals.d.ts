@@ -229,16 +229,20 @@ interface SingleAppealDetailsResponse {
 	resubmitTypeId?: number;
 	appellantCaseId: number;
 	appellant?: {
-		id: number;
+		serviceUserId: number;
 		firstName: string;
 		lastName: string;
 		email?: string | null;
+		organisationName?: string | null;
+		phoneNumber?: string | null;
 	};
 	agent?: {
-		id: number;
+		serviceUserId: number;
 		firstName: string;
 		lastName: string;
-		email: string;
+		email?: string;
+		organisationName?: string | null;
+		phoneNumber?: string | null;
 	};
 	caseOfficer: string | null;
 	costs: {

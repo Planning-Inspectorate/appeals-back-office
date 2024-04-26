@@ -39,6 +39,14 @@ export const errorLastName = (/** @type {Error}*/ errors) => {
 		: undefined;
 };
 
+export const errorOrgNameAllowEmpty = (/** @type {Error}*/ errors) => {
+	return errors?.orgName
+		? {
+				text: 'Enter an organisation or company name, or leave empty'
+		  }
+		: undefined;
+};
+
 export const errorEmail = (/** @type {Error}*/ errors) => {
 	return errors?.emailAddress
 		? {
@@ -55,10 +63,26 @@ export const errorEmailAllowEmpty = (/** @type {Error}*/ errors) => {
 		: undefined;
 };
 
+export const errorPhoneNumberAllowEmpty = (/** @type {Error}*/ errors) => {
+	return errors?.phoneNumber
+		? {
+				text: 'Enter a valid phone number or leave empty'
+		  }
+		: undefined;
+};
+
 export const errorPlanningApplicationReference = (/** @type {Error}*/ errors) => {
 	return errors?.planningApplicationReference
 		? {
 				text: 'Enter the LPA application reference'
+		  }
+		: undefined;
+};
+
+export const errorInspectorAccessRadio = (/** @type {Error}*/ errors) => {
+	return errors?.inspectorAccessRadio
+		? {
+				text: 'Select one option'
 		  }
 		: undefined;
 };

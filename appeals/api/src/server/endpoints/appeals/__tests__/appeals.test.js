@@ -684,13 +684,17 @@ describe('appeals routes', () => {
 						serviceUserId: householdAppeal.agent.id,
 						firstName: householdAppeal.agent.firstName,
 						lastName: householdAppeal.agent.lastName,
-						email: householdAppeal.agent.email
+						email: householdAppeal.agent.email,
+						phoneNumber: householdAppeal.agent.phoneNumber,
+						organisationName: householdAppeal.agent.organisationName
 					},
 					appellant: {
 						serviceUserId: householdAppeal.appellant.id,
 						firstName: householdAppeal.appellant.firstName,
 						lastName: householdAppeal.appellant.lastName,
-						email: householdAppeal.appellant.email
+						email: householdAppeal.appellant.email,
+						phoneNumber: householdAppeal.appellant.phoneNumber,
+						organisationName: householdAppeal.appellant.organisationName
 					},
 					allocationDetails: null,
 					appealId: householdAppeal.id,
@@ -788,13 +792,17 @@ describe('appeals routes', () => {
 						serviceUserId: fullPlanningAppeal.agent.id,
 						firstName: fullPlanningAppeal.agent.firstName,
 						lastName: fullPlanningAppeal.agent.lastName,
-						email: fullPlanningAppeal.agent.email
+						email: fullPlanningAppeal.agent.email,
+						phoneNumber: fullPlanningAppeal.agent.phoneNumber,
+						organisationName: fullPlanningAppeal.agent.organisationName
 					},
 					appellant: {
 						serviceUserId: fullPlanningAppeal.appellant.id,
 						firstName: fullPlanningAppeal.appellant.firstName,
 						lastName: fullPlanningAppeal.appellant.lastName,
-						email: fullPlanningAppeal.appellant.email
+						email: fullPlanningAppeal.appellant.email,
+						phoneNumber: fullPlanningAppeal.appellant.phoneNumber,
+						organisationName: fullPlanningAppeal.appellant.organisationName
 					},
 					allocationDetails: null,
 					appealId: fullPlanningAppeal.id,
@@ -1384,13 +1392,17 @@ describe('appeals routes', () => {
 						serviceUserId: householdAppeal.agent.id,
 						firstName: householdAppeal.agent.firstName,
 						lastName: householdAppeal.agent.lastName,
-						email: householdAppeal.agent.email
+						email: householdAppeal.agent.email,
+						phoneNumber: householdAppeal.agent.phoneNumber,
+						organisationName: householdAppeal.agent.organisationName
 					},
 					appellant: {
 						serviceUserId: householdAppeal.appellant.id,
 						firstName: householdAppeal.appellant.firstName,
 						lastName: householdAppeal.appellant.lastName,
-						email: householdAppeal.appellant.email
+						email: householdAppeal.appellant.email,
+						phoneNumber: householdAppeal.appellant.phoneNumber,
+						organisationName: householdAppeal.appellant.organisationName
 					},
 					allocationDetails: null,
 					appealId: householdAppeal.id,
@@ -1488,13 +1500,17 @@ describe('appeals routes', () => {
 						serviceUserId: fullPlanningAppeal.agent.id,
 						firstName: fullPlanningAppeal.agent.firstName,
 						lastName: fullPlanningAppeal.agent.lastName,
-						email: fullPlanningAppeal.agent.email
+						email: fullPlanningAppeal.agent.email,
+						phoneNumber: fullPlanningAppeal.agent.phoneNumber,
+						organisationName: fullPlanningAppeal.agent.organisationName
 					},
 					appellant: {
 						serviceUserId: fullPlanningAppeal.appellant.id,
 						firstName: fullPlanningAppeal.appellant.firstName,
 						lastName: fullPlanningAppeal.appellant.lastName,
-						email: fullPlanningAppeal.appellant.email
+						email: fullPlanningAppeal.appellant.email,
+						phoneNumber: fullPlanningAppeal.appellant.phoneNumber,
+						organisationName: fullPlanningAppeal.appellant.organisationName
 					},
 					allocationDetails: null,
 					appealId: fullPlanningAppeal.id,

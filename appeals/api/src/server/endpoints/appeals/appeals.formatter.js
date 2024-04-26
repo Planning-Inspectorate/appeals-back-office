@@ -114,7 +114,9 @@ const formatAppeal = (
 					serviceUserId: appeal.agent.id,
 					firstName: appeal.agent.firstName || '',
 					lastName: appeal.agent.lastName || '',
-					email: appeal.agent.email
+					organisationName: appeal.agent.organisationName || null,
+					email: appeal.agent.email,
+					phoneNumber: appeal.agent.phoneNumber
 				}
 			}),
 			...(appeal.appellant && {
@@ -122,7 +124,9 @@ const formatAppeal = (
 					serviceUserId: appeal.appellant.id,
 					firstName: appeal.appellant.firstName || '',
 					lastName: appeal.appellant.lastName || '',
-					email: appeal.appellant?.email || null
+					organisationName: appeal.appellant.organisationName || null,
+					email: appeal.appellant?.email || null,
+					phoneNumber: appeal.appellant.phoneNumber || null
 				}
 			}),
 			allocationDetails: appeal.allocation

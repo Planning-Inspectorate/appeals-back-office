@@ -15,6 +15,7 @@ import {
 } from '../../appeal-documents/appeal-documents.middleware.js';
 import changeLpaReferenceRouter from '../change-lpa-reference/change-lpa-reference.router.js';
 import inspectorAccessRouter from '../inspector-access/inspector-access.router.js';
+import serviceUserRouter from '../service-user/service-user.router.js';
 import safetyRisksRouter from '../safety-risks/safety-risks.router.js';
 
 const router = createRouter({ mergeParams: true });
@@ -25,6 +26,7 @@ router.use('/incomplete', outcomeIncompleteRouter);
 router.use('/lpa-reference', changeLpaReferenceRouter);
 router.use('/inspector-access', inspectorAccessRouter);
 router.use('/safety-risks', safetyRisksRouter);
+router.use('/service-user', serviceUserRouter);
 
 router
 	.route('/')

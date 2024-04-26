@@ -1,9 +1,10 @@
 import { convertFromBooleanToYesNo } from '../boolean-formatter.js';
 import { appealSiteToAddressString } from '#lib/address-formatter.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
-import { nameToString } from '#lib/person-name-formatter.js';
 import { mapAddressInput } from './global-mapper-formatter.js';
 import { isFolderInfo } from '#lib/ts-utilities.js';
+import { mapActionComponent } from './component-permissions.mapper.js';
+import { permissionNames } from '#environment/permissions.js';
 
 /**
  * @typedef {import('@pins/appeals.api').Appeals.FolderInfo} FolderInfo
@@ -12,10 +13,11 @@ import { isFolderInfo } from '#lib/ts-utilities.js';
 /**
  * @param {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} appellantCaseData
  * @param {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} appealDetails
+ * @param {import('../../app/auth/auth-session.service').SessionWithAuth} session
  * @param {string} currentRoute
  * @returns {MappedInstructions}
  */
-export function initialiseAndMapData(appellantCaseData, appealDetails, currentRoute) {
+export function initialiseAndMapData(appellantCaseData, appealDetails, currentRoute, session) {
 	if (appellantCaseData === undefined) {
 		throw new Error('appellantCaseDetails is undefined');
 	}
@@ -27,134 +29,72 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 	let mappedData = {};
 
 	/** @type {Instructions} */
-	mappedData.appellantName = {
-		id: 'appellant-name',
+	mappedData.appellant = {
+		id: 'appellant',
 		display: {
 			summaryListItem: {
 				key: {
-					text: 'Appellant name'
+					text: 'Appellant'
 				},
 				value: {
-					text: nameToString({
-						firstName: appellantCaseData.appellant.firstName || '',
-						lastName: appellantCaseData.appellant.surname || ''
-					})
+					html: appealDetails.appellant
+						? `${appealDetails.appellant?.firstName + ' ' || ''}${
+								appealDetails.appellant?.lastName || ''
+						  }${
+								appealDetails.appellant?.organisationName
+									? '<br>' + appealDetails.appellant?.organisationName
+									: ''
+						  }${appealDetails.appellant?.email ? '<br>' + appealDetails.appellant?.email : ''}${
+								appealDetails.appellant?.phoneNumber
+									? '<br>' + appealDetails.appellant?.phoneNumber
+									: ''
+						  }`
+						: 'No appellant'
 				},
 				actions: {
 					items: [
-						{
+						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
-							visuallyHiddenText: 'Appellant name',
-							href: `${currentRoute}/change-appeal-details/appellant-name`
-						}
-					]
-				}
-			}
-		},
-		input: {
-			displayName: 'Appellant name',
-			instructions: [
-				{
-					type: 'input',
-					properties: {
-						name: 'appellant-name',
-						value: nameToString({
-							firstName: appellantCaseData.appellant.firstName || '',
-							lastName: appellantCaseData.appellant.surname || ''
+							href: `${currentRoute}/service-user/change/appellant`,
+							visuallyHiddenText: 'Appellant'
 						})
-					}
-				}
-			]
-		},
-		submitApi: '#',
-		inputItemApi: '#'
+					]
+				},
+				classes: 'appeal-appellant'
+			}
+		}
 	};
 
-	/** @type {Instructions} */
-	mappedData.applicantName = {
-		id: 'applicant-name',
+	mappedData.agent = {
+		id: 'agent',
 		display: {
 			summaryListItem: {
 				key: {
-					text: 'Applicant name'
+					text: 'Agent'
 				},
 				value: {
-					text: nameToString({
-						firstName: appellantCaseData.applicant.firstName || '',
-						lastName: appellantCaseData.applicant.surname || ''
-					})
+					html: appealDetails.agent
+						? `${appealDetails.agent?.firstName + ' ' || ''}${appealDetails.agent?.lastName || ''}${
+								appealDetails.agent?.organisationName
+									? '<br>' + appealDetails.agent?.organisationName
+									: ''
+						  }${appealDetails.agent?.email ? '<br>' + appealDetails.agent?.email : ''}${
+								appealDetails.agent?.phoneNumber ? '<br>' + appealDetails.agent?.phoneNumber : ''
+						  }`
+						: 'No agent'
 				},
 				actions: {
 					items: [
-						{
+						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
-							visuallyHiddenText: 'Applicant name',
-							href: `${currentRoute}/change-appeal-details/applicant-name`
-						}
-					]
-				}
-			}
-		},
-		input: {
-			displayName: 'Applicant name',
-			instructions: [
-				{
-					type: 'input',
-					properties: {
-						name: 'applicant-name',
-						value: nameToString({
-							firstName: appellantCaseData.applicant.firstName || '',
-							lastName: appellantCaseData.applicant.surname || ''
+							href: `${currentRoute}/service-user/change/agent`,
+							visuallyHiddenText: 'Agent'
 						})
-					}
-				}
-			]
-		},
-		submitApi: '#',
-		inputItemApi: '#'
-	};
-
-	mappedData.agentName = {
-		id: 'agent-name',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Agent name'
-				},
-				value: {
-					text: nameToString({
-						firstName: appealDetails.agent?.firstName || '',
-						lastName: appealDetails.agent?.lastName || ''
-					})
-				},
-				actions: {
-					items: [
-						{
-							text: 'Change',
-							visuallyHiddenText: 'Agent name',
-							href: `${currentRoute}/change-appeal-details/agent-name`
-						}
 					]
-				}
+				},
+				classes: 'appeal-agent'
 			}
-		},
-		input: {
-			displayName: 'Agent name',
-			instructions: [
-				{
-					type: 'input',
-					properties: {
-						name: 'agent-name',
-						value: nameToString({
-							firstName: appealDetails.agent?.firstName || '',
-							lastName: appealDetails.agent?.lastName || ''
-						})
-					}
-				}
-			]
-		},
-		submitApi: '#',
-		inputItemApi: '#'
+		}
 	};
 
 	/** @type {Instructions} */

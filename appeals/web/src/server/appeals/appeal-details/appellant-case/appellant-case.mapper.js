@@ -57,7 +57,8 @@ export async function appellantCasePage(
 	const mappedAppellantCaseData = initialiseAndMapData(
 		appellantCaseData,
 		appealDetails,
-		currentRoute
+		currentRoute,
+		session
 	);
 
 	/**
@@ -101,7 +102,7 @@ export async function appellantCasePage(
 				}
 			},
 			rows: [
-				mappedAppellantCaseData.appellantName.display.summaryListItem,
+				mappedAppellantCaseData.appellant.display.summaryListItem,
 				mappedAppellantCaseData.applicationReference.display.summaryListItem
 			]
 		}
@@ -111,7 +112,7 @@ export async function appellantCasePage(
 		appellantSummary.parameters.rows.splice(
 			1,
 			0,
-			mappedAppellantCaseData.agentName.display.summaryListItem
+			mappedAppellantCaseData.agent.display.summaryListItem
 		);
 	}
 
