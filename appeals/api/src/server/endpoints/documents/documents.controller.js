@@ -226,10 +226,15 @@ const updateDocuments = async (req, res) => {
 						);
 					}
 				}
-				if (
-					document.receivedDate &&
-					latestDocument?.latestDocumentVersion?.lastModified !== document.receivedDate
-				) {
+
+				const receivedDate = document.receivedDate
+					? new Date(document.receivedDate).toDateString()
+					: null;
+				const latestReceivedDate = latestDocument?.latestDocumentVersion?.dateReceived
+					? new Date(latestDocument?.latestDocumentVersion?.dateReceived).toDateString()
+					: null;
+
+				if (receivedDate && latestReceivedDate && receivedDate !== latestReceivedDate) {
 					const dateChangeMessage = AUDIT_TRAIL_DOCUMENT_DATE_CHANGED;
 					await logAuditTrail(
 						latestDocument.name,
