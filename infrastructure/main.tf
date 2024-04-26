@@ -1,46 +1,9 @@
-module "azure_region" {
-  source  = "claranet/regions/azurerm"
-  version = "7.1.1"
-
-  azure_region = local.location
-}
-
-data "azurerm_client_config" "current" {}
 
 resource "azurerm_resource_group" "appeals_back_office_rg1" {
   name     = "${local.org}-rg-${local.resource_suffix}-001"
   location = module.azure_region.location #.location_cli
 
   tags = local.tags
-}
-
-resource "azurerm_key_vault" "appeals_back_office_kv" {
-  name                        = "${local.org}-kv-appeals-bo"
-  location                    = module.azure_region.location
-  resource_group_name         = azurerm_resource_group.appeals_back_office_rg1.name
-  enabled_for_disk_encryption = true
-  tenant_id                   = data.azurerm_client_config.current.tenant_id
-  soft_delete_retention_days  = 7
-  purge_protection_enabled    = false
-
-  sku_name = "standard"
-
-  access_policy {
-    tenant_id = data.azurerm_client_config.current.tenant_id
-    object_id = data.azurerm_client_config.current.object_id
-
-    key_permissions = [
-      "Get",
-    ]
-
-    secret_permissions = [
-      "Get",
-    ]
-
-    storage_permissions = [
-      "Get",
-    ]
-  }
 }
 
 # Do we want to add a unique string to ensure each resource's name is unique?
@@ -55,11 +18,5 @@ resource "azurerm_key_vault" "appeals_back_office_kv" {
 #     tags = ["litigation", "compliance"]
 #   }
 # }
-
-# redis-cache.tf not edited
-# monitoring.tf not edited
-# databases.tf not edited
-# service-bus not edited
-# redis-cache - are all resources needed
 
 # Do we need a FE, BE, Management subnets? How many IPs are needed for each one?, dbs, webservers, storage accounts,

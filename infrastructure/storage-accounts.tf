@@ -1,3 +1,6 @@
+# Spin up after databases.tf
+
+
 # locals {
 #   allowed_origins_prod  = [var.back_office_public_url_new != null ? "https://${var.back_office_public_url_new}" : "", "https://${var.back_office_appeals_public_url}"]
 #   allowed_origins_live  = ["https://${var.back_office_public_url}", "https://${var.back_office_appeals_public_url}"]

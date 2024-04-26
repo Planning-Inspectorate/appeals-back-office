@@ -1,32 +1,35 @@
-resource "azurerm_application_insights" "back_office_app_insights" {
-  name                 = "${local.org}ai-${local.service_name}-${local.resource_suffix}-app-insights"
-  location             = module.azure_region.location
-  resource_group_name  = azurerm_resource_group.appeals_back_office_rg1.name
-  workspace_id         = azurerm_log_analytics_workspace.back_office.id
-  application_type     = "web"
-  daily_data_cap_in_gb = 10
-}
+# Spin this up after databases.tf
 
-resource "azurerm_application_insights" "back_office_appeals_insights" {
-  name                 = "${local.org}-ai-${local.service_name}-${local.resource_suffix}-appeals-insights"
-  location             = module.azure_region.location
-  resource_group_name  = azurerm_resource_group.appeals_back_office_rg1.name
-  workspace_id         = azurerm_log_analytics_workspace.back_office.id
-  application_type     = "web"
-  daily_data_cap_in_gb = 10
-}
 
-resource "azurerm_log_analytics_workspace" "back_office" {
-  name                = "pins-log-${local.service_name}-${local.resource_suffix}"
-  location            = module.azure_region.location
-  resource_group_name = azurerm_resource_group.appeals_back_office_rg1.name
-  sku                 = "PerGB2018"
-  retention_in_days   = 30
 
-  tags = local.tags
-}
+# resource "azurerm_application_insights" "back_office_app_insights" {
+#   name                 = "${local.org}ai-${local.service_name}-${local.resource_suffix}-app-insights"
+#   location             = module.azure_region.location
+#   resource_group_name  = azurerm_resource_group.appeals_back_office_rg1.name
+#   workspace_id         = azurerm_log_analytics_workspace.back_office.id
+#   application_type     = "web"
+#   daily_data_cap_in_gb = 10
+# }
 
-# This needs the SQL DB
+# resource "azurerm_application_insights" "back_office_appeals_insights" {
+#   name                 = "${local.org}-ai-${local.service_name}-${local.resource_suffix}-appeals-insights"
+#   location             = module.azure_region.location
+#   resource_group_name  = azurerm_resource_group.appeals_back_office_rg1.name
+#   workspace_id         = azurerm_log_analytics_workspace.back_office.id
+#   application_type     = "web"
+#   daily_data_cap_in_gb = 10
+# }
+
+# resource "azurerm_log_analytics_workspace" "back_office" {
+#   name                = "pins-log-${local.service_name}-${local.resource_suffix}"
+#   location            = module.azure_region.location
+#   resource_group_name = azurerm_resource_group.appeals_back_office_rg1.name
+#   sku                 = "PerGB2018"
+#   retention_in_days   = 30
+
+#   tags = local.tags
+# }
+
 # resource "azurerm_monitor_diagnostic_setting" "back_office_sql_database" {
 #   name                       = "SQLDatabaseAudit"
 #   target_resource_id         = azurerm_mssql_database.back_office.id
@@ -48,7 +51,6 @@ resource "azurerm_log_analytics_workspace" "back_office" {
 #   }
 # }
 
-# This needs SQL and SA
 # resource "azurerm_mssql_server_extended_auditing_policy" "back_office_sql_server" {
 #   enabled                = var.monitoring_alerts_enabled
 #   storage_endpoint       = azurerm_storage_account.back_office_sql_server.primary_blob_endpoint
@@ -62,30 +64,26 @@ resource "azurerm_log_analytics_workspace" "back_office" {
 #   ]
 # }
 
-# SQL Dependency
+# # SQL Dependency
 # resource "azurerm_mssql_database_extended_auditing_policy" "back_office_sql_database" {
 #   database_id            = azurerm_mssql_database.back_office.id
 #   log_monitoring_enabled = true
 # }
 
-# SQL Dependency
-# new stuff from here
 # resource "azurerm_advanced_threat_protection" "back_office_sql_server" {
 #   target_resource_id = azurerm_storage_account.back_office_sql_server.id
 #   enabled            = true
 # }
 
-# SQL Dependency
 # resource "azurerm_role_assignment" "back_office_sql_server" {
 #   scope                = azurerm_storage_account.back_office_sql_server.id
 #   role_definition_name = "Storage Blob Data Contributor"
 #   principal_id         = azurerm_mssql_server.back_office.identity[0].principal_id
 # }
 
-# This needs SQL and SA
 # resource "azurerm_mssql_server_security_alert_policy" "back_office_sql_server" {
 #   state                      = var.monitoring_alerts_enabled ? "Enabled" : "Disabled"
-#   resource_group_name        = azurerm_resource_group.back_office_stack.name
+#   resource_group_name        = azurerm_resource_group.appeals_back_office_rg1.name
 #   server_name                = azurerm_mssql_server.back_office.name
 #   storage_endpoint           = azurerm_storage_account.back_office_sql_server.primary_blob_endpoint
 #   storage_account_access_key = azurerm_storage_account.back_office_sql_server.primary_access_key
@@ -94,7 +92,6 @@ resource "azurerm_log_analytics_workspace" "back_office" {
 #   email_addresses            = local.tech_emails
 # }
 
-# This needs SQL and SA
 # resource "azurerm_mssql_server_vulnerability_assessment" "back_office_sql_server" {
 #   #checkov:skip=CKV2_AZURE_3: scans enabled by env
 #   #checkov:skip=CKV2_AZURE_4: false positive?
@@ -112,195 +109,195 @@ resource "azurerm_log_analytics_workspace" "back_office" {
 #   }
 # }
 
-resource "azurerm_monitor_metric_alert" "back_office_sql_db_cpu_alert" {
-  name                = "${local.service_name} SQL CPU Alert ${local.resource_suffix}"
-  resource_group_name = azurerm_resource_group.appeals_back_office_rg1.name
-  scopes              = [azurerm_mssql_database.back_office.id]
-  description         = "Action will be triggered when cpu percent is greater than 80."
-  window_size         = "PT5M"
-  frequency           = "PT1M"
-  severity            = 2
+# resource "azurerm_monitor_metric_alert" "back_office_sql_db_cpu_alert" {
+#   name                = "${local.service_name} SQL CPU Alert ${local.resource_suffix}"
+#   resource_group_name = azurerm_resource_group.appeals_back_office_rg1.name
+#   scopes              = [azurerm_mssql_database.back_office.id]
+#   description         = "Action will be triggered when cpu percent is greater than 80."
+#   window_size         = "PT5M"
+#   frequency           = "PT1M"
+#   severity            = 2
 
-  criteria {
-    metric_namespace = "Microsoft.Sql/servers/databases"
-    metric_name      = "cpu_percent"
-    aggregation      = "Average"
-    operator         = "GreaterThan"
-    threshold        = 80
-  }
+#   criteria {
+#     metric_namespace = "Microsoft.Sql/servers/databases"
+#     metric_name      = "cpu_percent"
+#     aggregation      = "Average"
+#     operator         = "GreaterThan"
+#     threshold        = 80
+#   }
 
-  action {
-    action_group_id = var.action_group_ids.bo_applications_tech
-  }
+#   action {
+#     action_group_id = var.action_group_ids.bo_applications_tech
+#   }
 
-  tags = local.tags
-}
+#   tags = local.tags
+# }
 
-resource "azurerm_monitor_metric_alert" "back_office_sql_db_dtu_alert" {
-  name                = "${local.service_name} SQL DTU Alert ${local.resource_suffix}"
-  resource_group_name = azurerm_resource_group.appeals_back_office_rg1.name
-  scopes              = [azurerm_mssql_database.back_office.id]
-  description         = "Action will be triggered when DTU percent is greater than 80."
-  window_size         = "PT5M"
-  frequency           = "PT1M"
-  severity            = 2
+# resource "azurerm_monitor_metric_alert" "back_office_sql_db_dtu_alert" {
+#   name                = "${local.service_name} SQL DTU Alert ${local.resource_suffix}"
+#   resource_group_name = azurerm_resource_group.appeals_back_office_rg1.name
+#   scopes              = [azurerm_mssql_database.back_office.id]
+#   description         = "Action will be triggered when DTU percent is greater than 80."
+#   window_size         = "PT5M"
+#   frequency           = "PT1M"
+#   severity            = 2
 
-  criteria {
-    metric_namespace = "Microsoft.Sql/servers/databases"
-    metric_name      = "dtu_consumption_percent"
-    aggregation      = "Average"
-    operator         = "GreaterThan"
-    threshold        = 80
-  }
+#   criteria {
+#     metric_namespace = "Microsoft.Sql/servers/databases"
+#     metric_name      = "dtu_consumption_percent"
+#     aggregation      = "Average"
+#     operator         = "GreaterThan"
+#     threshold        = 80
+#   }
 
-  action {
-    action_group_id = var.action_group_ids.bo_applications_tech
-  }
+#   action {
+#     action_group_id = var.action_group_ids.bo_applications_tech
+#   }
 
-  tags = local.tags
-}
+#   tags = local.tags
+# }
 
-resource "azurerm_monitor_metric_alert" "back_office_sql_db_log_io_alert" {
-  name                = "${local.service_name} SQL Log IO Alert ${local.resource_suffix}"
-  resource_group_name = azurerm_resource_group.appeals_back_office_rg1.name
-  scopes              = [azurerm_mssql_database.back_office.id]
-  description         = "Action will be triggered when DTU percent is greater than 80."
-  window_size         = "PT5M"
-  frequency           = "PT1M"
-  severity            = 2
+# resource "azurerm_monitor_metric_alert" "back_office_sql_db_log_io_alert" {
+#   name                = "${local.service_name} SQL Log IO Alert ${local.resource_suffix}"
+#   resource_group_name = azurerm_resource_group.appeals_back_office_rg1.name
+#   scopes              = [azurerm_mssql_database.back_office.id]
+#   description         = "Action will be triggered when DTU percent is greater than 80."
+#   window_size         = "PT5M"
+#   frequency           = "PT1M"
+#   severity            = 2
 
-  criteria {
-    metric_namespace = "Microsoft.Sql/servers/databases"
-    metric_name      = "log_write_percent"
-    aggregation      = "Average"
-    operator         = "GreaterThan"
-    threshold        = 80
-  }
+#   criteria {
+#     metric_namespace = "Microsoft.Sql/servers/databases"
+#     metric_name      = "log_write_percent"
+#     aggregation      = "Average"
+#     operator         = "GreaterThan"
+#     threshold        = 80
+#   }
 
-  action {
-    action_group_id = var.action_group_ids.bo_applications_tech
-  }
+#   action {
+#     action_group_id = var.action_group_ids.bo_applications_tech
+#   }
 
-  tags = local.tags
-}
+#   tags = local.tags
+# }
 
-resource "azurerm_monitor_metric_alert" "back_office_sql_db_deadlock_alert" {
-  name                = "${local.service_name} SQL Deadlock Alert ${local.resource_suffix}"
-  resource_group_name = azurerm_resource_group.appeals_back_office_rg1.name
-  scopes              = [azurerm_mssql_database.back_office.id]
-  description         = "Action will be triggered whenever the count of deadlocks is greater than 1."
-  window_size         = "PT5M"
-  frequency           = "PT1M"
-  severity            = 2
+# resource "azurerm_monitor_metric_alert" "back_office_sql_db_deadlock_alert" {
+#   name                = "${local.service_name} SQL Deadlock Alert ${local.resource_suffix}"
+#   resource_group_name = azurerm_resource_group.appeals_back_office_rg1.name
+#   scopes              = [azurerm_mssql_database.back_office.id]
+#   description         = "Action will be triggered whenever the count of deadlocks is greater than 1."
+#   window_size         = "PT5M"
+#   frequency           = "PT1M"
+#   severity            = 2
 
-  criteria {
-    metric_namespace = "Microsoft.Sql/servers/databases"
-    metric_name      = "deadlock"
-    aggregation      = "Count"
-    operator         = "GreaterThanOrEqual"
-    threshold        = 1
-  }
+#   criteria {
+#     metric_namespace = "Microsoft.Sql/servers/databases"
+#     metric_name      = "deadlock"
+#     aggregation      = "Count"
+#     operator         = "GreaterThanOrEqual"
+#     threshold        = 1
+#   }
 
-  action {
-    action_group_id = var.action_group_ids.bo_applications_tech
-  }
+#   action {
+#     action_group_id = var.action_group_ids.bo_applications_tech
+#   }
 
-  tags = local.tags
-}
+#   tags = local.tags
+# }
 
-# appeals DB alerts
-resource "azurerm_monitor_metric_alert" "back_office_appeals_sql_db_cpu_alert" {
-  name                = "${local.service_name} Appeals SQL CPU Alert ${local.resource_suffix}"
-  resource_group_name = azurerm_resource_group.appeals_back_office_rg1.name
-  scopes              = [azurerm_mssql_database.back_office_appeals.id]
-  description         = "Action will be triggered when cpu percent is greater than 80."
-  window_size         = "PT5M"
-  frequency           = "PT1M"
-  severity            = 2
+# # appeals DB alerts
+# resource "azurerm_monitor_metric_alert" "back_office_appeals_sql_db_cpu_alert" {
+#   name                = "${local.service_name} Appeals SQL CPU Alert ${local.resource_suffix}"
+#   resource_group_name = azurerm_resource_group.appeals_back_office_rg1.name
+#   scopes              = [azurerm_mssql_database.back_office_appeals.id]
+#   description         = "Action will be triggered when cpu percent is greater than 80."
+#   window_size         = "PT5M"
+#   frequency           = "PT1M"
+#   severity            = 2
 
-  criteria {
-    metric_namespace = "Microsoft.Sql/servers/databases"
-    metric_name      = "cpu_percent"
-    aggregation      = "Average"
-    operator         = "GreaterThan"
-    threshold        = 80
-  }
+#   criteria {
+#     metric_namespace = "Microsoft.Sql/servers/databases"
+#     metric_name      = "cpu_percent"
+#     aggregation      = "Average"
+#     operator         = "GreaterThan"
+#     threshold        = 80
+#   }
 
-  action {
-    action_group_id = var.action_group_ids.bo_appeals_tech
-  }
+#   action {
+#     action_group_id = var.action_group_ids.bo_appeals_tech
+#   }
 
-  tags = local.tags
-}
+#   tags = local.tags
+# }
 
-resource "azurerm_monitor_metric_alert" "back_office_appeals_sql_db_dtu_alert" {
-  name                = "${local.service_name} Appeals SQL DTU Alert ${local.resource_suffix}"
-  resource_group_name = azurerm_resource_group.appeals_back_office_rg1.name
-  scopes              = [azurerm_mssql_database.back_office_appeals.id]
-  description         = "Action will be triggered when DTU percent is greater than 80."
-  window_size         = "PT5M"
-  frequency           = "PT1M"
-  severity            = 2
+# resource "azurerm_monitor_metric_alert" "back_office_appeals_sql_db_dtu_alert" {
+#   name                = "${local.service_name} Appeals SQL DTU Alert ${local.resource_suffix}"
+#   resource_group_name = azurerm_resource_group.appeals_back_office_rg1.name
+#   scopes              = [azurerm_mssql_database.back_office_appeals.id]
+#   description         = "Action will be triggered when DTU percent is greater than 80."
+#   window_size         = "PT5M"
+#   frequency           = "PT1M"
+#   severity            = 2
 
-  criteria {
-    metric_namespace = "Microsoft.Sql/servers/databases"
-    metric_name      = "dtu_consumption_percent"
-    aggregation      = "Average"
-    operator         = "GreaterThan"
-    threshold        = 80
-  }
+#   criteria {
+#     metric_namespace = "Microsoft.Sql/servers/databases"
+#     metric_name      = "dtu_consumption_percent"
+#     aggregation      = "Average"
+#     operator         = "GreaterThan"
+#     threshold        = 80
+#   }
 
-  action {
-    action_group_id = var.action_group_ids.bo_appeals_tech
-  }
+#   action {
+#     action_group_id = var.action_group_ids.bo_appeals_tech
+#   }
 
-  tags = local.tags
-}
+#   tags = local.tags
+# }
 
-resource "azurerm_monitor_metric_alert" "back_office_appeals_sql_db_log_io_alert" {
-  name                = "${local.service_name} Appeals SQL Log IO Alert ${local.resource_suffix}"
-  resource_group_name = azurerm_resource_group.appeals_back_office_rg1.name
-  scopes              = [azurerm_mssql_database.back_office_appeals.id]
-  description         = "Action will be triggered when DTU percent is greater than 80."
-  window_size         = "PT5M"
-  frequency           = "PT1M"
-  severity            = 2
+# resource "azurerm_monitor_metric_alert" "back_office_appeals_sql_db_log_io_alert" {
+#   name                = "${local.service_name} Appeals SQL Log IO Alert ${local.resource_suffix}"
+#   resource_group_name = azurerm_resource_group.appeals_back_office_rg1.name
+#   scopes              = [azurerm_mssql_database.back_office_appeals.id]
+#   description         = "Action will be triggered when DTU percent is greater than 80."
+#   window_size         = "PT5M"
+#   frequency           = "PT1M"
+#   severity            = 2
 
-  criteria {
-    metric_namespace = "Microsoft.Sql/servers/databases"
-    metric_name      = "log_write_percent"
-    aggregation      = "Average"
-    operator         = "GreaterThan"
-    threshold        = 80
-  }
+#   criteria {
+#     metric_namespace = "Microsoft.Sql/servers/databases"
+#     metric_name      = "log_write_percent"
+#     aggregation      = "Average"
+#     operator         = "GreaterThan"
+#     threshold        = 80
+#   }
 
-  action {
-    action_group_id = var.action_group_ids.bo_appeals_tech
-  }
+#   action {
+#     action_group_id = var.action_group_ids.bo_appeals_tech
+#   }
 
-  tags = local.tags
-}
+#   tags = local.tags
+# }
 
-resource "azurerm_monitor_metric_alert" "back_office_appeals_sql_db_deadlock_alert" {
-  name                = "${local.service_name} Appeals SQL Deadlock Alert ${local.resource_suffix}"
-  resource_group_name = azurerm_resource_group.appeals_back_office_rg1.name
-  scopes              = [azurerm_mssql_database.back_office_appeals.id]
-  description         = "Action will be triggered whenever the count of deadlocks is greater than 1."
-  window_size         = "PT5M"
-  frequency           = "PT1M"
-  severity            = 2
+# resource "azurerm_monitor_metric_alert" "back_office_appeals_sql_db_deadlock_alert" {
+#   name                = "${local.service_name} Appeals SQL Deadlock Alert ${local.resource_suffix}"
+#   resource_group_name = azurerm_resource_group.appeals_back_office_rg1.name
+#   scopes              = [azurerm_mssql_database.back_office_appeals.id]
+#   description         = "Action will be triggered whenever the count of deadlocks is greater than 1."
+#   window_size         = "PT5M"
+#   frequency           = "PT1M"
+#   severity            = 2
 
-  criteria {
-    metric_namespace = "Microsoft.Sql/servers/databases"
-    metric_name      = "deadlock"
-    aggregation      = "Count"
-    operator         = "GreaterThanOrEqual"
-    threshold        = 1
-  }
+#   criteria {
+#     metric_namespace = "Microsoft.Sql/servers/databases"
+#     metric_name      = "deadlock"
+#     aggregation      = "Count"
+#     operator         = "GreaterThanOrEqual"
+#     threshold        = 1
+#   }
 
-  action {
-    action_group_id = var.action_group_ids.bo_appeals_tech
-  }
+#   action {
+#     action_group_id = var.action_group_ids.bo_appeals_tech
+#   }
 
-  tags = local.tags
-}
+#   tags = local.tags
+# }

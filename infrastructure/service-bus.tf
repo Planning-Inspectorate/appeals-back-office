@@ -1,3 +1,5 @@
+# May not be needed...
+
 # resource "azurerm_servicebus_namespace" "back_office" {
 #   name                          = "pins-sb-${local.service_name}-${local.resource_suffix}"
 #   location                      = azurerm_resource_group.back_office_stack.location
@@ -58,79 +60,7 @@
 #   default_message_ttl = var.service_bus_config.default_topic_ttl
 # }
 
-# # Topics
-# resource "azurerm_servicebus_topic" "nsip_project" {
-#   name                = var.sb_topic_names.applications.events.nsip_project
-#   namespace_id        = azurerm_servicebus_namespace.back_office.id
-#   default_message_ttl = var.service_bus_config.default_topic_ttl
-# }
 
-# resource "azurerm_servicebus_topic" "nsip_project_update" {
-#   name                = var.sb_topic_names.applications.events.nsip_project_update
-#   namespace_id        = azurerm_servicebus_namespace.back_office.id
-#   default_message_ttl = var.service_bus_config.default_topic_ttl
-# }
-
-# resource "azurerm_servicebus_topic" "nsip_documents" {
-#   name                = var.sb_topic_names.applications.events.nsip_documents
-#   namespace_id        = azurerm_servicebus_namespace.back_office.id
-#   default_message_ttl = var.service_bus_config.default_topic_ttl
-# }
-
-# resource "azurerm_servicebus_topic" "folders" {
-#   name                = var.sb_topic_names.applications.events.folders
-#   namespace_id        = azurerm_servicebus_namespace.back_office.id
-#   default_message_ttl = var.service_bus_config.default_topic_ttl
-# }
-
-# resource "azurerm_servicebus_topic" "nsip_subscription" {
-#   name                = var.sb_topic_names.applications.events.nsip_subscription
-#   namespace_id        = azurerm_servicebus_namespace.back_office.id
-#   default_message_ttl = var.service_bus_config.default_topic_ttl
-# }
-
-# resource "azurerm_servicebus_topic" "nsip_exam_timetable" {
-#   name                = var.sb_topic_names.applications.events.nsip_exam_timetable
-#   namespace_id        = azurerm_servicebus_namespace.back_office.id
-#   default_message_ttl = var.service_bus_config.default_topic_ttl
-# }
-
-# resource "azurerm_servicebus_topic" "nsip_representation" {
-#   name                = var.sb_topic_names.applications.events.nsip_representation
-#   namespace_id        = azurerm_servicebus_namespace.back_office.id
-#   default_message_ttl = var.service_bus_config.default_topic_ttl
-# }
-
-# resource "azurerm_servicebus_topic" "nsip_s51_advice" {
-#   name                = var.sb_topic_names.applications.events.nsip_s51_advice
-#   namespace_id        = azurerm_servicebus_namespace.back_office.id
-#   default_message_ttl = var.service_bus_config.default_topic_ttl
-# }
-
-# # Commands
-# resource "azurerm_servicebus_topic" "register_nsip_subscription" {
-#   name                = var.sb_topic_names.applications.commands.register_nsip_subscription
-#   namespace_id        = azurerm_servicebus_namespace.back_office.id
-#   default_message_ttl = var.service_bus_config.default_topic_ttl
-# }
-
-# resource "azurerm_servicebus_topic" "register_representation" {
-#   name                = var.sb_topic_names.applications.commands.register_representation
-#   namespace_id        = azurerm_servicebus_namespace.back_office.id
-#   default_message_ttl = var.service_bus_config.default_topic_ttl
-# }
-
-# resource "azurerm_servicebus_topic" "deadline_submission_topic" {
-#   name                = var.sb_topic_names.applications.commands.deadline_submission_topic
-#   namespace_id        = azurerm_servicebus_namespace.back_office.id
-#   default_message_ttl = var.service_bus_config.default_topic_ttl
-# }
-
-# resource "azurerm_servicebus_topic" "deadline_submission_result" {
-#   name                = var.sb_topic_names.applications.commands.deadline_submission_result
-#   namespace_id        = azurerm_servicebus_namespace.back_office.id
-#   default_message_ttl = var.service_bus_config.default_topic_ttl
-# }
 
 # # Appeals FO Producers (Commands)
 # resource "azurerm_servicebus_topic" "appeal_fo_appellant_submission" {
@@ -169,3 +99,78 @@
 #   namespace_id        = azurerm_servicebus_namespace.back_office.id
 #   default_message_ttl = var.service_bus_config.default_topic_ttl
 # }
+
+# # Taken out as marked as not needed in the spreadsheet
+# # Topics
+# # resource "azurerm_servicebus_topic" "nsip_project" {
+# #   name                = var.sb_topic_names.applications.events.nsip_project
+# #   namespace_id        = azurerm_servicebus_namespace.back_office.id
+# #   default_message_ttl = var.service_bus_config.default_topic_ttl
+# # }
+
+# # resource "azurerm_servicebus_topic" "nsip_project_update" {
+# #   name                = var.sb_topic_names.applications.events.nsip_project_update
+# #   namespace_id        = azurerm_servicebus_namespace.back_office.id
+# #   default_message_ttl = var.service_bus_config.default_topic_ttl
+# # }
+
+# # resource "azurerm_servicebus_topic" "nsip_documents" {
+# #   name                = var.sb_topic_names.applications.events.nsip_documents
+# #   namespace_id        = azurerm_servicebus_namespace.back_office.id
+# #   default_message_ttl = var.service_bus_config.default_topic_ttl
+# # }
+
+# # resource "azurerm_servicebus_topic" "folders" {
+# #   name                = var.sb_topic_names.applications.events.folders
+# #   namespace_id        = azurerm_servicebus_namespace.back_office.id
+# #   default_message_ttl = var.service_bus_config.default_topic_ttl
+# # }
+
+# # resource "azurerm_servicebus_topic" "nsip_subscription" {
+# #   name                = var.sb_topic_names.applications.events.nsip_subscription
+# #   namespace_id        = azurerm_servicebus_namespace.back_office.id
+# #   default_message_ttl = var.service_bus_config.default_topic_ttl
+# # }
+
+# # resource "azurerm_servicebus_topic" "nsip_exam_timetable" {
+# #   name                = var.sb_topic_names.applications.events.nsip_exam_timetable
+# #   namespace_id        = azurerm_servicebus_namespace.back_office.id
+# #   default_message_ttl = var.service_bus_config.default_topic_ttl
+# # }
+
+# # resource "azurerm_servicebus_topic" "nsip_representation" {
+# #   name                = var.sb_topic_names.applications.events.nsip_representation
+# #   namespace_id        = azurerm_servicebus_namespace.back_office.id
+# #   default_message_ttl = var.service_bus_config.default_topic_ttl
+# # }
+
+# # resource "azurerm_servicebus_topic" "nsip_s51_advice" {
+# #   name                = var.sb_topic_names.applications.events.nsip_s51_advice
+# #   namespace_id        = azurerm_servicebus_namespace.back_office.id
+# #   default_message_ttl = var.service_bus_config.default_topic_ttl
+# # }
+
+# # # Commands
+# # resource "azurerm_servicebus_topic" "register_nsip_subscription" {
+# #   name                = var.sb_topic_names.applications.commands.register_nsip_subscription
+# #   namespace_id        = azurerm_servicebus_namespace.back_office.id
+# #   default_message_ttl = var.service_bus_config.default_topic_ttl
+# # }
+
+# # resource "azurerm_servicebus_topic" "register_representation" {
+# #   name                = var.sb_topic_names.applications.commands.register_representation
+# #   namespace_id        = azurerm_servicebus_namespace.back_office.id
+# #   default_message_ttl = var.service_bus_config.default_topic_ttl
+# # }
+
+# # resource "azurerm_servicebus_topic" "deadline_submission_topic" {
+# #   name                = var.sb_topic_names.applications.commands.deadline_submission_topic
+# #   namespace_id        = azurerm_servicebus_namespace.back_office.id
+# #   default_message_ttl = var.service_bus_config.default_topic_ttl
+# # }
+
+# # resource "azurerm_servicebus_topic" "deadline_submission_result" {
+# #   name                = var.sb_topic_names.applications.commands.deadline_submission_result
+# #   namespace_id        = azurerm_servicebus_namespace.back_office.id
+# #   default_message_ttl = var.service_bus_config.default_topic_ttl
+# # }
