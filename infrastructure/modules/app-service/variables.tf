@@ -88,16 +88,16 @@ variable "action_group_ids_map" {
   type        = map(string)
 }
 
-variable "action_group_names" {
-  description = "The names of the Azure Monitor action groups for different alert types"
-  type = object({
-    bo_appeals_tech            = string,
-    bo_appeals_service_manager = string,
-    iap                        = string,
-    its                        = string,
-    info_sec                   = string
-  })
-}
+# variable "action_group_names" {
+#   description = "The names of the Azure Monitor action groups for different alert types"
+#   type = object({
+#     bo_appeals_tech            = string,
+#     bo_appeals_service_manager = string,
+#     iap                        = string,
+#     its                        = string,
+#     info_sec                   = string
+#   })
+# }
 
 # Resources
 
@@ -284,4 +284,3 @@ variable "bo_appeals_document_container_name" {
   type        = string
   default     = "bo-appeals-documents"
 }
-
