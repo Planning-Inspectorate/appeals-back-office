@@ -1,17 +1,17 @@
 # Put vars in alphabetical order a-z
 
-variable "action_group_names" {
-  description = "The names of the Azure Monitor action groups for different alert types"
-  type = object({
-    bo_appeals_tech                 = string,
-    bo_appeals_service_manager      = string,
-    bo_applications_tech            = string,
-    bo_applications_service_manager = string,
-    iap                             = string,
-    its                             = string,
-    info_sec                        = string
-  })
-}
+# variable "action_group_names" {
+#   description = "The names of the Azure Monitor action groups for different alert types"
+#   type = object({
+#     bo_appeals_tech                 = string,
+#     bo_appeals_service_manager      = string,
+#     bo_applications_tech            = string,
+#     bo_applications_service_manager = string,
+#     iap                             = string,
+#     its                             = string,
+#     info_sec                        = string
+#   })
+# }
 
 variable "database_public_access_enabled" {
   description = "A switch indicating if databases should have public access enabled"
