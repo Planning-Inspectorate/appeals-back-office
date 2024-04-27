@@ -17,6 +17,7 @@ import changeLpaReferenceRouter from '../change-lpa-reference/change-lpa-referen
 import inspectorAccessRouter from '../inspector-access/inspector-access.router.js';
 import serviceUserRouter from '../service-user/service-user.router.js';
 import safetyRisksRouter from '../safety-risks/safety-risks.router.js';
+import siteAddressRouter from '../address/address.router.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -27,6 +28,7 @@ router.use('/lpa-reference', changeLpaReferenceRouter);
 router.use('/inspector-access', inspectorAccessRouter);
 router.use('/safety-risks', safetyRisksRouter);
 router.use('/service-user', serviceUserRouter);
+router.use('/site-address', siteAddressRouter);
 
 router
 	.route('/')
