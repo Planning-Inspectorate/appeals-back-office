@@ -700,6 +700,7 @@ describe('appeals routes', () => {
 					appealId: householdAppeal.id,
 					appealReference: householdAppeal.reference,
 					appealSite: {
+						addressId: householdAppeal.address.id,
 						addressLine1: householdAppeal.address.addressLine1,
 						addressLine2: householdAppeal.address.addressLine2,
 						town: householdAppeal.address.addressTown,
@@ -810,6 +811,7 @@ describe('appeals routes', () => {
 					appealId: fullPlanningAppeal.id,
 					appealReference: fullPlanningAppeal.reference,
 					appealSite: {
+						addressId: fullPlanningAppeal.address.id,
 						addressLine1: fullPlanningAppeal.address.addressLine1,
 						addressLine2: fullPlanningAppeal.address.addressLine2,
 						town: fullPlanningAppeal.address.addressTown,
@@ -1412,6 +1414,7 @@ describe('appeals routes', () => {
 					appealId: householdAppeal.id,
 					appealReference: householdAppeal.reference,
 					appealSite: {
+						addressId: householdAppeal.address.id,
 						addressLine1: householdAppeal.address.addressLine1,
 						addressLine2: householdAppeal.address.addressLine2,
 						town: householdAppeal.address.addressTown,
@@ -1522,6 +1525,7 @@ describe('appeals routes', () => {
 					appealId: fullPlanningAppeal.id,
 					appealReference: fullPlanningAppeal.reference,
 					appealSite: {
+						addressId: fullPlanningAppeal.address.id,
 						addressLine1: fullPlanningAppeal.address.addressLine1,
 						addressLine2: fullPlanningAppeal.address.addressLine2,
 						town: fullPlanningAppeal.address.addressTown,

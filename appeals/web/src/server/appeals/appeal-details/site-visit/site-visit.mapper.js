@@ -8,6 +8,7 @@ import {
 	hourMinuteToApiDateString,
 	dayMonthYearToApiDateString
 } from '#lib/dates.js';
+import { appealSiteToAddressString } from '#lib/address-formatter.js';
 
 /**
  * @typedef {'unaccompanied'|'accompanied'|'accessRequired'} WebSiteVisitType
@@ -283,7 +284,7 @@ export function stringIsSiteVisitConfirmationPageType(pageType) {
 export function scheduleOrManageSiteVisitConfirmationPage(pageType, siteVisit, appealDetails) {
 	const formattedSiteVisitType = siteVisit.visitType.toLowerCase();
 	const formattedSiteAddress = appealDetails?.appealSite
-		? Object.values(appealDetails?.appealSite)?.join(', ')
+		? appealSiteToAddressString(appealDetails.appealSite)
 		: 'Address not known';
 	const formattedSiteVisitDate = dateToDisplayDate(siteVisit.visitDate);
 	const timeText =

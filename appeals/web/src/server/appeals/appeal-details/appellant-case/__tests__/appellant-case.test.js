@@ -203,6 +203,35 @@ describe('appellant-case', () => {
 			expect(notificationBannerElementHTML).toMatchSnapshot();
 			expect(notificationBannerElementHTML).toContain('Agent details updated');
 		});
+
+		it('should render a "Site updated" notification when the site address has been updated', async () => {
+			const appealId = appealData.appealId.toString();
+			nock('http://test/').patch(`/appeals/${appealId}/addresses/1`).reply(200, {
+				addressLine1: '1 Grove Cottage',
+				county: 'Devon',
+				postcode: 'NR35 2ND',
+				town: 'Woodton'
+			});
+			nock('http://test/')
+				.get(`/appeals/${appealData.appealId}/appellant-case`)
+				.reply(200, appealData);
+
+			await request.post(`${baseUrl}/${appealId}/appellant-case/site-address/change/1`).send({
+				addressLine1: '1 Grove Cottage',
+				county: 'Devon',
+				postCode: 'NR35 2ND',
+				town: 'Woodton'
+			});
+
+			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
+			const notificationBannerElementHTML = parseHtml(response.text, {
+				rootElement: notificationBannerElement
+			}).innerHTML;
+
+			expect(notificationBannerElementHTML).toMatchSnapshot();
+			expect(notificationBannerElementHTML).toContain('Success');
+			expect(notificationBannerElementHTML).toContain('Site address updated');
+		});
 	});
 
 	describe('GET /appellant-case with unchecked documents', () => {

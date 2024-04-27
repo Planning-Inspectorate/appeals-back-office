@@ -76,6 +76,7 @@ export const appealData = {
 	appealId: 1,
 	appealReference: 'APP/Q9999/D/21/351062',
 	appealSite: {
+		addressId: 1,
 		addressLine1: '21 The Pavement',
 		county: 'Wandsworth',
 		postCode: 'SW4 0HY'

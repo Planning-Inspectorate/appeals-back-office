@@ -134,7 +134,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 						{
 							text: 'Change',
 							visuallyHiddenText: 'Site address',
-							href: `${currentRoute}/change-appeal-details/site-address`
+							href: `${currentRoute}/site-address/change/${appealDetails.appealSite.addressId}`
 						}
 					]
 				}
