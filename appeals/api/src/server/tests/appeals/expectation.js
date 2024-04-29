@@ -103,6 +103,7 @@ export const baseExpectedLPAQuestionnaireResponse = (appeal) => ({
 	meetsOrExceedsThresholdOrCriteriaInColumn2:
 		appeal.lpaQuestionnaire?.meetsOrExceedsThresholdOrCriteriaInColumn2,
 	procedureType: appeal.lpaQuestionnaire?.procedureType?.name,
+	receivedAt: appeal.lpaQuestionnaire?.receivedAt,
 	scheduleType: appeal.lpaQuestionnaire?.scheduleType?.name,
 	siteWithinGreenBelt: appeal.lpaQuestionnaire?.siteWithinGreenBelt,
 	otherAppeals: [],

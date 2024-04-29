@@ -468,7 +468,7 @@ exports[`appeal-details GET /:appealId should not render action links to the man
                             <tr class="govuk-table__row">
                                 <th scope="col" class="govuk-table__header">Documentation</th>
                                 <th scope="col" class="govuk-table__header">Status</th>
-                                <th scope="col" class="govuk-table__header">Due date</th>
+                                <th scope="col" class="govuk-table__header">Received</th>
                                 <th scope="col" class="govuk-table__header">Action</th>
                             </tr>
                         </thead>
@@ -476,14 +476,14 @@ exports[`appeal-details GET /:appealId should not render action links to the man
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header">Appellant case</th>
                                 <td class="govuk-table__cell">Received</td>
-                                <td class="govuk-table__cell">2 October 2024</td>
+                                <td class="govuk-table__cell">2 August 2024</td>
                                 <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/appellant-case" class="govuk-link">Review <span class="govuk-visually-hidden">appellant case</span></a>
                                 </td>
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header">LPA questionnaire</th>
                                 <td class="govuk-table__cell">Not received</td>
-                                <td class="govuk-table__cell">11 October 2024</td>
+                                <td class="govuk-table__cell">2 August 2024</td>
                                 <td class="govuk-table__cell"></td>
                             </tr>
                             <tr class="govuk-table__row">
@@ -788,7 +788,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                             <tr class="govuk-table__row">
                                 <th scope="col" class="govuk-table__header">Documentation</th>
                                 <th scope="col" class="govuk-table__header">Status</th>
-                                <th scope="col" class="govuk-table__header">Due date</th>
+                                <th scope="col" class="govuk-table__header">Received</th>
                                 <th scope="col" class="govuk-table__header">Action</th>
                             </tr>
                         </thead>
@@ -796,14 +796,14 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header">Appellant case</th>
                                 <td class="govuk-table__cell">Received</td>
-                                <td class="govuk-table__cell">2 October 2024</td>
+                                <td class="govuk-table__cell">2 August 2024</td>
                                 <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/2/appellant-case" class="govuk-link">Review <span class="govuk-visually-hidden">appellant case</span></a>
                                 </td>
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header">LPA questionnaire</th>
                                 <td class="govuk-table__cell">Not received</td>
-                                <td class="govuk-table__cell">11 October 2024</td>
+                                <td class="govuk-table__cell">2 August 2024</td>
                                 <td class="govuk-table__cell"></td>
                             </tr>
                             <tr class="govuk-table__row">
@@ -1103,7 +1103,7 @@ exports[`appeal-details GET /:appealId should render a Issue a decision action b
                             <tr class="govuk-table__row">
                                 <th scope="col" class="govuk-table__header">Documentation</th>
                                 <th scope="col" class="govuk-table__header">Status</th>
-                                <th scope="col" class="govuk-table__header">Due date</th>
+                                <th scope="col" class="govuk-table__header">Received</th>
                                 <th scope="col" class="govuk-table__header">Action</th>
                             </tr>
                         </thead>
@@ -1111,14 +1111,14 @@ exports[`appeal-details GET /:appealId should render a Issue a decision action b
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header">Appellant case</th>
                                 <td class="govuk-table__cell">Received</td>
-                                <td class="govuk-table__cell">2 October 2024</td>
+                                <td class="govuk-table__cell">2 August 2024</td>
                                 <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/2/appellant-case" class="govuk-link">Review <span class="govuk-visually-hidden">appellant case</span></a>
                                 </td>
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header">LPA questionnaire</th>
                                 <td class="govuk-table__cell">Not received</td>
-                                <td class="govuk-table__cell">11 October 2024</td>
+                                <td class="govuk-table__cell">2 August 2024</td>
                                 <td class="govuk-table__cell"></td>
                             </tr>
                             <tr class="govuk-table__row">
@@ -1413,7 +1413,7 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                             <tr class="govuk-table__row">
                                 <th scope="col" class="govuk-table__header">Documentation</th>
                                 <th scope="col" class="govuk-table__header">Status</th>
-                                <th scope="col" class="govuk-table__header">Due date</th>
+                                <th scope="col" class="govuk-table__header">Received</th>
                                 <th scope="col" class="govuk-table__header">Action</th>
                             </tr>
                         </thead>
@@ -1421,14 +1421,14 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header">Appellant case</th>
                                 <td class="govuk-table__cell">Received</td>
-                                <td class="govuk-table__cell">2 October 2024</td>
+                                <td class="govuk-table__cell">2 August 2024</td>
                                 <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/appellant-case" class="govuk-link">Review <span class="govuk-visually-hidden">appellant case</span></a>
                                 </td>
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header">LPA questionnaire</th>
                                 <td class="govuk-table__cell">Not received</td>
-                                <td class="govuk-table__cell">11 October 2024</td>
+                                <td class="govuk-table__cell">2 August 2024</td>
                                 <td class="govuk-table__cell"></td>
                             </tr>
                             <tr class="govuk-table__row">
@@ -1725,7 +1725,7 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                             <tr class="govuk-table__row">
                                 <th scope="col" class="govuk-table__header">Documentation</th>
                                 <th scope="col" class="govuk-table__header">Status</th>
-                                <th scope="col" class="govuk-table__header">Due date</th>
+                                <th scope="col" class="govuk-table__header">Received</th>
                                 <th scope="col" class="govuk-table__header">Action</th>
                             </tr>
                         </thead>
@@ -1733,14 +1733,14 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header">Appellant case</th>
                                 <td class="govuk-table__cell">Received</td>
-                                <td class="govuk-table__cell">2 October 2024</td>
+                                <td class="govuk-table__cell">2 August 2024</td>
                                 <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/appellant-case" class="govuk-link">Review <span class="govuk-visually-hidden">appellant case</span></a>
                                 </td>
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header">LPA questionnaire</th>
                                 <td class="govuk-table__cell">Not received</td>
-                                <td class="govuk-table__cell">11 October 2024</td>
+                                <td class="govuk-table__cell">2 August 2024</td>
                                 <td class="govuk-table__cell"></td>
                             </tr>
                             <tr class="govuk-table__row">
@@ -2051,7 +2051,7 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
                             <tr class="govuk-table__row">
                                 <th scope="col" class="govuk-table__header">Documentation</th>
                                 <th scope="col" class="govuk-table__header">Status</th>
-                                <th scope="col" class="govuk-table__header">Due date</th>
+                                <th scope="col" class="govuk-table__header">Received</th>
                                 <th scope="col" class="govuk-table__header">Action</th>
                             </tr>
                         </thead>
@@ -2059,14 +2059,14 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header">Appellant case</th>
                                 <td class="govuk-table__cell">Received</td>
-                                <td class="govuk-table__cell">2 October 2024</td>
+                                <td class="govuk-table__cell">2 August 2024</td>
                                 <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/appellant-case" class="govuk-link">Review <span class="govuk-visually-hidden">appellant case</span></a>
                                 </td>
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header">LPA questionnaire</th>
                                 <td class="govuk-table__cell">Not received</td>
-                                <td class="govuk-table__cell">11 October 2024</td>
+                                <td class="govuk-table__cell">2 August 2024</td>
                                 <td class="govuk-table__cell"></td>
                             </tr>
                             <tr class="govuk-table__row">
@@ -2351,7 +2351,7 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                             <tr class="govuk-table__row">
                                 <th scope="col" class="govuk-table__header">Documentation</th>
                                 <th scope="col" class="govuk-table__header">Status</th>
-                                <th scope="col" class="govuk-table__header">Due date</th>
+                                <th scope="col" class="govuk-table__header">Received</th>
                                 <th scope="col" class="govuk-table__header">Action</th>
                             </tr>
                         </thead>
@@ -2359,14 +2359,14 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header">Appellant case</th>
                                 <td class="govuk-table__cell">Received</td>
-                                <td class="govuk-table__cell">2 October 2024</td>
+                                <td class="govuk-table__cell">2 August 2024</td>
                                 <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/appellant-case" class="govuk-link">Review <span class="govuk-visually-hidden">appellant case</span></a>
                                 </td>
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header">LPA questionnaire</th>
                                 <td class="govuk-table__cell">Not received</td>
-                                <td class="govuk-table__cell">11 October 2024</td>
+                                <td class="govuk-table__cell">2 August 2024</td>
                                 <td class="govuk-table__cell"></td>
                             </tr>
                             <tr class="govuk-table__row">
@@ -2651,7 +2651,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             <tr class="govuk-table__row">
                                 <th scope="col" class="govuk-table__header">Documentation</th>
                                 <th scope="col" class="govuk-table__header">Status</th>
-                                <th scope="col" class="govuk-table__header">Due date</th>
+                                <th scope="col" class="govuk-table__header">Received</th>
                                 <th scope="col" class="govuk-table__header">Action</th>
                             </tr>
                         </thead>
@@ -2659,7 +2659,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header">Appellant case</th>
                                 <td class="govuk-table__cell">Incomplete</td>
-                                <td class="govuk-table__cell">1 February 2099</td>
+                                <td class="govuk-table__cell"></td>
                                 <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/2/appellant-case" class="govuk-link">Review <span class="govuk-visually-hidden">appellant case</span></a>
                                 </td>
                             </tr>
@@ -2952,7 +2952,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             <tr class="govuk-table__row">
                                 <th scope="col" class="govuk-table__header">Documentation</th>
                                 <th scope="col" class="govuk-table__header">Status</th>
-                                <th scope="col" class="govuk-table__header">Due date</th>
+                                <th scope="col" class="govuk-table__header">Received</th>
                                 <th scope="col" class="govuk-table__header">Action</th>
                             </tr>
                         </thead>
@@ -2960,7 +2960,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header">Appellant case</th>
                                 <td class="govuk-table__cell">Incomplete</td>
-                                <td class="govuk-table__cell">15 February 2024</td>
+                                <td class="govuk-table__cell"></td>
                                 <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/2/appellant-case" class="govuk-link">Review <span class="govuk-visually-hidden">appellant case</span></a>
                                 </td>
                             </tr>
@@ -3253,7 +3253,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             <tr class="govuk-table__row">
                                 <th scope="col" class="govuk-table__header">Documentation</th>
                                 <th scope="col" class="govuk-table__header">Status</th>
-                                <th scope="col" class="govuk-table__header">Due date</th>
+                                <th scope="col" class="govuk-table__header">Received</th>
                                 <th scope="col" class="govuk-table__header">Action</th>
                             </tr>
                         </thead>
@@ -3261,7 +3261,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header">Appellant case</th>
                                 <td class="govuk-table__cell">Overdue</td>
-                                <td class="govuk-table__cell">1 February 2024</td>
+                                <td class="govuk-table__cell"></td>
                                 <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/2/appellant-case" class="govuk-link">Review <span class="govuk-visually-hidden">appellant case</span></a>
                                 </td>
                             </tr>
@@ -3567,7 +3567,7 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                             <tr class="govuk-table__row">
                                 <th scope="col" class="govuk-table__header">Documentation</th>
                                 <th scope="col" class="govuk-table__header">Status</th>
-                                <th scope="col" class="govuk-table__header">Due date</th>
+                                <th scope="col" class="govuk-table__header">Received</th>
                                 <th scope="col" class="govuk-table__header">Action</th>
                             </tr>
                         </thead>
@@ -3575,14 +3575,14 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header">Appellant case</th>
                                 <td class="govuk-table__cell">Received</td>
-                                <td class="govuk-table__cell">2 October 2024</td>
+                                <td class="govuk-table__cell">2 August 2024</td>
                                 <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/appellant-case" class="govuk-link">Review <span class="govuk-visually-hidden">appellant case</span></a>
                                 </td>
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header">LPA questionnaire</th>
                                 <td class="govuk-table__cell">Not received</td>
-                                <td class="govuk-table__cell">11 October 2024</td>
+                                <td class="govuk-table__cell">2 August 2024</td>
                                 <td class="govuk-table__cell"></td>
                             </tr>
                             <tr class="govuk-table__row">
@@ -4020,7 +4020,7 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                             <tr class="govuk-table__row">
                                 <th scope="col" class="govuk-table__header">Documentation</th>
                                 <th scope="col" class="govuk-table__header">Status</th>
-                                <th scope="col" class="govuk-table__header">Due date</th>
+                                <th scope="col" class="govuk-table__header">Received</th>
                                 <th scope="col" class="govuk-table__header">Action</th>
                             </tr>
                         </thead>
@@ -4028,14 +4028,14 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header">Appellant case</th>
                                 <td class="govuk-table__cell">Received</td>
-                                <td class="govuk-table__cell">2 October 2024</td>
+                                <td class="govuk-table__cell">2 August 2024</td>
                                 <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/appellant-case" class="govuk-link">Review <span class="govuk-visually-hidden">appellant case</span></a>
                                 </td>
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header">LPA questionnaire</th>
                                 <td class="govuk-table__cell">Not received</td>
-                                <td class="govuk-table__cell">11 October 2024</td>
+                                <td class="govuk-table__cell">2 August 2024</td>
                                 <td class="govuk-table__cell"></td>
                             </tr>
                             <tr class="govuk-table__row">
@@ -4320,7 +4320,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             <tr class="govuk-table__row">
                                 <th scope="col" class="govuk-table__header">Documentation</th>
                                 <th scope="col" class="govuk-table__header">Status</th>
-                                <th scope="col" class="govuk-table__header">Due date</th>
+                                <th scope="col" class="govuk-table__header">Received</th>
                                 <th scope="col" class="govuk-table__header">Action</th>
                             </tr>
                         </thead>
@@ -4328,14 +4328,14 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header">Appellant case</th>
                                 <td class="govuk-table__cell">Received</td>
-                                <td class="govuk-table__cell">2 October 2024</td>
+                                <td class="govuk-table__cell">2 August 2024</td>
                                 <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/appellant-case" class="govuk-link">Review <span class="govuk-visually-hidden">appellant case</span></a>
                                 </td>
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header">LPA questionnaire</th>
                                 <td class="govuk-table__cell">Not received</td>
-                                <td class="govuk-table__cell">11 October 2024</td>
+                                <td class="govuk-table__cell">2 August 2024</td>
                                 <td class="govuk-table__cell"></td>
                             </tr>
                             <tr class="govuk-table__row">
@@ -4620,7 +4620,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             <tr class="govuk-table__row">
                                 <th scope="col" class="govuk-table__header">Documentation</th>
                                 <th scope="col" class="govuk-table__header">Status</th>
-                                <th scope="col" class="govuk-table__header">Due date</th>
+                                <th scope="col" class="govuk-table__header">Received</th>
                                 <th scope="col" class="govuk-table__header">Action</th>
                             </tr>
                         </thead>
@@ -4628,14 +4628,14 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header">Appellant case</th>
                                 <td class="govuk-table__cell">Received</td>
-                                <td class="govuk-table__cell">2 October 2024</td>
+                                <td class="govuk-table__cell">2 August 2024</td>
                                 <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/3/appellant-case" class="govuk-link">Review <span class="govuk-visually-hidden">appellant case</span></a>
                                 </td>
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header">LPA questionnaire</th>
                                 <td class="govuk-table__cell">Not received</td>
-                                <td class="govuk-table__cell">11 October 2024</td>
+                                <td class="govuk-table__cell">2 August 2024</td>
                                 <td class="govuk-table__cell"></td>
                             </tr>
                             <tr class="govuk-table__row">
@@ -4940,7 +4940,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             <tr class="govuk-table__row">
                                 <th scope="col" class="govuk-table__header">Documentation</th>
                                 <th scope="col" class="govuk-table__header">Status</th>
-                                <th scope="col" class="govuk-table__header">Due date</th>
+                                <th scope="col" class="govuk-table__header">Received</th>
                                 <th scope="col" class="govuk-table__header">Action</th>
                             </tr>
                         </thead>
@@ -4948,14 +4948,14 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header">Appellant case</th>
                                 <td class="govuk-table__cell">Received</td>
-                                <td class="govuk-table__cell">2 October 2024</td>
+                                <td class="govuk-table__cell">2 August 2024</td>
                                 <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/2/appellant-case" class="govuk-link">Review <span class="govuk-visually-hidden">appellant case</span></a>
                                 </td>
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header">LPA questionnaire</th>
                                 <td class="govuk-table__cell">Not received</td>
-                                <td class="govuk-table__cell">11 October 2024</td>
+                                <td class="govuk-table__cell">2 August 2024</td>
                                 <td class="govuk-table__cell"></td>
                             </tr>
                             <tr class="govuk-table__row">
@@ -5225,7 +5225,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             <tr class="govuk-table__row">
                                 <th scope="col" class="govuk-table__header">Documentation</th>
                                 <th scope="col" class="govuk-table__header">Status</th>
-                                <th scope="col" class="govuk-table__header">Due date</th>
+                                <th scope="col" class="govuk-table__header">Received</th>
                                 <th scope="col" class="govuk-table__header">Action</th>
                             </tr>
                         </thead>
@@ -5233,14 +5233,14 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header">Appellant case</th>
                                 <td class="govuk-table__cell">Received</td>
-                                <td class="govuk-table__cell">2 October 2024</td>
+                                <td class="govuk-table__cell">2 August 2024</td>
                                 <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/2/appellant-case" class="govuk-link">Review <span class="govuk-visually-hidden">appellant case</span></a>
                                 </td>
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header">LPA questionnaire</th>
                                 <td class="govuk-table__cell">Not received</td>
-                                <td class="govuk-table__cell">11 October 2024</td>
+                                <td class="govuk-table__cell">2 August 2024</td>
                                 <td class="govuk-table__cell"></td>
                             </tr>
                             <tr class="govuk-table__row">
@@ -5666,7 +5666,7 @@ exports[`appeal-details should not render a back button 1`] = `
                                         <tr class="govuk-table__row">
                                             <th scope="col" class="govuk-table__header">Documentation</th>
                                             <th scope="col" class="govuk-table__header">Status</th>
-                                            <th scope="col" class="govuk-table__header">Due date</th>
+                                            <th scope="col" class="govuk-table__header">Received</th>
                                             <th scope="col" class="govuk-table__header">Action</th>
                                         </tr>
                                     </thead>
@@ -5674,14 +5674,14 @@ exports[`appeal-details should not render a back button 1`] = `
                                         <tr class="govuk-table__row">
                                             <th scope="row" class="govuk-table__header">Appellant case</th>
                                             <td class="govuk-table__cell">Received</td>
-                                            <td class="govuk-table__cell">2 October 2024</td>
+                                            <td class="govuk-table__cell">2 August 2024</td>
                                             <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/2/appellant-case" class="govuk-link">Review <span class="govuk-visually-hidden">appellant case</span></a>
                                             </td>
                                         </tr>
                                         <tr class="govuk-table__row">
                                             <th scope="row" class="govuk-table__header">LPA questionnaire</th>
                                             <td class="govuk-table__cell">Not received</td>
-                                            <td class="govuk-table__cell">11 October 2024</td>
+                                            <td class="govuk-table__cell">2 August 2024</td>
                                             <td class="govuk-table__cell"></td>
                                         </tr>
                                         <tr class="govuk-table__row">

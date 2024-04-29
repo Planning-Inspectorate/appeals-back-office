@@ -1162,7 +1162,7 @@ export async function initialiseAndMapAppealData(
 					)
 				},
 				{
-					text: dateToDisplayDate(appealDetails?.documentationSummary?.appellantCase?.dueDate)
+					text: dateToDisplayDate(appealDetails?.documentationSummary?.appellantCase?.receivedAt)
 				},
 				{
 					html:
@@ -1188,7 +1188,7 @@ export async function initialiseAndMapAppealData(
 					)
 				},
 				{
-					text: dateToDisplayDate(appealDetails?.documentationSummary?.lpaQuestionnaire?.dueDate)
+					text: dateToDisplayDate(appealDetails?.documentationSummary?.lpaQuestionnaire?.receivedAt)
 				},
 				{
 					html:
