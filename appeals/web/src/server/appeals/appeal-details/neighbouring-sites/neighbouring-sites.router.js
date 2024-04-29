@@ -8,7 +8,11 @@ const router = createRouter({ mergeParams: true });
 router
 	.route('/add/:source')
 	.get(asyncRoute(controller.getAddNeighbouringSite))
-	.post(validators.validateAddNeighbouringSite, asyncRoute(controller.postAddNeighbouringSite));
+	.post(
+		validators.validateAddNeighbouringSite,
+		validators.validatePostCode,
+		asyncRoute(controller.postAddNeighbouringSite)
+	);
 
 router
 	.route('/add/:source/check-and-confirm')
@@ -33,7 +37,11 @@ router
 router
 	.route('/change/site/:siteId')
 	.get(asyncRoute(controller.getChangeNeighbouringSite))
-	.post(validators.validateAddNeighbouringSite, asyncRoute(controller.postChangeNeighbouringSite));
+	.post(
+		validators.validateAddNeighbouringSite,
+		validators.validatePostCode,
+		asyncRoute(controller.postChangeNeighbouringSite)
+	);
 
 router
 	.route('/change/site/:siteId/check-and-confirm')

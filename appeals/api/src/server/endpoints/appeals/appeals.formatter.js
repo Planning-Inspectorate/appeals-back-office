@@ -138,7 +138,7 @@ const formatAppeal = (
 				: null,
 			appealId: appeal.id,
 			appealReference: appeal.reference,
-			appealSite: formatAddress(appeal.address),
+			appealSite: { addressId: appeal.address?.id, ...formatAddress(appeal.address) },
 			neighbouringSites: appeal.neighbouringSites?.map((site) => {
 				return {
 					siteId: site.id,
