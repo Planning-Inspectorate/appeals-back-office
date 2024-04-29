@@ -6,7 +6,7 @@ import { createTestEnvironment } from '#testing/index.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
-const baseUrl = '/appeals-service/appeals-list';
+const baseUrl = '/appeals-service/all-cases';
 const statuses = [
 	'assign_case_officer',
 	'ready_to_start',

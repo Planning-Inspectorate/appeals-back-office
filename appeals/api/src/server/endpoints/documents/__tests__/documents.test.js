@@ -25,6 +25,7 @@ import { request } from '../../../app-test.js';
 import joinDateAndTime from '#utils/join-date-and-time.js';
 import {
 	AUDIT_TRAIL_DOCUMENT_REDACTED,
+	AUDIT_TRAIL_DOCUMENT_DATE_CHANGED,
 	AUDIT_TRAIL_DOCUMENT_UPLOADED,
 	ERROR_DOCUMENT_REDACTION_STATUSES_MUST_BE_ONE_OF,
 	ERROR_MUST_BE_CORRECT_DATE_FORMAT,
@@ -111,6 +112,8 @@ describe('/appeals/:appealId/documents', () => {
 
 	describe('PATCH', () => {
 		test('updates multiple documents', async () => {
+			documentCreated.redactionStatus = 3;
+			documentCreated.latestDocumentVersion.dateReceived = '2023-09-23';
 			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 			databaseConnector.documentRedactionStatus.findMany.mockResolvedValue(
 				documentRedactionStatuses
@@ -127,12 +130,23 @@ describe('/appeals/:appealId/documents', () => {
 				.set('azureAdUserId', azureAdUserId);
 
 			expect(databaseConnector.documentVersion.update).toHaveBeenCalledTimes(2);
-			expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(4);
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(3);
 
 			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 				data: {
 					appealId: householdAppeal.id,
 					details: stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_REDACTED, [documentUpdated.name, 1]),
+					loggedAt: expect.any(Date),
+					userId: householdAppeal.caseOfficer.id
+				}
+			});
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+				data: {
+					appealId: householdAppeal.id,
+					details: stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_DATE_CHANGED, [
+						documentUpdated.name,
+						1
+					]),
 					loggedAt: expect.any(Date),
 					userId: householdAppeal.caseOfficer.id
 				}
@@ -349,6 +363,7 @@ describe('/appeals/:appealId/documents', () => {
 			databaseConnector.documentRedactionStatus.findMany.mockResolvedValue(
 				documentRedactionStatuses
 			);
+			databaseConnector.document.findUnique.mockResolvedValue(documentCreated);
 			databaseConnector.user.upsert.mockResolvedValue({
 				id: 1,
 				azureAdUserId
@@ -396,7 +411,7 @@ describe('/appeals/:appealId/documents', () => {
 					}
 				}
 			});
-			expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(6);
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(5);
 			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 				data: {
 					appealId: householdAppeal.id,

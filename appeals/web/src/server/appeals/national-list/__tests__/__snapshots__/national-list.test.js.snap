@@ -51,7 +51,7 @@ exports[`national-list GET / should render national list - 10 pages - all page i
                     </div>
                     <div class="govuk-button-group">
                         <button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button"
-                        id="filters-submit">Apply</button><a class="govuk-link" href="/appeals-service/appeals-list">Clear filter</a>
+                        id="filters-submit">Apply</button><a class="govuk-link" href="/appeals-service/all-cases">Clear filter</a>
                     </div>
                 </form>
             </div>
@@ -90,38 +90,38 @@ exports[`national-list GET / should render national list - 10 pages - all page i
     </table>
     <nav class="govuk-pagination" role="navigation" aria-label="results">
         <ul class="govuk-pagination__list">
-            <li class="govuk-pagination__item govuk-pagination__item--current"><a class="govuk-link govuk-pagination__link" href="/appeals-service/appeals-list?pageSize=30&amp;pageNumber=1"
+            <li class="govuk-pagination__item govuk-pagination__item--current"><a class="govuk-link govuk-pagination__link" href="/appeals-service/all-cases?pageSize=30&amp;pageNumber=1"
                 aria-label="Page 1" aria-current="page"> 1</a>
             </li>
-            <li class="govuk-pagination__item"><a class="govuk-link govuk-pagination__link" href="/appeals-service/appeals-list?pageSize=30&amp;pageNumber=2"
+            <li class="govuk-pagination__item"><a class="govuk-link govuk-pagination__link" href="/appeals-service/all-cases?pageSize=30&amp;pageNumber=2"
                 aria-label="Page 2"> 2</a>
             </li>
-            <li class="govuk-pagination__item"><a class="govuk-link govuk-pagination__link" href="/appeals-service/appeals-list?pageSize=30&amp;pageNumber=3"
+            <li class="govuk-pagination__item"><a class="govuk-link govuk-pagination__link" href="/appeals-service/all-cases?pageSize=30&amp;pageNumber=3"
                 aria-label="Page 3"> 3</a>
             </li>
-            <li class="govuk-pagination__item"><a class="govuk-link govuk-pagination__link" href="/appeals-service/appeals-list?pageSize=30&amp;pageNumber=4"
+            <li class="govuk-pagination__item"><a class="govuk-link govuk-pagination__link" href="/appeals-service/all-cases?pageSize=30&amp;pageNumber=4"
                 aria-label="Page 4"> 4</a>
             </li>
-            <li class="govuk-pagination__item"><a class="govuk-link govuk-pagination__link" href="/appeals-service/appeals-list?pageSize=30&amp;pageNumber=5"
+            <li class="govuk-pagination__item"><a class="govuk-link govuk-pagination__link" href="/appeals-service/all-cases?pageSize=30&amp;pageNumber=5"
                 aria-label="Page 5"> 5</a>
             </li>
-            <li class="govuk-pagination__item"><a class="govuk-link govuk-pagination__link" href="/appeals-service/appeals-list?pageSize=30&amp;pageNumber=6"
+            <li class="govuk-pagination__item"><a class="govuk-link govuk-pagination__link" href="/appeals-service/all-cases?pageSize=30&amp;pageNumber=6"
                 aria-label="Page 6"> 6</a>
             </li>
-            <li class="govuk-pagination__item"><a class="govuk-link govuk-pagination__link" href="/appeals-service/appeals-list?pageSize=30&amp;pageNumber=7"
+            <li class="govuk-pagination__item"><a class="govuk-link govuk-pagination__link" href="/appeals-service/all-cases?pageSize=30&amp;pageNumber=7"
                 aria-label="Page 7"> 7</a>
             </li>
-            <li class="govuk-pagination__item"><a class="govuk-link govuk-pagination__link" href="/appeals-service/appeals-list?pageSize=30&amp;pageNumber=8"
+            <li class="govuk-pagination__item"><a class="govuk-link govuk-pagination__link" href="/appeals-service/all-cases?pageSize=30&amp;pageNumber=8"
                 aria-label="Page 8"> 8</a>
             </li>
-            <li class="govuk-pagination__item"><a class="govuk-link govuk-pagination__link" href="/appeals-service/appeals-list?pageSize=30&amp;pageNumber=9"
+            <li class="govuk-pagination__item"><a class="govuk-link govuk-pagination__link" href="/appeals-service/all-cases?pageSize=30&amp;pageNumber=9"
                 aria-label="Page 9"> 9</a>
             </li>
-            <li class="govuk-pagination__item"><a class="govuk-link govuk-pagination__link" href="/appeals-service/appeals-list?pageSize=30&amp;pageNumber=10"
+            <li class="govuk-pagination__item"><a class="govuk-link govuk-pagination__link" href="/appeals-service/all-cases?pageSize=30&amp;pageNumber=10"
                 aria-label="Page 10"> 10</a>
             </li>
         </ul>
-        <div class="govuk-pagination__next"><a class="govuk-link govuk-pagination__link" href="/appeals-service/appeals-list?pageSize=30&amp;pageNumber=2"
+        <div class="govuk-pagination__next"><a class="govuk-link govuk-pagination__link" href="/appeals-service/all-cases?pageSize=30&amp;pageNumber=2"
             rel="next"><span class="govuk-pagination__link-title">Next</span><svg class="govuk-pagination__icon govuk-pagination__icon--next" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13"><path d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"></path></svg></a>
         </div>
     </nav>
@@ -179,7 +179,7 @@ exports[`national-list GET / should render national list - 15 pages - pagination
                     </div>
                     <div class="govuk-button-group">
                         <button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button"
-                        id="filters-submit">Apply</button><a class="govuk-link" href="/appeals-service/appeals-list">Clear filter</a>
+                        id="filters-submit">Apply</button><a class="govuk-link" href="/appeals-service/all-cases">Clear filter</a>
                     </div>
                 </form>
             </div>
@@ -218,18 +218,18 @@ exports[`national-list GET / should render national list - 15 pages - pagination
     </table>
     <nav class="govuk-pagination" role="navigation" aria-label="results">
         <ul class="govuk-pagination__list">
-            <li class="govuk-pagination__item govuk-pagination__item--current"><a class="govuk-link govuk-pagination__link" href="/appeals-service/appeals-list?pageSize=30&amp;pageNumber=1"
+            <li class="govuk-pagination__item govuk-pagination__item--current"><a class="govuk-link govuk-pagination__link" href="/appeals-service/all-cases?pageSize=30&amp;pageNumber=1"
                 aria-label="Page 1" aria-current="page"> 1</a>
             </li>
-            <li class="govuk-pagination__item"><a class="govuk-link govuk-pagination__link" href="/appeals-service/appeals-list?pageSize=30&amp;pageNumber=2"
+            <li class="govuk-pagination__item"><a class="govuk-link govuk-pagination__link" href="/appeals-service/all-cases?pageSize=30&amp;pageNumber=2"
                 aria-label="Page 2"> 2</a>
             </li>
             <li class="govuk-pagination__item govuk-pagination__item--ellipses">&ctdot;</li>
-            <li class="govuk-pagination__item"><a class="govuk-link govuk-pagination__link" href="/appeals-service/appeals-list?pageSize=30&amp;pageNumber=15"
+            <li class="govuk-pagination__item"><a class="govuk-link govuk-pagination__link" href="/appeals-service/all-cases?pageSize=30&amp;pageNumber=15"
                 aria-label="Page 15"> 15</a>
             </li>
         </ul>
-        <div class="govuk-pagination__next"><a class="govuk-link govuk-pagination__link" href="/appeals-service/appeals-list?pageSize=30&amp;pageNumber=2"
+        <div class="govuk-pagination__next"><a class="govuk-link govuk-pagination__link" href="/appeals-service/all-cases?pageSize=30&amp;pageNumber=2"
             rel="next"><span class="govuk-pagination__link-title">Next</span><svg class="govuk-pagination__icon govuk-pagination__icon--next" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13"><path d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"></path></svg></a>
         </div>
     </nav>
@@ -287,7 +287,7 @@ exports[`national-list GET / should render national list - no pagination 1`] = `
                     </div>
                     <div class="govuk-button-group">
                         <button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button"
-                        id="filters-submit">Apply</button><a class="govuk-link" href="/appeals-service/appeals-list">Clear filter</a>
+                        id="filters-submit">Apply</button><a class="govuk-link" href="/appeals-service/all-cases">Clear filter</a>
                     </div>
                 </form>
             </div>
@@ -381,7 +381,7 @@ exports[`national-list GET / should render national list - no search term - filt
                     </div>
                     <div class="govuk-button-group">
                         <button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button"
-                        id="filters-submit">Apply</button><a class="govuk-link" href="/appeals-service/appeals-list">Clear filter</a>
+                        id="filters-submit">Apply</button><a class="govuk-link" href="/appeals-service/all-cases">Clear filter</a>
                     </div>
                 </form>
             </div>
@@ -430,7 +430,7 @@ exports[`national-list GET / should render national list - search term - filter 
                 </div>
                 <div class="govuk-button-group">
                     <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
-                    id="filters-submit">Search</button><a class="govuk-link" href="/appeals-service/appeals-list">Clear search</a>
+                    id="filters-submit">Search</button><a class="govuk-link" href="/appeals-service/all-cases">Clear search</a>
                 </div>
             </form>
             <div class="govuk-section-break--visible govuk-!-margin-top-2 govuk-!-margin-bottom-6"></div>
@@ -467,7 +467,7 @@ exports[`national-list GET / should render national list - search term - filter 
                     </div>
                     <div class="govuk-button-group">
                         <button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button"
-                        id="filters-submit">Apply</button><a class="govuk-link" href="/appeals-service/appeals-list?searchTerm=BS7%208LQ">Clear filter</a>
+                        id="filters-submit">Apply</button><a class="govuk-link" href="/appeals-service/all-cases?searchTerm=BS7%208LQ">Clear filter</a>
                     </div>
                 </form>
             </div>
@@ -516,7 +516,7 @@ exports[`national-list GET / should render national list - search term - no resu
                 </div>
                 <div class="govuk-button-group">
                     <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
-                    id="filters-submit">Search</button><a class="govuk-link" href="/appeals-service/appeals-list">Clear search</a>
+                    id="filters-submit">Search</button><a class="govuk-link" href="/appeals-service/all-cases">Clear search</a>
                 </div>
             </form>
             <div class="govuk-section-break--visible govuk-!-margin-top-2 govuk-!-margin-bottom-6"></div>
@@ -553,7 +553,7 @@ exports[`national-list GET / should render national list - search term - no resu
                     </div>
                     <div class="govuk-button-group">
                         <button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button"
-                        id="filters-submit">Apply</button><a class="govuk-link" href="/appeals-service/appeals-list?searchTerm=NORESULT">Clear filter</a>
+                        id="filters-submit">Apply</button><a class="govuk-link" href="/appeals-service/all-cases?searchTerm=NORESULT">Clear filter</a>
                     </div>
                 </form>
             </div>
@@ -580,7 +580,7 @@ exports[`national-list GET / should render national list - search term 1`] = `
                 </div>
                 <div class="govuk-button-group">
                     <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
-                    id="filters-submit">Search</button><a class="govuk-link" href="/appeals-service/appeals-list">Clear search</a>
+                    id="filters-submit">Search</button><a class="govuk-link" href="/appeals-service/all-cases">Clear search</a>
                 </div>
             </form>
             <div class="govuk-section-break--visible govuk-!-margin-top-2 govuk-!-margin-bottom-6"></div>
@@ -617,7 +617,7 @@ exports[`national-list GET / should render national list - search term 1`] = `
                     </div>
                     <div class="govuk-button-group">
                         <button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button"
-                        id="filters-submit">Apply</button><a class="govuk-link" href="/appeals-service/appeals-list?searchTerm=BS7%208LQ">Clear filter</a>
+                        id="filters-submit">Apply</button><a class="govuk-link" href="/appeals-service/all-cases?searchTerm=BS7%208LQ">Clear filter</a>
                     </div>
                 </form>
             </div>
@@ -785,7 +785,7 @@ data-module="govuk-header">
                     <ul class="govuk-header__navigation-list">
                         <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/personal-list">Assigned to me</a>
                         </li>
-                        <li class="govuk-header__navigation-item govuk-header__navigation-item--active"><a class="govuk-header__link" href="/appeals-service/appeals-list">All cases</a>
+                        <li class="govuk-header__navigation-item govuk-header__navigation-item--active"><a class="govuk-header__link" href="/appeals-service/all-cases">All cases</a>
                         </li>
                         <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/auth/signout">Sign out</a>
                         </li>

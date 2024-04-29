@@ -219,7 +219,7 @@ export const householdAppeal = {
 			name: 'Written'
 		},
 		procedureTypeId: 3,
-		receivedAt: null,
+		receivedAt: '2022-05-17T23:00:00.000Z',
 		scheduleType: {
 			name: 'Schedule 1'
 		},

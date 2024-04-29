@@ -1360,11 +1360,11 @@ describe('linkedAppealStatus', () => {
 
 describe('isInternalUrl', () => {
 	test('should return true for fully qualified internal HTTP URL', () => {
-		const url = 'http://localhost/appeals-service/appeals-list';
+		const url = 'http://localhost/appeals-service/all-cases';
 
 		const request = httpMocks.createRequest({
 			method: 'GET',
-			url: '/appeals-service/appeals-list',
+			url: '/appeals-service/all-cases',
 			secure: true,
 			headers: {
 				host: 'localhost'
@@ -1376,10 +1376,10 @@ describe('isInternalUrl', () => {
 
 	describe('isInternalUrl', () => {
 		test('should return true for fully qualified internal HTTPS URL', () => {
-			const url = 'https://localhost/appeals-service/appeals-list';
+			const url = 'https://localhost/appeals-service/all-cases';
 			const request = httpMocks.createRequest({
 				method: 'GET',
-				url: '/appeals-service/appeals-list',
+				url: '/appeals-service/all-cases',
 				secure: true,
 				headers: {
 					host: 'localhost'
@@ -1415,10 +1415,10 @@ describe('isInternalUrl', () => {
 		});
 
 		test('should handle URLs without protocols', () => {
-			const url = '//localhost/appeals-service/appeals-list';
+			const url = '//localhost/appeals-service/all-cases';
 			const request = httpMocks.createRequest({
 				method: 'GET',
-				url: '/appeals-service/appeals-list',
+				url: '/appeals-service/all-cases',
 				secure: false,
 				headers: {
 					host: 'localhost'

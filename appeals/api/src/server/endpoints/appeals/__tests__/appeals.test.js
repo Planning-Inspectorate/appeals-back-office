@@ -718,11 +718,13 @@ describe('appeals routes', () => {
 					documentationSummary: {
 						appellantCase: {
 							status: 'received',
-							dueDate: householdAppeal.dueDate
+							dueDate: householdAppeal.dueDate,
+							receivedAt: householdAppeal.createdAt.toISOString()
 						},
 						lpaQuestionnaire: {
 							dueDate: null,
-							status: 'received'
+							status: 'received',
+							receivedAt: householdAppeal.lpaQuestionnaire.receivedAt
 						}
 					},
 					healthAndSafety: {
@@ -826,11 +828,13 @@ describe('appeals routes', () => {
 					documentationSummary: {
 						appellantCase: {
 							status: 'received',
-							dueDate: fullPlanningAppeal.dueDate
+							dueDate: fullPlanningAppeal.dueDate,
+							receivedAt: householdAppeal.createdAt.toISOString()
 						},
 						lpaQuestionnaire: {
 							dueDate: null,
-							status: 'received'
+							status: 'received',
+							receivedAt: householdAppeal.lpaQuestionnaire.receivedAt
 						}
 					},
 					healthAndSafety: {
@@ -1426,11 +1430,13 @@ describe('appeals routes', () => {
 					documentationSummary: {
 						appellantCase: {
 							status: 'received',
-							dueDate: householdAppeal.dueDate
+							dueDate: householdAppeal.dueDate,
+							receivedAt: householdAppeal.createdAt.toISOString()
 						},
 						lpaQuestionnaire: {
 							dueDate: null,
-							status: 'received'
+							status: 'received',
+							receivedAt: householdAppeal.lpaQuestionnaire.receivedAt
 						}
 					},
 					healthAndSafety: {
@@ -1534,11 +1540,13 @@ describe('appeals routes', () => {
 					documentationSummary: {
 						appellantCase: {
 							status: 'received',
-							dueDate: fullPlanningAppeal.dueDate
+							dueDate: fullPlanningAppeal.dueDate,
+							receivedAt: householdAppeal.createdAt.toISOString()
 						},
 						lpaQuestionnaire: {
 							dueDate: null,
-							status: 'received'
+							status: 'received',
+							receivedAt: householdAppeal.lpaQuestionnaire.receivedAt
 						}
 					},
 					healthAndSafety: {
