@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`site-ownership GET /change should render changeSiteOwnership page 1`] = `
+exports[`site-ownership GET /change should render the siteOwnership change page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -19,7 +19,7 @@ exports[`site-ownership GET /change should render changeSiteOwnership page 1`] =
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="siteOwnershipRadio-2" name="siteOwnershipRadio"
-                            type="radio" value="partial">
+                            type="radio" value="partially">
                             <label class="govuk-label govuk-radios__label" for="siteOwnershipRadio-2">Partially owned by appellant</label>
                         </div>
                     </div>
