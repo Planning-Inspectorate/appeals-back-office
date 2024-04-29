@@ -24,7 +24,10 @@ const renderChangeSiteOwnership = async (request, response) => {
 			request.apiClient,
 			currentAppeal.appealId,
 			currentAppeal.appellantCaseId
-		).catch((error) => logger.error(error));
+		).catch((error) => {
+			logger.error(error);
+			return response.render('app/404.njk');
+		});
 
 		const mappedPageContents = changeSiteOwnershipPage(
 			currentAppeal,
