@@ -6,7 +6,7 @@ exports[`costs GET /costs/:costsCategory/add-document-details/:folderId should r
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">Appellant costs document</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Appellant costs document</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -84,7 +84,7 @@ exports[`costs GET /costs/:costsCategory/add-document-details/:folderId should r
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">Costs decision document</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Costs decision document</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -162,7 +162,7 @@ exports[`costs GET /costs/:costsCategory/add-document-details/:folderId should r
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">LPA costs document</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">LPA costs document</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -2195,7 +2195,7 @@ exports[`costs POST /costs/:costsCategory/add-document-details/:folderId should 
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">Appellant costs document</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Appellant costs document</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -2286,7 +2286,7 @@ exports[`costs POST /costs/:costsCategory/add-document-details/:folderId should 
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">Costs decision document</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Costs decision document</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -2377,7 +2377,7 @@ exports[`costs POST /costs/:costsCategory/add-document-details/:folderId should 
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">LPA costs document</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">LPA costs document</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -2468,7 +2468,7 @@ exports[`costs POST /costs/:costsCategory/add-document-details/:folderId should 
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">Appellant costs document</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Appellant costs document</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -2559,7 +2559,7 @@ exports[`costs POST /costs/:costsCategory/add-document-details/:folderId should 
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">Costs decision document</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Costs decision document</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -2650,7 +2650,7 @@ exports[`costs POST /costs/:costsCategory/add-document-details/:folderId should 
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">LPA costs document</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">LPA costs document</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -2741,7 +2741,7 @@ exports[`costs POST /costs/:costsCategory/add-document-details/:folderId should 
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">Appellant costs document</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Appellant costs document</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -2832,7 +2832,7 @@ exports[`costs POST /costs/:costsCategory/add-document-details/:folderId should 
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">Costs decision document</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Costs decision document</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -2923,7 +2923,7 @@ exports[`costs POST /costs/:costsCategory/add-document-details/:folderId should 
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">LPA costs document</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">LPA costs document</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -3014,7 +3014,7 @@ exports[`costs POST /costs/:costsCategory/add-document-details/:folderId should 
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">Appellant costs document</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Appellant costs document</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -3105,7 +3105,7 @@ exports[`costs POST /costs/:costsCategory/add-document-details/:folderId should 
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">Costs decision document</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Costs decision document</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -3196,7 +3196,7 @@ exports[`costs POST /costs/:costsCategory/add-document-details/:folderId should 
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">LPA costs document</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">LPA costs document</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -3285,7 +3285,7 @@ exports[`costs POST /costs/:costsCategory/add-document-details/:folderId should 
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">Appellant costs document</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Appellant costs document</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -3374,7 +3374,7 @@ exports[`costs POST /costs/:costsCategory/add-document-details/:folderId should 
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">Costs decision document</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Costs decision document</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -3463,7 +3463,7 @@ exports[`costs POST /costs/:costsCategory/add-document-details/:folderId should 
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">LPA costs document</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">LPA costs document</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -3554,7 +3554,7 @@ exports[`costs POST /costs/:costsCategory/add-document-details/:folderId should 
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">Appellant costs document</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Appellant costs document</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -3645,7 +3645,7 @@ exports[`costs POST /costs/:costsCategory/add-document-details/:folderId should 
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">Costs decision document</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Costs decision document</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -3736,7 +3736,7 @@ exports[`costs POST /costs/:costsCategory/add-document-details/:folderId should 
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">LPA costs document</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">LPA costs document</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -3827,7 +3827,7 @@ exports[`costs POST /costs/:costsCategory/add-document-details/:folderId should 
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">Appellant costs document</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Appellant costs document</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -3918,7 +3918,7 @@ exports[`costs POST /costs/:costsCategory/add-document-details/:folderId should 
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">Costs decision document</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Costs decision document</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -4009,7 +4009,7 @@ exports[`costs POST /costs/:costsCategory/add-document-details/:folderId should 
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">LPA costs document</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">LPA costs document</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -4100,7 +4100,7 @@ exports[`costs POST /costs/:costsCategory/add-document-details/:folderId should 
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">Appellant costs document</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Appellant costs document</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -4191,7 +4191,7 @@ exports[`costs POST /costs/:costsCategory/add-document-details/:folderId should 
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">Costs decision document</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Costs decision document</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -4282,7 +4282,7 @@ exports[`costs POST /costs/:costsCategory/add-document-details/:folderId should 
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">LPA costs document</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">LPA costs document</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -4373,7 +4373,7 @@ exports[`costs POST /costs/:costsCategory/add-document-details/:folderId should 
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">Appellant costs document</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Appellant costs document</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -4464,7 +4464,7 @@ exports[`costs POST /costs/:costsCategory/add-document-details/:folderId should 
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">Costs decision document</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Costs decision document</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -4555,7 +4555,7 @@ exports[`costs POST /costs/:costsCategory/add-document-details/:folderId should 
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">LPA costs document</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">LPA costs document</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -4646,7 +4646,7 @@ exports[`costs POST /costs/:costsCategory/add-document-details/:folderId should 
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">Appellant costs document</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Appellant costs document</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -4737,7 +4737,7 @@ exports[`costs POST /costs/:costsCategory/add-document-details/:folderId should 
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">Costs decision document</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Costs decision document</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -4828,7 +4828,7 @@ exports[`costs POST /costs/:costsCategory/add-document-details/:folderId should 
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">LPA costs document</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">LPA costs document</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -4919,7 +4919,7 @@ exports[`costs POST /costs/:costsCategory/add-document-details/:folderId should 
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">Appellant costs document</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Appellant costs document</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -5010,7 +5010,7 @@ exports[`costs POST /costs/:costsCategory/add-document-details/:folderId should 
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">Costs decision document</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Costs decision document</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -5101,7 +5101,7 @@ exports[`costs POST /costs/:costsCategory/add-document-details/:folderId should 
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">LPA costs document</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">LPA costs document</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -5190,7 +5190,7 @@ exports[`costs POST /costs/:costsCategory/add-document-details/:folderId should 
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">Appellant costs document</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Appellant costs document</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -5279,7 +5279,7 @@ exports[`costs POST /costs/:costsCategory/add-document-details/:folderId should 
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">Costs decision document</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Costs decision document</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -5368,7 +5368,7 @@ exports[`costs POST /costs/:costsCategory/add-document-details/:folderId should 
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">LPA costs document</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">LPA costs document</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
