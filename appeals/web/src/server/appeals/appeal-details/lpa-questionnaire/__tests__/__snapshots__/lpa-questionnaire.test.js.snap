@@ -1633,7 +1633,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-document-details/
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">Additional documents</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Additional documents</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -1773,7 +1773,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-document-details/
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">Additional documents</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Additional documents</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -1913,7 +1913,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-document-details/
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">New supporting documents</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">New supporting documents</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -5533,7 +5533,7 @@ exports[`LPA Questionnaire review POST /lpa-questionnaire/1/add-document-details
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">New supporting documents</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">New supporting documents</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -5686,7 +5686,7 @@ exports[`LPA Questionnaire review POST /lpa-questionnaire/1/add-document-details
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">New supporting documents</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">New supporting documents</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -5839,7 +5839,7 @@ exports[`LPA Questionnaire review POST /lpa-questionnaire/1/add-document-details
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">New supporting documents</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">New supporting documents</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -5992,7 +5992,7 @@ exports[`LPA Questionnaire review POST /lpa-questionnaire/1/add-document-details
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">New supporting documents</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">New supporting documents</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -6143,7 +6143,7 @@ exports[`LPA Questionnaire review POST /lpa-questionnaire/1/add-document-details
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">New supporting documents</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">New supporting documents</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -6294,7 +6294,7 @@ exports[`LPA Questionnaire review POST /lpa-questionnaire/1/add-document-details
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">New supporting documents</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">New supporting documents</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -6447,7 +6447,7 @@ exports[`LPA Questionnaire review POST /lpa-questionnaire/1/add-document-details
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">New supporting documents</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">New supporting documents</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -6600,7 +6600,7 @@ exports[`LPA Questionnaire review POST /lpa-questionnaire/1/add-document-details
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">New supporting documents</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">New supporting documents</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -6753,7 +6753,7 @@ exports[`LPA Questionnaire review POST /lpa-questionnaire/1/add-document-details
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">New supporting documents</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">New supporting documents</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -6906,7 +6906,7 @@ exports[`LPA Questionnaire review POST /lpa-questionnaire/1/add-document-details
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">New supporting documents</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">New supporting documents</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -7059,7 +7059,7 @@ exports[`LPA Questionnaire review POST /lpa-questionnaire/1/add-document-details
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">New supporting documents</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">New supporting documents</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -7212,7 +7212,7 @@ exports[`LPA Questionnaire review POST /lpa-questionnaire/1/add-document-details
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">New supporting documents</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">New supporting documents</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -7363,7 +7363,7 @@ exports[`LPA Questionnaire review POST /lpa-questionnaire/1/add-document-details
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-9">New supporting documents</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">New supporting documents</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
