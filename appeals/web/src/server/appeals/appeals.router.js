@@ -7,11 +7,7 @@ import { permissionNames } from '#environment/permissions.js';
 
 const router = createRouter();
 
-router.use(
-	'/appeals-list',
-	assertUserHasPermission(permissionNames.viewCaseList),
-	nationalListRouter
-);
+router.use('/all-cases', assertUserHasPermission(permissionNames.viewCaseList), nationalListRouter);
 
 router.use('/personal-list', personalListRouter);
 

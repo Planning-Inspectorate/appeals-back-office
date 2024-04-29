@@ -141,7 +141,7 @@ data-module="govuk-header">
                     <ul class="govuk-header__navigation-list">
                         <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/personal-list">Assigned to me</a>
                         </li>
-                        <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/appeals-list">All cases</a>
+                        <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/all-cases">All cases</a>
                         </li>
                         <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/auth/signout">Sign out</a>
                         </li>
@@ -281,7 +281,7 @@ data-module="govuk-header">
                     <ul class="govuk-header__navigation-list">
                         <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/personal-list">Assigned to me</a>
                         </li>
-                        <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/appeals-list">All cases</a>
+                        <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/all-cases">All cases</a>
                         </li>
                         <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/auth/signout">Sign out</a>
                         </li>

@@ -427,7 +427,7 @@ export function decisionConfirmationPage(appealData, appealIsInvalid) {
 			{
 				type: 'html',
 				parameters: {
-					html: '<p class="govuk-body"><a href="/appeals-service/appeals-list" class="govuk-link">Go back to your list</a></p>'
+					html: '<p class="govuk-body"><a href="/appeals-service/all-cases" class="govuk-link">Go back to your list</a></p>'
 				}
 			},
 			{
