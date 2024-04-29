@@ -152,6 +152,11 @@ export const notificationBannerDefinitions = {
 		type: 'success',
 		pages: ['appellantCase'],
 		text: 'Site address updated'
+	},
+	siteOwnershipUpdated: {
+		type: 'success',
+		pages: ['appellantCase'],
+		text: 'Site ownership updated'
 	}
 };
 
