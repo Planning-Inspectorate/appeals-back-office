@@ -207,6 +207,7 @@ interface SingleLPAQuestionnaireResponse {
 	meetsOrExceedsThresholdOrCriteriaInColumn2?: boolean | null;
 	otherAppeals: string[];
 	procedureType?: string;
+	receivedAt: Date | null;
 	scheduleType?: string;
 	sensitiveAreaDetails?: string | null;
 	siteWithinGreenBelt?: boolean | null;

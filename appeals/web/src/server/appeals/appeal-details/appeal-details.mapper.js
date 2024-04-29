@@ -144,7 +144,7 @@ export async function appealDetailsPage(appealDetails, currentRoute, session) {
 			head: [
 				{ text: 'Documentation' },
 				{ text: 'Status' },
-				{ text: 'Due date' },
+				{ text: 'Received' },
 				{ text: 'Action' }
 			],
 			rows: [

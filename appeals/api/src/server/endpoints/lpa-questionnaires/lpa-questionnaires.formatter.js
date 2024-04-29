@@ -91,6 +91,7 @@ const formatLpaQuestionnaire = (appeal, folders = null) => {
 					lpaQuestionnaire.meetsOrExceedsThresholdOrCriteriaInColumn2,
 				otherAppeals: [],
 				procedureType: lpaQuestionnaire.procedureType?.name,
+				receivedAt: lpaQuestionnaire.receivedAt,
 				scheduleType: lpaQuestionnaire.scheduleType?.name,
 				sensitiveAreaDetails: lpaQuestionnaire.sensitiveAreaDetails,
 				siteWithinGreenBelt: lpaQuestionnaire.siteWithinGreenBelt,

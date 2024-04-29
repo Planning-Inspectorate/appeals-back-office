@@ -239,11 +239,13 @@ const formatAppeal = (
 			documentationSummary: {
 				appellantCase: {
 					status: formatAppellantCaseDocumentationStatus(appeal),
-					dueDate: appeal.dueDate
+					dueDate: appeal.dueDate,
+					receivedAt: appeal.createdAt
 				},
 				lpaQuestionnaire: {
 					status: formatLpaQuestionnaireDocumentationStatus(appeal),
-					dueDate: appeal.appealTimetable?.lpaQuestionnaireDueDate || null
+					dueDate: appeal.appealTimetable?.lpaQuestionnaireDueDate || null,
+					receivedAt: appeal.lpaQuestionnaire?.receivedAt || null
 				}
 			}
 		};
