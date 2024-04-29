@@ -150,7 +150,8 @@ export const notificationBannerDefinitions = {
 	},
 	siteAddressUpdated: {
 		type: 'success',
-		pages: ['appellantCase']
+		pages: ['appellantCase'],
+		text: 'Site address updated'
 	}
 };
 

@@ -16,14 +16,12 @@ export const getChangeSiteAddress = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 const renderChangeSiteAddress = async (request, response) => {
-	const { errors } = request;
+	const { errors, currentAppeal } = request;
 
 	const backLinkUrl = request.originalUrl.split('/').slice(0, -3).join('/');
 
-	const appealDetails = request.currentAppeal;
-
 	const mappedPageContents = changeSiteAddressPage(
-		appealDetails,
+		currentAppeal,
 		backLinkUrl,
 		request.session.siteAddress,
 		errors
@@ -60,12 +58,7 @@ export const postChangeSiteAddress = async (request, response) => {
 	try {
 		await changeSiteAddress(request.apiClient, appealId, request.session.siteAddress, addressId);
 
-		addNotificationBannerToSession(
-			request.session,
-			'siteAddressUpdated',
-			appealId,
-			`<p class="govuk-notification-banner__heading">Site address updated</p>`
-		);
+		addNotificationBannerToSession(request.session, 'siteAddressUpdated', appealId);
 
 		delete request.session.siteAddress;
 
