@@ -13,18 +13,16 @@ describe('site-ownership', () => {
 	beforeEach(installMockApi), afterEach(teardown);
 
 	describe('GET /change', () => {
-		it('should render changeSiteOwnership page', async () => {
+		it('should render the siteOwnership change page', async () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}/appellant-cases/${appellantCaseId}`)
-				.reply(200, {
-					...appellantCaseDataNotValidated
-				});
+				.reply(200, appellantCaseDataNotValidated);
 			const response = await request.get(`${baseUrl}/site-ownership/change`);
 
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change the site ownership');
+			expect(elementInnerHtml).toContain('Change the site ownership</h1>');
 		});
 	});
 
@@ -36,9 +34,7 @@ describe('site-ownership', () => {
 
 			nock('http://test/')
 				.patch(`/appeals/${appealId}/appellant-cases/${appellantCaseId}`)
-				.reply(200, {
-					...validData
-				});
+				.reply(200, validData);
 
 			const response = await request.post(`${baseUrl}/site-ownership/change`).send(validData);
 
@@ -50,14 +46,12 @@ describe('site-ownership', () => {
 
 		it('should re-direct to appellant-case if site is partially owned', async () => {
 			const validData = {
-				siteOwnershipRadio: 'partial'
+				siteOwnershipRadio: 'partially'
 			};
 
 			nock('http://test/')
 				.patch(`/appeals/${appealId}/appellant-cases/${appellantCaseId}`)
-				.reply(200, {
-					...validData
-				});
+				.reply(200, validData);
 
 			const response = await request.post(`${baseUrl}/site-ownership/change`).send(validData);
 

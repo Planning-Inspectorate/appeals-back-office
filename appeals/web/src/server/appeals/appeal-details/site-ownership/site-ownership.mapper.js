@@ -44,7 +44,7 @@ export const changeSiteOwnershipPage = (appealData, appellantCaseData, storedSes
 							checked: isFullyOwned
 						},
 						{
-							value: 'partial',
+							value: 'partially',
 							text: 'Partially owned by appellant',
 							checked: !isFullyOwned
 						}
