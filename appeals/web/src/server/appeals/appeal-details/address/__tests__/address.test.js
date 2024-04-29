@@ -7,8 +7,9 @@ import nock from 'nock';
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details';
+const errorRoot = '.govuk-error-summary';
 
-describe('neighbouring-sites', () => {
+describe('site-address', () => {
 	beforeEach(installMockApi);
 	afterEach(teardown);
 
@@ -21,6 +22,7 @@ describe('neighbouring-sites', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Change site address');
 		});
 	});
 
@@ -40,12 +42,10 @@ describe('neighbouring-sites', () => {
 				.send(invalidData);
 
 			expect(response.statusCode).toBe(200);
-
-			const element = parseHtml(response.text);
+			const element = parseHtml(response.text, { rootElement: errorRoot });
 
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('Enter the first line of the address');
-			expect(element.innerHTML).toContain('govuk-error-summary');
 		});
 
 		it('should re-render updateSiteAddress page if addressLine1 is an empty string', async () => {
@@ -64,11 +64,10 @@ describe('neighbouring-sites', () => {
 
 			expect(response.statusCode).toBe(200);
 
-			const element = parseHtml(response.text);
+			const element = parseHtml(response.text, { rootElement: errorRoot });
 
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('Enter the first line of the address');
-			expect(element.innerHTML).toContain('govuk-error-summary');
 		});
 
 		it('should re-render updateSiteAddress page if town is null', async () => {
@@ -86,11 +85,10 @@ describe('neighbouring-sites', () => {
 				.send(invalidData);
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
+			const element = parseHtml(response.text, { rootElement: errorRoot });
 
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('Enter the town');
-			expect(element.innerHTML).toContain('govuk-error-summary');
 		});
 
 		it('should re-render updateSiteAddress page if town is an empty string', async () => {
@@ -109,11 +107,10 @@ describe('neighbouring-sites', () => {
 
 			expect(response.statusCode).toBe(200);
 
-			const element = parseHtml(response.text);
+			const element = parseHtml(response.text, { rootElement: errorRoot });
 
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('Enter the town');
-			expect(element.innerHTML).toContain('govuk-error-summary');
 		});
 
 		it('should re-render updateSiteAddress page if the postcode is null', async () => {
@@ -132,11 +129,10 @@ describe('neighbouring-sites', () => {
 
 			expect(response.statusCode).toBe(200);
 
-			const element = parseHtml(response.text);
+			const element = parseHtml(response.text, { rootElement: errorRoot });
 
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('Enter postcode');
-			expect(element.innerHTML).toContain('govuk-error-summary');
 		});
 
 		it('should re-render updateSiteAddress page if the postcode is invalid', async () => {
@@ -155,11 +151,10 @@ describe('neighbouring-sites', () => {
 
 			expect(response.statusCode).toBe(200);
 
-			const element = parseHtml(response.text);
+			const element = parseHtml(response.text, { rootElement: errorRoot });
 
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('Invalid postcode');
-			expect(element.innerHTML).toContain('govuk-error-summary');
 		});
 
 		it('should re-render updateSiteAddress page if the postcode is an empty string', async () => {
@@ -178,11 +173,10 @@ describe('neighbouring-sites', () => {
 
 			expect(response.statusCode).toBe(200);
 
-			const element = parseHtml(response.text);
+			const element = parseHtml(response.text, { rootElement: errorRoot });
 
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('Enter postcode');
-			expect(element.innerHTML).toContain('govuk-error-summary');
 		});
 
 		it('should redirect to the appellant case page', async () => {

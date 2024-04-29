@@ -12,6 +12,7 @@ router
 	.post(
 		validateAppeal,
 		validators.validateChangeSiteAddress,
+		validators.validatePostCode,
 		asyncRoute(controllers.postChangeSiteAddress)
 	);
 
