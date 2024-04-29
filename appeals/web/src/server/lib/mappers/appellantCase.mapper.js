@@ -187,52 +187,27 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 	};
 
 	/** @type {Instructions} */
-	mappedData.siteFullyOwned = {
-		id: 'site-fully-owned',
+	mappedData.siteOwnership = {
+		id: 'site-ownership',
 		display: {
 			summaryListItem: {
 				key: {
-					text: 'Site fully owned'
+					text: 'Site ownership'
 				},
 				value: {
-					text: convertFromBooleanToYesNo(appellantCaseData.siteOwnership.isFullyOwned) || ''
+					text: appellantCaseData.siteOwnership.isFullyOwned ? 'Fully owned' : 'Partially owned'
 				},
 				actions: {
 					items: [
 						{
 							text: 'Change',
-							visuallyHiddenText: 'Site fully owned',
-							href: `${currentRoute}/change-appeal-details/site-fully-owned`
+							visuallyHiddenText: 'Site ownership',
+							href: `${currentRoute}/site-ownership/change`
 						}
 					]
 				}
 			}
-		},
-		input: {
-			displayName: 'Site fully owned',
-			instructions: [
-				{
-					type: 'radios',
-					properties: {
-						name: 'site-fully-owned',
-						items: [
-							{
-								text: 'Yes',
-								value: 'yes',
-								checked: appellantCaseData.siteOwnership.isFullyOwned
-							},
-							{
-								text: 'No',
-								value: 'no',
-								checked: !appellantCaseData.siteOwnership.isFullyOwned
-							}
-						]
-					}
-				}
-			]
-		},
-		submitApi: '#',
-		inputItemApi: '#'
+		}
 	};
 
 	/** @type {Instructions} */

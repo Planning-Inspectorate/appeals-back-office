@@ -18,6 +18,7 @@ import inspectorAccessRouter from '../inspector-access/inspector-access.router.j
 import serviceUserRouter from '../service-user/service-user.router.js';
 import safetyRisksRouter from '../safety-risks/safety-risks.router.js';
 import siteAddressRouter from '../address/address.router.js';
+import siteOwnershipRouter from '../site-ownership/site-ownership.router.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -29,6 +30,7 @@ router.use('/inspector-access', inspectorAccessRouter);
 router.use('/safety-risks', safetyRisksRouter);
 router.use('/service-user', serviceUserRouter);
 router.use('/site-address', siteAddressRouter);
+router.use('/site-ownership', siteOwnershipRouter);
 
 router
 	.route('/')

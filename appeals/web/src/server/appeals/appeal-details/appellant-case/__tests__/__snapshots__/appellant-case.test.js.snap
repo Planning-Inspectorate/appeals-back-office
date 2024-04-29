@@ -85,14 +85,9 @@ exports[`appellant-case GET /appellant-case should render a "LPA application ref
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"> Change<span class="govuk-visually-hidden"> Site address</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site fully owned</dt>
-                    <dd class="govuk-summary-list__value">Yes</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/site-fully-owned"> Change<span class="govuk-visually-hidden"> Site fully owned</span></a>
-                    </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site partially owned</dt>
-                    <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/site-partially-owned"> Change<span class="govuk-visually-hidden"> Site partially owned</span></a>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site ownership</dt>
+                    <dd class="govuk-summary-list__value">Fully owned</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-ownership/change"> Change<span class="govuk-visually-hidden"> Site ownership</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> All owners known</dt>
@@ -238,18 +233,6 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 </div>"
 `;
 
-exports[`appellant-case GET /appellant-case should render a success notification banner when a service user was updated 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
-role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
-    <div class="govuk-notification-banner__header">
-        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
-    </div>
-    <div class="govuk-notification-banner__content">
-        <p class="govuk-notification-banner__heading">Agent details updated</p>
-    </div>
-</div>"
-`;
-
 exports[`appellant-case GET /appellant-case should render a "Site updated" notification when the site address has been updated 1`] = `
 "<div class="govuk-notification-banner govuk-notification-banner--success"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
@@ -258,6 +241,18 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
     </div>
     <div class="govuk-notification-banner__content">
         <p class="govuk-notification-banner__heading">Site address updated</p>
+    </div>
+</div>"
+`;
+
+exports[`appellant-case GET /appellant-case should render a success notification banner when a service user was updated 1`] = `
+"<div class="govuk-notification-banner govuk-notification-banner--success"
+role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
+    </div>
+    <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">Agent details updated</p>
     </div>
 </div>"
 `;
@@ -322,14 +317,9 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"> Change<span class="govuk-visually-hidden"> Site address</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site fully owned</dt>
-                    <dd class="govuk-summary-list__value">Yes</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/site-fully-owned"> Change<span class="govuk-visually-hidden"> Site fully owned</span></a>
-                    </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site partially owned</dt>
-                    <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/site-partially-owned"> Change<span class="govuk-visually-hidden"> Site partially owned</span></a>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site ownership</dt>
+                    <dd class="govuk-summary-list__value">Fully owned</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-ownership/change"> Change<span class="govuk-visually-hidden"> Site ownership</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> All owners known</dt>
@@ -542,14 +532,9 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"> Change<span class="govuk-visually-hidden"> Site address</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site fully owned</dt>
-                    <dd class="govuk-summary-list__value">Yes</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/site-fully-owned"> Change<span class="govuk-visually-hidden"> Site fully owned</span></a>
-                    </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site partially owned</dt>
-                    <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/site-partially-owned"> Change<span class="govuk-visually-hidden"> Site partially owned</span></a>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site ownership</dt>
+                    <dd class="govuk-summary-list__value">Fully owned</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-ownership/change"> Change<span class="govuk-visually-hidden"> Site ownership</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> All owners known</dt>
@@ -756,14 +741,9 @@ exports[`appellant-case GET /appellant-case with unchecked documents should rend
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"> Change<span class="govuk-visually-hidden"> Site address</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site fully owned</dt>
-                    <dd class="govuk-summary-list__value">Yes</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/site-fully-owned"> Change<span class="govuk-visually-hidden"> Site fully owned</span></a>
-                    </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site partially owned</dt>
-                    <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/site-partially-owned"> Change<span class="govuk-visually-hidden"> Site partially owned</span></a>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site ownership</dt>
+                    <dd class="govuk-summary-list__value">Fully owned</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-ownership/change"> Change<span class="govuk-visually-hidden"> Site ownership</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> All owners known</dt>
@@ -980,14 +960,9 @@ exports[`appellant-case GET /appellant-case with unchecked documents should rend
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"> Change<span class="govuk-visually-hidden"> Site address</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site fully owned</dt>
-                    <dd class="govuk-summary-list__value">Yes</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/site-fully-owned"> Change<span class="govuk-visually-hidden"> Site fully owned</span></a>
-                    </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site partially owned</dt>
-                    <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/site-partially-owned"> Change<span class="govuk-visually-hidden"> Site partially owned</span></a>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site ownership</dt>
+                    <dd class="govuk-summary-list__value">Fully owned</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-ownership/change"> Change<span class="govuk-visually-hidden"> Site ownership</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> All owners known</dt>
@@ -3733,14 +3708,9 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"> Change<span class="govuk-visually-hidden"> Site address</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site fully owned</dt>
-                    <dd class="govuk-summary-list__value">Yes</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/site-fully-owned"> Change<span class="govuk-visually-hidden"> Site fully owned</span></a>
-                    </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site partially owned</dt>
-                    <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/site-partially-owned"> Change<span class="govuk-visually-hidden"> Site partially owned</span></a>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site ownership</dt>
+                    <dd class="govuk-summary-list__value">Fully owned</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-ownership/change"> Change<span class="govuk-visually-hidden"> Site ownership</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> All owners known</dt>

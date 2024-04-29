@@ -129,8 +129,7 @@ export async function appellantCasePage(
 			},
 			rows: [
 				mappedAppellantCaseData.siteAddress.display.summaryListItem,
-				mappedAppellantCaseData.siteFullyOwned.display.summaryListItem,
-				mappedAppellantCaseData.sitePartiallyOwned.display.summaryListItem,
+				mappedAppellantCaseData.siteOwnership.display.summaryListItem,
 				mappedAppellantCaseData.allOwnersKnown.display.summaryListItem,
 				mappedAppellantCaseData.attemptedToIdentifyOwners.display.summaryListItem,
 				mappedAppellantCaseData.advertisedAppeal.display.summaryListItem,
