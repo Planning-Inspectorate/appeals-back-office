@@ -63,7 +63,9 @@ describe('/appeals/:appealId/document-folders/:folderId', () => {
 				documents: [
 					{
 						id: savedFolder.documents[0].guid,
-						latestDocumentVersion: {},
+						latestDocumentVersion: {
+							documentType: 'appellantCostApplication'
+						},
 						name: savedFolder.documents[0].name
 					}
 				]

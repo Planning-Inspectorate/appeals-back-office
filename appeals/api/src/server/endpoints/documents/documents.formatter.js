@@ -25,7 +25,8 @@ const formatFolder = (folder) => ({
 					size: document?.latestDocumentVersion?.size,
 					mime: document?.latestDocumentVersion?.mime,
 					draft: document?.latestDocumentVersion?.draft,
-					isLateEntry: document?.latestDocumentVersion?.isLateEntry
+					isLateEntry: document?.latestDocumentVersion?.isLateEntry,
+					documentType: document?.latestDocumentVersion?.documentType
 				}
 			})) || null,
 	id: folder.id,
