@@ -18,7 +18,7 @@ const clientActions = (uploadForm) => {
 	const uploadCounter = uploadForm.querySelector('.pins-file-upload__counter');
 	/** @type {HTMLElement | null} */
 	const filesRows = uploadForm.querySelector('.pins-file-upload__files-rows');
-	/** @type {HTMLElement | null} */
+	/** @type {HTMLInputElement | null} */
 	const uploadInput = uploadForm.querySelector('input[name="files"]');
 	/** @type {HTMLElement | null} */
 	const submitButton = uploadForm.querySelector('.pins-file-upload__submit');
@@ -46,8 +46,6 @@ const clientActions = (uploadForm) => {
 	 */
 	function onDropZoneDragOver(event) {
 		event.preventDefault();
-		console.log('onDropZoneDragOver - event:');
-		console.log(event);
 		uploadForm
 			.querySelector('.pins-file-upload__dropzone')
 			?.classList.add('pins-file-upload__dropzone--dragover');
@@ -58,8 +56,6 @@ const clientActions = (uploadForm) => {
 	 */
 	function onDropZoneDragLeave(event) {
 		event.preventDefault();
-		console.log('onDropZoneDragLeave - event:');
-		console.log(event);
 		uploadForm
 			.querySelector('.pins-file-upload__dropzone')
 			?.classList.remove('pins-file-upload__dropzone--dragover');
@@ -70,20 +66,17 @@ const clientActions = (uploadForm) => {
 	 */
 	function onDropZoneDrop(event) {
 		event.preventDefault();
-		console.log('onDropZoneDrop - event:');
-		console.log(event);
 		uploadForm
 			.querySelector('.pins-file-upload__dropzone')
 			?.classList.remove('pins-file-upload__dropzone--dragover');
 
 		/** @type {HTMLInputElement | null} */
-		const fileInput = uploadForm.querySelector('input[type="file"]');
-		if (fileInput) {
-			fileInput.files = event.dataTransfer?.files;
+		if (uploadInput) {
+			uploadInput.files = event.dataTransfer?.files;
 		}
 
-		updateFilesRows(fileInput);
-		updateButtonText();
+		updateFilesRows(uploadInput);
+		updateUploadButton();
 	}
 
 	setupDropzone();
@@ -101,19 +94,33 @@ const clientActions = (uploadForm) => {
 		const { target } = selectEvent;
 
 		updateFilesRows(target);
-		updateButtonText();
+		updateUploadButton();
+	};
+
+	const allowSingleFileOnly = () => {
+		return !uploadInput.getAttributeNames().includes('multiple');
+	};
+
+	const updateUploadControlsVisibility = () => {
+		if (!dropZone) {
+			return;
+		}
+
+		dropZone.hidden = allowSingleFileOnly() && globalDataTransfer.files.length > 0;
 	};
 
 	/**
 	 * Update button text and files counter
 	 *
 	 */
-	const updateButtonText = () => {
+	const updateUploadButton = () => {
 		const filesRowsNumber = globalDataTransfer.files.length;
 
 		uploadButton.innerHTML = filesRowsNumber > 0 ? 'Add more files' : 'Choose file';
 		uploadButton.blur();
 		uploadCounter.textContent = filesRowsNumber > 0 ? `${filesRowsNumber} files` : 'No file chosen';
+
+		updateUploadControlsVisibility();
 	};
 
 	/**
@@ -145,6 +152,10 @@ const clientActions = (uploadForm) => {
 		const wrongFiles = [];
 
 		for (const selectedFile of newFiles) {
+			if (allowSingleFileOnly() && globalDataTransfer.items.length > 0) {
+				break;
+			}
+
 			const fileRowId = `file_row_${selectedFile.lastModified}_${selectedFile.size}`;
 			const fileCannotBeAdded = checkSelectedFile(selectedFile);
 
@@ -198,7 +209,7 @@ const clientActions = (uploadForm) => {
 
 			globalDataTransfer.items.remove(rowToRemoveIndex);
 			rowToRemove.remove();
-			updateButtonText();
+			updateUploadButton();
 		}
 	};
 
@@ -211,6 +222,14 @@ const clientActions = (uploadForm) => {
 		if (additionalDocumentsConfirmation && !additionalDocumentsConfirmation?.checked) {
 			// eslint-disable-next-line no-throw-literal
 			throw { message: 'ADDITIONAL_DOCUMENTS_CONFIRMATION_REQUIRED' };
+		}
+
+		if (allowSingleFileOnly() && globalDataTransfer.files.length > 1) {
+			const newDataTransfer = new DataTransfer();
+
+			newDataTransfer.items.add(globalDataTransfer.files[0]);
+
+			globalDataTransfer = newDataTransfer;
 		}
 
 		const filesToUpload = globalDataTransfer.files;
@@ -240,7 +259,7 @@ const clientActions = (uploadForm) => {
 	 */
 	const finalizeUpload = (errors) => {
 		globalDataTransfer = new DataTransfer();
-		updateButtonText();
+		updateUploadButton();
 
 		if (errors.length > 0) {
 			const failedRowIds = new Set(errors.map((error) => error.fileRowId));
