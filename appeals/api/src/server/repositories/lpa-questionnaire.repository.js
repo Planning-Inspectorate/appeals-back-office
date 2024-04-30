@@ -32,6 +32,7 @@ const updateLPAQuestionnaireById = (id, data) => {
 				includesScreeningOption: data.includesScreeningOption,
 				inspectorAccessDetails: data.inspectorAccessDetails,
 				isConservationArea: data.isConservationArea,
+				isCorrectAppealType: data.isCorrectAppealType,
 				isEnvironmentalStatementRequired: data.isEnvironmentalStatementRequired,
 				isAffectingNeighbouringSites: data.isAffectingNeighbouringSites,
 				isGypsyOrTravellerSite: data.isGypsyOrTravellerSite,

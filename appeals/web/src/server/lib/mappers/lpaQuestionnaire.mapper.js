@@ -45,29 +45,6 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 					]
 				}
 			}
-		},
-		input: {
-			displayName: 'Is listed building',
-			instructions: [
-				{
-					type: 'radios',
-					properties: {
-						name: 'isListedBuilding',
-						items: [
-							{
-								text: 'Yes',
-								value: 'yes',
-								checked: data.isListedBuilding || false
-							},
-							{
-								text: 'No',
-								value: 'no',
-								checked: !data.isListedBuilding
-							}
-						]
-					}
-				}
-			]
 		}
 	};
 
@@ -235,34 +212,11 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 						{
 							text: 'Change',
 							visuallyHiddenText: 'Correct appeal type',
-							href: `${currentRoute}/change-lpa-questionnaire/is-correct-appeal-type`
+							href: `${currentRoute}/is-correct-appeal-type/change`
 						}
 					]
 				}
 			}
-		},
-		input: {
-			displayName: 'Is correct appeal type',
-			instructions: [
-				{
-					type: 'radios',
-					properties: {
-						name: 'isCorrectAppealType',
-						items: [
-							{
-								text: 'Yes',
-								value: 'yes',
-								checked: data.doesAffectAScheduledMonument || false
-							},
-							{
-								text: 'No',
-								value: 'no',
-								checked: !data.doesAffectAScheduledMonument
-							}
-						]
-					}
-				}
-			]
 		}
 	};
 	/** @type {Instructions} */

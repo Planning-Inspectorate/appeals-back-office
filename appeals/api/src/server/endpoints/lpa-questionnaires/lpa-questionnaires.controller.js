@@ -50,6 +50,7 @@ const updateLPAQuestionnaireById = async (req, res) => {
 			isPublicRightOfWay,
 			isSensitiveArea,
 			isTheSiteWithinAnAONB,
+			isCorrectAppealType,
 			meetsOrExceedsThresholdOrCriteriaInColumn2,
 			scheduleType,
 			sensitiveAreaDetails
@@ -84,6 +85,7 @@ const updateLPAQuestionnaireById = async (req, res) => {
 					isConservationArea,
 					isEnvironmentalStatementRequired,
 					isAffectingNeighbouringSites,
+					isCorrectAppealType,
 					isGypsyOrTravellerSite,
 					isListedBuilding,
 					isPublicRightOfWay,

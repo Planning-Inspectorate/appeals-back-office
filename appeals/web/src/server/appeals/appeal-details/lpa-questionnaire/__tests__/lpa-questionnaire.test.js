@@ -28,7 +28,6 @@ import { textInputCharacterLimits } from '../../../appeal.constants.js';
 import usersService from '#appeals/appeal-users/users-service.js';
 import { cloneDeep } from 'lodash-es';
 import { addDays } from 'date-fns';
-import logger from '#lib/logger.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -50,8 +49,33 @@ describe('LPA Questionnaire review', () => {
 	afterEach(teardown);
 
 	describe('Notification banners', () => {
-		it('should render a success notification banner when the neighbouring site affected value is updated', async () => {
+		it('should render a success notification banner when "is correct appeal type" is updated', async () => {
 			nock('http://test/').patch(`/appeals/1/lpa-questionnaires/2`).reply(200, {});
+			nock('http://test/')
+				.get(`/appeals/1/lpa-questionnaires/2`)
+				.reply(200, lpaQuestionnaireData)
+				.persist();
+
+			const validData = {
+				correctAppealTypeRadio: 'no'
+			};
+
+			await request.post(`${baseUrl}/is-correct-appeal-type/change`).send(validData);
+
+			const caseDetailsResponse = await request.get(`${baseUrl}`);
+
+			const notificationBannerElementHTML = parseHtml(caseDetailsResponse.text, {
+				rootElement: notificationBannerElement
+			}).innerHTML;
+			expect(notificationBannerElementHTML).toMatchSnapshot();
+			expect(notificationBannerElementHTML).toContain('Success');
+			expect(notificationBannerElementHTML).toContain(
+				'Correct appeal type (LPA response) has been updated'
+			);
+		}, 10000);
+
+		it('should render a success notification banner when the neighbouring site affected value is updated', async () => {
+			nock('http://test/').patch(`/appeals/1/lpa-questionnaires/1`).reply(200, {});
 			nock('http://test/')
 				.get(`/appeals/1/lpa-questionnaires/2`)
 				.reply(200, lpaQuestionnaireData)
@@ -63,18 +87,13 @@ describe('LPA Questionnaire review', () => {
 				.send({ neighbouringSiteAffected: 'yes' });
 
 			const caseDetailsResponse = await request.get(`${baseUrl}`);
-			try {
-				const notificationBannerElementHTML = parseHtml(caseDetailsResponse.text, {
-					rootElement: notificationBannerElement
-				}).innerHTML;
-				expect(notificationBannerElementHTML).toMatchSnapshot();
-				expect(notificationBannerElementHTML).toContain('Success');
-				expect(notificationBannerElementHTML).toContain(
-					'Neighbouring site affected status updated'
-				);
-			} catch (error) {
-				logger.error('There are no notification banner elements in the html', error);
-			}
+
+			const notificationBannerElementHTML = parseHtml(caseDetailsResponse.text, {
+				rootElement: notificationBannerElement
+			}).innerHTML;
+			expect(notificationBannerElementHTML).toMatchSnapshot();
+			expect(notificationBannerElementHTML).toContain('Success');
+			expect(notificationBannerElementHTML).toContain('Neighbouring site affected status updated');
 		}, 10000);
 
 		it('should render the LPA Questionnaire page with draft documents notification banner with links to add metadata page for each folder containing draft documents, and no links for folders with only non-draft documents', async () => {

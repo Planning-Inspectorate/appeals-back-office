@@ -542,6 +542,7 @@ interface UpdateLPAQuestionnaireRequest {
 	incompleteReasons?: IncompleteInvalidReasons;
 	isAffectingNeighbouringSites?: boolean;
 	isConservationArea?: boolean;
+	isCorrectAppealType?: boolean;
 	isEnvironmentalStatementRequired?: boolean;
 	isGypsyOrTravellerSite?: boolean;
 	isListedBuilding?: boolean;
