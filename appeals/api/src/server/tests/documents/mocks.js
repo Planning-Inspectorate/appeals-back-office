@@ -105,7 +105,10 @@ export const savedFolder = {
 			folderId,
 			guid,
 			name: originalFileName,
-			isDeleted: false
+			isDeleted: false,
+			latestDocumentVersion: {
+				documentType: 'appellantCostApplication'
+			}
 		}
 	]
 };
