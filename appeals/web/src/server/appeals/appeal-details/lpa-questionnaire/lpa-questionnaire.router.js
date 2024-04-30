@@ -15,6 +15,7 @@ import changePageRouter from '../../change-page/change-page.router.js';
 import changeInspectorAccessRouter from '../inspector-access/inspector-access.router.js';
 import neighbouringSitesRouter from '../neighbouring-sites/neighbouring-sites.router.js';
 import safetyRisksRouter from '../safety-risks/safety-risks.router.js';
+import correctAppealTypeRouter from '../correct-appeal-type/correct-appeal-type.router.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -23,6 +24,7 @@ router.use('/:lpaQuestionnaireId/incomplete', outcomeIncompleteRouter);
 router.use('/:lpaQuestionnaireId/change-lpa-questionnaire', changePageRouter);
 router.use('/:lpaQuestionnaireId/inspector-access', changeInspectorAccessRouter);
 router.use('/:lpaQuestionnaireId/safety-risks', safetyRisksRouter);
+router.use('/:lpaQuestionnaireId/is-correct-appeal-type', correctAppealTypeRouter);
 
 router
 	.route('/:lpaQuestionnaireId')

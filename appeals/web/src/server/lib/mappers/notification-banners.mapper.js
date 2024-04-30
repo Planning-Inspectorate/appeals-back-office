@@ -157,6 +157,11 @@ export const notificationBannerDefinitions = {
 		type: 'success',
 		pages: ['appellantCase'],
 		text: 'Site ownership updated'
+	},
+	isAppealTypeCorrectUpdated: {
+		type: 'success',
+		pages: ['lpaQuestionnaire'],
+		text: 'Correct appeal type (LPA response) has been updated'
 	}
 };
 

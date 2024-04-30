@@ -36,7 +36,7 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
             <dl class="govuk-summary-list" id="constraints-summary">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Correct appeal type</dt>
                     <dd class="govuk-summary-list__value">Yes</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/change-lpa-questionnaire/is-correct-appeal-type"> Change<span class="govuk-visually-hidden"> Correct appeal type</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/is-correct-appeal-type/change"> Change<span class="govuk-visually-hidden"> Correct appeal type</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Affects a listed building</dt>
@@ -414,7 +414,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
             <dl class="govuk-summary-list" id="constraints-summary">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Correct appeal type</dt>
                     <dd class="govuk-summary-list__value">Yes</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/change-lpa-questionnaire/is-correct-appeal-type"> Change<span class="govuk-visually-hidden"> Correct appeal type</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/is-correct-appeal-type/change"> Change<span class="govuk-visually-hidden"> Correct appeal type</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Affects a listed building</dt>
@@ -809,7 +809,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
             <dl class="govuk-summary-list" id="constraints-summary">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Correct appeal type</dt>
                     <dd class="govuk-summary-list__value">Yes</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/change-lpa-questionnaire/is-correct-appeal-type"> Change<span class="govuk-visually-hidden"> Correct appeal type</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/is-correct-appeal-type/change"> Change<span class="govuk-visually-hidden"> Correct appeal type</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Affects a listed building</dt>
@@ -3257,6 +3257,30 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 </div>"
 `;
 
+exports[`LPA Questionnaire review Notification banners should render a success notification banner when "is correct appeal type" is updated 1`] = `
+"<div class="govuk-notification-banner govuk-notification-banner--success"
+role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
+    </div>
+    <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">Correct appeal type (LPA response) has been updated</p>
+    </div>
+</div>"
+`;
+
+exports[`LPA Questionnaire review Notification banners should render a success notification banner when the neighbouring site affected value is updated 1`] = `
+"<div class="govuk-notification-banner govuk-notification-banner--success"
+role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
+    </div>
+    <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">Neighbouring site affected status updated</p>
+    </div>
+</div>"
+`;
+
 exports[`LPA Questionnaire review Notification banners should render the LPA Questionnaire page with draft documents notification banner with links to add metadata page for each folder containing draft documents, and no links for folders with only non-draft documents 1`] = `
 "<div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
 data-module="govuk-notification-banner">
@@ -3358,7 +3382,7 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
             <dl class="govuk-summary-list" id="constraints-summary">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Correct appeal type</dt>
                     <dd class="govuk-summary-list__value">Yes</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/change-lpa-questionnaire/is-correct-appeal-type"> Change<span class="govuk-visually-hidden"> Correct appeal type</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/is-correct-appeal-type/change"> Change<span class="govuk-visually-hidden"> Correct appeal type</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Affects a listed building</dt>
