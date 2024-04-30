@@ -2,7 +2,7 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 
 /**
  * @typedef {Object} CostsDocumentType
- * @property {number} id
+ * @property {string} value
  * @property {string} name
  */
 
@@ -25,9 +25,9 @@ export function addDocumentTypePage(appealDetails, documentTypes) {
 				type: 'radios',
 				parameters: {
 					name: 'costs-document-type',
-					id: 'costs-document-type',
+					value: 'costs-document-type',
 					items: documentTypes.map((documentType) => ({
-						value: documentType.id,
+						value: documentType.value,
 						text: documentType.name
 					}))
 				}

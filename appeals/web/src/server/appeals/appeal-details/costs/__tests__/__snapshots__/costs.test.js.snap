@@ -1820,17 +1820,17 @@ exports[`costs GET /costs/:costsCategory/select-document-type/:folderId should r
                     <div class="govuk-radios" data-module="govuk-radios">
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="costs-document-type" name="costs-document-type"
-                            type="radio" value="1">
+                            type="radio" value="appellantCostApplication">
                             <label class="govuk-label govuk-radios__label" for="costs-document-type">Application</label>
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="costs-document-type-2" name="costs-document-type"
-                            type="radio" value="2">
+                            type="radio" value="appellantCostWithdrawal">
                             <label class="govuk-label govuk-radios__label" for="costs-document-type-2">Withdrawal</label>
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="costs-document-type-3" name="costs-document-type"
-                            type="radio" value="3">
+                            type="radio" value="appellantCostCorrespondence">
                             <label class="govuk-label govuk-radios__label" for="costs-document-type-3">Correspondence</label>
                         </div>
                     </div>
@@ -1856,17 +1856,17 @@ exports[`costs GET /costs/:costsCategory/select-document-type/:folderId should r
                     <div class="govuk-radios" data-module="govuk-radios">
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="costs-document-type" name="costs-document-type"
-                            type="radio" value="1">
+                            type="radio" value="appellantCostApplication">
                             <label class="govuk-label govuk-radios__label" for="costs-document-type">Application</label>
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="costs-document-type-2" name="costs-document-type"
-                            type="radio" value="2">
+                            type="radio" value="appellantCostWithdrawal">
                             <label class="govuk-label govuk-radios__label" for="costs-document-type-2">Withdrawal</label>
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="costs-document-type-3" name="costs-document-type"
-                            type="radio" value="3">
+                            type="radio" value="appellantCostCorrespondence">
                             <label class="govuk-label govuk-radios__label" for="costs-document-type-3">Correspondence</label>
                         </div>
                     </div>
@@ -5657,17 +5657,17 @@ exports[`costs POST /costs/:costsCategory/select-document-type/:folderId should 
                     <div class="govuk-radios" data-module="govuk-radios">
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="costs-document-type" name="costs-document-type"
-                            type="radio" value="1">
+                            type="radio" value="appellantCostApplication">
                             <label class="govuk-label govuk-radios__label" for="costs-document-type">Application</label>
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="costs-document-type-2" name="costs-document-type"
-                            type="radio" value="2">
+                            type="radio" value="appellantCostWithdrawal">
                             <label class="govuk-label govuk-radios__label" for="costs-document-type-2">Withdrawal</label>
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="costs-document-type-3" name="costs-document-type"
-                            type="radio" value="3">
+                            type="radio" value="appellantCostCorrespondence">
                             <label class="govuk-label govuk-radios__label" for="costs-document-type-3">Correspondence</label>
                         </div>
                     </div>
@@ -5704,17 +5704,17 @@ exports[`costs POST /costs/:costsCategory/select-document-type/:folderId should 
                     <div class="govuk-radios" data-module="govuk-radios">
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="costs-document-type" name="costs-document-type"
-                            type="radio" value="1">
+                            type="radio" value="lpaCostApplication">
                             <label class="govuk-label govuk-radios__label" for="costs-document-type">Application</label>
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="costs-document-type-2" name="costs-document-type"
-                            type="radio" value="2">
+                            type="radio" value="lpaCostWithdrawal">
                             <label class="govuk-label govuk-radios__label" for="costs-document-type-2">Withdrawal</label>
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="costs-document-type-3" name="costs-document-type"
-                            type="radio" value="3">
+                            type="radio" value="lpaCostCorrespondence">
                             <label class="govuk-label govuk-radios__label" for="costs-document-type-3">Correspondence</label>
                         </div>
                     </div>
