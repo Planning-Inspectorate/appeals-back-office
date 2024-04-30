@@ -18,7 +18,12 @@ import { objectContainsAllKeys } from '#lib/object-utilities.js';
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 const renderSelectDocumentType = async (request, response) => {
-	const { errors, currentAppeal, session, params } = request;
+	const {
+		errors,
+		currentAppeal,
+		session,
+		params: { costsCategory }
+	} = request;
 
 	if (!currentAppeal) {
 		return response.status(404).render('app/404');
@@ -28,8 +33,6 @@ const renderSelectDocumentType = async (request, response) => {
 	}
 
 	// TODO: BOAT-1168 - add API endpoint to retrieve document type options (hardcoded for now)
-	const { costsCategory } = params;
-
 	const documentTypes = [
 		{
 			value: `${costsCategory}CostApplication`,
