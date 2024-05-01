@@ -116,8 +116,10 @@ export const ERROR_ONLY_FOR_INCOMPLETE_VALIDATION_OUTCOME = `should only be give
 export const ERROR_ONLY_FOR_INVALID_VALIDATION_OUTCOME = `should only be given if the validation outcome is ${VALIDATION_OUTCOME_INVALID}`;
 export const ERROR_PAGENUMBER_AND_PAGESIZE_ARE_REQUIRED =
 	'both pageNumber and pageSize are required for pagination';
-export const ERROR_SITE_VISIT_REQUIRED_FIELDS =
-	'if any of visitDate, visitStartTime or visitEndTime are given then all these fields are required';
+export const ERROR_SITE_VISIT_REQUIRED_FIELDS_ACCOMPANIED =
+	'if visit type is accompanied, if visitDate or visitStartTime are given, both these fields are required';
+export const ERROR_SITE_VISIT_REQUIRED_FIELDS_ACCESS_REQUIRED =
+	'is visit type is access required, if visitDate, visitStartTime or visitEndTime are given, all these fields are required';
 export const ERROR_START_TIME_MUST_BE_EARLIER_THAN_END_TIME =
 	'start time must be earlier than end time';
 export const ERROR_VALID_VALIDATION_OUTCOME_REASONS_REQUIRED =
@@ -151,6 +153,8 @@ export const ODW_APPELLANT_SVCUSR = 'Appellant';
 export const ODW_AGENT_SVCUSR = 'Agent';
 
 export const SITE_VISIT_TYPE_UNACCOMPANIED = 'Unaccompanied';
+export const SITE_VISIT_TYPE_ACCOMPANIED = 'Accompanied';
+export const SITE_VISIT_TYPE_ACCESS_REQUIRED = 'Access required';
 
 export const STATE_TARGET_ASSIGN_CASE_OFFICER = 'assign_case_officer';
 export const STATE_TARGET_VALIDATION = 'validation';

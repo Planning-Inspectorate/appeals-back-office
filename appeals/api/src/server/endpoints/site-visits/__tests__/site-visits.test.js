@@ -9,7 +9,8 @@ import {
 	ERROR_MUST_BE_CORRECT_TIME_FORMAT,
 	ERROR_MUST_BE_NUMBER,
 	ERROR_NOT_FOUND,
-	ERROR_SITE_VISIT_REQUIRED_FIELDS,
+	ERROR_SITE_VISIT_REQUIRED_FIELDS_ACCESS_REQUIRED,
+	ERROR_SITE_VISIT_REQUIRED_FIELDS_ACCOMPANIED,
 	ERROR_START_TIME_MUST_BE_EARLIER_THAN_END_TIME,
 	SITE_VISIT_TYPE_UNACCOMPANIED
 } from '../../constants.js';
@@ -348,12 +349,12 @@ describe('site visit routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						appealId: ERROR_SITE_VISIT_REQUIRED_FIELDS
+						appealId: ERROR_SITE_VISIT_REQUIRED_FIELDS_ACCESS_REQUIRED
 					}
 				});
 			});
 
-			test('returns an error if visitType is not Unaccompanied and visitEndTime is not given when visitDate and visitStartTime are given', async () => {
+			test('returns an error if visitType is Access required and visitEndTime is not given when visitDate and visitStartTime are given', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 
@@ -369,12 +370,12 @@ describe('site visit routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						appealId: ERROR_SITE_VISIT_REQUIRED_FIELDS
+						appealId: ERROR_SITE_VISIT_REQUIRED_FIELDS_ACCESS_REQUIRED
 					}
 				});
 			});
 
-			test('returns an error if visitType is not Unaccompanied and visitStartTime is not given when visitDate and visitEndTime are given', async () => {
+			test('returns an error if visitType is Access required and visitStartTime is not given when visitDate and visitEndTime are given', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 
@@ -390,7 +391,27 @@ describe('site visit routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						appealId: ERROR_SITE_VISIT_REQUIRED_FIELDS
+						appealId: ERROR_SITE_VISIT_REQUIRED_FIELDS_ACCESS_REQUIRED
+					}
+				});
+			});
+
+			test('returns an error if visitType is Accompanied and visitStartTime is not given when visitDate is given', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+
+				const response = await request
+					.post(`/appeals/${householdAppeal.id}/site-visits`)
+					.send({
+						visitDate: '2023-12-07',
+						visitType: 'Accompanied'
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						appealId: ERROR_SITE_VISIT_REQUIRED_FIELDS_ACCOMPANIED
 					}
 				});
 			});
@@ -996,7 +1017,7 @@ describe('site visit routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						appealId: ERROR_SITE_VISIT_REQUIRED_FIELDS
+						appealId: ERROR_SITE_VISIT_REQUIRED_FIELDS_ACCESS_REQUIRED
 					}
 				});
 			});
@@ -1017,7 +1038,7 @@ describe('site visit routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						appealId: ERROR_SITE_VISIT_REQUIRED_FIELDS
+						appealId: ERROR_SITE_VISIT_REQUIRED_FIELDS_ACCESS_REQUIRED
 					}
 				});
 			});
@@ -1038,7 +1059,7 @@ describe('site visit routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						appealId: ERROR_SITE_VISIT_REQUIRED_FIELDS
+						appealId: ERROR_SITE_VISIT_REQUIRED_FIELDS_ACCESS_REQUIRED
 					}
 				});
 			});
