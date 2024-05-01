@@ -4,7 +4,7 @@ import { body } from 'express-validator';
 
 /**
  * @param {string} parameterName
- * @param {string} regex
+ * @param {RegExp} regex
  * @returns {ValidationChain}
  */
 const validateRegex = (parameterName, regex) =>

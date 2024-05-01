@@ -1,5 +1,6 @@
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
+import { stringIsValidPostcodeFormat } from '#lib/postcode.js';
 
 export const createPostcodeValidator = (
 	fieldName = 'postCode',
@@ -13,9 +14,7 @@ export const createPostcodeValidator = (
 			.withMessage(emptyErrorMessage)
 			.bail()
 			.custom((postcode) => {
-				const regex = /^([A-Z]{1,2}\d[A-Z\d]? ?\d[A-Z]{2}|GIR ?0A{2})$/gm;
-
-				return postcode.match(regex);
+				return stringIsValidPostcodeFormat(postcode);
 			})
 			.withMessage(invalidErrorMessage)
 	);
