@@ -1050,7 +1050,9 @@ export async function manageDocumentPage(
 	const pageContent = {
 		title: 'Manage document',
 		backLinkText: 'Back',
-		backLinkUrl: backLinkUrl?.replace('{{folderId}}', folder.id),
+		backLinkUrl: backLinkUrl
+			?.replace('{{folderId}}', folder.id)
+			.replace('{{documentId}}', document.guid || ''),
 		preHeading: 'Manage document',
 		heading: document?.name || '',
 		pageComponents
@@ -1104,7 +1106,9 @@ export async function deleteDocumentPage(
 	const pageContent = {
 		title: 'Remove document',
 		backLinkText: 'Back',
-		backLinkUrl: backLinkUrl?.replace('{{folderId}}', folder.id),
+		backLinkUrl: backLinkUrl
+			?.replace('{{folderId}}', folder.id)
+			.replace('{{documentId}}', document.guid || ''),
 		preHeading: 'Manage versions',
 		heading: 'Are you sure you want to remove this version?',
 		pageComponents: [
