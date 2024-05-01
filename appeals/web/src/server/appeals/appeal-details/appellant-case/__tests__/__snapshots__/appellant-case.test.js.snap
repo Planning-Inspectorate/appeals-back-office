@@ -2817,7 +2817,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage folder</span>
-            <h1             class="govuk-heading-l govuk-!-margin-bottom-9">New supporting documents</h1>
+            <h1             class="govuk-heading-l">New supporting documents</h1>
         </div>
     </div>
     <table class="govuk-table" id="documents-table">
@@ -2937,7 +2937,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l govuk-!-margin-bottom-9">test-pdf-documentFileVersionsInfo.pdf</h1>
+            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -3033,7 +3033,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l govuk-!-margin-bottom-9">test-pdf-documentFileVersionsInfo.pdf</h1>
+            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -3132,7 +3132,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l govuk-!-margin-bottom-9">test-pdf-documentFileVersionsInfo.pdf</h1>
+            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -3220,7 +3220,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l govuk-!-margin-bottom-9">test-pdf-documentFileVersionsInfo.pdf</h1>
+            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -3298,7 +3298,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l govuk-!-margin-bottom-9">test-pdf-documentFileVersionsInfo.pdf</h1>
+            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -3376,7 +3376,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l govuk-!-margin-bottom-9">test-pdf-documentFileVersionsInfo.pdf</h1>
+            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
