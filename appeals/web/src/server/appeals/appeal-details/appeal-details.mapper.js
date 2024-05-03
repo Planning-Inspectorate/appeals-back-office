@@ -187,12 +187,10 @@ export async function appealDetailsPage(appealDetails, currentRoute, session) {
 	};
 
 	/** @type {PageComponent} */
-	const caseAudit = {
+	const caseManagement = {
 		type: 'html',
 		parameters: {
-			html:
-				'<h2>Case history</h2>' +
-				`<p><a class="govuk-link" href="/appeals-service/appeal-details/${appealDetails.appealId}/audit">View changes</a> that have been made to this appeal.</p>`
+			html: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealDetails.appealId}/audit">Case history</a>`
 		}
 	};
 
@@ -221,28 +219,32 @@ export async function appealDetailsPage(appealDetails, currentRoute, session) {
 			id: 'accordion-default' + appealDetails.appealId,
 			items: [
 				{
-					heading: { text: 'Case overview' },
+					heading: { text: 'Overview' },
 					content: { html: '', pageComponents: [caseOverview] }
 				},
 				{
-					heading: { text: 'Site details' },
+					heading: { text: 'Details' },
 					content: { html: '', pageComponents: [siteDetails] }
 				},
 				{
-					heading: { text: 'Case timetable' },
+					heading: { text: 'Timetable' },
 					content: { html: '', pageComponents: caseTimetable }
 				},
 				{
-					heading: { text: 'Case documentation' },
+					heading: { text: 'Documentation' },
 					content: { html: '', pageComponents: [caseDocumentation] }
 				},
 				{
-					heading: { text: 'Case contacts' },
+					heading: { text: 'Contacts' },
 					content: { html: '', pageComponents: [caseContacts] }
 				},
 				{
-					heading: { text: 'Case team' },
+					heading: { text: 'Team' },
 					content: { html: '', pageComponents: [caseTeam] }
+				},
+				{
+					heading: { text: 'Case management' },
+					content: { html: '', pageComponents: [caseManagement] }
 				}
 			]
 		}
@@ -334,8 +336,7 @@ export async function appealDetailsPage(appealDetails, currentRoute, session) {
 		...notificationBanners,
 		...statusTagsComponentGroup,
 		caseSummary,
-		appealDetailsAccordion,
-		caseAudit
+		appealDetailsAccordion
 	];
 
 	preRenderPageComponents(pageComponents);
