@@ -5,6 +5,27 @@ variable "environment" {
   type        = string
 }
 
+variable "sql_config" {
+  description = "Config for SQL Server and DB"
+  type = object({
+    admin = object({
+      login_username = string
+      object_id      = string
+    })
+    sku_name    = string
+    max_size_gb = number
+    retention = object({
+      audit_days             = number
+      short_term_days        = number
+      long_term_weekly       = string
+      long_term_monthly      = string
+      long_term_yearly       = string
+      long_term_week_of_year = number
+    })
+    public_network_access_enabled = bool
+  })
+}
+
 variable "tags" {
   description = "A collection of tags to assign to taggable resources"
   type        = map(string)
