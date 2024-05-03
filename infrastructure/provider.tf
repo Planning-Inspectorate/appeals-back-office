@@ -18,3 +18,10 @@ terraform {
 provider "azurerm" {
   features {}
 }
+
+provider "azurerm" {
+  alias           = "tooling"
+  subscription_id = var.tooling_config.subscription_id
+
+  features {}
+}
