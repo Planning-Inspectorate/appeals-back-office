@@ -296,7 +296,7 @@ exports[`appeal-details GET /:appealId should not render action links to the man
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default1">
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-1"> Case overview</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-1"> Overview</span></h2>
                 </div>
                 <div id="accordion-default1-content-1" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-1">
@@ -349,7 +349,7 @@ exports[`appeal-details GET /:appealId should not render action links to the man
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-2"> Site details</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-2"> Details</span></h2>
                 </div>
                 <div id="accordion-default1-content-2" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-2">
@@ -424,7 +424,7 @@ exports[`appeal-details GET /:appealId should not render action links to the man
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-3"> Case timetable</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-3"> Timetable</span></h2>
                 </div>
                 <div id="accordion-default1-content-3" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-3">
@@ -459,7 +459,7 @@ exports[`appeal-details GET /:appealId should not render action links to the man
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-4"> Case documentation</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-4"> Documentation</span></h2>
                 </div>
                 <div id="accordion-default1-content-4" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-4">
@@ -525,7 +525,7 @@ exports[`appeal-details GET /:appealId should not render action links to the man
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-5"> Case contacts</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-5"> Contacts</span></h2>
                 </div>
                 <div id="accordion-default1-content-5" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-5">
@@ -558,7 +558,7 @@ exports[`appeal-details GET /:appealId should not render action links to the man
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-6"> Case team</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-6"> Team</span></h2>
                 </div>
                 <div id="accordion-default1-content-6" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-6">
@@ -576,10 +576,15 @@ exports[`appeal-details GET /:appealId should not render action links to the man
                     </dl>
                 </div>
             </div>
+            <div class="govuk-accordion__section">
+                <div class="govuk-accordion__section-header">
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-7"> Case management</span></h2>
+                </div>
+                <div id="accordion-default1-content-7" class="govuk-accordion__section-content"
+                aria-labelledby="accordion-default1-heading-7"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit">Case history</a>
+                </div>
+            </div>
         </div>
-        <h2>Case history</h2>
-        <p><a class="govuk-link" href="/appeals-service/appeal-details/1/audit">View changes</a> that
-            have been made to this appeal.</p>
 </main>"
 `;
 
@@ -621,7 +626,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default1">
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-1"> Case overview</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-1"> Overview</span></h2>
                 </div>
                 <div id="accordion-default1-content-1" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-1">
@@ -669,7 +674,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-2"> Site details</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-2"> Details</span></h2>
                 </div>
                 <div id="accordion-default1-content-2" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-2">
@@ -744,7 +749,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-3"> Case timetable</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-3"> Timetable</span></h2>
                 </div>
                 <div id="accordion-default1-content-3" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-3">
@@ -779,7 +784,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-4"> Case documentation</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-4"> Documentation</span></h2>
                 </div>
                 <div id="accordion-default1-content-4" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-4">
@@ -845,7 +850,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-5"> Case contacts</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-5"> Contacts</span></h2>
                 </div>
                 <div id="accordion-default1-content-5" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-5">
@@ -878,7 +883,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-6"> Case team</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-6"> Team</span></h2>
                 </div>
                 <div id="accordion-default1-content-6" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-6">
@@ -896,10 +901,15 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                     </dl>
                 </div>
             </div>
+            <div class="govuk-accordion__section">
+                <div class="govuk-accordion__section-header">
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-7"> Case management</span></h2>
+                </div>
+                <div id="accordion-default1-content-7" class="govuk-accordion__section-content"
+                aria-labelledby="accordion-default1-heading-7"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit">Case history</a>
+                </div>
+            </div>
         </div>
-        <h2>Case history</h2>
-        <p><a class="govuk-link" href="/appeals-service/appeal-details/1/audit">View changes</a> that
-            have been made to this appeal.</p>
 </main>"
 `;
 
@@ -936,7 +946,7 @@ exports[`appeal-details GET /:appealId should render a Issue a decision action b
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default1">
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-1"> Case overview</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-1"> Overview</span></h2>
                 </div>
                 <div id="accordion-default1-content-1" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-1">
@@ -984,7 +994,7 @@ exports[`appeal-details GET /:appealId should render a Issue a decision action b
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-2"> Site details</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-2"> Details</span></h2>
                 </div>
                 <div id="accordion-default1-content-2" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-2">
@@ -1059,7 +1069,7 @@ exports[`appeal-details GET /:appealId should render a Issue a decision action b
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-3"> Case timetable</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-3"> Timetable</span></h2>
                 </div>
                 <div id="accordion-default1-content-3" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-3">
@@ -1094,7 +1104,7 @@ exports[`appeal-details GET /:appealId should render a Issue a decision action b
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-4"> Case documentation</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-4"> Documentation</span></h2>
                 </div>
                 <div id="accordion-default1-content-4" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-4">
@@ -1160,7 +1170,7 @@ exports[`appeal-details GET /:appealId should render a Issue a decision action b
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-5"> Case contacts</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-5"> Contacts</span></h2>
                 </div>
                 <div id="accordion-default1-content-5" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-5">
@@ -1193,7 +1203,7 @@ exports[`appeal-details GET /:appealId should render a Issue a decision action b
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-6"> Case team</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-6"> Team</span></h2>
                 </div>
                 <div id="accordion-default1-content-6" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-6">
@@ -1211,10 +1221,15 @@ exports[`appeal-details GET /:appealId should render a Issue a decision action b
                     </dl>
                 </div>
             </div>
+            <div class="govuk-accordion__section">
+                <div class="govuk-accordion__section-header">
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-7"> Case management</span></h2>
+                </div>
+                <div id="accordion-default1-content-7" class="govuk-accordion__section-content"
+                aria-labelledby="accordion-default1-heading-7"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit">Case history</a>
+                </div>
+            </div>
         </div>
-        <h2>Case history</h2>
-        <p><a class="govuk-link" href="/appeals-service/appeal-details/1/audit">View changes</a> that
-            have been made to this appeal.</p>
 </main>"
 `;
 
@@ -1237,7 +1252,7 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default1">
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-1"> Case overview</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-1"> Overview</span></h2>
                 </div>
                 <div id="accordion-default1-content-1" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-1">
@@ -1294,7 +1309,7 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-2"> Site details</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-2"> Details</span></h2>
                 </div>
                 <div id="accordion-default1-content-2" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-2">
@@ -1369,7 +1384,7 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-3"> Case timetable</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-3"> Timetable</span></h2>
                 </div>
                 <div id="accordion-default1-content-3" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-3">
@@ -1404,7 +1419,7 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-4"> Case documentation</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-4"> Documentation</span></h2>
                 </div>
                 <div id="accordion-default1-content-4" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-4">
@@ -1470,7 +1485,7 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-5"> Case contacts</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-5"> Contacts</span></h2>
                 </div>
                 <div id="accordion-default1-content-5" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-5">
@@ -1503,7 +1518,7 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-6"> Case team</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-6"> Team</span></h2>
                 </div>
                 <div id="accordion-default1-content-6" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-6">
@@ -1521,10 +1536,15 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                     </dl>
                 </div>
             </div>
+            <div class="govuk-accordion__section">
+                <div class="govuk-accordion__section-header">
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-7"> Case management</span></h2>
+                </div>
+                <div id="accordion-default1-content-7" class="govuk-accordion__section-content"
+                aria-labelledby="accordion-default1-heading-7"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit">Case history</a>
+                </div>
+            </div>
         </div>
-        <h2>Case history</h2>
-        <p><a class="govuk-link" href="/appeals-service/appeal-details/1/audit">View changes</a> that
-            have been made to this appeal.</p>
 </main>"
 `;
 
@@ -1547,7 +1567,7 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default1">
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-1"> Case overview</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-1"> Overview</span></h2>
                 </div>
                 <div id="accordion-default1-content-1" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-1">
@@ -1606,7 +1626,7 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-2"> Site details</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-2"> Details</span></h2>
                 </div>
                 <div id="accordion-default1-content-2" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-2">
@@ -1681,7 +1701,7 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-3"> Case timetable</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-3"> Timetable</span></h2>
                 </div>
                 <div id="accordion-default1-content-3" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-3">
@@ -1716,7 +1736,7 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-4"> Case documentation</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-4"> Documentation</span></h2>
                 </div>
                 <div id="accordion-default1-content-4" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-4">
@@ -1782,7 +1802,7 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-5"> Case contacts</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-5"> Contacts</span></h2>
                 </div>
                 <div id="accordion-default1-content-5" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-5">
@@ -1815,7 +1835,7 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-6"> Case team</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-6"> Team</span></h2>
                 </div>
                 <div id="accordion-default1-content-6" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-6">
@@ -1833,10 +1853,15 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                     </dl>
                 </div>
             </div>
+            <div class="govuk-accordion__section">
+                <div class="govuk-accordion__section-header">
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-7"> Case management</span></h2>
+                </div>
+                <div id="accordion-default1-content-7" class="govuk-accordion__section-content"
+                aria-labelledby="accordion-default1-heading-7"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit">Case history</a>
+                </div>
+            </div>
         </div>
-        <h2>Case history</h2>
-        <p><a class="govuk-link" href="/appeals-service/appeal-details/1/audit">View changes</a> that
-            have been made to this appeal.</p>
 </main>"
 `;
 
@@ -1872,7 +1897,7 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default1">
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-1"> Case overview</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-1"> Overview</span></h2>
                 </div>
                 <div id="accordion-default1-content-1" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-1">
@@ -1932,7 +1957,7 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-2"> Site details</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-2"> Details</span></h2>
                 </div>
                 <div id="accordion-default1-content-2" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-2">
@@ -2007,7 +2032,7 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-3"> Case timetable</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-3"> Timetable</span></h2>
                 </div>
                 <div id="accordion-default1-content-3" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-3">
@@ -2042,7 +2067,7 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-4"> Case documentation</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-4"> Documentation</span></h2>
                 </div>
                 <div id="accordion-default1-content-4" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-4">
@@ -2108,7 +2133,7 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-5"> Case contacts</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-5"> Contacts</span></h2>
                 </div>
                 <div id="accordion-default1-content-5" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-5">
@@ -2141,7 +2166,7 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-6"> Case team</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-6"> Team</span></h2>
                 </div>
                 <div id="accordion-default1-content-6" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-6">
@@ -2159,10 +2184,15 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
                     </dl>
                 </div>
             </div>
+            <div class="govuk-accordion__section">
+                <div class="govuk-accordion__section-header">
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-7"> Case management</span></h2>
+                </div>
+                <div id="accordion-default1-content-7" class="govuk-accordion__section-content"
+                aria-labelledby="accordion-default1-heading-7"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit">Case history</a>
+                </div>
+            </div>
         </div>
-        <h2>Case history</h2>
-        <p><a class="govuk-link" href="/appeals-service/appeal-details/1/audit">View changes</a> that
-            have been made to this appeal.</p>
 </main>"
 `;
 
@@ -2184,7 +2214,7 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default1">
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-1"> Case overview</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-1"> Overview</span></h2>
                 </div>
                 <div id="accordion-default1-content-1" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-1">
@@ -2232,7 +2262,7 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-2"> Site details</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-2"> Details</span></h2>
                 </div>
                 <div id="accordion-default1-content-2" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-2">
@@ -2307,7 +2337,7 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-3"> Case timetable</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-3"> Timetable</span></h2>
                 </div>
                 <div id="accordion-default1-content-3" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-3">
@@ -2342,7 +2372,7 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-4"> Case documentation</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-4"> Documentation</span></h2>
                 </div>
                 <div id="accordion-default1-content-4" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-4">
@@ -2408,7 +2438,7 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-5"> Case contacts</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-5"> Contacts</span></h2>
                 </div>
                 <div id="accordion-default1-content-5" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-5">
@@ -2441,7 +2471,7 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-6"> Case team</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-6"> Team</span></h2>
                 </div>
                 <div id="accordion-default1-content-6" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-6">
@@ -2459,10 +2489,15 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                     </dl>
                 </div>
             </div>
+            <div class="govuk-accordion__section">
+                <div class="govuk-accordion__section-header">
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-7"> Case management</span></h2>
+                </div>
+                <div id="accordion-default1-content-7" class="govuk-accordion__section-content"
+                aria-labelledby="accordion-default1-heading-7"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit">Case history</a>
+                </div>
+            </div>
         </div>
-        <h2>Case history</h2>
-        <p><a class="govuk-link" href="/appeals-service/appeal-details/1/audit">View changes</a> that
-            have been made to this appeal.</p>
 </main>"
 `;
 
@@ -2484,7 +2519,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default1">
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-1"> Case overview</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-1"> Overview</span></h2>
                 </div>
                 <div id="accordion-default1-content-1" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-1">
@@ -2532,7 +2567,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-2"> Site details</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-2"> Details</span></h2>
                 </div>
                 <div id="accordion-default1-content-2" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-2">
@@ -2607,7 +2642,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-3"> Case timetable</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-3"> Timetable</span></h2>
                 </div>
                 <div id="accordion-default1-content-3" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-3">
@@ -2642,7 +2677,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-4"> Case documentation</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-4"> Documentation</span></h2>
                 </div>
                 <div id="accordion-default1-content-4" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-4">
@@ -2709,7 +2744,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-5"> Case contacts</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-5"> Contacts</span></h2>
                 </div>
                 <div id="accordion-default1-content-5" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-5">
@@ -2742,7 +2777,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-6"> Case team</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-6"> Team</span></h2>
                 </div>
                 <div id="accordion-default1-content-6" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-6">
@@ -2760,10 +2795,15 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                     </dl>
                 </div>
             </div>
+            <div class="govuk-accordion__section">
+                <div class="govuk-accordion__section-header">
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-7"> Case management</span></h2>
+                </div>
+                <div id="accordion-default1-content-7" class="govuk-accordion__section-content"
+                aria-labelledby="accordion-default1-heading-7"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit">Case history</a>
+                </div>
+            </div>
         </div>
-        <h2>Case history</h2>
-        <p><a class="govuk-link" href="/appeals-service/appeal-details/1/audit">View changes</a> that
-            have been made to this appeal.</p>
 </main>"
 `;
 
@@ -2785,7 +2825,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default1">
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-1"> Case overview</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-1"> Overview</span></h2>
                 </div>
                 <div id="accordion-default1-content-1" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-1">
@@ -2833,7 +2873,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-2"> Site details</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-2"> Details</span></h2>
                 </div>
                 <div id="accordion-default1-content-2" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-2">
@@ -2908,7 +2948,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-3"> Case timetable</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-3"> Timetable</span></h2>
                 </div>
                 <div id="accordion-default1-content-3" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-3">
@@ -2943,7 +2983,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-4"> Case documentation</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-4"> Documentation</span></h2>
                 </div>
                 <div id="accordion-default1-content-4" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-4">
@@ -3010,7 +3050,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-5"> Case contacts</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-5"> Contacts</span></h2>
                 </div>
                 <div id="accordion-default1-content-5" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-5">
@@ -3043,7 +3083,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-6"> Case team</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-6"> Team</span></h2>
                 </div>
                 <div id="accordion-default1-content-6" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-6">
@@ -3061,10 +3101,15 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                     </dl>
                 </div>
             </div>
+            <div class="govuk-accordion__section">
+                <div class="govuk-accordion__section-header">
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-7"> Case management</span></h2>
+                </div>
+                <div id="accordion-default1-content-7" class="govuk-accordion__section-content"
+                aria-labelledby="accordion-default1-heading-7"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit">Case history</a>
+                </div>
+            </div>
         </div>
-        <h2>Case history</h2>
-        <p><a class="govuk-link" href="/appeals-service/appeal-details/1/audit">View changes</a> that
-            have been made to this appeal.</p>
 </main>"
 `;
 
@@ -3086,7 +3131,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default1">
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-1"> Case overview</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-1"> Overview</span></h2>
                 </div>
                 <div id="accordion-default1-content-1" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-1">
@@ -3134,7 +3179,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-2"> Site details</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-2"> Details</span></h2>
                 </div>
                 <div id="accordion-default1-content-2" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-2">
@@ -3209,7 +3254,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-3"> Case timetable</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-3"> Timetable</span></h2>
                 </div>
                 <div id="accordion-default1-content-3" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-3">
@@ -3244,7 +3289,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-4"> Case documentation</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-4"> Documentation</span></h2>
                 </div>
                 <div id="accordion-default1-content-4" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-4">
@@ -3311,7 +3356,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-5"> Case contacts</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-5"> Contacts</span></h2>
                 </div>
                 <div id="accordion-default1-content-5" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-5">
@@ -3344,7 +3389,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-6"> Case team</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-6"> Team</span></h2>
                 </div>
                 <div id="accordion-default1-content-6" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-6">
@@ -3362,10 +3407,15 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                     </dl>
                 </div>
             </div>
+            <div class="govuk-accordion__section">
+                <div class="govuk-accordion__section-header">
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-7"> Case management</span></h2>
+                </div>
+                <div id="accordion-default1-content-7" class="govuk-accordion__section-content"
+                aria-labelledby="accordion-default1-heading-7"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit">Case history</a>
+                </div>
+            </div>
         </div>
-        <h2>Case history</h2>
-        <p><a class="govuk-link" href="/appeals-service/appeal-details/1/audit">View changes</a> that
-            have been made to this appeal.</p>
 </main>"
 `;
 
@@ -3388,7 +3438,7 @@ exports[`appeal-details GET /:appealId should render the case reference for each
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default1">
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-1"> Case overview</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-1"> Overview</span></h2>
                 </div>
                 <div id="accordion-default1-content-1" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-1">
@@ -3448,7 +3498,7 @@ exports[`appeal-details GET /:appealId should render the case reference for each
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-2"> Site details</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-2"> Details</span></h2>
                 </div>
                 <div id="accordion-default1-content-2" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-2">
@@ -3523,7 +3573,7 @@ exports[`appeal-details GET /:appealId should render the case reference for each
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-3"> Case timetable</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-3"> Timetable</span></h2>
                 </div>
                 <div id="accordion-default1-content-3" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-3">
@@ -3558,7 +3608,7 @@ exports[`appeal-details GET /:appealId should render the case reference for each
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-4"> Case documentation</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-4"> Documentation</span></h2>
                 </div>
                 <div id="accordion-default1-content-4" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-4">
@@ -3624,7 +3674,7 @@ exports[`appeal-details GET /:appealId should render the case reference for each
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-5"> Case contacts</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-5"> Contacts</span></h2>
                 </div>
                 <div id="accordion-default1-content-5" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-5">
@@ -3657,7 +3707,7 @@ exports[`appeal-details GET /:appealId should render the case reference for each
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-6"> Case team</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-6"> Team</span></h2>
                 </div>
                 <div id="accordion-default1-content-6" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-6">
@@ -3675,10 +3725,15 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                     </dl>
                 </div>
             </div>
+            <div class="govuk-accordion__section">
+                <div class="govuk-accordion__section-header">
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-7"> Case management</span></h2>
+                </div>
+                <div id="accordion-default1-content-7" class="govuk-accordion__section-content"
+                aria-labelledby="accordion-default1-heading-7"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit">Case history</a>
+                </div>
+            </div>
         </div>
-        <h2>Case history</h2>
-        <p><a class="govuk-link" href="/appeals-service/appeal-details/1/audit">View changes</a> that
-            have been made to this appeal.</p>
 </main>"
 `;
 
@@ -3841,7 +3896,7 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default1">
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-1"> Case overview</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-1"> Overview</span></h2>
                 </div>
                 <div id="accordion-default1-content-1" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-1">
@@ -3901,7 +3956,7 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-2"> Site details</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-2"> Details</span></h2>
                 </div>
                 <div id="accordion-default1-content-2" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-2">
@@ -3976,7 +4031,7 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-3"> Case timetable</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-3"> Timetable</span></h2>
                 </div>
                 <div id="accordion-default1-content-3" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-3">
@@ -4011,7 +4066,7 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-4"> Case documentation</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-4"> Documentation</span></h2>
                 </div>
                 <div id="accordion-default1-content-4" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-4">
@@ -4077,7 +4132,7 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-5"> Case contacts</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-5"> Contacts</span></h2>
                 </div>
                 <div id="accordion-default1-content-5" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-5">
@@ -4110,7 +4165,7 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-6"> Case team</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-6"> Team</span></h2>
                 </div>
                 <div id="accordion-default1-content-6" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-6">
@@ -4128,10 +4183,15 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                     </dl>
                 </div>
             </div>
+            <div class="govuk-accordion__section">
+                <div class="govuk-accordion__section-header">
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-7"> Case management</span></h2>
+                </div>
+                <div id="accordion-default1-content-7" class="govuk-accordion__section-content"
+                aria-labelledby="accordion-default1-heading-7"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit">Case history</a>
+                </div>
+            </div>
         </div>
-        <h2>Case history</h2>
-        <p><a class="govuk-link" href="/appeals-service/appeal-details/1/audit">View changes</a> that
-            have been made to this appeal.</p>
 </main>"
 `;
 
@@ -4153,7 +4213,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default1">
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-1"> Case overview</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-1"> Overview</span></h2>
                 </div>
                 <div id="accordion-default1-content-1" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-1">
@@ -4201,7 +4261,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-2"> Site details</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-2"> Details</span></h2>
                 </div>
                 <div id="accordion-default1-content-2" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-2">
@@ -4276,7 +4336,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-3"> Case timetable</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-3"> Timetable</span></h2>
                 </div>
                 <div id="accordion-default1-content-3" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-3">
@@ -4311,7 +4371,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-4"> Case documentation</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-4"> Documentation</span></h2>
                 </div>
                 <div id="accordion-default1-content-4" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-4">
@@ -4377,7 +4437,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-5"> Case contacts</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-5"> Contacts</span></h2>
                 </div>
                 <div id="accordion-default1-content-5" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-5">
@@ -4410,7 +4470,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-6"> Case team</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-6"> Team</span></h2>
                 </div>
                 <div id="accordion-default1-content-6" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-6">
@@ -4428,10 +4488,15 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                     </dl>
                 </div>
             </div>
+            <div class="govuk-accordion__section">
+                <div class="govuk-accordion__section-header">
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-7"> Case management</span></h2>
+                </div>
+                <div id="accordion-default1-content-7" class="govuk-accordion__section-content"
+                aria-labelledby="accordion-default1-heading-7"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit">Case history</a>
+                </div>
+            </div>
         </div>
-        <h2>Case history</h2>
-        <p><a class="govuk-link" href="/appeals-service/appeal-details/1/audit">View changes</a> that
-            have been made to this appeal.</p>
 </main>"
 `;
 
@@ -4453,7 +4518,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default3">
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default3-heading-1"> Case overview</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default3-heading-1"> Overview</span></h2>
                 </div>
                 <div id="accordion-default3-content-1" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default3-heading-1">
@@ -4501,7 +4566,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default3-heading-2"> Site details</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default3-heading-2"> Details</span></h2>
                 </div>
                 <div id="accordion-default3-content-2" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default3-heading-2">
@@ -4576,7 +4641,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default3-heading-3"> Case timetable</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default3-heading-3"> Timetable</span></h2>
                 </div>
                 <div id="accordion-default3-content-3" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default3-heading-3">
@@ -4611,7 +4676,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default3-heading-4"> Case documentation</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default3-heading-4"> Documentation</span></h2>
                 </div>
                 <div id="accordion-default3-content-4" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default3-heading-4">
@@ -4677,7 +4742,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default3-heading-5"> Case contacts</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default3-heading-5"> Contacts</span></h2>
                 </div>
                 <div id="accordion-default3-content-5" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default3-heading-5">
@@ -4710,7 +4775,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default3-heading-6"> Case team</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default3-heading-6"> Team</span></h2>
                 </div>
                 <div id="accordion-default3-content-6" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default3-heading-6">
@@ -4728,10 +4793,15 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                     </dl>
                 </div>
             </div>
+            <div class="govuk-accordion__section">
+                <div class="govuk-accordion__section-header">
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default3-heading-7"> Case management</span></h2>
+                </div>
+                <div id="accordion-default3-content-7" class="govuk-accordion__section-content"
+                aria-labelledby="accordion-default3-heading-7"><a class="govuk-link" href="/appeals-service/appeal-details/3/audit">Case history</a>
+                </div>
+            </div>
         </div>
-        <h2>Case history</h2>
-        <p><a class="govuk-link" href="/appeals-service/appeal-details/3/audit">View changes</a> that
-            have been made to this appeal.</p>
 </main>"
 `;
 
@@ -4754,7 +4824,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default2">
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-1"> Case overview</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-1"> Overview</span></h2>
                 </div>
                 <div id="accordion-default2-content-1" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default2-heading-1">
@@ -4821,7 +4891,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-2"> Site details</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-2"> Details</span></h2>
                 </div>
                 <div id="accordion-default2-content-2" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default2-heading-2">
@@ -4896,7 +4966,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-3"> Case timetable</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-3"> Timetable</span></h2>
                 </div>
                 <div id="accordion-default2-content-3" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default2-heading-3">
@@ -4931,7 +5001,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-4"> Case documentation</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-4"> Documentation</span></h2>
                 </div>
                 <div id="accordion-default2-content-4" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default2-heading-4">
@@ -4997,7 +5067,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-5"> Case contacts</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-5"> Contacts</span></h2>
                 </div>
                 <div id="accordion-default2-content-5" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default2-heading-5">
@@ -5030,7 +5100,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-6"> Case team</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-6"> Team</span></h2>
                 </div>
                 <div id="accordion-default2-content-6" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default2-heading-6">
@@ -5048,10 +5118,15 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                     </dl>
                 </div>
             </div>
+            <div class="govuk-accordion__section">
+                <div class="govuk-accordion__section-header">
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-7"> Case management</span></h2>
+                </div>
+                <div id="accordion-default2-content-7" class="govuk-accordion__section-content"
+                aria-labelledby="accordion-default2-heading-7"><a class="govuk-link" href="/appeals-service/appeal-details/2/audit">Case history</a>
+                </div>
+            </div>
         </div>
-        <h2>Case history</h2>
-        <p><a class="govuk-link" href="/appeals-service/appeal-details/2/audit">View changes</a> that
-            have been made to this appeal.</p>
 </main>"
 `;
 
@@ -5073,7 +5148,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default1">
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-1"> Case overview</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-1"> Overview</span></h2>
                 </div>
                 <div id="accordion-default1-content-1" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-1">
@@ -5121,7 +5196,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-2"> Site details</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-2"> Details</span></h2>
                 </div>
                 <div id="accordion-default1-content-2" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-2">
@@ -5196,7 +5271,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-3"> Case timetable</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-3"> Timetable</span></h2>
                 </div>
                 <div id="accordion-default1-content-3" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-3">
@@ -5216,7 +5291,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-4"> Case documentation</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-4"> Documentation</span></h2>
                 </div>
                 <div id="accordion-default1-content-4" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-4">
@@ -5282,7 +5357,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-5"> Case contacts</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-5"> Contacts</span></h2>
                 </div>
                 <div id="accordion-default1-content-5" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-5">
@@ -5315,7 +5390,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
             </div>
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-6"> Case team</span></h2>
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-6"> Team</span></h2>
                 </div>
                 <div id="accordion-default1-content-6" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-6">
@@ -5333,10 +5408,15 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                     </dl>
                 </div>
             </div>
+            <div class="govuk-accordion__section">
+                <div class="govuk-accordion__section-header">
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-7"> Case management</span></h2>
+                </div>
+                <div id="accordion-default1-content-7" class="govuk-accordion__section-content"
+                aria-labelledby="accordion-default1-heading-7"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit">Case history</a>
+                </div>
+            </div>
         </div>
-        <h2>Case history</h2>
-        <p><a class="govuk-link" href="/appeals-service/appeal-details/1/audit">View changes</a> that
-            have been made to this appeal.</p>
 </main>"
 `;
 
@@ -5499,7 +5579,7 @@ exports[`appeal-details should not render a back button 1`] = `
                     <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default2">
                         <div class="govuk-accordion__section">
                             <div class="govuk-accordion__section-header">
-                                <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-1"> Case overview</span></h2>
+                                <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-1"> Overview</span></h2>
                             </div>
                             <div id="accordion-default2-content-1" class="govuk-accordion__section-content"
                             aria-labelledby="accordion-default2-heading-1">
@@ -5547,7 +5627,7 @@ exports[`appeal-details should not render a back button 1`] = `
                         </div>
                         <div class="govuk-accordion__section">
                             <div class="govuk-accordion__section-header">
-                                <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-2"> Site details</span></h2>
+                                <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-2"> Details</span></h2>
                             </div>
                             <div id="accordion-default2-content-2" class="govuk-accordion__section-content"
                             aria-labelledby="accordion-default2-heading-2">
@@ -5622,7 +5702,7 @@ exports[`appeal-details should not render a back button 1`] = `
                         </div>
                         <div class="govuk-accordion__section">
                             <div class="govuk-accordion__section-header">
-                                <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-3"> Case timetable</span></h2>
+                                <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-3"> Timetable</span></h2>
                             </div>
                             <div id="accordion-default2-content-3" class="govuk-accordion__section-content"
                             aria-labelledby="accordion-default2-heading-3">
@@ -5657,7 +5737,7 @@ exports[`appeal-details should not render a back button 1`] = `
                         </div>
                         <div class="govuk-accordion__section">
                             <div class="govuk-accordion__section-header">
-                                <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-4"> Case documentation</span></h2>
+                                <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-4"> Documentation</span></h2>
                             </div>
                             <div id="accordion-default2-content-4" class="govuk-accordion__section-content"
                             aria-labelledby="accordion-default2-heading-4">
@@ -5723,7 +5803,7 @@ exports[`appeal-details should not render a back button 1`] = `
                         </div>
                         <div class="govuk-accordion__section">
                             <div class="govuk-accordion__section-header">
-                                <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-5"> Case contacts</span></h2>
+                                <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-5"> Contacts</span></h2>
                             </div>
                             <div id="accordion-default2-content-5" class="govuk-accordion__section-content"
                             aria-labelledby="accordion-default2-heading-5">
@@ -5756,7 +5836,7 @@ exports[`appeal-details should not render a back button 1`] = `
                         </div>
                         <div class="govuk-accordion__section">
                             <div class="govuk-accordion__section-header">
-                                <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-6"> Case team</span></h2>
+                                <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-6"> Team</span></h2>
                             </div>
                             <div id="accordion-default2-content-6" class="govuk-accordion__section-content"
                             aria-labelledby="accordion-default2-heading-6">
@@ -5774,10 +5854,15 @@ exports[`appeal-details should not render a back button 1`] = `
                                 </dl>
                             </div>
                         </div>
+                        <div class="govuk-accordion__section">
+                            <div class="govuk-accordion__section-header">
+                                <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-7"> Case management</span></h2>
+                            </div>
+                            <div id="accordion-default2-content-7" class="govuk-accordion__section-content"
+                            aria-labelledby="accordion-default2-heading-7"><a class="govuk-link" href="/appeals-service/appeal-details/2/audit">Case history</a>
+                            </div>
+                        </div>
                     </div>
-                    <h2>Case history</h2>
-                    <p><a class="govuk-link" href="/appeals-service/appeal-details/2/audit">View changes</a> that
-                        have been made to this appeal.</p>
             </main>
         </div>
         <footer class="govuk-footer" role="contentinfo">
