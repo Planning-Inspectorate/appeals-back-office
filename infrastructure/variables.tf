@@ -1,8 +1,12 @@
 # variables should be sorted A-Z
 
-# ignored while we build up the terraform
-# tflint-ignore: terraform_unused_declarations
 variable "environment" {
   description = "The name of the environment in which resources will be deployed"
   type        = string
+}
+
+variable "tags" {
+  description = "A collection of tags to assign to taggable resources"
+  type        = map(string)
+  default     = {}
 }
