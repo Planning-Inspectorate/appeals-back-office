@@ -5,9 +5,23 @@ module "primary_region" {
   azure_region = local.primary_location
 }
 
+module "secondary_region" {
+  source  = "claranet/regions/azurerm"
+  version = "7.1.1"
+
+  azure_region = local.secondary_location
+}
+
 resource "azurerm_resource_group" "primary" {
   name     = "${local.org}-rg-${local.resource_suffix}"
   location = module.primary_region.location
+
+  tags = local.tags
+}
+
+resource "azurerm_resource_group" "secondary" {
+  name     = "${local.org}-rg-${local.secondary_resource_suffix}"
+  location = module.secondary_region.location
 
   tags = local.tags
 }

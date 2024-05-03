@@ -2,7 +2,7 @@ resource "azurerm_virtual_network" "main" {
   name                = "${local.org}-vnet-${local.resource_suffix}"
   location            = module.primary_region.location
   resource_group_name = azurerm_resource_group.primary.name
-  address_space       = [var.vnet_address_space]
+  address_space       = [var.vnet_config.address_space]
 
   tags = var.tags
 }
@@ -11,7 +11,7 @@ resource "azurerm_subnet" "main" {
   name                 = "${local.org}-snet-${local.resource_suffix}"
   resource_group_name  = azurerm_resource_group.primary.name
   virtual_network_name = azurerm_virtual_network.main.name
-  address_prefixes     = [var.vnet_main_subnet_address_space]
+  address_prefixes     = [var.vnet_config.main_subnet_address_space]
 }
 
 resource "azurerm_virtual_network_peering" "bo_to_tooling" {

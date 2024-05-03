@@ -1,9 +1,11 @@
 locals {
-  org              = "pins"
-  service_name     = "appeals-bo"
-  primary_location = "uk-south"
+  org                = "pins"
+  service_name       = "appeals-bo"
+  primary_location   = "uk-south"
+  secondary_location = "uk-west"
 
-  resource_suffix = "${local.service_name}-${var.environment}"
+  resource_suffix           = "${local.service_name}-${var.environment}"
+  secondary_resource_suffix = "${local.service_name}-secondary-${var.environment}"
 
   secrets = [
     "appeals-bo-client-secret",
