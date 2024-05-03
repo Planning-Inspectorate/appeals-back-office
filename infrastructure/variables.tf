@@ -20,12 +20,12 @@ variable "tooling_config" {
   })
 }
 
-variable "vnet_address_space" {
-  description = "The main VNET address space in CIDR notation"
-  type        = string
-}
-
-variable "vnet_main_subnet_address_space" {
-  description = "The main subnet address space in CIDR notation"
-  type        = string
+variable "vnet_config" {
+  description = "VNet configuration"
+  type = object({
+    address_space                  = string
+    main_subnet_address_space      = string
+    secondary_address_space        = string
+    secondary_subnet_address_space = string
+  })
 }
