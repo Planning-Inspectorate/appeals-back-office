@@ -1,7 +1,11 @@
 common_config = {
   resource_group_name = "pins-rg-common-test-ukw-001"
   action_group_names = {
-    tech = "pins-ag-odt-appeals-bo-tech-test"
+    bo_tech              = "pins-ag-odt-appeals-bo-tech-test"
+    bo_service_manager   = "pins-ag-odt-appeals-bo-service-manager-test"
+    fo_tech              = "pins-ag-odt-appeals-fo-tech-test"
+    fo_service_manager   = "pins-ag-odt-appeals-fo-service-manager-test"
+    data_service_manager = "pins-ag-odt-data-service-manager-test"
   }
 }
 

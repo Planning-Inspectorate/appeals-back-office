@@ -3,7 +3,11 @@ alerts_enabled = false
 common_config = {
   resource_group_name = "pins-rg-common-dev-ukw-001"
   action_group_names = {
-    tech = "pins-ag-odt-appeals-bo-tech-dev"
+    bo_tech              = "pins-ag-odt-appeals-bo-tech-dev"
+    bo_service_manager   = "pins-ag-odt-appeals-bo-service-manager-dev"
+    fo_tech              = "pins-ag-odt-appeals-fo-tech-dev"
+    fo_service_manager   = "pins-ag-odt-appeals-fo-service-manager-dev"
+    data_service_manager = "pins-ag-odt-data-service-manager-dev"
   }
 }
 
