@@ -108,7 +108,7 @@ resource "azurerm_resource_group_template_deployment" "document_storage_malware_
           },
           "overrideSubscriptionLevelSettings": true
         },
-        "scope": "[resourceId('Microsoft.Storage/storageAccounts', parameters('storage_account_id'))]"
+        "scope": "[parameters('storage_account_id')]"
       }
     ],
     "outputs": {}
