@@ -73,7 +73,7 @@ resource "azurerm_resource_group_template_deployment" "document_storage_malware_
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-      "storage_account_name": {
+      "storage_account_id": {
         "type": "string"
       },
       "subscription_id": {
