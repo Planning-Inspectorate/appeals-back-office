@@ -293,6 +293,7 @@
  * @property {string} [preHeading] Preheading (Usually 'Appeal ${shortAppealReference}')
  * @property {string} [heading]
  * @property {string} [headingClasses]
+ * @property {string} [submitButtonText]
  * @property {ButtonProperties} [submitButtonProperties]
  * @property {string} [skipButtonUrl]
  * @property {PageComponent[]} [pageComponents]

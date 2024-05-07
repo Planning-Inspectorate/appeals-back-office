@@ -3,12 +3,7 @@ import { removeSummaryListActions } from '#lib/mappers/mapper-utilities.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { capitalize } from 'lodash-es';
-import {
-	dateToDisplayDate,
-	hourMinuteToApiDateString,
-	dayMonthYearToApiDateString
-} from '#lib/dates.js';
-import { appealSiteToAddressString } from '#lib/address-formatter.js';
+import { hourMinuteToApiDateString, dayMonthYearToApiDateString } from '#lib/dates.js';
 
 /**
  * @typedef {'unaccompanied'|'accompanied'|'accessRequired'} WebSiteVisitType
@@ -196,6 +191,14 @@ export async function scheduleOrManageSiteVisitPage(
 	};
 
 	/** @type {PageComponent} */
+	const selectTimeHtmlComponent = {
+		type: 'html',
+		parameters: {
+			html: '<h2>Select time</h2><p class="govuk-hint">Optional for unaccompanied visits</p><p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>'
+		}
+	};
+
+	/** @type {PageComponent} */
 	const selectStartTimeComponent = {
 		type: 'time-input',
 		wrapperHtml: {
@@ -233,6 +236,14 @@ export async function scheduleOrManageSiteVisitPage(
 		}
 	};
 
+	/** @type {PageComponent} */
+	const insetTextComponent = {
+		type: 'inset-text',
+		parameters: {
+			text: 'Confirming will inform the relevant parties of the site visit '
+		}
+	};
+
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);
 
 	/** @type {PageContent} */
@@ -241,12 +252,15 @@ export async function scheduleOrManageSiteVisitPage(
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: `${titlePrefix} site visit`,
+		submitButtonText: 'Confirm',
 		pageComponents: [
 			siteInformationComponent,
 			selectVisitTypeComponent,
 			selectDateComponent,
+			selectTimeHtmlComponent,
 			selectStartTimeComponent,
-			selectEndTimeComponent
+			selectEndTimeComponent,
+			insetTextComponent
 		]
 	};
 
@@ -277,33 +291,24 @@ export function stringIsSiteVisitConfirmationPageType(pageType) {
 
 /**
  * @param {SiteVisitConfirmationPageType} pageType
- * @param {import('@pins/appeals.api/src/server/endpoints/appeals.js').SingleSiteVisitDetailsResponse} siteVisit
  * @param {Appeal} appealDetails
  * @returns {PageContent}
  */
-export function scheduleOrManageSiteVisitConfirmationPage(pageType, siteVisit, appealDetails) {
-	const formattedSiteVisitType = siteVisit.visitType.toLowerCase();
-	const formattedSiteAddress = appealDetails?.appealSite
-		? appealSiteToAddressString(appealDetails.appealSite)
-		: 'Address not known';
-	const formattedSiteVisitDate = dateToDisplayDate(siteVisit.visitDate);
-	const timeText =
-		siteVisit.visitStartTime && siteVisit.visitEndTime
-			? `, between ${siteVisit.visitStartTime} and ${siteVisit.visitEndTime}`
-			: '';
-
+export function scheduleOrManageSiteVisitConfirmationPage(pageType, appealDetails) {
 	/** @type {PageContent} */
 	const pageContent = {
 		title: '',
 		pageComponents: []
 	};
+
 	/** @type {PageComponent} */
-	const whatHappensNextComponent = {
+	const bodyCopyComponent = {
 		type: 'html',
 		parameters: {
-			html: `<h2>What happens next</h2>`
+			html: '<p class="govuk-body">The relevant parties have been informed. The case timetable has been updated.</p>'
 		}
 	};
+
 	/** @type {PageComponent} */
 	const backToCaseDetailsComponent = {
 		type: 'html',
@@ -326,33 +331,17 @@ export function scheduleOrManageSiteVisitConfirmationPage(pageType, siteVisit, a
 						)}</strong>`
 					}
 				},
-				{
-					type: 'html',
-					parameters: {
-						html: `<span class="govuk-body">Your ${formattedSiteVisitType} site visit at ${formattedSiteAddress} is booked for ${formattedSiteVisitDate}${timeText}.</span>`
-					}
-				},
-				whatHappensNextComponent,
-				{
-					type: 'html',
-					parameters: {
-						html: `<p class="govuk-body">The case timetable has been updated.${
-							formattedSiteVisitType !== 'unaccompanied'
-								? ` We've sent an email to the LPA and appellant to confirm the site visit.`
-								: ''
-						}</p>`
-					}
-				},
+				bodyCopyComponent,
 				backToCaseDetailsComponent
 			];
 			break;
 		case 'unchanged':
-			pageContent.title = 'No changes were made';
+			pageContent.title = 'No changes made';
 			pageContent.pageComponents = [
 				{
 					type: 'panel',
 					parameters: {
-						titleText: 'No changes were made',
+						titleText: 'No changes made',
 						headingLevel: 1,
 						html: `Appeal reference<br><strong>${appealShortReference(
 							appealDetails.appealReference
@@ -362,13 +351,7 @@ export function scheduleOrManageSiteVisitConfirmationPage(pageType, siteVisit, a
 				{
 					type: 'html',
 					parameters: {
-						html: `<p class="govuk-body">The original details still apply.</p>`
-					}
-				},
-				{
-					type: 'html',
-					parameters: {
-						html: `<p class="govuk-body">No emails have been sent to the parties.</p>`
+						html: `<p class="govuk-body">No emails have been sent.</p>`
 					}
 				},
 				backToCaseDetailsComponent
@@ -387,23 +370,7 @@ export function scheduleOrManageSiteVisitConfirmationPage(pageType, siteVisit, a
 						)}</strong>`
 					}
 				},
-				{
-					type: 'html',
-					parameters: {
-						html: `<span class="govuk-body">The visit type is now changed to ${formattedSiteVisitType}. Your site visit at ${formattedSiteAddress} is still scheduled for ${formattedSiteVisitDate}${timeText}.</span>`
-					}
-				},
-				whatHappensNextComponent,
-				{
-					type: 'html',
-					parameters: {
-						html: `<p class="govuk-body">We updated the case timetable.${
-							formattedSiteVisitType !== 'unaccompanied'
-								? ` We've sent an email to the LPA and appellant to confirm the changes to the site visit.`
-								: ''
-						}</p>`
-					}
-				},
+				bodyCopyComponent,
 				backToCaseDetailsComponent
 			];
 			break;
@@ -420,23 +387,7 @@ export function scheduleOrManageSiteVisitConfirmationPage(pageType, siteVisit, a
 						)}</strong>`
 					}
 				},
-				{
-					type: 'html',
-					parameters: {
-						html: `<span class="govuk-body">Your ${formattedSiteVisitType} site visit at ${formattedSiteAddress} is rescheduled for ${formattedSiteVisitDate}${timeText}.</span>`
-					}
-				},
-				whatHappensNextComponent,
-				{
-					type: 'html',
-					parameters: {
-						html: `<p class="govuk-body">We updated the case timetable.${
-							formattedSiteVisitType !== 'unaccompanied'
-								? ` We've sent an email to the LPA and appellant to confirm the site visit.`
-								: ''
-						}</p>`
-					}
-				},
+				bodyCopyComponent,
 				backToCaseDetailsComponent
 			];
 			break;
@@ -454,23 +405,7 @@ export function scheduleOrManageSiteVisitConfirmationPage(pageType, siteVisit, a
 						)}</strong>`
 					}
 				},
-				{
-					type: 'html',
-					parameters: {
-						html: `<span class="govuk-body">Your site visit at ${formattedSiteAddress} is rescheduled for ${formattedSiteVisitDate}${timeText}. The site visit type is now changed to ${formattedSiteVisitType}.</span>`
-					}
-				},
-				whatHappensNextComponent,
-				{
-					type: 'html',
-					parameters: {
-						html: `<p class="govuk-body">We updated the case timetable.${
-							formattedSiteVisitType !== 'unaccompanied'
-								? ` We've sent an email to the LPA and appellant to confirm the changes to the site visit.`
-								: ''
-						}</p>`
-					}
-				},
+				bodyCopyComponent,
 				backToCaseDetailsComponent
 			];
 			break;
