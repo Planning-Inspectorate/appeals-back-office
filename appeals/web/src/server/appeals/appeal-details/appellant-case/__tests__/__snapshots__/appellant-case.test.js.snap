@@ -2572,13 +2572,11 @@ exports[`appellant-case GET /appellant-case/incomplete/confirmation should rende
                     <div class="govuk-panel__body">Appeal reference
                         <br><strong>351062</strong>
                     </div>
-                </div><span class="govuk-body">The appeal has been reviewed.</span>
-                <h2>What happens next</h2>
-                <p class="govuk-body">The appellant and LPA have been informed. We have told them what to do
-                    next.</p>
-                <p class="govuk-body">They have been advised of any new due date for missing information.</p>
-                <p                 class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1">Go back to case details</a>
-                    </p>
+                </div>
+                <p class="govuk-body">The relevant parties have been informed. We have told them what to do
+                    next and the due date for missing information.</p>
+                <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1">Go back to case details</a>
+                </p>
             </div>
         </div>
     </div>
