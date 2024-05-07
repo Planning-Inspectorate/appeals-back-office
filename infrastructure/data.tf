@@ -15,5 +15,5 @@ data "azurerm_monitor_action_group" "common" {
   for_each = tomap(var.common_config.action_group_names)
 
   resource_group_name = var.common_config.resource_group_name
-  name                = "${each.value}-${var.environment}"
+  name                = each.value
 }
