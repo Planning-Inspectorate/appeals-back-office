@@ -46,12 +46,11 @@ resource "azurerm_private_endpoint" "sql_primary" {
 
 resource "azurerm_mssql_database" "primary" {
   #checkov:skip=CKV_AZURE_224: TODO: Ensure that the Ledger feature is enabled on database that requires cryptographic proof and nonrepudiation of data integrity
-  name           = "${local.org}-sqldb-${local.resource_suffix}"
-  server_id      = azurerm_mssql_server.primary.id
-  collation      = "SQL_Latin1_General_CP1_CI_AS"
-  sku_name       = var.sql_config.sku_name
-  max_size_gb    = var.sql_config.max_size_gb
-  zone_redundant = true
+  name        = "${local.org}-sqldb-${local.resource_suffix}"
+  server_id   = azurerm_mssql_server.primary.id
+  collation   = "SQL_Latin1_General_CP1_CI_AS"
+  sku_name    = var.sql_config.sku_name
+  max_size_gb = var.sql_config.max_size_gb
 
   short_term_retention_policy {
     retention_days = var.sql_config.retention.short_term_days
