@@ -11,7 +11,11 @@ variable "common_config" {
   type = object({
     resource_group_name = string
     action_group_names = object({
-      tech = string
+      bo_tech              = string
+      bo_service_manager   = string
+      fo_tech              = string
+      fo_service_manager   = string
+      data_service_manager = string
     })
   })
 }
