@@ -6,3 +6,8 @@ data "azurerm_virtual_network" "tooling" {
 
   provider = azurerm.tooling
 }
+
+data "azurerm_monitor_action_group" "tech" {
+  resource_group_name = var.common_config.resource_group_name
+  name                = var.common_config.action_group_names.tech
+}

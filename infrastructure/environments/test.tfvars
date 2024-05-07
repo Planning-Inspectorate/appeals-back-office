@@ -1,3 +1,10 @@
+common_config = {
+  resource_group_name = "pins-rg-common-test-ukw-001"
+  action_group_names = {
+    tech = "pins-ag-odt-appeals-bo-tech-test"
+  }
+}
+
 environment = "test"
 
 sql_config = {
