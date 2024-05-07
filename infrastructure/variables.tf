@@ -66,3 +66,8 @@ variable "vnet_config" {
     secondary_subnet_address_space = string
   })
 }
+
+variable "web_app_domain" {
+  description = "The domain for the web app"
+  type        = string
+}
