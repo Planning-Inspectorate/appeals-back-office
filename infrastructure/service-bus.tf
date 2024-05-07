@@ -21,7 +21,9 @@ resource "azurerm_servicebus_namespace" "main" {
   tags = local.tags
 }
 
-resource "azurerm_private_endpoint" "back_office" {
+resource "azurerm_private_endpoint" "sb_main" {
+  count = var.service_bus_config.sku == "Premium" ? 1 : 0
+
   name                = "pins-pe-${local.service_name}-sb-${var.environment}"
   resource_group_name = azurerm_resource_group.primary.name
   location            = module.primary_region.location
