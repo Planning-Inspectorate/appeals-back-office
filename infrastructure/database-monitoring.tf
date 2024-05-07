@@ -81,6 +81,8 @@ resource "azurerm_mssql_server_security_alert_policy" "sql_server" {
 
 # vulnerabilty assesment
 resource "azurerm_mssql_server_vulnerability_assessment" "appeals_sql_server" {
+  count = var.alerts_enabled ? 1 : 0
+
   #checkov:skip=CKV2_AZURE_3: scans enabled by env
   #checkov:skip=CKV2_AZURE_4: false positive?
   #checkov:skip=CKV2_AZURE_5: false positive?
