@@ -25,6 +25,45 @@ variable "environment" {
   type        = string
 }
 
+variable "service_bus_config" {
+  description = "Config for Service Bus"
+  type = object({
+    sku                           = string
+    capacity                      = number
+    public_network_access_enabled = bool
+  })
+}
+
+variable "sb_ttl" {
+  description = "Service bus TTL settings"
+  type = object({
+    # default topic TTL
+    default = string
+    # TTL for subscriptions
+    bo_sub = string
+    # TTL for internal subscriptions
+    bo_internal = string
+    # TTL for front office subscriptions
+    fo_sub = string
+  })
+}
+
+variable "sb_topic_names" {
+  description = "Service bus topic names"
+  type = object({
+    submissions = object({
+      appellant         = string
+      lpa_questionnaire = string
+    })
+    events = object({
+      appeal           = string
+      document         = string
+      document_to_move = string
+      service_user     = string
+    })
+  })
+}
+
 variable "sql_config" {
   description = "Config for SQL Server and DB"
   type = object({
