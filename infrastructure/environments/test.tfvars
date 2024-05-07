@@ -11,6 +11,12 @@ common_config = {
 
 environment = "test"
 
+service_bus_config = {
+  sku                           = "Premium"
+  capacity                      = 1
+  public_network_access_enabled = false
+}
+
 sql_config = {
   admin = {
     login_username = "pins-odt-sql-test-appeals-bo"

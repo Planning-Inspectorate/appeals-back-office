@@ -11,6 +11,12 @@ common_config = {
 
 environment = "prod"
 
+service_bus_config = {
+  sku                           = "Premium"
+  capacity                      = 1
+  public_network_access_enabled = false
+}
+
 sql_config = {
   admin = {
     login_username = "pins-odt-sql-prod-appeals-bo"

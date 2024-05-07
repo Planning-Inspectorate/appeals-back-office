@@ -13,6 +13,12 @@ common_config = {
 
 environment = "dev"
 
+service_bus_config = {
+  sku                           = "Standard"
+  capacity                      = 0
+  public_network_access_enabled = true
+}
+
 sql_config = {
   admin = {
     login_username = "pins-odt-sql-dev-appeals-bo"
