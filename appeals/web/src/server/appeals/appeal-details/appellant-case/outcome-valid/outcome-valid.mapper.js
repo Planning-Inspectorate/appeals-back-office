@@ -60,6 +60,14 @@ export function updateValidDatePage(
 		}
 	};
 
+	/** @type {PageComponent} */
+	const insetTextComponent = {
+		type: 'inset-text',
+		parameters: {
+			text: 'Confirming will inform the relevant parties of the valid date'
+		}
+	};
+
 	const pageContent = {
 		title,
 		backLinkUrl: `/appeals-service/appeal-details/${appealId}/appellant-case`,
@@ -67,7 +75,7 @@ export function updateValidDatePage(
 		backLinkText: 'Back',
 		heading: title,
 		submitButtonText: 'Submit',
-		pageComponents: [validDateTextComponent, selectDateComponent]
+		pageComponents: [validDateTextComponent, selectDateComponent, insetTextComponent]
 	};
 
 	return pageContent;
@@ -82,12 +90,12 @@ export function updateValidDatePage(
 export function decisionValidConfirmationPage(appealId, appealReference) {
 	/** @type {PageContent} */
 	const pageContent = {
-		title: 'Appeal valid',
+		title: 'Valid date added',
 		pageComponents: [
 			{
 				type: 'panel',
 				parameters: {
-					titleText: 'Appeal valid',
+					titleText: 'Valid date added',
 					headingLevel: 1,
 					html: `Appeal reference<br><strong>${appealShortReference(appealReference)}</strong>`
 				}
@@ -95,25 +103,7 @@ export function decisionValidConfirmationPage(appealId, appealReference) {
 			{
 				type: 'html',
 				parameters: {
-					html: `<span class="govuk-body">The timetable is now created and published.</span>`
-				}
-			},
-			{
-				type: 'html',
-				parameters: {
-					html: `<h2>What happens next</h2>`
-				}
-			},
-			{
-				type: 'html',
-				parameters: {
-					html: `<p class="govuk-body">We've sent the start letter email to the Appellant and LPA.</p>`
-				}
-			},
-			{
-				type: 'html',
-				parameters: {
-					html: `<p class="govuk-body">The case has been published on the Appeals Casework Portal.</p>`
+					html: `<p class="govuk-body">The relevant parties have been informed.</p>`
 				}
 			},
 			{
