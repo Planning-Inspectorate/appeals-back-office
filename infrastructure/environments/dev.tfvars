@@ -1,3 +1,12 @@
+alerts_enabled = false
+
+common_config = {
+  resource_group_name = "pins-rg-common-dev-ukw-001"
+  action_group_names = {
+    tech = "pins-ag-odt-appeals-bo-tech-dev"
+  }
+}
+
 environment = "dev"
 
 sql_config = {

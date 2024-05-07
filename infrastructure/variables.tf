@@ -1,5 +1,21 @@
 # variables should be sorted A-Z
 
+variable "alerts_enabled" {
+  description = "Whether to enable Azure Monitor alerts"
+  type        = string
+  default     = true
+}
+
+variable "common_config" {
+  description = "Config for the common resources, such as action groups"
+  type = object({
+    resource_group_name = string
+    action_group_names = object({
+      tech = string
+    })
+  })
+}
+
 variable "environment" {
   description = "The name of the environment in which resources will be deployed"
   type        = string
