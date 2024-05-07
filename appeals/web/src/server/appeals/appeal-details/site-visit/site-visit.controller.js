@@ -55,7 +55,7 @@ const renderScheduleOrManageSiteVisit = async (request, response, pageType) => {
 			visitEndTimeMinute
 		);
 
-		return response.render('appeals/appeal/schedule-site-visit.njk', {
+		return response.render('patterns/change-page.pattern.njk', {
 			pageContent: mappedPageContent,
 			errors
 		});
@@ -91,7 +91,6 @@ export const renderScheduleOrManageSiteVisitConfirmation = async (request, respo
 			if (siteVisit && stringIsSiteVisitConfirmationPageType(confirmationPageTypeToRender)) {
 				const pageContent = scheduleOrManageSiteVisitConfirmationPage(
 					confirmationPageTypeToRender,
-					siteVisit,
 					appealDetails
 				);
 
