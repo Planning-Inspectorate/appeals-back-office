@@ -7,6 +7,8 @@ locals {
   resource_suffix           = "${local.service_name}-${var.environment}"
   secondary_resource_suffix = "${local.service_name}-secondary-${var.environment}"
 
+  service_bus_hostname = "${azurerm_servicebus_namespace.main.name}.servicebus.windows.net"
+
   secrets = [
     "appeals-bo-client-secret",
     "appeals-bo-gov-notify-api-key",

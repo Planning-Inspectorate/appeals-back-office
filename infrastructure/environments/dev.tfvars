@@ -1,7 +1,9 @@
 apps_config = {
-  app_service_plan_sku     = "P0v3"
-  node_environment         = "development"
-  private_endpoint_enabled = false
+  app_service_plan_sku       = "P0v3"
+  functions_node_version     = 18
+  functions_service_plan_sku = "P0v3"
+  node_environment           = "development"
+  private_endpoint_enabled   = false
 
   auth = {
     client_id = "64c20f53-becf-4b7e-ba62-c1dc9b03ccf9" # Appeals Back Office DEV

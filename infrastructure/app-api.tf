@@ -49,7 +49,7 @@ module "app_api" {
     GOV_NOTIFY_API_KEY   = local.key_vault_refs["appeals-bo-gov-notify-api-key"]
     MOCK_HORIZON         = var.apps_config.integrations.horizon_mock
     SERVICE_BUS_ENABLED  = var.apps_config.integrations.service_bus_broadcast_enabled
-    SERVICE_BUS_HOSTNAME = "${azurerm_servicebus_namespace.main.name}.servicebus.windows.net"
+    SERVICE_BUS_HOSTNAME = local.service_bus_hostname
     SRV_HORIZON_URL      = var.apps_config.integrations.horizon_api_url
     TEST_MAILBOX         = local.key_vault_refs["appeals-bo-test-mailbox"]
   }
