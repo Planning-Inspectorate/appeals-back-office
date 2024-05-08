@@ -9,6 +9,17 @@ apps_config = {
     horizon_web_url               = ""
     service_bus_broadcast_enabled = true
   }
+
+  logging = {
+    level_file   = "silent"
+    level_stdout = "info"
+  }
+
+  redis = {
+    capacity = 0
+    family   = "C"
+    sku_name = "Basic"
+  }
 }
 
 alerts_enabled = false

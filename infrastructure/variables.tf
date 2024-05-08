@@ -19,6 +19,17 @@ variable "apps_config" {
       horizon_web_url               = string # The URL base path to create deep links to Horizon cases
       service_bus_broadcast_enabled = bool   # Whether to send service bus messages
     })
+
+    logging = object({
+      level_file   = string
+      level_stdout = string
+    })
+
+    redis = object({
+      capacity = number
+      family   = string
+      sku_name = string
+    })
   })
 }
 
