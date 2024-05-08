@@ -240,7 +240,7 @@ export function checkAndConfirmPage(request, appealData, session, decisionLetter
 		parameters: {
 			html: `<div class="govuk-checkboxes__item govuk-!-margin-bottom-5">
 					<input class="govuk-checkboxes__input" id="ready-to-send" name="ready-to-send" type="checkbox" value="Yes">
-					<label class="govuk-label govuk-checkboxes__label" for="ready-to-send">This decision is ready to be sent to all parties</label>
+					<label class="govuk-label govuk-checkboxes__label" for="ready-to-send">This decision is ready to be sent to the relevant parties</label>
 				</div>`
 		}
 	};
@@ -252,7 +252,7 @@ export function checkAndConfirmPage(request, appealData, session, decisionLetter
 		backLinkText: 'Back',
 		preHeading: `Appeal ${appealShortReference(appealData.appealReference)}`,
 		heading: title,
-		submitButtonText: 'Submit decision',
+		submitButtonText: 'Send decision',
 		pageComponents: [summaryListComponent, warningTextComponent, insetConfirmComponent]
 	};
 
@@ -409,25 +409,13 @@ export function decisionConfirmationPage(appealData, appealIsInvalid) {
 			{
 				type: 'html',
 				parameters: {
-					html: '<span class="govuk-body">Relevant parties have been informed.</span>'
+					html: '<p class="govuk-body">The relevant parties have been informed. The appeal will be closed.</p>'
 				}
 			},
 			{
 				type: 'html',
 				parameters: {
-					html: '<h2>What happens next</h2>'
-				}
-			},
-			{
-				type: 'html',
-				parameters: {
-					html: '<p class="govuk-body">The appeal will be closed.</p>'
-				}
-			},
-			{
-				type: 'html',
-				parameters: {
-					html: '<p class="govuk-body"><a href="/appeals-service/all-cases" class="govuk-link">Go back to your list</a></p>'
+					html: `<p class="govuk-body"><a href="/appeals-service/appeal-details/${appealData.appealId}" class="govuk-link">Go back to case details</a></p>`
 				}
 			},
 			{
