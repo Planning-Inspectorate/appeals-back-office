@@ -6,6 +6,9 @@ common_config = {
     fo_tech              = "pins-ag-odt-appeals-fo-tech-test"
     fo_service_manager   = "pins-ag-odt-appeals-fo-service-manager-test"
     data_service_manager = "pins-ag-odt-data-service-manager-test"
+    iap                  = "pins-ag-odt-iap-test"
+    its                  = "pins-ag-odt-its-test"
+    info_sec             = "pins-ag-odt-info-sec-test"
   }
 }
 

@@ -16,6 +16,9 @@ variable "common_config" {
       fo_tech              = string
       fo_service_manager   = string
       data_service_manager = string
+      iap                  = string
+      its                  = string
+      info_sec             = string
     })
   })
 }
