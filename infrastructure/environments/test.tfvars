@@ -48,6 +48,8 @@ common_config = {
   }
 }
 
+docs_domain = "https://back-office-appeals-docs-test.planninginspectorate.gov.uk"
+
 environment = "test"
 
 service_bus_config = {

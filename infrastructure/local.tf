@@ -45,5 +45,11 @@ locals {
     info_sec        = data.azurerm_monitor_action_group.common["info_sec"].id
   }
   tech_emails = [for rec in data.azurerm_monitor_action_group.common["bo_tech"].email_receiver : rec.email_address]
-  # action group id object for passing to node-app-service module
+
+  documents = {
+    # strip leading "https://" and trailing "/" to leave just the domain names
+    domain       = replace(replace(var.docs_domain, "https://", ""), "/", "")
+    blob_endpont = replace(replace(azurerm_storage_account.documents.primary_blob_endpoint, "https://", ""), "/", "")
+  }
+
 }
