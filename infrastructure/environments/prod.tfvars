@@ -9,6 +9,17 @@ apps_config = {
     horizon_web_url               = "https://horizonweb.planninginspectorate.gov.uk/otcs/llisapi.dll?func=ll&objId="
     service_bus_broadcast_enabled = false
   }
+
+  logging = {
+    level_file   = "silent"
+    level_stdout = "info"
+  }
+
+  redis = {
+    capacity = 1
+    family   = "C"
+    sku_name = "Standard"
+  }
 }
 
 common_config = {
