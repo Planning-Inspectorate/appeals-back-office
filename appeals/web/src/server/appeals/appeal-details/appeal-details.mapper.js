@@ -223,7 +223,7 @@ export async function appealDetailsPage(appealDetails, currentRoute, session) {
 					content: { html: '', pageComponents: [caseOverview] }
 				},
 				{
-					heading: { text: 'Details' },
+					heading: { text: 'Site' },
 					content: { html: '', pageComponents: [siteDetails] }
 				},
 				{
