@@ -12,6 +12,18 @@ resource "azurerm_subnet" "main" {
   resource_group_name  = azurerm_resource_group.primary.name
   virtual_network_name = azurerm_virtual_network.main.name
   address_prefixes     = [var.vnet_config.main_subnet_address_space]
+
+  # for app services
+  delegation {
+    name = "delegation"
+
+    service_delegation {
+      name = "Microsoft.Web/serverFarms"
+      actions = [
+        "Microsoft.Network/virtualNetworks/subnets/action"
+      ]
+    }
+  }
 }
 
 resource "azurerm_virtual_network_peering" "bo_to_tooling" {
