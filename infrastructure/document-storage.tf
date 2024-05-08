@@ -74,19 +74,19 @@ resource "azurerm_resource_group_template_deployment" "document_storage_malware_
     "contentVersion": "1.0.0.0",
     "parameters": {
       "storage_account_id": {
-        "type": "string"
+        "type": "String"
       },
       "subscription_id": {
-        "type": "string"
+        "type": "String"
       },
       "resource_group": {
-        "type": "string"
+        "type": "String"
       },
       "event_grid_topicId": {
-        "type": "string"
+        "type": "String"
       },
       "cap_gb_per_month": {
-        "type": "int"
+        "type": "Int"
       }
     },
     "resources": [
