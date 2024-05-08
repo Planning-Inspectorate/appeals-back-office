@@ -117,8 +117,7 @@ export const renderDecisionIncompleteConfirmationPage = async (request, response
 
 	const pageContent = decisionIncompleteConfirmationPage(
 		currentAppeal.appealId,
-		currentAppeal.appealReference,
-		session.lpaQuestionnaireUpdatedDueDate
+		currentAppeal.appealReference
 	);
 
 	response.render('appeals/confirmation.njk', {

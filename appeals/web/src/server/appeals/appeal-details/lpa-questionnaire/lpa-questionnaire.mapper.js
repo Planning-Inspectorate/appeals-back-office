@@ -442,7 +442,7 @@ export function checkAndConfirmPage(
 	const insetTextComponent = {
 		type: 'inset-text',
 		parameters: {
-			text: 'Confirming this review will inform the appellant and LPA of the outcome'
+			text: 'Confirming this review will inform the relevant parties of the outcome'
 		}
 	};
 

@@ -1165,7 +1165,7 @@ exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-ques
                     </dd>
                 </div>
             </dl>
-            <div class="govuk-inset-text">Confirming this review will inform the appellant and LPA of the outcome</div>
+            <div class="govuk-inset-text">Confirming this review will inform the relevant parties of the outcome</div>
             <form             method="post" novalidate="novalidate">
                 <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
                 </form>
@@ -1375,13 +1375,10 @@ exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-ques
                     <div class="govuk-panel__body">Appeal reference
                         <br><strong>351062</strong>
                     </div>
-                </div><span class="govuk-body">The review of LPA questionnaire is finished.</span>
-                <h2>What happens next</h2>
-                <p class="govuk-body">We’ve sent an email to the appellant and LPA to confirm their questionnaire
-                    is incomplete, and let them know what to do to complete it.</p>
-                <p class="govuk-body">We also let them know the due date has changed to the 2 October 3000.</p>
-                <p                 class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1">Go back to case details</a>
-                    </p>
+                </div>
+                <p class="govuk-body">The relevant parties have been informed .</p>
+                <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1">Go back to case details</a>
+                </p>
             </div>
         </div>
     </div>
