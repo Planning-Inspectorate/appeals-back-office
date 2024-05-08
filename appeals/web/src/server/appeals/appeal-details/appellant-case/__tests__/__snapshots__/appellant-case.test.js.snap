@@ -2355,7 +2355,7 @@ exports[`appellant-case GET /appellant-case/check-your-answers should render the
                     </dd>
                 </div>
             </dl>
-            <div class="govuk-inset-text">Confirming this review will inform the appellant and LPA of the outcome</div>
+            <div class="govuk-inset-text">Confirming this review will inform the relevant parties of the outcome</div>
             <form             method="post" novalidate="novalidate">
                 <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
                 </form>
@@ -2401,7 +2401,7 @@ exports[`appellant-case GET /appellant-case/check-your-answers should render the
                     </dd>
                 </div>
             </dl>
-            <div class="govuk-inset-text">Confirming this review will inform the appellant and LPA of the outcome</div>
+            <div class="govuk-inset-text">Confirming this review will inform the relevant parties of the outcome</div>
             <form             method="post" novalidate="novalidate">
                 <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
                 </form>
@@ -2760,11 +2760,10 @@ exports[`appellant-case GET /appellant-case/invalid/confirmation should render t
                     <div class="govuk-panel__body">Appeal reference
                         <br><strong>351062</strong>
                     </div>
-                </div><span class="govuk-body">The appeal has been closed.</span>
-                <h2>What happens next</h2>
-                <p class="govuk-body">The appellant and LPA have been informed.</p>
-                <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1">Go back to case details</a>
-                </p>
+                </div>
+                <p class="govuk-body">The appeal has been closed. The relevant parties have been informed.</p>
+                <p                 class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1">Go back to case details</a>
+                    </p>
             </div>
         </div>
     </div>
