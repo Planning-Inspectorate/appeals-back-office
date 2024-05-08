@@ -40,7 +40,7 @@ module "function_casedata_import" {
 
 # Service Bus subscriptions
 
-resource "azurerm_servicebus_subscription" "fo_appellant_submission_subscription" {
+resource "azurerm_servicebus_subscription" "fo_appellant_submission" {
   name                                 = "${azurerm_servicebus_topic.appeal_fo_appellant_submission.name}-bo-sub"
   topic_id                             = azurerm_servicebus_topic.appeal_fo_appellant_submission.id
   max_delivery_count                   = 1
@@ -48,7 +48,7 @@ resource "azurerm_servicebus_subscription" "fo_appellant_submission_subscription
   dead_lettering_on_message_expiration = true
 }
 
-resource "azurerm_servicebus_subscription" "fo_lpaq_submission_subscription" {
+resource "azurerm_servicebus_subscription" "fo_lpa_questionnaire" {
   name                                 = "${azurerm_servicebus_topic.appeal_fo_lpa_questionnaire_submission.name}-bo-sub"
   topic_id                             = azurerm_servicebus_topic.appeal_fo_lpa_questionnaire_submission.id
   max_delivery_count                   = 1
@@ -58,14 +58,14 @@ resource "azurerm_servicebus_subscription" "fo_lpaq_submission_subscription" {
 
 # RBAC for subscriptions
 
-resource "azurerm_role_assignment" "service_bus_data_receiver_appellant_case" {
-  scope                = azurerm_servicebus_subscription.fo_appellant_submission_subscription.id
+resource "azurerm_role_assignment" "fo_appellant_submission_sub_reciever" {
+  scope                = azurerm_servicebus_subscription.fo_appellant_submission.id
   role_definition_name = "Azure Service Bus Data Receiver"
   principal_id         = module.function_casedata_import.principal_id
 }
 
-resource "azurerm_role_assignment" "service_bus_data_receiver_lpa_questionnaire" {
-  scope                = azurerm_servicebus_subscription.fo_lpaq_submission_subscription.id
+resource "azurerm_role_assignment" "fo_lpa_questionnaire_sub_reciever" {
+  scope                = azurerm_servicebus_subscription.fo_lpa_questionnaire.id
   role_definition_name = "Azure Service Bus Data Receiver"
   principal_id         = module.function_casedata_import.principal_id
 }
