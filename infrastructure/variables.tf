@@ -62,6 +62,11 @@ variable "common_config" {
   })
 }
 
+variable "docs_domain" {
+  description = "Domain name for docs storage account"
+  type        = string
+}
+
 variable "environment" {
   description = "The name of the environment in which resources will be deployed"
   type        = string

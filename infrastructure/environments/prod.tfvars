@@ -48,6 +48,8 @@ common_config = {
   }
 }
 
+docs_domain = "https://appeal-documents.planninginspectorate.gov.uk"
+
 environment = "prod"
 
 service_bus_config = {
