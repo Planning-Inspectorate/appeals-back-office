@@ -8,6 +8,9 @@ common_config = {
     fo_tech              = "pins-ag-odt-appeals-fo-tech-dev"
     fo_service_manager   = "pins-ag-odt-appeals-fo-service-manager-dev"
     data_service_manager = "pins-ag-odt-data-service-manager-dev"
+    iap                  = "pins-ag-odt-iap-dev"
+    its                  = "pins-ag-odt-its-dev"
+    info_sec             = "pins-ag-odt-info-sec-dev"
   }
 }
 

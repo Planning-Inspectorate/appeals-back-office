@@ -6,6 +6,9 @@ common_config = {
     fo_tech              = "pins-ag-odt-appeals-fo-tech-prod"
     fo_service_manager   = "pins-ag-odt-appeals-fo-service-manager-prod"
     data_service_manager = "pins-ag-odt-data-service-manager-prod"
+    iap                  = "pins-ag-odt-iap-prod"
+    its                  = "pins-ag-odt-its-prod"
+    info_sec             = "pins-ag-odt-info-sec-prod"
   }
 }
 
