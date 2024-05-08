@@ -159,13 +159,28 @@ export async function lpaQuestionnairePage(
 		}
 	};
 
+	/** @type {PageComponent} */
+	const insetTextComponent = {
+		type: 'inset-text',
+		parameters: {
+			text: 'Confirming this review will inform the relevant parties of the outcome'
+		}
+	};
+
 	const reviewOutcomeRadiosInputInstruction =
 		mappedLpaqDetails.lpaq.reviewOutcome.input?.instructions.find(
 			inputInstructionIsRadiosInputInstruction
 		);
 
 	/** @type {PageComponent[]} */
-	const reviewOutcomeComponents = [];
+	const reviewOutcomeComponents = [
+		{
+			type: 'html',
+			parameters: {
+				html: '<h2>What is the outcome of your review?</h2>'
+			}
+		}
+	];
 
 	if (reviewOutcomeRadiosInputInstruction) {
 		reviewOutcomeComponents.push({
@@ -229,7 +244,8 @@ export async function lpaQuestionnairePage(
 			caseSummary,
 			...appealTypeSpecificPageComponents,
 			additionalDocumentsSummary,
-			...reviewOutcomeComponents
+			...reviewOutcomeComponents,
+			insetTextComponent
 		]
 	};
 
@@ -798,19 +814,7 @@ export function reviewCompletePage(appealId, appealReference) {
 			{
 				type: 'html',
 				parameters: {
-					html: `<span class="govuk-body">The review of LPA questionnaire is finished.</span>`
-				}
-			},
-			{
-				type: 'html',
-				parameters: {
-					html: `<h2>What happens next</h2>`
-				}
-			},
-			{
-				type: 'html',
-				parameters: {
-					html: `<p class="govuk-body">We've sent an email to the LPA to confirm their questionnaire is complete and that the review is finished.</p>`
+					html: '<p class="govuk-body">The relevant parties have been informed.</p>'
 				}
 			},
 			{
