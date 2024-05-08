@@ -14,7 +14,6 @@ module "app_api" {
   # service plan
   app_service_plan_id                  = azurerm_service_plan.apps.id
   app_service_plan_resource_group_name = azurerm_resource_group.primary.name
-  app_service_private_dns_zone_id      = azurerm_private_dns_zone.app_service.id
 
   # container
   container_registry_name = var.tooling_config.container_registry_name
@@ -22,10 +21,11 @@ module "app_api" {
   image_name              = "back-office/back-office-appeals-api"
 
   # networking
-  endpoint_subnet_id         = azurerm_subnet.main.id
-  inbound_vnet_connectivity  = var.apps_config.private_endpoint_enabled
-  integration_subnet_id      = azurerm_subnet.main.id
-  outbound_vnet_connectivity = true
+  app_service_private_dns_zone_id = azurerm_private_dns_zone.app_service.id
+  endpoint_subnet_id              = azurerm_subnet.main.id
+  inbound_vnet_connectivity       = var.apps_config.private_endpoint_enabled
+  integration_subnet_id           = azurerm_subnet.main.id
+  outbound_vnet_connectivity      = true
 
   # monitoring
   action_group_ids           = local.action_group_ids

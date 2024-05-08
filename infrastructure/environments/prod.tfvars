@@ -3,6 +3,16 @@ apps_config = {
   node_environment         = "production"
   private_endpoint_enabled = true
 
+  auth = {
+    client_id = "ba49fd0e-11ad-48e2-8bfb-a203defb625f" # Appeals Back Office PROD
+    group_ids = {
+      case_officer = "5d82e08c-8f05-40ea-a3df-d306f3a2c870"
+      cs_team      = "785e6615-a9ea-44bf-a669-634e52b6f07a"
+      inspector    = "c921094a-318f-4996-be5e-9bd2ef9b7bdf"
+      legal        = "33fc8bdb-8c82-40ae-9a59-9eb5073f553b"
+    }
+  }
+
   integrations = {
     horizon_api_url               = "http://10.224.161.68:8000"
     horizon_mock                  = false
