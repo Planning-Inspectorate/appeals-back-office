@@ -13,6 +13,16 @@ variable "apps_config" {
     node_environment         = string
     private_endpoint_enabled = bool
 
+    auth = object({
+      client_id = string
+      group_ids = object({
+        case_officer = string
+        cs_team      = string
+        inspector    = string
+        legal        = string
+      })
+    })
+
     integrations = object({
       horizon_api_url               = string # The URL used to connect to the Horizon API
       horizon_mock                  = bool   # Whether to mock Horizon integration
