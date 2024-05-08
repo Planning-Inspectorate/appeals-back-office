@@ -2093,17 +2093,19 @@ export const costsFolderInfoAppellant = {
 			}
 		}
 	],
-	id: 3864,
+	id: 1,
 	path: 'appeal_costs/appellant'
 };
 
 export const costsFolderInfoLpa = {
 	...costsFolderInfoAppellant,
+	id: 2,
 	path: 'appeal_costs/lpa'
 };
 
 export const costsFolderInfoDecision = {
 	...costsFolderInfoAppellant,
+	id: 3,
 	path: 'appeal_costs/decision'
 };
 

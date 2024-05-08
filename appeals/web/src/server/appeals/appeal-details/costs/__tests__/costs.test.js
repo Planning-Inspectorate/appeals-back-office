@@ -86,7 +86,7 @@ describe('costs', () => {
 
 				expect(response.statusCode).toBe(302);
 				expect(response.text).toEqual(
-					`Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/upload-documents/3864`
+					`Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/upload-documents/${costsFolder.id}`
 				);
 			});
 		}
@@ -138,7 +138,7 @@ describe('costs', () => {
 
 				expect(selectDocumentTypeResponse.statusCode).toBe(302);
 				expect(selectDocumentTypeResponse.text).toContain(
-					`Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/upload-documents/3864`
+					`Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/upload-documents/${costsFolder.id}`
 				);
 
 				const response = await request.get(
@@ -259,6 +259,91 @@ describe('costs', () => {
 				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
 				expect(unprettifiedElement.innerHTML).toContain(`${expectedH1Text}</h1>`);
 			});
+
+			it(`should render a back link to the upload document page (${costsCategory})`, async () => {
+				const response = await request.get(
+					`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.id}`
+				);
+				const element = parseHtml(response.text, {
+					rootElement: '.govuk-back-link',
+					skipPrettyPrint: true
+				});
+
+				expect(element.innerHTML).toContain(
+					`href="/appeals-service/appeal-details/1/costs/${costsCategory}/upload-documents/${costsFolder.id}"`
+				);
+			});
+		}
+	});
+
+	describe('GET /costs/:costsCategory/add-document-details/:folderId/:documentId', () => {
+		const costsCategories = ['appellant', 'lpa', 'decision'];
+
+		beforeEach(async () => {
+			nock('http://test/')
+				.get('/appeals/1/document-folders/1')
+				.reply(200, costsFolderInfoAppellant)
+				.persist();
+			nock('http://test/')
+				.get('/appeals/1/document-folders/2')
+				.reply(200, costsFolderInfoLpa)
+				.persist();
+			nock('http://test/')
+				.get('/appeals/1/document-folders/3')
+				.reply(200, costsFolderInfoDecision)
+				.persist();
+			nock('http://test/')
+				.get('/appeals/document-redaction-statuses')
+				.reply(200, documentRedactionStatuses);
+		});
+
+		for (const costsCategory of costsCategories) {
+			// @ts-ignore
+			const costsFolder = appealData.costs[`${costsCategory}Folder`];
+
+			it(`should render the document details page with one item per unpublished document (${costsCategory})`, async () => {
+				let expectedH1Text = '';
+
+				switch (costsCategory) {
+					case 'appellant':
+						expectedH1Text = 'Appellant costs document';
+						break;
+					case 'lpa':
+						expectedH1Text = 'LPA costs document';
+						break;
+					case 'decision':
+						expectedH1Text = 'Costs decision document';
+						break;
+				}
+
+				const response = await request.get(
+					`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.id}`
+				);
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+				expect(element.innerHTML).toContain('test-pdf-documentFolderInfo.pdf');
+				expect(element.innerHTML).not.toContain('sample-20s-documentFolderInfo.mp4');
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain(`${expectedH1Text}</h1>`);
+			});
+
+			it(`should render a back link to the upload document version page (${costsCategory})`, async () => {
+				const response = await request.get(
+					`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.id}/1`
+				);
+				const element = parseHtml(response.text, {
+					rootElement: '.govuk-back-link',
+					skipPrettyPrint: true
+				});
+
+				expect(element.innerHTML).toContain(
+					`href="/appeals-service/appeal-details/1/costs/${costsCategory}/upload-documents/${costsFolder.id}/1"`
+				);
+			});
 		}
 	});
 
@@ -292,6 +377,8 @@ describe('costs', () => {
 		});
 
 		for (const costsCategory of costsCategories) {
+			// @ts-ignore
+			const costsFolder = appealData.costs[`${costsCategory}Folder`];
 			let expectedH1Text = '';
 
 			switch (costsCategory) {
@@ -700,7 +787,7 @@ describe('costs', () => {
 
 			it(`should send a patch request to the appeal documents endpoint and redirect to the appeal details page, if complete and valid document details were provided (${costsCategory})`, async () => {
 				const response = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/add-document-details/1`)
+					.post(`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.id}`)
 					.send({
 						items: [
 							{
@@ -718,7 +805,7 @@ describe('costs', () => {
 				expect(response.statusCode).toBe(302);
 				expect(response.text).toEqual(
 					costsCategory === 'decision'
-						? 'Found. Redirecting to /appeals-service/appeal-details/1/costs/decision/check-and-confirm/3864'
+						? `Found. Redirecting to /appeals-service/appeal-details/1/costs/decision/check-and-confirm/${costsFolder.id}`
 						: 'Found. Redirecting to /appeals-service/appeal-details/1'
 				);
 			});
@@ -1080,6 +1167,9 @@ describe('costs', () => {
 		});
 
 		for (const costsCategory of costsCategories) {
+			// @ts-ignore
+			const costsFolder = appealData.costs[`${costsCategory}Folder`];
+
 			it(`should re-render the delete document page with the expected error message if answer was not provided (${costsCategory})`, async () => {
 				nock('http://test/')
 					.get('/appeals/1/documents/1/versions')
@@ -1145,14 +1235,14 @@ describe('costs', () => {
 					.reply(200, multipleVersionsDocument);
 
 				const response = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/manage-documents/1/1/1/delete`)
+					.post(`${baseUrl}/1/costs/${costsCategory}/manage-documents/${costsFolder.id}/1/1/delete`)
 					.send({
 						'delete-file-answer': 'yes-and-upload-another-document'
 					});
 
 				expect(response.statusCode).toBe(302);
 				expect(response.text).toEqual(
-					`Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/upload-documents/3864/1`
+					`Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/upload-documents/${costsFolder.id}/1`
 				);
 			});
 
@@ -1162,7 +1252,7 @@ describe('costs', () => {
 					.reply(200, documentFileVersionsInfo);
 
 				const response = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/manage-documents/1/1/1/delete`)
+					.post(`${baseUrl}/1/costs/${costsCategory}/manage-documents/${costsFolder.id}/1/1/delete`)
 					.send({
 						'delete-file-answer': 'yes-and-upload-another-document'
 					});

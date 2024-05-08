@@ -138,7 +138,7 @@ export const getDocumentVersionUpload = async (request, response) => {
 	const {
 		currentAppeal,
 		currentFolder,
-		params: { costsCategory }
+		params: { costsCategory, documentId }
 	} = request;
 
 	if (!currentAppeal || !currentFolder) {
@@ -150,7 +150,7 @@ export const getDocumentVersionUpload = async (request, response) => {
 		response,
 		currentAppeal,
 		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/select-document-type/${currentFolder.id}`,
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/add-document-details/${currentFolder.id}`,
+		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/add-document-details/${currentFolder.id}/${documentId}`,
 		false,
 		undefined, // TODO: should the upload new version page have a custom title, and if so what should it be?
 		false
@@ -163,7 +163,7 @@ export const getAddDocumentDetails = async (request, response) => {
 		session,
 		currentAppeal,
 		currentFolder,
-		params: { costsCategory }
+		params: { costsCategory, documentId }
 	} = request;
 
 	if (!currentAppeal || !currentFolder) {
@@ -192,7 +192,11 @@ export const getAddDocumentDetails = async (request, response) => {
 	renderDocumentDetails(
 		request,
 		response,
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/upload-documents/${currentFolder?.id}`,
+		`/appeals-service/appeal-details/${
+			currentAppeal.appealId
+		}/costs/${costsCategory}/upload-documents/${currentFolder?.id}${
+			documentId ? `/${documentId}` : ''
+		}`,
 		false,
 		costsCategoryLabel
 	);
