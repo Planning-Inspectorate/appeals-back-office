@@ -330,6 +330,14 @@ export function changeAppealFinalDatePage(appealDetails, changeDay, changeMonth,
 		}
 	};
 
+	/** @type {PageComponent} */
+	const insetTextComponent = {
+		type: 'inset-text',
+		parameters: {
+			text: 'Confirming will ask the appellant to resubmit using the correct appeal type'
+		}
+	};
+
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);
 
 	/** @type {PageContent} */
@@ -338,7 +346,7 @@ export function changeAppealFinalDatePage(appealDetails, changeDay, changeMonth,
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-type/resubmit`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'What is the final date the appellant must resubmit by?',
-		pageComponents: [selectDateComponent]
+		pageComponents: [selectDateComponent, insetTextComponent]
 	};
 
 	return pageContent;
@@ -367,13 +375,13 @@ export function resubmitConfirmationPage(appealData) {
 			{
 				type: 'html',
 				parameters: {
-					html: `<p class="govuk-body">The appellant has been emailed to ask them to resubmit their appeal with the correct type.</p>`
+					html: '<p class="govuk-body">The appellant has been asked to resubmit using the correct appeal type.</p>'
 				}
 			},
 			{
 				type: 'html',
 				parameters: {
-					html: `<p class="govuk-body">You can go <a href="/appeals-service/personal-list" class="govuk-link">back to your list</a> or <a href="/appeals-service/appeal-details/${appealData.appealId}" class="govuk-link">view the closed case</a>.</p>`
+					html: `<p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/${appealData.appealId}" class="govuk-link">Go back to case details</a></p>`
 				}
 			}
 		]
