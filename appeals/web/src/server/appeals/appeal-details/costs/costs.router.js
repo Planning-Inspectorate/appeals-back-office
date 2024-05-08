@@ -32,7 +32,10 @@ router
 	.get(validateAppeal, validateCaseFolderId, asyncRoute(controller.getDocumentVersionUpload));
 
 router
-	.route('/:costsCategory/add-document-details/:folderId')
+	.route([
+		'/:costsCategory/add-document-details/:folderId',
+		'/:costsCategory/add-document-details/:folderId/:documentId'
+	])
 	.get(validateAppeal, validateCaseFolderId, asyncRoute(controller.getAddDocumentDetails))
 	.post(
 		validateAppeal,
