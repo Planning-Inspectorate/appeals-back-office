@@ -9,9 +9,11 @@ variable "alerts_enabled" {
 variable "apps_config" {
   description = "Config for the apps"
   type = object({
-    app_service_plan_sku     = string
-    node_environment         = string
-    private_endpoint_enabled = bool
+    app_service_plan_sku       = string
+    functions_node_version     = number
+    functions_service_plan_sku = string
+    node_environment           = string
+    private_endpoint_enabled   = bool
 
     auth = object({
       client_id = string

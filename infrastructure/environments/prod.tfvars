@@ -1,7 +1,9 @@
 apps_config = {
-  app_service_plan_sku     = "P1v3"
-  node_environment         = "production"
-  private_endpoint_enabled = true
+  app_service_plan_sku       = "P1v3"
+  functions_node_version     = 18
+  functions_service_plan_sku = "P1v3"
+  node_environment           = "production"
+  private_endpoint_enabled   = true
 
   auth = {
     client_id = "ba49fd0e-11ad-48e2-8bfb-a203defb625f" # Appeals Back Office PROD
