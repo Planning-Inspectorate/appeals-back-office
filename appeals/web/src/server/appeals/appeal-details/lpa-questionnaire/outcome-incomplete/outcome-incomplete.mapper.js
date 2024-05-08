@@ -1,32 +1,12 @@
-import { webDateToDisplayDate } from '#lib/dates.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 
 /**
  *
  * @param {string} appealId
  * @param {string} appealReference
- * @param {import('../lpa-questionnaire.mapper.js').DayMonthYear} lpaQuestionnaireUpdatedDueDate
  * @returns {PageContent}
  */
-export function decisionIncompleteConfirmationPage(
-	appealId,
-	appealReference,
-	lpaQuestionnaireUpdatedDueDate
-) {
-	/** @type {PageComponent[]} */
-	const updatedDueDateComponents = [];
-
-	if (lpaQuestionnaireUpdatedDueDate) {
-		updatedDueDateComponents.push({
-			type: 'html',
-			parameters: {
-				html: `<p class="govuk-body">We also let them know the due date has changed to the ${webDateToDisplayDate(
-					lpaQuestionnaireUpdatedDueDate
-				)}.</p>`
-			}
-		});
-	}
-
+export function decisionIncompleteConfirmationPage(appealId, appealReference) {
 	/** @type {PageContent} */
 	const pageContent = {
 		title: 'LPA questionnaire incomplete',
@@ -39,25 +19,13 @@ export function decisionIncompleteConfirmationPage(
 					html: `Appeal reference<br><strong>${appealShortReference(appealReference)}</strong>`
 				}
 			},
+
 			{
 				type: 'html',
 				parameters: {
-					html: `<span class="govuk-body">The review of LPA questionnaire is finished.</span>`
+					html: '<p class="govuk-body">The relevant parties have been informed .</p>'
 				}
 			},
-			{
-				type: 'html',
-				parameters: {
-					html: `<h2>What happens next</h2>`
-				}
-			},
-			{
-				type: 'html',
-				parameters: {
-					html: `<p class="govuk-body">We’ve sent an email to the appellant and LPA to confirm their questionnaire is incomplete, and let them know what to do to complete it.</p>`
-				}
-			},
-			...updatedDueDateComponents,
 			{
 				type: 'html',
 				parameters: {
