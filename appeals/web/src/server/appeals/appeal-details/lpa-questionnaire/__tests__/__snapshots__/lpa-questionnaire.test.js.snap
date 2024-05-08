@@ -316,6 +316,7 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
             </dl>
         </div>
     </div>
+    <h2>What is the outcome of your review?</h2>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <form action="" method="POST" novalidate>
@@ -333,7 +334,8 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
                         </div>
                     </div>
                 </div>
-                <button class="govuk-button" data-module="govuk-button">Continue</button>
+                <div class="govuk-inset-text">Confirming this review will inform the relevant parties of the outcome</div>
+                <button                 class="govuk-button" data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -696,6 +698,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
             </dl>
         </div>
     </div>
+    <h2>What is the outcome of your review?</h2>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <form action="" method="POST" novalidate>
@@ -713,7 +716,8 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                         </div>
                     </div>
                 </div>
-                <button class="govuk-button" data-module="govuk-button">Continue</button>
+                <div class="govuk-inset-text">Confirming this review will inform the relevant parties of the outcome</div>
+                <button                 class="govuk-button" data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -1091,6 +1095,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
             </dl>
         </div>
     </div>
+    <h2>What is the outcome of your review?</h2>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <form action="" method="POST" novalidate>
@@ -1108,7 +1113,8 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                         </div>
                     </div>
                 </div>
-                <button class="govuk-button" data-module="govuk-button">Continue</button>
+                <div class="govuk-inset-text">Confirming this review will inform the relevant parties of the outcome</div>
+                <button                 class="govuk-button" data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -1184,10 +1190,8 @@ exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-ques
                     <div class="govuk-panel__body">Appeal reference
                         <br><strong>351062</strong>
                     </div>
-                </div><span class="govuk-body">The review of LPA questionnaire is finished.</span>
-                <h2>What happens next</h2>
-                <p class="govuk-body">We've sent an email to the LPA to confirm their questionnaire is complete
-                    and that the review is finished.</p>
+                </div>
+                <p class="govuk-body">The relevant parties have been informed.</p>
                 <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1">Go back to case details</a>
                 </p>
             </div>
@@ -3659,6 +3663,7 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
             </dl>
         </div>
     </div>
+    <h2>What is the outcome of your review?</h2>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <form action="" method="POST" novalidate>
@@ -3676,7 +3681,8 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                         </div>
                     </div>
                 </div>
-                <button class="govuk-button" data-module="govuk-button">Continue</button>
+                <div class="govuk-inset-text">Confirming this review will inform the relevant parties of the outcome</div>
+                <button                 class="govuk-button" data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
