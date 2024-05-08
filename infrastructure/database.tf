@@ -69,7 +69,7 @@ resource "azurerm_mssql_database" "primary" {
 resource "azurerm_key_vault_secret" "sql_admin_connection_string" {
   #checkov:skip=CKV_AZURE_41: TODO: Secret rotation
   key_vault_id = azurerm_key_vault.main.id
-  name         = "${local.service_name}-admin-connection-string"
+  name         = "${local.service_name}-sql-admin-connection-string"
   value = join(
     ";",
     [
@@ -88,7 +88,7 @@ resource "azurerm_key_vault_secret" "sql_admin_connection_string" {
 resource "azurerm_key_vault_secret" "sql_app_connection_string" {
   #checkov:skip=CKV_AZURE_41: TODO: Secret rotation
   key_vault_id = azurerm_key_vault.main.id
-  name         = "${local.service_name}-app-connection-string"
+  name         = "${local.service_name}-sql-app-connection-string"
   value = join(
     ";",
     [
