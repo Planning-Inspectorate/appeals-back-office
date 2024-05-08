@@ -6,6 +6,22 @@ variable "alerts_enabled" {
   default     = true
 }
 
+variable "apps_config" {
+  description = "Config for the apps"
+  type = object({
+    app_service_plan_sku     = string
+    node_environment         = string
+    private_endpoint_enabled = bool
+
+    integrations = object({
+      horizon_api_url               = string # The URL used to connect to the Horizon API
+      horizon_mock                  = bool   # Whether to mock Horizon integration
+      horizon_web_url               = string # The URL base path to create deep links to Horizon cases
+      service_bus_broadcast_enabled = bool   # Whether to send service bus messages
+    })
+  })
+}
+
 variable "common_config" {
   description = "Config for the common resources, such as action groups"
   type = object({
@@ -97,9 +113,11 @@ variable "tags" {
 variable "tooling_config" {
   description = "Config for the tooling subscription resources"
   type = object({
-    network_name    = string
-    network_rg      = string
-    subscription_id = string
+    container_registry_name = string
+    container_registry_rg   = string
+    network_name            = string
+    network_rg              = string
+    subscription_id         = string
   })
 }
 

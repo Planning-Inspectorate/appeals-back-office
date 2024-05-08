@@ -1,3 +1,16 @@
+apps_config = {
+  app_service_plan_sku     = "P1v3"
+  node_environment         = "production"
+  private_endpoint_enabled = true
+
+  integrations = {
+    horizon_api_url               = "http://10.224.161.68:8000"
+    horizon_mock                  = false
+    horizon_web_url               = "https://horizonweb.planninginspectorate.gov.uk/otcs/llisapi.dll?func=ll&objId="
+    service_bus_broadcast_enabled = false
+  }
+}
+
 common_config = {
   resource_group_name = "pins-rg-common-prod-ukw-001"
   action_group_names = {
