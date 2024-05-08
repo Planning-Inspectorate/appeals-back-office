@@ -1,3 +1,16 @@
+apps_config = {
+  app_service_plan_sku     = "P0v3"
+  node_environment         = "development"
+  private_endpoint_enabled = false
+
+  integrations = {
+    horizon_api_url               = ""
+    horizon_mock                  = true
+    horizon_web_url               = ""
+    service_bus_broadcast_enabled = true
+  }
+}
+
 alerts_enabled = false
 
 common_config = {
