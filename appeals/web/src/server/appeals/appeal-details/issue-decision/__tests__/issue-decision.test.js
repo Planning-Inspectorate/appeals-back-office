@@ -283,7 +283,7 @@ describe('issue-decision', () => {
 				'<h1 class="govuk-panel__title"> Decision sent</h1>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<a href="/appeals-service/all-cases" class="govuk-link">Go back to your list</a>'
+				'<a href="/appeals-service/appeal-details/1" class="govuk-link">Go back to case details</a>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				`<a href="/appeals-service/appeal-details/1/costs/decision/upload-documents/3" class="govuk-link">Add costs decision</a>`

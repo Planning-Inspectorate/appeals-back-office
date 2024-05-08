@@ -240,9 +240,9 @@ exports[`issue-decision GET /issue-decision/check-your-decision should render th
                 <div class="govuk-checkboxes__item govuk-!-margin-bottom-5">
                     <input class="govuk-checkboxes__input" id="ready-to-send" name="ready-to-send"
                     type="checkbox" value="Yes">
-                    <label class="govuk-label govuk-checkboxes__label" for="ready-to-send">This decision is ready to be sent to all parties</label>
+                    <label class="govuk-label govuk-checkboxes__label" for="ready-to-send">This decision is ready to be sent to the relevant parties</label>
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Submit decision</button>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Send decision</button>
             </form>
         </div>
     </div>
@@ -259,14 +259,13 @@ exports[`issue-decision GET /issue-decision/decision-sent should render the conf
                     <div class="govuk-panel__body">Appeal reference
                         <br><strong>351062</strong>
                     </div>
-                </div><span class="govuk-body">Relevant parties have been informed.</span>
-                <h2>What happens next</h2>
-                <p class="govuk-body">The appeal will be closed.</p>
-                <p class="govuk-body"><a href="/appeals-service/all-cases" class="govuk-link">Go back to your list</a>
-                </p>
-                <p class="govuk-body"><a href="/appeals-service/appeal-details/1/costs/decision/upload-documents/3"
-                    class="govuk-link">Add costs decision</a>
-                </p>
+                </div>
+                <p class="govuk-body">The relevant parties have been informed. The appeal will be closed.</p>
+                <p                 class="govuk-body"><a href="/appeals-service/appeal-details/1" class="govuk-link">Go back to case details</a>
+                    </p>
+                    <p class="govuk-body"><a href="/appeals-service/appeal-details/1/costs/decision/upload-documents/3"
+                        class="govuk-link">Add costs decision</a>
+                    </p>
             </div>
         </div>
     </div>
