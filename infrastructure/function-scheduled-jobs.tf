@@ -40,7 +40,7 @@ module "function_scheduled_jobs" {
 
 # RBAC for documents
 resource "azurerm_role_assignment" "function_scheduled_jobs_writer" {
-  scope                = azurerm_storage_container.appeal_documents.id
+  scope                = azurerm_storage_container.appeal_documents.resource_manager_id
   role_definition_name = "Storage Blob Data Contributor"
   principal_id         = module.function_scheduled_jobs.principal_id
 }
