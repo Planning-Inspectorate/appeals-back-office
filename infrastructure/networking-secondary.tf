@@ -7,6 +7,25 @@ resource "azurerm_virtual_network" "secondary" {
   tags = var.tags
 }
 
+resource "azurerm_subnet" "secondary_apps" {
+  name                 = "${local.org}-snet-${local.service_name}-apps-secondary-${var.environment}"
+  resource_group_name  = azurerm_resource_group.secondary.name
+  virtual_network_name = azurerm_virtual_network.secondary.name
+  address_prefixes     = [var.vnet_config.secondary_apps_subnet_address_space]
+
+  # for app services
+  delegation {
+    name = "delegation"
+
+    service_delegation {
+      name = "Microsoft.Web/serverFarms"
+      actions = [
+        "Microsoft.Network/virtualNetworks/subnets/action"
+      ]
+    }
+  }
+}
+
 resource "azurerm_subnet" "secondary" {
   name                 = "${local.org}-snet-${local.secondary_resource_suffix}"
   resource_group_name  = azurerm_resource_group.secondary.name
