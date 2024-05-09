@@ -167,12 +167,16 @@ exports[`issue-decision GET /check-invalid-decision should render the check your
                         to send the decision to relevant parties and close the appeal. Make sure
                         you have reviewed the decision information.</strong>
                 </div>
-                <div class="govuk-checkboxes__item govuk-!-margin-bottom-5">
-                    <input class="govuk-checkboxes__input" id="ready-to-send" name="ready-to-send"
-                    type="checkbox" value="Yes">
-                    <label class="govuk-label govuk-checkboxes__label" for="ready-to-send">This decision is ready to be sent to all parties</label>
+                <div class="govuk-form-group">
+                    <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                        <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" id="ready-to-send" name="ready-to-send"
+                            type="checkbox" value="yes">
+                            <label class="govuk-label govuk-checkboxes__label" for="ready-to-send">This decision is ready to be sent to the relevant parties</label>
+                        </div>
+                    </div>
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Submit this decision</button>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Send decision</button>
             </form>
         </div>
     </div>
@@ -237,10 +241,14 @@ exports[`issue-decision GET /issue-decision/check-your-decision should render th
                         to send the decision to relevant parties and close the appeal. Make sure
                         you have reviewed the decision information.</strong>
                 </div>
-                <div class="govuk-checkboxes__item govuk-!-margin-bottom-5">
-                    <input class="govuk-checkboxes__input" id="ready-to-send" name="ready-to-send"
-                    type="checkbox" value="Yes">
-                    <label class="govuk-label govuk-checkboxes__label" for="ready-to-send">This decision is ready to be sent to the relevant parties</label>
+                <div class="govuk-form-group">
+                    <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                        <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" id="ready-to-send" name="ready-to-send"
+                            type="checkbox" value="yes">
+                            <label class="govuk-label govuk-checkboxes__label" for="ready-to-send">This decision is ready to be sent to the relevant parties</label>
+                        </div>
+                    </div>
                 </div>
                 <button type="submit" class="govuk-button" data-module="govuk-button">Send decision</button>
             </form>
