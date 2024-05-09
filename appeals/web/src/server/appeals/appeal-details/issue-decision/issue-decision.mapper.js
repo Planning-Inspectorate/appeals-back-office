@@ -236,12 +236,16 @@ export function checkAndConfirmPage(request, appealData, session, decisionLetter
 
 	/** @type {PageComponent} */
 	const insetConfirmComponent = {
-		type: 'html',
+		type: 'checkboxes',
 		parameters: {
-			html: `<div class="govuk-checkboxes__item govuk-!-margin-bottom-5">
-					<input class="govuk-checkboxes__input" id="ready-to-send" name="ready-to-send" type="checkbox" value="Yes">
-					<label class="govuk-label govuk-checkboxes__label" for="ready-to-send">This decision is ready to be sent to the relevant parties</label>
-				</div>`
+			name: 'ready-to-send',
+			items: [
+				{
+					text: 'This decision is ready to be sent to the relevant parties',
+					value: 'yes',
+					checked: false
+				}
+			]
 		}
 	};
 
@@ -356,12 +360,16 @@ export function checkAndConfirmInvalidPage(request, appealData, session) {
 
 	/** @type {PageComponent} */
 	const insetConfirmComponent = {
-		type: 'html',
+		type: 'checkboxes',
 		parameters: {
-			html: `<div class="govuk-checkboxes__item govuk-!-margin-bottom-5">
-					<input class="govuk-checkboxes__input" id="ready-to-send" name="ready-to-send" type="checkbox" value="Yes">
-					<label class="govuk-label govuk-checkboxes__label" for="ready-to-send">This decision is ready to be sent to all parties</label>
-				</div>`
+			name: 'ready-to-send',
+			items: [
+				{
+					text: 'This decision is ready to be sent to the relevant parties',
+					value: 'yes',
+					checked: false
+				}
+			]
 		}
 	};
 
@@ -372,7 +380,7 @@ export function checkAndConfirmInvalidPage(request, appealData, session) {
 		backLinkText: 'Back',
 		preHeading: `Appeal ${appealShortReference(appealData.appealReference)}`,
 		heading: title,
-		submitButtonText: 'Submit this decision',
+		submitButtonText: 'Send decision',
 		pageComponents: [summaryListComponent, warningTextComponent, insetConfirmComponent]
 	};
 
