@@ -81,7 +81,7 @@ resource "azurerm_cdn_frontdoor_custom_domain_association" "web" {
 
 # WAF policy
 resource "azurerm_cdn_frontdoor_firewall_policy" "web" {
-  name                              = "${local.org}-waf-${local.service_name}-web-${var.environment}"
+  name                              = replace("${local.org}-waf-${local.service_name}-web-${var.environment}", "-", "")
   resource_group_name               = azurerm_resource_group.primary.name
   sku_name                          = "Premium_AzureFrontDoor"
   enabled                           = true
@@ -92,7 +92,7 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "web" {
 }
 
 resource "azurerm_cdn_frontdoor_security_policy" "web" {
-  name                     = "${local.org}-sec-${local.service_name}-web-${var.environment}"
+  name                     = replace("${local.org}-sec-${local.service_name}-web-${var.environment}", "-", "")
   cdn_frontdoor_profile_id = azurerm_cdn_frontdoor_profile.web.id
 
   security_policies {
