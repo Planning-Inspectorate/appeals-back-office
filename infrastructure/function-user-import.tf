@@ -19,7 +19,7 @@ module "function_user_import" {
   function_apps_storage_account_access_key = azurerm_storage_account.functions.primary_access_key
 
   # networking
-  integration_subnet_id      = azurerm_subnet.main.id
+  integration_subnet_id      = azurerm_subnet.apps.id
   outbound_vnet_connectivity = true
 
   # monitoring
