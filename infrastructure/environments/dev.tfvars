@@ -77,9 +77,11 @@ sql_config = {
 }
 
 vnet_config = {
-  address_space                  = "10.15.0.0/22"
-  main_subnet_address_space      = "10.15.0.0/24"
-  secondary_address_space        = "10.15.16.0/22"
-  secondary_subnet_address_space = "10.15.16.0/24"
+  address_space                       = "10.15.0.0/22"
+  apps_subnet_address_space           = "10.15.0.0/24"
+  main_subnet_address_space           = "10.15.1.0/24"
+  secondary_address_space             = "10.15.16.0/22"
+  secondary_apps_subnet_address_space = "10.15.16.0/24"
+  secondary_subnet_address_space      = "10.15.17.0/24"
 }
 web_app_domain = "back-office-appeals-dev.planninginspectorate.gov.uk"

@@ -24,7 +24,7 @@ module "app_web" {
   app_service_private_dns_zone_id = azurerm_private_dns_zone.app_service.id
   front_door_restriction          = true
   inbound_vnet_connectivity       = false
-  integration_subnet_id           = azurerm_subnet.main.id
+  integration_subnet_id           = azurerm_subnet.apps.id
   outbound_vnet_connectivity      = true
 
   # monitoring

@@ -7,11 +7,11 @@ resource "azurerm_virtual_network" "main" {
   tags = var.tags
 }
 
-resource "azurerm_subnet" "main" {
-  name                 = "${local.org}-snet-${local.resource_suffix}"
+resource "azurerm_subnet" "apps" {
+  name                 = "${local.org}-snet-${local.service_name}-apps-${var.environment}"
   resource_group_name  = azurerm_resource_group.primary.name
   virtual_network_name = azurerm_virtual_network.main.name
-  address_prefixes     = [var.vnet_config.main_subnet_address_space]
+  address_prefixes     = [var.vnet_config.apps_subnet_address_space]
 
   # for app services
   delegation {
@@ -24,6 +24,13 @@ resource "azurerm_subnet" "main" {
       ]
     }
   }
+}
+
+resource "azurerm_subnet" "main" {
+  name                 = "${local.org}-snet-${local.resource_suffix}"
+  resource_group_name  = azurerm_resource_group.primary.name
+  virtual_network_name = azurerm_virtual_network.main.name
+  address_prefixes     = [var.vnet_config.main_subnet_address_space]
 }
 
 resource "azurerm_virtual_network_peering" "bo_to_tooling" {

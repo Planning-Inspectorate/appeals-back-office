@@ -22,9 +22,9 @@ module "app_api" {
 
   # networking
   app_service_private_dns_zone_id = azurerm_private_dns_zone.app_service.id
-  endpoint_subnet_id              = azurerm_subnet.main.id
+  endpoint_subnet_id              = azurerm_subnet.apps.id
   inbound_vnet_connectivity       = var.apps_config.private_endpoint_enabled
-  integration_subnet_id           = azurerm_subnet.main.id
+  integration_subnet_id           = azurerm_subnet.apps.id
   outbound_vnet_connectivity      = true
 
   # monitoring
