@@ -72,7 +72,7 @@ resource "azurerm_role_assignment" "document_to_move_sub_reciever" {
 # RBAC for storage
 
 resource "azurerm_role_assignment" "function_doc_processing_writer" {
-  scope                = azurerm_storage_container.appeal_documents.id
+  scope                = azurerm_storage_container.appeal_documents.resource_manager_id
   role_definition_name = "Storage Blob Data Contributor"
   principal_id         = module.function_doc_processing.principal_id
 }
