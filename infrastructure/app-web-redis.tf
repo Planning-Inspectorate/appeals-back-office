@@ -18,7 +18,7 @@ resource "azurerm_private_endpoint" "redis_web" {
 
   private_dns_zone_group {
     name                 = "pins-pdns-${local.service_name}-redis-cache-${var.environment}"
-    private_dns_zone_ids = [azurerm_private_dns_zone.redis_cache.id]
+    private_dns_zone_ids = [data.azurerm_private_dns_zone.redis_cache.id]
   }
 
   private_service_connection {

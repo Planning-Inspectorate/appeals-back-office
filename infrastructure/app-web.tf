@@ -21,7 +21,7 @@ module "app_web" {
   image_name              = "back-office/appeals-web"
 
   # networking
-  app_service_private_dns_zone_id = azurerm_private_dns_zone.app_service.id
+  app_service_private_dns_zone_id = data.azurerm_private_dns_zone.app_service.id
   front_door_restriction          = true
   inbound_vnet_connectivity       = false
   integration_subnet_id           = azurerm_subnet.apps.id
