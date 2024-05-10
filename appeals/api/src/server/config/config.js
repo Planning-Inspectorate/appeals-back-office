@@ -40,6 +40,9 @@ const { value, error } = schema.validate({
 		template: {
 			validAppellantCase: {
 				id: '3b4b74b4-b604-411b-9c98-5be2c6f3bdfd'
+			},
+			appealConfirmed: {
+				id: '783f94cc-1d6d-4153-8ad7-9070e449a57c'
 			}
 		},
 		testMailbox: environment.TEST_MAILBOX || 'test@example.com'

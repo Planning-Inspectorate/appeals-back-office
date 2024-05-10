@@ -33,6 +33,9 @@ export default joi
 				template: joi.object({
 					validAppellantCase: joi.object({
 						id: joi.string()
+					}),
+					appealConfirmed: joi.object({
+						id: joi.string()
 					})
 				}),
 				testMailbox: joi.string()

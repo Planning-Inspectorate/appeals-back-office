@@ -591,6 +591,7 @@ interface UpdateAppellantCaseValidationOutcomeParams {
 	};
 	validationOutcome: ValidationOutcome;
 	validAt: Date;
+	siteAddress: string;
 }
 
 interface UpdateTimetableRequest {

@@ -15,4 +15,21 @@ const formatAddress = (address) => ({
 	town: address.addressTown
 });
 
-export { formatAddress };
+/**
+ * @param {Address} address
+ * @returns {string}
+ */
+const formatAddressSingleLine = (address) => {
+	const parts = [
+		address.addressLine1,
+		address.addressLine2,
+		address.addressTown,
+		address.addressCounty,
+		address.postcode,
+		address.addressCountry
+	];
+
+	return parts.filter((part) => part).join(', ');
+};
+
+export { formatAddress, formatAddressSingleLine };
