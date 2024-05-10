@@ -61,7 +61,7 @@ const { value, error } = schema.validate({
 });
 
 if (error) {
-	throw error;
+	throw new Error(`loadConfig validation error: ${error.message}`);
 }
 
 export default value;
