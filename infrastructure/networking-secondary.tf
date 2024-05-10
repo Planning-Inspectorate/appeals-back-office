@@ -54,42 +54,42 @@ resource "azurerm_virtual_network_peering" "secondary_tooling_to_bo" {
 
 resource "azurerm_private_dns_zone_virtual_network_link" "secondary_app_config" {
   name                  = "${local.org}-vnetlink-app-config-${local.secondary_resource_suffix}"
-  resource_group_name   = azurerm_resource_group.primary.name
+  resource_group_name   = var.tooling_config.network_rg
   private_dns_zone_name = data.azurerm_private_dns_zone.app_config.name
   virtual_network_id    = azurerm_virtual_network.secondary.id
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "secondary_app_service" {
   name                  = "${local.org}-vnetlink-app-service-${local.secondary_resource_suffix}"
-  resource_group_name   = azurerm_resource_group.primary.name
+  resource_group_name   = var.tooling_config.network_rg
   private_dns_zone_name = data.azurerm_private_dns_zone.app_service.name
   virtual_network_id    = azurerm_virtual_network.secondary.id
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "secondary_database" {
   name                  = "${local.org}-vnetlink-db-${local.secondary_resource_suffix}"
-  resource_group_name   = azurerm_resource_group.primary.name
+  resource_group_name   = var.tooling_config.network_rg
   private_dns_zone_name = data.azurerm_private_dns_zone.database.name
   virtual_network_id    = azurerm_virtual_network.secondary.id
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "secondary_redis_cache" {
   name                  = "${local.org}-vnetlink-redis-cache-${local.secondary_resource_suffix}"
-  resource_group_name   = azurerm_resource_group.primary.name
+  resource_group_name   = var.tooling_config.network_rg
   private_dns_zone_name = data.azurerm_private_dns_zone.redis_cache.name
   virtual_network_id    = azurerm_virtual_network.secondary.id
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "secondary_service_bus" {
   name                  = "${local.org}-vnetlink-service-bus-${local.secondary_resource_suffix}"
-  resource_group_name   = azurerm_resource_group.primary.name
+  resource_group_name   = var.tooling_config.network_rg
   private_dns_zone_name = data.azurerm_private_dns_zone.service_bus.name
   virtual_network_id    = azurerm_virtual_network.secondary.id
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "secondary_synapse" {
   name                  = "${local.org}-vnetlink-synapse-${local.secondary_resource_suffix}"
-  resource_group_name   = azurerm_resource_group.primary.name
+  resource_group_name   = var.tooling_config.network_rg
   private_dns_zone_name = data.azurerm_private_dns_zone.synapse.name
   virtual_network_id    = azurerm_virtual_network.secondary.id
 }
