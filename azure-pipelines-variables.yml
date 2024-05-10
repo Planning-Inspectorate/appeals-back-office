@@ -1,4 +1,5 @@
 variables:
   azurecrName: pinscrsharedtoolinguks
-  resourceGroup: pins-rg-back-office-$(ENVIRONMENT)-$(REGION_SHORT)-001
+  legacyResourceGroup: pins-rg-back-office-$(ENVIRONMENT)-$(REGION_SHORT)-001
+  resourceGroup: pins-rg-appeals-bo-$(ENVIRONMENT)
   tagPrefix: back-office
