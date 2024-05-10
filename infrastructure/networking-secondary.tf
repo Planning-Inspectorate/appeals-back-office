@@ -57,6 +57,8 @@ resource "azurerm_private_dns_zone_virtual_network_link" "secondary_app_config" 
   resource_group_name   = var.tooling_config.network_rg
   private_dns_zone_name = data.azurerm_private_dns_zone.app_config.name
   virtual_network_id    = azurerm_virtual_network.secondary.id
+
+  provider = azurerm.tooling
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "secondary_app_service" {
@@ -64,6 +66,8 @@ resource "azurerm_private_dns_zone_virtual_network_link" "secondary_app_service"
   resource_group_name   = var.tooling_config.network_rg
   private_dns_zone_name = data.azurerm_private_dns_zone.app_service.name
   virtual_network_id    = azurerm_virtual_network.secondary.id
+
+  provider = azurerm.tooling
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "secondary_database" {
@@ -71,6 +75,8 @@ resource "azurerm_private_dns_zone_virtual_network_link" "secondary_database" {
   resource_group_name   = var.tooling_config.network_rg
   private_dns_zone_name = data.azurerm_private_dns_zone.database.name
   virtual_network_id    = azurerm_virtual_network.secondary.id
+
+  provider = azurerm.tooling
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "secondary_redis_cache" {
@@ -78,6 +84,8 @@ resource "azurerm_private_dns_zone_virtual_network_link" "secondary_redis_cache"
   resource_group_name   = var.tooling_config.network_rg
   private_dns_zone_name = data.azurerm_private_dns_zone.redis_cache.name
   virtual_network_id    = azurerm_virtual_network.secondary.id
+
+  provider = azurerm.tooling
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "secondary_service_bus" {
@@ -85,6 +93,8 @@ resource "azurerm_private_dns_zone_virtual_network_link" "secondary_service_bus"
   resource_group_name   = var.tooling_config.network_rg
   private_dns_zone_name = data.azurerm_private_dns_zone.service_bus.name
   virtual_network_id    = azurerm_virtual_network.secondary.id
+
+  provider = azurerm.tooling
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "secondary_synapse" {
@@ -92,4 +102,6 @@ resource "azurerm_private_dns_zone_virtual_network_link" "secondary_synapse" {
   resource_group_name   = var.tooling_config.network_rg
   private_dns_zone_name = data.azurerm_private_dns_zone.synapse.name
   virtual_network_id    = azurerm_virtual_network.secondary.id
+
+  provider = azurerm.tooling
 }
