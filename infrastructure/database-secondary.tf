@@ -32,7 +32,7 @@ resource "azurerm_private_endpoint" "sql_secondary" {
 
   private_dns_zone_group {
     name                 = "sqlserverprivatednszone"
-    private_dns_zone_ids = [azurerm_private_dns_zone.database.id]
+    private_dns_zone_ids = [data.azurerm_private_dns_zone.database.id]
   }
 
   private_service_connection {

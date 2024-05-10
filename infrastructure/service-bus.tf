@@ -31,7 +31,7 @@ resource "azurerm_private_endpoint" "sb_main" {
 
   private_dns_zone_group {
     name                 = "pins-pdns-${local.service_name}-sb-${var.environment}"
-    private_dns_zone_ids = [azurerm_private_dns_zone.service_bus.id]
+    private_dns_zone_ids = [data.azurerm_private_dns_zone.service_bus.id]
   }
 
   private_service_connection {
