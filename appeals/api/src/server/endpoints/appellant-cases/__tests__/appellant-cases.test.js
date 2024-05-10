@@ -30,6 +30,7 @@ import joinDateAndTime from '#utils/join-date-and-time.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 
 const { databaseConnector } = await import('../../../utils/database-connector.js');
+import config from '#config/config.js';
 
 describe('appellant cases routes', () => {
 	beforeEach(() => {
@@ -291,6 +292,10 @@ describe('appellant cases routes', () => {
 						userId: householdAppeal.caseOfficer.id
 					}
 				});
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).not.toHaveBeenCalled();
+
 				expect(response.status).toEqual(200);
 			});
 
@@ -372,6 +377,10 @@ describe('appellant cases routes', () => {
 						]
 					}
 				);
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).not.toHaveBeenCalled();
+
 				expect(response.status).toEqual(200);
 			});
 
@@ -450,6 +459,10 @@ describe('appellant cases routes', () => {
 						}
 					]
 				});
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).not.toHaveBeenCalled();
+
 				expect(response.status).toEqual(200);
 			});
 
@@ -539,6 +552,10 @@ describe('appellant cases routes', () => {
 						userId: householdAppeal.caseOfficer.id
 					}
 				});
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).not.toHaveBeenCalled();
+
 				expect(response.status).toEqual(200);
 			});
 
@@ -607,6 +624,10 @@ describe('appellant cases routes', () => {
 						userId: householdAppeal.caseOfficer.id
 					}
 				});
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).not.toHaveBeenCalled();
+
 				expect(response.status).toEqual(200);
 			});
 
@@ -685,6 +706,10 @@ describe('appellant cases routes', () => {
 						}
 					]
 				});
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).not.toHaveBeenCalled();
+
 				expect(response.status).toEqual(200);
 			});
 
@@ -743,6 +768,9 @@ describe('appellant cases routes', () => {
 						text: 'A'
 					})
 				});
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).not.toHaveBeenCalled();
 
 				expect(response.status).toEqual(200);
 			});
@@ -806,10 +834,14 @@ describe('appellant cases routes', () => {
 					}
 				});
 				// expect(databaseConnector.appeal.update).not.toHaveBeenCalled();
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).not.toHaveBeenCalled();
+
 				expect(response.status).toEqual(200);
 			});
 
-			test('updates appellant case when the validation outcome is Valid', async () => {
+			test('updates appellant case and sends a notify email when the validation outcome is Valid', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...householdAppeal,
@@ -855,6 +887,22 @@ describe('appellant cases routes', () => {
 						valid: true
 					}
 				});
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).toHaveBeenCalledTimes(1);
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).toHaveBeenCalledWith(
+					config.govNotify.template.appealConfirmed.id,
+					'test@136s7.com',
+					{
+						emailReplyToId: null,
+						personalisation: {
+							appeal_reference_number: '1345264',
+							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom'
+						},
+						reference: null
+					}
+				);
 
 				expect(response.status).toEqual(200);
 			});

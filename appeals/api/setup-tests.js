@@ -583,6 +583,7 @@ jest.unstable_mockModule('./src/server/infrastructure/event-client.js', () => ({
 const mockGotGet = jest.fn();
 const mockGotPost = jest.fn();
 const mockSendEmail = jest.fn();
+global.mockSendEmail = mockSendEmail;
 
 jest.unstable_mockModule('jsonwebtoken', () => ({
 	default: {
