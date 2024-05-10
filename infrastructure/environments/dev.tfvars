@@ -16,7 +16,7 @@ apps_config = {
   }
 
   integrations = {
-    horizon_api_url               = ""
+    horizon_api_url               = "http://10.0.7.4:8000" # required by config validation, even if mocked
     horizon_mock                  = true
     horizon_web_url               = ""
     service_bus_broadcast_enabled = true
