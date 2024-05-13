@@ -59,6 +59,7 @@ extends:
           - name: Deploy Appeals API
             condition: eq(${{ parameters.deployAppealsAPI }}, 'true')
             steps:
+              # deploy to existing app (to be removed)
               - ${{ if eq(parameters.schemaMigration, true) }}:
                   - checkout: self
                   - template: ../steps/azure_get_secrets.yml
@@ -73,7 +74,6 @@ extends:
                         DATABASE_URL: $(DATABASE_URL)
                       script: npm run db:migrate:prod
                       workingDirectory: $(Build.Repository.LocalPath)/appeals/api
-              # deploy to existing app (to be removed)
               - template: ../steps/azure_web_app_deploy.yml
                 parameters:
                   appName: pins-app-back-office-appeals-api-$(ENVIRONMENT)-$(REGION_SHORT)-001
@@ -81,6 +81,21 @@ extends:
                   azurecrName: $(azurecrName)
                   repository: back-office/back-office-appeals-api
               # deploy to new app
+              - ${{ if eq(parameters.schemaMigration, true) }}:
+                  # - checkout: self
+                  - template: ../steps/azure_get_secrets.yml
+                    parameters:
+                      keyVaultName: pins-kv-appeals-bo-$(ENVIRONMENT)
+                      secrets:
+                        - name: appeals-bo-sql-admin-connection-string
+                          variable: appeals-bo-sql-admin-connection-string
+                  - template: ../steps/node_script.yml
+                    parameters:
+                      nodeVersion: 18
+                      environmentVariables:
+                        DATABASE_URL: $(appeals-bo-sql-admin-connection-string)
+                      script: npm run db:migrate:prod
+                      workingDirectory: $(Build.Repository.LocalPath)/appeals/api
               - template: ../steps/azure_web_app_deploy.yml
                 parameters:
                   appName: pins-app-appeals-bo-api-$(ENVIRONMENT)
