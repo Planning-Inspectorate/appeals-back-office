@@ -23,9 +23,9 @@ parameters:
     displayName: Region
     type: string
     values:
-      - UK West
       - UK South
-    default: UK West
+      - UK West
+    default: UK South
   - name: schemaMigration
     displayName: Run Database Migration
     type: boolean
