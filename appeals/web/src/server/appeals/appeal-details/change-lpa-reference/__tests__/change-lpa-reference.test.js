@@ -13,6 +13,8 @@ describe('change-lpa-reference', () => {
 	afterEach(teardown);
 
 	describe('GET /change', () => {
+		beforeEach(installMockApi);
+		afterEach(teardown);
 		it('should render changeLpaReference page when loaded from appeal details', async () => {
 			const appealId = appealData.appealId;
 			const response = await request.get(`${baseUrl}/${appealId}/lpa-reference/change`);

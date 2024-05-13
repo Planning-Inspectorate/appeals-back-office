@@ -7,7 +7,6 @@ import {
 	reviewCompletePage
 } from './lpa-questionnaire.mapper.js';
 import logger from '#lib/logger.js';
-import * as appealDetailsService from '../appeal-details.service.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import {
 	renderDocumentUpload,
@@ -240,12 +239,8 @@ export const getConfirmation = async (request, response) => {
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const getAddDocuments = async (request, response) => {
-	const [appealDetails, lpaQuestionnaireDetails] = await Promise.all([
-		appealDetailsService
-			.getAppealDetailsFromId(request.apiClient, request.params.appealId)
-			.catch((error) => logger.error(error)),
-		getLpaQuestionnaireDetails(request)
-	]);
+	const appealDetails = request.currentAppeal;
+	const lpaQuestionnaireDetails = await getLpaQuestionnaireDetails(request);
 
 	if (!appealDetails || !lpaQuestionnaireDetails) {
 		return response.status(404).render('app/404');
@@ -309,13 +304,8 @@ export const getManageDocument = async (request, response) => {
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const getAddDocumentsVersion = async (request, response) => {
-	const [appealDetails, lpaQuestionnaireDetails] = await Promise.all([
-		appealDetailsService
-			.getAppealDetailsFromId(request.apiClient, request.params.appealId)
-			.catch((error) => logger.error(error)),
-		getLpaQuestionnaireDetails(request)
-	]);
-
+	const appealDetails = request.currentAppeal;
+	const lpaQuestionnaireDetails = await getLpaQuestionnaireDetails(request);
 	if (!appealDetails || !lpaQuestionnaireDetails) {
 		return response.status(404).render('app/404');
 	}

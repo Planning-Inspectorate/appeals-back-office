@@ -34,12 +34,16 @@ const renderManageLinkedAppeals = async (request, response) => {
 		params: { appealId }
 	} = request;
 
-	const appealData = await getAppealDetailsFromId(request.apiClient, appealId);
+	const appealData = request.currentAppeal;
 	let leadAppealData;
 	let leadLinkedAppeal;
 
 	if (appealData.isChildAppeal === true) {
-		leadLinkedAppeal = appealData.linkedAppeals.find((linkedAppeal) => linkedAppeal.isParentAppeal);
+		leadLinkedAppeal = appealData.linkedAppeals.find(
+			(
+				/** @type {import('@pins/appeals.api/src/server/endpoints/appeals.js').LinkedAppeal} */ linkedAppeal
+			) => linkedAppeal.isParentAppeal
+		);
 
 		if (leadLinkedAppeal && leadLinkedAppeal.appealId) {
 			leadAppealData = await getAppealDetailsFromId(
@@ -79,12 +83,9 @@ export const getAddLinkedAppealReference = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const renderAddLinkedAppealReference = async (request, response) => {
-	const {
-		errors,
-		params: { appealId }
-	} = request;
+	const { errors } = request;
 
-	const appealDetails = await getAppealDetailsFromId(request.apiClient, appealId);
+	const appealDetails = request.currentAppeal;
 
 	const mappedPageContent = await addLinkedAppealPage(appealDetails);
 
@@ -142,12 +143,9 @@ export const renderAddLinkedAppealCheckAndConfirm = async (request, response) =>
 		return response.render('app/500.njk');
 	}
 
-	const {
-		errors,
-		params: { appealId }
-	} = request;
+	const { errors } = request;
 
-	const targetAppealDetails = await getAppealDetailsFromId(request.apiClient, appealId);
+	const targetAppealDetails = request.currentAppeal;
 	let linkCandidateAppealData;
 
 	if (request.session.linkableAppeal?.linkableAppealSummary.source === 'back-office') {
@@ -260,10 +258,13 @@ export const postUnlinkAppeal = async (request, response) => {
 		}
 		if (unlinkAppeal === 'yes') {
 			const appealRelationshipId = parseInt(relationshipId, 10);
-			const appealData = await getAppealDetailsFromId(request.apiClient, appealId);
+			const appealData = request.currentAppeal;
 			const childRef =
-				appealData.linkedAppeals.find((appeal) => appeal.relationshipId === appealRelationshipId)
-					?.appealReference || '';
+				appealData.linkedAppeals.find(
+					(
+						/** @type {import('@pins/appeals.api/src/server/endpoints/appeals.js').LinkedAppeal} */ linkedAppeal
+					) => linkedAppeal.relationshipId === appealRelationshipId
+				)?.appealReference || '';
 
 			await postUnlinkRequest(request.apiClient, appealId, appealRelationshipId);
 
@@ -298,11 +299,13 @@ const renderUnlinkAppeal = async (request, response) => {
 		params: { appealId, relationshipId, backLinkAppealId }
 	} = request;
 
-	const appealData = await getAppealDetailsFromId(request.apiClient, appealId);
+	const appealData = request.currentAppeal;
 
 	const childRef =
 		appealData.linkedAppeals.find(
-			(appeal) => appeal.relationshipId === parseInt(relationshipId, 10)
+			(
+				/** @type {import('@pins/appeals.api/src/server/endpoints/appeals.js').LinkedAppeal} */ linkedAppeal
+			) => linkedAppeal.relationshipId === parseInt(relationshipId, 10)
 		)?.appealReference || '';
 
 	const mappedPageContent = await unlinkAppealPage(

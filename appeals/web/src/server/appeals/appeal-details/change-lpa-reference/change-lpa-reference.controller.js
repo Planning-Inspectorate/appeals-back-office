@@ -1,6 +1,5 @@
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { getAppealDetailsFromId } from '../appeal-details.service.js';
 import { changeLpaReferencePage } from './change-lpa-reference.mapper.js';
 import { changeLpaReference } from './change-lpa-reference.service.js';
 
@@ -18,18 +17,15 @@ export const getChangeLpaReference = async (request, response) => {
  */
 const renderChangeLpaReference = async (request, response) => {
 	try {
-		const {
-			errors,
-			params: { appealId }
-		} = request;
+		const { errors } = request;
 		const currentUrl = request.originalUrl;
 
 		const origin = currentUrl.split('/').slice(0, -2).join('/');
 
-		const appealsDetails = await getAppealDetailsFromId(request.apiClient, appealId);
+		const appealDetails = request.currentAppeal;
 
 		const mappedPageContents = changeLpaReferencePage(
-			appealsDetails,
+			appealDetails,
 			request.session.planningApplicationReference,
 			origin,
 			errors

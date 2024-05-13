@@ -10,7 +10,6 @@ import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { HTTPError } from 'got';
-import { getAppealDetailsFromId } from '../appeal-details.service.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -290,7 +289,7 @@ export const postRemoveOtherAppeals = async (request, response) => {
 				`<p class="govuk-notification-banner__heading">You have removed the relationship between this appeal and appeal ${relatedAppealShortReference}</p>`
 			);
 
-			const appealData = await getAppealDetailsFromId(request.apiClient, appealId);
+			const appealData = request.currentAppeal;
 
 			if (appealData.otherAppeals.length > 0) {
 				return response.redirect(

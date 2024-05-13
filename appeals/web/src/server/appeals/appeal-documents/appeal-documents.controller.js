@@ -145,7 +145,6 @@ export const renderManageFolder = async (
 	}
 
 	const redactionStatuses = await getDocumentRedactionStatuses(request.apiClient);
-
 	if (!redactionStatuses) {
 		return response.render('app/500.njk');
 	}
