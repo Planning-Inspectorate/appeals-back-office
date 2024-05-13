@@ -1,5 +1,4 @@
 import logger from '#lib/logger.js';
-import * as appealDetailsService from '../appeal-details.service.js';
 import * as siteVisitService from './site-visit.service.js';
 import {
 	mapWebVisitTypeToApiVisitType,
@@ -22,9 +21,7 @@ import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 const renderScheduleOrManageSiteVisit = async (request, response, pageType) => {
 	const { errors } = request;
 
-	const appealDetails = await appealDetailsService
-		.getAppealDetailsFromId(request.apiClient, request.params.appealId)
-		.catch((error) => logger.error(error));
+	const appealDetails = request.currentAppeal;
 
 	if (appealDetails) {
 		let {
@@ -74,9 +71,7 @@ export const renderScheduleOrManageSiteVisitConfirmation = async (request, respo
 		params: { appealId, confirmationPageTypeToRender }
 	} = request;
 
-	const appealDetails = await appealDetailsService
-		.getAppealDetailsFromId(request.apiClient, request.params.appealId)
-		.catch((error) => logger.error(error));
+	const appealDetails = request.currentAppeal;
 
 	if (appealDetails) {
 		const siteVisitIdAsNumber = appealDetails.siteVisit?.siteVisitId;
@@ -110,9 +105,7 @@ export const renderScheduleOrManageSiteVisitConfirmation = async (request, respo
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const renderSiteVisitBooked = async (request, response) => {
-	const appealDetails = await appealDetailsService
-		.getAppealDetailsFromId(request.apiClient, request.params.appealId)
-		.catch((error) => logger.error(error));
+	const appealDetails = request.currentAppeal;
 
 	if (appealDetails) {
 		const siteVisitIdAsNumber = appealDetails.siteVisit?.siteVisitId;
@@ -140,9 +133,7 @@ export const renderSiteVisitBooked = async (request, response) => {
 const renderSetVisitType = async (request, response) => {
 	const { errors } = request;
 
-	const appealDetails = await appealDetailsService
-		.getAppealDetailsFromId(request.apiClient, request.params.appealId)
-		.catch((error) => logger.error(error));
+	const appealDetails = request.currentAppeal;
 
 	if (appealDetails) {
 		const {
@@ -198,9 +189,7 @@ export const postScheduleOrManageSiteVisit = async (request, response, pageType)
 	} = request;
 
 	try {
-		const appealDetails = await appealDetailsService
-			.getAppealDetailsFromId(request.apiClient, appealId)
-			.catch((error) => logger.error(error));
+		const appealDetails = request.currentAppeal;
 
 		if (appealDetails) {
 			const {
@@ -303,9 +292,7 @@ export const postSetVisitType = async (request, response) => {
 	} = request;
 
 	try {
-		const appealDetails = await appealDetailsService
-			.getAppealDetailsFromId(request.apiClient, appealId)
-			.catch((error) => logger.error(error));
+		const appealDetails = request.currentAppeal;
 
 		if (appealDetails) {
 			const {

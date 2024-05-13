@@ -1,5 +1,4 @@
 import logger from '#lib/logger.js';
-import * as appealDetailsService from '../appeal-details.service.js';
 import usersService from '../../appeal-users/users-service.js';
 import config from '#environment/config.js';
 import { setAppealAssignee } from './assign-user.service.js';
@@ -28,9 +27,7 @@ const renderAssignUser = async (
 		body: { searchTerm }
 	} = request;
 
-	const appealDetails = await appealDetailsService
-		.getAppealDetailsFromId(request.apiClient, request.params.appealId)
-		.catch((error) => logger.error(error));
+	const appealDetails = request.currentAppeal;
 
 	if (appealDetails) {
 		const mappedPageContent = await assignUserPage(
@@ -75,10 +72,8 @@ const renderAssignOrUnassignUserCheckAndConfirm = async (
 			? config.referenceData.appeals.inspectorGroupId
 			: config.referenceData.appeals.caseOfficerGroupId;
 
-		const [appealDetails, user] = await Promise.all([
-			appealDetailsService.getAppealDetailsFromId(request.apiClient, request.params.appealId),
-			usersService.getUserByRoleAndId(groupId, request.session, assigneeId)
-		]);
+		const appealDetails = request.currentAppeal;
+		const user = await usersService.getUserByRoleAndId(groupId, request.session, assigneeId);
 
 		if (appealDetails && assigneeId) {
 			let existingUser = null;
@@ -276,9 +271,7 @@ export const postUnassignInspectorCheckAndConfirm = async (request, response) =>
 const renderAssignNewUser = async (request, response, isInspector = false) => {
 	const { errors } = request;
 
-	const appealDetails = await appealDetailsService
-		.getAppealDetailsFromId(request.apiClient, request.params.appealId)
-		.catch((error) => logger.error(error));
+	const appealDetails = request.currentAppeal;
 
 	if (appealDetails) {
 		const mappedPageContent = assignNewUserPage(

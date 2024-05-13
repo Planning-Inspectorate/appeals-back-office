@@ -75,20 +75,6 @@ describe('appeal-details', () => {
 
 			it('should render a "Horizon reference added" success notification banner, a "Transferred" status tag, and an inset text component with the appeal type and horizon link for the transferred appeal, when the appeal was successfully transferred to horizon', async () => {
 				nock.cleanAll();
-				nock('http://test/').get('/appeals/transferred-appeal/123').reply(200, {
-					caseFound: true
-				});
-				nock('http://test/')
-					.post('/appeals/2/appeal-transfer-confirmation')
-					.reply(200, { success: true });
-
-				await request.post(`${baseUrl}/2/change-appeal-type/add-horizon-reference`).send({
-					'horizon-reference': '123'
-				});
-
-				await request.post(`${baseUrl}/2/change-appeal-type/check-transfer`).send({
-					confirm: 'yes'
-				});
 
 				const appealId = 2;
 
@@ -102,7 +88,23 @@ describe('appeal-details', () => {
 							transferredAppealType: '(C) Enforcement notice appeal',
 							transferredAppealReference: '12345'
 						}
-					});
+					})
+					.persist();
+
+				nock('http://test/').get('/appeals/transferred-appeal/123').reply(200, {
+					caseFound: true
+				});
+				nock('http://test/')
+					.post(`/appeals/${appealId}/appeal-transfer-confirmation`)
+					.reply(200, { success: true });
+
+				await request.post(`${baseUrl}/${appealId}/change-appeal-type/add-horizon-reference`).send({
+					'horizon-reference': '123'
+				});
+
+				await request.post(`${baseUrl}/${appealId}/change-appeal-type/check-transfer`).send({
+					confirm: 'yes'
+				});
 
 				const response = await request.get(`${baseUrl}/${appealId}`);
 
@@ -151,7 +153,10 @@ describe('appeal-details', () => {
 							town: 'Woodton'
 						}
 					});
-				nock('http://test/').get(`/appeals/${appealData.appealId}`).reply(200, appealData);
+				nock('http://test/')
+					.get(`/appeals/${appealData.appealId}`)
+					.reply(200, appealData)
+					.persist();
 
 				await request.post(`${baseUrl}/1/neighbouring-sites/add/back-office`).send({
 					addressLine1: '1 Grove Cottage',
@@ -179,7 +184,10 @@ describe('appeal-details', () => {
 				nock('http://test/').patch(`/appeals/${appealReference}/neighbouring-sites`).reply(200, {
 					siteId: 1
 				});
-				nock('http://test/').get(`/appeals/${appealData.appealId}`).reply(200, appealData);
+				nock('http://test/')
+					.get(`/appeals/${appealData.appealId}`)
+					.reply(200, appealData)
+					.persist();
 
 				await request.post(`${baseUrl}/1/neighbouring-sites/change/site/1`).send({
 					addressLine1: '2 Grove Cottage',
@@ -207,7 +215,10 @@ describe('appeal-details', () => {
 				nock('http://test/').delete(`/appeals/${appealReference}/neighbouring-sites`).reply(200, {
 					siteId: 1
 				});
-				nock('http://test/').get(`/appeals/${appealData.appealId}`).reply(200, appealData);
+				nock('http://test/')
+					.get(`/appeals/${appealData.appealId}`)
+					.reply(200, appealData)
+					.persist();
 
 				await request.post(`${baseUrl}/1/neighbouring-sites/remove/site/1`).send({
 					'remove-neighbouring-site': 'yes'
@@ -230,7 +241,10 @@ describe('appeal-details', () => {
 				nock('http://test/')
 					.get(`/appeals/linkable-appeal/${appealReference}`)
 					.reply(200, linkableAppealSummaryBackOffice);
-				nock('http://test/').get(`/appeals/${appealData.appealId}`).reply(200, appealData);
+				nock('http://test/')
+					.get(`/appeals/${appealData.appealId}`)
+					.reply(200, appealData)
+					.persist();
 				nock('http://test/').post(`/appeals/${appealData.appealId}/link-appeal`).reply(200, {
 					childId: linkableAppealSummaryBackOffice.appealId,
 					childRef: linkableAppealSummaryBackOffice.appealReference,
@@ -261,7 +275,10 @@ describe('appeal-details', () => {
 				nock('http://test/')
 					.get(`/appeals/linkable-appeal/${appealReference}`)
 					.reply(200, linkableAppealSummaryBackOffice);
-				nock('http://test/').get(`/appeals/${appealData.appealId}`).reply(200, appealData);
+				nock('http://test/')
+					.get(`/appeals/${appealData.appealId}`)
+					.reply(200, appealData)
+					.persist();
 				nock('http://test/').post(`/appeals/${appealData.appealId}/link-appeal`).reply(200, {
 					childId: appealData.appealId,
 					childRef: appealData.appealReference,
@@ -297,7 +314,10 @@ describe('appeal-details', () => {
 				nock('http://test/')
 					.get(`/appeals/linkable-appeal/${appealReference}`)
 					.reply(200, linkableAppealSummaryHorizon);
-				nock('http://test/').get(`/appeals/${appealData.appealId}`).reply(200, appealData);
+				nock('http://test/')
+					.get(`/appeals/${appealData.appealId}`)
+					.reply(200, appealData)
+					.persist();
 				nock('http://test/').post(`/appeals/${appealData.appealId}/link-legacy-appeal`).reply(200, {
 					childId: null,
 					childRef: '3171066',
@@ -333,7 +353,10 @@ describe('appeal-details', () => {
 				nock('http://test/')
 					.get(`/appeals/linkable-appeal/${appealReference}`)
 					.reply(200, linkableAppealSummaryHorizon);
-				nock('http://test/').get(`/appeals/${appealData.appealId}`).reply(200, appealData);
+				nock('http://test/')
+					.get(`/appeals/${appealData.appealId}`)
+					.reply(200, appealData)
+					.persist();
 				nock('http://test/').post(`/appeals/${appealData.appealId}/link-legacy-appeal`).reply(200, {
 					childId: 5466,
 					childRef: 'TEST-489773',
@@ -824,7 +847,7 @@ describe('appeal-details', () => {
 
 		it('should render an action link to the add linked appeal page in the linked appeals row, if there are no linked appeals', async () => {
 			nock.cleanAll();
-			nock('http://test/').get(`/appeals/${appealData.appealId}`).reply(200, appealData);
+			nock('http://test/').get(`/appeals/${appealData.appealId}`).reply(200, appealData).persist();
 
 			const response = await request.get(`${baseUrl}/${appealData.appealId}`);
 			const element = parseHtml(response.text);

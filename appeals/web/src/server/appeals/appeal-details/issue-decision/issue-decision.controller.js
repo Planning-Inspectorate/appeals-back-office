@@ -1,8 +1,4 @@
-import {
-	getAppealDetailsFromId,
-	postInspectorDecision,
-	postInspectorInvalidReason
-} from './issue-decision.service.js';
+import { postInspectorDecision, postInspectorInvalidReason } from './issue-decision.service.js';
 import logger from '#lib/logger.js';
 import {
 	checkAndConfirmPage,
@@ -69,7 +65,7 @@ const renderIssueDecision = async (request, response) => {
 	const { errors } = request;
 
 	const appealId = request.params.appealId;
-	const appealData = await getAppealDetailsFromId(request.apiClient, appealId);
+	const appealData = request.currentAppeal;
 
 	if (
 		request.session?.inspectorDecision?.appealId &&
@@ -124,7 +120,7 @@ export const postDecisionLetterUpload = async (request, response) => {
 const renderDecisionLetterUpload = async (request, response) => {
 	const { appealId } = request.params;
 	const { errors } = request;
-	const appealData = await getAppealDetailsFromId(request.apiClient, appealId);
+	const appealData = request.currentAppeal;
 	const currentFolder = {
 		id: appealData.decision?.folderId,
 		path: 'appeal_decision/decisionLetter'
@@ -197,7 +193,7 @@ const renderDateDecisionLetter = async (request, response) => {
 	const { errors } = request;
 	const appealId = request.params.appealId;
 
-	const appealData = await getAppealDetailsFromId(request.apiClient, appealId);
+	const appealData = request.currentAppeal;
 	const currentFolder = {
 		id: appealData.decision?.folderId,
 		path: 'appeal_decision/decisionLetter'
@@ -287,9 +283,8 @@ export const postInvalidReason = async (request, response) => {
  */
 const renderInvalidReason = async (request, response) => {
 	const { errors } = request;
-	const appealId = request.params.appealId;
 
-	const appealData = await getAppealDetailsFromId(request.apiClient, appealId);
+	const appealData = request.currentAppeal;
 
 	if (!appealData) {
 		return response.status(404).render('app/404');
@@ -356,7 +351,7 @@ export const postCheckDecision = async (request, response) => {
 export const renderCheckDecision = async (request, response) => {
 	const { errors } = request;
 	const appealId = request.params.appealId;
-	const appealData = await getAppealDetailsFromId(request.apiClient, appealId);
+	const appealData = request.currentAppeal;
 
 	if (!appealData) {
 		return response.render('app/404.njk');
@@ -390,8 +385,7 @@ export const renderCheckDecision = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const getDecisionSent = async (request, response) => {
-	const appealId = request.params.appealId;
-	const appealData = await getAppealDetailsFromId(request.apiClient, appealId);
+	const appealData = request.currentAppeal;
 	const appealIsInvalid = request.session.inspectorDecision.outcome === 'Invalid';
 
 	/** @type {import('./issue-decision.types.js').InspectorDecisionRequest} */
@@ -418,8 +412,7 @@ export const getCheckInvalidDecision = async (request, response) => {
  */
 export const renderCheckInvalidDecision = async (request, response) => {
 	const { errors } = request;
-	const appealId = request.params.appealId;
-	const appealData = await getAppealDetailsFromId(request.apiClient, appealId);
+	const appealData = request.currentAppeal;
 
 	if (!appealData) {
 		return response.render('app/404.njk');

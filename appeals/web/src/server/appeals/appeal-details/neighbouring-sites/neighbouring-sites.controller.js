@@ -1,4 +1,3 @@
-import { getAppealDetailsFromId } from '../appeal-details.service.js';
 import {
 	addNeighbouringSiteCheckAndConfirmPage,
 	addNeighbouringSitePage,
@@ -33,7 +32,7 @@ export const getAddNeighbouringSite = async (request, response) => {
 const renderAddNeighbouringSite = async (request, response) => {
 	const {
 		errors,
-		params: { appealId, source }
+		params: { source }
 	} = request;
 
 	const currentUrl = request.originalUrl;
@@ -41,10 +40,10 @@ const renderAddNeighbouringSite = async (request, response) => {
 	//Removes /neighbouring-sites/change/affected from the route to take us back to origin (ie LPA questionnaire page or appeals details)
 	const origin = currentUrl.split('/').slice(0, -3).join('/');
 
-	const appealsDetails = await getAppealDetailsFromId(request.apiClient, appealId);
+	const appealsDetail = request.currentAppeal;
 
 	const mappedPageContents = addNeighbouringSitePage(
-		appealsDetails,
+		appealsDetail,
 		// @ts-ignore
 		source,
 		origin,
@@ -101,14 +100,14 @@ export const getAddNeighbouringSiteCheckAndConfirm = async (request, response) =
 const renderAddNeighbouringSiteCheckAndConfirm = async (request, response) => {
 	const {
 		errors,
-		params: { appealId, source }
+		params: { source }
 	} = request;
 
 	if (!objectContainsAllKeys(request.session, 'neighbouringSite')) {
 		return response.render('app/500.njk');
 	}
 
-	const appealData = await getAppealDetailsFromId(request.apiClient, appealId);
+	const appealData = request.currentAppeal;
 
 	if (!appealData) {
 		return response.render('app/404.njk');
@@ -192,8 +191,7 @@ export const getManageNeighbouringSites = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 const renderManageNeighbouringSites = async (request, response) => {
-	const { appealId } = request.params;
-	const appealData = await getAppealDetailsFromId(request.apiClient, appealId);
+	const appealData = request.currentAppeal;
 
 	const mappedPageContents = manageNeighbouringSitesPage(appealData);
 
@@ -217,7 +215,7 @@ export const getRemoveNeighbouringSite = async (request, response) => {
 const renderRemoveNeighbouringSite = async (request, response) => {
 	const {
 		errors,
-		params: { appealId, siteId }
+		params: { siteId }
 	} = request;
 
 	const currentUrl = request.originalUrl;
@@ -225,9 +223,9 @@ const renderRemoveNeighbouringSite = async (request, response) => {
 	//Removes /neighbouring-sites/change/affected from the route to take us back to origin (ie LPA questionnaire page or appeals details)
 	const origin = currentUrl.split('/').slice(0, -4).join('/');
 
-	const appealsDetails = await getAppealDetailsFromId(request.apiClient, appealId);
+	const appealDetails = request.currentAppeal;
 
-	const mappedPageContents = removeNeighbouringSitePage(appealsDetails, origin, siteId);
+	const mappedPageContents = removeNeighbouringSitePage(appealDetails, origin, siteId);
 
 	return response.render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContents,
@@ -289,10 +287,10 @@ export const getChangeNeighbouringSite = async (request, response) => {
 const renderChangeNeighbouringSite = async (request, response) => {
 	const {
 		errors,
-		params: { appealId, siteId }
+		params: { siteId }
 	} = request;
 
-	const appealDetails = await getAppealDetailsFromId(request.apiClient, appealId);
+	const appealDetails = request.currentAppeal;
 
 	const mappedPageContents = changeNeighbouringSitePage(
 		appealDetails,
@@ -347,14 +345,14 @@ export const getChangeNeighbouringSiteCheckAndConfirm = async (request, response
 const renderChangeNeighbouringSiteCheckAndConfirm = async (request, response) => {
 	const {
 		errors,
-		params: { appealId, siteId }
+		params: { siteId }
 	} = request;
 
 	if (!objectContainsAllKeys(request.session, 'neighbouringSite')) {
 		return response.render('app/500.njk');
 	}
 
-	const appealData = await getAppealDetailsFromId(request.apiClient, appealId);
+	const appealData = request.currentAppeal;
 
 	if (!appealData) {
 		return response.render('app/404.njk');
@@ -426,12 +424,9 @@ export const getChangeNeighbouringSiteAffected = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 const renderChangeNeighbouringSiteAffected = async (request, response) => {
-	const {
-		errors,
-		params: { appealId }
-	} = request;
+	const { errors } = request;
 
-	const appealData = await getAppealDetailsFromId(request.apiClient, appealId);
+	const appealData = request.currentAppeal;
 
 	const currentUrl = request.originalUrl;
 
@@ -465,7 +460,7 @@ export const postChangeNeighbouringSiteAffected = async (request, response) => {
 	}
 
 	try {
-		const appealData = await getAppealDetailsFromId(request.apiClient, appealId);
+		const appealData = request.currentAppeal;
 		const lpaQuestionnaireId = appealData.lpaQuestionnaireId?.toString();
 
 		//Removes /neighbouring-sites/change/affected from the route to take us back to origin (ie LPA questionnaire page or appeals details)

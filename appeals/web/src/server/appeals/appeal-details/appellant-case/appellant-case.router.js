@@ -9,6 +9,8 @@ import outcomeInvalidRouter from './outcome-invalid/outcome-invalid.router.js';
 import outcomeIncompleteRouter from './outcome-incomplete/outcome-incomplete.router.js';
 import { assertGroupAccess } from '#app/auth/auth.guards.js';
 import { validateAppeal } from '../appeal-details.middleware.js';
+import { assertUserHasPermission } from '#app/auth/auth.guards.js';
+import { permissionNames } from '#environment/permissions.js';
 import {
 	validateCaseFolderId,
 	validateCaseDocumentId
@@ -22,21 +24,67 @@ import siteOwnershipRouter from '../site-ownership/site-ownership.router.js';
 
 const router = createRouter({ mergeParams: true });
 
-router.use('/valid', outcomeValidRouter);
-router.use('/invalid', outcomeInvalidRouter);
-router.use('/incomplete', outcomeIncompleteRouter);
-router.use('/lpa-reference', changeLpaReferenceRouter);
-router.use('/inspector-access', inspectorAccessRouter);
-router.use('/safety-risks', safetyRisksRouter);
-router.use('/service-user', serviceUserRouter);
-router.use('/site-address', siteAddressRouter);
-router.use('/site-ownership', siteOwnershipRouter);
+router.use(
+	'/valid',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	outcomeValidRouter
+);
+router.use(
+	'/invalid',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	outcomeInvalidRouter
+);
+router.use(
+	'/incomplete',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	outcomeIncompleteRouter
+);
+router.use(
+	'/lpa-reference',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	changeLpaReferenceRouter
+);
+router.use(
+	'/inspector-access',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	inspectorAccessRouter
+);
+router.use(
+	'/safety-risks',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	safetyRisksRouter
+);
+router.use(
+	'/service-user',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	serviceUserRouter
+);
+router.use(
+	'/site-address',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	siteAddressRouter
+);
+router.use(
+	'/site-ownership',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	siteOwnershipRouter
+);
 
 router
 	.route('/')
 	.get(validateAppeal, asyncRoute(controller.getAppellantCase))
 	.post(
 		validateAppeal,
+		assertUserHasPermission(permissionNames.updateCase),
 		validators.validateReviewOutcome,
 		assertGroupAccess(config.referenceData.appeals.caseOfficerGroupId),
 		asyncRoute(controller.postAppellantCase)
@@ -44,9 +92,14 @@ router
 
 router
 	.route('/check-your-answers')
-	.get(validateAppeal, asyncRoute(controller.getCheckAndConfirm))
+	.get(
+		validateAppeal,
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncRoute(controller.getCheckAndConfirm)
+	)
 	.post(
 		validateAppeal,
+		assertUserHasPermission(permissionNames.updateCase),
 		assertGroupAccess(config.referenceData.appeals.caseOfficerGroupId),
 		asyncRoute(controller.postCheckAndConfirm)
 	);
@@ -55,6 +108,7 @@ router
 	.route('/add-documents/:folderId')
 	.get(
 		validateAppeal,
+		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		validateCaseDocumentId,
 		asyncRoute(controller.getAddDocuments)
@@ -64,6 +118,7 @@ router
 	.route('/add-documents/:folderId/:documentId')
 	.get(
 		validateAppeal,
+		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		validateCaseDocumentId,
 		asyncRoute(controller.getAddDocumentsVersion)
@@ -71,8 +126,15 @@ router
 
 router
 	.route('/add-document-details/:folderId')
-	.get(validateAppeal, validateCaseFolderId, asyncRoute(controller.getAddDocumentDetails))
+	.get(
+		validateAppeal,
+		assertUserHasPermission(permissionNames.updateCase),
+		validateCaseFolderId,
+		asyncRoute(controller.getAddDocumentDetails)
+	)
 	.post(
+		validateAppeal,
+		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		documentsValidators.validateDocumentDetailsBodyFormat,
 		documentsValidators.validateDocumentDetailsReceivedDatesFields,
@@ -85,8 +147,15 @@ router
 
 router
 	.route('/add-document-details/:folderId/:documentId')
-	.get(validateAppeal, validateCaseFolderId, asyncRoute(controller.getAddDocumentVersionDetails))
+	.get(
+		validateAppeal,
+		assertUserHasPermission(permissionNames.updateCase),
+		validateCaseFolderId,
+		asyncRoute(controller.getAddDocumentVersionDetails)
+	)
 	.post(
+		validateAppeal,
+		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		documentsValidators.validateDocumentDetailsBodyFormat,
 		documentsValidators.validateDocumentDetailsReceivedDatesFields,
@@ -99,16 +168,33 @@ router
 
 router
 	.route('/manage-documents/:folderId/')
-	.get(validateCaseFolderId, asyncRoute(controller.getManageFolder));
+	.get(
+		assertUserHasPermission(permissionNames.updateCase),
+		validateCaseFolderId,
+		asyncRoute(controller.getManageFolder)
+	);
 
 router
 	.route('/manage-documents/:folderId/:documentId')
-	.get(validateCaseFolderId, validateCaseDocumentId, asyncRoute(controller.getManageDocument));
+	.get(
+		validateAppeal,
+		assertUserHasPermission(permissionNames.updateCase),
+		validateCaseFolderId,
+		validateCaseDocumentId,
+		asyncRoute(controller.getManageDocument)
+	);
 
 router
 	.route('/change-document-details/:folderId/:documentId')
-	.get(validateCaseFolderId, asyncRoute(controller.getChangeDocumentVersionDetails))
+	.get(
+		validateAppeal,
+		assertUserHasPermission(permissionNames.updateCase),
+		validateCaseFolderId,
+		asyncRoute(controller.getChangeDocumentVersionDetails)
+	)
 	.post(
+		validateAppeal,
+		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		documentsValidators.validateDocumentDetailsBodyFormat,
 		documentsValidators.validateDocumentDetailsReceivedDatesFields,
@@ -121,8 +207,16 @@ router
 
 router
 	.route('/manage-documents/:folderId/:documentId/:versionId/delete')
-	.get(validateCaseFolderId, validateCaseDocumentId, asyncRoute(controller.getDeleteDocument))
+	.get(
+		validateAppeal,
+		assertUserHasPermission(permissionNames.updateCase),
+		validateCaseFolderId,
+		validateCaseDocumentId,
+		asyncRoute(controller.getDeleteDocument)
+	)
 	.post(
+		validateAppeal,
+		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		validateCaseDocumentId,
 		documentsValidators.validateDocumentDeleteAnswer,

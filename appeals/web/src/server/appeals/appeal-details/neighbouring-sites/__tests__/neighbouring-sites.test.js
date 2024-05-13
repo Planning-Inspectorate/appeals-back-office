@@ -256,7 +256,7 @@ describe('neighbouring-sites', () => {
 						town: 'Woodton'
 					}
 				});
-			nock('http://test/').get(`/appeals/${appealData.appealId}`).reply(200, appealData);
+			nock('http://test/').get(`/appeals/${appealData.appealId}`).reply(200, appealData).persist();
 			await request.post(`${baseUrl}/1/neighbouring-sites/add/back-office`).send({
 				addressLine1: '1 Grove Cottage',
 				addressLine2: null,
@@ -292,7 +292,7 @@ describe('neighbouring-sites', () => {
 						town: 'Woodton'
 					}
 				});
-			nock('http://test/').get(`/appeals/${appealData.appealId}`).reply(200, appealData);
+			nock('http://test/').get(`/appeals/${appealData.appealId}`).reply(200, appealData).persist();
 			await request
 				.post(`${baseUrl}/1/lpa-questionnaire/2/neighbouring-sites/add/back-office`)
 				.send({
@@ -616,7 +616,7 @@ describe('neighbouring-sites', () => {
 			nock('http://test/').patch(`/appeals/${appealReference}/neighbouring-sites`).reply(200, {
 				siteId: 1
 			});
-			nock('http://test/').get(`/appeals/${appealData.appealId}`).reply(200, appealData);
+			nock('http://test/').get(`/appeals/${appealData.appealId}`).reply(200, appealData).persist();
 
 			await request.post(`${baseUrl}/1/neighbouring-sites/change/site/1`).send({
 				addressLine1: '2 Grove Cottage',

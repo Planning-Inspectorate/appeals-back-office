@@ -42,27 +42,112 @@ router
 		asyncRoute(controller.viewAppealDetails)
 	);
 
-router.use('/:appealId/start-case', startDateRouter);
-router.use('/:appealId/documents', appealDocumentsRouter);
+router.use(
+	'/:appealId/start-case',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	startDateRouter
+);
+router.use(
+	'/:appealId/documents',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	appealDocumentsRouter
+);
 router.use('/:appealId/lpa-questionnaire', lpaQuestionnaireRouter);
 router.use('/:appealId/allocation-details', allocationDetailsRouter);
 router.use('/:appealId/appeal-timetables', appealTimetablesRouter);
 router.use('/:appealId/appellant-case', appellantCaseRouter);
-router.use('/:appealId/site-visit', siteVisitRouter);
-router.use('/:appealId/assign-user', assignUserRouter);
-router.use('/:appealId/unassign-user', unassignUserRouter);
-router.use('/:appealId/assign-new-user', assignNewUserRouter);
-router.use('/:appealId/change-appeal-details', changePageRouter);
-router.use('/:appealId/issue-decision', issueDecisionRouter);
-router.use('/:appealId/change-appeal-type', appealTypeChangeRouter);
-router.use('/:appealId/linked-appeals', linkedAppealsRouter);
-router.use('/:appealId/other-appeals', otherAppealsRouter);
+router.use(
+	'/:appealId/site-visit',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	siteVisitRouter
+);
+router.use(
+	'/:appealId/assign-user',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	assignUserRouter
+);
+router.use(
+	'/:appealId/unassign-user',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	unassignUserRouter
+);
+router.use(
+	'/:appealId/assign-new-user',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	assignNewUserRouter
+);
+router.use(
+	'/:appealId/change-appeal-details',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	changePageRouter
+);
+router.use(
+	'/:appealId/issue-decision',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	issueDecisionRouter
+);
+router.use(
+	'/:appealId/change-appeal-type',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	appealTypeChangeRouter
+);
+router.use(
+	'/:appealId/linked-appeals',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	linkedAppealsRouter
+);
+router.use(
+	'/:appealId/other-appeals',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	otherAppealsRouter
+);
 router.use('/:appealId/audit', auditRouter);
-router.use('/:appealId/neighbouring-sites', neighbouringSitesRouter);
-router.use('/:appealId/costs', costsRouter);
+router.use(
+	'/:appealId/neighbouring-sites',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	neighbouringSitesRouter
+);
+router.use(
+	'/:appealId/costs',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	costsRouter
+);
 
-router.use('/:appealId/service-user', serviceUserRouter);
-router.use('/:appealId/lpa-reference', changeLpaReferenceRouter);
-router.use('/:appealId/inspector-access', changeInspectorAccessRouter);
-router.use('/:appealId/safety-risks', safetyRisksRouter);
+router.use(
+	'/:appealId/service-user',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	serviceUserRouter
+);
+router.use(
+	'/:appealId/lpa-reference',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	changeLpaReferenceRouter
+);
+router.use(
+	'/:appealId/inspector-access',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	changeInspectorAccessRouter
+);
+router.use(
+	'/:appealId/safety-risks',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	safetyRisksRouter
+);
 export default router;
