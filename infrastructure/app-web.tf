@@ -37,7 +37,7 @@ module "app_web" {
     ApplicationInsightsAgent_EXTENSION_VERSION = "~3"
     NODE_ENV                                   = var.apps_config.node_environment
 
-    API_HOST     = module.app_api.default_site_hostname
+    API_HOST     = "https://${module.app_api.default_site_hostname}"
     APP_HOSTNAME = var.web_app_domain
 
     # auth
