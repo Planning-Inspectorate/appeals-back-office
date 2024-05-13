@@ -7,7 +7,7 @@ resource "azurerm_mssql_server" "secondary" {
   resource_group_name           = azurerm_resource_group.secondary.name
   location                      = module.secondary_region.location
   version                       = "12.0"
-  administrator_login           = random_id.sql_admin_username.id
+  administrator_login           = random_id.sql_admin_username.b64_url
   administrator_login_password  = random_password.sql_admin_password.result
   minimum_tls_version           = "1.2"
   public_network_access_enabled = var.sql_config.public_network_access_enabled

@@ -6,7 +6,7 @@ resource "azurerm_mssql_server" "primary" {
   resource_group_name           = azurerm_resource_group.primary.name
   location                      = module.primary_region.location
   version                       = "12.0"
-  administrator_login           = random_id.sql_admin_username.id
+  administrator_login           = random_id.sql_admin_username.b64_url
   administrator_login_password  = random_password.sql_admin_password.result
   minimum_tls_version           = "1.2"
   public_network_access_enabled = var.sql_config.public_network_access_enabled
@@ -75,7 +75,7 @@ resource "azurerm_key_vault_secret" "sql_admin_connection_string" {
     [
       "sqlserver://${azurerm_mssql_server.primary.fully_qualified_domain_name}",
       "database=${azurerm_mssql_database.primary.name}",
-      "user=${random_id.sql_admin_username.id}",
+      "user=${random_id.sql_admin_username.b64_url}",
       "password=${random_password.sql_admin_password.result}",
       "trustServerCertificate=false"
     ]
@@ -94,7 +94,7 @@ resource "azurerm_key_vault_secret" "sql_app_connection_string" {
     [
       "sqlserver://${azurerm_mssql_server.primary.fully_qualified_domain_name}",
       "database=${azurerm_mssql_database.primary.name}",
-      "user=${random_id.sql_app_username.id}",
+      "user=${random_id.sql_app_username.b64_url}",
       "password=${random_password.sql_app_password.result}",
       "trustServerCertificate=false"
     ]
