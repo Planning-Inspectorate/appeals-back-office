@@ -66,3 +66,10 @@ resource "azurerm_role_assignment" "app_api_secrets_user" {
   role_definition_name = "Key Vault Secrets User"
   principal_id         = module.app_api.principal_id
 }
+
+## RBAC for service bus
+resource "azurerm_role_assignment" "app_api_service_bus" {
+  scope                = azurerm_servicebus_namespace.main.id
+  role_definition_name = "Azure Service Bus Data Sender"
+  principal_id         = module.app_api.principal_id
+}
