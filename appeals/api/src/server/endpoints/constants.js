@@ -79,6 +79,7 @@ export const ERROR_DOCUMENT_NAME_ALREADY_EXISTS = 'a document with the same name
 export const ERROR_FAILED_TO_GET_DATA = 'failed to get data';
 export const ERROR_FAILED_TO_SAVE_DATA = 'failed to save data';
 export const ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL = 'failed to send notification email';
+export const ERROR_GOV_NOTIFY_CONNECTIVITY = 'Gov notify connectivity. Error Code: {replacement0}';
 export const ERROR_NO_RECIPIENT_EMAIL = 'recipient email not found';
 export const ERROR_GOV_NOTIFY_API_KEY_NOT_SET = 'gov notify api key is not set';
 export const ERROR_INVALID_APPEAL_TYPE = `must be one of ${APPEAL_TYPE_SHORTHAND_FPA}, ${APPEAL_TYPE_SHORTHAND_HAS}`;
