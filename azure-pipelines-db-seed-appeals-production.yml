@@ -38,20 +38,7 @@ jobs:
               parameters:
                 script: npm ci
                 nodeVersion: 18
-            # run against existing DB instance (to be removed)
             - template: steps/azure_auth.yml@templates
-            - template: steps/azure_get_secrets.yml@templates
-              parameters:
-                secrets:
-                  - name: back-office-appeals-sql-connection-string
-                    variable: DATABASE_URL
-            - template: steps/node_script.yml@templates
-              parameters:
-                environmentVariables:
-                  DATABASE_URL: $(DATABASE_URL)
-                script: npm run db:seed:prod
-                workingDirectory: $(Build.Repository.LocalPath)/appeals/api
-            # run against new DB instance
             - template: steps/azure_get_secrets.yml@templates
               parameters:
                 keyVaultName: pins-kv-appeals-bo-prod

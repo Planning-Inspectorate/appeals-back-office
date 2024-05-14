@@ -19,13 +19,6 @@ parameters:
     displayName: Deploy Function - Appeals Document Processing
     type: boolean
     default: true
-  - name: region
-    displayName: Region
-    type: string
-    values:
-      - UK South
-      - UK West
-    default: UK South
   - name: schemaMigration
     displayName: Run Database Migration
     type: boolean
@@ -59,43 +52,21 @@ extends:
           - name: Deploy Appeals API
             condition: eq(${{ parameters.deployAppealsAPI }}, 'true')
             steps:
-              # deploy to existing app (to be removed)
               - ${{ if eq(parameters.schemaMigration, true) }}:
-                  - checkout: self
-                  - template: ../steps/azure_get_secrets.yml
-                    parameters:
-                      secrets:
-                        - name: back-office-appeals-sql-connection-string
-                          variable: DATABASE_URL
-                  - template: ../steps/node_script.yml
-                    parameters:
-                      nodeVersion: 18
-                      environmentVariables:
-                        DATABASE_URL: $(DATABASE_URL)
-                      script: npm run db:migrate:prod
-                      workingDirectory: $(Build.Repository.LocalPath)/appeals/api
-              - template: ../steps/azure_web_app_deploy.yml
-                parameters:
-                  appName: pins-app-back-office-appeals-api-$(ENVIRONMENT)-$(REGION_SHORT)-001
-                  appResourceGroup: $(legacyResourceGroup)
-                  azurecrName: $(azurecrName)
-                  repository: back-office/back-office-appeals-api
-              # deploy to new app
-              - ${{ if eq(parameters.schemaMigration, true) }}:
-                  # - checkout: self
-                  - template: ../steps/azure_get_secrets.yml
-                    parameters:
-                      keyVaultName: pins-kv-appeals-bo-$(ENVIRONMENT)
-                      secrets:
-                        - name: appeals-bo-sql-admin-connection-string
-                          variable: appeals-bo-sql-admin-connection-string
-                  - template: ../steps/node_script.yml
-                    parameters:
-                      nodeVersion: 18
-                      environmentVariables:
-                        DATABASE_URL: $(appeals-bo-sql-admin-connection-string)
-                      script: npm run db:migrate:prod
-                      workingDirectory: $(Build.Repository.LocalPath)/appeals/api
+                - checkout: self
+                - template: ../steps/azure_get_secrets.yml
+                  parameters:
+                    keyVaultName: pins-kv-appeals-bo-$(ENVIRONMENT)
+                    secrets:
+                      - name: appeals-bo-sql-admin-connection-string
+                        variable: appeals-bo-sql-admin-connection-string
+                - template: ../steps/node_script.yml
+                  parameters:
+                    nodeVersion: 18
+                    environmentVariables:
+                      DATABASE_URL: $(appeals-bo-sql-admin-connection-string)
+                    script: npm run db:migrate:prod
+                    workingDirectory: $(Build.Repository.LocalPath)/appeals/api
               - template: ../steps/azure_web_app_deploy.yml
                 parameters:
                   appName: pins-app-appeals-bo-api-$(ENVIRONMENT)
@@ -105,14 +76,6 @@ extends:
           - name: Deploy Appeals Web
             condition: eq(${{ parameters.deployAppealsWeb }}, 'true')
             steps:
-              # deploy to existing app (to be removed)
-              - template: ../steps/azure_web_app_deploy.yml
-                parameters:
-                  appName: pins-app-back-office-appeals-wfe-$(ENVIRONMENT)-$(REGION_SHORT)-001
-                  appResourceGroup: $(legacyResourceGroup)
-                  azurecrName: $(azurecrName)
-                  repository: back-office/appeals-web
-              # deploy to new app
               - template: ../steps/azure_web_app_deploy.yml
                 parameters:
                   appName: pins-app-appeals-bo-web-$(ENVIRONMENT)
@@ -125,12 +88,6 @@ extends:
               sourcePipeline: Build
             condition: eq(${{ parameters.deployFunctionAppealsCasedataImport }}, 'true')
             steps:
-              # deploy to existing function (to be removed)
-              - template: ../steps/function_app_deploy.yml
-                parameters:
-                  appName: pins-func-bo-appeals-casedata-import-$(ENVIRONMENT)-$(REGION_SHORT)-001
-                  resourceGroup: $(legacyResourceGroup)
-              # deploy to new function
               - template: ../steps/function_app_deploy.yml
                 parameters:
                   appName: pins-func-appeals-bo-casedata-import-$(ENVIRONMENT)
@@ -141,12 +98,6 @@ extends:
               sourcePipeline: Build
             condition: eq(${{ parameters.deployFunctionAppealsUserImport }}, 'true')
             steps:
-              # deploy to existing function (to be removed)
-              - template: ../steps/function_app_deploy.yml
-                parameters:
-                  appName: pins-func-bo-appeals-user-import-$(ENVIRONMENT)-$(REGION_SHORT)-001
-                  resourceGroup: $(legacyResourceGroup)
-              # deploy to new function
               - template: ../steps/function_app_deploy.yml
                 parameters:
                   appName: pins-func-appeals-bo-user-import-$(ENVIRONMENT)
@@ -157,12 +108,6 @@ extends:
               sourcePipeline: Build
             condition: eq(${{ parameters.deployFunctionAppealsDocProcessing }}, 'true')
             steps:
-              # deploy to existing function (to be removed)
-              - template: ../steps/function_app_deploy.yml
-                parameters:
-                  appName: pins-func-bo-appeals-doc-processing-$(ENVIRONMENT)-$(REGION_SHORT)-001
-                  resourceGroup: $(legacyResourceGroup)
-              # deploy to new function
               - template: ../steps/function_app_deploy.yml
                 parameters:
                   appName: pins-func-appeals-bo-doc-processing-$(ENVIRONMENT)
