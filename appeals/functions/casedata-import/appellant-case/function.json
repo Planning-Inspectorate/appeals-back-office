@@ -5,7 +5,7 @@
 			"type": "serviceBusTrigger",
 			"direction": "in",
 			"topicName": "appeal-fo-appellant-submission",
-			"subscriptionName": "fo-appellant-submission-subscription",
+			"subscriptionName": "appeal-fo-appellant-submission-bo-sub",
 			"connection": "ServiceBusConnection"
 		}
 	]
