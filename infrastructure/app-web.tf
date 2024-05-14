@@ -65,6 +65,12 @@ module "app_web" {
 
     # integration
     HORIZON_APPEAL_BASE_URL = var.apps_config.integrations.horizon_web_url
+
+    # retries
+    RETRY_MAX_ATTEMPTS = "3"
+    # got default retry codes
+    # https://github.com/sindresorhus/got/blob/main/documentation/7-retry.md
+    RETRY_STATUS_CODES = "408,413,429,500,502,503,504,521,522,524"
   }
 
   providers = {
