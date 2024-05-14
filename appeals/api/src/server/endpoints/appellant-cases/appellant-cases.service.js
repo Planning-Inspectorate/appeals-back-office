@@ -4,7 +4,6 @@ import {
 	isOutcomeValid
 } from '#utils/check-validation-outcome.js';
 import { broadcastAppealState } from '#endpoints/integrations/integrations.service.js';
-import logger from '#utils/logger.js';
 
 import {
 	AUDIT_TRAIL_SUBMISSION_INCOMPLETE,
@@ -54,15 +53,6 @@ const updateAppellantCaseValidationOutcome = async (
 	const { appealStatus, appealType, id: appealId } = appeal;
 	const { appealDueDate, incompleteReasons, invalidReasons } = data;
 
-	let recipientEmail;
-	if (isOutcomeValid(validationOutcome.name)) {
-		recipientEmail = appeal.agent?.email || appeal.appellant?.email;
-
-		if (!recipientEmail) {
-			throw new Error(ERROR_NO_RECIPIENT_EMAIL);
-		}
-	}
-
 	await appellantCaseRepository.updateAppellantCaseValidationOutcome({
 		appellantCaseId,
 		validationOutcomeId: validationOutcome.id,
@@ -88,6 +78,10 @@ const updateAppellantCaseValidationOutcome = async (
 	}
 
 	if (isOutcomeValid(validationOutcome.name)) {
+		const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
+		if (!recipientEmail) {
+			throw new Error(ERROR_NO_RECIPIENT_EMAIL);
+		}
 		try {
 			await notifyClient.sendEmail(config.govNotify.template.appealConfirmed, recipientEmail, {
 				appeal_reference_number: appeal.reference,
@@ -95,7 +89,6 @@ const updateAppellantCaseValidationOutcome = async (
 			});
 		} catch (error) {
 			if (error) {
-				logger.error(error);
 				throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
 			}
 		}
