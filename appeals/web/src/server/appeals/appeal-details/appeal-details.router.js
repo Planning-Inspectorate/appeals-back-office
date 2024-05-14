@@ -112,7 +112,8 @@ router.use(
 	assertUserHasPermission(permissionNames.updateCase),
 	otherAppealsRouter
 );
-router.use('/:appealId/audit', auditRouter);
+router.use('/:appealId/audit', validateAppeal, auditRouter);
+
 router.use(
 	'/:appealId/neighbouring-sites',
 	validateAppeal,
