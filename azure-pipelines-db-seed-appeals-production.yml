@@ -52,7 +52,7 @@ jobs:
                 script: npm run db:seed:prod
                 workingDirectory: $(Build.Repository.LocalPath)/appeals/api
             # run against new DB instance
-            - template: ../steps/azure_get_secrets.yml
+            - template: steps/azure_get_secrets.yml@templates
               parameters:
                 keyVaultName: pins-kv-appeals-bo-prod
                 secrets:
