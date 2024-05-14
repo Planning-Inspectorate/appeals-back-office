@@ -134,3 +134,29 @@ resource "azurerm_resource_group_template_deployment" "document_storage_malware_
   })
 }
 
+## RBAC for Entra Groups
+# read/write access
+resource "azurerm_role_assignment" "case_officer_documents_access" {
+  scope                = azurerm_storage_container.appeal_documents.resource_manager_id
+  role_definition_name = "Storage Blob Data Contributor"
+  principal_id         = var.apps_config.auth.group_ids.case_officer
+}
+
+resource "azurerm_role_assignment" "inspector_documents_access" {
+  scope                = azurerm_storage_container.appeal_documents.resource_manager_id
+  role_definition_name = "Storage Blob Data Contributor"
+  principal_id         = var.apps_config.auth.group_ids.inspector
+}
+
+# read only access
+resource "azurerm_role_assignment" "cs_team_documents_access" {
+  scope                = azurerm_storage_container.appeal_documents.resource_manager_id
+  role_definition_name = "Storage Blob Data Reader"
+  principal_id         = var.apps_config.auth.group_ids.cs_team
+}
+
+resource "azurerm_role_assignment" "legal_documents_access" {
+  scope                = azurerm_storage_container.appeal_documents.resource_manager_id
+  role_definition_name = "Storage Blob Data Reader"
+  principal_id         = var.apps_config.auth.group_ids.legal
+}
