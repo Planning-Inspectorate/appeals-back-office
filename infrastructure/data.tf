@@ -9,6 +9,13 @@ data "azurerm_virtual_network" "tooling" {
   provider = azurerm.tooling
 }
 
+data "azurerm_virtual_network" "front_office_vnet" {
+  name                = var.common_infra_config.network_name
+  resource_group_name = var.common_infra_config.network_rg
+
+  provider = azurerm.tooling
+}
+
 # these are owned by the "common" stack in the infrastructure-environments repo
 # https://github.com/Planning-Inspectorate/infrastructure-environments/blob/main/app/stacks/uk-west/common/action-group.tf
 data "azurerm_monitor_action_group" "common" {
