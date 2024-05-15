@@ -64,6 +64,14 @@ variable "common_config" {
   })
 }
 
+variable "common_infra_config" {
+  description = "Config for the common infra"
+  type = object({
+    network_name = string
+    network_rg   = string
+  })
+}
+
 variable "docs_domain" {
   description = "Domain name for docs storage account"
   type        = string

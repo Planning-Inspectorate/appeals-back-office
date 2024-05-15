@@ -49,6 +49,22 @@ resource "azurerm_virtual_network_peering" "tooling_to_bo" {
   provider = azurerm.tooling
 }
 
+resource "azurerm_virtual_network_peering" "bo_to_front_office" {
+  name                      = "${local.org}-peer-${local.service_name}-to-front-office-${var.environment}"
+  remote_virtual_network_id = data.azurerm_virtual_network.front_office_vnet.id
+  resource_group_name       = azurerm_virtual_network.main.resource_group_name
+  virtual_network_name      = azurerm_virtual_network.main.name
+}
+
+resource "azurerm_virtual_network_peering" "front_office_to_bo" {
+  name                      = "${local.org}-peer-front-office-to-${local.service_name}-${var.environment}"
+  remote_virtual_network_id = azurerm_virtual_network.main.id
+  resource_group_name       = var.common_infra_config.network_rg
+  virtual_network_name      = var.common_infra_config.network_name
+
+  provider = azurerm.tooling
+}
+
 ## DNS Zones for Azure Services
 ## Private DNS Zones exist in the tooling subscription and are shared
 ## here we link them to the VNet

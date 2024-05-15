@@ -50,6 +50,11 @@ common_config = {
   }
 }
 
+common_infra_config = {
+  vnet_name  = "pins-vnet-common-test-ukw-001"
+  network_rg = "pins-rg-common-test-ukw-001"
+}
+
 docs_domain = "https://back-office-appeals-docs-test.planninginspectorate.gov.uk"
 
 environment = "test"
@@ -86,4 +91,5 @@ vnet_config = {
   secondary_apps_subnet_address_space = "10.15.20.0/24"
   secondary_subnet_address_space      = "10.15.21.0/24"
 }
+
 web_app_domain = "back-office-appeals-test.planninginspectorate.gov.uk"
