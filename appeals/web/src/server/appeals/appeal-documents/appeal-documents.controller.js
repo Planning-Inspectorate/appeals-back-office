@@ -61,7 +61,7 @@ export const renderDocumentUpload = async (
 		_documentType = fileInfo?.latestDocumentVersion.documentType;
 	}
 
-	const mappedPageContent = documentUploadPage(
+	const mappedPageContent = await documentUploadPage(
 		appealId,
 		appealDetails.appealReference,
 		`${currentFolder.id}`,
@@ -71,6 +71,7 @@ export const renderDocumentUpload = async (
 		backButtonUrl,
 		nextPageUrl,
 		isLateEntry,
+		request.session,
 		errors,
 		pageHeadingTextOverride,
 		allowMultipleFiles,

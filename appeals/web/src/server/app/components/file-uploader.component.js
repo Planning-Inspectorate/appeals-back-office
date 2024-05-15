@@ -69,6 +69,8 @@ export async function postDocumentsUpload({ apiClient, params, body, session }, 
 						(file) => file.documentName === document.documentName
 					);
 					const documentWithRowId = { ...document };
+					// BOAT-1277: added ts-ignore as this function will be obsolete after ticket changes are implemented
+					// @ts-ignore
 					documentWithRowId.fileRowId = fileToUpload?.fileRowId || '';
 
 					return documentWithRowId;
@@ -109,11 +111,15 @@ export async function postUploadDocumentVersion({ apiClient, params, body, sessi
 		const fileToUpload = body.document;
 		const documentWithRowId = { ...document };
 
+		// BOAT-1277: added ts-ignore as this function will be obsolete after ticket changes are implemented
+		// @ts-ignore
 		documentWithRowId.fileRowId = fileToUpload?.fileRowId || '';
 
 		return documentWithRowId;
 	});
 	const document = documentsWithRowId[0];
+	// BOAT-1277: added ts-ignore as this function will be obsolete after ticket changes are implemented
+	// @ts-ignore
 	document.fileRowId = body?.document.fileRowId || '';
 
 	return response.send({ ...uploadInfo, documents: documentsWithRowId, accessToken });

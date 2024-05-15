@@ -541,6 +541,59 @@ export function checkAndConfirmPage(
 }
 
 /**
+ * @typedef {Object} FileUploadInfoItem
+ * @property {string} name
+ * @property {string} GUID
+ * @property {string} fileRowId
+ * @property {string} blobStoreUrl
+ * @property {string} mimeType
+ * @property {string} documentType
+ * @property {number} size
+ * @property {string} stage
+ */
+
+/**
+ * @param {string|number} appealId
+ * @param {string} appealReference
+ * @param {string|number} folderId
+ * @param {FileUploadInfoItem[]} fileUploadInfo
+ * @returns {PageContent}
+ */
+export function addDocumentsCheckAndConfirmPage(
+	appealId,
+	appealReference,
+	folderId,
+	fileUploadInfo
+) {
+	/** @type {PageContent} */
+	const pageContent = {
+		title: 'Check answers',
+		backLinkUrl: `/appeals-service/appeal-details/${appealId}/appellant-case/add-documents/${folderId}`,
+		preHeading: `Appeal ${appealShortReference(appealReference)}`,
+		heading: 'Check your answers - add documents test',
+		pageComponents: [
+			{
+				type: 'table',
+				parameters: {
+					head: [{ text: 'name' }, { text: 'GUID' }],
+					rows: fileUploadInfo.map((/** @type {FileUploadInfoItem} */ infoItem) => [
+						{
+							text: infoItem.name
+						},
+						{
+							text: infoItem.GUID
+						}
+					]),
+					firstCellIsHeader: true
+				}
+			}
+		]
+	};
+
+	return pageContent;
+}
+
+/**
  *
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
  * @param {AppellantCaseValidationOutcome|undefined} validationOutcome

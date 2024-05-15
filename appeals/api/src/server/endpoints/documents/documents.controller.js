@@ -105,7 +105,7 @@ const addDocuments = async (req, res) => {
 			)
 		);
 
-		return res.send(getStorageInfo(documentInfo.documents));
+		return res.send();
 	} catch (/** @type {Object<any, any>} */ error) {
 		if (error.code === 'P2002') {
 			return res.status(409).send({

@@ -8,22 +8,24 @@ import { buildErrorListItem, buildProgressMessage, buildRegularListItem } from '
 /**
  * Actions on the client for the file upload process
  *
- * @param {HTMLElement} uploadForm
+ * @param {HTMLElement} container
  * @returns {*}
  */
-const clientActions = (uploadForm) => {
+const clientActions = (container) => {
+	/** @type {HTMLFormElement | null} */
+	const form = container.querySelector('.pins-file-upload form');
 	/** @type {HTMLElement | null} */
-	const uploadButton = uploadForm.querySelector('.pins-file-upload__button');
+	const uploadButton = container.querySelector('.pins-file-upload__button');
 	/** @type {HTMLElement | null} */
-	const uploadCounter = uploadForm.querySelector('.pins-file-upload__counter');
+	const uploadCounter = container.querySelector('.pins-file-upload__counter');
 	/** @type {HTMLElement | null} */
-	const filesRows = uploadForm.querySelector('.pins-file-upload__files-rows');
+	const filesRows = container.querySelector('.pins-file-upload__files-rows');
 	/** @type {HTMLInputElement | null} */
-	const uploadInput = uploadForm.querySelector('input[name="files"]');
+	const uploadInput = container.querySelector('input[name="files"]');
 	/** @type {HTMLElement | null} */
-	const submitButton = uploadForm.querySelector('.pins-file-upload__submit');
+	const submitButton = container.querySelector('.pins-file-upload__submit');
 	/** @type {HTMLElement | null} */
-	const uploadRow = uploadForm.querySelector('.pins-file-upload__upload');
+	const uploadRow = container.querySelector('.pins-file-upload__upload');
 	/** @type {HTMLElement | null} */
 	let dropZone;
 
@@ -46,7 +48,7 @@ const clientActions = (uploadForm) => {
 	 */
 	function onDropZoneDragOver(event) {
 		event.preventDefault();
-		uploadForm
+		container
 			.querySelector('.pins-file-upload__dropzone')
 			?.classList.add('pins-file-upload__dropzone--dragover');
 	}
@@ -56,7 +58,7 @@ const clientActions = (uploadForm) => {
 	 */
 	function onDropZoneDragLeave(event) {
 		event.preventDefault();
-		uploadForm
+		container
 			.querySelector('.pins-file-upload__dropzone')
 			?.classList.remove('pins-file-upload__dropzone--dragover');
 	}
@@ -66,7 +68,7 @@ const clientActions = (uploadForm) => {
 	 */
 	function onDropZoneDrop(event) {
 		event.preventDefault();
-		uploadForm
+		container
 			.querySelector('.pins-file-upload__dropzone')
 			?.classList.remove('pins-file-upload__dropzone--dragover');
 
@@ -76,14 +78,82 @@ const clientActions = (uploadForm) => {
 		}
 
 		updateFilesRows(uploadInput);
+		createFormFieldsForAddedDocuments();
 		updateUploadButton();
 	}
 
 	setupDropzone();
 
-	if (!uploadButton || !uploadInput || !filesRows || !uploadCounter || !submitButton) return;
+	if (!form || !uploadButton || !uploadInput || !filesRows || !uploadCounter || !submitButton)
+		return;
 
 	let globalDataTransfer = new DataTransfer();
+
+	/**
+	 * @typedef {Object} UploadInfo
+	 * @property {any[]} documents
+	 * @property {import('./_server-actions.js').AccessToken} [accessToken]
+	 */
+
+	/** @type {UploadInfo} */
+	const uploadInfo = {
+		documents: [],
+		accessToken: JSON.parse(container.dataset?.accessToken || '')
+	};
+
+	// BOAT-1277:
+	function createFormFieldsForAddedDocuments() {
+		container.querySelectorAll('.document-hidden-field').forEach((field) => field.remove());
+
+		// uploading new version of an existing document (i.e. if documentGUID is present)
+		if (globalDataTransfer.files.length === 1 && container.dataset?.documentId) {
+			// should only be possible to add a single document, so ignore all added files apart from the first
+			// no need for GUID field (server will have it already)
+			updateUploadInfoHiddenField(
+				JSON.stringify({
+					name: globalDataTransfer.files.item(0)?.name || ''
+				})
+			);
+		}
+		// uploading new document(s)
+		else {
+			for (const file of globalDataTransfer.files) {
+				/** @type {FileWithRowId} */
+				const fileWithRowId = file;
+				const guid = window.crypto.randomUUID();
+
+				uploadInfo.documents.push({
+					name: file.name,
+					GUID: guid,
+					fileRowId: fileWithRowId.fileRowId,
+					blobStoreUrl: createBlobStorageUrl(container.dataset?.caseReference, guid, file.name),
+					mimeType: file.type,
+					documentType: container.dataset?.documentType,
+					size: file.size,
+					stage: container.dataset?.documentStage
+				});
+			}
+
+			updateUploadInfoHiddenField(JSON.stringify(uploadInfo.documents));
+		}
+	}
+
+	// BOAT-1277:
+	/**
+	 * @param {any} value
+	 * */
+	function updateUploadInfoHiddenField(value) {
+		document.querySelectorAll('.upload-info-hidden-field').forEach((element) => element.remove());
+
+		const hiddenField = document.createElement('input');
+
+		hiddenField.className = 'upload-info-hidden-field';
+		hiddenField.type = 'hidden';
+		hiddenField.name = 'upload-info';
+		hiddenField.value = value;
+
+		form?.append(hiddenField);
+	}
 
 	/**
 	 * Execute actions after selecting the files to upload
@@ -94,6 +164,7 @@ const clientActions = (uploadForm) => {
 		const { target } = selectEvent;
 
 		updateFilesRows(target);
+		createFormFieldsForAddedDocuments();
 		updateUploadButton();
 	};
 
@@ -128,7 +199,7 @@ const clientActions = (uploadForm) => {
 	 * @returns {{message: string} | null}
 	 */
 	const checkSelectedFile = (selectedFile) => {
-		const allowedMimeTypes = (uploadForm.dataset.allowedTypes || '').split(',');
+		const allowedMimeTypes = (container.dataset.allowedTypes || '').split(',');
 
 		if (selectedFile.name.length > 255) {
 			return { message: 'NAME_SINGLE_FILE' };
@@ -147,7 +218,7 @@ const clientActions = (uploadForm) => {
 	const updateFilesRows = (target) => {
 		const { files: newFiles } = target;
 
-		hideErrors(uploadForm);
+		hideErrors(container);
 
 		const wrongFiles = [];
 
@@ -171,7 +242,7 @@ const clientActions = (uploadForm) => {
 				wrongFiles.push(error);
 			} else {
 				// Process file if no error
-				const existingFileRow = uploadForm.querySelector(`#${CSS.escape(fileRowId)}`);
+				const existingFileRow = container.querySelector(`#${CSS.escape(fileRowId)}`);
 				if (!existingFileRow) {
 					selectedFile.fileRowId = fileRowId;
 					globalDataTransfer.items.add(selectedFile);
@@ -187,7 +258,7 @@ const clientActions = (uploadForm) => {
 			}
 		}
 		if (wrongFiles.length > 0) {
-			showErrors({ message: 'FILE_SPECIFIC_ERRORS', details: wrongFiles }, uploadForm);
+			showErrors({ message: 'FILE_SPECIFIC_ERRORS', details: wrongFiles }, container);
 		}
 		// reset the INPUT value to be able to re-uploade deleted files
 		target.value = '';
@@ -266,7 +337,7 @@ const clientActions = (uploadForm) => {
 			const allRowsId = [...filesRows.children].map((row) => row.id);
 
 			for (const rowId of allRowsId) {
-				const fileRow = uploadForm.querySelector(`#${rowId}`);
+				const fileRow = container.querySelector(`#${rowId}`);
 
 				if (!failedRowIds.has(rowId) && fileRow) {
 					fileRow.remove();
@@ -277,40 +348,44 @@ const clientActions = (uploadForm) => {
 			throw { message: 'FILE_SPECIFIC_ERRORS', details: errors };
 		} else {
 			disableLeavePageWarning();
-			window.location.href = uploadForm.dataset.nextPageUrl || '';
+			//window.location.href = container.dataset.nextPageUrl || '';
+			form.submit();
 		}
 	};
 
 	/**
-		@param {Event} clickEvent
+	 *	@param {Event} clickEvent
 	 */
 	const onSubmit = async (clickEvent) => {
 		clickEvent.preventDefault();
 
-		const { getUploadInfoFromInternalDB, uploadFiles, getVersionUploadInfoFromInternalDB } =
-			serverActions(uploadForm);
+		const {
+			// getUploadInfoFromInternalDB,
+			uploadFiles
+			// getVersionUploadInfoFromInternalDB
+		} = serverActions(container);
 
 		enableLeavePageWarning();
 
 		try {
 			const fileList = await onSubmitValidation();
 
-			buildProgressMessage({ show: true }, uploadForm);
+			buildProgressMessage({ show: true }, container);
 
 			let errors = null;
-			let uploadInfo;
+			// let uploadInfo;
 
-			if (fileList.length === 1 && uploadForm.dataset?.documentId) {
-				uploadInfo = await getVersionUploadInfoFromInternalDB(fileList[0]);
-			} else {
-				uploadInfo = await getUploadInfoFromInternalDB(fileList);
-			}
+			// if (fileList.length === 1 && container.dataset?.documentId) {
+			// 	uploadInfo = await getVersionUploadInfoFromInternalDB(fileList[0]);
+			// } else {
+			// 	uploadInfo = await getUploadInfoFromInternalDB(fileList);
+			// }
 
 			errors = await uploadFiles(fileList, uploadInfo);
 
 			finalizeUpload(errors);
 		} catch (/** @type {*} */ error) {
-			showErrors(error, uploadForm);
+			showErrors(error, container);
 		}
 	};
 
@@ -334,6 +409,18 @@ const clientActions = (uploadForm) => {
 
 	const disableLeavePageWarning = () => {
 		window.removeEventListener('beforeunload', leavePageWarningEventHandler);
+	};
+
+	/**
+	 * @param {string|undefined} caseReference
+	 * @param {string} fileGuid
+	 * @param {string} fileName
+	 * @returns {string}
+	 */
+	const createBlobStorageUrl = (caseReference, fileGuid, fileName) => {
+		if (!caseReference) return '';
+
+		return `appeal/${caseReference}/${fileGuid}/v1/${fileName}`;
 	};
 
 	return { onFileSelect, onSubmitValidation, registerEvents };

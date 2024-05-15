@@ -13,6 +13,7 @@ import usersService from '#appeals/appeal-users/users-service.js';
 import { surnameFirstToFullName } from '#lib/person-name-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import getActiveDirectoryAccessToken from '#lib/active-directory-token.js';
 
 /**
  * @typedef {import('../appeal-details/appeal-details.types.js').WebAppeal} Appeal
@@ -36,13 +37,14 @@ import { addNotificationBannerToSession } from '#lib/session-utilities.js';
  * @param {string} backButtonUrl
  * @param {string|undefined} nextPageUrl
  * @param {boolean} isLateEntry
+ * @param {any} session
  * @param {import('@pins/express').ValidationErrors|undefined} errors
  * @param {string} [pageHeadingTextOverride]
  * @param {boolean} [allowMultipleFiles]
  * @param {string} [documentType]
- * @returns {import('#appeals/appeal-documents/appeal-documents.types.js').DocumentUploadPageParameters}
+ * @returns {Promise<import('#appeals/appeal-documents/appeal-documents.types.js').DocumentUploadPageParameters>}
  */
-export function documentUploadPage(
+export async function documentUploadPage(
 	appealId,
 	appealReference,
 	folderId,
@@ -52,6 +54,7 @@ export function documentUploadPage(
 	backButtonUrl,
 	nextPageUrl,
 	isLateEntry,
+	session,
 	errors,
 	pageHeadingTextOverride,
 	allowMultipleFiles,
@@ -63,13 +66,18 @@ export function documentUploadPage(
 	const pathComponents = folderPath.split('/');
 	const documentStage = pathComponents[0];
 	const documentTypeComputed = documentType || pathComponents[1];
+	const accessToken = await getActiveDirectoryAccessToken(session);
 
 	return {
 		backButtonUrl: backButtonUrl?.replace('{{folderId}}', folderId),
 		appealId,
+		appealReference,
 		folderId: folderId,
 		documentId,
 		useBlobEmulator: config.useBlobEmulator,
+		...(accessToken && {
+			accessToken: JSON.stringify(accessToken)
+		}),
 		blobStorageHost:
 			config.useBlobEmulator === true ? config.blobEmulatorSasUrl : config.blobStorageUrl,
 		blobStorageContainer: config.blobStorageDefaultContainer,
