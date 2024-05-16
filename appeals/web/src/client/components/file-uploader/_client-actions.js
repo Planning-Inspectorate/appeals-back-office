@@ -103,7 +103,8 @@ const clientActions = (container) => {
 
 	// BOAT-1277:
 	function createFormFieldsForAddedDocuments() {
-		container.querySelectorAll('.document-hidden-field').forEach((field) => field.remove());
+		console.log('createFormFieldsForAddedDocuments - globalDataTransfer.files:');
+		console.log(globalDataTransfer.files);
 
 		// uploading new version of an existing document (i.e. if documentGUID is present)
 		if (globalDataTransfer.files.length === 1 && container.dataset?.documentId) {
@@ -117,6 +118,8 @@ const clientActions = (container) => {
 		}
 		// uploading new document(s)
 		else {
+			uploadInfo.documents.length = 0;
+
 			for (const file of globalDataTransfer.files) {
 				/** @type {FileWithRowId} */
 				const fileWithRowId = file;
