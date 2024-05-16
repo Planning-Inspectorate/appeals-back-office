@@ -28,9 +28,14 @@ app.locals = locals;
 app.use((request, response, next) => {
 	const { req, statusCode } = response;
 
-	if (!/((\bfonts\b)|(\bimages\b)|(\bstyles\b)|(\bscripts\b))/.test(req.originalUrl)) {
+	// don't log any HEAD requests, or requests for static assets
+	if (
+		req.method !== 'HEAD' &&
+		!/((\bfonts\b)|(\bimages\b)|(\bstyles\b)|(\bscripts\b))/.test(req.originalUrl)
+	) {
 		pino.info(`[WEB] ${req.method} ${req.originalUrl.toString()} (Response code: ${statusCode})`);
 	}
+
 	next();
 });
 
