@@ -358,7 +358,7 @@ export const getDeleteDocument = async (request, response) => {
 	renderDeleteDocument(
 		request,
 		response,
-		`/appeals-service/appeal-details/${request.params.appealId}/appellant-case/manage-documents/{{folderId}}`
+		`/appeals-service/appeal-details/${request.params.appealId}/appellant-case/manage-documents/{{folderId}}/{{documentId}}`
 	);
 };
 /** @type {import('@pins/express').RequestHandler<Response>} */
@@ -367,6 +367,7 @@ export const postDeleteDocument = async (request, response) => {
 		request,
 		response,
 		`/appeals-service/appeal-details/${request.params.appealId}/appellant-case`,
+		`/appeals-service/appeal-details/${request.params.appealId}/appellant-case/manage-documents/{{folderId}}/{{documentId}}`,
 		`/appeals-service/appeal-details/${request.params.appealId}/appellant-case/add-documents/{{folderId}}`
 	);
 };

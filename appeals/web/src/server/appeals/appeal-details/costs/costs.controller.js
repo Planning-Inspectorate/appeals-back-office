@@ -328,7 +328,8 @@ export const postDeleteCostsDocument = async (request, response) => {
 		request,
 		response,
 		`/appeals-service/appeal-details/${request.params.appealId}`,
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/upload-documents/${currentFolder?.id}/{{documentId}}`
+		`/appeals-service/appeal-details/${request.params.appealId}/costs/${costsCategory}/manage-documents/{{folderId}}/{{documentId}}`,
+		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/select-document-type/{{folderId}}`
 	);
 };
 

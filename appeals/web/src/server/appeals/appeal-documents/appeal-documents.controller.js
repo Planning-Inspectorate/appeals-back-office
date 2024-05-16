@@ -449,13 +449,15 @@ export const renderDeleteDocument = async (request, response, backButtonUrl) => 
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  * @param {string} returnUrl
- * @param {string} uploadNewDocumentVersionUrl
+ * @param {string} cancelUrl
+ * @param {string} uploadNewDocumentUrl
  */
 export const postDocumentDelete = async (
 	request,
 	response,
 	returnUrl,
-	uploadNewDocumentVersionUrl
+	cancelUrl,
+	uploadNewDocumentUrl
 ) => {
 	const {
 		apiClient,
@@ -466,7 +468,7 @@ export const postDocumentDelete = async (
 	} = request;
 
 	if (errors) {
-		return renderDeleteDocument(request, response, returnUrl);
+		return renderDeleteDocument(request, response, cancelUrl);
 	}
 
 	if (!currentFolder) {
@@ -477,19 +479,26 @@ export const postDocumentDelete = async (
 		return response.render('app/500.njk');
 	}
 
-	const returnUrlProcessed = returnUrl?.replace('{{folderId}}', currentFolder.id);
-	const uploadNewDocumentVersionUrlProcessed = uploadNewDocumentVersionUrl
+	const cancelUrlProcessed = cancelUrl
 		?.replace('{{folderId}}', currentFolder.id)
 		.replace('{{documentId}}', documentId);
+	const uploadNewDocumentUrlProcessed = uploadNewDocumentUrl?.replace(
+		'{{folderId}}',
+		currentFolder.id
+	);
 
-	if (!isInternalUrl(returnUrl, request) || !isInternalUrl(uploadNewDocumentVersionUrl, request)) {
+	if (
+		!isInternalUrl(returnUrl, request) ||
+		!isInternalUrl(cancelUrl, request) ||
+		!isInternalUrl(uploadNewDocumentUrl, request)
+	) {
 		return response.status(400).render('errorPageTemplate', {
 			message: 'Invalid redirection attempt detected.'
 		});
 	}
 
 	if (body['delete-file-answer'] === 'no') {
-		return response.redirect(returnUrlProcessed);
+		return response.redirect(cancelUrlProcessed);
 	} else if (body['delete-file-answer'] === 'yes') {
 		await deleteDocument(apiClient, appealId, documentId, versionId);
 		addNotificationBannerToSession(
@@ -497,7 +506,7 @@ export const postDocumentDelete = async (
 			'documentDeleted',
 			Number.parseInt(appealId, 10)
 		);
-		return response.redirect(returnUrlProcessed);
+		return response.redirect(returnUrl);
 	} else if (body['delete-file-answer'] === 'yes-and-upload-another-document') {
 		const fileVersionsInfo = await getFileVersionsInfo(request.apiClient, appealId, documentId);
 
@@ -506,10 +515,12 @@ export const postDocumentDelete = async (
 				fileVersionsInfo?.documentVersion?.filter((version) => version.isDeleted === false).length <
 				2;
 
-			await deleteDocument(apiClient, appealId, documentId, versionId);
-			return response.redirect(
-				deletingOnlyVersion ? returnUrlProcessed : uploadNewDocumentVersionUrlProcessed
-			);
+			if (deletingOnlyVersion) {
+				await deleteDocument(apiClient, appealId, documentId, versionId);
+				return response.redirect(uploadNewDocumentUrlProcessed);
+			} else {
+				return response.render('app/500.njk');
+			}
 		}
 	}
 

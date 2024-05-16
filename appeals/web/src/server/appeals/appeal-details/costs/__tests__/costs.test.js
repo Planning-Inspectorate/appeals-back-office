@@ -1196,7 +1196,7 @@ describe('costs', () => {
 				expect(errorSummaryElement.innerHTML).toContain('Answer must be provided');
 			});
 
-			it(`should not send an API request to delete the document, and should redirect to the case details page, if answer "no" was provided`, async () => {
+			it(`should not send an API request to delete the document, and should redirect to the manage document page, if answer "no" was provided`, async () => {
 				nock('http://test/')
 					.get('/appeals/1/documents/1/versions')
 					.reply(200, documentFileVersionsInfo);
@@ -1208,7 +1208,9 @@ describe('costs', () => {
 					});
 
 				expect(response.statusCode).toBe(302);
-				expect(response.text).toEqual('Found. Redirecting to /appeals-service/appeal-details/1');
+				expect(response.text).toEqual(
+					`Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/manage-documents/1/1`
+				);
 			});
 
 			it(`should send an API request to delete the document, and redirect to the case details page, if answer "yes" was provided`, async () => {
@@ -1226,7 +1228,7 @@ describe('costs', () => {
 				expect(response.text).toEqual('Found. Redirecting to /appeals-service/appeal-details/1');
 			});
 
-			it(`should send an API request to delete the document, and redirect to the upload new document page, if answer "yes, and upload another document" was provided, and there is more than one version of the document`, async () => {
+			it(`should render a 500 page, if answer "yes, and upload another document" was provided, and there is more than one version of the document`, async () => {
 				const multipleVersionsDocument = cloneDeep(documentFileVersionsInfo);
 				multipleVersionsDocument.documentVersion.push(multipleVersionsDocument.documentVersion[0]);
 
@@ -1240,13 +1242,14 @@ describe('costs', () => {
 						'delete-file-answer': 'yes-and-upload-another-document'
 					});
 
-				expect(response.statusCode).toBe(302);
-				expect(response.text).toEqual(
-					`Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/upload-documents/${costsFolder.id}/1`
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain(
+					'Sorry, there is a problem with the service</h1>'
 				);
 			});
 
-			it(`should send an API request to delete the document, and redirect to the case details page, if answer "yes, and upload another document" was provided, and there is only one version of the document`, async () => {
+			it(`should send an API request to delete the document, and redirect to the upload new document version page, if answer "yes, and upload another document" was provided, and there is only one version of the document`, async () => {
 				nock('http://test/')
 					.get('/appeals/1/documents/1/versions')
 					.reply(200, documentFileVersionsInfo);
@@ -1258,7 +1261,9 @@ describe('costs', () => {
 					});
 
 				expect(response.statusCode).toBe(302);
-				expect(response.text).toEqual('Found. Redirecting to /appeals-service/appeal-details/1');
+				expect(response.text).toEqual(
+					`Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/select-document-type/${costsFolder.id}`
+				);
 			});
 		}
 	});
