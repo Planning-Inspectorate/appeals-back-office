@@ -11,6 +11,7 @@ sb_topic_names = {
     appeal           = "appeal"
     document         = "appeal-document"
     document_to_move = "appeal-document-to-move"
+    event            = "appeal-event"
     service_user     = "appeal-service-user"
   }
 }

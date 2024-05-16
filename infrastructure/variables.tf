@@ -106,6 +106,7 @@ variable "sb_topic_names" {
       appeal           = string
       document         = string
       document_to_move = string
+      event            = string
       service_user     = string
     })
   })

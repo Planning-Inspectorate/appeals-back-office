@@ -73,6 +73,12 @@ resource "azurerm_servicebus_topic" "appeal_document" {
   default_message_ttl = var.sb_ttl.default
 }
 
+resource "azurerm_servicebus_topic" "appeal_event" {
+  name                = var.sb_topic_names.events.event
+  namespace_id        = azurerm_servicebus_namespace.main.id
+  default_message_ttl = var.sb_ttl.default
+}
+
 resource "azurerm_servicebus_topic" "service_user" {
   name                = var.sb_topic_names.events.service_user
   namespace_id        = azurerm_servicebus_namespace.main.id
