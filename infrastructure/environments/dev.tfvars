@@ -12,6 +12,8 @@ apps_config = {
       cs_team      = "455cbf03-f92f-4357-8daa-9f513b21fb73"
       inspector    = "0724c372-098d-4eef-acfb-bc85cd483dd1"
       legal        = "369caed5-fe22-445e-8cdc-8b2f6746afc7"
+      pads         = "5afda392-73c5-4c18-a76f-7e3b1933813c"
+      read_only    = "60acabaa-6ac9-4462-828a-b79adc3d802c"
     }
   }
 
