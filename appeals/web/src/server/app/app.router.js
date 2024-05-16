@@ -5,7 +5,12 @@ import asyncRoute from '#lib/async-route.js';
 import authRouter from './auth/auth.router.js';
 import appealsRouter from '../appeals/appeals.router.js';
 import { installAuthMock } from '#testing/app/mocks/auth.js';
-import { handleHeathCheck, viewHomepage, viewUnauthenticatedError } from './app.controller.js';
+import {
+	handleHeathCheck,
+	handleHeadHealthCheck,
+	viewHomepage,
+	viewUnauthenticatedError
+} from './app.controller.js';
 import { handleSignout } from './auth/auth.controller.js';
 import { assertIsAuthenticated } from './auth/auth.guards.js';
 import {
@@ -30,6 +35,7 @@ router.use(authRouter);
 
 // Unauthenticated routes
 
+router.route('/').head(handleHeadHealthCheck); // used by Front Door health check
 router.route('/unauthenticated').get(viewUnauthenticatedError);
 router.route('/health-check').get(handleHeathCheck);
 

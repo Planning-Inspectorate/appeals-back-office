@@ -28,6 +28,12 @@ export const viewHomepage = async (request, response) => {
 };
 
 /** @type {import('express').RequestHandler} */
+export function handleHeadHealthCheck(_, response) {
+	// no-op - HEAD mustn't return a body
+	response.sendStatus(200);
+}
+
+/** @type {import('express').RequestHandler} */
 export function handleHeathCheck(_, response) {
 	response.send('OK');
 }
