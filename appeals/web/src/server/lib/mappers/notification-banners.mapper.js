@@ -162,6 +162,11 @@ export const notificationBannerDefinitions = {
 		type: 'success',
 		pages: ['lpaQuestionnaire'],
 		text: 'Correct appeal type (LPA response) has been updated'
+	},
+	lpaqDueDateUpdated: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'LPA questionnaire due date changed'
 	}
 };
 

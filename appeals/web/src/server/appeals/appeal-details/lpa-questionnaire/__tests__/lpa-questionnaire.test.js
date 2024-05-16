@@ -1491,7 +1491,7 @@ describe('LPA Questionnaire review', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 		});
 
-		it('should re-render the document details page with the expected error message if receivedDate is a date in the future', async () => {
+		it('should re-render the document details page with the expected error message if receivedDate is in the future', async () => {
 			const futureDate = addDays(new Date(), 1);
 			const response = await request.post(`${baseUrl}/add-document-details/1`).send({
 				items: [
