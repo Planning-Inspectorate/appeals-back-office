@@ -236,9 +236,7 @@ export const createDateInputDateInFutureValidator = (
 			})
 			.withMessage(
 				capitalize(
-					`${
-						(messageFieldNamePrefix && messageFieldNamePrefix + ' ') || ''
-					}must be a date in the future`
+					`${(messageFieldNamePrefix && messageFieldNamePrefix + ' ') || ''}must be in the future`
 				)
 			)
 	);

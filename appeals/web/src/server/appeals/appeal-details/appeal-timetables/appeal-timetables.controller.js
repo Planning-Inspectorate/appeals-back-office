@@ -4,9 +4,9 @@ import { setAppealTimetables } from './appeal-timetables.service.js';
 import {
 	routeToObjectMapper,
 	mapUpdateDueDatePage,
-	mapConfirmationPage,
 	apiErrorMapper
 } from './appeal-timetables.mapper.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 
 /**
  *
@@ -99,10 +99,9 @@ const processUpdateDueDate = async (request, response) => {
 				return response.render('app/500.njk');
 			}
 		}
+		addNotificationBannerToSession(request.session, 'lpaqDueDateUpdated', appealId);
 
-		return response.redirect(
-			`/appeals-service/appeal-details/${appealId}/appeal-timetables/${timetableType}/confirmation`
-		);
+		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {
 		logger.error(
 			error,
@@ -110,37 +109,6 @@ const processUpdateDueDate = async (request, response) => {
 		);
 
 		return response.render('app/500.njk');
-	}
-};
-
-/**
- *
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- */
-const renderConfirmationPage = async (request, response) => {
-	const { appealId, appealReference } = request.currentAppeal;
-	const { timetableType } = request.params;
-
-	if (!appealId || !appealReference) {
-		return response.render('app/500.njk');
-	}
-
-	const appealDetails = request.currentAppeal;
-	const timetableProperty = routeToObjectMapper[timetableType];
-
-	const pageContent = mapConfirmationPage(
-		appealDetails?.appealTimetable,
-		timetableProperty,
-		appealDetails
-	);
-
-	if (!pageContent) {
-		return response.render('app/500.njk');
-	} else {
-		response.render('appeals/confirmation.njk', {
-			pageContent
-		});
 	}
 };
 
@@ -152,9 +120,4 @@ export const getDueDate = async (request, response) => {
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const postDueDate = async (request, response) => {
 	processUpdateDueDate(request, response);
-};
-
-/** @type {import('@pins/express').RequestHandler<Response>}  */
-export const getConfirmation = async (request, response) => {
-	renderConfirmationPage(request, response);
 };
