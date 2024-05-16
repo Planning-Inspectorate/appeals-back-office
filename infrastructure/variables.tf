@@ -22,6 +22,8 @@ variable "apps_config" {
         cs_team      = string
         inspector    = string
         legal        = string
+        pads         = string
+        read_only    = string
       })
     })
 

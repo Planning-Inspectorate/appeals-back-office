@@ -45,6 +45,8 @@ module "app_web" {
     APPEALS_CS_TEAM_GROUP_ID      = var.apps_config.auth.group_ids.cs_team
     APPEALS_INSPECTOR_GROUP_ID    = var.apps_config.auth.group_ids.inspector
     APPEALS_LEGAL_TEAM_GROUP_ID   = var.apps_config.auth.group_ids.legal
+    APPEALS_PADS_GROUP_ID         = var.apps_config.auth.group_ids.pads
+    APPEALS_READ_ONLY_GROUP_ID    = var.apps_config.auth.group_ids.read_only
     AUTH_CLIENT_ID                = var.apps_config.auth.client_id
     AUTH_CLIENT_SECRET            = local.key_vault_refs["appeals-bo-client-secret"]
     AUTH_CLOUD_INSTANCE_ID        = "https://login.microsoftonline.com"
