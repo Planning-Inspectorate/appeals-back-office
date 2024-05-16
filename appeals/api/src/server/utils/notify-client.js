@@ -65,6 +65,9 @@ class NotifyClient {
 				reference: null
 			});
 		} catch (error) {
+			if (config.NODE_ENV !== NODE_ENV_PRODUCTION) {
+				logger.error(error);
+			}
 			// @ts-ignore
 			if (
 				typeof error === 'object' &&
