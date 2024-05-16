@@ -11,6 +11,8 @@ import {
 import { formatFolder } from './documents.formatter.js';
 import documentRedactionStatusRepository from '#repositories/document-redaction-status.repository.js';
 import { ERROR_NOT_FOUND, STATUSES, CONFIG_APPEAL_STAGES } from '#endpoints/constants.js';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
+import { EventType } from '@pins/event-client';
 
 /** @typedef {import('../appeals.js').RepositoryGetByIdResultItem} RepositoryResult */
 /** @typedef {import('@pins/appeals.api').Schema.Document} Document */
@@ -69,6 +71,12 @@ export const addDocumentsToAppeal = async (upload, appeal) => {
 		appeal.appealStatus[0].status,
 		documentsToSendToDatabase
 	);
+
+	for (const document of documentsCreated) {
+		if (document?.documentGuid) {
+			await broadcasters.broadcastDocument(document?.documentGuid, EventType.Create);
+		}
+	}
 
 	const documentsToAddToBlobStorage = mapDocumentsForBlobStorage(
 		documentsCreated,
@@ -172,6 +180,9 @@ export const addVersionToDocument = async (upload, appeal, document) => {
 			documents: []
 		};
 	}
+
+	await broadcasters.broadcastDocument(document.guid, EventType.Update);
+
 	const documentsToAddToBlobStorage = mapDocumentsForBlobStorage(
 		[documentVersionCreated],
 		appeal.reference,

@@ -1,5 +1,5 @@
 import lpaQuestionnaireRepository from '#repositories/lpa-questionnaire.repository.js';
-import { broadcastAppealState } from '#endpoints/integrations/integrations.service.js';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { recalculateDateIfNotBusinessDay } from '#utils/business-days.js';
 import { isOutcomeIncomplete } from '#utils/check-validation-outcome.js';
 import transitionState from '#state/transition-state.js';
@@ -75,7 +75,7 @@ const updateLPAQuestionaireValidationOutcome = async ({
 		});
 	}
 
-	await broadcastAppealState(appealId);
+	await broadcasters.broadcastAppeal(appealId);
 
 	return timetable?.lpaQuestionnaireDueDate;
 };

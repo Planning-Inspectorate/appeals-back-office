@@ -1,7 +1,7 @@
 import { ERROR_NOT_FOUND } from '#endpoints/constants.js';
 import neighbouringSitesRepository from '#repositories/neighbouring-sites.repository.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
-import { broadcastAppealState } from '#endpoints/integrations/integrations.service.js';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import {
 	AUDIT_TRAIL_ADDRESS_ADDED,
 	AUDIT_TRAIL_ADDRESS_UPDATED,
@@ -36,7 +36,7 @@ export const addNeighbouringSite = async (req, res) => {
 			details: AUDIT_TRAIL_ADDRESS_ADDED
 		});
 
-		await broadcastAppealState(appeal.id);
+		await broadcasters.broadcastAppeal(appeal.id);
 	}
 
 	return res.send({
@@ -74,7 +74,7 @@ export const updateNeighbouringSite = async (req, res) => {
 		details: AUDIT_TRAIL_ADDRESS_UPDATED
 	});
 
-	await broadcastAppealState(appeal.id);
+	await broadcasters.broadcastAppeal(appeal.id);
 	return res.send({
 		siteId
 	});
@@ -101,7 +101,7 @@ export const removeNeighbouringSite = async (req, res) => {
 		details: AUDIT_TRAIL_ADDRESS_REMOVED
 	});
 
-	await broadcastAppealState(appeal.id);
+	await broadcasters.broadcastAppeal(appeal.id);
 	return res.send({
 		siteId
 	});

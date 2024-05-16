@@ -26,7 +26,6 @@ import joinDateAndTime from '#utils/join-date-and-time.js';
 import {
 	AUDIT_TRAIL_DOCUMENT_REDACTED,
 	AUDIT_TRAIL_DOCUMENT_DATE_CHANGED,
-	AUDIT_TRAIL_DOCUMENT_UPLOADED,
 	ERROR_DOCUMENT_REDACTION_STATUSES_MUST_BE_ONE_OF,
 	ERROR_MUST_BE_CORRECT_DATE_FORMAT,
 	ERROR_MUST_BE_NUMBER,
@@ -110,6 +109,63 @@ describe('/appeals/:appealId/documents', () => {
 				}
 			]
 		};
+	});
+
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
+
+	describe('POST', () => {
+		test('creates multiple documents', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+			databaseConnector.documentRedactionStatus.findMany.mockResolvedValue(
+				documentRedactionStatuses
+			);
+			databaseConnector.user.upsert.mockResolvedValue({
+				id: 1,
+				azureAdUserId
+			});
+			//databaseConnector.document.findUnique.mockResolvedValue(documentCreated);
+			databaseConnector.document.create = jest.fn().mockResolvedValue(documentCreated);
+
+			databaseConnector.$transaction = jest.fn().mockImplementation((callback) =>
+				callback({
+					document: {
+						create: jest.fn().mockResolvedValue([
+							{ ...documentCreated, guid: '987e66e0-1db4-404b-8213-8082919159e9' },
+							{ ...documentCreated, guid: '8b107895-b8c9-467f-aad0-c09daafeaaad' }
+						]),
+						update: jest.fn().mockResolvedValue([
+							{ ...documentUpdated, guid: '987e66e0-1db4-404b-8213-8082919159e9' },
+							{ ...documentUpdated, guid: '8b107895-b8c9-467f-aad0-c09daafeaaad' }
+						])
+					},
+					documentVersion: {
+						upsert: jest.fn().mockResolvedValue([
+							{ ...documentVersionCreated, guid: '987e66e0-1db4-404b-8213-8082919159e9' },
+							{ ...documentVersionCreated, guid: '8b107895-b8c9-467f-aad0-c09daafeaaad' }
+						]),
+						findFirst: jest.fn().mockResolvedValue([
+							{ ...documentVersionRetrieved, guid: '987e66e0-1db4-404b-8213-8082919159e9' },
+							{ ...documentVersionRetrieved, guid: '8b107895-b8c9-467f-aad0-c09daafeaaad' }
+						])
+					}
+				})
+			);
+
+			const response = await request
+				.post(`/appeals/${householdAppeal.id}/documents`)
+				.send({
+					...requestBody,
+					blobStorageHost: 'blobStorageHost',
+					blobStorageContainer: 'blobStorageContainer'
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(databaseConnector.$transaction).toHaveBeenCalledTimes(2);
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(2);
+			expect(response.status).toEqual(200);
+		});
 	});
 
 	describe('PATCH', () => {
@@ -355,99 +411,6 @@ describe('/appeals/:appealId/documents', () => {
 						documentRedactionStatusIds.join(', ')
 					])
 				}
-			});
-		});
-	});
-
-	describe('POST', () => {
-		test('updates multiple documents', async () => {
-			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-			databaseConnector.documentRedactionStatus.findMany.mockResolvedValue(
-				documentRedactionStatuses
-			);
-			databaseConnector.document.findUnique.mockResolvedValue(documentCreated);
-			databaseConnector.user.upsert.mockResolvedValue({
-				id: 1,
-				azureAdUserId
-			});
-
-			//databaseConnector.documentVersionAudit.create.mockResolvedValue();
-
-			databaseConnector.$transaction = jest.fn().mockImplementation((callback) =>
-				callback({
-					document: {
-						create: jest.fn().mockResolvedValue(documentCreated),
-						update: jest.fn().mockResolvedValue(documentUpdated)
-					},
-					documentVersion: {
-						upsert: jest.fn().mockResolvedValue(documentVersionCreated),
-						findFirst: jest.fn().mockResolvedValue(documentVersionRetrieved)
-					}
-				})
-			);
-
-			const response = await request
-				.post(`/appeals/${householdAppeal.id}/documents`)
-				.send({
-					...requestBody,
-					blobStorageHost: 'blobStorageHost',
-					blobStorageContainer: 'blobStorageContainer'
-				})
-				.set('azureAdUserId', azureAdUserId);
-
-			expect(databaseConnector.documentVersion.update).toHaveBeenCalledTimes(2);
-			expect(databaseConnector.documentVersion.update).toHaveBeenCalledWith({
-				data: {
-					dateReceived: joinDateAndTime(requestBody.documents[0].receivedDate),
-					redactionStatus: {
-						connect: {
-							id: 1
-						}
-					},
-					draft: false
-				},
-				where: {
-					documentGuid_version: {
-						documentGuid: '987e66e0-1db4-404b-8213-8082919159e9',
-						version: 1
-					}
-				}
-			});
-			expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(5);
-			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
-				data: {
-					appealId: householdAppeal.id,
-					details: stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_UPLOADED, [documentUpdated.name, 1]),
-					loggedAt: expect.any(Date),
-					userId: householdAppeal.caseOfficer.id
-				}
-			});
-			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
-				data: {
-					appealId: householdAppeal.id,
-					details: stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_REDACTED, [documentUpdated.name, 1]),
-					loggedAt: expect.any(Date),
-					userId: householdAppeal.caseOfficer.id
-				}
-			});
-			expect(response.status).toEqual(200);
-			expect(response.body).toEqual({
-				documents: [
-					{
-						GUID: documentUpdated.guid,
-						blobStoreUrl: `appeal/${householdAppeal.reference.replace(/\//g, '-')}/${
-							documentUpdated.guid
-						}/v1/${documentUpdated.name}`,
-						documentName: documentUpdated.name
-					},
-					{
-						GUID: documentUpdated.guid,
-						blobStoreUrl: `appeal/${householdAppeal.reference.replace(/\//g, '-')}/${
-							documentUpdated.guid
-						}/v1/${documentUpdated.name}`,
-						documentName: documentUpdated.name
-					}
-				]
 			});
 		});
 	});

@@ -3,7 +3,7 @@ import {
 	isOutcomeInvalid,
 	isOutcomeValid
 } from '#utils/check-validation-outcome.js';
-import { broadcastAppealState } from '#endpoints/integrations/integrations.service.js';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 
 import {
 	AUDIT_TRAIL_SUBMISSION_INCOMPLETE,
@@ -98,7 +98,7 @@ const updateAppellantCaseValidationOutcome = async (
 		await appealRepository.updateAppealById(appealId, { dueDate: appealDueDate });
 	}
 
-	await broadcastAppealState(appealId);
+	await broadcasters.broadcastAppeal(appealId);
 };
 
 export { checkAppellantCaseExists, updateAppellantCaseValidationOutcome };
