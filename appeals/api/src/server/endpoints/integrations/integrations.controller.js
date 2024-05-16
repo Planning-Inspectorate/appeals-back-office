@@ -1,27 +1,9 @@
-import {
-	mapAppealSubmission,
-	mapQuestionnaireSubmission,
-	mapDocumentSubmission,
-	mapAppeal,
-	mapDocument
-} from './integrations.mappers/index.js';
-
-import { broadcastServiceUser } from './integration.broadcasters.js';
-
-import {
-	importAppellantCase,
-	importLPAQuestionnaire,
-	importDocument,
-	produceAppealUpdate,
-	produceDocumentUpdate,
-	produceBlobMoveRequest
-} from './integrations.service.js';
-
+import { messageMappers } from './integrations.mappers.js';
+import { broadcasters } from './integrations.broadcasters.js';
+import { integrationService } from './integrations.service.js';
 import { addDocumentAudit } from '#endpoints/documents/documents.service.js';
-import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { EventType } from '@pins/event-client';
-import BackOfficeAppError from '#utils/app-error.js';
 import {
 	AUDIT_TRAIL_APPELLANT_IMPORT_MSG,
 	AUDIT_TRAIL_LPAQ_IMPORT_MSG,
@@ -30,6 +12,7 @@ import {
 	ODW_APPELLANT_SVCUSR,
 	ODW_AGENT_SVCUSR
 } from '#endpoints/constants.js';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -43,53 +26,50 @@ import {
  * @returns {Promise<Response>}
  */
 export const postAppealSubmission = async (req, res) => {
-	const { appeal, documents } = mapAppealSubmission(req.body);
-	const dbSavedResult = await importAppellantCase(appeal, documents);
+	const { appeal, documents } = messageMappers.mapAppealSubmission(req.body);
+	const dbResult = await integrationService.importAppellantCase(appeal, documents);
+
+	const { id, reference, appellantId, agentId } = dbResult.appeal;
+	const { documentVersions } = dbResult;
 
 	await createAuditTrail({
-		appealId: dbSavedResult.appeal.id,
+		appealId: id,
 		details: AUDIT_TRAIL_APPELLANT_IMPORT_MSG,
 		azureAdUserId: AUDIT_TRAIL_SYSTEM_UUID
 	});
 
-	const appealTopic = mapAppeal(dbSavedResult.appeal);
-	//await produceAppealUpdate(appealTopic, EventType.Create);
-
-	const { reference, appellantId, agentId } = dbSavedResult.appeal;
+	await broadcasters.broadcastAppeal(id, EventType.Create);
 
 	if (appellantId) {
-		await broadcastServiceUser(appellantId, EventType.Create, ODW_APPELLANT_SVCUSR, reference);
+		await broadcasters.broadcastServiceUser(
+			appellantId,
+			EventType.Create,
+			ODW_APPELLANT_SVCUSR,
+			reference
+		);
 	}
 
 	if (agentId) {
-		await broadcastServiceUser(agentId, EventType.Create, ODW_AGENT_SVCUSR, reference);
+		await broadcasters.broadcastServiceUser(agentId, EventType.Create, ODW_AGENT_SVCUSR, reference);
 	}
 
-	const documentsToMove = documents.map((d) => {
-		return {
-			originalURI: d.documentURI,
-			importedURI: dbSavedResult.documentVersions.find((dv) => dv.documentGuid === d.documentGuid)
-				.documentURI
-		};
-	});
+	await integrationService.importDocuments(documents, documentVersions);
 
-	await produceBlobMoveRequest(documentsToMove, EventType.Create);
+	for (const document of documentVersions) {
+		await broadcasters.broadcastDocument(document.guid, EventType.Create);
 
-	const documentsTopic = dbSavedResult.documentVersions.map((d) => mapDocument(d));
-	for (const documentTopic of documentsTopic) {
 		const auditTrail = await createAuditTrail({
-			appealId: dbSavedResult.appeal.id,
+			appealId: id,
 			azureAdUserId: AUDIT_TRAIL_SYSTEM_UUID,
-			details: stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_IMPORTED, [documentTopic.fileName])
+			details: stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_IMPORTED, [document.fileName])
 		});
+
 		if (auditTrail) {
-			await addDocumentAudit(documentTopic.documentGuid, 1, auditTrail, 'Create');
+			await addDocumentAudit(document.documentGuid, 1, auditTrail, EventType.Create);
 		}
 	}
 
-	//await produceDocumentUpdate(documentsTopic, EventType.Create);
-
-	return res.send(appealTopic);
+	return res.send({ id, reference });
 };
 
 /**
@@ -98,65 +78,43 @@ export const postAppealSubmission = async (req, res) => {
  * @returns {Promise<Response>}
  */
 export const postLpaqSubmission = async (req, res) => {
-	const { caseReference, questionnaire, nearbyCaseReferences, documents } =
-		mapQuestionnaireSubmission(req.body);
-	const dbSavedResult = await importLPAQuestionnaire(
+	const { caseReference, questionnaire, documents } = messageMappers.mapQuestionnaireSubmission(
+		req.body
+	);
+	const dbResult = await integrationService.importLPAQuestionnaire(
+		// @ts-ignore
 		caseReference,
-		nearbyCaseReferences,
 		questionnaire,
 		documents
 	);
-	if (!dbSavedResult?.appeal) {
-		throw new BackOfficeAppError(
-			`Failure importing LPA questionnaire. Appeal with case reference '${caseReference}' does not exist.`
-		);
-	}
+
+	// @ts-ignore
+	const { id, reference } = dbResult.appeal;
+	const { documentVersions } = dbResult;
 
 	await createAuditTrail({
-		appealId: dbSavedResult.appeal.id,
+		appealId: id,
 		details: AUDIT_TRAIL_LPAQ_IMPORT_MSG,
 		azureAdUserId: AUDIT_TRAIL_SYSTEM_UUID
 	});
 
-	const appealTopic = mapAppeal(dbSavedResult.appeal);
-	await produceAppealUpdate(appealTopic, EventType.Update);
+	await broadcasters.broadcastAppeal(id, EventType.Update);
 
-	const documentsToMove = documents.map((d) => {
-		return {
-			originalURI: d.documentURI,
-			importedURI: dbSavedResult.documentVersions.find((dv) => dv.documentGuid === d.documentGuid)
-				.documentURI
-		};
-	});
+	await integrationService.importDocuments(documents, documentVersions);
 
-	await produceBlobMoveRequest(documentsToMove, EventType.Create);
+	for (const document of documentVersions) {
+		await broadcasters.broadcastDocument(document.guid, EventType.Create);
 
-	const documentsTopic = dbSavedResult.documentVersions.map((d) => mapDocument(d));
-	for (const documentTopic of documentsTopic) {
 		const auditTrail = await createAuditTrail({
-			appealId: dbSavedResult.appeal.id,
+			appealId: id,
 			azureAdUserId: AUDIT_TRAIL_SYSTEM_UUID,
-			details: stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_IMPORTED, [documentTopic.fileName])
+			details: stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_IMPORTED, [document.fileName])
 		});
+
 		if (auditTrail) {
-			await addDocumentAudit(documentTopic.documentGuid, 1, auditTrail, 'Create');
+			await addDocumentAudit(document.documentGuid, 1, auditTrail, EventType.Create);
 		}
 	}
 
-	await produceDocumentUpdate(documentsTopic, EventType.Create);
-
-	return res.send(appealTopic);
-};
-
-/**
- * @param {{body: AddDocumentsRequest}} req
- * @param {Response} res
- * @returns {Promise<Response>}
- */
-export const postDocumentSubmission = async (req, res) => {
-	const data = mapDocumentSubmission(req.body);
-	const result = await importDocument(data);
-	const formattedResult = mapDocument(result);
-
-	return res.send(formattedResult);
+	return res.send({ id, reference });
 };

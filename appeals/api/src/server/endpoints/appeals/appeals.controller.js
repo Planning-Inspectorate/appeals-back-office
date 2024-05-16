@@ -4,7 +4,7 @@ import appealRepository from '#repositories/appeal.repository.js';
 import { getPageCount } from '#utils/database-pagination.js';
 import { sortAppeals } from '#utils/appeal-sorter.js';
 import { getAppealTypeByTypeId } from '#repositories/appeal-type.repository.js';
-import { broadcastAppealState } from '#endpoints/integrations/integrations.service.js';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import {
@@ -244,7 +244,7 @@ const updateAppealById = async (req, res) => {
 			});
 		}
 
-		await broadcastAppealState(appeal.id);
+		await broadcasters.broadcastAppeal(appeal.id);
 	} catch (error) {
 		if (error) {
 			logger.error(error);

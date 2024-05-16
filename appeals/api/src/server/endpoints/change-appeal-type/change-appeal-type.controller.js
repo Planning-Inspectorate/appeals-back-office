@@ -6,7 +6,7 @@ import {
 	STATE_TARGET_TRANSFERRED
 } from '#endpoints/constants.js';
 import transitionState from '#state/transition-state.js';
-import { broadcastAppealState } from '#endpoints/integrations/integrations.service.js';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -52,7 +52,7 @@ export const requestChangeOfAppealType = async (req, res) => {
 			appeal.appealStatus,
 			STATE_TARGET_CLOSED
 		),
-		await broadcastAppealState(appeal.id)
+		await broadcasters.broadcastAppeal(appeal.id)
 	]);
 
 	return res.send(true);
@@ -83,7 +83,7 @@ export const requestTransferOfAppeal = async (req, res) => {
 			appeal.appealStatus,
 			STATE_TARGET_AWAITING_TRANSFER
 		),
-		await broadcastAppealState(appeal.id)
+		await broadcasters.broadcastAppeal(appeal.id)
 	]);
 
 	return res.send(true);
@@ -114,7 +114,7 @@ export const requestConfirmationTransferOfAppeal = async (req, res) => {
 			appeal.appealStatus,
 			STATE_TARGET_TRANSFERRED
 		),
-		await broadcastAppealState(appeal.id)
+		await broadcasters.broadcastAppeal(appeal.id)
 	]);
 
 	return res.send(true);

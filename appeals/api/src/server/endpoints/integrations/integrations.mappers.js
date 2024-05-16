@@ -2,15 +2,21 @@
 
 import { randomUUID } from 'node:crypto';
 
-import { mapAddressIn, mapAddressOut } from './address.mapper.js';
-import { mapLpaIn, mapLpaOut } from './lpa.mapper.js';
-import { mapDocumentIn, mapDocumentOut } from './document.mapper.js';
-import { mapServiceUserIn, mapServiceUserOut } from './service-user.mapper.js';
-import { mapAppellantCaseIn, mapAppellantCaseOut } from './appellant-case.mapper.js';
-import { mapQuestionnaireIn, mapQuestionnaireOut } from './questionnaire.mapper.js';
-import { mapAppealTypeIn, mapAppealTypeOut } from './appeal-type.mapper.js';
-import { mapAppealAllocationOut } from './appeal-allocation.mapper.js';
-import { mapCaseDataOut } from './casedata.mapper.js';
+import { mapAddressIn, mapAddressOut } from './integrations.mappers/address.mapper.js';
+import { mapLpaIn, mapLpaOut } from './integrations.mappers/lpa.mapper.js';
+import { mapDocumentIn, mapDocumentOut } from './integrations.mappers/document.mapper.js';
+import { mapServiceUserIn, mapServiceUserOut } from './integrations.mappers/service-user.mapper.js';
+import {
+	mapAppellantCaseIn,
+	mapAppellantCaseOut
+} from './integrations.mappers/appellant-case.mapper.js';
+import {
+	mapQuestionnaireIn,
+	mapQuestionnaireOut
+} from './integrations.mappers/questionnaire.mapper.js';
+import { mapAppealTypeIn, mapAppealTypeOut } from './integrations.mappers/appeal-type.mapper.js';
+import { mapAppealAllocationOut } from './integrations.mappers/appeal-allocation.mapper.js';
+import { mapCaseDataOut } from './integrations.mappers/casedata.mapper.js';
 
 const mappers = {
 	mapAddressIn,
@@ -35,7 +41,7 @@ const mappers = {
 /** @typedef {import('#config/../openapi-types.js').QuestionnaireData} QuestionnaireData */
 /** @typedef {import('#config/../openapi-types.js').DocumentMetaImport} DocumentMetaImport */
 
-export const mapAppealSubmission = (/** @type {AppellantCaseData} */ data) => {
+const mapAppealSubmission = (/** @type {AppellantCaseData} */ data) => {
 	const { appeal, documents } = data;
 	const { appellant, agent } = appeal;
 
@@ -63,7 +69,7 @@ export const mapAppealSubmission = (/** @type {AppellantCaseData} */ data) => {
 	};
 };
 
-export const mapQuestionnaireSubmission = (/** @type {QuestionnaireData} */ data) => {
+const mapQuestionnaireSubmission = (/** @type {QuestionnaireData} */ data) => {
 	const { questionnaire, documents } = data;
 	const questionnaireInput = mappers.mapQuestionnaireIn(questionnaire);
 	const documentsInput = (documents || []).map((document) => mappers.mapDocumentIn(document));
@@ -76,11 +82,11 @@ export const mapQuestionnaireSubmission = (/** @type {QuestionnaireData} */ data
 	};
 };
 
-export const mapDocumentSubmission = (/** @type {DocumentMetaImport} */ data) => {
+const mapDocumentSubmission = (/** @type {DocumentMetaImport} */ data) => {
 	return mappers.mapDocumentIn(data);
 };
 
-export const mapAppeal = (appeal) => {
+const mapAppeal = (appeal) => {
 	const topic = {
 		appealType: mappers.mapAppealTypeOut(appeal.appealType.shorthand),
 		caseReference: appeal.reference,
@@ -95,12 +101,21 @@ export const mapAppeal = (appeal) => {
 	return topic;
 };
 
-export const mapDocument = (doc) => {
+const mapDocument = (doc) => {
 	return mappers.mapDocumentOut(doc);
 };
 
-export const mapServiceUser = (caseReference, user, userType) => {
+const mapServiceUser = (caseReference, user, userType) => {
 	if (caseReference && user && userType) {
 		return mappers.mapServiceUserOut(user, userType, caseReference);
 	}
+};
+
+export const messageMappers = {
+	mapAppealSubmission,
+	mapQuestionnaireSubmission,
+	mapDocumentSubmission,
+	mapServiceUser,
+	mapDocument,
+	mapAppeal
 };

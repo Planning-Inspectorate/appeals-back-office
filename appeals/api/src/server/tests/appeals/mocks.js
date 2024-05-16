@@ -1,4 +1,5 @@
 import { APPEAL_TYPE_SHORTHAND_FPA, APPEAL_TYPE_SHORTHAND_HAS } from '#endpoints/constants.js';
+import { STATUSES } from '@pins/appeals/constants/state.js';
 
 import {
 	azureAdUserId,
@@ -59,7 +60,7 @@ export const householdAppeal = {
 	reference: '1345264',
 	appealStatus: [
 		{
-			status: 'assign_case_officer',
+			status: STATUSES.ASSIGN_CASE_OFFICER,
 			valid: true
 		}
 	],

@@ -1,6 +1,6 @@
 import appealRepository from '#repositories/appeal.repository.js';
 import transitionState from '#state/transition-state.js';
-import { broadcastAppealState } from '#endpoints/integrations/integrations.service.js';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { CASE_OUTCOME_INVALID, STATE_TARGET_INVALID } from '#endpoints/constants.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.RepositoryGetByIdResultItem} Appeal */
@@ -30,7 +30,7 @@ export const publishInvalidDecision = async (appeal, invalidDecisionReason, azur
 			appeal.appealStatus,
 			STATE_TARGET_INVALID
 		);
-		await broadcastAppealState(appeal.id);
+		await broadcasters.broadcastAppeal(appeal.id);
 
 		return result;
 	}

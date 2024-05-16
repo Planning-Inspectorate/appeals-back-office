@@ -1,9 +1,9 @@
 import pino from '#utils/logger.js';
 import config from '#config/config.js';
-import { mapServiceUser } from './integrations.mappers/index.js';
+import { messageMappers } from '../integrations.mappers.js';
 import { producers } from '#infrastructure/topics.js';
 import { eventClient } from '#infrastructure/event-client.js';
-import { schemas, validateFromSchema } from './integrations.validators.js';
+import { schemas, validateFromSchema } from '../integrations.validators.js';
 import { databaseConnector } from '#utils/database-connector.js';
 import { ODW_SYSTEM_ID } from '#endpoints/constants.js';
 
@@ -24,10 +24,10 @@ export const broadcastServiceUser = async (
 		return false;
 	}
 
-	const msg = mapServiceUser(caseReference, user, roleName);
+	const msg = messageMappers.mapServiceUser(caseReference, user, roleName);
 
 	if (msg) {
-		const validationResult = await validateFromSchema(schemas.serviceUser, msg);
+		const validationResult = await validateFromSchema(schemas.events.serviceUser, msg);
 		if (validationResult !== true && validationResult.errors) {
 			const errorDetails = validationResult.errors?.map(
 				(e) => `${e.instancePath || '/'}: ${e.message}`
