@@ -9,9 +9,9 @@ apps_config = {
     client_id = "ba49fd0e-11ad-48e2-8bfb-a203defb625f" # Appeals Back Office PROD
     group_ids = {
       case_officer = "5d82e08c-8f05-40ea-a3df-d306f3a2c870"
-      cs_team      = "785e6615-a9ea-44bf-a669-634e52b6f07a"
+      cs_team      = "73eae0eb-1a9a-4d3c-8e9c-7684083424f8"
       inspector    = "c921094a-318f-4996-be5e-9bd2ef9b7bdf"
-      legal        = "33fc8bdb-8c82-40ae-9a59-9eb5073f553b"
+      legal        = "137de428-596f-4f14-a451-4258024efe3e"
     }
   }
 
