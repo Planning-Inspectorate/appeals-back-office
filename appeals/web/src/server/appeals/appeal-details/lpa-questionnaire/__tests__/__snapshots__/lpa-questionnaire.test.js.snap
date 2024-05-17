@@ -1380,7 +1380,7 @@ exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-ques
                         <br><strong>351062</strong>
                     </div>
                 </div>
-                <p class="govuk-body">The relevant parties have been informed .</p>
+                <p class="govuk-body">The relevant parties have been informed.</p>
                 <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1">Go back to case details</a>
                 </p>
             </div>
