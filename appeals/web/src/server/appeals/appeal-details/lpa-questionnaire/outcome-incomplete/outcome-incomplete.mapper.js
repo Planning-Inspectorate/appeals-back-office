@@ -23,7 +23,7 @@ export function decisionIncompleteConfirmationPage(appealId, appealReference) {
 			{
 				type: 'html',
 				parameters: {
-					html: '<p class="govuk-body">The relevant parties have been informed .</p>'
+					html: '<p class="govuk-body">The relevant parties have been informed.</p>'
 				}
 			},
 			{
