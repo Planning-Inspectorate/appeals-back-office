@@ -1,6 +1,6 @@
 import { Router as createRouter } from 'express';
 import { asyncHandler } from '#middleware/async-handler.js';
-import { createSiteVisit, getSiteVisitById, updateSiteVisit } from './site-visits.controller.js';
+import { createSiteVisit, getSiteVisitById, rearrangeSiteVisit } from './site-visits.controller.js';
 import checkLookupValueIsValidAndAddToRequest from '#middleware/check-lookup-value-is-valid-and-add-to-request.js';
 import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
 import {
@@ -103,7 +103,7 @@ router.patch(
 		'siteVisitType',
 		ERROR_INVALID_SITE_VISIT_TYPE
 	),
-	asyncHandler(updateSiteVisit)
+	asyncHandler(rearrangeSiteVisit)
 );
 
 export { router as siteVisitRoutes };

@@ -517,13 +517,15 @@ export const spec = {
 			visitDate: '2023-07-09',
 			visitEndTime: '12:00',
 			visitStartTime: '10:00',
-			visitType: 'Accompanied'
+			visitType: 'Accompanied',
+			previousVisitType: 'Unaccompanied'
 		},
 		UpdateSiteVisitResponse: {
 			visitDate: '2023-07-09T01:00:00.000Z',
 			visitEndTime: '12:00',
 			visitStartTime: '10:00',
-			visitType: 'Accompanied'
+			visitType: 'Accompanied',
+			previousVisitType: 'Unaccompanied'
 		},
 		SingleSiteVisitResponse: {
 			appealId: 2,

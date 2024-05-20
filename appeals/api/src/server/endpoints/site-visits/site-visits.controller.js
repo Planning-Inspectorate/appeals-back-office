@@ -1,7 +1,6 @@
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import {
 	AUDIT_TRAIL_SITE_VISIT_ARRANGED,
-	AUDIT_TRAIL_SITE_VISIT_TYPE_SELECTED,
 	DEFAULT_DATE_FORMAT_AUDIT_TRAIL,
 	ERROR_FAILED_TO_SAVE_DATA
 } from '#endpoints/constants.js';
@@ -10,9 +9,11 @@ import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { format, parseISO } from 'date-fns';
 import { formatSiteVisit } from './site-visits.formatter.js';
+import { updateSiteVisit } from './site-visits.service.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
+/** @typedef {import('@pins/appeals.api').Appeals.UpdateSiteVisitData} UpdateSiteVisitData */
 
 /**
  * @param {Request} req
@@ -72,32 +73,31 @@ const createSiteVisit = async (req, res) => {
  * @param {Response} res
  * @returns {Promise<Response>}
  */
-const updateSiteVisit = async (req, res) => {
+const rearrangeSiteVisit = async (req, res) => {
 	const {
 		body,
-		body: { visitDate, visitEndTime, visitStartTime },
+		body: { visitDate, visitEndTime, visitStartTime, previousVisitType },
 		params,
 		params: { siteVisitId },
 		visitType
 	} = req;
 	const appealId = Number(params.appealId);
 	const azureAdUserId = String(req.get('azureAdUserId'));
+	const notifyClient = req.notifyClient;
+
+	/** @type { UpdateSiteVisitData } */
+	const updateSiteVisitData = {
+		siteVisitId: Number(siteVisitId),
+		appealId: Number(appealId),
+		visitDate: visitDate,
+		visitEndTime,
+		visitStartTime,
+		visitType,
+		previousVisitType
+	};
 
 	try {
-		await siteVisitRepository.updateSiteVisitById(Number(siteVisitId), {
-			...(visitDate && { visitDate }),
-			...(visitEndTime !== undefined && { visitEndTime }),
-			...(visitStartTime !== undefined && { visitStartTime }),
-			...(visitType && { siteVisitTypeId: visitType?.id })
-		});
-
-		if (visitType) {
-			createAuditTrail({
-				appealId,
-				azureAdUserId,
-				details: AUDIT_TRAIL_SITE_VISIT_TYPE_SELECTED
-			});
-		}
+		await updateSiteVisit(azureAdUserId, updateSiteVisitData, notifyClient);
 
 		return res.send(body);
 	} catch (error) {
@@ -106,4 +106,4 @@ const updateSiteVisit = async (req, res) => {
 	}
 };
 
-export { createSiteVisit, getSiteVisitById, updateSiteVisit };
+export { createSiteVisit, getSiteVisitById, rearrangeSiteVisit };
