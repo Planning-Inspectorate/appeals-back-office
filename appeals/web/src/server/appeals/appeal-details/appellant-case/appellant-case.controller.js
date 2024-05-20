@@ -4,24 +4,23 @@ import {
 	appellantCasePage,
 	mapWebReviewOutcomeToApiReviewOutcome,
 	checkAndConfirmPage,
-	getValidationOutcomeFromAppellantCase,
-	addDocumentsCheckAndConfirmPage
+	getValidationOutcomeFromAppellantCase
 } from './appellant-case.mapper.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import {
 	postChangeDocumentDetails,
 	postDocumentDelete,
 	postDocumentDetails,
+	renderUploadDocumentsCheckAndConfirm,
+	postUploadDocumentsCheckAndConfirm,
 	renderChangeDocumentDetails,
 	renderDeleteDocument,
 	renderDocumentDetails,
 	renderDocumentUpload,
+	postDocumentUpload,
 	renderManageDocument,
 	renderManageFolder
 } from '../../appeal-documents/appeal-documents.controller.js';
-import { createNewDocument } from '#app/components/file-uploader.component.js';
-import { isFileUploadInfo } from '#lib/ts-utilities.js';
-import config from '@pins/appeals.web/environment/config.js';
 
 /**
  *
@@ -48,8 +47,7 @@ const renderAppellantCase = async (request, response) => {
 			appellantCaseResponse,
 			currentAppeal,
 			request.originalUrl,
-			request.session,
-			request.apiClient
+			request.session
 		);
 
 		return response.render('patterns/display-page.pattern.njk', {
@@ -221,6 +219,7 @@ export const getAddDocuments = async (request, response) => {
 	}
 
 	const appellantCaseDetails = await getAppellantCaseDetails(request, response, currentAppeal);
+
 	if (!appellantCaseDetails) {
 		return response.status(404).render('app/404');
 	}
@@ -237,114 +236,17 @@ export const getAddDocuments = async (request, response) => {
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const postAddDocuments = async (request, response) => {
-	const { body, currentAppeal, currentFolder } = request;
-
-	if (!currentAppeal || !currentFolder) {
-		return response.status(404).render('app/404');
-	}
-
-	if (!body['upload-info']) {
-		return response.status(500).render('app/500');
-	}
-
-	/** @type {import('./appellant-case.mapper.js').FileUploadInfoItem[]} */
-	const uploadInfo = JSON.parse(body['upload-info']);
-
-	if (!isFileUploadInfo(uploadInfo)) {
-		return response.status(500).render('app/500');
-	}
-
-	request.session.fileUploadInfo = uploadInfo;
-
-	response.redirect(
-		`/appeals-service/appeal-details/${request.currentAppeal.appealId}/appellant-case/add-documents/${currentFolder.id}/check-your-answers`
-	);
-};
-
-/** @type {import('@pins/express').RequestHandler<Response>} */
-export const getAddDocumentsCheckAndConfirm = async (request, response) => {
 	const { currentAppeal, currentFolder } = request;
 
 	if (!currentAppeal || !currentFolder) {
 		return response.status(404).render('app/404');
 	}
 
-	if (!objectContainsAllKeys(request.session, 'fileUploadInfo')) {
-		return response.render('app/500.njk');
-	}
-
-	const mappedPageContent = addDocumentsCheckAndConfirmPage(
-		currentAppeal.appealId,
-		currentAppeal.appealReference,
-		currentFolder.id,
-		request.session.fileUploadInfo
+	postDocumentUpload(
+		request,
+		response,
+		`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/add-document-details/${currentFolder.id}`
 	);
-
-	return response.render('patterns/check-and-confirm-page.pattern.njk', {
-		pageContent: mappedPageContent
-	});
-};
-
-/** @type {import('@pins/express').RequestHandler<Response>} */
-export const postAddDocumentsCheckAndConfirm = async (request, response) => {
-	const { currentAppeal, currentFolder } = request;
-
-	if (!currentAppeal || !currentFolder) {
-		return response.status(404).render('app/404');
-	}
-
-	if (!objectContainsAllKeys(request.session, 'fileUploadInfo')) {
-		return response.render('app/500.njk');
-	}
-
-	try {
-		const {
-			currentAppeal,
-			session: { fileUploadInfo }
-		} = request;
-
-		/** @type {import('@pins/appeals/index.js').AddDocumentsRequest} */
-		const addDocumentsRequestPayload = {
-			blobStorageHost:
-				config.useBlobEmulator === true ? config.blobEmulatorSasUrl : config.blobStorageUrl,
-			blobStorageContainer: config.blobStorageDefaultContainer,
-			documents: fileUploadInfo.map(
-				(/** @type {import('./appellant-case.mapper.js').FileUploadInfoItem} */ document) => {
-					/** @type {import('@pins/appeals/index.js').MappedDocument} */
-					const mappedDocument = {
-						caseId: currentAppeal.appealId,
-						documentName: document.name,
-						documentType: document.documentType,
-						mimeType: document.mimeType,
-						documentSize: document.size,
-						stage: document.stage,
-						fileRowId: document.fileRowId,
-						folderId: currentFolder.id,
-						GUID: document.GUID
-					};
-
-					return mappedDocument;
-				}
-			)
-		};
-
-		await createNewDocument(request.apiClient, currentAppeal.appealId, addDocumentsRequestPayload);
-
-		delete request.session.fileUploadInfo;
-
-		return response.redirect(
-			`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case`
-		);
-	} catch (error) {
-		logger.error(
-			error,
-			error instanceof Error
-				? error.message
-				: 'Something went wrong when completing appellant case review'
-		);
-
-		return response.render('app/500.njk');
-	}
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
@@ -374,8 +276,49 @@ export const postAddDocumentDetails = async (request, response) => {
 		request,
 		response,
 		`/appeals-service/appeal-details/${request.params.appealId}/appellant-case/add-documents/{{folderId}}`,
-		`/appeals-service/appeal-details/${request.params.appealId}/appellant-case/`
+		`/appeals-service/appeal-details/${request.params.appealId}/appellant-case/add-documents/{{folderId}}/check-your-answers`
 	);
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const getAddDocumentsCheckAndConfirm = async (request, response) => {
+	const {currentFolder } = request;
+
+	if (!currentFolder) {
+		return response.status(404).render('app/404');
+	}
+
+	renderUploadDocumentsCheckAndConfirm(
+		request,
+		response,
+		`/appeals-service/appeal-details/${request.currentAppeal.appealId}/appellant-case/add-document-details/${currentFolder.id}`
+	);
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const postAddDocumentsCheckAndConfirm = async (request, response) => {
+	const { currentAppeal } = request;
+
+	if (!currentAppeal) {
+		return response.status(404).render('app/404');
+	}
+
+	try {
+		postUploadDocumentsCheckAndConfirm(
+			request,
+			response,
+			`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case`
+		);
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error
+				? error.message
+				: 'Something went wrong when completing appellant case review'
+		);
+
+		return response.render('app/500.njk');
+	}
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */

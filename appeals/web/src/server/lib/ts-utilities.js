@@ -8,7 +8,19 @@ export function isDefined(value) {
 }
 
 /** @typedef {import('@pins/appeals.api').Appeals.FolderInfo} FolderInfo */
-/** @typedef {import('#appeals/appeal-details/appellant-case/appellant-case.mapper.js').FileUploadInfoItem[]} FileUploadInfoItem */
+/**
+ * @typedef {Object} FileUploadInfoItem
+ * @property {string} name
+ * @property {string} GUID
+ * @property {string} fileRowId
+ * @property {string} blobStoreUrl
+ * @property {string} mimeType
+ * @property {string} documentType
+ * @property {number} size
+ * @property {string} stage
+ * @property {string} receivedDate
+ * @property {number} redactionStatus
+ */
 
 /**
  * @param {FolderInfo|any} value

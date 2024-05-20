@@ -8,7 +8,9 @@ import {
 } from './appeal.documents.service.js';
 import {
 	mapDocumentDetailsFormDataToAPIRequest,
+	addDocumentDetailsFormDataToFileUploadInfo,
 	addDocumentDetailsPage,
+	addDocumentsCheckAndConfirmPage,
 	manageFolderPage,
 	manageDocumentPage,
 	mapRedactionStatusIdToName,
@@ -18,6 +20,12 @@ import {
 } from './appeal-documents.mapper.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { isInternalUrl } from '#lib/url-utilities.js';
+import { objectContainsAllKeys } from '#lib/object-utilities.js';
+import { createNewDocument } from '#app/components/file-uploader.component.js';
+import config from '@pins/appeals.web/environment/config.js';
+import { redactionStatusNameToId } from '#lib/redaction-statuses.js';
+import { isFileUploadInfo } from '#lib/ts-utilities.js';
+import { dateToDayMonthYear, dayMonthYearToApiDateString } from '#lib/dates.js';
 
 /**
  *
@@ -82,6 +90,44 @@ export const renderDocumentUpload = async (
 };
 
 /**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * @param {string} nextPageUrl
+ */
+export const postDocumentUpload = async (request, response, nextPageUrl) => {
+	const { body, currentAppeal, currentFolder } = request;
+
+	if (!currentAppeal || !currentFolder) {
+		return response.status(404).render('app/404');
+	}
+
+	if (!body['upload-info']) {
+		return response.status(500).render('app/500');
+	}
+
+	/** @type {import('#lib/ts-utilities.js').FileUploadInfoItem[]} */
+	const uploadInfo = JSON.parse(body['upload-info']);
+
+	if (!isFileUploadInfo(uploadInfo)) {
+		return response.status(500).render('app/500');
+	}
+
+	const redactionStatuses = await getDocumentRedactionStatuses(request.apiClient);
+
+	if (!redactionStatuses) {
+		return response.render('app/500.njk');
+	}
+
+	request.session.fileUploadInfo = uploadInfo.map(infoItem => ({
+		...infoItem,
+		redactionStatus: redactionStatusNameToId(redactionStatuses, 'unredacted'),
+		receivedDate: dayMonthYearToApiDateString(dateToDayMonthYear(new Date())),
+	}));
+
+	response.redirect(nextPageUrl);
+};
+
+/**
  *
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
@@ -96,10 +142,14 @@ export const renderDocumentDetails = async (
 	isLateEntry = false,
 	pageHeadingTextOverride
 ) => {
-	const { currentFolder, body, errors } = request;
+	const { currentFolder, errors } = request;
 
 	if (!currentFolder) {
 		return response.status(404).render('app/404.njk');
+	}
+
+	if (!objectContainsAllKeys(request.session, 'fileUploadInfo')) {
+		return response.render('app/500.njk');
 	}
 
 	const redactionStatuses = await getDocumentRedactionStatuses(request.apiClient);
@@ -111,7 +161,7 @@ export const renderDocumentDetails = async (
 	const mappedPageContent = addDocumentDetailsPage(
 		backButtonUrl,
 		currentFolder,
-		body?.items,
+		request.session.fileUploadInfo,
 		redactionStatuses,
 		pageHeadingTextOverride
 	);
@@ -239,6 +289,7 @@ export const postDocumentDetails = async (
 	try {
 		const {
 			body,
+			currentFolder,
 			apiClient,
 			params: { appealId },
 			errors
@@ -254,25 +305,30 @@ export const postDocumentDetails = async (
 			);
 		}
 
+		if (!currentFolder) {
+			return response.status(404).render('app/404');
+		}
+
+		if (!objectContainsAllKeys(request.session, 'fileUploadInfo')) {
+			return response.render('app/500.njk');
+		}
+
 		const redactionStatuses = await getDocumentRedactionStatuses(apiClient);
 
 		if (redactionStatuses) {
-			const apiRequest = mapDocumentDetailsFormDataToAPIRequest(body, redactionStatuses);
-			const updateDocumentsResult = await updateDocuments(apiClient, appealId, apiRequest);
+			addDocumentDetailsFormDataToFileUploadInfo(body, request.session.fileUploadInfo, redactionStatuses);
 
-			if (updateDocumentsResult) {
-				addNotificationBannerToSession(
-					request.session,
-					'documentAdded',
-					Number.parseInt(appealId, 10)
-				);
+			addNotificationBannerToSession(
+				request.session,
+				'documentAdded',
+				Number.parseInt(appealId, 10)
+			);
 
-				if (successCallback) {
-					successCallback(request);
-				}
-
-				return response.redirect(nextPageUrl || `/appeals-service/appeal-details/${appealId}/`);
+			if (successCallback) {
+				successCallback(request);
 			}
+
+			return response.redirect(nextPageUrl?.replace('{{folderId}}', currentFolder.id) || `/appeals-service/appeal-details/${appealId}/`);
 		}
 
 		return response.render('app/500.njk');
@@ -280,6 +336,104 @@ export const postDocumentDetails = async (
 		logger.error(
 			error,
 			error instanceof Error ? error.message : 'Something went wrong when adding document details'
+		);
+
+		return response.render('app/500.njk');
+	}
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * @param {string} backLinkUrl
+ */
+export const renderUploadDocumentsCheckAndConfirm = async (request, response, backLinkUrl) => {
+	const { currentAppeal, currentFolder } = request;
+
+	if (!currentAppeal || !currentFolder) {
+		return response.status(404).render('app/404');
+	}
+
+	if (!objectContainsAllKeys(request.session, 'fileUploadInfo')) {
+		return response.render('app/500.njk');
+	}
+
+	const redactionStatuses = await getDocumentRedactionStatuses(request.apiClient);
+
+	if (!redactionStatuses) {
+		return response.render('app/500.njk');
+	}
+
+	const mappedPageContent = addDocumentsCheckAndConfirmPage(
+		backLinkUrl,
+		currentAppeal.appealReference,
+		request.session.fileUploadInfo,
+		redactionStatuses
+	);
+
+	return response.render('patterns/check-and-confirm-page.pattern.njk', {
+		pageContent: mappedPageContent
+	});
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * @param {string} nextPageUrl
+ */
+export const postUploadDocumentsCheckAndConfirm = async (request, response, nextPageUrl) => {
+	const { currentAppeal, currentFolder } = request;
+
+	if (!currentAppeal || !currentFolder) {
+		return response.status(404).render('app/404');
+	}
+
+	if (!objectContainsAllKeys(request.session, 'fileUploadInfo')) {
+		return response.render('app/500.njk');
+	}
+
+	try {
+		const {
+			currentAppeal,
+			session: { fileUploadInfo }
+		} = request;
+
+		/** @type {import('@pins/appeals/index.js').AddDocumentsRequest} */
+		const addDocumentsRequestPayload = {
+			blobStorageHost:
+				config.useBlobEmulator === true ? config.blobEmulatorSasUrl : config.blobStorageUrl,
+			blobStorageContainer: config.blobStorageDefaultContainer,
+			documents: fileUploadInfo.map(
+				(/** @type {import('#lib/ts-utilities.js').FileUploadInfoItem} */ document) => {
+					/** @type {import('@pins/appeals/index.js').MappedDocument} */
+					const mappedDocument = {
+						caseId: currentAppeal.appealId,
+						documentName: document.name,
+						documentType: document.documentType,
+						mimeType: document.mimeType,
+						documentSize: document.size,
+						stage: document.stage,
+						fileRowId: document.fileRowId,
+						folderId: currentFolder.id,
+						GUID: document.GUID
+					};
+
+					return mappedDocument;
+				}
+			)
+		};
+
+		await createNewDocument(request.apiClient, currentAppeal.appealId, addDocumentsRequestPayload);
+
+		delete request.session.fileUploadInfo;
+
+		return response.redirect(nextPageUrl);
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error
+				? error.message
+				: 'Something went wrong when submitting the upload documents check and confirm page'
 		);
 
 		return response.render('app/500.njk');
