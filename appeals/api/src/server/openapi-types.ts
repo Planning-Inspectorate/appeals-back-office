@@ -1375,6 +1375,8 @@ export interface UpdateSiteVisitRequest {
 	visitStartTime?: string;
 	/** @example "Accompanied" */
 	visitType?: string;
+	/** @example "Unaccompanied" */
+	previousVisitType?: string;
 }
 
 export interface UpdateSiteVisitResponse {
@@ -1386,6 +1388,8 @@ export interface UpdateSiteVisitResponse {
 	visitStartTime?: string;
 	/** @example "Accompanied" */
 	visitType?: string;
+	/** @example "Unaccompanied" */
+	previousVisitType?: string;
 }
 
 export interface SingleSiteVisitResponse {

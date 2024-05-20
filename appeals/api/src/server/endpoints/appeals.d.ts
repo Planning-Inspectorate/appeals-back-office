@@ -665,6 +665,16 @@ interface CreateAuditTrailRequest {
 	userId: number;
 }
 
+export interface UpdateSiteVisitData {
+	siteVisitId: number;
+	appealId: number;
+	visitDate?: string;
+	visitEndTime?: string;
+	visitStartTime?: string;
+	visitType?: any;
+	previousVisitType: string;
+}
+
 type GetAuditTrailsResponse = {
 	azureAdUserId: string;
 	details: string;

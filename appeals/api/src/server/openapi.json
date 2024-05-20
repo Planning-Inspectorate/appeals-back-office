@@ -6309,6 +6309,10 @@
 					"visitType": {
 						"type": "string",
 						"example": "Accompanied"
+					},
+					"previousVisitType": {
+						"type": "string",
+						"example": "Unaccompanied"
 					}
 				},
 				"xml": {
@@ -6333,6 +6337,10 @@
 					"visitType": {
 						"type": "string",
 						"example": "Accompanied"
+					},
+					"previousVisitType": {
+						"type": "string",
+						"example": "Unaccompanied"
 					}
 				},
 				"xml": {

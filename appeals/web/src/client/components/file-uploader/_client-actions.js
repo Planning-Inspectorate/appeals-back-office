@@ -258,10 +258,10 @@ const clientActions = (uploadForm) => {
 	 * @param {AnError[]} errors
 	 */
 	const finalizeUpload = (errors) => {
-		globalDataTransfer = new DataTransfer();
-		updateUploadButton();
-
 		if (errors.length > 0) {
+			globalDataTransfer = new DataTransfer();
+			updateUploadButton();
+
 			const failedRowIds = new Set(errors.map((error) => error.fileRowId));
 			const allRowsId = [...filesRows.children].map((row) => row.id);
 
