@@ -103,9 +103,6 @@ const clientActions = (container) => {
 
 	// BOAT-1277:
 	function createFormFieldsForAddedDocuments() {
-		console.log('createFormFieldsForAddedDocuments - globalDataTransfer.files:');
-		console.log(globalDataTransfer.files);
-
 		// uploading new version of an existing document (i.e. if documentGUID is present)
 		if (globalDataTransfer.files.length === 1 && container.dataset?.documentId) {
 			// should only be possible to add a single document, so ignore all added files apart from the first
