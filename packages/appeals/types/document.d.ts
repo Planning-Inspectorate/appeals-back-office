@@ -19,9 +19,14 @@ export interface MappedDocument {
 	stage: string;
 	fileRowId: string;
 	folderId: number;
+	GUID: string;
 }
 
 export interface AddDocumentsResponse {
+	documents: (DocumentAuditTrailInfo | null)[];
+}
+
+export interface AddDocumentVersionResponse {
 	documents: (BlobInfo | null)[];
 }
 
@@ -33,6 +38,11 @@ export interface BlobInfo {
 	caseType?: string | undefined;
 	caseReference?: string | undefined;
 	fileRowId?: string | undefined;
+}
+
+export interface DocumentAuditTrailInfo {
+	documentName: string;
+	GUID: string;
 }
 
 export interface UploadRequest {
@@ -53,4 +63,5 @@ export interface DocumentMetadata {
 	documentSize: number;
 	folderId: number;
 	name: string;
+	GUID: string;
 }

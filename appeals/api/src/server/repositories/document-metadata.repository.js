@@ -29,15 +29,18 @@ export const getDefaultRedactionStatus = async () => {
 export const addDocument = async (metadata, context) => {
 	const unredactedStatus = await getDefaultRedactionStatus();
 	const transaction = await databaseConnector.$transaction(async (tx) => {
+		const guid = metadata.GUID;
+
 		const document = await tx.document.create({
 			data: {
+				guid,
 				caseId: context.caseId,
 				folderId: context.folderId,
 				name: metadata.originalFilename
 			}
 		});
 
-		const { guid, name } = document;
+		const { name } = document;
 		const newVersionId = 1;
 
 		metadata.fileName = name;
@@ -46,9 +49,15 @@ export const addDocument = async (metadata, context) => {
 			metadata.blobStorageContainer
 		}/${metadata.blobStoragePath}`;
 
-		const documentVersion = await tx.documentVersion.upsert({
-			create: {
-				...metadata,
+		const newMetadata = {
+			...metadata
+		};
+
+		delete newMetadata.GUID;
+
+		const documentVersion = await tx.documentVersion.create({
+			data: {
+				...newMetadata,
 				version: newVersionId,
 				parentDocument: {
 					connect: {
@@ -63,9 +72,7 @@ export const addDocument = async (metadata, context) => {
 				},
 				published: false,
 				draft: true
-			},
-			where: { documentGuid_version: { documentGuid: guid, version: newVersionId } },
-			update: {}
+			}
 		});
 
 		await tx.document.update({

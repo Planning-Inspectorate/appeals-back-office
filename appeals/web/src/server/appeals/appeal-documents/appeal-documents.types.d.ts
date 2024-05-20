@@ -3,9 +3,11 @@ import { ValidationErrors } from '@pins/express/types/express.js';
 export interface DocumentUploadPageParameters {
 	backButtonUrl: string;
 	appealId: string;
+	appealReference: string;
 	folderId: string;
 	documentId?: string;
 	useBlobEmulator: boolean;
+	accessToken: AccessToken;
 	blobStorageHost: string;
 	blobStorageContainer: string;
 	multiple: boolean;

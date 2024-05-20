@@ -145,10 +145,9 @@ const serverActions = (uploadForm) => {
 		if (blobStorageHost == undefined || blobStorageContainer == undefined) {
 			throw new Error('blobStorageHost or blobStorageContainer are undefined.');
 		}
-		const blobStorageClient =
-			useBlobEmulator && !accessToken
-				? new BlobStorageClient(new BlobServiceClient(blobStorageHost))
-				: BlobStorageClient.fromUrlAndToken(blobStorageHost, accessToken);
+		const blobStorageClient = useBlobEmulator /*&& !accessToken*/
+			? new BlobStorageClient(new BlobServiceClient(blobStorageHost))
+			: BlobStorageClient.fromUrlAndToken(blobStorageHost, accessToken);
 
 		for (const documentUploadInfo of documents) {
 			const fileToUpload = [...fileList].find(
@@ -167,6 +166,10 @@ const serverActions = (uploadForm) => {
 				if (errorOutcome) {
 					failedUploads.push(errorOutcome);
 				}
+			} else {
+				throw new Error(
+					'file not uploaded to blob storage because fileToUpload and/or blobStoreUrl was falsy'
+				);
 			}
 		}
 

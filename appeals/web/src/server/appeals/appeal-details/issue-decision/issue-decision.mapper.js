@@ -75,6 +75,8 @@ export function decisionLetterUploadPage(appealData, folderId, folderPath, appea
 	const documentType = pathComponents[1];
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
+	// BOAT-1277:
+	// @ts-ignore
 	return {
 		backButtonUrl: `/appeals-service/appeal-details/${appealData.appealId}/issue-decision/decision`,
 		appealId,
