@@ -243,6 +243,7 @@ export function mapAddDocumentsPageHeading(isAdditionalDocument, documentId) {
  * @param {string} backLinkUrl
  * @param {FolderInfo & {id: string}} folder - API type needs to be updated here (should be Folder, but there are worse problems with that type)
  * @param {FileUploadInfoItem[]} uploadInfo
+ * @param {Object<string, any>} bodyItems
  * @param {RedactionStatus[]} redactionStatuses
  * @param {string} [pageHeadingTextOverride]
  * @returns {PageContent}
@@ -251,6 +252,7 @@ export function addDocumentDetailsPage(
 	backLinkUrl,
 	folder,
 	uploadInfo,
+	bodyItems,
 	redactionStatuses,
 	pageHeadingTextOverride
 ) {
@@ -265,6 +267,7 @@ export function addDocumentDetailsPage(
 			return mapFileUploadInfoItemToDocumentDetailsPageComponents(
 				uploadInfo,
 				uploadInfoItem,
+				bodyItems,
 				index,
 				redactionStatuses
 			);
@@ -277,6 +280,7 @@ export function addDocumentDetailsPage(
 /**
  * @param {FileUploadInfoItem[]} uploadInfo
  * @param {FileUploadInfoItem} uploadInfoItem
+ * @param {Object<string, any>} bodyItems
  * @param {number} index
  * @param {RedactionStatus[]} redactionStatuses
  * @returns {PageComponent[]}
@@ -284,10 +288,18 @@ export function addDocumentDetailsPage(
 function mapFileUploadInfoItemToDocumentDetailsPageComponents(
 	uploadInfo,
 	uploadInfoItem,
+	bodyItems,
 	index,
 	redactionStatuses
 ) {
 	const receivedDateDayMonthYear = apiDateStringToDayMonthYear(uploadInfoItem.receivedDate);
+	const bodyItem = bodyItems?.find(
+		(/** @type {{ documentId: string; }} */ item) => item.documentId === uploadInfoItem.GUID
+	);
+	const bodyRecievedDateDay = bodyItem?.receivedDate?.day;
+	const bodyRecievedDateMonth = bodyItem?.receivedDate?.month;
+	const bodyRecievedDateYear = bodyItem?.receivedDate?.year;
+	const bodyRedactionStatus = bodyItem?.redactionStatus;
 
 	return [
 		{
@@ -318,21 +330,21 @@ function mapFileUploadInfoItemToDocumentDetailsPageComponents(
 						id: `items[${index}].receivedDate.day`,
 						name: '[day]',
 						label: 'Day',
-						value: receivedDateDayMonthYear?.day || ''
+						value: (bodyRecievedDateDay !== undefined ? bodyRecievedDateDay : receivedDateDayMonthYear?.day) || ''
 					},
 					{
 						classes: 'govuk-input govuk-date-input__input govuk-input--width-2',
 						id: `items[${index}].receivedDate.month`,
 						name: '[month]',
 						label: 'Month',
-						value: receivedDateDayMonthYear?.month || ''
+						value: (bodyRecievedDateMonth !== undefined ? bodyRecievedDateMonth : receivedDateDayMonthYear?.month) || ''
 					},
 					{
 						classes: 'govuk-input govuk-date-input__input govuk-input--width-4',
 						id: `items[${index}].receivedDate.year`,
 						name: '[year]',
 						label: 'Year',
-						value: receivedDateDayMonthYear?.year || ''
+						value: (bodyRecievedDateYear !== undefined ? bodyRecievedDateYear : receivedDateDayMonthYear?.year) || ''
 					}
 				]
 			}
@@ -354,12 +366,12 @@ function mapFileUploadInfoItemToDocumentDetailsPageComponents(
 					{
 						text: 'Redacted',
 						value: 'redacted',
-						checked: redactionStatusIdToName(redactionStatuses, uploadInfoItem.redactionStatus) === 'redacted'
+						checked: (bodyRedactionStatus ? bodyRedactionStatus : redactionStatusIdToName(redactionStatuses, uploadInfoItem.redactionStatus)) === 'redacted'
 					},
 					{
 						text: 'Unredacted',
 						value: 'unredacted',
-						checked: redactionStatusIdToName(redactionStatuses, uploadInfoItem.redactionStatus) === 'unredacted'
+						checked: (bodyRedactionStatus ? bodyRedactionStatus : redactionStatusIdToName(redactionStatuses, uploadInfoItem.redactionStatus)) === 'unredacted'
 					},
 					{
 						divider: 'Or'
@@ -367,7 +379,7 @@ function mapFileUploadInfoItemToDocumentDetailsPageComponents(
 					{
 						text: 'No redaction required',
 						value: 'no redaction required',
-						checked: redactionStatusIdToName(redactionStatuses, uploadInfoItem.redactionStatus) === 'no redaction required'
+						checked: (bodyRedactionStatus ? bodyRedactionStatus : redactionStatusIdToName(redactionStatuses, uploadInfoItem.redactionStatus)) === 'no redaction required'
 					}
 				]
 			}
@@ -1394,7 +1406,7 @@ export const folderPathToFolderNameText = (folderPath) => {
 
 /**
  * @param {string} backLinkUrl
- * @param {FolderInfo & {id: string}} folder - API type needs to be updated here (should be Folder, but there are worse problems with that type)
+ * @param {FolderInfo & {id: string}} folder
  * @param {import('./appeal-documents.controller.js').DocumentDetailsItem[]} bodyItems
  * @param {RedactionStatus[]} redactionStatuses
  * @returns {PageContent}

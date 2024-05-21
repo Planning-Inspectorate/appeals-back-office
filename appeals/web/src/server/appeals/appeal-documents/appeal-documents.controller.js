@@ -142,7 +142,7 @@ export const renderDocumentDetails = async (
 	isLateEntry = false,
 	pageHeadingTextOverride
 ) => {
-	const { currentFolder, errors } = request;
+	const { currentFolder, body, errors } = request;
 
 	if (!currentFolder) {
 		return response.status(404).render('app/404.njk');
@@ -162,6 +162,7 @@ export const renderDocumentDetails = async (
 		backButtonUrl,
 		currentFolder,
 		request.session.fileUploadInfo,
+		body?.items,
 		redactionStatuses,
 		pageHeadingTextOverride
 	);
