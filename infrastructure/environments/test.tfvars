@@ -51,8 +51,8 @@ common_config = {
 }
 
 common_infra_config = {
-  vnet_name  = "pins-vnet-common-test-ukw-001"
-  network_rg = "pins-rg-common-test-ukw-001"
+  network_name = "pins-vnet-common-test-ukw-001"
+  network_rg   = "pins-rg-common-test-ukw-001"
 }
 
 docs_domain = "https://back-office-appeals-docs-test.planninginspectorate.gov.uk"
