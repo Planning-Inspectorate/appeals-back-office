@@ -388,6 +388,105 @@ function mapFileUploadInfoItemToDocumentDetailsPageComponents(
 }
 
 /**
+ * @param {DocumentDetailsItem} item
+ * @returns {PageComponent[]}
+ */
+function mapDocumentDetailsItemToDocumentDetailsPageComponents(item) {
+	const bodyRecievedDateDay = item?.receivedDate?.day;
+	const bodyRecievedDateMonth = item?.receivedDate?.month;
+	const bodyRecievedDateYear = item?.receivedDate?.year;
+	const bodyRedactionStatus = item?.redactionStatus;
+
+	/** @type {PageComponent[]} */
+	const pageComponents = [
+		{
+			wrapperHtml: {
+				opening: `<div class="govuk-form-group"><h2 class="govuk-heading-m">${item.name}</h2>`,
+				closing: ''
+			},
+			type: 'input',
+			parameters: {
+				type: 'hidden',
+				name: `items[0][documentId]`,
+				value: item.documentId
+			}
+		},
+		{
+			type: 'date-input',
+			parameters: {
+				id: `items[0]receivedDate`,
+				namePrefix: `items[0][receivedDate]`,
+				fieldset: {
+					legend: {
+						text: 'Date received'
+					}
+				},
+				items: [
+					{
+						classes: 'govuk-input govuk-date-input__input govuk-input--width-2',
+						id: `items[0].receivedDate.day`,
+						name: '[day]',
+						label: 'Day',
+						value: bodyRecievedDateDay || ''
+					},
+					{
+						classes: 'govuk-input govuk-date-input__input govuk-input--width-2',
+						id: `items[0].receivedDate.month`,
+						name: '[month]',
+						label: 'Month',
+						value: bodyRecievedDateMonth || ''
+					},
+					{
+						classes: 'govuk-input govuk-date-input__input govuk-input--width-4',
+						id: `items[0].receivedDate.year`,
+						name: '[year]',
+						label: 'Year',
+						value: bodyRecievedDateYear || ''
+					}
+				]
+			}
+		},
+		{
+			wrapperHtml: {
+				opening: '',
+				closing: '</div>'
+			},
+			type: 'radios',
+			parameters: {
+				name: `items[0][redactionStatus]`,
+				fieldset: {
+					legend: {
+						text: 'Redaction status'
+					}
+				},
+				items: [
+					{
+						text: 'Redacted',
+						value: 'redacted',
+						checked: bodyRedactionStatus === 'redacted'
+					},
+					{
+						text: 'Unredacted',
+						value: 'unredacted',
+						checked: bodyRedactionStatus === 'unredacted'
+					},
+					{
+						divider: 'Or'
+					},
+					{
+						text: 'No redaction required',
+						value: 'no redaction required',
+						checked: bodyRedactionStatus === 'no redaction required'
+					}
+				]
+			}
+		}
+	];
+
+	return pageComponents;
+}
+
+/**
  * @param {string} backLinkUrl
  * @param {string} appealReference
  * @param {FileUploadInfoItem[]} fileUploadInfo
@@ -1404,17 +1503,31 @@ export const folderPathToFolderNameText = (folderPath) => {
  * @property {{[key: string]: string} | null} [attributes]
  */
 
+/** @typedef {import('./appeal-documents.controller.js').DocumentDetailsItem} DocumentDetailsItem */
+/** @typedef {Object<string, any>} Document */
+
 /**
  * @param {string} backLinkUrl
  * @param {FolderInfo & {id: string}} folder
- * @param {import('./appeal-documents.controller.js').DocumentDetailsItem[]} bodyItems
+ * @param {DocumentDetailsItem|undefined} bodyItem
+ * @param {Document} file
  * @param {RedactionStatus[]} redactionStatuses
  * @returns {PageContent}
  */
-export function changeDocumentDetailsPage(backLinkUrl, folder, bodyItems, redactionStatuses) {
-	const filteredDocuments = folder.documents.filter((document) =>
-		bodyItems.find((item) => item.documentId === document.id)
-	);
+export function changeDocumentDetailsPage(backLinkUrl, folder, bodyItem, file, redactionStatuses) {
+	const item = {
+		name: bodyItem?.name || file.latestDocumentVersion.fileName,
+		documentId: bodyItem?.documentId || file.guid,
+		receivedDate: bodyItem?.receivedDate
+			? bodyItem?.receivedDate
+			: apiDateStringToDayMonthYear(file?.latestDocumentVersion?.dateReceived),
+		redactionStatus: bodyItem?.redactionStatus
+			? bodyItem?.redactionStatus
+			: mapRedactionStatusIdToName(
+				redactionStatuses,
+				file?.latestDocumentVersion?.redactionStatusId
+			).toLowerCase()
+	};
 
 	/** @type {PageContent} */
 	const pageContent = {
@@ -1423,8 +1536,7 @@ export function changeDocumentDetailsPage(backLinkUrl, folder, bodyItems, redact
 		backLinkUrl: backLinkUrl?.replace('{{folderId}}', folder.id),
 		preHeading: 'Change document details',
 		heading: `${folderPathToFolderNameText(folder.path)} documents`,
-		// TODO: BOAT-1277: create new function to replace mapFileUploadInfoItemToDocumentDetailsPageComponents, which was refactored to support the new add document details approach in the upload journey
-		pageComponents: []
+		pageComponents: mapDocumentDetailsItemToDocumentDetailsPageComponents(item)
 	};
 
 	if (pageContent.pageComponents) {

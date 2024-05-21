@@ -25,7 +25,7 @@ import { createNewDocument } from '#app/components/file-uploader.component.js';
 import config from '@pins/appeals.web/environment/config.js';
 import { redactionStatusNameToId } from '#lib/redaction-statuses.js';
 import { isFileUploadInfo } from '#lib/ts-utilities.js';
-import { dateToDayMonthYear, dayMonthYearToApiDateString } from '#lib/dates.js';
+import { apiDateStringToDayMonthYear, dateToDayMonthYear, dayMonthYearToApiDateString } from '#lib/dates.js';
 
 /**
  *
@@ -443,10 +443,13 @@ export const postUploadDocumentsCheckAndConfirm = async (request, response, next
 
 /**
  * @typedef {Object} DocumentDetailsItem
+ * @property {string} name
  * @property {string} documentId
- * @property {import('#appeals/appeals.types.js').DayMonthYear} receivedDate
+ * @property {import('#appeals/appeals.types.js').DayMonthYear|undefined} receivedDate
  * @property {import('@pins/appeals.api').Schema.DocumentRedactionStatus} redactionStatus
  */
+
+/** @typedef {import('@pins/appeals.api').Schema.Document} Document */
 
 /**
  *
@@ -462,8 +465,12 @@ export const renderChangeDocumentDetails = async (request, response, backButtonU
 		params: { appealId, documentId }
 	} = request;
 
-	/** @type {DocumentDetailsItem[]} */
-	let items = body?.items;
+	if (!currentFolder) {
+		return response.status(500).render('app/500.njk');
+	}
+
+	/** @type {DocumentDetailsItem} */
+	const bodyItem = body?.items?.[0];
 
 	const redactionStatuses = await getDocumentRedactionStatuses(request.apiClient);
 
@@ -471,36 +478,17 @@ export const renderChangeDocumentDetails = async (request, response, backButtonU
 		return response.status(500).render('app/500.njk');
 	}
 
-	if (!items) {
-		const currentFile = await getFileInfo(request.apiClient, appealId, documentId);
+	const currentFile = await getFileInfo(request.apiClient, appealId, documentId);
 
-		if (currentFile) {
-			const receivedDate = new Date(currentFile?.latestDocumentVersion?.dateReceived);
-			const redactionStatus = mapRedactionStatusIdToName(
-				redactionStatuses,
-				currentFile?.latestDocumentVersion?.redactionStatusId
-			).toLowerCase();
-			items ??= [
-				{
-					documentId: documentId,
-					receivedDate: {
-						day: receivedDate.getDate(),
-						month: receivedDate.getMonth() + 1,
-						year: receivedDate.getFullYear()
-					},
-					redactionStatus: redactionStatus
-				}
-			];
-		}
-	}
-	if (!currentFolder) {
-		return response.status(404).render('app/404.njk');
+	if (!currentFile) {
+		return response.status(500).render('app/500.njk');
 	}
 
 	const mappedPageContent = changeDocumentDetailsPage(
 		backButtonUrl,
 		currentFolder,
-		items,
+		bodyItem,
+		currentFile,
 		redactionStatuses
 	);
 
