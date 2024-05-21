@@ -51,8 +51,8 @@ common_config = {
 }
 
 common_infra_config = {
-  vnet_name  = "pins-vnet-common-prod-ukw-001"
-  network_rg = "pins-rg-common-prod-ukw-001"
+  network_name = "pins-vnet-common-prod-ukw-001"
+  network_rg   = "pins-rg-common-prod-ukw-001"
 }
 
 
