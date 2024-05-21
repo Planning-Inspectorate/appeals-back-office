@@ -13,6 +13,7 @@ import {
 	postDocumentDetails,
 	renderUploadDocumentsCheckAndConfirm,
 	postUploadDocumentsCheckAndConfirm,
+	postUploadDocumentVersionCheckAndConfirm,
 	renderChangeDocumentDetails,
 	renderDeleteDocument,
 	renderDocumentDetails,
@@ -322,6 +323,32 @@ export const postAddDocumentsCheckAndConfirm = async (request, response) => {
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
+export const postAddDocumentVersionCheckAndConfirm = async (request, response) => {
+	const { currentAppeal } = request;
+
+	if (!currentAppeal) {
+		return response.status(404).render('app/404');
+	}
+
+	try {
+		postUploadDocumentVersionCheckAndConfirm(
+			request,
+			response,
+			`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case`
+		);
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error
+				? error.message
+				: 'Something went wrong when completing appellant case review'
+		);
+
+		return response.render('app/500.njk');
+	}
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
 export const getManageFolder = async (request, response) => {
 	renderManageFolder(
 		request,
@@ -343,7 +370,7 @@ export const getManageDocument = async (request, response) => {
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
-export const getAddDocumentsVersion = async (request, response) => {
+export const getAddDocumentVersion = async (request, response) => {
 	const { currentAppeal } = request;
 
 	if (!currentAppeal) {
@@ -362,6 +389,27 @@ export const getAddDocumentsVersion = async (request, response) => {
 		`/appeals-service/appeal-details/${request.params.appealId}/appellant-case/manage-documents/${request.params.folderId}/${request.params.documentId}`,
 		`/appeals-service/appeal-details/${request.params.appealId}/appellant-case/add-document-details/${request.params.folderId}/${request.params.documentId}`,
 		getValidationOutcomeFromAppellantCase(appellantCaseDetails) === 'valid'
+	);
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const postAddDocumentVersion = async (request, response) => {
+	const {
+		currentAppeal,
+		currentFolder,
+		params: {
+			documentId
+		}
+	} = request;
+
+	if (!currentAppeal || !currentFolder) {
+		return response.status(404).render('app/404');
+	}
+
+	postDocumentUpload(
+		request,
+		response,
+		`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/add-document-details/${currentFolder.id}/${documentId}`
 	);
 };
 
@@ -392,7 +440,7 @@ export const postDocumentVersionDetails = async (request, response) => {
 		request,
 		response,
 		`/appeals-service/appeal-details/${request.params.appealId}/appellant-case/add-documents/${request.params.folderId}/${request.params.documentId}`,
-		`/appeals-service/appeal-details/${request.params.appealId}/appellant-case`
+		`/appeals-service/appeal-details/${request.params.appealId}/appellant-case/add-documents/${request.params.folderId}/${request.params.documentId}/check-your-answers`
 	);
 };
 /** @type {import('@pins/express').RequestHandler<Response>} */

@@ -36,6 +36,7 @@ import { redactionStatusIdToName } from '#lib/redaction-statuses.js';
  * @param {string} folderPath
  * @param {string} documentId
  * @param {string} documentName
+ * @param {number} latestVersion
  * @param {string} backButtonUrl
  * @param {string|undefined} nextPageUrl
  * @param {boolean} isLateEntry
@@ -53,6 +54,7 @@ export async function documentUploadPage(
 	folderPath,
 	documentId,
 	documentName,
+	latestVersion,
 	backButtonUrl,
 	nextPageUrl,
 	isLateEntry,
@@ -76,6 +78,8 @@ export async function documentUploadPage(
 		appealReference,
 		folderId: folderId,
 		documentId,
+		documentOriginalFileName: documentName,
+		documentVersion: latestVersion,
 		useBlobEmulator: config.useBlobEmulator,
 		...(accessToken && {
 			accessToken: JSON.stringify(accessToken)
@@ -83,7 +87,7 @@ export async function documentUploadPage(
 		blobStorageHost:
 			config.useBlobEmulator === true ? config.blobEmulatorSasUrl : config.blobStorageUrl,
 		blobStorageContainer: config.blobStorageDefaultContainer,
-		multiple: allowMultipleFiles !== undefined ? allowMultipleFiles : !documentId,
+		multiple: documentId ? false : allowMultipleFiles || false,
 		documentStage: documentStage,
 		serviceName: documentName || pageHeadingText,
 		pageTitle: pageHeadingTextOverride || 'Upload documents',

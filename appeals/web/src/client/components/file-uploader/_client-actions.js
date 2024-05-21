@@ -78,7 +78,7 @@ const clientActions = (container) => {
 		}
 
 		updateFilesRows(uploadInput);
-		createFormFieldsForAddedDocuments();
+		createUploadInfoForAddedDocuments();
 		updateUploadButton();
 	}
 
@@ -101,22 +101,31 @@ const clientActions = (container) => {
 		accessToken: JSON.parse(container.dataset?.accessToken || '')
 	};
 
-	// BOAT-1277:
-	function createFormFieldsForAddedDocuments() {
-		// uploading new version of an existing document (i.e. if documentGUID is present)
+	function createUploadInfoForAddedDocuments() {
+		uploadInfo.documents.length = 0;
+
+		// uploading new version of an existing document
 		if (globalDataTransfer.files.length === 1 && container.dataset?.documentId) {
-			// should only be possible to add a single document, so ignore all added files apart from the first
-			// no need for GUID field (server will have it already)
-			updateUploadInfoHiddenField(
-				JSON.stringify({
-					name: globalDataTransfer.files.item(0)?.name || ''
-				})
-			);
+			/** @type {FileWithRowId|null} */
+			const file = globalDataTransfer.files.item(0);
+
+			uploadInfo.documents.push({
+				name: globalDataTransfer.files.item(0)?.name || '',
+				GUID: container.dataset?.documentId,
+				fileRowId: file?.fileRowId,
+				blobStoreUrl: createBlobStorageUrl(
+					container.dataset?.caseReference,
+					container.dataset?.documentId,
+					container.dataset?.documentOriginalFileName || '',
+					container.dataset?.documentVersion),
+				mimeType: file?.type,
+				documentType: container.dataset?.documentType,
+				size: file?.size,
+				stage: container.dataset?.documentStage
+			});
 		}
 		// uploading new document(s)
 		else {
-			uploadInfo.documents.length = 0;
-
 			for (const file of globalDataTransfer.files) {
 				/** @type {FileWithRowId} */
 				const fileWithRowId = file;
@@ -126,16 +135,20 @@ const clientActions = (container) => {
 					name: file.name,
 					GUID: guid,
 					fileRowId: fileWithRowId.fileRowId,
-					blobStoreUrl: createBlobStorageUrl(container.dataset?.caseReference, guid, file.name),
+					blobStoreUrl: createBlobStorageUrl(
+						container.dataset?.caseReference,
+						guid,
+						file.name
+					),
 					mimeType: file.type,
 					documentType: container.dataset?.documentType,
 					size: file.size,
 					stage: container.dataset?.documentStage
 				});
 			}
-
-			updateUploadInfoHiddenField(JSON.stringify(uploadInfo.documents));
 		}
+
+		updateUploadInfoHiddenField(JSON.stringify(uploadInfo.documents));
 	}
 
 	// BOAT-1277:
@@ -164,7 +177,7 @@ const clientActions = (container) => {
 		const { target } = selectEvent;
 
 		updateFilesRows(target);
-		createFormFieldsForAddedDocuments();
+		createUploadInfoForAddedDocuments();
 		updateUploadButton();
 	};
 
@@ -415,12 +428,16 @@ const clientActions = (container) => {
 	 * @param {string|undefined} caseReference
 	 * @param {string} fileGuid
 	 * @param {string} fileName
+	 * @param {string} [latestVersion]
 	 * @returns {string}
 	 */
-	const createBlobStorageUrl = (caseReference, fileGuid, fileName) => {
+	const createBlobStorageUrl = (caseReference, fileGuid, fileName, latestVersion) => {
 		if (!caseReference) return '';
 
-		return `appeal/${caseReference}/${fileGuid}/v1/${fileName}`;
+		const latestVersionNumber = latestVersion && parseInt(latestVersion, 10);
+		const version = latestVersionNumber ? latestVersionNumber + 1 : 1;
+
+		return `appeal/${caseReference}/${fileGuid}/v${version}/${fileName}`;
 	};
 
 	return { onFileSelect, onSubmitValidation, registerEvents };

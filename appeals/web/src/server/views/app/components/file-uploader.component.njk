@@ -18,6 +18,8 @@
 		 data-document-type="{{ params.documentType }}" data-document-stage="{{ params.documentStage }}"
 		 data-blob-storage-host="{{ params.blobStorageHost }}" data-blob-storage-container="{{ params.blobStorageContainer}}"
 		 {% if params.documentId %} data-document-id="{{ params.documentId }}"{% endif %}
+		 {% if params.documentOriginalFileName %} data-document-original-file-name="{{ params.documentOriginalFileName }}"{% endif %}
+		 {% if params.documentVersion %} data-document-version="{{ params.documentVersion }}"{% endif %}
 		 {% if params.useBlobEmulator %} data-use-blob-emulator="{{ params.useBlobEmulator }}"{% endif %}
 		 {% if params.accessToken %} data-access-token="{{ params.accessToken }}"{% endif %}
 		 data-allowed-types="{% for value in params.allowedTypes %}{{ value|MIME }}{% endfor %}">

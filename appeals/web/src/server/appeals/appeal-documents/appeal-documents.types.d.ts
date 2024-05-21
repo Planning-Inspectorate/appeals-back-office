@@ -6,6 +6,8 @@ export interface DocumentUploadPageParameters {
 	appealReference: string;
 	folderId: string;
 	documentId?: string;
+	documentOriginalFileName?: string;
+	documentVersion?: number;
 	useBlobEmulator: boolean;
 	accessToken: AccessToken;
 	blobStorageHost: string;

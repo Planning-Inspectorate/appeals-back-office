@@ -131,7 +131,17 @@ router
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		validateCaseDocumentId,
-		asyncRoute(controller.getAddDocumentsVersion)
+		asyncRoute(controller.getAddDocumentVersion)
+	)
+	.post(validateAppeal, validateCaseFolderId, asyncRoute(controller.postAddDocumentVersion));
+
+router
+	.route('/add-documents/:folderId/:documentId/check-your-answers')
+	.get(validateAppeal, validateCaseFolderId, asyncRoute(controller.getAddDocumentsCheckAndConfirm))
+	.post(
+		validateAppeal,
+		validateCaseFolderId,
+		asyncRoute(controller.postAddDocumentVersionCheckAndConfirm)
 	);
 
 router

@@ -13,7 +13,6 @@ import {
 	addDocumentsCheckAndConfirmPage,
 	manageFolderPage,
 	manageDocumentPage,
-	mapRedactionStatusIdToName,
 	changeDocumentDetailsPage,
 	deleteDocumentPage,
 	documentUploadPage
@@ -21,11 +20,11 @@ import {
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { isInternalUrl } from '#lib/url-utilities.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
-import { createNewDocument } from '#app/components/file-uploader.component.js';
+import { createNewDocument, createNewDocumentVersion } from '#app/components/file-uploader.component.js';
 import config from '@pins/appeals.web/environment/config.js';
 import { redactionStatusNameToId } from '#lib/redaction-statuses.js';
 import { isFileUploadInfo } from '#lib/ts-utilities.js';
-import { apiDateStringToDayMonthYear, dateToDayMonthYear, dayMonthYearToApiDateString } from '#lib/dates.js';
+import { dateToDayMonthYear, dayMonthYearToApiDateString } from '#lib/dates.js';
 
 /**
  *
@@ -62,11 +61,13 @@ export const renderDocumentUpload = async (
 
 	let documentName;
 	let _documentType = documentType;
+	let latestVersion;
 
 	if (documentId) {
 		const fileInfo = await getFileInfo(request.apiClient, appealId, documentId);
 		documentName = fileInfo?.latestDocumentVersion.fileName;
 		_documentType = fileInfo?.latestDocumentVersion.documentType;
+		latestVersion = fileInfo?.latestDocumentVersion.version;
 	}
 
 	const mappedPageContent = await documentUploadPage(
@@ -76,6 +77,7 @@ export const renderDocumentUpload = async (
 		currentFolder.path,
 		documentId,
 		documentName,
+		latestVersion,
 		backButtonUrl,
 		nextPageUrl,
 		isLateEntry,
@@ -319,12 +321,13 @@ export const postDocumentDetails = async (
 		if (redactionStatuses) {
 			addDocumentDetailsFormDataToFileUploadInfo(body, request.session.fileUploadInfo, redactionStatuses);
 
+			// TODO: BOAT-1277: move this to check and confirm step
 			addNotificationBannerToSession(
 				request.session,
 				'documentAdded',
 				Number.parseInt(appealId, 10)
 			);
-
+			// TODO: BOAT-1277: move this to check and confirm step
 			if (successCallback) {
 				successCallback(request);
 			}
@@ -383,7 +386,10 @@ export const renderUploadDocumentsCheckAndConfirm = async (request, response, ba
  * @param {string} nextPageUrl
  */
 export const postUploadDocumentsCheckAndConfirm = async (request, response, nextPageUrl) => {
-	const { currentAppeal, currentFolder } = request;
+	const {
+		currentAppeal,
+		currentFolder
+	} = request;
 
 	if (!currentAppeal || !currentFolder) {
 		return response.status(404).render('app/404');
@@ -425,6 +431,68 @@ export const postUploadDocumentsCheckAndConfirm = async (request, response, next
 		};
 
 		await createNewDocument(request.apiClient, currentAppeal.appealId, addDocumentsRequestPayload);
+
+		delete request.session.fileUploadInfo;
+
+		return response.redirect(nextPageUrl);
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error
+				? error.message
+				: 'Something went wrong when submitting the upload documents check and confirm page'
+		);
+
+		return response.render('app/500.njk');
+	}
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * @param {string} nextPageUrl
+ */
+export const postUploadDocumentVersionCheckAndConfirm = async (request, response, nextPageUrl) => {
+	const {
+		currentAppeal,
+		currentFolder
+	} = request;
+
+	if (!currentAppeal || !currentFolder) {
+		return response.status(404).render('app/404');
+	}
+
+	if (!objectContainsAllKeys(request.session, 'fileUploadInfo')) {
+		return response.render('app/500.njk');
+	}
+
+	try {
+		const {
+			currentAppeal,
+			session: { fileUploadInfo },
+			params: { documentId }
+		} = request;
+		const uploadInfo = fileUploadInfo[0];
+
+		/** @type {import('@pins/appeals/index.js').AddDocumentVersionRequest} */
+		const addDocumentVersionRequestPayload = {
+			blobStorageHost:
+				config.useBlobEmulator === true ? config.blobEmulatorSasUrl : config.blobStorageUrl,
+			blobStorageContainer: config.blobStorageDefaultContainer,
+			document: {
+				caseId: currentAppeal.appealId,
+				documentName: uploadInfo.name,
+				documentType: uploadInfo.documentType,
+				mimeType: uploadInfo.mimeType,
+				documentSize: uploadInfo.size,
+				stage: uploadInfo.stage,
+				fileRowId: uploadInfo.fileRowId,
+				folderId: currentFolder.id,
+				GUID: uploadInfo.GUID
+			}
+		};
+
+		await createNewDocumentVersion(request.apiClient, currentAppeal.appealId, documentId, addDocumentVersionRequestPayload);
 
 		delete request.session.fileUploadInfo;
 
