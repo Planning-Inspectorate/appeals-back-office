@@ -232,7 +232,8 @@ export const postScheduleOrManageSiteVisit = async (request, response, pageType)
 					mappedUpdateOrCreateSiteVisitParameters.apiVisitType,
 					mappedUpdateOrCreateSiteVisitParameters.visitDate,
 					mappedUpdateOrCreateSiteVisitParameters.visitStartTime,
-					mappedUpdateOrCreateSiteVisitParameters.visitEndTime
+					mappedUpdateOrCreateSiteVisitParameters.visitEndTime,
+					mappedUpdateOrCreateSiteVisitParameters.previousVisitType
 				);
 
 				return response.redirect(

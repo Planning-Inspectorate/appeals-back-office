@@ -527,7 +527,8 @@ export function mapPostScheduleOrManageSiteVisitCommonParameters(
 		}),
 		visitStartTime: hourMinuteToApiDateString(visitStartTimeHour, visitStartTimeMinute),
 		visitEndTime: hourMinuteToApiDateString(visitEndTimeHour, visitEndTimeMinute),
-		apiVisitType: mapWebVisitTypeToApiVisitType(visitType)
+		apiVisitType: mapWebVisitTypeToApiVisitType(visitType),
+		previousVisitType: ''
 	};
 }
 
@@ -572,6 +573,10 @@ export function mapPostScheduleOrManageSiteVisitConfirmationPageType(
 		confirmationPageTypeToRender = 'date-time';
 	} else if (visitTypeChanged && dateTimeChanged) {
 		confirmationPageTypeToRender = 'all';
+	}
+
+	if (visitTypeChanged) {
+		updateOrCreateSiteVisitParameters.previousVisitType = oldApiVisitType;
 	}
 
 	return confirmationPageTypeToRender;
