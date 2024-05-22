@@ -5,6 +5,7 @@ import { mapBlobPath } from '#endpoints/documents/documents.mapper.js';
 import { getDefaultRedactionStatus } from './document-metadata.repository.js';
 import { createAppealReference } from '#utils/appeal-reference.js';
 import { STATUSES } from '@pins/appeals/constants/state.js';
+import { STAGE, DOCTYPE } from '@pins/appeals/constants/documents.js';
 
 import config from '#config/config.js';
 
@@ -205,8 +206,6 @@ export const createDocument = async (data) => {
 };
 
 const getFolderIdFromDocumentType = (caseFolders, documentType, stage) => {
-	const catchAllFolder = 'additionalDocuments';
-
 	const caseFolder = caseFolders.find(
 		(caseFolder) => caseFolder.path === `${stage}/${documentType}`
 	);
@@ -214,7 +213,16 @@ const getFolderIdFromDocumentType = (caseFolders, documentType, stage) => {
 		return caseFolder.id;
 	}
 
-	return caseFolders.find((caseFolder) => caseFolder.path === `${stage}/${catchAllFolder}`).id;
+	if (stage === STAGE.APPELLANT_CASE) {
+		return caseFolders.find(
+			(caseFolder) => caseFolder.path === `${stage}/${DOCTYPE.APPELLANT_CASE_CORRESPONDENCE}`
+		).id;
+	}
+	if (stage === STAGE.LPA_QUESTIONNAIRE) {
+		return caseFolders.find(
+			(caseFolder) => caseFolder.path === `${stage}/${DOCTYPE.LPA_CASE_CORRESPONDENCE}`
+		).id;
+	}
 };
 
 const getFindUniqueAppealQueryIncludes = () => {
