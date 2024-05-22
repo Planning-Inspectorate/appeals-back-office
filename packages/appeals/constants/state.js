@@ -1,3 +1,4 @@
+/** @type {Object<string, string>} */
 export const STATUSES = {
 	ASSIGN_CASE_OFFICER: 'assign_case_officer',
 	VALIDATION: 'validation',
@@ -14,6 +15,7 @@ export const STATUSES = {
 	TRANSFERRED: 'transferred'
 };
 
+/** @type {Object<string, string>} */
 export const TRANSITIONS = {
 	ASSIGNED_CASE_OFFICER: 'assigned_case_officer',
 	VALIDATION_VALID: 'validation_valid',
