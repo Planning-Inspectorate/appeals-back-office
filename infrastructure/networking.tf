@@ -61,8 +61,6 @@ resource "azurerm_virtual_network_peering" "front_office_to_bo" {
   remote_virtual_network_id = azurerm_virtual_network.main.id
   resource_group_name       = var.common_infra_config.network_rg
   virtual_network_name      = var.common_infra_config.network_name
-
-  provider = azurerm.tooling
 }
 
 ## DNS Zones for Azure Services
