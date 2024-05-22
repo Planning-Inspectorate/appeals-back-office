@@ -1,4 +1,4 @@
-import { ODW_SYSTEM_ID } from '#endpoints/constants.js';
+import { ODW_AGENT_SVCUSR, ODW_APPELLANT_SVCUSR, ODW_SYSTEM_ID } from '#endpoints/constants.js';
 
 /**
  *
@@ -21,7 +21,7 @@ export const mapServiceUserIn = (data) => {
 /**
  *
  * @param {*} data
- * @param {'Appellant' | 'Agent'} serviceUserType
+ * @param {string} serviceUserType
  * @param {string} caseReference
  * @returns {import('pins-data-model').Schemas.ServiceUser | null}
  */
@@ -46,7 +46,7 @@ export const mapServiceUserOut = (data, serviceUserType, caseReference) => {
 			sourceSuid: data.id.toString(),
 			caseReference,
 			sourceSystem: ODW_SYSTEM_ID,
-			serviceUserType,
+			serviceUserType: mapServiceUserType(serviceUserType),
 			role: data.jobTitle ?? null,
 			otherPhoneNumber: null,
 			faxNumber: null
@@ -56,4 +56,20 @@ export const mapServiceUserOut = (data, serviceUserType, caseReference) => {
 	}
 
 	return null;
+};
+
+/**
+ *
+ * @param {string} type
+ * @returns {'Applicant' | 'Appellant' | 'Agent' | 'RepresentationContact' | 'Subscriber'}
+ */
+const mapServiceUserType = (type) => {
+	if (type.toLowerCase() === ODW_APPELLANT_SVCUSR.toLowerCase()) {
+		return ODW_APPELLANT_SVCUSR;
+	}
+	if (type.toLowerCase() === ODW_AGENT_SVCUSR.toLowerCase()) {
+		return ODW_AGENT_SVCUSR;
+	}
+
+	return ODW_APPELLANT_SVCUSR;
 };

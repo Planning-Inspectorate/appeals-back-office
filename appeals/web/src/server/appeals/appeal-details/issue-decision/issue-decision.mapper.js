@@ -159,7 +159,7 @@ export function dateDecisionLetterPage(
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {Appeal} appealData
  * @param  {import('./issue-decision.types.js').InspectorDecisionRequest} session
- * @param {import('@pins/appeals.api').Schema.Folder|undefined} decisionLetterFolder
+ * @param {import('@pins/appeals.api').Appeals.SingleFolderResponse|undefined} decisionLetterFolder
  * @returns {PageContent}
  */
 export function checkAndConfirmPage(request, appealData, session, decisionLetterFolder) {

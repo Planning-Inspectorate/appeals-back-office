@@ -35,15 +35,15 @@ const renderSelectDocumentType = async (request, response) => {
 	// TODO: BOAT-1168 - add API endpoint to retrieve document type options (hardcoded for now)
 	const documentTypes = [
 		{
-			value: `${costsCategory}CostApplication`,
+			value: `${costsCategory}CostsApplication`,
 			name: 'Application'
 		},
 		{
-			value: `${costsCategory}CostWithdrawal`,
+			value: `${costsCategory}CostsWithdrawal`,
 			name: 'Withdrawal'
 		},
 		{
-			value: `${costsCategory}CostCorrespondence`,
+			value: `${costsCategory}CostsCorrespondence`,
 			name: 'Correspondence'
 		}
 	];

@@ -1,4 +1,5 @@
-import { ERROR_FAILED_TO_SAVE_DATA, CONFIG_APPEAL_STAGES } from '#endpoints/constants.js';
+import { ERROR_FAILED_TO_SAVE_DATA } from '#endpoints/constants.js';
+import { STAGE } from '@pins/appeals/constants/documents.js';
 import { getFoldersForAppeal } from '#endpoints/documents/documents.service.js';
 import { formatLpaQuestionnaire } from './lpa-questionnaires.formatter.js';
 import { updateLPAQuestionaireValidationOutcome } from './lpa-questionnaires.service.js';
@@ -16,7 +17,7 @@ import logger from '#utils/logger.js';
  */
 const getLpaQuestionnaireById = async (req, res) => {
 	const { appeal } = req;
-	const folders = await getFoldersForAppeal(appeal, CONFIG_APPEAL_STAGES.lpaQuestionnaire);
+	const folders = await getFoldersForAppeal(appeal, STAGE.LPAQUESTIONNAIRE);
 	const formattedAppeal = formatLpaQuestionnaire(appeal, folders);
 	return res.send(formattedAppeal);
 };

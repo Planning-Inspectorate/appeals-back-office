@@ -5,7 +5,7 @@ import config from '#config/config.js';
 import { randomUUID } from 'node:crypto';
 import { UUID_REGEX } from '#endpoints/constants.js';
 import { mapDate } from './date.mapper.js';
-import { ODW_SYSTEM_ID, CONFIG_APPEAL_STAGES } from '#endpoints/constants.js';
+import { ODW_SYSTEM_ID } from '#endpoints/constants.js';
 import {
 	AVSCAN_STATUS,
 	REDACTION_STATUS,
@@ -112,7 +112,7 @@ const mapVirusCheckStatus = (documentVersion) => {
 };
 
 const mapPublishingStatus = (documentVersion) => {
-	return documentVersion.stage !== 'internal';
+	return documentVersion.stage !== STAGE.INTERNAL;
 };
 
 const mapRedactionStatus = (status) => {
@@ -126,29 +126,29 @@ const mapRedactionStatus = (status) => {
 };
 
 const mapOrigin = (stage) => {
-	if (stage === CONFIG_APPEAL_STAGES.appellantCase) {
+	if (stage === STAGE.APPELLANTCASE) {
 		return ORIGIN.CITIZEN;
 	}
-	if (stage === CONFIG_APPEAL_STAGES.lpaQuestionnaire) {
+	if (stage === STAGE.LPAQUESTIONNAIRE) {
 		return ORIGIN.LPA;
 	}
-	if (stage === CONFIG_APPEAL_STAGES.decision || stage === CONFIG_APPEAL_STAGES.costs) {
+	if (stage === STAGE.APPEALDECISION || stage === STAGE.INTERNAL) {
 		return ORIGIN.PINS;
 	}
 	return null;
 };
 
 const mapStage = (stage) => {
-	if (stage === CONFIG_APPEAL_STAGES.appellantCase) {
+	if (stage === STAGE.APPELLANTCASE) {
 		return STAGE.APPELLANTCASE;
 	}
-	if (stage === CONFIG_APPEAL_STAGES.lpaQuestionnaire) {
+	if (stage === STAGE.LPAQUESTIONNAIRE) {
 		return STAGE.LPAQUESTIONNAIRE;
 	}
-	if (stage === CONFIG_APPEAL_STAGES.decision) {
+	if (stage === STAGE.APPEALDECISION) {
 		return STAGE.APPEALDECISION;
 	}
-	if (stage === CONFIG_APPEAL_STAGES.costs) {
+	if (stage === STAGE.COSTS) {
 		return STAGE.COSTS;
 	}
 

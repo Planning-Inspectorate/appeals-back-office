@@ -796,9 +796,9 @@ export const lpaQuestionnaireDataNotValidated = {
 	],
 	developmentDescription: '',
 	documents: {
-		conservationAreaMap: {
+		conservationMap: {
 			folderId: 1,
-			path: 'lpa_questionnaire/conservationAreaMap',
+			path: 'lpa-questionnaire/conservationMap',
 			documents: [
 				{
 					id: '9635631c-507c-4af2-98a1-da007e8bb56a',
@@ -808,9 +808,9 @@ export const lpaQuestionnaireDataNotValidated = {
 				}
 			]
 		},
-		notifyingParties: {
+		whoNotified: {
 			folderId: 2,
-			path: 'lpa_questionnaire/notifyingParties',
+			path: 'lpa-questionnaire/whoNotified',
 			documents: [
 				{
 					id: '9635631c-507c-4af2-98a1-da007e8bb56b',
@@ -820,45 +820,9 @@ export const lpaQuestionnaireDataNotValidated = {
 				}
 			]
 		},
-		siteNotices: {
-			folderId: 3,
-			path: 'lpa_questionnaire/siteNotices',
-			documents: [
-				{
-					id: '9635631c-507c-4af2-98a1-da007e8bb56c',
-					name: 'siteNotices.docx',
-					folderId: 3,
-					caseId: 1
-				}
-			]
-		},
-		lettersToNeighbours: {
-			folderId: 4,
-			path: 'lpa_questionnaire/lettersToNeighbours',
-			documents: [
-				{
-					id: '9635631c-507c-4af2-98a1-da007e8bb56d',
-					name: 'lettersToNeighbours.docx',
-					folderId: 4,
-					caseId: 1
-				}
-			]
-		},
-		pressAdvert: {
-			folderId: 5,
-			path: 'lpa_questionnaire/pressAdvert',
-			documents: [
-				{
-					id: '9635631c-507c-4af2-98a1-da007e8bb56e',
-					name: 'pressAdvert.docx',
-					folderId: 5,
-					caseId: 1
-				}
-			]
-		},
-		representations: {
+		otherPartyRepresentations: {
 			folderId: 6,
-			path: 'lpa_questionnaire/representations',
+			path: 'lpa-questionnaire/otherPartyRepresentations',
 			documents: [
 				{
 					id: '9635631c-507c-4af2-98a1-da007e8bb56f',
@@ -868,9 +832,9 @@ export const lpaQuestionnaireDataNotValidated = {
 				}
 			]
 		},
-		officersReport: {
+		planningOfficerReport: {
 			folderId: 7,
-			path: 'lpa_questionnaire/officersReport',
+			path: 'lpa-questionnaire/planningOfficerReport',
 			documents: [
 				{
 					id: '9635631c-507c-4af2-98a1-da007e8bb56g',
@@ -880,165 +844,165 @@ export const lpaQuestionnaireDataNotValidated = {
 				}
 			]
 		},
-		communityInfrastructureLevy: {
-			folderId: 8,
-			path: 'lpa_questionnaire/communityInfrastructureLevy',
-			documents: [
-				{
-					id: '9635631c-507c-4af2-98a1-da007e8bb56h',
-					name: 'communityInfrastructureLevy.docx',
-					folderId: 8,
-					caseId: 1
-				}
-			]
-		},
-		consultationResponses: {
-			folderId: 9,
-			path: 'lpa_questionnaire/consultationResponses',
-			documents: [
-				{
-					id: '9635631c-507c-4af2-98a1-da007e8bb56i',
-					name: 'consultationResponses.docx',
-					folderId: 9,
-					caseId: 1
-				}
-			]
-		},
-		definitiveMapAndStatement: {
-			folderId: 10,
-			path: 'lpa_questionnaire/definitiveMapAndStatement',
-			documents: [
-				{
-					id: '9635631c-507c-4af2-98a1-da007e8bb56j',
-					name: 'definitiveMapAndStatement.docx',
-					folderId: 10,
-					caseId: 1
-				}
-			]
-		},
-		emergingPlans: {
-			folderId: 11,
-			path: 'lpa_questionnaire/emergingPlans',
-			documents: [
-				{
-					id: '9635631c-507c-4af2-98a1-da007e8bb56k',
-					name: 'emergingPlans.docx',
-					folderId: 11,
-					caseId: 1
-				}
-			]
-		},
-		environmentalStatementResponses: {
-			folderId: 12,
-			path: 'lpa_questionnaire/environmentalStatementResponses',
-			documents: [
-				{
-					id: '9635631c-507c-4af2-98a1-da007e8bb56l',
-					name: 'environmentalStatementResponses.docx',
-					folderId: 12,
-					caseId: 1
-				}
-			]
-		},
-		issuedScreeningOption: {
-			folderId: 13,
-			path: 'lpa_questionnaire/issuedScreeningOption',
-			documents: [
-				{
-					id: '9635631c-507c-4af2-98a1-da007e8bb56m',
-					name: 'issuedScreeningOption.docx',
-					folderId: 13,
-					caseId: 1
-				}
-			]
-		},
-		otherRelevantPolicies: {
-			folderId: 14,
-			path: 'lpa_questionnaire/otherRelevantPolicies',
-			documents: [
-				{
-					id: '9635631c-507c-4af2-98a1-da007e8bb56n',
-					name: 'otherRelevantPolicies.docx',
-					folderId: 14,
-					caseId: 1
-				}
-			]
-		},
-		policiesFromStatutoryDevelopment: {
-			folderId: 15,
-			path: 'lpa_questionnaire/policiesFromStatutoryDevelopment',
-			documents: [
-				{
-					id: '9635631c-507c-4af2-98a1-da007e8bb56o',
-					name: 'policiesFromStatutoryDevelopment.docx',
-					folderId: 15,
-					caseId: 1
-				}
-			]
-		},
-		relevantPartiesNotification: {
-			folderId: 16,
-			path: 'lpa_questionnaire/relevantPartiesNotification',
-			documents: [
-				{
-					id: '9635631c-507c-4af2-98a1-da007e8bb56p',
-					name: 'relevantPartiesNotification.docx',
-					folderId: 16,
-					caseId: 1
-				}
-			]
-		},
-		responsesOrAdvice: {
-			folderId: 17,
-			path: 'lpa_questionnaire/responsesOrAdvice',
-			documents: [
-				{
-					id: '9635631c-507c-4af2-98a1-da007e8bb56q',
-					name: 'responsesOrAdvice.docx',
-					folderId: 17,
-					caseId: 1
-				}
-			]
-		},
-		screeningDirection: {
-			folderId: 18,
-			path: 'lpa_questionnaire/screeningDirection',
-			documents: [
-				{
-					id: '9635631c-507c-4af2-98a1-da007e8bb56r',
-					name: 'screeningDirection.docx',
-					folderId: 18,
-					caseId: 1
-				}
-			]
-		},
-		supplementaryPlanningDocuments: {
-			folderId: 19,
-			path: 'lpa_questionnaire/supplementaryPlanningDocuments',
-			documents: [
-				{
-					id: '9635631c-507c-4af2-98a1-da007e8bb56s',
-					name: 'supplementaryPlanningDocuments.docx',
-					folderId: 19,
-					caseId: 1
-				}
-			]
-		},
-		treePreservationOrder: {
-			folderId: 20,
-			path: 'lpa_questionnaire/treePreservationOrder',
-			documents: [
-				{
-					id: '9635631c-507c-4af2-98a1-da007e8bb56t',
-					name: 'treePreservationOrder.docx',
-					folderId: 20,
-					caseId: 1
-				}
-			]
-		},
-		additionalDocuments: {
+		// communityInfrastructureLevy: {
+		// 	folderId: 8,
+		// 	path: 'lpa_questionnaire/communityInfrastructureLevy',
+		// 	documents: [
+		// 		{
+		// 			id: '9635631c-507c-4af2-98a1-da007e8bb56h',
+		// 			name: 'communityInfrastructureLevy.docx',
+		// 			folderId: 8,
+		// 			caseId: 1
+		// 		}
+		// 	]
+		// },
+		// consultationResponses: {
+		// 	folderId: 9,
+		// 	path: 'lpa_questionnaire/consultationResponses',
+		// 	documents: [
+		// 		{
+		// 			id: '9635631c-507c-4af2-98a1-da007e8bb56i',
+		// 			name: 'consultationResponses.docx',
+		// 			folderId: 9,
+		// 			caseId: 1
+		// 		}
+		// 	]
+		// },
+		// definitiveMapAndStatement: {
+		// 	folderId: 10,
+		// 	path: 'lpa_questionnaire/definitiveMapAndStatement',
+		// 	documents: [
+		// 		{
+		// 			id: '9635631c-507c-4af2-98a1-da007e8bb56j',
+		// 			name: 'definitiveMapAndStatement.docx',
+		// 			folderId: 10,
+		// 			caseId: 1
+		// 		}
+		// 	]
+		// },
+		// emergingPlans: {
+		// 	folderId: 11,
+		// 	path: 'lpa_questionnaire/emergingPlans',
+		// 	documents: [
+		// 		{
+		// 			id: '9635631c-507c-4af2-98a1-da007e8bb56k',
+		// 			name: 'emergingPlans.docx',
+		// 			folderId: 11,
+		// 			caseId: 1
+		// 		}
+		// 	]
+		// },
+		// environmentalStatementResponses: {
+		// 	folderId: 12,
+		// 	path: 'lpa_questionnaire/environmentalStatementResponses',
+		// 	documents: [
+		// 		{
+		// 			id: '9635631c-507c-4af2-98a1-da007e8bb56l',
+		// 			name: 'environmentalStatementResponses.docx',
+		// 			folderId: 12,
+		// 			caseId: 1
+		// 		}
+		// 	]
+		// },
+		// issuedScreeningOption: {
+		// 	folderId: 13,
+		// 	path: 'lpa_questionnaire/issuedScreeningOption',
+		// 	documents: [
+		// 		{
+		// 			id: '9635631c-507c-4af2-98a1-da007e8bb56m',
+		// 			name: 'issuedScreeningOption.docx',
+		// 			folderId: 13,
+		// 			caseId: 1
+		// 		}
+		// 	]
+		// },
+		// otherRelevantPolicies: {
+		// 	folderId: 14,
+		// 	path: 'lpa_questionnaire/otherRelevantPolicies',
+		// 	documents: [
+		// 		{
+		// 			id: '9635631c-507c-4af2-98a1-da007e8bb56n',
+		// 			name: 'otherRelevantPolicies.docx',
+		// 			folderId: 14,
+		// 			caseId: 1
+		// 		}
+		// 	]
+		// },
+		// policiesFromStatutoryDevelopment: {
+		// 	folderId: 15,
+		// 	path: 'lpa_questionnaire/policiesFromStatutoryDevelopment',
+		// 	documents: [
+		// 		{
+		// 			id: '9635631c-507c-4af2-98a1-da007e8bb56o',
+		// 			name: 'policiesFromStatutoryDevelopment.docx',
+		// 			folderId: 15,
+		// 			caseId: 1
+		// 		}
+		// 	]
+		// },
+		// relevantPartiesNotification: {
+		// 	folderId: 16,
+		// 	path: 'lpa_questionnaire/relevantPartiesNotification',
+		// 	documents: [
+		// 		{
+		// 			id: '9635631c-507c-4af2-98a1-da007e8bb56p',
+		// 			name: 'relevantPartiesNotification.docx',
+		// 			folderId: 16,
+		// 			caseId: 1
+		// 		}
+		// 	]
+		// },
+		// responsesOrAdvice: {
+		// 	folderId: 17,
+		// 	path: 'lpa_questionnaire/responsesOrAdvice',
+		// 	documents: [
+		// 		{
+		// 			id: '9635631c-507c-4af2-98a1-da007e8bb56q',
+		// 			name: 'responsesOrAdvice.docx',
+		// 			folderId: 17,
+		// 			caseId: 1
+		// 		}
+		// 	]
+		// },
+		// screeningDirection: {
+		// 	folderId: 18,
+		// 	path: 'lpa_questionnaire/screeningDirection',
+		// 	documents: [
+		// 		{
+		// 			id: '9635631c-507c-4af2-98a1-da007e8bb56r',
+		// 			name: 'screeningDirection.docx',
+		// 			folderId: 18,
+		// 			caseId: 1
+		// 		}
+		// 	]
+		// },
+		// supplementaryPlanningDocuments: {
+		// 	folderId: 19,
+		// 	path: 'lpa_questionnaire/supplementaryPlanningDocuments',
+		// 	documents: [
+		// 		{
+		// 			id: '9635631c-507c-4af2-98a1-da007e8bb56s',
+		// 			name: 'supplementaryPlanningDocuments.docx',
+		// 			folderId: 19,
+		// 			caseId: 1
+		// 		}
+		// 	]
+		// },
+		// treePreservationOrder: {
+		// 	folderId: 20,
+		// 	path: 'lpa_questionnaire/treePreservationOrder',
+		// 	documents: [
+		// 		{
+		// 			id: '9635631c-507c-4af2-98a1-da007e8bb56t',
+		// 			name: 'treePreservationOrder.docx',
+		// 			folderId: 20,
+		// 			caseId: 1
+		// 		}
+		// 	]
+		// },
+		lpaCaseCorrespondence: {
 			folderId: 21,
-			path: 'lpa_questionnaire/additionalDocuments',
+			path: 'lpa-questionnaire/lpaCaseCorrespondence',
 			documents: [
 				{
 					id: '00c43c8c-829a-4aa8-883a-fd6fc1f52c3d',

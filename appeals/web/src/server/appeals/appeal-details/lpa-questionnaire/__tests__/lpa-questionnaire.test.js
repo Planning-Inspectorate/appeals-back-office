@@ -291,7 +291,7 @@ describe('LPA Questionnaire review', () => {
 		it('should render a notification banner when a file is unscanned', async () => {
 			//Create a document with virus scan still in progress
 			let updatedLPAQuestionnaireData = cloneDeep(lpaQuestionnaireDataIncompleteOutcome);
-			updatedLPAQuestionnaireData.documents.conservationAreaMap.documents.push(
+			updatedLPAQuestionnaireData.documents.conservationMap.documents.push(
 				notCheckedDocumentFolderInfoDocuments
 			);
 			nock('http://test/')
@@ -306,7 +306,7 @@ describe('LPA Questionnaire review', () => {
 		it('should render an error when a file has a virus', async () => {
 			//Create a document with failed virus check
 			let updatedLPAQuestionnaireData = cloneDeep(lpaQuestionnaireDataIncompleteOutcome);
-			updatedLPAQuestionnaireData.documents.conservationAreaMap.documents.push({
+			updatedLPAQuestionnaireData.documents.conservationMap.documents.push({
 				...notCheckedDocumentFolderInfoDocuments,
 				// @ts-ignore
 				virusCheckStatus: 'failed_virus_check'

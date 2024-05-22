@@ -41,7 +41,7 @@ export function addDocumentTypePage(appealDetails, documentTypes) {
 /**
  *
  * @param {import('../appeal-details.types.js').WebAppeal} appealDetails
- * @param {import('@pins/appeals.api').Schema.Folder} decisionDocumentFolder
+ * @param {import('@pins/appeals.api').Appeals.SingleFolderResponse} decisionDocumentFolder
  * @returns {PageContent}
  */
 export function decisionCheckAndConfirmPage(appealDetails, decisionDocumentFolder) {

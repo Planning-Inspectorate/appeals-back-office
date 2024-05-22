@@ -10,7 +10,8 @@ import {
 } from '#repositories/document-metadata.repository.js';
 import { formatFolder } from './documents.formatter.js';
 import documentRedactionStatusRepository from '#repositories/document-redaction-status.repository.js';
-import { ERROR_NOT_FOUND, STATUSES, CONFIG_APPEAL_STAGES } from '#endpoints/constants.js';
+import { ERROR_NOT_FOUND, STATUSES } from '#endpoints/constants.js';
+import { STAGE } from '@pins/appeals/constants/documents.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { EventType } from '@pins/event-client';
 
@@ -235,15 +236,17 @@ export const addDocumentAudit = async (guid, version, auditTrail, action) => {
  */
 const isLateEntry = (stage, status) => {
 	switch (stage) {
-		case CONFIG_APPEAL_STAGES.appellantCase:
+		case STAGE.APPELLANTCASE:
 			return (
 				status !== STATUSES.STATE_TARGET_ASSIGN_CASE_OFFICER &&
+				status !== STATUSES.STATE_TARGET_VALIDATION &&
 				status !== STATUSES.STATE_TARGET_READY_TO_START
 			);
 
-		case CONFIG_APPEAL_STAGES.lpaQuestionnaire:
+		case STAGE.LPAQUESTIONNAIRE:
 			return (
 				status !== STATUSES.STATE_TARGET_ASSIGN_CASE_OFFICER &&
+				status !== STATUSES.STATE_TARGET_VALIDATION &&
 				status !== STATUSES.STATE_TARGET_READY_TO_START &&
 				status !== STATUSES.STATE_TARGET_LPA_QUESTIONNAIRE_DUE
 			);

@@ -146,26 +146,11 @@ interface SingleLPAQuestionnaireResponse {
 	designatedSites?: DesignatedSiteDetails[] | null;
 	developmentDescription?: string | null;
 	documents: {
-		communityInfrastructureLevy: FolderInfo | {};
-		conservationAreaMap: FolderInfo | {};
-		consultationResponses: FolderInfo | {};
-		definitiveMapAndStatement: FolderInfo | {};
-		emergingPlans: FolderInfo | {};
-		environmentalStatementResponses: FolderInfo | {};
-		issuedScreeningOption: FolderInfo | {};
-		lettersToNeighbours: FolderInfo | {};
-		notifyingParties: FolderInfo | {};
-		officersReport: FolderInfo | {};
-		otherRelevantPolicies: FolderInfo | {};
-		policiesFromStatutoryDevelopment: FolderInfo | {};
-		pressAdvert: FolderInfo | {};
-		representations: FolderInfo | {};
-		responsesOrAdvice: FolderInfo | {};
-		screeningDirection: FolderInfo | {};
-		siteNotices: FolderInfo | {};
-		supplementaryPlanningDocuments: FolderInfo | {};
-		treePreservationOrder: FolderInfo | {};
-		additionalDocuments: FolderInfo | {};
+		whoNotified: FolderInfo | {};
+		conservationMap: FolderInfo | {};
+		lpaCaseCorrespondence: FolderInfo | {};
+		otherPartyRepresentations: FolderInfo | {};
+		planningOfficerReport: FolderInfo | {};
 	};
 	doesAffectAListedBuilding?: boolean | null;
 	doesAffectAScheduledMonument?: boolean | null;
@@ -207,7 +192,7 @@ interface SingleLPAQuestionnaireResponse {
 	meetsOrExceedsThresholdOrCriteriaInColumn2?: boolean | null;
 	otherAppeals: string[];
 	procedureType?: string;
-	receivedAt: Date | null;
+	receivedAt: Date;
 	scheduleType?: string;
 	sensitiveAreaDetails?: string | null;
 	siteWithinGreenBelt?: boolean | null;
@@ -334,12 +319,12 @@ interface SingleAppellantCaseResponse {
 		isCorrect: boolean | null;
 	};
 	documents: {
-		appealStatement: FolderInfo | {};
-		applicationForm: FolderInfo | {};
-		decisionLetter: FolderInfo | {};
-		designAndAccessStatement?: FolderInfo | {};
-		newSupportingDocuments: FolderInfo | {};
-		additionalDocuments: FolderInfo | {};
+		appellantCaseCorrespondence: FolderInfo | {};
+		appellantCaseWithdrawalLetter: FolderInfo | {};
+		appellantStatement: FolderInfo | {};
+		applicationDecisionLetter: FolderInfo | {};
+		changedDescription: FolderInfo | {};
+		originalApplicationForm: FolderInfo | {};
 	};
 	hasAdvertisedAppeal: boolean | null;
 	hasDesignAndAccessStatement?: boolean | null;
@@ -417,42 +402,6 @@ interface FolderInfo {
 	documents: DocumentInfo[];
 }
 
-interface LatestDocumentVersionInfo {
-	published: boolean | null | undefined;
-	draft: boolean;
-	dateReceived: Date | null | undefined;
-	redactionStatusId: number | null | undefined;
-	documentGuid?: string | null | undefined;
-	version?: number | null | undefined;
-	lastModified?: any;
-	documentType?: string | null | undefined;
-	sourceSystem?: string | null | undefined;
-	origin?: any;
-	originalFilename?: string | null | undefined;
-	fileName?: string | null | undefined;
-	representative?: any;
-	description?: any;
-	owner?: any;
-	author?: any;
-	securityClassification?: any;
-	mime?: string | null | undefined;
-	horizonDataID?: any;
-	fileMD5?: any;
-	path?: any;
-	virusCheckStatus?: any;
-	size?: number | null | undefined;
-	stage?: string | null | undefined;
-	blobStorageContainer?: string | null | undefined;
-	blobStoragePath?: string | null | undefined;
-	dateCreated?: string | null | undefined;
-	datePublished?: any;
-	isDeleted?: boolean | null | undefined;
-	isLateEntry?: boolean | null | undefined;
-	redactionStatus?: number | null | undefined;
-	redacted?: boolean | null | undefined;
-	documentURI?: string | null | undefined;
-}
-
 interface DocumentInfo {
 	id: string;
 	name: string;
@@ -460,7 +409,7 @@ interface DocumentInfo {
 	folderId?: number;
 	caseId?: number;
 	virusCheckStatus?: any;
-	latestDocumentVersion?: LatestDocumentVersionInfo;
+	latestDocumentVersion?: Schema.DocumentVersion;
 	isLateEntry?: boolean;
 }
 
@@ -734,7 +683,6 @@ export {
 	CreateAuditTrail,
 	CreateAuditTrailRequest,
 	DocumentationSummary,
-	LatestDocumentVersionInfo,
 	DocumentInfo,
 	FolderInfo,
 	NotValidReasonOption,

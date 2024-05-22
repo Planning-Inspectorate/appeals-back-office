@@ -2,6 +2,7 @@ import { Router as createRouter } from 'express';
 import { asyncHandler } from '#middleware/async-handler.js';
 import { updateServiceUserById } from './service-user.controller.js';
 import { updateServiceUserValidator } from './service-user.validators.js';
+import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
 
 const router = createRouter();
 
@@ -29,6 +30,7 @@ router.patch(
 	#swagger.responses[400] = {}
 	#swagger.responses[404] = {}
  */
+	checkAppealExistsByIdAndAddToRequest,
 	updateServiceUserValidator,
 	asyncHandler(updateServiceUserById)
 );

@@ -35,6 +35,7 @@ export const broadcastDocument = async (
 	});
 
 	if (!document || !document.latestDocumentVersion) {
+		pino.error(`Trying to broadcast info for document ${documentId}, but it was not found.`);
 		return false;
 	}
 

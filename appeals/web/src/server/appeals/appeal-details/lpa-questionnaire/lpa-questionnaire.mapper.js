@@ -116,8 +116,8 @@ export async function lpaQuestionnairePage(
 				},
 				actions: {
 					items:
-						(isFolderInfo(lpaqDetails.documents.additionalDocuments)
-							? lpaqDetails.documents.additionalDocuments.documents
+						(isFolderInfo(lpaqDetails.documents.lpaCaseCorrespondence)
+							? lpaqDetails.documents.lpaCaseCorrespondence.documents
 							: []
 						).length > 0
 							? [
@@ -127,8 +127,8 @@ export async function lpaQuestionnairePage(
 										href: mapDocumentManageUrl(
 											lpaqDetails.appealId,
 											lpaqDetails.lpaQuestionnaireId,
-											(isFolderInfo(lpaqDetails.documents.additionalDocuments) &&
-												lpaqDetails.documents.additionalDocuments.folderId) ||
+											(isFolderInfo(lpaqDetails.documents.lpaCaseCorrespondence) &&
+												lpaqDetails.documents.lpaCaseCorrespondence.folderId) ||
 												undefined
 										)
 									},
@@ -137,7 +137,7 @@ export async function lpaQuestionnairePage(
 										visuallyHiddenText: 'additional documents',
 										href: displayPageFormatter.formatDocumentActionLink(
 											lpaqDetails.appealId,
-											lpaqDetails.documents.additionalDocuments,
+											lpaqDetails.documents.lpaCaseCorrespondence,
 											buildDocumentUploadUrlTemplate(lpaqDetails.lpaQuestionnaireId)
 										)
 									}
@@ -148,7 +148,7 @@ export async function lpaQuestionnairePage(
 										visuallyHiddenText: 'additional documents',
 										href: displayPageFormatter.formatDocumentActionLink(
 											lpaqDetails.appealId,
-											lpaqDetails.documents.additionalDocuments,
+											lpaqDetails.documents.lpaCaseCorrespondence,
 											buildDocumentUploadUrlTemplate(lpaqDetails.lpaQuestionnaireId)
 										)
 									}

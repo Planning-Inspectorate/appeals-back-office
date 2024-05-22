@@ -176,15 +176,15 @@ export async function appellantCasePage(
 				},
 				actions: {
 					items:
-						isFolderInfo(appellantCaseData.documents.additionalDocuments) &&
-						appellantCaseData.documents.additionalDocuments.documents.length > 0
+						isFolderInfo(appellantCaseData.documents.appellantCaseCorrespondence) &&
+						appellantCaseData.documents.appellantCaseCorrespondence.documents.length > 0
 							? [
 									{
 										text: 'Manage',
 										visuallyHiddenText: 'additional documents',
 										href: mapDocumentManageUrl(
 											appellantCaseData.appealId,
-											appellantCaseData.documents.additionalDocuments.folderId
+											appellantCaseData.documents.appellantCaseCorrespondence.folderId
 										)
 									},
 									{
@@ -192,7 +192,7 @@ export async function appellantCasePage(
 										visuallyHiddenText: 'additional documents',
 										href: displayPageFormatter.formatDocumentActionLink(
 											appellantCaseData.appealId,
-											appellantCaseData.documents.additionalDocuments,
+											appellantCaseData.documents.appellantCaseCorrespondence,
 											documentUploadUrlTemplate
 										)
 									}
@@ -203,7 +203,7 @@ export async function appellantCasePage(
 										visuallyHiddenText: 'additional documents',
 										href: displayPageFormatter.formatDocumentActionLink(
 											appellantCaseData.appealId,
-											appellantCaseData.documents.additionalDocuments,
+											appellantCaseData.documents.appellantCaseCorrespondence,
 											documentUploadUrlTemplate
 										)
 									}
