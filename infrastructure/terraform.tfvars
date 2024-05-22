@@ -12,6 +12,7 @@ sb_topic_names = {
     document         = "appeal-document"
     document_to_move = "appeal-document-to-move"
     event            = "appeal-event"
+    listed_building  = "listed-building"
     service_user     = "appeal-service-user"
   }
 }
