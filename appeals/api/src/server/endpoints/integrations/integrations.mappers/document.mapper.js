@@ -71,7 +71,7 @@ export const mapDocumentOut = (data) => {
 		owner: null,
 		author: null,
 		description: null,
-		caseStage: mapStage(data.latestDocumentVersion.stage),
+		caseStage: data.latestDocumentVersion.stage,
 		horizonFolderId: null
 	};
 
@@ -126,31 +126,14 @@ const mapRedactionStatus = (status) => {
 };
 
 const mapOrigin = (stage) => {
-	if (stage === STAGE.APPELLANTCASE) {
+	if (stage === STAGE.APPELLANT_CASE) {
 		return ORIGIN.CITIZEN;
 	}
-	if (stage === STAGE.LPAQUESTIONNAIRE) {
+	if (stage === STAGE.LPA_QUESTIONNAIRE) {
 		return ORIGIN.LPA;
 	}
-	if (stage === STAGE.APPEALDECISION || stage === STAGE.INTERNAL) {
+	if (stage === STAGE.APPEAL_DECISION || stage === STAGE.INTERNAL) {
 		return ORIGIN.PINS;
 	}
 	return null;
-};
-
-const mapStage = (stage) => {
-	if (stage === STAGE.APPELLANTCASE) {
-		return STAGE.APPELLANTCASE;
-	}
-	if (stage === STAGE.LPAQUESTIONNAIRE) {
-		return STAGE.LPAQUESTIONNAIRE;
-	}
-	if (stage === STAGE.APPEALDECISION) {
-		return STAGE.APPEALDECISION;
-	}
-	if (stage === STAGE.COSTS) {
-		return STAGE.COSTS;
-	}
-
-	return stage;
 };

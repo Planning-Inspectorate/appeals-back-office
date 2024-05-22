@@ -136,7 +136,7 @@ const getMyAppeals = async (req, res) => {
 const getAppeal = async (req, res) => {
 	const { appeal } = req;
 	const [decisionFolders, costsFolders] = await Promise.all([
-		getFoldersForAppeal(appeal, STAGE.APPEALDECISION),
+		getFoldersForAppeal(appeal, STAGE.APPEAL_DECISION),
 		getFoldersForAppeal(appeal, STAGE.COSTS)
 	]);
 
