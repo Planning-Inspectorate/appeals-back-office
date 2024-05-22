@@ -9,7 +9,7 @@ import {
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import {
 	postChangeDocumentDetails,
-	postDocumentDelete,
+	postDeleteDocument,
 	postDocumentDetails,
 	renderUploadDocumentsCheckAndConfirm,
 	postUploadDocumentsCheckAndConfirm,
@@ -283,7 +283,7 @@ export const postAddDocumentDetails = async (request, response) => {
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const getAddDocumentsCheckAndConfirm = async (request, response) => {
-	const {currentFolder } = request;
+	const { currentFolder } = request;
 
 	if (!currentFolder) {
 		return response.status(404).render('app/404');
@@ -397,9 +397,7 @@ export const postAddDocumentVersion = async (request, response) => {
 	const {
 		currentAppeal,
 		currentFolder,
-		params: {
-			documentId
-		}
+		params: { documentId }
 	} = request;
 
 	if (!currentAppeal || !currentFolder) {
@@ -469,8 +467,8 @@ export const getDeleteDocument = async (request, response) => {
 	);
 };
 /** @type {import('@pins/express').RequestHandler<Response>} */
-export const postDeleteDocument = async (request, response) => {
-	postDocumentDelete(
+export const postDeleteDocumentPage = async (request, response) => {
+	postDeleteDocument(
 		request,
 		response,
 		`/appeals-service/appeal-details/${request.params.appealId}/appellant-case`,

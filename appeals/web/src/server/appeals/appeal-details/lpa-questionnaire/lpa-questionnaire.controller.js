@@ -17,7 +17,7 @@ import {
 	renderDeleteDocument,
 	renderChangeDocumentDetails,
 	postChangeDocumentDetails,
-	postDocumentDelete
+	postDeleteDocument
 } from '../../appeal-documents/appeal-documents.controller.js';
 
 /**
@@ -372,8 +372,8 @@ export const getDeleteDocument = async (request, response) => {
 	);
 };
 /** @type {import('@pins/express').RequestHandler<Response>} */
-export const postDeleteDocument = async (request, response) => {
-	postDocumentDelete(
+export const postDeleteDocumentPage = async (request, response) => {
+	postDeleteDocument(
 		request,
 		response,
 		`/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}`,

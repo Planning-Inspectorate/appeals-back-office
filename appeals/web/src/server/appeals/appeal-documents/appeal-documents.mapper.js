@@ -334,21 +334,30 @@ function mapFileUploadInfoItemToDocumentDetailsPageComponents(
 						id: `items[${index}].receivedDate.day`,
 						name: '[day]',
 						label: 'Day',
-						value: (bodyRecievedDateDay !== undefined ? bodyRecievedDateDay : receivedDateDayMonthYear?.day) || ''
+						value:
+							(bodyRecievedDateDay !== undefined
+								? bodyRecievedDateDay
+								: receivedDateDayMonthYear?.day) || ''
 					},
 					{
 						classes: 'govuk-input govuk-date-input__input govuk-input--width-2',
 						id: `items[${index}].receivedDate.month`,
 						name: '[month]',
 						label: 'Month',
-						value: (bodyRecievedDateMonth !== undefined ? bodyRecievedDateMonth : receivedDateDayMonthYear?.month) || ''
+						value:
+							(bodyRecievedDateMonth !== undefined
+								? bodyRecievedDateMonth
+								: receivedDateDayMonthYear?.month) || ''
 					},
 					{
 						classes: 'govuk-input govuk-date-input__input govuk-input--width-4',
 						id: `items[${index}].receivedDate.year`,
 						name: '[year]',
 						label: 'Year',
-						value: (bodyRecievedDateYear !== undefined ? bodyRecievedDateYear : receivedDateDayMonthYear?.year) || ''
+						value:
+							(bodyRecievedDateYear !== undefined
+								? bodyRecievedDateYear
+								: receivedDateDayMonthYear?.year) || ''
 					}
 				]
 			}
@@ -356,7 +365,8 @@ function mapFileUploadInfoItemToDocumentDetailsPageComponents(
 		{
 			wrapperHtml: {
 				opening: '',
-				closing: index < uploadInfo.length - 1 ? '<hr class="govuk-!-margin-top-7"></div>' : '</div>'
+				closing:
+					index < uploadInfo.length - 1 ? '<hr class="govuk-!-margin-top-7"></div>' : '</div>'
 			},
 			type: 'radios',
 			parameters: {
@@ -370,12 +380,20 @@ function mapFileUploadInfoItemToDocumentDetailsPageComponents(
 					{
 						text: 'Redacted',
 						value: 'redacted',
-						checked: (bodyRedactionStatus ? bodyRedactionStatus : redactionStatusIdToName(redactionStatuses, uploadInfoItem.redactionStatus)) === 'redacted'
+						checked:
+							(bodyRedactionStatus
+								? bodyRedactionStatus
+								: redactionStatusIdToName(redactionStatuses, uploadInfoItem.redactionStatus)) ===
+							'redacted'
 					},
 					{
 						text: 'Unredacted',
 						value: 'unredacted',
-						checked: (bodyRedactionStatus ? bodyRedactionStatus : redactionStatusIdToName(redactionStatuses, uploadInfoItem.redactionStatus)) === 'unredacted'
+						checked:
+							(bodyRedactionStatus
+								? bodyRedactionStatus
+								: redactionStatusIdToName(redactionStatuses, uploadInfoItem.redactionStatus)) ===
+							'unredacted'
 					},
 					{
 						divider: 'Or'
@@ -383,7 +401,11 @@ function mapFileUploadInfoItemToDocumentDetailsPageComponents(
 					{
 						text: 'No redaction required',
 						value: 'no redaction required',
-						checked: (bodyRedactionStatus ? bodyRedactionStatus : redactionStatusIdToName(redactionStatuses, uploadInfoItem.redactionStatus)) === 'no redaction required'
+						checked:
+							(bodyRedactionStatus
+								? bodyRedactionStatus
+								: redactionStatusIdToName(redactionStatuses, uploadInfoItem.redactionStatus)) ===
+							'no redaction required'
 					}
 				]
 			}
@@ -1250,6 +1272,14 @@ export async function deleteDocumentPage(
 		value: 'no'
 	});
 
+	/** @type {PageComponent} */
+	const warningText = {
+		type: 'warning-text',
+		parameters: {
+			text: 'Removing the only version of a document will delete the document from the case'
+		}
+	};
+
 	/** @type {PageContent} */
 	const pageContent = {
 		title: 'Remove document',
@@ -1283,19 +1313,7 @@ export async function deleteDocumentPage(
 					]
 				}
 			},
-			{
-				type: 'html',
-				parameters: {
-					html:
-						totalDocumentVersions === 1
-							? `<div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-								<strong class="govuk-warning-text__text">
-									<span class="govuk-warning-text__assistive">Warning</span> Removing the only version of a document will delete the document from the case
-								</strong>
-							</div>`
-							: ''
-				}
-			},
+			...(totalDocumentVersions === 1 ? [warningText] : []),
 			{
 				wrapperHtml: {
 					opening: '<form method="POST">',
@@ -1435,9 +1453,13 @@ export const mapDocumentDetailsFormDataToAPIRequest = (formData, redactionStatus
  * @param {import('@pins/appeals.api').Schema.DocumentRedactionStatus[]} redactionStatuses
  * @returns
  */
-export const addDocumentDetailsFormDataToFileUploadInfo = (formData, fileUploadInfo, redactionStatuses) => {
+export const addDocumentDetailsFormDataToFileUploadInfo = (
+	formData,
+	fileUploadInfo,
+	redactionStatuses
+) => {
 	for (const item of formData.items) {
-		const matchingInfoItem = fileUploadInfo.find(infoItem => infoItem.GUID === item.documentId);
+		const matchingInfoItem = fileUploadInfo.find((infoItem) => infoItem.GUID === item.documentId);
 
 		if (matchingInfoItem) {
 			matchingInfoItem.receivedDate = dayMonthYearToApiDateString({
@@ -1445,7 +1467,10 @@ export const addDocumentDetailsFormDataToFileUploadInfo = (formData, fileUploadI
 				month: parseInt(item.receivedDate.month, 10),
 				year: parseInt(item.receivedDate.year, 10)
 			});
-			matchingInfoItem.redactionStatus = mapRedactionStatusNameToId(redactionStatuses, item.redactionStatus)
+			matchingInfoItem.redactionStatus = mapRedactionStatusNameToId(
+				redactionStatuses,
+				item.redactionStatus
+			);
 		}
 	}
 };
@@ -1528,9 +1553,9 @@ export function changeDocumentDetailsPage(backLinkUrl, folder, bodyItem, file, r
 		redactionStatus: bodyItem?.redactionStatus
 			? bodyItem?.redactionStatus
 			: mapRedactionStatusIdToName(
-				redactionStatuses,
-				file?.latestDocumentVersion?.redactionStatusId
-			).toLowerCase()
+					redactionStatuses,
+					file?.latestDocumentVersion?.redactionStatusId
+			  ).toLowerCase()
 	};
 
 	/** @type {PageContent} */

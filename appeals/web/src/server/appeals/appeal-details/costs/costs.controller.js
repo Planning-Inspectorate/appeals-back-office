@@ -6,7 +6,7 @@ import {
 	renderManageFolder,
 	renderManageDocument,
 	renderDeleteDocument,
-	postDocumentDelete
+	postDeleteDocument
 } from '#appeals/appeal-documents/appeal-documents.controller.js';
 import { capitalize } from 'lodash-es';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
@@ -324,7 +324,7 @@ export const postDeleteCostsDocument = async (request, response) => {
 		return response.status(404).render('app/404');
 	}
 
-	postDocumentDelete(
+	postDeleteDocument(
 		request,
 		response,
 		`/appeals-service/appeal-details/${request.params.appealId}`,

@@ -20,7 +20,10 @@ import {
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { isInternalUrl } from '#lib/url-utilities.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
-import { createNewDocument, createNewDocumentVersion } from '#app/components/file-uploader.component.js';
+import {
+	createNewDocument,
+	createNewDocumentVersion
+} from '#app/components/file-uploader.component.js';
 import config from '@pins/appeals.web/environment/config.js';
 import { redactionStatusNameToId } from '#lib/redaction-statuses.js';
 import { isFileUploadInfo } from '#lib/ts-utilities.js';
@@ -120,10 +123,10 @@ export const postDocumentUpload = async (request, response, nextPageUrl) => {
 		return response.render('app/500.njk');
 	}
 
-	request.session.fileUploadInfo = uploadInfo.map(infoItem => ({
+	request.session.fileUploadInfo = uploadInfo.map((infoItem) => ({
 		...infoItem,
 		redactionStatus: redactionStatusNameToId(redactionStatuses, 'unredacted'),
-		receivedDate: dayMonthYearToApiDateString(dateToDayMonthYear(new Date())),
+		receivedDate: dayMonthYearToApiDateString(dateToDayMonthYear(new Date()))
 	}));
 
 	response.redirect(nextPageUrl);
@@ -319,7 +322,11 @@ export const postDocumentDetails = async (
 		const redactionStatuses = await getDocumentRedactionStatuses(apiClient);
 
 		if (redactionStatuses) {
-			addDocumentDetailsFormDataToFileUploadInfo(body, request.session.fileUploadInfo, redactionStatuses);
+			addDocumentDetailsFormDataToFileUploadInfo(
+				body,
+				request.session.fileUploadInfo,
+				redactionStatuses
+			);
 
 			// TODO: BOAT-1277: move this to check and confirm step
 			addNotificationBannerToSession(
@@ -332,7 +339,10 @@ export const postDocumentDetails = async (
 				successCallback(request);
 			}
 
-			return response.redirect(nextPageUrl?.replace('{{folderId}}', currentFolder.id) || `/appeals-service/appeal-details/${appealId}/`);
+			return response.redirect(
+				nextPageUrl?.replace('{{folderId}}', currentFolder.id) ||
+					`/appeals-service/appeal-details/${appealId}/`
+			);
 		}
 
 		return response.render('app/500.njk');
@@ -386,10 +396,7 @@ export const renderUploadDocumentsCheckAndConfirm = async (request, response, ba
  * @param {string} nextPageUrl
  */
 export const postUploadDocumentsCheckAndConfirm = async (request, response, nextPageUrl) => {
-	const {
-		currentAppeal,
-		currentFolder
-	} = request;
+	const { currentAppeal, currentFolder } = request;
 
 	if (!currentAppeal || !currentFolder) {
 		return response.status(404).render('app/404');
@@ -453,10 +460,7 @@ export const postUploadDocumentsCheckAndConfirm = async (request, response, next
  * @param {string} nextPageUrl
  */
 export const postUploadDocumentVersionCheckAndConfirm = async (request, response, nextPageUrl) => {
-	const {
-		currentAppeal,
-		currentFolder
-	} = request;
+	const { currentAppeal, currentFolder } = request;
 
 	if (!currentAppeal || !currentFolder) {
 		return response.status(404).render('app/404');
@@ -492,7 +496,12 @@ export const postUploadDocumentVersionCheckAndConfirm = async (request, response
 			}
 		};
 
-		await createNewDocumentVersion(request.apiClient, currentAppeal.appealId, documentId, addDocumentVersionRequestPayload);
+		await createNewDocumentVersion(
+			request.apiClient,
+			currentAppeal.appealId,
+			documentId,
+			addDocumentVersionRequestPayload
+		);
 
 		delete request.session.fileUploadInfo;
 
@@ -664,7 +673,7 @@ export const renderDeleteDocument = async (request, response, backButtonUrl) => 
  * @param {string} cancelUrl
  * @param {string} uploadNewDocumentUrl
  */
-export const postDocumentDelete = async (
+export const postDeleteDocument = async (
 	request,
 	response,
 	returnUrl,

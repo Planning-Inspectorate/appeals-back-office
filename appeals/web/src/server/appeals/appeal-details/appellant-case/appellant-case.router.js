@@ -240,7 +240,7 @@ router
 		validateCaseFolderId,
 		validateCaseDocumentId,
 		documentsValidators.validateDocumentDeleteAnswer,
-		asyncRoute(controller.postDeleteDocument)
+		asyncRoute(controller.postDeleteDocumentPage)
 	);
 
 export default router;
