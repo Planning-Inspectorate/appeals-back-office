@@ -1,4 +1,4 @@
-import { CONFIG_APPEAL_FOLDER_PATHS } from '#endpoints/constants.js';
+import { FOLDERS } from '@pins/appeals/constants/documents.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Folder} Folder */
 /** @typedef {import('@pins/appeals/index.js').MappedDocument} MappedDocument */
@@ -84,7 +84,7 @@ export const mapCaseReferenceForStorageUrl = (caseReference) => {
  */
 export const mapDefaultCaseFolders = (caseId) => {
 	// @ts-ignore
-	return CONFIG_APPEAL_FOLDER_PATHS.map((/** @type {string} */ path) => {
+	return FOLDERS.map((/** @type {string} */ path) => {
 		return {
 			caseId,
 			path
@@ -100,7 +100,7 @@ export const mapDefaultCaseFolders = (caseId) => {
 export const mapFoldersLayoutForAppealSection = (sectionName, folders) => {
 	/** @type {Object<string, Object>} **/ const folderLayout = {};
 
-	for (const path of CONFIG_APPEAL_FOLDER_PATHS) {
+	for (const path of FOLDERS) {
 		if (path.indexOf(sectionName) === 0) {
 			const key = path.replace(`${sectionName}/`, '');
 			folderLayout[key] = mapFoldersLayoutForAppealFolder(folders, `${sectionName}/${key}`) || {};
@@ -128,6 +128,7 @@ const mapFoldersLayoutForAppealFolder = (folders, path) => {
 						return {
 							id: d.guid,
 							name: d.name,
+							createdAt: d.createdAt.toISOString(),
 							folderId: d.folderId,
 							caseId: folder.caseId,
 							isLateEntry: d.latestDocumentVersion?.isLateEntry,

@@ -33,26 +33,11 @@ export const baseExpectedLPAQuestionnaireResponse = (appeal) => ({
 	),
 	developmentDescription: appeal.lpaQuestionnaire?.developmentDescription,
 	documents: {
-		communityInfrastructureLevy: {},
-		conservationAreaMap: {},
-		consultationResponses: {},
-		definitiveMapAndStatement: {},
-		emergingPlans: {},
-		environmentalStatementResponses: {},
-		issuedScreeningOption: {},
-		lettersToNeighbours: {},
-		notifyingParties: {},
-		officersReport: {},
-		otherRelevantPolicies: {},
-		policiesFromStatutoryDevelopment: {},
-		pressAdvert: {},
-		representations: {},
-		responsesOrAdvice: {},
-		screeningDirection: {},
-		siteNotices: {},
-		supplementaryPlanningDocuments: {},
-		treePreservationOrder: {},
-		additionalDocuments: {}
+		whoNotified: {},
+		conservationMap: {},
+		lpaCaseCorrespondence: {},
+		otherPartyRepresentations: {},
+		planningOfficerReport: {}
 	},
 	doesAffectAListedBuilding: appeal.lpaQuestionnaire?.doesAffectAListedBuilding,
 	doesAffectAScheduledMonument: appeal.lpaQuestionnaire?.doesAffectAScheduledMonument,
@@ -103,7 +88,7 @@ export const baseExpectedLPAQuestionnaireResponse = (appeal) => ({
 	meetsOrExceedsThresholdOrCriteriaInColumn2:
 		appeal.lpaQuestionnaire?.meetsOrExceedsThresholdOrCriteriaInColumn2,
 	procedureType: appeal.lpaQuestionnaire?.procedureType?.name,
-	receivedAt: appeal.lpaQuestionnaire?.receivedAt,
+	receivedAt: appeal.lpaQuestionnaire?.receivedAt || null,
 	scheduleType: appeal.lpaQuestionnaire?.scheduleType?.name,
 	siteWithinGreenBelt: appeal.lpaQuestionnaire?.siteWithinGreenBelt,
 	otherAppeals: [],
@@ -153,16 +138,12 @@ export const baseExpectedAppellantCaseResponse = (appeal) => ({
 		}
 	}),
 	documents: {
-		appealStatement: {},
-		applicationForm: {},
-		designAndAccessStatement: {},
-		decisionLetter: {},
-		newPlansOrDrawings: {},
-		newSupportingDocuments: {},
-		planningObligation: {},
-		plansDrawingsSupportingDocuments: {},
-		separateOwnershipCertificate: {},
-		additionalDocuments: {}
+		appellantCaseCorrespondence: {},
+		appellantCaseWithdrawalLetter: {},
+		appellantStatement: {},
+		applicationDecisionLetter: {},
+		changedDescription: {},
+		originalApplicationForm: {}
 	},
 	hasAdvertisedAppeal: appeal.appellantCase?.hasAdvertisedAppeal,
 	...(isFPA(appeal.appealType) && {

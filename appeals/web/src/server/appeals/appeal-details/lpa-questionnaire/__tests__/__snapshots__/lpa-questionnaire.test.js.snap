@@ -116,38 +116,6 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/change-lpa-questionnaire/notification-methods"> Change<span class="govuk-visually-hidden"> Notification methods</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site notice</dt>
-                    <dd class="govuk-summary-list__value">
-                        <ul class="govuk-list">
-                            <li><span><div class="govuk-body govuk-!-margin-bottom-2">siteNotices.docx</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
-                            </li>
-                        </ul>
-                    </dd>
-                    <dd class="govuk-summary-list__actions">
-                        <ul class="govuk-summary-list__actions-list">
-                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/3/"> Manage<span class="govuk-visually-hidden"> Site notice</span></a>
-                            </li>
-                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/3"> Add<span class="govuk-visually-hidden"> Site notice</span></a>
-                            </li>
-                        </ul>
-                    </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Letter/email to interested parties</dt>
-                    <dd                     class="govuk-summary-list__value">
-                        <ul class="govuk-list">
-                            <li><span><div class="govuk-body govuk-!-margin-bottom-2">lettersToNeighbours.docx</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
-                            </li>
-                        </ul>
-                        </dd>
-                        <dd class="govuk-summary-list__actions">
-                            <ul class="govuk-summary-list__actions-list">
-                                <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/4/"> Manage<span class="govuk-visually-hidden"> Letter or email to interested parties</span></a>
-                                </li>
-                                <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/4"> Add<span class="govuk-visually-hidden"> Letter or email to interested parties</span></a>
-                                </li>
-                            </ul>
-                        </dd>
-                </div>
             </dl>
         </div>
     </div>
@@ -497,38 +465,6 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/change-lpa-questionnaire/notification-methods"> Change<span class="govuk-visually-hidden"> Notification methods</span></a>
                     </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site notice</dt>
-                    <dd class="govuk-summary-list__value">
-                        <ul class="govuk-list">
-                            <li><span><div class="govuk-body govuk-!-margin-bottom-2">siteNotices.docx</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
-                            </li>
-                        </ul>
-                    </dd>
-                    <dd class="govuk-summary-list__actions">
-                        <ul class="govuk-summary-list__actions-list">
-                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/3/"> Manage<span class="govuk-visually-hidden"> Site notice</span></a>
-                            </li>
-                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/3"> Add<span class="govuk-visually-hidden"> Site notice</span></a>
-                            </li>
-                        </ul>
-                    </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Letter/email to interested parties</dt>
-                    <dd                     class="govuk-summary-list__value">
-                        <ul class="govuk-list">
-                            <li><span><div class="govuk-body govuk-!-margin-bottom-2">lettersToNeighbours.docx</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
-                            </li>
-                        </ul>
-                        </dd>
-                        <dd class="govuk-summary-list__actions">
-                            <ul class="govuk-summary-list__actions-list">
-                                <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/4/"> Manage<span class="govuk-visually-hidden"> Letter or email to interested parties</span></a>
-                                </li>
-                                <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/4"> Add<span class="govuk-visually-hidden"> Letter or email to interested parties</span></a>
-                                </li>
-                            </ul>
-                        </dd>
                 </div>
             </dl>
         </div>
@@ -894,38 +830,6 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/change-lpa-questionnaire/notification-methods"> Change<span class="govuk-visually-hidden"> Notification methods</span></a>
                     </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site notice</dt>
-                    <dd class="govuk-summary-list__value">
-                        <ul class="govuk-list">
-                            <li><span><div class="govuk-body govuk-!-margin-bottom-2">siteNotices.docx</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
-                            </li>
-                        </ul>
-                    </dd>
-                    <dd class="govuk-summary-list__actions">
-                        <ul class="govuk-summary-list__actions-list">
-                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/3/"> Manage<span class="govuk-visually-hidden"> Site notice</span></a>
-                            </li>
-                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/3"> Add<span class="govuk-visually-hidden"> Site notice</span></a>
-                            </li>
-                        </ul>
-                    </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Letter/email to interested parties</dt>
-                    <dd                     class="govuk-summary-list__value">
-                        <ul class="govuk-list">
-                            <li><span><div class="govuk-body govuk-!-margin-bottom-2">lettersToNeighbours.docx</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
-                            </li>
-                        </ul>
-                        </dd>
-                        <dd class="govuk-summary-list__actions">
-                            <ul class="govuk-summary-list__actions-list">
-                                <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/4/"> Manage<span class="govuk-visually-hidden"> Letter or email to interested parties</span></a>
-                                </li>
-                                <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/4"> Add<span class="govuk-visually-hidden"> Letter or email to interested parties</span></a>
-                                </li>
-                            </ul>
-                        </dd>
                 </div>
             </dl>
         </div>
@@ -3462,38 +3366,6 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/change-lpa-questionnaire/notification-methods"> Change<span class="govuk-visually-hidden"> Notification methods</span></a>
                     </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site notice</dt>
-                    <dd class="govuk-summary-list__value">
-                        <ul class="govuk-list">
-                            <li><span><div class="govuk-body govuk-!-margin-bottom-2">siteNotices.docx</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
-                            </li>
-                        </ul>
-                    </dd>
-                    <dd class="govuk-summary-list__actions">
-                        <ul class="govuk-summary-list__actions-list">
-                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/3/"> Manage<span class="govuk-visually-hidden"> Site notice</span></a>
-                            </li>
-                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/3"> Add<span class="govuk-visually-hidden"> Site notice</span></a>
-                            </li>
-                        </ul>
-                    </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Letter/email to interested parties</dt>
-                    <dd                     class="govuk-summary-list__value">
-                        <ul class="govuk-list">
-                            <li><span><div class="govuk-body govuk-!-margin-bottom-2">lettersToNeighbours.docx</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
-                            </li>
-                        </ul>
-                        </dd>
-                        <dd class="govuk-summary-list__actions">
-                            <ul class="govuk-summary-list__actions-list">
-                                <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/4/"> Manage<span class="govuk-visually-hidden"> Letter or email to interested parties</span></a>
-                                </li>
-                                <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/4"> Add<span class="govuk-visually-hidden"> Letter or email to interested parties</span></a>
-                                </li>
-                            </ul>
-                        </dd>
                 </div>
             </dl>
         </div>

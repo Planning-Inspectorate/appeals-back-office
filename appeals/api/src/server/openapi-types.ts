@@ -89,34 +89,8 @@ export interface AppellantCaseData {
 		/** @example "There's an american bully onsite" */
 		healthAndSafetyIssuesDetails?: string;
 	};
-	documents?: {
-		/** @example "decision.pdf" */
-		filename?: string;
-		/** @example "decision.pdf" */
-		originalFilename?: string;
-		/** @example 12345 */
-		size?: number;
-		/** @example "application/pdf" */
-		mime?: string;
-		/** @example "https://storage.com/published/en010120/v1/filename.pdf" */
-		documentURI?: string;
-		/** @example "2023-03-26T00:00:00.000Z" */
-		dateCreated?: string;
-		/** @example "2023-03-26T00:00:00.000Z" */
-		lastModified?: string;
-		/** @example "decisionLetter" */
-		documentType?: string;
-		/** @example "appeals" */
-		sourceSystem?: string;
-		/** @example "citizen" */
-		origin?: string;
-		/** @example "en010120/v1/filename.pdf" */
-		blobStoragePath?: string;
-		/** @example "published" */
-		blobStorageContainer?: string;
-		/** @example "appellant_case" */
-		stage?: string;
-	}[];
+	/** @example [] */
+	documents?: any[];
 }
 
 export interface QuestionnaireData {

@@ -2,6 +2,8 @@ import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.j
 import { AUDIT_TRAIL_SERVICE_USER_UPDATED, ERROR_NOT_FOUND } from '#endpoints/constants.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import serviceUserRepository from '#repositories/service-user.repository.js';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
+import { EventType } from '@pins/event-client';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -46,8 +48,13 @@ export const updateServiceUserById = async (req, res) => {
 		azureAdUserId: req.get('azureAdUserId'),
 		details: stringTokenReplacement(AUDIT_TRAIL_SERVICE_USER_UPDATED, [userType])
 	});
-	// TODO: Will need to broadcast service user as part of integration work
-	//await produceServiceUsersUpdate(, EventType.Update, userType);
+
+	await broadcasters.broadcastServiceUser(
+		dbSavedResult.id,
+		EventType.Update,
+		userType,
+		req.appeal.reference
+	);
 
 	return res.send({
 		serviceUserId

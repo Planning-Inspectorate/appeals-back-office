@@ -3467,63 +3467,8 @@
 					},
 					"documents": {
 						"type": "array",
-						"items": {
-							"type": "object",
-							"properties": {
-								"filename": {
-									"type": "string",
-									"example": "decision.pdf"
-								},
-								"originalFilename": {
-									"type": "string",
-									"example": "decision.pdf"
-								},
-								"size": {
-									"type": "number",
-									"example": 12345
-								},
-								"mime": {
-									"type": "string",
-									"example": "application/pdf"
-								},
-								"documentURI": {
-									"type": "string",
-									"example": "https://storage.com/published/en010120/v1/filename.pdf"
-								},
-								"dateCreated": {
-									"type": "string",
-									"example": "2023-03-26T00:00:00.000Z"
-								},
-								"lastModified": {
-									"type": "string",
-									"example": "2023-03-26T00:00:00.000Z"
-								},
-								"documentType": {
-									"type": "string",
-									"example": "decisionLetter"
-								},
-								"sourceSystem": {
-									"type": "string",
-									"example": "appeals"
-								},
-								"origin": {
-									"type": "string",
-									"example": "citizen"
-								},
-								"blobStoragePath": {
-									"type": "string",
-									"example": "en010120/v1/filename.pdf"
-								},
-								"blobStorageContainer": {
-									"type": "string",
-									"example": "published"
-								},
-								"stage": {
-									"type": "string",
-									"example": "appellant_case"
-								}
-							}
-						}
+						"example": [],
+						"items": {}
 					}
 				},
 				"xml": {

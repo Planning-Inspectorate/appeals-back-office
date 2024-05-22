@@ -26,7 +26,7 @@ const serviceUserWithInvalidUserType = {
 	userType: null
 };
 
-describe('appeal neighbouring sites routes', () => {
+describe('appeal service user routes', () => {
 	afterEach(() => {
 		jest.clearAllMocks();
 	});
@@ -34,7 +34,12 @@ describe('appeal neighbouring sites routes', () => {
 	describe('invalid requests', () => {
 		test('returns 404 when the service user is not found', async () => {
 			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+			// @ts-ignore
+			databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
+			// @ts-ignore
 			databaseConnector.serviceUser.findUnique.mockResolvedValue(null);
+
 			const response = await request
 				.patch(`/appeals/0/service-user`)
 				.send({ serviceUser: validServiceUser })
@@ -44,6 +49,9 @@ describe('appeal neighbouring sites routes', () => {
 		});
 
 		test('returns 400 when updating a service user and the field is missing required fields', async () => {
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+
 			const response = await request
 				.patch(`/appeals/${householdAppeal.id}/service-user`)
 				.send({ serviceUser: serviceUserWithMissingRequiredFields })
@@ -53,6 +61,11 @@ describe('appeal neighbouring sites routes', () => {
 		});
 
 		test('returns 400 when updating a service user and the email is invalid', async () => {
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+			// @ts-ignore
+			databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
+
 			const response = await request
 				.patch(`/appeals/${householdAppeal.id}/service-user`)
 				.send({ serviceUser: serviceUserWithInvalidEmail })
@@ -62,6 +75,11 @@ describe('appeal neighbouring sites routes', () => {
 		});
 
 		test('returns 400 when updating a service user and the userType is invalid', async () => {
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+			// @ts-ignore
+			databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
+
 			const response = await request
 				.patch(`/appeals/${householdAppeal.id}/service-user`)
 				.send({ serviceUser: serviceUserWithInvalidUserType })
@@ -72,7 +90,11 @@ describe('appeal neighbouring sites routes', () => {
 	});
 
 	describe('valid requests', () => {
-		test('returns 200 when updating a neighbouring site with a valid address', async () => {
+		test('returns 200 when updating a service user with correct data', async () => {
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+			// @ts-ignore
+			databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
 			// @ts-ignore
 			databaseConnector.serviceUser.findUnique.mockResolvedValue(serviceUser);
 			// @ts-ignore

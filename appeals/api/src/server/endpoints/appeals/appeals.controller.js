@@ -16,7 +16,6 @@ import {
 	DEFAULT_PAGE_SIZE,
 	ERROR_FAILED_TO_SAVE_DATA,
 	ERROR_CANNOT_BE_EMPTY_STRING,
-	CONFIG_APPEAL_STAGES,
 	AUDIT_TRAIL_SYSTEM_UUID,
 	STATE_TARGET_READY_TO_START,
 	STATE_TARGET_ASSIGN_CASE_OFFICER,
@@ -26,6 +25,7 @@ import {
 	STATE_TARGET_COMPLETE,
 	STATE_TARGET_VALIDATION
 } from '../constants.js';
+import { STAGE } from '@pins/appeals/constants/documents.js';
 import {
 	formatAppeal,
 	formatAppeals,
@@ -136,8 +136,8 @@ const getMyAppeals = async (req, res) => {
 const getAppeal = async (req, res) => {
 	const { appeal } = req;
 	const [decisionFolders, costsFolders] = await Promise.all([
-		getFoldersForAppeal(appeal, CONFIG_APPEAL_STAGES.decision),
-		getFoldersForAppeal(appeal, CONFIG_APPEAL_STAGES.costs)
+		getFoldersForAppeal(appeal, STAGE.APPEALDECISION),
+		getFoldersForAppeal(appeal, STAGE.COSTS)
 	]);
 
 	let transferAppealTypeInfo;
