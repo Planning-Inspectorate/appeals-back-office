@@ -99,7 +99,7 @@ const formatAppellantCase = (appeal, folders = null) => {
 const formatFoldersAndDocuments = (folders) => {
 	if (folders) {
 		return {
-			documents: mapFoldersLayoutForAppealSection(STAGE.APPELLANTCASE, folders)
+			documents: mapFoldersLayoutForAppealSection(STAGE.APPELLANT_CASE, folders)
 		};
 	}
 

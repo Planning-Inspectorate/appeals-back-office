@@ -236,14 +236,14 @@ export const addDocumentAudit = async (guid, version, auditTrail, action) => {
  */
 const isLateEntry = (stage, status) => {
 	switch (stage) {
-		case STAGE.APPELLANTCASE:
+		case STAGE.APPELLANT_CASE:
 			return (
 				status !== STATUSES.STATE_TARGET_ASSIGN_CASE_OFFICER &&
 				status !== STATUSES.STATE_TARGET_VALIDATION &&
 				status !== STATUSES.STATE_TARGET_READY_TO_START
 			);
 
-		case STAGE.LPAQUESTIONNAIRE:
+		case STAGE.LPA_QUESTIONNAIRE:
 			return (
 				status !== STATUSES.STATE_TARGET_ASSIGN_CASE_OFFICER &&
 				status !== STATUSES.STATE_TARGET_VALIDATION &&

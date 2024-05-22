@@ -110,7 +110,7 @@ const formatLpaQuestionnaire = (appeal, folders = null) => {
 const formatFoldersAndDocuments = (folders) => {
 	if (folders) {
 		return {
-			documents: mapFoldersLayoutForAppealSection(STAGE.LPAQUESTIONNAIRE, folders)
+			documents: mapFoldersLayoutForAppealSection(STAGE.LPA_QUESTIONNAIRE, folders)
 		};
 	}
 
