@@ -1,15 +1,18 @@
+/** @type {Object<string, string>} */
 export const REDACTION_STATUS = {
 	REDACTED: 'redacted',
 	UNREDACTED: 'not_redacted',
 	NO_REDACTION_REQUIRED: 'no_redaction_required'
 };
 
+/** @type {Object<string, string>} */
 export const AVSCAN_STATUS = {
 	NOT_SCANNED: 'not_scanned',
 	SCANNED: 'scanned',
 	AFFECTED: 'affected'
 };
 
+/** @type {Object<string, string>} */
 export const ORIGIN = {
 	CITIZEN: 'citizen',
 	LPA: 'lpa',
@@ -17,6 +20,7 @@ export const ORIGIN = {
 	OGD: 'ogd'
 };
 
+/** @type {Object<string, string>} */
 export const STAGE = {
 	APPELLANTCASE: 'appellant-case',
 	LPAQUESTIONNAIRE: 'lpa-questionnaire',
@@ -28,6 +32,7 @@ export const STAGE = {
 	FINALCOMMENTS: 'final-comments'
 };
 
+/** @type {Object<string, string>} */
 export const DOCTYPE = {
 	APPELLANTCASECORRESPONDENCE: 'appellantCaseCorrespondence',
 	APPELLANTCASEWITHDRAWAL: 'appellantCaseWithdrawalLetter',
@@ -52,6 +57,7 @@ export const DOCTYPE = {
 	INSPECTORCORRESPONDENCE: 'inspectorCorrespondence'
 };
 
+/** @type {string[]} */
 export const FOLDERS = [
 	`${STAGE.APPELLANTCASE}/${DOCTYPE.APPELLANTSTATEMENT}`,
 	`${STAGE.APPELLANTCASE}/${DOCTYPE.ORIGINALAPPLICATIONFORM}`,

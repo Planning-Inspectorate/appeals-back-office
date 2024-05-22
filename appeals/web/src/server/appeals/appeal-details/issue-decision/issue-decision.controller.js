@@ -11,6 +11,7 @@ import {
 	checkAndConfirmInvalidPage
 } from './issue-decision.mapper.js';
 import { getFolder } from '#appeals/appeal-documents/appeal.documents.service.js';
+import { STAGE, DOCTYPE } from '@pins/appeals/constants/documents.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -123,7 +124,7 @@ const renderDecisionLetterUpload = async (request, response) => {
 	const appealData = request.currentAppeal;
 	const currentFolder = {
 		id: appealData.decision?.folderId,
-		path: 'appeal_decision/decisionLetter'
+		path: `${STAGE.APPEALDECISION}/${DOCTYPE.CASEDECISIONLETTER}`
 	};
 
 	if (!currentFolder || !currentFolder.id) {
@@ -133,7 +134,7 @@ const renderDecisionLetterUpload = async (request, response) => {
 	const mappedPageContent = decisionLetterUploadPage(
 		appealData,
 		appealData.decision?.folderId,
-		'appeal_decision/decisionLetter',
+		currentFolder.path,
 		appealId,
 		errors
 	);
@@ -196,7 +197,7 @@ const renderDateDecisionLetter = async (request, response) => {
 	const appealData = request.currentAppeal;
 	const currentFolder = {
 		id: appealData.decision?.folderId,
-		path: 'appeal_decision/decisionLetter'
+		path: `${STAGE.APPEALDECISION}/${DOCTYPE.CASEDECISIONLETTER}`
 	};
 
 	if (!currentFolder || !currentFolder.id) {

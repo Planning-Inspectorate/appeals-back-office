@@ -152,5 +152,5 @@ const mapStage = (stage) => {
 		return STAGE.COSTS;
 	}
 
-	return null;
+	return stage;
 };
