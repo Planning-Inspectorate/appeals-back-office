@@ -117,6 +117,7 @@ variable "sb_topic_names" {
       document         = string
       document_to_move = string
       event            = string
+      listed_building  = string
       service_user     = string
     })
   })

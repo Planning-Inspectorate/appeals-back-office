@@ -92,3 +92,11 @@ resource "azurerm_servicebus_topic" "appeal_document_to_move" {
   namespace_id        = azurerm_servicebus_namespace.main.id
   default_message_ttl = var.sb_ttl.default
 }
+
+## Temporary - may be managed by ODW at some point
+
+resource "azurerm_servicebus_topic" "listed_building" {
+  name                = var.sb_topic_names.events.listed_building
+  namespace_id        = azurerm_servicebus_namespace.main.id
+  default_message_ttl = var.sb_ttl.default
+}
