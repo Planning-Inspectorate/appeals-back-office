@@ -315,7 +315,7 @@ export const postAddDocumentsCheckAndConfirm = async (request, response) => {
 			error,
 			error instanceof Error
 				? error.message
-				: 'Something went wrong when completing appellant case review'
+				: 'Something went wrong when adding documents to appellant case'
 		);
 
 		return response.render('app/500.njk');
@@ -341,7 +341,7 @@ export const postAddDocumentVersionCheckAndConfirm = async (request, response) =
 			error,
 			error instanceof Error
 				? error.message
-				: 'Something went wrong when completing appellant case review'
+				: 'Something went wrong when adding document version to appellant case'
 		);
 
 		return response.render('app/500.njk');
