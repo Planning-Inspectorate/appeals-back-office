@@ -45,4 +45,7 @@ export const validateCheckDecision = createValidator(
 		.trim()
 		.notEmpty()
 		.withMessage('Please confirm that the decision is ready to be sent to all parties')
+		.bail()
+		.equals('yes')
+		.withMessage('Please confirm that the decision is ready to be sent to all parties')
 );

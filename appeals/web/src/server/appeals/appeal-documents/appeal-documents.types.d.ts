@@ -18,6 +18,7 @@ export interface DocumentUploadPageParameters {
 	appealShortReference?: string | null | undefined;
 	pageTitle?: string;
 	pageHeadingText: string;
+	pageBodyComponents: PageComponent[];
 	caseInfoText?: string;
 	documentType: string;
 	nextPageUrl: string;

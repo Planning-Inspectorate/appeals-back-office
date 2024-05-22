@@ -43,6 +43,7 @@ import { redactionStatusIdToName } from '#lib/redaction-statuses.js';
  * @param {any} session
  * @param {import('@pins/express').ValidationErrors|undefined} errors
  * @param {string} [pageHeadingTextOverride]
+ * @param {PageComponent[]} [pageBodyComponents]
  * @param {boolean} [allowMultipleFiles]
  * @param {string} [documentType]
  * @returns {Promise<import('#appeals/appeal-documents/appeal-documents.types.js').DocumentUploadPageParameters>}
@@ -61,6 +62,7 @@ export async function documentUploadPage(
 	session,
 	errors,
 	pageHeadingTextOverride,
+	pageBodyComponents = [],
 	allowMultipleFiles,
 	documentType
 ) {
@@ -92,7 +94,8 @@ export async function documentUploadPage(
 		serviceName: documentName || pageHeadingText,
 		pageTitle: pageHeadingTextOverride || 'Upload documents',
 		appealShortReference: appealShortReference(appealReference),
-		pageHeadingText: pageHeadingText,
+		pageHeadingText,
+		pageBodyComponents,
 		documentType: documentTypeComputed,
 		nextPageUrl:
 			nextPageUrl?.replace('{{folderId}}', folderId) ||

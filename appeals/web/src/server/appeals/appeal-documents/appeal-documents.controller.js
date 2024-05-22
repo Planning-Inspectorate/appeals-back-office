@@ -38,6 +38,7 @@ import { dateToDayMonthYear, dayMonthYearToApiDateString } from '#lib/dates.js';
  * @param {string} [nextPageUrl]
  * @param {boolean} [isLateEntry]
  * @param {string} [pageHeadingTextOverride]
+ * @param {PageComponent[]} [pageBodyComponents]
  * @param {boolean} [allowMultipleFiles]
  * @param {string} [documentType]
  */
@@ -49,6 +50,7 @@ export const renderDocumentUpload = async (
 	nextPageUrl,
 	isLateEntry = false,
 	pageHeadingTextOverride,
+	pageBodyComponents,
 	allowMultipleFiles = true,
 	documentType
 ) => {
@@ -87,6 +89,7 @@ export const renderDocumentUpload = async (
 		request.session,
 		errors,
 		pageHeadingTextOverride,
+		pageBodyComponents,
 		allowMultipleFiles,
 		_documentType
 	);
@@ -116,6 +119,8 @@ export const postDocumentUpload = async (request, response, nextPageUrl) => {
 	if (!isFileUploadInfo(uploadInfo)) {
 		return response.status(500).render('app/500');
 	}
+
+	// TODO: BOAT-1277: if there is existing fileUploadInfo in session (user has returned before commit step), delete any contained documents from blob storage?
 
 	const redactionStatuses = await getDocumentRedactionStatuses(request.apiClient);
 
@@ -393,7 +398,7 @@ export const renderUploadDocumentsCheckAndConfirm = async (request, response, ba
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- * @param {string} nextPageUrl
+ * @param {string} [nextPageUrl]
  */
 export const postUploadDocumentsCheckAndConfirm = async (request, response, nextPageUrl) => {
 	const { currentAppeal, currentFolder } = request;
@@ -441,7 +446,9 @@ export const postUploadDocumentsCheckAndConfirm = async (request, response, next
 
 		delete request.session.fileUploadInfo;
 
-		return response.redirect(nextPageUrl);
+		if (nextPageUrl) {
+			return response.redirect(nextPageUrl);
+		}
 	} catch (error) {
 		logger.error(
 			error,

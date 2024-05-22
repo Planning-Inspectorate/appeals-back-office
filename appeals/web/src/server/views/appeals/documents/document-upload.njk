@@ -27,6 +27,9 @@
 	{%- if displayLateEntryContent -%}
 		{%- include "../../app/includes/late-entry-information.njk" -%}
 	{%- endif -%}
+	{%- for component in pageBodyComponents -%}
+		{%- include "../components/page-component.njk" -%}
+	{%- endfor -%}
 	{{ fileUploader({
 		text: 'Continue',
 		formId: 1,

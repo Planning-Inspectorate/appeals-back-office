@@ -117,7 +117,8 @@ const clientActions = (container) => {
 					container.dataset?.caseReference,
 					container.dataset?.documentId,
 					container.dataset?.documentOriginalFileName || '',
-					container.dataset?.documentVersion),
+					container.dataset?.documentVersion
+				),
 				mimeType: file?.type,
 				documentType: container.dataset?.documentType,
 				size: file?.size,
@@ -135,11 +136,7 @@ const clientActions = (container) => {
 					name: file.name,
 					GUID: guid,
 					fileRowId: fileWithRowId.fileRowId,
-					blobStoreUrl: createBlobStorageUrl(
-						container.dataset?.caseReference,
-						guid,
-						file.name
-					),
+					blobStoreUrl: createBlobStorageUrl(container.dataset?.caseReference, guid, file.name),
 					mimeType: file.type,
 					documentType: container.dataset?.documentType,
 					size: file.size,
@@ -361,7 +358,6 @@ const clientActions = (container) => {
 			throw { message: 'FILE_SPECIFIC_ERRORS', details: errors };
 		} else {
 			disableLeavePageWarning();
-			//window.location.href = container.dataset.nextPageUrl || '';
 			form.submit();
 		}
 	};
@@ -372,11 +368,7 @@ const clientActions = (container) => {
 	const onSubmit = async (clickEvent) => {
 		clickEvent.preventDefault();
 
-		const {
-			// getUploadInfoFromInternalDB,
-			uploadFiles
-			// getVersionUploadInfoFromInternalDB
-		} = serverActions(container);
+		const { uploadFiles } = serverActions(container);
 
 		enableLeavePageWarning();
 
@@ -385,16 +377,7 @@ const clientActions = (container) => {
 
 			buildProgressMessage({ show: true }, container);
 
-			let errors = null;
-			// let uploadInfo;
-
-			// if (fileList.length === 1 && container.dataset?.documentId) {
-			// 	uploadInfo = await getVersionUploadInfoFromInternalDB(fileList[0]);
-			// } else {
-			// 	uploadInfo = await getUploadInfoFromInternalDB(fileList);
-			// }
-
-			errors = await uploadFiles(fileList, uploadInfo);
+			let errors = await uploadFiles(fileList, uploadInfo);
 
 			finalizeUpload(errors);
 		} catch (/** @type {*} */ error) {
