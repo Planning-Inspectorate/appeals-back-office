@@ -13,12 +13,13 @@ const entityInfo = {
 
 export const broadcastDocument = async (
 	/** @type {string} */ documentId,
+	/** @type {number} */ version,
 	/** @type {string} */ updateType
 ) => {
 	if (!config.serviceBusEnabled) {
 		return false;
 	}
-	const document = await databaseConnector.document.findUnique({
+	const document = await databaseConnector.document.findFirst({
 		where: { guid: documentId },
 		include: {
 			case: {
@@ -26,7 +27,10 @@ export const broadcastDocument = async (
 					appealType: true
 				}
 			},
-			latestDocumentVersion: {
+			documentVersion: {
+				where: {
+					version
+				},
 				include: {
 					redactionStatus: true
 				}
@@ -34,8 +38,10 @@ export const broadcastDocument = async (
 		}
 	});
 
-	if (!document || !document.latestDocumentVersion) {
-		pino.error(`Trying to broadcast info for document ${documentId}, but it was not found.`);
+	if (!document || document.documentVersion?.length != 1) {
+		pino.error(
+			`Trying to broadcast info for document ${documentId} version ${version}, but it was not found.`
+		);
 		return false;
 	}
 
