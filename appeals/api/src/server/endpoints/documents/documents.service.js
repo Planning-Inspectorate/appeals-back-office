@@ -75,7 +75,7 @@ export const addDocumentsToAppeal = async (upload, appeal) => {
 
 	for (const document of documentsCreated) {
 		if (document?.documentGuid) {
-			await broadcasters.broadcastDocument(document?.documentGuid, EventType.Create);
+			await broadcasters.broadcastDocument(document?.documentGuid, 1, EventType.Create);
 		}
 	}
 
@@ -182,7 +182,11 @@ export const addVersionToDocument = async (upload, appeal, document) => {
 		};
 	}
 
-	await broadcasters.broadcastDocument(document.guid, EventType.Update);
+	await broadcasters.broadcastDocument(
+		document.guid,
+		documentVersionCreated.version,
+		EventType.Update
+	);
 
 	const documentsToAddToBlobStorage = mapDocumentsForBlobStorage(
 		[documentVersionCreated],
@@ -216,6 +220,7 @@ export const getDocumentRedactionStatusIds = async () => {
  */
 export const deleteDocument = async (document, version) => {
 	const result = await deleteDocumentVersion(document.guid, version);
+	await broadcasters.broadcastDocument(document.guid, version, EventType.Delete);
 	return result || null;
 };
 

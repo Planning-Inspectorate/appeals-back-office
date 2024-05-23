@@ -36,42 +36,49 @@ export const mapDocumentIn = (doc) => {
 };
 
 export const mapDocumentOut = (data) => {
-	if (!data || !data.latestDocumentVersion) {
+	const latestDocumentVersion = data.documentVersion.length === 1 ? data.documentVersion[0] : null;
+	const documentInput = {
+		...data,
+		latestDocumentVersion
+	};
+
+	if (!documentInput || !documentInput.latestDocumentVersion) {
 		return null;
 	}
 
-	const isPublished = mapPublishingStatus(data.latestDocumentVersion);
-	const virusCheckStatus = mapVirusCheckStatus(data.latestDocumentVersion);
-	const redactedStatus = mapRedactionStatus(data.latestDocumentVersion.redactionStatus);
+	const isPublished = mapPublishingStatus(documentInput.latestDocumentVersion);
+	const virusCheckStatus = mapVirusCheckStatus(documentInput.latestDocumentVersion);
+	const redactedStatus = mapRedactionStatus(documentInput.latestDocumentVersion.redactionStatus);
 
 	const doc = {
-		documentId: data.guid,
-		caseId: data.caseId,
-		caseReference: data.case.reference,
-		version: data.latestDocumentVersion.version,
-		filename: data.latestDocumentVersion.fileName,
-		originalFilename: data.latestDocumentVersion.originalFilename,
-		size: data.latestDocumentVersion.size,
-		mime: data.latestDocumentVersion.mime,
-		documentURI: data.latestDocumentVersion.documentURI,
-		publishedDocumentURI: isPublished ? data.latestDocumentVersion.documentURI : null,
+		documentId: documentInput.guid,
+		caseId: documentInput.caseId,
+		caseReference: documentInput.case.reference,
+		version: documentInput.latestDocumentVersion.version,
+		filename: documentInput.latestDocumentVersion.fileName,
+		originalFilename: documentInput.latestDocumentVersion.originalFilename,
+		size: documentInput.latestDocumentVersion.size,
+		mime: documentInput.latestDocumentVersion.mime,
+		documentURI: documentInput.latestDocumentVersion.documentURI,
+		publishedDocumentURI: isPublished ? documentInput.latestDocumentVersion.documentURI : null,
 		virusCheckStatus,
-		fileMD5: data.latestDocumentVersion.fileMD5,
-		dateCreated: mapDate(data.latestDocumentVersion.dateCreated),
-		dateReceived: mapDate(data.latestDocumentVersion.dateReceived),
-		datePublished: isPublished ? mapDate(data.latestDocumentVersion.dateCreated) : null,
+		fileMD5: documentInput.latestDocumentVersion.fileMD5,
+		dateCreated: mapDate(documentInput.latestDocumentVersion.dateCreated),
+		dateReceived: mapDate(documentInput.latestDocumentVersion.dateReceived),
+		datePublished: isPublished ? mapDate(documentInput.latestDocumentVersion.dateCreated) : null,
 		lastModified: mapDate(
-			data.latestDocumentVersion.lastModified || data.latestDocumentVersion.dateCreated
+			documentInput.latestDocumentVersion.lastModified ||
+				documentInput.latestDocumentVersion.dateCreated
 		),
-		caseType: data.case.appealType.shorthand,
+		caseType: documentInput.case.appealType.shorthand,
 		redactedStatus,
-		documentType: data.latestDocumentVersion.documentType,
+		documentType: documentInput.latestDocumentVersion.documentType,
 		sourceSystem: ODW_SYSTEM_ID,
-		origin: mapOrigin(data.latestDocumentVersion.stage),
+		origin: mapOrigin(documentInput.latestDocumentVersion.stage),
 		owner: null,
 		author: null,
 		description: null,
-		caseStage: data.latestDocumentVersion.stage,
+		caseStage: documentInput.latestDocumentVersion.stage,
 		horizonFolderId: null
 	};
 
