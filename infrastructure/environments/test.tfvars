@@ -55,6 +55,9 @@ common_infra_config = {
   network_rg   = "pins-rg-common-test-ukw-001"
 }
 
+documents_config = {
+  account_replication_type = "LRS"
+}
 docs_domain = "https://back-office-appeals-docs-test.planninginspectorate.gov.uk"
 
 environment = "test"
