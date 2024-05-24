@@ -59,8 +59,8 @@ common_infra_config = {
 
 documents_config = {
   account_replication_type = "LRS"
+  domain                   = "https://back-office-appeals-docs-dev.planninginspectorate.gov.uk"
 }
-docs_domain = "https://back-office-appeals-docs-dev.planninginspectorate.gov.uk"
 
 environment = "dev"
 
