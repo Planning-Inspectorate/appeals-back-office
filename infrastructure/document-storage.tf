@@ -13,7 +13,7 @@ resource "azurerm_storage_account" "documents" {
   resource_group_name              = azurerm_resource_group.primary.name
   location                         = module.primary_region.location
   account_tier                     = "Standard"
-  account_replication_type         = "GRS"
+  account_replication_type         = var.documents_config.account_replication_type
   allow_nested_items_to_be_public  = true
   cross_tenant_replication_enabled = false
   enable_https_traffic_only        = true

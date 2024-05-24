@@ -55,7 +55,9 @@ common_infra_config = {
   network_rg   = "pins-rg-common-prod-ukw-001"
 }
 
-
+documents_config = {
+  account_replication_type = "GZRS"
+}
 docs_domain = "https://appeal-documents.planninginspectorate.gov.uk"
 
 environment = "prod"
