@@ -77,12 +77,9 @@ variable "documents_config" {
   type = object({
     # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account#account_replication_type
     account_replication_type = string
+    # Domain name for docs storage account
+    domain = string
   })
-}
-
-variable "docs_domain" {
-  description = "Domain name for docs storage account"
-  type        = string
 }
 
 variable "environment" {

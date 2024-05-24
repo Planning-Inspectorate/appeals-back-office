@@ -57,8 +57,8 @@ common_infra_config = {
 
 documents_config = {
   account_replication_type = "GZRS"
+  domain                   = "https://appeal-documents.planninginspectorate.gov.uk"
 }
-docs_domain = "https://appeal-documents.planninginspectorate.gov.uk"
 
 environment = "prod"
 
