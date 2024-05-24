@@ -174,6 +174,13 @@ npm run dev:applications
 npm run dev:appeals
 ```
 
+## Architecture
+The architecture of the Appeals Back Office service and it's relationships with other systems can be viewed through interactive [C4 Model diagrams](https://c4model.com) held as [Structizier](https://docs.structurizr.com) code in the `workspace.dsl` file
+
+This can be viewed locally through an interactive web interface by running `npm run c4`
+
+Finally open your web browser to view [http://localhost:8082](http://localhost:8082)
+
 ## Structure
 
 The main folders are `apps` (which contains the deployable services, such as the API and web front-end for the Application stack), `appeals` (which contains the deployable services, such as the API and web front-end for the Appeal stack) and `packages` which contains libraries, as well as shared code and configuration. The whole setup is using [npm workspaces](https://docs.npmjs.com/cli/v7/using-npm/workspaces).
