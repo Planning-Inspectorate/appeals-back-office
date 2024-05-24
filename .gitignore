@@ -92,3 +92,7 @@ override.tf.json
 
 # Pre-commit hooks
 providers-tmp.tf
+
+# Structurizr
+workspace.json
+.structurizr/*
