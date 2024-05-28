@@ -9,6 +9,7 @@ import {
 import * as documentsValidators from '../../appeal-documents/appeal-documents.validators.js';
 import { validateAddDocumentType, validatePostDecisionConfirmation } from './costs.validators.js';
 import { assertGroupAccess } from '#app/auth/auth.guards.js';
+import { validateAppeal } from '../appeal-details.middleware.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -23,7 +24,8 @@ router
 
 router
 	.route('/:costsCategory/upload-documents/:folderId')
-	.get(validateCaseFolderId, asyncRoute(controller.getDocumentUpload));
+	.get(validateAppeal, validateCaseFolderId, asyncRoute(controller.getDocumentUpload))
+	.post(validateAppeal, validateCaseFolderId, asyncRoute(controller.postDocumentUploadPage));
 
 router
 	.route('/:costsCategory/upload-documents/:folderId/:documentId')
@@ -44,6 +46,15 @@ router
 		documentsValidators.validateDocumentDetailsRedactionStatuses,
 		assertGroupAccess(config.referenceData.appeals.caseOfficerGroupId),
 		asyncRoute(controller.postAddDocumentDetails)
+	);
+
+router
+	.route('/:costsCategory/check-your-answers/:folderId')
+	.get(validateAppeal, validateCaseFolderId, asyncRoute(controller.getAddDocumentsCheckAndConfirm))
+	.post(
+		validateAppeal,
+		validateCaseFolderId,
+		asyncRoute(controller.postAddDocumentsCheckAndConfirm)
 	);
 
 router

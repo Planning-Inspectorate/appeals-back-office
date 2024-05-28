@@ -399,8 +399,14 @@ export const renderUploadDocumentsCheckAndConfirm = async (request, response, ba
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  * @param {string} [nextPageUrl]
+ * @param {function} [successCallback]
  */
-export const postUploadDocumentsCheckAndConfirm = async (request, response, nextPageUrl) => {
+export const postUploadDocumentsCheckAndConfirm = async (
+	request,
+	response,
+	nextPageUrl,
+	successCallback
+) => {
 	const { currentAppeal, currentFolder } = request;
 
 	if (!currentAppeal || !currentFolder) {
@@ -445,6 +451,10 @@ export const postUploadDocumentsCheckAndConfirm = async (request, response, next
 		await createNewDocument(request.apiClient, currentAppeal.appealId, addDocumentsRequestPayload);
 
 		delete request.session.fileUploadInfo;
+
+		if (successCallback) {
+			successCallback(request);
+		}
 
 		if (nextPageUrl) {
 			return response.redirect(nextPageUrl);

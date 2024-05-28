@@ -80,7 +80,7 @@ export function decisionCheckAndConfirmPage(appealDetails, decisionDocumentFolde
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `Check your answers - ${shortAppealReference}`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/costs/decision/upload-documents/${decisionDocumentFolder.id}`,
+		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/costs/decision/add-document-details/${decisionDocumentFolder.id}`,
 		heading: 'Check your answers',
 		pageComponents: [
 			...(decisionDocumentFolder.documents && decisionDocumentFolder.documents.length > 0
