@@ -83,11 +83,20 @@ const clientActions = (container) => {
 	}
 
 	setupDropzone();
+	cleanUpUncommittedFiles();
 
 	if (!form || !uploadButton || !uploadInput || !filesRows || !uploadCounter || !submitButton)
 		return;
 
 	let globalDataTransfer = new DataTransfer();
+
+	function cleanUpUncommittedFiles () {
+		if (container.dataset?.uncommittedFiles) {
+			const uncommittedFiles = JSON.parse(container.dataset?.uncommittedFiles || '');
+
+			// TODO: BOAT-1277: delete uncommitted files from blob storage
+		}
+	}
 
 	/**
 	 * @typedef {Object} UploadInfo

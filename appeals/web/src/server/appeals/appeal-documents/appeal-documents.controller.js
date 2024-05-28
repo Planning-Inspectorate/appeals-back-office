@@ -57,7 +57,8 @@ export const renderDocumentUpload = async (
 	const {
 		currentFolder,
 		errors,
-		params: { appealId, documentId }
+		params: { appealId, documentId },
+		session
 	} = request;
 
 	if (!appealDetails || !currentFolder) {
@@ -91,7 +92,10 @@ export const renderDocumentUpload = async (
 		pageHeadingTextOverride,
 		pageBodyComponents,
 		allowMultipleFiles,
-		_documentType
+		_documentType,
+		JSON.stringify({
+			files: session.fileUploadInfo?.map((/** @type {import('#lib/ts-utilities.js').FileUploadInfoItem} */ document) => document.GUID)
+		})
 	);
 
 	return response.render('appeals/documents/document-upload.njk', mappedPageContent);
@@ -119,8 +123,6 @@ export const postDocumentUpload = async (request, response, nextPageUrl) => {
 	if (!isFileUploadInfo(uploadInfo)) {
 		return response.status(500).render('app/500');
 	}
-
-	// TODO: BOAT-1277: if there is existing fileUploadInfo in session (user has returned before commit step), delete any contained documents from blob storage?
 
 	const redactionStatuses = await getDocumentRedactionStatuses(request.apiClient);
 
@@ -287,15 +289,13 @@ export const renderManageDocument = async (
  * @param {string} backButtonUrl
  * @param {string} [nextPageUrl]
  * @param {string} [pageHeadingTextOverride]
- * @param {function} [successCallback]
  */
 export const postDocumentDetails = async (
 	request,
 	response,
 	backButtonUrl,
 	nextPageUrl,
-	pageHeadingTextOverride,
-	successCallback
+	pageHeadingTextOverride
 ) => {
 	try {
 		const {
@@ -332,17 +332,6 @@ export const postDocumentDetails = async (
 				request.session.fileUploadInfo,
 				redactionStatuses
 			);
-
-			// TODO: BOAT-1277: move this to check and confirm step
-			addNotificationBannerToSession(
-				request.session,
-				'documentAdded',
-				Number.parseInt(appealId, 10)
-			);
-			// TODO: BOAT-1277: move this to check and confirm step
-			if (successCallback) {
-				successCallback(request);
-			}
 
 			return response.redirect(
 				nextPageUrl?.replace('{{folderId}}', currentFolder.id) ||
@@ -451,6 +440,12 @@ export const postUploadDocumentsCheckAndConfirm = async (
 		await createNewDocument(request.apiClient, currentAppeal.appealId, addDocumentsRequestPayload);
 
 		delete request.session.fileUploadInfo;
+
+		addNotificationBannerToSession(
+			request.session,
+			'documentAdded',
+			Number.parseInt(currentAppeal.appealId, 10)
+		);
 
 		if (successCallback) {
 			successCallback(request);

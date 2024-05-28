@@ -46,6 +46,7 @@ import { redactionStatusIdToName } from '#lib/redaction-statuses.js';
  * @param {PageComponent[]} [pageBodyComponents]
  * @param {boolean} [allowMultipleFiles]
  * @param {string} [documentType]
+ * @param {string} [uncommittedFileGUIDs]
  * @returns {Promise<import('#appeals/appeal-documents/appeal-documents.types.js').DocumentUploadPageParameters>}
  */
 export async function documentUploadPage(
@@ -64,7 +65,8 @@ export async function documentUploadPage(
 	pageHeadingTextOverride,
 	pageBodyComponents = [],
 	allowMultipleFiles,
-	documentType
+	documentType,
+	uncommittedFileGUIDs = ''
 ) {
 	const isAdditionalDocument = folderPath.split('/')[1] === 'additionalDocuments';
 	const pageHeadingText =
@@ -102,6 +104,7 @@ export async function documentUploadPage(
 			backButtonUrl?.replace('{{folderId}}', folderId),
 		displayLateEntryContent: isAdditionalDocument && isLateEntry,
 		displayCorrectFolderConfirmationContent: isAdditionalDocument && !isLateEntry,
+		uncommittedFileGUIDs,
 		errors
 	};
 }
