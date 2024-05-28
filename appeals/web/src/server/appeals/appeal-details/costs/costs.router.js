@@ -29,15 +29,17 @@ router
 
 router
 	.route('/:costsCategory/upload-documents/:folderId/:documentId')
-	.get(validateCaseFolderId, asyncRoute(controller.getDocumentVersionUpload));
+	.get(validateAppeal, validateCaseFolderId, asyncRoute(controller.getDocumentVersionUpload))
+	.post(validateAppeal, validateCaseFolderId, asyncRoute(controller.postDocumentVersionUpload));
 
 router
 	.route([
 		'/:costsCategory/add-document-details/:folderId',
 		'/:costsCategory/add-document-details/:folderId/:documentId'
 	])
-	.get(validateCaseFolderId, asyncRoute(controller.getAddDocumentDetails))
+	.get(validateAppeal, validateCaseFolderId, asyncRoute(controller.getAddDocumentDetails))
 	.post(
+		validateAppeal,
 		validateCaseFolderId,
 		documentsValidators.validateDocumentDetailsBodyFormat,
 		documentsValidators.validateDocumentDetailsReceivedDatesFields,
@@ -55,6 +57,15 @@ router
 		validateAppeal,
 		validateCaseFolderId,
 		asyncRoute(controller.postAddDocumentsCheckAndConfirm)
+	);
+
+router
+	.route('/:costsCategory/check-your-answers/:folderId/:documentId')
+	.get(validateAppeal, validateCaseFolderId, asyncRoute(controller.getAddDocumentsCheckAndConfirm))
+	.post(
+		validateAppeal,
+		validateCaseFolderId,
+		asyncRoute(controller.postAddDocumentVersionCheckAndConfirm)
 	);
 
 router
@@ -82,6 +93,15 @@ router
 		validateCaseFolderId,
 		validatePostDecisionConfirmation,
 		asyncRoute(controller.postDecisionCheckAndConfirm)
+	);
+
+router
+	.route('/decision/check-and-confirm/:folderId/:documentId')
+	.get(validateCaseFolderId, asyncRoute(controller.getAddDocumentsCheckAndConfirm))
+	.post(
+		validateCaseFolderId,
+		validatePostDecisionConfirmation,
+		asyncRoute(controller.postAddDocumentVersionCheckAndConfirm)
 	);
 
 export default router;

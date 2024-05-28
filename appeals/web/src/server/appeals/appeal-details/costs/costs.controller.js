@@ -9,7 +9,8 @@ import {
 	renderDeleteDocument,
 	postDeleteDocument,
 	renderUploadDocumentsCheckAndConfirm,
-	postUploadDocumentsCheckAndConfirm
+	postUploadDocumentsCheckAndConfirm,
+	postUploadDocumentVersionCheckAndConfirm
 } from '#appeals/appeal-documents/appeal-documents.controller.js';
 import { capitalize } from 'lodash-es';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
@@ -176,12 +177,31 @@ export const getDocumentVersionUpload = async (request, response) => {
 		request,
 		response,
 		currentAppeal,
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/select-document-type/${currentFolder.id}`,
+		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/manage-documents/${currentFolder.id}/${documentId}`,
 		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/add-document-details/${currentFolder.id}/${documentId}`,
 		false,
 		undefined, // TODO: should the upload new version page have a custom title, and if so what should it be?
 		[],
 		false
+	);
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const postDocumentVersionUpload = async (request, response) => {
+	const {
+		currentAppeal,
+		currentFolder,
+		params: { costsCategory, documentId }
+	} = request;
+
+	if (!currentAppeal || !currentFolder) {
+		return response.status(404).render('app/404');
+	}
+
+	postDocumentUpload(
+		request,
+		response,
+		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/add-document-details/${currentFolder.id}/${documentId}`
 	);
 };
 
@@ -226,7 +246,7 @@ export const postAddDocumentDetails = async (request, response) => {
 	const {
 		currentAppeal,
 		currentFolder,
-		params: { costsCategory }
+		params: { costsCategory, documentId }
 	} = request;
 
 	if (!currentAppeal || !currentFolder) {
@@ -249,8 +269,16 @@ export const postAddDocumentDetails = async (request, response) => {
 		response,
 		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/upload-documents/${currentFolder?.id}`,
 		costsCategory === 'decision'
-			? `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/decision/check-and-confirm/${currentFolder?.id}`
-			: `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/check-your-answers/${currentFolder?.id}`,
+			? `/appeals-service/appeal-details/${
+					currentAppeal.appealId
+			  }/costs/decision/check-and-confirm/${currentFolder?.id}${
+					documentId ? `/${documentId}` : ''
+			  }`
+			: `/appeals-service/appeal-details/${
+					currentAppeal.appealId
+			  }/costs/${costsCategory}/check-your-answers/${currentFolder?.id}${
+					documentId ? `/${documentId}` : ''
+			  }`,
 		costsCategoryLabel
 	);
 };
@@ -317,6 +345,32 @@ export const postAddDocumentsCheckAndConfirm = async (request, response) => {
 		logger.error(
 			error,
 			error instanceof Error ? error.message : 'Something went wrong when adding costs documents'
+		);
+
+		return response.render('app/500.njk');
+	}
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const postAddDocumentVersionCheckAndConfirm = async (request, response) => {
+	const { currentAppeal } = request;
+
+	if (!currentAppeal) {
+		return response.status(404).render('app/404');
+	}
+
+	try {
+		postUploadDocumentVersionCheckAndConfirm(
+			request,
+			response,
+			`/appeals-service/appeal-details/${currentAppeal.appealId}`
+		);
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error
+				? error.message
+				: 'Something went wrong when adding costs document version'
 		);
 
 		return response.render('app/500.njk');
@@ -421,13 +475,24 @@ export const postDeleteCostsDocument = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const renderDecisionCheckAndConfirm = async (request, response) => {
-	const { errors, currentAppeal, currentFolder } = request;
+	const {
+		errors,
+		currentAppeal,
+		currentFolder,
+		session,
+		params: { documentId }
+	} = request;
 
 	if (!currentAppeal || !currentFolder) {
 		return response.status(404).render('app/404');
 	}
 
-	const mappedPageContent = decisionCheckAndConfirmPage(currentAppeal, currentFolder);
+	const mappedPageContent = decisionCheckAndConfirmPage(
+		currentAppeal,
+		currentFolder,
+		session,
+		documentId
+	);
 
 	return response.render('patterns/check-and-confirm-page.pattern.njk', {
 		pageContent: mappedPageContent,

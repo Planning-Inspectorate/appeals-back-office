@@ -42,40 +42,17 @@ export function addDocumentTypePage(appealDetails, documentTypes) {
  *
  * @param {import('../appeal-details.types.js').WebAppeal} appealDetails
  * @param {import('@pins/appeals.api').Schema.Folder} decisionDocumentFolder
+ * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
+ * @param {string} [documentId]
  * @returns {PageContent}
  */
-export function decisionCheckAndConfirmPage(appealDetails, decisionDocumentFolder) {
+export function decisionCheckAndConfirmPage(
+	appealDetails,
+	decisionDocumentFolder,
+	session,
+	documentId
+) {
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);
-
-	/** @type {PageComponent} */
-	const summaryListComponent = {
-		type: 'summary-list',
-		parameters: {
-			rows: [
-				{
-					key: {
-						text: 'Costs decision'
-					},
-					value: {
-						html: `<ul class="govuk-list"><li>${(decisionDocumentFolder.documents || [])
-							.map(
-								(document) =>
-									`<a class="govuk-link" href="/documents/${appealDetails.appealId}/download/${document.id}/preview/">${document.name}</a>`
-							)
-							.join('</li><li>')}</li></ul>`
-					},
-					actions: {
-						items: [
-							{
-								text: 'Change',
-								href: `/appeals-service/appeal-details/${appealDetails.appealId}/costs/decision/upload-documents/${decisionDocumentFolder.id}`
-							}
-						]
-					}
-				}
-			]
-		}
-	};
 
 	/** @type {PageContent} */
 	const pageContent = {
@@ -83,9 +60,34 @@ export function decisionCheckAndConfirmPage(appealDetails, decisionDocumentFolde
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/costs/decision/add-document-details/${decisionDocumentFolder.id}`,
 		heading: 'Check your answers',
 		pageComponents: [
-			...(decisionDocumentFolder.documents && decisionDocumentFolder.documents.length > 0
-				? [summaryListComponent]
-				: []),
+			{
+				type: 'summary-list',
+				parameters: {
+					rows: [
+						{
+							key: {
+								text: documentId ? 'Updated costs decision' : 'Costs decision'
+							},
+							value: {
+								html: `<ul class="govuk-list"><li>${session.fileUploadInfo
+									?.map(
+										(/** @type {import('#lib/ts-utilities.js').FileUploadInfoItem} */ document) =>
+											document.name
+									)
+									.join('</li><li>')}</li></ul>`
+							},
+							actions: {
+								items: [
+									{
+										text: 'Change',
+										href: `/appeals-service/appeal-details/${appealDetails.appealId}/costs/decision/upload-documents/${decisionDocumentFolder.id}`
+									}
+								]
+							}
+						}
+					]
+				}
+			},
 			{
 				type: 'warning-text',
 				parameters: {
