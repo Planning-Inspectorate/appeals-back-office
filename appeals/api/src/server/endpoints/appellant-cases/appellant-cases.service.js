@@ -18,8 +18,6 @@ import appealRepository from '#repositories/appeal.repository.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import config from '#config/config.js';
-// eslint-disable-next-line no-unused-vars
-import NotifyClient from '#utils/notify-client.js';
 
 /** @typedef {import('express').RequestHandler} RequestHandler */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAppellantCaseValidationOutcomeParams} UpdateAppellantCaseValidationOutcomeParams */
@@ -44,7 +42,7 @@ const checkAppellantCaseExists = (req, res, next) => {
 
 /**
  * @param {UpdateAppellantCaseValidationOutcomeParams} param0
- * @param { NotifyClient } notifyClient
+ * @param { import('#endpoints/appeals.js').NotifyClient } notifyClient
  */
 const updateAppellantCaseValidationOutcome = async (
 	{ appeal, appellantCaseId, azureAdUserId, data, validationOutcome, validAt, siteAddress },
