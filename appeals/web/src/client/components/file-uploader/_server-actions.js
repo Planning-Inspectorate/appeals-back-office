@@ -19,122 +19,6 @@ const serverActions = (uploadForm) => {
 	/**
 	 *
 	 * @param {FileWithRowId[]} fileList
-	 * @returns {Promise<AnError[]>}
-	 */
-	const getUploadInfoFromInternalDB = async (fileList) => {
-		const { blobStorageHost, blobStorageContainer, folderId, caseId, documentType, documentStage } =
-			uploadForm.dataset;
-		const payload = {
-			blobStorageHost: sanitiseStorageHost(blobStorageHost || ''),
-			blobStorageContainer,
-			documents: [...fileList].map((file) => ({
-				documentName: file.name,
-				documentSize: file.size,
-				mimeType: file.type,
-				documentType: documentType,
-				stage: documentStage,
-				caseId,
-				folderId,
-				fileRowId: file.fileRowId
-			}))
-		};
-
-		return fetch(`/documents/${caseId}/upload/`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify(payload)
-		})
-			.then((response) => {
-				return response.json();
-			})
-			.then((responseJson) => {
-				if ('error' in responseJson) {
-					if (responseJson.error.code === 409) {
-						const duplicateNameError = new Error('DUPLICATE_NAME_SINGLE_FILE');
-
-						// @ts-ignore
-						duplicateNameError.details = [
-							{
-								message: responseJson.error.body.fileName
-							}
-						];
-
-						throw duplicateNameError;
-					} else {
-						throw new Error(responseJson.error?.message);
-					}
-				}
-
-				for (const documentUploadInfo of responseJson.documents) {
-					if (documentUploadInfo.failedReason) {
-						failedUploads.push({
-							message: documentUploadInfo.failedReason,
-							fileRowId: documentUploadInfo.fileRowId,
-							name: documentUploadInfo.documentName
-						});
-					}
-				}
-
-				return responseJson;
-			});
-	};
-
-	/**
-	 *
-	 * @param {FileWithRowId} file
-	 * @returns {Promise<AnError[]>}
-	 */
-	const getVersionUploadInfoFromInternalDB = async (file) => {
-		const {
-			blobStorageHost,
-			blobStorageContainer,
-			folderId,
-			caseId,
-			documentId,
-			documentType,
-			documentStage
-		} = uploadForm.dataset;
-		const payload = {
-			blobStorageHost: sanitiseStorageHost(blobStorageHost || ''),
-			blobStorageContainer,
-			document: {
-				documentName: file.name,
-				documentSize: file.size,
-				mimeType: file.type,
-				documentType: documentType,
-				stage: documentStage,
-				caseId,
-				folderId,
-				fileRowId: file.fileRowId
-			}
-		};
-
-		return fetch(`/documents/${caseId}/upload/${documentId}`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify(payload)
-		})
-			.then((response) => response.json())
-			.then((documentUploadInfo) => {
-				if (documentUploadInfo.failedReason) {
-					failedUploads.push({
-						message: documentUploadInfo.failedReason,
-						fileRowId: documentUploadInfo.fileRowId,
-						name: documentUploadInfo.documentName
-					});
-				}
-
-				return documentUploadInfo;
-			});
-	};
-
-	/**
-	 *
-	 * @param {FileWithRowId[]} fileList
 	 * @param {UploadRequest} uploadInfo
 	 * @returns {Promise<AnError[]>}>}
 	 */
@@ -212,18 +96,6 @@ const serverActions = (uploadForm) => {
 	};
 
 	/**
-	 * @type {(host:string)  => string}
-	 */
-	const sanitiseStorageHost = (host) => {
-		if (host.indexOf('?') > 0) {
-			const urlParts = host.split('?');
-			return urlParts[0];
-		}
-
-		return host;
-	};
-
-	/**
 	 * @param {string[]} blobStorageUrls
 	 */
 	const deleteFiles = async (blobStorageUrls) => {
@@ -249,9 +121,7 @@ const serverActions = (uploadForm) => {
 	};
 
 	return {
-		getUploadInfoFromInternalDB,
 		uploadFiles,
-		getVersionUploadInfoFromInternalDB,
 		deleteFiles
 	};
 };

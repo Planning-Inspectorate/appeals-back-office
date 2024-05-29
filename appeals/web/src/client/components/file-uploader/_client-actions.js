@@ -87,8 +87,9 @@ const clientActions = (container) => {
 	setupDropzone();
 	cleanUpUncommittedFiles();
 
-	if (!form || !uploadButton || !uploadInput || !filesRows || !uploadCounter || !submitButton)
+	if (!form || !uploadButton || !uploadInput || !filesRows || !uploadCounter || !submitButton) {
 		return;
+	}
 
 	let globalDataTransfer = new DataTransfer();
 
@@ -161,7 +162,6 @@ const clientActions = (container) => {
 		updateUploadInfoHiddenField(JSON.stringify(uploadInfo.documents));
 	}
 
-	// BOAT-1277:
 	/**
 	 * @param {any} value
 	 * */
@@ -283,7 +283,7 @@ const clientActions = (container) => {
 		if (wrongFiles.length > 0) {
 			showErrors({ message: 'FILE_SPECIFIC_ERRORS', details: wrongFiles }, container);
 		}
-		// reset the INPUT value to be able to re-uploade deleted files
+		// reset the INPUT value to be able to re-upload deleted files
 		target.value = '';
 	};
 

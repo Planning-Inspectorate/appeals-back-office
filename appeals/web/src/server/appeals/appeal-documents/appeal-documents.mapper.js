@@ -74,8 +74,6 @@ export async function documentUploadPage(
 	const documentStage = pathComponents[0];
 	const documentTypeComputed = documentType || pathComponents[1];
 	const accessToken = await getActiveDirectoryAccessToken(session);
-
-	// TODO: 1277: pass any existing uploadInfo from session to upload component so it can be accessed in clientside js (for uncommitted file deletion)
 	const { fileUploadInfo } = session;
 
 	return {
