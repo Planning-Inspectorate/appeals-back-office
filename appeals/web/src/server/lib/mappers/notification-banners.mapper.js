@@ -87,9 +87,6 @@ export const notificationBannerDefinitions = {
 		type: 'success',
 		text: 'Horizon reference added'
 	},
-	foldersWithDraftDocuments: {
-		pages: ['appellantCase', 'lpaQuestionnaire']
-	},
 	assignCaseOfficer: {
 		pages: ['appealDetails']
 	},
