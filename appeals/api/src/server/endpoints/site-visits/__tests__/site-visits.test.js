@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { jest } from '@jest/globals';
 import { request } from '../../../app-test.js';
 import {
@@ -12,7 +13,8 @@ import {
 	ERROR_SITE_VISIT_REQUIRED_FIELDS_ACCESS_REQUIRED,
 	ERROR_SITE_VISIT_REQUIRED_FIELDS_ACCOMPANIED,
 	ERROR_START_TIME_MUST_BE_EARLIER_THAN_END_TIME,
-	SITE_VISIT_TYPE_UNACCOMPANIED
+	SITE_VISIT_TYPE_UNACCOMPANIED,
+	SITE_VISIT_TYPE_ACCOMPANIED
 } from '../../constants.js';
 
 import { householdAppeal as householdAppealData } from '#tests/appeals/mocks.js';
@@ -21,6 +23,8 @@ import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { format, parseISO } from 'date-fns';
 
 const { databaseConnector } = await import('../../../utils/database-connector.js');
+import { fetchVisitNotificationTemplateIds } from '../site-visits.service.js';
+import config from '#config/config.js';
 
 describe('site visit routes', () => {
 	/** @type {typeof householdAppealData} */
@@ -643,6 +647,11 @@ describe('site visit routes', () => {
 				expect(response.body).toEqual({
 					visitType: siteVisit.siteVisitType.name
 				});
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).not.toHaveBeenCalled();
+
+				expect(response.status).toEqual(200);
 			});
 
 			test('updates a site visit with updating the status and time fields with leading zeros', async () => {
@@ -661,7 +670,8 @@ describe('site visit routes', () => {
 						visitDate: siteVisit.visitDate.split('T')[0],
 						visitEndTime: siteVisit.visitEndTime,
 						visitStartTime: siteVisit.visitStartTime,
-						visitType: siteVisit.siteVisitType.name
+						visitType: siteVisit.siteVisitType.name,
+						previousVisitType: 'Accompanied'
 					})
 					.set('azureAdUserId', azureAdUserId);
 
@@ -689,7 +699,8 @@ describe('site visit routes', () => {
 					visitDate: siteVisit.visitDate,
 					visitEndTime: siteVisit.visitEndTime,
 					visitStartTime: siteVisit.visitStartTime,
-					visitType: siteVisit.siteVisitType.name
+					visitType: siteVisit.siteVisitType.name,
+					previousVisitType: 'Accompanied'
 				});
 			});
 
@@ -709,7 +720,8 @@ describe('site visit routes', () => {
 						visitDate: siteVisit.visitDate.split('T')[0],
 						visitEndTime: '3:00',
 						visitStartTime: '1:00',
-						visitType: siteVisit.siteVisitType.name
+						visitType: siteVisit.siteVisitType.name,
+						previousVisitType: 'Accompanied'
 					})
 					.set('azureAdUserId', azureAdUserId);
 
@@ -754,7 +766,8 @@ describe('site visit routes', () => {
 					visitDate: siteVisit.visitDate,
 					visitEndTime: '3:00',
 					visitStartTime: '1:00',
-					visitType: siteVisit.siteVisitType.name
+					visitType: siteVisit.siteVisitType.name,
+					previousVisitType: 'Accompanied'
 				});
 			});
 
@@ -772,7 +785,8 @@ describe('site visit routes', () => {
 						visitDate: siteVisit.visitDate.split('T')[0],
 						visitEndTime: '18:00',
 						visitStartTime: '16:00',
-						visitType: siteVisit.siteVisitType.name
+						visitType: siteVisit.siteVisitType.name,
+						previousVisitType: 'Accompanied'
 					})
 					.set('azureAdUserId', azureAdUserId);
 
@@ -798,7 +812,8 @@ describe('site visit routes', () => {
 					visitDate: siteVisit.visitDate,
 					visitEndTime: '18:00',
 					visitStartTime: '16:00',
-					visitType: siteVisit.siteVisitType.name
+					visitType: siteVisit.siteVisitType.name,
+					previousVisitType: 'Accompanied'
 				});
 			});
 
@@ -816,7 +831,8 @@ describe('site visit routes', () => {
 					.patch(`/appeals/${householdAppeal.id}/site-visits/${siteVisit.id}`)
 					.send({
 						visitDate: siteVisit.visitDate.split('T')[0],
-						visitType: siteVisit.siteVisitType.name
+						visitType: siteVisit.siteVisitType.name,
+						previousVisitType: 'Accompanied'
 					})
 					.set('azureAdUserId', azureAdUserId);
 
@@ -838,8 +854,14 @@ describe('site visit routes', () => {
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
 					visitDate: siteVisit.visitDate,
-					visitType: siteVisit.siteVisitType.name
+					visitType: siteVisit.siteVisitType.name,
+					previousVisitType: 'Accompanied'
 				});
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).toHaveBeenCalledTimes(2);
+
+				expect(response.status).toEqual(200);
 			});
 
 			test('updates an Unaccompanied site visit with blank time fields', async () => {
@@ -858,7 +880,8 @@ describe('site visit routes', () => {
 						visitDate: siteVisit.visitDate.split('T')[0],
 						visitEndTime: '',
 						visitStartTime: '',
-						visitType: siteVisit.siteVisitType.name
+						visitType: siteVisit.siteVisitType.name,
+						previousVisitType: SITE_VISIT_TYPE_ACCOMPANIED
 					})
 					.set('azureAdUserId', azureAdUserId);
 
@@ -884,8 +907,50 @@ describe('site visit routes', () => {
 					visitDate: siteVisit.visitDate,
 					visitEndTime: '',
 					visitStartTime: '',
-					visitType: siteVisit.siteVisitType.name
+					visitType: siteVisit.siteVisitType.name,
+					previousVisitType: SITE_VISIT_TYPE_ACCOMPANIED
 				});
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).toHaveBeenCalledTimes(2);
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).toHaveBeenCalledWith(
+					config.govNotify.template.siteVisitChange.accompaniedToUnaccompanied.appellant.id,
+					'test@136s7.com',
+					{
+						emailReplyToId: null,
+						personalisation: {
+							appeal_reference_number: '1345264',
+							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+							start_time: '',
+							end_time: '',
+							lpa_reference: '48269/APP/2021/1482',
+							visit_date: '31 March 2022'
+						},
+						reference: null
+					}
+				);
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).toHaveBeenCalledWith(
+					config.govNotify.template.siteVisitChange.accompaniedToUnaccompanied.lpa.id,
+					'maid@lpa-email.gov.uk',
+					{
+						emailReplyToId: null,
+						personalisation: {
+							appeal_reference_number: '1345264',
+							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+							start_time: '',
+							end_time: '',
+							lpa_reference: '48269/APP/2021/1482',
+							visit_date: '31 March 2022'
+						},
+						reference: null
+					}
+				);
+
+				expect(response.status).toEqual(200);
 			});
 
 			test('returns an error if appealId is not numeric', async () => {
@@ -921,6 +986,9 @@ describe('site visit routes', () => {
 						appealId: ERROR_NOT_FOUND
 					}
 				});
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).not.toHaveBeenCalled();
 			});
 
 			test('returns an error if siteVisitId is not numeric', async () => {
@@ -940,6 +1008,9 @@ describe('site visit routes', () => {
 						siteVisitId: ERROR_MUST_BE_NUMBER
 					}
 				});
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).not.toHaveBeenCalled();
 			});
 
 			test('returns an error if siteVisitId is not found', async () => {
@@ -959,6 +1030,9 @@ describe('site visit routes', () => {
 						siteVisitId: ERROR_NOT_FOUND
 					}
 				});
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).not.toHaveBeenCalled();
 			});
 
 			test('returns an error if visitType is not a string value', async () => {
@@ -978,6 +1052,9 @@ describe('site visit routes', () => {
 						visitType: ERROR_INVALID_SITE_VISIT_TYPE
 					}
 				});
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).not.toHaveBeenCalled();
 			});
 
 			test('returns an error if visitType is an incorrect value', async () => {
@@ -999,6 +1076,9 @@ describe('site visit routes', () => {
 						visitType: ERROR_INVALID_SITE_VISIT_TYPE
 					}
 				});
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).not.toHaveBeenCalled();
 			});
 
 			test('returns an error if visitType is not Unaccompanied and visitDate is not given when visitEndTime and visitStartTime are given', async () => {
@@ -1020,6 +1100,9 @@ describe('site visit routes', () => {
 						appealId: ERROR_SITE_VISIT_REQUIRED_FIELDS_ACCESS_REQUIRED
 					}
 				});
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).not.toHaveBeenCalled();
 			});
 
 			test('returns an error if visitType is not Unaccompanied and visitEndTime is not given when visitDate and visitStartTime are given', async () => {
@@ -1041,6 +1124,9 @@ describe('site visit routes', () => {
 						appealId: ERROR_SITE_VISIT_REQUIRED_FIELDS_ACCESS_REQUIRED
 					}
 				});
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).not.toHaveBeenCalled();
 			});
 
 			test('returns an error if visitType is not Unaccompanied and visitStartTime is not given when visitDate and visitEndTime are given', async () => {
@@ -1062,6 +1148,9 @@ describe('site visit routes', () => {
 						appealId: ERROR_SITE_VISIT_REQUIRED_FIELDS_ACCESS_REQUIRED
 					}
 				});
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).not.toHaveBeenCalled();
 			});
 
 			test('returns an error if visitDate is in an invalid format', async () => {
@@ -1084,6 +1173,9 @@ describe('site visit routes', () => {
 						visitDate: ERROR_MUST_BE_CORRECT_DATE_FORMAT
 					}
 				});
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).not.toHaveBeenCalled();
 			});
 
 			test('returns an error if visitDate is not a valid date', async () => {
@@ -1106,6 +1198,9 @@ describe('site visit routes', () => {
 						visitDate: ERROR_MUST_BE_CORRECT_DATE_FORMAT
 					}
 				});
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).not.toHaveBeenCalled();
 			});
 
 			test('returns an error if visitEndTime is not a valid time', async () => {
@@ -1128,6 +1223,9 @@ describe('site visit routes', () => {
 						visitEndTime: ERROR_MUST_BE_CORRECT_TIME_FORMAT
 					}
 				});
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).not.toHaveBeenCalled();
 			});
 
 			test('returns an error if visitStartTime is not a valid time', async () => {
@@ -1150,6 +1248,9 @@ describe('site visit routes', () => {
 						visitStartTime: ERROR_MUST_BE_CORRECT_TIME_FORMAT
 					}
 				});
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).not.toHaveBeenCalled();
 			});
 
 			test('returns an error if visitStartTime is not before visitEndTime', async () => {
@@ -1172,6 +1273,9 @@ describe('site visit routes', () => {
 						visitStartTime: ERROR_START_TIME_MUST_BE_EARLIER_THAN_END_TIME
 					}
 				});
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).not.toHaveBeenCalled();
 			});
 
 			test('does not throw an error if given an empty body', async () => {
@@ -1186,6 +1290,55 @@ describe('site visit routes', () => {
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({});
 			});
+		});
+	});
+
+	describe('fetchVisitNotificationTemplateIds', () => {
+		test('returns appellant template ID for unaccompaniedToAccessRequired', () => {
+			const result = fetchVisitNotificationTemplateIds('Access Required', 'Unaccompanied');
+			expect(result).toEqual({ appellant: { id: 'f9bd99e7-f3f1-4836-a2dc-018dfdece854' } });
+		});
+
+		test('returns appellant template ID for accessRequiredToUnaccompanied', () => {
+			const result = fetchVisitNotificationTemplateIds('Unaccompanied', 'Access Required');
+			expect(result).toEqual({ appellant: { id: 'a4964a74-af84-45c2-a61b-162a92f94087' } });
+		});
+
+		test('returns appellant and lpa template IDs for unaccompaniedToAccompanied', () => {
+			const result = fetchVisitNotificationTemplateIds('Accompanied', 'Unaccompanied');
+			expect(result).toEqual({
+				appellant: { id: '771691cb-81cc-444a-8db0-dbbd4f66b61f' },
+				lpa: { id: '03a6616e-3e0c-4f28-acd5-f4e873847457' }
+			});
+		});
+
+		test('returns appellant and lpa template IDs for accessRequiredToAccompanied', () => {
+			const result = fetchVisitNotificationTemplateIds('Accompanied', 'Access Required');
+			expect(result).toEqual({
+				appellant: { id: '0b7d9246-99b8-43d7-8205-02a3c9762691' },
+				lpa: { id: '03a6616e-3e0c-4f28-acd5-f4e873847457' }
+			});
+		});
+
+		test('returns appellant and lpa template IDs for accompaniedToAccessRequired', () => {
+			const result = fetchVisitNotificationTemplateIds('Access Required', 'Accompanied');
+			expect(result).toEqual({
+				appellant: { id: 'f9bd99e7-f3f1-4836-a2dc-018dfdece854' },
+				lpa: { id: '15acdaee-ca9d-4001-bb93-9f50ab29226d' }
+			});
+		});
+
+		test('returns appellant and lpa template IDs for accompaniedToUnaccompanied', () => {
+			const result = fetchVisitNotificationTemplateIds('Unaccompanied', 'Accompanied');
+			expect(result).toEqual({
+				appellant: { id: '5056b6fe-095f-45ad-abb5-0a582ef274c3' },
+				lpa: { id: '15acdaee-ca9d-4001-bb93-9f50ab29226d' }
+			});
+		});
+
+		test('returns an empty object for an unknown transition', () => {
+			const result = fetchVisitNotificationTemplateIds('UnknownType', 'AnotherUnknownType');
+			expect(result).toEqual({});
 		});
 	});
 });

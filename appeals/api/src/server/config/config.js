@@ -43,6 +43,50 @@ const { value, error } = schema.validate({
 			},
 			appealConfirmed: {
 				id: '783f94cc-1d6d-4153-8ad7-9070e449a57c'
+			},
+			siteVisitChange: {
+				unaccompaniedToAccessRequired: {
+					appellant: {
+						id: 'f9bd99e7-f3f1-4836-a2dc-018dfdece854'
+					}
+				},
+				unaccompaniedToAccompanied: {
+					appellant: {
+						id: '771691cb-81cc-444a-8db0-dbbd4f66b61f'
+					},
+					lpa: {
+						id: '03a6616e-3e0c-4f28-acd5-f4e873847457'
+					}
+				},
+				accessRequiredToAccompanied: {
+					appellant: {
+						id: '0b7d9246-99b8-43d7-8205-02a3c9762691'
+					},
+					lpa: {
+						id: '03a6616e-3e0c-4f28-acd5-f4e873847457'
+					}
+				},
+				accessRequiredToUnaccompanied: {
+					appellant: {
+						id: 'a4964a74-af84-45c2-a61b-162a92f94087'
+					}
+				},
+				accompaniedToAccessRequired: {
+					appellant: {
+						id: 'f9bd99e7-f3f1-4836-a2dc-018dfdece854'
+					},
+					lpa: {
+						id: '15acdaee-ca9d-4001-bb93-9f50ab29226d'
+					}
+				},
+				accompaniedToUnaccompanied: {
+					appellant: {
+						id: '5056b6fe-095f-45ad-abb5-0a582ef274c3'
+					},
+					lpa: {
+						id: '15acdaee-ca9d-4001-bb93-9f50ab29226d'
+					}
+				}
 			}
 		},
 		testMailbox: environment.TEST_MAILBOX || 'test@example.com'

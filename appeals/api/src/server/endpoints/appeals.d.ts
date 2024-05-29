@@ -622,6 +622,11 @@ export interface UpdateSiteVisitData {
 	visitStartTime?: string;
 	visitType?: any;
 	previousVisitType: string;
+	appellantEmail: string;
+	lpaEmail: string;
+	appealReferenceNumber: string;
+	lpaReference: string;
+	siteAddress: string;
 }
 
 type GetAuditTrailsResponse = {
