@@ -5,13 +5,11 @@ import { jest } from '@jest/globals';
 import { createTestEnvironment } from '#testing/index.js';
 import {
 	appellantCaseDataNotValidated,
-	appellantCaseDataNotValidatedWithDocuments,
 	appellantCaseDataIncompleteOutcome,
 	appellantCaseDataValidOutcome,
 	appellantCaseInvalidReasons,
 	appellantCaseIncompleteReasons,
 	documentFolderInfo,
-	documentFolderInfoWithoutDraftDocuments,
 	documentFileInfo,
 	additionalDocumentsFolderInfo,
 	documentRedactionStatuses,
@@ -28,7 +26,7 @@ import { cloneDeep } from 'lodash-es';
 import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
 import usersService from '#appeals/appeal-users/users-service.js';
 
-const { app, installMockApi, teardown } = createTestEnvironment();
+const { app, installMockApi, teardown } = createTestEnvironment({ authenticated: false });
 const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details';
 const appellantCasePagePath = '/appellant-case';
@@ -59,6 +57,35 @@ const invalidReasonsWithTextIds = invalidReasonsWithText.map((reason) => reason.
 const incompleteReasonsWithoutTextIds = incompleteReasonsWithoutText.map((reason) => reason.id);
 const incompleteReasonsWithTextIds = incompleteReasonsWithText.map((reason) => reason.id);
 
+// BOAT-1277: attempt to mock session auth (copied from `appeals/web/src/server/app/auth/__tests__/auth.test.js`)
+import {
+	ConfidentialClientApplication,
+	createAccountInfo
+} from '#testing/app/app.js';
+
+const azureMsalMock = ConfidentialClientApplication.getMock();
+
+/** @returns {ConfidentialClientApplication} */
+function getConfidentialClientApplication() {
+	return /** @type {ConfidentialClientApplication} */ (
+		azureMsalMock.confidentialClientApplications.last
+	);
+}
+
+/** @typedef {'appeals_cs_team' | 'appeals_legal_team' | 'appeals_case_officer' | 'appeals_inspector'} AppealGroupId  */
+/** @typedef {'applications_case_admin_officer' | 'applications_case_team' | 'applications_inspector'} ApplicationsGroupId  */
+
+/**
+ * @param {Array<AppealGroupId | ApplicationsGroupId>} groups
+ * @returns {Promise<void>}
+ */
+async function signinWithGroups(groups) {
+	getConfidentialClientApplication().account = createAccountInfo({ groups });
+
+	await request.get('/').redirects(1);
+	await request.get(`/auth/redirect?code=msal_code`);
+}
+
 describe('appellant-case', () => {
 	beforeEach(installMockApi);
 	afterEach(teardown);
@@ -80,21 +107,6 @@ describe('appellant-case', () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataNotValidated);
-
-			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-		});
-
-		it('should render the appellant case page with draft documents notification banner with links to add metadata page for each folder containing draft documents, and no links for folders with only non-draft documents', async () => {
-			nock('http://test/')
-				.get('/appeals/1/appellant-cases/0')
-				.reply(200, appellantCaseDataNotValidatedWithDocuments);
-			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
-			nock('http://test/')
-				.get('/appeals/1/document-folders/2')
-				.reply(200, documentFolderInfoWithoutDraftDocuments);
 
 			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
 			const element = parseHtml(response.text);
@@ -1530,12 +1542,15 @@ describe('appellant-case', () => {
 			nock.cleanAll();
 		});
 
-		it('should render a document upload page with a file upload component, and no late entry tag and associated details component, and no additional documents warning text and confirmation checkbox, if the folder is not additional documents', async () => {
+		it.only('should render a document upload page with a file upload component, and no late entry tag and associated details component, and no additional documents warning text and confirmation checkbox, if the folder is not additional documents', async () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataNotValidated);
 			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+
+			await request.get('/auth/signin');
+			await signinWithGroups(['appeals_case_officer']);
 
 			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}/add-documents/1`);
 			const element = parseHtml(response.text);

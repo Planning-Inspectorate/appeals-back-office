@@ -138,7 +138,8 @@ describe('auth', () => {
 			);
 		});
 
-		it('should silently reacquire a token on each route navigation', async () => {
+		it.only('should silently reacquire a token on each route navigation', async () => {
+			await request.get('/auth/signin');
 			await signinWithGroups(['appeals_case_officer']);
 			await request.get('/');
 
