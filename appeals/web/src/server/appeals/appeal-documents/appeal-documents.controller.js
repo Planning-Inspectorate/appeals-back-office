@@ -87,15 +87,12 @@ export const renderDocumentUpload = async (
 		backButtonUrl,
 		nextPageUrl,
 		isLateEntry,
-		request.session,
+		session,
 		errors,
 		pageHeadingTextOverride,
 		pageBodyComponents,
 		allowMultipleFiles,
-		_documentType,
-		JSON.stringify({
-			files: session.fileUploadInfo?.map((/** @type {import('#lib/ts-utilities.js').FileUploadInfoItem} */ document) => document.GUID)
-		})
+		_documentType
 	);
 
 	return response.render('appeals/documents/document-upload.njk', mappedPageContent);

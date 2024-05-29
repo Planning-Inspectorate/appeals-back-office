@@ -145,9 +145,10 @@ const serverActions = (uploadForm) => {
 		if (blobStorageHost == undefined || blobStorageContainer == undefined) {
 			throw new Error('blobStorageHost or blobStorageContainer are undefined.');
 		}
-		const blobStorageClient = useBlobEmulator /*&& !accessToken*/
-			? new BlobStorageClient(new BlobServiceClient(blobStorageHost))
-			: BlobStorageClient.fromUrlAndToken(blobStorageHost, accessToken);
+		const blobStorageClient =
+			useBlobEmulator && !accessToken
+				? new BlobStorageClient(new BlobServiceClient(blobStorageHost))
+				: BlobStorageClient.fromUrlAndToken(blobStorageHost, accessToken);
 
 		for (const documentUploadInfo of documents) {
 			const fileToUpload = [...fileList].find(
@@ -222,7 +223,37 @@ const serverActions = (uploadForm) => {
 		return host;
 	};
 
-	return { getUploadInfoFromInternalDB, uploadFiles, getVersionUploadInfoFromInternalDB };
+	/**
+	 * @param {string[]} blobStorageUrls
+	 */
+	const deleteFiles = async (blobStorageUrls) => {
+		const { blobStorageHost, blobStorageContainer, useBlobEmulator, accessToken } =
+			/** type: UploadForm **/ uploadForm.dataset;
+		if (blobStorageHost == undefined || blobStorageContainer == undefined) {
+			throw new Error('blobStorageHost or blobStorageContainer are undefined.');
+		}
+
+		let parsedAccessToken;
+		if (accessToken) {
+			parsedAccessToken = JSON.parse(accessToken);
+		}
+
+		const blobStorageClient =
+			useBlobEmulator && !accessToken
+				? new BlobStorageClient(new BlobServiceClient(blobStorageHost))
+				: BlobStorageClient.fromUrlAndToken(blobStorageHost, parsedAccessToken);
+
+		for (const blobStorageUrl of blobStorageUrls) {
+			await blobStorageClient.deleteBlobIfExists(blobStorageContainer, blobStorageUrl);
+		}
+	};
+
+	return {
+		getUploadInfoFromInternalDB,
+		uploadFiles,
+		getVersionUploadInfoFromInternalDB,
+		deleteFiles
+	};
 };
 
 export default serverActions;

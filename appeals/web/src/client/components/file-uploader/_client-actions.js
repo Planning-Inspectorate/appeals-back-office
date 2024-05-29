@@ -29,6 +29,8 @@ const clientActions = (container) => {
 	/** @type {HTMLElement | null} */
 	let dropZone;
 
+	const { uploadFiles, deleteFiles } = serverActions(container);
+
 	function setupDropzone() {
 		dropZone = document.createElement('div');
 		dropZone.className = 'pins-file-upload__dropzone';
@@ -90,11 +92,11 @@ const clientActions = (container) => {
 
 	let globalDataTransfer = new DataTransfer();
 
-	function cleanUpUncommittedFiles () {
+	function cleanUpUncommittedFiles() {
 		if (container.dataset?.uncommittedFiles) {
-			const uncommittedFiles = JSON.parse(container.dataset?.uncommittedFiles || '');
+			const uncommittedFiles = JSON.parse(container.dataset?.uncommittedFiles);
 
-			// TODO: BOAT-1277: delete uncommitted files from blob storage
+			deleteFiles(uncommittedFiles.files);
 		}
 	}
 
@@ -107,7 +109,9 @@ const clientActions = (container) => {
 	/** @type {UploadInfo} */
 	const uploadInfo = {
 		documents: [],
-		accessToken: JSON.parse(container.dataset?.accessToken || '')
+		...(container.dataset?.accessToken && {
+			accessToken: JSON.parse(container.dataset?.accessToken || '')
+		})
 	};
 
 	function createUploadInfoForAddedDocuments() {
@@ -377,8 +381,6 @@ const clientActions = (container) => {
 	const onSubmit = async (clickEvent) => {
 		clickEvent.preventDefault();
 
-		const { uploadFiles } = serverActions(container);
-
 		enableLeavePageWarning();
 
 		try {
@@ -418,18 +420,18 @@ const clientActions = (container) => {
 
 	/**
 	 * @param {string|undefined} caseReference
-	 * @param {string} fileGuid
+	 * @param {string} fileGUID
 	 * @param {string} fileName
 	 * @param {string} [latestVersion]
 	 * @returns {string}
 	 */
-	const createBlobStorageUrl = (caseReference, fileGuid, fileName, latestVersion) => {
+	const createBlobStorageUrl = (caseReference, fileGUID, fileName, latestVersion) => {
 		if (!caseReference) return '';
 
 		const latestVersionNumber = latestVersion && parseInt(latestVersion, 10);
 		const version = latestVersionNumber ? latestVersionNumber + 1 : 1;
 
-		return `appeal/${caseReference}/${fileGuid}/v${version}/${fileName}`;
+		return `appeal/${caseReference}/${fileGUID}/v${version}/${fileName}`;
 	};
 
 	return { onFileSelect, onSubmitValidation, registerEvents };

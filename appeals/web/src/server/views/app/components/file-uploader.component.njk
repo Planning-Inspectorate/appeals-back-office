@@ -22,7 +22,7 @@
 		 {% if params.documentVersion %} data-document-version="{{ params.documentVersion }}"{% endif %}
 		 {% if params.useBlobEmulator %} data-use-blob-emulator="{{ params.useBlobEmulator }}"{% endif %}
 		 {% if params.accessToken %} data-access-token="{{ params.accessToken }}"{% endif %}
-		 {% if params.uncommittedFileGUIDs %} data-uncommitted-files="{{ params.uncommittedFileGUIDs }}"{% endif %}
+		 {% if params.uncommittedFiles %} data-uncommitted-files="{{ params.uncommittedFiles }}"{% endif %}
 		 data-allowed-types="{% for value in params.allowedTypes %}{{ value|MIME }}{% endfor %}">
 		<div class="top-errors-hook"></div>
 		{% if params.formTitle %}

@@ -24,6 +24,6 @@ export interface DocumentUploadPageParameters {
 	nextPageUrl: string;
 	displayLateEntryContent?: boolean;
 	displayCorrectFolderConfirmationContent?: boolean;
+	uncommittedFiles?: string[];
 	errors: ValidationErrors | undefined;
-	uncommittedFileGUIDs: string;
 }

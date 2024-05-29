@@ -27,6 +27,7 @@ import { redactionStatusIdToName } from '#lib/redaction-statuses.js';
  * @typedef {import('@pins/appeals.api').Api.DocumentVersionDetails} DocumentVersionDetails
  * @typedef {import('@pins/appeals.api').Api.DocumentVersionAuditEntry} DocumentVersionAuditEntry
  * @typedef {FolderInfo & {id: string, caseId: string}} DocumentFolder
+ * @typedef {import('#lib/ts-utilities.js').FileUploadInfoItem} FileUploadInfoItem
  */
 
 /**
@@ -46,7 +47,6 @@ import { redactionStatusIdToName } from '#lib/redaction-statuses.js';
  * @param {PageComponent[]} [pageBodyComponents]
  * @param {boolean} [allowMultipleFiles]
  * @param {string} [documentType]
- * @param {string} [uncommittedFileGUIDs]
  * @returns {Promise<import('#appeals/appeal-documents/appeal-documents.types.js').DocumentUploadPageParameters>}
  */
 export async function documentUploadPage(
@@ -65,8 +65,7 @@ export async function documentUploadPage(
 	pageHeadingTextOverride,
 	pageBodyComponents = [],
 	allowMultipleFiles,
-	documentType,
-	uncommittedFileGUIDs = ''
+	documentType
 ) {
 	const isAdditionalDocument = folderPath.split('/')[1] === 'additionalDocuments';
 	const pageHeadingText =
@@ -75,6 +74,9 @@ export async function documentUploadPage(
 	const documentStage = pathComponents[0];
 	const documentTypeComputed = documentType || pathComponents[1];
 	const accessToken = await getActiveDirectoryAccessToken(session);
+
+	// TODO: 1277: pass any existing uploadInfo from session to upload component so it can be accessed in clientside js (for uncommitted file deletion)
+	const { fileUploadInfo } = session;
 
 	return {
 		backButtonUrl: backButtonUrl?.replace('{{folderId}}', folderId),
@@ -87,6 +89,13 @@ export async function documentUploadPage(
 		useBlobEmulator: config.useBlobEmulator,
 		...(accessToken && {
 			accessToken: JSON.stringify(accessToken)
+		}),
+		...(fileUploadInfo && {
+			uncommittedFiles: JSON.stringify({
+				files: fileUploadInfo.map(
+					(/** @type {FileUploadInfoItem} */ infoItem) => infoItem.blobStoreUrl
+				)
+			})
 		}),
 		blobStorageHost:
 			config.useBlobEmulator === true ? config.blobEmulatorSasUrl : config.blobStorageUrl,
@@ -104,7 +113,6 @@ export async function documentUploadPage(
 			backButtonUrl?.replace('{{folderId}}', folderId),
 		displayLateEntryContent: isAdditionalDocument && isLateEntry,
 		displayCorrectFolderConfirmationContent: isAdditionalDocument && !isLateEntry,
-		uncommittedFileGUIDs,
 		errors
 	};
 }
@@ -244,10 +252,6 @@ export function mapAddDocumentsPageHeading(isAdditionalDocument, documentId) {
 
 	return 'Upload documents';
 }
-
-/**
- * @typedef {import('#lib/ts-utilities.js').FileUploadInfoItem} FileUploadInfoItem
- */
 
 /**
  * @param {string} backLinkUrl
