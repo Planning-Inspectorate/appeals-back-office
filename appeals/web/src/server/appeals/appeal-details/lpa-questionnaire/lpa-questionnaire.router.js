@@ -99,7 +99,18 @@ router
 		validateCaseFolderId,
 		validateCaseDocumentId,
 		asyncRoute(controller.getAddDocuments)
+	)
+	.post(validateAppeal, validateCaseFolderId, asyncRoute(controller.postAddDocuments));
+
+router
+	.route('/:lpaQuestionnaireId/add-documents/:folderId/check-your-answers')
+	.get(validateAppeal, validateCaseFolderId, asyncRoute(controller.getAddDocumentsCheckAndConfirm))
+	.post(
+		validateAppeal,
+		validateCaseFolderId,
+		asyncRoute(controller.postAddDocumentsCheckAndConfirm)
 	);
+
 router
 	.route('/:lpaQuestionnaireId/add-documents/:folderId/:documentId')
 	.get(
@@ -107,7 +118,17 @@ router
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		validateCaseDocumentId,
-		asyncRoute(controller.getAddDocumentsVersion)
+		asyncRoute(controller.getAddDocumentVersion)
+	)
+	.post(validateAppeal, validateCaseFolderId, asyncRoute(controller.postAddDocumentVersion));
+
+router
+	.route('/:lpaQuestionnaireId/add-documents/:folderId/:documentId/check-your-answers')
+	.get(validateAppeal, validateCaseFolderId, asyncRoute(controller.getAddDocumentsCheckAndConfirm))
+	.post(
+		validateAppeal,
+		validateCaseFolderId,
+		asyncRoute(controller.postAddDocumentVersionCheckAndConfirm)
 	);
 
 router
@@ -213,7 +234,7 @@ router
 		validateCaseFolderId,
 		validateCaseDocumentId,
 		documentsValidators.validateDocumentDeleteAnswer,
-		asyncRoute(controller.postDeleteDocument)
+		asyncRoute(controller.postDeleteDocumentPage)
 	);
 
 export default router;
