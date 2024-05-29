@@ -68,7 +68,8 @@ export const householdAppeal = {
 	lpa: {
 		name: 'Maidstone Borough Council',
 		lpaCode: 'MAID',
-		id: 1
+		id: 1,
+		email: 'maid@lpa-email.gov.uk'
 	},
 	planningApplicationReference: '48269/APP/2021/1482',
 	appellant: {

@@ -10,6 +10,7 @@ import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { format, parseISO } from 'date-fns';
 import { formatSiteVisit } from './site-visits.formatter.js';
 import { updateSiteVisit } from './site-visits.service.js';
+import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -79,11 +80,18 @@ const rearrangeSiteVisit = async (req, res) => {
 		body: { visitDate, visitEndTime, visitStartTime, previousVisitType },
 		params,
 		params: { siteVisitId },
-		visitType
+		visitType,
+		appeal
 	} = req;
 	const appealId = Number(params.appealId);
 	const azureAdUserId = String(req.get('azureAdUserId'));
 	const notifyClient = req.notifyClient;
+	const siteAddress = appeal.address
+		? formatAddressSingleLine(appeal.address)
+		: 'Address not available';
+
+	const appellantEmail = String(appeal.agent?.email || appeal.appellant?.email || '');
+	const lpaEmail = appeal.lpa.email;
 
 	/** @type { UpdateSiteVisitData } */
 	const updateSiteVisitData = {
@@ -93,7 +101,12 @@ const rearrangeSiteVisit = async (req, res) => {
 		visitEndTime,
 		visitStartTime,
 		visitType,
-		previousVisitType
+		previousVisitType,
+		appellantEmail,
+		lpaEmail,
+		appealReferenceNumber: appeal.reference,
+		lpaReference: appeal.planningApplicationReference,
+		siteAddress
 	};
 
 	try {

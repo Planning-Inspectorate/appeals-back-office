@@ -30,15 +30,61 @@ export default joi
 				api: joi.object({
 					key: joi.string() // optional if not NODE_ENV=production
 				}),
-				template: joi.object({
-					validAppellantCase: joi.object({
-						id: joi.string()
-					}),
-					appealConfirmed: joi.object({
-						id: joi.string()
+				template: joi
+					.object({
+						validAppellantCase: joi.object({
+							id: joi.string().required()
+						}),
+						appealConfirmed: joi.object({
+							id: joi.string().required()
+						}),
+						siteVisitChange: joi.object({
+							unaccompaniedToAccessRequired: joi.object({
+								appellant: joi.object({
+									id: joi.string().required()
+								})
+							}),
+							unaccompaniedToAccompanied: joi.object({
+								appellant: joi.object({
+									id: joi.string().required()
+								}),
+								lpa: joi.object({
+									id: joi.string().required()
+								})
+							}),
+							accessRequiredToAccompanied: joi.object({
+								appellant: joi.object({
+									id: joi.string().required()
+								}),
+								lpa: joi.object({
+									id: joi.string().required()
+								})
+							}),
+							accessRequiredToUnaccompanied: joi.object({
+								appellant: joi.object({
+									id: joi.string().required()
+								})
+							}),
+							accompaniedToAccessRequired: joi.object({
+								appellant: joi.object({
+									id: joi.string().required()
+								}),
+								lpa: joi.object({
+									id: joi.string().required()
+								})
+							}),
+							accompaniedToUnaccompanied: joi.object({
+								appellant: joi.object({
+									id: joi.string().required()
+								}),
+								lpa: joi.object({
+									id: joi.string().required()
+								})
+							})
+						})
 					})
-				}),
-				testMailbox: joi.string()
+					.required(),
+				testMailbox: joi.string().required()
 			})
 			.when('NODE_ENV', {
 				not: 'production',
