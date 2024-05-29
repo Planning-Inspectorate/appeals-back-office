@@ -23,7 +23,6 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
-import { addDraftDocumentsNotificationBanner } from '#lib/mappers/documents.mapper.js';
 
 /**
  * @typedef {import('#appeals/appeal-details/appeal-details.types.js').SingleLPAQuestionnaireResponse} LPAQuestionnaire
@@ -42,16 +41,9 @@ import { addDraftDocumentsNotificationBanner } from '#lib/mappers/documents.mapp
  * @param {Appeal} appealDetails
  * @param {string} currentRoute
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
- * @param {import('got').Got} apiClient
  * @returns {Promise<PageContent>}
  */
-export async function lpaQuestionnairePage(
-	lpaqDetails,
-	appealDetails,
-	currentRoute,
-	session,
-	apiClient
-) {
+export async function lpaQuestionnairePage(lpaqDetails, appealDetails, currentRoute, session) {
 	const mappedLpaqDetails = initialiseAndMapLPAQData(lpaqDetails, currentRoute);
 	const mappedAppealDetails = await initialiseAndMapAppealData(
 		appealDetails,
@@ -215,14 +207,6 @@ export async function lpaQuestionnairePage(
 			}
 		});
 	}
-
-	await addDraftDocumentsNotificationBanner(
-		appealDetails?.appealId,
-		lpaqDetails.documents,
-		session,
-		apiClient,
-		`/appeals-service/appeal-details/${appealDetails?.appealId}/lpa-questionnaire/${lpaqDetails.lpaQuestionnaireId}/add-document-details/{{folderId}}`
-	);
 
 	const notificationBanners = mapNotificationBannerComponentParameters(
 		session,

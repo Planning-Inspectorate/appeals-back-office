@@ -60,7 +60,7 @@ export const getFoldersForAppeal = async (appeal, path = null) => {
 /**
  * @param {AddDocumentsRequest} upload
  * @param {RepositoryResult} appeal
- * @returns {Promise<AddDocumentsResponse>}}
+ * @returns {Promise<AddDocumentsResponse>}
  */
 export const addDocumentsToAppeal = async (upload, appeal) => {
 	const { blobStorageHost, blobStorageContainer, documents } = upload;

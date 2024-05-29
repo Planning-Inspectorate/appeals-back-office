@@ -50,8 +50,7 @@ const renderLpaQuestionnaire = async (request, response, errors = null) => {
 		lpaQuestionnaire,
 		currentAppeal,
 		request.originalUrl,
-		session,
-		request.apiClient
+		session
 	);
 
 	return response.render('patterns/display-page.pattern.njk', {
