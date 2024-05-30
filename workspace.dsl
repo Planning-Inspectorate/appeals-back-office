@@ -1,4 +1,6 @@
 workspace "Appeal service" {
+	!docs architecture
+
 	model {
 		properties {
 			"structurizr.groupSeparator" "/"
@@ -20,7 +22,6 @@ workspace "Appeal service" {
 			systemAppsBo = softwareSystem "Appeals Back-Office" "Internal service to manage planning appeals in England"  {
 
 				group "Appeal Back-Office Web" {
-
     				containerBoWeb = container "Appeal Back-Office Web" "Web UI" "Node.js, Azure Web App" {
     					tags "Microsoft Azure - App Services"
     				}
@@ -55,15 +56,15 @@ workspace "Appeal service" {
 				}
 			}
 
-			systemIntegration = softwareSystem "Integration Layer" "Data exchange between applications" {
+			systemIntegration = softwareSystem "Integration Layer" "Distributed messaging platform to exchange data between applications" {
 				tags "InternalCollaborationSystem"
 
-				containerBoServiceBus = container "Service Bus" "Messaging platform for data exchange" "Azure ServiceBus Namespace" {
+				containerBoServiceBus = container "Service Bus" "Messaging platform for data exchange" "Azure Service Bus Namespace" {
 					tags "Microsoft Azure - Azure Service Bus" "InternalCollaborationSystem"
 
 					group "Commands" {
-						componentCaseCmdTopic = component "Service Bus Appeal submission topic" "Appeal submission commands"
-						componentLpaqCmdTopic = component "Service Bus LPA submission topic" "LPA submission commands"
+						componentCaseCmdTopic = component "Service Bus Appeal submission topic" "Appeal submission command"
+						componentLpaqCmdTopic = component "Service Bus LPA submission topic" "LPA submission command"
 					}
 					group "Events" {
 						componentCaseMessageTopic = component "Service Bus Appeal topic" "Appeal messages"
@@ -84,7 +85,7 @@ workspace "Appeal service" {
 
 		}
 
-		systemGovUk = softwareSystem "GOV Notify" {
+		systemGovUk = softwareSystem "GOV Notify" "UK government messaging platform for sending emails, text and letters to users" {
 			tags = "ExternalSystem"
 			containerGovNotify = container "GOV Notify" "UK government messaging platform for sending emails, text and letters to users"
 		}
@@ -135,6 +136,48 @@ workspace "Appeal service" {
 	views {
 		properties {
 			"structurizr.sort" "created"
+		}
+
+		systemLandscape "SystemLandscape" {
+			include *
+			autoLayout lr
+			title "System Landscape"
+		}
+
+		systemContext systemAppsFo "AppealsFOContext" {
+			include *
+			autoLayout lr
+			title "Appeals Front-Office Context"
+		}
+
+		systemContext systemAppsBo "AppealsBOContext" {
+			include *
+			autoLayout lr
+			title "Appeals Back-Office Context"
+		}
+
+		container systemAppsBo "AppealsBOSystem" {
+			include *
+			autoLayout lr
+			title "Appeals Back-Office System"
+		}
+
+		systemContext systemIntegration "IntegrationContext" {
+			include *
+			autoLayout lr
+			title "Integration Context"
+		}
+
+		container systemIntegration "IntegrationSystem" {
+			include *
+			autoLayout lr
+			title "Integration System"
+		}
+
+		component containerBoServiceBus "IntegrationComponents" {
+			include *
+			autoLayout lr
+			title "Integration Components"
 		}
 
 		# Azure icons only
