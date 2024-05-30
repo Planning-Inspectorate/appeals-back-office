@@ -11,7 +11,6 @@ on:
 permissions:
   contents: write
 
-
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -26,7 +25,7 @@ jobs:
       - name: Pull Structurizr Site Generator Docker image
         run: docker pull ghcr.io/avisi-cloud/structurizr-site-generatr
       - name: Generate C4 Diagrams Site
-        run:  docker run --rm -v ./:/var/model ghcr.io/avisi-cloud/structurizr-site-generatr generate-site -w workspace.dsl
+        run: docker run --rm -v ./:/var/model ghcr.io/avisi-cloud/structurizr-site-generatr generate-site -w workspace.dsl
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:

@@ -18,6 +18,7 @@ import appealRepository from '#repositories/appeal.repository.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import config from '#config/config.js';
+import formatDate from '#utils/date-formatter.js';
 
 /** @typedef {import('express').RequestHandler} RequestHandler */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAppellantCaseValidationOutcomeParams} UpdateAppellantCaseValidationOutcomeParams */
@@ -84,6 +85,46 @@ const updateAppellantCaseValidationOutcome = async (
 			await notifyClient.sendEmail(config.govNotify.template.appealConfirmed, recipientEmail, {
 				appeal_reference_number: appeal.reference,
 				site_address: siteAddress
+			});
+		} catch (error) {
+			if (error) {
+				throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
+			}
+		}
+	}
+
+	const updatedAppeal = await appealRepository.getAppealById(Number(appealId));
+	``;
+	if (isOutcomeIncomplete(validationOutcome.name) && updatedAppeal) {
+		const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
+		if (!recipientEmail) {
+			throw new Error(ERROR_NO_RECIPIENT_EMAIL);
+		}
+
+		const newIncompleteReasons =
+			updatedAppeal.appellantCase?.appellantCaseIncompleteReasonsOnAppellantCases;
+		if (!newIncompleteReasons) {
+			throw new Error(ERROR_NOT_FOUND);
+		}
+
+		const incompleteReasonsList = newIncompleteReasons.flatMap((item) => {
+			if (item.appellantCaseIncompleteReasonText.length > 0) {
+				return item.appellantCaseIncompleteReasonText.map(
+					(textItem) => `${item.appellantCaseIncompleteReason.name}: ${textItem.text}`
+				);
+			} else {
+				return [item.appellantCaseIncompleteReason.name];
+			}
+		});
+
+		const appealDueDateAsDateObject = new Date(appealDueDate);
+
+		try {
+			await notifyClient.sendEmail(config.govNotify.template.appealIncomplete, recipientEmail, {
+				appeal_reference_number: appeal.reference,
+				site_address: siteAddress,
+				due_date: formatDate(appealDueDateAsDateObject, false),
+				reasons: incompleteReasonsList
 			});
 		} catch (error) {
 			if (error) {
