@@ -232,9 +232,24 @@ describe('appellant cases routes', () => {
 		});
 
 		describe('PATCH', () => {
-			test('updates appellant case when the validation outcome is Incomplete without reason text and an appeal due date', async () => {
+			test('updates appellant case when the validation outcome is Incomplete without reason text and with an appeal due date', async () => {
+				const incompleteAppeal = {
+					...householdAppeal,
+					appellantCase: {
+						...householdAppeal.appellantCase,
+						appellantCaseIncompleteReasonsOnAppellantCases: [
+							{
+								appellantCaseIncompleteReason: {
+									id: 1,
+									name: 'Reason 1'
+								},
+								appellantCaseIncompleteReasonText: []
+							}
+						]
+					}
+				};
 				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+				databaseConnector.appeal.findUnique.mockResolvedValue(incompleteAppeal);
 				// @ts-ignore
 				databaseConnector.user.upsert.mockResolvedValue({
 					id: 1,
@@ -294,14 +309,69 @@ describe('appellant cases routes', () => {
 				});
 
 				// eslint-disable-next-line no-undef
-				expect(mockSendEmail).not.toHaveBeenCalled();
+				expect(mockSendEmail).toHaveBeenCalledTimes(1);
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).toHaveBeenCalledWith(
+					config.govNotify.template.appealIncomplete.id,
+					'test@136s7.com',
+					{
+						emailReplyToId: null,
+						personalisation: {
+							appeal_reference_number: '1345264',
+							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+							due_date: '14 July 2099',
+							reasons: ['Reason 1']
+						},
+						reference: null
+					}
+				);
 
 				expect(response.status).toEqual(200);
 			});
 
-			test('updates appellant case when the validation outcome is Incomplete with reason text', async () => {
+			test('updates appellant case when the validation outcome is Incomplete with reason text and an appeal due date', async () => {
+				const incompleteAppeal = {
+					...householdAppeal,
+					appellantCase: {
+						...householdAppeal.appellantCase,
+						appellantCaseIncompleteReasonsOnAppellantCases: [
+							{
+								appellantCaseIncompleteReason: {
+									id: 1,
+									name: 'Reason 1'
+								},
+								appellantCaseIncompleteReasonText: [
+									{
+										id: 1,
+										text: 'Reason Text 1'
+									},
+									{
+										id: 2,
+										text: 'Reason Text 2'
+									}
+								]
+							},
+							{
+								appellantCaseIncompleteReason: {
+									id: 2,
+									name: 'Reason 2'
+								},
+								appellantCaseIncompleteReasonText: [
+									{
+										id: 1,
+										text: 'Reason Text 3'
+									},
+									{
+										id: 2,
+										text: 'Reason Text 4'
+									}
+								]
+							}
+						]
+					}
+				};
 				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+				databaseConnector.appeal.findUnique.mockResolvedValue(incompleteAppeal);
 				// @ts-ignore
 				databaseConnector.user.upsert.mockResolvedValue({
 					id: 1,
@@ -325,14 +395,15 @@ describe('appellant cases routes', () => {
 				);
 
 				const body = {
+					appealDueDate: '2099-07-14',
 					incompleteReasons: [
 						{
 							id: 1,
-							text: ['Reason 1', 'Reason 2']
+							text: ['Reason Text 1', 'Reason Text 2']
 						},
 						{
 							id: 2,
-							text: ['Reason 3', 'Reason 4']
+							text: ['Reason Text 3', 'Reason Text 4']
 						}
 					],
 					validationOutcome: 'Incomplete'
@@ -357,29 +428,49 @@ describe('appellant cases routes', () => {
 							{
 								appellantCaseId: appellantCase.id,
 								appellantCaseIncompleteReasonId: 1,
-								text: 'Reason 1'
+								text: 'Reason Text 1'
 							},
 							{
 								appellantCaseId: appellantCase.id,
 								appellantCaseIncompleteReasonId: 1,
-								text: 'Reason 2'
+								text: 'Reason Text 2'
 							},
 							{
 								appellantCaseId: appellantCase.id,
 								appellantCaseIncompleteReasonId: 2,
-								text: 'Reason 3'
+								text: 'Reason Text 3'
 							},
 							{
 								appellantCaseId: appellantCase.id,
 								appellantCaseIncompleteReasonId: 2,
-								text: 'Reason 4'
+								text: 'Reason Text 4'
 							}
 						]
 					}
 				);
 
 				// eslint-disable-next-line no-undef
-				expect(mockSendEmail).not.toHaveBeenCalled();
+				expect(mockSendEmail).toHaveBeenCalledTimes(1);
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).toHaveBeenCalledWith(
+					config.govNotify.template.appealIncomplete.id,
+					'test@136s7.com',
+					{
+						emailReplyToId: null,
+						personalisation: {
+							appeal_reference_number: '1345264',
+							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+							due_date: '14 July 2099',
+							reasons: [
+								'Reason 1: Reason Text 1',
+								'Reason 1: Reason Text 2',
+								'Reason 2: Reason Text 3',
+								'Reason 2: Reason Text 4'
+							]
+						},
+						reference: null
+					}
+				);
 
 				expect(response.status).toEqual(200);
 			});
@@ -554,7 +645,7 @@ describe('appellant cases routes', () => {
 				});
 
 				// eslint-disable-next-line no-undef
-				expect(mockSendEmail).not.toHaveBeenCalled();
+				expect(mockSendEmail).toHaveBeenCalledTimes(1);
 
 				expect(response.status).toEqual(200);
 			});
@@ -626,7 +717,7 @@ describe('appellant cases routes', () => {
 				});
 
 				// eslint-disable-next-line no-undef
-				expect(mockSendEmail).not.toHaveBeenCalled();
+				expect(mockSendEmail).toHaveBeenCalledTimes(1);
 
 				expect(response.status).toEqual(200);
 			});
