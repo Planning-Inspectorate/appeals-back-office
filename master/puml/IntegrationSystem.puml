@@ -1,0 +1,29 @@
+@startuml
+set separator none
+title Integration System
+
+left to right direction
+
+!include <C4/C4>
+!include <C4/C4_Context>
+!include <C4/C4_Container>
+
+System(AppealsFrontOffice, "Appeals Front-Office", $descr="Public dashboards for appellants and LPAs", $tags="", $link="")
+System(AppealsBackOffice, "Appeals Back-Office", $descr="Internal service to manage planning appeals in England", $tags="", $link="")
+
+System_Boundary("IntegrationLayer_boundary", "Integration Layer", $tags="") {
+  Container(IntegrationLayer.ServiceBus, "Service Bus", $techn="Azure Service Bus Namespace", $descr="Messaging platform for data exchange", $tags="", $link="")
+  Container(IntegrationLayer.OperationalDataWarehouseODW, "Operational Data Warehouse (ODW)", $techn="", $descr="Holds all Planning Inspectorate data so that it can be used for internal purposes", $tags="", $link="")
+  Container(IntegrationLayer.AzureEventGrid, "Azure Event Grid", $techn="Reports virus scan results for uploaded blobs", $descr=",", $tags="", $link="")
+}
+
+Rel(AppealsFrontOffice, IntegrationLayer.ServiceBus, "Records appellant submissions", $techn="Service Bus Topic", $tags="", $link="")
+Rel(AppealsBackOffice, IntegrationLayer.ServiceBus, "Records changes to appeals", $techn="Service Bus Topic", $tags="", $link="")
+Rel(IntegrationLayer.ServiceBus, AppealsBackOffice, "Requests the creation of appeals", $techn="Service Bus Topic", $tags="", $link="")
+Rel(IntegrationLayer.ServiceBus, IntegrationLayer.OperationalDataWarehouseODW, "Informs subscribers of changes to appeals", $techn="Service Bus Topic", $tags="", $link="")
+Rel(IntegrationLayer.ServiceBus, AppealsFrontOffice, "Informs subscribers of changes to appeals", $techn="Service Bus Topic", $tags="", $link="")
+Rel(IntegrationLayer.AzureEventGrid, AppealsBackOffice, "Reports virus scan results", $techn="Event Grid Topic", $tags="", $link="")
+Rel(AppealsBackOffice, AppealsFrontOffice, "Copies documents to import", $techn="", $tags="", $link="")
+
+SHOW_LEGEND(true)
+@enduml

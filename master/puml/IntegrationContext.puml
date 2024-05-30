@@ -1,0 +1,25 @@
+@startuml
+set separator none
+title Integration Context
+
+left to right direction
+
+!include <C4/C4>
+!include <C4/C4_Context>
+
+AddBoundaryTag("Planning Inspectorate: Appeal Service", $borderColor="#cccccc", $fontColor="#cccccc", $borderStyle="dashed")
+Boundary(group_1, "Planning Inspectorate: Appeal Service", $tags="Planning Inspectorate: Appeal Service") {
+  System(IntegrationLayer, "Integration Layer", $descr="Distributed messaging platform to exchange data between applications", $tags="", $link="")
+  System(AppealsFrontOffice, "Appeals Front-Office", $descr="Public dashboards for appellants and LPAs", $tags="", $link="")
+  System(AppealsBackOffice, "Appeals Back-Office", $descr="Internal service to manage planning appeals in England", $tags="", $link="")
+}
+
+
+Rel(AppealsFrontOffice, IntegrationLayer, "Records appellant submissions", $techn="Service Bus Topic", $tags="", $link="")
+Rel(AppealsBackOffice, IntegrationLayer, "Records changes to appeals", $techn="Service Bus Topic", $tags="", $link="")
+Rel(IntegrationLayer, AppealsBackOffice, "Requests the creation of appeals", $techn="Service Bus Topic", $tags="", $link="")
+Rel(IntegrationLayer, AppealsFrontOffice, "Informs subscribers of changes to appeals", $techn="Service Bus Topic", $tags="", $link="")
+Rel(AppealsBackOffice, AppealsFrontOffice, "Copies documents to import", $techn="", $tags="", $link="")
+
+SHOW_LEGEND(true)
+@enduml

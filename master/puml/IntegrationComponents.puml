@@ -1,0 +1,52 @@
+@startuml
+set separator none
+title Integration Components
+
+left to right direction
+
+!include <C4/C4>
+!include <C4/C4_Context>
+!include <C4/C4_Container>
+!include <C4/C4_Component>
+
+System(AppealsFrontOffice, "Appeals Front-Office", $descr="Public dashboards for appellants and LPAs", $tags="", $link="")
+System(AppealsBackOffice, "Appeals Back-Office", $descr="Internal service to manage planning appeals in England", $tags="", $link="")
+Container(IntegrationLayer.OperationalDataWarehouseODW, "Operational Data Warehouse (ODW)", $techn="", $descr="Holds all Planning Inspectorate data so that it can be used for internal purposes", $tags="", $link="")
+
+Container_Boundary("IntegrationLayer.ServiceBus_boundary", "Service Bus", $tags="") {
+  AddBoundaryTag("Commands", $borderColor="#cccccc", $fontColor="#cccccc", $borderStyle="dashed")
+  Boundary(group_1, "Commands", $tags="Commands") {
+    Component(IntegrationLayer.ServiceBus.ServiceBusAppealsubmissiontopic, "Service Bus Appeal submission topic", $techn="", $descr="Appeal submission command", $tags="", $link="")
+    Component(IntegrationLayer.ServiceBus.ServiceBusLPAsubmissiontopic, "Service Bus LPA submission topic", $techn="", $descr="LPA submission command", $tags="", $link="")
+  }
+
+  AddBoundaryTag("Events", $borderColor="#cccccc", $fontColor="#cccccc", $borderStyle="dashed")
+  Boundary(group_2, "Events", $tags="Events") {
+    Component(IntegrationLayer.ServiceBus.ServiceBusAppealtopic, "Service Bus Appeal topic", $techn="", $descr="Appeal messages", $tags="", $link="")
+    Component(IntegrationLayer.ServiceBus.ServiceBusDocumenttopic, "Service Bus Document topic", $techn="", $descr="Appeal document messages", $tags="", $link="")
+    Component(IntegrationLayer.ServiceBus.ServiceBusServiceUsertopic, "Service Bus Service User topic", $techn="", $descr="Service user messages", $tags="", $link="")
+    Component(IntegrationLayer.ServiceBus.ServiceBusEventtopic, "Service Bus Event topic", $techn="", $descr="Event message", $tags="", $link="")
+  }
+
+}
+
+Rel(AppealsFrontOffice, IntegrationLayer.ServiceBus.ServiceBusAppealsubmissiontopic, "Records appellant submissions", $techn="Service Bus Topic", $tags="", $link="")
+Rel(AppealsFrontOffice, IntegrationLayer.ServiceBus.ServiceBusLPAsubmissiontopic, "Records LPA submissions", $techn="Service Bus Topic", $tags="", $link="")
+Rel(AppealsBackOffice, IntegrationLayer.ServiceBus.ServiceBusAppealtopic, "Records changes to appeals", $techn="Service Bus Topic", $tags="", $link="")
+Rel(AppealsBackOffice, IntegrationLayer.ServiceBus.ServiceBusDocumenttopic, "Records changes to documents", $techn="Service Bus", $tags="", $link="")
+Rel(AppealsBackOffice, IntegrationLayer.ServiceBus.ServiceBusServiceUsertopic, "Records changes to user information", $techn="Service Bus Topic", $tags="", $link="")
+Rel(AppealsBackOffice, IntegrationLayer.ServiceBus.ServiceBusEventtopic, "Records changes to site visits and other events", $techn="Service Bus Topic", $tags="", $link="")
+Rel(IntegrationLayer.ServiceBus.ServiceBusAppealsubmissiontopic, AppealsBackOffice, "Requests the creation of appeals", $techn="Service Bus Topic", $tags="", $link="")
+Rel(IntegrationLayer.ServiceBus.ServiceBusLPAsubmissiontopic, AppealsBackOffice, "Requests the addition of LPA responses to appeals", $techn="Service Bus Topic", $tags="", $link="")
+Rel(IntegrationLayer.ServiceBus.ServiceBusAppealtopic, IntegrationLayer.OperationalDataWarehouseODW, "Informs subscribers of changes to appeals", $techn="Service Bus Topic", $tags="", $link="")
+Rel(IntegrationLayer.ServiceBus.ServiceBusDocumenttopic, IntegrationLayer.OperationalDataWarehouseODW, "Informs subscribers of changes to documents", $techn="Service Bus Topic", $tags="", $link="")
+Rel(IntegrationLayer.ServiceBus.ServiceBusServiceUsertopic, IntegrationLayer.OperationalDataWarehouseODW, "Informs subscribers of changes to service users information", $techn="Service Bus Topic", $tags="", $link="")
+Rel(IntegrationLayer.ServiceBus.ServiceBusEventtopic, IntegrationLayer.OperationalDataWarehouseODW, "Informs subscribers of changes to site visits and other events", $techn="Service Bus Topic", $tags="", $link="")
+Rel(IntegrationLayer.ServiceBus.ServiceBusAppealtopic, AppealsFrontOffice, "Informs subscribers of changes to appeals", $techn="Service Bus Topic", $tags="", $link="")
+Rel(IntegrationLayer.ServiceBus.ServiceBusDocumenttopic, AppealsFrontOffice, "Informs subscribers of changes to documents", $techn="Service Bus Topic", $tags="", $link="")
+Rel(IntegrationLayer.ServiceBus.ServiceBusServiceUsertopic, AppealsFrontOffice, "Informs subscribers of changes to service users information", $techn="Service Bus Topic", $tags="", $link="")
+Rel(IntegrationLayer.ServiceBus.ServiceBusEventtopic, AppealsFrontOffice, "Informs subscribers of changes to site visits and other events", $techn="Service Bus Topic", $tags="", $link="")
+Rel(AppealsBackOffice, AppealsFrontOffice, "Copies documents to import", $techn="", $tags="", $link="")
+
+SHOW_LEGEND(true)
+@enduml
