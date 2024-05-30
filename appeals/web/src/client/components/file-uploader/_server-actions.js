@@ -16,6 +16,20 @@ const serverActions = (uploadForm) => {
 	/** @type {AnError[]} */
 	const failedUploads = [];
 
+	const getAccessToken = async () => {
+		return fetch('/auth/get-access-token')
+			.then(response => {
+				return response.json();
+			})
+			.then(responseJson => {
+				if ('error' in responseJson) {
+					throw new Error(responseJson.error?.message);
+				}
+
+				return responseJson;
+			})
+	};
+
 	/**
 	 *
 	 * @param {FileWithRowId[]} fileList
@@ -23,7 +37,10 @@ const serverActions = (uploadForm) => {
 	 * @returns {Promise<AnError[]>}>}
 	 */
 	const uploadFiles = async (fileList, uploadInfo) => {
-		const { documents, accessToken } = uploadInfo;
+		const { documents } = uploadInfo;
+
+		const accessToken = await getAccessToken();
+
 		const { blobStorageHost, blobStorageContainer, useBlobEmulator } =
 			/** type: UploadForm **/ uploadForm.dataset;
 		if (blobStorageHost == undefined || blobStorageContainer == undefined) {

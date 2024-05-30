@@ -4,6 +4,7 @@ import config from '#environment/config.js';
 import pino from '#lib/logger.js';
 import * as authService from './auth.service.js';
 import * as authSession from './auth-session.service.js';
+import getActiveDirectoryAccessToken from '#lib/active-directory-token.js';
 
 /**
  * Phase 1 – Navigate to external MSAL signin url
@@ -115,4 +116,20 @@ export async function handleSignout(req, response) {
 
 	response.setHeader('Clear-Site-Data', '*');
 	response.clearCookie('connect.sid', { path: '/' }).redirect(config.msal.logoutUri);
+}
+
+/** @typedef {import('../auth/auth-session.service').SessionWithAuth} SessionWithAuth */
+/** @typedef {import('@azure/core-auth').AccessToken} AccessToken */
+
+/**
+ * Get an Azure Active Directory access token
+ *
+ * @param {{apiClient: import('got').Got, params: {caseId: string}, session: SessionWithAuth}} request
+ * @param {*} response
+ * @returns {Promise<{}|undefined>}
+ */
+export async function getAccessToken({ session }, response) {
+	const accessToken = await getActiveDirectoryAccessToken(session);
+
+	return response.send(accessToken);
 }
