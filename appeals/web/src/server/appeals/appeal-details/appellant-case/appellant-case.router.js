@@ -110,7 +110,6 @@ router
 		validateAppeal,
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
-		validateCaseDocumentId,
 		asyncRoute(controller.getAddDocuments)
 	)
 	.post(validateAppeal, validateCaseFolderId, asyncRoute(controller.postAddDocuments));

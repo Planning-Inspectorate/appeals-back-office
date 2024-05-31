@@ -26,7 +26,7 @@ import { cloneDeep } from 'lodash-es';
 import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
 import usersService from '#appeals/appeal-users/users-service.js';
 
-const { app, installMockApi, teardown } = createTestEnvironment({ authenticated: false });
+const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details';
 const appellantCasePagePath = '/appellant-case';
@@ -57,34 +57,8 @@ const invalidReasonsWithTextIds = invalidReasonsWithText.map((reason) => reason.
 const incompleteReasonsWithoutTextIds = incompleteReasonsWithoutText.map((reason) => reason.id);
 const incompleteReasonsWithTextIds = incompleteReasonsWithText.map((reason) => reason.id);
 
-// BOAT-1277: attempt to mock session auth (copied from `appeals/web/src/server/app/auth/__tests__/auth.test.js`)
-import {
-	ConfidentialClientApplication,
-	createAccountInfo
-} from '#testing/app/app.js';
-
-const azureMsalMock = ConfidentialClientApplication.getMock();
-
-/** @returns {ConfidentialClientApplication} */
-function getConfidentialClientApplication() {
-	return /** @type {ConfidentialClientApplication} */ (
-		azureMsalMock.confidentialClientApplications.last
-	);
-}
-
-/** @typedef {'appeals_cs_team' | 'appeals_legal_team' | 'appeals_case_officer' | 'appeals_inspector'} AppealGroupId  */
-/** @typedef {'applications_case_admin_officer' | 'applications_case_team' | 'applications_inspector'} ApplicationsGroupId  */
-
-/**
- * @param {Array<AppealGroupId | ApplicationsGroupId>} groups
- * @returns {Promise<void>}
- */
-async function signinWithGroups(groups) {
-	getConfidentialClientApplication().account = createAccountInfo({ groups });
-
-	await request.get('/').redirects(1);
-	await request.get(`/auth/redirect?code=msal_code`);
-}
+const testUploadInfo =
+	'[{"name": "test-document.txt", "GUID": "1", "fileRowId": "1", "blobStoreUrl": "/", "mimeType": "txt", "documentType": "txt", "size": 1, "stage": "appellant-case"}]';
 
 describe('appellant-case', () => {
 	beforeEach(installMockApi);
@@ -1542,17 +1516,15 @@ describe('appellant-case', () => {
 			nock.cleanAll();
 		});
 
-		it.only('should render a document upload page with a file upload component, and no late entry tag and associated details component, and no additional documents warning text and confirmation checkbox, if the folder is not additional documents', async () => {
+		it('should render a document upload page with a file upload component, and no late entry tag and associated details component, and no additional documents warning text and confirmation checkbox, if the folder is not additional documents', async () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataNotValidated);
 			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 
-			await request.get('/auth/signin');
-			await signinWithGroups(['appeals_case_officer']);
-
 			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}/add-documents/1`);
+
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
@@ -1697,20 +1669,73 @@ describe('appellant-case', () => {
 		});
 	});
 
-	describe('GET /appellant-case/add-document-details/:folderId/', () => {
+	describe('POST /appellant-case/add-documents/:folderId/', () => {
 		beforeEach(() => {
 			nock.cleanAll();
 			nock('http://test/').get('/appeals/1').reply(200, appealData);
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses);
+			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
 		});
 		afterEach(() => {
 			nock.cleanAll();
 		});
 
-		it('should render the add document details page with one item per unpublished document, and without a late entry status tag and associated details component, if the folder is not additional documents', async () => {
+		it('should render a 500 error page if upload-info is not present in the request body', async () => {
+			const response = await request
+				.post(`${baseUrl}/1${appellantCasePagePath}/add-documents/1`)
+				.send({});
+
+			expect(response.statusCode).toBe(500);
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+		});
+
+		it('should render a 500 error page if request body upload-info is in an incorrect format', async () => {
+			const response = await request
+				.post(`${baseUrl}/1${appellantCasePagePath}/add-documents/1`)
+				.send({
+					'upload-info': ''
+				});
+
+			expect(response.statusCode).toBe(500);
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+		});
+
+		it('should redirect to the add document details page if upload-info is present in the request body and in the correct format', async () => {
+			const response = await request
+				.post(`${baseUrl}/1${appellantCasePagePath}/add-documents/1`)
+				.send({
+					'upload-info': testUploadInfo
+				});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/appellant-case/add-document-details/2864'
+			);
+		});
+	});
+
+	describe('GET /appellant-case/add-document-details/:folderId/', () => {
+		beforeEach(() => {
+			nock.cleanAll();
+			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/')
+				.get('/appeals/document-redaction-statuses')
+				.reply(200, documentRedactionStatuses)
+				.persist();
+			nock('http://test/')
+				.get('/appeals/1/document-folders/1')
+				.reply(200, documentFolderInfo)
+				.persist();
+		});
+		afterEach(() => {
+			nock.cleanAll();
+		});
+
+		it('should render a 500 error page if fileUploadInfo is not present in the session', async () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataNotValidated);
@@ -1719,12 +1744,35 @@ describe('appellant-case', () => {
 			const response = await request.get(
 				`${baseUrl}/1${appellantCasePagePath}/add-document-details/1`
 			);
-			const element = parseHtml(response.text);
 
+			expect(response.statusCode).toBe(500);
+			const element = parseHtml(response.text);
 			expect(element.innerHTML).toMatchSnapshot();
 		});
 
-		it('should render the add document details page with one item per unpublished document, and without a late entry status tag and associated details component, if the folder is additional documents, and the appellant case has no validation outcome', async () => {
+		it('should render the add document details page with one item per uploaded document, and without a late entry status tag and associated details component, if the folder is not additional documents', async () => {
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, appellantCaseDataNotValidated);
+
+			const addDocumentsResponse = await request
+				.post(`${baseUrl}/1${appellantCasePagePath}/add-documents/1`)
+				.send({
+					'upload-info': testUploadInfo
+				});
+
+			expect(addDocumentsResponse.statusCode).toBe(302);
+
+			const response = await request.get(
+				`${baseUrl}/1${appellantCasePagePath}/add-document-details/1`
+			);
+
+			expect(response.statusCode).toBe(200);
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+		});
+
+		it('should render the add document details page with one item per uploaded document, and without a late entry status tag and associated details component, if the folder is additional documents, and the appellant case has no validation outcome', async () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataNotValidated);
@@ -1732,15 +1780,24 @@ describe('appellant-case', () => {
 				.get('/appeals/1/document-folders/1')
 				.reply(200, additionalDocumentsFolderInfo);
 
+			const addDocumentsResponse = await request
+				.post(`${baseUrl}/1${appellantCasePagePath}/add-documents/1`)
+				.send({
+					'upload-info': testUploadInfo
+				});
+
+			expect(addDocumentsResponse.statusCode).toBe(302);
+
 			const response = await request.get(
 				`${baseUrl}/1${appellantCasePagePath}/add-document-details/1`
 			);
-			const element = parseHtml(response.text);
 
+			expect(response.statusCode).toBe(200);
+			const element = parseHtml(response.text);
 			expect(element.innerHTML).toMatchSnapshot();
 		});
 
-		it('should render the add document details page with one item per unpublished document, and without a late entry status tag and associated details component, if the folder is additional documents, and the appellant case has a validation outcome of invalid', async () => {
+		it('should render the add document details page with one item per uploaded document, and without a late entry status tag and associated details component, if the folder is additional documents, and the appellant case has a validation outcome of invalid', async () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataInvalidOutcome);
@@ -1748,15 +1805,24 @@ describe('appellant-case', () => {
 				.get('/appeals/1/document-folders/1')
 				.reply(200, additionalDocumentsFolderInfo);
 
+			const addDocumentsResponse = await request
+				.post(`${baseUrl}/1${appellantCasePagePath}/add-documents/1`)
+				.send({
+					'upload-info': testUploadInfo
+				});
+
+			expect(addDocumentsResponse.statusCode).toBe(302);
+
 			const response = await request.get(
 				`${baseUrl}/1${appellantCasePagePath}/add-document-details/1`
 			);
-			const element = parseHtml(response.text);
 
+			expect(response.statusCode).toBe(200);
+			const element = parseHtml(response.text);
 			expect(element.innerHTML).toMatchSnapshot();
 		});
 
-		it('should render the add document details page with one item per unpublished document, and without a late entry status tag and associated details component, if the folder is additional documents, and the appellant case has a validation outcome of incomplete', async () => {
+		it('should render the add document details page with one item per uploaded document, and without a late entry status tag and associated details component, if the folder is additional documents, and the appellant case has a validation outcome of incomplete', async () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataIncompleteOutcome);
@@ -1764,15 +1830,24 @@ describe('appellant-case', () => {
 				.get('/appeals/1/document-folders/1')
 				.reply(200, additionalDocumentsFolderInfo);
 
+			const addDocumentsResponse = await request
+				.post(`${baseUrl}/1${appellantCasePagePath}/add-documents/1`)
+				.send({
+					'upload-info': testUploadInfo
+				});
+
+			expect(addDocumentsResponse.statusCode).toBe(302);
+
 			const response = await request.get(
 				`${baseUrl}/1${appellantCasePagePath}/add-document-details/1`
 			);
-			const element = parseHtml(response.text);
 
+			expect(response.statusCode).toBe(200);
+			const element = parseHtml(response.text);
 			expect(element.innerHTML).toMatchSnapshot();
 		});
 
-		it('should render the add document details page with one item per unpublished document, and with a late entry status tag and associated details component, if the folder is additional documents, and the appellant case has a validation outcome of valid', async () => {
+		it('should render the add document details page with one item per uploaded document, and with a late entry status tag and associated details component, if the folder is additional documents, and the appellant case has a validation outcome of valid', async () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataValidOutcome);
@@ -1780,21 +1855,39 @@ describe('appellant-case', () => {
 				.get('/appeals/1/document-folders/1')
 				.reply(200, additionalDocumentsFolderInfo);
 
+			const addDocumentsResponse = await request
+				.post(`${baseUrl}/1${appellantCasePagePath}/add-documents/1`)
+				.send({
+					'upload-info': testUploadInfo
+				});
+
+			expect(addDocumentsResponse.statusCode).toBe(302);
+
 			const response = await request.get(
 				`${baseUrl}/1${appellantCasePagePath}/add-document-details/1`
 			);
-			const element = parseHtml(response.text);
 
+			expect(response.statusCode).toBe(200);
+			const element = parseHtml(response.text);
 			expect(element.innerHTML).toMatchSnapshot();
 		});
 	});
 
 	describe('POST /appellant-case/add-document-details/:folderId/', () => {
-		beforeEach(() => {
+		/**
+		 * @type {import("superagent").Response}
+		 */
+		let addDocumentsResponse;
+
+		beforeEach(async () => {
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
-				.reply(200, documentRedactionStatuses);
-			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
+				.reply(200, documentRedactionStatuses)
+				.persist();
+			nock('http://test/')
+				.get('/appeals/1/document-folders/1')
+				.reply(200, documentFolderInfo)
+				.persist();
 			nock('http://test/')
 				.patch('/appeals/1/documents')
 				.reply(200, {
@@ -1806,6 +1899,12 @@ describe('appellant-case', () => {
 						}
 					]
 				});
+
+			addDocumentsResponse = await request
+				.post(`${baseUrl}/1${appellantCasePagePath}/add-documents/1`)
+				.send({
+					'upload-info': testUploadInfo
+				});
 		});
 
 		afterEach(() => {
@@ -1813,16 +1912,20 @@ describe('appellant-case', () => {
 		});
 
 		it('should re-render the document details page with the expected error message if the request body is in an incorrect format', async () => {
+			expect(addDocumentsResponse.statusCode).toBe(302);
+
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}/add-document-details/1`)
 				.send({});
 
+			expect(response.statusCode).toBe(200);
 			const element = parseHtml(response.text);
-
 			expect(element.innerHTML).toMatchSnapshot();
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate day is empty', async () => {
+			expect(addDocumentsResponse.statusCode).toBe(302);
+
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}/add-document-details/1`)
 				.send({
@@ -1839,12 +1942,14 @@ describe('appellant-case', () => {
 					]
 				});
 
+			expect(response.statusCode).toBe(200);
 			const element = parseHtml(response.text);
-
 			expect(element.innerHTML).toMatchSnapshot();
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate day is non-numeric', async () => {
+			expect(addDocumentsResponse.statusCode).toBe(302);
+
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}/add-document-details/1`)
 				.send({
@@ -1861,12 +1966,14 @@ describe('appellant-case', () => {
 					]
 				});
 
+			expect(response.statusCode).toBe(200);
 			const element = parseHtml(response.text);
-
 			expect(element.innerHTML).toMatchSnapshot();
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate day is less than 1', async () => {
+			expect(addDocumentsResponse.statusCode).toBe(302);
+
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}/add-document-details/1`)
 				.send({
@@ -1883,12 +1990,14 @@ describe('appellant-case', () => {
 					]
 				});
 
+			expect(response.statusCode).toBe(200);
 			const element = parseHtml(response.text);
-
 			expect(element.innerHTML).toMatchSnapshot();
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate day is greater than 31', async () => {
+			expect(addDocumentsResponse.statusCode).toBe(302);
+
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}/add-document-details/1`)
 				.send({
@@ -1905,12 +2014,14 @@ describe('appellant-case', () => {
 					]
 				});
 
+			expect(response.statusCode).toBe(200);
 			const element = parseHtml(response.text);
-
 			expect(element.innerHTML).toMatchSnapshot();
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate month is empty', async () => {
+			expect(addDocumentsResponse.statusCode).toBe(302);
+
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}/add-document-details/1`)
 				.send({
@@ -1927,12 +2038,14 @@ describe('appellant-case', () => {
 					]
 				});
 
+			expect(response.statusCode).toBe(200);
 			const element = parseHtml(response.text);
-
 			expect(element.innerHTML).toMatchSnapshot();
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate month is non-numeric', async () => {
+			expect(addDocumentsResponse.statusCode).toBe(302);
+
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}/add-document-details/1`)
 				.send({
@@ -1949,12 +2062,14 @@ describe('appellant-case', () => {
 					]
 				});
 
+			expect(response.statusCode).toBe(200);
 			const element = parseHtml(response.text);
-
 			expect(element.innerHTML).toMatchSnapshot();
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate month is less than 1', async () => {
+			expect(addDocumentsResponse.statusCode).toBe(302);
+
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}/add-document-details/1`)
 				.send({
@@ -1971,12 +2086,14 @@ describe('appellant-case', () => {
 					]
 				});
 
+			expect(response.statusCode).toBe(200);
 			const element = parseHtml(response.text);
-
 			expect(element.innerHTML).toMatchSnapshot();
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate month is greater than 12', async () => {
+			expect(addDocumentsResponse.statusCode).toBe(302);
+
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}/add-document-details/1`)
 				.send({
@@ -1993,12 +2110,14 @@ describe('appellant-case', () => {
 					]
 				});
 
+			expect(response.statusCode).toBe(200);
 			const element = parseHtml(response.text);
-
 			expect(element.innerHTML).toMatchSnapshot();
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate year is empty', async () => {
+			expect(addDocumentsResponse.statusCode).toBe(302);
+
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}/add-document-details/1`)
 				.send({
@@ -2015,12 +2134,14 @@ describe('appellant-case', () => {
 					]
 				});
 
+			expect(response.statusCode).toBe(200);
 			const element = parseHtml(response.text);
-
 			expect(element.innerHTML).toMatchSnapshot();
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate year is non-numeric', async () => {
+			expect(addDocumentsResponse.statusCode).toBe(302);
+
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}/add-document-details/1`)
 				.send({
@@ -2037,12 +2158,14 @@ describe('appellant-case', () => {
 					]
 				});
 
+			expect(response.statusCode).toBe(200);
 			const element = parseHtml(response.text);
-
 			expect(element.innerHTML).toMatchSnapshot();
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate is not a valid date', async () => {
+			expect(addDocumentsResponse.statusCode).toBe(302);
+
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}/add-document-details/1`)
 				.send({
@@ -2059,12 +2182,14 @@ describe('appellant-case', () => {
 					]
 				});
 
+			expect(response.statusCode).toBe(200);
 			const element = parseHtml(response.text);
-
 			expect(element.innerHTML).toMatchSnapshot();
 		});
 
-		it('should send a patch request to the appeal documents endpoint and redirect to the appellant case page, if complete and valid document details were provided', async () => {
+		it('should send a patch request to the appeal documents endpoint and redirect to the check your answers page, if complete and valid document details were provided', async () => {
+			expect(addDocumentsResponse.statusCode).toBe(302);
+
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}/add-document-details/1`)
 				.send({
@@ -2082,6 +2207,108 @@ describe('appellant-case', () => {
 				});
 
 			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/appellant-case/add-documents/2864/check-your-answers'
+			);
+		});
+	});
+
+	describe('GET /appellant-case/add-documents/:folderId/check-your-answers', () => {
+		beforeEach(() => {
+			nock.cleanAll();
+			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/')
+				.get('/appeals/1/document-folders/1')
+				.reply(200, documentFolderInfo)
+				.persist();
+			nock('http://test/')
+				.get('/appeals/document-redaction-statuses')
+				.reply(200, documentRedactionStatuses)
+				.persist();
+		});
+		afterEach(() => {
+			nock.cleanAll();
+		});
+
+		it('should render a 500 error page if fileUploadInfo is not present in the session', async () => {
+			const response = await request.get(
+				`${baseUrl}/1${appellantCasePagePath}/add-documents/1/check-your-answers`
+			);
+
+			expect(response.statusCode).toBe(500);
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+		});
+
+		it('should render the add documents check and confirm page with summary list row displaying info on the uploaded document', async () => {
+			const addDocumentsResponse = await request
+				.post(`${baseUrl}/1${appellantCasePagePath}/add-documents/1`)
+				.send({
+					'upload-info': testUploadInfo
+				});
+
+			expect(addDocumentsResponse.statusCode).toBe(302);
+
+			const response = await request.get(
+				`${baseUrl}/1${appellantCasePagePath}/add-documents/1/check-your-answers`
+			);
+
+			expect(response.statusCode).toBe(200);
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+		});
+	});
+
+	describe('POST /appellant-case/add-documents/:folderId/check-your-answers', () => {
+		beforeEach(() => {
+			nock.cleanAll();
+			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/')
+				.get('/appeals/1/document-folders/1')
+				.reply(200, documentFolderInfo)
+				.persist();
+			nock('http://test/')
+				.get('/appeals/document-redaction-statuses')
+				.reply(200, documentRedactionStatuses)
+				.persist();
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, appellantCaseDataNotValidated);
+		});
+		afterEach(() => {
+			nock.cleanAll();
+		});
+
+		it('should render a 500 error page if fileUploadInfo is not present in the session', async () => {
+			const response = await request
+				.post(`${baseUrl}/1${appellantCasePagePath}/add-documents/1/check-your-answers`)
+				.send({});
+
+			expect(response.statusCode).toBe(500);
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+		});
+
+		it('should send an API request to create a new document and redirect to the appellant case page', async () => {
+			const mockDocumentsEndpoint = nock('http://test/').post('/appeals/1/documents').reply(200);
+
+			const addDocumentsResponse = await request
+				.post(`${baseUrl}/1${appellantCasePagePath}/add-documents/1`)
+				.send({
+					'upload-info': testUploadInfo
+				});
+
+			expect(addDocumentsResponse.statusCode).toBe(302);
+
+			const response = await request
+				.post(`${baseUrl}/1${appellantCasePagePath}/add-documents/1/check-your-answers`)
+				.send({});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/appellant-case'
+			);
+			expect(mockDocumentsEndpoint.isDone()).toBe(true);
 		});
 	});
 

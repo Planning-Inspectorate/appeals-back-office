@@ -158,13 +158,13 @@ export const renderDocumentDetails = async (
 	}
 
 	if (!objectContainsAllKeys(request.session, 'fileUploadInfo')) {
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 
 	const redactionStatuses = await getDocumentRedactionStatuses(request.apiClient);
 
 	if (!redactionStatuses) {
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 
 	const mappedPageContent = addDocumentDetailsPage(
@@ -360,13 +360,13 @@ export const renderUploadDocumentsCheckAndConfirm = async (request, response, ba
 	}
 
 	if (!objectContainsAllKeys(request.session, 'fileUploadInfo')) {
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 
 	const redactionStatuses = await getDocumentRedactionStatuses(request.apiClient);
 
 	if (!redactionStatuses) {
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 
 	const mappedPageContent = addDocumentsCheckAndConfirmPage(
@@ -400,7 +400,7 @@ export const postUploadDocumentsCheckAndConfirm = async (
 	}
 
 	if (!objectContainsAllKeys(request.session, 'fileUploadInfo')) {
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 
 	try {

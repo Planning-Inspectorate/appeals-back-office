@@ -14,7 +14,6 @@ import usersService from '#appeals/appeal-users/users-service.js';
 import { surnameFirstToFullName } from '#lib/person-name-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import getActiveDirectoryAccessToken from '#lib/active-directory-token.js';
 import { redactionStatusIdToName } from '#lib/redaction-statuses.js';
 
 /**
@@ -73,7 +72,6 @@ export async function documentUploadPage(
 	const pathComponents = folderPath.split('/');
 	const documentStage = pathComponents[0];
 	const documentTypeComputed = documentType || pathComponents[1];
-	const accessToken = await getActiveDirectoryAccessToken(session);
 	const { fileUploadInfo } = session;
 
 	return {
@@ -85,9 +83,6 @@ export async function documentUploadPage(
 		documentOriginalFileName: documentName,
 		documentVersion: latestVersion,
 		useBlobEmulator: config.useBlobEmulator,
-		...(accessToken && {
-			accessToken: JSON.stringify(accessToken)
-		}),
 		...(fileUploadInfo && {
 			uncommittedFiles: JSON.stringify({
 				files: fileUploadInfo.map(

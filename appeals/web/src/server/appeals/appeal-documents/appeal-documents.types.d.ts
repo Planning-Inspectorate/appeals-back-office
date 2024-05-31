@@ -9,7 +9,6 @@ export interface DocumentUploadPageParameters {
 	documentOriginalFileName?: string;
 	documentVersion?: number;
 	useBlobEmulator: boolean;
-	accessToken: AccessToken;
 	blobStorageHost: string;
 	blobStorageContainer: string;
 	multiple: boolean;
