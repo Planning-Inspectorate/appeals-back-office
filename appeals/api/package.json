@@ -64,7 +64,7 @@
     "pino-http": "^8.1.0",
     "pino-pretty": "^8.1.0",
     "rhea": "3.0.1",
-    "swagger-ui-express": "^4.4.0",
+    "swagger-ui-express": "^5.0.1",
     "xstate": "4.32.1",
     "pins-data-model": "github:Planning-Inspectorate/data-model#1.3.0"
   },
@@ -82,7 +82,7 @@
     "rimraf": "^3.0.2",
     "supertest": "6.2.3",
     "swagger-autogen": "^2.21.4",
-    "swagger-typescript-api": "^13.0.3"
+    "swagger-typescript-api": "^13.0.5"
   },
   "imports": {
     "#db-client": "./src/server/utils/db-client/index.js",
