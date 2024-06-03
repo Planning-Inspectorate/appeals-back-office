@@ -175,7 +175,7 @@ export const renderDocumentDetails = async (
 		redactionStatuses,
 		pageHeadingTextOverride
 	);
-	const isAdditionalDocument = currentFolder.path.split('/')[1] === 'additionalDocuments';
+	const isAdditionalDocument = currentFolder.path.split('/')[1] === 'appellantCaseCorrespondence';
 
 	return response.render('appeals/documents/add-document-details.njk', {
 		pageContent: mappedPageContent,
@@ -476,7 +476,7 @@ export const postUploadDocumentVersionCheckAndConfirm = async (request, response
 	}
 
 	if (!objectContainsAllKeys(request.session, 'fileUploadInfo')) {
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 
 	try {

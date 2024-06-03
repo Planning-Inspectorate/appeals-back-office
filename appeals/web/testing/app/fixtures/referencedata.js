@@ -228,54 +228,7 @@ export const appellantCaseDataNotValidated = {
 	},
 	planningApplicationReference: '48269/APP/2021/1482',
 	documents: {
-		applicationForm: {
-			folderId: 1,
-			path: 'appellant_case/applicationForm',
-			documents: []
-		},
-		decisionLetter: {
-			folderId: 2,
-			path: 'appellant_case/decisionLetter',
-			documents: []
-		},
-		designAndAccessStatement: {
-			folderId: 3,
-			path: 'appellant_case/designAndAccessStatement',
-			documents: []
-		},
-		planningObligation: {
-			folderId: 4,
-			path: 'appellant_case/planningObligation',
-			documents: []
-		},
-		plansDrawingsSupportingDocuments: {
-			folderId: 5,
-			path: 'appellant_case/plansDrawingsSupportingDocuments',
-			documents: []
-		},
-		separateOwnershipCertificate: {
-			folderId: 6,
-			path: 'appellant_case/separateOwnershipCertificate',
-			documents: []
-		},
-		newPlansOrDrawings: {
-			folderId: 7,
-			path: 'appellant_case/newPlansOrDrawings',
-			documents: []
-		},
-		newSupportingDocuments: {
-			folderId: 8,
-			path: 'appellant_case/newSupportingDocuments',
-			documents: []
-		},
-		appealStatement: {
-			folderId: 9,
-			path: 'appellant_case/appealStatement',
-			documents: []
-		},
-		additionalDocuments: {
-			folderId: 10,
-			path: 'appellant_case/additionalDocuments',
+		appellantCaseCorrespondence: {
 			documents: [
 				{
 					id: '00c43c8c-829a-4aa8-883a-fd6fc1f52c3d',
@@ -293,7 +246,34 @@ export const appellantCaseDataNotValidated = {
 					isLateEntry: false,
 					virusCheckStatus: 'checked'
 				}
-			]
+			],
+			folderId: 70461,
+			path: 'appellant-case/appellantCaseCorrespondence'
+		},
+		appellantCaseWithdrawalLetter: {
+			documents: [],
+			folderId: 70460,
+			path: 'appellant-case/appellantCaseWithdrawalLetter'
+		},
+		appellantStatement: {
+			documents: [],
+			folderId: 70456,
+			path: 'appellant-case/appellantStatement'
+		},
+		applicationDecisionLetter: {
+			documents: [],
+			folderId: 70458,
+			path: 'appellant-case/applicationDecisionLetter'
+		},
+		changedDescription: {
+			documents: [],
+			folderId: 70459,
+			path: 'appellant-case/changedDescription'
+		},
+		originalApplicationForm: {
+			documents: [],
+			folderId: 70457,
+			path: 'appellant-case/originalApplicationForm'
 		}
 	},
 	hasAdvertisedAppeal: null,
@@ -1508,7 +1488,7 @@ export const documentFolderInfo = {
 		}
 	],
 	id: 2864,
-	path: 'appellant_case/newSupportingDocuments'
+	path: 'appellant-case/changedDescription'
 };
 
 export const documentFolderInfoWithoutDraftDocuments = {
@@ -1541,13 +1521,13 @@ export const documentFolderInfoWithoutDraftDocuments = {
 		}
 	],
 	id: 2864,
-	path: 'appellant_case/newSupportingDocuments'
+	path: 'appellant-case/changedDescription'
 };
 
 export const additionalDocumentsFolderInfo = {
 	...documentFolderInfo,
 	id: 2865,
-	path: 'appellant_case/additionalDocuments'
+	path: 'appellant-case/appellantCaseCorrespondence'
 };
 
 export const notCheckedDocumentFolderInfoDocuments = {

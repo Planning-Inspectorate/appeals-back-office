@@ -66,7 +66,7 @@ export async function documentUploadPage(
 	allowMultipleFiles,
 	documentType
 ) {
-	const isAdditionalDocument = folderPath.split('/')[1] === 'additionalDocuments';
+	const isAdditionalDocument = folderPath.split('/')[1] === 'appellantCaseCorrespondence';
 	const pageHeadingText =
 		pageHeadingTextOverride || mapAddDocumentsPageHeading(isAdditionalDocument, documentId);
 	const pathComponents = folderPath.split('/');
@@ -550,7 +550,7 @@ export function addDocumentsCheckAndConfirmPage(
 							text: capitalize(redactionStatusIdToName(redactionStatuses, infoItem.redactionStatus))
 						}
 					]),
-					firstCellIsHeader: true
+					firstCellIsHeader: false
 				}
 			}
 		]

@@ -129,17 +129,17 @@ exports[`appellant-case GET /appellant-case should render a "LPA application ref
             <dl class="govuk-summary-list" id="appeal-summary">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#"> Add<span class="govuk-visually-hidden"> Application form</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70457"> Add<span class="govuk-visually-hidden"> Application form</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#"> Add<span class="govuk-visually-hidden"> Decision letter</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70458"> Add<span class="govuk-visually-hidden"> Decision letter</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal statement</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#"> Add<span class="govuk-visually-hidden"> Appeal statement</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70456"> Add<span class="govuk-visually-hidden"> Appeal statement</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
@@ -149,7 +149,7 @@ exports[`appellant-case GET /appellant-case should render a "LPA application ref
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> New supporting documents</dt>
                     <dd                     class="govuk-summary-list__value"></dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#"> Add<span class="govuk-visually-hidden"> New supporting documents</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70459"> Add<span class="govuk-visually-hidden"> New supporting documents</span></a>
                         </dd>
                 </div>
             </dl>
@@ -158,13 +158,32 @@ exports[`appellant-case GET /appellant-case should render a "LPA application ref
     <div class="govuk-summary-card">
         <div class="govuk-summary-card__title-wrapper">
             <h2 class="govuk-summary-card__title">Additional documents</h2>
-            <div class="govuk-summary-card__actions"><a class="govuk-link" href="#"> Add<span class="govuk-visually-hidden"> additional documents</span></a>
-            </div>
+            <ul class="govuk-summary-card__actions">
+                <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/manage-documents/70461/"> Manage<span class="govuk-visually-hidden"> additional documents</span></a>
+                </li>
+                <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70461"> Add<span class="govuk-visually-hidden"> additional documents</span></a>
+                </li>
+            </ul>
         </div>
         <div class="govuk-summary-card__content">
             <dl class="govuk-summary-list pins-summary-list--fullwidth-value">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
-                    <dd                     class="govuk-summary-list__value">None</dd>
+                    <dd                     class="govuk-summary-list__value">
+                        <ul class="govuk-list">
+                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/preview'
+                                target="'_blank'" class="govuk-link">ph1.jpeg</a><strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>
+                            </li>
+                        </ul>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
+                    <dd                     class="govuk-summary-list__value">
+                        <ul class="govuk-list">
+                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/preview'
+                                target="'_blank'" class="govuk-link">ph0.jpeg</a>
+                            </li>
+                        </ul>
+                        </dd>
                 </div>
             </dl>
         </div>
@@ -342,17 +361,17 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
             <dl class="govuk-summary-list" id="appeal-summary">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#"> Add<span class="govuk-visually-hidden"> Application form</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70457"> Add<span class="govuk-visually-hidden"> Application form</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#"> Add<span class="govuk-visually-hidden"> Decision letter</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70458"> Add<span class="govuk-visually-hidden"> Decision letter</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal statement</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#"> Add<span class="govuk-visually-hidden"> Appeal statement</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70456"> Add<span class="govuk-visually-hidden"> Appeal statement</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
@@ -362,7 +381,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> New supporting documents</dt>
                     <dd                     class="govuk-summary-list__value"></dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#"> Add<span class="govuk-visually-hidden"> New supporting documents</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70459"> Add<span class="govuk-visually-hidden"> New supporting documents</span></a>
                         </dd>
                 </div>
             </dl>
@@ -371,13 +390,32 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
     <div class="govuk-summary-card">
         <div class="govuk-summary-card__title-wrapper">
             <h2 class="govuk-summary-card__title">Additional documents</h2>
-            <div class="govuk-summary-card__actions"><a class="govuk-link" href="#"> Add<span class="govuk-visually-hidden"> additional documents</span></a>
-            </div>
+            <ul class="govuk-summary-card__actions">
+                <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/manage-documents/70461/"> Manage<span class="govuk-visually-hidden"> additional documents</span></a>
+                </li>
+                <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70461"> Add<span class="govuk-visually-hidden"> additional documents</span></a>
+                </li>
+            </ul>
         </div>
         <div class="govuk-summary-card__content">
             <dl class="govuk-summary-list pins-summary-list--fullwidth-value">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
-                    <dd                     class="govuk-summary-list__value">None</dd>
+                    <dd                     class="govuk-summary-list__value">
+                        <ul class="govuk-list">
+                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/preview'
+                                target="'_blank'" class="govuk-link">ph1.jpeg</a><strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>
+                            </li>
+                        </ul>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
+                    <dd                     class="govuk-summary-list__value">
+                        <ul class="govuk-list">
+                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/preview'
+                                target="'_blank'" class="govuk-link">ph0.jpeg</a>
+                            </li>
+                        </ul>
+                        </dd>
                 </div>
             </dl>
         </div>
@@ -532,17 +570,17 @@ exports[`appellant-case GET /appellant-case with unchecked documents should rend
             <dl class="govuk-summary-list" id="appeal-summary">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#"> Add<span class="govuk-visually-hidden"> Application form</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70457"> Add<span class="govuk-visually-hidden"> Application form</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#"> Add<span class="govuk-visually-hidden"> Decision letter</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70458"> Add<span class="govuk-visually-hidden"> Decision letter</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal statement</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#"> Add<span class="govuk-visually-hidden"> Appeal statement</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70456"> Add<span class="govuk-visually-hidden"> Appeal statement</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
@@ -552,7 +590,7 @@ exports[`appellant-case GET /appellant-case with unchecked documents should rend
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> New supporting documents</dt>
                     <dd                     class="govuk-summary-list__value"></dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#"> Add<span class="govuk-visually-hidden"> New supporting documents</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70459"> Add<span class="govuk-visually-hidden"> New supporting documents</span></a>
                         </dd>
                 </div>
             </dl>
@@ -561,13 +599,40 @@ exports[`appellant-case GET /appellant-case with unchecked documents should rend
     <div class="govuk-summary-card">
         <div class="govuk-summary-card__title-wrapper">
             <h2 class="govuk-summary-card__title">Additional documents</h2>
-            <div class="govuk-summary-card__actions"><a class="govuk-link" href="#"> Add<span class="govuk-visually-hidden"> additional documents</span></a>
-            </div>
+            <ul class="govuk-summary-card__actions">
+                <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/manage-documents/70461/"> Manage<span class="govuk-visually-hidden"> additional documents</span></a>
+                </li>
+                <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70461"> Add<span class="govuk-visually-hidden"> additional documents</span></a>
+                </li>
+            </ul>
         </div>
         <div class="govuk-summary-card__content">
             <dl class="govuk-summary-list pins-summary-list--fullwidth-value">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
-                    <dd                     class="govuk-summary-list__value">None</dd>
+                    <dd                     class="govuk-summary-list__value">
+                        <ul class="govuk-list">
+                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/preview'
+                                target="'_blank'" class="govuk-link">ph1.jpeg</a><strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>
+                            </li>
+                        </ul>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
+                    <dd                     class="govuk-summary-list__value">
+                        <ul class="govuk-list">
+                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/preview'
+                                target="'_blank'" class="govuk-link">ph0.jpeg</a>
+                            </li>
+                        </ul>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
+                    <dd                     class="govuk-summary-list__value">
+                        <ul class="govuk-list">
+                            <li><span><div class="govuk-body govuk-!-margin-bottom-2">test-doc.jpeg</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                            </li>
+                        </ul>
+                        </dd>
                 </div>
             </dl>
         </div>
@@ -724,17 +789,17 @@ exports[`appellant-case GET /appellant-case with unchecked documents should rend
             <dl class="govuk-summary-list" id="appeal-summary">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#"> Add<span class="govuk-visually-hidden"> Application form</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70457"> Add<span class="govuk-visually-hidden"> Application form</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#"> Add<span class="govuk-visually-hidden"> Decision letter</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70458"> Add<span class="govuk-visually-hidden"> Decision letter</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal statement</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#"> Add<span class="govuk-visually-hidden"> Appeal statement</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70456"> Add<span class="govuk-visually-hidden"> Appeal statement</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
@@ -744,7 +809,7 @@ exports[`appellant-case GET /appellant-case with unchecked documents should rend
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> New supporting documents</dt>
                     <dd                     class="govuk-summary-list__value"></dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#"> Add<span class="govuk-visually-hidden"> New supporting documents</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70459"> Add<span class="govuk-visually-hidden"> New supporting documents</span></a>
                         </dd>
                 </div>
             </dl>
@@ -753,13 +818,40 @@ exports[`appellant-case GET /appellant-case with unchecked documents should rend
     <div class="govuk-summary-card">
         <div class="govuk-summary-card__title-wrapper">
             <h2 class="govuk-summary-card__title">Additional documents</h2>
-            <div class="govuk-summary-card__actions"><a class="govuk-link" href="#"> Add<span class="govuk-visually-hidden"> additional documents</span></a>
-            </div>
+            <ul class="govuk-summary-card__actions">
+                <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/manage-documents/70461/"> Manage<span class="govuk-visually-hidden"> additional documents</span></a>
+                </li>
+                <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70461"> Add<span class="govuk-visually-hidden"> additional documents</span></a>
+                </li>
+            </ul>
         </div>
         <div class="govuk-summary-card__content">
             <dl class="govuk-summary-list pins-summary-list--fullwidth-value">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
-                    <dd                     class="govuk-summary-list__value">None</dd>
+                    <dd                     class="govuk-summary-list__value">
+                        <ul class="govuk-list">
+                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/preview'
+                                target="'_blank'" class="govuk-link">ph1.jpeg</a><strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>
+                            </li>
+                        </ul>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
+                    <dd                     class="govuk-summary-list__value">
+                        <ul class="govuk-list">
+                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/preview'
+                                target="'_blank'" class="govuk-link">ph0.jpeg</a>
+                            </li>
+                        </ul>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
+                    <dd                     class="govuk-summary-list__value">
+                        <ul class="govuk-list">
+                            <li><span><div class="govuk-body govuk-!-margin-bottom-2">test-doc.jpeg</div><strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong></span>
+                            </li>
+                        </ul>
+                        </dd>
                 </div>
             </dl>
         </div>
@@ -816,7 +908,22 @@ exports[`appellant-case GET /appellant-case/add-document-details/:folderId/ shou
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">New supporting documents</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Appellant case correspondence documents</h1>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full govuk-!-margin-top-3 govuk-!-margin-bottom-5"><strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <details class="govuk-details" data-module="govuk-details">
+                        <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> What is late entry?</span>
+                        </summary>
+                        <div class="govuk-details__text">Additional documents are marked as late entries when the appellant case
+                            or LPA questionnaire to which they are being added has already been reviewed
+                            as valid or complete.</div>
+                    </details>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -835,7 +942,7 @@ exports[`appellant-case GET /appellant-case/add-document-details/:folderId/ shou
                                         <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.day">Day</label>
                                         <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
                                         id="items[0].receivedDate.day" name="items[0][receivedDate]-[day]" type="text"
-                                        value="31" inputmode="numeric">
+                                        value="3" inputmode="numeric">
                                     </div>
                                 </div>
                                 <div class="govuk-date-input__item">
@@ -843,7 +950,7 @@ exports[`appellant-case GET /appellant-case/add-document-details/:folderId/ shou
                                         <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.month">Month</label>
                                         <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
                                         id="items[0].receivedDate.month" name="items[0][receivedDate]-[month]"
-                                        type="text" value="5" inputmode="numeric">
+                                        type="text" value="6" inputmode="numeric">
                                     </div>
                                 </div>
                                 <div class="govuk-date-input__item">
@@ -894,7 +1001,7 @@ exports[`appellant-case GET /appellant-case/add-document-details/:folderId/ shou
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">New supporting documents</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Appellant case correspondence documents</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -913,7 +1020,7 @@ exports[`appellant-case GET /appellant-case/add-document-details/:folderId/ shou
                                         <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.day">Day</label>
                                         <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
                                         id="items[0].receivedDate.day" name="items[0][receivedDate]-[day]" type="text"
-                                        value="31" inputmode="numeric">
+                                        value="3" inputmode="numeric">
                                     </div>
                                 </div>
                                 <div class="govuk-date-input__item">
@@ -921,7 +1028,7 @@ exports[`appellant-case GET /appellant-case/add-document-details/:folderId/ shou
                                         <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.month">Month</label>
                                         <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
                                         id="items[0].receivedDate.month" name="items[0][receivedDate]-[month]"
-                                        type="text" value="5" inputmode="numeric">
+                                        type="text" value="6" inputmode="numeric">
                                     </div>
                                 </div>
                                 <div class="govuk-date-input__item">
@@ -972,7 +1079,7 @@ exports[`appellant-case GET /appellant-case/add-document-details/:folderId/ shou
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">New supporting documents</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Appellant case correspondence documents</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -991,7 +1098,7 @@ exports[`appellant-case GET /appellant-case/add-document-details/:folderId/ shou
                                         <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.day">Day</label>
                                         <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
                                         id="items[0].receivedDate.day" name="items[0][receivedDate]-[day]" type="text"
-                                        value="31" inputmode="numeric">
+                                        value="3" inputmode="numeric">
                                     </div>
                                 </div>
                                 <div class="govuk-date-input__item">
@@ -999,7 +1106,7 @@ exports[`appellant-case GET /appellant-case/add-document-details/:folderId/ shou
                                         <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.month">Month</label>
                                         <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
                                         id="items[0].receivedDate.month" name="items[0][receivedDate]-[month]"
-                                        type="text" value="5" inputmode="numeric">
+                                        type="text" value="6" inputmode="numeric">
                                     </div>
                                 </div>
                                 <div class="govuk-date-input__item">
@@ -1050,7 +1157,7 @@ exports[`appellant-case GET /appellant-case/add-document-details/:folderId/ shou
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">New supporting documents</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Appellant case correspondence documents</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -1069,7 +1176,7 @@ exports[`appellant-case GET /appellant-case/add-document-details/:folderId/ shou
                                         <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.day">Day</label>
                                         <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
                                         id="items[0].receivedDate.day" name="items[0][receivedDate]-[day]" type="text"
-                                        value="31" inputmode="numeric">
+                                        value="3" inputmode="numeric">
                                     </div>
                                 </div>
                                 <div class="govuk-date-input__item">
@@ -1077,7 +1184,7 @@ exports[`appellant-case GET /appellant-case/add-document-details/:folderId/ shou
                                         <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.month">Month</label>
                                         <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
                                         id="items[0].receivedDate.month" name="items[0][receivedDate]-[month]"
-                                        type="text" value="5" inputmode="numeric">
+                                        type="text" value="6" inputmode="numeric">
                                     </div>
                                 </div>
                                 <div class="govuk-date-input__item">
@@ -1128,7 +1235,7 @@ exports[`appellant-case GET /appellant-case/add-document-details/:folderId/ shou
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">New supporting documents</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Changed description documents</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -1147,7 +1254,7 @@ exports[`appellant-case GET /appellant-case/add-document-details/:folderId/ shou
                                         <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.day">Day</label>
                                         <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
                                         id="items[0].receivedDate.day" name="items[0][receivedDate]-[day]" type="text"
-                                        value="31" inputmode="numeric">
+                                        value="3" inputmode="numeric">
                                     </div>
                                 </div>
                                 <div class="govuk-date-input__item">
@@ -1155,7 +1262,98 @@ exports[`appellant-case GET /appellant-case/add-document-details/:folderId/ shou
                                         <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.month">Month</label>
                                         <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
                                         id="items[0].receivedDate.month" name="items[0][receivedDate]-[month]"
-                                        type="text" value="5" inputmode="numeric">
+                                        type="text" value="6" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.year">Year</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                        id="items[0].receivedDate.year" name="items[0][receivedDate]-[year]" type="text"
+                                        value="2024" inputmode="numeric">
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="govuk-form-group">
+                        <fieldset class="govuk-fieldset">
+                            <legend class="govuk-fieldset__legend">Redaction status</legend>
+                            <div class="govuk-radios" data-module="govuk-radios">
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]" name="items[0][redactionStatus]"
+                                    type="radio" value="redacted">
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]">Redacted</label>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]-2" name="items[0][redactionStatus]"
+                                    type="radio" value="unredacted" checked>
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]-2">Unredacted</label>
+                                </div>
+                                <div class="govuk-radios__divider">Or</div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]-4" name="items[0][redactionStatus]"
+                                    type="radio" value="no redaction required">
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]-4">No redaction required</label>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case GET /appellant-case/add-document-details/:folderId/:documentId should render a 500 error page if fileUploadInfo is not present in the session 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+            <p class="govuk-body">Try again later.</p>
+            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
+                the problem persists.</p>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case GET /appellant-case/add-document-details/:folderId/:documentId should render the add document details page with one item per uploaded document, and without a late entry status tag and associated details component, if the folder is not additional documents 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Changed description documents</h1>
+                </div>
+            </div>
+            <form method="post" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <h2 class="govuk-heading-m">test-document.txt</h2>
+                    <div class="govuk-form-group">
+                        <input class="govuk-input" id="" name="items[0][documentId]" type="hidden"
+                        value="1">
+                    </div>
+                    <div class="govuk-form-group">
+                        <fieldset class="govuk-fieldset" role="group">
+                            <legend class="govuk-fieldset__legend">Date received</legend>
+                            <div class="govuk-date-input" id="items[0]receivedDate">
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.day">Day</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                        id="items[0].receivedDate.day" name="items[0][receivedDate]-[day]" type="text"
+                                        value="3" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.month">Month</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                        id="items[0].receivedDate.month" name="items[0][receivedDate]-[month]"
+                                        type="text" value="6" inputmode="numeric">
                                     </div>
                                 </div>
                                 <div class="govuk-date-input__item">
@@ -1205,7 +1403,7 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/ should rend
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Upload documents</h1>
     <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/appellant-case/add-document-details/2864"
     data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="2864"
-    data-document-type="newSupportingDocuments" data-document-stage="appellant_case"
+    data-document-type="changedDescription" data-document-stage="appellant-case"
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
     data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
         <div class="top-errors-hook"></div>
@@ -1242,7 +1440,7 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/ should rend
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Add additional documents</h1>
     <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/appellant-case/add-document-details/2865"
     data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="2865"
-    data-document-type="additionalDocuments" data-document-stage="appellant_case"
+    data-document-type="appellantCaseCorrespondence" data-document-stage="appellant-case"
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
     data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
         <div class="top-errors-hook"></div>
@@ -1294,7 +1492,7 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/ should rend
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Add additional documents</h1>
     <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/appellant-case/add-document-details/2865"
     data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="2865"
-    data-document-type="additionalDocuments" data-document-stage="appellant_case"
+    data-document-type="appellantCaseCorrespondence" data-document-stage="appellant-case"
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
     data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
         <div class="top-errors-hook"></div>
@@ -1346,7 +1544,7 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/ should rend
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Add additional documents</h1>
     <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/appellant-case/add-document-details/2865"
     data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="2865"
-    data-document-type="additionalDocuments" data-document-stage="appellant_case"
+    data-document-type="appellantCaseCorrespondence" data-document-stage="appellant-case"
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
     data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
         <div class="top-errors-hook"></div>
@@ -1413,7 +1611,7 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/ should rend
     </div>
     <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/appellant-case/add-document-details/2865"
     data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="2865"
-    data-document-type="additionalDocuments" data-document-stage="appellant_case"
+    data-document-type="appellantCaseCorrespondence" data-document-stage="appellant-case"
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
     data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
         <div class="top-errors-hook"></div>
@@ -1450,7 +1648,7 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId 
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Upload an updated document</h1>
     <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/appellant-case/add-document-details/1/1"
     data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="2864"
-    data-document-type="newSupportingDocuments" data-document-stage="appellant_case"
+    data-document-type="changedDescription" data-document-stage="appellant-case"
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
     data-document-id="1" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
         <div class="top-errors-hook"></div>
@@ -1486,7 +1684,7 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId 
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Update additional document</h1>
     <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/appellant-case/add-document-details/1/1"
     data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="2865"
-    data-document-type="additionalDocuments" data-document-stage="appellant_case"
+    data-document-type="appellantCaseCorrespondence" data-document-stage="appellant-case"
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
     data-document-id="1" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
         <div class="top-errors-hook"></div>
@@ -1537,7 +1735,7 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId 
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Update additional document</h1>
     <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/appellant-case/add-document-details/1/1"
     data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="2865"
-    data-document-type="additionalDocuments" data-document-stage="appellant_case"
+    data-document-type="appellantCaseCorrespondence" data-document-stage="appellant-case"
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
     data-document-id="1" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
         <div class="top-errors-hook"></div>
@@ -1588,7 +1786,7 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId 
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Update additional document</h1>
     <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/appellant-case/add-document-details/1/1"
     data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="2865"
-    data-document-type="additionalDocuments" data-document-stage="appellant_case"
+    data-document-type="appellantCaseCorrespondence" data-document-stage="appellant-case"
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
     data-document-id="1" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
         <div class="top-errors-hook"></div>
@@ -1654,7 +1852,7 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId 
     </div>
     <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/appellant-case/add-document-details/1/1"
     data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="2865"
-    data-document-type="additionalDocuments" data-document-stage="appellant_case"
+    data-document-type="appellantCaseCorrespondence" data-document-stage="appellant-case"
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
     data-document-id="1" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
         <div class="top-errors-hook"></div>
@@ -1681,6 +1879,52 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId 
         <div class="progress-hook"></div>
     </div>
     </form>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId/check-your-answers should render a 500 error page if fileUploadInfo is not present in the session 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+            <p class="govuk-body">Try again later.</p>
+            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
+                the problem persists.</p>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId/check-your-answers should render the add documents check and confirm page with summary list row displaying info on the uploaded document 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+                    <h1                     class="govuk-heading-xl govuk-!-margin-bottom-3">Check your answers</h1>
+                </div>
+            </div>
+            <table class="govuk-table">
+                <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                        <th scope="col" class="govuk-table__header">Name</th>
+                        <th scope="col" class="govuk-table__header">Received</th>
+                        <th scope="col" class="govuk-table__header">Redaction status</th>
+                    </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">test-document.txt</td>
+                        <td class="govuk-table__cell">3 June 2024</td>
+                        <td class="govuk-table__cell">Unredacted</td>
+                    </tr>
+                </tbody>
+            </table>
+            <form method="post" novalidate="novalidate">
+                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+            </form>
+        </div>
     </div>
 </main>"
 `;
@@ -1717,8 +1961,8 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/check-your-a
                 </thead>
                 <tbody class="govuk-table__body">
                     <tr class="govuk-table__row">
-                        <th scope="row" class="govuk-table__header">test-document.txt</th>
-                        <td class="govuk-table__cell">31 May 2024</td>
+                        <td class="govuk-table__cell">test-document.txt</td>
+                        <td class="govuk-table__cell">3 June 2024</td>
                         <td class="govuk-table__cell">Unredacted</td>
                     </tr>
                 </tbody>
@@ -2241,7 +2485,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage folder</span>
-            <h1             class="govuk-heading-l">New supporting documents</h1>
+            <h1             class="govuk-heading-l">Changed description documents</h1>
         </div>
     </div>
     <table class="govuk-table" id="documents-table">
@@ -3178,17 +3422,17 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
             <dl class="govuk-summary-list" id="appeal-summary">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#"> Add<span class="govuk-visually-hidden"> Application form</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70457"> Add<span class="govuk-visually-hidden"> Application form</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#"> Add<span class="govuk-visually-hidden"> Decision letter</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70458"> Add<span class="govuk-visually-hidden"> Decision letter</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal statement</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#"> Add<span class="govuk-visually-hidden"> Appeal statement</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70456"> Add<span class="govuk-visually-hidden"> Appeal statement</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
@@ -3198,7 +3442,7 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> New supporting documents</dt>
                     <dd                     class="govuk-summary-list__value"></dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#"> Add<span class="govuk-visually-hidden"> New supporting documents</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70459"> Add<span class="govuk-visually-hidden"> New supporting documents</span></a>
                         </dd>
                 </div>
             </dl>
@@ -3207,13 +3451,32 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
     <div class="govuk-summary-card">
         <div class="govuk-summary-card__title-wrapper">
             <h2 class="govuk-summary-card__title">Additional documents</h2>
-            <div class="govuk-summary-card__actions"><a class="govuk-link" href="#"> Add<span class="govuk-visually-hidden"> additional documents</span></a>
-            </div>
+            <ul class="govuk-summary-card__actions">
+                <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/manage-documents/70461/"> Manage<span class="govuk-visually-hidden"> additional documents</span></a>
+                </li>
+                <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70461"> Add<span class="govuk-visually-hidden"> additional documents</span></a>
+                </li>
+            </ul>
         </div>
         <div class="govuk-summary-card__content">
             <dl class="govuk-summary-list pins-summary-list--fullwidth-value">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
-                    <dd                     class="govuk-summary-list__value">None</dd>
+                    <dd                     class="govuk-summary-list__value">
+                        <ul class="govuk-list">
+                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/preview'
+                                target="'_blank'" class="govuk-link">ph1.jpeg</a><strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>
+                            </li>
+                        </ul>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
+                    <dd                     class="govuk-summary-list__value">
+                        <ul class="govuk-list">
+                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/preview'
+                                target="'_blank'" class="govuk-link">ph0.jpeg</a>
+                            </li>
+                        </ul>
+                        </dd>
                 </div>
             </dl>
         </div>
@@ -3270,7 +3533,7 @@ exports[`appellant-case POST /appellant-case/add-document-details/:folderId/ sho
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">New supporting documents</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Changed description documents</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -3289,7 +3552,7 @@ exports[`appellant-case POST /appellant-case/add-document-details/:folderId/ sho
                                         <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.day">Day</label>
                                         <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
                                         id="items[0].receivedDate.day" name="items[0][receivedDate]-[day]" type="text"
-                                        value="31" inputmode="numeric">
+                                        value="3" inputmode="numeric">
                                     </div>
                                 </div>
                                 <div class="govuk-date-input__item">
@@ -3297,7 +3560,7 @@ exports[`appellant-case POST /appellant-case/add-document-details/:folderId/ sho
                                         <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.month">Month</label>
                                         <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
                                         id="items[0].receivedDate.month" name="items[0][receivedDate]-[month]"
-                                        type="text" value="5" inputmode="numeric">
+                                        type="text" value="6" inputmode="numeric">
                                     </div>
                                 </div>
                                 <div class="govuk-date-input__item">
@@ -3361,7 +3624,7 @@ exports[`appellant-case POST /appellant-case/add-document-details/:folderId/ sho
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">New supporting documents</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Changed description documents</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -3380,7 +3643,7 @@ exports[`appellant-case POST /appellant-case/add-document-details/:folderId/ sho
                                         <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.day">Day</label>
                                         <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
                                         id="items[0].receivedDate.day" name="items[0][receivedDate]-[day]" type="text"
-                                        value="31" inputmode="numeric">
+                                        value="3" inputmode="numeric">
                                     </div>
                                 </div>
                                 <div class="govuk-date-input__item">
@@ -3388,7 +3651,7 @@ exports[`appellant-case POST /appellant-case/add-document-details/:folderId/ sho
                                         <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.month">Month</label>
                                         <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
                                         id="items[0].receivedDate.month" name="items[0][receivedDate]-[month]"
-                                        type="text" value="5" inputmode="numeric">
+                                        type="text" value="6" inputmode="numeric">
                                     </div>
                                 </div>
                                 <div class="govuk-date-input__item">
@@ -3452,7 +3715,7 @@ exports[`appellant-case POST /appellant-case/add-document-details/:folderId/ sho
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">New supporting documents</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Changed description documents</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -3471,7 +3734,7 @@ exports[`appellant-case POST /appellant-case/add-document-details/:folderId/ sho
                                         <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.day">Day</label>
                                         <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
                                         id="items[0].receivedDate.day" name="items[0][receivedDate]-[day]" type="text"
-                                        value="31" inputmode="numeric">
+                                        value="3" inputmode="numeric">
                                     </div>
                                 </div>
                                 <div class="govuk-date-input__item">
@@ -3479,7 +3742,7 @@ exports[`appellant-case POST /appellant-case/add-document-details/:folderId/ sho
                                         <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.month">Month</label>
                                         <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
                                         id="items[0].receivedDate.month" name="items[0][receivedDate]-[month]"
-                                        type="text" value="5" inputmode="numeric">
+                                        type="text" value="6" inputmode="numeric">
                                     </div>
                                 </div>
                                 <div class="govuk-date-input__item">
@@ -3543,7 +3806,7 @@ exports[`appellant-case POST /appellant-case/add-document-details/:folderId/ sho
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">New supporting documents</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Changed description documents</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -3562,7 +3825,7 @@ exports[`appellant-case POST /appellant-case/add-document-details/:folderId/ sho
                                         <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.day">Day</label>
                                         <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
                                         id="items[0].receivedDate.day" name="items[0][receivedDate]-[day]" type="text"
-                                        value="31" inputmode="numeric">
+                                        value="3" inputmode="numeric">
                                     </div>
                                 </div>
                                 <div class="govuk-date-input__item">
@@ -3570,7 +3833,7 @@ exports[`appellant-case POST /appellant-case/add-document-details/:folderId/ sho
                                         <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.month">Month</label>
                                         <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
                                         id="items[0].receivedDate.month" name="items[0][receivedDate]-[month]"
-                                        type="text" value="5" inputmode="numeric">
+                                        type="text" value="6" inputmode="numeric">
                                     </div>
                                 </div>
                                 <div class="govuk-date-input__item">
@@ -3632,7 +3895,7 @@ exports[`appellant-case POST /appellant-case/add-document-details/:folderId/ sho
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">New supporting documents</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Changed description documents</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -3651,7 +3914,7 @@ exports[`appellant-case POST /appellant-case/add-document-details/:folderId/ sho
                                         <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.day">Day</label>
                                         <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
                                         id="items[0].receivedDate.day" name="items[0][receivedDate]-[day]" type="text"
-                                        value="31" inputmode="numeric">
+                                        value="3" inputmode="numeric">
                                     </div>
                                 </div>
                                 <div class="govuk-date-input__item">
@@ -3659,7 +3922,7 @@ exports[`appellant-case POST /appellant-case/add-document-details/:folderId/ sho
                                         <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.month">Month</label>
                                         <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
                                         id="items[0].receivedDate.month" name="items[0][receivedDate]-[month]"
-                                        type="text" value="5" inputmode="numeric">
+                                        type="text" value="6" inputmode="numeric">
                                     </div>
                                 </div>
                                 <div class="govuk-date-input__item">
@@ -3723,7 +3986,7 @@ exports[`appellant-case POST /appellant-case/add-document-details/:folderId/ sho
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">New supporting documents</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Changed description documents</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -3742,7 +4005,7 @@ exports[`appellant-case POST /appellant-case/add-document-details/:folderId/ sho
                                         <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.day">Day</label>
                                         <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
                                         id="items[0].receivedDate.day" name="items[0][receivedDate]-[day]" type="text"
-                                        value="31" inputmode="numeric">
+                                        value="3" inputmode="numeric">
                                     </div>
                                 </div>
                                 <div class="govuk-date-input__item">
@@ -3750,7 +4013,7 @@ exports[`appellant-case POST /appellant-case/add-document-details/:folderId/ sho
                                         <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.month">Month</label>
                                         <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
                                         id="items[0].receivedDate.month" name="items[0][receivedDate]-[month]"
-                                        type="text" value="5" inputmode="numeric">
+                                        type="text" value="6" inputmode="numeric">
                                     </div>
                                 </div>
                                 <div class="govuk-date-input__item">
@@ -3814,7 +4077,7 @@ exports[`appellant-case POST /appellant-case/add-document-details/:folderId/ sho
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">New supporting documents</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Changed description documents</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -3833,7 +4096,7 @@ exports[`appellant-case POST /appellant-case/add-document-details/:folderId/ sho
                                         <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.day">Day</label>
                                         <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
                                         id="items[0].receivedDate.day" name="items[0][receivedDate]-[day]" type="text"
-                                        value="31" inputmode="numeric">
+                                        value="3" inputmode="numeric">
                                     </div>
                                 </div>
                                 <div class="govuk-date-input__item">
@@ -3841,7 +4104,7 @@ exports[`appellant-case POST /appellant-case/add-document-details/:folderId/ sho
                                         <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.month">Month</label>
                                         <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
                                         id="items[0].receivedDate.month" name="items[0][receivedDate]-[month]"
-                                        type="text" value="5" inputmode="numeric">
+                                        type="text" value="6" inputmode="numeric">
                                     </div>
                                 </div>
                                 <div class="govuk-date-input__item">
@@ -3905,7 +4168,7 @@ exports[`appellant-case POST /appellant-case/add-document-details/:folderId/ sho
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">New supporting documents</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Changed description documents</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -3924,7 +4187,7 @@ exports[`appellant-case POST /appellant-case/add-document-details/:folderId/ sho
                                         <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.day">Day</label>
                                         <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
                                         id="items[0].receivedDate.day" name="items[0][receivedDate]-[day]" type="text"
-                                        value="31" inputmode="numeric">
+                                        value="3" inputmode="numeric">
                                     </div>
                                 </div>
                                 <div class="govuk-date-input__item">
@@ -3932,7 +4195,7 @@ exports[`appellant-case POST /appellant-case/add-document-details/:folderId/ sho
                                         <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.month">Month</label>
                                         <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
                                         id="items[0].receivedDate.month" name="items[0][receivedDate]-[month]"
-                                        type="text" value="5" inputmode="numeric">
+                                        type="text" value="6" inputmode="numeric">
                                     </div>
                                 </div>
                                 <div class="govuk-date-input__item">
@@ -3996,7 +4259,7 @@ exports[`appellant-case POST /appellant-case/add-document-details/:folderId/ sho
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">New supporting documents</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Changed description documents</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -4015,7 +4278,7 @@ exports[`appellant-case POST /appellant-case/add-document-details/:folderId/ sho
                                         <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.day">Day</label>
                                         <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
                                         id="items[0].receivedDate.day" name="items[0][receivedDate]-[day]" type="text"
-                                        value="31" inputmode="numeric">
+                                        value="3" inputmode="numeric">
                                     </div>
                                 </div>
                                 <div class="govuk-date-input__item">
@@ -4023,7 +4286,7 @@ exports[`appellant-case POST /appellant-case/add-document-details/:folderId/ sho
                                         <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.month">Month</label>
                                         <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
                                         id="items[0].receivedDate.month" name="items[0][receivedDate]-[month]"
-                                        type="text" value="5" inputmode="numeric">
+                                        type="text" value="6" inputmode="numeric">
                                     </div>
                                 </div>
                                 <div class="govuk-date-input__item">
@@ -4087,7 +4350,7 @@ exports[`appellant-case POST /appellant-case/add-document-details/:folderId/ sho
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">New supporting documents</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Changed description documents</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -4106,7 +4369,7 @@ exports[`appellant-case POST /appellant-case/add-document-details/:folderId/ sho
                                         <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.day">Day</label>
                                         <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
                                         id="items[0].receivedDate.day" name="items[0][receivedDate]-[day]" type="text"
-                                        value="31" inputmode="numeric">
+                                        value="3" inputmode="numeric">
                                     </div>
                                 </div>
                                 <div class="govuk-date-input__item">
@@ -4114,7 +4377,7 @@ exports[`appellant-case POST /appellant-case/add-document-details/:folderId/ sho
                                         <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.month">Month</label>
                                         <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
                                         id="items[0].receivedDate.month" name="items[0][receivedDate]-[month]"
-                                        type="text" value="5" inputmode="numeric">
+                                        type="text" value="6" inputmode="numeric">
                                     </div>
                                 </div>
                                 <div class="govuk-date-input__item">
@@ -4178,7 +4441,7 @@ exports[`appellant-case POST /appellant-case/add-document-details/:folderId/ sho
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">New supporting documents</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Changed description documents</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -4197,7 +4460,7 @@ exports[`appellant-case POST /appellant-case/add-document-details/:folderId/ sho
                                         <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.day">Day</label>
                                         <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
                                         id="items[0].receivedDate.day" name="items[0][receivedDate]-[day]" type="text"
-                                        value="31" inputmode="numeric">
+                                        value="3" inputmode="numeric">
                                     </div>
                                 </div>
                                 <div class="govuk-date-input__item">
@@ -4205,7 +4468,7 @@ exports[`appellant-case POST /appellant-case/add-document-details/:folderId/ sho
                                         <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.month">Month</label>
                                         <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
                                         id="items[0].receivedDate.month" name="items[0][receivedDate]-[month]"
-                                        type="text" value="5" inputmode="numeric">
+                                        type="text" value="6" inputmode="numeric">
                                     </div>
                                 </div>
                                 <div class="govuk-date-input__item">
@@ -4267,7 +4530,7 @@ exports[`appellant-case POST /appellant-case/add-document-details/:folderId/ sho
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">New supporting documents</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Changed description documents</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
@@ -4286,7 +4549,7 @@ exports[`appellant-case POST /appellant-case/add-document-details/:folderId/ sho
                                         <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.day">Day</label>
                                         <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
                                         id="items[0].receivedDate.day" name="items[0][receivedDate]-[day]" type="text"
-                                        value="31" inputmode="numeric">
+                                        value="3" inputmode="numeric">
                                     </div>
                                 </div>
                                 <div class="govuk-date-input__item">
@@ -4294,7 +4557,1095 @@ exports[`appellant-case POST /appellant-case/add-document-details/:folderId/ sho
                                         <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.month">Month</label>
                                         <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
                                         id="items[0].receivedDate.month" name="items[0][receivedDate]-[month]"
-                                        type="text" value="5" inputmode="numeric">
+                                        type="text" value="6" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.year">Year</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                        id="items[0].receivedDate.year" name="items[0][receivedDate]-[year]" type="text"
+                                        value="2024" inputmode="numeric">
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="govuk-form-group">
+                        <fieldset class="govuk-fieldset">
+                            <legend class="govuk-fieldset__legend">Redaction status</legend>
+                            <div class="govuk-radios" data-module="govuk-radios">
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]" name="items[0][redactionStatus]"
+                                    type="radio" value="redacted">
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]">Redacted</label>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]-2" name="items[0][redactionStatus]"
+                                    type="radio" value="unredacted" checked>
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]-2">Unredacted</label>
+                                </div>
+                                <div class="govuk-radios__divider">Or</div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]-4" name="items[0][redactionStatus]"
+                                    type="radio" value="no redaction required">
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]-4">No redaction required</label>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case POST /appellant-case/add-document-details/:folderId/:documentId should re-render the document details page with the expected error message if receivedDate day is empty 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#items[0].receivedDate.day">Received date day cannot be empty</a>
+                            </li>
+                            <li><a href="#">Received date must be a valid date</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Changed description documents</h1>
+                </div>
+            </div>
+            <form method="post" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <h2 class="govuk-heading-m">test-document.txt</h2>
+                    <div class="govuk-form-group">
+                        <input class="govuk-input" id="" name="items[0][documentId]" type="hidden"
+                        value="1">
+                    </div>
+                    <div class="govuk-form-group">
+                        <fieldset class="govuk-fieldset" role="group">
+                            <legend class="govuk-fieldset__legend">Date received</legend>
+                            <div class="govuk-date-input" id="items[0]receivedDate">
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.day">Day</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                        id="items[0].receivedDate.day" name="items[0][receivedDate]-[day]" type="text"
+                                        value="3" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.month">Month</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                        id="items[0].receivedDate.month" name="items[0][receivedDate]-[month]"
+                                        type="text" value="6" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.year">Year</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                        id="items[0].receivedDate.year" name="items[0][receivedDate]-[year]" type="text"
+                                        value="2024" inputmode="numeric">
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="govuk-form-group">
+                        <fieldset class="govuk-fieldset">
+                            <legend class="govuk-fieldset__legend">Redaction status</legend>
+                            <div class="govuk-radios" data-module="govuk-radios">
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]" name="items[0][redactionStatus]"
+                                    type="radio" value="redacted">
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]">Redacted</label>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]-2" name="items[0][redactionStatus]"
+                                    type="radio" value="unredacted" checked>
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]-2">Unredacted</label>
+                                </div>
+                                <div class="govuk-radios__divider">Or</div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]-4" name="items[0][redactionStatus]"
+                                    type="radio" value="no redaction required">
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]-4">No redaction required</label>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case POST /appellant-case/add-document-details/:folderId/:documentId should re-render the document details page with the expected error message if receivedDate day is greater than 31 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#items[0].receivedDate.day">Received date day must be between 1 and 31</a>
+                            </li>
+                            <li><a href="#">Received date must be a valid date</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Changed description documents</h1>
+                </div>
+            </div>
+            <form method="post" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <h2 class="govuk-heading-m">test-document.txt</h2>
+                    <div class="govuk-form-group">
+                        <input class="govuk-input" id="" name="items[0][documentId]" type="hidden"
+                        value="1">
+                    </div>
+                    <div class="govuk-form-group">
+                        <fieldset class="govuk-fieldset" role="group">
+                            <legend class="govuk-fieldset__legend">Date received</legend>
+                            <div class="govuk-date-input" id="items[0]receivedDate">
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.day">Day</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                        id="items[0].receivedDate.day" name="items[0][receivedDate]-[day]" type="text"
+                                        value="3" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.month">Month</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                        id="items[0].receivedDate.month" name="items[0][receivedDate]-[month]"
+                                        type="text" value="6" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.year">Year</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                        id="items[0].receivedDate.year" name="items[0][receivedDate]-[year]" type="text"
+                                        value="2024" inputmode="numeric">
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="govuk-form-group">
+                        <fieldset class="govuk-fieldset">
+                            <legend class="govuk-fieldset__legend">Redaction status</legend>
+                            <div class="govuk-radios" data-module="govuk-radios">
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]" name="items[0][redactionStatus]"
+                                    type="radio" value="redacted">
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]">Redacted</label>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]-2" name="items[0][redactionStatus]"
+                                    type="radio" value="unredacted" checked>
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]-2">Unredacted</label>
+                                </div>
+                                <div class="govuk-radios__divider">Or</div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]-4" name="items[0][redactionStatus]"
+                                    type="radio" value="no redaction required">
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]-4">No redaction required</label>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case POST /appellant-case/add-document-details/:folderId/:documentId should re-render the document details page with the expected error message if receivedDate day is less than 1 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#items[0].receivedDate.day">Received date day must be between 1 and 31</a>
+                            </li>
+                            <li><a href="#">Received date must be a valid date</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Changed description documents</h1>
+                </div>
+            </div>
+            <form method="post" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <h2 class="govuk-heading-m">test-document.txt</h2>
+                    <div class="govuk-form-group">
+                        <input class="govuk-input" id="" name="items[0][documentId]" type="hidden"
+                        value="1">
+                    </div>
+                    <div class="govuk-form-group">
+                        <fieldset class="govuk-fieldset" role="group">
+                            <legend class="govuk-fieldset__legend">Date received</legend>
+                            <div class="govuk-date-input" id="items[0]receivedDate">
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.day">Day</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                        id="items[0].receivedDate.day" name="items[0][receivedDate]-[day]" type="text"
+                                        value="3" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.month">Month</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                        id="items[0].receivedDate.month" name="items[0][receivedDate]-[month]"
+                                        type="text" value="6" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.year">Year</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                        id="items[0].receivedDate.year" name="items[0][receivedDate]-[year]" type="text"
+                                        value="2024" inputmode="numeric">
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="govuk-form-group">
+                        <fieldset class="govuk-fieldset">
+                            <legend class="govuk-fieldset__legend">Redaction status</legend>
+                            <div class="govuk-radios" data-module="govuk-radios">
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]" name="items[0][redactionStatus]"
+                                    type="radio" value="redacted">
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]">Redacted</label>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]-2" name="items[0][redactionStatus]"
+                                    type="radio" value="unredacted" checked>
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]-2">Unredacted</label>
+                                </div>
+                                <div class="govuk-radios__divider">Or</div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]-4" name="items[0][redactionStatus]"
+                                    type="radio" value="no redaction required">
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]-4">No redaction required</label>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case POST /appellant-case/add-document-details/:folderId/:documentId should re-render the document details page with the expected error message if receivedDate day is non-numeric 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#items[0].receivedDate.day">Received date day must be a number</a>
+                            </li>
+                            <li><a href="#">Received date must be a valid date</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Changed description documents</h1>
+                </div>
+            </div>
+            <form method="post" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <h2 class="govuk-heading-m">test-document.txt</h2>
+                    <div class="govuk-form-group">
+                        <input class="govuk-input" id="" name="items[0][documentId]" type="hidden"
+                        value="1">
+                    </div>
+                    <div class="govuk-form-group">
+                        <fieldset class="govuk-fieldset" role="group">
+                            <legend class="govuk-fieldset__legend">Date received</legend>
+                            <div class="govuk-date-input" id="items[0]receivedDate">
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.day">Day</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                        id="items[0].receivedDate.day" name="items[0][receivedDate]-[day]" type="text"
+                                        value="3" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.month">Month</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                        id="items[0].receivedDate.month" name="items[0][receivedDate]-[month]"
+                                        type="text" value="6" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.year">Year</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                        id="items[0].receivedDate.year" name="items[0][receivedDate]-[year]" type="text"
+                                        value="2024" inputmode="numeric">
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="govuk-form-group">
+                        <fieldset class="govuk-fieldset">
+                            <legend class="govuk-fieldset__legend">Redaction status</legend>
+                            <div class="govuk-radios" data-module="govuk-radios">
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]" name="items[0][redactionStatus]"
+                                    type="radio" value="redacted">
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]">Redacted</label>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]-2" name="items[0][redactionStatus]"
+                                    type="radio" value="unredacted" checked>
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]-2">Unredacted</label>
+                                </div>
+                                <div class="govuk-radios__divider">Or</div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]-4" name="items[0][redactionStatus]"
+                                    type="radio" value="no redaction required">
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]-4">No redaction required</label>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case POST /appellant-case/add-document-details/:folderId/:documentId should re-render the document details page with the expected error message if receivedDate is not a valid date 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#">Received date must be a valid date</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Changed description documents</h1>
+                </div>
+            </div>
+            <form method="post" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <h2 class="govuk-heading-m">test-document.txt</h2>
+                    <div class="govuk-form-group">
+                        <input class="govuk-input" id="" name="items[0][documentId]" type="hidden"
+                        value="1">
+                    </div>
+                    <div class="govuk-form-group">
+                        <fieldset class="govuk-fieldset" role="group">
+                            <legend class="govuk-fieldset__legend">Date received</legend>
+                            <div class="govuk-date-input" id="items[0]receivedDate">
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.day">Day</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                        id="items[0].receivedDate.day" name="items[0][receivedDate]-[day]" type="text"
+                                        value="3" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.month">Month</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                        id="items[0].receivedDate.month" name="items[0][receivedDate]-[month]"
+                                        type="text" value="6" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.year">Year</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                        id="items[0].receivedDate.year" name="items[0][receivedDate]-[year]" type="text"
+                                        value="2024" inputmode="numeric">
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="govuk-form-group">
+                        <fieldset class="govuk-fieldset">
+                            <legend class="govuk-fieldset__legend">Redaction status</legend>
+                            <div class="govuk-radios" data-module="govuk-radios">
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]" name="items[0][redactionStatus]"
+                                    type="radio" value="redacted">
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]">Redacted</label>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]-2" name="items[0][redactionStatus]"
+                                    type="radio" value="unredacted" checked>
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]-2">Unredacted</label>
+                                </div>
+                                <div class="govuk-radios__divider">Or</div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]-4" name="items[0][redactionStatus]"
+                                    type="radio" value="no redaction required">
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]-4">No redaction required</label>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case POST /appellant-case/add-document-details/:folderId/:documentId should re-render the document details page with the expected error message if receivedDate month is empty 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#items[0].receivedDate.month">Received date month cannot be empty</a>
+                            </li>
+                            <li><a href="#">Received date must be a valid date</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Changed description documents</h1>
+                </div>
+            </div>
+            <form method="post" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <h2 class="govuk-heading-m">test-document.txt</h2>
+                    <div class="govuk-form-group">
+                        <input class="govuk-input" id="" name="items[0][documentId]" type="hidden"
+                        value="1">
+                    </div>
+                    <div class="govuk-form-group">
+                        <fieldset class="govuk-fieldset" role="group">
+                            <legend class="govuk-fieldset__legend">Date received</legend>
+                            <div class="govuk-date-input" id="items[0]receivedDate">
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.day">Day</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                        id="items[0].receivedDate.day" name="items[0][receivedDate]-[day]" type="text"
+                                        value="3" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.month">Month</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                        id="items[0].receivedDate.month" name="items[0][receivedDate]-[month]"
+                                        type="text" value="6" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.year">Year</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                        id="items[0].receivedDate.year" name="items[0][receivedDate]-[year]" type="text"
+                                        value="2024" inputmode="numeric">
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="govuk-form-group">
+                        <fieldset class="govuk-fieldset">
+                            <legend class="govuk-fieldset__legend">Redaction status</legend>
+                            <div class="govuk-radios" data-module="govuk-radios">
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]" name="items[0][redactionStatus]"
+                                    type="radio" value="redacted">
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]">Redacted</label>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]-2" name="items[0][redactionStatus]"
+                                    type="radio" value="unredacted" checked>
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]-2">Unredacted</label>
+                                </div>
+                                <div class="govuk-radios__divider">Or</div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]-4" name="items[0][redactionStatus]"
+                                    type="radio" value="no redaction required">
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]-4">No redaction required</label>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case POST /appellant-case/add-document-details/:folderId/:documentId should re-render the document details page with the expected error message if receivedDate month is greater than 12 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#items[0].receivedDate.month">Received date month must be between 1 and 12</a>
+                            </li>
+                            <li><a href="#">Received date must be a valid date</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Changed description documents</h1>
+                </div>
+            </div>
+            <form method="post" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <h2 class="govuk-heading-m">test-document.txt</h2>
+                    <div class="govuk-form-group">
+                        <input class="govuk-input" id="" name="items[0][documentId]" type="hidden"
+                        value="1">
+                    </div>
+                    <div class="govuk-form-group">
+                        <fieldset class="govuk-fieldset" role="group">
+                            <legend class="govuk-fieldset__legend">Date received</legend>
+                            <div class="govuk-date-input" id="items[0]receivedDate">
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.day">Day</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                        id="items[0].receivedDate.day" name="items[0][receivedDate]-[day]" type="text"
+                                        value="3" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.month">Month</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                        id="items[0].receivedDate.month" name="items[0][receivedDate]-[month]"
+                                        type="text" value="6" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.year">Year</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                        id="items[0].receivedDate.year" name="items[0][receivedDate]-[year]" type="text"
+                                        value="2024" inputmode="numeric">
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="govuk-form-group">
+                        <fieldset class="govuk-fieldset">
+                            <legend class="govuk-fieldset__legend">Redaction status</legend>
+                            <div class="govuk-radios" data-module="govuk-radios">
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]" name="items[0][redactionStatus]"
+                                    type="radio" value="redacted">
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]">Redacted</label>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]-2" name="items[0][redactionStatus]"
+                                    type="radio" value="unredacted" checked>
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]-2">Unredacted</label>
+                                </div>
+                                <div class="govuk-radios__divider">Or</div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]-4" name="items[0][redactionStatus]"
+                                    type="radio" value="no redaction required">
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]-4">No redaction required</label>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case POST /appellant-case/add-document-details/:folderId/:documentId should re-render the document details page with the expected error message if receivedDate month is less than 1 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#items[0].receivedDate.month">Received date month must be between 1 and 12</a>
+                            </li>
+                            <li><a href="#">Received date must be a valid date</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Changed description documents</h1>
+                </div>
+            </div>
+            <form method="post" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <h2 class="govuk-heading-m">test-document.txt</h2>
+                    <div class="govuk-form-group">
+                        <input class="govuk-input" id="" name="items[0][documentId]" type="hidden"
+                        value="1">
+                    </div>
+                    <div class="govuk-form-group">
+                        <fieldset class="govuk-fieldset" role="group">
+                            <legend class="govuk-fieldset__legend">Date received</legend>
+                            <div class="govuk-date-input" id="items[0]receivedDate">
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.day">Day</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                        id="items[0].receivedDate.day" name="items[0][receivedDate]-[day]" type="text"
+                                        value="3" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.month">Month</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                        id="items[0].receivedDate.month" name="items[0][receivedDate]-[month]"
+                                        type="text" value="6" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.year">Year</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                        id="items[0].receivedDate.year" name="items[0][receivedDate]-[year]" type="text"
+                                        value="2024" inputmode="numeric">
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="govuk-form-group">
+                        <fieldset class="govuk-fieldset">
+                            <legend class="govuk-fieldset__legend">Redaction status</legend>
+                            <div class="govuk-radios" data-module="govuk-radios">
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]" name="items[0][redactionStatus]"
+                                    type="radio" value="redacted">
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]">Redacted</label>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]-2" name="items[0][redactionStatus]"
+                                    type="radio" value="unredacted" checked>
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]-2">Unredacted</label>
+                                </div>
+                                <div class="govuk-radios__divider">Or</div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]-4" name="items[0][redactionStatus]"
+                                    type="radio" value="no redaction required">
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]-4">No redaction required</label>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case POST /appellant-case/add-document-details/:folderId/:documentId should re-render the document details page with the expected error message if receivedDate month is non-numeric 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#items[0].receivedDate.month">Received date month must be a number</a>
+                            </li>
+                            <li><a href="#">Received date must be a valid date</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Changed description documents</h1>
+                </div>
+            </div>
+            <form method="post" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <h2 class="govuk-heading-m">test-document.txt</h2>
+                    <div class="govuk-form-group">
+                        <input class="govuk-input" id="" name="items[0][documentId]" type="hidden"
+                        value="1">
+                    </div>
+                    <div class="govuk-form-group">
+                        <fieldset class="govuk-fieldset" role="group">
+                            <legend class="govuk-fieldset__legend">Date received</legend>
+                            <div class="govuk-date-input" id="items[0]receivedDate">
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.day">Day</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                        id="items[0].receivedDate.day" name="items[0][receivedDate]-[day]" type="text"
+                                        value="3" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.month">Month</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                        id="items[0].receivedDate.month" name="items[0][receivedDate]-[month]"
+                                        type="text" value="6" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.year">Year</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                        id="items[0].receivedDate.year" name="items[0][receivedDate]-[year]" type="text"
+                                        value="2024" inputmode="numeric">
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="govuk-form-group">
+                        <fieldset class="govuk-fieldset">
+                            <legend class="govuk-fieldset__legend">Redaction status</legend>
+                            <div class="govuk-radios" data-module="govuk-radios">
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]" name="items[0][redactionStatus]"
+                                    type="radio" value="redacted">
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]">Redacted</label>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]-2" name="items[0][redactionStatus]"
+                                    type="radio" value="unredacted" checked>
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]-2">Unredacted</label>
+                                </div>
+                                <div class="govuk-radios__divider">Or</div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]-4" name="items[0][redactionStatus]"
+                                    type="radio" value="no redaction required">
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]-4">No redaction required</label>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case POST /appellant-case/add-document-details/:folderId/:documentId should re-render the document details page with the expected error message if receivedDate year is empty 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#items[0].receivedDate.year">Received date year cannot be empty</a>
+                            </li>
+                            <li><a href="#">Received date must be a valid date</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Changed description documents</h1>
+                </div>
+            </div>
+            <form method="post" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <h2 class="govuk-heading-m">test-document.txt</h2>
+                    <div class="govuk-form-group">
+                        <input class="govuk-input" id="" name="items[0][documentId]" type="hidden"
+                        value="1">
+                    </div>
+                    <div class="govuk-form-group">
+                        <fieldset class="govuk-fieldset" role="group">
+                            <legend class="govuk-fieldset__legend">Date received</legend>
+                            <div class="govuk-date-input" id="items[0]receivedDate">
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.day">Day</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                        id="items[0].receivedDate.day" name="items[0][receivedDate]-[day]" type="text"
+                                        value="3" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.month">Month</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                        id="items[0].receivedDate.month" name="items[0][receivedDate]-[month]"
+                                        type="text" value="6" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.year">Year</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                        id="items[0].receivedDate.year" name="items[0][receivedDate]-[year]" type="text"
+                                        value="2024" inputmode="numeric">
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="govuk-form-group">
+                        <fieldset class="govuk-fieldset">
+                            <legend class="govuk-fieldset__legend">Redaction status</legend>
+                            <div class="govuk-radios" data-module="govuk-radios">
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]" name="items[0][redactionStatus]"
+                                    type="radio" value="redacted">
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]">Redacted</label>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]-2" name="items[0][redactionStatus]"
+                                    type="radio" value="unredacted" checked>
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]-2">Unredacted</label>
+                                </div>
+                                <div class="govuk-radios__divider">Or</div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]-4" name="items[0][redactionStatus]"
+                                    type="radio" value="no redaction required">
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]-4">No redaction required</label>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case POST /appellant-case/add-document-details/:folderId/:documentId should re-render the document details page with the expected error message if receivedDate year is non-numeric 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#items[0].receivedDate.year">Received date year must be a number</a>
+                            </li>
+                            <li><a href="#">Received date must be a valid date</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Changed description documents</h1>
+                </div>
+            </div>
+            <form method="post" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <h2 class="govuk-heading-m">test-document.txt</h2>
+                    <div class="govuk-form-group">
+                        <input class="govuk-input" id="" name="items[0][documentId]" type="hidden"
+                        value="1">
+                    </div>
+                    <div class="govuk-form-group">
+                        <fieldset class="govuk-fieldset" role="group">
+                            <legend class="govuk-fieldset__legend">Date received</legend>
+                            <div class="govuk-date-input" id="items[0]receivedDate">
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.day">Day</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                        id="items[0].receivedDate.day" name="items[0][receivedDate]-[day]" type="text"
+                                        value="3" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.month">Month</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                        id="items[0].receivedDate.month" name="items[0][receivedDate]-[month]"
+                                        type="text" value="6" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.year">Year</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                        id="items[0].receivedDate.year" name="items[0][receivedDate]-[year]" type="text"
+                                        value="2024" inputmode="numeric">
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="govuk-form-group">
+                        <fieldset class="govuk-fieldset">
+                            <legend class="govuk-fieldset__legend">Redaction status</legend>
+                            <div class="govuk-radios" data-module="govuk-radios">
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]" name="items[0][redactionStatus]"
+                                    type="radio" value="redacted">
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]">Redacted</label>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]-2" name="items[0][redactionStatus]"
+                                    type="radio" value="unredacted" checked>
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]-2">Unredacted</label>
+                                </div>
+                                <div class="govuk-radios__divider">Or</div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]-4" name="items[0][redactionStatus]"
+                                    type="radio" value="no redaction required">
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]-4">No redaction required</label>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case POST /appellant-case/add-document-details/:folderId/:documentId should re-render the document details page with the expected error message if the request body is in an incorrect format 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#">There is a problem with the service</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Add document details</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Changed description documents</h1>
+                </div>
+            </div>
+            <form method="post" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <h2 class="govuk-heading-m">test-document.txt</h2>
+                    <div class="govuk-form-group">
+                        <input class="govuk-input" id="" name="items[0][documentId]" type="hidden"
+                        value="1">
+                    </div>
+                    <div class="govuk-form-group">
+                        <fieldset class="govuk-fieldset" role="group">
+                            <legend class="govuk-fieldset__legend">Date received</legend>
+                            <div class="govuk-date-input" id="items[0]receivedDate">
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.day">Day</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                        id="items[0].receivedDate.day" name="items[0][receivedDate]-[day]" type="text"
+                                        value="3" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.month">Month</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                        id="items[0].receivedDate.month" name="items[0][receivedDate]-[month]"
+                                        type="text" value="6" inputmode="numeric">
                                     </div>
                                 </div>
                                 <div class="govuk-date-input__item">
@@ -4353,6 +5704,45 @@ exports[`appellant-case POST /appellant-case/add-documents/:folderId/ should ren
 `;
 
 exports[`appellant-case POST /appellant-case/add-documents/:folderId/ should render a 500 error page if upload-info is not present in the request body 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+            <p class="govuk-body">Try again later.</p>
+            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
+                the problem persists.</p>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case POST /appellant-case/add-documents/:folderId/:documentId should render a 500 error page if request body upload-info is in an incorrect format 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+            <p class="govuk-body">Try again later.</p>
+            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
+                the problem persists.</p>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case POST /appellant-case/add-documents/:folderId/:documentId should render a 500 error page if upload-info is not present in the request body 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+            <p class="govuk-body">Try again later.</p>
+            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
+                the problem persists.</p>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case POST /appellant-case/add-documents/:folderId/:documentId/check-your-answers should render a 500 error page if fileUploadInfo is not present in the session 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">

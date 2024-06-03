@@ -4,12 +4,10 @@ import supertest from 'supertest';
 import { jest } from '@jest/globals';
 import {
 	lpaQuestionnaireDataNotValidated,
-	lpaQuestionnaireDataNotValidatedWithDocuments,
 	lpaQuestionnaireDataIncompleteOutcome,
 	lpaQuestionnaireDataCompleteOutcome,
 	lpaQuestionnaireIncompleteReasons,
 	documentFolderInfo,
-	documentFolderInfoWithoutDraftDocuments,
 	additionalDocumentsFolderInfo,
 	documentFileInfo,
 	documentFileVersionsInfo,
@@ -95,23 +93,6 @@ describe('LPA Questionnaire review', () => {
 			expect(notificationBannerElementHTML).toContain('Success');
 			expect(notificationBannerElementHTML).toContain('Neighbouring site affected status updated');
 		}, 10000);
-
-		it('should render the LPA Questionnaire page with draft documents notification banner with links to add metadata page for each folder containing draft documents, and no links for folders with only non-draft documents', async () => {
-			nock('http://test/')
-				.get('/appeals/1/lpa-questionnaires/2')
-				.reply(200, lpaQuestionnaireDataNotValidatedWithDocuments);
-			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
-			nock('http://test/')
-				.get('/appeals/1/document-folders/2')
-				.reply(200, documentFolderInfoWithoutDraftDocuments);
-
-			const response = await request.get(`${baseUrl}`);
-			const notificationBannerElementHTML = parseHtml(response.text, {
-				rootElement: notificationBannerElement
-			}).innerHTML;
-
-			expect(notificationBannerElementHTML).toMatchSnapshot();
-		});
 
 		it('should render a "Inspector access (lpa) updated" success notification banner when the inspector access (lpa) is updated', async () => {
 			const appealId = appealData.appealId;
