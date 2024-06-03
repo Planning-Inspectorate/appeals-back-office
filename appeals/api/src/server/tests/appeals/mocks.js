@@ -272,7 +272,8 @@ export const householdAppealAppellantCaseIncomplete = {
 		...householdAppeal.appellantCase,
 		...incompleteAppellantCaseOutcome
 	},
-	id: 3
+	id: 3,
+	dueDate: '2099-07-14T01:00:00.000Z'
 };
 
 export const householdAppealAppellantCaseInvalid = {
