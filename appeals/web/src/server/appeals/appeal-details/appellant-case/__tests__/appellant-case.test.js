@@ -20,7 +20,8 @@ import {
 	documentFileMultipleVersionsInfoWithLatestAsLateEntry,
 	activeDirectoryUsersData,
 	appealData,
-	appellantCaseDataInvalidOutcome
+	appellantCaseDataInvalidOutcome,
+	fileUploadInfo
 } from '#testing/app/fixtures/referencedata.js';
 import { cloneDeep } from 'lodash-es';
 import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
@@ -56,9 +57,6 @@ const invalidReasonsWithoutTextIds = invalidReasonsWithoutText.map((reason) => r
 const invalidReasonsWithTextIds = invalidReasonsWithText.map((reason) => reason.id);
 const incompleteReasonsWithoutTextIds = incompleteReasonsWithoutText.map((reason) => reason.id);
 const incompleteReasonsWithTextIds = incompleteReasonsWithText.map((reason) => reason.id);
-
-const testUploadInfo =
-	'[{"name": "test-document.txt", "GUID": "1", "fileRowId": "1", "blobStoreUrl": "/", "mimeType": "txt", "documentType": "txt", "size": 1, "stage": "appellant-case"}]';
 
 describe('appellant-case', () => {
 	beforeEach(installMockApi);
@@ -1890,7 +1888,7 @@ describe('appellant-case', () => {
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}/add-documents/1`)
 				.send({
-					'upload-info': testUploadInfo
+					'upload-info': fileUploadInfo
 				});
 
 			expect(response.statusCode).toBe(302);
@@ -1952,7 +1950,7 @@ describe('appellant-case', () => {
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}/add-documents/1/1`)
 				.send({
-					'upload-info': testUploadInfo
+					'upload-info': fileUploadInfo
 				});
 
 			expect(response.statusCode).toBe(302);
@@ -2011,7 +2009,7 @@ describe('appellant-case', () => {
 			const addDocumentsResponse = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}/add-documents/1`)
 				.send({
-					'upload-info': testUploadInfo
+					'upload-info': fileUploadInfo
 				});
 
 			expect(addDocumentsResponse.statusCode).toBe(302);
@@ -2050,7 +2048,7 @@ describe('appellant-case', () => {
 			const addDocumentsResponse = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}/add-documents/1`)
 				.send({
-					'upload-info': testUploadInfo
+					'upload-info': fileUploadInfo
 				});
 
 			expect(addDocumentsResponse.statusCode).toBe(302);
@@ -2091,7 +2089,7 @@ describe('appellant-case', () => {
 			const addDocumentsResponse = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}/add-documents/1`)
 				.send({
-					'upload-info': testUploadInfo
+					'upload-info': fileUploadInfo
 				});
 
 			expect(addDocumentsResponse.statusCode).toBe(302);
@@ -2132,7 +2130,7 @@ describe('appellant-case', () => {
 			const addDocumentsResponse = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}/add-documents/1`)
 				.send({
-					'upload-info': testUploadInfo
+					'upload-info': fileUploadInfo
 				});
 
 			expect(addDocumentsResponse.statusCode).toBe(302);
@@ -2173,7 +2171,7 @@ describe('appellant-case', () => {
 			const addDocumentsResponse = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}/add-documents/1`)
 				.send({
-					'upload-info': testUploadInfo
+					'upload-info': fileUploadInfo
 				});
 
 			expect(addDocumentsResponse.statusCode).toBe(302);
@@ -2233,7 +2231,7 @@ describe('appellant-case', () => {
 			addDocumentsResponse = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}/add-documents/1`)
 				.send({
-					'upload-info': testUploadInfo
+					'upload-info': fileUploadInfo
 				});
 		});
 
@@ -2682,7 +2680,7 @@ describe('appellant-case', () => {
 			const addDocumentsResponse = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}/add-documents/1/1`)
 				.send({
-					'upload-info': testUploadInfo
+					'upload-info': fileUploadInfo
 				});
 
 			expect(addDocumentsResponse.statusCode).toBe(302);
@@ -2741,7 +2739,7 @@ describe('appellant-case', () => {
 			addDocumentsResponse = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}/add-documents/1/1`)
 				.send({
-					'upload-info': testUploadInfo
+					'upload-info': fileUploadInfo
 				});
 		});
 
@@ -3180,7 +3178,7 @@ describe('appellant-case', () => {
 			const addDocumentsResponse = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}/add-documents/1`)
 				.send({
-					'upload-info': testUploadInfo
+					'upload-info': fileUploadInfo
 				});
 
 			expect(addDocumentsResponse.statusCode).toBe(302);
@@ -3248,7 +3246,7 @@ describe('appellant-case', () => {
 			const addDocumentsResponse = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}/add-documents/1`)
 				.send({
-					'upload-info': testUploadInfo
+					'upload-info': fileUploadInfo
 				});
 
 			expect(addDocumentsResponse.statusCode).toBe(302);
@@ -3303,7 +3301,7 @@ describe('appellant-case', () => {
 			const addDocumentsResponse = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}/add-documents/1/1`)
 				.send({
-					'upload-info': testUploadInfo
+					'upload-info': fileUploadInfo
 				});
 
 			expect(addDocumentsResponse.statusCode).toBe(302);
@@ -3372,7 +3370,7 @@ describe('appellant-case', () => {
 			const addDocumentsResponse = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}/add-documents/1/1`)
 				.send({
-					'upload-info': testUploadInfo
+					'upload-info': fileUploadInfo
 				});
 
 			expect(addDocumentsResponse.statusCode).toBe(302);

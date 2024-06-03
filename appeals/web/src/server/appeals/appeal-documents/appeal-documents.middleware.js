@@ -9,6 +9,7 @@ export const validateCaseFolderId = async (req, res, next) => {
 	const folder = await getFolder(req.apiClient, appealId, folderId);
 
 	if (!folder) {
+		console.log('validateCaseFolderId 404');
 		return res.status(404).render('app/404');
 	}
 
@@ -25,6 +26,7 @@ export const validateCaseDocumentId = async (req, res, next) => {
 	if (documentId) {
 		const document = await getFileInfo(req.apiClient, appealId, documentId);
 		if (!document || !document.latestDocumentVersion) {
+			console.log('validateCaseDocumentId 404');
 			return res.status(404).render('app/404');
 		}
 	}

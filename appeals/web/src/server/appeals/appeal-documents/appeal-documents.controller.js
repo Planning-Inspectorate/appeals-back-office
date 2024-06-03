@@ -28,6 +28,7 @@ import config from '@pins/appeals.web/environment/config.js';
 import { redactionStatusNameToId } from '#lib/redaction-statuses.js';
 import { isFileUploadInfo } from '#lib/ts-utilities.js';
 import { dateToDayMonthYear, dayMonthYearToApiDateString } from '#lib/dates.js';
+import { folderIsAdditionalDocuments } from '#lib/documents.js';
 
 /**
  *
@@ -175,7 +176,8 @@ export const renderDocumentDetails = async (
 		redactionStatuses,
 		pageHeadingTextOverride
 	);
-	const isAdditionalDocument = currentFolder.path.split('/')[1] === 'appellantCaseCorrespondence';
+
+	const isAdditionalDocument = folderIsAdditionalDocuments(currentFolder);
 
 	return response.render('appeals/documents/add-document-details.njk', {
 		pageContent: mappedPageContent,

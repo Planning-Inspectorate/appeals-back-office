@@ -2099,6 +2099,8 @@ export const appealCostsDocumentItem = {
 	}
 };
 
+export const fileUploadInfo = '[{"name": "test-document.txt", "GUID": "1", "fileRowId": "1", "blobStoreUrl": "/", "mimeType": "txt", "documentType": "txt", "size": 1, "stage": "appellant-case"}]';
+
 export const baseSession = {
 	id: '',
 	cookie: { originalMaxAge: 1 },
