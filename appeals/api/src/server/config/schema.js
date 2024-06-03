@@ -41,6 +41,9 @@ export default joi
 						appealIncomplete: joi.object({
 							id: joi.string().required()
 						}),
+						appealInvalid: joi.object({
+							id: joi.string().required()
+						}),
 						decisionIsInvalidAppellant: joi.object({
 							id: joi.string()
 						}),

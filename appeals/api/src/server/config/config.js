@@ -47,6 +47,9 @@ const { value, error } = schema.validate({
 			appealIncomplete: {
 				id: 'f9cbd646-be00-45e2-96fc-f47e585e5b5e'
 			},
+			appealInvalid: {
+				id: '59c8337a-e854-4fc4-8c83-aa958b91bd99'
+			},
 			decisionIsInvalidAppellant: {
 				id: 'bd117483-e7fe-4655-8f57-cf597ad57710'
 			},
