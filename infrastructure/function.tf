@@ -23,7 +23,7 @@ resource "azurerm_storage_account" "functions" {
   #checkov:skip=CKV_AZURE_59: TODO: Ensure that Storage accounts disallow public access
   #checkov:skip=CKV_AZURE_206: TODO: Ensure that Storage Accounts use replication
 
-  name                             = "pinsstfuncappealsbo${var.environment}"
+  name                             = "pinsstfuncappealsbo${local.environment}" # local will shorten training to train so storage account name length is =< 24 chars
   resource_group_name              = azurerm_resource_group.primary.name
   location                         = module.primary_region.location
   account_tier                     = "Standard"

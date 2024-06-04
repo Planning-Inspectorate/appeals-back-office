@@ -9,7 +9,7 @@ resource "azurerm_storage_account" "sql_server" {
   #checkov:skip=CKV_AZURE_35: Network access restrictions
   #checkov:skip=CKV_AZURE_59: TODO: Ensure that Storage accounts disallow public access
 
-  name                             = "pinsstsqlappealsbo${var.environment}"
+  name                             = "pinsstsqlappealsbo${local.environment}" # local will shorten training to train so storage account name length is =< 24 chars
   resource_group_name              = azurerm_resource_group.primary.name
   location                         = module.primary_region.location
   account_tier                     = "Standard"
