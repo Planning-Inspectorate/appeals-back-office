@@ -1,8 +1,8 @@
-/** @typedef {import('@pins/appeals.api').Appeals.RepositoryGetByIdResultItem} RepositoryGetByIdResultItem */
+/** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Appeals.SingleSiteVisitDetailsResponse} SingleSiteVisitDetailsResponse */
 
 /**
- * @param {RepositoryGetByIdResultItem} appeal
+ * @param {Appeal} appeal
  * @returns {SingleSiteVisitDetailsResponse | void}
  */
 const formatSiteVisit = (appeal) => {

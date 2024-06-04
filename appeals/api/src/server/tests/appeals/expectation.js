@@ -1,12 +1,12 @@
-import isFPA from '#utils/is-fpa.js';
 import formatValidationOutcomeResponse from '#utils/format-validation-outcome-response.js';
+import { formatAppellantCase } from '#endpoints/appellant-cases/appellant-cases.formatter.js';
 
-/** @typedef {import('@pins/appeals.api').Appeals.RepositoryGetByIdResultItem} RepositoryGetByIdResultItem */
+/** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Appeals.SingleLPAQuestionnaireResponse} SingleLPAQuestionnaireResponse */
 /** @typedef {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} SingleAppellantCaseResponse */
 
 /**
- * @param {RepositoryGetByIdResultItem} appeal
+ * @param {Appeal} appeal
  * @returns {SingleLPAQuestionnaireResponse}
  */
 export const baseExpectedLPAQuestionnaireResponse = (appeal) => ({
@@ -28,9 +28,6 @@ export const baseExpectedLPAQuestionnaireResponse = (appeal) => ({
 	},
 	communityInfrastructureLevyAdoptionDate:
 		appeal.lpaQuestionnaire?.communityInfrastructureLevyAdoptionDate,
-	designatedSites: appeal.lpaQuestionnaire?.designatedSites?.map(
-		({ designatedSite: { name, description } }) => ({ name, description })
-	),
 	developmentDescription: appeal.lpaQuestionnaire?.developmentDescription,
 	documents: {
 		whoNotified: {},
@@ -87,104 +84,32 @@ export const baseExpectedLPAQuestionnaireResponse = (appeal) => ({
 	lpaQuestionnaireId: appeal.lpaQuestionnaire?.id,
 	meetsOrExceedsThresholdOrCriteriaInColumn2:
 		appeal.lpaQuestionnaire?.meetsOrExceedsThresholdOrCriteriaInColumn2,
-	procedureType: appeal.lpaQuestionnaire?.procedureType?.name,
-	receivedAt: appeal.lpaQuestionnaire?.receivedAt || null,
-	scheduleType: appeal.lpaQuestionnaire?.scheduleType?.name,
+	procedureType: appeal?.procedureType?.name,
+	receivedAt: appeal.lpaQuestionnaire?.receivedAt || new Date(),
 	siteWithinGreenBelt: appeal.lpaQuestionnaire?.siteWithinGreenBelt,
 	otherAppeals: [],
 	validation: formatValidationOutcomeResponse(
+		// @ts-ignore
 		appeal.lpaQuestionnaire?.lpaQuestionnaireValidationOutcome?.name,
-		appeal.lpaQuestionnaire?.lpaQuestionnaireIncompleteReasonOnLPAQuestionnaire
+		appeal.lpaQuestionnaire?.lpaQuestionnaireIncompleteReasonsSelected
 	)
 });
 
 /**
  *
- * @param {RepositoryGetByIdResultItem} appeal
+ * @param {Appeal} appeal
  * @returns
  */
-export const baseExpectedAppellantCaseResponse = (appeal) => ({
-	...(isFPA(appeal.appealType) && {
-		agriculturalHolding: {
-			isAgriculturalHolding: appeal.appellantCase?.isAgriculturalHolding,
-			isTenant: appeal.appellantCase?.isAgriculturalHoldingTenant,
-			hasToldTenants: appeal.appellantCase?.hasToldTenants,
-			hasOtherTenants: appeal.appellantCase?.hasOtherTenants
+export const baseExpectedAppellantCaseResponse = (appeal) => {
+	return {
+		...formatAppellantCase(appeal),
+		documents: {
+			appellantCaseCorrespondence: {},
+			appellantCaseWithdrawalLetter: {},
+			appellantStatement: {},
+			applicationDecisionLetter: {},
+			changedDescription: {},
+			originalApplicationForm: {}
 		}
-	}),
-	appealId: appeal.id,
-	appealReference: appeal.reference,
-	appealSite: {
-		addressId: appeal.address?.id,
-		addressLine1: appeal.address?.addressLine1 || '',
-		addressLine2: appeal.address?.addressLine2 || '',
-		town: appeal.address?.addressTown || '',
-		county: appeal.address?.addressCounty || '',
-		postCode: appeal.address?.postcode
-	},
-	appellantCaseId: appeal.appellantCase?.id,
-	appellant: {
-		firstName: appeal.appellant?.firstName,
-		surname: appeal.appellant?.lastName
-	},
-	applicant: {
-		firstName: appeal.appellantCase?.applicantFirstName,
-		surname: appeal.appellantCase?.applicantSurname
-	},
-	...(isFPA(appeal.appealType) && {
-		developmentDescription: {
-			details: appeal.appellantCase?.newDevelopmentDescription,
-			isCorrect: appeal.appellantCase?.isDevelopmentDescriptionStillCorrect
-		}
-	}),
-	documents: {
-		appellantCaseCorrespondence: {},
-		appellantCaseWithdrawalLetter: {},
-		appellantStatement: {},
-		applicationDecisionLetter: {},
-		changedDescription: {},
-		originalApplicationForm: {}
-	},
-	hasAdvertisedAppeal: appeal.appellantCase?.hasAdvertisedAppeal,
-	...(isFPA(appeal.appealType) && {
-		hasDesignAndAccessStatement: appeal.appellantCase?.hasDesignAndAccessStatement
-	}),
-	...(isFPA(appeal.appealType) && {
-		hasNewPlansOrDrawings: appeal.appellantCase?.hasNewPlansOrDrawings
-	}),
-	hasNewSupportingDocuments: appeal.appellantCase?.hasNewSupportingDocuments,
-	...(isFPA(appeal.appealType) && {
-		hasSeparateOwnershipCertificate: appeal.appellantCase?.hasSeparateOwnershipCertificate
-	}),
-	healthAndSafety: {
-		details: appeal.appellantCase?.healthAndSafetyIssues,
-		hasIssues: appeal.appellantCase?.hasHealthAndSafetyIssues
-	},
-	isAppellantNamedOnApplication: appeal.appellantCase?.isAppellantNamedOnApplication,
-	localPlanningDepartment: appeal.lpa.name,
-	planningApplicationReference: '48269/APP/2021/1482',
-	...(isFPA(appeal.appealType) && {
-		planningObligation: {
-			hasObligation: appeal.appellantCase?.hasPlanningObligation,
-			status: appeal.appellantCase?.planningObligationStatus.name
-		}
-	}),
-	procedureType: appeal.lpaQuestionnaire?.procedureType?.name,
-	siteOwnership: {
-		areAllOwnersKnown: appeal.appellantCase?.areAllOwnersKnown,
-		hasAttemptedToIdentifyOwners: appeal.appellantCase?.hasAttemptedToIdentifyOwners,
-		hasToldOwners: appeal.appellantCase?.hasToldOwners,
-		isFullyOwned: appeal.appellantCase?.isSiteFullyOwned,
-		isPartiallyOwned: appeal.appellantCase?.isSitePartiallyOwned,
-		knowsOtherLandowners: appeal.appellantCase?.knowledgeOfOtherLandowners.name
-	},
-	validation: formatValidationOutcomeResponse(
-		appeal.appellantCase?.appellantCaseValidationOutcome?.name,
-		appeal.appellantCase?.appellantCaseIncompleteReasonsOnAppellantCases,
-		appeal.appellantCase?.appellantCaseInvalidReasonsOnAppellantCases
-	),
-	visibility: {
-		details: appeal.appellantCase?.visibilityRestrictions,
-		isVisible: appeal.appellantCase?.isSiteVisibleFromPublicRoad
-	}
-});
+	};
+}

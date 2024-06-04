@@ -41,16 +41,33 @@ describe('/appeals/:appealId/document-folders/:folderId', () => {
 
 			expect(response.status).toEqual(200);
 			expect(response.body).toEqual({
-				id: savedFolder.id,
+				folderId: savedFolder.id,
 				path: savedFolder.path,
-				caseId: savedFolder.caseId,
+				caseId: savedFolder.caseId.toString(),
 				documents: [
 					{
 						id: savedFolder.documents[0].guid,
+						caseId: savedFolder.caseId,
+						folderId: savedFolder.id,
+						createdAt: expect.any(String),
+						isDeleted: false,
 						latestDocumentVersion: {
-							documentType: 'appellantCostApplication'
+							version: 1,
+							blobStorageContainer: '',
+							blobStoragePath: '',
+							documentURI: '',
+							dateReceived: '',
+							size: '',
+							mime: '',
+							fileName: '',
+							originalFilename: '',
+							redactionStatus: '',
+							documentType: 'appellantCostApplication',
+							stage: '',
+							virusCheckStatus: 'not_scanned'
 						},
-						name: savedFolder.documents[0].name
+						name: savedFolder.documents[0].name,
+						versionAudit: []
 					}
 				]
 			});
@@ -62,14 +79,37 @@ describe('/appeals/:appealId/documents/:documentId', () => {
 	describe('GET', () => {
 		test('gets a single document', async () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-			databaseConnector.document.findUnique.mockResolvedValue(documentCreated);
+			databaseConnector.document.findUnique.mockResolvedValue(savedFolder.documents[0]);
 
 			const response = await request
-				.get(`/appeals/${householdAppeal.id}/documents/${documentCreated.guid}`)
+				.get(`/appeals/${householdAppeal.id}/documents/${savedFolder.documents[0].guid}`)
 				.set('azureAdUserId', azureAdUserId);
 
 			expect(response.status).toEqual(200);
-			expect(response.body).toEqual(documentCreated);
+			expect(response.body).toEqual({
+				id: savedFolder.documents[0].guid,
+				caseId: savedFolder.caseId,
+				folderId: savedFolder.id,
+				createdAt: expect.any(String),
+				isDeleted: false,
+				latestDocumentVersion: {
+					version: 1,
+					blobStorageContainer: '',
+					blobStoragePath: '',
+					documentURI: '',
+					dateReceived: '',
+					size: '',
+					mime: '',
+					fileName: '',
+					originalFilename: '',
+					redactionStatus: '',
+					documentType: 'appellantCostApplication',
+					stage: '',
+					virusCheckStatus: 'not_scanned'
+				},
+				name: savedFolder.documents[0].name,
+				versionAudit: []
+			});
 		});
 	});
 });
@@ -266,7 +306,7 @@ describe('appeals documents', () => {
 					update: jest.fn().mockResolvedValue(documentUpdated)
 				},
 				documentVersion: {
-					upsert: jest.fn().mockResolvedValue(documentVersionCreated),
+					create: jest.fn().mockResolvedValue(documentVersionCreated),
 					findFirst: jest.fn().mockResolvedValue(documentVersionRetrieved)
 				}
 			};
@@ -280,7 +320,14 @@ describe('appeals documents', () => {
 				householdAppeal,
 				documentCreated.guid
 			);
-			expect(response).toEqual({ documents: [blobInfo] });
+			expect(response).toEqual({
+				documents: [
+					{
+						...blobInfo,
+						blobStoreUrl: expect.any(String)
+					}
+				]
+			});
 		});
 	});
 
@@ -300,7 +347,7 @@ describe('appeals documents', () => {
 					{
 						id: 'incorrect-id',
 						version: 0,
-						virusCheckStatus: 'checked'
+						virusCheckStatus: 'scanned'
 					}
 				]
 			};
@@ -355,7 +402,7 @@ describe('appeals documents', () => {
 					{
 						id: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882',
 						version: 1,
-						virusCheckStatus: 'checked'
+						virusCheckStatus: 'scanned'
 					}
 				]
 			};
@@ -374,7 +421,7 @@ describe('appeals documents', () => {
 					{
 						id: documentCreated.guid,
 						version: 3,
-						virusCheckStatus: 'checked'
+						virusCheckStatus: 'scanned'
 					}
 				]
 			};

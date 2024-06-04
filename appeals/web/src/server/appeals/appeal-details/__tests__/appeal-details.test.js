@@ -1179,7 +1179,7 @@ describe('appeal-details', () => {
 						costs: {
 							appellantFolder: {
 								caseId: 1,
-								id: 1,
+								folderId: 1,
 								path: 'appeal_costs/appellant',
 								documents: [appealCostsDocumentItem]
 							}
@@ -1229,7 +1229,7 @@ describe('appeal-details', () => {
 						costs: {
 							lpaFolder: {
 								caseId: 1,
-								id: 2,
+								folderId: 2,
 								path: 'appeal_costs/lpa',
 								documents: [appealCostsDocumentItem]
 							}
@@ -1279,7 +1279,7 @@ describe('appeal-details', () => {
 						costs: {
 							decisionFolder: {
 								caseId: 1,
-								id: 3,
+								folderId: 3,
 								path: 'appeal_costs/decision',
 								documents: [appealCostsDocumentItem]
 							}

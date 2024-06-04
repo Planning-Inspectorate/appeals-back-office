@@ -125,7 +125,7 @@ const renderDecisionLetterUpload = async (request, response) => {
 	const { currentAppeal } = request;
 
 	request.currentFolder = {
-		id: currentAppeal.decision?.folderId,
+		folderId: currentAppeal.decision?.folderId,
 		path: `${STAGE.APPEAL_DECISION}/${DOCTYPE.CASE_DECISION_LETTER}`
 	};
 

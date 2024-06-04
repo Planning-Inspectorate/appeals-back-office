@@ -9,22 +9,24 @@ import {
 } from '#endpoints/constants.js';
 import config from '#config/config.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
+import formatDate from '#utils/date-formatter.js';
 import { format, parseISO } from 'date-fns';
+import { ERROR_NOT_FOUND } from '#endpoints/constants.js';
+import { toCamelCase } from '#utils/string-utils.js';
 // eslint-disable-next-line no-unused-vars
 import NotifyClient from '#utils/notify-client.js';
 
-/** @typedef {import('express').RequestHandler} RequestHandler */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateSiteVisitData} UpdateSiteVisitData */
 /** @typedef {import('@pins/appeals.api').Appeals.CreateSiteVisitData} CreateSiteVisitData */
 /** @typedef {import('@pins/appeals.api').Appeals.NotifyTemplate} NotifyTemplate */
-
-import { ERROR_NOT_FOUND } from '#endpoints/constants.js';
-import formatDate from '#utils/date-formatter.js';
-import { toCamelCase } from '#utils/string-utils.js';
+/** @typedef {import('express').Request} Request */
+/** @typedef {import('express').Response} Response */
+/** @typedef {import('express').NextFunction} NextFunction */
 
 /**
  * @param {string} azureAdUserId
  * @param {CreateSiteVisitData} siteVisitData
+ * @param {*} notifyClient
  * @returns {Promise<void>}
  */
 export const createSiteVisit = async (azureAdUserId, siteVisitData, notifyClient) => {
@@ -37,6 +39,7 @@ export const createSiteVisit = async (azureAdUserId, siteVisitData, notifyClient
 
 		await siteVisitRepository.createSiteVisitById({
 			appealId,
+			// @ts-ignore
 			visitDate,
 			visitEndTime,
 			visitStartTime,
@@ -90,8 +93,10 @@ export const createSiteVisit = async (azureAdUserId, siteVisitData, notifyClient
 };
 
 /**
- * @type {RequestHandler}
- * @returns {Promise<object | void>}
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ * @returns {Promise<Response | void>}
  */
 const checkSiteVisitExists = async (req, res, next) => {
 	const {

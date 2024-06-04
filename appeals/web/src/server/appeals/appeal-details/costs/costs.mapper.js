@@ -41,7 +41,7 @@ export function addDocumentTypePage(appealDetails, documentTypes) {
 /**
  *
  * @param {import('../appeal-details.types.js').WebAppeal} appealDetails
- * @param {import('@pins/appeals.api').Appeals.SingleFolderResponse} decisionDocumentFolder
+ * @param {import('@pins/appeals.api').Appeals.FolderInfo} decisionDocumentFolder
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
  * @param {string} [documentId]
  * @returns {PageContent}
@@ -57,7 +57,7 @@ export function decisionCheckAndConfirmPage(
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `Check your answers - ${shortAppealReference}`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/costs/decision/add-document-details/${decisionDocumentFolder.id}`,
+		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/costs/decision/add-document-details/${decisionDocumentFolder.folderId}`,
 		heading: 'Check your answers',
 		pageComponents: [
 			{
@@ -80,7 +80,7 @@ export function decisionCheckAndConfirmPage(
 								items: [
 									{
 										text: 'Change',
-										href: `/appeals-service/appeal-details/${appealDetails.appealId}/costs/decision/upload-documents/${decisionDocumentFolder.id}`
+										href: `/appeals-service/appeal-details/${appealDetails.appealId}/costs/decision/upload-documents/${decisionDocumentFolder.folderId}`
 									}
 								]
 							}

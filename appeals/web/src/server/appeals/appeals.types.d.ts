@@ -23,7 +23,7 @@ export interface DayMonthYear {
 	year: number;
 }
 
-export type DocumentVirusCheckStatus = 'not_checked' | 'checked' | 'failed_virus_check';
+export type DocumentVirusCheckStatus = 'not_scanned' | 'scanned' | 'affected';
 
 declare global {
 	namespace Express {

@@ -421,7 +421,7 @@ export function decisionConfirmationPage(appealData, appealIsInvalid) {
 			{
 				type: 'html',
 				parameters: {
-					html: `<p class="govuk-body"><a href="/appeals-service/appeal-details/${appealData.appealId}/costs/decision/upload-documents/${appealData.costs.decisionFolder.id}" class="govuk-link">Add costs decision</a></p>`
+					html: `<p class="govuk-body"><a href="/appeals-service/appeal-details/${appealData.appealId}/costs/decision/upload-documents/${appealData.costs.decisionFolder?.folderId}" class="govuk-link">Add costs decision</a></p>`
 				}
 			}
 		]

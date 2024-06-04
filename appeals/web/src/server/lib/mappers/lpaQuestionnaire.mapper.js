@@ -277,13 +277,13 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 				value: displayPageFormatter.formatDocumentValues(
 					data.appealId,
 					isFolderInfo(data.documents.conservationMap)
-						? data.documents.conservationMap.documents
+						? data.documents.conservationMap.documents || []
 						: []
 				),
 				actions: {
 					items: [
 						...((isFolderInfo(data.documents.conservationMap)
-							? data.documents.conservationMap.documents
+							? data.documents.conservationMap.documents || []
 							: []
 						).length
 							? [
@@ -372,12 +372,12 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 				},
 				value: displayPageFormatter.formatDocumentValues(
 					data.appealId,
-					isFolderInfo(data.documents.whoNotified) ? data.documents.whoNotified.documents : []
+					isFolderInfo(data.documents.whoNotified) ? data.documents.whoNotified.documents || [] : []
 				),
 				actions: {
 					items: [
 						...((isFolderInfo(data.documents.whoNotified)
-							? data.documents.whoNotified.documents
+							? data.documents.whoNotified.documents || []
 							: []
 						).length
 							? [
@@ -527,13 +527,13 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 				value: displayPageFormatter.formatDocumentValues(
 					data.appealId,
 					isFolderInfo(data.documents.otherPartyRepresentations)
-						? data.documents.otherPartyRepresentations.documents
+						? data.documents.otherPartyRepresentations.documents || []
 						: []
 				),
 				actions: {
 					items: [
 						...((isFolderInfo(data.documents.otherPartyRepresentations)
-							? data.documents.otherPartyRepresentations.documents
+							? data.documents.otherPartyRepresentations.documents || []
 							: []
 						).length
 							? [
@@ -576,13 +576,13 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 				value: displayPageFormatter.formatDocumentValues(
 					data.appealId,
 					isFolderInfo(data.documents.planningOfficerReport)
-						? data.documents.planningOfficerReport.documents
+						? data.documents.planningOfficerReport.documents || []
 						: []
 				),
 				actions: {
 					items: [
 						...((isFolderInfo(data.documents.planningOfficerReport)
-							? data.documents.planningOfficerReport.documents
+							? data.documents.planningOfficerReport.documents || []
 							: []
 						).length
 							? [
@@ -842,12 +842,12 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 		id: 'additional-documents',
 		display: {
 			...((isFolderInfo(data.documents.lpaCaseCorrespondence)
-				? data.documents.lpaCaseCorrespondence.documents
+				? data.documents.lpaCaseCorrespondence.documents || []
 				: []
 			).length > 0
 				? {
 						summaryListItems: (isFolderInfo(data.documents.lpaCaseCorrespondence)
-							? data.documents.lpaCaseCorrespondence.documents
+							? data.documents.lpaCaseCorrespondence.documents || []
 							: []
 						).map((/** @type {DocumentInfo} */ document) => ({
 							key: {
@@ -857,7 +857,7 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 							value: displayPageFormatter.formatDocumentValues(
 								data.appealId,
 								[document],
-								document.isLateEntry || false
+								document.latestDocumentVersion?.isLateEntry || false
 							),
 							actions: {
 								items: []

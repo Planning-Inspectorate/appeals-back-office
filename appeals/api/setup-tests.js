@@ -13,36 +13,20 @@ dotenv.config({ path: path.join(__dirname, '.env.test') });
 const mockAppealRelationshipAdd = jest.fn().mockResolvedValue({});
 const mockAppealRelationshipRemove = jest.fn().mockResolvedValue({});
 const mockAppealRelationshipFindMany = jest.fn().mockResolvedValue({});
-const mockCaseFindUnique = jest.fn().mockResolvedValue({});
-const mockCaseUpdate = jest.fn().mockResolvedValue({});
 const mockAppealDecision = jest.fn().mockResolvedValue({});
-const mockApplicationDetailsFindUnique = jest.fn().mockResolvedValue({});
-const mockZoomLevelFindUnique = jest.fn().mockResolvedValue({});
-const mockSubSectorFindUnique = jest.fn().mockResolvedValue({});
-const mockServiceCustomerFindUnique = jest.fn().mockResolvedValue({});
-const mockRegionFindUnique = jest.fn().mockResolvedValue({});
-const mockRegionsOnApplicationDetailsDeleteMany = jest.fn().mockResolvedValue({});
 const mockAppealFindUnique = jest.fn().mockResolvedValue({});
 const mocklPAQuestionnaireCreate = jest.fn().mockResolvedValue({});
 const mocklPAQuestionnaireUpdate = jest.fn().mockResolvedValue({});
 const mockAppealStatusUpdateMany = jest.fn().mockResolvedValue({});
 const mockAppealStatusCreate = jest.fn().mockResolvedValue({});
 const mockAppealUpdate = jest.fn().mockResolvedValue({});
-const mockValidationDecisionCreate = jest.fn().mockResolvedValue({});
 const mockAppealStatusCreateMany = jest.fn().mockResolvedValue({});
 const mockAppealFindMany = jest.fn().mockResolvedValue({});
 const mockAppealCount = jest.fn().mockResolvedValue(0);
 const mockAppealTimetableUpsert = jest.fn().mockResolvedValue(0);
 const mockAppealTimetableUpdate = jest.fn().mockResolvedValue(0);
-const mockReviewQuestionnaireCreate = jest.fn().mockResolvedValue({});
-const mockCaseCreate = jest.fn().mockResolvedValue({});
 const mockFolderCreate = jest.fn().mockResolvedValue({});
-const mockCaseUpdateMany = jest.fn().mockResolvedValue({});
 const mockFolderUpdateMany = jest.fn().mockResolvedValue({});
-const mockRegionsOnApplicationDetailsUpdateMany = jest.fn().mockResolvedValue({});
-const mockCaseStatusUpdateMany = jest.fn().mockResolvedValue({});
-const mockCaseStatusCreate = jest.fn().mockResolvedValue({});
-const mockExecuteRawUnsafe = jest.fn().mockResolvedValue({});
 const mockDocumentFindUnique = jest.fn().mockResolvedValue({});
 const mockDocumentUpdate = jest.fn().mockResolvedValue({});
 const mockFolderFindUnique = jest.fn().mockResolvedValue({});
@@ -51,13 +35,6 @@ const mockDocumentUpsert = jest.fn().mockResolvedValue({});
 const mockFolderFindMany = jest.fn().mockResolvedValue({});
 const mockDocumentFindMany = jest.fn().mockResolvedValue({});
 const mockDocumentCount = jest.fn().mockResolvedValue({});
-const mockCaseFindMany = jest.fn().mockResolvedValue({});
-const mockRegionFindMany = jest.fn().mockResolvedValue({});
-const mockCaseCount = jest.fn().mockResolvedValue({});
-const mockSectorFindUnique = jest.fn().mockResolvedValue({});
-const mockSectorFindMany = jest.fn().mockResolvedValue({});
-const mockSubSectorFindMany = jest.fn().mockResolvedValue({});
-const mockZoomLevelFindMany = jest.fn().mockResolvedValue({});
 const mockDocumentFindFirst = jest.fn().mockResolvedValue({});
 const mockDocumentDelete = jest.fn().mockResolvedValue({});
 const mockDocumentVersionCreate = jest.fn().mockResolvedValue({});
@@ -65,31 +42,15 @@ const mockDocumentMetdataFindFirst = jest.fn().mockResolvedValue({});
 const mockDocumentMetdataFindUnique = jest.fn().mockResolvedValue({});
 const mockDocumentMetdataUpsert = jest.fn().mockResolvedValue({});
 const mockDocumentMetdataUpdate = jest.fn().mockResolvedValue({});
-const mockRepresentationCount = jest.fn().mockResolvedValue({});
-const mockRepresentationFindMany = jest.fn().mockResolvedValue({});
-const mockRepresentationFindFirst = jest.fn().mockResolvedValue({});
-const mockRepresentationCreate = jest.fn().mockResolvedValue({});
-const mockRepresentationUpdate = jest.fn().mockResolvedValue({});
-const mockRepresentationContactUpdate = jest.fn().mockResolvedValue({});
-const mockRepresentationContactFindFirst = jest.fn().mockResolvedValue({});
-const mockRepresentationContactDelete = jest.fn().mockResolvedValue({});
-const mockRepresentationActionCreate = jest.fn().mockResolvedValue({});
-const mockExaminationTimetableTypeFindUnique = jest.fn().mockResolvedValue({});
-const mockExaminationTimetableTypeFindMany = jest.fn().mockResolvedValue({});
-const mockExaminationTimetableItemFindUnique = jest.fn().mockResolvedValue({});
-const mockExaminationTimetableItemFindMany = jest.fn().mockResolvedValue({});
-const mockExaminationTimetableItemCreate = jest.fn().mockResolvedValue({});
-const mockExaminationTimetableItemUpdateMany = jest.fn().mockResolvedValue({});
-const mockExaminationTimetableItemDelete = jest.fn().mockResolvedValue({});
 const mockAddressCreate = jest.fn().mockResolvedValue({});
 const mockAddressDelete = jest.fn().mockResolvedValue({});
 const mockAddressUpdate = jest.fn().mockResolvedValue({});
 const mockAppellantCaseIncompleteReasonFindMany = jest.fn().mockResolvedValue({});
-const mockAppellantCaseIncompleteReasonOnAppellantCaseDeleteMany = jest.fn().mockResolvedValue({});
-const mockAppellantCaseIncompleteReasonOnAppellantCaseCreateMany = jest.fn().mockResolvedValue({});
+const mockAppellantCaseIncompleteReasonsSelectedDeleteMany = jest.fn().mockResolvedValue({});
+const mockAppellantCaseIncompleteReasonsSelectedCreateMany = jest.fn().mockResolvedValue({});
 const mockAppellantCaseInvalidReasonFindMany = jest.fn().mockResolvedValue({});
-const mockAppellantCaseInvalidReasonOnAppellantCaseDeleteMany = jest.fn().mockResolvedValue({});
-const mockAppellantCaseInvalidReasonOnAppellantCaseCreateMany = jest.fn().mockResolvedValue({});
+const mockAppellantCaseInvalidReasonsSelectedDeleteMany = jest.fn().mockResolvedValue({});
+const mockAppellantCaseInvalidReasonsSelectedCreateMany = jest.fn().mockResolvedValue({});
 const mockAppellantCaseValidationOutcomeFindMany = jest.fn().mockResolvedValue({});
 const mockAppellantCaseValidationOutcomeFindUnique = jest.fn().mockResolvedValue({});
 const mockAppellantCaseUpdate = jest.fn().mockResolvedValue({});
@@ -97,13 +58,13 @@ const mockLPAQuestionnaireValidationOutcomeFindMany = jest.fn().mockResolvedValu
 const mockLPAQuestionnaireValidationOutcomeFindUnique = jest.fn().mockResolvedValue({});
 const mockLPAQuestionnaireIncompleteReasonFindUnique = jest.fn().mockResolvedValue({});
 const mockLPAQuestionnaireIncompleteReasonFindMany = jest.fn().mockResolvedValue({});
-const mockLPAQuestionnaireIncompleteReasonOnLPAQuestionnaireDeleteMany = jest
+const mockLPAQuestionnaireIncompleteReasonsSelectedDeleteMany = jest
 	.fn()
 	.mockResolvedValue({});
-const mockLPAQuestionnaireIncompleteReasonOnLPAQuestionnaireCreateMany = jest
+const mockLPAQuestionnaireIncompleteReasonsSelectedCreateMany = jest
 	.fn()
 	.mockResolvedValue({});
-const mockLPAQuestionnaireIncompleteReasonOnLPAQuestionnaireUpdate = jest
+const mockLPAQuestionnaireIncompleteReasonsSelectedUpdate = jest
 	.fn()
 	.mockResolvedValue({});
 const mockSiteVisitCreate = jest.fn().mockResolvedValue({});
@@ -114,15 +75,10 @@ const mockSpecialismsFindUnique = jest.fn().mockResolvedValue({});
 const mockAppealAllocationUpsert = jest.fn().mockResolvedValue({});
 const mockAppealSpecialismDeleteMany = jest.fn().mockResolvedValue({});
 const mockAppealSpecialismCreateMany = jest.fn().mockResolvedValue({});
-const mockDesignatedSiteFindMany = jest.fn().mockResolvedValue({});
 const mockKnowledgeOfOtherLandownersFindMany = jest.fn().mockResolvedValue({});
 const mockLPANotificationMethodsFindMany = jest.fn().mockResolvedValue({});
-const mockPlanningObligationStatusFindMany = jest.fn().mockResolvedValue({});
 const mockProcedureTypeFindMany = jest.fn().mockResolvedValue({});
-const mockScheduleTypeFindMany = jest.fn().mockResolvedValue({});
 const mockAppellantUpdate = jest.fn().mockResolvedValue({});
-const mockDesignatedSitesOnLPAQuestionnairesCreateMany = jest.fn().mockResolvedValue({});
-const mockDesignatedSitesOnLPAQuestionnairesDeleteMany = jest.fn().mockResolvedValue({});
 const mockUserUpsert = jest.fn().mockResolvedValue({});
 const mockAppellantCaseIncompleteReasonTextDeleteMany = jest.fn().mockResolvedValue({});
 const mockAppellantCaseIncompleteReasonTextCreateMany = jest.fn().mockResolvedValue({});
@@ -185,46 +141,10 @@ class MockPrismaClient {
 		};
 	}
 
-	get reviewQuestionnaire() {
-		return {
-			create: mockReviewQuestionnaireCreate
-		};
-	}
-
 	get lPAQuestionnaire() {
 		return {
 			create: mocklPAQuestionnaireCreate,
 			update: mocklPAQuestionnaireUpdate
-		};
-	}
-
-	get validationDecision() {
-		return {
-			create: mockValidationDecisionCreate
-		};
-	}
-
-	get caseStatus() {
-		return {
-			updateMany: mockCaseStatusUpdateMany,
-			create: mockCaseStatusCreate
-		};
-	}
-
-	get case() {
-		return {
-			findMany: mockCaseFindMany,
-			findUnique: mockCaseFindUnique,
-			update: mockCaseUpdate,
-			create: mockCaseCreate,
-			count: mockCaseCount,
-			updateMany: mockCaseUpdateMany
-		};
-	}
-
-	get applicationDetails() {
-		return {
-			findUnique: mockApplicationDetailsFindUnique
 		};
 	}
 
@@ -266,88 +186,6 @@ class MockPrismaClient {
 		};
 	}
 
-	get zoomLevel() {
-		return {
-			findMany: mockZoomLevelFindMany,
-			findUnique: mockZoomLevelFindUnique
-		};
-	}
-
-	get examinationTimetableType() {
-		return {
-			findMany: mockExaminationTimetableTypeFindMany,
-			findUnique: mockExaminationTimetableTypeFindUnique
-		};
-	}
-
-	get examinationTimetableItem() {
-		return {
-			findMany: mockExaminationTimetableItemFindMany,
-			findUnique: mockExaminationTimetableItemFindUnique,
-			create: mockExaminationTimetableItemCreate,
-			updateMany: mockExaminationTimetableItemUpdateMany,
-			delete: mockExaminationTimetableItemDelete
-		};
-	}
-
-	get sector() {
-		return {
-			findUnique: mockSectorFindUnique,
-			findMany: mockSectorFindMany
-		};
-	}
-
-	get subSector() {
-		return {
-			findMany: mockSubSectorFindMany,
-			findUnique: mockSubSectorFindUnique
-		};
-	}
-
-	get serviceCustomer() {
-		return {
-			findUnique: mockServiceCustomerFindUnique
-		};
-	}
-
-	get region() {
-		return {
-			findUnique: mockRegionFindUnique,
-			findMany: mockRegionFindMany
-		};
-	}
-
-	get regionsOnApplicationDetails() {
-		return {
-			deleteMany: mockRegionsOnApplicationDetailsDeleteMany,
-			updateMany: mockRegionsOnApplicationDetailsUpdateMany
-		};
-	}
-
-	get representation() {
-		return {
-			count: mockRepresentationCount,
-			findMany: mockRepresentationFindMany,
-			findFirst: mockRepresentationFindFirst,
-			create: mockRepresentationCreate,
-			update: mockRepresentationUpdate
-		};
-	}
-
-	get representationContact() {
-		return {
-			findFirst: mockRepresentationContactFindFirst,
-			update: mockRepresentationContactUpdate,
-			delete: mockRepresentationContactDelete
-		};
-	}
-
-	get representationAction() {
-		return {
-			create: mockRepresentationActionCreate
-		};
-	}
-
 	get appellantCaseIncompleteReason() {
 		return {
 			findMany: mockAppellantCaseIncompleteReasonFindMany
@@ -373,17 +211,17 @@ class MockPrismaClient {
 		};
 	}
 
-	get appellantCaseIncompleteReasonOnAppellantCase() {
+	get appellantCaseIncompleteReasonsSelected() {
 		return {
-			deleteMany: mockAppellantCaseIncompleteReasonOnAppellantCaseDeleteMany,
-			createMany: mockAppellantCaseIncompleteReasonOnAppellantCaseCreateMany
+			deleteMany: mockAppellantCaseIncompleteReasonsSelectedDeleteMany,
+			createMany: mockAppellantCaseIncompleteReasonsSelectedCreateMany
 		};
 	}
 
-	get appellantCaseInvalidReasonOnAppellantCase() {
+	get appellantCaseInvalidReasonsSelected() {
 		return {
-			deleteMany: mockAppellantCaseInvalidReasonOnAppellantCaseDeleteMany,
-			createMany: mockAppellantCaseInvalidReasonOnAppellantCaseCreateMany
+			deleteMany: mockAppellantCaseInvalidReasonsSelectedDeleteMany,
+			createMany: mockAppellantCaseInvalidReasonsSelectedCreateMany
 		};
 	}
 
@@ -401,11 +239,11 @@ class MockPrismaClient {
 		};
 	}
 
-	get lPAQuestionnaireIncompleteReasonOnLPAQuestionnaire() {
+	get lPAQuestionnaireIncompleteReasonsSelected() {
 		return {
-			deleteMany: mockLPAQuestionnaireIncompleteReasonOnLPAQuestionnaireDeleteMany,
-			createMany: mockLPAQuestionnaireIncompleteReasonOnLPAQuestionnaireCreateMany,
-			update: mockLPAQuestionnaireIncompleteReasonOnLPAQuestionnaireUpdate
+			deleteMany: mockLPAQuestionnaireIncompleteReasonsSelectedDeleteMany,
+			createMany: mockLPAQuestionnaireIncompleteReasonsSelectedCreateMany,
+			update: mockLPAQuestionnaireIncompleteReasonsSelectedUpdate
 		};
 	}
 
@@ -442,12 +280,6 @@ class MockPrismaClient {
 		};
 	}
 
-	get designatedSite() {
-		return {
-			findMany: mockDesignatedSiteFindMany
-		};
-	}
-
 	get knowledgeOfOtherLandowners() {
 		return {
 			findMany: mockKnowledgeOfOtherLandownersFindMany
@@ -460,34 +292,15 @@ class MockPrismaClient {
 		};
 	}
 
-	get planningObligationStatus() {
-		return {
-			findMany: mockPlanningObligationStatusFindMany
-		};
-	}
-
 	get procedureType() {
 		return {
 			findMany: mockProcedureTypeFindMany
 		};
 	}
 
-	get scheduleType() {
-		return {
-			findMany: mockScheduleTypeFindMany
-		};
-	}
-
 	get appellant() {
 		return {
 			update: mockAppellantUpdate
-		};
-	}
-
-	get designatedSitesOnLPAQuestionnaires() {
-		return {
-			createMany: mockDesignatedSitesOnLPAQuestionnairesCreateMany,
-			deleteMany: mockDesignatedSitesOnLPAQuestionnairesDeleteMany
 		};
 	}
 
@@ -563,6 +376,7 @@ class MockPrismaClient {
 	}
 }
 
+const mockExecuteRawUnsafe = jest.fn().mockResolvedValue({});
 const mockPrismaUse = jest.fn().mockResolvedValue();
 
 MockPrismaClient.prototype.$executeRawUnsafe = mockExecuteRawUnsafe;

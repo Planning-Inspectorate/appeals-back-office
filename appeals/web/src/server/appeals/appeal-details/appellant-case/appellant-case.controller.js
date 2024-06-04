@@ -246,7 +246,7 @@ export const postAddDocuments = async (request, response) => {
 	postDocumentUpload(
 		request,
 		response,
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/add-document-details/${currentFolder.id}`
+		`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/add-document-details/${currentFolder.folderId}`
 	);
 };
 
@@ -297,7 +297,9 @@ export const getAddDocumentsCheckAndConfirm = async (request, response) => {
 		response,
 		`/appeals-service/appeal-details/${
 			request.currentAppeal.appealId
-		}/appellant-case/add-document-details/${currentFolder.id}${documentId ? `/${documentId}` : ''}`
+		}/appellant-case/add-document-details/${currentFolder.folderId}${
+			documentId ? `/${documentId}` : ''
+		}`
 	);
 };
 
@@ -412,7 +414,7 @@ export const postAddDocumentVersion = async (request, response) => {
 	postDocumentUpload(
 		request,
 		response,
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/add-document-details/${currentFolder.id}/${documentId}`
+		`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/add-document-details/${currentFolder.folderId}/${documentId}`
 	);
 };
 

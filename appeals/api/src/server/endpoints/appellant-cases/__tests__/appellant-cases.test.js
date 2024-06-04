@@ -4,7 +4,6 @@ import { request } from '../../../app-test.js';
 import {
 	ERROR_MUST_BE_NUMBER,
 	ERROR_NOT_FOUND,
-	STATE_TARGET_INVALID,
 	LENGTH_8,
 	AUDIT_TRAIL_SUBMISSION_INCOMPLETE,
 	STATE_TARGET_READY_TO_START
@@ -251,11 +250,11 @@ describe('appellant cases routes', () => {
 					appellantCaseIncompleteReasons
 				);
 				// @ts-ignore
-				databaseConnector.appellantCaseIncompleteReasonOnAppellantCase.deleteMany.mockResolvedValue(
+				databaseConnector.appellantCaseIncompleteReasonsSelected.deleteMany.mockResolvedValue(
 					true
 				);
 				// @ts-ignore
-				databaseConnector.appellantCaseIncompleteReasonOnAppellantCase.createMany.mockResolvedValue(
+				databaseConnector.appellantCaseIncompleteReasonsSelected.createMany.mockResolvedValue(
 					true
 				);
 
@@ -264,7 +263,7 @@ describe('appellant cases routes', () => {
 					incompleteReasons: [{ id: 1 }, { id: 2 }],
 					validationOutcome: 'Incomplete'
 				};
-				const formattedAppealDueDate = joinDateAndTime(body.appealDueDate);
+
 				const { appellantCase, id } = householdAppealAppellantCaseIncomplete;
 				const response = await request
 					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
@@ -277,11 +276,13 @@ describe('appellant cases routes', () => {
 						appellantCaseValidationOutcomeId: 1
 					}
 				});
+
+				const formattedAppealDueDate = joinDateAndTime(body.appealDueDate);
 				expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
 					where: { id },
 					data: {
-						dueDate: formattedAppealDueDate,
-						updatedAt: expect.any(Date)
+						caseExtensionDate: formattedAppealDueDate,
+						caseUpdatedDate: expect.any(Date)
 					}
 				});
 				expect(databaseConnector.appealStatus.create).not.toHaveBeenCalled();
@@ -320,11 +321,11 @@ describe('appellant cases routes', () => {
 					appellantCaseIncompleteReasons
 				);
 				// @ts-ignore
-				databaseConnector.appellantCaseIncompleteReasonOnAppellantCase.deleteMany.mockResolvedValue(
+				databaseConnector.appellantCaseIncompleteReasonsSelected.deleteMany.mockResolvedValue(
 					true
 				);
 				// @ts-ignore
-				databaseConnector.appellantCaseIncompleteReasonOnAppellantCase.createMany.mockResolvedValue(
+				databaseConnector.appellantCaseIncompleteReasonsSelected.createMany.mockResolvedValue(
 					true
 				);
 
@@ -385,7 +386,6 @@ describe('appellant cases routes', () => {
 
 				// eslint-disable-next-line no-undef
 				expect(mockSendEmail).toHaveBeenCalledTimes(1);
-				// eslint-disable-next-line no-undef
 
 				expect(response.status).toEqual(200);
 			});
@@ -404,11 +404,11 @@ describe('appellant cases routes', () => {
 					appellantCaseIncompleteReasons
 				);
 				// @ts-ignore
-				databaseConnector.appellantCaseIncompleteReasonOnAppellantCase.deleteMany.mockResolvedValue(
+				databaseConnector.appellantCaseIncompleteReasonsSelected.deleteMany.mockResolvedValue(
 					true
 				);
 				// @ts-ignore
-				databaseConnector.appellantCaseIncompleteReasonOnAppellantCase.createMany.mockResolvedValue(
+				databaseConnector.appellantCaseIncompleteReasonsSelected.createMany.mockResolvedValue(
 					true
 				);
 				// @ts-ignore
@@ -500,11 +500,11 @@ describe('appellant cases routes', () => {
 					appellantCaseIncompleteReasons
 				);
 				// @ts-ignore
-				databaseConnector.appellantCaseIncompleteReasonOnAppellantCase.deleteMany.mockResolvedValue(
+				databaseConnector.appellantCaseIncompleteReasonsSelected.deleteMany.mockResolvedValue(
 					true
 				);
 				// @ts-ignore
-				databaseConnector.appellantCaseIncompleteReasonOnAppellantCase.createMany.mockResolvedValue(
+				databaseConnector.appellantCaseIncompleteReasonsSelected.createMany.mockResolvedValue(
 					true
 				);
 				// @ts-ignore
@@ -627,11 +627,11 @@ describe('appellant cases routes', () => {
 					appellantCaseInvalidReasons
 				);
 				// @ts-ignore
-				databaseConnector.appellantCaseInvalidReasonOnAppellantCase.deleteMany.mockResolvedValue(
+				databaseConnector.appellantCaseInvalidReasonsSelected.deleteMany.mockResolvedValue(
 					true
 				);
 				// @ts-ignore
-				databaseConnector.appellantCaseInvalidReasonOnAppellantCase.createMany.mockResolvedValue(
+				databaseConnector.appellantCaseInvalidReasonsSelected.createMany.mockResolvedValue(
 					true
 				);
 				// @ts-ignore
@@ -709,11 +709,11 @@ describe('appellant cases routes', () => {
 					appellantCaseInvalidReasons
 				);
 				// @ts-ignore
-				databaseConnector.appellantCaseInvalidReasonOnAppellantCase.deleteMany.mockResolvedValue(
+				databaseConnector.appellantCaseInvalidReasonsSelected.deleteMany.mockResolvedValue(
 					true
 				);
 				// @ts-ignore
-				databaseConnector.appellantCaseInvalidReasonOnAppellantCase.createMany.mockResolvedValue(
+				databaseConnector.appellantCaseInvalidReasonsSelected.createMany.mockResolvedValue(
 					true
 				);
 				// @ts-ignore
@@ -791,11 +791,11 @@ describe('appellant cases routes', () => {
 					appellantCaseInvalidReasons
 				);
 				// @ts-ignore
-				databaseConnector.appellantCaseInvalidReasonOnAppellantCase.deleteMany.mockResolvedValue(
+				databaseConnector.appellantCaseInvalidReasonsSelected.deleteMany.mockResolvedValue(
 					true
 				);
 				// @ts-ignore
-				databaseConnector.appellantCaseInvalidReasonOnAppellantCase.createMany.mockResolvedValue(
+				databaseConnector.appellantCaseInvalidReasonsSelected.createMany.mockResolvedValue(
 					true
 				);
 				// @ts-ignore
@@ -896,72 +896,6 @@ describe('appellant cases routes', () => {
 				expect(response.status).toEqual(200);
 			});
 
-			test.skip('updates appellant case when the validation outcome is Invalid with numeric array', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue({
-					...householdAppeal,
-					appealStatus: [
-						{
-							status: 'validation',
-							valid: true
-						}
-					]
-				});
-				// @ts-ignore
-				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
-					appellantCaseValidationOutcomes[1]
-				);
-				// @ts-ignore
-				databaseConnector.appellantCaseInvalidReason.findMany.mockResolvedValue(
-					appellantCaseInvalidReasons
-				);
-				// @ts-ignore
-				databaseConnector.appellantCaseInvalidReasonOnAppellantCase.deleteMany.mockResolvedValue(
-					true
-				);
-				// @ts-ignore
-				databaseConnector.appellantCaseInvalidReasonOnAppellantCase.createMany.mockResolvedValue(
-					true
-				);
-				// @ts-ignore
-				databaseConnector.user.upsert.mockResolvedValue({
-					id: 1,
-					azureAdUserId
-				});
-
-				const body = {
-					invalidReasons: [{ id: 1 }, { id: 2 }],
-					validationOutcome: 'Invalid'
-				};
-				const { appellantCase, id } = householdAppeal;
-				const response = await request
-					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
-					.send(body)
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith({
-					where: { id: appellantCase.id },
-					data: {
-						appellantCaseValidationOutcomeId: 2
-					}
-				});
-
-				expect(databaseConnector.appealStatus.create).toHaveBeenCalledWith({
-					data: {
-						appealId: id,
-						createdAt: expect.any(Date),
-						status: STATE_TARGET_INVALID,
-						valid: true
-					}
-				});
-				// expect(databaseConnector.appeal.update).not.toHaveBeenCalled();
-
-				// eslint-disable-next-line no-undef
-				expect(mockSendEmail).not.toHaveBeenCalled();
-
-				expect(response.status).toEqual(200);
-			});
-
 			test('updates appellant case and sends a notify email when the validation outcome is Valid', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue({
@@ -1028,5 +962,6 @@ describe('appellant cases routes', () => {
 				expect(response.status).toEqual(200);
 			});
 		});
+
 	});
 });

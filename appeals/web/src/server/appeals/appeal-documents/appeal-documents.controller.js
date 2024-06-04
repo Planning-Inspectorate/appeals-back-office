@@ -72,17 +72,18 @@ export const renderDocumentUpload = async (
 
 	if (documentId) {
 		const fileInfo = await getFileInfo(request.apiClient, appealId, documentId);
-		documentName = fileInfo?.latestDocumentVersion.fileName;
-		_documentType = fileInfo?.latestDocumentVersion.documentType;
-		latestVersion = fileInfo?.latestDocumentVersion.version;
+		documentName = fileInfo?.latestDocumentVersion?.fileName;
+		_documentType = fileInfo?.latestDocumentVersion?.documentType;
+		latestVersion = fileInfo?.latestDocumentVersion?.version;
 	}
 
 	const mappedPageContent = await documentUploadPage(
 		appealId,
 		appealDetails.appealReference,
-		`${currentFolder.id}`,
+		`${currentFolder.folderId}`,
 		currentFolder.path,
 		documentId,
+		// @ts-ignore
 		documentName,
 		latestVersion,
 		backButtonUrl,
@@ -333,7 +334,7 @@ export const postDocumentDetails = async (
 			);
 
 			return response.redirect(
-				nextPageUrl?.replace('{{folderId}}', currentFolder.id) ||
+				nextPageUrl?.replace('{{folderId}}', currentFolder.folderId) ||
 					`/appeals-service/appeal-details/${appealId}/`
 			);
 		}
@@ -427,8 +428,11 @@ export const postUploadDocumentsCheckAndConfirm = async (
 						documentSize: document.size,
 						stage: document.stage,
 						fileRowId: document.fileRowId,
-						folderId: currentFolder.id,
-						GUID: document.GUID
+						folderId: currentFolder.folderId,
+						GUID: document.GUID,
+						receivedDate: document.receivedDate,
+						redactionStatusId: document.redactionStatus,
+						blobStoragePath: document.blobStoreUrl
 					};
 
 					return mappedDocument;
@@ -500,8 +504,11 @@ export const postUploadDocumentVersionCheckAndConfirm = async (request, response
 				documentSize: uploadInfo.size,
 				stage: uploadInfo.stage,
 				fileRowId: uploadInfo.fileRowId,
-				folderId: currentFolder.id,
-				GUID: uploadInfo.GUID
+				folderId: currentFolder.folderId,
+				GUID: uploadInfo.GUID,
+				receivedDate: uploadInfo.receivedDate,
+				redactionStatusId: uploadInfo.redactionStatus,
+				blobStoragePath: uploadInfo.blobStoreUrl
 			}
 		};
 
@@ -546,7 +553,6 @@ export const postUploadDocumentVersionCheckAndConfirm = async (request, response
 export const renderChangeDocumentDetails = async (request, response, backButtonUrl) => {
 	const {
 		currentFolder,
-		body,
 		errors,
 		params: { appealId, documentId }
 	} = request;
@@ -554,9 +560,6 @@ export const renderChangeDocumentDetails = async (request, response, backButtonU
 	if (!currentFolder) {
 		return response.status(500).render('app/500.njk');
 	}
-
-	/** @type {DocumentDetailsItem} */
-	const bodyItem = body?.items?.[0];
 
 	const redactionStatuses = await getDocumentRedactionStatuses(request.apiClient);
 
@@ -573,7 +576,6 @@ export const renderChangeDocumentDetails = async (request, response, backButtonU
 	const mappedPageContent = changeDocumentDetailsPage(
 		backButtonUrl,
 		currentFolder,
-		bodyItem,
 		currentFile,
 		redactionStatuses
 	);
@@ -710,11 +712,11 @@ export const postDeleteDocument = async (
 	}
 
 	const cancelUrlProcessed = cancelUrl
-		?.replace('{{folderId}}', currentFolder.id)
+		?.replace('{{folderId}}', currentFolder.folderId)
 		.replace('{{documentId}}', documentId);
 	const uploadNewDocumentUrlProcessed = uploadNewDocumentUrl?.replace(
 		'{{folderId}}',
-		currentFolder.id
+		currentFolder.folderId
 	);
 
 	if (
@@ -740,10 +742,9 @@ export const postDeleteDocument = async (
 	} else if (body['delete-file-answer'] === 'yes-and-upload-another-document') {
 		const fileVersionsInfo = await getFileVersionsInfo(request.apiClient, appealId, documentId);
 
-		if (fileVersionsInfo?.documentVersion) {
+		if (fileVersionsInfo?.allVersions) {
 			const deletingOnlyVersion =
-				fileVersionsInfo?.documentVersion?.filter((version) => version.isDeleted === false).length <
-				2;
+				fileVersionsInfo?.allVersions?.filter((version) => version.isDeleted === false).length < 2;
 
 			if (deletingOnlyVersion) {
 				await deleteDocument(apiClient, appealId, documentId, versionId);

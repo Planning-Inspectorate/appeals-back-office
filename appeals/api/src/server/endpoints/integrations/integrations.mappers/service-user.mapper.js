@@ -1,5 +1,7 @@
 import { ODW_AGENT_SVCUSR, ODW_APPELLANT_SVCUSR, ODW_SYSTEM_ID } from '#endpoints/constants.js';
 
+/** @typedef {import('@pins/appeals.api').Schema.ServiceUser} ServiceUser */
+
 /**
  *
  * @param {*} data
@@ -20,7 +22,7 @@ export const mapServiceUserIn = (data) => {
 
 /**
  *
- * @param {*} data
+ * @param {ServiceUser} data
  * @param {string} serviceUserType
  * @param {string} caseReference
  * @returns {import('pins-data-model').Schemas.ServiceUser | null}
@@ -31,7 +33,7 @@ export const mapServiceUserOut = (data, serviceUserType, caseReference) => {
 			id: data.id.toString(),
 			organisation: data.organisationName ?? null,
 			organisationType: null,
-			salutation: null,
+			salutation: data.salutation ?? null,
 			firstName: data.firstName ?? null,
 			lastName: data.lastName ?? null,
 			emailAddress: data.email ?? null,
@@ -47,7 +49,7 @@ export const mapServiceUserOut = (data, serviceUserType, caseReference) => {
 			caseReference,
 			sourceSystem: ODW_SYSTEM_ID,
 			serviceUserType: mapServiceUserType(serviceUserType),
-			role: data.jobTitle ?? null,
+			role: null,
 			otherPhoneNumber: null,
 			faxNumber: null
 		};

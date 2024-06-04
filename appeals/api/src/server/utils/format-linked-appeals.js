@@ -1,12 +1,11 @@
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Appeals.LinkedAppeal} LinkedAppeal */
 /** @typedef {import('@pins/appeals.api').Appeals.RelatedAppeal} RelatedAppeal */
-/** @typedef {import('@pins/appeals.api').Appeals.RepositoryGetAllResultItem} RepositoryGetAllResultItem */
 
 /**
  * @param {import('./db-client/index.js').AppealRelationship[]} linkedAppeals
  * @param {string} reference
- * @param { RepositoryGetAllResultItem[] | null} formattedAppealWithLinkedTypes
+ * @param { Appeal[] | null} formattedAppealWithLinkedTypes
  * @returns {LinkedAppeal[]}
  */
 const formatLinkedAppeals = (linkedAppeals, reference, formattedAppealWithLinkedTypes) => {
@@ -45,7 +44,7 @@ const formatLinkedAppeals = (linkedAppeals, reference, formattedAppealWithLinked
 /**
  * @param {import('./db-client/index.js').AppealRelationship[]} relatedAppeals
  * @param { number } currentAppealId
- * @param { RepositoryGetAllResultItem[] | null} formattedAppealWithLinkedTypes
+ * @param { Appeal[] | null} formattedAppealWithLinkedTypes
  * @returns {RelatedAppeal[]}
  */
 const formatRelatedAppeals = (relatedAppeals, currentAppealId, formattedAppealWithLinkedTypes) => {
@@ -65,7 +64,7 @@ const formatRelatedAppeals = (relatedAppeals, currentAppealId, formattedAppealWi
 };
 
 /**
- * @param {RepositoryGetAllResultItem[] | null} formattedAppealWithLinkedTypes
+ * @param {Appeal[] | null} formattedAppealWithLinkedTypes
  * @param {number| null} appealId
  * @returns {string}
  */
@@ -74,7 +73,7 @@ const assignAppealType = (formattedAppealWithLinkedTypes, appealId) => {
 		const matchedAppeal = formattedAppealWithLinkedTypes.find((appeal) => appeal.id === appealId);
 
 		if (matchedAppeal && matchedAppeal.appealType) {
-			return `(${matchedAppeal.appealType.code}) ${matchedAppeal.appealType.type}`;
+			return `(${matchedAppeal.appealType.key}) ${matchedAppeal.appealType.type}`;
 		}
 	}
 

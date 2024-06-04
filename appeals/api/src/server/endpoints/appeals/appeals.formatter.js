@@ -15,6 +15,7 @@ import {
 	STATE_TARGET_ASSIGN_CASE_OFFICER,
 	STATE_TARGET_COMPLETE
 } from '#endpoints/constants.js';
+import { formatFolder } from '#endpoints/documents/documents.formatter.js';
 
 const approxStageCompletion = {
 	STATE_TARGET_READY_TO_START: 5,
@@ -30,12 +31,10 @@ const approxStageCompletion = {
 /** @typedef {import('@pins/appeals.api').Schema.AppealRelationship} AppealRelationship */
 /** @typedef {import('@pins/appeals.api').Schema.AppealType} AppealType */
 /** @typedef {import('@pins/appeals.api').Appeals.AppealListResponse} AppealListResponse */
-/** @typedef {import('@pins/appeals.api').Appeals.RepositoryGetAllResultItem} RepositoryGetAllResultItem */
-/** @typedef {import('@pins/appeals.api').Appeals.RepositoryGetByIdResultItem} RepositoryGetByIdResultItem */
 /** @typedef {import('@pins/appeals.api').Appeals.SingleAppealDetailsResponse} SingleAppealDetailsResponse */
 /** @typedef {import('#db-client').AppealStatus} AppealStatus */
 /**
- * @param {RepositoryGetAllResultItem} appeal
+ * @param {Appeal} appeal
  * @param {AppealRelationship[]} linkedAppeals
  * @returns {AppealListResponse}}
  */
@@ -45,8 +44,8 @@ const formatAppeals = (appeal, linkedAppeals) => ({
 	appealSite: formatAddress(appeal.address),
 	appealStatus: appeal.appealStatus[0].status,
 	appealType: appeal.appealType?.type,
-	createdAt: appeal.createdAt,
-	localPlanningDepartment: appeal.lpa.name,
+	createdAt: appeal.caseCreatedDate,
+	localPlanningDepartment: appeal.lpa?.name || '',
 	appellantCaseStatus: '',
 	lpaQuestionnaireStatus: '',
 	dueDate: null,
@@ -55,7 +54,7 @@ const formatAppeals = (appeal, linkedAppeals) => ({
 });
 
 /**
- * @param {RepositoryGetAllResultItem} appeal
+ * @param {Appeal} appeal
  * @param {AppealRelationship[]} linkedAppeals
  * @returns {AppealListResponse}}
  */
@@ -65,38 +64,38 @@ const formatMyAppeals = (appeal, linkedAppeals) => ({
 	appealSite: formatAddress(appeal.address),
 	appealStatus: appeal.appealStatus[0].status,
 	appealType: appeal.appealType?.type,
-	createdAt: appeal.createdAt,
-	localPlanningDepartment: appeal.lpa.name,
+	createdAt: appeal.caseCreatedDate,
+	localPlanningDepartment: appeal.lpa?.name || '',
 	lpaQuestionnaireId: appeal.lpaQuestionnaire?.id || null,
 	appealTimetable: appeal.appealTimetable
 		? {
 				appealTimetableId: appeal.appealTimetable.id,
 				lpaQuestionnaireDueDate: appeal.appealTimetable.lpaQuestionnaireDueDate || null,
-				...(isFPA(appeal.appealType) && {
+				...(isFPA(appeal.appealType?.key || '') && {
 					finalCommentReviewDate: appeal.appealTimetable.finalCommentReviewDate || null,
 					statementReviewDate: appeal.appealTimetable.statementReviewDate || null,
 					issueDeterminationDate: appeal.appealTimetable.issueDeterminationDate || null
 				})
 		  }
 		: undefined,
-	appellantCaseStatus: appeal?.appellantCase?.appellantCaseValidationOutcome?.name || null,
-	lpaQuestionnaireStatus: appeal.lpaQuestionnaire?.lpaQuestionnaireValidationOutcome?.name || null,
+	appellantCaseStatus: appeal?.appellantCase?.appellantCaseValidationOutcome?.name || '',
+	lpaQuestionnaireStatus: appeal.lpaQuestionnaire?.lpaQuestionnaireValidationOutcome?.name || '',
 	dueDate: mapAppealToDueDate(
 		appeal,
-		appeal?.appellantCase?.appellantCaseValidationOutcome?.name,
-		appeal.dueDate
+		appeal.appellantCase?.appellantCaseValidationOutcome?.name || '',
+		appeal.caseExtensionDate
 	),
 	isParentAppeal: linkedAppeals.filter((link) => link.parentRef === appeal.reference).length > 0,
 	isChildAppeal: linkedAppeals.filter((link) => link.childRef === appeal.reference).length > 0
 });
 
 /**
- * @param {RepositoryGetByIdResultItem} appeal
+ * @param {Appeal} appeal
  * @param {Folder[]} decisionFolders
  * @param {Folder[]} costsFolders
  * @param {{ transferredAppealType: string, transferredAppealReference: string } | null} transferAppealTypeInfo
  * @param {{ letterDate: Date|null, virusCheckStatus: string|null } | null} decisionInfo
- * @param { RepositoryGetAllResultItem[] | null} referencedAppeals
+ * @param { Appeal[] | null} referencedAppeals
  * @returns {SingleAppealDetailsResponse | void}}
  */
 const formatAppeal = (
@@ -139,13 +138,14 @@ const formatAppeal = (
 			appealId: appeal.id,
 			appealReference: appeal.reference,
 			appealSite: { addressId: appeal.address?.id, ...formatAddress(appeal.address) },
-			neighbouringSites: appeal.neighbouringSites?.map((site) => {
-				return {
-					siteId: site.id,
-					source: site.source,
-					address: formatAddress(site.address)
-				};
-			}),
+			neighbouringSites:
+				appeal.neighbouringSites?.map((site) => {
+					return {
+						siteId: site.id,
+						source: site.source,
+						address: formatAddress(site.address)
+					};
+				}) || [],
 			isAffectingNeighbouringSites: appeal.lpaQuestionnaire?.isAffectingNeighbouringSites,
 			appealStatus: appeal.appealStatus[0].status,
 			...(transferAppealTypeInfo && {
@@ -158,22 +158,22 @@ const formatAppeal = (
 				? {
 						appealTimetableId: appeal.appealTimetable.id,
 						lpaQuestionnaireDueDate: appeal.appealTimetable.lpaQuestionnaireDueDate || null,
-						...(isFPA(appeal.appealType) && {
+						...(isFPA(appeal.appealType?.key || '') && {
 							finalCommentReviewDate: appeal.appealTimetable.finalCommentReviewDate || null,
 							statementReviewDate: appeal.appealTimetable.statementReviewDate || null
 						})
 				  }
 				: null,
 			appealType: appeal.appealType?.type,
-			...(appeal.resubmitTypeId && {
-				resubmitTypeId: appeal.resubmitTypeId
+			...(appeal.caseResubmittedTypeId && {
+				resubmitTypeId: appeal.caseResubmittedTypeId
 			}),
 			appellantCaseId: appeal.appellantCase?.id || 0,
 			caseOfficer: appeal.caseOfficer?.azureAdUserId || null,
 			costs: {
-				appellantFolder: costsFolders.find((f) => f.path.endsWith('appellant')),
-				lpaFolder: costsFolders.find((f) => f.path.endsWith('lpa')),
-				decisionFolder: costsFolders.find((f) => f.path.endsWith('decision'))
+				appellantFolder: formatFolder(costsFolders.find((f) => f.path?.endsWith('appellant'))),
+				lpaFolder: formatFolder(costsFolders.find((f) => f.path?.endsWith('lpa'))),
+				decisionFolder: formatFolder(costsFolders.find((f) => f.path?.endsWith('decision')))
 			},
 			decision:
 				decisionInfo &&
@@ -191,8 +191,8 @@ const formatAppeal = (
 					  },
 			healthAndSafety: {
 				appellantCase: {
-					details: appeal.appellantCase?.healthAndSafetyIssues || null,
-					hasIssues: appeal.appellantCase?.hasHealthAndSafetyIssues
+					details: appeal.appellantCase?.siteSafetyDetails,
+					hasIssues: appeal.appellantCase?.siteSafetyDetails !== null
 				},
 				lpaQuestionnaire: {
 					details: appeal.lpaQuestionnaire?.healthAndSafetyDetails || null,
@@ -202,8 +202,8 @@ const formatAppeal = (
 			inspector: appeal.inspector?.azureAdUserId || null,
 			inspectorAccess: {
 				appellantCase: {
-					details: appeal.appellantCase?.inspectorAccessDetails || null,
-					isRequired: appeal.appellantCase?.doesSiteRequireInspectorAccess
+					details: appeal.appellantCase?.siteAccessDetails,
+					isRequired: appeal.appellantCase?.siteAccessDetails !== null
 				},
 				lpaQuestionnaire: {
 					details: appeal.lpaQuestionnaire?.inspectorAccessDetails || null,
@@ -222,10 +222,10 @@ const formatAppeal = (
 			isChildAppeal:
 				(appeal.linkedAppeals || []).filter((link) => link.childRef === appeal.reference).length >
 				0,
-			localPlanningDepartment: appeal.lpa.name,
+			localPlanningDepartment: appeal.lpa?.name || '',
 			lpaQuestionnaireId: appeal.lpaQuestionnaire?.id || null,
-			planningApplicationReference: appeal.planningApplicationReference,
-			procedureType: appeal.lpaQuestionnaire?.procedureType?.name || 'Written',
+			planningApplicationReference: appeal.applicationReference,
+			procedureType: appeal.procedureType?.name || 'Written',
 			siteVisit: {
 				siteVisitId: appeal.siteVisit?.id || null,
 				visitDate: appeal.siteVisit?.visitDate || null,
@@ -233,14 +233,14 @@ const formatAppeal = (
 				visitEndTime: appeal.siteVisit?.visitEndTime || null,
 				visitType: appeal.siteVisit?.siteVisitType?.name || null
 			},
-			createdAt: appeal.createdAt,
-			startedAt: appeal.startedAt,
-			validAt: appeal.validAt,
+			createdAt: appeal.caseCreatedDate,
+			startedAt: appeal.caseStartedDate,
+			validAt: appeal.caseValidDate,
 			documentationSummary: {
 				appellantCase: {
 					status: formatAppellantCaseDocumentationStatus(appeal),
-					dueDate: appeal.dueDate,
-					receivedAt: appeal.createdAt
+					dueDate: appeal.caseExtensionDate,
+					receivedAt: appeal.caseCreatedDate
 				},
 				lpaQuestionnaire: {
 					status: formatLpaQuestionnaireDocumentationStatus(appeal),
@@ -257,7 +257,7 @@ const formatAppeal = (
 
 /**
  * Map each appeal to include a due date.
- * @param {RepositoryGetAllResultItem} appeal
+ * @param {Appeal} appeal
  * @param {string} appellantCaseStatus
  * @param {Date | null} appellantCaseDueDate
  * @returns { Date | null | undefined }
@@ -268,25 +268,25 @@ export const mapAppealToDueDate = (appeal, appellantCaseStatus, appellantCaseDue
 			if (appellantCaseStatus == 'Incomplete' && appellantCaseDueDate) {
 				return new Date(appellantCaseDueDate);
 			}
-			return add(new Date(appeal.createdAt), {
+			return add(new Date(appeal.caseCreatedDate), {
 				days: approxStageCompletion.STATE_TARGET_READY_TO_START
 			});
 		case STATE_TARGET_LPA_QUESTIONNAIRE_DUE:
 			if (appeal.appealTimetable?.lpaQuestionnaireDueDate) {
 				return new Date(appeal.appealTimetable?.lpaQuestionnaireDueDate);
 			}
-			return add(new Date(appeal.createdAt), {
+			return add(new Date(appeal.caseCreatedDate), {
 				days: approxStageCompletion.STATE_TARGET_LPA_QUESTIONNAIRE_DUE
 			});
 		case STATE_TARGET_ASSIGN_CASE_OFFICER:
-			return add(new Date(appeal.createdAt), {
+			return add(new Date(appeal.caseCreatedDate), {
 				days: approxStageCompletion.STATE_TARGET_ASSIGN_CASE_OFFICER
 			});
 		case STATE_TARGET_ISSUE_DETERMINATION: {
 			if (appeal.appealTimetable?.issueDeterminationDate) {
 				return new Date(appeal.appealTimetable?.issueDeterminationDate);
 			}
-			return add(new Date(appeal.createdAt), {
+			return add(new Date(appeal.caseCreatedDate), {
 				days: approxStageCompletion.STATE_TARGET_ISSUE_DETERMINATION
 			});
 		}
@@ -294,7 +294,7 @@ export const mapAppealToDueDate = (appeal, appellantCaseStatus, appellantCaseDue
 			if (appeal.appealTimetable?.statementReviewDate) {
 				return new Date(appeal.appealTimetable?.statementReviewDate);
 			}
-			return add(new Date(appeal.createdAt), {
+			return add(new Date(appeal.caseCreatedDate), {
 				days: approxStageCompletion.STATE_TARGET_STATEMENT_REVIEW
 			});
 		}
@@ -302,7 +302,7 @@ export const mapAppealToDueDate = (appeal, appellantCaseStatus, appellantCaseDue
 			if (appeal.appealTimetable?.finalCommentReviewDate) {
 				return new Date(appeal.appealTimetable?.finalCommentReviewDate);
 			}
-			return add(new Date(appeal.createdAt), {
+			return add(new Date(appeal.caseCreatedDate), {
 				days: approxStageCompletion.STATE_TARGET_FINAL_COMMENT_REVIEW
 			});
 		}

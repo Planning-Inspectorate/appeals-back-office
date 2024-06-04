@@ -36,11 +36,11 @@ const startAppeal = async (req, res) => {
 		const startedAt = await recalculateDateIfNotBusinessDay(joinDateAndTime(startDate));
 
 		const azureAdUserId = req.get('azureAdUserId');
-		const timetable = await calculateTimetable(appeal.appealType.shorthand, startedAt);
+		const timetable = await calculateTimetable(appeal.appealType.key, startedAt);
 		if (timetable) {
 			await Promise.all([
 				await appealTimetableRepository.upsertAppealTimetableById(appeal.id, timetable),
-				await appealRepository.updateAppealById(appeal.id, { startedAt: startedAt.toISOString() })
+				await appealRepository.updateAppealById(appeal.id, { caseStartedDate: startedAt.toISOString() })
 			]);
 
 			await createAuditTrail({

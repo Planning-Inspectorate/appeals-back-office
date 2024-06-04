@@ -4,13 +4,18 @@ import {
 	ERROR_FAILED_TO_SAVE_DATA,
 	ERROR_FAILED_TO_ADD_DOCUMENTS,
 	ERROR_DOCUMENT_NAME_ALREADY_EXISTS,
-	ERROR_NOT_FOUND
+	ERROR_NOT_FOUND,
+	AUDIT_TRAIL_DOCUMENT_REDACTED,
+	AUDIT_TRAIL_DOCUMENT_UNREDACTED,
+	AUDIT_TRAIL_DOCUMENT_NO_REDACTION_REQUIRED,
+	AUDIT_TRAIL_DOCUMENT_DATE_CHANGED
 } from '#endpoints/constants.js';
 import logger from '#utils/logger.js';
 import * as service from './documents.service.js';
 import * as documentRepository from '#repositories/document.repository.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
+import { formatDocument } from './documents.formatter.js';
 
 /** @typedef {import('@pins/appeals/index.js').BlobInfo} BlobInfo */
 /** @typedef {import('@pins/appeals.api').Schema.Folder} Folder */
@@ -39,7 +44,7 @@ const getFolder = async (req, res) => {
 const getDocument = async (req, res) => {
 	const { document } = req;
 
-	return res.send(document);
+	return res.send(formatDocument(document));
 };
 
 /**
@@ -53,7 +58,7 @@ const getDocumentAndVersions = async (req, res) => {
 	if (!document || document.isDeleted) {
 		return res.status(404).send({ errors: { documentId: ERROR_NOT_FOUND } });
 	}
-	return res.send(document);
+	return res.send(formatDocument(document));
 };
 
 /**
@@ -180,6 +185,64 @@ const deleteDocumentVersion = async (req, res) => {
 };
 
 /**
+ * @param {Request} req
+ * @param {Response} res
+ */
+const updateDocuments = async (req, res) => {
+	const { body, appeal } = req;
+	try {
+		const documents = body.documents;
+		for (const document of documents) {
+			const latestDocument = await documentRepository.getDocumentById(document.id);
+			document.latestVersion = latestDocument?.latestDocumentVersion?.version;
+
+			if (latestDocument && latestDocument.name) {
+				if (document.redactionStatus !== latestDocument?.latestDocumentVersion?.redactionStatusId) {
+					const auditTrailMessage = getAuditMessage(document.redactionStatus);
+					if (auditTrailMessage) {
+						await logAuditTrail(
+							latestDocument.name,
+							document.latestVersion,
+							auditTrailMessage,
+							req,
+							appeal.id,
+							latestDocument.guid
+						);
+					}
+				}
+
+				const receivedDate = document.receivedDate
+					? new Date(document.receivedDate).toDateString()
+					: null;
+				const latestReceivedDate = latestDocument?.latestDocumentVersion?.dateReceived
+					? new Date(latestDocument?.latestDocumentVersion?.dateReceived).toDateString()
+					: null;
+
+				if (receivedDate && latestReceivedDate && receivedDate !== latestReceivedDate) {
+					const dateChangeMessage = AUDIT_TRAIL_DOCUMENT_DATE_CHANGED;
+					await logAuditTrail(
+						latestDocument.name,
+						document.latestVersion,
+						dateChangeMessage,
+						req,
+						appeal.id,
+						latestDocument.guid
+					);
+				}
+			}
+		}
+		await documentRepository.updateDocuments(documents);
+	} catch (error) {
+		if (error) {
+			logger.error(error);
+			return res.status(500).send({ errors: { body: ERROR_FAILED_TO_SAVE_DATA } });
+		}
+	}
+
+	res.send(body);
+};
+
+/**
  * @type {(docs: (BlobInfo|null)[]) => object}
  */
 const getStorageInfo = (docs) => {
@@ -197,6 +260,55 @@ const getStorageInfo = (docs) => {
 };
 
 /**
+ * @param {number} redactionStatus
+ * @returns {string|null}
+ */
+function getAuditMessage(redactionStatus) {
+	switch (redactionStatus) {
+		case 1:
+			return AUDIT_TRAIL_DOCUMENT_REDACTED;
+		case 2:
+			return AUDIT_TRAIL_DOCUMENT_UNREDACTED;
+		case 3:
+			return AUDIT_TRAIL_DOCUMENT_NO_REDACTION_REQUIRED;
+		default:
+			return null;
+	}
+}
+
+/**
+ *
+ * @param {string} documentName
+ * @param {number} documentVersion
+ * @param {string} messageKey
+ * @param {Request} req
+ * @param {number} appealId
+ * @param {string} documentGuid
+ * @param {string} action
+ */
+async function logAuditTrail(
+	documentName,
+	documentVersion,
+	messageKey,
+	req,
+	appealId,
+	documentGuid,
+	action = 'Update'
+) {
+	const details = stringTokenReplacement(messageKey, [documentName, documentVersion]);
+
+	const auditTrail = await createAuditTrail({
+		appealId: appealId,
+		azureAdUserId: req.get('azureAdUserId'),
+		details: details
+	});
+
+	if (auditTrail) {
+		await service.addDocumentAudit(documentGuid, documentVersion, auditTrail, action);
+	}
+}
+
+/**
  * @param {Request} req
  * @param {Response} res
  */
@@ -209,7 +321,7 @@ const updateDocumentsAvCheckStatus = async (req, res) => {
 			if (!latestDocument) {
 				return res.status(404).send({ errors: { body: ERROR_NOT_FOUND } });
 			}
-			const versionList = latestDocument.documentVersion?.map((v) => v.version);
+			const versionList = latestDocument.versions?.map((v) => v.version);
 			if (!versionList || versionList.indexOf(document.version) < 0) {
 				return res.status(404).send({ errors: { body: ERROR_NOT_FOUND } });
 			}
@@ -231,6 +343,7 @@ export {
 	getDocument,
 	getDocumentAndVersions,
 	getFolder,
+	updateDocuments,
 	updateDocumentsAvCheckStatus,
 	deleteDocumentVersion
 };

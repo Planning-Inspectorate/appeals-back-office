@@ -23,6 +23,7 @@ import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-co
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
 import { isFolderInfo } from '#lib/ts-utilities.js';
+import { AVSCAN_STATUS } from '@pins/appeals/constants/documents.js';
 
 /**
  * @typedef {import('../../appeals.types.js').DayMonthYear} DayMonthYear
@@ -123,7 +124,6 @@ export async function appellantCasePage(appellantCaseData, appealDetails, curren
 				mappedAppellantCaseData.siteAddress.display.summaryListItem,
 				mappedAppellantCaseData.siteOwnership.display.summaryListItem,
 				mappedAppellantCaseData.allOwnersKnown.display.summaryListItem,
-				mappedAppellantCaseData.attemptedToIdentifyOwners.display.summaryListItem,
 				mappedAppellantCaseData.advertisedAppeal.display.summaryListItem,
 				mappedAppellantCaseData.inspectorAccess.display.summaryListItem,
 				mappedAppellantCaseData.healthAndSafetyIssues.display.summaryListItem
@@ -148,9 +148,7 @@ export async function appellantCasePage(appellantCaseData, appealDetails, curren
 			rows: [
 				mappedAppellantCaseData.applicationForm.display.summaryListItem,
 				mappedAppellantCaseData.decisionLetter.display.summaryListItem,
-				mappedAppellantCaseData.appealStatement.display.summaryListItem,
-				mappedAppellantCaseData.addNewSupportingDocuments.display.summaryListItem,
-				mappedAppellantCaseData.newSupportingDocuments.display.summaryListItem
+				mappedAppellantCaseData.appealStatement.display.summaryListItem
 			]
 		}
 	};
@@ -169,7 +167,8 @@ export async function appellantCasePage(appellantCaseData, appealDetails, curren
 				actions: {
 					items:
 						isFolderInfo(appellantCaseData.documents.appellantCaseCorrespondence) &&
-						appellantCaseData.documents.appellantCaseCorrespondence.documents.length > 0
+						appellantCaseData.documents?.appellantCaseCorrespondence?.documents &&
+						appellantCaseData.documents?.appellantCaseCorrespondence?.documents.length > 0
 							? [
 									{
 										text: 'Manage',
@@ -221,7 +220,7 @@ export async function appellantCasePage(appellantCaseData, appealDetails, curren
 		});
 	}
 
-	if (getDocumentsForVirusStatus(appellantCaseData, 'not_checked').length > 0) {
+	if (getDocumentsForVirusStatus(appellantCaseData, AVSCAN_STATUS.NOT_SCANNED).length > 0) {
 		addNotificationBannerToSession(
 			session,
 			'notCheckedDocument',
@@ -233,7 +232,7 @@ export async function appellantCasePage(appellantCaseData, appealDetails, curren
 	/** @type {PageComponent[]} */
 	const errorSummaryPageComponents = [];
 
-	if (getDocumentsForVirusStatus(appellantCaseData, 'failed_virus_check').length > 0) {
+	if (getDocumentsForVirusStatus(appellantCaseData, AVSCAN_STATUS.AFFECTED).length > 0) {
 		errorSummaryPageComponents.push({
 			type: 'error-summary',
 			parameters: {
@@ -699,15 +698,15 @@ export function mapWebReviewOutcomeToApiReviewOutcome(
 /**
  *
  * @param {SingleAppellantCaseResponse} appellantCaseData
- * @param {"not_checked"|"checked"|"failed_virus_check"} virusStatus
+ * @param {"not_scanned"|"scanned"|"affected"} virusStatus
  * @returns {DocumentInfo[]}
  */
 function getDocumentsForVirusStatus(appellantCaseData, virusStatus) {
 	const unscannedFiles = [];
 	for (const folder of Object.values(appellantCaseData.documents)) {
-		if ('documents' in folder) {
+		if (folder && 'documents' in folder && folder.documents) {
 			const documentsOfStatus = folder.documents.filter(
-				(item) => item.virusCheckStatus === virusStatus
+				(item) => item.latestDocumentVersion?.virusCheckStatus === virusStatus
 			);
 			for (const document of documentsOfStatus) {
 				unscannedFiles.push(document);
