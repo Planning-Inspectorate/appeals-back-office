@@ -9,7 +9,7 @@ resource "azurerm_storage_account" "documents" {
   #checkov:skip=CKV_AZURE_35: Network access restrictions
   #checkov:skip=CKV_AZURE_59: TODO: Ensure that Storage accounts disallow public access
   #checkov:skip=CKV_AZURE_190: TODO: Ensure that Storage blobs restrict public access
-  name                             = "pinsstdocsappealsbo${var.environment}"
+  name                             = "pinsstdocsappealsbo${local.environment}" # env training will shorten from training to train so doc storage account name length is 24 chars
   resource_group_name              = azurerm_resource_group.primary.name
   location                         = module.primary_region.location
   account_tier                     = "Standard"
