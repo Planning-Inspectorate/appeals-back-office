@@ -347,7 +347,7 @@ export const postAddDocumentsCheckAndConfirm = async (request, response) => {
 			error instanceof Error ? error.message : 'Something went wrong when adding costs documents'
 		);
 
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };
 
@@ -373,7 +373,7 @@ export const postAddDocumentVersionCheckAndConfirm = async (request, response) =
 				: 'Something went wrong when adding costs document version'
 		);
 
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };
 
