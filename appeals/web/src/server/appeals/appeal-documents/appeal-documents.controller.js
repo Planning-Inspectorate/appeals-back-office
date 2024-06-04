@@ -262,7 +262,7 @@ export const renderManageDocument = async (
 	}
 
 	if (!redactionStatuses) {
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 
 	const mappedPageContent = await manageDocumentPage(
@@ -320,7 +320,7 @@ export const postDocumentDetails = async (
 		}
 
 		if (!objectContainsAllKeys(request.session, 'fileUploadInfo')) {
-			return response.render('app/500.njk');
+			return response.status(500).render('app/500.njk');
 		}
 
 		const redactionStatuses = await getDocumentRedactionStatuses(apiClient);
@@ -338,14 +338,14 @@ export const postDocumentDetails = async (
 			);
 		}
 
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	} catch (error) {
 		logger.error(
 			error,
 			error instanceof Error ? error.message : 'Something went wrong when adding document details'
 		);
 
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };
 

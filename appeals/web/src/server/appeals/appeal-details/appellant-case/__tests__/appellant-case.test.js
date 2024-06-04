@@ -26,6 +26,7 @@ import {
 import { cloneDeep } from 'lodash-es';
 import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
 import usersService from '#appeals/appeal-users/users-service.js';
+import { dateToDisplayDate } from '#lib/dates.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -3188,8 +3189,6 @@ describe('appellant-case', () => {
 			);
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
@@ -3198,7 +3197,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Received</th>');
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</th>');
 			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</td>');
-			expect(unprettifiedElement.innerHTML).toContain('3 June 2024</td>');
+			expect(unprettifiedElement.innerHTML).toContain(`${dateToDisplayDate(new Date())}</td>`);
 			expect(unprettifiedElement.innerHTML).toContain('Unredacted</td>');
 			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 		});
@@ -3311,8 +3310,6 @@ describe('appellant-case', () => {
 			);
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
@@ -3321,7 +3318,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Received</th>');
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</th>');
 			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</td>');
-			expect(unprettifiedElement.innerHTML).toContain('3 June 2024</td>');
+			expect(unprettifiedElement.innerHTML).toContain(`${dateToDisplayDate(new Date())}</td>`);
 			expect(unprettifiedElement.innerHTML).toContain('Unredacted</td>');
 			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 		});
@@ -3390,10 +3387,8 @@ describe('appellant-case', () => {
 	describe('GET /appellant-case/manage-documents/:folderId/', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-
 			// @ts-ignore
 			usersService.getUserByRoleAndId = jest.fn().mockResolvedValue(activeDirectoryUsersData[0]);
-
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses);
@@ -3409,8 +3404,9 @@ describe('appellant-case', () => {
 			const response = await request.get(
 				`${baseUrl}/1${appellantCasePagePath}/manage-documents/99/`
 			);
-			const element = parseHtml(response.text);
 
+			expect(response.statusCode).toBe(404);
+			const element = parseHtml(response.text);
 			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
@@ -3455,8 +3451,11 @@ describe('appellant-case', () => {
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses);
-			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+			nock('http://test/')
+				.get('/appeals/1/document-folders/1')
+				.reply(200, documentFolderInfo)
+				.persist();
+			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo).persist();
 		});
 
 		it('should render a 404 error page if the folderId is not valid', async () => {
@@ -3467,8 +3466,9 @@ describe('appellant-case', () => {
 			const response = await request.get(
 				`${baseUrl}/1${appellantCasePagePath}/manage-documents/99/1`
 			);
-			const element = parseHtml(response.text);
 
+			expect(response.statusCode).toBe(404);
+			const element = parseHtml(response.text);
 			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
@@ -3484,8 +3484,9 @@ describe('appellant-case', () => {
 			const response = await request.get(
 				`${baseUrl}/1${appellantCasePagePath}/manage-documents/1/99`
 			);
-			const element = parseHtml(response.text);
 
+			expect(response.statusCode).toBe(404);
+			const element = parseHtml(response.text);
 			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
