@@ -13,6 +13,8 @@
     "clean": "rimraf .turbo node_modules dist",
     "clean:dev": "rimraf dist src/server/static/scripts src/server/static/styles",
     "dev": "cross-env NODE_ENV=local npm-run-all --silent clean:dev sass rollup --parallel --race watch:** nodemon",
+		"dev-permissions-co":   "cross-env HTTP_PORT=8080 HTTPS_PORT=8080 APP_HOSTNAME=localhost:8080 AUTH_REDIRECT_URI=https://localhost:8080/auth/redirect AUTH_DISABLED_GROUP_IDS=cc4133e5-2319-4762-8a7b-33413701210a NODE_ENV=local npm-run-all --silent clean:dev sass rollup --parallel --race watch:** nodemon",
+		"dev-permissions-pads": "cross-env HTTP_PORT=8081 HTTPS_PORT=8081 APP_HOSTNAME=localhost:8081 AUTH_REDIRECT_URI=https://localhost:8081/auth/redirect AUTH_DISABLED_GROUP_IDS=pads                                 NODE_ENV=local npm-run-all --silent clean:dev sass rollup --parallel --race watch:** nodemon",
     "lint:js": "npx eslint .",
     "lint:js:fix": "npx eslint . --fix",
     "nodemon": "nodemon --config ./nodemon.json ./src/server/server.js",
