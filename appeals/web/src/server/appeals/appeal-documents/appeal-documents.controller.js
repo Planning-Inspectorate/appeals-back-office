@@ -125,7 +125,7 @@ export const postDocumentUpload = async (request, response, nextPageUrl) => {
 	const redactionStatuses = await getDocumentRedactionStatuses(request.apiClient);
 
 	if (!redactionStatuses) {
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 
 	request.session.fileUploadInfo = uploadInfo.map((infoItem) => ({

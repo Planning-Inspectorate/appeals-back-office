@@ -58,7 +58,7 @@ export const postIssueDecision = async (request, response) => {
 		);
 	} catch (error) {
 		logger.error(error);
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };
 
@@ -183,7 +183,11 @@ export const postDateDecisionLetter = async (request, response) => {
 		);
 	} catch (error) {
 		logger.error(error);
-		return response.render('app/500.njk');
+
+		console.log('postDateDecisionLetter - 500:');
+		console.log(error);
+
+		return response.status(500).render('app/500.njk');
 	}
 };
 
@@ -196,11 +200,11 @@ const renderDateDecisionLetter = async (request, response) => {
 	const { errors, currentAppeal, session } = request;
 
 	if (!currentAppeal) {
-		return response.render('app/404.njk');
+		return response.status(404).render('app/404.njk');
 	}
 
 	if (!objectContainsAllKeys(session, ['fileUploadInfo', 'inspectorDecision'])) {
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 
 	/** @type {import('./issue-decision.types.js').InspectorDecisionRequest} */
@@ -267,7 +271,7 @@ export const postInvalidReason = async (request, response) => {
 		);
 	} catch (error) {
 		logger.error(error);
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };
 
@@ -314,11 +318,11 @@ export const postCheckDecision = async (request, response) => {
 		const { errors, currentAppeal } = request;
 
 		if (!currentAppeal) {
-			return response.render('app/500.njk');
+			return response.status(500).render('app/500.njk');
 		}
 
 		if (!objectContainsAllKeys(request.session, 'fileUploadInfo')) {
-			return response.render('app/500.njk');
+			return response.status(500).render('app/500.njk');
 		}
 
 		request.currentFolder = {
@@ -350,7 +354,7 @@ export const postCheckDecision = async (request, response) => {
 		);
 	} catch (error) {
 		logger.error(error);
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };
 
@@ -362,14 +366,14 @@ export const renderCheckDecision = async (request, response) => {
 	const { errors, currentAppeal, session } = request;
 
 	if (!currentAppeal) {
-		return response.render('app/404.njk');
+		return response.status(404).render('app/404.njk');
 	}
 
 	if (
 		!currentAppeal.decision ||
 		!objectContainsAllKeys(session, ['fileUploadInfo', 'inspectorDecision'])
 	) {
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 
 	const mappedPageContent = checkAndConfirmPage(request, currentAppeal, request.session);
@@ -415,7 +419,7 @@ export const renderCheckInvalidDecision = async (request, response) => {
 	const appealData = request.currentAppeal;
 
 	if (!appealData) {
-		return response.render('app/404.njk');
+		return response.status(404).render('app/404.njk');
 	}
 
 	const mappedPageContent = checkAndConfirmInvalidPage(
@@ -452,6 +456,6 @@ export const postCheckInvalidDecision = async (request, response) => {
 		);
 	} catch (error) {
 		logger.error(error);
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };
