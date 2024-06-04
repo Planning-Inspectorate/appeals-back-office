@@ -3,10 +3,10 @@ import formatValidationOutcomeResponse from '#utils/format-validation-outcome-re
 import { mapFoldersLayoutForAppealSection } from '../documents/documents.mapper.js';
 import { STAGE } from '@pins/appeals/constants/documents.js';
 
-/** @typedef {import('@pins/appeals.api').Appeals.RepositoryGetByIdResultItem} RepositoryGetByIdResultItem */
+/** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Appeals.SingleLPAQuestionnaireResponse} SingleLPAQuestionnaireResponse */
 /** @typedef {import('@pins/appeals.api').Appeals.ListedBuildingDetailsResponse} ListedBuildingDetailsResponse */
-/** @typedef {import('@pins/appeals.api').Schema.ListedBuildingDetails} ListedBuildingDetails */
+/** @typedef {import('@pins/appeals.api').Schema.ListedBuildingSelected} ListedBuildingDetails */
 /** @typedef {import('@pins/appeals.api').Schema.Folder} Folder */
 /**
  * @param {boolean} affectsListedBuilding
@@ -21,7 +21,7 @@ const formatListedBuildingDetails = (affectsListedBuilding, values) =>
 	null;
 
 /**
- * @param {RepositoryGetByIdResultItem} appeal
+ * @param {Appeal} appeal
  * @param {Folder[] | null} folders
  * @returns {SingleLPAQuestionnaireResponse | {}}
  */
@@ -39,9 +39,6 @@ const formatLpaQuestionnaire = (appeal, folders = null) => {
 				appealSite: formatAddress(address),
 				communityInfrastructureLevyAdoptionDate:
 					lpaQuestionnaire.communityInfrastructureLevyAdoptionDate,
-				designatedSites: lpaQuestionnaire.designatedSites?.map(
-					({ designatedSite: { name, description } }) => ({ name, description })
-				),
 				developmentDescription: lpaQuestionnaire.developmentDescription,
 				...formatFoldersAndDocuments(folders),
 				doesAffectAListedBuilding: lpaQuestionnaire.doesAffectAListedBuilding,
@@ -90,15 +87,14 @@ const formatLpaQuestionnaire = (appeal, folders = null) => {
 				meetsOrExceedsThresholdOrCriteriaInColumn2:
 					lpaQuestionnaire.meetsOrExceedsThresholdOrCriteriaInColumn2,
 				otherAppeals: [],
-				procedureType: lpaQuestionnaire.procedureType?.name,
+				procedureType: appeal.procedureType?.name,
 				receivedAt: lpaQuestionnaire.receivedAt,
-				scheduleType: lpaQuestionnaire.scheduleType?.name,
 				sensitiveAreaDetails: lpaQuestionnaire.sensitiveAreaDetails,
 				siteWithinGreenBelt: lpaQuestionnaire.siteWithinGreenBelt,
 				statutoryConsulteesDetails: lpaQuestionnaire.statutoryConsulteesDetails,
 				validation: formatValidationOutcomeResponse(
-					lpaQuestionnaire.lpaQuestionnaireValidationOutcome?.name,
-					lpaQuestionnaire.lpaQuestionnaireIncompleteReasonOnLPAQuestionnaire
+					lpaQuestionnaire.lpaQuestionnaireValidationOutcome?.name || null,
+					lpaQuestionnaire.lpaQuestionnaireIncompleteReasonsSelected
 				)
 		  }
 		: {};

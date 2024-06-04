@@ -734,7 +734,7 @@ export const spec = {
 				{
 					id: '987e66e0-1db4-404b-8213-8082919159e9',
 					version: 1,
-					virusCheckStatus: 'checked'
+					virusCheckStatus: 'scanned'
 				}
 			]
 		},
@@ -743,7 +743,7 @@ export const spec = {
 				{
 					id: '987e66e0-1db4-404b-8213-8082919159e9',
 					version: 1,
-					virusCheckStatus: 'checked'
+					virusCheckStatus: 'scanned'
 				}
 			]
 		},

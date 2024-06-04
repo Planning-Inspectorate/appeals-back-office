@@ -8,7 +8,7 @@
 const formatAuditTrail = (auditTrail) =>
 	auditTrail
 		? auditTrail.map(({ details, loggedAt, user, doc }) => ({
-				azureAdUserId: user.azureAdUserId,
+				azureAdUserId: user?.azureAdUserId || '',
 				details,
 				loggedDate: loggedAt,
 				doc: doc

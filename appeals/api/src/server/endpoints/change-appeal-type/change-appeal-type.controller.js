@@ -19,7 +19,7 @@ import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.
 export const getAppealTypes = async (req, res) => {
 	const allAppealTypes = req.appealTypes;
 	const response = allAppealTypes.filter(
-		(appealType) => appealType.shorthand !== req.appeal.appealType?.shorthand
+		(appealType) => appealType.key !== req.appeal.appealType?.key
 	);
 	return res.send(response);
 };
@@ -38,8 +38,8 @@ export const requestChangeOfAppealType = async (req, res) => {
 		await databaseConnector.appeal.update({
 			where: { id: appeal.id },
 			data: {
-				resubmitTypeId: newAppealTypeId,
-				updatedAt: new Date()
+				caseResubmittedTypeId: newAppealTypeId,
+				caseUpdatedDate: new Date()
 			}
 		}),
 		await timetableRepository.upsertAppealTimetableById(appeal.id, {
@@ -72,8 +72,8 @@ export const requestTransferOfAppeal = async (req, res) => {
 		await databaseConnector.appeal.update({
 			where: { id: appeal.id },
 			data: {
-				resubmitTypeId: newAppealTypeId,
-				updatedAt: new Date()
+				caseResubmittedTypeId: newAppealTypeId,
+				caseUpdatedDate: new Date()
 			}
 		}),
 		await transitionState(
@@ -103,8 +103,8 @@ export const requestConfirmationTransferOfAppeal = async (req, res) => {
 		await databaseConnector.appeal.update({
 			where: { id: appeal.id },
 			data: {
-				transferredCaseId: newAppealReference,
-				updatedAt: new Date()
+				caseTransferredId: newAppealReference,
+				caseUpdatedDate: new Date()
 			}
 		}),
 		await transitionState(

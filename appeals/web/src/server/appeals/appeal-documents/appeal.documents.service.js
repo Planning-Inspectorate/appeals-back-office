@@ -1,14 +1,14 @@
 import logger from '#lib/logger.js';
 
-/** @typedef {import('@pins/appeals.api').Appeals.SingleFolderResponse} SingleFolderResponse */
-/** @typedef {import('@pins/appeals.api').Schema.Document} Document */
+/** @typedef {import('@pins/appeals.api').Appeals.FolderInfo} FolderInfo */
+/** @typedef {import('@pins/appeals.api').Appeals.DocumentInfo} DocumentInfo */
 /** @typedef {import('@pins/appeals.api').Schema.DocumentRedactionStatus} DocumentRedactionStatus */
 
 /**
  * @param {import('got').Got} apiClient
  * @param {string|number} appealId
  * @param {string|number} folderId
- * @returns {Promise<SingleFolderResponse|undefined>}
+ * @returns {Promise<FolderInfo|undefined>}
  */
 export const getFolder = async (apiClient, appealId, folderId) => {
 	try {
@@ -25,7 +25,7 @@ export const getFolder = async (apiClient, appealId, folderId) => {
  * @param {import('got').Got} apiClient
  * @param {string} appealId
  * @param {string} fileGuid
- * @returns {Promise<Document|undefined>}
+ * @returns {Promise<DocumentInfo|undefined>}
  */
 export const getFileInfo = async (apiClient, appealId, fileGuid) => {
 	try {
@@ -40,7 +40,7 @@ export const getFileInfo = async (apiClient, appealId, fileGuid) => {
  * @param {import('got').Got} apiClient
  * @param {string} appealId
  * @param {string} fileGuid
- * @returns {Promise<import('@pins/appeals.api/src/server/openapi-types.js').DocumentDetails|undefined>}
+ * @returns {Promise<DocumentInfo|undefined>}
  */
 export const getFileVersionsInfo = async (apiClient, appealId, fileGuid) => {
 	try {

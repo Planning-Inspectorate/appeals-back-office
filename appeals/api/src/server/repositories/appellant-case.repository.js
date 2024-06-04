@@ -22,7 +22,7 @@ const updateAppellantCaseById = (id, data) =>
 
 /**
  * @param {UpdateAppellantCaseValidationOutcome} param0
- * @returns {Promise<object>}
+ * @returns {Promise<object[]>}
  */
 const updateAppellantCaseValidationOutcome = ({
 	appellantCaseId,
@@ -30,7 +30,8 @@ const updateAppellantCaseValidationOutcome = ({
 	incompleteReasons,
 	invalidReasons,
 	appealId,
-	validAt
+	validAt,
+	appealDueDate
 }) => {
 	const transaction = [
 		updateAppellantCaseById(appellantCaseId, {
@@ -44,11 +45,17 @@ const updateAppellantCaseValidationOutcome = ({
 				id: appellantCaseId,
 				relationOne: 'appellantCaseId',
 				relationTwo: 'appellantCaseIncompleteReasonId',
-				manyToManyRelationTable: 'appellantCaseIncompleteReasonOnAppellantCase',
+				manyToManyRelationTable: 'appellantCaseIncompleteReasonsSelected',
 				incompleteInvalidReasonTextTable: 'appellantCaseIncompleteReasonText',
 				data: incompleteReasons
 			})
 		);
+		if (appealId && appealDueDate) {
+			transaction.push(
+				// @ts-ignore
+				appealRepository.updateAppealById(appealId, { caseExtensionDate: new Date(appealDueDate).toISOString() })
+			);
+		}
 	}
 
 	if (invalidReasons) {
@@ -57,7 +64,7 @@ const updateAppellantCaseValidationOutcome = ({
 				id: appellantCaseId,
 				relationOne: 'appellantCaseId',
 				relationTwo: 'appellantCaseInvalidReasonId',
-				manyToManyRelationTable: 'appellantCaseInvalidReasonOnAppellantCase',
+				manyToManyRelationTable: 'appellantCaseInvalidReasonsSelected',
 				incompleteInvalidReasonTextTable: 'appellantCaseInvalidReasonText',
 				data: invalidReasons
 			})
@@ -66,11 +73,13 @@ const updateAppellantCaseValidationOutcome = ({
 
 	if (appealId && validAt) {
 		transaction.push(
-			appealRepository.updateAppealById(appealId, { validAt: new Date(validAt).toISOString() })
+			// @ts-ignore
+			appealRepository.updateAppealById(appealId, { caseValidDate: new Date(validAt).toISOString() })
 		);
 	}
 
-	return databaseConnector.$transaction(transaction);
+	const tx = databaseConnector.$transaction(transaction);
+	return tx;
 };
 
 export default { updateAppellantCaseById, updateAppellantCaseValidationOutcome };

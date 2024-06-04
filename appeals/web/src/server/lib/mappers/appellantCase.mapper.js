@@ -19,8 +19,8 @@ import { formatServiceUserAsHtmlList } from '#lib/service-user-formatter.js';
  * @returns {MappedInstructions}
  */
 export function initialiseAndMapData(appellantCaseData, appealDetails, currentRoute, session) {
-	if (appellantCaseData === undefined) {
-		throw new Error('appellantCaseDetails is undefined');
+	if (!appellantCaseData || appellantCaseData === null) {
+		throw new Error('appellantCaseDetails is null or undefined');
 	}
 
 	currentRoute =
@@ -268,7 +268,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 					text: 'All owners known'
 				},
 				value: {
-					text: convertFromBooleanToYesNo(appellantCaseData.siteOwnership.areAllOwnersKnown) || ''
+					text: appellantCaseData.siteOwnership.areAllOwnersKnown
 				},
 				actions: {
 					items: [
@@ -298,58 +298,6 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 								text: 'No',
 								value: 'no',
 								checked: !appellantCaseData.siteOwnership.areAllOwnersKnown
-							}
-						]
-					}
-				}
-			]
-		},
-		submitApi: '#',
-		inputItemApi: '#'
-	};
-
-	/** @type {Instructions} */
-	mappedData.attemptedToIdentifyOwners = {
-		id: 'attempted-to-identify-owners',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Attempted to identify owners'
-				},
-				value: {
-					text:
-						convertFromBooleanToYesNo(
-							appellantCaseData.siteOwnership.hasAttemptedToIdentifyOwners
-						) || ''
-				},
-				actions: {
-					items: [
-						{
-							text: 'Change',
-							visuallyHiddenText: 'Attempted to identify owners',
-							href: `${currentRoute}/change-appeal-details/attempted-to-identify-owners`
-						}
-					]
-				}
-			}
-		},
-		input: {
-			displayName: 'Attempted to identify owners',
-			instructions: [
-				{
-					type: 'radios',
-					properties: {
-						name: 'attempted-to-identify-owners',
-						items: [
-							{
-								text: 'Yes',
-								value: 'yes',
-								checked: appellantCaseData.siteOwnership.hasAttemptedToIdentifyOwners
-							},
-							{
-								text: 'No',
-								value: 'no',
-								checked: !appellantCaseData.siteOwnership.hasAttemptedToIdentifyOwners
 							}
 						]
 					}
@@ -477,7 +425,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 				value: displayPageFormatter.formatDocumentValues(
 					appellantCaseData.appealId,
 					isFolderInfo(appellantCaseData.documents.originalApplicationForm)
-						? appellantCaseData.documents.originalApplicationForm.documents
+						? appellantCaseData.documents.originalApplicationForm?.documents || []
 						: []
 				),
 				actions: {
@@ -526,13 +474,13 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 				value: displayPageFormatter.formatDocumentValues(
 					appellantCaseData.appealId,
 					isFolderInfo(appellantCaseData.documents.applicationDecisionLetter)
-						? appellantCaseData.documents.applicationDecisionLetter.documents
+						? appellantCaseData.documents.applicationDecisionLetter.documents || []
 						: []
 				),
 				actions: {
 					items: [
 						...((isFolderInfo(appellantCaseData.documents.applicationDecisionLetter)
-							? appellantCaseData.documents.applicationDecisionLetter.documents
+							? appellantCaseData.documents.applicationDecisionLetter.documents || []
 							: []
 						).length
 							? [
@@ -574,13 +522,13 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 				value: displayPageFormatter.formatDocumentValues(
 					appellantCaseData.appealId,
 					isFolderInfo(appellantCaseData.documents.appellantStatement)
-						? appellantCaseData.documents.appellantStatement.documents
+						? appellantCaseData.documents.appellantStatement.documents || []
 						: []
 				),
 				actions: {
 					items: [
 						...((isFolderInfo(appellantCaseData.documents.appellantStatement)
-							? appellantCaseData.documents.appellantStatement.documents
+							? appellantCaseData.documents.appellantStatement.documents || []
 							: []
 						).length
 							? [
@@ -612,124 +560,16 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 	};
 
 	/** @type {Instructions} */
-	mappedData.addNewSupportingDocuments = {
-		id: 'add-new-supporting-documents',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Supporting documents'
-				},
-				value: {
-					text:
-						convertFromBooleanToYesNo(
-							(isFolderInfo(appellantCaseData.documents.changedDescription)
-								? appellantCaseData.documents.changedDescription.documents
-								: []
-							)?.length > 0
-						) || ''
-				},
-				actions: {
-					items: [
-						{
-							text: 'Change',
-							visuallyHiddenText: 'Supporting documents',
-							href: `${currentRoute}/change-appeal-details/add-new-supporting-documents`
-						}
-					]
-				}
-			}
-		},
-		input: {
-			displayName: 'Supporting documents',
-			instructions: [
-				{
-					type: 'radios',
-					properties: {
-						name: 'add-new-supporting-documents',
-						items: [
-							{
-								text: 'Yes',
-								value: 'yes',
-								checked:
-									isFolderInfo(appellantCaseData.documents.changedDescription) &&
-									appellantCaseData.documents.changedDescription.documents?.length > 0
-							},
-							{
-								text: 'No',
-								value: 'no',
-								checked: !(
-									isFolderInfo(appellantCaseData.documents.changedDescription) &&
-									appellantCaseData.documents.changedDescription.documents?.length > 0
-								)
-							}
-						]
-					}
-				}
-			]
-		},
-		submitApi: '#',
-		inputItemApi: '#'
-	};
-
-	/** @type {Instructions} */
-	mappedData.newSupportingDocuments = {
-		id: 'new-supporting-documents',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'New supporting documents'
-				},
-				value: displayPageFormatter.formatDocumentValues(
-					appellantCaseData.appealId,
-					isFolderInfo(appellantCaseData.documents.changedDescription)
-						? appellantCaseData.documents.changedDescription.documents
-						: []
-				),
-				actions: {
-					items: [
-						...((isFolderInfo(appellantCaseData.documents.changedDescription)
-							? appellantCaseData.documents.changedDescription.documents
-							: []
-						).length
-							? [
-									{
-										text: 'Manage',
-										visuallyHiddenText: 'New supporting documents',
-										href: mapDocumentManageUrl(
-											appellantCaseData.appealId,
-											isFolderInfo(appellantCaseData.documents.changedDescription)
-												? appellantCaseData.documents.changedDescription.folderId
-												: undefined
-										)
-									}
-							  ]
-							: []),
-						{
-							text: 'Add',
-							visuallyHiddenText: 'New supporting documents',
-							href: displayPageFormatter.formatDocumentActionLink(
-								appellantCaseData.appealId,
-								appellantCaseData.documents.changedDescription,
-								documentUploadUrlTemplate
-							)
-						}
-					]
-				}
-			}
-		}
-	};
-
-	/** @type {Instructions} */
 	mappedData.additionalDocuments = {
 		id: 'additional-documents',
 		display: {
 			...((isFolderInfo(appellantCaseData.documents.appellantCaseCorrespondence)
-				? appellantCaseData.documents.appellantCaseCorrespondence.documents
+				? appellantCaseData.documents.appellantCaseCorrespondence.documents || []
 				: []
 			).length > 0
 				? {
 						summaryListItems: (isFolderInfo(appellantCaseData.documents.appellantCaseCorrespondence)
-							? appellantCaseData.documents.appellantCaseCorrespondence.documents
+							? appellantCaseData.documents.appellantCaseCorrespondence.documents || []
 							: []
 						).map((document) => ({
 							key: {
@@ -739,7 +579,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 							value: displayPageFormatter.formatDocumentValues(
 								appellantCaseData.appealId,
 								[document],
-								document.isLateEntry || false
+								document.latestDocumentVersion?.isLateEntry || false
 							),
 							actions: {
 								items: []

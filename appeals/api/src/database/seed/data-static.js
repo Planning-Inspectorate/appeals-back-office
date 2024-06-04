@@ -4,16 +4,13 @@
 
 /**
  * @typedef {import('@pins/appeals.api').Schema.ProcedureType} ProcedureType
- * @typedef {import('@pins/appeals.api').Schema.DesignatedSiteDetails} DesignatedSiteDetails
- * @typedef {import('@pins/appeals.api').Schema.LPANotificationMethodDetails} LPANotificationMethodDetails
- * @typedef {import('@pins/appeals.api').Schema.ScheduleType} ScheduleType
- * @typedef {import('@pins/appeals.api').Schema.PlanningObligationStatus} PlanningObligationStatus
  * @typedef {import('@pins/appeals.api').Schema.KnowledgeOfOtherLandowners} KnowledgeOfOtherLandowners
  * @typedef {import('@pins/appeals.api').Schema.AppellantCaseValidationOutcome} AppellantCaseValidationOutcome
  * @typedef {import('@pins/appeals.api').Schema.AppellantCaseIncompleteReason} AppellantCaseIncompleteReason
  * @typedef {import('@pins/appeals.api').Schema.AppellantCaseInvalidReason} AppellantCaseInvalidReason
  * @typedef {import('@pins/appeals.api').Schema.LPAQuestionnaireValidationOutcome} LPAQuestionnaireValidationOutcome
  * @typedef {import('@pins/appeals.api').Schema.LPAQuestionnaireIncompleteReason} LPAQuestionnaireIncompleteReason
+ * @typedef {import('@pins/appeals.api').Schema.LPANotificationMethods} LPANotificationMethods
  * @typedef {import('@pins/appeals.api').Schema.SiteVisitType} SiteVisitType
  * @typedef {import('@pins/appeals.api').Schema.Specialism} Specialism
  * @typedef {import('@pins/appeals.api').Schema.DocumentRedactionStatus} DocumentRedactionStatus
@@ -24,152 +21,118 @@
  *
  */
 export const appealTypes = [
-	{ shorthand: 'D', type: 'Householder', code: 'D', enabled: true },
-	//{ shorthand: 'FPA', type: 'Planning appeal (legacy)', code: 'A', enabled: false },
-	{ shorthand: 'C', type: 'Enforcement notice appeal', code: 'C', enabled: false },
-	// {
-	// 	shorthand: 'X2',
-	// 	type: 'Planned listed building and conservation area appeal (legacy)',
-	// 	code: 'E',
-	// 	enabled: false
-	// },
+	{ key: 'D', type: 'Householder', processCode: 'HAS', enabled: true },
+	{ key: 'C', type: 'Enforcement notice appeal', enabled: false },
 	{
-		shorthand: 'F',
+		key: 'F',
 		type: 'Enforcement listed building and conservation area appeal',
-		code: 'F',
 		enabled: false
 	},
-	{ shorthand: 'G', type: 'Discontinuance notice appeal', code: 'G', enabled: false },
-	{ shorthand: 'H', type: 'Advertisement appeal', code: 'H', enabled: false },
-	{ shorthand: 'L', type: 'Community infrastructure levy', code: 'L', enabled: false },
-	{ shorthand: 'Q', type: 'Planning obligation appeal', code: 'Q', enabled: false },
-	{ shorthand: 'S', type: 'Affordable housing obligation appeal', code: 'S', enabled: false },
-	{ shorthand: 'V', type: 'Call-in application', code: 'V', enabled: false },
-	{ shorthand: 'W', type: 'Planning appeal', code: 'W', enabled: false },
-	{ shorthand: 'X', type: 'Lawful development certificate appeal', code: 'X', enabled: false },
+	{ key: 'G', type: 'Discontinuance notice appeal', enabled: false },
+	{ key: 'H', type: 'Advertisement appeal', enabled: false },
+	{ key: 'L', type: 'Community infrastructure levy', enabled: false },
+	{ key: 'Q', type: 'Planning obligation appeal', enabled: false },
+	{ key: 'S', type: 'Affordable housing obligation appeal', enabled: false },
+	{ key: 'V', type: 'Call-in application', enabled: false },
+	{ key: 'W', type: 'Planning appeal', enabled: false },
+	{ key: 'X', type: 'Lawful development certificate appeal', enabled: false },
 	{
-		shorthand: 'Y',
+		key: 'Y',
 		type: 'Planned listed building and conservation area appeal',
-		code: 'Y',
 		enabled: false
 	},
-	{ shorthand: 'Z', type: 'Commercial (CAS) appeal', code: 'Z', enabled: false }
+	{ key: 'Z', type: 'Commercial (CAS) appeal', enabled: false }
 ];
 
 /**
  * Seed static data into the database. Does not disconnect from the database or handle errors.
  * An array of procedure types.
- *
- * @type {ProcedureType[]}
  */
 export const procedureTypes = [
 	{
+		key: 'hearing',
 		name: 'Hearing'
 	},
 	{
+		key: 'inquiry',
 		name: 'Inquiry'
 	},
 	{
+		key: 'written',
 		name: 'Written'
 	}
 ];
 
 /**
- * An array of designated sites.
+ * An array of document redaction statuses.
  *
- * @type {DesignatedSiteDetails[]}
  */
-export const designatedSites = [
+export const documentRedactionStatuses = [
 	{
-		name: 'cSAC',
-		description: 'candidate special area of conservation'
+		key: 'redacted',
+		name: 'Redacted'
 	},
 	{
-		name: 'pSPA',
-		description: 'potential special protection area'
+		key: 'not_redacted',
+		name: 'Unredacted'
 	},
 	{
-		name: 'SAC',
-		description: 'special area of conservation'
-	},
-	{
-		name: 'SPA Ramsar',
-		description: 'ramsar special protection area'
-	},
-	{
-		name: 'SSSI',
-		description: 'site of special scientific interest'
-	},
-	{
-		name: 'Other',
-		description: ''
+		key: 'no_redaction_required',
+		name: 'No redaction required'
 	}
 ];
+
 
 /**
  * An array of LPA notification methods.
  *
- * @type {LPANotificationMethodDetails[]}
  */
 export const lpaNotificationMethods = [
 	{
+		key: 'notice',
 		name: 'A site notice'
 	},
 	{
+		key: 'letter',
 		name: 'Letter/email to interested parties'
 	},
 	{
+		key: 'press-advert',
 		name: 'A press advert'
 	}
 ];
 
-/**
- * An array of schedule types.
- *
- * @type {ScheduleType[]}
- */
-export const scheduleTypes = [
-	{
-		name: 'Schedule 1'
-	},
-	{
-		name: 'Schedule 2'
-	}
-];
-
-/**
- * An array of planning obligation statuses.
- *
- * @type {Pick<PlanningObligationStatus, 'name'>[]}
- */
-export const planningObligationStatuses = [
-	{
-		name: 'Finalised'
-	},
-	{
-		name: 'Draft'
-	},
-	{
-		name: 'Not started'
-	}
-];
 
 /**
  * An array of knowledge of other landowners values.
  *
- * @type {Pick<KnowledgeOfOtherLandowners, 'name'>[]}
  */
 export const knowledgeOfOtherLandownersValues = [
 	{
+		key: 'yes',
 		name: 'Yes'
 	},
 	{
+		key: 'some',
 		name: 'Some'
 	},
 	{
+		key: 'no',
 		name: 'No'
 	}
 ];
+
+/**
+ * An array of site visit types.
+ *
+ */
+export const siteVisitTypes = [
+	{ key: 'site_visit_access_required', name: 'Access required' },
+	{ key: 'site_visit_accompanied', name: 'Accompanied' },
+	{ key: 'site_visit_unaccompanied', name: 'Unaccompanied' }
+];
+
+//////////////////////////////////
 
 /**
  * An array of appellant case validation outcomes.
@@ -295,17 +258,6 @@ export const lpaQuestionnaireIncompleteReasons = [
 ];
 
 /**
- * An array of site visit types.
- *
- * @type {Pick<SiteVisitType, 'name'>[]}
- */
-export const siteVisitTypes = [
-	{ name: 'Access required' },
-	{ name: 'Accompanied' },
-	{ name: 'Unaccompanied' }
-];
-
-/**
  * An array of specialisms.
  *
  * @type {Pick<Specialism, 'name'>[]}
@@ -338,23 +290,6 @@ export const specialisms = [
 ];
 
 /**
- * An array of document redaction statuses.
- *
- * @type {Pick<DocumentRedactionStatus, 'name'>[]}
- */
-export const documentRedactionStatuses = [
-	{
-		name: 'Redacted'
-	},
-	{
-		name: 'Unredacted'
-	},
-	{
-		name: 'No redaction required'
-	}
-];
-
-/**
  * Seed static data into the database. Does not disconnect from the database or handle errors.
  *
  * @param {import('../../server/utils/db-client/index.js').PrismaClient} databaseConnector
@@ -375,52 +310,46 @@ export async function seedStaticData(databaseConnector) {
 	for (const appealType of appealTypes) {
 		await databaseConnector.appealType.upsert({
 			create: appealType,
-			where: { shorthand: appealType.shorthand },
-			update: { type: appealType.type }
+			where: { type: appealType.type  },
+			update: appealType
 		});
 	}
 	for (const procedureType of procedureTypes) {
 		await databaseConnector.procedureType.upsert({
 			create: procedureType,
 			where: { name: procedureType.name },
-			update: {}
-		});
-	}
-	for (const designatedSite of designatedSites) {
-		await databaseConnector.designatedSite.upsert({
-			create: designatedSite,
-			where: { name: designatedSite.name },
-			update: {}
+			update: procedureType
 		});
 	}
 	for (const lpaNotificationMethod of lpaNotificationMethods) {
 		await databaseConnector.lPANotificationMethods.upsert({
 			create: lpaNotificationMethod,
 			where: { name: lpaNotificationMethod.name },
-			update: {}
-		});
-	}
-	for (const scheduleType of scheduleTypes) {
-		await databaseConnector.scheduleType.upsert({
-			create: scheduleType,
-			where: { name: scheduleType.name },
-			update: {}
-		});
-	}
-	for (const planningObligationStatus of planningObligationStatuses) {
-		await databaseConnector.planningObligationStatus.upsert({
-			create: planningObligationStatus,
-			where: { name: planningObligationStatus.name },
-			update: {}
+			update: lpaNotificationMethod
 		});
 	}
 	for (const knowledgeOfOtherLandownersValue of knowledgeOfOtherLandownersValues) {
 		await databaseConnector.knowledgeOfOtherLandowners.upsert({
 			create: knowledgeOfOtherLandownersValue,
 			where: { name: knowledgeOfOtherLandownersValue.name },
-			update: {}
+			update: knowledgeOfOtherLandownersValue,
 		});
 	}
+	for (const siteVisitType of siteVisitTypes) {
+		await databaseConnector.siteVisitType.upsert({
+			create: siteVisitType,
+			where: { name: siteVisitType.name },
+			update: siteVisitType
+		});
+	}
+	for (const documentRedactionStatus of documentRedactionStatuses) {
+		await databaseConnector.documentRedactionStatus.upsert({
+			create: documentRedactionStatus,
+			where: { name: documentRedactionStatus.name },
+			update: documentRedactionStatus
+		});
+	}
+
 	for (const appellantCaseValidationOutcome of appellantCaseValidationOutcomes) {
 		await databaseConnector.appellantCaseValidationOutcome.upsert({
 			create: appellantCaseValidationOutcome,
@@ -456,24 +385,10 @@ export async function seedStaticData(databaseConnector) {
 			update: {}
 		});
 	}
-	for (const siteVisitType of siteVisitTypes) {
-		await databaseConnector.siteVisitType.upsert({
-			create: { name: siteVisitType.name },
-			where: { name: siteVisitType.name },
-			update: {}
-		});
-	}
 	for (const specialism of specialisms) {
 		await databaseConnector.specialism.upsert({
 			create: { name: specialism.name },
 			where: { name: specialism.name },
-			update: {}
-		});
-	}
-	for (const documentRedactionStatus of documentRedactionStatuses) {
-		await databaseConnector.documentRedactionStatus.upsert({
-			create: { name: documentRedactionStatus.name },
-			where: { name: documentRedactionStatus.name },
 			update: {}
 		});
 	}

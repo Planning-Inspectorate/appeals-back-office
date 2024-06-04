@@ -12,6 +12,7 @@ import { appealSiteToMultilineAddressStringHtml } from './address-formatter.js';
  * @typedef {import('@pins/appeals.api').Schema.Document} Document
  * @typedef {import('@pins/appeals.api').Appeals.DocumentInfo} DocumentInfo
  * @typedef {import('@pins/appeals.api').Appeals.FolderInfo} FolderInfo
+ * @typedef {import('@pins/appeals.api').Schema.LPANotificationMethods} LPANotificationMethods
  */
 
 /**
@@ -36,13 +37,15 @@ export const formatDocumentActionLink = (appealId, listOfDocuments, documentUplo
 };
 
 /**
- * @param {import('@pins/appeals.api/src/database/schema.js').LPANotificationMethodDetails[] | null | undefined} notificationMethods
+ * @param {LPANotificationMethods[] | null | undefined} notificationMethods
  * @returns {string}
  */
 export const formatListOfNotificationMethodsToHtml = (notificationMethods) => {
 	if (!notificationMethods || !notificationMethods.length) {
 		return '';
 	}
+	// TODO: check LPANotificationMethodDetails in SingleAppellantCaseResponse
+	// @ts-ignore
 	return `<ul>${notificationMethods.map((method) => `<li>${method.name}</li>`).join('')}</ul>`;
 };
 
@@ -145,7 +148,7 @@ export const formatListOfListedBuildingNumbers = (
 
 /**
  * @param {number} appealId
- * @param {DocumentInfo[]} listOfDocuments
+ * @param {*[]} listOfDocuments
  * @param {boolean} [addLateEntryStatusTag]
  * @returns {HtmlProperty & ClassesProperty}
  */
@@ -239,7 +242,7 @@ export const formatDocumentValues = (appealId, listOfDocuments, addLateEntryStat
 			};
 		}
 	} else {
-		logger.error('Document not in correct format');
+		logger.debug('No documents in this folder');
 	}
 
 	return htmlProperty;
@@ -247,7 +250,7 @@ export const formatDocumentValues = (appealId, listOfDocuments, addLateEntryStat
 
 /**
  * @param {number} appealId
- * @param {import('@pins/appeals.api/src/server/endpoints/appeals.js').SingleFolderResponse|undefined} folder
+ * @param {import('@pins/appeals.api/src/server/endpoints/appeals.js').FolderInfo|undefined} folder
  * @returns {HtmlProperty & ClassesProperty}
  */
 export const formatFolderValues = (appealId, folder) => {
@@ -256,10 +259,10 @@ export const formatFolderValues = (appealId, folder) => {
 			const documentInfo = {
 				id: document.id,
 				name: document.name,
-				folderId: folder.id,
+				folderId: folder.folderId,
 				caseId: appealId,
-				virusCheckStatus: document.latestDocumentVersion.virusCheckStatus,
-				isLateEntry: document.latestDocumentVersion.isLateEntry
+				virusCheckStatus: document.latestDocumentVersion?.virusCheckStatus,
+				isLateEntry: document.latestDocumentVersion?.isLateEntry
 			};
 
 			return documentInfo;

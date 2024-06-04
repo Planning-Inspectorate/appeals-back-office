@@ -18,13 +18,14 @@ import { ERROR_NOT_FOUND, STATUSES } from '#endpoints/constants.js';
 import { STAGE } from '@pins/appeals/constants/documents.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { EventType } from '@pins/event-client';
+import { AVSCAN_STATUS } from '@pins/appeals/constants/documents.js';
 
-/** @typedef {import('../appeals.js').RepositoryGetByIdResultItem} RepositoryResult */
+/** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Document} Document */
 /** @typedef {import('@pins/appeals.api').Schema.DocumentVersion} DocumentVersion */
 /** @typedef {import('@pins/appeals.api').Schema.Folder} Folder */
 /** @typedef {import('@pins/appeals.api').Schema.AuditTrail} AuditTrail */
-/** @typedef {import('@pins/appeals.api').Appeals.SingleFolderResponse} SingleFolderResponse */
+/** @typedef {import('@pins/appeals.api').Appeals.FolderInfo} FolderInfo */
 /** @typedef {import('@pins/appeals/index.js').AddDocumentsRequest} AddDocumentsRequest */
 /** @typedef {import('@pins/appeals/index.js').AddDocumentVersionRequest} AddDocumentVersionRequest */
 /** @typedef {import('@pins/appeals/index.js').AddDocumentsResponse} AddDocumentsResponse */
@@ -32,21 +33,21 @@ import { EventType } from '@pins/event-client';
 /** @typedef {import('@pins/appeals/index.js').DocumentMetadata} DocumentMetadata */
 
 /**
- * @param {RepositoryResult} appeal
+ * @param {Appeal} appeal
  * @param {string} folderId
- * @returns {Promise<SingleFolderResponse | null>}
+ * @returns {Promise<FolderInfo | null>}
  */
 export const getFolderForAppeal = async (appeal, folderId) => {
 	const folder = await getById(Number(folderId));
 	if (folder && folder.caseId === appeal.id) {
-		return formatFolder(folder);
+		return formatFolder(folder) || null;
 	}
 
 	return null;
 };
 
 /**
- * @param {RepositoryResult} appeal
+ * @param {Appeal} appeal
  * @param {string?} path
  * @returns {Promise<Folder[]>}
  */
@@ -60,8 +61,8 @@ export const getFoldersForAppeal = async (appeal, path = null) => {
 
 /**
  * @param {AddDocumentsRequest} upload
- * @param {RepositoryResult} appeal
- * @returns {Promise<AddDocumentsResponse>}
+ * @param {Appeal} appeal
+ * @returns {Promise<AddDocumentsResponse>}}
  */
 export const addDocumentsToAppeal = async (upload, appeal) => {
 	const { blobStorageHost, blobStorageContainer, documents } = upload;
@@ -118,6 +119,10 @@ const addDocumentAndVersion = async (caseId, reference, appealStatus, documents)
 					size: d.documentSize,
 					version: 1,
 					blobStorageContainer: d.blobStorageContainer,
+					blobStoragePath: d.blobStoragePath,
+					documentURI: d.documentURI,
+					dateReceived: d.dateReceived,
+					redactionStatusId: d.redactionStatusId,
 					isLateEntry: isLateEntry(d.stage, appealStatus)
 				},
 				{
@@ -146,7 +151,7 @@ const addDocumentAndVersion = async (caseId, reference, appealStatus, documents)
 
 /**
  * @param {AddDocumentVersionRequest} upload
- * @param {RepositoryResult} appeal
+ * @param {Appeal} appeal
  * @param {Document} document
  * @returns {Promise<AddDocumentVersionResponse>}}
  */
@@ -164,9 +169,6 @@ export const addVersionToDocument = async (upload, appeal, document) => {
 	)[0];
 
 	const documentVersionCreated = await addDocumentVersion({
-		context: {
-			blobStorageHost: documentToSendToDatabase.blobStorageHost
-		},
 		documentGuid: document.guid,
 		fileName: document.name,
 		originalFilename: documentToSendToDatabase.name,
@@ -176,6 +178,10 @@ export const addVersionToDocument = async (upload, appeal, document) => {
 		documentType: documentToSendToDatabase.documentType,
 		version: 1,
 		blobStorageContainer: documentToSendToDatabase.blobStorageContainer,
+		blobStoragePath: documentToSendToDatabase.blobStoragePath,
+		documentURI: documentToSendToDatabase.documentURI,
+		dateReceived: documentToSendToDatabase.dateReceived,
+		redactionStatusId: documentToSendToDatabase.redactionStatusId,
 		isLateEntry: isLateEntry(documentToSendToDatabase.stage, appeal.appealStatus[0].status)
 	});
 
@@ -213,18 +219,31 @@ export const getDocumentRedactionStatusIds = async () => {
 		throw new Error(ERROR_NOT_FOUND);
 	}
 
-	return redactionStatuses.map(({ id }) => id);
+	return redactionStatuses.map(({ id }) => Number(id));
+};
+
+/**
+ *
+ * @param {DocumentVersion} documentVersion
+ * @returns
+ */
+export const getAvScanStatus = (documentVersion) => {
+	if (documentVersion.avScan && documentVersion.avScan.length > 0) {
+		return documentVersion.avScan[0].avScanSuccess ? AVSCAN_STATUS.SCANNED : AVSCAN_STATUS.AFFECTED;
+	}
+
+	return AVSCAN_STATUS.NOT_SCANNED;
 };
 
 /**
  * @param { Document } document
  * @param { number } version
- * @returns {Promise<(Document | null)>}
+ * @returns {Promise<boolean>}
  */
 export const deleteDocument = async (document, version) => {
 	const result = await deleteDocumentVersion(document.guid, version);
 	await broadcasters.broadcastDocument(document.guid, version, EventType.Delete);
-	return result || null;
+	return result !== null;
 };
 
 /**

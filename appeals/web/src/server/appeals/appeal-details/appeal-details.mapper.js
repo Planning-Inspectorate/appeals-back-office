@@ -269,7 +269,7 @@ export async function appealDetailsPage(appealDetails, currentRoute, session) {
 			: new Date();
 
 		const virusCheckStatus = mapVirusCheckStatus(
-			appealDetails.decision.virusCheckStatus || 'not_checked'
+			appealDetails.decision.virusCheckStatus || 'not_scanned'
 		);
 		const letterDownloadUrl = appealDetails.decision?.documentId
 			? mapDocumentDownloadUrl(appealDetails.appealId, appealDetails.decision?.documentId)

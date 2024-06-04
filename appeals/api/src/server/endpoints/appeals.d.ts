@@ -4,7 +4,7 @@ import { Schema } from 'index';
 declare global {
 	namespace Express {
 		interface Request {
-			appeal: RepositoryGetByIdResultItem;
+			appeal: Schema.Appeal;
 			appealTypes: Schema.AppealType[];
 			document: Schema.Document;
 			notifyClient: NotifyClient;
@@ -19,7 +19,7 @@ interface NotifyClient {
 	sendEmail: (
 		template: NotifyTemplate,
 		recipientEmail?: string,
-		personalisation: { [key: string]: string }
+		personalisation: { [key: string]: string | string[] }
 	) => void;
 }
 
@@ -27,115 +27,228 @@ interface NotifyTemplate {
 	id: string;
 }
 
-interface TimetableDeadlineDate {
-	[key: string]: Date;
-}
-
-interface LinkedAppeal {
-	appealId: number | null;
+interface SingleAppealDetailsResponse {
+	allocationDetails: AppealAllocation | null;
+	appealId: number;
 	appealReference: string;
-	isParentAppeal: boolean;
-	linkingDate: Date;
-	appealType?: string;
-	relationshipId: number;
-	externalSource: boolean;
-	externalAppealType?: string;
-}
-
-interface LinkableAppealSummary {
-	appealId: string | undefined;
-	appealReference: string | undefined;
-	appealType: string | undefined;
+	appealSite: AppealSite;
 	appealStatus: string;
-	siteAddress: AppealSite;
-	localPlanningDepartment: string;
-	appellantName: string | undefined;
-	agentName?: string | undefined | null;
-	submissionDate: string;
-	source: 'horizon' | 'back-office';
-}
-
-interface RelatedAppeal {
-	appealId: number | null;
-	appealReference: string;
-	linkingDate: Date;
-	appealType?: string;
-	relationshipId: number;
-	externalSource: boolean;
-}
-
-interface AppealSite {
-	addressId?: number;
-	addressLine1?: string;
-	addressLine2?: string | null;
-	town?: string;
-	county?: string | null;
-	postCode?: string | null;
-}
-
-interface AppealTimetable {
-	appealTimetableId: number;
-	finalCommentReviewDate?: Date | null;
-	lpaQuestionnaireDueDate: Date | null;
-	statementReviewDate?: Date | null;
-	issueDeterminationDate?: Date | null;
-	completeDate?: Date | null;
-}
-
-interface RepositoryGetAllResultItem {
-	address?: Schema.Address | null;
-	appealStatus: Schema.AppealStatus[];
-	appealType: Schema.AppealType | null;
-	createdAt: Date;
-	id: number;
-	lpa: LPA;
-	lpaQuestionnaire?: Schema.LPAQuestionnaire | null;
-	reference: string;
-	appealTimetable?: Schema.AppealTimetable | null;
-	dueDate: Date | null;
-	appellantCase?: Schema.AppellantCase | null;
-}
-
-interface RepositoryGetByIdResultItem {
-	address: Schema.Address | null;
-	neighbouringSites?: Schema.NeighbouringSite[] | null;
-	allocation?: Schema.AppealAllocation | null;
-	appealStatus: Schema.AppealStatus[];
-	appealTimetable: Schema.AppealTimetable | null;
-	appealType: Schema.AppealType | null;
-	appellant: Schema.ServiceUser | null;
-	agent: Schema.ServiceUser | null;
-	appellantCase?: Schema.AppellantCase | null;
-	caseOfficer: User | null;
-	createdAt: Date;
-	dueDate: Date | null;
-	id: number;
-	inspector: User | null;
-	transferredCaseId?: string | null;
+	transferStatus?: {
+		transferredAppealType: string;
+		transferredAppealReference: string;
+	} | null;
+	appealTimetable: AppealTimetable | null;
+	appealType?: string | null;
 	resubmitTypeId?: number | null;
-	inspectorDecision?: Schema.InspectorDecision | null;
-	linkedAppeals: Schema.AppealRelationship[] | null;
-	relatedAppeals: Schema.AppealRelationship[] | null;
-	lpa: LPA;
-	lpaQuestionnaire: Schema.LPAQuestionnaire | null;
+	appellantCaseId: number;
+	appellant?: ServiceUserResponse | null;
+	agent?: ServiceUserResponse | null;
+	caseOfficer?: string | null;
+	costs: {
+		appellantFolder?: FolderInfo | null;
+		lpaFolder?: FolderInfo | null;
+		decisionFolder?: FolderInfo | null;
+	};
+	decision: {
+		folderId: number;
+		outcome?: string | null;
+		documentId?: string | null;
+		letterDate?: Date | null;
+		virusCheckStatus?: string | null;
+	};
+	documentationSummary: DocumentationSummary;
+	healthAndSafety: {
+		appellantCase: {
+			details?: string | null;
+			hasIssues?: boolean | null;
+		};
+		lpaQuestionnaire: {
+			details?: string | null;
+			hasIssues?: boolean | null;
+		};
+	};
+	inspector?: string | null;
+	inspectorAccess: {
+		appellantCase: {
+			details?: string | null;
+			isRequired?: boolean | null;
+		};
+		lpaQuestionnaire: {
+			details?: string | null;
+			isRequired?: boolean | null;
+		};
+	};
+	isParentAppeal?: boolean | null;
+	isChildAppeal?: boolean | null;
+	linkedAppeals: LinkedAppeal[];
+	otherAppeals: RelatedAppeal[];
+	localPlanningDepartment: string;
+	lpaQuestionnaireId?: number | null;
+	isAffectingNeighbouringSites?: boolean | null;
+	neighbouringSites: Schema.NeighbouringSite[];
 	planningApplicationReference: string;
-	reference: string;
-	resubmitTypeId?: number;
-	siteVisit: Schema.SiteVisit | null;
-	specialisms: Schema.AppealSpecialism[];
-	createdAt: Date | null;
-	startedAt: Date | null;
-	updatedAt: Date | null;
-	validAt: Date | null;
+	procedureType?: string | null;
+	siteVisit?: {
+		siteVisitId: number;
+		visitDate: Date;
+		visitStartTime: string;
+		visitEndTime?: string | null;
+		visitType: string;
+	} | null;
+	createdAt: Date;
+	startedAt?: Date | null;
+	validAt?: Date | null;
 }
 
-interface BankHolidayFeedEvent {
-	title: string;
-	date: string;
-	notes: string;
+interface UpdateAppealRequest {
+	caseExtensionDate?: string;
+	caseStartedDate?: string;
+	caseValidDate?: string;
+	applicationReference?: string;
+	caseOfficer?: number | null;
+	inspector?: number | null;
 }
 
-interface BankHolidayFeedEvents extends Array<BankHolidayFeedEvent> {}
+/*
+appealId: appeal.id,
+	appealReference: appeal.reference,
+	appealSite: {
+		addressId: appeal.address?.id,
+		addressLine1: appeal.address?.addressLine1 || '',
+		addressLine2: appeal.address?.addressLine2 || '',
+		town: appeal.address?.addressTown || '',
+		county: appeal.address?.addressCounty || '',
+		postCode: appeal.address?.postcode
+	},
+	appellantCaseId: appeal.appellantCase?.id,
+	appellant: {
+		firstName: appeal.appellant?.firstName,
+		surname: appeal.appellant?.lastName
+	},
+	applicant: {
+		firstName: appeal.appellant?.firstName,
+		surname: appeal.appellant?.lastName
+	},
+	documents: {
+		appellantCaseCorrespondence: {},
+		appellantCaseWithdrawalLetter: {},
+		appellantStatement: {},
+		applicationDecisionLetter: {},
+		changedDescription: {},
+		originalApplicationForm: {}
+	},
+	hasAdvertisedAppeal: appeal.appellantCase?.hasAdvertisedAppeal,
+	healthAndSafety: {
+		details: appeal.appellantCase?.siteSafetyDetails,
+		hasIssues: true
+	},
+	localPlanningDepartment: appeal.lpa.name,
+	planningApplicationReference: appeal.applicationReference,
+	procedureType: appeal.procedureType?.name,
+	siteOwnership: {
+		areAllOwnersKnown: appeal.appellantCase?.knowsAllOwners,
+		changedDevelopmentDescription: appeal.appellantCase?.changedDevelopmentDescription,
+		originalDevelopmentDescription: appeal.appellantCase?.originalDevelopmentDescription,
+		isFullyOwned: appeal.appellantCase?.ownsAllLand,
+		isPartiallyOwned: appeal.appellantCase?.ownsSomeLand,
+		knowsAllLandowners: appeal.appellantCase?.knowsOtherOwners?.name,
+		knowsOtherLandowners: appeal.appellantCase?.knowsOtherOwners?.name
+	},
+	validation: formatValidationOutcomeResponse(
+		appeal.appellantCase?.appellantCaseValidationOutcome?.name || null,
+		appeal.appellantCase?.appellantCaseIncompleteReasonsSelected,
+		appeal.appellantCase?.appellantCaseInvalidReasonsSelected
+	)
+*/
+
+interface SingleAppellantCaseResponse {
+	appealId: number;
+	appealReference: string;
+	appealSite: AppealSite;
+	appellantCaseId: number;
+	applicant: {
+		firstName: string | null;
+		surname: string | null;
+	};
+	isAppellantNamedOnApplication: boolean | null;
+	planningApplicationReference: string;
+	hasAdvertisedAppeal: boolean | null;
+	healthAndSafety: {
+		details: string | null;
+		hasIssues: boolean | null;
+	};
+	localPlanningDepartment: string;
+	procedureType?: string;
+	siteOwnership: {
+		areAllOwnersKnown: string | null;
+		knowsOtherLandowners: string | null;
+		isFullyOwned: boolean | null;
+		isPartiallyOwned: boolean | null;
+		floorSpaceSquareMetres: decimal | null;
+		siteAreaSquareMetres: decimal | null;
+	};
+	developmentDescription?: {
+		details: string | null;
+		isCorrect: boolean | null;
+	};
+	documents: {
+		appellantCaseCorrespondence?: FolderInfo | null;
+		appellantCaseWithdrawalLetter?: FolderInfo | null;
+		appellantStatement?: FolderInfo | null;
+		applicationDecisionLetter?: FolderInfo | null;
+		changedDescription?: FolderInfo | null;
+		originalApplicationForm?: FolderInfo | null;
+	};
+	validation: ValidationOutcomeResponse | null;
+}
+
+interface UpdateAppellantCaseRequest {
+	appellantCaseValidationOutcomeId?: number;
+	applicantFirstName?: string;
+	applicantSurname?: string;
+	areAllOwnersKnown?: boolean;
+	hasAdvertisedAppeal?: boolean;
+	doesSiteRequireInspectorAccess?: boolean;
+	inspectorAccessDetails?: string;
+	hasAttemptedToIdentifyOwners?: boolean;
+	hasHealthAndSafetyIssues?: boolean;
+	healthAndSafetyIssues?: string;
+	isSiteFullyOwned?: boolean;
+	isSitePartiallyOwned?: boolean;
+	isSiteVisibleFromPublicRoad?: boolean;
+	visibilityRestrictions?: string;
+}
+
+interface UpdateAppellantCaseValidationOutcome {
+	appellantCaseId: number;
+	validationOutcomeId: number;
+	incompleteReasons?: IncompleteInvalidReasons;
+	invalidReasons?: IncompleteInvalidReasons;
+	appealId?: number;
+	validAt?: Date;
+	appealDueDate?: Date;
+}
+
+interface UpdateAppellantCaseValidationOutcomeParams {
+	appeal: {
+		appealStatus: AppealStatus[];
+		appealType: AppealType;
+		appellant: Appellant;
+		agent: Agent;
+		id: number;
+		reference: string;
+	};
+	appellantCaseId: number;
+	azureAdUserId: string;
+	data: {
+		appealDueDate: Date;
+		incompleteReasons: IncompleteInvalidReasons;
+		invalidReasons: IncompleteInvalidReasons;
+	};
+	validationOutcome: ValidationOutcome;
+	validAt: Date;
+	siteAddress: string;
+}
 
 interface SingleLPAQuestionnaireResponse {
 	affectsListedBuildingDetails: ListedBuildingDetailsResponse | null;
@@ -146,11 +259,11 @@ interface SingleLPAQuestionnaireResponse {
 	designatedSites?: DesignatedSiteDetails[] | null;
 	developmentDescription?: string | null;
 	documents: {
-		whoNotified: FolderInfo | {};
-		conservationMap: FolderInfo | {};
-		lpaCaseCorrespondence: FolderInfo | {};
-		otherPartyRepresentations: FolderInfo | {};
-		planningOfficerReport: FolderInfo | {};
+		whoNotified?: FolderInfo | null;
+		conservationMap?: FolderInfo | null;
+		lpaCaseCorrespondence?: FolderInfo | null;
+		otherPartyRepresentations?: FolderInfo | null;
+		planningOfficerReport?: FolderInfo | null;
 	};
 	doesAffectAListedBuilding?: boolean | null;
 	doesAffectAScheduledMonument?: boolean | null;
@@ -200,92 +313,87 @@ interface SingleLPAQuestionnaireResponse {
 	validation: ValidationOutcomeResponse | null;
 }
 
-interface SingleAppealDetailsResponse {
-	allocationDetails: AppealAllocation | null;
-	appealId: number;
+interface UpdateLPAQuestionnaireRequest {
+	appealId?: number;
+	designatedSites?: number[];
+	doesAffectAListedBuilding?: boolean;
+	doesAffectAScheduledMonument?: boolean;
+	doesSiteRequireInspectorAccess?: boolean;
+	doesSiteHaveHealthAndSafetyIssues?: boolean;
+	hasCompletedAnEnvironmentalStatement?: boolean;
+	hasProtectedSpecies?: boolean;
+	hasTreePreservationOrder?: boolean;
+	healthAndSafetyDetails?: string;
+	includesScreeningOption?: boolean;
+	incompleteReasons?: IncompleteInvalidReasons;
+	isAffectingNeighbouringSites?: boolean;
+	isConservationArea?: boolean;
+	isCorrectAppealType?: boolean;
+	isEnvironmentalStatementRequired?: boolean;
+	isGypsyOrTravellerSite?: boolean;
+	isListedBuilding?: boolean;
+	isPublicRightOfWay?: boolean;
+	isSensitiveArea?: boolean;
+	isTheSiteWithinAnAONB?: boolean;
+	inspectorAccessDetails?: string;
+	lpaQuestionnaireValidationOutcomeId?: number;
+	meetsOrExceedsThresholdOrCriteriaInColumn2?: boolean;
+	scheduleTypeId?: number;
+	sensitiveAreaDetails?: string;
+	timetable?: TimetableDeadlineDate;
+	validationOutcomeId?: number;
+}
+
+interface UpdateLPAQuestionaireValidationOutcomeParams {
+	appeal: {
+		id: number;
+		appealStatus: AppealStatus[];
+		appealType: AppealType;
+	};
+	azureAdUserId: string;
+	data: {
+		lpaQuestionnaireDueDate: string;
+		incompleteReasons: IncompleteInvalidReasons;
+	};
+	lpaQuestionnaireId: number;
+	validationOutcome: ValidationOutcome;
+}
+
+interface TimetableDeadlineDate {
+	[key: string]: Date;
+}
+
+interface RelatedAppeal {
+	appealId: number | null;
 	appealReference: string;
-	appealSite: AppealSite;
-	appealStatus: string;
-	transferStatus?: {
-		transferredAppealType: string;
-		transferredAppealReference: string;
-	};
-	appealTimetable: AppealTimetable | null;
+	linkingDate: Date;
 	appealType?: string;
-	resubmitTypeId?: number;
-	appellantCaseId: number;
-	appellant?: ServiceUserResponse;
-	agent?: ServiceUserResponse;
-	caseOfficer: string | null;
-	costs: {
-		appellantFolder: {
-			id: number;
-			path: string;
-			caseId: number;
-			documents: Schema.Document[];
-		};
-		lpaFolder: {
-			id: number;
-			path: string;
-			caseId: number;
-			documents: Schema.Document[];
-		};
-		decisionFolder: {
-			id: number;
-			path: string;
-			caseId: number;
-			documents: Schema.Document[];
-		};
-	};
-	decision: {
-		folderId: number;
-		outcome?: string;
-		documentId?: string;
-		letterDate?: Date;
-		virusCheckStatus?: string;
-	};
-	documentationSummary: DocumentationSummary;
-	healthAndSafety: {
-		appellantCase: {
-			details: string | null;
-			hasIssues: boolean | null;
-		};
-		lpaQuestionnaire: {
-			details: string | null;
-			hasIssues: boolean | null;
-		};
-	};
-	inspector: string | null;
-	inspectorAccess: {
-		appellantCase: {
-			details: string | null;
-			isRequired: boolean | null;
-		};
-		lpaQuestionnaire: {
-			details: string | null;
-			isRequired: boolean | null;
-		};
-	};
-	isParentAppeal: boolean | null;
-	isChildAppeal: boolean | null;
-	linkedAppeals: LinkedAppeal[];
-	otherAppeals: RelatedAppeal[];
+	relationshipId: number;
+	externalSource: boolean;
+}
+
+interface LinkedAppeal {
+	appealId: number | null;
+	appealReference: string;
+	isParentAppeal: boolean;
+	linkingDate: Date;
+	appealType?: string | null;
+	relationshipId: number;
+	externalSource: boolean;
+	externalAppealType?: string | null;
+}
+
+interface LinkableAppealSummary {
+	appealId: string | undefined;
+	appealReference: string | undefined;
+	appealType: string | undefined;
+	appealStatus: string;
+	siteAddress: AppealSite;
 	localPlanningDepartment: string;
-	lpaQuestionnaireId: number | null;
-	isAffectingNeighbouringSites: boolean | null;
-	neighbouringSites: Schema.NeighbouringSite[] | null;
-	planningApplicationReference: string;
-	procedureType: string | null;
-	siteVisit: {
-		siteVisitId: number | null;
-		visitDate: Date | null;
-		visitStartTime: string | null;
-		visitEndTime: string | null;
-		visitType: string | null;
-	};
-	createdAt: Date | null;
-	startedAt: Date | null;
-	validAt: Date | null;
+	appellantName: string | undefined;
+	agentName?: string | undefined | null;
+	submissionDate: string;
+	source: 'horizon' | 'back-office';
 }
 
 interface AppealAllocation {
@@ -294,68 +402,38 @@ interface AppealAllocation {
 	specialisms: string[];
 }
 
-interface SingleAppellantCaseResponse {
-	agriculturalHolding?: {
-		isAgriculturalHolding: boolean | null;
-		isTenant: boolean | null;
-		hasToldTenants: boolean | null;
-		hasOtherTenants: boolean | null;
-	};
-	appealId: number;
-	appealReference: string;
-	appealSite: AppealSite;
-	appellantCaseId: number;
-	appellant: {
-		firstName: string;
-		surname: string;
-	};
-	applicant: {
-		firstName: string | null;
-		surname: string | null;
-	};
-	planningApplicationReference: string;
-	developmentDescription?: {
-		details: string | null;
-		isCorrect: boolean | null;
-	};
-	documents: {
-		appellantCaseCorrespondence: FolderInfo | {};
-		appellantCaseWithdrawalLetter: FolderInfo | {};
-		appellantStatement: FolderInfo | {};
-		applicationDecisionLetter: FolderInfo | {};
-		changedDescription: FolderInfo | {};
-		originalApplicationForm: FolderInfo | {};
-	};
-	hasAdvertisedAppeal: boolean | null;
-	hasDesignAndAccessStatement?: boolean | null;
-	hasNewPlansOrDrawings?: boolean | null;
-	hasNewSupportingDocuments: boolean | null;
-	hasSeparateOwnershipCertificate?: boolean | null;
-	healthAndSafety: {
-		details: string | null;
-		hasIssues: boolean | null;
-	};
-	isAppellantNamedOnApplication: boolean | null;
-	localPlanningDepartment: string;
-	planningObligation?: {
-		hasObligation: boolean | null;
-		status: string | null;
-	};
-	procedureType?: string;
-	siteOwnership: {
-		areAllOwnersKnown: boolean | null;
-		hasAttemptedToIdentifyOwners: boolean | null;
-		hasToldOwners: boolean | null;
-		isFullyOwned: boolean | null;
-		isPartiallyOwned: boolean | null;
-		knowsOtherLandowners: string | null;
-	};
-	validation: ValidationOutcomeResponse | null;
-	visibility: {
-		details: string | null;
-		isVisible: boolean | null;
-	};
+interface AppealSite {
+	addressId?: number;
+	addressLine1?: string;
+	addressLine2?: string | null;
+	town?: string;
+	county?: string | null;
+	postCode?: string | null;
 }
+
+interface AppealTimetable {
+	appealTimetableId: number;
+	finalCommentReviewDate?: Date | null;
+	lpaQuestionnaireDueDate: Date | null;
+	statementReviewDate?: Date | null;
+	issueDeterminationDate?: Date | null;
+	completeDate?: Date | null;
+}
+
+interface UpdateTimetableRequest {
+	finalCommentReviewDate?: Date;
+	issueDeterminationDate?: Date;
+	lpaQuestionnaireDueDate?: Date;
+	statementReviewDate?: Date;
+}
+
+interface BankHolidayFeedEvent {
+	title: string;
+	date: string;
+	notes: string;
+}
+
+interface BankHolidayFeedEvents extends Array<BankHolidayFeedEvent> {}
 
 interface ValidationOutcomeResponse {
 	outcome: string | null;
@@ -380,37 +458,52 @@ interface AppealListResponse {
 	isChildAppeal: boolean | null;
 }
 
-type BankHolidayFeedDivisions =
-	| 'england-and-wales'
-	| 'northern-ireland'
-	| 'scotland'
-	| 'united-kingdom';
+interface DocumentationSummary {
+	appellantCase?: DocumentationSummaryEntry;
+	lpaQuestionnaire?: DocumentationSummaryEntry;
+}
 
 interface DocumentationSummaryEntry {
 	status: string;
 	dueDate: Date | undefined | null;
 }
 
-interface DocumentationSummary {
-	appellantCase?: DocumentationSummaryEntry;
-	lpaQuestionnaire?: DocumentationSummaryEntry;
-}
-
 interface FolderInfo {
 	folderId: number;
+	caseId: string;
 	path: string;
 	documents: DocumentInfo[];
 }
 
 interface DocumentInfo {
 	id: string;
+	caseId: number;
+	folderId: number;
 	name: string;
-	createdAt?: string;
-	folderId?: number;
-	caseId?: number;
-	virusCheckStatus?: any;
-	latestDocumentVersion?: Schema.DocumentVersion;
-	isLateEntry?: boolean;
+	createdAt: string;
+	isDeleted?: boolean | null;
+	latestDocumentVersion: DocumentVersionInfo;
+	allVersions: DocumentVersionInfo[];
+	versionAudit: Schema.DocumentVersionAudit[];
+}
+
+interface DocumentVersionInfo {
+	documentId: string;
+	version: number;
+	originalFilename: string;
+	fileName: string;
+	blobStorageContainer: string;
+	blobStoragePath: string;
+	documentURI: string;
+	dateReceived: string;
+	redactionStatus?: string | null;
+	virusCheckStatus: string;
+	size: string;
+	mime: string;
+	isLateEntry?: boolean | null;
+	isDeleted?: boolean | null;
+	stage: string;
+	documentType: string;
 }
 
 interface SingleSiteVisitDetailsResponse {
@@ -597,13 +690,6 @@ interface IncompleteInvalidReasonsResponse {
 	text?: string[];
 }
 
-interface SingleFolderResponse {
-	id: number;
-	path: string;
-	caseId: number;
-	documents: DocumentInfo[] | null;
-}
-
 interface CreateAuditTrail {
 	appealId: number;
 	azureAdUserId?: string;
@@ -695,6 +781,12 @@ type ServiceUserResponse = {
 
 type AssignedUser = 'caseOfficer' | 'inspector';
 
+type BankHolidayFeedDivisions =
+	| 'england-and-wales'
+	| 'northern-ireland'
+	| 'scotland'
+	| 'united-kingdom';
+
 export {
 	AppealListResponse,
 	AppealSite,
@@ -706,6 +798,7 @@ export {
 	CreateAuditTrailRequest,
 	DocumentationSummary,
 	DocumentInfo,
+	DocumentVersionInfo,
 	FolderInfo,
 	NotValidReasonOption,
 	IncompleteInvalidReasons,
@@ -717,14 +810,11 @@ export {
 	LookupTables,
 	NotifyClient,
 	NotifyTemplate,
-	RepositoryGetAllResultItem,
-	RepositoryGetByIdResultItem,
 	SingleAddressResponse,
 	SingleAppealDetailsResponse,
 	SingleAppellantCaseResponse,
 	SingleAppellantResponse,
 	GetAuditTrailsResponse,
-	SingleFolderResponse,
 	SingleLPAQuestionnaireResponse,
 	SingleSiteVisitDetailsResponse,
 	TimetableDeadlineDate,

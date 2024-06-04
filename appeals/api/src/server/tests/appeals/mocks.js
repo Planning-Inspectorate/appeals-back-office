@@ -58,6 +58,12 @@ export const auditTrails = [
 export const householdAppeal = {
 	id: 1,
 	reference: '1345264',
+	procedureType: {
+		id: 1,
+		key: 'written',
+		name: 'Written'
+	},
+	neighbouringSites: [],
 	appealStatus: [
 		{
 			status: STATUSES.ASSIGN_CASE_OFFICER,
@@ -71,7 +77,7 @@ export const householdAppeal = {
 		id: 1,
 		email: 'maid@lpa-email.gov.uk'
 	},
-	planningApplicationReference: '48269/APP/2021/1482',
+	applicationReference: '48269/APP/2021/1482',
 	appellant: {
 		id: 1,
 		firstName: 'Lee',
@@ -88,7 +94,7 @@ export const householdAppeal = {
 		phoneNumber: '09876 543 210',
 		organisationName: 'Smith Inc.'
 	},
-	createdAt: new Date(2022, 4, 18),
+	caseCreatedDate: new Date(2022, 4, 18),
 	address: {
 		addressLine1: '96 The Avenue',
 		addressLine2: 'Leftfield',
@@ -100,11 +106,12 @@ export const householdAppeal = {
 	},
 	appealType: {
 		id: 2,
-		shorthand: APPEAL_TYPE_SHORTHAND_HAS,
-		type: 'household'
+		key: APPEAL_TYPE_SHORTHAND_HAS,
+		processCode: 'HAS',
+		type: 'Householder'
 	},
 	appellantCase: {
-		appellantCaseIncompleteReasonsOnAppellantCases: [],
+		appellantCaseIncompleteReasonsSelected: [],
 		appellantCaseValidationOutcome: null,
 		applicantFirstName: 'Fiona',
 		applicantSurname: 'Burgess',
@@ -116,7 +123,7 @@ export const householdAppeal = {
 		hasOtherTenants: null,
 		hasToldOwners: true,
 		hasToldTenants: null,
-		healthAndSafetyIssues: 'There is no mobile reception at the site',
+		siteAccessDetails: 'There is no mobile reception at the site',
 		id: 1,
 		isAgriculturalHolding: null,
 		isAgriculturalHoldingTenant: null,
@@ -125,7 +132,7 @@ export const householdAppeal = {
 		isSitePartiallyOwned: true,
 		isSiteVisibleFromPublicRoad: false,
 		doesSiteRequireInspectorAccess: true,
-		inspectorAccessDetails: 'Small dog big character',
+		siteSafetyDetails: 'Small dog big character',
 		knowledgeOfOtherLandowners: {
 			name: 'Some'
 		},
@@ -135,7 +142,7 @@ export const householdAppeal = {
 		id: 1,
 		azureAdUserId: 'a8973f33-4d2e-486b-87b0-d068343ad9eb'
 	},
-	dueDate: '2023-08-10T01:00:00.000Z',
+	caseExtensionDate: '2023-08-10T01:00:00.000Z',
 	inspector: {
 		id: 2,
 		azureAdUserId: 'e8f89175-d02c-4a60-870e-dc954d5b530a'
@@ -157,14 +164,6 @@ export const householdAppeal = {
 		id: 1,
 		appealId: 1,
 		communityInfrastructureLevyAdoptionDate: null,
-		designatedSites: [
-			{
-				designatedSite: {
-					name: 'cSAC',
-					description: 'candidate special area of conservation'
-				}
-			}
-		],
 		developmentDescription: null,
 		doesAffectAListedBuilding: null,
 		doesAffectAScheduledMonument: null,
@@ -217,15 +216,7 @@ export const householdAppeal = {
 			}
 		],
 		meetsOrExceedsThresholdOrCriteriaInColumn2: null,
-		procedureType: {
-			name: 'Written'
-		},
-		procedureTypeId: 3,
 		receivedAt: '2022-05-17T23:00:00.000Z',
-		scheduleType: {
-			name: 'Schedule 1'
-		},
-		scheduleTypeId: 1,
 		sentAt: '2023-05-24T10:34:09.286Z',
 		siteWithinGreenBelt: null
 	}
@@ -236,8 +227,8 @@ export const fullPlanningAppeal = {
 	id: 2,
 	appealType: {
 		id: 1,
-		type: 'full planning',
-		shorthand: APPEAL_TYPE_SHORTHAND_FPA
+		key: APPEAL_TYPE_SHORTHAND_FPA,
+		type: 'Full Planning'
 	},
 	appellantCase: {
 		...householdAppeal.appellantCase,
@@ -251,9 +242,6 @@ export const fullPlanningAppeal = {
 		isAgriculturalHoldingTenant: true,
 		isDevelopmentDescriptionStillCorrect: false,
 		newDevelopmentDescription: 'A new extension has been added at the back',
-		planningObligationStatus: {
-			name: 'Finalised'
-		}
 	}
 };
 
@@ -273,7 +261,7 @@ export const householdAppealAppellantCaseIncomplete = {
 		...incompleteAppellantCaseOutcome
 	},
 	id: 3,
-	dueDate: '2099-07-14T01:00:00.000Z'
+	caseExtensionDate: '2099-07-14T01:00:00.000Z'
 };
 
 export const householdAppealAppellantCaseInvalid = {

@@ -11,6 +11,10 @@ export interface AddDocumentVersionRequest {
 }
 
 export interface MappedDocument {
+	blobStorageHost?: string | null;
+	blobStorageContainer?: string | null;
+	blobStoragePath?: string | null;
+	documentURI?: string | null;
 	caseId: number;
 	documentName: string;
 	documentType: string;
@@ -20,6 +24,8 @@ export interface MappedDocument {
 	fileRowId: string;
 	folderId: number;
 	GUID: string;
+	receivedDate: string;
+	redactionStatusId: number;
 }
 
 export interface AddDocumentsResponse {
@@ -54,8 +60,10 @@ export interface UploadRequest {
 }
 
 export interface DocumentMetadata {
-	blobStorageHost: string;
-	blobStorageContainer: string;
+	blobStorageHost?: string | null;
+	blobStorageContainer?: string | null;
+	blobStoragePath?: string | null;
+	documentURI?: string | null;
 	caseId: number;
 	mime: string;
 	stage: string;
@@ -64,4 +72,6 @@ export interface DocumentMetadata {
 	folderId: number;
 	name: string;
 	GUID: string;
+	redactionStatusId: number;
+	dateReceived: Date;
 }

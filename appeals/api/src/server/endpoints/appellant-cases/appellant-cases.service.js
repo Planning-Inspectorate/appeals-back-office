@@ -21,12 +21,16 @@ import config from '#config/config.js';
 import formatDate from '#utils/date-formatter.js';
 import { getFormattedReasons } from '#utils/appeal-formatter.js';
 
-/** @typedef {import('express').RequestHandler} RequestHandler */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAppellantCaseValidationOutcomeParams} UpdateAppellantCaseValidationOutcomeParams */
+/** @typedef {import('express').Request} Request */
+/** @typedef {import('express').Response} Response */
+/** @typedef {import('express').NextFunction} NextFunction */
 
 /**
- * @type {RequestHandler}
- * @returns {object | void}
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ * @returns {Response | void}
  */
 const checkAppellantCaseExists = (req, res, next) => {
 	const {
@@ -36,7 +40,7 @@ const checkAppellantCaseExists = (req, res, next) => {
 	const hasAppellantCase = appeal.appellantCase?.id === Number(appellantCaseId);
 
 	if (!hasAppellantCase) {
-		return res.status(404).send({ errors: { appellantCaseId: ERROR_NOT_FOUND } });
+		res.status(404).send({ errors: { appellantCaseId: ERROR_NOT_FOUND } });
 	}
 
 	next();
@@ -54,9 +58,10 @@ const updateAppellantCaseValidationOutcome = async (
 	const { appealDueDate, incompleteReasons, invalidReasons } = data;
 
 	await appellantCaseRepository.updateAppellantCaseValidationOutcome({
+		appealId,
 		appellantCaseId,
 		validationOutcomeId: validationOutcome.id,
-		...(isOutcomeIncomplete(validationOutcome.name) && { incompleteReasons }),
+		...(isOutcomeIncomplete(validationOutcome.name) && { incompleteReasons, appealDueDate }),
 		...(isOutcomeInvalid(validationOutcome.name) && { invalidReasons }),
 		...(isOutcomeValid(validationOutcome.name) && { appealId, validAt })
 	});
@@ -77,10 +82,6 @@ const updateAppellantCaseValidationOutcome = async (
 		});
 	}
 
-	if (appealDueDate) {
-		await appealRepository.updateAppealById(appealId, { dueDate: appealDueDate });
-	}
-
 	if (isOutcomeValid(validationOutcome.name)) {
 		const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
 		if (!recipientEmail) {
@@ -99,53 +100,57 @@ const updateAppellantCaseValidationOutcome = async (
 	}
 
 	const updatedAppeal = await appealRepository.getAppealById(Number(appealId));
-	const { dueDate: updatedDueDate, appellantCase: updatedAppellantCase } = updatedAppeal;
+	if (updatedAppeal) {
+		const { caseExtensionDate: updatedDueDate, appellantCase: updatedAppellantCase } =
+			updatedAppeal;
 
-	if (isOutcomeIncomplete(validationOutcome.name) && updatedAppeal) {
-		const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
-		if (!recipientEmail) {
-			throw new Error(ERROR_NO_RECIPIENT_EMAIL);
-		}
+		if (isOutcomeIncomplete(validationOutcome.name)) {
+			const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
+			if (!recipientEmail) {
+				throw new Error(ERROR_NO_RECIPIENT_EMAIL);
+			}
 
-		const incompleteReasonsList = getFormattedReasons(
-			updatedAppellantCase?.appellantCaseIncompleteReasonsOnAppellantCases
-		);
+			const incompleteReasonsList = getFormattedReasons(
+				// @ts-ignore
+				updatedAppellantCase?.appellantCaseIncompleteReasonsSelected
+			);
 
-		const appealDueDateAsDateObject = new Date(updatedDueDate);
-
-		try {
-			await notifyClient.sendEmail(config.govNotify.template.appealIncomplete, recipientEmail, {
-				appeal_reference_number: appeal.reference,
-				site_address: siteAddress,
-				due_date: formatDate(appealDueDateAsDateObject, false),
-				reasons: incompleteReasonsList
-			});
-		} catch (error) {
-			if (error) {
-				throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
+			if (updatedDueDate) {
+				try {
+					await notifyClient.sendEmail(config.govNotify.template.appealIncomplete, recipientEmail, {
+						appeal_reference_number: appeal.reference,
+						site_address: siteAddress,
+						due_date: formatDate(new Date(updatedDueDate), false),
+						reasons: incompleteReasonsList
+					});
+				} catch (error) {
+					if (error) {
+						throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
+					}
+				}
 			}
 		}
-	}
 
-	if (isOutcomeInvalid(validationOutcome.name) && updatedAppeal) {
-		const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
-		if (!recipientEmail) {
-			throw new Error(ERROR_NO_RECIPIENT_EMAIL);
-		}
+		if (isOutcomeInvalid(validationOutcome.name)) {
+			const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
+			if (!recipientEmail) {
+				throw new Error(ERROR_NO_RECIPIENT_EMAIL);
+			}
 
-		const invalidReasonsList = getFormattedReasons(
-			updatedAppellantCase?.appellantCaseInvalidReasonsOnAppellantCases
-		);
+			const invalidReasonsList = getFormattedReasons(
+				updatedAppellantCase?.appellantCaseInvalidReasonsSelected
+			);
 
-		try {
-			await notifyClient.sendEmail(config.govNotify.template.appealInvalid, recipientEmail, {
-				appeal_reference_number: appeal.reference,
-				site_address: siteAddress,
-				reasons: invalidReasonsList
-			});
-		} catch (error) {
-			if (error) {
-				throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
+			try {
+				await notifyClient.sendEmail(config.govNotify.template.appealInvalid, recipientEmail, {
+					appeal_reference_number: appeal.reference,
+					site_address: siteAddress,
+					reasons: invalidReasonsList
+				});
+			} catch (error) {
+				if (error) {
+					throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
+				}
 			}
 		}
 	}

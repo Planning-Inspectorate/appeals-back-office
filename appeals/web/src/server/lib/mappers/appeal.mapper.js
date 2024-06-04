@@ -1201,7 +1201,7 @@ export async function initialiseAndMapAppealData(
 	};
 
 	const appealHasAppellantCostsDocuments = appealDetails?.costs?.appellantFolder?.documents?.filter(
-		(document) => document.isDeleted === false
+		(document) => document.latestDocumentVersion?.isDeleted === false
 	).length;
 
 	/** @type {Instructions} */
@@ -1225,10 +1225,10 @@ export async function initialiseAndMapAppealData(
 					html: `<ul class="govuk-summary-list__actions-list">
 						${
 							appealHasAppellantCostsDocuments
-								? `<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="${currentRoute}/costs/appellant/manage-documents/${appealDetails?.costs?.appellantFolder?.id}">Manage</a></li>`
+								? `<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="${currentRoute}/costs/appellant/manage-documents/${appealDetails?.costs?.appellantFolder?.folderId}">Manage</a></li>`
 								: ''
 						}<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="${currentRoute}/costs/appellant/select-document-type/${
-						appealDetails?.costs?.appellantFolder?.id
+						appealDetails?.costs?.appellantFolder?.folderId
 					}">Add</a></li></ul>`,
 					classes: 'appeal-costs-appellant-actions'
 				}
@@ -1237,7 +1237,7 @@ export async function initialiseAndMapAppealData(
 	};
 
 	const appealHasLPACostsDocuments = appealDetails?.costs?.lpaFolder?.documents?.filter(
-		(document) => document.isDeleted === false
+		(document) => document.latestDocumentVersion?.isDeleted === false
 	).length;
 
 	/** @type {Instructions} */
@@ -1261,10 +1261,10 @@ export async function initialiseAndMapAppealData(
 					html: `<ul class="govuk-summary-list__actions-list">
 						${
 							appealHasLPACostsDocuments
-								? `<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="${currentRoute}/costs/lpa/manage-documents/${appealDetails?.costs?.lpaFolder?.id}">Manage</a></li>`
+								? `<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="${currentRoute}/costs/lpa/manage-documents/${appealDetails?.costs?.lpaFolder?.folderId}">Manage</a></li>`
 								: ''
 						}<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="${currentRoute}/costs/lpa/select-document-type/${
-						appealDetails?.costs?.lpaFolder?.id
+						appealDetails?.costs?.lpaFolder?.folderId
 					}">Add</a></li></ul>`,
 					classes: 'appeal-costs-lpa-actions'
 				}
@@ -1273,7 +1273,7 @@ export async function initialiseAndMapAppealData(
 	};
 
 	const appealHasCostsDecisionDocuments = appealDetails?.costs?.decisionFolder?.documents?.filter(
-		(document) => document.isDeleted === false
+		(document) => document.latestDocumentVersion?.isDeleted === false
 	).length;
 
 	/** @type {Instructions} */
@@ -1297,10 +1297,10 @@ export async function initialiseAndMapAppealData(
 					html: `<ul class="govuk-summary-list__actions-list">
 						${
 							appealHasCostsDecisionDocuments
-								? `<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="${currentRoute}/costs/decision/manage-documents/${appealDetails?.costs?.decisionFolder?.id}">Manage</a></li>`
+								? `<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="${currentRoute}/costs/decision/manage-documents/${appealDetails?.costs?.decisionFolder?.folderId}">Manage</a></li>`
 								: ''
 						}<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="${currentRoute}/costs/decision/upload-documents/${
-						appealDetails?.costs?.decisionFolder?.id
+						appealDetails?.costs?.decisionFolder?.folderId
 					}">Add</a></li></ul>`,
 					classes: 'appeal-costs-decision-actions'
 				}

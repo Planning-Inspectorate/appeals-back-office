@@ -71,7 +71,7 @@ function formatStatus(appealStatuses) {
 }
 
 /**
- * @param {Object[]} reasonsArray - The array of reasons objects containing incomplete or invalid reasons
+ * @param {Object<string, string>[] | undefined} reasonsArray - The array of reasons objects containing incomplete or invalid reasons
  * @returns {string[]} - List of formatted reasons
  */
 export const getFormattedReasons = (reasonsArray) => {

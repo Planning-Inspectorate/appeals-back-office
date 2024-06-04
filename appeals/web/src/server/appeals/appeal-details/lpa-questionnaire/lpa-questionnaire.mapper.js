@@ -181,7 +181,7 @@ export async function lpaQuestionnairePage(lpaqDetails, appealDetails, currentRo
 		});
 	}
 
-	if (getDocumentsForVirusStatus(lpaqDetails, 'not_checked').length > 0) {
+	if (getDocumentsForVirusStatus(lpaqDetails, 'not_scanned').length > 0) {
 		addNotificationBannerToSession(
 			session,
 			'notCheckedDocument',
@@ -193,7 +193,7 @@ export async function lpaQuestionnairePage(lpaqDetails, appealDetails, currentRo
 	/** @type {PageComponent[]} */
 	const errorSummaryPageComponents = [];
 
-	if (getDocumentsForVirusStatus(lpaqDetails, 'failed_virus_check').length > 0) {
+	if (getDocumentsForVirusStatus(lpaqDetails, 'affected').length > 0) {
 		errorSummaryPageComponents.push({
 			type: 'error-summary',
 			parameters: {
@@ -739,14 +739,14 @@ export function mapWebValidationOutcomeToApiValidationOutcome(
 /**
  *
  * @param {LPAQuestionnaire} lpaQuestionnaire
- * @param {"not_checked"|"checked"|"failed_virus_check"} virusStatus
+ * @param {"not_scanned"|"checked"|"affected"} virusStatus
  * @returns {import('@pins/appeals.api').Appeals.DocumentInfo[]}
  */
 function getDocumentsForVirusStatus(lpaQuestionnaire, virusStatus) {
 	let unscannedFiles = [];
 	for (let folder of Object.values(lpaQuestionnaire.documents)) {
 		const documentsOfStatus = (isFolderInfo(folder) ? folder.documents : []).filter(
-			(item) => item.virusCheckStatus === virusStatus
+			(item) => item.latestDocumentVersion?.virusCheckStatus === virusStatus
 		);
 		for (const document of documentsOfStatus) {
 			unscannedFiles.push(document);
