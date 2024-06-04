@@ -15,6 +15,7 @@ import NotifyClient from '#utils/notify-client.js';
 
 import { ERROR_NOT_FOUND } from '#endpoints/constants.js';
 import formatDate from '#utils/date-formatter.js';
+import { toCamelCase } from '#utils/string-utils.js';
 
 /**
  * @type {RequestHandler}
@@ -123,12 +124,7 @@ const fetchVisitNotificationTemplateIds = (visitType, previousVisitType) => {
 		return {};
 	}
 
-	// @ts-ignore
-	const formatToCamelCase = (str) => str.charAt(0).toLowerCase() + str.slice(1);
-	// @ts-ignore
-	const removeSpaces = (str) => str.replace(/\s+/g, '');
-
-	const transitionKey = removeSpaces(`${formatToCamelCase(previousVisitType)}To${visitType}`);
+	const transitionKey = toCamelCase(`${previousVisitType} To ${visitType}`);
 	return config.govNotify.template.siteVisitChange[transitionKey] || {};
 };
 
