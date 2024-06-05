@@ -118,7 +118,8 @@ variable "sb_topic_names" {
       lpa_questionnaire = string
     })
     events = object({
-      appeal           = string
+      appeal_has       = string
+      appeal_s78       = string
       document         = string
       document_to_move = string
       event            = string
