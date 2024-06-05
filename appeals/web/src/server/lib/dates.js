@@ -165,6 +165,7 @@ export function webDateToDisplayDate(dayMonthYear, { condensed = false } = {}) {
 	const { day, month, year } = dayMonthYear;
 	const date = new Date(Date.UTC(year, month - 1, day));
 	const formatString = condensed ? 'd MMM yyyy' : 'd MMMM yyyy';
+
 	return formatInTimeZone(date, timeZone, formatString, { locale: enGB });
 }
 

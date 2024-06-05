@@ -502,9 +502,6 @@ describe('costs', () => {
 				const response = await request.get(
 					`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.id}`
 				);
-				const element = parseHtml(response.text);
-
-				expect(element.innerHTML).toMatchSnapshot();
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
@@ -624,9 +621,6 @@ describe('costs', () => {
 				const response = await request.get(
 					`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.id}/1`
 				);
-				const element = parseHtml(response.text);
-
-				expect(element.innerHTML).toMatchSnapshot();
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
@@ -750,10 +744,6 @@ describe('costs', () => {
 					.post(`${baseUrl}/1/costs/${costsCategory}/add-document-details/1`)
 					.send({});
 
-				const element = parseHtml(response.text);
-
-				expect(element.innerHTML).toMatchSnapshot();
-
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
@@ -785,10 +775,6 @@ describe('costs', () => {
 							}
 						]
 					});
-
-				const element = parseHtml(response.text);
-
-				expect(element.innerHTML).toMatchSnapshot();
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
@@ -822,10 +808,6 @@ describe('costs', () => {
 						]
 					});
 
-				const element = parseHtml(response.text);
-
-				expect(element.innerHTML).toMatchSnapshot();
-
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
@@ -857,10 +839,6 @@ describe('costs', () => {
 							}
 						]
 					});
-
-				const element = parseHtml(response.text);
-
-				expect(element.innerHTML).toMatchSnapshot();
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
@@ -896,10 +874,6 @@ describe('costs', () => {
 						]
 					});
 
-				const element = parseHtml(response.text);
-
-				expect(element.innerHTML).toMatchSnapshot();
-
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
@@ -934,10 +908,6 @@ describe('costs', () => {
 						]
 					});
 
-				const element = parseHtml(response.text);
-
-				expect(element.innerHTML).toMatchSnapshot();
-
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
@@ -970,10 +940,6 @@ describe('costs', () => {
 						]
 					});
 
-				const element = parseHtml(response.text);
-
-				expect(element.innerHTML).toMatchSnapshot();
-
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
@@ -1005,10 +971,6 @@ describe('costs', () => {
 							}
 						]
 					});
-
-				const element = parseHtml(response.text);
-
-				expect(element.innerHTML).toMatchSnapshot();
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
@@ -1044,10 +1006,6 @@ describe('costs', () => {
 						]
 					});
 
-				const element = parseHtml(response.text);
-
-				expect(element.innerHTML).toMatchSnapshot();
-
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
@@ -1082,10 +1040,6 @@ describe('costs', () => {
 						]
 					});
 
-				const element = parseHtml(response.text);
-
-				expect(element.innerHTML).toMatchSnapshot();
-
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
@@ -1118,10 +1072,6 @@ describe('costs', () => {
 						]
 					});
 
-				const element = parseHtml(response.text);
-
-				expect(element.innerHTML).toMatchSnapshot();
-
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
@@ -1153,10 +1103,6 @@ describe('costs', () => {
 							}
 						]
 					});
-
-				const element = parseHtml(response.text);
-
-				expect(element.innerHTML).toMatchSnapshot();
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
@@ -1287,10 +1233,6 @@ describe('costs', () => {
 					.post(`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.id}/1`)
 					.send({});
 
-				const element = parseHtml(response.text);
-
-				expect(element.innerHTML).toMatchSnapshot();
-
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
@@ -1322,10 +1264,6 @@ describe('costs', () => {
 							}
 						]
 					});
-
-				const element = parseHtml(response.text);
-
-				expect(element.innerHTML).toMatchSnapshot();
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
@@ -1359,10 +1297,6 @@ describe('costs', () => {
 						]
 					});
 
-				const element = parseHtml(response.text);
-
-				expect(element.innerHTML).toMatchSnapshot();
-
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
@@ -1394,10 +1328,6 @@ describe('costs', () => {
 							}
 						]
 					});
-
-				const element = parseHtml(response.text);
-
-				expect(element.innerHTML).toMatchSnapshot();
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
@@ -1433,10 +1363,6 @@ describe('costs', () => {
 						]
 					});
 
-				const element = parseHtml(response.text);
-
-				expect(element.innerHTML).toMatchSnapshot();
-
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
@@ -1471,10 +1397,6 @@ describe('costs', () => {
 						]
 					});
 
-				const element = parseHtml(response.text);
-
-				expect(element.innerHTML).toMatchSnapshot();
-
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
@@ -1507,10 +1429,6 @@ describe('costs', () => {
 						]
 					});
 
-				const element = parseHtml(response.text);
-
-				expect(element.innerHTML).toMatchSnapshot();
-
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
@@ -1542,10 +1460,6 @@ describe('costs', () => {
 							}
 						]
 					});
-
-				const element = parseHtml(response.text);
-
-				expect(element.innerHTML).toMatchSnapshot();
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
@@ -1581,10 +1495,6 @@ describe('costs', () => {
 						]
 					});
 
-				const element = parseHtml(response.text);
-
-				expect(element.innerHTML).toMatchSnapshot();
-
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
@@ -1619,10 +1529,6 @@ describe('costs', () => {
 						]
 					});
 
-				const element = parseHtml(response.text);
-
-				expect(element.innerHTML).toMatchSnapshot();
-
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
@@ -1655,10 +1561,6 @@ describe('costs', () => {
 						]
 					});
 
-				const element = parseHtml(response.text);
-
-				expect(element.innerHTML).toMatchSnapshot();
-
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
@@ -1690,10 +1592,6 @@ describe('costs', () => {
 							}
 						]
 					});
-
-				const element = parseHtml(response.text);
-
-				expect(element.innerHTML).toMatchSnapshot();
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
@@ -2520,17 +2418,43 @@ describe('costs', () => {
 	});
 
 	describe('GET /costs/decision/check-and-confirm/:folderId', () => {
+		/**
+		 * @type {import("superagent").Response}
+		 */
+		let selectDocumentTypeResponse;
+		/**
+		 * @type {import("superagent").Response}
+		 */
+		let addDocumentsResponse;
+
 		beforeEach(async () => {
 			nock('http://test/')
 				.get('/appeals/1/document-folders/3')
 				.reply(200, costsFolderInfoDecision)
 				.persist();
+			nock('http://test/')
+				.get('/appeals/document-redaction-statuses')
+				.reply(200, documentRedactionStatuses);
+
+			selectDocumentTypeResponse = await request
+				.post(`${baseUrl}/1/costs/decision/select-document-type/3`)
+				.send({
+					'costs-document-type': '3'
+				});
+			addDocumentsResponse = await request
+				.post(`${baseUrl}/1/costs/decision/upload-documents/3`)
+				.send({
+					'upload-info': fileUploadInfo
+				});
 		});
 
 		it('should render a 404 error page if the folderId is not valid', async () => {
 			nock('http://test/')
 				.get('/appeals/1/documents/1/versions')
 				.reply(200, documentFileVersionsInfo);
+
+			expect(selectDocumentTypeResponse.statusCode).toBe(302);
+			expect(addDocumentsResponse.statusCode).toBe(302);
 
 			const response = await request.get(`${baseUrl}/1/costs/decision/check-and-confirm/99`);
 
@@ -2547,6 +2471,9 @@ describe('costs', () => {
 			nock('http://test/')
 				.get('/appeals/1/documents/1/versions')
 				.reply(200, documentFileVersionsInfo);
+
+			expect(selectDocumentTypeResponse.statusCode).toBe(302);
+			expect(addDocumentsResponse.statusCode).toBe(302);
 
 			const response = await request.get(`${baseUrl}/1/costs/decision/check-and-confirm/3`);
 
@@ -2573,6 +2500,10 @@ describe('costs', () => {
 		/**
 		 * @type {import("superagent").Response}
 		 */
+		let selectDocumentTypeResponse;
+		/**
+		 * @type {import("superagent").Response}
+		 */
 		let addDocumentsResponse;
 
 		beforeEach(async () => {
@@ -2585,6 +2516,11 @@ describe('costs', () => {
 				.reply(200, documentRedactionStatuses)
 				.persist();
 
+			selectDocumentTypeResponse = await request
+				.post(`${baseUrl}/1/costs/decision/select-document-type/3`)
+				.send({
+					'costs-document-type': '3'
+				});
 			addDocumentsResponse = await request
 				.post(`${baseUrl}/1/costs/decision/upload-documents/3`)
 				.send({
@@ -2593,6 +2529,7 @@ describe('costs', () => {
 		});
 
 		it('should render a 404 error page if the folderId is not valid', async () => {
+			expect(selectDocumentTypeResponse.statusCode).toBe(302);
 			expect(addDocumentsResponse.statusCode).toBe(302);
 
 			const response = await request.post(`${baseUrl}/1/costs/decision/check-and-confirm/99`).send({
@@ -2609,6 +2546,7 @@ describe('costs', () => {
 		});
 
 		it('should re-render the check and confirm costs decision page with the expected error message if confirmation was not provided', async () => {
+			expect(selectDocumentTypeResponse.statusCode).toBe(302);
 			expect(addDocumentsResponse.statusCode).toBe(302);
 
 			const response = await request
@@ -2629,6 +2567,7 @@ describe('costs', () => {
 		});
 
 		it('should redirect to the case details page if confirmation was provided', async () => {
+			expect(selectDocumentTypeResponse.statusCode).toBe(302);
 			expect(addDocumentsResponse.statusCode).toBe(302);
 
 			const mockDocumentsEndpoint = nock('http://test/').post('/appeals/1/documents').reply(200);

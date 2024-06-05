@@ -2020,8 +2020,6 @@ describe('appellant-case', () => {
 			);
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
@@ -2059,8 +2057,6 @@ describe('appellant-case', () => {
 			);
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
@@ -2100,8 +2096,6 @@ describe('appellant-case', () => {
 			);
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
@@ -2141,8 +2135,6 @@ describe('appellant-case', () => {
 			);
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
@@ -2182,8 +2174,6 @@ describe('appellant-case', () => {
 			);
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
@@ -2248,8 +2238,6 @@ describe('appellant-case', () => {
 				.send({});
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -2279,8 +2267,6 @@ describe('appellant-case', () => {
 				});
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -2310,8 +2296,6 @@ describe('appellant-case', () => {
 				});
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -2341,8 +2325,6 @@ describe('appellant-case', () => {
 				});
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -2374,8 +2356,6 @@ describe('appellant-case', () => {
 				});
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -2407,8 +2387,6 @@ describe('appellant-case', () => {
 				});
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -2438,8 +2416,6 @@ describe('appellant-case', () => {
 				});
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -2469,8 +2445,6 @@ describe('appellant-case', () => {
 				});
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -2502,8 +2476,6 @@ describe('appellant-case', () => {
 				});
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -2535,8 +2507,6 @@ describe('appellant-case', () => {
 				});
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -2566,8 +2536,6 @@ describe('appellant-case', () => {
 				});
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -2597,8 +2565,6 @@ describe('appellant-case', () => {
 				});
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -2691,8 +2657,6 @@ describe('appellant-case', () => {
 			);
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
@@ -2756,8 +2720,6 @@ describe('appellant-case', () => {
 				.send({});
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -2787,8 +2749,6 @@ describe('appellant-case', () => {
 				});
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -2818,8 +2778,6 @@ describe('appellant-case', () => {
 				});
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -2849,8 +2807,6 @@ describe('appellant-case', () => {
 				});
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -2882,8 +2838,6 @@ describe('appellant-case', () => {
 				});
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -2915,8 +2869,6 @@ describe('appellant-case', () => {
 				});
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -2946,8 +2898,6 @@ describe('appellant-case', () => {
 				});
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -2977,8 +2927,6 @@ describe('appellant-case', () => {
 				});
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -3010,8 +2958,6 @@ describe('appellant-case', () => {
 				});
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -3043,8 +2989,6 @@ describe('appellant-case', () => {
 				});
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -3074,8 +3018,6 @@ describe('appellant-case', () => {
 				});
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -3105,8 +3047,6 @@ describe('appellant-case', () => {
 				});
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',

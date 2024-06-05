@@ -451,7 +451,6 @@ export const postUploadDocumentsCheckAndConfirm = async (
 		}
 
 		if (nextPageUrl) {
-			console.log('nextPageUrl');
 			return response.redirect(nextPageUrl);
 		}
 	} catch (error) {

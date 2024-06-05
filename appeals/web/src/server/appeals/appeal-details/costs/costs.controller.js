@@ -337,7 +337,7 @@ export const postAddDocumentsCheckAndConfirm = async (request, response) => {
 					'costsDocumentAdded',
 					currentAppeal.appealId,
 					'',
-					`${capitalize(costsCategory)} costs documents uploaded`
+					`${costsCategory === 'lpa' ? 'LPA' : capitalize(costsCategory)} costs documents uploaded`
 				);
 			}
 		);

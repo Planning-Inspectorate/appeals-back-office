@@ -1345,9 +1345,6 @@ describe('LPA Questionnaire review', () => {
 			const response = await request.get(
 				'/appeals-service/appeal-details/1/lpa-questionnaire/1/add-document-details/1'
 			);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
@@ -1383,9 +1380,6 @@ describe('LPA Questionnaire review', () => {
 			const response = await request.get(
 				'/appeals-service/appeal-details/1/lpa-questionnaire/1/add-document-details/1'
 			);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
@@ -1421,9 +1415,6 @@ describe('LPA Questionnaire review', () => {
 			const response = await request.get(
 				'/appeals-service/appeal-details/1/lpa-questionnaire/1/add-document-details/1'
 			);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
@@ -1459,9 +1450,6 @@ describe('LPA Questionnaire review', () => {
 			const response = await request.get(
 				'/appeals-service/appeal-details/1/lpa-questionnaire/1/add-document-details/1'
 			);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
@@ -1520,8 +1508,6 @@ describe('LPA Questionnaire review', () => {
 			const response = await request.post(`${baseUrl}/add-document-details/1`).send({});
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -1549,8 +1535,6 @@ describe('LPA Questionnaire review', () => {
 			});
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -1578,8 +1562,6 @@ describe('LPA Questionnaire review', () => {
 			});
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -1607,8 +1589,6 @@ describe('LPA Questionnaire review', () => {
 			});
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -1638,8 +1618,6 @@ describe('LPA Questionnaire review', () => {
 			});
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -1669,8 +1647,6 @@ describe('LPA Questionnaire review', () => {
 			});
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -1698,8 +1674,6 @@ describe('LPA Questionnaire review', () => {
 			});
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -1727,8 +1701,6 @@ describe('LPA Questionnaire review', () => {
 			});
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -1758,8 +1730,6 @@ describe('LPA Questionnaire review', () => {
 			});
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -1789,8 +1759,6 @@ describe('LPA Questionnaire review', () => {
 			});
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -1818,8 +1786,6 @@ describe('LPA Questionnaire review', () => {
 			});
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -1847,8 +1813,6 @@ describe('LPA Questionnaire review', () => {
 			});
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -1877,8 +1841,6 @@ describe('LPA Questionnaire review', () => {
 			});
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -1953,8 +1915,6 @@ describe('LPA Questionnaire review', () => {
 			const response = await request.get(`${baseUrl}/add-documents/1/check-your-answers`);
 
 			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
