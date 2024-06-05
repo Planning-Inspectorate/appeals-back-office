@@ -1,20 +1,13 @@
-import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
-import {
-	AUDIT_TRAIL_SITE_VISIT_ARRANGED,
-	DEFAULT_DATE_FORMAT_AUDIT_TRAIL,
-	ERROR_FAILED_TO_SAVE_DATA
-} from '#endpoints/constants.js';
-import siteVisitRepository from '#repositories/site-visit.repository.js';
+import { ERROR_FAILED_TO_SAVE_DATA } from '#endpoints/constants.js';
 import logger from '#utils/logger.js';
-import stringTokenReplacement from '#utils/string-token-replacement.js';
-import { format, parseISO } from 'date-fns';
 import { formatSiteVisit } from './site-visits.formatter.js';
-import { updateSiteVisit } from './site-visits.service.js';
+import { createSiteVisit, updateSiteVisit } from './site-visits.service.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateSiteVisitData} UpdateSiteVisitData */
+/** @typedef {import('@pins/appeals.api').Appeals.CreateSiteVisitData} CreateSiteVisitData */
 
 /**
  * @param {Request} req
@@ -33,34 +26,40 @@ const getSiteVisitById = async (req, res) => {
  * @param {Response} res
  * @returns {Promise<Response>}
  */
-const createSiteVisit = async (req, res) => {
+const postSiteVisit = async (req, res) => {
 	const {
 		body,
 		body: { visitDate, visitEndTime, visitStartTime },
 		params,
-		visitType
+		visitType,
+		appeal
 	} = req;
 	const appealId = Number(params.appealId);
 	const azureAdUserId = String(req.get('azureAdUserId'));
+	const notifyClient = req.notifyClient;
+	const siteAddress = appeal.address
+		? formatAddressSingleLine(appeal.address)
+		: 'Address not available';
+
+	const appellantEmail = String(appeal.agent?.email || appeal.appellant?.email || '');
+	const lpaEmail = appeal.lpa.email;
+
+	/** @type { CreateSiteVisitData } */
+	const siteVisitData = {
+		appealId: Number(appealId),
+		visitDate: visitDate,
+		visitEndTime,
+		visitStartTime,
+		visitType: visitType,
+		appellantEmail,
+		lpaEmail,
+		appealReferenceNumber: appeal.reference,
+		lpaReference: appeal.planningApplicationReference,
+		siteAddress
+	};
 
 	try {
-		await siteVisitRepository.createSiteVisitById({
-			appealId,
-			visitDate,
-			visitEndTime,
-			visitStartTime,
-			siteVisitTypeId: visitType.id
-		});
-
-		if (visitDate) {
-			await createAuditTrail({
-				appealId,
-				azureAdUserId,
-				details: stringTokenReplacement(AUDIT_TRAIL_SITE_VISIT_ARRANGED, [
-					format(parseISO(visitDate), DEFAULT_DATE_FORMAT_AUDIT_TRAIL)
-				])
-			});
-		}
+		await createSiteVisit(azureAdUserId, siteVisitData, notifyClient);
 
 		return res.send(body);
 	} catch (error) {
@@ -119,4 +118,4 @@ const rearrangeSiteVisit = async (req, res) => {
 	}
 };
 
-export { createSiteVisit, getSiteVisitById, rearrangeSiteVisit };
+export { postSiteVisit, getSiteVisitById, rearrangeSiteVisit };

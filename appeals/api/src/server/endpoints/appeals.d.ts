@@ -614,6 +614,19 @@ interface CreateAuditTrailRequest {
 	userId: number;
 }
 
+export interface CreateSiteVisitData {
+	appealId: number;
+	visitDate?: string;
+	visitEndTime?: string;
+	visitStartTime?: string;
+	visitType?: any;
+	appellantEmail: string;
+	lpaEmail: string;
+	appealReferenceNumber: string;
+	lpaReference: string;
+	siteAddress: string;
+}
+
 export interface UpdateSiteVisitData {
 	siteVisitId: number;
 	appealId: number;

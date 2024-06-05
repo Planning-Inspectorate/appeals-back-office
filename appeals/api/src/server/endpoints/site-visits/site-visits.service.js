@@ -1,21 +1,85 @@
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import siteVisitRepository from '#repositories/site-visit.repository.js';
 import {
+	AUDIT_TRAIL_SITE_VISIT_ARRANGED,
+	DEFAULT_DATE_FORMAT_AUDIT_TRAIL,
 	AUDIT_TRAIL_SITE_VISIT_TYPE_SELECTED,
 	ERROR_FAILED_TO_SAVE_DATA,
 	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL
 } from '#endpoints/constants.js';
 import config from '#config/config.js';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { format, parseISO } from 'date-fns';
 // eslint-disable-next-line no-unused-vars
 import NotifyClient from '#utils/notify-client.js';
 
 /** @typedef {import('express').RequestHandler} RequestHandler */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateSiteVisitData} UpdateSiteVisitData */
+/** @typedef {import('@pins/appeals.api').Appeals.CreateSiteVisitData} CreateSiteVisitData */
 /** @typedef {import('@pins/appeals.api').Appeals.NotifyTemplate} NotifyTemplate */
 
 import { ERROR_NOT_FOUND } from '#endpoints/constants.js';
 import formatDate from '#utils/date-formatter.js';
 import { toCamelCase } from '#utils/string-utils.js';
+
+/**
+ * @param {string} azureAdUserId
+ * @param {CreateSiteVisitData} siteVisitData
+ * @returns {Promise<void>}
+ */
+export const createSiteVisit = async (azureAdUserId, siteVisitData, notifyClient) => {
+	try {
+		const appealId = siteVisitData.appealId;
+		const visitDate = siteVisitData.visitDate;
+		const visitEndTime = siteVisitData.visitEndTime;
+		const visitStartTime = siteVisitData.visitStartTime;
+		const visitTypeId = siteVisitData.visitType.id;
+
+		await siteVisitRepository.createSiteVisitById({
+			appealId,
+			visitDate,
+			visitEndTime,
+			visitStartTime,
+			siteVisitTypeId: visitTypeId
+		});
+
+		if (visitDate) {
+			await createAuditTrail({
+				appealId,
+				azureAdUserId,
+				details: stringTokenReplacement(AUDIT_TRAIL_SITE_VISIT_ARRANGED, [
+					format(parseISO(visitDate), DEFAULT_DATE_FORMAT_AUDIT_TRAIL)
+				])
+			});
+		}
+
+		const visitTypeKey = toCamelCase(`${siteVisitData.visitType.name}`);
+		const notifyTemplateIds = config.govNotify.template.siteVisitSchedule[visitTypeKey] || {};
+
+		const emailVariables = {
+			appeal_reference_number: siteVisitData.appealReferenceNumber,
+			lpa_reference: siteVisitData.lpaReference,
+			site_address: siteVisitData.siteAddress,
+			start_time: siteVisitData.visitStartTime || '',
+			end_time: siteVisitData.visitEndTime || '',
+			visit_date: formatDate(new Date(siteVisitData.visitDate || ''), false)
+		};
+
+		if (notifyTemplateIds.appellant && siteVisitData.appellantEmail) {
+			try {
+				await notifyClient.sendEmail(
+					notifyTemplateIds.appellant,
+					siteVisitData.appellantEmail,
+					emailVariables
+				);
+			} catch (error) {
+				throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
+			}
+		}
+	} catch (error) {
+		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
+	}
+};
 
 /**
  * @type {RequestHandler}

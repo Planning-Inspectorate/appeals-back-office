@@ -255,11 +255,63 @@ describe('site visit routes', () => {
 						userId: householdAppeal.caseOfficer.id
 					}
 				});
-				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
 					visitDate: siteVisit.visitDate,
 					visitType: siteVisit.siteVisitType.name
 				});
+				expect(response.status).toEqual(200);
+			});
+
+			test('creates an Unaccompanied site visit and sends notify email', async () => {
+				const { siteVisit } = householdAppeal;
+
+				siteVisit.siteVisitType.name = SITE_VISIT_TYPE_UNACCOMPANIED;
+
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+				// @ts-ignore
+				databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+
+				const visitData = {
+					visitEndTime: '12:00',
+					visitStartTime: '11:00',
+					visitType: siteVisit.siteVisitType.name
+				};
+
+				const response = await request
+					.post(`/appeals/${householdAppeal.id}/site-visits`)
+					.send({
+						visitDate: siteVisit.visitDate.split('T')[0],
+						...visitData
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.body).toEqual({
+					visitDate: siteVisit.visitDate,
+					...visitData
+				});
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).toHaveBeenCalledTimes(1);
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).toHaveBeenCalledWith(
+					config.govNotify.template.siteVisitSchedule.unaccompanied.appellant.id,
+					'test@136s7.com',
+					{
+						emailReplyToId: null,
+						personalisation: {
+							appeal_reference_number: '1345264',
+							end_time: '12:00',
+							lpa_reference: '48269/APP/2021/1482',
+							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+							start_time: '11:00',
+							visit_date: '31 March 2022'
+						},
+						reference: null
+					}
+				);
+
+				expect(response.status).toEqual(200);
 			});
 
 			test('returns an error if appealId is not numeric', async () => {
@@ -851,7 +903,6 @@ describe('site visit routes', () => {
 						userId: householdAppeal.caseOfficer.id
 					}
 				});
-				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
 					visitDate: siteVisit.visitDate,
 					visitType: siteVisit.siteVisitType.name,
@@ -860,7 +911,6 @@ describe('site visit routes', () => {
 
 				// eslint-disable-next-line no-undef
 				expect(mockSendEmail).toHaveBeenCalledTimes(2);
-
 				expect(response.status).toEqual(200);
 			});
 
