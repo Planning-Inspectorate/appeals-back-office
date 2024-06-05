@@ -50,6 +50,13 @@ export default joi
 						decisionIsInvalidLPA: joi.object({
 							id: joi.string()
 						}),
+						siteVisitSchedule: joi.object({
+							unaccompanied: joi.object({
+								appellant: joi.object({
+									id: joi.string().required()
+								})
+							})
+						}),
 						siteVisitChange: joi.object({
 							unaccompaniedToAccessRequired: joi.object({
 								appellant: joi.object({
