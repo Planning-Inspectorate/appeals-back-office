@@ -8,7 +8,8 @@ sb_topic_names = {
   }
 
   events = {
-    appeal           = "appeal"
+    appeal_has       = "appeal-has"
+    appeal_s78       = "appeal-s78"
     document         = "appeal-document"
     document_to_move = "appeal-document-to-move"
     event            = "appeal-event"
