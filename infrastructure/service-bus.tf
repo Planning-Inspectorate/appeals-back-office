@@ -61,8 +61,14 @@ resource "azurerm_servicebus_topic" "appeal_fo_lpa_questionnaire_submission" {
 
 ## Back office broadcast topics
 
-resource "azurerm_servicebus_topic" "appeal" {
-  name                = var.sb_topic_names.events.appeal
+resource "azurerm_servicebus_topic" "appeal_has" {
+  name                = var.sb_topic_names.events.appeal_has
+  namespace_id        = azurerm_servicebus_namespace.main.id
+  default_message_ttl = var.sb_ttl.default
+}
+
+resource "azurerm_servicebus_topic" "appeal_s78" {
+  name                = var.sb_topic_names.events.appeal_s78
   namespace_id        = azurerm_servicebus_namespace.main.id
   default_message_ttl = var.sb_ttl.default
 }

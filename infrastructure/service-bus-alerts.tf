@@ -20,7 +20,8 @@ locals {
     # Appeals back office events - recieved by front office
     "Broadcasts" = {
       topics = [
-        var.sb_topic_names.events.appeal,
+        var.sb_topic_names.events.appeal_has,
+        var.sb_topic_names.events.appeal_s78,
         var.sb_topic_names.events.document,
         var.sb_topic_names.events.service_user
       ],
