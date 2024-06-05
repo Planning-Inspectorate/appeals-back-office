@@ -3,7 +3,7 @@ import nock from 'nock';
 import supertest from 'supertest';
 import { createTestEnvironment } from '#testing/index.js';
 import { siteVisitData, appealData } from '#testing/app/fixtures/referencedata.js';
-import { mapPostScheduleOrManageSiteVisitConfirmationPageType } from '../site-visit.mapper.js';
+import { getSiteVisitChangeType } from '../site-visit.mapper.js';
 
 /**
  * @typedef {import('../site-visit.mapper.js').ScheduleOrManageSiteVisitConfirmationPageType} ScheduleOrManageSiteVisitConfirmationPageType
@@ -770,7 +770,12 @@ describe('site-visit', () => {
 
 			nock('http://test/')
 				.patch('/appeals/1/site-visits/0')
-				.reply(200, { ...siteVisitData, visitStartTime: '', visitEndTime: '' });
+				.reply(200, {
+					...siteVisitData,
+					visitStartTime: '',
+					visitEndTime: '',
+					siteVisitChangeType: 'date-time'
+				});
 
 			let response = await request.post(`${baseUrl}/1${siteVisitPath}/manage-visit`).send({
 				'visit-type': 'unaccompanied',
@@ -787,7 +792,7 @@ describe('site-visit', () => {
 		});
 	});
 
-	describe('mapPostScheduleOrManageSiteVisitConfirmationPageType', () => {
+	describe('getSiteVisitChangeType', () => {
 		/** @type {WebAppeal} */
 		let appealDetails;
 		/** @type {UpdateOrCreateSiteVisitParameters} */
@@ -818,10 +823,7 @@ describe('site-visit', () => {
 		it('should return "visit-type" if visit type has changed but not date and time', () => {
 			updateOrCreateSiteVisitParameters.apiVisitType = 'accompanied';
 
-			const result = mapPostScheduleOrManageSiteVisitConfirmationPageType(
-				appealDetails,
-				updateOrCreateSiteVisitParameters
-			);
+			const result = getSiteVisitChangeType(appealDetails, updateOrCreateSiteVisitParameters);
 
 			expect(result).toBe('visit-type');
 			expect(updateOrCreateSiteVisitParameters.previousVisitType).toBe('unaccompanied');
@@ -830,10 +832,7 @@ describe('site-visit', () => {
 		it('should return "date-time" if date and time have changed but not visit type', () => {
 			updateOrCreateSiteVisitParameters.visitDate = '2023-05-21';
 
-			const result = mapPostScheduleOrManageSiteVisitConfirmationPageType(
-				appealDetails,
-				updateOrCreateSiteVisitParameters
-			);
+			const result = getSiteVisitChangeType(appealDetails, updateOrCreateSiteVisitParameters);
 
 			expect(result).toBe('date-time');
 			expect(updateOrCreateSiteVisitParameters.previousVisitType).toBe('');
@@ -843,20 +842,14 @@ describe('site-visit', () => {
 			updateOrCreateSiteVisitParameters.apiVisitType = 'accompanied';
 			updateOrCreateSiteVisitParameters.visitDate = '2023-05-21';
 
-			const result = mapPostScheduleOrManageSiteVisitConfirmationPageType(
-				appealDetails,
-				updateOrCreateSiteVisitParameters
-			);
+			const result = getSiteVisitChangeType(appealDetails, updateOrCreateSiteVisitParameters);
 
 			expect(result).toBe('all');
 			expect(updateOrCreateSiteVisitParameters.previousVisitType).toBe('unaccompanied');
 		});
 
 		it('should return "unchanged" if neither visit type nor date/time have changed', () => {
-			const result = mapPostScheduleOrManageSiteVisitConfirmationPageType(
-				appealDetails,
-				updateOrCreateSiteVisitParameters
-			);
+			const result = getSiteVisitChangeType(appealDetails, updateOrCreateSiteVisitParameters);
 
 			expect(result).toBe('unchanged');
 			expect(updateOrCreateSiteVisitParameters.previousVisitType).toBe('');

@@ -541,10 +541,7 @@ export function mapPostScheduleOrManageSiteVisitCommonParameters(
  * @param {import('./site-visit.service.js').UpdateOrCreateSiteVisitParameters} updateOrCreateSiteVisitParameters
  * @returns {ScheduleOrManageSiteVisitConfirmationPageType}
  */
-export function mapPostScheduleOrManageSiteVisitConfirmationPageType(
-	appealDetails,
-	updateOrCreateSiteVisitParameters
-) {
+export function getSiteVisitChangeType(appealDetails, updateOrCreateSiteVisitParameters) {
 	const oldVisitDate = appealDetails.siteVisit?.visitDate;
 
 	// TODO: Tech debt (BOAT-981): align date conversion to use date-fns
