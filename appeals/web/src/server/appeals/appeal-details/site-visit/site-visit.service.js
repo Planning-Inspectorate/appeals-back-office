@@ -45,6 +45,7 @@ export async function createSiteVisit(
  * @param {string} [visitDate]
  * @param {string} [visitStartTime]
  * @param {string} [visitEndTime]
+ * @param {string} [siteVisitChangeType]
  */
 export async function updateSiteVisit(
 	apiClient,
@@ -54,7 +55,8 @@ export async function updateSiteVisit(
 	visitDate,
 	visitStartTime,
 	visitEndTime,
-	previousVisitType
+	previousVisitType,
+	siteVisitChangeType
 ) {
 	return apiClient
 		.patch(`appeals/${appealId}/site-visits/${siteVisitId}`, {
@@ -63,7 +65,8 @@ export async function updateSiteVisit(
 				...(visitDate && { visitDate }),
 				visitStartTime,
 				visitEndTime,
-				...(previousVisitType && { previousVisitType })
+				...(previousVisitType && { previousVisitType }),
+				siteVisitChangeType
 			}
 		})
 		.json();

@@ -1258,7 +1258,9 @@ export const siteVisitData = {
 	siteVisitId: 0,
 	visitEndTime: '10:44',
 	visitStartTime: '09:38',
-	visitType: 'Accompanied'
+	visitType: 'Accompanied',
+	previousVisitType: 'Unaccompanied',
+	siteVisitChangeType: 'date-time'
 };
 
 export const appealTypesData = [
