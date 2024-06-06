@@ -46,6 +46,17 @@ extends:
   template: stages/wrapper_cd.yml@templates
   parameters:
     variableGroupPrefix: 'cd'
+    environments:
+      - name: Dev
+      - name: Test
+        dependsOn:
+          - Dev
+      - name: Training
+        dependsOn:
+          - Test
+      - name: Prod
+        dependsOn:
+          - Test
     deploymentStages:
       - name: Deploy Appeals
         deploymentJobs:
