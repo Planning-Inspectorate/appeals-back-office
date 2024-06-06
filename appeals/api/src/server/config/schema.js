@@ -63,6 +63,11 @@ export default joi
 								lpa: joi.object({
 									id: joi.string().required()
 								})
+							}),
+							accessRequired: joi.object({
+								appellant: joi.object({
+									id: joi.string().required()
+								})
 							})
 						}),
 						siteVisitChange: joi.object({
