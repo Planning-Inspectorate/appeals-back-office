@@ -76,6 +76,14 @@ export const createSiteVisit = async (azureAdUserId, siteVisitData, notifyClient
 				throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
 			}
 		}
+
+		if (notifyTemplateIds.lpa && siteVisitData.lpaEmail) {
+			try {
+				await notifyClient.sendEmail(notifyTemplateIds.lpa, siteVisitData.lpaEmail, emailVariables);
+			} catch (error) {
+				throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
+			}
+		}
 	} catch (error) {
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
 	}

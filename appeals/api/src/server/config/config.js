@@ -61,6 +61,14 @@ const { value, error } = schema.validate({
 					appellant: {
 						id: 'a33bb800-56d9-46a4-ba64-35d9d0263666'
 					}
+				},
+				accompanied: {
+					appellant: {
+						id: '4002346f-fd65-42fe-b663-36600b85080c'
+					},
+					lpa: {
+						id: '03a6616e-3e0c-4f28-acd5-f4e873847457'
+					}
 				}
 			},
 			siteVisitChange: {

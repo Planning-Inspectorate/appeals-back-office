@@ -33,7 +33,7 @@ function formatDate(date, shortened = true) {
 		'December'
 	];
 
-	const day = date.getDate().toString().padStart(2, '0');
+	const day = date.getDate().toString();
 
 	const monthIndex = date.getMonth();
 	const monthNames = shortened ? shortenedMonthNames : fullMonthNames;

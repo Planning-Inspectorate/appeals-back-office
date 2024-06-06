@@ -55,6 +55,14 @@ export default joi
 								appellant: joi.object({
 									id: joi.string().required()
 								})
+							}),
+							accompanied: joi.object({
+								appellant: joi.object({
+									id: joi.string().required()
+								}),
+								lpa: joi.object({
+									id: joi.string().required()
+								})
 							})
 						}),
 						siteVisitChange: joi.object({
