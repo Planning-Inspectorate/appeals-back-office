@@ -303,7 +303,7 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
                     </div>
                 </div>
                 <div class="govuk-inset-text">Confirming this review will inform the relevant parties of the outcome</div>
-                <button                 class="govuk-button" data-module="govuk-button">Continue</button>
+                <button                 class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -653,7 +653,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                     </div>
                 </div>
                 <div class="govuk-inset-text">Confirming this review will inform the relevant parties of the outcome</div>
-                <button                 class="govuk-button" data-module="govuk-button">Continue</button>
+                <button                 class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -1018,7 +1018,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                     </div>
                 </div>
                 <div class="govuk-inset-text">Confirming this review will inform the relevant parties of the outcome</div>
-                <button                 class="govuk-button" data-module="govuk-button">Continue</button>
+                <button                 class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -3554,7 +3554,7 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                     </div>
                 </div>
                 <div class="govuk-inset-text">Confirming this review will inform the relevant parties of the outcome</div>
-                <button                 class="govuk-button" data-module="govuk-button">Continue</button>
+                <button                 class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
