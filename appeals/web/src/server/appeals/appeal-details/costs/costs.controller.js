@@ -26,7 +26,7 @@ const renderSelectDocumentType = async (request, response) => {
 	} = request;
 
 	if (!currentAppeal) {
-		return response.status(404).render('app/404');
+		return response.status(404).render('app/404.njk');
 	}
 	if (session.costsDocumentType) {
 		delete session.costsDocumentType;
@@ -50,7 +50,7 @@ const renderSelectDocumentType = async (request, response) => {
 
 	const mappedPageContent = addDocumentTypePage(request.currentAppeal, documentTypes);
 
-	return response.render('patterns/change-page.pattern.njk', {
+	return response.status(200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
 		errors
 	});
@@ -73,7 +73,7 @@ export const postSelectDocumentType = async (request, response) => {
 	} = request;
 
 	if (!currentAppeal || !currentFolder) {
-		return response.status(404).render('app/404');
+		return response.status(404).render('app/404.njk');
 	}
 
 	if (errors) {
@@ -99,11 +99,11 @@ export const getDocumentUpload = async (request, response) => {
 	} = request;
 
 	if (!currentAppeal || !currentFolder) {
-		return response.status(404).render('app/404');
+		return response.status(404).render('app/404.njk');
 	}
 
 	if (costsCategory !== 'decision' && !objectContainsAllKeys(session, 'costsDocumentType')) {
-		return response.status(500).render('app/500');
+		return response.status(500).render('app/500.njk');
 	}
 
 	let uploadPageHeadingText = '';
@@ -142,7 +142,7 @@ export const getDocumentVersionUpload = async (request, response) => {
 	} = request;
 
 	if (!currentAppeal || !currentFolder) {
-		return response.status(404).render('app/404');
+		return response.status(404).render('app/404.njk');
 	}
 
 	renderDocumentUpload(
@@ -167,7 +167,7 @@ export const getAddDocumentDetails = async (request, response) => {
 	} = request;
 
 	if (!currentAppeal || !currentFolder) {
-		return response.status(404).render('app/404');
+		return response.status(404).render('app/404.njk');
 	}
 
 	let costsCategoryLabel = `${capitalize(costsCategory)} costs document`;
@@ -211,7 +211,7 @@ export const postAddDocumentDetails = async (request, response) => {
 	} = request;
 
 	if (!currentAppeal || !currentFolder) {
-		return response.status(404).render('app/404');
+		return response.status(404).render('app/404.njk');
 	}
 
 	let costsCategoryLabel = `${capitalize(costsCategory)} costs document`;
@@ -250,7 +250,7 @@ export const getManageFolder = async (request, response) => {
 	} = request;
 
 	if (!currentAppeal || !currentFolder) {
-		return response.status(404).render('app/404');
+		return response.status(404).render('app/404.njk');
 	}
 
 	let costsCategoryLabel = `${capitalize(costsCategory)} costs documents`;
@@ -282,7 +282,7 @@ export const getManageDocument = async (request, response) => {
 	} = request;
 
 	if (!currentAppeal || !currentFolder) {
-		return response.status(404).render('app/404');
+		return response.status(404).render('app/404.njk');
 	}
 
 	renderManageDocument(
@@ -302,7 +302,7 @@ export const getDeleteCostsDocument = async (request, response) => {
 	} = request;
 
 	if (!currentFolder) {
-		return response.status(404).render('app/404');
+		return response.status(404).render('app/404.njk');
 	}
 
 	renderDeleteDocument(
@@ -321,7 +321,7 @@ export const postDeleteCostsDocument = async (request, response) => {
 	} = request;
 
 	if (!currentAppeal || !currentFolder) {
-		return response.status(404).render('app/404');
+		return response.status(404).render('app/404.njk');
 	}
 
 	postDocumentDelete(
@@ -342,12 +342,12 @@ export const renderDecisionCheckAndConfirm = async (request, response) => {
 	const { errors, currentAppeal, currentFolder } = request;
 
 	if (!currentAppeal || !currentFolder) {
-		return response.status(404).render('app/404');
+		return response.status(404).render('app/404.njk');
 	}
 
 	const mappedPageContent = decisionCheckAndConfirmPage(request.currentAppeal, currentFolder);
 
-	return response.render('patterns/check-and-confirm-page.pattern.njk', {
+	return response.status(200).render('patterns/check-and-confirm-page.pattern.njk', {
 		pageContent: mappedPageContent,
 		errors
 	});
@@ -363,7 +363,7 @@ export const postDecisionCheckAndConfirm = async (request, response) => {
 	const { session, errors, currentAppeal, currentFolder } = request;
 
 	if (!currentAppeal || !currentFolder) {
-		return response.status(404).render('app/404');
+		return response.status(404).render('app/404.njk');
 	}
 
 	if (errors) {

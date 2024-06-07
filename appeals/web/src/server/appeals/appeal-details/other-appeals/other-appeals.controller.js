@@ -31,7 +31,7 @@ export const postAddOtherAppeals = async (request, response) => {
 	} = request;
 
 	if (addOtherAppealsReference === undefined) {
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 
 	if (errors) {
@@ -39,7 +39,7 @@ export const postAddOtherAppeals = async (request, response) => {
 	}
 
 	if (request.body.problemWithHorizon) {
-		return response.render('app/500.njk', {
+		return response.status(500).render('app/500.njk', {
 			titleCopy: 'Sorry, there is a problem with Horizon',
 			additionalCtas: [
 				{
@@ -81,7 +81,7 @@ const renderAddOtherAppeals = async (
 		appealReferenceInputValue
 	);
 
-	return response.render('patterns/display-page.pattern.njk', {
+	return response.status(200).render('patterns/display-page.pattern.njk', {
 		pageContent: mappedPageContent,
 		errors: request.errors || errors
 	});
@@ -120,7 +120,7 @@ export const postConfirmOtherAppeals = async (request, response) => {
 		delete request.session.appealId;
 		delete request.session.relatedAppealReference;
 
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 
 	if (relateAppealsAnswer === 'no') {
@@ -137,7 +137,7 @@ export const postConfirmOtherAppeals = async (request, response) => {
 				delete request.session.appealId;
 				delete request.session.relatedAppealReference;
 
-				return response.render('app/500.njk');
+				return response.status(500).render('app/500.njk');
 			}
 
 			const { source } = relatedAppealDetails;
@@ -189,7 +189,7 @@ const renderConfirmOtherAppeals = async (request, response, errors = undefined) 
 		!objectContainsAllKeys(request.session, ['appealId', 'linkableAppeal']) ||
 		request.session.appealId !== request.currentAppeal.appealId
 	) {
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 
 	const { linkableAppeal } = request.session;
@@ -199,13 +199,13 @@ const renderConfirmOtherAppeals = async (request, response, errors = undefined) 
 
 		const mappedPageContent = confirmOtherAppealsPage(request.currentAppeal, relatedAppealDetails);
 
-		return response.render('patterns/check-and-confirm-page.pattern.njk', {
+		return response.status(200).render('patterns/check-and-confirm-page.pattern.njk', {
 			pageContent: mappedPageContent,
 			errors: request.errors || errors
 		});
 	} catch (error) {
 		if (error instanceof HTTPError && error.response.statusCode === 404) {
-			return response.render('app/500.njk');
+			return response.status(500).render('app/500.njk');
 		} else {
 			let errorMessage = 'Something went wrong when getting appeal details from reference';
 			if (error instanceof Error) {
@@ -224,7 +224,7 @@ const renderConfirmOtherAppeals = async (request, response, errors = undefined) 
 export const getManageOtherAppeals = async (request, response) => {
 	const mappedPageContent = manageOtherAppealsPage(request.currentAppeal, request);
 
-	return response.render('patterns/display-page.pattern.njk', {
+	return response.status(200).render('patterns/display-page.pattern.njk', {
 		pageContent: mappedPageContent
 	});
 };
@@ -246,7 +246,7 @@ const renderRemoveOtherAppeals = async (request, response) => {
 	const { relatedAppealShortReference } = request.params;
 
 	if (!relatedAppealShortReference) {
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 
 	const mappedPageContent = removeAppealRelationshipPage(
@@ -254,7 +254,7 @@ const renderRemoveOtherAppeals = async (request, response) => {
 		relatedAppealShortReference
 	);
 
-	return response.render('patterns/display-page.pattern.njk', {
+	return response.status(200).render('patterns/display-page.pattern.njk', {
 		pageContent: mappedPageContent,
 		errors: request.errors
 	});
@@ -300,6 +300,6 @@ export const postRemoveOtherAppeals = async (request, response) => {
 			}
 		}
 	} catch (error) {
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };

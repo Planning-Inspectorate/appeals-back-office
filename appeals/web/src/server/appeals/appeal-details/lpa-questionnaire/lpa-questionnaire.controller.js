@@ -39,7 +39,7 @@ const renderLpaQuestionnaire = async (request, response, errors = null) => {
 	);
 
 	if (!lpaQuestionnaire) {
-		return response.render('app/404.njk');
+		return response.status(404).render('app/404.njk');
 	}
 
 	const mappedPageContent = await lpaQuestionnairePage(
@@ -50,7 +50,7 @@ const renderLpaQuestionnaire = async (request, response, errors = null) => {
 		request.apiClient
 	);
 
-	return response.render('patterns/display-page.pattern.njk', {
+	return response.status(200).render('patterns/display-page.pattern.njk', {
 		pageContent: mappedPageContent,
 		errors
 	});
@@ -99,7 +99,7 @@ export const postLpaQuestionnaire = async (request, response) => {
 				);
 			}
 		} else {
-			return response.render('app/500.njk');
+			return response.status(500).render('app/500.njk');
 		}
 	} catch (error) {
 		let errorMessage = 'Something went wrong when completing lpa questionnaire review';
@@ -124,7 +124,7 @@ export const renderLpaQuestionnaireReviewCompletePage = async (request, response
 	} = request;
 	const pageContent = reviewCompletePage(appealId, appealReference);
 
-	return response.render('appeals/confirmation.njk', {
+	return response.status(200).render('appeals/confirmation.njk', {
 		pageContent
 	});
 };
@@ -137,7 +137,7 @@ export const renderLpaQuestionnaireReviewCompletePage = async (request, response
 const renderCheckAndConfirm = async (request, response) => {
 	try {
 		if (!objectContainsAllKeys(request.session, 'webLPAQuestionnaireReviewOutcome')) {
-			return response.render('app/500.njk');
+			return response.status(500).render('app/500.njk');
 		}
 
 		const {
@@ -165,7 +165,7 @@ const renderCheckAndConfirm = async (request, response) => {
 			webLPAQuestionnaireReviewOutcome.updatedDueDate
 		);
 
-		return response.render('patterns/check-and-confirm-page.pattern.njk', {
+		return response.status(200).render('patterns/check-and-confirm-page.pattern.njk', {
 			pageContent: mappedPageContent
 		});
 	} catch (error) {
@@ -176,7 +176,7 @@ const renderCheckAndConfirm = async (request, response) => {
 				: 'Something went wrong when completing lpa questionnaire review'
 		);
 
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };
 
@@ -189,7 +189,7 @@ export const getCheckAndConfirm = async (request, response) => {
 export const postCheckAndConfirm = async (request, response) => {
 	try {
 		if (!objectContainsAllKeys(request.session, 'webLPAQuestionnaireReviewOutcome')) {
-			return response.render('app/500.njk');
+			return response.status(500).render('app/500.njk');
 		}
 
 		const {
@@ -228,7 +228,7 @@ export const postCheckAndConfirm = async (request, response) => {
 				: 'Something went wrong when completing lpa questionnaire review'
 		);
 
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };
 
@@ -243,7 +243,7 @@ export const getAddDocuments = async (request, response) => {
 	const lpaQuestionnaireDetails = await getLpaQuestionnaireDetails(request);
 
 	if (!appealDetails || !lpaQuestionnaireDetails) {
-		return response.status(404).render('app/404');
+		return response.status(404).render('app/404.njk');
 	}
 
 	renderDocumentUpload(
@@ -260,7 +260,7 @@ export const getAddDocuments = async (request, response) => {
 export const getAddDocumentDetails = async (request, response) => {
 	const lpaQuestionnaireDetails = await getLpaQuestionnaireDetails(request);
 	if (!lpaQuestionnaireDetails) {
-		return response.status(404).render('app/404');
+		return response.status(404).render('app/404.njk');
 	}
 
 	renderDocumentDetails(
@@ -307,7 +307,7 @@ export const getAddDocumentsVersion = async (request, response) => {
 	const appealDetails = request.currentAppeal;
 	const lpaQuestionnaireDetails = await getLpaQuestionnaireDetails(request);
 	if (!appealDetails || !lpaQuestionnaireDetails) {
-		return response.status(404).render('app/404');
+		return response.status(404).render('app/404.njk');
 	}
 
 	renderDocumentUpload(
@@ -324,7 +324,7 @@ export const getAddDocumentsVersion = async (request, response) => {
 export const getAddDocumentVersionDetails = async (request, response) => {
 	const lpaQuestionnaireDetails = await getLpaQuestionnaireDetails(request);
 	if (!lpaQuestionnaireDetails) {
-		return response.status(404).render('app/404');
+		return response.status(404).render('app/404.njk');
 	}
 
 	renderDocumentDetails(

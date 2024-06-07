@@ -33,12 +33,12 @@ const renderChangeServiceUser = async (request, response) => {
 			backLinkUrl,
 			errors
 		);
-		return response.render('patterns/change-page.pattern.njk', {
+		return response.status(200).render('patterns/change-page.pattern.njk', {
 			pageContent: mappedPageContents,
 			errors
 		});
 	}
-	return response.render('app/500.njk');
+	return response.status(500).render('app/500.njk');
 };
 
 /**
@@ -69,7 +69,7 @@ export const postChangeServiceUser = async (request, response) => {
 		const serviceUserId = appealDetails[userType]?.serviceUserId;
 
 		if (!serviceUserId) {
-			return response.render('app/404.njk');
+			return response.status(404).render('app/404.njk');
 		}
 
 		await updateServiceUser(
@@ -94,5 +94,5 @@ export const postChangeServiceUser = async (request, response) => {
 		logger.error(error);
 	}
 
-	return response.render('app/500.njk');
+	return response.status(500).render('app/500.njk');
 };

@@ -18,7 +18,7 @@ const renderUpdateDueDate = async (request, response, apiErrors) => {
 	const appealDetails = request.currentAppeal;
 
 	if (!appealDetails) {
-		return response.render('app/404.njk');
+		return response.status(404).render('app/404.njk');
 	}
 
 	const appealId = appealDetails.appealId;
@@ -31,12 +31,12 @@ const renderUpdateDueDate = async (request, response, apiErrors) => {
 	);
 
 	if (!appealId || !timetableProperty || !mappedPageContent) {
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 
 	let errors = request.errors || apiErrors;
 
-	return response.render('appeals/appeal/update-date.njk', {
+	return response.status(200).render('appeals/appeal/update-date.njk', {
 		pageContent: mappedPageContent,
 		errors
 	});
@@ -59,7 +59,7 @@ const processUpdateDueDate = async (request, response) => {
 	const { timetableType } = request.params;
 
 	if (!objectContainsAllKeys(body, ['due-date-day', 'due-date-month', 'due-date-year'])) {
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 
 	try {
@@ -72,7 +72,7 @@ const processUpdateDueDate = async (request, response) => {
 			Number.isNaN(updatedDueDateMonth) ||
 			Number.isNaN(updatedDueDateYear)
 		) {
-			return response.render('app/500.njk');
+			return response.status(500).render('app/500.njk');
 		}
 
 		const updatedDueDateDayString = `0${updatedDueDateDay}`.slice(-2);
@@ -96,7 +96,7 @@ const processUpdateDueDate = async (request, response) => {
 
 				return renderUpdateDueDate(request, response, apiErrors);
 			} else {
-				return response.render('app/500.njk');
+				return response.status(500).render('app/500.njk');
 			}
 		}
 		addNotificationBannerToSession(request.session, 'lpaqDueDateUpdated', appealId);
@@ -108,7 +108,7 @@ const processUpdateDueDate = async (request, response) => {
 			error instanceof Error ? error.message : 'Something went wrong when changing appeal timetable'
 		);
 
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };
 

@@ -22,7 +22,7 @@ const renderIncompleteReason = async (request, response) => {
 	} = request;
 
 	if (appellantCaseId === null || appellantCaseId === undefined) {
-		return response.render('app/404.njk');
+		return response.status(404).render('app/404.njk');
 	}
 
 	const [appellantCaseResponse, incompleteReasonOptions] = await Promise.all([
@@ -36,7 +36,7 @@ const renderIncompleteReason = async (request, response) => {
 	]);
 
 	if (!appellantCaseResponse) {
-		return response.render('app/404.njk');
+		return response.status(404).render('app/404.njk');
 	}
 
 	if (
@@ -59,7 +59,7 @@ const renderIncompleteReason = async (request, response) => {
 				appellantCaseResponse.validation
 			);
 
-		return response.render('appeals/appeal/appellant-case-invalid-incomplete.njk', {
+		return response.status(200).render('appeals/appeal/appellant-case-invalid-incomplete.njk', {
 			appeal: {
 				id: appealId,
 				shortReference: appealShortReference(appealReference)
@@ -70,7 +70,7 @@ const renderIncompleteReason = async (request, response) => {
 		});
 	}
 
-	return response.render('app/500.njk');
+	return response.status(500).render('app/500.njk');
 };
 
 /**
@@ -96,7 +96,7 @@ const renderUpdateDueDate = async (request, response) => {
 		postedDueDateYear
 	);
 
-	return response.render('appeals/appeal/update-date.njk', {
+	return response.status(200).render('appeals/appeal/update-date.njk', {
 		pageContent: mappedPageContent,
 		errors
 	});
@@ -114,7 +114,7 @@ const renderDecisionIncompleteConfirmationPage = async (request, response) => {
 
 	const pageContent = decisionIncompleteConfirmationPage(appealId, appealReference);
 
-	response.render('appeals/confirmation.njk', {
+	response.status(200).render('appeals/confirmation.njk', {
 		pageContent
 	});
 };
@@ -155,7 +155,7 @@ export const postIncompleteReason = async (request, response) => {
 				: 'Something went wrong when completing appellant case review'
 		);
 
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };
 
@@ -167,7 +167,7 @@ export const getUpdateDueDate = async (request, response) => {
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const postUpdateDueDate = async (request, response) => {
 	if (!objectContainsAllKeys(request.session, 'webAppellantCaseReviewOutcome')) {
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 
 	const {
@@ -176,7 +176,7 @@ export const postUpdateDueDate = async (request, response) => {
 	} = request;
 
 	if (!objectContainsAllKeys(body, ['due-date-day', 'due-date-month', 'due-date-year'])) {
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 
 	if (request.errors) {
@@ -193,7 +193,7 @@ export const postUpdateDueDate = async (request, response) => {
 			Number.isNaN(updatedDueDateMonth) ||
 			Number.isNaN(updatedDueDateYear)
 		) {
-			return response.render('app/500.njk');
+			return response.status(500).render('app/500.njk');
 		}
 
 		request.session.webAppellantCaseReviewOutcome.updatedDueDate = {
@@ -213,7 +213,7 @@ export const postUpdateDueDate = async (request, response) => {
 				: 'Something went wrong when completing appellant case review'
 		);
 
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };
 

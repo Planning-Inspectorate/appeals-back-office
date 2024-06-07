@@ -27,7 +27,7 @@ export const renderAudit = async (request, response) => {
 
 		const shortAppealReference = appealShortReference(appeal.appealReference);
 
-		return response.render('appeals/appeal/audit.njk', {
+		return response.status(200).render('appeals/appeal/audit.njk', {
 			pageContent: {
 				auditTrails,
 				caseReference: shortAppealReference,
@@ -39,5 +39,5 @@ export const renderAudit = async (request, response) => {
 		});
 	}
 
-	return response.render('app/404.njk');
+	return response.status(404).render('app/404.njk');
 };

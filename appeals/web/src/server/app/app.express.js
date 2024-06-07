@@ -153,7 +153,7 @@ app.use(
 // Catch undefined routes (404) and render generic 404 not found page
 app.use((request, response) => {
 	pino.warn(`[WEB] Page ${response.req.originalUrl} does not exist. Render 404 page`);
-	response.status(404).render('app/404');
+	response.status(404).render('app/404.njk');
 });
 
 export { app };

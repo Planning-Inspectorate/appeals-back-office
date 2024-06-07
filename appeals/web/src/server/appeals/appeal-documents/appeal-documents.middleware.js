@@ -9,7 +9,7 @@ export const validateCaseFolderId = async (req, res, next) => {
 	const folder = await getFolder(req.apiClient, appealId, folderId);
 
 	if (!folder) {
-		return res.status(404).render('app/404');
+		return res.status(404).render('app/404.njk');
 	}
 
 	req.currentFolder = folder;
@@ -25,7 +25,7 @@ export const validateCaseDocumentId = async (req, res, next) => {
 	if (documentId) {
 		const document = await getFileInfo(req.apiClient, appealId, documentId);
 		if (!document || !document.latestDocumentVersion) {
-			return res.status(404).render('app/404');
+			return res.status(404).render('app/404.njk');
 		}
 	}
 

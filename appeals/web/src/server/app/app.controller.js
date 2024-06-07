@@ -21,7 +21,7 @@ export const viewHomepage = async (request, response) => {
 	const appealGroupIds = intersection(Object.values(config.referenceData.appeals), userGroups);
 
 	if (appealGroupIds.length === 0) {
-		return response.render('app/403');
+		return response.status(403).render('app/403.njk');
 	}
 
 	return response.redirect('/appeals-service/personal-list');
@@ -40,5 +40,5 @@ export function handleHeathCheck(_, response) {
 
 /** @type {import('express').RequestHandler} */
 export function viewUnauthenticatedError(_, response) {
-	response.status(200).render('app/401');
+	response.status(401).render('app/401.njk');
 }
