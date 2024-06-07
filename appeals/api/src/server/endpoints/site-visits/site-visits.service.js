@@ -129,7 +129,8 @@ const updateSiteVisit = async (azureAdUserId, updateSiteVisitData, notifyClient)
 		const appealId = Number(updateSiteVisitData.appealId);
 		const notifyTemplateIds = fetchVisitNotificationTemplateIds(
 			updateSiteVisitData.visitType.name,
-			updateSiteVisitData.previousVisitType
+			updateSiteVisitData.previousVisitType,
+			updateSiteVisitData.siteVisitChangeType
 		);
 
 		const result = await siteVisitRepository.updateSiteVisitById(
@@ -190,14 +191,38 @@ const updateSiteVisit = async (azureAdUserId, updateSiteVisitData, notifyClient)
 /**
  * @param {string} visitType
  * @param {string} previousVisitType
+ * @param {string} siteVisitChangeType
  */
-const fetchVisitNotificationTemplateIds = (visitType, previousVisitType) => {
-	if (!previousVisitType || previousVisitType === visitType) {
-		return {};
-	}
+const fetchVisitNotificationTemplateIds = (visitType, previousVisitType, siteVisitChangeType) => {
+	switch (siteVisitChangeType) {
+		case 'all':
+		case 'unchanged':
+			return {};
 
-	const transitionKey = toCamelCase(`${previousVisitType} To ${visitType}`);
-	return config.govNotify.template.siteVisitChange[transitionKey] || {};
+		case 'date-time':
+			if (visitType === 'Access required') {
+				return {
+					appellant: {
+						id: config.govNotify.template.siteVisitChange.accessRequiredDateChange.appellant.id
+					}
+				};
+			} else if (visitType === 'Accompanied') {
+				return {
+					appellant: {
+						id: config.govNotify.template.siteVisitChange.accompaniedDateChange.appellant.id
+					},
+					lpa: { id: config.govNotify.template.siteVisitChange.accompaniedDateChange.lpa.id }
+				};
+			}
+			return {};
+
+		case 'visit-type': {
+			const transitionKey = toCamelCase(`${previousVisitType} To ${visitType}`);
+			return config.govNotify.template.siteVisitChange[transitionKey] || {};
+		}
+		default:
+			return {};
+	}
 };
 
 export { checkSiteVisitExists, updateSiteVisit, fetchVisitNotificationTemplateIds };

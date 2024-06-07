@@ -118,6 +118,19 @@ const { value, error } = schema.validate({
 					lpa: {
 						id: '15acdaee-ca9d-4001-bb93-9f50ab29226d'
 					}
+				},
+				accessRequiredDateChange: {
+					appellant: {
+						id: '1b963d2c-ae50-45c4-abbb-149481c69074'
+					}
+				},
+				accompaniedDateChange: {
+					appellant: {
+						id: '3bd2cd75-bf1e-4256-8a4c-5c5739bc0ecc'
+					},
+					lpa: {
+						id: '5d23f669-a1d2-4232-9171-10f956dfb400'
+					}
 				}
 			}
 		},
