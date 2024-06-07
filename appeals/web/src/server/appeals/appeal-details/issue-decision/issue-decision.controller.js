@@ -53,7 +53,7 @@ export const postIssueDecision = async (request, response) => {
 		);
 	} catch (error) {
 		logger.error(error);
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };
 
@@ -77,7 +77,7 @@ const renderIssueDecision = async (request, response) => {
 
 	const mappedPageContent = issueDecisionPage(appealData, request.session.inspectorDecision);
 
-	return response.render('patterns/change-page.pattern.njk', {
+	return response.status(200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
 		errors
 	});
@@ -109,7 +109,7 @@ export const postDecisionLetterUpload = async (request, response) => {
 		);
 	} catch (error) {
 		logger.error(error);
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };
 
@@ -128,7 +128,7 @@ const renderDecisionLetterUpload = async (request, response) => {
 	};
 
 	if (!currentFolder || !currentFolder.id) {
-		return response.status(404).render('app/404');
+		return response.status(404).render('app/404.njk');
 	}
 
 	const mappedPageContent = decisionLetterUploadPage(
@@ -139,7 +139,9 @@ const renderDecisionLetterUpload = async (request, response) => {
 		errors
 	);
 
-	return response.render('appeals/documents/decision-letter-upload.njk', mappedPageContent);
+	return response
+		.status(200)
+		.render('appeals/documents/decision-letter-upload.njk', mappedPageContent);
 };
 
 /**
@@ -181,7 +183,7 @@ export const postDateDecisionLetter = async (request, response) => {
 		);
 	} catch (error) {
 		logger.error(error);
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };
 
@@ -201,7 +203,7 @@ const renderDateDecisionLetter = async (request, response) => {
 	};
 
 	if (!currentFolder || !currentFolder.id) {
-		return response.status(404).render('app/404');
+		return response.status(404).render('app/404.njk');
 	}
 
 	const folder = await getFolder(request.apiClient, appealId, currentFolder.id.toString());
@@ -235,7 +237,7 @@ const renderDateDecisionLetter = async (request, response) => {
 		decisionLetterYear
 	);
 
-	return response.render('patterns/change-page.pattern.njk', {
+	return response.status(200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
 		errors
 	});
@@ -273,7 +275,7 @@ export const postInvalidReason = async (request, response) => {
 		);
 	} catch (error) {
 		logger.error(error);
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };
 
@@ -288,7 +290,7 @@ const renderInvalidReason = async (request, response) => {
 	const appealData = request.currentAppeal;
 
 	if (!appealData) {
-		return response.status(404).render('app/404');
+		return response.status(404).render('app/404.njk');
 	}
 
 	const invalidReason =
@@ -296,7 +298,7 @@ const renderInvalidReason = async (request, response) => {
 
 	const mappedPageContent = invalidReasonPage(appealData, invalidReason);
 
-	return response.render('patterns/change-page.pattern.njk', {
+	return response.status(200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
 		errors
 	});
@@ -341,7 +343,7 @@ export const postCheckDecision = async (request, response) => {
 		);
 	} catch (error) {
 		logger.error(error);
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };
 
@@ -355,11 +357,11 @@ export const renderCheckDecision = async (request, response) => {
 	const appealData = request.currentAppeal;
 
 	if (!appealData) {
-		return response.render('app/404.njk');
+		return response.status(404).render('app/404.njk');
 	}
 
 	if (!appealData.decision) {
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 
 	const decisionLetterFolder = await getFolder(
@@ -375,7 +377,7 @@ export const renderCheckDecision = async (request, response) => {
 		decisionLetterFolder
 	);
 
-	return response.render('appeals/appeal/issue-decision.njk', {
+	return response.status(200).render('appeals/appeal/issue-decision.njk', {
 		pageContent: mappedPageContent,
 		errors
 	});
@@ -394,7 +396,7 @@ export const getDecisionSent = async (request, response) => {
 
 	const pageContent = decisionConfirmationPage(appealData, appealIsInvalid);
 
-	return response.render('appeals/confirmation.njk', {
+	return response.status(200).render('appeals/confirmation.njk', {
 		pageContent
 	});
 };
@@ -416,7 +418,7 @@ export const renderCheckInvalidDecision = async (request, response) => {
 	const appealData = request.currentAppeal;
 
 	if (!appealData) {
-		return response.render('app/404.njk');
+		return response.status(404).render('app/404.njk');
 	}
 
 	const mappedPageContent = checkAndConfirmInvalidPage(
@@ -425,7 +427,7 @@ export const renderCheckInvalidDecision = async (request, response) => {
 		request.session.inspectorDecision
 	);
 
-	return response.render('appeals/appeal/issue-decision.njk', {
+	return response.status(200).render('appeals/appeal/issue-decision.njk', {
 		pageContent: mappedPageContent,
 		errors
 	});
@@ -453,6 +455,6 @@ export const postCheckInvalidDecision = async (request, response) => {
 		);
 	} catch (error) {
 		logger.error(error);
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };

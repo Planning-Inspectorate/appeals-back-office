@@ -18,7 +18,7 @@ const renderInvalidReason = async (request, response) => {
 		currentAppeal.appellantCaseId === null ||
 		currentAppeal.appellantCaseId === undefined
 	) {
-		return response.render('app/404.njk');
+		return response.status(404).render('app/404.njk');
 	}
 
 	const [appellantCaseResponse, invalidReasonOptions] = await Promise.all([
@@ -36,7 +36,7 @@ const renderInvalidReason = async (request, response) => {
 	]);
 
 	if (!appellantCaseResponse) {
-		return response.render('app/404.njk');
+		return response.status(404).render('app/404.njk');
 	}
 
 	if (
@@ -56,7 +56,7 @@ const renderInvalidReason = async (request, response) => {
 			appellantCaseResponse.validation
 		);
 
-		return response.render('appeals/appeal/appellant-case-invalid-incomplete.njk', {
+		return response.status(200).render('appeals/appeal/appellant-case-invalid-incomplete.njk', {
 			appeal: {
 				id: currentAppeal.appealId,
 				shortReference: appealShortReference(currentAppeal.appealReference)
@@ -67,7 +67,7 @@ const renderInvalidReason = async (request, response) => {
 		});
 	}
 
-	return response.render('app/500.njk');
+	return response.status(500).render('app/500.njk');
 };
 
 /**
@@ -82,7 +82,7 @@ const renderDecisionInvalidConfirmationPage = async (request, response) => {
 
 	const pageContent = decisionInvalidConfirmationPage(appealId, appealReference);
 
-	response.render('appeals/confirmation.njk', {
+	response.status(200).render('appeals/confirmation.njk', {
 		pageContent
 	});
 };
@@ -124,7 +124,7 @@ export const postInvalidReason = async (request, response) => {
 				: 'Something went wrong when completing appellant case review'
 		);
 
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };
 

@@ -17,7 +17,7 @@ const renderStartDatePage = async (request, response) => {
 	const { appealId, appealReference, startedAt } = request.currentAppeal;
 
 	if (startedAt) {
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 
 	const now = new Date();
@@ -25,7 +25,7 @@ const renderStartDatePage = async (request, response) => {
 
 	const mappedPageContent = startCasePage(appealId, appealReference, today);
 
-	return response.render('patterns/display-page.pattern.njk', {
+	return response.status(200).render('patterns/display-page.pattern.njk', {
 		pageContent: mappedPageContent
 	});
 };
@@ -55,7 +55,7 @@ export const postStartDate = async (request, response) => {
 				: 'Something went wrong when posting the case start date'
 		);
 
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };
 
@@ -64,7 +64,7 @@ export const getConfirmation = async (request, response) => {
 	const { appealId, appealReference } = request.currentAppeal;
 	const pageContent = startCaseConfirmationPage(appealId, appealReference);
 
-	response.render('appeals/confirmation.njk', {
+	response.status(200).render('appeals/confirmation.njk', {
 		pageContent
 	});
 };

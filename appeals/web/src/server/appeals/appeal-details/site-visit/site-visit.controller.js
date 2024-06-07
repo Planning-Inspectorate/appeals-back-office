@@ -52,13 +52,13 @@ const renderScheduleOrManageSiteVisit = async (request, response, pageType) => {
 			visitEndTimeMinute
 		);
 
-		return response.render('patterns/change-page.pattern.njk', {
+		return response.status(200).render('patterns/change-page.pattern.njk', {
 			pageContent: mappedPageContent,
 			errors
 		});
 	}
 
-	return response.render('app/404.njk');
+	return response.status(404).render('app/404.njk');
 };
 
 /**
@@ -89,14 +89,14 @@ export const renderScheduleOrManageSiteVisitConfirmation = async (request, respo
 					appealDetails
 				);
 
-				return response.render('appeals/confirmation.njk', {
+				return response.status(200).render('appeals/confirmation.njk', {
 					pageContent
 				});
 			}
 		}
 	}
 
-	return response.render('app/404.njk');
+	return response.status(404).render('app/404.njk');
 };
 
 /**
@@ -116,13 +116,13 @@ export const renderSiteVisitBooked = async (request, response) => {
 				appealDetails.appealReference
 			);
 
-			return response.render('patterns/display-page.pattern.njk', {
+			return response.status(200).render('patterns/display-page.pattern.njk', {
 				pageContent
 			});
 		}
 	}
 
-	return response.render('app/404.njk');
+	return response.status(404).render('app/404.njk');
 };
 
 /**
@@ -142,13 +142,13 @@ const renderSetVisitType = async (request, response) => {
 
 		const mappedPageContent = setVisitTypePage(appealDetails, visitType);
 
-		return response.render('appeals/appeal/set-site-visit-type.njk', {
+		return response.status(200).render('appeals/appeal/set-site-visit-type.njk', {
 			pageContent: mappedPageContent,
 			errors
 		});
 	}
 
-	return response.render('app/404.njk');
+	return response.status(404).render('app/404.njk');
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
@@ -255,14 +255,14 @@ export const postScheduleOrManageSiteVisit = async (request, response, pageType)
 				);
 			}
 		}
-		return response.render('app/404.njk');
+		return response.status(404).render('app/404.njk');
 	} catch (error) {
 		logger.error(
 			error,
 			error instanceof Error ? error.message : 'Something went wrong when scheduling the site visit'
 		);
 
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };
 
@@ -323,7 +323,7 @@ export const postSetVisitType = async (request, response) => {
 			}
 		}
 
-		return response.render('app/404.njk');
+		return response.status(404).render('app/404.njk');
 	} catch (error) {
 		logger.error(
 			error,
@@ -332,6 +332,6 @@ export const postSetVisitType = async (request, response) => {
 				: 'Something went wrong when setting the site visit type'
 		);
 
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };

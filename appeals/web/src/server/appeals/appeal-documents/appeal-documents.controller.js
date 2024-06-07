@@ -49,7 +49,7 @@ export const renderDocumentUpload = async (
 	} = request;
 
 	if (!appealDetails || !currentFolder) {
-		return response.status(404).render('app/404');
+		return response.status(404).render('app/404.njk');
 	}
 
 	let documentName;
@@ -77,7 +77,7 @@ export const renderDocumentUpload = async (
 		_documentType
 	);
 
-	return response.render('appeals/documents/document-upload.njk', mappedPageContent);
+	return response.status(200).render('appeals/documents/document-upload.njk', mappedPageContent);
 };
 
 /**
@@ -104,7 +104,7 @@ export const renderDocumentDetails = async (
 	const redactionStatuses = await getDocumentRedactionStatuses(request.apiClient);
 
 	if (!redactionStatuses) {
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 
 	const mappedPageContent = addDocumentDetailsPage(
@@ -116,7 +116,7 @@ export const renderDocumentDetails = async (
 	);
 	const isAdditionalDocument = currentFolder.path.split('/')[1] === 'additionalDocuments';
 
-	return response.render('appeals/documents/add-document-details.njk', {
+	return response.status(200).render('appeals/documents/add-document-details.njk', {
 		pageContent: mappedPageContent,
 		displayLateEntryContent: isAdditionalDocument && isLateEntry,
 		errors
@@ -146,7 +146,7 @@ export const renderManageFolder = async (
 
 	const redactionStatuses = await getDocumentRedactionStatuses(request.apiClient);
 	if (!redactionStatuses) {
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 
 	const mappedPageContent = manageFolderPage(
@@ -158,7 +158,7 @@ export const renderManageFolder = async (
 		pageHeadingTextOverride
 	);
 
-	return response.render('appeals/documents/manage-folder.njk', {
+	return response.status(200).render('appeals/documents/manage-folder.njk', {
 		pageContent: mappedPageContent,
 		errors
 	});
@@ -199,7 +199,7 @@ export const renderManageDocument = async (
 	}
 
 	if (!redactionStatuses) {
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 
 	const mappedPageContent = await manageDocumentPage(
@@ -213,7 +213,7 @@ export const renderManageDocument = async (
 		request
 	);
 
-	return response.render('appeals/documents/manage-document.njk', {
+	return response.status(200).render('appeals/documents/manage-document.njk', {
 		pageContent: mappedPageContent,
 		errors
 	});
@@ -274,14 +274,14 @@ export const postDocumentDetails = async (
 			}
 		}
 
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	} catch (error) {
 		logger.error(
 			error,
 			error instanceof Error ? error.message : 'Something went wrong when adding document details'
 		);
 
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };
 
@@ -348,7 +348,7 @@ export const renderChangeDocumentDetails = async (request, response, backButtonU
 		redactionStatuses
 	);
 
-	return response.render('appeals/documents/add-document-details.njk', {
+	return response.status(200).render('appeals/documents/add-document-details.njk', {
 		pageContent: mappedPageContent,
 		errors
 	});
@@ -389,14 +389,14 @@ export const postChangeDocumentDetails = async (request, response, backButtonUrl
 			}
 		}
 
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	} catch (error) {
 		logger.error(
 			error,
 			error instanceof Error ? error.message : 'Something went wrong when adding document details'
 		);
 
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };
 
@@ -427,7 +427,7 @@ export const renderDeleteDocument = async (request, response, backButtonUrl) => 
 	}
 
 	if (!redactionStatuses) {
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 
 	const mappedPageContent = await deleteDocumentPage(
@@ -438,7 +438,7 @@ export const renderDeleteDocument = async (request, response, backButtonUrl) => 
 		versionId
 	);
 
-	return response.render('appeals/documents/delete-document.njk', {
+	return response.status(200).render('appeals/documents/delete-document.njk', {
 		pageContent: mappedPageContent,
 		errors
 	});
@@ -476,7 +476,7 @@ export const postDocumentDelete = async (
 	}
 
 	if (!body['delete-file-answer'] || !appealId || !documentId || !versionId) {
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 
 	const cancelUrlProcessed = cancelUrl
@@ -519,10 +519,10 @@ export const postDocumentDelete = async (
 				await deleteDocument(apiClient, appealId, documentId, versionId);
 				return response.redirect(uploadNewDocumentUrlProcessed);
 			} else {
-				return response.render('app/500.njk');
+				return response.status(500).render('app/500.njk');
 			}
 		}
 	}
 
-	return response.render('app/500.njk');
+	return response.status(500).render('app/500.njk');
 };

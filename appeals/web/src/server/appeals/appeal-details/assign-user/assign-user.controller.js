@@ -40,13 +40,13 @@ const renderAssignUser = async (
 			request.session
 		);
 
-		return response.render('appeals/appeal/assign-user.njk', {
+		return response.status(200).render('appeals/appeal/assign-user.njk', {
 			pageContent: mappedPageContent,
 			errors
 		});
 	}
 
-	return response.render('app/404.njk');
+	return response.status(404).render('app/404.njk');
 };
 
 /**
@@ -97,14 +97,16 @@ const renderAssignOrUnassignUserCheckAndConfirm = async (
 				errors
 			);
 
-			return response.render('appeals/appeal/confirm-assign-unassign-user.njk', mappedPageContent);
+			return response
+				.status(200)
+				.render('appeals/appeal/confirm-assign-unassign-user.njk', mappedPageContent);
 		}
 
-		return response.render('app/404.njk');
+		return response.status(404).render('app/404.njk');
 	} catch (error) {
 		logger.error(error, error instanceof Error ? error.message : 'Something went wrong');
 
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };
 
@@ -148,7 +150,7 @@ export const postAssignUser = async (request, response, isInspector = false) => 
 	} catch (error) {
 		logger.error(error, error instanceof Error ? error.message : 'Something went wrong');
 
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };
 
@@ -218,7 +220,7 @@ export const postAssignOrUnassignUserCheckAndConfirm = async (
 	} catch (error) {
 		logger.error(error, error instanceof Error ? error.message : 'Something went wrong');
 
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };
 
@@ -282,11 +284,11 @@ const renderAssignNewUser = async (request, response, isInspector = false) => {
 		);
 
 		if (appealDetails) {
-			return response.render('appeals/appeal/assign-new-user.njk', mappedPageContent);
+			return response.status(200).render('appeals/appeal/assign-new-user.njk', mappedPageContent);
 		}
 	}
 
-	return response.render('app/404.njk');
+	return response.status(404).render('app/404.njk');
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
@@ -330,7 +332,7 @@ export const postAssignNewUser = async (request, response, isInspector = false) 
 	} catch (error) {
 		logger.error(error, error instanceof Error ? error.message : 'Something went wrong');
 
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };
 

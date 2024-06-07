@@ -53,7 +53,7 @@ const renderManageLinkedAppeals = async (request, response) => {
 		}
 
 		if (!leadLinkedAppeal || !leadAppealData) {
-			return response.render('app/500.njk');
+			return response.status(500).render('app/500.njk');
 		}
 	}
 
@@ -64,7 +64,7 @@ const renderManageLinkedAppeals = async (request, response) => {
 		leadAppealData
 	);
 
-	return response.render('patterns/display-page.pattern.njk', {
+	return response.status(200).render('patterns/display-page.pattern.njk', {
 		pageContent: mappedPageContent,
 		errors
 	});
@@ -89,7 +89,7 @@ export const renderAddLinkedAppealReference = async (request, response) => {
 
 	const mappedPageContent = await addLinkedAppealPage(appealDetails);
 
-	return response.render('patterns/change-page.pattern.njk', {
+	return response.status(200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
 		errors
 	});
@@ -109,7 +109,7 @@ export const postAddLinkedAppeal = async (request, response) => {
 	} = request;
 
 	if (request.body.problemWithHorizon) {
-		return response.render('app/500.njk', {
+		return response.status(500).render('app/500.njk', {
 			titleCopy: 'Sorry, there is a problem with Horizon',
 			additionalCtas: [
 				{
@@ -140,7 +140,7 @@ export const getAddLinkedAppealCheckAndConfirm = async (request, response) => {
  */
 export const renderAddLinkedAppealCheckAndConfirm = async (request, response) => {
 	if (!objectContainsAllKeys(request.session, 'linkableAppeal')) {
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 
 	const { errors } = request;
@@ -161,7 +161,7 @@ export const renderAddLinkedAppealCheckAndConfirm = async (request, response) =>
 		linkCandidateAppealData
 	);
 
-	return response.render('patterns/check-and-confirm-page.pattern.njk', {
+	return response.status(200).render('patterns/check-and-confirm-page.pattern.njk', {
 		pageContent: mappedPageContent,
 		errors
 	});
@@ -173,7 +173,7 @@ export const renderAddLinkedAppealCheckAndConfirm = async (request, response) =>
  */
 export const postAddLinkedAppealCheckAndConfirm = async (request, response) => {
 	if (!objectContainsAllKeys(request.session, 'linkableAppeal')) {
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 
 	const {
@@ -223,7 +223,7 @@ export const postAddLinkedAppealCheckAndConfirm = async (request, response) => {
 		logger.error(error);
 	}
 
-	return response.render('app/500.njk');
+	return response.status(500).render('app/500.njk');
 };
 
 /**
@@ -284,7 +284,7 @@ export const postUnlinkAppeal = async (request, response) => {
 			`/appeals-service/appeal-details/${appealId}/change-appeal-type/change-appeal-final-date`
 		);
 	} catch (error) {
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };
 
@@ -316,7 +316,7 @@ const renderUnlinkAppeal = async (request, response) => {
 		backLinkAppealId
 	);
 
-	return response.render('patterns/display-page.pattern.njk', {
+	return response.status(200).render('patterns/display-page.pattern.njk', {
 		pageContent: mappedPageContent,
 		errors
 	});

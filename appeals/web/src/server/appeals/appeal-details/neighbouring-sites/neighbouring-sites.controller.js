@@ -51,7 +51,7 @@ const renderAddNeighbouringSite = async (request, response) => {
 		errors
 	);
 
-	return response.render('patterns/change-page.pattern.njk', {
+	return response.status(200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContents,
 		errors
 	});
@@ -104,13 +104,13 @@ const renderAddNeighbouringSiteCheckAndConfirm = async (request, response) => {
 	} = request;
 
 	if (!objectContainsAllKeys(request.session, 'neighbouringSite')) {
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 
 	const appealData = request.currentAppeal;
 
 	if (!appealData) {
-		return response.render('app/404.njk');
+		return response.status(404).render('app/404.njk');
 	}
 
 	const currentUrl = request.originalUrl;
@@ -126,7 +126,7 @@ const renderAddNeighbouringSiteCheckAndConfirm = async (request, response) => {
 		request.session.neighbouringSite
 	);
 
-	return response.render('patterns/check-and-confirm-page.pattern.njk', {
+	return response.status(200).render('patterns/check-and-confirm-page.pattern.njk', {
 		pageContent: mappedPageContent,
 		errors
 	});
@@ -138,7 +138,7 @@ const renderAddNeighbouringSiteCheckAndConfirm = async (request, response) => {
  */
 export const postAddNeighbouringSiteCheckAndConfirm = async (request, response) => {
 	if (!objectContainsAllKeys(request.session, 'neighbouringSite')) {
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 
 	const {
@@ -175,7 +175,7 @@ export const postAddNeighbouringSiteCheckAndConfirm = async (request, response) 
 		logger.error(error);
 	}
 
-	return response.render('app/500.njk');
+	return response.status(500).render('app/500.njk');
 };
 
 /**
@@ -195,7 +195,7 @@ const renderManageNeighbouringSites = async (request, response) => {
 
 	const mappedPageContents = manageNeighbouringSitesPage(appealData);
 
-	return response.render('patterns/display-page.pattern.njk', {
+	return response.status(200).render('patterns/display-page.pattern.njk', {
 		pageContent: mappedPageContents
 	});
 };
@@ -227,7 +227,7 @@ const renderRemoveNeighbouringSite = async (request, response) => {
 
 	const mappedPageContents = removeNeighbouringSitePage(appealDetails, origin, siteId);
 
-	return response.render('patterns/change-page.pattern.njk', {
+	return response.status(200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContents,
 		errors
 	});
@@ -249,7 +249,7 @@ export const postRemoveNeighbouringSite = async (request, response) => {
 	}
 
 	if (!body['remove-neighbouring-site'] || !appealId || !siteId) {
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 
 	const currentUrl = request.originalUrl;
@@ -269,7 +269,7 @@ export const postRemoveNeighbouringSite = async (request, response) => {
 		);
 		return response.redirect(origin);
 	}
-	return response.render('app/500.njk');
+	return response.status(500).render('app/500.njk');
 };
 
 /**
@@ -299,7 +299,7 @@ const renderChangeNeighbouringSite = async (request, response) => {
 		errors
 	);
 
-	return response.render('patterns/change-page.pattern.njk', {
+	return response.status(200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContents,
 		errors
 	});
@@ -349,13 +349,13 @@ const renderChangeNeighbouringSiteCheckAndConfirm = async (request, response) =>
 	} = request;
 
 	if (!objectContainsAllKeys(request.session, 'neighbouringSite')) {
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 
 	const appealData = request.currentAppeal;
 
 	if (!appealData) {
-		return response.render('app/404.njk');
+		return response.status(404).render('app/404.njk');
 	}
 
 	const mappedPageContent = changeNeighbouringSiteCheckAndConfirmPage(
@@ -364,7 +364,7 @@ const renderChangeNeighbouringSiteCheckAndConfirm = async (request, response) =>
 		siteId
 	);
 
-	return response.render('patterns/check-and-confirm-page.pattern.njk', {
+	return response.status(200).render('patterns/check-and-confirm-page.pattern.njk', {
 		pageContent: mappedPageContent,
 		errors
 	});
@@ -376,7 +376,7 @@ const renderChangeNeighbouringSiteCheckAndConfirm = async (request, response) =>
  */
 export const postChangeNeighbouringSiteCheckAndConfirm = async (request, response) => {
 	if (!objectContainsAllKeys(request.session, 'neighbouringSite')) {
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 
 	const {
@@ -408,7 +408,7 @@ export const postChangeNeighbouringSiteCheckAndConfirm = async (request, respons
 		logger.error(error);
 	}
 
-	return response.render('app/500.njk');
+	return response.status(500).render('app/500.njk');
 };
 
 /**
@@ -434,12 +434,12 @@ const renderChangeNeighbouringSiteAffected = async (request, response) => {
 	const origin = currentUrl.split('/').slice(0, -3).join('/');
 
 	if (!appealData) {
-		return response.render('app/404.njk');
+		return response.status(404).render('app/404.njk');
 	}
 
 	const mappedPageContent = changeNeighbouringSiteAffectedPage(appealData, origin);
 
-	return response.render('patterns/change-page.pattern.njk', {
+	return response.status(200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
 		errors
 	});
@@ -488,5 +488,5 @@ export const postChangeNeighbouringSiteAffected = async (request, response) => {
 		logger.error(error);
 	}
 
-	return response.render('app/500.njk');
+	return response.status(500).render('app/500.njk');
 };

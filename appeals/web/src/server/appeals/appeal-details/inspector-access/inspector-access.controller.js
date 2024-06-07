@@ -40,14 +40,14 @@ const renderChangeInspectorAccess = async (request, response) => {
 
 		delete request.session.inspectorAccess;
 
-		return response.render('patterns/change-page.pattern.njk', {
+		return response.status(200).render('patterns/change-page.pattern.njk', {
 			pageContent: mappedPageContents,
 			errors
 		});
 	} catch (error) {
 		logger.error(error);
 		delete request.session.inspectorAccess;
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };
 
@@ -105,5 +105,5 @@ export const postChangeInspectorAccess = async (request, response) => {
 		logger.error(error);
 	}
 
-	return response.render('app/500.njk');
+	return response.status(500).render('app/500.njk');
 };
