@@ -25,17 +25,17 @@ All apps in this monorepo are built with [Express.js](https://expressjs.com/). I
 
 Once the prerequisite software is installed, and the repository cloned, contributors can proceed to the setup and configuration of the system, as described in the basic setup guide.
 
-> [Basic setup](basic-setup.md)
+> [Basic setup](docs/basic-setup.md)
 
 With the system up and running locally, additional setup and configuration can enable secure features that are disabled by default
 
-> [Advanced setup](advanced-setup.md)
+> [Advanced setup](docs/advanced-setup.md)
 
 For additional information, please refer to the following documents:
 
-* [api back-end](api.md)
-* [horizon](horizon.md)
-* [notifications](notifications.md)
+* [api back-end](docs/api.md)
+* [horizon](docs/horizon.md)
+* [notifications](docs/notifications.md)
 
 
 ## Licensing
