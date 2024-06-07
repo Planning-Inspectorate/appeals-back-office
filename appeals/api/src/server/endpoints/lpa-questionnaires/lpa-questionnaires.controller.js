@@ -5,6 +5,7 @@ import { formatLpaQuestionnaire } from './lpa-questionnaires.formatter.js';
 import { updateLPAQuestionaireValidationOutcome } from './lpa-questionnaires.service.js';
 import lpaQuestionnaireRepository from '#repositories/lpa-questionnaire.repository.js';
 import logger from '#utils/logger.js';
+import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -61,16 +62,24 @@ const updateLPAQuestionnaireById = async (req, res) => {
 	} = req;
 	const lpaQuestionnaireId = Number(params.lpaQuestionnaireId);
 	const azureAdUserId = String(req.get('azureAdUserId'));
+	const siteAddress = appeal.address
+		? formatAddressSingleLine(appeal.address)
+		: 'Address not available';
+	const notifyClient = req.notifyClient;
 
 	try {
 		validationOutcome
-			? (body.lpaQuestionnaireDueDate = await updateLPAQuestionaireValidationOutcome({
-					appeal,
-					azureAdUserId,
-					data: body,
-					lpaQuestionnaireId,
-					validationOutcome
-			  }))
+			? (body.lpaQuestionnaireDueDate = await updateLPAQuestionaireValidationOutcome(
+					{
+						appeal,
+						azureAdUserId,
+						data: body,
+						lpaQuestionnaireId,
+						validationOutcome,
+						siteAddress
+					},
+					notifyClient
+			  ))
 			: await lpaQuestionnaireRepository.updateLPAQuestionnaireById(lpaQuestionnaireId, {
 					designatedSites,
 					doesAffectAListedBuilding,

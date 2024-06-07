@@ -512,6 +512,8 @@ interface UpdateLPAQuestionaireValidationOutcomeParams {
 		id: number;
 		appealStatus: AppealStatus[];
 		appealType: AppealType;
+		reference: string;
+		lpa: LPA;
 	};
 	azureAdUserId: string;
 	data: {
@@ -520,6 +522,7 @@ interface UpdateLPAQuestionaireValidationOutcomeParams {
 	};
 	lpaQuestionnaireId: number;
 	validationOutcome: ValidationOutcome;
+	siteAddress: string;
 }
 
 interface UpdateAppellantCaseValidationOutcomeParams {

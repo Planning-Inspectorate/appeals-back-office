@@ -246,7 +246,8 @@ export async function lpaQuestionnairePage(
 			additionalDocumentsSummary,
 			...reviewOutcomeComponents,
 			insetTextComponent
-		]
+		],
+		submitButtonText: 'Confirm'
 	};
 
 	if (
