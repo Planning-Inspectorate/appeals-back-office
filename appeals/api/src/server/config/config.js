@@ -56,6 +56,9 @@ const { value, error } = schema.validate({
 			decisionIsInvalidLPA: {
 				id: 'a0cb542f-24d3-4b22-826b-1e012892f922'
 			},
+			lpaqComplete: {
+				id: 'c571ee53-69c8-400e-a4c0-44ded262a081'
+			},
 			siteVisitSchedule: {
 				unaccompanied: {
 					appellant: {
