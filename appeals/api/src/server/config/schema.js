@@ -112,6 +112,19 @@ export default joi
 								lpa: joi.object({
 									id: joi.string().required()
 								})
+							}),
+							accessRequiredDateChange: joi.object({
+								appellant: joi.object({
+									id: joi.string().required()
+								})
+							}),
+							accompaniedDateChange: joi.object({
+								appellant: joi.object({
+									id: joi.string().required()
+								}),
+								lpa: joi.object({
+									id: joi.string().required()
+								})
 							})
 						})
 					})

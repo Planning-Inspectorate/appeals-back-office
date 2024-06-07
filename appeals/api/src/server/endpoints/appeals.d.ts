@@ -640,6 +640,7 @@ export interface UpdateSiteVisitData {
 	appealReferenceNumber: string;
 	lpaReference: string;
 	siteAddress: string;
+	siteVisitChangeType: string;
 }
 
 type GetAuditTrailsResponse = {

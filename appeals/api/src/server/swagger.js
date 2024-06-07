@@ -518,14 +518,16 @@ export const spec = {
 			visitEndTime: '12:00',
 			visitStartTime: '10:00',
 			visitType: 'Accompanied',
-			previousVisitType: 'Unaccompanied'
+			previousVisitType: 'Unaccompanied',
+			siteVisitChangeType: 'all'
 		},
 		UpdateSiteVisitResponse: {
 			visitDate: '2023-07-09T01:00:00.000Z',
 			visitEndTime: '12:00',
 			visitStartTime: '10:00',
 			visitType: 'Accompanied',
-			previousVisitType: 'Unaccompanied'
+			previousVisitType: 'Unaccompanied',
+			siteVisitChangeType: 'all'
 		},
 		SingleSiteVisitResponse: {
 			appealId: 2,
