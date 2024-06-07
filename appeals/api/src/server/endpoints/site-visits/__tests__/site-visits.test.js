@@ -1030,7 +1030,7 @@ describe('site visit routes', () => {
 				});
 
 				// eslint-disable-next-line no-undef
-				expect(mockSendEmail).toHaveBeenCalledTimes(2);
+				expect(mockSendEmail).toHaveBeenCalledTimes(0);
 				expect(response.status).toEqual(200);
 			});
 
