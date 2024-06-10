@@ -33,7 +33,9 @@ With the system up and running locally, additional setup and configuration can e
 
 For additional information, please refer to the following documents:
 
+* [web front-end](docs/web.md)
 * [api back-end](docs/api.md)
+* [integrations](docs/integrations.md)
 * [horizon](docs/horizon.md)
 * [notifications](docs/notifications.md)
 
