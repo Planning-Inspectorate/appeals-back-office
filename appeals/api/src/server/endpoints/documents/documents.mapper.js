@@ -4,6 +4,7 @@ import { FOLDERS } from '@pins/appeals/constants/documents.js';
 /** @typedef {import('@pins/appeals/index.js').MappedDocument} MappedDocument */
 /** @typedef {import('@pins/appeals/index.js').DocumentMetadata} DocumentMetadata */
 /** @typedef {import('@pins/appeals/index.js').BlobInfo} BlobInfo */
+/** @typedef {import('@pins/appeals/index.js').DocumentAuditTrailInfo} DocumentAuditTrailInfo */
 /** @typedef {import('@pins/appeals.api').Schema.DocumentVersion} DocumentVersion */
 /** @typedef {import('@pins/appeals.api').Appeals.FolderInfo} FolderInfo */
 
@@ -22,6 +23,7 @@ export const mapDocumentsForDatabase = (
 ) => {
 	return documents?.map((document) => {
 		return {
+			GUID: document.GUID,
 			name: document.documentName,
 			caseId,
 			folderId: document.folderId,
@@ -52,6 +54,24 @@ export const mapDocumentsForBlobStorage = (documents, caseReference, versionId =
 				GUID: document.documentGuid,
 				documentName: fileName,
 				blobStoreUrl: mapBlobPath(document.documentGuid, caseReference, fileName, versionId)
+			};
+		}
+
+		return null;
+	});
+};
+
+/**
+ * @param {(DocumentVersion|null)[]} documents
+ * @returns {(DocumentAuditTrailInfo|null)[]}
+ */
+export const mapDocumentsForAuditTrail = (documents) => {
+	return documents.map((document) => {
+		if (document) {
+			const fileName = document.fileName || document.documentGuid;
+			return {
+				documentName: fileName,
+				GUID: document.documentGuid
 			};
 		}
 

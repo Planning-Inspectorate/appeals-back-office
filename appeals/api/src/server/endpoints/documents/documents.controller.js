@@ -4,11 +4,7 @@ import {
 	ERROR_FAILED_TO_SAVE_DATA,
 	ERROR_FAILED_TO_ADD_DOCUMENTS,
 	ERROR_DOCUMENT_NAME_ALREADY_EXISTS,
-	ERROR_NOT_FOUND,
-	AUDIT_TRAIL_DOCUMENT_REDACTED,
-	AUDIT_TRAIL_DOCUMENT_UNREDACTED,
-	AUDIT_TRAIL_DOCUMENT_NO_REDACTION_REQUIRED,
-	AUDIT_TRAIL_DOCUMENT_DATE_CHANGED
+	ERROR_NOT_FOUND
 } from '#endpoints/constants.js';
 import logger from '#utils/logger.js';
 import * as service from './documents.service.js';
@@ -105,7 +101,7 @@ const addDocuments = async (req, res) => {
 			)
 		);
 
-		return res.send(getStorageInfo(documentInfo.documents));
+		return res.send();
 	} catch (/** @type {Object<any, any>} */ error) {
 		if (error.code === 'P2002') {
 			return res.status(409).send({
@@ -204,64 +200,6 @@ const getStorageInfo = (docs) => {
  * @param {Request} req
  * @param {Response} res
  */
-const updateDocuments = async (req, res) => {
-	const { body, appeal } = req;
-	try {
-		const documents = body.documents;
-		for (const document of documents) {
-			const latestDocument = await documentRepository.getDocumentById(document.id);
-			document.latestVersion = latestDocument?.latestDocumentVersion?.version;
-
-			if (latestDocument && latestDocument.name) {
-				if (document.redactionStatus !== latestDocument?.latestDocumentVersion?.redactionStatusId) {
-					const auditTrailMessage = getAuditMessage(document.redactionStatus);
-					if (auditTrailMessage) {
-						await logAuditTrail(
-							latestDocument.name,
-							document.latestVersion,
-							auditTrailMessage,
-							req,
-							appeal.id,
-							latestDocument.guid
-						);
-					}
-				}
-
-				const receivedDate = document.receivedDate
-					? new Date(document.receivedDate).toDateString()
-					: null;
-				const latestReceivedDate = latestDocument?.latestDocumentVersion?.dateReceived
-					? new Date(latestDocument?.latestDocumentVersion?.dateReceived).toDateString()
-					: null;
-
-				if (receivedDate && latestReceivedDate && receivedDate !== latestReceivedDate) {
-					const dateChangeMessage = AUDIT_TRAIL_DOCUMENT_DATE_CHANGED;
-					await logAuditTrail(
-						latestDocument.name,
-						document.latestVersion,
-						dateChangeMessage,
-						req,
-						appeal.id,
-						latestDocument.guid
-					);
-				}
-			}
-		}
-		await documentRepository.updateDocuments(documents);
-	} catch (error) {
-		if (error) {
-			logger.error(error);
-			return res.status(500).send({ errors: { body: ERROR_FAILED_TO_SAVE_DATA } });
-		}
-	}
-
-	res.send(body);
-};
-
-/**
- * @param {Request} req
- * @param {Response} res
- */
 const updateDocumentsAvCheckStatus = async (req, res) => {
 	const { body } = req;
 	try {
@@ -287,62 +225,12 @@ const updateDocumentsAvCheckStatus = async (req, res) => {
 	res.send(body);
 };
 
-/**
- * @param {number} redactionStatus
- * @returns {string|null}
- */
-function getAuditMessage(redactionStatus) {
-	switch (redactionStatus) {
-		case 1:
-			return AUDIT_TRAIL_DOCUMENT_REDACTED;
-		case 2:
-			return AUDIT_TRAIL_DOCUMENT_UNREDACTED;
-		case 3:
-			return AUDIT_TRAIL_DOCUMENT_NO_REDACTION_REQUIRED;
-		default:
-			return null;
-	}
-}
-
-/**
- *
- * @param {string} documentName
- * @param {number} documentVersion
- * @param {string} messageKey
- * @param {Request} req
- * @param {number} appealId
- * @param {string} documentGuid
- * @param {string} action
- */
-async function logAuditTrail(
-	documentName,
-	documentVersion,
-	messageKey,
-	req,
-	appealId,
-	documentGuid,
-	action = 'Update'
-) {
-	const details = stringTokenReplacement(messageKey, [documentName, documentVersion]);
-
-	const auditTrail = await createAuditTrail({
-		appealId: appealId,
-		azureAdUserId: req.get('azureAdUserId'),
-		details: details
-	});
-
-	if (auditTrail) {
-		await service.addDocumentAudit(documentGuid, documentVersion, auditTrail, action);
-	}
-}
-
 export {
 	addDocuments,
 	addDocumentVersion,
 	getDocument,
 	getDocumentAndVersions,
 	getFolder,
-	updateDocuments,
 	updateDocumentsAvCheckStatus,
 	deleteDocumentVersion
 };

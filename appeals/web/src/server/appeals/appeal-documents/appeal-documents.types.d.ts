@@ -3,8 +3,11 @@ import { ValidationErrors } from '@pins/express/types/express.js';
 export interface DocumentUploadPageParameters {
 	backButtonUrl: string;
 	appealId: string;
+	appealReference: string;
 	folderId: string;
 	documentId?: string;
+	documentOriginalFileName?: string;
+	documentVersion?: number;
 	useBlobEmulator: boolean;
 	blobStorageHost: string;
 	blobStorageContainer: string;
@@ -14,10 +17,12 @@ export interface DocumentUploadPageParameters {
 	appealShortReference?: string | null | undefined;
 	pageTitle?: string;
 	pageHeadingText: string;
+	pageBodyComponents: PageComponent[];
 	caseInfoText?: string;
 	documentType: string;
 	nextPageUrl: string;
 	displayLateEntryContent?: boolean;
 	displayCorrectFolderConfirmationContent?: boolean;
+	uncommittedFiles?: string[];
 	errors: ValidationErrors | undefined;
 }

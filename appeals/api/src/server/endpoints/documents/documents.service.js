@@ -1,6 +1,10 @@
 import { PromisePool } from '@supercharge/promise-pool/dist/promise-pool.js';
 import logger from '#utils/logger.js';
-import { mapDocumentsForDatabase, mapDocumentsForBlobStorage } from './documents.mapper.js';
+import {
+	mapDocumentsForDatabase,
+	mapDocumentsForBlobStorage,
+	mapDocumentsForAuditTrail
+} from './documents.mapper.js';
 import { getByCaseId, getByCaseIdPath, getById } from '#repositories/folder.repository.js';
 import {
 	addDocument,
@@ -24,6 +28,7 @@ import { EventType } from '@pins/event-client';
 /** @typedef {import('@pins/appeals/index.js').AddDocumentsRequest} AddDocumentsRequest */
 /** @typedef {import('@pins/appeals/index.js').AddDocumentVersionRequest} AddDocumentVersionRequest */
 /** @typedef {import('@pins/appeals/index.js').AddDocumentsResponse} AddDocumentsResponse */
+/** @typedef {import('@pins/appeals/index.js').AddDocumentVersionResponse} AddDocumentVersionResponse */
 /** @typedef {import('@pins/appeals/index.js').DocumentMetadata} DocumentMetadata */
 
 /**
@@ -56,7 +61,7 @@ export const getFoldersForAppeal = async (appeal, path = null) => {
 /**
  * @param {AddDocumentsRequest} upload
  * @param {RepositoryResult} appeal
- * @returns {Promise<AddDocumentsResponse>}}
+ * @returns {Promise<AddDocumentsResponse>}
  */
 export const addDocumentsToAppeal = async (upload, appeal) => {
 	const { blobStorageHost, blobStorageContainer, documents } = upload;
@@ -79,13 +84,12 @@ export const addDocumentsToAppeal = async (upload, appeal) => {
 		}
 	}
 
-	const documentsToAddToBlobStorage = mapDocumentsForBlobStorage(
-		documentsCreated,
-		appeal.reference
-	).filter((d) => d !== null);
+	const documentsToAddToAuditTrail = mapDocumentsForAuditTrail(documentsCreated).filter(
+		(d) => d !== null
+	);
 
 	return {
-		documents: documentsToAddToBlobStorage
+		documents: documentsToAddToAuditTrail
 	};
 };
 
@@ -101,13 +105,12 @@ const addDocumentAndVersion = async (caseId, reference, appealStatus, documents)
 		.for(documents)
 		.handleError((error, document) => {
 			logger.error(`Error while upserting document name "${document.name}" to database: ${error}`);
-			// @ts-ignore
-			error.meta.fileName = document.name;
 			throw error;
 		})
 		.process(async (d) => {
 			const document = await addDocument(
 				{
+					GUID: d.GUID,
 					originalFilename: d.name,
 					mime: d.mime,
 					documentType: d.documentType,
@@ -145,7 +148,7 @@ const addDocumentAndVersion = async (caseId, reference, appealStatus, documents)
  * @param {AddDocumentVersionRequest} upload
  * @param {RepositoryResult} appeal
  * @param {Document} document
- * @returns {Promise<AddDocumentsResponse>}}
+ * @returns {Promise<AddDocumentVersionResponse>}}
  */
 export const addVersionToDocument = async (upload, appeal, document) => {
 	if (!document || document.isDeleted) {

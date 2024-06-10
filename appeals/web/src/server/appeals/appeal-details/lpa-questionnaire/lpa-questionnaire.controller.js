@@ -11,13 +11,17 @@ import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import {
 	renderDocumentUpload,
 	renderDocumentDetails,
+	postDocumentUpload,
 	postDocumentDetails,
+	renderUploadDocumentsCheckAndConfirm,
+	postUploadDocumentsCheckAndConfirm,
+	postUploadDocumentVersionCheckAndConfirm,
 	renderManageFolder,
 	renderManageDocument,
 	renderDeleteDocument,
 	renderChangeDocumentDetails,
 	postChangeDocumentDetails,
-	postDocumentDelete
+	postDeleteDocument
 } from '../../appeal-documents/appeal-documents.controller.js';
 
 /**
@@ -46,8 +50,7 @@ const renderLpaQuestionnaire = async (request, response, errors = null) => {
 		lpaQuestionnaire,
 		currentAppeal,
 		request.originalUrl,
-		session,
-		request.apiClient
+		session
 	);
 
 	return response.status(200).render('patterns/display-page.pattern.njk', {
@@ -239,20 +242,35 @@ export const getConfirmation = async (request, response) => {
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const getAddDocuments = async (request, response) => {
-	const appealDetails = request.currentAppeal;
+	const { currentAppeal } = request;
 	const lpaQuestionnaireDetails = await getLpaQuestionnaireDetails(request);
 
-	if (!appealDetails || !lpaQuestionnaireDetails) {
+	if (!currentAppeal || !lpaQuestionnaireDetails) {
 		return response.status(404).render('app/404.njk');
 	}
 
 	renderDocumentUpload(
 		request,
 		response,
-		appealDetails,
+		currentAppeal,
 		`/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}`,
 		`/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/add-document-details/{{folderId}}`,
 		getValidationOutcomeFromLpaQuestionnaire(lpaQuestionnaireDetails) === 'complete'
+	);
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const postAddDocuments = async (request, response) => {
+	const { currentAppeal, currentFolder } = request;
+
+	if (!currentAppeal || !currentFolder) {
+		return response.status(404).render('app/404');
+	}
+
+	postDocumentUpload(
+		request,
+		response,
+		`/appeals-service/appeal-details/${currentAppeal.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/add-document-details/${currentFolder.id}`
 	);
 };
 
@@ -277,8 +295,80 @@ export const postAddDocumentDetails = async (request, response) => {
 		request,
 		response,
 		`/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/add-documents/{{folderId}}`,
-		`/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/`
+		`/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/add-documents/{{folderId}}/check-your-answers`
 	);
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const getAddDocumentsCheckAndConfirm = async (request, response) => {
+	const {
+		currentFolder,
+		params: { documentId }
+	} = request;
+
+	if (!currentFolder) {
+		return response.status(404).render('app/404');
+	}
+
+	renderUploadDocumentsCheckAndConfirm(
+		request,
+		response,
+		`/appeals-service/appeal-details/${request.currentAppeal.appealId}/lpa-questionnaire/${
+			request.params.lpaQuestionnaireId
+		}/add-document-details/${currentFolder.id}${documentId ? `/${documentId}` : ''}`
+	);
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const postAddDocumentsCheckAndConfirm = async (request, response) => {
+	const { currentAppeal } = request;
+
+	if (!currentAppeal) {
+		return response.status(404).render('app/404');
+	}
+
+	try {
+		postUploadDocumentsCheckAndConfirm(
+			request,
+			response,
+			`/appeals-service/appeal-details/${currentAppeal.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}`
+		);
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error
+				? error.message
+				: 'Something went wrong when adding documents to lpa questionnaire'
+		);
+
+		return response.render('app/500.njk');
+	}
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const postAddDocumentVersionCheckAndConfirm = async (request, response) => {
+	const { currentAppeal } = request;
+
+	if (!currentAppeal) {
+		return response.status(404).render('app/404');
+	}
+
+	try {
+		postUploadDocumentVersionCheckAndConfirm(
+			request,
+			response,
+			`/appeals-service/appeal-details/${currentAppeal.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}`
+		);
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error
+				? error.message
+				: 'Something went wrong when adding document version to lpa questionnaire'
+		);
+
+		return response.render('app/500.njk');
+	}
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
@@ -303,7 +393,7 @@ export const getManageDocument = async (request, response) => {
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
-export const getAddDocumentsVersion = async (request, response) => {
+export const getAddDocumentVersion = async (request, response) => {
 	const appealDetails = request.currentAppeal;
 	const lpaQuestionnaireDetails = await getLpaQuestionnaireDetails(request);
 	if (!appealDetails || !lpaQuestionnaireDetails) {
@@ -317,6 +407,25 @@ export const getAddDocumentsVersion = async (request, response) => {
 		`/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/manage-documents/${request.params.folderId}/${request.params.documentId}`,
 		`/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/add-document-details/${request.params.folderId}/${request.params.documentId}`,
 		getValidationOutcomeFromLpaQuestionnaire(lpaQuestionnaireDetails) === 'complete'
+	);
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const postAddDocumentVersion = async (request, response) => {
+	const {
+		currentAppeal,
+		currentFolder,
+		params: { documentId }
+	} = request;
+
+	if (!currentAppeal || !currentFolder) {
+		return response.status(404).render('app/404');
+	}
+
+	postDocumentUpload(
+		request,
+		response,
+		`/appeals-service/appeal-details/${currentAppeal.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/add-document-details/${currentFolder.id}/${documentId}`
 	);
 };
 
@@ -350,7 +459,7 @@ export const postDocumentVersionDetails = async (request, response) => {
 		request,
 		response,
 		`/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/add-documents/${request.params.folderId}/${request.params.documentId}`,
-		`/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}`
+		`/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/add-documents/${request.params.folderId}/${request.params.documentId}/check-your-answers`
 	);
 };
 
@@ -372,8 +481,8 @@ export const getDeleteDocument = async (request, response) => {
 	);
 };
 /** @type {import('@pins/express').RequestHandler<Response>} */
-export const postDeleteDocument = async (request, response) => {
-	postDocumentDelete(
+export const postDeleteDocumentPage = async (request, response) => {
+	postDeleteDocument(
 		request,
 		response,
 		`/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}`,

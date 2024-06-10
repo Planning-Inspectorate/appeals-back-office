@@ -13,7 +13,8 @@ import {
 	costsFolderInfoDecision,
 	documentRedactionStatuses,
 	appealCostsDocumentItem,
-	linkedAppealsWithExternalLead
+	linkedAppealsWithExternalLead,
+	fileUploadInfo
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 
@@ -465,9 +466,31 @@ describe('appeal-details', () => {
 				nock('http://test/')
 					.get('/appeals/document-redaction-statuses')
 					.reply(200, documentRedactionStatuses);
+				nock('http://test/').post('/appeals/1/documents').reply(200);
 
-				await request.get(
-					`${baseUrl}/1/costs/appellant/add-document-details/${appealData.costs.appellantFolder.id}`
+				const selectDocumentTypeResponse = await request
+					.post(`${baseUrl}/1/costs/appellant/select-document-type/1`)
+					.send({
+						'costs-document-type': '1'
+					});
+
+				expect(selectDocumentTypeResponse.statusCode).toBe(302);
+
+				const addDocumentsResponse = await request
+					.post(`${baseUrl}/1/costs/appellant/upload-documents/1`)
+					.send({
+						'upload-info': fileUploadInfo
+					});
+
+				expect(addDocumentsResponse.statusCode).toBe(302);
+
+				const postCheckAndConfirmResponse = await request
+					.post(`${baseUrl}/1/costs/appellant/check-your-answers/1`)
+					.send({});
+
+				expect(postCheckAndConfirmResponse.statusCode).toBe(302);
+				expect(postCheckAndConfirmResponse.text).toBe(
+					'Found. Redirecting to /appeals-service/appeal-details/1'
 				);
 
 				const caseDetailsResponse = await request.get(`${baseUrl}/1`);
@@ -477,7 +500,7 @@ describe('appeal-details', () => {
 				}).innerHTML;
 
 				expect(notificationBannerElementHTML).toMatchSnapshot();
-				expect(notificationBannerElementHTML).toContain('Appellant costs document uploaded</p>');
+				expect(notificationBannerElementHTML).toContain('Appellant costs documents uploaded</p>');
 			});
 
 			it('should render a success notification banner when an LPA costs document was uploaded', async () => {
@@ -488,9 +511,31 @@ describe('appeal-details', () => {
 				nock('http://test/')
 					.get('/appeals/document-redaction-statuses')
 					.reply(200, documentRedactionStatuses);
+				nock('http://test/').post('/appeals/1/documents').reply(200);
 
-				await request.get(
-					`${baseUrl}/1/costs/lpa/add-document-details/${appealData.costs.lpaFolder.id}`
+				const selectDocumentTypeResponse = await request
+					.post(`${baseUrl}/1/costs/lpa/select-document-type/2`)
+					.send({
+						'costs-document-type': '1'
+					});
+
+				expect(selectDocumentTypeResponse.statusCode).toBe(302);
+
+				const addDocumentsResponse = await request
+					.post(`${baseUrl}/1/costs/lpa/upload-documents/2`)
+					.send({
+						'upload-info': fileUploadInfo
+					});
+
+				expect(addDocumentsResponse.statusCode).toBe(302);
+
+				const postCheckAndConfirmResponse = await request
+					.post(`${baseUrl}/1/costs/lpa/check-your-answers/2`)
+					.send({});
+
+				expect(postCheckAndConfirmResponse.statusCode).toBe(302);
+				expect(postCheckAndConfirmResponse.text).toBe(
+					'Found. Redirecting to /appeals-service/appeal-details/1'
 				);
 
 				const caseDetailsResponse = await request.get(`${baseUrl}/1`);
@@ -500,7 +545,7 @@ describe('appeal-details', () => {
 				}).innerHTML;
 
 				expect(notificationBannerElementHTML).toMatchSnapshot();
-				expect(notificationBannerElementHTML).toContain('LPA costs document uploaded</p>');
+				expect(notificationBannerElementHTML).toContain('LPA costs documents uploaded</p>');
 			});
 
 			it('should render a success notification banner when a costs decision document was uploaded', async () => {
@@ -511,6 +556,23 @@ describe('appeal-details', () => {
 				nock('http://test/')
 					.get('/appeals/document-redaction-statuses')
 					.reply(200, documentRedactionStatuses);
+				nock('http://test/').post('/appeals/1/documents').reply(200);
+
+				const selectDocumentTypeResponse = await request
+					.post(`${baseUrl}/1/costs/decision/select-document-type/3`)
+					.send({
+						'costs-document-type': '1'
+					});
+
+				expect(selectDocumentTypeResponse.statusCode).toBe(302);
+
+				const addDocumentsResponse = await request
+					.post(`${baseUrl}/1/costs/decision/upload-documents/3`)
+					.send({
+						'upload-info': fileUploadInfo
+					});
+
+				expect(addDocumentsResponse.statusCode).toBe(302);
 
 				const checkAndConfirmResponse = await request
 					.post(`${baseUrl}/1/costs/decision/check-and-confirm/3`)

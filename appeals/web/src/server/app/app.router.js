@@ -17,10 +17,6 @@ import {
 	getDocumentDownload,
 	getDocumentDownloadByVersion
 } from './components/file-downloader.component.js';
-import {
-	postDocumentsUpload,
-	postUploadDocumentVersion
-} from './components/file-uploader.component.js';
 import { addApiClientToRequest } from '../lib/middleware/add-apiclient-to-request.js';
 
 const router = createRouter();
@@ -65,22 +61,6 @@ router.use(assertGroupAccess(...groupIds));
 
 router.route('/').get(viewHomepage);
 router.route('/auth/signout').get(handleSignout);
-
-router
-	.route('/documents/:caseId/upload')
-	.post(
-		assertGroupAccess(allowedGroups.caseOfficerGroupId),
-		addApiClientToRequest,
-		asyncRoute(postDocumentsUpload)
-	);
-
-router
-	.route('/documents/:caseId/upload/:documentId')
-	.post(
-		assertGroupAccess(allowedGroups.caseOfficerGroupId),
-		addApiClientToRequest,
-		asyncRoute(postUploadDocumentVersion)
-	);
 
 router
 	.route('/documents/:caseId/download/:guid/:preview?')

@@ -37,6 +37,9 @@ export const getByCaseId = (caseId) => {
 		where: { caseId },
 		include: {
 			documents: {
+				include: {
+					latestDocumentVersion: true
+				},
 				orderBy: {
 					createdAt: 'desc'
 				}
