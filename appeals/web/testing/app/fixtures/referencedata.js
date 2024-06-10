@@ -228,54 +228,7 @@ export const appellantCaseDataNotValidated = {
 	},
 	planningApplicationReference: '48269/APP/2021/1482',
 	documents: {
-		applicationForm: {
-			folderId: 1,
-			path: 'appellant_case/applicationForm',
-			documents: []
-		},
-		decisionLetter: {
-			folderId: 2,
-			path: 'appellant_case/decisionLetter',
-			documents: []
-		},
-		designAndAccessStatement: {
-			folderId: 3,
-			path: 'appellant_case/designAndAccessStatement',
-			documents: []
-		},
-		planningObligation: {
-			folderId: 4,
-			path: 'appellant_case/planningObligation',
-			documents: []
-		},
-		plansDrawingsSupportingDocuments: {
-			folderId: 5,
-			path: 'appellant_case/plansDrawingsSupportingDocuments',
-			documents: []
-		},
-		separateOwnershipCertificate: {
-			folderId: 6,
-			path: 'appellant_case/separateOwnershipCertificate',
-			documents: []
-		},
-		newPlansOrDrawings: {
-			folderId: 7,
-			path: 'appellant_case/newPlansOrDrawings',
-			documents: []
-		},
-		newSupportingDocuments: {
-			folderId: 8,
-			path: 'appellant_case/newSupportingDocuments',
-			documents: []
-		},
-		appealStatement: {
-			folderId: 9,
-			path: 'appellant_case/appealStatement',
-			documents: []
-		},
-		additionalDocuments: {
-			folderId: 10,
-			path: 'appellant_case/additionalDocuments',
+		appellantCaseCorrespondence: {
 			documents: [
 				{
 					id: '00c43c8c-829a-4aa8-883a-fd6fc1f52c3d',
@@ -293,7 +246,34 @@ export const appellantCaseDataNotValidated = {
 					isLateEntry: false,
 					virusCheckStatus: 'checked'
 				}
-			]
+			],
+			folderId: 70461,
+			path: 'appellant-case/appellantCaseCorrespondence'
+		},
+		appellantCaseWithdrawalLetter: {
+			documents: [],
+			folderId: 70460,
+			path: 'appellant-case/appellantCaseWithdrawalLetter'
+		},
+		appellantStatement: {
+			documents: [],
+			folderId: 70456,
+			path: 'appellant-case/appellantStatement'
+		},
+		applicationDecisionLetter: {
+			documents: [],
+			folderId: 70458,
+			path: 'appellant-case/applicationDecisionLetter'
+		},
+		changedDescription: {
+			documents: [],
+			folderId: 70459,
+			path: 'appellant-case/changedDescription'
+		},
+		originalApplicationForm: {
+			documents: [],
+			folderId: 70457,
+			path: 'appellant-case/originalApplicationForm'
 		}
 	},
 	hasAdvertisedAppeal: null,
@@ -1486,7 +1466,7 @@ export const documentFolderInfo = {
 			id: '97260151-4334-407f-a76a-0b5666cbcfa6',
 			name: 'ph0-documentFolderInfo.jpeg',
 			latestDocumentVersion: {
-				draft: true,
+				draft: false,
 				dateReceived: '2025-04-03T01:00:00.000Z',
 				redactionStatus: 3,
 				size: 58861,
@@ -1499,7 +1479,7 @@ export const documentFolderInfo = {
 			id: '97260151-4334-407f-a76a-0b5666cbcfa7',
 			name: 'ph1-documentFolderInfo.jpeg',
 			latestDocumentVersion: {
-				draft: true,
+				draft: false,
 				dateReceived: '2025-04-03T01:00:00.000Z',
 				redactionStatus: 2,
 				size: 58987,
@@ -1510,7 +1490,7 @@ export const documentFolderInfo = {
 		}
 	],
 	id: 2864,
-	path: 'appellant_case/newSupportingDocuments'
+	path: 'appellant-case/changedDescription'
 };
 
 export const documentFolderInfoWithoutDraftDocuments = {
@@ -1543,13 +1523,13 @@ export const documentFolderInfoWithoutDraftDocuments = {
 		}
 	],
 	id: 2864,
-	path: 'appellant_case/newSupportingDocuments'
+	path: 'appellant-case/changedDescription'
 };
 
 export const additionalDocumentsFolderInfo = {
 	...documentFolderInfo,
 	id: 2865,
-	path: 'appellant_case/additionalDocuments'
+	path: 'appellant-case/appellantCaseCorrespondence'
 };
 
 export const notCheckedDocumentFolderInfoDocuments = {
@@ -2036,7 +2016,7 @@ export const costsFolderInfoAppellant = {
 			id: '15d19184-155b-4b6c-bba6-2bd2a61ca9a3',
 			name: 'test-pdf-documentFolderInfo.pdf',
 			latestDocumentVersion: {
-				draft: true,
+				draft: false,
 				dateReceived: '2023-02-01T01:00:00.000Z',
 				redactionStatus: 1,
 				size: 129363,
@@ -2089,7 +2069,7 @@ export const appealCostsDocumentItem = {
 		lastModified: null,
 		documentType: 'appellant',
 		published: false,
-		draft: true,
+		draft: false,
 		sourceSystem: 'back-office-appeals',
 		origin: null,
 		originalFilename: 'test-doc-alternate.docx',
@@ -2120,6 +2100,9 @@ export const appealCostsDocumentItem = {
 			'https://127.0.0.1:10000/devstoreaccount1/document-service-uploads/document-service-uploads/appeal/6014692/d2197025-5edb-4477-8e98-2a1bf13ed2ea/v1/test-doc-alternate.docx'
 	}
 };
+
+export const fileUploadInfo =
+	'[{"name": "test-document.txt", "GUID": "1", "fileRowId": "1", "blobStoreUrl": "/", "mimeType": "txt", "documentType": "txt", "size": 1, "stage": "appellant-case"}]';
 
 export const baseSession = {
 	id: '',

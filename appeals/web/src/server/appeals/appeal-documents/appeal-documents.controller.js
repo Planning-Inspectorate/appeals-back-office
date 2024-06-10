@@ -8,16 +8,27 @@ import {
 } from './appeal.documents.service.js';
 import {
 	mapDocumentDetailsFormDataToAPIRequest,
+	addDocumentDetailsFormDataToFileUploadInfo,
 	addDocumentDetailsPage,
+	addDocumentsCheckAndConfirmPage,
 	manageFolderPage,
 	manageDocumentPage,
-	mapRedactionStatusIdToName,
 	changeDocumentDetailsPage,
 	deleteDocumentPage,
 	documentUploadPage
 } from './appeal-documents.mapper.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { isInternalUrl } from '#lib/url-utilities.js';
+import { objectContainsAllKeys } from '#lib/object-utilities.js';
+import {
+	createNewDocument,
+	createNewDocumentVersion
+} from '#app/components/file-uploader.component.js';
+import config from '@pins/appeals.web/environment/config.js';
+import { redactionStatusNameToId } from '#lib/redaction-statuses.js';
+import { isFileUploadInfo } from '#lib/ts-utilities.js';
+import { dateToDayMonthYear, dayMonthYearToApiDateString } from '#lib/dates.js';
+import { folderIsAdditionalDocuments } from '#lib/documents.js';
 
 /**
  *
@@ -28,6 +39,7 @@ import { isInternalUrl } from '#lib/url-utilities.js';
  * @param {string} [nextPageUrl]
  * @param {boolean} [isLateEntry]
  * @param {string} [pageHeadingTextOverride]
+ * @param {PageComponent[]} [pageBodyComponents]
  * @param {boolean} [allowMultipleFiles]
  * @param {string} [documentType]
  */
@@ -39,13 +51,15 @@ export const renderDocumentUpload = async (
 	nextPageUrl,
 	isLateEntry = false,
 	pageHeadingTextOverride,
+	pageBodyComponents,
 	allowMultipleFiles = true,
 	documentType
 ) => {
 	const {
 		currentFolder,
 		errors,
-		params: { appealId, documentId }
+		params: { appealId, documentId },
+		session
 	} = request;
 
 	if (!appealDetails || !currentFolder) {
@@ -54,30 +68,73 @@ export const renderDocumentUpload = async (
 
 	let documentName;
 	let _documentType = documentType;
+	let latestVersion;
 
 	if (documentId) {
 		const fileInfo = await getFileInfo(request.apiClient, appealId, documentId);
 		documentName = fileInfo?.latestDocumentVersion.fileName;
 		_documentType = fileInfo?.latestDocumentVersion.documentType;
+		latestVersion = fileInfo?.latestDocumentVersion.version;
 	}
 
-	const mappedPageContent = documentUploadPage(
+	const mappedPageContent = await documentUploadPage(
 		appealId,
 		appealDetails.appealReference,
 		`${currentFolder.id}`,
 		currentFolder.path,
 		documentId,
 		documentName,
+		latestVersion,
 		backButtonUrl,
 		nextPageUrl,
 		isLateEntry,
+		session,
 		errors,
 		pageHeadingTextOverride,
+		pageBodyComponents,
 		allowMultipleFiles,
 		_documentType
 	);
 
 	return response.status(200).render('appeals/documents/document-upload.njk', mappedPageContent);
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * @param {string} nextPageUrl
+ */
+export const postDocumentUpload = async (request, response, nextPageUrl) => {
+	const { body, currentAppeal, currentFolder } = request;
+
+	if (!currentAppeal || !currentFolder) {
+		return response.status(404).render('app/404');
+	}
+
+	if (!body['upload-info']) {
+		return response.status(500).render('app/500');
+	}
+
+	/** @type {import('#lib/ts-utilities.js').FileUploadInfoItem[]} */
+	const uploadInfo = JSON.parse(body['upload-info']);
+
+	if (!isFileUploadInfo(uploadInfo)) {
+		return response.status(500).render('app/500');
+	}
+
+	const redactionStatuses = await getDocumentRedactionStatuses(request.apiClient);
+
+	if (!redactionStatuses) {
+		return response.status(500).render('app/500.njk');
+	}
+
+	request.session.fileUploadInfo = uploadInfo.map((infoItem) => ({
+		...infoItem,
+		redactionStatus: redactionStatusNameToId(redactionStatuses, 'unredacted'),
+		receivedDate: dayMonthYearToApiDateString(dateToDayMonthYear(new Date()))
+	}));
+
+	response.redirect(nextPageUrl);
 };
 
 /**
@@ -101,6 +158,10 @@ export const renderDocumentDetails = async (
 		return response.status(404).render('app/404.njk');
 	}
 
+	if (!objectContainsAllKeys(request.session, 'fileUploadInfo')) {
+		return response.status(500).render('app/500.njk');
+	}
+
 	const redactionStatuses = await getDocumentRedactionStatuses(request.apiClient);
 
 	if (!redactionStatuses) {
@@ -110,13 +171,15 @@ export const renderDocumentDetails = async (
 	const mappedPageContent = addDocumentDetailsPage(
 		backButtonUrl,
 		currentFolder,
+		request.session.fileUploadInfo,
 		body?.items,
 		redactionStatuses,
 		pageHeadingTextOverride
 	);
-	const isAdditionalDocument = currentFolder.path.split('/')[1] === 'additionalDocuments';
 
-	return response.status(200).render('appeals/documents/add-document-details.njk', {
+	const isAdditionalDocument = folderIsAdditionalDocuments(currentFolder);
+
+	return response.render('appeals/documents/add-document-details.njk', {
 		pageContent: mappedPageContent,
 		displayLateEntryContent: isAdditionalDocument && isLateEntry,
 		errors
@@ -225,19 +288,18 @@ export const renderManageDocument = async (
  * @param {string} backButtonUrl
  * @param {string} [nextPageUrl]
  * @param {string} [pageHeadingTextOverride]
- * @param {function} [successCallback]
  */
 export const postDocumentDetails = async (
 	request,
 	response,
 	backButtonUrl,
 	nextPageUrl,
-	pageHeadingTextOverride,
-	successCallback
+	pageHeadingTextOverride
 ) => {
 	try {
 		const {
 			body,
+			currentFolder,
 			apiClient,
 			params: { appealId },
 			errors
@@ -253,25 +315,27 @@ export const postDocumentDetails = async (
 			);
 		}
 
+		if (!currentFolder) {
+			return response.status(404).render('app/404');
+		}
+
+		if (!objectContainsAllKeys(request.session, 'fileUploadInfo')) {
+			return response.status(500).render('app/500.njk');
+		}
+
 		const redactionStatuses = await getDocumentRedactionStatuses(apiClient);
 
 		if (redactionStatuses) {
-			const apiRequest = mapDocumentDetailsFormDataToAPIRequest(body, redactionStatuses);
-			const updateDocumentsResult = await updateDocuments(apiClient, appealId, apiRequest);
+			addDocumentDetailsFormDataToFileUploadInfo(
+				body,
+				request.session.fileUploadInfo,
+				redactionStatuses
+			);
 
-			if (updateDocumentsResult) {
-				addNotificationBannerToSession(
-					request.session,
-					'documentAdded',
-					Number.parseInt(appealId, 10)
-				);
-
-				if (successCallback) {
-					successCallback(request);
-				}
-
-				return response.redirect(nextPageUrl || `/appeals-service/appeal-details/${appealId}/`);
-			}
+			return response.redirect(
+				nextPageUrl?.replace('{{folderId}}', currentFolder.id) ||
+					`/appeals-service/appeal-details/${appealId}/`
+			);
 		}
 
 		return response.status(500).render('app/500.njk');
@@ -286,11 +350,192 @@ export const postDocumentDetails = async (
 };
 
 /**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * @param {string} backLinkUrl
+ */
+export const renderUploadDocumentsCheckAndConfirm = async (request, response, backLinkUrl) => {
+	const { currentAppeal, currentFolder } = request;
+
+	if (!currentAppeal || !currentFolder) {
+		return response.status(404).render('app/404');
+	}
+
+	if (!objectContainsAllKeys(request.session, 'fileUploadInfo')) {
+		return response.status(500).render('app/500.njk');
+	}
+
+	const redactionStatuses = await getDocumentRedactionStatuses(request.apiClient);
+
+	if (!redactionStatuses) {
+		return response.status(500).render('app/500.njk');
+	}
+
+	const mappedPageContent = addDocumentsCheckAndConfirmPage(
+		backLinkUrl,
+		currentAppeal.appealReference,
+		request.session.fileUploadInfo,
+		redactionStatuses
+	);
+
+	return response.render('patterns/check-and-confirm-page.pattern.njk', {
+		pageContent: mappedPageContent
+	});
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * @param {string} [nextPageUrl]
+ * @param {function} [successCallback]
+ */
+export const postUploadDocumentsCheckAndConfirm = async (
+	request,
+	response,
+	nextPageUrl,
+	successCallback
+) => {
+	const { currentAppeal, currentFolder } = request;
+
+	if (!currentAppeal || !currentFolder) {
+		return response.status(404).render('app/404');
+	}
+
+	if (!objectContainsAllKeys(request.session, 'fileUploadInfo')) {
+		return response.status(500).render('app/500.njk');
+	}
+
+	try {
+		const {
+			currentAppeal,
+			session: { fileUploadInfo }
+		} = request;
+
+		/** @type {import('@pins/appeals/index.js').AddDocumentsRequest} */
+		const addDocumentsRequestPayload = {
+			blobStorageHost:
+				config.useBlobEmulator === true ? config.blobEmulatorSasUrl : config.blobStorageUrl,
+			blobStorageContainer: config.blobStorageDefaultContainer,
+			documents: fileUploadInfo.map(
+				(/** @type {import('#lib/ts-utilities.js').FileUploadInfoItem} */ document) => {
+					/** @type {import('@pins/appeals/index.js').MappedDocument} */
+					const mappedDocument = {
+						caseId: currentAppeal.appealId,
+						documentName: document.name,
+						documentType: document.documentType,
+						mimeType: document.mimeType,
+						documentSize: document.size,
+						stage: document.stage,
+						fileRowId: document.fileRowId,
+						folderId: currentFolder.id,
+						GUID: document.GUID
+					};
+
+					return mappedDocument;
+				}
+			)
+		};
+
+		await createNewDocument(request.apiClient, currentAppeal.appealId, addDocumentsRequestPayload);
+
+		delete request.session.fileUploadInfo;
+
+		addNotificationBannerToSession(
+			request.session,
+			'documentAdded',
+			Number.parseInt(currentAppeal.appealId, 10)
+		);
+
+		if (successCallback) {
+			successCallback(request);
+		}
+
+		if (nextPageUrl) {
+			return response.redirect(nextPageUrl);
+		}
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error
+				? error.message
+				: 'Something went wrong when submitting the upload documents check and confirm page'
+		);
+	}
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * @param {string} nextPageUrl
+ */
+export const postUploadDocumentVersionCheckAndConfirm = async (request, response, nextPageUrl) => {
+	const { currentAppeal, currentFolder } = request;
+
+	if (!currentAppeal || !currentFolder) {
+		return response.status(404).render('app/404');
+	}
+
+	if (!objectContainsAllKeys(request.session, 'fileUploadInfo')) {
+		return response.status(500).render('app/500.njk');
+	}
+
+	try {
+		const {
+			currentAppeal,
+			session: { fileUploadInfo },
+			params: { documentId }
+		} = request;
+		const uploadInfo = fileUploadInfo[0];
+
+		/** @type {import('@pins/appeals/index.js').AddDocumentVersionRequest} */
+		const addDocumentVersionRequestPayload = {
+			blobStorageHost:
+				config.useBlobEmulator === true ? config.blobEmulatorSasUrl : config.blobStorageUrl,
+			blobStorageContainer: config.blobStorageDefaultContainer,
+			document: {
+				caseId: currentAppeal.appealId,
+				documentName: uploadInfo.name,
+				documentType: uploadInfo.documentType,
+				mimeType: uploadInfo.mimeType,
+				documentSize: uploadInfo.size,
+				stage: uploadInfo.stage,
+				fileRowId: uploadInfo.fileRowId,
+				folderId: currentFolder.id,
+				GUID: uploadInfo.GUID
+			}
+		};
+
+		await createNewDocumentVersion(
+			request.apiClient,
+			currentAppeal.appealId,
+			documentId,
+			addDocumentVersionRequestPayload
+		);
+
+		delete request.session.fileUploadInfo;
+
+		return response.redirect(nextPageUrl);
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error
+				? error.message
+				: 'Something went wrong when submitting the upload documents check and confirm page'
+		);
+
+		return response.status(500).render('app/500.njk');
+	}
+};
+
+/**
  * @typedef {Object} DocumentDetailsItem
+ * @property {string} name
  * @property {string} documentId
- * @property {import('#appeals/appeals.types.js').DayMonthYear} receivedDate
+ * @property {import('#appeals/appeals.types.js').DayMonthYear|undefined} receivedDate
  * @property {import('@pins/appeals.api').Schema.DocumentRedactionStatus} redactionStatus
  */
+
+/** @typedef {import('@pins/appeals.api').Schema.Document} Document */
 
 /**
  *
@@ -306,8 +551,12 @@ export const renderChangeDocumentDetails = async (request, response, backButtonU
 		params: { appealId, documentId }
 	} = request;
 
-	/** @type {DocumentDetailsItem[]} */
-	let items = body?.items;
+	if (!currentFolder) {
+		return response.status(500).render('app/500.njk');
+	}
+
+	/** @type {DocumentDetailsItem} */
+	const bodyItem = body?.items?.[0];
 
 	const redactionStatuses = await getDocumentRedactionStatuses(request.apiClient);
 
@@ -315,36 +564,17 @@ export const renderChangeDocumentDetails = async (request, response, backButtonU
 		return response.status(500).render('app/500.njk');
 	}
 
-	if (!items) {
-		const currentFile = await getFileInfo(request.apiClient, appealId, documentId);
+	const currentFile = await getFileInfo(request.apiClient, appealId, documentId);
 
-		if (currentFile) {
-			const receivedDate = new Date(currentFile?.latestDocumentVersion?.dateReceived);
-			const redactionStatus = mapRedactionStatusIdToName(
-				redactionStatuses,
-				currentFile?.latestDocumentVersion?.redactionStatusId
-			).toLowerCase();
-			items ??= [
-				{
-					documentId: documentId,
-					receivedDate: {
-						day: receivedDate.getDate(),
-						month: receivedDate.getMonth() + 1,
-						year: receivedDate.getFullYear()
-					},
-					redactionStatus: redactionStatus
-				}
-			];
-		}
-	}
-	if (!currentFolder) {
-		return response.status(404).render('app/404.njk');
+	if (!currentFile) {
+		return response.status(500).render('app/500.njk');
 	}
 
 	const mappedPageContent = changeDocumentDetailsPage(
 		backButtonUrl,
 		currentFolder,
-		items,
+		bodyItem,
+		currentFile,
 		redactionStatuses
 	);
 
@@ -452,7 +682,7 @@ export const renderDeleteDocument = async (request, response, backButtonUrl) => 
  * @param {string} cancelUrl
  * @param {string} uploadNewDocumentUrl
  */
-export const postDocumentDelete = async (
+export const postDeleteDocument = async (
 	request,
 	response,
 	returnUrl,

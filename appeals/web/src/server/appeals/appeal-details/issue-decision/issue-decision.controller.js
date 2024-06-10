@@ -6,11 +6,16 @@ import {
 	issueDecisionPage,
 	decisionConfirmationPage,
 	mapDecisionOutcome,
-	decisionLetterUploadPage,
+	decisionLetterUploadPageBodyComponents,
 	invalidReasonPage,
 	checkAndConfirmInvalidPage
 } from './issue-decision.mapper.js';
-import { getFolder } from '#appeals/appeal-documents/appeal.documents.service.js';
+import {
+	renderDocumentUpload,
+	postDocumentUpload,
+	postUploadDocumentsCheckAndConfirm
+} from '../../appeal-documents/appeal-documents.controller.js';
+import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { STAGE, DOCTYPE } from '@pins/appeals/constants/documents.js';
 
 /**
@@ -91,26 +96,24 @@ export const getDecisionLetterUpload = async (request, response) => {
 	return renderDecisionLetterUpload(request, response);
 };
 
-/**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- */
+/** @type {import('@pins/express').RequestHandler<Response>} */
 export const postDecisionLetterUpload = async (request, response) => {
-	try {
-		const { appealId } = request.params;
-		const { errors } = request;
+	const { currentAppeal } = request;
 
-		if (errors) {
-			return renderIssueDecision(request, response);
-		}
-
-		return response.redirect(
-			`/appeals-service/appeal-details/${appealId}/issue-decision/decision-date`
-		);
-	} catch (error) {
-		logger.error(error);
-		return response.status(500).render('app/500.njk');
+	if (!currentAppeal) {
+		return response.status(404).render('app/404');
 	}
+
+	request.currentFolder = {
+		id: currentAppeal.decision?.folderId,
+		path: 'appeal_decision/decisionLetter'
+	};
+
+	postDocumentUpload(
+		request,
+		response,
+		`/appeals-service/appeal-details/${currentAppeal.appealId}/issue-decision/decision-letter-date`
+	);
 };
 
 /**
@@ -119,29 +122,26 @@ export const postDecisionLetterUpload = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 const renderDecisionLetterUpload = async (request, response) => {
-	const { appealId } = request.params;
-	const { errors } = request;
-	const appealData = request.currentAppeal;
-	const currentFolder = {
-		id: appealData.decision?.folderId,
+	const { currentAppeal } = request;
+
+	request.currentFolder = {
+		id: currentAppeal.decision?.folderId,
 		path: `${STAGE.APPEAL_DECISION}/${DOCTYPE.CASE_DECISION_LETTER}`
 	};
 
-	if (!currentFolder || !currentFolder.id) {
-		return response.status(404).render('app/404.njk');
-	}
+	const pageBodyComponents = decisionLetterUploadPageBodyComponents();
 
-	const mappedPageContent = decisionLetterUploadPage(
-		appealData,
-		appealData.decision?.folderId,
-		currentFolder.path,
-		appealId,
-		errors
+	renderDocumentUpload(
+		request,
+		response,
+		currentAppeal,
+		`/appeals-service/appeal-details/${request.params.appealId}/issue-decision/decision`,
+		`/appeals-service/appeal-details/${request.params.appealId}/issue-decision/decision-letter-date`,
+		false,
+		'Upload decision letter',
+		pageBodyComponents,
+		false
 	);
-
-	return response
-		.status(200)
-		.render('appeals/documents/decision-letter-upload.njk', mappedPageContent);
 };
 
 /**
@@ -183,6 +183,7 @@ export const postDateDecisionLetter = async (request, response) => {
 		);
 	} catch (error) {
 		logger.error(error);
+
 		return response.status(500).render('app/500.njk');
 	}
 };
@@ -193,29 +194,21 @@ export const postDateDecisionLetter = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 const renderDateDecisionLetter = async (request, response) => {
-	const { errors } = request;
-	const appealId = request.params.appealId;
+	const { errors, currentAppeal, session } = request;
 
-	const appealData = request.currentAppeal;
-	const currentFolder = {
-		id: appealData.decision?.folderId,
-		path: `${STAGE.APPEAL_DECISION}/${DOCTYPE.CASE_DECISION_LETTER}`
-	};
-
-	if (!currentFolder || !currentFolder.id) {
+	if (!currentAppeal) {
 		return response.status(404).render('app/404.njk');
 	}
 
-	const folder = await getFolder(request.apiClient, appealId, currentFolder.id.toString());
-	const documentId = folder?.documents?.length && folder.documents[0].id;
-
-	if (documentId) {
-		/** @type {import('./issue-decision.types.js').InspectorDecisionRequest} */
-		request.session.inspectorDecision = {
-			...request.session.inspectorDecision,
-			documentId
-		};
+	if (!objectContainsAllKeys(session, ['fileUploadInfo', 'inspectorDecision'])) {
+		return response.status(500).render('app/500.njk');
 	}
+
+	/** @type {import('./issue-decision.types.js').InspectorDecisionRequest} */
+	request.session.inspectorDecision = {
+		...session.inspectorDecision,
+		documentId: session.fileUploadInfo[0].GUID
+	};
 
 	let decisionLetterDay = request.body['decision-letter-date-day'];
 	let decisionLetterMonth = request.body['decision-letter-date-month'];
@@ -231,7 +224,7 @@ const renderDateDecisionLetter = async (request, response) => {
 	}
 
 	const mappedPageContent = dateDecisionLetterPage(
-		appealData,
+		currentAppeal,
 		decisionLetterDay,
 		decisionLetterMonth,
 		decisionLetterYear
@@ -319,7 +312,20 @@ export const getCheckDecision = async (request, response) => {
 export const postCheckDecision = async (request, response) => {
 	try {
 		const { appealId } = request.params;
-		const { errors } = request;
+		const { errors, currentAppeal } = request;
+
+		if (!currentAppeal) {
+			return response.status(500).render('app/500.njk');
+		}
+
+		if (!objectContainsAllKeys(request.session, 'fileUploadInfo')) {
+			return response.status(500).render('app/500.njk');
+		}
+
+		request.currentFolder = {
+			id: currentAppeal.decision?.folderId,
+			path: 'appeal_decision/decisionLetter'
+		};
 
 		if (errors) {
 			return renderCheckDecision(request, response);
@@ -329,6 +335,8 @@ export const postCheckDecision = async (request, response) => {
 		const documentId = request.session.inspectorDecision.documentId;
 		const letterDate = new Date(request.session.inspectorDecision.letterDate);
 		const formattedDate = letterDate.toISOString().split('T')[0];
+
+		await postUploadDocumentsCheckAndConfirm(request, response);
 
 		await postInspectorDecision(
 			request.apiClient,
@@ -352,30 +360,20 @@ export const postCheckDecision = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const renderCheckDecision = async (request, response) => {
-	const { errors } = request;
-	const appealId = request.params.appealId;
-	const appealData = request.currentAppeal;
+	const { errors, currentAppeal, session } = request;
 
-	if (!appealData) {
+	if (!currentAppeal) {
 		return response.status(404).render('app/404.njk');
 	}
 
-	if (!appealData.decision) {
+	if (
+		!currentAppeal.decision ||
+		!objectContainsAllKeys(session, ['fileUploadInfo', 'inspectorDecision'])
+	) {
 		return response.status(500).render('app/500.njk');
 	}
 
-	const decisionLetterFolder = await getFolder(
-		request.apiClient,
-		appealId,
-		appealData.decision.folderId.toString() || ''
-	);
-
-	const mappedPageContent = checkAndConfirmPage(
-		request,
-		appealData,
-		request.session.inspectorDecision,
-		decisionLetterFolder
-	);
+	const mappedPageContent = checkAndConfirmPage(request, currentAppeal, request.session);
 
 	return response.status(200).render('appeals/appeal/issue-decision.njk', {
 		pageContent: mappedPageContent,
