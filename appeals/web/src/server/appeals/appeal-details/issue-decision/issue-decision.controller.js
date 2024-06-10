@@ -184,9 +184,6 @@ export const postDateDecisionLetter = async (request, response) => {
 	} catch (error) {
 		logger.error(error);
 
-		console.log('postDateDecisionLetter - 500:');
-		console.log(error);
-
 		return response.status(500).render('app/500.njk');
 	}
 };
