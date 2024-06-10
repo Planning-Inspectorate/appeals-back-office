@@ -1,5 +1,5 @@
 workspace "Appeal service" {
-	!docs architecture
+	!docs docs/architecture
 
 	model {
 		properties {

@@ -13,7 +13,7 @@ The system is structured as a multi-tier application, designed to run on the Azu
 
 
 > [!IMPORTANT]
-> A detailed architectural overview is available as a set of [C4 model diagrams](https://planning-inspectorate.github.io/appeals-back-office/master/appeals-back-office/context/)
+> A detailed architectural overview is available as a set of [C4 model diagrams](docs/architecture/index.md)
 
 
 ## Getting Started
