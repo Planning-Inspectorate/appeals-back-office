@@ -90,6 +90,31 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "web" {
 
   tags = local.tags
 
+  custom_rule {
+    name                           = "RateLimitHttpRequest"
+    enabled                        = true
+    priority                       = 100
+    rate_limit_duration_in_minutes = 1
+    rate_limit_threshold           = 300
+    type                           = "RateLimitRule"
+    action                         = "Block"
+
+    match_condition {
+      match_variable = "RequestMethod"
+      operator       = "Equal"
+      match_values = [
+        "GET",
+        "POST",
+        "PUT",
+        "DELETE",
+        "COPY",
+        "MOVE",
+        "HEAD",
+        "OPTIONS"
+      ]
+    }
+  }
+
   managed_rule {
     type    = "Microsoft_DefaultRuleSet"
     version = "2.1"
