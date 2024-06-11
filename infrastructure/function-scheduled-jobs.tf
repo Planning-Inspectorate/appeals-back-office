@@ -12,7 +12,7 @@ module "function_scheduled_jobs" {
   tags            = local.tags
 
   # service plan
-  app_service_plan_id = azurerm_service_plan.apps.id
+  app_service_plan_id = azurerm_service_plan.functions.id
 
   # storage
   function_apps_storage_account            = azurerm_storage_account.functions.name
