@@ -12,6 +12,9 @@ export class UpdateDueDatePage extends Page {
 		dateInputDay: '#due-date-day',
 		dateInputMonth: '#due-date-month',
 		dateInputYear: '#due-date-year',
+		validDateDay: '#valid-date-day',
+		validDateMonth: '#valid-date-month',
+		validDateYear: '#valid-date-year',
 		skipButton: '.govuk-button',
 		visitDateDay: '#visit-date-day',
 		visitDateMonth: '#visit-date-month',
@@ -28,6 +31,9 @@ export class UpdateDueDatePage extends Page {
 		enterDateDay: () => cy.get(this.selectors.dateInputDay),
 		enterDateMonth: () => cy.get(this.selectors.dateInputMonth),
 		enterDateYear: () => cy.get(this.selectors.dateInputYear),
+		validDateDay: () => cy.get(this.selectors.validDateDay),
+		validDateMonth: () => cy.get(this.selectors.validDateMonth),
+		validDateYear: () => cy.get(this.selectors.validDateYear),
 		clickSkipButton: () => cy.contains(this.selectors.skipButton, 'Skip'),
 		enterVisitDay: () => cy.get(this.selectors.visitDateDay),
 		enterVisitMonth: () => cy.get(this.selectors.visitDateMonth),
@@ -52,6 +58,20 @@ export class UpdateDueDatePage extends Page {
 	enterDateYear(text, index = 0) {
 		cy.get('#due-date-year');
 		this.updateDueDateElements.enterDateYear().eq(index).clear().type(text);
+	}
+
+	validDateDay(text, index = 0) {
+		cy.get('#valid-date-day');
+		this.updateDueDateElements.validDateDay().eq(index).clear().type(text);
+	}
+
+	validDateMonth(text, index = 0) {
+		cy.get('#valid-date-month');
+		this.updateDueDateElements.validDateMonth().eq(index).clear().type(text);
+	}
+	validDateYear(text, index = 0) {
+		cy.get('#valid-date-year');
+		this.updateDueDateElements.validDateYear().eq(index).clear().type(text);
 	}
 	clickSkipButton(text) {
 		this.updateDueDateElements.clickSkipButton(text).click();
