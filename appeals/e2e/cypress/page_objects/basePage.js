@@ -8,11 +8,13 @@ export class Page {
 
 	selectors = {
 		accordion: '.govuk-accordion',
+		accordionButton: '.govuk-accordion__section-button',
 		accordionToggleText: '.govuk-accordion__section-toggle-text',
 		accordionSectionHeader: '.govuk-accordion__section-header',
 		accordionSectionExpanded: 'govuk-accordion__section.govuk-accordion__section--expanded',
 		backLink: '.govuk-back-link',
 		bannerHeader: '.govuk-notification-banner__heading',
+		bannerLink: '.govuk-notification-banner__link',
 		publish_bannerHeader: '#main-content > div > div > div > h1',
 		button: '.govuk-button',
 		body: '.govuk-body',
@@ -60,11 +62,14 @@ export class Page {
 	basePageElements = {
 		accordion: (text) =>
 			cy.get(this.selectors.accordion).contains('span', text, { matchCase: false }),
+		accordionButton: (text) =>
+			cy.get(this.selectors.accordionButton).contains('span', text, { matchCase: false }),
 		answerCell: (question) =>
 			cy.contains(this.selectors.summaryListKey, question, { matchCase: false }).next(),
 		applicationHeaderCentral: () => cy.get(`${this.selectors.centralCol} > p`),
 		backLink: () => cy.get(this.selectors.backLink),
 		bannerHeader: () => cy.get(this.selectors.bannerHeader),
+		bannerLink: () => cy.get(this.selectors.bannerLink),
 		publishBannerHeader: () => cy.get(this.selectors.publish_bannerHeader),
 		button: () => cy.get(this.selectors.button),
 		buttonByLabelText: (buttonText) =>
