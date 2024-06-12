@@ -76,7 +76,7 @@ describe('Appeals feature', () => {
 			appealsListPage.checkAnswer('Visit type', 'Unaccompanied');
 	});
 
-	it.only('Change to acommpanied site visit from Site details', () => {
+	it('Change to acommpanied site visit from Site details', () => {
 		cy.visit('/appeals-service/all-cases');
 		appealsListPage.clickAppealFromList(30);
 		appealsListPage.clickChangeVisitTypeHasSiteDetails();
