@@ -23,7 +23,7 @@ import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-co
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
 import { isFolderInfo } from '#lib/ts-utilities.js';
-import { addDraftDocumentsNotificationBanner } from '#lib/mappers/documents.mapper.js';
+import { AVSCAN_STATUS } from '@pins/appeals/constants/documents.js';
 
 /**
  * @typedef {import('../../appeals.types.js').DayMonthYear} DayMonthYear
@@ -44,20 +44,14 @@ import { addDraftDocumentsNotificationBanner } from '#lib/mappers/documents.mapp
  * @param {Appeal} appealDetails
  * @param {string} currentRoute
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
- * @param {import('got').Got} apiClient
  * @returns {Promise<PageContent>}
  */
-export async function appellantCasePage(
-	appellantCaseData,
-	appealDetails,
-	currentRoute,
-	session,
-	apiClient
-) {
+export async function appellantCasePage(appellantCaseData, appealDetails, currentRoute, session) {
 	const mappedAppellantCaseData = initialiseAndMapData(
 		appellantCaseData,
 		appealDetails,
-		currentRoute
+		currentRoute,
+		session
 	);
 
 	/**
@@ -72,7 +66,14 @@ export async function appellantCasePage(
 					? [mappedAppellantCaseData.siteAddress.display.summaryListItem]
 					: []),
 				...(mappedAppellantCaseData.localPlanningAuthority.display.summaryListItem
-					? [mappedAppellantCaseData.localPlanningAuthority.display.summaryListItem]
+					? [
+							{
+								...mappedAppellantCaseData.localPlanningAuthority.display.summaryListItem,
+								key: {
+									text: 'LPA'
+								}
+							}
+					  ]
 					: [])
 			]
 		}
@@ -94,7 +95,7 @@ export async function appellantCasePage(
 				}
 			},
 			rows: [
-				mappedAppellantCaseData.appellantName.display.summaryListItem,
+				mappedAppellantCaseData.appellant.display.summaryListItem,
 				mappedAppellantCaseData.applicationReference.display.summaryListItem
 			]
 		}
@@ -104,7 +105,7 @@ export async function appellantCasePage(
 		appellantSummary.parameters.rows.splice(
 			1,
 			0,
-			mappedAppellantCaseData.agentName.display.summaryListItem
+			mappedAppellantCaseData.agent.display.summaryListItem
 		);
 	}
 
@@ -121,12 +122,10 @@ export async function appellantCasePage(
 			},
 			rows: [
 				mappedAppellantCaseData.siteAddress.display.summaryListItem,
-				mappedAppellantCaseData.siteFullyOwned.display.summaryListItem,
-				mappedAppellantCaseData.sitePartiallyOwned.display.summaryListItem,
+				mappedAppellantCaseData.siteOwnership.display.summaryListItem,
 				mappedAppellantCaseData.allOwnersKnown.display.summaryListItem,
-				mappedAppellantCaseData.attemptedToIdentifyOwners.display.summaryListItem,
 				mappedAppellantCaseData.advertisedAppeal.display.summaryListItem,
-				mappedAppellantCaseData.visibility.display.summaryListItem,
+				mappedAppellantCaseData.inspectorAccess.display.summaryListItem,
 				mappedAppellantCaseData.healthAndSafetyIssues.display.summaryListItem
 			]
 		}
@@ -149,9 +148,7 @@ export async function appellantCasePage(
 			rows: [
 				mappedAppellantCaseData.applicationForm.display.summaryListItem,
 				mappedAppellantCaseData.decisionLetter.display.summaryListItem,
-				mappedAppellantCaseData.appealStatement.display.summaryListItem,
-				mappedAppellantCaseData.addNewSupportingDocuments.display.summaryListItem,
-				mappedAppellantCaseData.newSupportingDocuments.display.summaryListItem
+				mappedAppellantCaseData.appealStatement.display.summaryListItem
 			]
 		}
 	};
@@ -169,15 +166,16 @@ export async function appellantCasePage(
 				},
 				actions: {
 					items:
-						isFolderInfo(appellantCaseData.documents.additionalDocuments) &&
-						appellantCaseData.documents.additionalDocuments.documents.length > 0
+						isFolderInfo(appellantCaseData.documents.appellantCaseCorrespondence) &&
+						appellantCaseData.documents?.appellantCaseCorrespondence?.documents &&
+						appellantCaseData.documents?.appellantCaseCorrespondence?.documents.length > 0
 							? [
 									{
 										text: 'Manage',
 										visuallyHiddenText: 'additional documents',
 										href: mapDocumentManageUrl(
 											appellantCaseData.appealId,
-											appellantCaseData.documents.additionalDocuments.folderId
+											appellantCaseData.documents.appellantCaseCorrespondence.folderId
 										)
 									},
 									{
@@ -185,7 +183,7 @@ export async function appellantCasePage(
 										visuallyHiddenText: 'additional documents',
 										href: displayPageFormatter.formatDocumentActionLink(
 											appellantCaseData.appealId,
-											appellantCaseData.documents.additionalDocuments,
+											appellantCaseData.documents.appellantCaseCorrespondence,
 											documentUploadUrlTemplate
 										)
 									}
@@ -196,7 +194,7 @@ export async function appellantCasePage(
 										visuallyHiddenText: 'additional documents',
 										href: displayPageFormatter.formatDocumentActionLink(
 											appellantCaseData.appealId,
-											appellantCaseData.documents.additionalDocuments,
+											appellantCaseData.documents.appellantCaseCorrespondence,
 											documentUploadUrlTemplate
 										)
 									}
@@ -222,7 +220,7 @@ export async function appellantCasePage(
 		});
 	}
 
-	if (getDocumentsForVirusStatus(appellantCaseData, 'not_checked').length > 0) {
+	if (getDocumentsForVirusStatus(appellantCaseData, AVSCAN_STATUS.NOT_SCANNED).length > 0) {
 		addNotificationBannerToSession(
 			session,
 			'notCheckedDocument',
@@ -231,18 +229,10 @@ export async function appellantCasePage(
 		);
 	}
 
-	await addDraftDocumentsNotificationBanner(
-		appealDetails?.appealId,
-		appellantCaseData.documents,
-		session,
-		apiClient,
-		`/appeals-service/appeal-details/${appealDetails?.appealId}/appellant-case/add-document-details/{{folderId}}`
-	);
-
 	/** @type {PageComponent[]} */
 	const errorSummaryPageComponents = [];
 
-	if (getDocumentsForVirusStatus(appellantCaseData, 'failed_virus_check').length > 0) {
+	if (getDocumentsForVirusStatus(appellantCaseData, AVSCAN_STATUS.AFFECTED).length > 0) {
 		errorSummaryPageComponents.push({
 			type: 'error-summary',
 			parameters: {
@@ -502,7 +492,7 @@ export function checkAndConfirmPage(
 	const insetTextComponent = {
 		type: 'inset-text',
 		parameters: {
-			text: 'Confirming this review will inform the appellant and LPA of the outcome'
+			text: 'Confirming this review will inform the relevant parties of the outcome'
 		}
 	};
 
@@ -708,15 +698,15 @@ export function mapWebReviewOutcomeToApiReviewOutcome(
 /**
  *
  * @param {SingleAppellantCaseResponse} appellantCaseData
- * @param {"not_checked"|"checked"|"failed_virus_check"} virusStatus
+ * @param {"not_scanned"|"scanned"|"affected"} virusStatus
  * @returns {DocumentInfo[]}
  */
 function getDocumentsForVirusStatus(appellantCaseData, virusStatus) {
 	const unscannedFiles = [];
 	for (const folder of Object.values(appellantCaseData.documents)) {
-		if ('documents' in folder) {
+		if (folder && 'documents' in folder && folder.documents) {
 			const documentsOfStatus = folder.documents.filter(
-				(item) => item.virusCheckStatus === virusStatus
+				(item) => item.latestDocumentVersion?.virusCheckStatus === virusStatus
 			);
 			for (const document of documentsOfStatus) {
 				unscannedFiles.push(document);

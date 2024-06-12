@@ -5,16 +5,17 @@ import validateUuidParameter from '#common/validators/uuid-parameter.js';
 import validateStringParameter from '#common/validators/string-parameter.js';
 import { validationErrorHandler } from '#middleware/error-handler.js';
 import {
-	ERROR_DOCUMENT_REDACTION_STATUSES_MUST_BE_ONE_OF,
 	ERROR_DOCUMENT_AV_RESULT_STATUSES_MUST_BE_ONE_OF,
 	ERROR_MUST_BE_STRING,
 	ERROR_MUST_BE_UUID,
 	ERROR_MUST_CONTAIN_AT_LEAST_1_VALUE,
-	ERROR_MUST_BE_VALID_FILEINFO
+	ERROR_MUST_BE_VALID_FILEINFO,
+	ERROR_DOCUMENT_REDACTION_STATUSES_MUST_BE_ONE_OF
 } from '#endpoints/constants.js';
-import validateDateParameter from '#common/validators/date-parameter.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
+import validateDateParameter from '#common/validators/date-parameter.js';
 import { getDocumentRedactionStatusIds } from './documents.service.js';
+import { AVSCAN_STATUS } from '@pins/appeals/constants/documents.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateDocumentsRequest} UpdateDocumentsRequest */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateDocumentsAvCheckRequest} UpdateDocumentsAvCheckRequest */
@@ -45,7 +46,7 @@ const validateDocumentRedactionStatusIds = async (documents) => {
  * @returns {Promise<boolean>}
  */
 const validateAvCheckResult = async (documents) => {
-	const validAvResults = ['checked', 'failed_virus_check'];
+	const validAvResults = [AVSCAN_STATUS.SCANNED, AVSCAN_STATUS.AFFECTED];
 	const hasValidStatusIds = documents.every(({ virusCheckStatus }) =>
 		validAvResults.includes(virusCheckStatus)
 	);

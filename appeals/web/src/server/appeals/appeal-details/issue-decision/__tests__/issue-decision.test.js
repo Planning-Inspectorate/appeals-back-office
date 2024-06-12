@@ -3,7 +3,13 @@ import nock from 'nock';
 import supertest from 'supertest';
 import { createTestEnvironment } from '#testing/index.js';
 import { mapDecisionOutcome } from '../issue-decision.mapper.js';
-import { documentFileInfo, inspectorDecisionData } from '#testing/appeals/appeals.js';
+import {
+	appealData,
+	documentFileInfo,
+	inspectorDecisionData,
+	documentRedactionStatuses,
+	fileUploadInfo
+} from '#testing/appeals/appeals.js';
 import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
@@ -19,61 +25,215 @@ describe('issue-decision', () => {
 	beforeEach(installMockApi);
 	afterEach(teardown);
 
-	describe('GET /change-appeal-type/appeal-type', () => {
-		it('should render the decision page', async () => {
+	describe('GET /decision', () => {
+		it(`should render the 'what is the decision' page with the expected content`, async () => {
 			const response = await request.get(`${baseUrl}/1${issueDecisionPath}/${decisionPath}`);
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('What is the decision?</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<input class="govuk-radios__input" id="decision" name="decision" type="radio" value="Allowed">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<input class="govuk-radios__input" id="decision-2" name="decision" type="radio" value="Dismissed">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<input class="govuk-radios__input" id="decision-3" name="decision" type="radio" value="Split">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<input class="govuk-radios__input" id="decision-4" name="decision" type="radio" value="Invalid">'
+			);
 		});
 	});
-	describe('POST /:appealId/issue-decision/decision', () => {
+
+	describe('POST /decision', () => {
 		beforeEach(() => {
 			nock('http://test/').get('/appeals/1').reply(200, inspectorDecisionData);
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 		});
 		afterEach(teardown);
 
-		it('should render the decision details correctly', async () => {
-			const mockAppealId = '1';
-			const mockAppealDecision = 'allowed';
+		it(`should redirect to the decision letter upload page, if the decision is 'Allowed'`, async () => {
 			const response = await request
-				.post(`${baseUrl}/${mockAppealId}/issue-decision/decision`)
-				.send({ decision: mockAppealDecision })
+				.post(`${baseUrl}/1/issue-decision/decision`)
+				.send({ decision: 'Allowed' })
 				.expect(302);
 
 			expect(response.headers.location).toBe(
-				`/appeals-service/appeal-details/${mockAppealId}/issue-decision/decision-letter-upload`
+				`/appeals-service/appeal-details/1/issue-decision/decision-letter-upload`
 			);
 		});
 
-		it('should send the decision details for invalid, and redirect correctly', async () => {
-			const mockAppealId = '1';
-			const mockAppealDecision = 'Invalid';
+		it(`should redirect to the decision letter upload page, if the decision is 'Dismissed'`, async () => {
 			const response = await request
-				.post(`${baseUrl}/${mockAppealId}/issue-decision/decision`)
-				.send({ decision: mockAppealDecision })
+				.post(`${baseUrl}/1/issue-decision/decision`)
+				.send({ decision: 'Dismissed' })
 				.expect(302);
 
 			expect(response.headers.location).toBe(
-				`/appeals-service/appeal-details/${mockAppealId}/issue-decision/invalid-reason`
+				`/appeals-service/appeal-details/1/issue-decision/decision-letter-upload`
+			);
+		});
+
+		it(`should redirect to the decision letter upload page, if the decision is 'Split'`, async () => {
+			const response = await request
+				.post(`${baseUrl}/1/issue-decision/decision`)
+				.send({ decision: 'Split' })
+				.expect(302);
+
+			expect(response.headers.location).toBe(
+				`/appeals-service/appeal-details/1/issue-decision/decision-letter-upload`
+			);
+		});
+
+		it(`should send the decision details for invalid, and redirect to the invalid reason page, if the decision is 'Invalid'`, async () => {
+			const response = await request
+				.post(`${baseUrl}/1/issue-decision/decision`)
+				.send({ decision: 'Invalid' })
+				.expect(302);
+
+			expect(response.headers.location).toBe(
+				`/appeals-service/appeal-details/1/issue-decision/invalid-reason`
 			);
 		});
 	});
 
-	describe('GET /change-appeal-type/decision-letter-upload', () => {
-		it('should render the decision letter upload page', async () => {
+	describe('GET /decision-letter-upload', () => {
+		it('should render the decision letter upload page with a file upload component', async () => {
 			const response = await request.get(
 				`${baseUrl}/1${issueDecisionPath}/${decisionLetterUploadPath}`
 			);
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Upload decision letter</h1>');
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Warning</span> Before uploading, check that you have:'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<li>added the correct appeal reference</li>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<li>added the decision date and visit date</li>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('<li>added the correct site address</li>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<li>added the decision to the top and bottom of the letter</li>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('<li>signed the letter</li>');
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<div class="govuk-grid-row pins-file-upload"'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Choose file</button>');
 		});
 	});
 
-	describe('GET /change-appeal-type/decision-letter-date', () => {
-		it('should render the decision letter date page', async () => {
+	describe('POST /decision-letter-upload', () => {
+		beforeEach(() => {
+			nock.cleanAll();
+			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/')
+				.get('/appeals/document-redaction-statuses')
+				.reply(200, documentRedactionStatuses);
+		});
+		afterEach(() => {
+			nock.cleanAll();
+		});
+
+		it('should render a 500 error page if upload-info is not present in the request body', async () => {
+			const response = await request
+				.post(`${baseUrl}/1${issueDecisionPath}/${decisionLetterUploadPath}`)
+				.send({});
+
+			expect(response.statusCode).toBe(500);
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Sorry, there is a problem with the service</h1>'
+			);
+		});
+
+		it('should render a 500 error page if request body upload-info is in an incorrect format', async () => {
+			const response = await request
+				.post(`${baseUrl}/1${issueDecisionPath}/${decisionLetterUploadPath}`)
+				.send({
+					'upload-info': ''
+				});
+
+			expect(response.statusCode).toBe(500);
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Sorry, there is a problem with the service</h1>'
+			);
+		});
+
+		it('should redirect to the decision letter date page if upload-info is present in the request body and in the correct format', async () => {
+			const response = await request
+				.post(`${baseUrl}/1${issueDecisionPath}/${decisionLetterUploadPath}`)
+				.send({
+					'upload-info': fileUploadInfo
+				});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/issue-decision/decision-letter-date'
+			);
+		});
+	});
+
+	describe('GET /decision-letter-date', () => {
+		beforeEach(() => {
+			nock.cleanAll();
+			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/')
+				.get('/appeals/document-redaction-statuses')
+				.reply(200, documentRedactionStatuses);
+		});
+		afterEach(() => {
+			nock.cleanAll();
+		});
+
+		it('should render a 500 error page if fileUploadInfo is not present in the session', async () => {
+			const response = await request.get(
+				`${baseUrl}/1${issueDecisionPath}/${decisionLetterDatePath}`
+			);
+
+			expect(response.statusCode).toBe(500);
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Sorry, there is a problem with the service</h1>'
+			);
+		});
+
+		it('should render the decision letter date page with the expected content if fileUploadInfo is present in the session', async () => {
+			const uploadDecisionLetterResponse = await request
+				.post(`${baseUrl}/1${issueDecisionPath}/${decisionLetterUploadPath}`)
+				.send({
+					'upload-info': fileUploadInfo
+				});
+
+			expect(uploadDecisionLetterResponse.statusCode).toBe(302);
+
 			const response = await request.get(
 				`${baseUrl}/1${issueDecisionPath}/${decisionLetterDatePath}`
 			);
@@ -83,31 +243,39 @@ describe('issue-decision', () => {
 		});
 	});
 
-	describe('POST /:appealId/issue-decision/decision-letter-date', () => {
-		beforeEach(() => {
+	describe('POST /decision-letter-date', () => {
+		/**
+		 * @type {import("superagent").Response}
+		 */
+		let issueDecisionResponse;
+		/**
+		 * @type {import("superagent").Response}
+		 */
+		let uploadDecisionLetterResponse;
+
+		beforeEach(async () => {
 			nock('http://test/').get('/appeals/1').reply(200, inspectorDecisionData);
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+			nock('http://test/')
+				.get('/appeals/document-redaction-statuses')
+				.reply(200, documentRedactionStatuses);
+
+			issueDecisionResponse = await request
+				.post(`${baseUrl}/1/issue-decision/decision`)
+				.send({ decision: 'Allowed' });
+
+			uploadDecisionLetterResponse = await request
+				.post(`${baseUrl}/1${issueDecisionPath}/${decisionLetterUploadPath}`)
+				.send({
+					'upload-info': fileUploadInfo
+				});
 		});
 		afterEach(teardown);
 
-		it('should render the decision letter date correctly', async () => {
-			const mockAppealId = '1';
-			const mockLetterDecisionDate = {
-				'decision-letter-date-day': '1',
-				'decision-letter-date-month': '1',
-				'decision-letter-date-year': '2023'
-			};
-			const response = await request
-				.post(`${baseUrl}/${mockAppealId}/issue-decision/decision-letter-date`)
-				.send(mockLetterDecisionDate)
-				.expect(302);
+		it('should re-render the decision letter date page with an error message if the provided date day is invalid', async () => {
+			expect(issueDecisionResponse.statusCode).toBe(302);
+			expect(uploadDecisionLetterResponse.statusCode).toBe(302);
 
-			expect(response.headers.location).toBe(
-				`/appeals-service/appeal-details/${mockAppealId}/issue-decision/check-your-decision`
-			);
-		});
-
-		it('should re-render the  decision letter date page with an error message if the provided date day is invalid', async () => {
 			const response = await request
 				.post(`${baseUrl}/1${issueDecisionPath}/${decisionLetterDatePath}`)
 				.send({
@@ -121,7 +289,10 @@ describe('issue-decision', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 		});
 
-		it('should re-render the  decision letter date page with an error message if the provided date month is invalid', async () => {
+		it('should re-render the decision letter date page with an error message if the provided date month is invalid', async () => {
+			expect(issueDecisionResponse.statusCode).toBe(302);
+			expect(uploadDecisionLetterResponse.statusCode).toBe(302);
+
 			const response = await request
 				.post(`${baseUrl}/1${issueDecisionPath}/${decisionLetterDatePath}`)
 				.send({
@@ -135,7 +306,10 @@ describe('issue-decision', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 		});
 
-		it('should re-render the  decision letter date page with an error message if the provided date year is invalid', async () => {
+		it('should re-render the decision letter date page with an error message if the provided date year is invalid', async () => {
+			expect(issueDecisionResponse.statusCode).toBe(302);
+			expect(uploadDecisionLetterResponse.statusCode).toBe(302);
+
 			const response = await request
 				.post(`${baseUrl}/1${issueDecisionPath}/${decisionLetterDatePath}`)
 				.send({
@@ -149,7 +323,10 @@ describe('issue-decision', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 		});
 
-		it('should re-render the  decision letter date page with an error message if the provided date year is not in the past', async () => {
+		it('should re-render the decision letter date page with an error message if the provided date year is not in the past', async () => {
+			expect(issueDecisionResponse.statusCode).toBe(302);
+			expect(uploadDecisionLetterResponse.statusCode).toBe(302);
+
 			teardown;
 			const response = await request
 				.post(`${baseUrl}/1${issueDecisionPath}/${decisionLetterDatePath}`)
@@ -164,7 +341,10 @@ describe('issue-decision', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 		});
 
-		it('should re-render the  decision letter date page with an error message if the provided date is not a business day', async () => {
+		it('should re-render the decision letter date page with an error message if the provided date is not a business day', async () => {
+			expect(issueDecisionResponse.statusCode).toBe(302);
+			expect(uploadDecisionLetterResponse.statusCode).toBe(302);
+
 			teardown;
 			const response = await request
 				.post(`${baseUrl}/1${issueDecisionPath}/${decisionLetterDatePath}`)
@@ -177,6 +357,26 @@ describe('issue-decision', () => {
 			expect(response.statusCode).toBe(200);
 			const element = parseHtml(response.text);
 			expect(element.innerHTML).toMatchSnapshot();
+		});
+
+		it('should redirect to the check your decision page if the provided date is fully populated and valid', async () => {
+			expect(issueDecisionResponse.statusCode).toBe(302);
+			expect(uploadDecisionLetterResponse.statusCode).toBe(302);
+
+			const mockAppealId = '1';
+			const mockLetterDecisionDate = {
+				'decision-letter-date-day': '1',
+				'decision-letter-date-month': '1',
+				'decision-letter-date-year': '2023'
+			};
+			const response = await request
+				.post(`${baseUrl}/${mockAppealId}/issue-decision/decision-letter-date`)
+				.send(mockLetterDecisionDate)
+				.expect(302);
+
+			expect(response.headers.location).toBe(
+				`/appeals-service/appeal-details/${mockAppealId}/issue-decision/check-your-decision`
+			);
 		});
 	});
 
@@ -234,7 +434,7 @@ describe('issue-decision', () => {
 		});
 	});
 
-	describe('GET /change-appeal-type/check-your-decision', () => {
+	describe('GET /issue-decision/check-your-decision', () => {
 		it('should render the check your decision letter page', async () => {
 			const response = await request.get(
 				`${baseUrl}/1${issueDecisionPath}/${checkYourDecisionPath}`
@@ -262,6 +462,32 @@ describe('issue-decision', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+		});
+	});
+
+	describe('GET /issue-decision/decision-sent', () => {
+		it('should render the confirmation page with the expected content', async () => {
+			await request
+				.post(`${baseUrl}/1/issue-decision/decision`)
+				.send({ decision: 'Allowed' })
+				.expect(302);
+
+			const response = await request.get(`${baseUrl}/1${issueDecisionPath}/decision-sent`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<h1 class="govuk-panel__title"> Decision sent</h1>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<a href="/appeals-service/appeal-details/1" class="govuk-link">Go back to case details</a>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				`<a href="/appeals-service/appeal-details/1/costs/decision/upload-documents/3" class="govuk-link">Add costs decision</a>`
+			);
 		});
 	});
 });

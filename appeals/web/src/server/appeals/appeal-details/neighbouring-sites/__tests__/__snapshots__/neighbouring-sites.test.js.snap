@@ -1,12 +1,54 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`neighbouring-sites GET /add should render getAllNeighbouringSite page 1`] = `
+exports[`neighbouring-sites GET /add should render getAllNeighbouringSite page for inspector 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Add neighbouring site</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Add neighbouring site (Inspector/third party)</h1>
+                </div>
+            </div>
+            <form method="POST" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="address-line-1">Address line 1</label>
+                    <input class="govuk-input" id="address-line-1" name="addressLine1"
+                    type="text">
+                </div>
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="address-line-2">Address line 2 (optional)</label>
+                    <input class="govuk-input" id="address-line-2"
+                    name="addressLine2" type="text">
+                </div>
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="address-town">Town or city</label>
+                    <input class="govuk-input govuk-input govuk-input--width-20"
+                    id="address-town" name="town" type="text">
+                </div>
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="address-county">County (optional)</label>
+                    <input class="govuk-input govuk-input govuk-input--width-20"
+                    id="address-county" name="county" type="text">
+                </div>
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="address-postcode">Postcode</label>
+                    <input class="govuk-input govuk-input govuk-input--width-10"
+                    id="address-postcode" name="postCode" type="text">
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`neighbouring-sites GET /add should render getAllNeighbouringSite page for lpa 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Add neighbouring site (LPA)</h1>
                 </div>
             </div>
             <form method="POST" novalidate="novalidate">
@@ -54,7 +96,7 @@ exports[`neighbouring-sites GET /add/check-and-confirm should render the check y
             <dl class="govuk-summary-list govuk-!-margin-bottom-9">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Address</dt>
                     <dd class="govuk-summary-list__value">123 Long Road, London, E1 8RU</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add"> Change</a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add/back-office"> Change</a>
                     </dd>
                 </div>
             </dl>
@@ -66,7 +108,69 @@ exports[`neighbouring-sites GET /add/check-and-confirm should render the check y
 </main>"
 `;
 
-exports[`neighbouring-sites GET /change/:siteId should render the change neighbouring site page 1`] = `
+exports[`neighbouring-sites GET /change/affected should render the change neighbouringSiteAffected page from appeals details 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Could a neighbouring site be affected?</h1>
+                </div>
+            </div>
+            <form method="POST" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <div class="govuk-radios" data-module="govuk-radios">
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="neighbouringSiteAffected" name="neighbouringSiteAffected"
+                            type="radio" value="yes" checked>
+                            <label class="govuk-label govuk-radios__label" for="neighbouringSiteAffected">Yes</label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="neighbouringSiteAffected-2" name="neighbouringSiteAffected"
+                            type="radio" value="no">
+                            <label class="govuk-label govuk-radios__label" for="neighbouringSiteAffected-2">No</label>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`neighbouring-sites GET /change/affected should render the change neighbouringSiteAffected page from lpa questionnaire 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Could a neighbouring site be affected?</h1>
+                </div>
+            </div>
+            <form method="POST" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <div class="govuk-radios" data-module="govuk-radios">
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="neighbouringSiteAffected" name="neighbouringSiteAffected"
+                            type="radio" value="yes" checked>
+                            <label class="govuk-label govuk-radios__label" for="neighbouringSiteAffected">Yes</label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="neighbouringSiteAffected-2" name="neighbouringSiteAffected"
+                            type="radio" value="no">
+                            <label class="govuk-label govuk-radios__label" for="neighbouringSiteAffected-2">No</label>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`neighbouring-sites GET /change/site/:siteId should render the change neighbouring site page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -108,7 +212,7 @@ exports[`neighbouring-sites GET /change/:siteId should render the change neighbo
 </main>"
 `;
 
-exports[`neighbouring-sites GET /change/:siteId/check-and-confirm should render the check your answers page 1`] = `
+exports[`neighbouring-sites GET /change/site/:siteId/check-and-confirm should render the check your answers page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -120,7 +224,7 @@ exports[`neighbouring-sites GET /change/:siteId/check-and-confirm should render 
             <dl class="govuk-summary-list govuk-!-margin-bottom-9">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Address</dt>
                     <dd class="govuk-summary-list__value">123 Long Road, London, E1 8RU</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/change/1"> Change</a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/change/site/1"> Change</a>
                     </dd>
                 </div>
             </dl>
@@ -147,7 +251,14 @@ exports[`neighbouring-sites GET /manage should render the manage neighbouring si
                 <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Action</th>
             </tr>
         </thead>
-        <tbody class="govuk-table__body"></tbody>
+        <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+                <td class="govuk-table__cell">1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</td>
+                <td class="govuk-table__cell"><a href="change/site/1" class="govuk-link">Change</a> | <a href="remove/site/1"
+                    class="govuk-link">Remove</a>
+                </td>
+            </tr>
+        </tbody>
     </table>
     <table class="govuk-table">
         <caption class="govuk-table__caption govuk-table__caption--m">Neighbouring sites (inspector and/or third party request)</caption>
@@ -159,8 +270,9 @@ exports[`neighbouring-sites GET /manage should render the manage neighbouring si
             </thead>
             <tbody class="govuk-table__body">
                 <tr class="govuk-table__row">
-                    <td class="govuk-table__cell">1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</td>
-                    <td class="govuk-table__cell"><a href="change/1" class="govuk-link">Change</a> | <a href="remove/1" class="govuk-link">Remove</a>
+                    <td class="govuk-table__cell">2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</td>
+                    <td class="govuk-table__cell"><a href="change/site/2" class="govuk-link">Change</a> | <a href="remove/site/2"
+                        class="govuk-link">Remove</a>
                     </td>
                 </tr>
             </tbody>
@@ -168,7 +280,7 @@ exports[`neighbouring-sites GET /manage should render the manage neighbouring si
 </main>"
 `;
 
-exports[`neighbouring-sites GET /remove/:siteId should render the remove neighbouring site page 1`] = `
+exports[`neighbouring-sites GET /remove/site/:siteId should render the remove neighbouring site page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -224,7 +336,7 @@ exports[`neighbouring-sites POST /add should re-render getAllNeighbouringSite pa
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Add neighbouring site</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Add neighbouring site (Inspector/third party)</h1>
                 </div>
             </div>
             <form method="POST" novalidate="novalidate">
@@ -279,7 +391,7 @@ exports[`neighbouring-sites POST /add should re-render getAllNeighbouringSite pa
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Add neighbouring site</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Add neighbouring site (Inspector/third party)</h1>
                 </div>
             </div>
             <form method="POST" novalidate="novalidate">
@@ -334,7 +446,7 @@ exports[`neighbouring-sites POST /add should re-render getAllNeighbouringSite pa
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Add neighbouring site</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Add neighbouring site (Inspector/third party)</h1>
                 </div>
             </div>
             <form method="POST" novalidate="novalidate">
@@ -388,7 +500,7 @@ exports[`neighbouring-sites POST /add should re-render getAllNeighbouringSite pa
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Add neighbouring site</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Add neighbouring site (Inspector/third party)</h1>
                 </div>
             </div>
             <form method="POST" novalidate="novalidate">
@@ -442,7 +554,7 @@ exports[`neighbouring-sites POST /add should re-render getAllNeighbouringSite pa
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Add neighbouring site</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Add neighbouring site (Inspector/third party)</h1>
                 </div>
             </div>
             <form method="POST" novalidate="novalidate">
@@ -496,7 +608,7 @@ exports[`neighbouring-sites POST /add should re-render getAllNeighbouringSite pa
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Add neighbouring site</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Add neighbouring site (Inspector/third party)</h1>
                 </div>
             </div>
             <form method="POST" novalidate="novalidate">
@@ -550,7 +662,7 @@ exports[`neighbouring-sites POST /add should re-render getAllNeighbouringSite pa
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Add neighbouring site</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Add neighbouring site (Inspector/third party)</h1>
                 </div>
             </div>
             <form method="POST" novalidate="novalidate">
@@ -587,7 +699,7 @@ exports[`neighbouring-sites POST /add should re-render getAllNeighbouringSite pa
 </main>"
 `;
 
-exports[`neighbouring-sites POST /change/:siteId should re-render changeNeighbouringSite page if addressLine1 is an empty string 1`] = `
+exports[`neighbouring-sites POST /change/site/:siteId should re-render changeNeighbouringSite page if addressLine1 is an empty string 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -642,7 +754,7 @@ exports[`neighbouring-sites POST /change/:siteId should re-render changeNeighbou
 </main>"
 `;
 
-exports[`neighbouring-sites POST /change/:siteId should re-render changeNeighbouringSite page if addressLine1 is null 1`] = `
+exports[`neighbouring-sites POST /change/site/:siteId should re-render changeNeighbouringSite page if addressLine1 is null 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -697,7 +809,7 @@ exports[`neighbouring-sites POST /change/:siteId should re-render changeNeighbou
 </main>"
 `;
 
-exports[`neighbouring-sites POST /change/:siteId should re-render changeNeighbouringSite page if the postcode is an empty string 1`] = `
+exports[`neighbouring-sites POST /change/site/:siteId should re-render changeNeighbouringSite page if the postcode is an empty string 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -751,7 +863,7 @@ exports[`neighbouring-sites POST /change/:siteId should re-render changeNeighbou
 </main>"
 `;
 
-exports[`neighbouring-sites POST /change/:siteId should re-render changeNeighbouringSite page if the postcode is invalid 1`] = `
+exports[`neighbouring-sites POST /change/site/:siteId should re-render changeNeighbouringSite page if the postcode is invalid 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -805,7 +917,7 @@ exports[`neighbouring-sites POST /change/:siteId should re-render changeNeighbou
 </main>"
 `;
 
-exports[`neighbouring-sites POST /change/:siteId should re-render changeNeighbouringSite page if the postcode is null 1`] = `
+exports[`neighbouring-sites POST /change/site/:siteId should re-render changeNeighbouringSite page if the postcode is null 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -859,7 +971,7 @@ exports[`neighbouring-sites POST /change/:siteId should re-render changeNeighbou
 </main>"
 `;
 
-exports[`neighbouring-sites POST /change/:siteId should re-render changeNeighbouringSite page if town is an empty string 1`] = `
+exports[`neighbouring-sites POST /change/site/:siteId should re-render changeNeighbouringSite page if town is an empty string 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -913,7 +1025,7 @@ exports[`neighbouring-sites POST /change/:siteId should re-render changeNeighbou
 </main>"
 `;
 
-exports[`neighbouring-sites POST /change/:siteId should re-render changeNeighbouringSite page if town is null 1`] = `
+exports[`neighbouring-sites POST /change/site/:siteId should re-render changeNeighbouringSite page if town is null 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -967,7 +1079,7 @@ exports[`neighbouring-sites POST /change/:siteId should re-render changeNeighbou
 </main>"
 `;
 
-exports[`neighbouring-sites POST /remove/:siteId should re-render remove neighbouring if user has not selected a radio option 1`] = `
+exports[`neighbouring-sites POST /remove/site/:siteId should re-render remove neighbouring if user has not selected a radio option 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">

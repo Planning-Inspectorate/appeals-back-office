@@ -34,7 +34,7 @@ const renderIncompleteReason = async (request, response) => {
 	]);
 
 	if (!lpaQuestionnaireResponse) {
-		return response.render('app/404.njk');
+		return response.status(404).render('app/404.njk');
 	}
 
 	if (
@@ -54,7 +54,7 @@ const renderIncompleteReason = async (request, response) => {
 			lpaQuestionnaireResponse.validation
 		);
 
-		return response.render('appeals/appeal/lpa-questionnaire-incomplete.njk', {
+		return response.status(200).render('appeals/appeal/lpa-questionnaire-incomplete.njk', {
 			appeal: {
 				id: currentAppeal.appealId,
 				shortReference: appealShortReference(currentAppeal.appealReference)
@@ -65,7 +65,7 @@ const renderIncompleteReason = async (request, response) => {
 		});
 	}
 
-	return response.render('app/500.njk');
+	return response.status(500).render('app/500.njk');
 };
 
 /**
@@ -97,7 +97,7 @@ const renderUpdateDueDate = async (request, response) => {
 		postedDueDateYear
 	);
 
-	return response.render('appeals/appeal/update-date.njk', {
+	return response.status(200).render('appeals/appeal/update-date.njk', {
 		pageContent: mappedPageContent,
 		errors
 	});
@@ -112,16 +112,15 @@ export const renderDecisionIncompleteConfirmationPage = async (request, response
 	const { currentAppeal, session } = request;
 
 	if (!objectContainsAllKeys(session, 'lpaQuestionnaireUpdatedDueDate')) {
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 
 	const pageContent = decisionIncompleteConfirmationPage(
 		currentAppeal.appealId,
-		currentAppeal.appealReference,
-		session.lpaQuestionnaireUpdatedDueDate
+		currentAppeal.appealReference
 	);
 
-	response.render('appeals/confirmation.njk', {
+	response.status(200).render('appeals/confirmation.njk', {
 		pageContent
 	});
 };
@@ -165,7 +164,7 @@ export const postIncompleteReason = async (request, response) => {
 				: 'Something went wrong when completing appellant case review'
 		);
 
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };
 
@@ -185,7 +184,7 @@ export const postUpdateDueDate = async (request, response) => {
 	} = request;
 
 	if (!objectContainsAllKeys(session, 'webLPAQuestionnaireReviewOutcome')) {
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 
 	if (errors) {
@@ -193,7 +192,7 @@ export const postUpdateDueDate = async (request, response) => {
 	}
 
 	if (!objectContainsAllKeys(body, ['due-date-day', 'due-date-month', 'due-date-year'])) {
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 
 	try {
@@ -206,7 +205,7 @@ export const postUpdateDueDate = async (request, response) => {
 			Number.isNaN(updatedDueDateMonth) ||
 			Number.isNaN(updatedDueDateYear)
 		) {
-			return response.render('app/500.njk');
+			return response.status(500).render('app/500.njk');
 		}
 
 		request.session.webLPAQuestionnaireReviewOutcome.updatedDueDate = {
@@ -226,7 +225,7 @@ export const postUpdateDueDate = async (request, response) => {
 				: 'Something went wrong when completing appellant case review'
 		);
 
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };
 

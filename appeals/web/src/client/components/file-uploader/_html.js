@@ -50,7 +50,7 @@ export const buildRegularListItem = (uploadedFile) => {
 
 	const li = document.createElement('li');
 	li.className = 'pins-file-upload__file-row';
-	li.id = `file_row_${uploadedFileFileRowId}_${uploadedFileSize}`;
+	li.id = uploadedFileFileRowId || '';
 
 	const p = document.createElement('p');
 	p.className = 'govuk-heading-s';

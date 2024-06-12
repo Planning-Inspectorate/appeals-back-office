@@ -13,10 +13,10 @@ export const viewAppealDetails = async (request, response) => {
 		const currentUrl = request.originalUrl;
 		const mappedPageContent = await appealDetailsPage(appealDetails, currentUrl, session);
 
-		response.render('patterns/display-page.pattern.njk', {
+		response.status(200).render('patterns/display-page.pattern.njk', {
 			pageContent: mappedPageContent
 		});
 	} else {
-		response.render('app/404.njk');
+		response.status(404).render('app/404.njk');
 	}
 };

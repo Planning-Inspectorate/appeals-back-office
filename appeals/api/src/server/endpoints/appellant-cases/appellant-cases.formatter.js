@@ -1,15 +1,14 @@
 import formatAddress from '#utils/format-address.js';
 import formatValidationOutcomeResponse from '#utils/format-validation-outcome-response.js';
-import isFPA from '#utils/is-fpa.js';
 import { mapFoldersLayoutForAppealSection } from '../documents/documents.mapper.js';
-import { CONFIG_APPEAL_STAGES } from '#endpoints/constants.js';
+import { STAGE } from '@pins/appeals/constants/documents.js';
 
-/** @typedef {import('@pins/appeals.api').Appeals.RepositoryGetByIdResultItem} RepositoryGetByIdResultItem */
+/** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} SingleAppellantCaseResponse */
 /** @typedef {import('@pins/appeals.api').Schema.Folder} Folder */
 
 /**
- * @param {RepositoryGetByIdResultItem} appeal
+ * @param {Appeal} appeal
  * @param {Folder[] | null} folders
  * @returns {SingleAppellantCaseResponse | undefined}
  */
@@ -19,14 +18,6 @@ const formatAppellantCase = (appeal, folders = null) => {
 	if (appellantCase) {
 		// @ts-ignore
 		return {
-			...(isFPA(appeal.appealType) && {
-				agriculturalHolding: {
-					isAgriculturalHolding: appellantCase.isAgriculturalHolding,
-					isTenant: appellantCase.isAgriculturalHoldingTenant,
-					hasToldTenants: appellantCase.hasToldTenants,
-					hasOtherTenants: appellantCase.hasOtherTenants
-				}
-			}),
 			appealId: appeal.id,
 			appealReference: appeal.reference,
 			appealSite: {
@@ -34,61 +25,37 @@ const formatAppellantCase = (appeal, folders = null) => {
 				...formatAddress(appeal.address)
 			},
 			appellantCaseId: appellantCase.id,
-			appellant: {
+			applicant: {
 				firstName: appeal.appellant?.firstName || '',
 				surname: appeal.appellant?.lastName || ''
 			},
-			applicant: {
-				firstName: appellantCase.applicantFirstName,
-				surname: appellantCase.applicantSurname
-			},
-			planningApplicationReference: appeal.planningApplicationReference,
-			...(isFPA(appeal.appealType) && {
-				developmentDescription: {
-					isCorrect: appellantCase.isDevelopmentDescriptionStillCorrect,
-					details: appellantCase.newDevelopmentDescription
-				}
-			}),
-			...formatFoldersAndDocuments(folders),
+			isAppellantNamedOnApplication: appeal.agent == null,
+			planningApplicationReference: appeal.applicationReference || '',
 			hasAdvertisedAppeal: appellantCase.hasAdvertisedAppeal,
-			...(isFPA(appeal.appealType) && {
-				hasDesignAndAccessStatement: appellantCase.hasDesignAndAccessStatement,
-				hasNewPlansOrDrawings: appellantCase.hasNewPlansOrDrawings
-			}),
-			hasNewSupportingDocuments: appellantCase.hasNewSupportingDocuments,
-			...(isFPA(appeal.appealType) && {
-				hasSeparateOwnershipCertificate: appellantCase.hasSeparateOwnershipCertificate
-			}),
 			healthAndSafety: {
-				details: appellantCase.healthAndSafetyIssues,
-				hasIssues: appellantCase.hasHealthAndSafetyIssues
+				details: appellantCase.siteSafetyDetails,
+				hasIssues: appellantCase.siteSafetyDetails !== null
 			},
-			isAppellantNamedOnApplication: appellantCase.isAppellantNamedOnApplication,
-			localPlanningDepartment: appeal.lpa.name,
-			...(isFPA(appeal.appealType) && {
-				planningObligation: {
-					hasObligation: appellantCase.hasPlanningObligation,
-					status: appellantCase.planningObligationStatus?.name || null
-				}
-			}),
-			procedureType: appeal.lpaQuestionnaire?.procedureType?.name,
+			localPlanningDepartment: appeal.lpa?.name || '',
+			procedureType: appeal.procedureType?.name,
 			siteOwnership: {
-				areAllOwnersKnown: appellantCase.areAllOwnersKnown,
-				hasAttemptedToIdentifyOwners: appellantCase.hasAttemptedToIdentifyOwners,
-				hasToldOwners: appellantCase.hasToldOwners,
-				isFullyOwned: appellantCase.isSiteFullyOwned,
-				isPartiallyOwned: appellantCase.isSitePartiallyOwned,
-				knowsOtherLandowners: appellantCase.knowledgeOfOtherLandowners?.name || null
+				areAllOwnersKnown: appellantCase.knowsAllOwners?.name || null,
+				knowsOtherLandowners: appellantCase.knowsOtherOwners?.name || null,
+				isFullyOwned: appellantCase.ownsAllLand || null,
+				isPartiallyOwned: appellantCase.ownsSomeLand || null,
+				floorSpaceSquareMetres: appellantCase.floorSpaceSquareMetres || null,
+				siteAreaSquareMetres: appellantCase.siteAreaSquareMetres || null
+			},
+			developmentDescription: {
+				details: appellantCase.originalDevelopmentDescription || null,
+				isCorrect: appellantCase.changedDevelopmentDescription !== true
 			},
 			validation: formatValidationOutcomeResponse(
-				appellantCase.appellantCaseValidationOutcome?.name,
-				appellantCase.appellantCaseIncompleteReasonsOnAppellantCases,
-				appellantCase.appellantCaseInvalidReasonsOnAppellantCases
+				appellantCase.appellantCaseValidationOutcome?.name || '',
+				appellantCase.appellantCaseIncompleteReasonsSelected,
+				appellantCase.appellantCaseInvalidReasonsSelected
 			),
-			visibility: {
-				details: appellantCase.visibilityRestrictions,
-				isVisible: appellantCase.isSiteVisibleFromPublicRoad
-			}
+			...formatFoldersAndDocuments(folders)
 		};
 	}
 };
@@ -99,11 +66,11 @@ const formatAppellantCase = (appeal, folders = null) => {
 const formatFoldersAndDocuments = (folders) => {
 	if (folders) {
 		return {
-			documents: mapFoldersLayoutForAppealSection(CONFIG_APPEAL_STAGES.appellantCase, folders)
+			documents: mapFoldersLayoutForAppealSection(STAGE.APPELLANT_CASE, folders)
 		};
 	}
 
-	return null;
+	return [];
 };
 
 export { formatAppellantCase };

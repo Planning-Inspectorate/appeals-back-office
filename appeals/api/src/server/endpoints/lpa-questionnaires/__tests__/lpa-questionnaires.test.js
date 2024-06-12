@@ -3,25 +3,17 @@ import { jest } from '@jest/globals';
 import { request } from '../../../app-test.js';
 import {
 	AUDIT_TRAIL_PROGRESSED_TO_STATUS,
-	ERROR_CANNOT_BE_EMPTY_STRING,
 	ERROR_FAILED_TO_SAVE_DATA,
 	ERROR_INVALID_LPA_QUESTIONNAIRE_VALIDATION_OUTCOME,
 	ERROR_LPA_QUESTIONNAIRE_VALID_VALIDATION_OUTCOME_REASONS_REQUIRED,
-	ERROR_MAX_LENGTH_CHARACTERS,
-	ERROR_MUST_BE_ARRAY_OF_NUMBERS,
 	ERROR_MUST_BE_BOOLEAN,
 	ERROR_MUST_BE_CORRECT_DATE_FORMAT,
 	ERROR_MUST_BE_INCOMPLETE_INVALID_REASON,
 	ERROR_MUST_BE_IN_FUTURE,
 	ERROR_MUST_BE_NUMBER,
-	ERROR_MUST_BE_STRING,
-	ERROR_MUST_CONTAIN_AT_LEAST_1_VALUE,
-	ERROR_MUST_HAVE_DETAILS,
-	ERROR_MUST_NOT_HAVE_DETAILS,
 	ERROR_NOT_FOUND,
 	ERROR_ONLY_FOR_INCOMPLETE_VALIDATION_OUTCOME,
 	LENGTH_10,
-	LENGTH_300,
 	LENGTH_8,
 	STATE_TARGET_STATEMENT_REVIEW,
 	STATE_TARGET_ISSUE_DETERMINATION,
@@ -43,6 +35,7 @@ import createManyToManyRelationData from '#utils/create-many-to-many-relation-da
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
+import config from '#config/config.js';
 
 describe('lpa questionnaires routes', () => {
 	beforeEach(() => {
@@ -229,8 +222,56 @@ describe('lpa questionnaires routes', () => {
 					}
 				});
 				expect(
-					databaseConnector.lPAQuestionnaireIncompleteReasonOnLPAQuestionnaire.update
+					databaseConnector.lPAQuestionnaireIncompleteReasonsSelected.update
 				).not.toHaveBeenCalled();
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).toHaveBeenCalledTimes(1);
+
+				expect(response.status).toEqual(200);
+			});
+
+			test('sends a correctly formatted notify email when the outcome is complete for a household appeal', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...householdAppeal,
+					appealStatus: [
+						{
+							status: 'lpa_questionnaire_due',
+							valid: true
+						}
+					]
+				});
+				// @ts-ignore
+				databaseConnector.lPAQuestionnaireValidationOutcome.findUnique.mockResolvedValue(
+					lpaQuestionnaireValidationOutcomes[0]
+				);
+
+				const body = {
+					validationOutcome: 'complete'
+				};
+				const { id, lpaQuestionnaire } = householdAppeal;
+				const response = await request
+					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
+					.send(body)
+					.set('azureAdUserId', azureAdUserId);
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).toHaveBeenCalledTimes(1);
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).toHaveBeenCalledWith(
+					config.govNotify.template.lpaqComplete.id,
+					'maid@lpa-email.gov.uk',
+					{
+						emailReplyToId: null,
+						personalisation: {
+							appeal_reference_number: '1345264',
+							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom'
+						},
+						reference: null
+					}
+				);
+
 				expect(response.status).toEqual(200);
 			});
 
@@ -295,7 +336,7 @@ describe('lpa questionnaires routes', () => {
 					}
 				});
 				expect(
-					databaseConnector.lPAQuestionnaireIncompleteReasonOnLPAQuestionnaire.update
+					databaseConnector.lPAQuestionnaireIncompleteReasonsSelected.update
 				).not.toHaveBeenCalled();
 				expect(response.status).toEqual(200);
 			});
@@ -332,7 +373,7 @@ describe('lpa questionnaires routes', () => {
 					}
 				});
 				expect(
-					databaseConnector.lPAQuestionnaireIncompleteReasonOnLPAQuestionnaire.createMany
+					databaseConnector.lPAQuestionnaireIncompleteReasonsSelected.createMany
 				).toHaveBeenCalledWith({
 					data: createManyToManyRelationData({
 						data: body.incompleteReasons.map(({ id }) => id),
@@ -387,7 +428,7 @@ describe('lpa questionnaires routes', () => {
 					}
 				});
 				expect(
-					databaseConnector.lPAQuestionnaireIncompleteReasonOnLPAQuestionnaire.createMany
+					databaseConnector.lPAQuestionnaireIncompleteReasonsSelected.createMany
 				).toHaveBeenCalledWith({
 					data: createManyToManyRelationData({
 						data: body.incompleteReasons.map(({ id }) => id),
@@ -442,7 +483,7 @@ describe('lpa questionnaires routes', () => {
 					}
 				});
 				expect(
-					databaseConnector.lPAQuestionnaireIncompleteReasonOnLPAQuestionnaire.createMany
+					databaseConnector.lPAQuestionnaireIncompleteReasonsSelected.createMany
 				).toHaveBeenCalledWith({
 					data: createManyToManyRelationData({
 						data: body.incompleteReasons.map(({ id }) => id),
@@ -497,7 +538,7 @@ describe('lpa questionnaires routes', () => {
 					}
 				});
 				expect(
-					databaseConnector.lPAQuestionnaireIncompleteReasonOnLPAQuestionnaire.createMany
+					databaseConnector.lPAQuestionnaireIncompleteReasonsSelected.createMany
 				).toHaveBeenCalledWith({
 					data: createManyToManyRelationData({
 						data: body.incompleteReasons.map(({ id }) => id),
@@ -552,7 +593,7 @@ describe('lpa questionnaires routes', () => {
 					}
 				});
 				expect(
-					databaseConnector.lPAQuestionnaireIncompleteReasonOnLPAQuestionnaire.createMany
+					databaseConnector.lPAQuestionnaireIncompleteReasonsSelected.createMany
 				).toHaveBeenCalledWith({
 					data: createManyToManyRelationData({
 						data: body.incompleteReasons.map(({ id }) => id),
@@ -616,7 +657,7 @@ describe('lpa questionnaires routes', () => {
 					}
 				});
 				expect(
-					databaseConnector.lPAQuestionnaireIncompleteReasonOnLPAQuestionnaire.createMany
+					databaseConnector.lPAQuestionnaireIncompleteReasonsSelected.createMany
 				).toHaveBeenCalledWith({
 					data: createManyToManyRelationData({
 						data: body.incompleteReasons.map(({ id }) => id),
@@ -709,7 +750,7 @@ describe('lpa questionnaires routes', () => {
 					}
 				});
 				expect(
-					databaseConnector.lPAQuestionnaireIncompleteReasonOnLPAQuestionnaire.createMany
+					databaseConnector.lPAQuestionnaireIncompleteReasonsSelected.createMany
 				).toHaveBeenCalledWith({
 					data: createManyToManyRelationData({
 						data: body.incompleteReasons.map(({ id }) => id),
@@ -799,7 +840,7 @@ describe('lpa questionnaires routes', () => {
 					}
 				});
 				expect(
-					databaseConnector.lPAQuestionnaireIncompleteReasonOnLPAQuestionnaire.createMany
+					databaseConnector.lPAQuestionnaireIncompleteReasonsSelected.createMany
 				).toHaveBeenCalledWith({
 					data: createManyToManyRelationData({
 						data: body.incompleteReasons.map(({ id }) => id),
@@ -3877,581 +3918,6 @@ describe('lpa questionnaires routes', () => {
 				});
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual(responseBody);
-			});
-
-			test('updates designatedSites when given a numeric array', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-				// @ts-ignore
-				databaseConnector.designatedSite.findMany.mockResolvedValue([
-					{ id: 1 },
-					{ id: 2 },
-					{ id: 3 }
-				]);
-
-				const body = {
-					designatedSites: [1, 2, 3]
-				};
-				const { id, lpaQuestionnaire } = householdAppeal;
-				const response = await request
-					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
-					.send(body)
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(
-					databaseConnector.designatedSitesOnLPAQuestionnaires.createMany
-				).toHaveBeenCalledWith({
-					data: [
-						{ designatedSiteId: 1, lpaQuestionnaireId: 1 },
-						{ designatedSiteId: 2, lpaQuestionnaireId: 1 },
-						{ designatedSiteId: 3, lpaQuestionnaireId: 1 }
-					]
-				});
-				expect(response.status).toEqual(200);
-			});
-
-			test('updates designatedSites and deduplicates when given an array with duplicates', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-				// @ts-ignore
-				databaseConnector.designatedSite.findMany.mockResolvedValue([
-					{ id: 1 },
-					{ id: 2 },
-					{ id: 3 }
-				]);
-
-				const body = {
-					designatedSites: [1, 2, 2, 3, 3, 3]
-				};
-				const { id, lpaQuestionnaire } = householdAppeal;
-				const response = await request
-					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
-					.send(body)
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(
-					databaseConnector.designatedSitesOnLPAQuestionnaires.createMany
-				).toHaveBeenCalledWith({
-					data: [
-						{ designatedSiteId: 1, lpaQuestionnaireId: 1 },
-						{ designatedSiteId: 2, lpaQuestionnaireId: 1 },
-						{ designatedSiteId: 3, lpaQuestionnaireId: 1 }
-					]
-				});
-				expect(response.status).toEqual(200);
-				expect(response.body).toEqual({ designatedSites: [1, 2, 3] });
-			});
-
-			test('returns an error if designatedSites is not an array', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-
-				const { id, lpaQuestionnaire } = householdAppeal;
-				const response = await request
-					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
-					.send({
-						designatedSites: 1
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						designatedSites: ERROR_MUST_BE_ARRAY_OF_NUMBERS
-					}
-				});
-			});
-
-			test('returns an error if designatedSites is not a numeric array', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-
-				const body = {
-					designatedSites: ['1', '2', '3']
-				};
-				const { id, lpaQuestionnaire } = householdAppeal;
-				const response = await request
-					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
-					.send(body)
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						designatedSites: ERROR_MUST_BE_ARRAY_OF_NUMBERS
-					}
-				});
-			});
-
-			test('returns an error if designatedSites is a empty array', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-
-				const { id, lpaQuestionnaire } = householdAppeal;
-				const response = await request
-					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
-					.send({
-						designatedSites: []
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						designatedSites: ERROR_MUST_CONTAIN_AT_LEAST_1_VALUE
-					}
-				});
-			});
-
-			test('returns an error if designatedSites contains an invalid value', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-				// @ts-ignore
-				databaseConnector.designatedSite.findMany.mockResolvedValue([
-					{ id: 1 },
-					{ id: 2 },
-					{ id: 3 }
-				]);
-
-				const body = {
-					designatedSites: [1, 2, 4]
-				};
-				const { id, lpaQuestionnaire } = householdAppeal;
-				const response = await request
-					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
-					.send(body)
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(404);
-				expect(response.body).toEqual({
-					errors: {
-						designatedSites: ERROR_NOT_FOUND
-					}
-				});
-			});
-
-			test('updates scheduleType when given a numeric number', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-				// @ts-ignore
-				databaseConnector.scheduleType.findMany.mockResolvedValue([
-					{ id: 1 },
-					{ id: 2 },
-					{ id: 3 }
-				]);
-
-				const body = {
-					scheduleType: 1
-				};
-				const { id, lpaQuestionnaire } = householdAppeal;
-				const response = await request
-					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
-					.send(body)
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(databaseConnector.lPAQuestionnaire.update).toHaveBeenCalledWith({
-					where: { id: householdAppeal.lpaQuestionnaire.id },
-					data: {
-						scheduleTypeId: 1
-					}
-				});
-				expect(response.status).toEqual(200);
-			});
-
-			test('updates scheduleType when given a string number', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-				// @ts-ignore
-				databaseConnector.scheduleType.findMany.mockResolvedValue([
-					{ id: 1 },
-					{ id: 2 },
-					{ id: 3 }
-				]);
-
-				const body = {
-					scheduleType: '1'
-				};
-				const { id, lpaQuestionnaire } = householdAppeal;
-				const response = await request
-					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
-					.send(body)
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(databaseConnector.lPAQuestionnaire.update).toHaveBeenCalledWith({
-					where: { id: householdAppeal.lpaQuestionnaire.id },
-					data: {
-						scheduleTypeId: 1
-					}
-				});
-				expect(response.status).toEqual(200);
-			});
-
-			test('returns an error if scheduleType is not a number', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-
-				const body = {
-					scheduleType: 'one'
-				};
-				const { id, lpaQuestionnaire } = householdAppeal;
-				const response = await request
-					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
-					.send(body)
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						scheduleType: ERROR_MUST_BE_NUMBER
-					}
-				});
-			});
-
-			test('returns an error if scheduleType is not valid', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-				// @ts-ignore
-				databaseConnector.scheduleType.findMany.mockResolvedValue([
-					{ id: 1 },
-					{ id: 2 },
-					{ id: 3 }
-				]);
-
-				const body = {
-					scheduleType: 4
-				};
-				const { id, lpaQuestionnaire } = householdAppeal;
-				const response = await request
-					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
-					.send(body)
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(404);
-				expect(response.body).toEqual({
-					errors: {
-						scheduleType: ERROR_NOT_FOUND
-					}
-				});
-			});
-
-			test('returns an error if isSensitiveArea is not a boolean', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-
-				const { id, lpaQuestionnaire } = householdAppeal;
-				const response = await request
-					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
-					.send({
-						isSensitiveArea: 'yes'
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						isSensitiveArea: ERROR_MUST_BE_BOOLEAN
-					}
-				});
-			});
-
-			test('updates isSensitiveArea when given boolean true', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-
-				const body = {
-					isSensitiveArea: true,
-					sensitiveAreaDetails: 'The area is liable to flooding'
-				};
-				const { id, lpaQuestionnaire } = householdAppeal;
-				const response = await request
-					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
-					.send(body)
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(databaseConnector.lPAQuestionnaire.update).toHaveBeenCalledWith({
-					where: { id: lpaQuestionnaire.id },
-					data: body
-				});
-				expect(response.status).toEqual(200);
-			});
-
-			test('updates isSensitiveArea when given boolean false', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-
-				const body = {
-					isSensitiveArea: false
-				};
-				const { id, lpaQuestionnaire } = householdAppeal;
-				const response = await request
-					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
-					.send(body)
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(databaseConnector.lPAQuestionnaire.update).toHaveBeenCalledWith({
-					where: { id: lpaQuestionnaire.id },
-					data: body
-				});
-				expect(response.status).toEqual(200);
-			});
-
-			test('updates isSensitiveArea when given string true', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-
-				const requestBody = {
-					isSensitiveArea: 'true',
-					sensitiveAreaDetails: 'The area is liable to flooding'
-				};
-				const responseBody = {
-					isSensitiveArea: true,
-					sensitiveAreaDetails: 'The area is liable to flooding'
-				};
-				const { id, lpaQuestionnaire } = householdAppeal;
-				const response = await request
-					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
-					.send(requestBody)
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(databaseConnector.lPAQuestionnaire.update).toHaveBeenCalledWith({
-					where: { id: lpaQuestionnaire.id },
-					data: responseBody
-				});
-				expect(response.status).toEqual(200);
-				expect(response.body).toEqual(responseBody);
-			});
-
-			test('updates isSensitiveArea when given string false', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-
-				const requestBody = {
-					isSensitiveArea: 'false'
-				};
-				const responseBody = {
-					isSensitiveArea: false
-				};
-				const { id, lpaQuestionnaire } = householdAppeal;
-				const response = await request
-					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
-					.send(requestBody)
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(databaseConnector.lPAQuestionnaire.update).toHaveBeenCalledWith({
-					where: { id: lpaQuestionnaire.id },
-					data: responseBody
-				});
-				expect(response.status).toEqual(200);
-				expect(response.body).toEqual(responseBody);
-			});
-
-			test('updates isSensitiveArea when given numeric 1', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-
-				const requestBody = {
-					isSensitiveArea: 1,
-					sensitiveAreaDetails: 'The area is liable to flooding'
-				};
-				const responseBody = {
-					isSensitiveArea: true,
-					sensitiveAreaDetails: 'The area is liable to flooding'
-				};
-				const { id, lpaQuestionnaire } = householdAppeal;
-				const response = await request
-					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
-					.send(requestBody)
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(databaseConnector.lPAQuestionnaire.update).toHaveBeenCalledWith({
-					where: { id: lpaQuestionnaire.id },
-					data: responseBody
-				});
-				expect(response.status).toEqual(200);
-				expect(response.body).toEqual(responseBody);
-			});
-
-			test('updates isSensitiveArea when given numeric 0', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-
-				const requestBody = {
-					isSensitiveArea: 0
-				};
-				const responseBody = {
-					isSensitiveArea: false
-				};
-				const { id, lpaQuestionnaire } = householdAppeal;
-				const response = await request
-					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
-					.send(requestBody)
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(databaseConnector.lPAQuestionnaire.update).toHaveBeenCalledWith({
-					where: { id: lpaQuestionnaire.id },
-					data: responseBody
-				});
-				expect(response.status).toEqual(200);
-				expect(response.body).toEqual(responseBody);
-			});
-
-			test('updates isSensitiveArea when given string 1', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-
-				const requestBody = {
-					isSensitiveArea: '1',
-					sensitiveAreaDetails: 'The area is liable to flooding'
-				};
-				const responseBody = {
-					isSensitiveArea: true,
-					sensitiveAreaDetails: 'The area is liable to flooding'
-				};
-				const { id, lpaQuestionnaire } = householdAppeal;
-				const response = await request
-					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
-					.send(requestBody)
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(databaseConnector.lPAQuestionnaire.update).toHaveBeenCalledWith({
-					where: { id: lpaQuestionnaire.id },
-					data: responseBody
-				});
-				expect(response.status).toEqual(200);
-				expect(response.body).toEqual(responseBody);
-			});
-
-			test('updates isSensitiveArea when given string 0', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-
-				const requestBody = {
-					isSensitiveArea: '0'
-				};
-				const responseBody = {
-					isSensitiveArea: false
-				};
-				const { id, lpaQuestionnaire } = householdAppeal;
-				const response = await request
-					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
-					.send(requestBody)
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(databaseConnector.lPAQuestionnaire.update).toHaveBeenCalledWith({
-					where: { id: lpaQuestionnaire.id },
-					data: responseBody
-				});
-				expect(response.status).toEqual(200);
-				expect(response.body).toEqual(responseBody);
-			});
-
-			test('returns an error if sensitiveAreaDetails is not a string', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-
-				const { id, lpaQuestionnaire } = householdAppeal;
-				const response = await request
-					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
-					.send({
-						sensitiveAreaDetails: ['The area is liable to flooding']
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						sensitiveAreaDetails: ERROR_MUST_BE_STRING
-					}
-				});
-			});
-
-			test('returns an error if sensitiveAreaDetails is an empty string', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-
-				const { id, lpaQuestionnaire } = householdAppeal;
-				const response = await request
-					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
-					.send({
-						sensitiveAreaDetails: ''
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						sensitiveAreaDetails: ERROR_CANNOT_BE_EMPTY_STRING
-					}
-				});
-			});
-
-			test('returns an error if sensitiveAreaDetails is more than 300 characters', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-
-				const { id, lpaQuestionnaire } = householdAppeal;
-				const response = await request
-					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
-					.send({
-						sensitiveAreaDetails: 'A'.repeat(LENGTH_300 + 1)
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						sensitiveAreaDetails: stringTokenReplacement(ERROR_MAX_LENGTH_CHARACTERS, [LENGTH_300])
-					}
-				});
-			});
-
-			test('returns an error if isSensitiveArea is false and sensitiveAreaDetails is given', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-
-				const { id, lpaQuestionnaire } = householdAppeal;
-				const response = await request
-					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
-					.send({
-						isSensitiveArea: false,
-						sensitiveAreaDetails: 'The area is liable to flooding'
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						isSensitiveArea: stringTokenReplacement(ERROR_MUST_NOT_HAVE_DETAILS, [
-							'sensitiveAreaDetails',
-							'isSensitiveArea',
-							false
-						])
-					}
-				});
-			});
-
-			test('returns an error if isSensitiveArea is true and sensitiveAreaDetails is not given', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-
-				const { id, lpaQuestionnaire } = householdAppeal;
-				const response = await request
-					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
-					.send({
-						isSensitiveArea: true
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						isSensitiveArea: stringTokenReplacement(ERROR_MUST_HAVE_DETAILS, [
-							'sensitiveAreaDetails',
-							'isSensitiveArea',
-							true
-						])
-					}
-				});
 			});
 
 			test('does not return an error when given an empty body', async () => {

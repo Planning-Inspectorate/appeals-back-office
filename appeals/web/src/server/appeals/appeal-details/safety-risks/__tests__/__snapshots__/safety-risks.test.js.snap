@@ -1,0 +1,204 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`safety-risks GET /change/:source should render changeSafetyRisksAccess page for the LPA answer when source is LPA from LPA questionnaire 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change the site health and safety risks (LPA answer)</h1>
+                </div>
+            </div>
+            <form method="POST" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <div class="govuk-radios" data-module="govuk-radios">
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="safetyRisksRadio" name="safetyRisksRadio"
+                            type="radio" value="yes" data-aria-controls="conditional-safetyRisksRadio">
+                            <label class="govuk-label govuk-radios__label" for="safetyRisksRadio">Yes</label>
+                        </div>
+                        <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
+                        id="conditional-safetyRisksRadio">
+                            <div class="govuk-form-group">
+                                <label class="govuk-label" for="safety-risk-details">Health and safety risks (LPA details)</label>
+                                <textarea class="govuk-textarea"
+                                id="safety-risk-details" name="safetyRisksDetails" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="safetyRisksRadio-2" name="safetyRisksRadio"
+                            type="radio" value="no" checked>
+                            <label class="govuk-label govuk-radios__label" for="safetyRisksRadio-2">No</label>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`safety-risks GET /change/:source should render changeSafetyRisksAccess page for the LPA answer when source is LPA from appeals details 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change the site health and safety risks (LPA answer)</h1>
+                </div>
+            </div>
+            <form method="POST" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <div class="govuk-radios" data-module="govuk-radios">
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="safetyRisksRadio" name="safetyRisksRadio"
+                            type="radio" value="yes" data-aria-controls="conditional-safetyRisksRadio">
+                            <label class="govuk-label govuk-radios__label" for="safetyRisksRadio">Yes</label>
+                        </div>
+                        <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
+                        id="conditional-safetyRisksRadio">
+                            <div class="govuk-form-group">
+                                <label class="govuk-label" for="safety-risk-details">Health and safety risks (LPA details)</label>
+                                <textarea class="govuk-textarea"
+                                id="safety-risk-details" name="safetyRisksDetails" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="safetyRisksRadio-2" name="safetyRisksRadio"
+                            type="radio" value="no" checked>
+                            <label class="govuk-label govuk-radios__label" for="safetyRisksRadio-2">No</label>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`safety-risks GET /change/:source should render changeSafetyRisksAccess page for the appellant answer when source is appellant from appeals details 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change the site health and safety risks (appellant answer)</h1>
+                </div>
+            </div>
+            <form method="POST" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <div class="govuk-radios" data-module="govuk-radios">
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="safetyRisksRadio" name="safetyRisksRadio"
+                            type="radio" value="yes" checked data-aria-controls="conditional-safetyRisksRadio">
+                            <label class="govuk-label govuk-radios__label" for="safetyRisksRadio">Yes</label>
+                        </div>
+                        <div class="govuk-radios__conditional" id="conditional-safetyRisksRadio">
+                            <div class="govuk-form-group">
+                                <label class="govuk-label" for="safety-risk-details">Health and safety risks (appellant details)</label>
+                                <textarea class="govuk-textarea"
+                                id="safety-risk-details" name="safetyRisksDetails" rows="3">Dogs on site</textarea>
+                            </div>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="safetyRisksRadio-2" name="safetyRisksRadio"
+                            type="radio" value="no">
+                            <label class="govuk-label govuk-radios__label" for="safetyRisksRadio-2">No</label>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`safety-risks GET /change/:source should render changeSafetyRisksAccess page for the appellant answer when source is appellant from appellant case 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change the site health and safety risks (appellant answer)</h1>
+                </div>
+            </div>
+            <form method="POST" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <div class="govuk-radios" data-module="govuk-radios">
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="safetyRisksRadio" name="safetyRisksRadio"
+                            type="radio" value="yes" checked data-aria-controls="conditional-safetyRisksRadio">
+                            <label class="govuk-label govuk-radios__label" for="safetyRisksRadio">Yes</label>
+                        </div>
+                        <div class="govuk-radios__conditional" id="conditional-safetyRisksRadio">
+                            <div class="govuk-form-group">
+                                <label class="govuk-label" for="safety-risk-details">Health and safety risks (appellant details)</label>
+                                <textarea class="govuk-textarea"
+                                id="safety-risk-details" name="safetyRisksDetails" rows="3">Dogs on site</textarea>
+                            </div>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="safetyRisksRadio-2" name="safetyRisksRadio"
+                            type="radio" value="no">
+                            <label class="govuk-label govuk-radios__label" for="safetyRisksRadio-2">No</label>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`safety-risks POST /change/:source should re-render changeSafetyRisksAccess page with an error when isRequired is "yes" but details is empty 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#safetyRisksDetails">Provide details of health and safety risks</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change the site health and safety risks (LPA answer)</h1>
+                </div>
+            </div>
+            <form method="POST" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <div class="govuk-radios" data-module="govuk-radios">
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="safetyRisksRadio" name="safetyRisksRadio"
+                            type="radio" value="yes" checked data-aria-controls="conditional-safetyRisksRadio">
+                            <label class="govuk-label govuk-radios__label" for="safetyRisksRadio">Yes</label>
+                        </div>
+                        <div class="govuk-radios__conditional" id="conditional-safetyRisksRadio">
+                            <div class="govuk-form-group">
+                                <label class="govuk-label" for="safety-risk-details">Health and safety risks (LPA details)</label>
+                                <textarea class="govuk-textarea"
+                                id="safety-risk-details" name="safetyRisksDetails" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="safetyRisksRadio-2" name="safetyRisksRadio"
+                            type="radio" value="no">
+                            <label class="govuk-label govuk-radios__label" for="safetyRisksRadio-2">No</label>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;

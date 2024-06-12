@@ -1,9 +1,11 @@
 import { getFoldersForAppeal } from '#endpoints/documents/documents.service.js';
-import { CONFIG_APPEAL_STAGES, ERROR_FAILED_TO_SAVE_DATA } from '#endpoints/constants.js';
+import { ERROR_FAILED_TO_SAVE_DATA } from '#endpoints/constants.js';
+import { STAGE } from '@pins/appeals/constants/documents.js';
 import appellantCaseRepository from '#repositories/appellant-case.repository.js';
 import logger from '#utils/logger.js';
 import { formatAppellantCase } from './appellant-cases.formatter.js';
 import { updateAppellantCaseValidationOutcome } from './appellant-cases.service.js';
+import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -15,7 +17,7 @@ import { updateAppellantCaseValidationOutcome } from './appellant-cases.service.
  */
 const getAppellantCaseById = async (req, res) => {
 	const { appeal } = req;
-	const folders = await getFoldersForAppeal(appeal, CONFIG_APPEAL_STAGES.appellantCase);
+	const folders = await getFoldersForAppeal(appeal, STAGE.APPELLANT_CASE);
 	const formattedAppeal = formatAppellantCase(appeal, folders);
 
 	return res.send(formattedAppeal);
@@ -34,10 +36,12 @@ const updateAppellantCaseById = async (req, res) => {
 			applicantFirstName,
 			applicantSurname,
 			areAllOwnersKnown,
+			doesSiteRequireInspectorAccess,
 			hasAdvertisedAppeal,
 			hasAttemptedToIdentifyOwners,
 			hasHealthAndSafetyIssues,
 			healthAndSafetyIssues,
+			inspectorAccessDetails,
 			isSiteFullyOwned,
 			isSitePartiallyOwned,
 			isSiteVisibleFromPublicRoad,
@@ -49,25 +53,42 @@ const updateAppellantCaseById = async (req, res) => {
 	const appellantCaseId = Number(params.appellantCaseId);
 	const azureAdUserId = String(req.get('azureAdUserId'));
 	const { validAt, ...data } = body;
+	const siteAddress = appeal.address
+		? formatAddressSingleLine(appeal.address)
+		: 'Address not available';
+	const notifyClient = req.notifyClient;
 
 	try {
 		validationOutcome
-			? await updateAppellantCaseValidationOutcome({
-					appeal,
-					appellantCaseId,
-					azureAdUserId,
-					data,
-					validationOutcome,
-					validAt
-			  })
+			? await updateAppellantCaseValidationOutcome(
+					{
+						appeal: {
+							appealStatus: appeal.appealStatus,
+							appealType: appeal.appealType,
+							appellant: appeal.appellant,
+							agent: appeal.agent,
+							id: appeal.id,
+							reference: appeal.reference
+						},
+						appellantCaseId,
+						azureAdUserId,
+						data,
+						validationOutcome,
+						validAt,
+						siteAddress
+					},
+					notifyClient
+			  )
 			: await appellantCaseRepository.updateAppellantCaseById(appellantCaseId, {
 					applicantFirstName,
 					applicantSurname,
 					areAllOwnersKnown,
+					doesSiteRequireInspectorAccess,
 					hasAdvertisedAppeal,
 					hasAttemptedToIdentifyOwners,
 					hasHealthAndSafetyIssues,
 					healthAndSafetyIssues,
+					inspectorAccessDetails,
 					isSiteFullyOwned,
 					isSitePartiallyOwned,
 					isSiteVisibleFromPublicRoad,

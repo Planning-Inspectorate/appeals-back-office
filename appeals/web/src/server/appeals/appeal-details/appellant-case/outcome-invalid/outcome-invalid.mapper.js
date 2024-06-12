@@ -22,19 +22,7 @@ export function decisionInvalidConfirmationPage(appealId, appealReference) {
 			{
 				type: 'html',
 				parameters: {
-					html: `<span class="govuk-body">The appeal has been closed.</span>`
-				}
-			},
-			{
-				type: 'html',
-				parameters: {
-					html: `<h2>What happens next</h2>`
-				}
-			},
-			{
-				type: 'html',
-				parameters: {
-					html: `<p class="govuk-body">The appellant and LPA have been informed.</p>`
+					html: '<p class="govuk-body">The appeal has been closed. The relevant parties have been informed.</p>'
 				}
 			},
 			{

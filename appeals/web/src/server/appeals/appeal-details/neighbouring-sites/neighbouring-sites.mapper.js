@@ -4,28 +4,31 @@ import {
 	errorAddressLine1,
 	errorPostcode,
 	errorTown
-} from '#lib/error-handlers/address-error-handler.js';
+} from '#lib/error-handlers/change-screen-error-handlers.js';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
  * @typedef {{ address: import("@pins/appeals.api/src/server/endpoints/appeals.js").AppealSite; siteId: string; }} NeighbouringSitesItem
+ * @typedef {'lpa'|'back-office'} Source
  */
 
 /**
  * @param {Appeal} appealData
  * @param {import('@pins/appeals.api').Appeals.AppealSite} currentAddress
+ * @param {Source} source
+ * @param {string} origin
  * @param {import("@pins/express").ValidationErrors | undefined} errors
  * @returns {PageContent}
  */
-export function addNeighbouringSitePage(appealData, currentAddress, errors) {
+export function addNeighbouringSitePage(appealData, source, origin, currentAddress, errors) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
 	/** @type {PageContent} */
 	const pageContent = {
 		title: 'Add neighbouring site',
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}`,
+		backLinkUrl: origin,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: 'Add neighbouring site',
+		heading: `Add neighbouring site ${getFormattedSource(source)}`,
 		pageComponents: [
 			{
 				type: 'input',
@@ -107,15 +110,22 @@ export function addNeighbouringSitePage(appealData, currentAddress, errors) {
  *
  * @param {Appeal} appealData
  * @param {import('@pins/appeals.api').Appeals.AppealSite} neighbouringSiteData
+ * @param {Source} source
+ * @param {string} origin
  * @returns {PageContent}
  */
-export function addNeighbouringSiteCheckAndConfirmPage(appealData, neighbouringSiteData) {
+export function addNeighbouringSiteCheckAndConfirmPage(
+	appealData,
+	source,
+	origin,
+	neighbouringSiteData
+) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `Details of neighbouring site you're adding to ${shortAppealReference}`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/neighbouring-sites/add`,
+		backLinkUrl: `${origin}/neighbouring-sites/add/${source}`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'Check your answers',
 		headingClasses: 'govuk-heading-l',
@@ -136,7 +146,7 @@ export function addNeighbouringSiteCheckAndConfirmPage(appealData, neighbouringS
 								items: [
 									{
 										text: 'Change',
-										href: `/appeals-service/appeal-details/${appealData.appealId}/neighbouring-sites/add`,
+										href: `${origin}/neighbouring-sites/add/${source}`,
 										visuallyHidden: 'Address'
 									}
 								]
@@ -159,9 +169,13 @@ export function addNeighbouringSiteCheckAndConfirmPage(appealData, neighbouringS
 export function manageNeighbouringSitesPage(appealData) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
-	const neighbouringSitesInspectorRows = appealData.neighbouringSites?.map((site) =>
-		neighbouringSiteTableRowFormatter(site)
-	);
+	const lpaNeighbouringSitesInspectorRows = appealData.neighbouringSites
+		?.filter((site) => site.source === 'lpa')
+		.map((site) => neighbouringSiteTableRowFormatter(site));
+
+	const backOfficeNeighbouringSitesInspectorRows = appealData.neighbouringSites
+		?.filter((site) => site.source === 'back-office')
+		.map((site) => neighbouringSiteTableRowFormatter(site));
 
 	/**@type {PageContent} */
 	const pageContent = {
@@ -178,7 +192,7 @@ export function manageNeighbouringSitesPage(appealData) {
 					captionClasses: 'govuk-table__caption--m',
 					firstCellIsHeader: false,
 					head: [{ text: 'Address' }, { text: 'Action', classes: 'govuk-!-width-one-quarter' }],
-					rows: []
+					rows: lpaNeighbouringSitesInspectorRows
 				}
 			},
 			{
@@ -188,7 +202,7 @@ export function manageNeighbouringSitesPage(appealData) {
 					captionClasses: 'govuk-table__caption--m',
 					firstCellIsHeader: false,
 					head: [{ text: 'Address' }, { text: 'Action', classes: 'govuk-!-width-one-quarter' }],
-					rows: neighbouringSitesInspectorRows
+					rows: backOfficeNeighbouringSitesInspectorRows
 				}
 			}
 		]
@@ -205,7 +219,7 @@ function neighbouringSiteTableRowFormatter(site) {
 			html: `${appealSiteToMultilineAddressStringHtml(site.address)}`
 		},
 		{
-			html: `<a href="change/${site.siteId}" class="govuk-link" >Change</a> | <a href="remove/${site.siteId}" class="govuk-link">Remove</a>`
+			html: `<a href="change/site/${site.siteId}" class="govuk-link" >Change</a> | <a href="remove/site/${site.siteId}" class="govuk-link">Remove</a>`
 		}
 	];
 }
@@ -213,9 +227,10 @@ function neighbouringSiteTableRowFormatter(site) {
 /**
  * @param {Appeal} appealData
  * @param {string} siteId
+ * @param {string} origin
  * @returns {PageContent}
  */
-export function removeNeighbouringSitePage(appealData, siteId) {
+export function removeNeighbouringSitePage(appealData, origin, siteId) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
 	let siteAddress;
@@ -232,7 +247,7 @@ export function removeNeighbouringSitePage(appealData, siteId) {
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `Remove neighbouring site`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/neighbouring-sites/manage`,
+		backLinkUrl: `${origin}/neighbouring-sites/manage`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'Remove neighbouring site',
 		headingClasses: 'govuk-heading-l',
@@ -405,7 +420,7 @@ export function changeNeighbouringSiteCheckAndConfirmPage(
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `Details of neighbouring site you're updating for ${shortAppealReference}`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/neighbouring-sites/change/${siteId}`,
+		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/neighbouring-sites/change/site/${siteId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'Check your answers',
 		headingClasses: 'govuk-heading-l',
@@ -426,7 +441,7 @@ export function changeNeighbouringSiteCheckAndConfirmPage(
 								items: [
 									{
 										text: 'Change',
-										href: `/appeals-service/appeal-details/${appealData.appealId}/neighbouring-sites/change/${siteId}`,
+										href: `/appeals-service/appeal-details/${appealData.appealId}/neighbouring-sites/change/site/${siteId}`,
 										visuallyHidden: 'Address'
 									}
 								]
@@ -439,4 +454,58 @@ export function changeNeighbouringSiteCheckAndConfirmPage(
 	};
 
 	return pageContent;
+}
+
+/**
+ * @param {Appeal} appealData
+ * @param {string} origin
+ * @returns {PageContent}
+ */
+export function changeNeighbouringSiteAffectedPage(appealData, origin) {
+	const shortAppealReference = appealShortReference(appealData.appealReference);
+
+	/** @type {PageContent} */
+	const pageContent = {
+		title: 'Update neighbouring site affected',
+		backLinkUrl: origin,
+		preHeading: `Appeal ${shortAppealReference}`,
+		heading: 'Could a neighbouring site be affected?',
+		pageComponents: [
+			{
+				type: 'radios',
+				parameters: {
+					name: 'neighbouringSiteAffected',
+					id: 'neighbouring-site-affected',
+					items: [
+						{
+							value: 'yes',
+							text: 'Yes',
+							checked: appealData.isAffectingNeighbouringSites
+						},
+						{
+							value: 'no',
+							text: 'No',
+							checked: !appealData.isAffectingNeighbouringSites
+						}
+					]
+				}
+			}
+		]
+	};
+
+	return pageContent;
+}
+
+/**
+ *
+ * @param {Source} source
+ * @returns
+ */
+function getFormattedSource(source) {
+	const formattedSource = {
+		lpa: '(LPA)',
+		'back-office': '(Inspector/third party)'
+	};
+
+	return formattedSource[source];
 }

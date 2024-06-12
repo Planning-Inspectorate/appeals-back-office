@@ -1,8 +1,8 @@
 import { databaseConnector } from '#utils/database-connector.js';
 import documentRedactionStatusRepository from '#repositories/document-redaction-status.repository.js';
 import { findPreviousVersion } from '#utils/find-previous-version.js';
-import { mapBlobPath } from '#endpoints/documents/documents.mapper.js';
 import { randomUUID } from 'node:crypto';
+import { REDACTION_STATUS } from '@pins/appeals/constants/documents.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Document} Document */
 /** @typedef {import('@pins/appeals.api').Schema.DocumentVersion} DocumentVersion */
@@ -14,9 +14,9 @@ import { randomUUID } from 'node:crypto';
 export const getDefaultRedactionStatus = async () => {
 	const redactionStatuses =
 		await documentRedactionStatusRepository.getAllDocumentRedactionStatuses();
-	const defaultRedactionStatus = 'Unredacted';
+	const defaultRedactionStatus = REDACTION_STATUS.UNREDACTED;
 	const unredactedStatus = redactionStatuses.find(
-		(redactionStatus) => redactionStatus.name === defaultRedactionStatus
+		(redactionStatus) => redactionStatus.key === defaultRedactionStatus
 	);
 	return unredactedStatus;
 };
@@ -29,43 +29,34 @@ export const getDefaultRedactionStatus = async () => {
 export const addDocument = async (metadata, context) => {
 	const unredactedStatus = await getDefaultRedactionStatus();
 	const transaction = await databaseConnector.$transaction(async (tx) => {
+		const guid = metadata.GUID;
+
 		const document = await tx.document.create({
 			data: {
+				guid,
 				caseId: context.caseId,
 				folderId: context.folderId,
 				name: metadata.originalFilename
 			}
 		});
 
-		const { guid, name } = document;
-		const newVersionId = 1;
+		const { name } = document;
 
+		metadata.documentGuid = guid;
+		metadata.version = 1;
 		metadata.fileName = name;
-		metadata.blobStoragePath = mapBlobPath(guid, context.reference, name, newVersionId);
-		metadata.documentURI = `${context.blobStorageHost.replace(/\/$/, '')}/${
-			metadata.blobStorageContainer
-		}/${metadata.blobStoragePath}`;
 
-		const documentVersion = await tx.documentVersion.upsert({
-			create: {
+		delete metadata.GUID;
+
+		const documentVersion = await tx.documentVersion.create({
+			data: {
 				...metadata,
-				version: newVersionId,
-				parentDocument: {
-					connect: {
-						guid
-					}
-				},
-				dateReceived: new Date().toISOString(),
-				redactionStatus: {
-					connect: {
-						id: unredactedStatus?.id
-					}
-				},
+				lastModified: new Date(),
+				dateReceived: metadata.dateReceived ?? new Date().toISOString(),
+				redactionStatusId: metadata.redactionStatusId ?? unredactedStatus?.id,
 				published: false,
-				draft: true
-			},
-			where: { documentGuid_version: { documentGuid: guid, version: newVersionId } },
-			update: {}
+				draft: false
+			}
 		});
 
 		await tx.document.update({
@@ -74,8 +65,8 @@ export const addDocument = async (metadata, context) => {
 		});
 
 		const latestVersion = await tx.documentVersion.findFirst({
-			include: { parentDocument: true },
-			where: { documentGuid: guid, version: newVersionId }
+			include: { document: true, avScan: true },
+			where: { documentGuid: guid, version: metadata.version }
 		});
 
 		return latestVersion;
@@ -88,13 +79,13 @@ export const addDocument = async (metadata, context) => {
  * @param {any} metadata
  * @returns {Promise<DocumentVersion | null>}
  */
-export const addDocumentVersion = async ({ context, documentGuid, ...metadata }) => {
+export const addDocumentVersion = async ({ documentGuid, ...metadata }) => {
 	const unredactedStatus = await getDefaultRedactionStatus();
 	const transaction = await databaseConnector.$transaction(async (tx) => {
 		const document = await tx.document.findFirst({
 			include: {
 				case: true,
-				documentVersion: true
+				versions: true
 			},
 			where: { guid: documentGuid }
 		});
@@ -103,35 +94,24 @@ export const addDocumentVersion = async ({ context, documentGuid, ...metadata })
 			throw new Error('Document not found');
 		}
 
-		const { reference } = document.case;
-		const { name, documentVersion } = document;
+		const { name, versions } = document;
 
-		const newVersionId = documentVersion ? documentVersion.length + 1 : 1;
+		const newVersionId = versions ? versions.length + 1 : 1;
 
+		metadata.documentGuid = documentGuid;
+		metadata.version = newVersionId;
 		metadata.fileName = name;
-		metadata.blobStoragePath = mapBlobPath(documentGuid, reference, name, newVersionId);
-		metadata.documentURI = `${context.blobStorageHost}/${metadata.blobStorageContainer}/${metadata.blobStoragePath}`;
 
-		await tx.documentVersion.upsert({
-			create: {
+		await tx.documentVersion.create({
+			data: {
 				...metadata,
-				version: newVersionId,
-				parentDocument: {
-					connect: {
-						guid: documentGuid
-					}
-				},
-				dateReceived: new Date().toISOString(),
-				redactionStatus: {
-					connect: {
-						id: unredactedStatus?.id
-					}
-				},
+				lastModified: new Date(),
+				documentGuid,
+				dateReceived: metadata.dateReceived ?? new Date().toISOString(),
+				redactionStatusId: metadata.redactionStatusId ?? unredactedStatus?.id,
 				published: false,
-				draft: true
-			},
-			where: { documentGuid_version: { documentGuid, version: newVersionId } },
-			update: {}
+				draft: false
+			}
 		});
 
 		await tx.document.update({
@@ -140,13 +120,14 @@ export const addDocumentVersion = async ({ context, documentGuid, ...metadata })
 		});
 
 		const latestVersion = await tx.documentVersion.findFirst({
-			include: { parentDocument: true },
+			include: { document: true, avScan: true },
 			where: { documentGuid, version: newVersionId }
 		});
 
 		return latestVersion;
 	});
 
+	// @ts-ignore
 	return transaction;
 };
 
@@ -158,15 +139,15 @@ export const deleteDocumentVersion = async (documentGuid, version) => {
 	const transaction = await databaseConnector.$transaction(async (tx) => {
 		const document = await tx.document.findFirst({
 			include: {
-				documentVersion: true,
+				versions: true,
 				latestDocumentVersion: true
 			},
 			where: { guid: documentGuid }
 		});
 
-		if (document && document.latestDocumentVersion && document.documentVersion) {
-			const versionToDelete = document.documentVersion.find((v) => v.version === version);
-			const versionCount = document.documentVersion.filter((v) => !v.isDeleted).length;
+		if (document && document.latestDocumentVersion && document.versions) {
+			const versionToDelete = document.versions.find((v) => v.version === version);
+			const versionCount = document.versions.filter((v) => !v.isDeleted).length;
 
 			if (versionToDelete) {
 				if (versionToDelete.version !== document.latestDocumentVersion.version) {
@@ -176,6 +157,7 @@ export const deleteDocumentVersion = async (documentGuid, version) => {
 						await deleteVersion(tx, document.guid, versionToDelete.version);
 						await deleteDocument(tx, document.guid, document.name);
 					} else {
+						// @ts-ignore
 						await setPreviousVersion(tx, document, versionToDelete.version);
 						await deleteVersion(tx, document.guid, versionToDelete.version);
 					}
@@ -245,7 +227,7 @@ const deleteDocument = async (tx, documentGuid, name) => {
  * @param {number} version
  */
 const setPreviousVersion = async (tx, document, version) => {
-	const versions = document.documentVersion?.filter((v) => !v.isDeleted).map((v) => v.version);
+	const versions = document.versions?.filter((v) => !v.isDeleted).map((v) => v.version);
 
 	if (!versions) {
 		return;

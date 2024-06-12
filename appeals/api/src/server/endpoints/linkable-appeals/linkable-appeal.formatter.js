@@ -1,6 +1,7 @@
+/** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
+
 /**
- *
- * @param {import("#endpoints/appeals.js").RepositoryGetByIdResultItem} appeal
+ * @param {Appeal} appeal
  * @returns {import('@pins/appeals.api').Appeals.LinkableAppealSummary}
  */
 export const formatLinkableAppealSummary = (appeal) => {
@@ -23,7 +24,7 @@ export const formatLinkableAppealSummary = (appeal) => {
 					appeal.agent?.organisationName ? '(' + appeal.agent?.organisationName + ')' : ''
 			  }`
 			: 'No agent',
-		submissionDate: new Date(appeal.createdAt).toISOString(),
+		submissionDate: new Date(appeal.caseCreatedDate).toISOString(),
 		source: 'back-office'
 	};
 };

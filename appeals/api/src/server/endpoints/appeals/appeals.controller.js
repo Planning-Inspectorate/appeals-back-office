@@ -1,11 +1,13 @@
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { getFoldersForAppeal } from '#endpoints/documents/documents.service.js';
-import appealRepository from '#repositories/appeal.repository.js';
 import { getPageCount } from '#utils/database-pagination.js';
 import { sortAppeals } from '#utils/appeal-sorter.js';
 import { getAppealTypeByTypeId } from '#repositories/appeal-type.repository.js';
-import { broadcastAppealState } from '#endpoints/integrations/integrations.service.js';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
+import { getAvScanStatus } from '#endpoints/documents/documents.service.js';
 import logger from '#utils/logger.js';
+import appealRepository from '#repositories/appeal.repository.js';
+import appealListRepository from '#repositories/appeal-lists.repository.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import {
 	AUDIT_TRAIL_ASSIGNED_CASE_OFFICER,
@@ -16,7 +18,6 @@ import {
 	DEFAULT_PAGE_SIZE,
 	ERROR_FAILED_TO_SAVE_DATA,
 	ERROR_CANNOT_BE_EMPTY_STRING,
-	CONFIG_APPEAL_STAGES,
 	AUDIT_TRAIL_SYSTEM_UUID,
 	STATE_TARGET_READY_TO_START,
 	STATE_TARGET_ASSIGN_CASE_OFFICER,
@@ -26,6 +27,7 @@ import {
 	STATE_TARGET_COMPLETE,
 	STATE_TARGET_VALIDATION
 } from '../constants.js';
+import { STAGE } from '@pins/appeals/constants/documents.js';
 import {
 	formatAppeal,
 	formatAppeals,
@@ -53,7 +55,7 @@ const getAppeals = async (req, res) => {
 	const status = String(query.status);
 	const hasInspector = String(query.hasInspector);
 
-	const [itemCount, appeals = [], rawStatuses = []] = await appealRepository.getAllAppeals(
+	const [itemCount, appeals = [], rawStatuses = []] = await appealListRepository.getAllAppeals(
 		pageNumber,
 		pageSize,
 		searchTerm,
@@ -96,7 +98,7 @@ const getMyAppeals = async (req, res) => {
 	const azureUserId = req.get('azureAdUserId');
 
 	if (azureUserId) {
-		const [itemCount, appeals = [], rawStatuses = []] = await appealRepository.getUserAppeals(
+		const [itemCount, appeals = [], rawStatuses = []] = await appealListRepository.getUserAppeals(
 			azureUserId,
 			pageNumber,
 			pageSize,
@@ -136,17 +138,17 @@ const getMyAppeals = async (req, res) => {
 const getAppeal = async (req, res) => {
 	const { appeal } = req;
 	const [decisionFolders, costsFolders] = await Promise.all([
-		getFoldersForAppeal(appeal, CONFIG_APPEAL_STAGES.decision),
-		getFoldersForAppeal(appeal, CONFIG_APPEAL_STAGES.costs)
+		getFoldersForAppeal(appeal, STAGE.APPEAL_DECISION),
+		getFoldersForAppeal(appeal, STAGE.COSTS)
 	]);
 
 	let transferAppealTypeInfo;
-	if (appeal.resubmitTypeId && appeal.transferredCaseId) {
-		const resubmitType = await getAppealTypeByTypeId(appeal.resubmitTypeId);
+	if (appeal.caseResubmittedTypeId && appeal.caseTransferredId) {
+		const resubmitType = await getAppealTypeByTypeId(appeal.caseResubmittedTypeId);
 		if (resubmitType) {
 			transferAppealTypeInfo = {
-				transferredAppealType: `(${resubmitType.code}) ${resubmitType.type}`,
-				transferredAppealReference: appeal.transferredCaseId
+				transferredAppealType: `(${resubmitType.key}) ${resubmitType.type}`,
+				transferredAppealReference: appeal.caseTransferredId
 			};
 		}
 	}
@@ -160,7 +162,7 @@ const getAppeal = async (req, res) => {
 		if (document && document.latestDocumentVersion) {
 			decisionInfo = {
 				letterDate: document.latestDocumentVersion.dateReceived,
-				virusCheckStatus: document.latestDocumentVersion.virusCheckStatus
+				virusCheckStatus: getAvScanStatus(document.latestDocumentVersion)
 			};
 		}
 	}
@@ -193,7 +195,7 @@ const updateAppealById = async (req, res) => {
 	const {
 		appeal,
 		body,
-		body: { caseOfficer, inspector, startedAt, validAt },
+		body: { caseOfficer, inspector, startedAt, validAt, planningApplicationReference },
 		params
 	} = req;
 	const appealId = Number(params.appealId);
@@ -227,7 +229,7 @@ const updateAppealById = async (req, res) => {
 				azureAdUserId: req.get('azureAdUserId')
 			});
 
-			if (isCaseOfficerAssignment) {
+			if (isCaseOfficerAssignment && appeal.appealType) {
 				await transitionState(
 					appeal.id,
 					appeal.appealType,
@@ -238,12 +240,13 @@ const updateAppealById = async (req, res) => {
 			}
 		} else {
 			await appealRepository.updateAppealById(appealId, {
-				startedAt,
-				validAt
+				caseStartedDate: startedAt,
+				caseValidDate: validAt,
+				applicationReference: planningApplicationReference
 			});
 		}
 
-		await broadcastAppealState(appeal.id);
+		await broadcasters.broadcastAppeal(appeal.id);
 	} catch (error) {
 		if (error) {
 			logger.error(error);

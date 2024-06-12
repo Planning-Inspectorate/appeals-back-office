@@ -69,3 +69,32 @@ function formatStatus(appealStatuses) {
 	if (arrayOfStatusesContainsString(appealStatuses, 'appeal_decided')) return 'appeal decided';
 	throw new Error('Unknown status');
 }
+
+/**
+ * @param {Object<string, string>[] | undefined} reasonsArray - The array of reasons objects containing incomplete or invalid reasons
+ * @returns {string[]} - List of formatted reasons
+ */
+export const getFormattedReasons = (reasonsArray) => {
+	if (!reasonsArray || reasonsArray.length === 0) {
+		throw new Error('No reasons found');
+	}
+
+	// Infer keys from the first item in the array
+	const firstItem = reasonsArray[0];
+	const reasonNameKey = Object.keys(firstItem).find(
+		(key) => /Reason$/.test(key) && !/ReasonId$/.test(key)
+	);
+	const reasonTextKey = Object.keys(firstItem).find((key) => /ReasonText$/.test(key));
+
+	if (!reasonNameKey || !reasonTextKey) {
+		throw new Error('Unable to infer keys from the given array');
+	}
+
+	return reasonsArray.flatMap((item) => {
+		if (item[reasonTextKey].length > 0) {
+			return item[reasonTextKey].map((textItem) => `${item[reasonNameKey].name}: ${textItem.text}`);
+		} else {
+			return [item[reasonNameKey].name];
+		}
+	});
+};

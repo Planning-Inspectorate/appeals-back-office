@@ -16,7 +16,12 @@ export const getById = (id) => {
 		include: {
 			documents: {
 				include: {
-					latestDocumentVersion: true
+					latestDocumentVersion: {
+						include: {
+							avScan: true,
+							redactionStatus: true
+						}
+					}
 				},
 				orderBy: {
 					createdAt: 'desc'
@@ -37,6 +42,14 @@ export const getByCaseId = (caseId) => {
 		where: { caseId },
 		include: {
 			documents: {
+				include: {
+					latestDocumentVersion: {
+						include: {
+							avScan: true,
+							redactionStatus: true
+						}
+					}
+				},
 				orderBy: {
 					createdAt: 'desc'
 				}
@@ -61,7 +74,12 @@ export const getByCaseIdPath = (caseId, path) => {
 		include: {
 			documents: {
 				include: {
-					latestDocumentVersion: true
+					latestDocumentVersion: {
+						include: {
+							avScan: true,
+							redactionStatus: true
+						}
+					}
 				},
 				orderBy: {
 					createdAt: 'desc'

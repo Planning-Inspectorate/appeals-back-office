@@ -5,7 +5,7 @@
 			"type": "serviceBusTrigger",
 			"direction": "in",
 			"topicName": "appeal-document-to-move",
-			"subscriptionName": "appeal-document-to-move-subscription",
+			"subscriptionName": "appeal-document-to-move-bo-sub",
 			"connection": "ServiceBusConnection"
 		}
 	]

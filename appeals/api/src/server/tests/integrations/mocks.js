@@ -30,23 +30,7 @@ export const validAppellantCase = {
 		doesSiteHaveHealthAndSafetyIssues: true,
 		healthAndSafetyIssuesDetails: "There's an american bully onsite"
 	},
-	documents: [
-		{
-			filename: 'decision.pdf',
-			originalFilename: 'decision.pdf',
-			size: 12345,
-			mime: 'application/pdf',
-			documentURI: 'https://storage.com/published/en010120/v1/filename.pdf',
-			dateCreated: '2023-03-26T00:00:00.000Z',
-			lastModified: '2023-03-26T00:00:00.000Z',
-			documentType: 'decisionLetter',
-			sourceSystem: 'appeals',
-			origin: 'citizen',
-			blobStoragePath: 'en010120/v1/filename.pdf',
-			blobStorageContainer: 'published',
-			stage: 'appellant_case'
-		}
-	]
+	documents: []
 };
 
 export const validLpaQuestionnaire = {

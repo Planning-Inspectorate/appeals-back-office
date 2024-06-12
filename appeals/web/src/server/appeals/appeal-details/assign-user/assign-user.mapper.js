@@ -43,7 +43,7 @@ export async function assignUserPage(
 			id: 'searchTerm',
 			name: 'searchTerm',
 			label: {
-				text: 'Search by name or email. A first name or surname may be enough to find the correct person.',
+				text: 'Search by name or email address',
 				classes: 'govuk-caption-m govuk-!-margin-bottom-3 colour--secondary'
 			},
 			value: searchTerm || ''
@@ -69,7 +69,7 @@ export async function assignUserPage(
 	const searchResultsPageComponent = {
 		type: 'summary-list',
 		wrapperHtml: {
-			opening: `<div class="govuk-grid-row"><div class="govuk-grid-column-full govuk-!-margin-bottom-5"><h2 class="govuk-heading-m">Search results</h2><p class="govuk-body">${searchResultsSummaryListSubtitle} for <strong>${searchTerm}</strong></p>`,
+			opening: `<div class="govuk-grid-row"><div class="govuk-grid-column-full govuk-!-margin-bottom-5"><h2 class="govuk-heading-m">Results</h2><p class="govuk-body">${searchResultsSummaryListSubtitle} for <strong>${searchTerm}</strong></p>`,
 			closing: '</div></div>'
 		},
 		parameters: {

@@ -10,6 +10,7 @@ import {
 import validateDateParameter from '#common/validators/date-parameter.js';
 import validateIdParameter from '#common/validators/id-parameter.js';
 import validateUuidParameter from '#common/validators/uuid-parameter.js';
+import validateStringParameter from '#common/validators/string-parameter.js';
 
 /** @typedef {import('express-validator').ValidationChain} ValidationChain */
 /** @typedef {import('express').Request} Request */
@@ -69,6 +70,7 @@ const patchAppealValidator = composeMiddleware(
 	validateIdParameter('appealId'),
 	validateDateParameter({ parameterName: 'startedAt' }),
 	validateDateParameter({ parameterName: 'validAt', mustBeNotBeFutureDate: true }),
+	validateStringParameter('planningApplicationReference'),
 	validateUuidParameter({
 		parameterName: 'caseOfficer',
 		parameterType: body,

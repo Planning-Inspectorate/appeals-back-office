@@ -1,38 +1,40 @@
-import { readdirSync, readFileSync } from 'node:fs';
 import Ajv from 'ajv';
 import addFormats from 'ajv-formats';
-import { setCache, getCache } from '#utils/cache-data.js';
+import { loadAllSchemas } from 'pins-data-model';
 import BackOfficeAppError from '#utils/app-error.js';
-
-const SCHEMA_PATH = './src/message-schemas';
-
-const loadSchemas = async () => {
-	const cacheKey = 'integration-schemas';
-	let schemas = getCache(cacheKey);
-	if (!schemas) {
-		schemas = readdirSync(SCHEMA_PATH)
-			.filter((file) => file.endsWith('.schema.json'))
-			.map((file) => {
-				return JSON.parse(readFileSync(`${SCHEMA_PATH}/${file}`).toString());
-			});
-
-		setCache(cacheKey, schemas);
-	}
-	return schemas;
-};
+import { setCache, getCache } from '#utils/cache-data.js';
 
 export const schemas = {
-	appellantCase: 'pins-appellant-case',
-	lpaQuestionnaire: 'pins-lpa-questionnaire',
-	document: 'pins-document',
-	appeal: 'pins-appeal'
+	commands: {
+		appealSubmission: '',
+		lpaSubmission: '',
+		documentSubmission: ''
+	},
+	events: {
+		serviceUser: 'service-user',
+		document: 'appeal-document',
+		appeal: 'pins-appeal',
+		lpaSubmission: '',
+		appealEvent: ''
+	}
 };
 
 export const validateFromSchema = async (
 	/** @type {string} */ schema,
 	/** @type {any} */ payload
 ) => {
-	const schemas = await loadSchemas();
+	const cacheKey = 'integration-schemas';
+	let schemas = getCache(cacheKey);
+	if (!schemas) {
+		const commandsAndEvents = await loadAllSchemas();
+		schemas = {
+			...commandsAndEvents.schemas,
+			...commandsAndEvents.commands
+		};
+
+		setCache(cacheKey, schemas);
+	}
+
 	const ajv = new Ajv({ schemas });
 	addFormats(ajv);
 

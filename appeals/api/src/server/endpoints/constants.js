@@ -20,10 +20,18 @@ export const AUDIT_TRAIL_ASSIGNED_INSPECTOR =
 export const AUDIT_TRAIL_CASE_TIMELINE_CREATED = 'The case timeline was created';
 export const AUDIT_TRAIL_CASE_TIMELINE_UPDATED = 'The case timeline was updated';
 export const AUDIT_TRAIL_DOCUMENT_UPLOADED =
-	'The document {replacement0} was uploaded (v{replacement1})';
+	'Document {replacement0} uploaded (version {replacement1})';
 export const AUDIT_TRAIL_DOCUMENT_IMPORTED = 'The document {replacement0} was received';
 export const AUDIT_TRAIL_DOCUMENT_DELETED =
 	'Version {replacement1} of document {replacement0} was removed';
+export const AUDIT_TRAIL_DOCUMENT_REDACTED =
+	'Document {replacement0} (version {replacement1}) marked as redacted';
+export const AUDIT_TRAIL_DOCUMENT_UNREDACTED =
+	'Document {replacement0} (version {replacement1}) marked as unredacted';
+export const AUDIT_TRAIL_DOCUMENT_NO_REDACTION_REQUIRED =
+	'Document {replacement0} (version {replacement1}) marked as requiring no redaction';
+export const AUDIT_TRAIL_DOCUMENT_DATE_CHANGED =
+	'Document {replacement0} (version {replacement1}) received date changed';
 export const AUDIT_TRAIL_LPAQ_IMPORT_MSG = 'The LPA questionnaire was received';
 export const AUDIT_TRAIL_PROGRESSED_TO_STATUS = 'The case has progressed to {replacement0}';
 export const AUDIT_TRAIL_SUBMISSION_INCOMPLETE = 'The {replacement0} was marked as incomplete';
@@ -41,6 +49,7 @@ export const AUDIT_TRAIL_ADDRESS_ADDED = 'A neighbouring address was added';
 export const AUDIT_TRAIL_ADDRESS_UPDATED = 'A neighbouring address was updated';
 export const AUDIT_TRAIL_ADDRESS_REMOVED = 'A neighbouring address was removed';
 export const AUDIT_TRAIL_SYSTEM_UUID = '00000000-0000-0000-0000-000000000000';
+export const AUDIT_TRAIL_SERVICE_USER_UPDATED = 'The {replacement0}’s details were updated';
 
 export const BANK_HOLIDAY_FEED_DIVISION_ENGLAND = 'england-and-wales';
 
@@ -70,6 +79,8 @@ export const ERROR_DOCUMENT_NAME_ALREADY_EXISTS = 'a document with the same name
 export const ERROR_FAILED_TO_GET_DATA = 'failed to get data';
 export const ERROR_FAILED_TO_SAVE_DATA = 'failed to save data';
 export const ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL = 'failed to send notification email';
+export const ERROR_GOV_NOTIFY_CONNECTIVITY = 'Gov notify connectivity. Error Code: {replacement0}';
+export const ERROR_NO_RECIPIENT_EMAIL = 'recipient email not found';
 export const ERROR_GOV_NOTIFY_API_KEY_NOT_SET = 'gov notify api key is not set';
 export const ERROR_INVALID_APPEAL_TYPE = `must be one of ${APPEAL_TYPE_SHORTHAND_FPA}, ${APPEAL_TYPE_SHORTHAND_HAS}`;
 export const ERROR_INVALID_APPELLANT_CASE_VALIDATION_OUTCOME = `must be one of ${VALIDATION_OUTCOME_INCOMPLETE}, ${VALIDATION_OUTCOME_INVALID}, ${VALIDATION_OUTCOME_VALID}`;
@@ -107,8 +118,10 @@ export const ERROR_ONLY_FOR_INCOMPLETE_VALIDATION_OUTCOME = `should only be give
 export const ERROR_ONLY_FOR_INVALID_VALIDATION_OUTCOME = `should only be given if the validation outcome is ${VALIDATION_OUTCOME_INVALID}`;
 export const ERROR_PAGENUMBER_AND_PAGESIZE_ARE_REQUIRED =
 	'both pageNumber and pageSize are required for pagination';
-export const ERROR_SITE_VISIT_REQUIRED_FIELDS =
-	'if any of visitDate, visitStartTime or visitEndTime are given then all these fields are required';
+export const ERROR_SITE_VISIT_REQUIRED_FIELDS_ACCOMPANIED =
+	'if visit type is accompanied, if visitDate or visitStartTime are given, both these fields are required';
+export const ERROR_SITE_VISIT_REQUIRED_FIELDS_ACCESS_REQUIRED =
+	'is visit type is access required, if visitDate, visitStartTime or visitEndTime are given, all these fields are required';
 export const ERROR_START_TIME_MUST_BE_EARLIER_THAN_END_TIME =
 	'start time must be earlier than end time';
 export const ERROR_VALID_VALIDATION_OUTCOME_REASONS_REQUIRED =
@@ -124,6 +137,7 @@ export const ERROR_INVALID_APPEAL_STATE = 'The action is invalid on the current 
 export const ERROR_CASE_OUTCOME_MUST_BE_ONE_OF = `The case outcome must be one of ${CASE_OUTCOME_ALLOWED}, ${CASE_OUTCOME_DISMISSED}, ${CASE_OUTCOME_SPLIT_DECISION}`;
 export const ERROR_LINKING_APPEALS =
 	'The appeals cannot be linked as the lead or child are already linked to other appeals.';
+export const ERROR_INVALID_EMAIL = 'must be a valid email';
 
 export const ERROR_INVALID_POSTCODE = 'needs to be a valid and include spaces';
 
@@ -137,8 +151,12 @@ export const LENGTH_300 = 300;
 
 export const NODE_ENV_PRODUCTION = 'production';
 export const ODW_SYSTEM_ID = 'back-office-appeals';
+export const ODW_APPELLANT_SVCUSR = 'Appellant';
+export const ODW_AGENT_SVCUSR = 'Agent';
 
 export const SITE_VISIT_TYPE_UNACCOMPANIED = 'Unaccompanied';
+export const SITE_VISIT_TYPE_ACCOMPANIED = 'Accompanied';
+export const SITE_VISIT_TYPE_ACCESS_REQUIRED = 'Access required';
 
 export const STATE_TARGET_ASSIGN_CASE_OFFICER = 'assign_case_officer';
 export const STATE_TARGET_VALIDATION = 'validation';
@@ -198,60 +216,4 @@ export const CONFIG_APPEAL_TIMETABLE = {
 			daysFromStartDate: 5
 		}
 	}
-};
-
-export const CONFIG_APPEAL_FOLDER_PATHS = [
-	// path in the format of {stage}/{documentType}
-	// if documentType not passed with individual doc metadata, will inherit from folder
-	// ------------------------------------------------
-	// Appellant case folders
-	'appellant_case/applicationForm',
-	'appellant_case/decisionLetter',
-	'appellant_case/designAndAccessStatement',
-	'appellant_case/planningObligation',
-	'appellant_case/plansDrawingsSupportingDocuments',
-	'appellant_case/separateOwnershipCertificate',
-	'appellant_case/newPlansOrDrawings',
-	'appellant_case/newSupportingDocuments',
-	'appellant_case/appealStatement',
-	// Dropbox / Late evidence
-	'appellant_case/additionalDocuments',
-
-	// ------------------------------------------------
-	// LPA questionnaire folders
-	'lpa_questionnaire/communityInfrastructureLevy',
-	'lpa_questionnaire/conservationAreaMap',
-	'lpa_questionnaire/consultationResponses',
-	'lpa_questionnaire/definitiveMapAndStatement',
-	'lpa_questionnaire/emergingPlans',
-	'lpa_questionnaire/environmentalStatementResponses',
-	'lpa_questionnaire/issuedScreeningOption',
-	'lpa_questionnaire/lettersToNeighbours',
-	'lpa_questionnaire/notifyingParties',
-	'lpa_questionnaire/officersReport',
-	'lpa_questionnaire/otherRelevantPolicies',
-	'lpa_questionnaire/policiesFromStatutoryDevelopment',
-	'lpa_questionnaire/pressAdvert',
-	'lpa_questionnaire/representations',
-	'lpa_questionnaire/responsesOrAdvice',
-	'lpa_questionnaire/screeningDirection',
-	'lpa_questionnaire/siteNotices',
-	'lpa_questionnaire/supplementaryPlanningDocuments',
-	'lpa_questionnaire/treePreservationOrder',
-	// Dropbox / Late evidence
-	'lpa_questionnaire/additionalDocuments',
-
-	// ------------------------------------------------
-	// Decision letter
-	'appeal_decision/decisionLetter',
-	'appeal_costs/lpa',
-	'appeal_costs/appellant'
-];
-
-export const CONFIG_APPEAL_STAGES = {
-	// stage mapping for ODW
-	appellantCase: 'appellant_case',
-	lpaQuestionnaire: 'lpa_questionnaire',
-	decision: 'appeal_decision',
-	costs: 'appeal_costs'
 };

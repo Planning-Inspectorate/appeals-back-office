@@ -1,8 +1,15 @@
 import { Router as createRouter } from 'express';
 import asyncRoute from '../../lib/async-route.js';
-import { completeMsalAuthentication, startMsalAuthentication } from './auth.controller.js';
+import {
+	completeMsalAuthentication,
+	startMsalAuthentication,
+	getAccessToken
+} from './auth.controller.js';
 import { assertIsUnauthenticated } from './auth.guards.js';
 import { clearAuthenticationData, registerAuthLocals } from './auth.pipes.js';
+import { assertGroupAccess } from './auth.guards.js';
+import config from '#environment/config.js';
+import { addApiClientToRequest } from '#lib/middleware/add-apiclient-to-request.js';
 
 const router = createRouter();
 
@@ -14,5 +21,15 @@ router.route('/auth/redirect').get(assertIsUnauthenticated, asyncRoute(completeM
 router.use(registerAuthLocals, clearAuthenticationData);
 
 router.route('/auth/signin').get(assertIsUnauthenticated, asyncRoute(startMsalAuthentication));
+
+const allowedGroups = config.referenceData.appeals;
+
+router
+	.route('/auth/get-access-token')
+	.get(
+		assertGroupAccess(allowedGroups.caseOfficerGroupId),
+		addApiClientToRequest,
+		asyncRoute(getAccessToken)
+	);
 
 export default router;

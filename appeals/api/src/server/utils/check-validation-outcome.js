@@ -1,5 +1,6 @@
 import {
 	VALIDATION_OUTCOME_INCOMPLETE,
+	VALIDATION_OUTCOME_COMPLETE,
 	VALIDATION_OUTCOME_INVALID,
 	VALIDATION_OUTCOME_VALID
 } from '#endpoints/constants.js';
@@ -16,6 +17,13 @@ const isOutcomeIncomplete = (validationOutcome) =>
  * @param {string} validationOutcome
  * @returns {boolean}
  */
+const isOutcomeComplete = (validationOutcome) =>
+	checkStringsMatch(validationOutcome, VALIDATION_OUTCOME_COMPLETE);
+
+/**
+ * @param {string} validationOutcome
+ * @returns {boolean}
+ */
 const isOutcomeInvalid = (validationOutcome) =>
 	checkStringsMatch(validationOutcome, VALIDATION_OUTCOME_INVALID);
 
@@ -26,4 +34,4 @@ const isOutcomeInvalid = (validationOutcome) =>
 const isOutcomeValid = (validationOutcome) =>
 	checkStringsMatch(validationOutcome, VALIDATION_OUTCOME_VALID);
 
-export { isOutcomeIncomplete, isOutcomeInvalid, isOutcomeValid };
+export { isOutcomeIncomplete, isOutcomeComplete, isOutcomeInvalid, isOutcomeValid };

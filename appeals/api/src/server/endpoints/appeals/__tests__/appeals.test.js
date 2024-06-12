@@ -5,6 +5,7 @@ import {
 	AUDIT_TRAIL_ASSIGNED_INSPECTOR,
 	AUDIT_TRAIL_REMOVED_CASE_OFFICER,
 	AUDIT_TRAIL_REMOVED_INSPECTOR,
+	ERROR_CANNOT_BE_EMPTY_STRING,
 	ERROR_FAILED_TO_SAVE_DATA,
 	ERROR_LENGTH_BETWEEN_2_AND_8_CHARACTERS,
 	ERROR_MUST_BE_BOOLEAN,
@@ -12,23 +13,23 @@ import {
 	ERROR_MUST_BE_GREATER_THAN_ZERO,
 	ERROR_MUST_BE_NUMBER,
 	ERROR_MUST_BE_SET_AS_HEADER,
+	ERROR_MUST_BE_STRING,
 	ERROR_MUST_BE_UUID,
 	ERROR_MUST_BE_VALID_APPEAL_STATE,
 	ERROR_MUST_NOT_BE_IN_FUTURE,
 	ERROR_NOT_FOUND,
 	ERROR_PAGENUMBER_AND_PAGESIZE_ARE_REQUIRED
 } from '../../constants.js';
-import { savedFolder } from '#tests/documents/mocks.js';
+import { savedFolder, decisionFolder } from '#tests/documents/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { householdAppeal, fullPlanningAppeal, linkedAppeals } from '#tests/appeals/mocks.js';
-import formatAddress from '#utils/format-address.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { getIdsOfReferencedAppeals, mapAppealToDueDate } from '../appeals.formatter.js';
 import { mapAppealStatuses } from '../appeals.controller.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 
-describe('appeals routes', () => {
+describe('appeals list routes', () => {
 	beforeEach(() => {
 		// @ts-ignore
 		databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
@@ -36,7 +37,6 @@ describe('appeals routes', () => {
 	afterEach(() => {
 		jest.clearAllMocks();
 	});
-
 	describe('/appeals', () => {
 		describe('GET', () => {
 			test('gets appeals when not given pagination params or a search term', async () => {
@@ -69,7 +69,7 @@ describe('appeals routes', () => {
 							},
 							appealStatus: householdAppeal.appealStatus[0].status,
 							appealType: householdAppeal.appealType.type,
-							createdAt: householdAppeal.createdAt.toISOString(),
+							createdAt: householdAppeal.caseCreatedDate.toISOString(),
 							localPlanningDepartment: householdAppeal.lpa.name,
 							appellantCaseStatus: '',
 							lpaQuestionnaireStatus: '',
@@ -89,7 +89,7 @@ describe('appeals routes', () => {
 							},
 							appealStatus: fullPlanningAppeal.appealStatus[0].status,
 							appealType: fullPlanningAppeal.appealType.type,
-							createdAt: fullPlanningAppeal.createdAt.toISOString(),
+							createdAt: fullPlanningAppeal.caseCreatedDate.toISOString(),
 							localPlanningDepartment: fullPlanningAppeal.lpa.name,
 							appellantCaseStatus: '',
 							lpaQuestionnaireStatus: '',
@@ -137,7 +137,7 @@ describe('appeals routes', () => {
 							},
 							appealStatus: fullPlanningAppeal.appealStatus[0].status,
 							appealType: fullPlanningAppeal.appealType.type,
-							createdAt: fullPlanningAppeal.createdAt.toISOString(),
+							createdAt: fullPlanningAppeal.caseCreatedDate.toISOString(),
 							localPlanningDepartment: fullPlanningAppeal.lpa.name,
 							appellantCaseStatus: '',
 							lpaQuestionnaireStatus: '',
@@ -204,7 +204,7 @@ describe('appeals routes', () => {
 							},
 							appealStatus: householdAppeal.appealStatus[0].status,
 							appealType: householdAppeal.appealType.type,
-							createdAt: householdAppeal.createdAt.toISOString(),
+							createdAt: householdAppeal.caseCreatedDate.toISOString(),
 							localPlanningDepartment: householdAppeal.lpa.name,
 							appellantCaseStatus: '',
 							lpaQuestionnaireStatus: '',
@@ -271,7 +271,7 @@ describe('appeals routes', () => {
 							},
 							appealStatus: householdAppeal.appealStatus[0].status,
 							appealType: householdAppeal.appealType.type,
-							createdAt: householdAppeal.createdAt.toISOString(),
+							createdAt: householdAppeal.caseCreatedDate.toISOString(),
 							localPlanningDepartment: householdAppeal.lpa.name,
 							appellantCaseStatus: '',
 							lpaQuestionnaireStatus: '',
@@ -338,7 +338,7 @@ describe('appeals routes', () => {
 							},
 							appealStatus: householdAppeal.appealStatus[0].status,
 							appealType: householdAppeal.appealType.type,
-							createdAt: householdAppeal.createdAt.toISOString(),
+							createdAt: householdAppeal.caseCreatedDate.toISOString(),
 							localPlanningDepartment: householdAppeal.lpa.name,
 							appellantCaseStatus: '',
 							lpaQuestionnaireStatus: '',
@@ -392,7 +392,7 @@ describe('appeals routes', () => {
 							},
 							appealStatus: householdAppeal.appealStatus[0].status,
 							appealType: householdAppeal.appealType.type,
-							createdAt: householdAppeal.createdAt.toISOString(),
+							createdAt: householdAppeal.caseCreatedDate.toISOString(),
 							localPlanningDepartment: householdAppeal.lpa.name,
 							appellantCaseStatus: '',
 							lpaQuestionnaireStatus: '',
@@ -448,7 +448,7 @@ describe('appeals routes', () => {
 							},
 							appealStatus: householdAppeal.appealStatus[0].status,
 							appealType: householdAppeal.appealType.type,
-							createdAt: householdAppeal.createdAt.toISOString(),
+							createdAt: householdAppeal.caseCreatedDate.toISOString(),
 							localPlanningDepartment: householdAppeal.lpa.name,
 							appellantCaseStatus: '',
 							lpaQuestionnaireStatus: '',
@@ -502,7 +502,7 @@ describe('appeals routes', () => {
 							},
 							appealStatus: householdAppeal.appealStatus[0].status,
 							appealType: householdAppeal.appealType.type,
-							createdAt: householdAppeal.createdAt.toISOString(),
+							createdAt: householdAppeal.caseCreatedDate.toISOString(),
 							localPlanningDepartment: householdAppeal.lpa.name,
 							appellantCaseStatus: '',
 							lpaQuestionnaireStatus: '',
@@ -660,1217 +660,1330 @@ describe('appeals routes', () => {
 			});
 		});
 	});
+});
 
-	describe('/appeals/:appealId', () => {
+describe('appeals routes', () => {
+  beforeEach(() => {
+    // @ts-ignore
+    databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
+  });
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+
+  describe('/appeals/:appealId', () => {
 		describe('GET', () => {
-			test('gets a single household appeal', async () => {
-				// @ts-ignore
-				databaseConnector.folder.findMany.mockResolvedValue([savedFolder]);
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-				// @ts-ignore
-				databaseConnector.appealRelationship.findMany
-					// @ts-ignore
-					.mockResolvedValueOnce(linkedAppeals);
+      test('gets a single household appeal', async () => {
+        // @ts-ignore
+        databaseConnector.folder.findMany.mockResolvedValue([decisionFolder]);
+        // @ts-ignore
+        databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+        // @ts-ignore
+        databaseConnector.appealRelationship.findMany
+          // @ts-ignore
+          .mockResolvedValueOnce(linkedAppeals);
 
-				const response = await request
-					.get(`/appeals/${householdAppeal.id}`)
-					.set('azureAdUserId', azureAdUserId);
+        const response = await request
+          .get(`/appeals/${householdAppeal.id}`)
+          .set('azureAdUserId', azureAdUserId);
 
-				expect(response.status).toEqual(200);
-				expect(response.body).toEqual({
-					agent: {
-						firstName: householdAppeal.agent.firstName,
-						lastName: householdAppeal.agent.lastName,
-						email: householdAppeal.agent.email
-					},
-					appellant: {
-						firstName: householdAppeal.appellant.firstName,
-						lastName: householdAppeal.appellant.lastName,
-						email: householdAppeal.appellant.email
-					},
-					allocationDetails: null,
-					appealId: householdAppeal.id,
-					appealReference: householdAppeal.reference,
-					appealSite: {
-						addressLine1: householdAppeal.address.addressLine1,
-						addressLine2: householdAppeal.address.addressLine2,
-						town: householdAppeal.address.addressTown,
-						county: householdAppeal.address.addressCounty,
-						postCode: householdAppeal.address.postcode
-					},
-					appealStatus: householdAppeal.appealStatus[0].status,
-					appealType: householdAppeal.appealType.type,
-					appealTimetable: null,
-					appellantCaseId: 1,
-					caseOfficer: householdAppeal.caseOfficer.azureAdUserId,
-					costs: {},
-					decision: {
-						folderId: savedFolder.id
-					},
-					documentationSummary: {
-						appellantCase: {
-							status: 'received',
-							dueDate: householdAppeal.dueDate
-						},
-						lpaQuestionnaire: {
-							dueDate: null,
-							status: 'received'
-						}
-					},
-					healthAndSafety: {
-						appellantCase: {
-							details: householdAppeal.appellantCase.healthAndSafetyIssues,
-							hasIssues: householdAppeal.appellantCase.hasHealthAndSafetyIssues
-						},
-						lpaQuestionnaire: {
-							details: householdAppeal.lpaQuestionnaire.healthAndSafetyDetails,
-							hasIssues: householdAppeal.lpaQuestionnaire.doesSiteHaveHealthAndSafetyIssues
-						}
-					},
-					inspector: householdAppeal.inspector.azureAdUserId,
-					inspectorAccess: {
-						appellantCase: {
-							details: householdAppeal.appellantCase.visibilityRestrictions,
-							isRequired: !householdAppeal.appellantCase.isSiteVisibleFromPublicRoad
-						},
-						lpaQuestionnaire: {
-							details: householdAppeal.lpaQuestionnaire.inspectorAccessDetails,
-							isRequired: householdAppeal.lpaQuestionnaire.doesSiteRequireInspectorAccess
-						}
-					},
-					isParentAppeal: true,
-					isChildAppeal: false,
-					linkedAppeals: linkedAppeals.map((a) => {
-						return {
-							appealReference: a.childRef,
-							isParentAppeal: false,
-							linkingDate: a.linkingDate,
-							appealType: 'Unknown',
-							externalSource: true
-						};
-					}),
-					otherAppeals: [],
-					localPlanningDepartment: householdAppeal.lpa.name,
-					lpaQuestionnaireId: householdAppeal.lpaQuestionnaire.id,
-					neighbouringSite: {
-						contacts: householdAppeal.lpaQuestionnaire.neighbouringSiteContact.map((contact) => ({
-							address: formatAddress(contact.address),
-							firstName: contact.firstName,
-							lastName: contact.lastName
-						})),
-						isAffected: householdAppeal.lpaQuestionnaire.isAffectingNeighbouringSites
-					},
-					planningApplicationReference: householdAppeal.planningApplicationReference,
-					procedureType: householdAppeal.lpaQuestionnaire.procedureType.name,
-					siteVisit: {
-						siteVisitId: householdAppeal.siteVisit.id,
-						visitDate: householdAppeal.siteVisit.visitDate,
-						visitStartTime: householdAppeal.siteVisit.visitStartTime,
-						visitEndTime: householdAppeal.siteVisit.visitEndTime,
-						visitType: householdAppeal.siteVisit.siteVisitType.name
-					},
-					createdAt: householdAppeal.createdAt.toISOString()
-					//startedAt: householdAppeal.startedAt.toISOString(),
-					//validAt: householdAppeal.validAt.toISOString()
-				});
-			});
+        expect(response.status).toEqual(200);
+        expect(response.body).toEqual({
+					neighbouringSites: [],
+          agent: {
+            serviceUserId: householdAppeal.agent.id,
+            firstName: householdAppeal.agent.firstName,
+            lastName: householdAppeal.agent.lastName,
+            email: householdAppeal.agent.email,
+            phoneNumber: householdAppeal.agent.phoneNumber,
+            organisationName: householdAppeal.agent.organisationName
+          },
+          appellant: {
+            serviceUserId: householdAppeal.appellant.id,
+            firstName: householdAppeal.appellant.firstName,
+            lastName: householdAppeal.appellant.lastName,
+            email: householdAppeal.appellant.email,
+            phoneNumber: householdAppeal.appellant.phoneNumber,
+            organisationName: householdAppeal.appellant.organisationName
+          },
+          allocationDetails: null,
+          appealId: householdAppeal.id,
+          appealReference: householdAppeal.reference,
+          appealSite: {
+            addressId: householdAppeal.address.id,
+            addressLine1: householdAppeal.address.addressLine1,
+            addressLine2: householdAppeal.address.addressLine2,
+            town: householdAppeal.address.addressTown,
+            county: householdAppeal.address.addressCounty,
+            postCode: householdAppeal.address.postcode
+          },
+          appealStatus: householdAppeal.appealStatus[0].status,
+          appealType: householdAppeal.appealType.type,
+          appealTimetable: null,
+          appellantCaseId: 1,
+          caseOfficer: householdAppeal.caseOfficer.azureAdUserId,
+          costs: {},
+          decision: {
+            folderId: savedFolder.id
+          },
+          documentationSummary: {
+            appellantCase: {
+              status: 'received',
+              dueDate: householdAppeal.caseExtensionDate,
+              receivedAt: householdAppeal.caseCreatedDate.toISOString()
+            },
+            lpaQuestionnaire: {
+              dueDate: null,
+              status: 'received',
+              receivedAt: householdAppeal.lpaQuestionnaire.receivedAt
+            }
+          },
+          healthAndSafety: {
+            appellantCase: {
+              details: householdAppeal.appellantCase.siteSafetyDetails,
+              hasIssues: householdAppeal.appellantCase.hasHealthAndSafetyIssues
+            },
+            lpaQuestionnaire: {
+              details: householdAppeal.lpaQuestionnaire.healthAndSafetyDetails,
+              hasIssues: householdAppeal.lpaQuestionnaire.doesSiteHaveHealthAndSafetyIssues
+            }
+          },
+          inspector: householdAppeal.inspector.azureAdUserId,
+          inspectorAccess: {
+            appellantCase: {
+              details: householdAppeal.appellantCase.siteAccessDetails,
+              isRequired: householdAppeal.appellantCase.doesSiteRequireInspectorAccess
+            },
+            lpaQuestionnaire: {
+              details: householdAppeal.lpaQuestionnaire.inspectorAccessDetails,
+              isRequired: householdAppeal.lpaQuestionnaire.doesSiteRequireInspectorAccess
+            }
+          },
+          isParentAppeal: true,
+          isChildAppeal: false,
+          linkedAppeals: linkedAppeals.map((a) => {
+            return {
+              appealReference: a.childRef,
+              isParentAppeal: false,
+              linkingDate: a.linkingDate,
+              appealType: 'Unknown',
+              externalSource: true
+            };
+          }),
+          otherAppeals: [],
+          localPlanningDepartment: householdAppeal.lpa.name,
+          lpaQuestionnaireId: householdAppeal.lpaQuestionnaire.id,
+          isAffectingNeighbouringSites: true,
+          planningApplicationReference: householdAppeal.applicationReference,
+          procedureType: householdAppeal.procedureType.name,
+          siteVisit: {
+            siteVisitId: householdAppeal.siteVisit.id,
+            visitDate: householdAppeal.siteVisit.visitDate,
+            visitStartTime: householdAppeal.siteVisit.visitStartTime,
+            visitEndTime: householdAppeal.siteVisit.visitEndTime,
+            visitType: householdAppeal.siteVisit.siteVisitType.name
+          },
+          createdAt: householdAppeal.caseCreatedDate.toISOString()
+          //startedAt: householdAppeal.startedAt.toISOString(),
+          //validAt: householdAppeal.validAt.toISOString()
+        });
+      });
 
-			test('gets a single full planning appeal', async () => {
-				// @ts-ignore
-				databaseConnector.folder.findMany.mockResolvedValue([savedFolder]);
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+      test('gets a single full planning appeal', async () => {
+        // @ts-ignore
+        databaseConnector.folder.findMany.mockResolvedValue([decisionFolder]);
+        // @ts-ignore
+        databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
 
-				const response = await request
-					.get(`/appeals/${fullPlanningAppeal.id}`)
-					.set('azureAdUserId', azureAdUserId);
+        const response = await request
+          .get(`/appeals/${fullPlanningAppeal.id}`)
+          .set('azureAdUserId', azureAdUserId);
 
-				expect(response.status).toEqual(200);
-				expect(response.body).toEqual({
-					agent: {
-						firstName: fullPlanningAppeal.agent.firstName,
-						lastName: fullPlanningAppeal.agent.lastName,
-						email: fullPlanningAppeal.agent.email
-					},
-					appellant: {
-						firstName: fullPlanningAppeal.appellant.firstName,
-						lastName: fullPlanningAppeal.appellant.lastName,
-						email: fullPlanningAppeal.appellant.email
-					},
-					allocationDetails: null,
-					appealId: fullPlanningAppeal.id,
-					appealReference: fullPlanningAppeal.reference,
-					appealSite: {
-						addressLine1: fullPlanningAppeal.address.addressLine1,
-						addressLine2: fullPlanningAppeal.address.addressLine2,
-						town: fullPlanningAppeal.address.addressTown,
-						county: fullPlanningAppeal.address.addressCounty,
-						postCode: fullPlanningAppeal.address.postcode
-					},
-					appealStatus: fullPlanningAppeal.appealStatus[0].status,
-					appealTimetable: null,
-					appealType: fullPlanningAppeal.appealType.type,
-					appellantCaseId: 1,
-					caseOfficer: fullPlanningAppeal.caseOfficer.azureAdUserId,
-					costs: {},
-					decision: {
-						folderId: savedFolder.id
-					},
-					documentationSummary: {
-						appellantCase: {
-							status: 'received',
-							dueDate: fullPlanningAppeal.dueDate
-						},
-						lpaQuestionnaire: {
-							dueDate: null,
-							status: 'received'
-						}
-					},
-					healthAndSafety: {
-						appellantCase: {
-							details: fullPlanningAppeal.appellantCase.healthAndSafetyIssues,
-							hasIssues: fullPlanningAppeal.appellantCase.hasHealthAndSafetyIssues
-						},
-						lpaQuestionnaire: {
-							details: fullPlanningAppeal.lpaQuestionnaire.healthAndSafetyDetails,
-							hasIssues: fullPlanningAppeal.lpaQuestionnaire.doesSiteHaveHealthAndSafetyIssues
-						}
-					},
-					inspector: fullPlanningAppeal.inspector.azureAdUserId,
-					inspectorAccess: {
-						appellantCase: {
-							details: fullPlanningAppeal.appellantCase.visibilityRestrictions,
-							isRequired: !fullPlanningAppeal.appellantCase.isSiteVisibleFromPublicRoad
-						},
-						lpaQuestionnaire: {
-							details: fullPlanningAppeal.lpaQuestionnaire.inspectorAccessDetails,
-							isRequired: fullPlanningAppeal.lpaQuestionnaire.doesSiteRequireInspectorAccess
-						}
-					},
-					isParentAppeal: false,
-					isChildAppeal: false,
-					linkedAppeals: [],
-					otherAppeals: [],
-					localPlanningDepartment: fullPlanningAppeal.lpa.name,
-					lpaQuestionnaireId: fullPlanningAppeal.lpaQuestionnaire.id,
-					neighbouringSite: {
-						contacts: fullPlanningAppeal.lpaQuestionnaire.neighbouringSiteContact.map(
-							(contact) => ({
-								address: formatAddress(contact.address),
-								firstName: contact.firstName,
-								lastName: contact.lastName
-							})
-						),
-						isAffected: fullPlanningAppeal.lpaQuestionnaire.isAffectingNeighbouringSites
-					},
-					planningApplicationReference: fullPlanningAppeal.planningApplicationReference,
-					procedureType: fullPlanningAppeal.lpaQuestionnaire.procedureType.name,
-					siteVisit: {
-						siteVisitId: fullPlanningAppeal.siteVisit.id,
-						visitDate: fullPlanningAppeal.siteVisit.visitDate,
-						visitStartTime: fullPlanningAppeal.siteVisit.visitStartTime,
-						visitEndTime: fullPlanningAppeal.siteVisit.visitEndTime,
-						visitType: fullPlanningAppeal.siteVisit.siteVisitType.name
-					},
-					createdAt: householdAppeal.createdAt.toISOString()
-					//startedAt: fullPlanningAppeal.startedAt.toISOString(),
-					//validAt: householdAppeal.validAt.toISOString()
-				});
-			});
+        expect(response.status).toEqual(200);
+        expect(response.body).toEqual({
+					neighbouringSites: [],
+          agent: {
+            serviceUserId: fullPlanningAppeal.agent.id,
+            firstName: fullPlanningAppeal.agent.firstName,
+            lastName: fullPlanningAppeal.agent.lastName,
+            email: fullPlanningAppeal.agent.email,
+            phoneNumber: fullPlanningAppeal.agent.phoneNumber,
+            organisationName: fullPlanningAppeal.agent.organisationName
+          },
+          appellant: {
+            serviceUserId: fullPlanningAppeal.appellant.id,
+            firstName: fullPlanningAppeal.appellant.firstName,
+            lastName: fullPlanningAppeal.appellant.lastName,
+            email: fullPlanningAppeal.appellant.email,
+            phoneNumber: fullPlanningAppeal.appellant.phoneNumber,
+            organisationName: fullPlanningAppeal.appellant.organisationName
+          },
+          allocationDetails: null,
+          appealId: fullPlanningAppeal.id,
+          appealReference: fullPlanningAppeal.reference,
+          appealSite: {
+            addressId: fullPlanningAppeal.address.id,
+            addressLine1: fullPlanningAppeal.address.addressLine1,
+            addressLine2: fullPlanningAppeal.address.addressLine2,
+            town: fullPlanningAppeal.address.addressTown,
+            county: fullPlanningAppeal.address.addressCounty,
+            postCode: fullPlanningAppeal.address.postcode
+          },
+          appealStatus: fullPlanningAppeal.appealStatus[0].status,
+          appealTimetable: null,
+          appealType: fullPlanningAppeal.appealType.type,
+          appellantCaseId: 1,
+          caseOfficer: fullPlanningAppeal.caseOfficer.azureAdUserId,
+          costs: {},
+          decision: {
+            folderId: savedFolder.id
+          },
+          documentationSummary: {
+            appellantCase: {
+              status: 'received',
+              dueDate: fullPlanningAppeal.caseExtensionDate,
+              receivedAt: householdAppeal.caseCreatedDate.toISOString()
+            },
+            lpaQuestionnaire: {
+              dueDate: null,
+              status: 'received',
+              receivedAt: householdAppeal.lpaQuestionnaire.receivedAt
+            }
+          },
+          healthAndSafety: {
+            appellantCase: {
+              details: fullPlanningAppeal.appellantCase.siteSafetyDetails,
+              hasIssues: fullPlanningAppeal.appellantCase.hasHealthAndSafetyIssues
+            },
+            lpaQuestionnaire: {
+              details: fullPlanningAppeal.lpaQuestionnaire.healthAndSafetyDetails,
+              hasIssues: fullPlanningAppeal.lpaQuestionnaire.doesSiteHaveHealthAndSafetyIssues
+            }
+          },
+          inspector: fullPlanningAppeal.inspector.azureAdUserId,
+          inspectorAccess: {
+            appellantCase: {
+              details: fullPlanningAppeal.appellantCase.siteAccessDetails,
+              isRequired: fullPlanningAppeal.appellantCase.doesSiteRequireInspectorAccess
+            },
+            lpaQuestionnaire: {
+              details: fullPlanningAppeal.lpaQuestionnaire.inspectorAccessDetails,
+              isRequired: fullPlanningAppeal.lpaQuestionnaire.doesSiteRequireInspectorAccess
+            }
+          },
+          isParentAppeal: false,
+          isChildAppeal: false,
+          linkedAppeals: [],
+          otherAppeals: [],
+          localPlanningDepartment: fullPlanningAppeal.lpa.name,
+          lpaQuestionnaireId: fullPlanningAppeal.lpaQuestionnaire.id,
+          isAffectingNeighbouringSites: true,
+          planningApplicationReference: fullPlanningAppeal.applicationReference,
+          procedureType: fullPlanningAppeal.procedureType.name,
+          siteVisit: {
+            siteVisitId: fullPlanningAppeal.siteVisit.id,
+            visitDate: fullPlanningAppeal.siteVisit.visitDate,
+            visitStartTime: fullPlanningAppeal.siteVisit.visitStartTime,
+            visitEndTime: fullPlanningAppeal.siteVisit.visitEndTime,
+            visitType: fullPlanningAppeal.siteVisit.siteVisitType.name
+          },
+          createdAt: householdAppeal.caseCreatedDate.toISOString()
+          //startedAt: fullPlanningAppeal.startedAt.toISOString(),
+          //validAt: householdAppeal.validAt.toISOString()
+        });
+      });
 
-			test('returns an error if appealId is not numeric', async () => {
-				const response = await request.get('/appeals/one').set('azureAdUserId', azureAdUserId);
+      test('returns an error if appealId is not numeric', async () => {
+        const response = await request.get('/appeals/one').set('azureAdUserId', azureAdUserId);
 
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						appealId: ERROR_MUST_BE_NUMBER
-					}
-				});
-			});
+        expect(response.status).toEqual(400);
+        expect(response.body).toEqual({
+          errors: {
+            appealId: ERROR_MUST_BE_NUMBER
+          }
+        });
+      });
 
-			test('returns an error if appealId is not found', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(null);
+      test('returns an error if appealId is not found', async () => {
+        // @ts-ignore
+        databaseConnector.appeal.findUnique.mockResolvedValue(null);
 
-				const response = await request.get('/appeals/3').set('azureAdUserId', azureAdUserId);
+        const response = await request.get('/appeals/3').set('azureAdUserId', azureAdUserId);
 
-				expect(response.status).toEqual(404);
-				expect(response.body).toEqual({
-					errors: {
-						appealId: ERROR_NOT_FOUND
-					}
-				});
-			});
-		});
+        expect(response.status).toEqual(404);
+        expect(response.body).toEqual({
+          errors: {
+            appealId: ERROR_NOT_FOUND
+          }
+        });
+      });
+    });
 
 		describe('PATCH', () => {
-			test('updates an appeal', async () => {
+      test('updates an appeal', async () => {
+        // @ts-ignore
+        databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+
+        const response = await request
+          .patch(`/appeals/${householdAppeal.id}`)
+          .send({
+            startedAt: '2023-05-05',
+            validAt: '2023-05-25'
+          })
+          .set('azureAdUserId', azureAdUserId);
+
+        expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
+          data: {
+            caseStartedDate: '2023-05-05T01:00:00.000Z',
+            caseValidDate: '2023-05-25T01:00:00.000Z',
+            caseUpdatedDate: expect.any(Date)
+          },
+          where: {
+            id: householdAppeal.id
+          }
+        });
+        expect(response.status).toEqual(200);
+        expect(response.body).toEqual({
+          startedAt: '2023-05-05T01:00:00.000Z',
+          validAt: '2023-05-25T01:00:00.000Z'
+        });
+      });
+
+      test('updates the planning application reference', async () => {
+        // @ts-ignore
+        databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+
+        const response = await request
+          .patch(`/appeals/${householdAppeal.id}`)
+          .send({
+            planningApplicationReference: '1234/A/567890'
+          })
+          .set('azureAdUserId', azureAdUserId);
+
+        expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
+          data: {
+            applicationReference: '1234/A/567890',
+						caseUpdatedDate: expect.any(Date)
+          },
+          where: {
+            id: householdAppeal.id
+          }
+        });
+        expect(response.status).toEqual(200);
+        expect(response.body).toEqual({
+          planningApplicationReference: '1234/A/567890'
+        });
+      });
+
+      test('assigns a case officer to an appeal', async () => {
+        // @ts-ignore
+        databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+        // @ts-ignore
+        databaseConnector.user.upsert.mockResolvedValue(householdAppeal.caseOfficer);
+
+        const response = await request
+          .patch(`/appeals/${householdAppeal.id}`)
+          .send({
+            caseOfficer: householdAppeal.caseOfficer.azureAdUserId
+          })
+          .set('azureAdUserId', azureAdUserId);
+
+        expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
+          data: {
+            caseOfficerUserId: householdAppeal.caseOfficer.id,
+            caseUpdatedDate: expect.any(Date)
+          },
+          where: {
+            id: householdAppeal.id
+          }
+        });
+        expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+          data: {
+            appealId: householdAppeal.id,
+            details: stringTokenReplacement(AUDIT_TRAIL_ASSIGNED_CASE_OFFICER, [
+              householdAppeal.caseOfficer.azureAdUserId
+            ]),
+            loggedAt: expect.any(Date),
+            userId: householdAppeal.caseOfficer.id
+          }
+        });
+        expect(response.status).toEqual(200);
+        expect(response.body).toEqual({
+          caseOfficer: householdAppeal.caseOfficer.azureAdUserId
+        });
+      });
+
+      test('removes a case officer from an appeal', async () => {
+        // @ts-ignore
+        databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+        // @ts-ignore
+        databaseConnector.user.upsert.mockResolvedValue(householdAppeal.caseOfficer);
+
+        const response = await request
+          .patch(`/appeals/${householdAppeal.id}`)
+          .send({
+            caseOfficer: null
+          })
+          .set('azureAdUserId', azureAdUserId);
+
+        expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
+          data: {
+            caseOfficerUserId: null,
+            caseUpdatedDate: expect.any(Date)
+          },
+          where: {
+            id: householdAppeal.id
+          }
+        });
+        expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+          data: {
+            appealId: householdAppeal.id,
+            details: stringTokenReplacement(AUDIT_TRAIL_REMOVED_CASE_OFFICER, [
+              householdAppeal.caseOfficer.azureAdUserId
+            ]),
+            loggedAt: expect.any(Date),
+            userId: householdAppeal.caseOfficer.id
+          }
+        });
+        expect(response.status).toEqual(200);
+        expect(response.body).toEqual({
+          caseOfficer: null
+        });
+      });
+
+      test('assigns an inspector to an appeal', async () => {
+        // @ts-ignore
+        databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+        // @ts-ignore
+        databaseConnector.user.upsert.mockResolvedValue(householdAppeal.inspector);
+
+        const response = await request
+          .patch(`/appeals/${householdAppeal.id}`)
+          .send({
+            inspector: householdAppeal.inspector.azureAdUserId
+          })
+          .set('azureAdUserId', azureAdUserId);
+
+        expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
+          data: {
+            inspectorUserId: householdAppeal.inspector.id,
+            caseUpdatedDate: expect.any(Date)
+          },
+          where: {
+            id: householdAppeal.id
+          }
+        });
+        expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(1);
+        expect(databaseConnector.appeal.update).toHaveBeenCalledTimes(1);
+        expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+          data: {
+            appealId: householdAppeal.id,
+            details: stringTokenReplacement(AUDIT_TRAIL_ASSIGNED_INSPECTOR, [
+              householdAppeal.inspector.azureAdUserId
+            ]),
+            loggedAt: expect.any(Date),
+            userId: householdAppeal.inspector.id
+          }
+        });
+        expect(response.status).toEqual(200);
+        expect(response.body).toEqual({
+          inspector: householdAppeal.inspector.azureAdUserId
+        });
+      });
+
+      test('removes an inspector from an appeal', async () => {
+        // @ts-ignore
+        databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+        // @ts-ignore
+        databaseConnector.user.upsert.mockResolvedValue(householdAppeal.inspector);
+
+        const response = await request
+          .patch(`/appeals/${householdAppeal.id}`)
+          .send({
+            inspector: null
+          })
+          .set('azureAdUserId', azureAdUserId);
+
+        expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
+          data: {
+            inspectorUserId: null,
+            caseUpdatedDate: expect.any(Date)
+          },
+          where: {
+            id: householdAppeal.id
+          }
+        });
+        expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+          data: {
+            appealId: householdAppeal.id,
+            details: stringTokenReplacement(AUDIT_TRAIL_REMOVED_INSPECTOR, [
+              householdAppeal.inspector.azureAdUserId
+            ]),
+            loggedAt: expect.any(Date),
+            userId: householdAppeal.inspector.id
+          }
+        });
+        expect(response.status).toEqual(200);
+        expect(response.body).toEqual({
+          inspector: null
+        });
+      });
+
+      test('returns an error if appealId is not numeric', async () => {
+        const response = await request.patch('/appeals/one').set('azureAdUserId', azureAdUserId);
+
+        expect(response.status).toEqual(400);
+        expect(response.body).toEqual({
+          errors: {
+            appealId: ERROR_MUST_BE_NUMBER
+          }
+        });
+      });
+
+      test('returns an error if appealId is not found', async () => {
+        // @ts-ignore
+        databaseConnector.appeal.findUnique.mockResolvedValue(null);
+
+        const response = await request
+          .get(`/appeals/${householdAppeal.id}`)
+          .set('azureAdUserId', azureAdUserId);
+
+        expect(response.status).toEqual(404);
+        expect(response.body).toEqual({
+          errors: {
+            appealId: ERROR_NOT_FOUND
+          }
+        });
+      });
+
+      test('returns an error if startedAt is not in the correct format', async () => {
+        const response = await request
+          .patch(`/appeals/${householdAppeal.id}`)
+          .send({
+            startedAt: '05/05/2023'
+          })
+          .set('azureAdUserId', azureAdUserId);
+
+        expect(response.status).toEqual(400);
+        expect(response.body).toEqual({
+          errors: {
+            startedAt: ERROR_MUST_BE_CORRECT_DATE_FORMAT
+          }
+        });
+      });
+
+      test('returns an error if startedAt does not contain leading zeros', async () => {
+        const response = await request
+          .patch(`/appeals/${householdAppeal.id}`)
+          .send({
+            startedAt: '2023-5-5'
+          })
+          .set('azureAdUserId', azureAdUserId);
+
+        expect(response.status).toEqual(400);
+        expect(response.body).toEqual({
+          errors: {
+            startedAt: ERROR_MUST_BE_CORRECT_DATE_FORMAT
+          }
+        });
+      });
+
+      test('returns an error if startedAt is not a valid date', async () => {
+        const response = await request
+          .patch(`/appeals/${householdAppeal.id}`)
+          .send({
+            startedAt: '2023-02-30'
+          })
+          .set('azureAdUserId', azureAdUserId);
+
+        expect(response.status).toEqual(400);
+        expect(response.body).toEqual({
+          errors: {
+            startedAt: ERROR_MUST_BE_CORRECT_DATE_FORMAT
+          }
+        });
+      });
+
+      test('returns an error if validAt is not in the correct format', async () => {
+        const response = await request
+          .patch(`/appeals/${householdAppeal.id}`)
+          .send({
+            validAt: '05/05/2023'
+          })
+          .set('azureAdUserId', azureAdUserId);
+
+        expect(response.status).toEqual(400);
+        expect(response.body).toEqual({
+          errors: {
+            validAt: ERROR_MUST_BE_CORRECT_DATE_FORMAT
+          }
+        });
+      });
+
+      test('returns an error if validAt does not contain leading zeros', async () => {
+        const response = await request
+          .patch(`/appeals/${householdAppeal.id}`)
+          .send({
+            validAt: '2023-5-5'
+          })
+          .set('azureAdUserId', azureAdUserId);
+
+        expect(response.status).toEqual(400);
+        expect(response.body).toEqual({
+          errors: {
+            validAt: ERROR_MUST_BE_CORRECT_DATE_FORMAT
+          }
+        });
+      });
+
+      test('returns an error if validAt is not a valid date', async () => {
+        const response = await request
+          .patch(`/appeals/${householdAppeal.id}`)
+          .send({
+            validAt: '2023-02-30'
+          })
+          .set('azureAdUserId', azureAdUserId);
+
+        expect(response.status).toEqual(400);
+        expect(response.body).toEqual({
+          errors: {
+            validAt: ERROR_MUST_BE_CORRECT_DATE_FORMAT
+          }
+        });
+      });
+
+      test('returns an error if validAt is in the future', async () => {
+        const response = await request
+          .patch(`/appeals/${householdAppeal.id}`)
+          .send({
+            validAt: '3000-02-02'
+          })
+          .set('azureAdUserId', azureAdUserId);
+
+        expect(response.status).toEqual(400);
+        expect(response.body).toEqual({
+          errors: {
+            validAt: ERROR_MUST_NOT_BE_IN_FUTURE
+          }
+        });
+      });
+
+      test('returns an error if caseOfficer is not a valid uuid', async () => {
+        const response = await request
+          .patch(`/appeals/${householdAppeal.id}`)
+          .send({
+            caseOfficer: '1'
+          })
+          .set('azureAdUserId', azureAdUserId);
+
+        expect(response.status).toEqual(400);
+        expect(response.body).toEqual({
+          errors: {
+            caseOfficer: ERROR_MUST_BE_UUID
+          }
+        });
+      });
+
+      test('returns an error if inspector is not a valid uuid', async () => {
+        const response = await request
+          .patch(`/appeals/${householdAppeal.id}`)
+          .send({
+            inspector: '1'
+          })
+          .set('azureAdUserId', azureAdUserId);
+
+        expect(response.status).toEqual(400);
+        expect(response.body).toEqual({
+          errors: {
+            inspector: ERROR_MUST_BE_UUID
+          }
+        });
+      });
+
+      test('returns an error if given an incorrect field name', async () => {
+        // @ts-ignore
+        databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+
+        // @ts-ignore
+        databaseConnector.appeal.update.mockImplementationOnce(() => {
+          throw new Error(ERROR_FAILED_TO_SAVE_DATA);
+        });
+
+        const response = await request
+          .patch(`/appeals/${householdAppeal.id}`)
+          .send({
+            startedAtDate: '2023-02-10'
+          })
+          .set('azureAdUserId', azureAdUserId);
+
+        expect(response.status).toEqual(500);
+        expect(response.body).toEqual({
+          errors: {
+            body: ERROR_FAILED_TO_SAVE_DATA
+          }
+        });
+      });
+
+      test('returns an error if the planning application reference is not a string', async () => {
+        const response = await request
+          .patch(`/appeals/${householdAppeal.id}`)
+          .send({
+            planningApplicationReference: 123
+          })
+          .set('azureAdUserId', azureAdUserId);
+
+        expect(response.status).toEqual(400);
+        expect(response.body).toEqual({
+          errors: {
+            planningApplicationReference: ERROR_MUST_BE_STRING
+          }
+        });
+      });
+
+      test('returns an error if the planning application reference is empty', async () => {
+        const response = await request
+          .patch(`/appeals/${householdAppeal.id}`)
+          .send({
+            planningApplicationReference: ''
+          })
+          .set('azureAdUserId', azureAdUserId);
+
+        expect(response.status).toEqual(400);
+        expect(response.body).toEqual({
+          errors: {
+            planningApplicationReference: ERROR_CANNOT_BE_EMPTY_STRING
+          }
+        });
+      });
+
+      test('returns an error if the planning application reference null', async () => {
+        const response = await request
+          .patch(`/appeals/${householdAppeal.id}`)
+          .send({
+            planningApplicationReference: null
+          })
+          .set('azureAdUserId', azureAdUserId);
+
+        expect(response.status).toEqual(400);
+        expect(response.body).toEqual({
+          errors: {
+            planningApplicationReference: ERROR_MUST_BE_STRING
+          }
+        });
+      });
+
+      test('does not throw an error if given an empty body', async () => {
+        // @ts-ignore
+        databaseConnector.appeal.update.mockResolvedValue(true);
+
+        const response = await request
+          .patch(`/appeals/${householdAppeal.id}`)
+          .send({})
+          .set('azureAdUserId', azureAdUserId);
+
+        expect(response.status).toEqual(200);
+        expect(response.body).toEqual({});
+      });
+    });
+  });
+
+});
+
+describe('appeals/case-reference/:caseReference', () => {
+	describe('GET', () => {
+		test('gets a single household appeal', async () => {
+			// @ts-ignore
+			databaseConnector.folder.findMany.mockResolvedValue([decisionFolder]);
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+			// @ts-ignore
+			databaseConnector.appealRelationship.findMany
 				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+				.mockResolvedValueOnce(linkedAppeals);
 
-				const response = await request
-					.patch(`/appeals/${householdAppeal.id}`)
-					.send({
-						startedAt: '2023-05-05',
-						validAt: '2023-05-25'
-					})
-					.set('azureAdUserId', azureAdUserId);
+			const response = await request
+				.get(`/appeals/case-reference/${householdAppeal.reference}`)
+				.set('azureAdUserId', azureAdUserId);
 
-				expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
-					data: {
-						startedAt: '2023-05-05T01:00:00.000Z',
-						validAt: '2023-05-25T01:00:00.000Z',
-						updatedAt: expect.any(Date)
+			expect(response.status).toEqual(200);
+			expect(response.body).toEqual({
+				neighbouringSites: [],
+				agent: {
+					serviceUserId: householdAppeal.agent.id,
+					firstName: householdAppeal.agent.firstName,
+					lastName: householdAppeal.agent.lastName,
+					email: householdAppeal.agent.email,
+					phoneNumber: householdAppeal.agent.phoneNumber,
+					organisationName: householdAppeal.agent.organisationName
+				},
+				appellant: {
+					serviceUserId: householdAppeal.appellant.id,
+					firstName: householdAppeal.appellant.firstName,
+					lastName: householdAppeal.appellant.lastName,
+					email: householdAppeal.appellant.email,
+					phoneNumber: householdAppeal.appellant.phoneNumber,
+					organisationName: householdAppeal.appellant.organisationName
+				},
+				allocationDetails: null,
+				appealId: householdAppeal.id,
+				appealReference: householdAppeal.reference,
+				appealSite: {
+					addressId: householdAppeal.address.id,
+					addressLine1: householdAppeal.address.addressLine1,
+					addressLine2: householdAppeal.address.addressLine2,
+					town: householdAppeal.address.addressTown,
+					county: householdAppeal.address.addressCounty,
+					postCode: householdAppeal.address.postcode
+				},
+				appealStatus: householdAppeal.appealStatus[0].status,
+				appealType: householdAppeal.appealType.type,
+				appealTimetable: null,
+				appellantCaseId: 1,
+				caseOfficer: householdAppeal.caseOfficer.azureAdUserId,
+				costs: {},
+				decision: {
+					folderId: savedFolder.id
+				},
+				documentationSummary: {
+					appellantCase: {
+						status: 'received',
+						dueDate: householdAppeal.caseExtensionDate,
+						receivedAt: householdAppeal.caseCreatedDate.toISOString()
 					},
-					where: {
-						id: householdAppeal.id
+					lpaQuestionnaire: {
+						dueDate: null,
+						status: 'received',
+						receivedAt: householdAppeal.lpaQuestionnaire.receivedAt
 					}
-				});
-				expect(response.status).toEqual(200);
-				expect(response.body).toEqual({
-					startedAt: '2023-05-05T01:00:00.000Z',
-					validAt: '2023-05-25T01:00:00.000Z'
-				});
-			});
-
-			test('assigns a case officer to an appeal', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-				// @ts-ignore
-				databaseConnector.user.upsert.mockResolvedValue(householdAppeal.caseOfficer);
-
-				const response = await request
-					.patch(`/appeals/${householdAppeal.id}`)
-					.send({
-						caseOfficer: householdAppeal.caseOfficer.azureAdUserId
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
-					data: {
-						caseOfficerUserId: householdAppeal.caseOfficer.id,
-						updatedAt: expect.any(Date)
+				},
+				healthAndSafety: {
+					appellantCase: {
+						details: householdAppeal.appellantCase.siteSafetyDetails,
+						hasIssues: true
 					},
-					where: {
-						id: householdAppeal.id
+					lpaQuestionnaire: {
+						details: householdAppeal.lpaQuestionnaire.healthAndSafetyDetails,
+						hasIssues: householdAppeal.lpaQuestionnaire.doesSiteHaveHealthAndSafetyIssues
 					}
-				});
-				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
-					data: {
-						appealId: householdAppeal.id,
-						details: stringTokenReplacement(AUDIT_TRAIL_ASSIGNED_CASE_OFFICER, [
-							householdAppeal.caseOfficer.azureAdUserId
-						]),
-						loggedAt: expect.any(Date),
-						userId: householdAppeal.caseOfficer.id
-					}
-				});
-				expect(response.status).toEqual(200);
-				expect(response.body).toEqual({
-					caseOfficer: householdAppeal.caseOfficer.azureAdUserId
-				});
-			});
-
-			test('removes a case officer from an appeal', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-				// @ts-ignore
-				databaseConnector.user.upsert.mockResolvedValue(householdAppeal.caseOfficer);
-
-				const response = await request
-					.patch(`/appeals/${householdAppeal.id}`)
-					.send({
-						caseOfficer: null
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
-					data: {
-						caseOfficerUserId: null,
-						updatedAt: expect.any(Date)
+				},
+				inspector: householdAppeal.inspector.azureAdUserId,
+				inspectorAccess: {
+					appellantCase: {
+						details: householdAppeal.appellantCase.siteAccessDetails,
+						isRequired: true
 					},
-					where: {
-						id: householdAppeal.id
+					lpaQuestionnaire: {
+						details: householdAppeal.lpaQuestionnaire.inspectorAccessDetails,
+						isRequired: householdAppeal.lpaQuestionnaire.doesSiteRequireInspectorAccess
 					}
-				});
-				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
-					data: {
-						appealId: householdAppeal.id,
-						details: stringTokenReplacement(AUDIT_TRAIL_REMOVED_CASE_OFFICER, [
-							householdAppeal.caseOfficer.azureAdUserId
-						]),
-						loggedAt: expect.any(Date),
-						userId: householdAppeal.caseOfficer.id
-					}
-				});
-				expect(response.status).toEqual(200);
-				expect(response.body).toEqual({
-					caseOfficer: null
-				});
-			});
-
-			test('assigns an inspector to an appeal', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-				// @ts-ignore
-				databaseConnector.user.upsert.mockResolvedValue(householdAppeal.inspector);
-
-				const response = await request
-					.patch(`/appeals/${householdAppeal.id}`)
-					.send({
-						inspector: householdAppeal.inspector.azureAdUserId
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
-					data: {
-						inspectorUserId: householdAppeal.inspector.id,
-						updatedAt: expect.any(Date)
-					},
-					where: {
-						id: householdAppeal.id
-					}
-				});
-				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(1);
-				expect(databaseConnector.appeal.update).toHaveBeenCalledTimes(1);
-				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
-					data: {
-						appealId: householdAppeal.id,
-						details: stringTokenReplacement(AUDIT_TRAIL_ASSIGNED_INSPECTOR, [
-							householdAppeal.inspector.azureAdUserId
-						]),
-						loggedAt: expect.any(Date),
-						userId: householdAppeal.inspector.id
-					}
-				});
-				expect(response.status).toEqual(200);
-				expect(response.body).toEqual({
-					inspector: householdAppeal.inspector.azureAdUserId
-				});
-			});
-
-			test('removes an inspector from an appeal', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-				// @ts-ignore
-				databaseConnector.user.upsert.mockResolvedValue(householdAppeal.inspector);
-
-				const response = await request
-					.patch(`/appeals/${householdAppeal.id}`)
-					.send({
-						inspector: null
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
-					data: {
-						inspectorUserId: null,
-						updatedAt: expect.any(Date)
-					},
-					where: {
-						id: householdAppeal.id
-					}
-				});
-				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
-					data: {
-						appealId: householdAppeal.id,
-						details: stringTokenReplacement(AUDIT_TRAIL_REMOVED_INSPECTOR, [
-							householdAppeal.inspector.azureAdUserId
-						]),
-						loggedAt: expect.any(Date),
-						userId: householdAppeal.inspector.id
-					}
-				});
-				expect(response.status).toEqual(200);
-				expect(response.body).toEqual({
-					inspector: null
-				});
-			});
-
-			test('returns an error if appealId is not numeric', async () => {
-				const response = await request.patch('/appeals/one').set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						appealId: ERROR_MUST_BE_NUMBER
-					}
-				});
-			});
-
-			test('returns an error if appealId is not found', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(null);
-
-				const response = await request
-					.get(`/appeals/${householdAppeal.id}`)
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(404);
-				expect(response.body).toEqual({
-					errors: {
-						appealId: ERROR_NOT_FOUND
-					}
-				});
-			});
-
-			test('returns an error if startedAt is not in the correct format', async () => {
-				const response = await request
-					.patch(`/appeals/${householdAppeal.id}`)
-					.send({
-						startedAt: '05/05/2023'
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						startedAt: ERROR_MUST_BE_CORRECT_DATE_FORMAT
-					}
-				});
-			});
-
-			test('returns an error if startedAt does not contain leading zeros', async () => {
-				const response = await request
-					.patch(`/appeals/${householdAppeal.id}`)
-					.send({
-						startedAt: '2023-5-5'
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						startedAt: ERROR_MUST_BE_CORRECT_DATE_FORMAT
-					}
-				});
-			});
-
-			test('returns an error if startedAt is not a valid date', async () => {
-				const response = await request
-					.patch(`/appeals/${householdAppeal.id}`)
-					.send({
-						startedAt: '2023-02-30'
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						startedAt: ERROR_MUST_BE_CORRECT_DATE_FORMAT
-					}
-				});
-			});
-
-			test('returns an error if validAt is not in the correct format', async () => {
-				const response = await request
-					.patch(`/appeals/${householdAppeal.id}`)
-					.send({
-						validAt: '05/05/2023'
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						validAt: ERROR_MUST_BE_CORRECT_DATE_FORMAT
-					}
-				});
-			});
-
-			test('returns an error if validAt does not contain leading zeros', async () => {
-				const response = await request
-					.patch(`/appeals/${householdAppeal.id}`)
-					.send({
-						validAt: '2023-5-5'
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						validAt: ERROR_MUST_BE_CORRECT_DATE_FORMAT
-					}
-				});
-			});
-
-			test('returns an error if validAt is not a valid date', async () => {
-				const response = await request
-					.patch(`/appeals/${householdAppeal.id}`)
-					.send({
-						validAt: '2023-02-30'
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						validAt: ERROR_MUST_BE_CORRECT_DATE_FORMAT
-					}
-				});
-			});
-
-			test('returns an error if validAt is in the future', async () => {
-				const response = await request
-					.patch(`/appeals/${householdAppeal.id}`)
-					.send({
-						validAt: '3000-02-02'
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						validAt: ERROR_MUST_NOT_BE_IN_FUTURE
-					}
-				});
-			});
-
-			test('returns an error if caseOfficer is not a valid uuid', async () => {
-				const response = await request
-					.patch(`/appeals/${householdAppeal.id}`)
-					.send({
-						caseOfficer: '1'
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						caseOfficer: ERROR_MUST_BE_UUID
-					}
-				});
-			});
-
-			test('returns an error if inspector is not a valid uuid', async () => {
-				const response = await request
-					.patch(`/appeals/${householdAppeal.id}`)
-					.send({
-						inspector: '1'
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						inspector: ERROR_MUST_BE_UUID
-					}
-				});
-			});
-
-			test('returns an error if given an incorrect field name', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-
-				// @ts-ignore
-				databaseConnector.appeal.update.mockImplementation(() => {
-					throw new Error(ERROR_FAILED_TO_SAVE_DATA);
-				});
-
-				const response = await request
-					.patch(`/appeals/${householdAppeal.id}`)
-					.send({
-						startedAtDate: '2023-02-10'
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(500);
-				expect(response.body).toEqual({
-					errors: {
-						body: ERROR_FAILED_TO_SAVE_DATA
-					}
-				});
-			});
-
-			test('does not throw an error if given an empty body', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.update.mockResolvedValue(true);
-
-				const response = await request
-					.patch(`/appeals/${householdAppeal.id}`)
-					.send({})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(200);
-				expect(response.body).toEqual({});
+				},
+				isParentAppeal: true,
+				isChildAppeal: false,
+				linkedAppeals: linkedAppeals.map((a) => {
+					return {
+						appealReference: a.childRef,
+						isParentAppeal: false,
+						linkingDate: a.linkingDate,
+						appealType: 'Unknown',
+						externalSource: true
+					};
+				}),
+				otherAppeals: [],
+				localPlanningDepartment: householdAppeal.lpa.name,
+				lpaQuestionnaireId: householdAppeal.lpaQuestionnaire.id,
+				isAffectingNeighbouringSites: true,
+				planningApplicationReference: householdAppeal.applicationReference,
+				procedureType: householdAppeal.procedureType.name,
+				siteVisit: {
+					siteVisitId: householdAppeal.siteVisit.id,
+					visitDate: householdAppeal.siteVisit.visitDate,
+					visitStartTime: householdAppeal.siteVisit.visitStartTime,
+					visitEndTime: householdAppeal.siteVisit.visitEndTime,
+					visitType: householdAppeal.siteVisit.siteVisitType.name
+				},
+				createdAt: householdAppeal.caseCreatedDate.toISOString()
+				//startedAt: householdAppeal.startedAt.toISOString(),
+				//validAt: householdAppeal.validAt.toISOString()
 			});
 		});
-	});
 
-	describe('appeals/case-reference/:caseReference', () => {
-		describe('GET', () => {
-			test('gets a single household appeal', async () => {
-				// @ts-ignore
-				databaseConnector.folder.findMany.mockResolvedValue([savedFolder]);
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-				// @ts-ignore
-				databaseConnector.appealRelationship.findMany
-					// @ts-ignore
-					.mockResolvedValueOnce(linkedAppeals);
+		test('gets a single full planning appeal', async () => {
+			// @ts-ignore
+			databaseConnector.folder.findMany.mockResolvedValue([decisionFolder]);
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
 
-				const response = await request
-					.get(`/appeals/case-reference/${householdAppeal.reference}`)
-					.set('azureAdUserId', azureAdUserId);
+			const response = await request
+				.get(`/appeals/case-reference/${fullPlanningAppeal.reference}`)
+				.set('azureAdUserId', azureAdUserId);
 
-				expect(response.status).toEqual(200);
-				expect(response.body).toEqual({
-					agent: {
-						firstName: householdAppeal.agent.firstName,
-						lastName: householdAppeal.agent.lastName,
-						email: householdAppeal.agent.email
+			expect(response.status).toEqual(200);
+			expect(response.body).toEqual({
+				neighbouringSites: [],
+				agent: {
+					serviceUserId: fullPlanningAppeal.agent.id,
+					firstName: fullPlanningAppeal.agent.firstName,
+					lastName: fullPlanningAppeal.agent.lastName,
+					email: fullPlanningAppeal.agent.email,
+					phoneNumber: fullPlanningAppeal.agent.phoneNumber,
+					organisationName: fullPlanningAppeal.agent.organisationName
+				},
+				appellant: {
+					serviceUserId: fullPlanningAppeal.appellant.id,
+					firstName: fullPlanningAppeal.appellant.firstName,
+					lastName: fullPlanningAppeal.appellant.lastName,
+					email: fullPlanningAppeal.appellant.email,
+					phoneNumber: fullPlanningAppeal.appellant.phoneNumber,
+					organisationName: fullPlanningAppeal.appellant.organisationName
+				},
+				allocationDetails: null,
+				appealId: fullPlanningAppeal.id,
+				appealReference: fullPlanningAppeal.reference,
+				appealSite: {
+					addressId: fullPlanningAppeal.address.id,
+					addressLine1: fullPlanningAppeal.address.addressLine1,
+					addressLine2: fullPlanningAppeal.address.addressLine2,
+					town: fullPlanningAppeal.address.addressTown,
+					county: fullPlanningAppeal.address.addressCounty,
+					postCode: fullPlanningAppeal.address.postcode
+				},
+				appealStatus: fullPlanningAppeal.appealStatus[0].status,
+				appealType: fullPlanningAppeal.appealType.type,
+				appealTimetable: null,
+				appellantCaseId: 1,
+				caseOfficer: fullPlanningAppeal.caseOfficer.azureAdUserId,
+				costs: {},
+				decision: {
+					folderId: savedFolder.id
+				},
+				documentationSummary: {
+					appellantCase: {
+						status: 'received',
+						dueDate: fullPlanningAppeal.caseExtensionDate,
+						receivedAt: householdAppeal.caseCreatedDate.toISOString()
 					},
-					appellant: {
-						firstName: householdAppeal.appellant.firstName,
-						lastName: householdAppeal.appellant.lastName,
-						email: householdAppeal.appellant.email
-					},
-					allocationDetails: null,
-					appealId: householdAppeal.id,
-					appealReference: householdAppeal.reference,
-					appealSite: {
-						addressLine1: householdAppeal.address.addressLine1,
-						addressLine2: householdAppeal.address.addressLine2,
-						town: householdAppeal.address.addressTown,
-						county: householdAppeal.address.addressCounty,
-						postCode: householdAppeal.address.postcode
-					},
-					appealStatus: householdAppeal.appealStatus[0].status,
-					appealType: householdAppeal.appealType.type,
-					appealTimetable: null,
-					appellantCaseId: 1,
-					caseOfficer: householdAppeal.caseOfficer.azureAdUserId,
-					costs: {},
-					decision: {
-						folderId: savedFolder.id
-					},
-					documentationSummary: {
-						appellantCase: {
-							status: 'received',
-							dueDate: householdAppeal.dueDate
-						},
-						lpaQuestionnaire: {
-							dueDate: null,
-							status: 'received'
-						}
-					},
-					healthAndSafety: {
-						appellantCase: {
-							details: householdAppeal.appellantCase.healthAndSafetyIssues,
-							hasIssues: householdAppeal.appellantCase.hasHealthAndSafetyIssues
-						},
-						lpaQuestionnaire: {
-							details: householdAppeal.lpaQuestionnaire.healthAndSafetyDetails,
-							hasIssues: householdAppeal.lpaQuestionnaire.doesSiteHaveHealthAndSafetyIssues
-						}
-					},
-					inspector: householdAppeal.inspector.azureAdUserId,
-					inspectorAccess: {
-						appellantCase: {
-							details: householdAppeal.appellantCase.visibilityRestrictions,
-							isRequired: !householdAppeal.appellantCase.isSiteVisibleFromPublicRoad
-						},
-						lpaQuestionnaire: {
-							details: householdAppeal.lpaQuestionnaire.inspectorAccessDetails,
-							isRequired: householdAppeal.lpaQuestionnaire.doesSiteRequireInspectorAccess
-						}
-					},
-					isParentAppeal: true,
-					isChildAppeal: false,
-					linkedAppeals: linkedAppeals.map((a) => {
-						return {
-							appealReference: a.childRef,
-							isParentAppeal: false,
-							linkingDate: a.linkingDate,
-							appealType: 'Unknown',
-							externalSource: true
-						};
-					}),
-					otherAppeals: [],
-					localPlanningDepartment: householdAppeal.lpa.name,
-					lpaQuestionnaireId: householdAppeal.lpaQuestionnaire.id,
-					neighbouringSite: {
-						contacts: householdAppeal.lpaQuestionnaire.neighbouringSiteContact.map((contact) => ({
-							address: formatAddress(contact.address),
-							firstName: contact.firstName,
-							lastName: contact.lastName
-						})),
-						isAffected: householdAppeal.lpaQuestionnaire.isAffectingNeighbouringSites
-					},
-					planningApplicationReference: householdAppeal.planningApplicationReference,
-					procedureType: householdAppeal.lpaQuestionnaire.procedureType.name,
-					siteVisit: {
-						siteVisitId: householdAppeal.siteVisit.id,
-						visitDate: householdAppeal.siteVisit.visitDate,
-						visitStartTime: householdAppeal.siteVisit.visitStartTime,
-						visitEndTime: householdAppeal.siteVisit.visitEndTime,
-						visitType: householdAppeal.siteVisit.siteVisitType.name
-					},
-					createdAt: householdAppeal.createdAt.toISOString()
-					//startedAt: householdAppeal.startedAt.toISOString(),
-					//validAt: householdAppeal.validAt.toISOString()
-				});
-			});
-
-			test('gets a single full planning appeal', async () => {
-				// @ts-ignore
-				databaseConnector.folder.findMany.mockResolvedValue([savedFolder]);
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
-
-				const response = await request
-					.get(`/appeals/case-reference/${fullPlanningAppeal.reference}`)
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(200);
-				expect(response.body).toEqual({
-					agent: {
-						firstName: fullPlanningAppeal.agent.firstName,
-						lastName: fullPlanningAppeal.agent.lastName,
-						email: fullPlanningAppeal.agent.email
-					},
-					appellant: {
-						firstName: fullPlanningAppeal.appellant.firstName,
-						lastName: fullPlanningAppeal.appellant.lastName,
-						email: fullPlanningAppeal.appellant.email
-					},
-					allocationDetails: null,
-					appealId: fullPlanningAppeal.id,
-					appealReference: fullPlanningAppeal.reference,
-					appealSite: {
-						addressLine1: fullPlanningAppeal.address.addressLine1,
-						addressLine2: fullPlanningAppeal.address.addressLine2,
-						town: fullPlanningAppeal.address.addressTown,
-						county: fullPlanningAppeal.address.addressCounty,
-						postCode: fullPlanningAppeal.address.postcode
-					},
-					appealStatus: fullPlanningAppeal.appealStatus[0].status,
-					appealType: fullPlanningAppeal.appealType.type,
-					appealTimetable: null,
-					appellantCaseId: 1,
-					caseOfficer: fullPlanningAppeal.caseOfficer.azureAdUserId,
-					costs: {},
-					decision: {
-						folderId: savedFolder.id
-					},
-					documentationSummary: {
-						appellantCase: {
-							status: 'received',
-							dueDate: fullPlanningAppeal.dueDate
-						},
-						lpaQuestionnaire: {
-							dueDate: null,
-							status: 'received'
-						}
-					},
-					healthAndSafety: {
-						appellantCase: {
-							details: fullPlanningAppeal.appellantCase.healthAndSafetyIssues,
-							hasIssues: fullPlanningAppeal.appellantCase.hasHealthAndSafetyIssues
-						},
-						lpaQuestionnaire: {
-							details: fullPlanningAppeal.lpaQuestionnaire.healthAndSafetyDetails,
-							hasIssues: fullPlanningAppeal.lpaQuestionnaire.doesSiteHaveHealthAndSafetyIssues
-						}
-					},
-					inspector: fullPlanningAppeal.inspector.azureAdUserId,
-					inspectorAccess: {
-						appellantCase: {
-							details: fullPlanningAppeal.appellantCase.visibilityRestrictions,
-							isRequired: !fullPlanningAppeal.appellantCase.isSiteVisibleFromPublicRoad
-						},
-						lpaQuestionnaire: {
-							details: fullPlanningAppeal.lpaQuestionnaire.inspectorAccessDetails,
-							isRequired: fullPlanningAppeal.lpaQuestionnaire.doesSiteRequireInspectorAccess
-						}
-					},
-					isParentAppeal: false,
-					isChildAppeal: false,
-					linkedAppeals: [],
-					otherAppeals: [],
-					localPlanningDepartment: fullPlanningAppeal.lpa.name,
-					lpaQuestionnaireId: fullPlanningAppeal.lpaQuestionnaire.id,
-					neighbouringSite: {
-						contacts: fullPlanningAppeal.lpaQuestionnaire.neighbouringSiteContact.map(
-							(contact) => ({
-								address: formatAddress(contact.address),
-								firstName: contact.firstName,
-								lastName: contact.lastName
-							})
-						),
-						isAffected: fullPlanningAppeal.lpaQuestionnaire.isAffectingNeighbouringSites
-					},
-					planningApplicationReference: fullPlanningAppeal.planningApplicationReference,
-					procedureType: fullPlanningAppeal.lpaQuestionnaire.procedureType.name,
-					siteVisit: {
-						siteVisitId: fullPlanningAppeal.siteVisit.id,
-						visitDate: fullPlanningAppeal.siteVisit.visitDate,
-						visitStartTime: fullPlanningAppeal.siteVisit.visitStartTime,
-						visitEndTime: fullPlanningAppeal.siteVisit.visitEndTime,
-						visitType: fullPlanningAppeal.siteVisit.siteVisitType.name
-					},
-					createdAt: fullPlanningAppeal.createdAt.toISOString()
-					//startedAt: fullPlanningAppeal.startedAt.toISOString(),
-					//validAt: fullPlanningAppeal.validAt.toISOString()
-				});
-			});
-			test('returns an error if appealId is not found', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(null);
-
-				const response = await request
-					.get('/appeals/case-reference/5')
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(404);
-				expect(response.body).toEqual({
-					errors: {
-						caseReference: ERROR_NOT_FOUND
+					lpaQuestionnaire: {
+						dueDate: null,
+						status: 'received',
+						receivedAt: householdAppeal.lpaQuestionnaire.receivedAt
 					}
-				});
+				},
+				healthAndSafety: {
+					appellantCase: {
+						details: fullPlanningAppeal.appellantCase.siteSafetyDetails,
+						hasIssues: true
+					},
+					lpaQuestionnaire: {
+						details: fullPlanningAppeal.lpaQuestionnaire.healthAndSafetyDetails,
+						hasIssues: true
+					}
+				},
+				inspector: fullPlanningAppeal.inspector.azureAdUserId,
+				inspectorAccess: {
+					appellantCase: {
+						details: fullPlanningAppeal.appellantCase.siteAccessDetails,
+						isRequired: true
+					},
+					lpaQuestionnaire: {
+						details: fullPlanningAppeal.lpaQuestionnaire.inspectorAccessDetails,
+						isRequired: true
+					}
+				},
+				isParentAppeal: false,
+				isChildAppeal: false,
+				linkedAppeals: [],
+				otherAppeals: [],
+				localPlanningDepartment: fullPlanningAppeal.lpa.name,
+				lpaQuestionnaireId: fullPlanningAppeal.lpaQuestionnaire.id,
+				isAffectingNeighbouringSites: true,
+				planningApplicationReference: fullPlanningAppeal.applicationReference,
+				procedureType: fullPlanningAppeal.procedureType.name,
+				siteVisit: {
+					siteVisitId: fullPlanningAppeal.siteVisit.id,
+					visitDate: fullPlanningAppeal.siteVisit.visitDate,
+					visitStartTime: fullPlanningAppeal.siteVisit.visitStartTime,
+					visitEndTime: fullPlanningAppeal.siteVisit.visitEndTime,
+					visitType: fullPlanningAppeal.siteVisit.siteVisitType.name
+				},
+				createdAt: fullPlanningAppeal.caseCreatedDate.toISOString()
+				//startedAt: fullPlanningAppeal.startedAt.toISOString(),
+				//validAt: fullPlanningAppeal.validAt.toISOString()
+			});
+		});
+		test('returns an error if appealId is not found', async () => {
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(null);
+
+			const response = await request
+				.get('/appeals/case-reference/5')
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(404);
+			expect(response.body).toEqual({
+				errors: {
+					caseReference: ERROR_NOT_FOUND
+				}
 			});
 		});
 	});
 });
 
 describe('mapAppealToDueDate Tests', () => {
-	let mockAppeal = {
-		appealType: null,
-		id: 1,
-		lpa: null,
-		reference: 'APP/Q9999/D/21/33813',
-		dueDate: null,
-		createdAt: new Date('2023-01-01T00:00:00.000Z'),
-		appealStatus: [
-			{
-				id: 2648,
-				status: 'ready_to_start',
-				createdAt: new Date('2024-01-09T16:14:31.387Z'),
-				valid: true,
-				appealId: 496,
-				subStateMachineName: null,
-				compoundStateName: null
-			}
-		],
-		appealTimetable: null
-	};
+  let mockAppeal = {
+    appealType: null,
+    id: 1,
+		address: null,
+		appellant: null,
+		agent: null,
+    lpa: null,
+    reference: 'APP/Q9999/D/21/33813',
+    caseExtensionDate: null,
+    caseCreatedDate: new Date('2023-01-01T00:00:00.000Z'),
+    appealStatus: [
+      {
+        id: 2648,
+        status: 'ready_to_start',
+        createdAt: new Date('2024-01-09T16:14:31.387Z'),
+        valid: true,
+        appealId: 496,
+        subStateMachineName: null,
+        compoundStateName: null
+      }
+    ],
+    appealTimetable: null
+  };
 
-	beforeEach(() => {
-		mockAppeal = {
-			appealType: null,
-			id: 1,
-			lpa: null,
-			reference: 'APP/Q9999/D/21/33813',
-			dueDate: null,
-			createdAt: new Date('2023-01-01T00:00:00.000Z'),
-			appealStatus: [
-				{
-					id: 2648,
-					status: 'ready_to_start',
-					createdAt: new Date('2024-01-09T16:14:31.387Z'),
-					valid: true,
-					appealId: 496,
-					subStateMachineName: null,
-					compoundStateName: null
+  beforeEach(() => {
+    mockAppeal = {
+			appellant: null,
+			agent: null,
+			address: null,
+      appealType: null,
+      id: 1,
+      lpa: null,
+      reference: 'APP/Q9999/D/21/33813',
+      caseExtensionDate: null,
+      caseCreatedDate: new Date('2023-01-01T00:00:00.000Z'),
+      appealStatus: [
+        {
+          id: 2648,
+          status: 'ready_to_start',
+          createdAt: new Date('2024-01-09T16:14:31.387Z'),
+          valid: true,
+          appealId: 496,
+          subStateMachineName: null,
+          compoundStateName: null
 				}
-			],
-			appealTimetable: null
-		};
-	});
+      ],
+      appealTimetable: null
+    };
+  });
 
-	test('maps STATE_TARGET_READY_TO_START status', () => {
-		mockAppeal.appealStatus[0].status = 'ready_to_start';
-		const dueDate = mapAppealToDueDate(mockAppeal, 'Incomplete', new Date('2023-02-01'));
-		expect(dueDate).toEqual(new Date('2023-02-01'));
-	});
+  test('maps STATE_TARGET_READY_TO_START status', () => {
+    mockAppeal.appealStatus[0].status = 'ready_to_start';
+    // @ts-ignore
+    const dueDate = mapAppealToDueDate(mockAppeal, 'Incomplete', new Date('2023-02-01'));
+    expect(dueDate).toEqual(new Date('2023-02-01'));
+  });
 
-	test('maps STATE_TARGET_READY_TO_START status with Incomplete status', () => {
-		mockAppeal.appealStatus[0].status = 'ready_to_start';
-		const createdAtPlusFiveDate = new Date('2023-01-06T00:00:00.000Z');
-		const dueDate = mapAppealToDueDate(mockAppeal, '', null);
-		expect(dueDate).toEqual(createdAtPlusFiveDate);
-	});
+  test('maps STATE_TARGET_READY_TO_START status with Incomplete status', () => {
+    mockAppeal.appealStatus[0].status = 'ready_to_start';
+    const createdAtPlusFiveDate = new Date('2023-01-06T00:00:00.000Z');
+    // @ts-ignore
+    const dueDate = mapAppealToDueDate(mockAppeal, '', null);
+    expect(dueDate).toEqual(createdAtPlusFiveDate);
+  });
 
-	test('maps STATE_TARGET_LPA_QUESTIONNAIRE_DUE', () => {
-		mockAppeal.appealStatus[0].status = 'lpa_questionnaire_due';
+  test('maps STATE_TARGET_LPA_QUESTIONNAIRE_DUE', () => {
+    mockAppeal.appealStatus[0].status = 'lpa_questionnaire_due';
 
-		const createdAtPlusTenDate = new Date('2023-01-11T00:00:00.000Z');
-		const dueDate = mapAppealToDueDate(mockAppeal, '', null);
-		expect(dueDate).toEqual(createdAtPlusTenDate);
-	});
+    const createdAtPlusTenDate = new Date('2023-01-11T00:00:00.000Z');
+    // @ts-ignore
+    const dueDate = mapAppealToDueDate(mockAppeal, '', null);
+    expect(dueDate).toEqual(createdAtPlusTenDate);
+  });
 
-	test('maps STATE_TARGET_LPA_QUESTIONNAIRE_DUE status with appealTimetable lpaQuestionnaireDueDate', () => {
-		let mockAppealWithTimetable = {
-			...mockAppeal,
-			appealTimetable: {
-				id: 1262,
-				appealId: 523,
-				lpaQuestionnaireDueDate: new Date('2023-03-01T00:00:00.000Z'),
-				finalCommentReviewDate: null,
-				issueDeterminationDate: null,
-				statementReviewDate: null,
-				resubmitAppealTypeDate: null
-			}
-		};
-		mockAppealWithTimetable.appealStatus[0].status = 'lpa_questionnaire_due';
+  test('maps STATE_TARGET_LPA_QUESTIONNAIRE_DUE status with appealTimetable lpaQuestionnaireDueDate', () => {
+    let mockAppealWithTimetable = {
+      ...mockAppeal,
+      appealTimetable: {
+        id: 1262,
+        appealId: 523,
+        lpaQuestionnaireDueDate: new Date('2023-03-01T00:00:00.000Z'),
+        finalCommentReviewDate: null,
+        issueDeterminationDate: null,
+        statementReviewDate: null
+      }
+    };
+    mockAppealWithTimetable.appealStatus[0].status = 'lpa_questionnaire_due';
 
-		const dueDate = mapAppealToDueDate(mockAppealWithTimetable, '', null);
-		expect(dueDate).toEqual(new Date('2023-03-01T00:00:00.000Z'));
-	});
+    // @ts-ignore
+    const dueDate = mapAppealToDueDate(mockAppealWithTimetable, '', null);
+    expect(dueDate).toEqual(new Date('2023-03-01T00:00:00.000Z'));
+  });
 
-	test('maps STATE_TARGET_ASSIGN_CASE_OFFICER', () => {
-		mockAppeal.appealStatus[0].status = 'assign_case_officer';
+  test('maps STATE_TARGET_ASSIGN_CASE_OFFICER', () => {
+    mockAppeal.appealStatus[0].status = 'assign_case_officer';
 
-		const createdAtPlusFifteenDate = new Date('2023-01-16T00:00:00.000Z');
-		const dueDate = mapAppealToDueDate(mockAppeal, '', null);
-		expect(dueDate).toEqual(createdAtPlusFifteenDate);
-	});
+    const createdAtPlusFifteenDate = new Date('2023-01-16T00:00:00.000Z');
+    // @ts-ignore
+    const dueDate = mapAppealToDueDate(mockAppeal, '', null);
+    expect(dueDate).toEqual(createdAtPlusFifteenDate);
+  });
 
-	test('maps STATE_TARGET_ISSUE_DETERMINATION', () => {
-		mockAppeal.appealStatus[0].status = 'issue_determination';
+  test('maps STATE_TARGET_ISSUE_DETERMINATION', () => {
+    mockAppeal.appealStatus[0].status = 'issue_determination';
 
-		const createdAtPlusThirtyDate = new Date('2023-01-31T00:00:00.000Z');
-		const dueDate = mapAppealToDueDate(mockAppeal, '', null);
-		expect(dueDate).toEqual(createdAtPlusThirtyDate);
-	});
+    const createdAtPlusThirtyDate = new Date('2023-01-31T00:00:00.000Z');
+    // @ts-ignore
+    const dueDate = mapAppealToDueDate(mockAppeal, '', null);
+    expect(dueDate).toEqual(createdAtPlusThirtyDate);
+  });
 
-	test('maps STATE_TARGET_ISSUE_DETERMINATION status with appealTimetable issueDeterminationDate', () => {
-		let mockAppealWithTimetable = {
-			...mockAppeal,
-			appealTimetable: {
-				id: 1262,
-				appealId: 523,
-				lpaQuestionnaireDueDate: null,
-				finalCommentReviewDate: null,
-				issueDeterminationDate: new Date('2023-03-01T00:00:00.000Z'),
-				statementReviewDate: null,
-				resubmitAppealTypeDate: null
-			}
-		};
-		mockAppealWithTimetable.appealStatus[0].status = 'issue_determination';
+  test('maps STATE_TARGET_ISSUE_DETERMINATION status with appealTimetable issueDeterminationDate', () => {
+    let mockAppealWithTimetable = {
+      ...mockAppeal,
+      appealTimetable: {
+        id: 1262,
+        appealId: 523,
+        lpaQuestionnaireDueDate: null,
+        finalCommentReviewDate: null,
+        issueDeterminationDate: new Date('2023-03-01T00:00:00.000Z'),
+        statementReviewDate: null
+      }
+    };
+    mockAppealWithTimetable.appealStatus[0].status = 'issue_determination';
 
-		const dueDate = mapAppealToDueDate(mockAppealWithTimetable, '', null);
-		expect(dueDate).toEqual(new Date('2023-03-01T00:00:00.000Z'));
-	});
+    // @ts-ignore
+    const dueDate = mapAppealToDueDate(mockAppealWithTimetable, '', null);
+    expect(dueDate).toEqual(new Date('2023-03-01T00:00:00.000Z'));
+  });
 
-	test('maps STATE_TARGET_STATEMENT_REVIEW', () => {
-		mockAppeal.appealStatus[0].status = 'statement_review';
+  test('maps STATE_TARGET_STATEMENT_REVIEW', () => {
+    mockAppeal.appealStatus[0].status = 'statement_review';
 
-		const createdAtPlusFiftyFiveDate = new Date('2023-02-25T00:00:00.000Z');
-		const dueDate = mapAppealToDueDate(mockAppeal, '', null);
-		expect(dueDate).toEqual(createdAtPlusFiftyFiveDate);
-	});
+    const createdAtPlusFiftyFiveDate = new Date('2023-02-25T00:00:00.000Z');
+    // @ts-ignore
+    const dueDate = mapAppealToDueDate(mockAppeal, '', null);
+    expect(dueDate).toEqual(createdAtPlusFiftyFiveDate);
+  });
 
-	test('maps STATE_TARGET_STATEMENT_REVIEW status with appealTimetable statementReviewDate', () => {
-		let mockAppealWithTimetable = {
-			...mockAppeal,
-			appealTimetable: {
-				id: 1262,
-				appealId: 523,
-				lpaQuestionnaireDueDate: null,
-				finalCommentReviewDate: null,
-				issueDeterminationDate: null,
-				statementReviewDate: new Date('2023-03-01T00:00:00.000Z'),
-				resubmitAppealTypeDate: null
-			}
-		};
-		mockAppealWithTimetable.appealStatus[0].status = 'statement_review';
+  test('maps STATE_TARGET_STATEMENT_REVIEW status with appealTimetable statementReviewDate', () => {
+    let mockAppealWithTimetable = {
+      ...mockAppeal,
+      appealTimetable: {
+        id: 1262,
+        appealId: 523,
+        lpaQuestionnaireDueDate: null,
+        finalCommentReviewDate: null,
+        issueDeterminationDate: null,
+        statementReviewDate: new Date('2023-03-01T00:00:00.000Z'),
+        resubmitAppealTypeDate: null
+      }
+    };
+    mockAppealWithTimetable.appealStatus[0].status = 'statement_review';
 
-		const dueDate = mapAppealToDueDate(mockAppealWithTimetable, '', null);
-		expect(dueDate).toEqual(new Date('2023-03-01T00:00:00.000Z'));
-	});
+    // @ts-ignore
+    const dueDate = mapAppealToDueDate(mockAppealWithTimetable, '', null);
+    expect(dueDate).toEqual(new Date('2023-03-01T00:00:00.000Z'));
+  });
 
-	test('maps STATE_TARGET_FINAL_COMMENT_REVIEW', () => {
-		mockAppeal.appealStatus[0].status = 'final_comment_review';
+  test('maps STATE_TARGET_FINAL_COMMENT_REVIEW', () => {
+    mockAppeal.appealStatus[0].status = 'final_comment_review';
 
-		const createdAtPlusSixtyDate = new Date('2023-03-02T00:00:00.000Z');
-		const dueDate = mapAppealToDueDate(mockAppeal, '', null);
-		expect(dueDate).toEqual(createdAtPlusSixtyDate);
-	});
+    const createdAtPlusSixtyDate = new Date('2023-03-02T00:00:00.000Z');
+    // @ts-ignore
+    const dueDate = mapAppealToDueDate(mockAppeal, '', null);
+    expect(dueDate).toEqual(createdAtPlusSixtyDate);
+  });
 
-	test('maps STATE_TARGET_FINAL_COMMENT_REVIEW status with appealTimetable finalCommentReviewDate', () => {
-		let mockAppealWithTimetable = {
-			...mockAppeal,
-			appealTimetable: {
-				id: 1262,
-				appealId: 523,
-				lpaQuestionnaireDueDate: null,
-				finalCommentReviewDate: new Date('2023-03-01T00:00:00.000Z'),
-				issueDeterminationDate: null,
-				statementReviewDate: null,
-				resubmitAppealTypeDate: null
-			}
-		};
-		mockAppealWithTimetable.appealStatus[0].status = 'final_comment_review';
+  test('maps STATE_TARGET_FINAL_COMMENT_REVIEW status with appealTimetable finalCommentReviewDate', () => {
+    let mockAppealWithTimetable = {
+      ...mockAppeal,
+      appealTimetable: {
+        id: 1262,
+        appealId: 523,
+        lpaQuestionnaireDueDate: null,
+        finalCommentReviewDate: new Date('2023-03-01T00:00:00.000Z'),
+        issueDeterminationDate: null,
+        statementReviewDate: null,
+        resubmitAppealTypeDate: null
+      }
+    };
+    mockAppealWithTimetable.appealStatus[0].status = 'final_comment_review';
 
-		const dueDate = mapAppealToDueDate(mockAppealWithTimetable, '', null);
-		expect(dueDate).toEqual(new Date('2023-03-01T00:00:00.000Z'));
-	});
+    // @ts-ignore
+    const dueDate = mapAppealToDueDate(mockAppealWithTimetable, '', null);
+    expect(dueDate).toEqual(new Date('2023-03-01T00:00:00.000Z'));
+  });
 
-	test('handles STATE_TARGET_COMPLETE', () => {
-		mockAppeal.appealStatus[0].status = 'complete';
+  test('handles STATE_TARGET_COMPLETE', () => {
+    mockAppeal.appealStatus[0].status = 'complete';
 
-		const dueDate = mapAppealToDueDate(mockAppeal, '', null);
-		expect(dueDate).toBeNull();
-	});
+    // @ts-ignore
+    const dueDate = mapAppealToDueDate(mockAppeal, '', null);
+    expect(dueDate).toBeNull();
+  });
 
-	test('handles unexpected status (default case)', () => {
-		mockAppeal.appealStatus[0].status = 'unexpected_status';
+  test('handles unexpected status (default case)', () => {
+    mockAppeal.appealStatus[0].status = 'unexpected_status';
 
-		const dueDate = mapAppealToDueDate(mockAppeal, '', null);
-		expect(dueDate).toBeUndefined();
-	});
+    // @ts-ignore
+    const dueDate = mapAppealToDueDate(mockAppeal, '', null);
+    expect(dueDate).toBeUndefined();
+  });
 });
 
 describe('mapAppealStatuses Tests', () => {
-	test('correctly orders statuses personal list', () => {
-		const preSortedStatuses = [
-			{ appealStatus: [{ status: 'issue_determination' }] },
-			{ appealStatus: [{ status: 'lpa_questionnaire_due' }] },
-			{ appealStatus: [{ status: 'awaiting_transfer' }] },
-			{ appealStatus: [{ status: 'ready_to_start' }] }
-		];
+  test('correctly orders statuses personal list', () => {
+    const preSortedStatuses = [
+      { appealStatus: [{ status: 'issue_determination' }] },
+      { appealStatus: [{ status: 'lpa_questionnaire_due' }] },
+      { appealStatus: [{ status: 'awaiting_transfer' }] },
+      { appealStatus: [{ status: 'ready_to_start' }] }
+    ];
 
-		const expectedOrder = [
-			'ready_to_start',
-			'lpa_questionnaire_due',
-			'issue_determination',
-			'awaiting_transfer'
-		];
+    const expectedOrder = [
+      'ready_to_start',
+      'lpa_questionnaire_due',
+      'issue_determination',
+      'awaiting_transfer'
+    ];
 
-		const orderedStatuses = mapAppealStatuses(preSortedStatuses);
-		expect(orderedStatuses).toEqual(expectedOrder);
-	});
+    const orderedStatuses = mapAppealStatuses(preSortedStatuses);
+    expect(orderedStatuses).toEqual(expectedOrder);
+  });
 
-	test('correctly orders statuses national list', () => {
-		const preSortedStatuses = [
-			{ appealStatus: [{ status: 'assign_case_officer' }] },
-			{ appealStatus: [{ status: 'ready_to_start' }] },
-			{ appealStatus: [{ status: 'issue_determination' }] },
-			{ appealStatus: [{ status: 'lpa_questionnaire_due' }] },
-			{ appealStatus: [{ status: 'awaiting_transfer' }] },
-			{ appealStatus: [{ status: 'ready_to_start' }] },
-			{ appealStatus: [{ status: 'complete' }] }
-		];
+  test('correctly orders statuses national list', () => {
+    const preSortedStatuses = [
+      { appealStatus: [{ status: 'assign_case_officer' }] },
+      { appealStatus: [{ status: 'ready_to_start' }] },
+      { appealStatus: [{ status: 'issue_determination' }] },
+      { appealStatus: [{ status: 'lpa_questionnaire_due' }] },
+      { appealStatus: [{ status: 'awaiting_transfer' }] },
+      { appealStatus: [{ status: 'ready_to_start' }] },
+      { appealStatus: [{ status: 'complete' }] }
+    ];
 
-		const expectedOrder = [
-			'assign_case_officer',
-			'ready_to_start',
-			'lpa_questionnaire_due',
-			'issue_determination',
-			'awaiting_transfer',
-			'complete'
-		];
+    const expectedOrder = [
+      'assign_case_officer',
+      'ready_to_start',
+      'lpa_questionnaire_due',
+      'issue_determination',
+      'awaiting_transfer',
+      'complete'
+    ];
 
-		const orderedStatuses = mapAppealStatuses(preSortedStatuses);
-		expect(orderedStatuses).toEqual(expectedOrder);
-	});
+    const orderedStatuses = mapAppealStatuses(preSortedStatuses);
+    expect(orderedStatuses).toEqual(expectedOrder);
+  });
 });
 
 describe('getRelevantLinkedAppealIds Tests', () => {
-	const moreLinkedAppeals = [
-		{
-			id: 101,
-			parentRef: 'TEST-396994',
-			childRef: 'TEST-100071',
-			parentId: 1027,
-			childId: 1028,
-			linkingDate: new Date('2024-01-30T13:44:39.655Z'),
-			type: 'linked',
-			externalSource: false
-		},
-		{
-			id: 102,
-			parentRef: 'TEST-396994',
-			childRef: 'TEST-123813',
-			parentId: 1027,
-			childId: 1029,
-			linkingDate: new Date('2024-01-30T13:44:39.655Z'),
-			type: 'linked',
-			externalSource: false
-		},
-		{
-			id: 103,
-			parentRef: 'TEST-396994',
-			childRef: 'TEST-864955',
-			parentId: 1027,
-			childId: 1043,
-			linkingDate: new Date('2024-01-30T13:44:39.655Z'),
-			type: 'linked',
-			externalSource: false
-		},
-		{
-			id: 104,
-			parentRef: 'TEST-396994',
-			childRef: '76215416',
-			parentId: 1027,
-			childId: null,
-			linkingDate: new Date('2024-01-30T13:44:39.655Z'),
-			type: 'linked',
-			externalSource: true
-		}
-	];
+  const moreLinkedAppeals = [
+    {
+      id: 101,
+      parentRef: 'TEST-396994',
+      childRef: 'TEST-100071',
+      parentId: 1027,
+      childId: 1028,
+      linkingDate: new Date('2024-01-30T13:44:39.655Z'),
+      type: 'linked',
+      externalSource: false
+    },
+    {
+      id: 102,
+      parentRef: 'TEST-396994',
+      childRef: 'TEST-123813',
+      parentId: 1027,
+      childId: 1029,
+      linkingDate: new Date('2024-01-30T13:44:39.655Z'),
+      type: 'linked',
+      externalSource: false
+    },
+    {
+      id: 103,
+      parentRef: 'TEST-396994',
+      childRef: 'TEST-864955',
+      parentId: 1027,
+      childId: 1043,
+      linkingDate: new Date('2024-01-30T13:44:39.655Z'),
+      type: 'linked',
+      externalSource: false
+    },
+    {
+      id: 104,
+      parentRef: 'TEST-396994',
+      childRef: '76215416',
+      parentId: 1027,
+      childId: null,
+      linkingDate: new Date('2024-01-30T13:44:39.655Z'),
+      type: 'linked',
+      externalSource: true
+    }
+  ];
 
-	test('should return correct child IDs when current appeal is a parent', () => {
-		const currentAppealRef = 'TEST-396994';
-		// @ts-ignore
-		const result = getIdsOfReferencedAppeals(moreLinkedAppeals, currentAppealRef);
-		expect(result).toEqual([1028, 1029, 1043]);
-	});
+  test('should return correct child IDs when current appeal is a parent', () => {
+    const currentAppealRef = 'TEST-396994';
+    // @ts-ignore
+    const result = getIdsOfReferencedAppeals(moreLinkedAppeals, currentAppealRef);
+    expect(result).toEqual([1028, 1029, 1043]);
+  });
 
-	test('should return correct parent ID when current appeal is a child', () => {
-		const currentAppealRef = 'TEST-100071';
-		// @ts-ignore
-		const result = getIdsOfReferencedAppeals(moreLinkedAppeals, currentAppealRef);
-		expect(result).toEqual([1027]);
-	});
+  test('should return correct parent ID when current appeal is a child', () => {
+    const currentAppealRef = 'TEST-100071';
+    // @ts-ignore
+    const result = getIdsOfReferencedAppeals(moreLinkedAppeals, currentAppealRef);
+    expect(result).toEqual([1027]);
+  });
 
-	test('should return an empty array when there are no linked appeals', () => {
-		const currentAppealRef = 'TEST/999999';
-		// @ts-ignore
-		const result = getIdsOfReferencedAppeals(moreLinkedAppeals, currentAppealRef);
-		expect(result).toEqual([]);
-	});
+  test('should return an empty array when there are no linked appeals', () => {
+    const currentAppealRef = 'TEST/999999';
+    // @ts-ignore
+    const result = getIdsOfReferencedAppeals(moreLinkedAppeals, currentAppealRef);
+    expect(result).toEqual([]);
+  });
 
-	test('should exclude linked appeals with null child IDs', () => {
-		const linkedAppealsWithNullChildId = [
-			...moreLinkedAppeals,
-			{
-				id: 105,
-				parentRef: 'TEST-396994',
-				childRef: 'TEST-100071',
-				parentId: 1027,
-				childId: null,
-				linkingDate: new Date('2024-01-30T13:44:39.655Z'),
-				type: 'linked',
-				externalSource: true
-			}
-		];
-		const currentAppealRef = 'TEST-396994';
-		// @ts-ignore
-		const result = getIdsOfReferencedAppeals(linkedAppealsWithNullChildId, currentAppealRef);
-		expect(result).toEqual([1028, 1029, 1043]);
-	});
+  test('should exclude linked appeals with null child IDs', () => {
+    const linkedAppealsWithNullChildId = [
+      ...moreLinkedAppeals,
+      {
+        id: 105,
+        parentRef: 'TEST-396994',
+        childRef: 'TEST-100071',
+        parentId: 1027,
+        childId: null,
+        linkingDate: new Date('2024-01-30T13:44:39.655Z'),
+        type: 'linked',
+        externalSource: true
+      }
+    ];
+    const currentAppealRef = 'TEST-396994';
+    // @ts-ignore
+    const result = getIdsOfReferencedAppeals(linkedAppealsWithNullChildId, currentAppealRef);
+    expect(result).toEqual([1028, 1029, 1043]);
+  });
 
-	test('should exclude duplicate row ids in the output', () => {
-		const linkedAppealsWithDuplucate = [
-			...moreLinkedAppeals,
-			{
-				id: 105,
-				parentRef: 'TEST-396994',
-				childRef: 'TEST-100071',
-				parentId: 1027,
-				childId: 1028,
-				linkingDate: new Date('2024-01-30T13:44:39.655Z'),
-				type: 'linked',
-				externalSource: false
-			}
-		];
-		const currentAppealRef = 'TEST-396994';
-		// @ts-ignore
-		const result = getIdsOfReferencedAppeals(linkedAppealsWithDuplucate, currentAppealRef);
-		expect(result).toEqual([1028, 1029, 1043]);
-	});
+  test('should exclude duplicate row ids in the output', () => {
+    const linkedAppealsWithDuplucate = [
+      ...moreLinkedAppeals,
+      {
+        id: 105,
+        parentRef: 'TEST-396994',
+        childRef: 'TEST-100071',
+        parentId: 1027,
+        childId: 1028,
+        linkingDate: new Date('2024-01-30T13:44:39.655Z'),
+        type: 'linked',
+        externalSource: false
+      }
+    ];
+    const currentAppealRef = 'TEST-396994';
+    // @ts-ignore
+    const result = getIdsOfReferencedAppeals(linkedAppealsWithDuplucate, currentAppealRef);
+    expect(result).toEqual([1028, 1029, 1043]);
+  });
 });
+
+

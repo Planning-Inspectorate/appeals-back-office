@@ -3,14 +3,12 @@
  */
 
 import {
-	APPEAL_TYPE_SHORTHAND_FPA,
 	APPEAL_TYPE_SHORTHAND_HAS
 } from '../../server/endpoints/constants.js';
 
 /**
  * @typedef {import('@pins/appeals.api').Schema.LPAQuestionnaire} LPAQuestionnaire
  * @typedef {import('@pins/appeals.api').Schema.AppellantCase} AppellantCase
- * @typedef {import('@pins/appeals.api').Schema.NeighbouringSiteContact} NeighbouringSiteContact
  * @typedef {import('@pins/appeals.api').Appeals.AppealSite} AppealSite
  */
 
@@ -107,29 +105,47 @@ export const agentsList = personList.map(({ firstName, lastName, company, email 
 	email
 }));
 
-/**
- * An array of neighbouring site contacts.
- *
- * @type {Pick<NeighbouringSiteContact, 'firstName' | 'lastName' | 'email' | 'telephone'>[]}
- */
-export const neighbouringSiteContactsList = personList.map(
-	({ firstName, lastName, email, telephone }) => ({
-		firstName,
-		lastName,
-		email,
-		telephone
-	})
-);
-
 export const localPlanningDepartmentList = [
-	{ lpaCode: 'MAID', name: 'Maidstone Borough Council' },
-	{ lpaCode: 'BARN', name: 'Barnsley Metropolitan Borough Council' },
-	{ lpaCode: 'WORT', name: 'Worthing Borough Council' },
-	{ lpaCode: 'DORS', name: 'Dorset Council' },
-	{ lpaCode: 'BASI', name: 'Basingstoke and Deane Borough Council' },
-	{ lpaCode: 'WILT', name: 'Wiltshire Council' },
-	{ lpaCode: 'WAVE', name: 'Waveney District Council' },
-	{ lpaCode: 'BRIS', name: 'Bristol City Council' }
+	{
+		lpaCode: 'MAID',
+		name: 'Maidstone Borough Council',
+		email: 'maid@lpa-email.gov.uk'
+	},
+	{
+		lpaCode: 'BARN',
+		name: 'Barnsley Metropolitan Borough Council',
+		email: 'barn@lpa-email.gov.uk'
+	},
+	{
+		lpaCode: 'WORT',
+		name: 'Worthing Borough Council',
+		email: 'wort@lpa-email.gov.uk'
+	},
+	{
+		lpaCode: 'DORS',
+		name: 'Dorset Council',
+		email: 'dors@lpa-email.gov.uk'
+	},
+	{
+		lpaCode: 'BASI',
+		name: 'Basingstoke and Deane Borough Council',
+		email: 'basi@lpa-email.gov.uk'
+	},
+	{
+		lpaCode: 'WILT',
+		name: 'Wiltshire Council',
+		email: 'wilt@lpa-email.gov.uk'
+	},
+	{
+		lpaCode: 'WAVE',
+		name: 'Waveney District Council',
+		email: 'wave@lpa-email.gov.uk'
+	},
+	{
+		lpaCode: 'BRIS',
+		name: 'Bristol City Council',
+		email: 'bris@lpa-email.gov.uk'
+	}
 ];
 
 export const addressesList = [
@@ -207,96 +223,8 @@ export const addressListForTrainers = addressesList.map((address) => ({
 
 /**
  * An array of objects representing LPA questionnaire lists.
- *
- * @type {{[key: string]: Pick<
- * 	LPAQuestionnaire,
- *  'communityInfrastructureLevyAdoptionDate' |
- *	'developmentDescription' |
- *	'doesAffectAListedBuilding' |
- *	'doesAffectAScheduledMonument' |
- *	'doesSiteHaveHealthAndSafetyIssues' |
- *	'doesSiteRequireInspectorAccess' |
- *	'extraConditions' |
- *	'hasCommunityInfrastructureLevy' |
- *	'hasCompletedAnEnvironmentalStatement' |
- *	'hasEmergingPlan' |
- *	'hasExtraConditions' |
- *	'hasProtectedSpecies' |
- *	'hasRepresentationsFromOtherParties' |
- *	'hasResponsesOrStandingAdviceToUpload' |
- *	'hasStatementOfCase' |
- *	'hasStatutoryConsultees' |
- *	'hasSupplementaryPlanningDocuments' |
- *	'hasTreePreservationOrder' |
- *	'healthAndSafetyDetails' |
- *	'inCAOrrelatesToCA' |
- *	'includesScreeningOption' |
- *	'inquiryDays' |
- *	'inspectorAccessDetails' |
- *	'isAffectingNeighbouringSites' |
- *	'isCommunityInfrastructureLevyFormallyAdopted' |
- *	'isCorrectAppealType' |
- *	'isEnvironmentalStatementRequired' |
- *	'isGypsyOrTravellerSite' |
- *	'isListedBuilding' |
- *	'isPublicRightOfWay' |
- *	'isSensitiveArea' |
- *	'isSiteVisible' |
- *	'isTheSiteWithinAnAONB' |
- *	'meetsOrExceedsThresholdOrCriteriaInColumn2' |
- *	'procedureTypeId' |
- *	'receivedAt' |
- *	'scheduleTypeId' |
- *	'sensitiveAreaDetails' |
- *	'sentAt' |
- *	'siteWithinGreenBelt' |
- *	'statutoryConsulteesDetails'
- * >}}
  */
 export const lpaQuestionnaireList = {
-	[APPEAL_TYPE_SHORTHAND_FPA]: {
-		communityInfrastructureLevyAdoptionDate: new Date('2023-05-09T01:00:00.000Z'),
-		developmentDescription: '',
-		doesAffectAListedBuilding: true,
-		doesAffectAScheduledMonument: true,
-		doesSiteHaveHealthAndSafetyIssues: true,
-		doesSiteRequireInspectorAccess: true,
-		extraConditions: 'Some extra conditions',
-		hasCommunityInfrastructureLevy: true,
-		hasCompletedAnEnvironmentalStatement: true,
-		hasEmergingPlan: true,
-		hasExtraConditions: true,
-		hasProtectedSpecies: true,
-		hasRepresentationsFromOtherParties: true,
-		hasResponsesOrStandingAdviceToUpload: true,
-		hasStatementOfCase: true,
-		hasStatutoryConsultees: true,
-		hasSupplementaryPlanningDocuments: true,
-		hasTreePreservationOrder: true,
-		healthAndSafetyDetails: 'There is no mobile signal at the property',
-		inCAOrrelatesToCA: true,
-		includesScreeningOption: true,
-		inquiryDays: 2,
-		inspectorAccessDetails: 'The entrance is at the back of the property',
-		isAffectingNeighbouringSites: true,
-		isCommunityInfrastructureLevyFormallyAdopted: true,
-		isCorrectAppealType: true,
-		isEnvironmentalStatementRequired: true,
-		isGypsyOrTravellerSite: true,
-		isListedBuilding: true,
-		isPublicRightOfWay: true,
-		isSensitiveArea: true,
-		isSiteVisible: true,
-		isTheSiteWithinAnAONB: true,
-		meetsOrExceedsThresholdOrCriteriaInColumn2: true,
-		procedureTypeId: 1,
-		receivedAt: new Date(2022, 3, 21),
-		scheduleTypeId: 2,
-		sensitiveAreaDetails: 'The area is prone to flooding',
-		sentAt: new Date(2022, 3, 2),
-		siteWithinGreenBelt: true,
-		statutoryConsulteesDetails: 'Some other people need to be consulted'
-	},
 	[APPEAL_TYPE_SHORTHAND_HAS]: {
 		communityInfrastructureLevyAdoptionDate: new Date('2023-05-09T01:00:00.000Z'),
 		developmentDescription: '',
@@ -332,9 +260,7 @@ export const lpaQuestionnaireList = {
 		isSiteVisible: true,
 		isTheSiteWithinAnAONB: true,
 		meetsOrExceedsThresholdOrCriteriaInColumn2: true,
-		procedureTypeId: 3,
 		receivedAt: new Date(2022, 3, 21),
-		scheduleTypeId: 2,
 		sensitiveAreaDetails: 'The area is prone to flooding',
 		sentAt: new Date(2022, 3, 2),
 		siteWithinGreenBelt: true,
@@ -380,81 +306,19 @@ export const incompleteReviewQuestionnaireSample = {
 
 /**
  * An array of objects representing appeal case details provided by the appellant.
- *
- * @type {{[key: string]: Pick<
- * 	AppellantCase,
- * 	'applicantFirstName' |
- *  'applicantSurname' |
- *  'areAllOwnersKnown' |
- *  'hasAttemptedToIdentifyOwners' |
- *  'hasDesignAndAccessStatement' |
- *  'hasHealthAndSafetyIssues' |
- *  'hasNewSupportingDocuments' |
- *  'hasOtherTenants' |
- *  'hasPlanningObligation' |
- *  'hasSeparateOwnershipCertificate' |
- *  'hasToldOwners' |
- *  'hasToldTenants' |
- *  'healthAndSafetyIssues' |
- *  'isAgriculturalHolding' |
- *  'isAgriculturalHoldingTenant' |
- *  'isAppellantNamedOnApplication' |
- *  'isDevelopmentDescriptionStillCorrect' |
- *  'isSiteFullyOwned' |
- *  'isSitePartiallyOwned' |
- *  'isSiteVisibleFromPublicRoad' |
- *  'newDevelopmentDescription' |
- *  'visibilityRestrictions'
- * >}}
  */
 export const appellantCaseList = {
-	[APPEAL_TYPE_SHORTHAND_FPA]: {
-		applicantFirstName: 'Fiona',
-		applicantSurname: 'Burgess',
-		areAllOwnersKnown: true,
-		hasAttemptedToIdentifyOwners: true,
-		hasDesignAndAccessStatement: true,
-		hasHealthAndSafetyIssues: true,
-		hasNewSupportingDocuments: true,
-		hasOtherTenants: true,
-		hasPlanningObligation: true,
-		hasSeparateOwnershipCertificate: true,
-		hasToldOwners: true,
-		hasToldTenants: false,
-		healthAndSafetyIssues: 'There is no mobile reception at the site',
-		isAgriculturalHolding: true,
-		isAgriculturalHoldingTenant: true,
-		isAppellantNamedOnApplication: false,
-		isDevelopmentDescriptionStillCorrect: false,
-		isSiteFullyOwned: false,
-		isSitePartiallyOwned: true,
-		isSiteVisibleFromPublicRoad: false,
-		newDevelopmentDescription: 'A new extension has been added at the back',
-		visibilityRestrictions: 'The site is behind a tall hedge'
-	},
 	[APPEAL_TYPE_SHORTHAND_HAS]: {
-		applicantFirstName: null,
-		applicantSurname: null,
-		areAllOwnersKnown: null,
-		hasAttemptedToIdentifyOwners: null,
-		hasDesignAndAccessStatement: null,
-		hasHealthAndSafetyIssues: false,
-		hasNewSupportingDocuments: false,
-		hasOtherTenants: null,
-		hasPlanningObligation: null,
-		hasSeparateOwnershipCertificate: null,
-		hasToldOwners: null,
-		hasToldTenants: null,
-		healthAndSafetyIssues: null,
-		isAgriculturalHolding: null,
-		isAgriculturalHoldingTenant: null,
-		isAppellantNamedOnApplication: true,
-		isDevelopmentDescriptionStillCorrect: null,
-		isSiteFullyOwned: true,
-		isSitePartiallyOwned: null,
-		isSiteVisibleFromPublicRoad: true,
-		newDevelopmentDescription: null,
-		visibilityRestrictions: null
+		siteAreaSquareMetres: 30.9,
+    floorSpaceSquareMetres: 9.7,
+    ownsAllLand: true,
+    ownsSomeLand: false,
+    //knowsOtherOwners: "Some",
+    //knowsAllOwners: "No",
+    hasAdvertisedAppeal: false,
+    //ownersInformed: null,
+    //originalDevelopmentDescription: "adipisicing aliqua",
+    //changedDevelopmentDescription: true
 	}
 };
 

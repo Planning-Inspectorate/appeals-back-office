@@ -27,15 +27,4 @@ router
 		asyncRoute(appealTimetablesController.postDueDate)
 	);
 
-router
-	.route('/:timetableType/confirmation')
-	.get(
-		validateAppeal,
-		assertUserHasPermission(
-			permissionNames.viewCaseDetails,
-			permissionNames.viewAssignedCaseDetails
-		),
-		asyncRoute(appealTimetablesController.getConfirmation)
-	);
-
 export default router;

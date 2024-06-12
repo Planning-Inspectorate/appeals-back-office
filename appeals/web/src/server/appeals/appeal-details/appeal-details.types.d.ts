@@ -85,20 +85,6 @@ export type AppealHealthAndSafety = {
 	lpaQuestionnaire: AppealHealthAndSafetyEntry;
 };
 
-export type AppealNeighbouringSiteContact = {
-	address: Address;
-	contactId: number;
-	email: string;
-	firstName: string;
-	lastName: string;
-	telephone: string;
-};
-
-export type AppealNeighbouringSite = {
-	contacts: AppealNeighbouringSiteContact[];
-	isAffected: boolean;
-};
-
 export interface LpaQuestionnaire {
 	constraints: LpaQuestionnaireFullAppealConstraints;
 	environmentalImpact: LpaQuestionnaireFullAppealEnvironmentalImpact;
@@ -291,10 +277,6 @@ export type DesignatedSite =
 
 export type ScheduleTypeOption = 'Yes, schedule 1' | 'Yes, schedule 2' | 'No';
 
-interface NeighbouringSiteContactsResponse {
-	address: Address;
-}
-
 export interface SingleLPAQuestionnaireResponse {
 	affectsListedBuildingDetails: ListedBuildingDetailsResponse | null;
 	appealId: number;
@@ -304,27 +286,11 @@ export interface SingleLPAQuestionnaireResponse {
 	designatedSites?: DesignatedSiteDetails[] | null;
 	developmentDescription?: string | null;
 	documents: {
-		communityInfrastructureLevy: FolderInfo | {};
-		conservationAreaMap: FolderInfo | {};
-		consultationResponses: FolderInfo | {};
-		definitiveMapAndStatement: FolderInfo | {};
-		emergingPlans: FolderInfo | {};
-		environmentalStatementResponses: FolderInfo | {};
-		issuedScreeningOption: FolderInfo | {};
-		lettersToNeighbours: FolderInfo | {};
-		otherRelevantPolicies: FolderInfo | {};
-		officersReport: FolderInfo | {};
-		policiesFromStatutoryDevelopment: FolderInfo | {};
-		pressAdvert: FolderInfo | {};
-		relevantPartiesNotification: FolderInfo | {};
-		representations: FolderInfo | {};
-		responsesOrAdvice: FolderInfo | {};
-		screeningDirection: FolderInfo | {};
-		siteNotices: FolderInfo | {};
-		supplementaryPlanningDocuments: FolderInfo | {};
-		treePreservationOrder: FolderInfo | {};
-		notifyingParties: FolderInfo | {};
-		additionalDocuments: FolderInfo | {};
+		whoNotified: FolderInfo | {};
+		conservationMap: FolderInfo | {};
+		lpaCaseCorrespondence: FolderInfo | {};
+		otherPartyRepresentations: FolderInfo | {};
+		planningOfficerReport: FolderInfo | {};
 	};
 	doesAffectAListedBuilding?: boolean | null;
 	doesAffectAScheduledMonument?: boolean | null;
@@ -364,7 +330,6 @@ export interface SingleLPAQuestionnaireResponse {
 	lpaNotificationMethods?: LPANotificationMethodDetails[] | null;
 	lpaQuestionnaireId: number;
 	meetsOrExceedsThresholdOrCriteriaInColumn2?: boolean | null;
-	neighbouringSiteContacts: NeighbouringSiteContactsResponse[] | null;
 	otherAppeals: LinkedAppeal[];
 	procedureType?: string;
 	scheduleType?: string;
@@ -397,6 +362,7 @@ export interface WebSiteVisit extends SiteVisit {
 export interface WebDocumentationSummaryEntry extends DocumentationSummaryEntry {
 	status: string;
 	dueDate: string | undefined | null;
+	receivedAt: string | undefined | null;
 }
 
 export interface WebDocumentationSummary extends DocumentationSummary {
@@ -419,4 +385,15 @@ export interface WebAppeal extends SingleAppealDetailsResponse {
 		visitEndTime: string | null;
 		visitType: string | null;
 	};
+}
+
+export interface WebServiceUser {
+	id: number;
+	organisationName?: string | null;
+	firstName: string;
+	middleName?: string | null;
+	lastName: string;
+	email?: string | null;
+	phoneNumber?: string | null;
+	addressId?: number | null;
 }

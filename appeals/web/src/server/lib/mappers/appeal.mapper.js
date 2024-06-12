@@ -15,6 +15,7 @@ import { linkedAppealStatus } from '#lib/appeals-formatter.js';
 import { generateIssueDecisionUrl } from '#appeals/appeal-details/issue-decision/issue-decision.mapper.js';
 import { mapActionComponent } from './component-permissions.mapper.js';
 import { permissionNames } from '#environment/permissions.js';
+import { formatServiceUserAsHtmlList } from '#lib/service-user-formatter.js';
 
 /**
  * @param {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} appealDetails
@@ -50,7 +51,8 @@ export async function initialiseAndMapAppealData(
 				},
 				value: {
 					text: appealDetails.appealReference
-				}
+				},
+				classes: 'appeal-appeal-reference'
 			}
 		}
 	};
@@ -74,7 +76,8 @@ export async function initialiseAndMapAppealData(
 							visuallyHiddenText: 'Appeal type'
 						})
 					]
-				}
+				},
+				classes: 'appeal-appeal-type'
 			}
 		},
 		input: {
@@ -119,7 +122,8 @@ export async function initialiseAndMapAppealData(
 							visuallyHiddenText: 'Case procedure'
 						})
 					]
-				}
+				},
+				classes: 'appeal-case-procedure'
 			}
 		},
 		input: {
@@ -164,64 +168,21 @@ export async function initialiseAndMapAppealData(
 				},
 				value: {
 					html: appealDetails.appellant
-						? `${appealDetails.appellant?.firstName + ' ' || ''}${
-								appealDetails.appellant?.lastName + '<br>' || ''
-						  }${appealDetails.appellant?.email || ''}`
+						? formatServiceUserAsHtmlList(appealDetails.appellant)
 						: 'No appellant'
 				},
 				actions: {
 					items: [
 						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
-							href: `${currentRoute}/change-appeal-details/appellant`,
+							href: `${currentRoute}/service-user/change/appellant`,
 							visuallyHiddenText: 'Appellant'
 						})
 					]
-				}
+				},
+				classes: 'appeal-appellant'
 			}
-		},
-		input: {
-			displayName: 'Appellant',
-			instructions: [
-				{
-					type: 'input',
-					properties: {
-						id: 'appellant-firstName',
-						name: 'appellant-firstName',
-						value: displayPageFormatter.nullToEmptyString(appealDetails.appellant?.firstName),
-						label: {
-							text: 'First name',
-							isPageHeading: false
-						}
-					}
-				},
-				{
-					type: 'input',
-					properties: {
-						id: 'appellant-lastName',
-						name: 'appellant-lastName',
-						value: displayPageFormatter.nullToEmptyString(appealDetails.appellant?.lastName),
-						label: {
-							text: 'Last name',
-							isPageHeading: false
-						}
-					}
-				},
-				{
-					type: 'input',
-					properties: {
-						id: 'appellant-email',
-						name: 'appellant-email',
-						value: displayPageFormatter.nullToEmptyString(appealDetails.appellant?.email),
-						label: {
-							text: 'Email address',
-							isPageHeading: false
-						}
-					}
-				}
-			]
-		},
-		submitApi: '#'
+		}
 	};
 
 	/** @type {Instructions} */
@@ -233,65 +194,20 @@ export async function initialiseAndMapAppealData(
 					text: 'Agent'
 				},
 				value: {
-					html: appealDetails.agent
-						? `${appealDetails.agent?.firstName + ' ' || ''}${
-								appealDetails.agent?.lastName + '<br>' || ''
-						  }${appealDetails.agent?.email || ''}`
-						: 'No agent'
+					html: appealDetails.agent ? formatServiceUserAsHtmlList(appealDetails.agent) : 'No agent'
 				},
 				actions: {
 					items: [
 						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
-							href: `${currentRoute}/change-appeal-details/agent`,
+							href: `${currentRoute}/service-user/change/agent`,
 							visuallyHiddenText: 'Agent'
 						})
 					]
-				}
+				},
+				classes: 'appeal-agent'
 			}
-		},
-		input: {
-			displayName: 'Agent',
-			instructions: [
-				{
-					type: 'input',
-					properties: {
-						id: 'agent-firstName',
-						name: 'agent-firstName',
-						value: displayPageFormatter.nullToEmptyString(appealDetails.agent?.firstName),
-						label: {
-							text: 'First name',
-							isPageHeading: false
-						}
-					}
-				},
-				{
-					type: 'input',
-					properties: {
-						id: 'agent-lastName',
-						name: 'agent-lastName',
-						value: displayPageFormatter.nullToEmptyString(appealDetails.agent?.lastName),
-						label: {
-							text: 'Last name',
-							isPageHeading: false
-						}
-					}
-				},
-				{
-					type: 'input',
-					properties: {
-						id: 'agent-email',
-						name: 'agent-email',
-						value: displayPageFormatter.nullToEmptyString(appealDetails.agent?.email),
-						label: {
-							text: 'Email address',
-							isPageHeading: false
-						}
-					}
-				}
-			]
-		},
-		submitApi: '#'
+		}
 	};
 
 	/** @type {Instructions} */
@@ -308,24 +224,29 @@ export async function initialiseAndMapAppealData(
 						'No linked appeals'
 				},
 				actions: {
-					items: [
-						mapActionComponent(
-							permissionNames.updateCase,
-							session,
-							appealDetails.linkedAppeals.length > 0
-								? {
-										text: 'Manage',
-										href: generateLinkedAppealsManageLinkHref(appealDetails),
-										visuallyHiddenText: 'Linked appeals'
-								  }
-								: {
+					items:
+						appealDetails.linkedAppeals.filter(
+							(linkedAppeal) => linkedAppeal.isParentAppeal && linkedAppeal.externalSource
+						).length === 0
+							? mapActionComponent(permissionNames.updateCase, session, [
+									...(appealDetails.linkedAppeals.length > 0
+										? [
+												{
+													text: 'Manage',
+													href: generateLinkedAppealsManageLinkHref(appealDetails),
+													visuallyHiddenText: 'Linked appeals'
+												}
+										  ]
+										: []),
+									{
 										text: 'Add',
 										href: `/appeals-service/appeal-details/${appealDetails.appealId}/linked-appeals/add`,
 										visuallyHiddenText: 'Linked appeals'
-								  }
-						)
-					]
-				}
+									}
+							  ])
+							: []
+				},
+				classes: 'appeal-linked-appeals'
 			}
 		},
 		input: {
@@ -387,7 +308,8 @@ export async function initialiseAndMapAppealData(
 				},
 				actions: {
 					items: otherAppealsItems
-				}
+				},
+				classes: 'appeal-other-appeals'
 			}
 		},
 		input: {
@@ -437,7 +359,8 @@ export async function initialiseAndMapAppealData(
 							visuallyHiddenText: 'Allocation level'
 						})
 					]
-				}
+				},
+				classes: 'appeal-allocation-details'
 			}
 		},
 		input: {
@@ -498,11 +421,12 @@ export async function initialiseAndMapAppealData(
 					items: [
 						{
 							text: 'Change',
-							href: `${currentRoute}/change-appeal-details/lpa-reference`,
+							href: `${currentRoute}/lpa-reference/change`,
 							visuallyHiddenText: 'L P A reference'
 						}
 					]
-				}
+				},
+				classes: 'appeal-lpa-reference'
 			}
 		}
 	};
@@ -529,7 +453,8 @@ export async function initialiseAndMapAppealData(
 									visuallyHiddenText: 'site address'
 								}
 						  ]
-				}
+				},
+				classes: 'appeal-decision'
 			}
 		},
 		input: {
@@ -572,7 +497,8 @@ export async function initialiseAndMapAppealData(
 							visuallyHiddenText: 'site address'
 						}
 					]
-				}
+				},
+				classes: 'appeal-site-address'
 			}
 		},
 		input: {
@@ -599,7 +525,8 @@ export async function initialiseAndMapAppealData(
 							visuallyHiddenText: 'local planning authority (LPA)'
 						}
 					]
-				}
+				},
+				classes: 'appeal-local-planning-authority'
 			}
 		}
 	};
@@ -614,7 +541,8 @@ export async function initialiseAndMapAppealData(
 				},
 				value: {
 					text: appealDetails.appealStatus
-				}
+				},
+				classes: 'appeal-appeal-status'
 			},
 			statusTag: {
 				status: appealDetails?.appealStatus || '',
@@ -633,7 +561,7 @@ export async function initialiseAndMapAppealData(
 				},
 				value: {
 					html: displayPageFormatter.formatAnswerAndDetails(
-						convertFromBooleanToYesNo(appealDetails.inspectorAccess.lpaQuestionnaire.isRequired) ||
+						convertFromBooleanToYesNo(appealDetails.inspectorAccess.lpaQuestionnaire.isRequired) ??
 							'No answer provided',
 						appealDetails.inspectorAccess.lpaQuestionnaire.details
 					)
@@ -642,11 +570,12 @@ export async function initialiseAndMapAppealData(
 					items: [
 						{
 							text: 'Change',
-							href: `${currentRoute}/change-appeal-details/lpa-inspector-access/`,
+							href: `${currentRoute}/inspector-access/change/lpa`,
 							visuallyHiddenText: 'inspection access (L P A answer)'
 						}
 					]
-				}
+				},
+				classes: 'appeal-lpa-inspector-access'
 			}
 		},
 		input: {
@@ -692,7 +621,7 @@ export async function initialiseAndMapAppealData(
 				},
 				value: {
 					html: displayPageFormatter.formatAnswerAndDetails(
-						convertFromBooleanToYesNo(appealDetails.inspectorAccess.appellantCase.isRequired) ||
+						convertFromBooleanToYesNo(appealDetails.inspectorAccess.appellantCase.isRequired) ??
 							'No answer provided',
 						appealDetails.inspectorAccess.appellantCase.details
 					)
@@ -701,11 +630,12 @@ export async function initialiseAndMapAppealData(
 					items: [
 						{
 							text: 'Change',
-							href: `${currentRoute}/change-appeal-details/appellant-case-inspector-access`,
+							href: `${currentRoute}/inspector-access/change/appellant`,
 							visuallyHiddenText: 'inspection access (appellant answer)'
 						}
 					]
-				}
+				},
+				classes: 'appeal-appellant-inspector-access'
 			}
 		},
 		input: {
@@ -751,18 +681,19 @@ export async function initialiseAndMapAppealData(
 				},
 				value: {
 					html:
-						convertFromBooleanToYesNo(appealDetails.neighbouringSite.isAffected) ||
+						convertFromBooleanToYesNo(appealDetails.isAffectingNeighbouringSites) ||
 						'No answer provided'
 				},
 				actions: {
 					items: [
 						{
 							text: 'Change',
-							href: `${currentRoute}/change-appeal-details/neighbouring-site-is-affected`,
+							href: `${currentRoute}/neighbouring-sites/change/affected`,
 							visuallyHiddenText: 'could a neighbouring site be affected'
 						}
 					]
-				}
+				},
+				classes: 'appeal-neighbouring-site-is-affected'
 			}
 		},
 		input: {
@@ -776,12 +707,12 @@ export async function initialiseAndMapAppealData(
 							{
 								text: 'Yes',
 								value: 'yes',
-								checked: appealDetails.neighbouringSite.isAffected
+								checked: appealDetails.isAffectingNeighbouringSites
 							},
 							{
 								text: 'No',
 								value: 'no',
-								checked: !appealDetails.neighbouringSite.isAffected
+								checked: !appealDetails.isAffectingNeighbouringSites
 							}
 						]
 					}
@@ -790,38 +721,44 @@ export async function initialiseAndMapAppealData(
 		}
 	};
 
-	if (
-		appealDetails.neighbouringSite.contacts &&
-		appealDetails.neighbouringSite.contacts.length > 0
-	) {
-		for (let i = 0; i < appealDetails.neighbouringSite.contacts.length; i++) {
-			mappedData.appeal[`neighbouringSiteAddress${i}`] = {
-				id: `neighbouring-site-address-${i}`,
-				display: {
-					summaryListItem: {
-						key: {
-							text: `Neighbour address ${i + 1}`
-						},
-						value: {
-							html: appealSiteToAddressString(appealDetails.neighbouringSite.contacts[i].address)
-						},
-						actions: {
-							items: [
-								{
-									text: 'Change',
-									href: `${currentRoute}/change-appeal-details/neighbouring-site-address-${i}`,
-									visuallyHiddenText: `neighbour address ${i + 1}`
-								}
-							]
-						}
-					}
+	/** @type {Instructions} */
+	mappedData.appeal.lpaNeighbouringSites = {
+		id: 'neighbouring-sites-lpa',
+		display: {
+			summaryListItem: {
+				key: {
+					text: 'Neighbouring sites (LPA)'
 				},
-				input: {
-					instructions: mapAddressInput(appealDetails.neighbouringSite.contacts[i].address)
-				}
-			};
+				value: {
+					html:
+						appealDetails.neighbouringSites && appealDetails.neighbouringSites.length > 0
+							? displayPageFormatter.formatListOfAddresses(
+									appealDetails.neighbouringSites.filter((site) => site.source === 'lpa')
+							  )
+							: 'None'
+				},
+				actions: {
+					items: [
+						...(appealDetails.neighbouringSites && appealDetails.neighbouringSites.length > 0
+							? [
+									{
+										text: 'Manage',
+										href: `${currentRoute}/neighbouring-sites/manage`,
+										visuallyHiddenText: 'Neighbouring sites (L P A)'
+									}
+							  ]
+							: []),
+						{
+							text: 'Add',
+							href: `${currentRoute}/neighbouring-sites/add/lpa`,
+							visuallyHiddenText: 'Neighbouring sites (LPA)'
+						}
+					]
+				},
+				classes: 'appeal-neighbouring-sites-inspector'
+			}
 		}
-	}
+	};
 
 	/** @type {Instructions} */
 	mappedData.appeal.inspectorNeighbouringSites = {
@@ -834,7 +771,9 @@ export async function initialiseAndMapAppealData(
 				value: {
 					html:
 						appealDetails.neighbouringSites && appealDetails.neighbouringSites.length > 0
-							? displayPageFormatter.formatListOfAddresses(appealDetails.neighbouringSites)
+							? displayPageFormatter.formatListOfAddresses(
+									appealDetails.neighbouringSites.filter((site) => site.source === 'back-office')
+							  )
 							: 'None'
 				},
 				actions: {
@@ -850,11 +789,12 @@ export async function initialiseAndMapAppealData(
 							: []),
 						{
 							text: 'Add',
-							href: `${currentRoute}/neighbouring-sites/add`,
+							href: `${currentRoute}/neighbouring-sites/add/back-office`,
 							visuallyHiddenText: 'Neighbouring sites (inspector and or third party request)'
 						}
 					]
-				}
+				},
+				classes: 'appeal-neighbouring-sites-inspector'
 			}
 		}
 	};
@@ -878,43 +818,13 @@ export async function initialiseAndMapAppealData(
 					items: [
 						{
 							text: 'Change',
-							href: `${currentRoute}/change-appeal-details/lpa-health-and-safety`,
+							href: `${currentRoute}/safety-risks/change/lpa`,
 							visuallyHiddenText: 'potential safety risks (L P A answer)'
 						}
 					]
-				}
+				},
+				classes: 'appeal-lpa-health-and-safety'
 			}
-		},
-		input: {
-			displayName: 'Potential safety risks (LPA answer)',
-			instructions: [
-				{
-					type: 'radios',
-					properties: {
-						name: 'lpaHealthAndSafety',
-						items: [
-							{
-								text: 'Yes',
-								value: 'yes',
-								conditional: conditionalFormatter(
-									'lpa-health-and-safety-text',
-									'lpaHealthAndSafetyText',
-									'Tell us why the inspector will need to enter the appeal site',
-									displayPageFormatter.nullToEmptyString(
-										appealDetails.healthAndSafety.lpaQuestionnaire.details
-									)
-								),
-								checked: appealDetails.healthAndSafety.lpaQuestionnaire.hasIssues
-							},
-							{
-								text: 'No',
-								value: 'no',
-								checked: !appealDetails.healthAndSafety.lpaQuestionnaire.hasIssues
-							}
-						]
-					}
-				}
-			]
 		}
 	};
 
@@ -937,43 +847,13 @@ export async function initialiseAndMapAppealData(
 					items: [
 						{
 							text: 'Change',
-							href: `${currentRoute}/change-appeal-details/appellant-case-health-and-safety`,
+							href: `${currentRoute}/safety-risks/change/appellant`,
 							visuallyHiddenText: 'potential safety risks (appellant answer)'
 						}
 					]
-				}
+				},
+				classes: 'appeal-appellant-health-and-safety'
 			}
-		},
-		input: {
-			displayName: 'Potential safety risks (appellant answer)',
-			instructions: [
-				{
-					type: 'radios',
-					properties: {
-						name: 'appellantCaseHealthAndSafety',
-						items: [
-							{
-								text: 'Yes',
-								value: 'yes',
-								conditional: conditionalFormatter(
-									'appellant-case-health-and-safety-text',
-									'appellantCaseHealthAndSafetyText',
-									'Tell us why the inspector will need to enter the appeal site',
-									displayPageFormatter.nullToEmptyString(
-										appealDetails.healthAndSafety.appellantCase.details
-									)
-								),
-								checked: appealDetails.healthAndSafety.appellantCase.hasIssues
-							},
-							{
-								text: 'No',
-								value: 'no',
-								checked: !appealDetails.healthAndSafety.appellantCase.hasIssues
-							}
-						]
-					}
-				}
-			]
 		}
 	};
 
@@ -998,7 +878,8 @@ export async function initialiseAndMapAppealData(
 							visuallyHiddenText: 'visit type'
 						}
 					]
-				}
+				},
+				classes: 'appeal-visit-type'
 			}
 		}
 	};
@@ -1025,10 +906,28 @@ export async function initialiseAndMapAppealData(
 							  }
 							: {}
 					]
-				}
+				},
+				classes: 'appeal-valid-date'
 			}
 		}
 	};
+
+	let startedAtActionLink = {};
+
+	if (appealDetails.validAt) {
+		if (appealDetails.startedAt) {
+			startedAtActionLink = {
+				text: 'Change',
+				href: `${currentRoute}/#`
+			};
+		} else {
+			startedAtActionLink = {
+				text: 'Add',
+				href: `${currentRoute}/start-case/add`,
+				visuallyHiddenText: 'The date the case was started'
+			};
+		}
+	}
 
 	/** @type {Instructions} */
 	mappedData.appeal.startedAt = {
@@ -1046,16 +945,9 @@ export async function initialiseAndMapAppealData(
 						: ''
 				},
 				actions: {
-					items: [
-						appealDetails.validAt
-							? {
-									text: appealDetails.startedAt ? 'Change' : 'Add',
-									href: `${currentRoute}/start-case/date`,
-									visuallyHiddenText: 'The date the case was started'
-							  }
-							: {}
-					]
-				}
+					items: [startedAtActionLink]
+				},
+				classes: 'appeal-start-date'
 			}
 		}
 	};
@@ -1081,7 +973,8 @@ export async function initialiseAndMapAppealData(
 							visuallyHiddenText: 'L P A questionnaire due'
 						}
 					]
-				}
+				},
+				classes: 'appeal-lpa-questionnaire-due-date'
 			}
 		}
 	};
@@ -1107,7 +1000,8 @@ export async function initialiseAndMapAppealData(
 							visuallyHiddenText: 'statement review due date'
 						}
 					]
-				}
+				},
+				classes: 'appeal-statement-review-due-date'
 			}
 		}
 	};
@@ -1133,7 +1027,8 @@ export async function initialiseAndMapAppealData(
 							visuallyHiddenText: 'final comment review due date'
 						}
 					]
-				}
+				},
+				classes: 'appeal-final-comment-review-due-date'
 			}
 		}
 	};
@@ -1164,7 +1059,8 @@ export async function initialiseAndMapAppealData(
 							visuallyHiddenText: 'site visit'
 						}
 					]
-				}
+				},
+				classes: 'appeal-site-visit'
 			}
 		}
 	};
@@ -1204,7 +1100,8 @@ export async function initialiseAndMapAppealData(
 							visuallyHiddenText: 'case officer'
 						}
 					]
-				}
+				},
+				classes: 'appeal-case-officer'
 			}
 		}
 	};
@@ -1244,7 +1141,8 @@ export async function initialiseAndMapAppealData(
 							visuallyHiddenText: 'inspector'
 						}
 					]
-				}
+				},
+				classes: 'appeal-inspector'
 			}
 		}
 	};
@@ -1264,7 +1162,7 @@ export async function initialiseAndMapAppealData(
 					)
 				},
 				{
-					text: dateToDisplayDate(appealDetails?.documentationSummary?.appellantCase?.dueDate)
+					text: dateToDisplayDate(appealDetails?.documentationSummary?.appellantCase?.receivedAt)
 				},
 				{
 					html:
@@ -1290,13 +1188,121 @@ export async function initialiseAndMapAppealData(
 					)
 				},
 				{
-					text: dateToDisplayDate(appealDetails?.documentationSummary?.lpaQuestionnaire?.dueDate)
+					text: dateToDisplayDate(appealDetails?.documentationSummary?.lpaQuestionnaire?.receivedAt)
 				},
 				{
 					html:
 						appealDetails?.documentationSummary?.lpaQuestionnaire?.status !== 'not_received'
 							? `<a href="${currentRoute}/lpa-questionnaire/${appealDetails?.lpaQuestionnaireId}" class="govuk-link">Review <span class="govuk-visually-hidden">L P A questionnaire</span></a>`
 							: ''
+				}
+			]
+		}
+	};
+
+	const appealHasAppellantCostsDocuments = appealDetails?.costs?.appellantFolder?.documents?.filter(
+		(document) => document.latestDocumentVersion?.isDeleted === false
+	).length;
+
+	/** @type {Instructions} */
+	mappedData.appeal.costsAppellant = {
+		id: 'costs-appellant',
+		display: {
+			tableItem: [
+				{
+					text: 'Costs (appellant)',
+					classes: 'appeal-costs-appellant-documentation'
+				},
+				{
+					text: appealHasAppellantCostsDocuments ? 'Received' : '',
+					classes: 'appeal-costs-appellant-status'
+				},
+				{
+					text: '',
+					classes: 'appeal-costs-appellant-due-date'
+				},
+				{
+					html: `<ul class="govuk-summary-list__actions-list">
+						${
+							appealHasAppellantCostsDocuments
+								? `<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="${currentRoute}/costs/appellant/manage-documents/${appealDetails?.costs?.appellantFolder?.folderId}">Manage</a></li>`
+								: ''
+						}<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="${currentRoute}/costs/appellant/select-document-type/${
+						appealDetails?.costs?.appellantFolder?.folderId
+					}">Add</a></li></ul>`,
+					classes: 'appeal-costs-appellant-actions'
+				}
+			]
+		}
+	};
+
+	const appealHasLPACostsDocuments = appealDetails?.costs?.lpaFolder?.documents?.filter(
+		(document) => document.latestDocumentVersion?.isDeleted === false
+	).length;
+
+	/** @type {Instructions} */
+	mappedData.appeal.costsLpa = {
+		id: 'costs-lpa',
+		display: {
+			tableItem: [
+				{
+					text: 'Costs (LPA)',
+					classes: 'appeal-costs-lpa-documentation'
+				},
+				{
+					text: appealHasLPACostsDocuments ? 'Received' : '',
+					classes: 'appeal-costs-lpa-status'
+				},
+				{
+					text: '',
+					classes: 'appeal-costs-lpa-due-date'
+				},
+				{
+					html: `<ul class="govuk-summary-list__actions-list">
+						${
+							appealHasLPACostsDocuments
+								? `<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="${currentRoute}/costs/lpa/manage-documents/${appealDetails?.costs?.lpaFolder?.folderId}">Manage</a></li>`
+								: ''
+						}<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="${currentRoute}/costs/lpa/select-document-type/${
+						appealDetails?.costs?.lpaFolder?.folderId
+					}">Add</a></li></ul>`,
+					classes: 'appeal-costs-lpa-actions'
+				}
+			]
+		}
+	};
+
+	const appealHasCostsDecisionDocuments = appealDetails?.costs?.decisionFolder?.documents?.filter(
+		(document) => document.latestDocumentVersion?.isDeleted === false
+	).length;
+
+	/** @type {Instructions} */
+	mappedData.appeal.costsDecision = {
+		id: 'costs-decision',
+		display: {
+			tableItem: [
+				{
+					text: 'Costs decision',
+					classes: 'appeal-costs-decision-documentation'
+				},
+				{
+					text: appealHasCostsDecisionDocuments ? 'Uploaded' : '',
+					classes: 'appeal-costs-decision-status'
+				},
+				{
+					text: '',
+					classes: 'appeal-costs-decision-due-date'
+				},
+				{
+					html: `<ul class="govuk-summary-list__actions-list">
+						${
+							appealHasCostsDecisionDocuments
+								? `<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="${currentRoute}/costs/decision/manage-documents/${appealDetails?.costs?.decisionFolder?.folderId}">Manage</a></li>`
+								: ''
+						}<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="${currentRoute}/costs/decision/upload-documents/${
+						appealDetails?.costs?.decisionFolder?.folderId
+					}">Add</a></li></ul>`,
+					classes: 'appeal-costs-decision-actions'
 				}
 			]
 		}
@@ -1322,7 +1328,8 @@ export async function initialiseAndMapAppealData(
 							href: `${currentRoute}/appeal-timetables/issue-determination`
 						}
 					]
-				}
+				},
+				classes: 'appeal-issue-determination'
 			}
 		}
 	};
@@ -1346,7 +1353,8 @@ export async function initialiseAndMapAppealData(
 							href: `${currentRoute}/change-appeal-details/complete-date`
 						}
 					]
-				}
+				},
+				classes: 'appeal-complete-date'
 			}
 		}
 	};

@@ -153,7 +153,7 @@ describe('linked-appeals', () => {
 	describe('GET /linked-appeals/add/check-and-confirm', () => {
 		it('should render the check and confirm page with a summary list displaying information about the linking candidate appeal, and a back link to the add linked appeal reference page', async () => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData);
+			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
 			nock('http://test/')
 				.get(`/appeals/${linkableAppealSummaryBackOffice.appealId}`)
 				.reply(200, {
@@ -271,7 +271,8 @@ describe('linked-appeals', () => {
 							appealReference: linkableAppealSummaryBackOffice.appealReference
 						}
 					]
-				});
+				})
+				.persist();
 			nock('http://test/')
 				.get(`/appeals/${linkableAppealSummaryBackOffice.appealId}`)
 				.reply(200, {
@@ -322,7 +323,8 @@ describe('linked-appeals', () => {
 					isParentAppeal: false,
 					isChildAppeal: false,
 					linkedAppeals: []
-				});
+				})
+				.persist();
 			nock('http://test/')
 				.get(`/appeals/${linkableAppealSummaryBackOffice.appealId}`)
 				.reply(200, {
@@ -332,7 +334,8 @@ describe('linked-appeals', () => {
 					isParentAppeal: false,
 					isChildAppeal: false,
 					linkedAppeals: []
-				});
+				})
+				.persist();
 			nock('http://test/')
 				.get('/appeals/linkable-appeal/123')
 				.reply(200, linkableAppealSummaryBackOffice);
@@ -376,7 +379,8 @@ describe('linked-appeals', () => {
 					isParentAppeal: false,
 					isChildAppeal: false,
 					linkedAppeals: []
-				});
+				})
+				.persist();
 			nock('http://test/')
 				.get(`/appeals/${linkableAppealSummaryBackOffice.appealId}`)
 				.reply(200, {
@@ -386,7 +390,8 @@ describe('linked-appeals', () => {
 					isParentAppeal: true,
 					isChildAppeal: false,
 					linkedAppeals: [linkedAppealBackOffice]
-				});
+				})
+				.persist();
 			nock('http://test/')
 				.get('/appeals/linkable-appeal/123')
 				.reply(200, linkableAppealSummaryBackOffice);
@@ -430,7 +435,8 @@ describe('linked-appeals', () => {
 					isParentAppeal: false,
 					isChildAppeal: false,
 					linkedAppeals: []
-				});
+				})
+				.persist();
 			nock('http://test/')
 				.get(`/appeals/${linkableAppealSummaryBackOffice.appealId}`)
 				.reply(200, {
@@ -439,7 +445,8 @@ describe('linked-appeals', () => {
 					isParentAppeal: false,
 					isChildAppeal: true,
 					linkedAppeals: [linkedAppealBackOffice]
-				});
+				})
+				.persist();
 			nock('http://test/')
 				.get('/appeals/linkable-appeal/123')
 				.reply(200, linkableAppealSummaryBackOffice);
@@ -483,7 +490,8 @@ describe('linked-appeals', () => {
 					isParentAppeal: true,
 					isChildAppeal: false,
 					linkedAppeals: [linkedAppealBackOffice]
-				});
+				})
+				.persist();
 			nock('http://test/')
 				.get(`/appeals/${linkableAppealSummaryBackOffice.appealId}`)
 				.reply(200, {
@@ -493,7 +501,8 @@ describe('linked-appeals', () => {
 					isParentAppeal: false,
 					isChildAppeal: false,
 					linkedAppeals: []
-				});
+				})
+				.persist();
 			nock('http://test/')
 				.get('/appeals/linkable-appeal/123')
 				.reply(200, linkableAppealSummaryBackOffice);
@@ -537,7 +546,8 @@ describe('linked-appeals', () => {
 					isParentAppeal: true,
 					isChildAppeal: false,
 					linkedAppeals: [linkedAppealBackOffice]
-				});
+				})
+				.persist();
 			nock('http://test/')
 				.get(`/appeals/${linkableAppealSummaryBackOffice.appealId}`)
 				.reply(200, {
@@ -547,7 +557,8 @@ describe('linked-appeals', () => {
 					isParentAppeal: true,
 					isChildAppeal: false,
 					linkedAppeals: [linkedAppealBackOffice]
-				});
+				})
+				.persist();
 			nock('http://test/')
 				.get('/appeals/linkable-appeal/123')
 				.reply(200, linkableAppealSummaryBackOffice);
@@ -593,7 +604,8 @@ describe('linked-appeals', () => {
 					isParentAppeal: true,
 					isChildAppeal: false,
 					linkedAppeals: [linkedAppealBackOffice]
-				});
+				})
+				.persist();
 			nock('http://test/')
 				.get(`/appeals/${linkableAppealSummaryBackOffice.appealId}`)
 				.reply(200, {
@@ -603,7 +615,8 @@ describe('linked-appeals', () => {
 					isParentAppeal: false,
 					isChildAppeal: true,
 					linkedAppeals: [linkedAppealBackOffice]
-				});
+				})
+				.persist();
 			nock('http://test/')
 				.get('/appeals/linkable-appeal/123')
 				.reply(200, linkableAppealSummaryBackOffice);
@@ -649,7 +662,8 @@ describe('linked-appeals', () => {
 					isParentAppeal: false,
 					isChildAppeal: true,
 					linkedAppeals: [linkedAppealBackOffice]
-				});
+				})
+				.persist();
 			nock('http://test/')
 				.get(`/appeals/${linkableAppealSummaryBackOffice.appealId}`)
 				.reply(200, {
@@ -659,7 +673,8 @@ describe('linked-appeals', () => {
 					isParentAppeal: false,
 					isChildAppeal: false,
 					linkedAppeals: []
-				});
+				})
+				.persist();
 			nock('http://test/')
 				.get('/appeals/linkable-appeal/123')
 				.reply(200, linkableAppealSummaryBackOffice);
@@ -705,7 +720,8 @@ describe('linked-appeals', () => {
 					isParentAppeal: false,
 					isChildAppeal: true,
 					linkedAppeals: [linkedAppealBackOffice]
-				});
+				})
+				.persist();
 			nock('http://test/')
 				.get(`/appeals/${linkableAppealSummaryBackOffice.appealId}`)
 				.reply(200, {
@@ -721,7 +737,8 @@ describe('linked-appeals', () => {
 							isParentAppeal: true
 						}
 					]
-				});
+				})
+				.persist();
 			nock('http://test/')
 				.get('/appeals/linkable-appeal/123')
 				.reply(200, linkableAppealSummaryBackOffice);
@@ -767,7 +784,8 @@ describe('linked-appeals', () => {
 					isParentAppeal: false,
 					isChildAppeal: true,
 					linkedAppeals: [linkedAppealBackOffice]
-				});
+				})
+				.persist();
 			nock('http://test/')
 				.get(`/appeals/${linkableAppealSummaryBackOffice.appealId}`)
 				.reply(200, {
@@ -777,7 +795,8 @@ describe('linked-appeals', () => {
 					isParentAppeal: false,
 					isChildAppeal: true,
 					linkedAppeals: [linkedAppealBackOffice]
-				});
+				})
+				.persist();
 			nock('http://test/')
 				.get('/appeals/linkable-appeal/123')
 				.reply(200, linkableAppealSummaryBackOffice);
@@ -825,7 +844,8 @@ describe('linked-appeals', () => {
 					isParentAppeal: false,
 					isChildAppeal: false,
 					linkedAppeals: []
-				});
+				})
+				.persist();
 			nock('http://test/')
 				.get(`/appeals/${linkableAppealSummaryBackOffice.appealId}`)
 				.reply(200, {
@@ -835,7 +855,8 @@ describe('linked-appeals', () => {
 					isParentAppeal: false,
 					isChildAppeal: false,
 					linkedAppeals: []
-				});
+				})
+				.persist();
 			nock('http://test/')
 				.get('/appeals/linkable-appeal/123')
 				.reply(200, linkableAppealSummaryBackOffice);
@@ -871,7 +892,8 @@ describe('linked-appeals', () => {
 					isParentAppeal: false,
 					isChildAppeal: false,
 					linkedAppeals: []
-				});
+				})
+				.persist();
 			nock('http://test/')
 				.get(`/appeals/${linkableAppealSummaryBackOffice.appealId}`)
 				.reply(200, {
@@ -881,7 +903,8 @@ describe('linked-appeals', () => {
 					isParentAppeal: false,
 					isChildAppeal: false,
 					linkedAppeals: []
-				});
+				})
+				.persist();
 			nock('http://test/')
 				.get('/appeals/linkable-appeal/123')
 				.reply(200, linkableAppealSummaryBackOffice);
@@ -918,7 +941,8 @@ describe('linked-appeals', () => {
 					isParentAppeal: false,
 					isChildAppeal: false,
 					linkedAppeals: []
-				});
+				})
+				.persist();
 			nock('http://test/')
 				.get(`/appeals/${linkableAppealSummaryBackOffice.appealId}`)
 				.reply(200, {
@@ -928,7 +952,8 @@ describe('linked-appeals', () => {
 					isParentAppeal: false,
 					isChildAppeal: false,
 					linkedAppeals: []
-				});
+				})
+				.persist();
 			nock('http://test/')
 				.get('/appeals/linkable-appeal/123')
 				.reply(200, linkableAppealSummaryBackOffice);
@@ -964,7 +989,8 @@ describe('linked-appeals', () => {
 					isParentAppeal: false,
 					isChildAppeal: false,
 					linkedAppeals: []
-				});
+				})
+				.persist();
 			nock('http://test/')
 				.get(`/appeals/${linkableAppealSummaryBackOffice.appealId}`)
 				.reply(200, {
@@ -974,7 +1000,8 @@ describe('linked-appeals', () => {
 					isParentAppeal: false,
 					isChildAppeal: false,
 					linkedAppeals: []
-				});
+				})
+				.persist();
 			nock('http://test/')
 				.get('/appeals/linkable-appeal/123')
 				.reply(200, linkableAppealSummaryBackOffice);
@@ -1010,7 +1037,8 @@ describe('linked-appeals', () => {
 					isParentAppeal: false,
 					isChildAppeal: false,
 					linkedAppeals: []
-				});
+				})
+				.persist();
 			nock('http://test/')
 				.get(`/appeals/${linkableAppealSummaryHorizon.appealId}`)
 				.reply(200, {
@@ -1020,7 +1048,8 @@ describe('linked-appeals', () => {
 					isParentAppeal: false,
 					isChildAppeal: false,
 					linkedAppeals: []
-				});
+				})
+				.persist();
 			nock('http://test/')
 				.get('/appeals/linkable-appeal/123')
 				.reply(200, linkableAppealSummaryHorizon);
@@ -1056,7 +1085,8 @@ describe('linked-appeals', () => {
 					isParentAppeal: false,
 					isChildAppeal: false,
 					linkedAppeals: []
-				});
+				})
+				.persist();
 			nock('http://test/')
 				.get(`/appeals/${linkableAppealSummaryHorizon.appealId}`)
 				.reply(200, {
@@ -1066,7 +1096,8 @@ describe('linked-appeals', () => {
 					isParentAppeal: false,
 					isChildAppeal: false,
 					linkedAppeals: []
-				});
+				})
+				.persist();
 			nock('http://test/')
 				.get('/appeals/linkable-appeal/123')
 				.reply(200, linkableAppealSummaryHorizon);
@@ -1096,7 +1127,7 @@ describe('linked-appeals', () => {
 
 	describe('GET /change-appeal-type/unlink-appeal', () => {
 		it('should render the unlink-appeal page', async () => {
-			nock('http://test/').get('/appeals/1').reply(200, leadAppealDataWithLinkedAppeals);
+			nock('http://test/').get('/appeals/1').reply(200, leadAppealDataWithLinkedAppeals).persist();
 			const response = await request.get(
 				`${baseUrl}/1${linkedAppealsPath}/${unlinkAppealPath}/1/1/1`
 			);
@@ -1108,7 +1139,7 @@ describe('linked-appeals', () => {
 
 	describe('POST /change-appeal-type/unlink-appeal', () => {
 		beforeEach(() => {
-			nock('http://test/').get('/appeals/1').reply(200, inspectorDecisionData);
+			nock('http://test/').get('/appeals/1').reply(200, inspectorDecisionData).persist();
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 		});
 		afterEach(teardown);

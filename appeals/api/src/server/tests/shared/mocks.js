@@ -80,16 +80,22 @@ export const validAppellantCaseOutcome = {
 };
 
 export const incompleteAppellantCaseOutcome = {
-	appellantCaseIncompleteReasonsOnAppellantCases: [
+	appellantCaseIncompleteReasonsSelected: [
 		{
 			appellantCaseIncompleteReason: {
-				name: 'The original application form is incomplete or missing'
-			}
+				name: 'The original application form is incomplete'
+			},
+			appellantCaseIncompleteReasonText: []
 		},
 		{
 			appellantCaseIncompleteReason: {
 				name: 'Other'
-			}
+			},
+			appellantCaseIncompleteReasonText: [
+				{
+					text: 'Appellant contact information is incorrect or missing'
+				}
+			]
 		}
 	],
 	appellantCaseValidationOutcome: {
@@ -98,16 +104,22 @@ export const incompleteAppellantCaseOutcome = {
 };
 
 export const invalidAppellantCaseOutcome = {
-	appellantCaseIvalidReasonsOnAppellantCases: [
+	appellantCaseInvalidReasonsSelected: [
 		{
 			appellantCaseInvalidReason: {
 				name: 'Appeal has not been submitted on time'
-			}
+			},
+			appellantCaseInvalidReasonText: []
 		},
 		{
 			appellantCaseInvalidReason: {
 				name: 'Other'
-			}
+			},
+			appellantCaseInvalidReasonText: [
+				{
+					text: 'The appeal site address does not match'
+				}
+			]
 		}
 	],
 	appellantCaseValidationOutcome: {
@@ -122,7 +134,7 @@ export const completeLPAQuestionnaireOutcome = {
 };
 
 export const incompleteLPAQuestionnaireOutcome = {
-	lpaQuestionnaireIncompleteReasonsOnLpaQuestionnaire: [
+	lpaQuestionnaireIncompleteReasonsSelected: [
 		{
 			lpaQuestionnaireIncompleteReason: {
 				name: 'Documents or information are missing'

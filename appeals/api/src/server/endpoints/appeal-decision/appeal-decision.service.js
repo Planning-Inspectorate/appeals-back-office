@@ -1,17 +1,16 @@
 import appealRepository from '#repositories/appeal.repository.js';
 import transitionState from '#state/transition-state.js';
-import { broadcastAppealState } from '#endpoints/integrations/integrations.service.js';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { STATE_TARGET_COMPLETE } from '#endpoints/constants.js';
 
-/** @typedef {import('@pins/appeals.api').Appeals.RepositoryGetByIdResultItem} Appeal */
+/** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.InspectorDecision} Decision */
-/** @typedef {import('@pins/appeals.api').Schema.InspectorDecisionOutcomeType} DecisionType */
 /** @typedef {import('@pins/appeals.api').Schema.Document} Document */
 
 /**
  *
  * @param {Appeal} appeal
- * @param {DecisionType} outcome
+ * @param {string} outcome
  * @param {Date} documentDate
  * @param {Document} document
  * @param {string} azureUserId
@@ -28,12 +27,12 @@ export const publishDecision = async (appeal, outcome, documentDate, document, a
 	if (result) {
 		await transitionState(
 			appeal.id,
-			appeal.appealType,
+			appeal.appealType || null,
 			azureUserId,
 			appeal.appealStatus,
 			STATE_TARGET_COMPLETE
 		);
-		await broadcastAppealState(appeal.id);
+		await broadcasters.broadcastAppeal(appeal.id);
 
 		return result;
 	}

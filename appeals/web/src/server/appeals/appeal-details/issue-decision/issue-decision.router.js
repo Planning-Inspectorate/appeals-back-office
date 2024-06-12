@@ -3,6 +3,7 @@ import asyncRoute from '#lib/async-route.js';
 import * as controller from './issue-decision.controller.js';
 import * as validators from './issue-decision.validators.js';
 import { createTextAreaSanitizer } from '#lib/sanitizers/textarea-sanitizer.js';
+import { validateAppeal } from '../appeal-details.middleware.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -13,8 +14,8 @@ router
 
 router
 	.route('/decision-letter-upload')
-	.get(asyncRoute(controller.getDecisionLetterUpload))
-	.post(asyncRoute(controller.postDecisionLetterUpload));
+	.get(validateAppeal, asyncRoute(controller.getDecisionLetterUpload))
+	.post(validateAppeal, asyncRoute(controller.postDecisionLetterUpload));
 
 router
 	.route('/decision-letter-date')
@@ -37,8 +38,8 @@ router
 
 router
 	.route('/check-your-decision')
-	.get(asyncRoute(controller.getCheckDecision))
-	.post(validators.validateCheckDecision, asyncRoute(controller.postCheckDecision));
+	.get(validateAppeal, asyncRoute(controller.getCheckDecision))
+	.post(validateAppeal, validators.validateCheckDecision, asyncRoute(controller.postCheckDecision));
 
 router
 	.route('/check-invalid-decision')

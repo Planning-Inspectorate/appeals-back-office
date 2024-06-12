@@ -1,7 +1,7 @@
 import config from '#config/config.js';
 import appealAllocationRepository from '#repositories/appeal-allocation.repository.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
-import { broadcastAppealState } from '#endpoints/integrations/integrations.service.js';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { AUDIT_TRAIL_ALLOCATION_DETAILS_ADDED } from '#endpoints/constants.js';
 
 /** @typedef {import('express').Request} Request */
@@ -41,7 +41,7 @@ export const saveAllocation = async (req, res) => {
 			details: AUDIT_TRAIL_ALLOCATION_DETAILS_ADDED
 		});
 
-		await broadcastAppealState(appeal.id);
+		await broadcasters.broadcastAppeal(appeal.id);
 	}
 
 	return res.send({

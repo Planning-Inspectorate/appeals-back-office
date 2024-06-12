@@ -7,7 +7,14 @@ import {
 	linkedAppeals,
 	linkableAppealSummaryBackOffice,
 	linkableAppealSummaryHorizon,
-	siteVisitData
+	siteVisitData,
+	costsFolderInfoAppellant,
+	costsFolderInfoLpa,
+	costsFolderInfoDecision,
+	documentRedactionStatuses,
+	appealCostsDocumentItem,
+	linkedAppealsWithExternalLead,
+	fileUploadInfo
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 
@@ -69,20 +76,6 @@ describe('appeal-details', () => {
 
 			it('should render a "Horizon reference added" success notification banner, a "Transferred" status tag, and an inset text component with the appeal type and horizon link for the transferred appeal, when the appeal was successfully transferred to horizon', async () => {
 				nock.cleanAll();
-				nock('http://test/').get('/appeals/transferred-appeal/123').reply(200, {
-					caseFound: true
-				});
-				nock('http://test/')
-					.post('/appeals/2/appeal-transfer-confirmation')
-					.reply(200, { success: true });
-
-				await request.post(`${baseUrl}/2/change-appeal-type/add-horizon-reference`).send({
-					'horizon-reference': '123'
-				});
-
-				await request.post(`${baseUrl}/2/change-appeal-type/check-transfer`).send({
-					confirm: 'yes'
-				});
 
 				const appealId = 2;
 
@@ -96,7 +89,23 @@ describe('appeal-details', () => {
 							transferredAppealType: '(C) Enforcement notice appeal',
 							transferredAppealReference: '12345'
 						}
-					});
+					})
+					.persist();
+
+				nock('http://test/').get('/appeals/transferred-appeal/123').reply(200, {
+					caseFound: true
+				});
+				nock('http://test/')
+					.post(`/appeals/${appealId}/appeal-transfer-confirmation`)
+					.reply(200, { success: true });
+
+				await request.post(`${baseUrl}/${appealId}/change-appeal-type/add-horizon-reference`).send({
+					'horizon-reference': '123'
+				});
+
+				await request.post(`${baseUrl}/${appealId}/change-appeal-type/check-transfer`).send({
+					confirm: 'yes'
+				});
 
 				const response = await request.get(`${baseUrl}/${appealId}`);
 
@@ -128,7 +137,7 @@ describe('appeal-details', () => {
 				//expect(insetTextElementHTML).toMatch("<a href=")
 			});
 
-			it('should render a "Inspector or third party neighbouring site added" success notification banner when an inspector/3rd party neighbouring site was added', async () => {
+			it('should render a "Neighbouring site added" success notification banner when an inspector/3rd party neighbouring site was added', async () => {
 				const appealReference = '1';
 
 				nock.cleanAll();
@@ -145,9 +154,12 @@ describe('appeal-details', () => {
 							town: 'Woodton'
 						}
 					});
-				nock('http://test/').get(`/appeals/${appealData.appealId}`).reply(200, appealData);
+				nock('http://test/')
+					.get(`/appeals/${appealData.appealId}`)
+					.reply(200, appealData)
+					.persist();
 
-				await request.post(`${baseUrl}/1/neighbouring-sites/add`).send({
+				await request.post(`${baseUrl}/1/neighbouring-sites/add/back-office`).send({
 					addressLine1: '1 Grove Cottage',
 					addressLine2: null,
 					county: 'Devon',
@@ -155,29 +167,30 @@ describe('appeal-details', () => {
 					town: 'Woodton'
 				});
 
-				await request.post(`${baseUrl}/1/neighbouring-sites/add/check-and-confirm`);
+				await request.post(`${baseUrl}/1/neighbouring-sites/add/back-office/check-and-confirm`);
 
 				const response = await request.get(`${baseUrl}/${appealData.appealId}`);
 				const notificationBannerElementHTML = parseHtml(response.text, {
 					rootElement: notificationBannerElement
 				}).innerHTML;
 				expect(notificationBannerElementHTML).toMatchSnapshot();
-				expect(notificationBannerElementHTML).toContain(
-					'Inspector or third party neighbouring site added'
-				);
+				expect(notificationBannerElementHTML).toContain('Neighbouring site added');
 				expect(notificationBannerElementHTML).toContain('Success');
 			});
 
-			it('should render a "Inspector or third party neighbouring site updated" success notification banner when an inspector/3rd party neighbouring site was updated', async () => {
+			it('should render a "Neighbouring site updated" success notification banner when an inspector/3rd party neighbouring site was updated', async () => {
 				const appealReference = '1';
 
 				nock.cleanAll();
 				nock('http://test/').patch(`/appeals/${appealReference}/neighbouring-sites`).reply(200, {
 					siteId: 1
 				});
-				nock('http://test/').get(`/appeals/${appealData.appealId}`).reply(200, appealData);
+				nock('http://test/')
+					.get(`/appeals/${appealData.appealId}`)
+					.reply(200, appealData)
+					.persist();
 
-				await request.post(`${baseUrl}/1/neighbouring-sites/change/1`).send({
+				await request.post(`${baseUrl}/1/neighbouring-sites/change/site/1`).send({
 					addressLine1: '2 Grove Cottage',
 					addressLine2: null,
 					county: 'Devon',
@@ -185,29 +198,30 @@ describe('appeal-details', () => {
 					town: 'Woodton'
 				});
 
-				await request.post(`${baseUrl}/1/neighbouring-sites/change/1/check-and-confirm`);
+				await request.post(`${baseUrl}/1/neighbouring-sites/change/site/1/check-and-confirm`);
 
 				const response = await request.get(`${baseUrl}/${appealData.appealId}`);
 				const notificationBannerElementHTML = parseHtml(response.text, {
 					rootElement: notificationBannerElement
 				}).innerHTML;
 				expect(notificationBannerElementHTML).toMatchSnapshot();
-				expect(notificationBannerElementHTML).toContain(
-					'Inspector or third party neighbouring site updated'
-				);
+				expect(notificationBannerElementHTML).toContain('Neighbouring site updated');
 				expect(notificationBannerElementHTML).toContain('Success');
 			});
 
-			it('should render a "Inspector or third party neighbouring site removed" success notification banner when an inspector/3rd party neighbouring site was removed', async () => {
+			it('should render a "Neighbouring site removed" success notification banner when an inspector/3rd party neighbouring site was removed', async () => {
 				const appealReference = '1';
 
 				nock.cleanAll();
 				nock('http://test/').delete(`/appeals/${appealReference}/neighbouring-sites`).reply(200, {
 					siteId: 1
 				});
-				nock('http://test/').get(`/appeals/${appealData.appealId}`).reply(200, appealData);
+				nock('http://test/')
+					.get(`/appeals/${appealData.appealId}`)
+					.reply(200, appealData)
+					.persist();
 
-				await request.post(`${baseUrl}/1/neighbouring-sites/remove/1`).send({
+				await request.post(`${baseUrl}/1/neighbouring-sites/remove/site/1`).send({
 					'remove-neighbouring-site': 'yes'
 				});
 
@@ -218,9 +232,7 @@ describe('appeal-details', () => {
 				}).innerHTML;
 				expect(notificationBannerElementHTML).toMatchSnapshot();
 				expect(notificationBannerElementHTML).toContain('Success');
-				expect(notificationBannerElementHTML).toContain(
-					'Inspector or third party neighbouring site removed'
-				);
+				expect(notificationBannerElementHTML).toContain('Neighbouring site removed');
 			});
 
 			it('should render a "This appeal is now the lead for appeal" success notification banner when the appeal was successfully linked as the lead of a back-office appeal', async () => {
@@ -230,7 +242,10 @@ describe('appeal-details', () => {
 				nock('http://test/')
 					.get(`/appeals/linkable-appeal/${appealReference}`)
 					.reply(200, linkableAppealSummaryBackOffice);
-				nock('http://test/').get(`/appeals/${appealData.appealId}`).reply(200, appealData);
+				nock('http://test/')
+					.get(`/appeals/${appealData.appealId}`)
+					.reply(200, appealData)
+					.persist();
 				nock('http://test/').post(`/appeals/${appealData.appealId}/link-appeal`).reply(200, {
 					childId: linkableAppealSummaryBackOffice.appealId,
 					childRef: linkableAppealSummaryBackOffice.appealReference,
@@ -261,7 +276,10 @@ describe('appeal-details', () => {
 				nock('http://test/')
 					.get(`/appeals/linkable-appeal/${appealReference}`)
 					.reply(200, linkableAppealSummaryBackOffice);
-				nock('http://test/').get(`/appeals/${appealData.appealId}`).reply(200, appealData);
+				nock('http://test/')
+					.get(`/appeals/${appealData.appealId}`)
+					.reply(200, appealData)
+					.persist();
 				nock('http://test/').post(`/appeals/${appealData.appealId}/link-appeal`).reply(200, {
 					childId: appealData.appealId,
 					childRef: appealData.appealReference,
@@ -297,7 +315,10 @@ describe('appeal-details', () => {
 				nock('http://test/')
 					.get(`/appeals/linkable-appeal/${appealReference}`)
 					.reply(200, linkableAppealSummaryHorizon);
-				nock('http://test/').get(`/appeals/${appealData.appealId}`).reply(200, appealData);
+				nock('http://test/')
+					.get(`/appeals/${appealData.appealId}`)
+					.reply(200, appealData)
+					.persist();
 				nock('http://test/').post(`/appeals/${appealData.appealId}/link-legacy-appeal`).reply(200, {
 					childId: null,
 					childRef: '3171066',
@@ -333,7 +354,10 @@ describe('appeal-details', () => {
 				nock('http://test/')
 					.get(`/appeals/linkable-appeal/${appealReference}`)
 					.reply(200, linkableAppealSummaryHorizon);
-				nock('http://test/').get(`/appeals/${appealData.appealId}`).reply(200, appealData);
+				nock('http://test/')
+					.get(`/appeals/${appealData.appealId}`)
+					.reply(200, appealData)
+					.persist();
 				nock('http://test/').post(`/appeals/${appealData.appealId}/link-legacy-appeal`).reply(200, {
 					childId: 5466,
 					childRef: 'TEST-489773',
@@ -433,7 +457,264 @@ describe('appeal-details', () => {
 				expect(notificationBannerElementHTML).toMatchSnapshot();
 				expect(notificationBannerElementHTML).toContain('Site visit type has been selected');
 			});
+
+			it('should render a success notification banner when an appellant costs document was uploaded', async () => {
+				nock('http://test/')
+					.get('/appeals/1/document-folders/1')
+					.reply(200, costsFolderInfoAppellant)
+					.persist();
+				nock('http://test/')
+					.get('/appeals/document-redaction-statuses')
+					.reply(200, documentRedactionStatuses);
+				nock('http://test/').post('/appeals/1/documents').reply(200);
+
+				const selectDocumentTypeResponse = await request
+					.post(`${baseUrl}/1/costs/appellant/select-document-type/1`)
+					.send({
+						'costs-document-type': '1'
+					});
+
+				expect(selectDocumentTypeResponse.statusCode).toBe(302);
+
+				const addDocumentsResponse = await request
+					.post(`${baseUrl}/1/costs/appellant/upload-documents/1`)
+					.send({
+						'upload-info': fileUploadInfo
+					});
+
+				expect(addDocumentsResponse.statusCode).toBe(302);
+
+				const postCheckAndConfirmResponse = await request
+					.post(`${baseUrl}/1/costs/appellant/check-your-answers/1`)
+					.send({});
+
+				expect(postCheckAndConfirmResponse.statusCode).toBe(302);
+				expect(postCheckAndConfirmResponse.text).toBe(
+					'Found. Redirecting to /appeals-service/appeal-details/1'
+				);
+
+				const caseDetailsResponse = await request.get(`${baseUrl}/1`);
+
+				const notificationBannerElementHTML = parseHtml(caseDetailsResponse.text, {
+					rootElement: notificationBannerElement
+				}).innerHTML;
+
+				expect(notificationBannerElementHTML).toMatchSnapshot();
+				expect(notificationBannerElementHTML).toContain('Appellant costs documents uploaded</p>');
+			});
+
+			it('should render a success notification banner when an LPA costs document was uploaded', async () => {
+				nock('http://test/')
+					.get('/appeals/1/document-folders/2')
+					.reply(200, costsFolderInfoLpa)
+					.persist();
+				nock('http://test/')
+					.get('/appeals/document-redaction-statuses')
+					.reply(200, documentRedactionStatuses);
+				nock('http://test/').post('/appeals/1/documents').reply(200);
+
+				const selectDocumentTypeResponse = await request
+					.post(`${baseUrl}/1/costs/lpa/select-document-type/2`)
+					.send({
+						'costs-document-type': '1'
+					});
+
+				expect(selectDocumentTypeResponse.statusCode).toBe(302);
+
+				const addDocumentsResponse = await request
+					.post(`${baseUrl}/1/costs/lpa/upload-documents/2`)
+					.send({
+						'upload-info': fileUploadInfo
+					});
+
+				expect(addDocumentsResponse.statusCode).toBe(302);
+
+				const postCheckAndConfirmResponse = await request
+					.post(`${baseUrl}/1/costs/lpa/check-your-answers/2`)
+					.send({});
+
+				expect(postCheckAndConfirmResponse.statusCode).toBe(302);
+				expect(postCheckAndConfirmResponse.text).toBe(
+					'Found. Redirecting to /appeals-service/appeal-details/1'
+				);
+
+				const caseDetailsResponse = await request.get(`${baseUrl}/1`);
+
+				const notificationBannerElementHTML = parseHtml(caseDetailsResponse.text, {
+					rootElement: notificationBannerElement
+				}).innerHTML;
+
+				expect(notificationBannerElementHTML).toMatchSnapshot();
+				expect(notificationBannerElementHTML).toContain('LPA costs documents uploaded</p>');
+			});
+
+			it('should render a success notification banner when a costs decision document was uploaded', async () => {
+				nock('http://test/')
+					.get('/appeals/1/document-folders/3')
+					.reply(200, costsFolderInfoDecision)
+					.persist();
+				nock('http://test/')
+					.get('/appeals/document-redaction-statuses')
+					.reply(200, documentRedactionStatuses);
+				nock('http://test/').post('/appeals/1/documents').reply(200);
+
+				const selectDocumentTypeResponse = await request
+					.post(`${baseUrl}/1/costs/decision/select-document-type/3`)
+					.send({
+						'costs-document-type': '1'
+					});
+
+				expect(selectDocumentTypeResponse.statusCode).toBe(302);
+
+				const addDocumentsResponse = await request
+					.post(`${baseUrl}/1/costs/decision/upload-documents/3`)
+					.send({
+						'upload-info': fileUploadInfo
+					});
+
+				expect(addDocumentsResponse.statusCode).toBe(302);
+
+				const checkAndConfirmResponse = await request
+					.post(`${baseUrl}/1/costs/decision/check-and-confirm/3`)
+					.send({
+						confirm: 'yes'
+					});
+
+				expect(checkAndConfirmResponse.statusCode).toBe(302);
+				expect(checkAndConfirmResponse.text).toEqual(
+					`Found. Redirecting to /appeals-service/appeal-details/1`
+				);
+
+				const caseDetailsResponse = await request.get(`${baseUrl}/1`);
+
+				const notificationBannerElementHTML = parseHtml(caseDetailsResponse.text, {
+					rootElement: notificationBannerElement
+				}).innerHTML;
+
+				expect(notificationBannerElementHTML).toMatchSnapshot();
+				expect(notificationBannerElementHTML).toContain('Costs decision uploaded</p>');
+			});
+
+			it('should render a success notification banner when a service user was updated', async () => {
+				nock('http://test/').get(`/appeals/1`).reply(200, appealData);
+				nock('http://test/').patch(`/appeals/1/service-user`).reply(200, {
+					serviceUserId: 1
+				});
+				const validData = {
+					firstName: 'Jessica',
+					lastName: 'Jones',
+					emailAddress: ''
+				};
+				await request.post(`${baseUrl}/1/service-user/change/agent`).send(validData);
+
+				const caseDetailsResponse = await request.get(`${baseUrl}/1`);
+
+				const notificationBannerElementHTML = parseHtml(caseDetailsResponse.text, {
+					rootElement: notificationBannerElement
+				}).innerHTML;
+				expect(notificationBannerElementHTML).toMatchSnapshot();
+				expect(notificationBannerElementHTML).toContain('Agent details updated');
+			});
+
+			it('should render a success notification banner when the lpa application reference was updated', async () => {
+				const appealId = appealData.appealId.toString();
+				nock('http://test/').patch(`/appeals/${appealId}`).reply(200, {
+					planningApplicationReference: '12345/A/67890'
+				});
+
+				const validData = {
+					planningApplicationReference: '12345/A/67890'
+				};
+
+				await request
+					.post(`${baseUrl}/${appealId}/appellant-case/lpa-reference/change`)
+					.send(validData);
+
+				const caseDetailsResponse = await request.get(`${baseUrl}/1`);
+
+				const notificationBannerElementHTML = parseHtml(caseDetailsResponse.text, {
+					rootElement: notificationBannerElement
+				}).innerHTML;
+				expect(notificationBannerElementHTML).toMatchSnapshot();
+				expect(notificationBannerElementHTML).toContain('LPA application reference updated');
+			});
+			it('should render a success notification banner when the inspector access was updated', async () => {
+				const appealId = appealData.appealId;
+				const appellantCaseId = appealData.appellantCaseId;
+				const validData = {
+					inspectorAccessRadio: 'yes',
+					inspectorAccessDetails: 'Details'
+				};
+
+				nock('http://test/')
+					.patch(`/appeals/${appealId}/appellant-cases/${appellantCaseId}`)
+					.reply(200, {
+						...validData
+					});
+
+				await request
+					.post(`${baseUrl}/${appealId}/inspector-access/change/appellant`)
+					.send(validData);
+
+				const caseDetailsResponse = await request.get(`${baseUrl}/1`);
+				const notificationBannerElementHTML = parseHtml(caseDetailsResponse.text, {
+					rootElement: notificationBannerElement
+				}).innerHTML;
+				expect(notificationBannerElementHTML).toMatchSnapshot();
+				expect(notificationBannerElementHTML).toContain('Inspector access (appellant) updated');
+			});
+
+			it('should render a success notification banner when the safety risks was updated', async () => {
+				const appealId = appealData.appealId;
+				const appellantCaseId = appealData.appellantCaseId;
+				const validData = {
+					safetyRisksRadio: 'yes',
+					safetyRisksDetails: 'Details'
+				};
+
+				nock('http://test/')
+					.patch(`/appeals/${appealId}/appellant-cases/${appellantCaseId}`)
+					.reply(200, {
+						...validData
+					});
+
+				await request.post(`${baseUrl}/${appealId}/safety-risks/change/appellant`).send(validData);
+
+				const caseDetailsResponse = await request.get(`${baseUrl}/1`);
+				const notificationBannerElementHTML = parseHtml(caseDetailsResponse.text, {
+					rootElement: notificationBannerElement
+				}).innerHTML;
+				expect(notificationBannerElementHTML).toMatchSnapshot();
+				expect(notificationBannerElementHTML).toContain(
+					'Site health and safety risks (appellant answer) updated'
+				);
+			});
+
+			it('should render a success notification banner when the neighbouring site affected value is updated', async () => {
+				const appealId = appealData.appealId;
+				const lpaQuestionnaireId = appealData.lpaQuestionnaireId;
+
+				nock('http://test/')
+					.patch(`/appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`)
+					.reply(200, {});
+
+				await request.get(`${baseUrl}/${appealId}/neighbouring-sites/change/affected`);
+
+				await request
+					.post(`${baseUrl}/${appealId}/neighbouring-sites/change/affected`)
+					.send({ neighbouringSiteAffected: 'yes' });
+
+				const caseDetailsResponse = await request.get(`${baseUrl}/1`);
+				const notificationBannerElementHTML = parseHtml(caseDetailsResponse.text, {
+					rootElement: notificationBannerElement
+				}).innerHTML;
+				expect(notificationBannerElementHTML).toMatchSnapshot();
+				expect(notificationBannerElementHTML).toContain(
+					'Neighbouring site affected status updated'
+				);
+			});
 		});
+
 		it('should render the received appeal details for a valid appealId with multiple linked/other appeals', async () => {
 			const appealId = appealData.appealId.toString();
 
@@ -628,7 +909,7 @@ describe('appeal-details', () => {
 
 		it('should render an action link to the add linked appeal page in the linked appeals row, if there are no linked appeals', async () => {
 			nock.cleanAll();
-			nock('http://test/').get(`/appeals/${appealData.appealId}`).reply(200, appealData);
+			nock('http://test/').get(`/appeals/${appealData.appealId}`).reply(200, appealData).persist();
 
 			const response = await request.get(`${baseUrl}/${appealData.appealId}`);
 			const element = parseHtml(response.text);
@@ -649,6 +930,46 @@ describe('appeal-details', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const linkedAppealsRowElement = parseHtml(response.text, {
+				rootElement: '.appeal-linked-appeals',
+				skipPrettyPrint: true
+			});
+
+			expect(linkedAppealsRowElement.innerHTML).toContain(
+				'href="/appeals-service/appeal-details/1/linked-appeals/manage"> Manage<span class="govuk-visually-hidden"> Linked appeals</span></a>'
+			);
+			expect(linkedAppealsRowElement.innerHTML).toContain(
+				'href="/appeals-service/appeal-details/1/linked-appeals/add"> Add<span class="govuk-visually-hidden"> Linked appeals</span></a>'
+			);
+		});
+
+		it('should not render action links to the manage linked appeals page or the add linked appeal page in the linked appeals row, if the appeal is linked as a child of an external lead appeal', async () => {
+			nock.cleanAll();
+			nock('http://test/')
+				.get(`/appeals/${appealData.appealId}`)
+				.reply(200, {
+					...appealData,
+					linkedAppeals: linkedAppealsWithExternalLead
+				});
+
+			const response = await request.get(`${baseUrl}/${appealData.appealId}`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, {
+				rootElement: '.appeal-linked-appeals',
+				skipPrettyPrint: true
+			});
+
+			expect(unprettifiedElement.innerHTML).toContain('Linked appeals</dt>');
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'href="/appeals-service/appeal-details/1/linked-appeals/add"'
+			);
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'href="/appeals-service/appeal-details/1/linked-appeals/manage"'
+			);
 		});
 
 		it('should render the case reference for each linked appeal in the linked appeals row, each linking to the respective case details page, if there are linked appeals', async () => {
@@ -732,6 +1053,272 @@ describe('appeal-details', () => {
 			const element = parseHtml(response.text, { rootElement: '.govuk-notification-banner' });
 			expect(element.innerHTML).toContain('<a');
 			expect(element.innerHTML).toMatchSnapshot();
+		});
+
+		describe('Costs', () => {
+			it('should render an appellant costs row in the case documentation accordion with empty status and received columns, and "add" action button, if the appellant costs documents folder is empty', async () => {
+				const appealId = 2;
+				nock('http://test/').get(`/appeals/${appealId}`).reply(200, appealData);
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.statusCode).toBe(200);
+
+				const appellantCostsDocumentationElement = parseHtml(response.text, {
+					rootElement: '.appeal-costs-appellant-documentation'
+				});
+				const appellantCostsStatusElement = parseHtml(response.text, {
+					rootElement: '.appeal-costs-appellant-status'
+				});
+				const appellantCostsDueDateElement = parseHtml(response.text, {
+					rootElement: '.appeal-costs-appellant-due-date'
+				});
+				const appellantCostsActionsElement = parseHtml(response.text, {
+					rootElement: '.appeal-costs-appellant-actions'
+				});
+
+				expect(appellantCostsDocumentationElement.innerHTML).toEqual(
+					'<th scope="row" class="govuk-table__header appeal-costs-appellant-documentation">Costs (appellant)</th>'
+				);
+				expect(appellantCostsStatusElement.innerHTML).toEqual(
+					'<td class="govuk-table__cell appeal-costs-appellant-status"></td>'
+				);
+				expect(appellantCostsDueDateElement.innerHTML).toEqual(
+					'<td class="govuk-table__cell appeal-costs-appellant-due-date"></td>'
+				);
+				expect(appellantCostsActionsElement.innerHTML).not.toContain(
+					'/costs/appellant/manage-documents/1">Manage</a>'
+				);
+				expect(appellantCostsActionsElement.innerHTML).toContain(
+					'/costs/appellant/select-document-type/1">Add</a>'
+				);
+			});
+
+			it('should render an LPA costs row in the case documentation accordion with empty status and received columns, and "add" action button, if the LPA costs documents folder is empty', async () => {
+				const appealId = 2;
+				nock('http://test/').get(`/appeals/${appealId}`).reply(200, appealData);
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.statusCode).toBe(200);
+
+				const lpaCostsDocumentationElement = parseHtml(response.text, {
+					rootElement: '.appeal-costs-lpa-documentation'
+				});
+				const lpaCostsStatusElement = parseHtml(response.text, {
+					rootElement: '.appeal-costs-lpa-status'
+				});
+				const lpaCostsDueDateElement = parseHtml(response.text, {
+					rootElement: '.appeal-costs-lpa-due-date'
+				});
+				const lpaCostsActionsElement = parseHtml(response.text, {
+					rootElement: '.appeal-costs-lpa-actions'
+				});
+
+				expect(lpaCostsDocumentationElement.innerHTML).toEqual(
+					'<th scope="row" class="govuk-table__header appeal-costs-lpa-documentation">Costs (LPA)</th>'
+				);
+				expect(lpaCostsStatusElement.innerHTML).toEqual(
+					'<td class="govuk-table__cell appeal-costs-lpa-status"></td>'
+				);
+				expect(lpaCostsDueDateElement.innerHTML).toEqual(
+					'<td class="govuk-table__cell appeal-costs-lpa-due-date"></td>'
+				);
+				expect(lpaCostsActionsElement.innerHTML).not.toContain(
+					'/costs/lpa/manage-documents/2">Manage</a>'
+				);
+				expect(lpaCostsActionsElement.innerHTML).toContain(
+					'/costs/lpa/select-document-type/2">Add</a>'
+				);
+			});
+
+			it('should render a costs decision row in the case documentation accordion with empty status and received columns, and "add" action button, if the costs decision documents folder is empty', async () => {
+				const appealId = 2;
+				nock('http://test/').get(`/appeals/${appealId}`).reply(200, appealData);
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.statusCode).toBe(200);
+
+				const decisionCostsDocumentationElement = parseHtml(response.text, {
+					rootElement: '.appeal-costs-decision-documentation'
+				});
+				const decisionCostsStatusElement = parseHtml(response.text, {
+					rootElement: '.appeal-costs-decision-status'
+				});
+				const decisionCostsDueDateElement = parseHtml(response.text, {
+					rootElement: '.appeal-costs-decision-due-date'
+				});
+				const decisionCostsActionsElement = parseHtml(response.text, {
+					rootElement: '.appeal-costs-decision-actions'
+				});
+
+				expect(decisionCostsDocumentationElement.innerHTML).toEqual(
+					'<th scope="row" class="govuk-table__header appeal-costs-decision-documentation">Costs decision</th>'
+				);
+				expect(decisionCostsStatusElement.innerHTML).toEqual(
+					'<td class="govuk-table__cell appeal-costs-decision-status"></td>'
+				);
+				expect(decisionCostsDueDateElement.innerHTML).toEqual(
+					'<td class="govuk-table__cell appeal-costs-decision-due-date"></td>'
+				);
+				expect(decisionCostsActionsElement.innerHTML).not.toContain(
+					'/costs/decision/manage-documents/3">Manage</a>'
+				);
+				expect(decisionCostsActionsElement.innerHTML).toContain(
+					'/costs/decision/upload-documents/3">Add</a>'
+				);
+			});
+
+			it('should render an appellant costs row in the case documentation accordion with "Received" status, empty received column, and "add" and "manage" action buttons, if there are documents in the appellant costs documents folder', async () => {
+				const appealId = 3;
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealData,
+						costs: {
+							appellantFolder: {
+								caseId: 1,
+								folderId: 1,
+								path: 'appeal_costs/appellant',
+								documents: [appealCostsDocumentItem]
+							}
+						}
+					});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.statusCode).toBe(200);
+
+				const appellantCostsDocumentationElement = parseHtml(response.text, {
+					rootElement: '.appeal-costs-appellant-documentation'
+				});
+				const appellantCostsStatusElement = parseHtml(response.text, {
+					rootElement: '.appeal-costs-appellant-status'
+				});
+				const appellantCostsDueDateElement = parseHtml(response.text, {
+					rootElement: '.appeal-costs-appellant-due-date'
+				});
+				const appellantCostsActionsElement = parseHtml(response.text, {
+					rootElement: '.appeal-costs-appellant-actions'
+				});
+
+				expect(appellantCostsDocumentationElement.innerHTML).toEqual(
+					'<th scope="row" class="govuk-table__header appeal-costs-appellant-documentation">Costs (appellant)</th>'
+				);
+				expect(appellantCostsStatusElement.innerHTML).toEqual(
+					'<td class="govuk-table__cell appeal-costs-appellant-status">Received</td>'
+				);
+				expect(appellantCostsDueDateElement.innerHTML).toEqual(
+					'<td class="govuk-table__cell appeal-costs-appellant-due-date"></td>'
+				);
+				expect(appellantCostsActionsElement.innerHTML).toContain(
+					'/costs/appellant/manage-documents/1">Manage</a>'
+				);
+				expect(appellantCostsActionsElement.innerHTML).toContain(
+					'/costs/appellant/select-document-type/1">Add</a>'
+				);
+			});
+
+			it('should render an LPA costs row in the case documentation accordion with "Received" status, empty received column, and "add" and "manage" action buttons, if there are documents in the LPA costs documents folder', async () => {
+				const appealId = 3;
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealData,
+						costs: {
+							lpaFolder: {
+								caseId: 1,
+								folderId: 2,
+								path: 'appeal_costs/lpa',
+								documents: [appealCostsDocumentItem]
+							}
+						}
+					});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.statusCode).toBe(200);
+
+				const lpaCostsDocumentationElement = parseHtml(response.text, {
+					rootElement: '.appeal-costs-lpa-documentation'
+				});
+				const lpaCostsStatusElement = parseHtml(response.text, {
+					rootElement: '.appeal-costs-lpa-status'
+				});
+				const lpaCostsDueDateElement = parseHtml(response.text, {
+					rootElement: '.appeal-costs-lpa-due-date'
+				});
+				const lpaCostsActionsElement = parseHtml(response.text, {
+					rootElement: '.appeal-costs-lpa-actions'
+				});
+
+				expect(lpaCostsDocumentationElement.innerHTML).toEqual(
+					'<th scope="row" class="govuk-table__header appeal-costs-lpa-documentation">Costs (LPA)</th>'
+				);
+				expect(lpaCostsStatusElement.innerHTML).toEqual(
+					'<td class="govuk-table__cell appeal-costs-lpa-status">Received</td>'
+				);
+				expect(lpaCostsDueDateElement.innerHTML).toEqual(
+					'<td class="govuk-table__cell appeal-costs-lpa-due-date"></td>'
+				);
+				expect(lpaCostsActionsElement.innerHTML).toContain(
+					'/costs/lpa/manage-documents/2">Manage</a>'
+				);
+				expect(lpaCostsActionsElement.innerHTML).toContain(
+					'/costs/lpa/select-document-type/2">Add</a>'
+				);
+			});
+
+			it('should render a costs decision row in the case documentation accordion with "Uploaded" status, empty received column, and "add" and "manage" action buttons, if there are documents in the costs decision documents folder', async () => {
+				const appealId = 3;
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealData,
+						costs: {
+							decisionFolder: {
+								caseId: 1,
+								folderId: 3,
+								path: 'appeal_costs/decision',
+								documents: [appealCostsDocumentItem]
+							}
+						}
+					});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.statusCode).toBe(200);
+
+				const decisionCostsDocumentationElement = parseHtml(response.text, {
+					rootElement: '.appeal-costs-decision-documentation'
+				});
+				const decisionCostsStatusElement = parseHtml(response.text, {
+					rootElement: '.appeal-costs-decision-status'
+				});
+				const decisionCostsDueDateElement = parseHtml(response.text, {
+					rootElement: '.appeal-costs-decision-due-date'
+				});
+				const decisionCostsActionsElement = parseHtml(response.text, {
+					rootElement: '.appeal-costs-decision-actions'
+				});
+
+				expect(decisionCostsDocumentationElement.innerHTML).toEqual(
+					'<th scope="row" class="govuk-table__header appeal-costs-decision-documentation">Costs decision</th>'
+				);
+				expect(decisionCostsStatusElement.innerHTML).toEqual(
+					'<td class="govuk-table__cell appeal-costs-decision-status">Uploaded</td>'
+				);
+				expect(decisionCostsDueDateElement.innerHTML).toEqual(
+					'<td class="govuk-table__cell appeal-costs-decision-due-date"></td>'
+				);
+				expect(decisionCostsActionsElement.innerHTML).toContain(
+					'/costs/decision/manage-documents/3">Manage</a>'
+				);
+				expect(decisionCostsActionsElement.innerHTML).toContain(
+					'/costs/decision/upload-documents/3">Add</a>'
+				);
+			});
 		});
 	});
 

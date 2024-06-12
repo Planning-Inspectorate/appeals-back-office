@@ -1,9 +1,11 @@
 import { convertFromBooleanToYesNo } from '../boolean-formatter.js';
 import { appealSiteToAddressString } from '#lib/address-formatter.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
-import { nameToString } from '#lib/person-name-formatter.js';
 import { mapAddressInput } from './global-mapper-formatter.js';
 import { isFolderInfo } from '#lib/ts-utilities.js';
+import { mapActionComponent } from './component-permissions.mapper.js';
+import { permissionNames } from '#environment/permissions.js';
+import { formatServiceUserAsHtmlList } from '#lib/service-user-formatter.js';
 
 /**
  * @typedef {import('@pins/appeals.api').Appeals.FolderInfo} FolderInfo
@@ -12,12 +14,13 @@ import { isFolderInfo } from '#lib/ts-utilities.js';
 /**
  * @param {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} appellantCaseData
  * @param {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} appealDetails
+ * @param {import('../../app/auth/auth-session.service').SessionWithAuth} session
  * @param {string} currentRoute
  * @returns {MappedInstructions}
  */
-export function initialiseAndMapData(appellantCaseData, appealDetails, currentRoute) {
-	if (appellantCaseData === undefined) {
-		throw new Error('appellantCaseDetails is undefined');
+export function initialiseAndMapData(appellantCaseData, appealDetails, currentRoute, session) {
+	if (!appellantCaseData || appellantCaseData === null) {
+		throw new Error('appellantCaseDetails is null or undefined');
 	}
 
 	currentRoute =
@@ -27,134 +30,54 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 	let mappedData = {};
 
 	/** @type {Instructions} */
-	mappedData.appellantName = {
-		id: 'appellant-name',
+	mappedData.appellant = {
+		id: 'appellant',
 		display: {
 			summaryListItem: {
 				key: {
-					text: 'Appellant name'
+					text: 'Appellant'
 				},
 				value: {
-					text: nameToString({
-						firstName: appellantCaseData.appellant.firstName || '',
-						lastName: appellantCaseData.appellant.surname || ''
-					})
+					html: appealDetails.appellant
+						? formatServiceUserAsHtmlList(appealDetails.appellant)
+						: 'No appellant'
 				},
 				actions: {
 					items: [
-						{
+						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
-							visuallyHiddenText: 'Appellant name',
-							href: `${currentRoute}/change-appeal-details/appellant-name`
-						}
-					]
-				}
-			}
-		},
-		input: {
-			displayName: 'Appellant name',
-			instructions: [
-				{
-					type: 'input',
-					properties: {
-						name: 'appellant-name',
-						value: nameToString({
-							firstName: appellantCaseData.appellant.firstName || '',
-							lastName: appellantCaseData.appellant.surname || ''
+							href: `${currentRoute}/service-user/change/appellant`,
+							visuallyHiddenText: 'Appellant'
 						})
-					}
-				}
-			]
-		},
-		submitApi: '#',
-		inputItemApi: '#'
+					]
+				},
+				classes: 'appeal-appellant'
+			}
+		}
 	};
 
-	/** @type {Instructions} */
-	mappedData.applicantName = {
-		id: 'applicant-name',
+	mappedData.agent = {
+		id: 'agent',
 		display: {
 			summaryListItem: {
 				key: {
-					text: 'Applicant name'
+					text: 'Agent'
 				},
 				value: {
-					text: nameToString({
-						firstName: appellantCaseData.applicant.firstName || '',
-						lastName: appellantCaseData.applicant.surname || ''
-					})
+					html: appealDetails.agent ? formatServiceUserAsHtmlList(appealDetails.agent) : 'No agent'
 				},
 				actions: {
 					items: [
-						{
+						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
-							visuallyHiddenText: 'Applicant name',
-							href: `${currentRoute}/change-appeal-details/applicant-name`
-						}
-					]
-				}
-			}
-		},
-		input: {
-			displayName: 'Applicant name',
-			instructions: [
-				{
-					type: 'input',
-					properties: {
-						name: 'applicant-name',
-						value: nameToString({
-							firstName: appellantCaseData.applicant.firstName || '',
-							lastName: appellantCaseData.applicant.surname || ''
+							href: `${currentRoute}/service-user/change/agent`,
+							visuallyHiddenText: 'Agent'
 						})
-					}
-				}
-			]
-		},
-		submitApi: '#',
-		inputItemApi: '#'
-	};
-
-	mappedData.agentName = {
-		id: 'agent-name',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Agent name'
-				},
-				value: {
-					text: nameToString({
-						firstName: appealDetails.agent?.firstName || '',
-						lastName: appealDetails.agent?.lastName || ''
-					})
-				},
-				actions: {
-					items: [
-						{
-							text: 'Change',
-							visuallyHiddenText: 'Agent name',
-							href: `${currentRoute}/change-appeal-details/agent-name`
-						}
 					]
-				}
+				},
+				classes: 'appeal-agent'
 			}
-		},
-		input: {
-			displayName: 'Agent name',
-			instructions: [
-				{
-					type: 'input',
-					properties: {
-						name: 'agent-name',
-						value: nameToString({
-							firstName: appealDetails.agent?.firstName || '',
-							lastName: appealDetails.agent?.lastName || ''
-						})
-					}
-				}
-			]
-		},
-		submitApi: '#',
-		inputItemApi: '#'
+		}
 	};
 
 	/** @type {Instructions} */
@@ -173,7 +96,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 						{
 							text: 'Change',
 							visuallyHiddenText: 'LPA application reference',
-							href: `${currentRoute}/change-appeal-details/application-reference`
+							href: `${currentRoute}/lpa-reference/change`
 						}
 					]
 				}
@@ -211,7 +134,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 						{
 							text: 'Change',
 							visuallyHiddenText: 'Site address',
-							href: `${currentRoute}/change-appeal-details/site-address`
+							href: `${currentRoute}/site-address/change/${appealDetails.appealSite.addressId}`
 						}
 					]
 				}
@@ -264,52 +187,27 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 	};
 
 	/** @type {Instructions} */
-	mappedData.siteFullyOwned = {
-		id: 'site-fully-owned',
+	mappedData.siteOwnership = {
+		id: 'site-ownership',
 		display: {
 			summaryListItem: {
 				key: {
-					text: 'Site fully owned'
+					text: 'Site ownership'
 				},
 				value: {
-					text: convertFromBooleanToYesNo(appellantCaseData.siteOwnership.isFullyOwned) || ''
+					text: appellantCaseData.siteOwnership.isFullyOwned ? 'Fully owned' : 'Partially owned'
 				},
 				actions: {
 					items: [
 						{
 							text: 'Change',
-							visuallyHiddenText: 'Site fully owned',
-							href: `${currentRoute}/change-appeal-details/site-fully-owned`
+							visuallyHiddenText: 'Site ownership',
+							href: `${currentRoute}/site-ownership/change`
 						}
 					]
 				}
 			}
-		},
-		input: {
-			displayName: 'Site fully owned',
-			instructions: [
-				{
-					type: 'radios',
-					properties: {
-						name: 'site-fully-owned',
-						items: [
-							{
-								text: 'Yes',
-								value: 'yes',
-								checked: appellantCaseData.siteOwnership.isFullyOwned
-							},
-							{
-								text: 'No',
-								value: 'no',
-								checked: !appellantCaseData.siteOwnership.isFullyOwned
-							}
-						]
-					}
-				}
-			]
-		},
-		submitApi: '#',
-		inputItemApi: '#'
+		}
 	};
 
 	/** @type {Instructions} */
@@ -370,7 +268,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 					text: 'All owners known'
 				},
 				value: {
-					text: convertFromBooleanToYesNo(appellantCaseData.siteOwnership.areAllOwnersKnown) || ''
+					text: appellantCaseData.siteOwnership.areAllOwnersKnown
 				},
 				actions: {
 					items: [
@@ -400,58 +298,6 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 								text: 'No',
 								value: 'no',
 								checked: !appellantCaseData.siteOwnership.areAllOwnersKnown
-							}
-						]
-					}
-				}
-			]
-		},
-		submitApi: '#',
-		inputItemApi: '#'
-	};
-
-	/** @type {Instructions} */
-	mappedData.attemptedToIdentifyOwners = {
-		id: 'attempted-to-identify-owners',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Attempted to identify owners'
-				},
-				value: {
-					text:
-						convertFromBooleanToYesNo(
-							appellantCaseData.siteOwnership.hasAttemptedToIdentifyOwners
-						) || ''
-				},
-				actions: {
-					items: [
-						{
-							text: 'Change',
-							visuallyHiddenText: 'Attempted to identify owners',
-							href: `${currentRoute}/change-appeal-details/attempted-to-identify-owners`
-						}
-					]
-				}
-			}
-		},
-		input: {
-			displayName: 'Attempted to identify owners',
-			instructions: [
-				{
-					type: 'radios',
-					properties: {
-						name: 'attempted-to-identify-owners',
-						items: [
-							{
-								text: 'Yes',
-								value: 'yes',
-								checked: appellantCaseData.siteOwnership.hasAttemptedToIdentifyOwners
-							},
-							{
-								text: 'No',
-								value: 'no',
-								checked: !appellantCaseData.siteOwnership.hasAttemptedToIdentifyOwners
 							}
 						]
 					}
@@ -512,101 +358,60 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 	};
 
 	/** @type {Instructions} */
-	mappedData.visibility = {
-		id: 'visibility',
+	mappedData.inspectorAccess = {
+		id: 'inspector-access',
 		display: {
 			summaryListItem: {
 				key: {
-					text: 'Visibility'
+					text: 'Inspection access required'
 				},
 				value: {
-					text: convertFromBooleanToYesNo(appellantCaseData.visibility.isVisible) || ''
+					html: displayPageFormatter.formatAnswerAndDetails(
+						convertFromBooleanToYesNo(appealDetails.inspectorAccess.appellantCase.isRequired) ??
+							'No answer provided',
+						appealDetails.inspectorAccess.appellantCase.details
+					)
 				},
 				actions: {
 					items: [
 						{
 							text: 'Change',
-							visuallyHiddenText: 'Visibility',
-							href: `${currentRoute}/change-appeal-details/visibility`
+							href: `${currentRoute}/inspector-access/change/appellant`,
+							visuallyHiddenText: 'Inspector access required'
 						}
 					]
-				}
+				},
+				classes: 'appellantcase-inspector-access'
 			}
-		},
-		input: {
-			displayName: 'Visibility',
-			instructions: [
-				{
-					type: 'radios',
-					properties: {
-						name: 'visibility',
-						items: [
-							{
-								text: 'Yes',
-								value: 'yes',
-								checked: appellantCaseData.visibility.isVisible
-							},
-							{
-								text: 'No',
-								value: 'no',
-								checked: !appellantCaseData.visibility.isVisible
-							}
-						]
-					}
-				}
-			]
-		},
-		submitApi: '#',
-		inputItemApi: '#'
+		}
 	};
 
 	/** @type {Instructions} */
 	mappedData.healthAndSafetyIssues = {
-		id: 'site-health-and-safety-issues',
+		id: 'appellant-case-health-and-safety',
 		display: {
 			summaryListItem: {
 				key: {
 					text: 'Potential safety risks'
 				},
 				value: {
-					text: convertFromBooleanToYesNo(appellantCaseData.healthAndSafety.hasIssues) || ''
+					html: displayPageFormatter.formatAnswerAndDetails(
+						convertFromBooleanToYesNo(appealDetails.healthAndSafety.appellantCase.hasIssues) ||
+							'No answer provided',
+						appealDetails.healthAndSafety.appellantCase.details
+					)
 				},
 				actions: {
 					items: [
 						{
 							text: 'Change',
-							visuallyHiddenText: 'Potential safety risks',
-							href: `${currentRoute}/change-appeal-details/site-health-and-safety-issues`
+							href: `${currentRoute}/safety-risks/change/appellant`,
+							visuallyHiddenText: 'potential safety risks'
 						}
 					]
 				}
 			}
-		},
-		input: {
-			displayName: 'Potential safety risks',
-			instructions: [
-				{
-					type: 'radios',
-					properties: {
-						name: 'site-health-and-safety-issues',
-						items: [
-							{
-								text: 'Yes',
-								value: 'yes',
-								checked: appellantCaseData.healthAndSafety.hasIssues
-							},
-							{
-								text: 'No',
-								value: 'no',
-								checked: !appellantCaseData.healthAndSafety.hasIssues
-							}
-						]
-					}
-				}
-			]
-		},
-		submitApi: '#',
-		inputItemApi: '#'
+		}
 	};
 
 	/** @type {Instructions} */
@@ -619,15 +424,15 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 				},
 				value: displayPageFormatter.formatDocumentValues(
 					appellantCaseData.appealId,
-					isFolderInfo(appellantCaseData.documents.applicationForm)
-						? appellantCaseData.documents.applicationForm.documents
+					isFolderInfo(appellantCaseData.documents.originalApplicationForm)
+						? appellantCaseData.documents.originalApplicationForm?.documents || []
 						: []
 				),
 				actions: {
 					items: [
 						...((
-							(isFolderInfo(appellantCaseData.documents.applicationForm) &&
-								appellantCaseData.documents.applicationForm.documents) ||
+							(isFolderInfo(appellantCaseData.documents.originalApplicationForm) &&
+								appellantCaseData.documents.originalApplicationForm.documents) ||
 							[]
 						).length
 							? [
@@ -636,8 +441,8 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 										visuallyHiddenText: 'Application form',
 										href: mapDocumentManageUrl(
 											appellantCaseData.appealId,
-											isFolderInfo(appellantCaseData.documents.applicationForm)
-												? appellantCaseData.documents.applicationForm.folderId
+											isFolderInfo(appellantCaseData.documents.originalApplicationForm)
+												? appellantCaseData.documents.originalApplicationForm.folderId
 												: undefined
 										)
 									}
@@ -648,7 +453,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 							visuallyHiddenText: 'Application form',
 							href: displayPageFormatter.formatDocumentActionLink(
 								appellantCaseData.appealId,
-								appellantCaseData.documents.applicationForm,
+								appellantCaseData.documents.originalApplicationForm,
 								documentUploadUrlTemplate
 							)
 						}
@@ -668,14 +473,14 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 				},
 				value: displayPageFormatter.formatDocumentValues(
 					appellantCaseData.appealId,
-					isFolderInfo(appellantCaseData.documents.decisionLetter)
-						? appellantCaseData.documents.decisionLetter.documents
+					isFolderInfo(appellantCaseData.documents.applicationDecisionLetter)
+						? appellantCaseData.documents.applicationDecisionLetter.documents || []
 						: []
 				),
 				actions: {
 					items: [
-						...((isFolderInfo(appellantCaseData.documents.decisionLetter)
-							? appellantCaseData.documents.decisionLetter.documents
+						...((isFolderInfo(appellantCaseData.documents.applicationDecisionLetter)
+							? appellantCaseData.documents.applicationDecisionLetter.documents || []
 							: []
 						).length
 							? [
@@ -684,8 +489,8 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 										visuallyHiddenText: 'Decision letter',
 										href: mapDocumentManageUrl(
 											appellantCaseData.appealId,
-											isFolderInfo(appellantCaseData.documents.decisionLetter)
-												? appellantCaseData.documents.decisionLetter.folderId
+											isFolderInfo(appellantCaseData.documents.applicationDecisionLetter)
+												? appellantCaseData.documents.applicationDecisionLetter.folderId
 												: undefined
 										)
 									}
@@ -696,7 +501,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 							visuallyHiddenText: 'Decision letter',
 							href: displayPageFormatter.formatDocumentActionLink(
 								appellantCaseData.appealId,
-								appellantCaseData.documents.decisionLetter,
+								appellantCaseData.documents.applicationDecisionLetter,
 								documentUploadUrlTemplate
 							)
 						}
@@ -716,14 +521,14 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 				},
 				value: displayPageFormatter.formatDocumentValues(
 					appellantCaseData.appealId,
-					isFolderInfo(appellantCaseData.documents.appealStatement)
-						? appellantCaseData.documents.appealStatement.documents
+					isFolderInfo(appellantCaseData.documents.appellantStatement)
+						? appellantCaseData.documents.appellantStatement.documents || []
 						: []
 				),
 				actions: {
 					items: [
-						...((isFolderInfo(appellantCaseData.documents.appealStatement)
-							? appellantCaseData.documents.appealStatement.documents
+						...((isFolderInfo(appellantCaseData.documents.appellantStatement)
+							? appellantCaseData.documents.appellantStatement.documents || []
 							: []
 						).length
 							? [
@@ -732,8 +537,8 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 										visuallyHiddenText: 'Appeal statement',
 										href: mapDocumentManageUrl(
 											appellantCaseData.appealId,
-											isFolderInfo(appellantCaseData.documents.appealStatement)
-												? appellantCaseData.documents.appealStatement.folderId
+											isFolderInfo(appellantCaseData.documents.appellantStatement)
+												? appellantCaseData.documents.appellantStatement.folderId
 												: undefined
 										)
 									}
@@ -744,115 +549,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 							visuallyHiddenText: 'Appeal statement',
 							href: displayPageFormatter.formatDocumentActionLink(
 								appellantCaseData.appealId,
-								appellantCaseData.documents.appealStatement,
-								documentUploadUrlTemplate
-							)
-						}
-					]
-				}
-			}
-		}
-	};
-
-	/** @type {Instructions} */
-	mappedData.addNewSupportingDocuments = {
-		id: 'add-new-supporting-documents',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Supporting documents'
-				},
-				value: {
-					text:
-						convertFromBooleanToYesNo(
-							(isFolderInfo(appellantCaseData.documents.newSupportingDocuments)
-								? appellantCaseData.documents.newSupportingDocuments.documents
-								: []
-							)?.length > 0
-						) || ''
-				},
-				actions: {
-					items: [
-						{
-							text: 'Change',
-							visuallyHiddenText: 'Supporting documents',
-							href: `${currentRoute}/change-appeal-details/add-new-supporting-documents`
-						}
-					]
-				}
-			}
-		},
-		input: {
-			displayName: 'Supporting documents',
-			instructions: [
-				{
-					type: 'radios',
-					properties: {
-						name: 'add-new-supporting-documents',
-						items: [
-							{
-								text: 'Yes',
-								value: 'yes',
-								checked:
-									isFolderInfo(appellantCaseData.documents.newSupportingDocuments) &&
-									appellantCaseData.documents.newSupportingDocuments.documents?.length > 0
-							},
-							{
-								text: 'No',
-								value: 'no',
-								checked: !(
-									isFolderInfo(appellantCaseData.documents.newSupportingDocuments) &&
-									appellantCaseData.documents.newSupportingDocuments.documents?.length > 0
-								)
-							}
-						]
-					}
-				}
-			]
-		},
-		submitApi: '#',
-		inputItemApi: '#'
-	};
-
-	/** @type {Instructions} */
-	mappedData.newSupportingDocuments = {
-		id: 'new-supporting-documents',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'New supporting documents'
-				},
-				value: displayPageFormatter.formatDocumentValues(
-					appellantCaseData.appealId,
-					isFolderInfo(appellantCaseData.documents.newSupportingDocuments)
-						? appellantCaseData.documents.newSupportingDocuments.documents
-						: []
-				),
-				actions: {
-					items: [
-						...((isFolderInfo(appellantCaseData.documents.newSupportingDocuments)
-							? appellantCaseData.documents.newSupportingDocuments.documents
-							: []
-						).length
-							? [
-									{
-										text: 'Manage',
-										visuallyHiddenText: 'New supporting documents',
-										href: mapDocumentManageUrl(
-											appellantCaseData.appealId,
-											isFolderInfo(appellantCaseData.documents.newSupportingDocuments)
-												? appellantCaseData.documents.newSupportingDocuments.folderId
-												: undefined
-										)
-									}
-							  ]
-							: []),
-						{
-							text: 'Add',
-							visuallyHiddenText: 'New supporting documents',
-							href: displayPageFormatter.formatDocumentActionLink(
-								appellantCaseData.appealId,
-								appellantCaseData.documents.newSupportingDocuments,
+								appellantCaseData.documents.appellantStatement,
 								documentUploadUrlTemplate
 							)
 						}
@@ -866,13 +563,13 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 	mappedData.additionalDocuments = {
 		id: 'additional-documents',
 		display: {
-			...((isFolderInfo(appellantCaseData.documents.additionalDocuments)
-				? appellantCaseData.documents.additionalDocuments.documents
+			...((isFolderInfo(appellantCaseData.documents.appellantCaseCorrespondence)
+				? appellantCaseData.documents.appellantCaseCorrespondence.documents || []
 				: []
 			).length > 0
 				? {
-						summaryListItems: (isFolderInfo(appellantCaseData.documents.additionalDocuments)
-							? appellantCaseData.documents.additionalDocuments.documents
+						summaryListItems: (isFolderInfo(appellantCaseData.documents.appellantCaseCorrespondence)
+							? appellantCaseData.documents.appellantCaseCorrespondence.documents || []
 							: []
 						).map((document) => ({
 							key: {
@@ -882,7 +579,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 							value: displayPageFormatter.formatDocumentValues(
 								appellantCaseData.appealId,
 								[document],
-								document.isLateEntry
+								document.latestDocumentVersion?.isLateEntry || false
 							),
 							actions: {
 								items: []

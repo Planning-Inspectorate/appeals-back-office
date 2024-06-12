@@ -18,6 +18,11 @@ async function minifySource(generated, directory) {
 	let outputSize = 0;
 
 	for (const fileName of generated) {
+		// Skip source map files
+		if (fileName.endsWith('.map')) {
+			continue;
+		}
+
 		const target = path.join(directory, fileName);
 		const raw = await fs.readFile(target, 'utf8');
 
