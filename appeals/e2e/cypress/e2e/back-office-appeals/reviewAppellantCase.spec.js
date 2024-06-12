@@ -50,7 +50,7 @@ describe('Appeals feature', () => {
 		appealsListPage.selectRadioButtonByValue('Incomplete');
 		appealsListPage.clickButtonByText('Continue');
 		appealsListPage.chooseCheckboxByIndex(3);
-		appealsListPage.fillInput('Hello here is some extra info, have a nice day 7384_+!£ =');
+		appealsListPage.fillInput1('Hello here is some extra info, have a nice day 7384_+!£ =');
 		appealsListPage.clickButtonByText('Continue');
 		updateDueDatePage.enterDateDay('30');
 		updateDueDatePage.enterDateMonth('12');
@@ -70,9 +70,9 @@ describe('Appeals feature', () => {
 		appealsListPage.selectRadioButtonByValue('Incomplete');
 		appealsListPage.clickButtonByText('Continue');
 		appealsListPage.chooseCheckboxByIndex(3);
-		appealsListPage.fillInput('Hello here is some extra info, have a nice day 7384_+!£ =');
-		appealsListPage.addAnotherButton();
 		appealsListPage.fillInput1('Hello here is some extra info, have a nice day 7384_+!£ =');
+		appealsListPage.addAnotherButton();
+		appealsListPage.fillInput2('Hello here is some extra info, have a nice day 7384_+!£ =');
 		appealsListPage.clickButtonByText('Continue');
 		updateDueDatePage.enterDateDay('30');
 		updateDueDatePage.enterDateMonth('12');
