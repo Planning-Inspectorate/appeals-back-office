@@ -6,6 +6,7 @@ export class AppealsListPage extends Page {
 	// Examples
 
 	_selectors = {
+		input1: '.govuk-input',
 		link: 'govuk-link',
 		uniqueSelector: 'selector-name',
 		summaryListValue: '.govuk-summary-list__value'
@@ -32,10 +33,19 @@ export class AppealsListPage extends Page {
 	appealsPageElements = {
 		answerCellAppeals: (answer) =>
 			cy.contains(this.selectors.summaryListValue, answer, { matchCase: false }),
-		link: () => cy.get(this._selectors.link)
+		link: () => cy.get(this._selectors.link),
+		input1: () => cy.get(this._selectors.input1)
+	};
+
+	inputCheckboxes = {
+		input: () => cy.get(this.selectors.input1)
 	};
 
 	//ACTIONS
+
+	clickAccordionByButton(text) {
+		this.basePageElements.accordionButton(text).click();
+	}
 
 	clickAppealFromList(position) {
 		this.basePageElements
@@ -45,8 +55,12 @@ export class AppealsListPage extends Page {
 			.click();
 	}
 
+	clickStartCaseBanner(text) {
+		this.basePageElements.bannerLink(text).click();
+	}
+
 	clickReviewLpaq(position) {
-		this.clickAccordionByText('Case documentation');
+		this.clickAccordionByButton('Documentation');
 		this.basePageElements
 			.tableCell()
 			.eq(position - 2)
@@ -55,31 +69,33 @@ export class AppealsListPage extends Page {
 	}
 
 	clickReviewAppellantCase(position) {
-		this.clickAccordionByText('Case documentation');
+		this.clickAccordionByButton('Documentation');
 		this.basePageElements
 			.tableCell()
-			.eq(position - 2)
+			.eq(position - 1)
 			.find(this.selectors.link)
 			.click();
 	}
 
 	clickChangeVisitTypeHasCaseTimetable() {
-		this.clickAccordionByText('Site details');
-		cy.get(
-			'#accordion-default1024-content-2 > .govuk-summary-list > :nth-child(7) > .govuk-summary-list__actions > .govuk-link'
-		).click();
+		this.clickAccordionByText('Timetable');
+		cy.get('.appeal-site-visit > .govuk-summary-list__actions > .govuk-link').click();
 	}
 
 	clickChangeVisitTypeHasSiteDetails() {
-		this.clickAccordionByText('Site details');
-		cy.get(':nth-child(8) > .govuk-summary-list__actions > .govuk-link').click();
+		this.clickAccordionByText('Site');
+		cy.get(
+			':nth-child(3) > .govuk-accordion__section-header > .govuk-accordion__section-heading > .govuk-accordion__section-button'
+		)
+			//cy.get('.appeal-site-visit > .govuk-summary-list__actions > .govuk-link')
+			.click();
 	}
 	fillInput(text, index = 0) {
 		this.basePageElements.input().eq(index).clear().type(text);
 	}
 
 	fillInput1(text, index = 1) {
-		this.basePageElements.input().eq(index).clear().type(text);
+		this.appealsPageElements.input1().eq(index).clear().type(text);
 	}
 
 	fillInput2(text, index = 2) {
@@ -87,6 +103,10 @@ export class AppealsListPage extends Page {
 	}
 
 	addAnotherButton() {
+		cy.get('#conditional-incompleteReason-4 > .pins-add-another > .govuk-button').click();
+	}
+
+	addAnotherButtonLpaq() {
 		cy.get('#conditional-incompleteReason-2 > .pins-add-another > .govuk-button').click();
 	}
 
@@ -96,14 +116,14 @@ export class AppealsListPage extends Page {
 	}
 
 	selectAppellantOutcome(outcome) {
-		this.clickAccordionByText('Case documentation');
+		this.clickAccordionByText('Documentation');
 		cy.contains(this.selectors.tableHeader, 'Appellant case');
 		this.clickAppealFromList(2);
 		this.selectRadioButtonByValue(outcome);
 	}
 
 	selectLpaqOutcome(outcome) {
-		this.clickAccordionByText('Case documentation');
+		this.clickAccordionByText('Documentation');
 		cy.contains(this.selectors.tableHeader, 'LPA Questionnaire');
 		this.clickAppealFromList(3);
 		this.selectRadioButtonByValue(outcome);
