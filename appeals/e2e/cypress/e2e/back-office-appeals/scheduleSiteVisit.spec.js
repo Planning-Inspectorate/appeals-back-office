@@ -55,7 +55,7 @@ describe('Appeals feature', () => {
 		updateDueDatePage.enterVisitMonth('12');
 		updateDueDatePage.enterVisitYear('2025');
 		updateDueDatePage.removeVisitStartTimeHour();
-		updateDueDatePage.removeVisitStartTimeHour();
+		updateDueDatePage.removeVisitStartTimeMinute();
 		updateDueDatePage.removeVisitEndTimeHour();
 		updateDueDatePage.removeVisitEndTimeMinute();
 		appealsListPage.clickButtonByText('Confirm');
