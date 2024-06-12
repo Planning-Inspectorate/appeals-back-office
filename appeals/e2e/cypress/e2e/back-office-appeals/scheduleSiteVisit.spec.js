@@ -12,7 +12,7 @@ describe('Appeals feature', () => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
-	it('Change to acommpanied site visit from case timetable', () => {
+	it('Change to accommpanied site visit from case timetable', () => {
 		cy.visit('/appeals-service/all-cases');
 		appealsListPage.clickAppealFromList(30);
 		appealsListPage.clickChangeVisitTypeHasCaseTimetable();
@@ -46,7 +46,7 @@ describe('Appeals feature', () => {
 			appealsListPage.checkAnswer('Visit type', 'Access required');
 	});
 
-	it('Change to Unacommpanied site visit without time from case timetable', () => {
+	it('Change to Unaccommpanied site visit without time from case timetable', () => {
 		cy.visit('/appeals-service/all-cases');
 		appealsListPage.clickAppealFromList(30);
 		appealsListPage.clickChangeVisitTypeHasCaseTimetable();
@@ -63,7 +63,7 @@ describe('Appeals feature', () => {
 			appealsListPage.checkAnswer('Visit type', 'Unaccompanied');
 	});
 
-	it('Change to Unacommpanied site visit with time from case timetable', () => {
+	it('Change to Unaccommpanied site visit with time from case timetable', () => {
 		cy.visit('/appeals-service/all-cases');
 		appealsListPage.clickAppealFromList(30);
 		appealsListPage.clickChangeVisitTypeHasCaseTimetable();
@@ -80,7 +80,7 @@ describe('Appeals feature', () => {
 			appealsListPage.checkAnswer('Visit type', 'Unaccompanied');
 	});
 
-	it.skip('Change to acommpanied site visit from Site details', () => {
+	it.skip('Change to accommpanied site visit from Site details', () => {
 		cy.visit('/appeals-service/all-cases');
 		appealsListPage.clickAppealFromList(30);
 		appealsListPage.clickChangeVisitTypeHasSiteDetails();
@@ -100,7 +100,7 @@ describe('Appeals feature', () => {
 			appealsListPage.checkAnswer('Visit Type', 'Access required');
 	});
 
-	it.skip('Change to Unacommpanied site visit from Site details', () => {
+	it.skip('Change to Unaccommpanied site visit from Site details', () => {
 		cy.visit('/appeals-service/all-cases');
 		appealsListPage.clickAppealFromList(30);
 		appealsListPage.clickChangeVisitTypeHasSiteDetails();
