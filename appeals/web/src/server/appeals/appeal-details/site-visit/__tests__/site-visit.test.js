@@ -3,6 +3,19 @@ import nock from 'nock';
 import supertest from 'supertest';
 import { createTestEnvironment } from '#testing/index.js';
 import { siteVisitData, appealData } from '#testing/app/fixtures/referencedata.js';
+import { getSiteVisitChangeType } from '../site-visit.mapper.js';
+
+/**
+ * @typedef {import('../site-visit.mapper.js').ScheduleOrManageSiteVisitConfirmationPageType} ScheduleOrManageSiteVisitConfirmationPageType
+ */
+
+/**
+ * @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal
+ */
+
+/**
+ * @typedef {import('../site-visit.service.js').UpdateOrCreateSiteVisitParameters} UpdateOrCreateSiteVisitParameters
+ */
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -220,7 +233,7 @@ describe('site-visit', () => {
 
 		it('should re-render the schedule visit page with the expected error message if visit end time hour is invalid', async () => {
 			const response = await request.post(`${baseUrl}/1${siteVisitPath}/schedule-visit`).send({
-				'visit-type': 'accompanied',
+				'visit-type': 'accessRequired',
 				'visit-date-day': '1',
 				'visit-date-month': '1',
 				'visit-date-year': '3000',
@@ -237,7 +250,7 @@ describe('site-visit', () => {
 
 		it('should re-render the schedule visit page with the expected error message if visit end time minute is invalid', async () => {
 			const response = await request.post(`${baseUrl}/1${siteVisitPath}/schedule-visit`).send({
-				'visit-type': 'accompanied',
+				'visit-type': 'accessRequired',
 				'visit-date-day': '1',
 				'visit-date-month': '1',
 				'visit-date-year': '3000',
@@ -254,7 +267,7 @@ describe('site-visit', () => {
 
 		it('should re-render the schedule visit page with the expected error message if visit start time is not before end time', async () => {
 			const response = await request.post(`${baseUrl}/1${siteVisitPath}/schedule-visit`).send({
-				'visit-type': 'accompanied',
+				'visit-type': 'accessRequired',
 				'visit-date-day': '1',
 				'visit-date-month': '1',
 				'visit-date-year': '3000',
@@ -271,7 +284,7 @@ describe('site-visit', () => {
 
 		it('should redirect to the site visit scheduled confirmation page if all required fields are populated and valid', async () => {
 			const response = await request.post(`${baseUrl}/1${siteVisitPath}/schedule-visit`).send({
-				'visit-type': 'accompanied',
+				'visit-type': 'accessRequired',
 				'visit-date-day': '1',
 				'visit-date-month': '1',
 				'visit-date-year': '3000',
@@ -297,6 +310,81 @@ describe('site-visit', () => {
 			});
 
 			expect(response.statusCode).toBe(302);
+		});
+
+		it('should re-render the schedule visit page with the expected error message if visit type is accompanied and start time is not populated', async () => {
+			const response = await request.post(`${baseUrl}/1${siteVisitPath}/schedule-visit`).send({
+				'visit-type': 'accompanied',
+				'visit-date-day': '1',
+				'visit-date-month': '1',
+				'visit-date-year': '3000',
+				'visit-start-time-hour': '',
+				'visit-start-time-minute': '',
+				'visit-end-time-hour': '',
+				'visit-end-time-minute': ''
+			});
+
+			const element = parseHtml(response.text, { rootElement: '.govuk-error-summary' });
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Start time hour cannot be empty</a>');
+			expect(element.innerHTML).toContain('Start time minute cannot be empty</a>');
+		});
+
+		it('should redirect to the site visit scheduled confirmation page if visit type is accompanied and end time is not populated but all other required fields are populated and valid', async () => {
+			const response = await request.post(`${baseUrl}/1${siteVisitPath}/schedule-visit`).send({
+				'visit-type': 'accompanied',
+				'visit-date-day': '1',
+				'visit-date-month': '1',
+				'visit-date-year': '3000',
+				'visit-start-time-hour': '11',
+				'visit-start-time-minute': '00',
+				'visit-end-time-hour': '',
+				'visit-end-time-minute': ''
+			});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/site-visit/visit-scheduled/new'
+			);
+		});
+
+		it('should re-render the schedule visit page with the expected error message if visit type is accessRequired and start time is not populated but all other required fields are populated and valid', async () => {
+			const response = await request.post(`${baseUrl}/1${siteVisitPath}/schedule-visit`).send({
+				'visit-type': 'accompanied',
+				'visit-date-day': '1',
+				'visit-date-month': '1',
+				'visit-date-year': '3000',
+				'visit-start-time-hour': '',
+				'visit-start-time-minute': '',
+				'visit-end-time-hour': '11',
+				'visit-end-time-minute': '30'
+			});
+
+			const element = parseHtml(response.text, { rootElement: '.govuk-error-summary' });
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Start time hour cannot be empty</a>');
+			expect(element.innerHTML).toContain('Start time minute cannot be empty</a>');
+		});
+
+		it('should re-render the schedule visit page with the expected error message if visit type is accessRequired and end time is not populated but all other required fields are populated and valid', async () => {
+			const response = await request.post(`${baseUrl}/1${siteVisitPath}/schedule-visit`).send({
+				'visit-type': 'accessRequired',
+				'visit-date-day': '1',
+				'visit-date-month': '1',
+				'visit-date-year': '3000',
+				'visit-start-time-hour': '11',
+				'visit-start-time-minute': '00',
+				'visit-end-time-hour': '',
+				'visit-end-time-minute': ''
+			});
+
+			const element = parseHtml(response.text, { rootElement: '.govuk-error-summary' });
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('End time hour cannot be empty</a>');
+			expect(element.innerHTML).toContain('End time minute cannot be empty</a>');
 		});
 	});
 
@@ -503,7 +591,7 @@ describe('site-visit', () => {
 
 		it('should re-render the manage visit page with the expected error message if visit end time hour is invalid', async () => {
 			const response = await request.post(`${baseUrl}/1${siteVisitPath}/manage-visit`).send({
-				'visit-type': 'accompanied',
+				'visit-type': 'accessRequired',
 				'visit-date-day': '1',
 				'visit-date-month': '1',
 				'visit-date-year': '3000',
@@ -520,7 +608,7 @@ describe('site-visit', () => {
 
 		it('should re-render the manage visit page with the expected error message if visit end time minute is invalid', async () => {
 			const response = await request.post(`${baseUrl}/1${siteVisitPath}/manage-visit`).send({
-				'visit-type': 'accompanied',
+				'visit-type': 'accessRequired',
 				'visit-date-day': '1',
 				'visit-date-month': '1',
 				'visit-date-year': '3000',
@@ -537,7 +625,7 @@ describe('site-visit', () => {
 
 		it('should re-render the manage visit page with the expected error message if visit start time is not before end time', async () => {
 			const response = await request.post(`${baseUrl}/1${siteVisitPath}/manage-visit`).send({
-				'visit-type': 'accompanied',
+				'visit-type': 'accessRequired',
 				'visit-date-day': '1',
 				'visit-date-month': '1',
 				'visit-date-year': '3000',
@@ -554,7 +642,7 @@ describe('site-visit', () => {
 
 		it('should redirect to the site visit managed confirmation page if all required fields are populated and valid', async () => {
 			const response = await request.post(`${baseUrl}/1${siteVisitPath}/manage-visit`).send({
-				'visit-type': 'accompanied',
+				'visit-type': 'accessRequired',
 				'visit-date-day': '1',
 				'visit-date-month': '1',
 				'visit-date-year': '3000',
@@ -682,7 +770,12 @@ describe('site-visit', () => {
 
 			nock('http://test/')
 				.patch('/appeals/1/site-visits/0')
-				.reply(200, { ...siteVisitData, visitStartTime: '', visitEndTime: '' });
+				.reply(200, {
+					...siteVisitData,
+					visitStartTime: '',
+					visitEndTime: '',
+					siteVisitChangeType: 'date-time'
+				});
 
 			let response = await request.post(`${baseUrl}/1${siteVisitPath}/manage-visit`).send({
 				'visit-type': 'unaccompanied',
@@ -696,6 +789,70 @@ describe('site-visit', () => {
 			});
 
 			expect(response.statusCode).toBe(302);
+		});
+	});
+
+	describe('getSiteVisitChangeType', () => {
+		/** @type {WebAppeal} */
+		let appealDetails;
+		/** @type {UpdateOrCreateSiteVisitParameters} */
+		let updateOrCreateSiteVisitParameters;
+
+		beforeEach(() => {
+			appealDetails = {
+				...appealData,
+				siteVisit: {
+					siteVisitId: 1,
+					visitDate: '2023-05-20T00:00:00Z',
+					visitType: 'unaccompanied',
+					visitStartTime: '10:00',
+					visitEndTime: '11:00'
+				}
+			};
+
+			updateOrCreateSiteVisitParameters = {
+				appealIdNumber: 1,
+				apiVisitType: 'unaccompanied',
+				visitDate: '2023-05-20',
+				visitStartTime: '10:00',
+				visitEndTime: '11:00',
+				previousVisitType: ''
+			};
+		});
+
+		it('should return "visit-type" if visit type has changed but not date and time', () => {
+			updateOrCreateSiteVisitParameters.apiVisitType = 'accompanied';
+
+			const result = getSiteVisitChangeType(appealDetails, updateOrCreateSiteVisitParameters);
+
+			expect(result).toBe('visit-type');
+			expect(updateOrCreateSiteVisitParameters.previousVisitType).toBe('unaccompanied');
+		});
+
+		it('should return "date-time" if date and time have changed but not visit type', () => {
+			updateOrCreateSiteVisitParameters.visitDate = '2023-05-21';
+
+			const result = getSiteVisitChangeType(appealDetails, updateOrCreateSiteVisitParameters);
+
+			expect(result).toBe('date-time');
+			expect(updateOrCreateSiteVisitParameters.previousVisitType).toBe('');
+		});
+
+		it('should return "all" if both visit type and date/time have changed', () => {
+			updateOrCreateSiteVisitParameters.apiVisitType = 'accompanied';
+			updateOrCreateSiteVisitParameters.visitDate = '2023-05-21';
+
+			const result = getSiteVisitChangeType(appealDetails, updateOrCreateSiteVisitParameters);
+
+			expect(result).toBe('all');
+			expect(updateOrCreateSiteVisitParameters.previousVisitType).toBe('unaccompanied');
+		});
+
+		it('should return "unchanged" if neither visit type nor date/time have changed', () => {
+			const result = getSiteVisitChangeType(appealDetails, updateOrCreateSiteVisitParameters);
+
+			expect(result).toBe('unchanged');
+			expect(updateOrCreateSiteVisitParameters.previousVisitType).toBe('');
 		});
 	});
 });

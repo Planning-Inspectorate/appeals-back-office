@@ -69,7 +69,7 @@ export const postValidDate = async (request, response) => {
 				: 'Something went wrong when completing appellant case review'
 		);
 
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };
 
@@ -98,7 +98,7 @@ const renderValidDatePage = async (request, response, apiErrors) => {
 		dateValidYear
 	);
 
-	return response.render('patterns/change-page.pattern.njk', {
+	return response.status(200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
 		errors
 	});
@@ -121,7 +121,7 @@ const renderDecisionValidConfirmationPage = async (request, response) => {
 
 	const pageContent = decisionValidConfirmationPage(appealId, appealReference);
 
-	response.render('appeals/confirmation.njk', {
+	response.status(200).render('appeals/confirmation.njk', {
 		pageContent
 	});
 };

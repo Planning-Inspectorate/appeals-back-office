@@ -1,4 +1,5 @@
 import { APPEAL_TYPE_SHORTHAND_FPA, APPEAL_TYPE_SHORTHAND_HAS } from '#endpoints/constants.js';
+import { STATUSES } from '@pins/appeals/constants/state.js';
 
 import {
 	azureAdUserId,
@@ -16,6 +17,41 @@ export const auditTrails = [
 		user: {
 			azureAdUserId
 		}
+	},
+	{
+		details: 'Document blank.pdf uploaded (version 1)',
+		loggedAt: new Date().toISOString(),
+		user: {
+			azureAdUserId
+		}
+	},
+	{
+		details: 'Version 1 of document blank.pdf received date changed',
+		loggedAt: new Date().toISOString(),
+		user: {
+			azureAdUserId
+		}
+	},
+	{
+		details: 'Document blank.pdf (version 1) marked as redacted',
+		loggedAt: new Date().toISOString(),
+		user: {
+			azureAdUserId
+		}
+	},
+	{
+		details: 'Document blank.pdf (version 1) marked as unredacted',
+		loggedAt: new Date().toISOString(),
+		user: {
+			azureAdUserId
+		}
+	},
+	{
+		details: 'Document blank.pdf (version 1) marked as requiring no redaction',
+		loggedAt: new Date().toISOString(),
+		user: {
+			azureAdUserId
+		}
 	}
 ];
 
@@ -24,7 +60,7 @@ export const householdAppeal = {
 	reference: '1345264',
 	appealStatus: [
 		{
-			status: 'assign_case_officer',
+			status: STATUSES.ASSIGN_CASE_OFFICER,
 			valid: true
 		}
 	],
@@ -32,20 +68,25 @@ export const householdAppeal = {
 	lpa: {
 		name: 'Maidstone Borough Council',
 		lpaCode: 'MAID',
-		id: 1
+		id: 1,
+		email: 'maid@lpa-email.gov.uk'
 	},
 	planningApplicationReference: '48269/APP/2021/1482',
 	appellant: {
 		id: 1,
 		firstName: 'Lee',
 		lastName: 'Thornton',
-		email: 'test@1367.com'
+		email: 'test@1367.com',
+		phoneNumber: '01234 567 890',
+		organisationName: 'Thornton LTD'
 	},
 	agent: {
 		id: 1,
 		firstName: 'John',
 		lastName: 'Smith',
-		email: 'test@136s7.com'
+		email: 'test@136s7.com',
+		phoneNumber: '09876 543 210',
+		organisationName: 'Smith Inc.'
 	},
 	createdAt: new Date(2022, 4, 18),
 	address: {
@@ -83,6 +124,8 @@ export const householdAppeal = {
 		isSiteFullyOwned: false,
 		isSitePartiallyOwned: true,
 		isSiteVisibleFromPublicRoad: false,
+		doesSiteRequireInspectorAccess: true,
+		inspectorAccessDetails: 'Small dog big character',
 		knowledgeOfOtherLandowners: {
 			name: 'Some'
 		},
@@ -174,31 +217,11 @@ export const householdAppeal = {
 			}
 		],
 		meetsOrExceedsThresholdOrCriteriaInColumn2: null,
-		neighbouringSiteContact: [
-			{
-				addressId: 1,
-				firstName: 'Eva',
-				id: 1,
-				lastName: 'Sharma',
-				lpaQuestionnaireId: 1,
-				telephone: '01234567891',
-				email: 'eva.sharma@example.com',
-				address: {
-					id: 1,
-					addressLine1: '44 Rivervale',
-					addressLine2: null,
-					addressTown: 'Bridport',
-					postcode: 'DT6 5RN',
-					addressCounty: null,
-					addressCountry: null
-				}
-			}
-		],
 		procedureType: {
 			name: 'Written'
 		},
 		procedureTypeId: 3,
-		receivedAt: null,
+		receivedAt: '2022-05-17T23:00:00.000Z',
 		scheduleType: {
 			name: 'Schedule 1'
 		},
@@ -249,7 +272,8 @@ export const householdAppealAppellantCaseIncomplete = {
 		...householdAppeal.appellantCase,
 		...incompleteAppellantCaseOutcome
 	},
-	id: 3
+	id: 3,
+	dueDate: '2099-07-14T01:00:00.000Z'
 };
 
 export const householdAppealAppellantCaseInvalid = {
@@ -318,3 +342,15 @@ export const linkedAppeals = [
 		externalSource: true
 	}
 ];
+
+export const serviceUser = {
+	id: 1,
+	organisationName: 'Fury LTD',
+	firstName: 'Nick',
+	middleName: null,
+	lastName: 'Fury',
+	email: 'nick.fury@mail.com',
+	website: null,
+	phoneNumber: null,
+	addressId: null
+};

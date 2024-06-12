@@ -1,9 +1,11 @@
-import { ERROR_FAILED_TO_SAVE_DATA, CONFIG_APPEAL_STAGES } from '#endpoints/constants.js';
+import { ERROR_FAILED_TO_SAVE_DATA } from '#endpoints/constants.js';
+import { STAGE } from '@pins/appeals/constants/documents.js';
 import { getFoldersForAppeal } from '#endpoints/documents/documents.service.js';
 import { formatLpaQuestionnaire } from './lpa-questionnaires.formatter.js';
 import { updateLPAQuestionaireValidationOutcome } from './lpa-questionnaires.service.js';
 import lpaQuestionnaireRepository from '#repositories/lpa-questionnaire.repository.js';
 import logger from '#utils/logger.js';
+import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -16,7 +18,7 @@ import logger from '#utils/logger.js';
  */
 const getLpaQuestionnaireById = async (req, res) => {
 	const { appeal } = req;
-	const folders = await getFoldersForAppeal(appeal, CONFIG_APPEAL_STAGES.lpaQuestionnaire);
+	const folders = await getFoldersForAppeal(appeal, STAGE.LPAQUESTIONNAIRE);
 	const formattedAppeal = formatLpaQuestionnaire(appeal, folders);
 	return res.send(formattedAppeal);
 };
@@ -34,10 +36,15 @@ const updateLPAQuestionnaireById = async (req, res) => {
 			designatedSites,
 			doesAffectAListedBuilding,
 			doesAffectAScheduledMonument,
+			doesSiteRequireInspectorAccess,
+			doesSiteHaveHealthAndSafetyIssues,
 			hasCompletedAnEnvironmentalStatement,
 			hasProtectedSpecies,
 			hasTreePreservationOrder,
+			healthAndSafetyDetails,
 			includesScreeningOption,
+			inspectorAccessDetails,
+			isAffectingNeighbouringSites,
 			isConservationArea,
 			isEnvironmentalStatementRequired,
 			isGypsyOrTravellerSite,
@@ -45,6 +52,7 @@ const updateLPAQuestionnaireById = async (req, res) => {
 			isPublicRightOfWay,
 			isSensitiveArea,
 			isTheSiteWithinAnAONB,
+			isCorrectAppealType,
 			meetsOrExceedsThresholdOrCriteriaInColumn2,
 			scheduleType,
 			sensitiveAreaDetails
@@ -54,26 +62,40 @@ const updateLPAQuestionnaireById = async (req, res) => {
 	} = req;
 	const lpaQuestionnaireId = Number(params.lpaQuestionnaireId);
 	const azureAdUserId = String(req.get('azureAdUserId'));
+	const siteAddress = appeal.address
+		? formatAddressSingleLine(appeal.address)
+		: 'Address not available';
+	const notifyClient = req.notifyClient;
 
 	try {
 		validationOutcome
-			? (body.lpaQuestionnaireDueDate = await updateLPAQuestionaireValidationOutcome({
-					appeal,
-					azureAdUserId,
-					data: body,
-					lpaQuestionnaireId,
-					validationOutcome
-			  }))
+			? (body.lpaQuestionnaireDueDate = await updateLPAQuestionaireValidationOutcome(
+					{
+						appeal,
+						azureAdUserId,
+						data: body,
+						lpaQuestionnaireId,
+						validationOutcome,
+						siteAddress
+					},
+					notifyClient
+			  ))
 			: await lpaQuestionnaireRepository.updateLPAQuestionnaireById(lpaQuestionnaireId, {
 					designatedSites,
 					doesAffectAListedBuilding,
 					doesAffectAScheduledMonument,
+					doesSiteRequireInspectorAccess,
+					doesSiteHaveHealthAndSafetyIssues,
 					hasCompletedAnEnvironmentalStatement,
 					hasProtectedSpecies,
 					hasTreePreservationOrder,
+					healthAndSafetyDetails,
 					includesScreeningOption,
+					inspectorAccessDetails,
 					isConservationArea,
 					isEnvironmentalStatementRequired,
+					isAffectingNeighbouringSites,
+					isCorrectAppealType,
 					isGypsyOrTravellerSite,
 					isListedBuilding,
 					isPublicRightOfWay,
@@ -98,11 +120,16 @@ const updateLPAQuestionnaireById = async (req, res) => {
 				designatedSites,
 				doesAffectAListedBuilding,
 				doesAffectAScheduledMonument,
+				doesSiteRequireInspectorAccess,
+				doesSiteHaveHealthAndSafetyIssues,
 				hasCompletedAnEnvironmentalStatement,
 				hasProtectedSpecies,
 				hasTreePreservationOrder,
+				healthAndSafetyDetails,
 				includesScreeningOption,
+				inspectorAccessDetails,
 				isConservationArea,
+				isAffectingNeighbouringSites,
 				isEnvironmentalStatementRequired,
 				isGypsyOrTravellerSite,
 				isListedBuilding,

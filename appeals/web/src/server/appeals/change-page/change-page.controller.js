@@ -33,19 +33,19 @@ const renderChangePage = async (request, response) => {
 				break;
 			}
 			default:
-				return response.render('app/500.njk');
+				return response.status(500).render('app/500.njk');
 		}
 
 		if (mappedPageContent === undefined) {
-			return response.render('app/404.njk');
+			return response.status(404).render('app/404.njk');
 		} else {
-			return response.render('patterns/change-page.pattern.njk', {
+			return response.status(200).render('patterns/change-page.pattern.njk', {
 				pageContent: mappedPageContent
 			});
 		}
 	} catch (error) {
 		logger.error(error);
-		return response.render('app/404.njk');
+		return response.status(404).render('app/404.njk');
 	}
 };
 

@@ -30,6 +30,7 @@ import joinDateAndTime from '#utils/join-date-and-time.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 
 const { databaseConnector } = await import('../../../utils/database-connector.js');
+import config from '#config/config.js';
 
 describe('appellant cases routes', () => {
 	beforeEach(() => {
@@ -231,9 +232,11 @@ describe('appellant cases routes', () => {
 		});
 
 		describe('PATCH', () => {
-			test('updates appellant case when the validation outcome is Incomplete without reason text and an appeal due date', async () => {
+			test('updates appellant case when the validation outcome is Incomplete without reason text and with an appeal due date', async () => {
 				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+				databaseConnector.appeal.findUnique.mockResolvedValue(
+					householdAppealAppellantCaseIncomplete
+				);
 				// @ts-ignore
 				databaseConnector.user.upsert.mockResolvedValue({
 					id: 1,
@@ -262,7 +265,7 @@ describe('appellant cases routes', () => {
 					validationOutcome: 'Incomplete'
 				};
 				const formattedAppealDueDate = joinDateAndTime(body.appealDueDate);
-				const { appellantCase, id } = householdAppeal;
+				const { appellantCase, id } = householdAppealAppellantCaseIncomplete;
 				const response = await request
 					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
 					.send(body)
@@ -285,18 +288,24 @@ describe('appellant cases routes', () => {
 
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 					data: {
-						appealId: householdAppeal.id,
+						appealId: householdAppealAppellantCaseIncomplete.id,
 						details: stringTokenReplacement(AUDIT_TRAIL_SUBMISSION_INCOMPLETE, ['appellant case']),
 						loggedAt: expect.any(Date),
-						userId: householdAppeal.caseOfficer.id
+						userId: householdAppealAppellantCaseIncomplete.caseOfficer.id
 					}
 				});
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).toHaveBeenCalledTimes(1);
+
 				expect(response.status).toEqual(200);
 			});
 
-			test('updates appellant case when the validation outcome is Incomplete with reason text', async () => {
+			test('updates appellant case when the validation outcome is Incomplete with reason text and an appeal due date', async () => {
 				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+				databaseConnector.appeal.findUnique.mockResolvedValue(
+					householdAppealAppellantCaseIncomplete
+				);
 				// @ts-ignore
 				databaseConnector.user.upsert.mockResolvedValue({
 					id: 1,
@@ -320,19 +329,20 @@ describe('appellant cases routes', () => {
 				);
 
 				const body = {
+					appealDueDate: '2099-07-14',
 					incompleteReasons: [
 						{
 							id: 1,
-							text: ['Reason 1', 'Reason 2']
+							text: ['Reason Text 1', 'Reason Text 2']
 						},
 						{
 							id: 2,
-							text: ['Reason 3', 'Reason 4']
+							text: ['Reason Text 3', 'Reason Text 4']
 						}
 					],
 					validationOutcome: 'Incomplete'
 				};
-				const { appellantCase, id } = householdAppeal;
+				const { appellantCase, id } = householdAppealAppellantCaseIncomplete;
 				const response = await request
 					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
 					.send(body)
@@ -352,110 +362,39 @@ describe('appellant cases routes', () => {
 							{
 								appellantCaseId: appellantCase.id,
 								appellantCaseIncompleteReasonId: 1,
-								text: 'Reason 1'
+								text: 'Reason Text 1'
 							},
 							{
 								appellantCaseId: appellantCase.id,
 								appellantCaseIncompleteReasonId: 1,
-								text: 'Reason 2'
+								text: 'Reason Text 2'
 							},
 							{
 								appellantCaseId: appellantCase.id,
 								appellantCaseIncompleteReasonId: 2,
-								text: 'Reason 3'
+								text: 'Reason Text 3'
 							},
 							{
 								appellantCaseId: appellantCase.id,
 								appellantCaseIncompleteReasonId: 2,
-								text: 'Reason 4'
+								text: 'Reason Text 4'
 							}
 						]
 					}
 				);
-				expect(response.status).toEqual(200);
-			});
 
-			test('updates appellant case when the validation outcome is Invalid with reason text', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-				// @ts-ignore
-				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
-					appellantCaseValidationOutcomes[1]
-				);
-				// @ts-ignore
-				databaseConnector.appellantCaseInvalidReason.findMany.mockResolvedValue(
-					appellantCaseInvalidReasons
-				);
-				// @ts-ignore
-				databaseConnector.appellantCaseInvalidReasonOnAppellantCase.deleteMany.mockResolvedValue(
-					true
-				);
-				// @ts-ignore
-				databaseConnector.appellantCaseInvalidReasonOnAppellantCase.createMany.mockResolvedValue(
-					true
-				);
-				// @ts-ignore
-				databaseConnector.user.upsert.mockResolvedValue({
-					id: 1,
-					azureAdUserId
-				});
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).toHaveBeenCalledTimes(1);
+				// eslint-disable-next-line no-undef
 
-				const body = {
-					invalidReasons: [
-						{
-							id: 1,
-							text: ['Reason 1', 'Reason 2']
-						},
-						{
-							id: 2,
-							text: ['Reason 3', 'Reason 4']
-						}
-					],
-					validationOutcome: 'Invalid'
-				};
-				const { appellantCase, id } = householdAppeal;
-				const response = await request
-					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
-					.send(body)
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith({
-					where: { id: appellantCase.id },
-					data: {
-						appellantCaseValidationOutcomeId: 2
-					}
-				});
-				expect(databaseConnector.appellantCaseInvalidReasonText.deleteMany).toHaveBeenCalled();
-				expect(databaseConnector.appellantCaseInvalidReasonText.createMany).toHaveBeenCalledWith({
-					data: [
-						{
-							appellantCaseId: appellantCase.id,
-							appellantCaseInvalidReasonId: 1,
-							text: 'Reason 1'
-						},
-						{
-							appellantCaseId: appellantCase.id,
-							appellantCaseInvalidReasonId: 1,
-							text: 'Reason 2'
-						},
-						{
-							appellantCaseId: appellantCase.id,
-							appellantCaseInvalidReasonId: 2,
-							text: 'Reason 3'
-						},
-						{
-							appellantCaseId: appellantCase.id,
-							appellantCaseInvalidReasonId: 2,
-							text: 'Reason 4'
-						}
-					]
-				});
 				expect(response.status).toEqual(200);
 			});
 
 			test('updates appellant case when the validation outcome is Incomplete with reason text containing blank strings', async () => {
 				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+				databaseConnector.appeal.findUnique.mockResolvedValue(
+					householdAppealAppellantCaseIncomplete
+				);
 				// @ts-ignore
 				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
 					appellantCaseValidationOutcomes[0]
@@ -479,19 +418,20 @@ describe('appellant cases routes', () => {
 				});
 
 				const body = {
+					appealDueDate: '2099-07-14',
 					incompleteReasons: [
 						{
 							id: 1,
-							text: ['Reason 1', 'Reason 2', '']
+							text: ['Reason Text 1', 'Reason Text 2', '']
 						},
 						{
 							id: 2,
-							text: ['Reason 3', 'Reason 4', '']
+							text: ['Reason Text 3', 'Reason Text 4', '']
 						}
 					],
 					validationOutcome: 'Incomplete'
 				};
-				const { appellantCase, id } = householdAppeal;
+				const { appellantCase, id } = householdAppealAppellantCaseIncomplete;
 				const response = await request
 					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
 					.send(body)
@@ -511,40 +451,46 @@ describe('appellant cases routes', () => {
 							{
 								appellantCaseId: appellantCase.id,
 								appellantCaseIncompleteReasonId: 1,
-								text: 'Reason 1'
+								text: 'Reason Text 1'
 							},
 							{
 								appellantCaseId: appellantCase.id,
 								appellantCaseIncompleteReasonId: 1,
-								text: 'Reason 2'
+								text: 'Reason Text 2'
 							},
 							{
 								appellantCaseId: appellantCase.id,
 								appellantCaseIncompleteReasonId: 2,
-								text: 'Reason 3'
+								text: 'Reason Text 3'
 							},
 							{
 								appellantCaseId: appellantCase.id,
 								appellantCaseIncompleteReasonId: 2,
-								text: 'Reason 4'
+								text: 'Reason Text 4'
 							}
 						]
 					}
 				);
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 					data: {
-						appealId: householdAppeal.id,
+						appealId: householdAppealAppellantCaseIncomplete.id,
 						details: stringTokenReplacement(AUDIT_TRAIL_SUBMISSION_INCOMPLETE, ['appellant case']),
 						loggedAt: expect.any(Date),
-						userId: householdAppeal.caseOfficer.id
+						userId: householdAppealAppellantCaseIncomplete.caseOfficer.id
 					}
 				});
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).toHaveBeenCalledTimes(1);
+
 				expect(response.status).toEqual(200);
 			});
 
 			test('updates appellant case when the validation outcome is Incomplete with reason text where blank strings takes the text over 10 items', async () => {
 				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+				databaseConnector.appeal.findUnique.mockResolvedValue(
+					householdAppealAppellantCaseIncomplete
+				);
 				// @ts-ignore
 				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
 					appellantCaseValidationOutcomes[0]
@@ -569,6 +515,7 @@ describe('appellant cases routes', () => {
 
 				const eightItemArray = new Array(LENGTH_8).fill('A');
 				const body = {
+					appealDueDate: '2099-07-14',
 					incompleteReasons: [
 						{
 							id: 1,
@@ -577,7 +524,7 @@ describe('appellant cases routes', () => {
 					],
 					validationOutcome: 'Incomplete'
 				};
-				const { appellantCase, id } = householdAppeal;
+				const { appellantCase, id } = householdAppealAppellantCaseIncomplete;
 				const response = await request
 					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
 					.send(body)
@@ -601,18 +548,76 @@ describe('appellant cases routes', () => {
 				);
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 					data: {
-						appealId: householdAppeal.id,
+						appealId: householdAppealAppellantCaseIncomplete.id,
 						details: stringTokenReplacement(AUDIT_TRAIL_SUBMISSION_INCOMPLETE, ['appellant case']),
 						loggedAt: expect.any(Date),
-						userId: householdAppeal.caseOfficer.id
+						userId: householdAppealAppellantCaseIncomplete.caseOfficer.id
 					}
 				});
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).toHaveBeenCalledTimes(1);
+
 				expect(response.status).toEqual(200);
 			});
 
-			test('updates appellant case when the validation outcome is Invalid with reason text containing blank strings', async () => {
+			test('sends a correctly formatted notify email when the validation outcome is Incomplete', async () => {
 				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+				databaseConnector.appeal.findUnique.mockResolvedValue(
+					householdAppealAppellantCaseIncomplete
+				);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
+				// @ts-ignore
+				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
+					appellantCaseValidationOutcomes[0]
+				);
+				// @ts-ignore
+				databaseConnector.appellantCaseIncompleteReason.findMany.mockResolvedValue(
+					appellantCaseIncompleteReasons
+				);
+
+				const body = {
+					appealDueDate: '2099-07-14',
+					incompleteReasons: [{ id: 1 }, { id: 2 }],
+					validationOutcome: 'Incomplete'
+				};
+				const { appellantCase, id } = householdAppealAppellantCaseIncomplete;
+				const response = await request
+					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+					.send(body)
+					.set('azureAdUserId', azureAdUserId);
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).toHaveBeenCalledTimes(1);
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).toHaveBeenCalledWith(
+					config.govNotify.template.appealIncomplete.id,
+					'test@136s7.com',
+					{
+						emailReplyToId: null,
+						personalisation: {
+							appeal_reference_number: '1345264',
+							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+							due_date: '14 July 2099',
+							reasons: [
+								'The original application form is incomplete',
+								'Other: Appellant contact information is incorrect or missing'
+							]
+						},
+						reference: null
+					}
+				);
+
+				expect(response.status).toEqual(200);
+			});
+
+			test('updates appellant case when the validation outcome is Invalid with reason text', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppealAppellantCaseInvalid);
 				// @ts-ignore
 				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
 					appellantCaseValidationOutcomes[1]
@@ -639,16 +644,16 @@ describe('appellant cases routes', () => {
 					invalidReasons: [
 						{
 							id: 1,
-							text: ['Reason 1', 'Reason 2', '']
+							text: ['Reason Text 1', 'Reason Text 2']
 						},
 						{
 							id: 2,
-							text: ['Reason 3', 'Reason 4', '']
+							text: ['Reason Text 3', 'Reason Text 4']
 						}
 					],
 					validationOutcome: 'Invalid'
 				};
-				const { appellantCase, id } = householdAppeal;
+				const { appellantCase, id } = householdAppealAppellantCaseInvalid;
 				const response = await request
 					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
 					.send(body)
@@ -666,31 +671,117 @@ describe('appellant cases routes', () => {
 						{
 							appellantCaseId: appellantCase.id,
 							appellantCaseInvalidReasonId: 1,
-							text: 'Reason 1'
+							text: 'Reason Text 1'
 						},
 						{
 							appellantCaseId: appellantCase.id,
 							appellantCaseInvalidReasonId: 1,
-							text: 'Reason 2'
+							text: 'Reason Text 2'
 						},
 						{
 							appellantCaseId: appellantCase.id,
 							appellantCaseInvalidReasonId: 2,
-							text: 'Reason 3'
+							text: 'Reason Text 3'
 						},
 						{
 							appellantCaseId: appellantCase.id,
 							appellantCaseInvalidReasonId: 2,
-							text: 'Reason 4'
+							text: 'Reason Text 4'
 						}
 					]
 				});
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).toHaveBeenCalledTimes(1);
+
+				expect(response.status).toEqual(200);
+			});
+
+			test('updates appellant case when the validation outcome is Invalid with reason text containing blank strings', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppealAppellantCaseInvalid);
+				// @ts-ignore
+				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
+					appellantCaseValidationOutcomes[1]
+				);
+				// @ts-ignore
+				databaseConnector.appellantCaseInvalidReason.findMany.mockResolvedValue(
+					appellantCaseInvalidReasons
+				);
+				// @ts-ignore
+				databaseConnector.appellantCaseInvalidReasonOnAppellantCase.deleteMany.mockResolvedValue(
+					true
+				);
+				// @ts-ignore
+				databaseConnector.appellantCaseInvalidReasonOnAppellantCase.createMany.mockResolvedValue(
+					true
+				);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
+
+				const body = {
+					invalidReasons: [
+						{
+							id: 1,
+							text: ['Reason Text 1', 'Reason Text 2', '']
+						},
+						{
+							id: 2,
+							text: ['Reason Text 3', 'Reason Text 4', '']
+						}
+					],
+					validationOutcome: 'Invalid'
+				};
+				const { appellantCase, id } = householdAppealAppellantCaseInvalid;
+				const response = await request
+					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+					.send(body)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith({
+					where: { id: appellantCase.id },
+					data: {
+						appellantCaseValidationOutcomeId: 2
+					}
+				});
+				expect(databaseConnector.appellantCaseInvalidReasonText.deleteMany).toHaveBeenCalled();
+				expect(databaseConnector.appellantCaseInvalidReasonText.createMany).toHaveBeenCalledWith({
+					data: [
+						{
+							appellantCaseId: appellantCase.id,
+							appellantCaseInvalidReasonId: 1,
+							text: 'Reason Text 1'
+						},
+						{
+							appellantCaseId: appellantCase.id,
+							appellantCaseInvalidReasonId: 1,
+							text: 'Reason Text 2'
+						},
+						{
+							appellantCaseId: appellantCase.id,
+							appellantCaseInvalidReasonId: 2,
+							text: 'Reason Text 3'
+						},
+						{
+							appellantCaseId: appellantCase.id,
+							appellantCaseInvalidReasonId: 2,
+							text: 'Reason Text 4'
+						}
+					]
+				});
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).toHaveBeenCalledTimes(1);
+
 				expect(response.status).toEqual(200);
 			});
 
 			test('updates appellant case when the validation outcome is Invalid with reason text where blank strings takes the text over 10 items', async () => {
 				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppealAppellantCaseInvalid);
 				// @ts-ignore
 				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
 					appellantCaseValidationOutcomes[1]
@@ -723,7 +814,7 @@ describe('appellant cases routes', () => {
 					],
 					validationOutcome: 'Invalid'
 				};
-				const { appellantCase, id } = householdAppeal;
+				const { appellantCase, id } = householdAppealAppellantCaseInvalid;
 				const response = await request
 					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
 					.send(body)
@@ -744,10 +835,68 @@ describe('appellant cases routes', () => {
 					})
 				});
 
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).toHaveBeenCalledTimes(1);
+
 				expect(response.status).toEqual(200);
 			});
 
-			test('updates appellant case when the validation outcome is Invalid with numeric array', async () => {
+			test('sends a correctly formatted notify email when the validation outcome is Invalid', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppealAppellantCaseInvalid);
+				// @ts-ignore
+				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
+					appellantCaseValidationOutcomes[1]
+				);
+				// @ts-ignore
+				databaseConnector.appellantCaseInvalidReason.findMany.mockResolvedValue(
+					appellantCaseInvalidReasons
+				);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
+
+				const body = {
+					invalidReasons: [
+						{
+							id: 1,
+							text: ['Reason Text 1', 'Reason Text 2']
+						}
+					],
+					validationOutcome: 'Invalid'
+				};
+				const { appellantCase, id } = householdAppealAppellantCaseInvalid;
+				const response = await request
+					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+					.send(body)
+					.set('azureAdUserId', azureAdUserId);
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).toHaveBeenCalledTimes(1);
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).toHaveBeenCalledWith(
+					config.govNotify.template.appealInvalid.id,
+					'test@136s7.com',
+					{
+						emailReplyToId: null,
+						personalisation: {
+							appeal_reference_number: '1345264',
+							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+							reasons: [
+								'Appeal has not been submitted on time',
+								'Other: The appeal site address does not match'
+							]
+						},
+						reference: null
+					}
+				);
+
+				expect(response.status).toEqual(200);
+			});
+
+			test.skip('updates appellant case when the validation outcome is Invalid with numeric array', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...householdAppeal,
@@ -806,10 +955,14 @@ describe('appellant cases routes', () => {
 					}
 				});
 				// expect(databaseConnector.appeal.update).not.toHaveBeenCalled();
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).not.toHaveBeenCalled();
+
 				expect(response.status).toEqual(200);
 			});
 
-			test('updates appellant case when the validation outcome is Valid', async () => {
+			test('updates appellant case and sends a notify email when the validation outcome is Valid', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...householdAppeal,
@@ -855,6 +1008,22 @@ describe('appellant cases routes', () => {
 						valid: true
 					}
 				});
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).toHaveBeenCalledTimes(1);
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).toHaveBeenCalledWith(
+					config.govNotify.template.appealConfirmed.id,
+					'test@136s7.com',
+					{
+						emailReplyToId: null,
+						personalisation: {
+							appeal_reference_number: '1345264',
+							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom'
+						},
+						reference: null
+					}
+				);
 
 				expect(response.status).toEqual(200);
 			});

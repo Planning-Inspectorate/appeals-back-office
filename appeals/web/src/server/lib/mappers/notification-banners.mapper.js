@@ -57,7 +57,7 @@ export const notificationBannerDefinitions = {
 		text: 'Document details updated'
 	},
 	documentDeleted: {
-		pages: ['appellantCase', 'lpaQuestionnaire'],
+		pages: ['appealDetails', 'appellantCase', 'lpaQuestionnaire'],
 		type: 'success',
 		text: 'Document removed'
 	},
@@ -87,9 +87,6 @@ export const notificationBannerDefinitions = {
 		type: 'success',
 		text: 'Horizon reference added'
 	},
-	foldersWithDraftDocuments: {
-		pages: ['appellantCase', 'lpaQuestionnaire']
-	},
 	assignCaseOfficer: {
 		pages: ['appealDetails']
 	},
@@ -110,18 +107,63 @@ export const notificationBannerDefinitions = {
 	},
 	neighbouringSiteAdded: {
 		type: 'success',
-		pages: ['appealDetails']
+		pages: ['appealDetails', 'lpaQuestionnaire']
 	},
 	neighbouringSiteUpdated: {
 		type: 'success',
-		pages: ['appealDetails']
+		pages: ['appealDetails', 'lpaQuestionnaire']
 	},
 	neighbouringSiteRemoved: {
 		type: 'success',
-		pages: ['appealDetails']
+		pages: ['appealDetails', 'lpaQuestionnaire']
 	},
 	appealValidAndReadyToStart: {
 		pages: ['appealDetails']
+	},
+	costsDocumentAdded: {
+		pages: ['appealDetails'],
+		type: 'success',
+		text: 'Costs document uploaded'
+	},
+	serviceUserUpdated: {
+		pages: ['appealDetails', 'appellantCase'],
+		type: 'success'
+	},
+	lpaReferenceUpdated: {
+		type: 'success',
+		pages: ['appealDetails', 'appellantCase', 'lpaQuestionnaire']
+	},
+	inspectorAccessUpdated: {
+		type: 'success',
+		pages: ['appealDetails', 'appellantCase', 'lpaQuestionnaire']
+	},
+	neighbouringSiteAffected: {
+		type: 'success',
+		pages: ['appealDetails', 'lpaQuestionnaire']
+	},
+	siteHealthAndSafetyUpdated: {
+		type: 'success',
+		pages: ['appealDetails', 'appellantCase', 'lpaQuestionnaire']
+	},
+	siteAddressUpdated: {
+		type: 'success',
+		pages: ['appellantCase'],
+		text: 'Site address updated'
+	},
+	siteOwnershipUpdated: {
+		type: 'success',
+		pages: ['appellantCase'],
+		text: 'Site ownership updated'
+	},
+	isAppealTypeCorrectUpdated: {
+		type: 'success',
+		pages: ['lpaQuestionnaire'],
+		text: 'Correct appeal type (LPA response) has been updated'
+	},
+	lpaqDueDateUpdated: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'LPA questionnaire due date changed'
 	}
 };
 

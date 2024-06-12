@@ -16,7 +16,7 @@ export const validateAppellantCase = async (req, res, next) => {
 	const { body } = req;
 
 	pino.info('Received appellant case from topic', body);
-	const validationResult = await validateFromSchema(schemas.appellantCase, body);
+	const validationResult = await validateFromSchema(schemas.commands.appealSubmission, body);
 	if (validationResult !== true && validationResult.errors) {
 		const errorDetails = validationResult.errors.map(
 			(e) => `${e.instancePath || '/'}: ${e.message}`
@@ -41,14 +41,14 @@ export const validateAppellantCase = async (req, res, next) => {
 export const validateLpaQuestionnaire = async (req, res, next) => {
 	const { body } = req;
 
-	pino.info('Received LPA questionnaire from topic', body);
-	const validationResult = await validateFromSchema(schemas.lpaQuestionnaire, body);
+	pino.info('Received LPA submission from topic', body);
+	const validationResult = await validateFromSchema(schemas.commands.lpaSubmission, body);
 	if (validationResult !== true && validationResult.errors) {
 		const errorDetails = validationResult.errors.map(
 			(e) => `${e.instancePath || '/'}: ${e.message}`
 		);
 
-		pino.error(`Error validating lpa questionnaire: ${errorDetails[0]}`);
+		pino.error(`Error validating LPA submission: ${errorDetails[0]}`);
 		return res.status(400).send({
 			errors: {
 				integration: ERROR_INVALID_LPAQ_DATA,
@@ -60,7 +60,7 @@ export const validateLpaQuestionnaire = async (req, res, next) => {
 	const appealExists = await findAppealByReference(body?.questionnaire?.caseReference);
 	if (!appealExists) {
 		pino.error(
-			`Error associating LPA questionnaire to an existing appeal with reference '${body?.questionnaire?.caseReference}'`
+			`Error associating LPA submission to an existing appeal with reference '${body?.questionnaire?.caseReference}'`
 		);
 		return res.status(404).send({
 			errors: {
@@ -80,7 +80,7 @@ export const validateDocument = async (req, res, next) => {
 	const { body } = req;
 
 	pino.info('Received document from topic');
-	const validationResult = await validateFromSchema(schemas.document, body);
+	const validationResult = await validateFromSchema(schemas.commands.documentSubmission, body);
 	if (validationResult !== true && validationResult.errors) {
 		const errorDetails = validationResult.errors.map(
 			(e) => `${e.instancePath || '/'}: ${e.message}`

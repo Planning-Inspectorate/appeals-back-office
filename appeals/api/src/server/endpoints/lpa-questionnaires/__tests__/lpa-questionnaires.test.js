@@ -43,6 +43,7 @@ import createManyToManyRelationData from '#utils/create-many-to-many-relation-da
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
+import config from '#config/config.js';
 
 describe('lpa questionnaires routes', () => {
 	beforeEach(() => {
@@ -231,6 +232,54 @@ describe('lpa questionnaires routes', () => {
 				expect(
 					databaseConnector.lPAQuestionnaireIncompleteReasonOnLPAQuestionnaire.update
 				).not.toHaveBeenCalled();
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).toHaveBeenCalledTimes(1);
+
+				expect(response.status).toEqual(200);
+			});
+
+			test('sends a correctly formatted notify email when the outcome is complete for a household appeal', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...householdAppeal,
+					appealStatus: [
+						{
+							status: 'lpa_questionnaire_due',
+							valid: true
+						}
+					]
+				});
+				// @ts-ignore
+				databaseConnector.lPAQuestionnaireValidationOutcome.findUnique.mockResolvedValue(
+					lpaQuestionnaireValidationOutcomes[0]
+				);
+
+				const body = {
+					validationOutcome: 'complete'
+				};
+				const { id, lpaQuestionnaire } = householdAppeal;
+				const response = await request
+					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
+					.send(body)
+					.set('azureAdUserId', azureAdUserId);
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).toHaveBeenCalledTimes(1);
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).toHaveBeenCalledWith(
+					config.govNotify.template.lpaqComplete.id,
+					'maid@lpa-email.gov.uk',
+					{
+						emailReplyToId: null,
+						personalisation: {
+							appeal_reference_number: '1345264',
+							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom'
+						},
+						reference: null
+					}
+				);
+
 				expect(response.status).toEqual(200);
 			});
 

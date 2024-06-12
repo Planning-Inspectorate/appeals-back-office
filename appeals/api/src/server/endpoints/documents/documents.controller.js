@@ -101,7 +101,7 @@ const addDocuments = async (req, res) => {
 			)
 		);
 
-		return res.send(getStorageInfo(documentInfo.documents));
+		return res.send();
 	} catch (/** @type {Object<any, any>} */ error) {
 		if (error.code === 'P2002') {
 			return res.status(409).send({
@@ -200,29 +200,6 @@ const getStorageInfo = (docs) => {
  * @param {Request} req
  * @param {Response} res
  */
-const updateDocuments = async (req, res) => {
-	const { body } = req;
-	try {
-		const documents = body.documents;
-		for (const document of documents) {
-			const latestDocument = await documentRepository.getDocumentById(document.id);
-			document.latestVersion = latestDocument?.latestDocumentVersion?.version;
-		}
-		await documentRepository.updateDocuments(documents);
-	} catch (error) {
-		if (error) {
-			logger.error(error);
-			return res.status(500).send({ errors: { body: ERROR_FAILED_TO_SAVE_DATA } });
-		}
-	}
-
-	res.send(body);
-};
-
-/**
- * @param {Request} req
- * @param {Response} res
- */
 const updateDocumentsAvCheckStatus = async (req, res) => {
 	const { body } = req;
 	try {
@@ -254,7 +231,6 @@ export {
 	getDocument,
 	getDocumentAndVersions,
 	getFolder,
-	updateDocuments,
 	updateDocumentsAvCheckStatus,
 	deleteDocumentVersion
 };

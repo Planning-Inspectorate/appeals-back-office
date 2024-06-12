@@ -15,7 +15,6 @@ export {
 	LPA,
 	LPAQuestionnaire,
 	NeighbouringSite,
-	NeighbouringSiteContact,
 	ReviewQuestionnaire,
 	LPAQuestionnaireIncompleteReason,
 	LPAQuestionnaireValidationOutcome,
@@ -60,10 +59,12 @@ export interface AppellantCase extends schema.AppellantCase {
 	appellantCaseValidationOutcome: AppellantCaseValidationOutcome | null;
 	appellantCaseIncompleteReasonsOnAppellantCases: AppellantCaseIncompleteReasonOnAppellantCase[];
 	appellantCaseInvalidReasonsOnAppellantCases: AppellantCaseInvalidReasonOnAppellantCase[];
+	inspectorAccessDetails: string;
 }
 
 export interface Folder extends schema.Folder {
-	documents?: schema.Document[] | null;
+	id: number;
+	documents: Document | null;
 }
 
 export interface Document extends schema.Document {
@@ -258,7 +259,6 @@ export interface LPAQuestionnaire extends schema.LPAQuestionnaire {
 		| null;
 	lpaQuestionnaireValidationOutcome: LPAQuestionnaireValidationOutcome | null;
 	meetsOrExceedsThresholdOrCriteriaInColumn2: boolean | null;
-	neighbouringSiteContact: NeighbouringSiteContact[] | null;
 	procedureType: ProcedureType | null;
 	scheduleType: ScheduleType | null;
 	sensitiveAreaDetails: string | null;
@@ -308,10 +308,6 @@ export interface LPAQuestionnaireIncompleteReasonOnLPAQuestionnaire
 	extends schema.LPAQuestionnaireIncompleteReasonOnLPAQuestionnaire {
 	lpaQuestionnaireIncompleteReason: LPAQuestionnaireIncompleteReason;
 	lpaQuestionnaireIncompleteReasonText: LPAQuestionnaireIncompleteReasonText[];
-}
-
-export interface NeighbouringSiteContact extends schema.NeighbouringSiteContact {
-	address: AppealSite;
 }
 
 export interface AppellantCaseIncompleteReasonOnAppellantCase

@@ -13,8 +13,11 @@ import {
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { householdAppeal } from '#tests/appeals/mocks.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { formatAddressSingleLine } from '../addresses.formatter.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
+
+/** @typedef {import('@pins/appeals.api').Schema.Address} Address */
 
 describe('addresses routes', () => {
 	beforeEach(() => {
@@ -586,5 +589,52 @@ describe('addresses routes', () => {
 				});
 			});
 		});
+	});
+});
+
+describe('formatAddressSingleLine function', () => {
+	test('should correctly format a complete address', () => {
+		/** @type {Address} */
+		const address = {
+			id: 1,
+			addressLine1: '123 Main St',
+			addressLine2: 'Suite 5',
+			addressTown: 'Anytown',
+			addressCounty: 'Anycountry',
+			postcode: '12345',
+			addressCountry: 'Neverland'
+		};
+		const formattedAddress = formatAddressSingleLine(address);
+		expect(formattedAddress).toEqual('123 Main St, Suite 5, Anytown, Anycountry, 12345, Neverland');
+	});
+
+	test('should correctly format an address with an empty addressLine2', () => {
+		/** @type {Address} */
+		const address = {
+			id: 1,
+			addressLine1: '123 Main St',
+			addressLine2: '',
+			addressTown: 'Anytown',
+			addressCounty: 'Anycountry',
+			postcode: '12345',
+			addressCountry: 'Neverland'
+		};
+		const formattedAddress = formatAddressSingleLine(address);
+		expect(formattedAddress).toEqual('123 Main St, Anytown, Anycountry, 12345, Neverland');
+	});
+
+	test('should handle empty strings in address components', () => {
+		/** @type {Address} */
+		const address = {
+			id: 1,
+			addressLine1: '',
+			addressLine2: '',
+			addressTown: '',
+			addressCounty: '',
+			postcode: '',
+			addressCountry: ''
+		};
+		const formattedAddress = formatAddressSingleLine(address);
+		expect(formattedAddress).toEqual('');
 	});
 });

@@ -89,34 +89,8 @@ export interface AppellantCaseData {
 		/** @example "There's an american bully onsite" */
 		healthAndSafetyIssuesDetails?: string;
 	};
-	documents?: {
-		/** @example "decision.pdf" */
-		filename?: string;
-		/** @example "decision.pdf" */
-		originalFilename?: string;
-		/** @example 12345 */
-		size?: number;
-		/** @example "application/pdf" */
-		mime?: string;
-		/** @example "https://storage.com/published/en010120/v1/filename.pdf" */
-		documentURI?: string;
-		/** @example "2023-03-26T00:00:00.000Z" */
-		dateCreated?: string;
-		/** @example "2023-03-26T00:00:00.000Z" */
-		lastModified?: string;
-		/** @example "decisionLetter" */
-		documentType?: string;
-		/** @example "appeals" */
-		sourceSystem?: string;
-		/** @example "citizen" */
-		origin?: string;
-		/** @example "en010120/v1/filename.pdf" */
-		blobStoragePath?: string;
-		/** @example "published" */
-		blobStorageContainer?: string;
-		/** @example "appellant_case" */
-		stage?: string;
-	}[];
+	/** @example [] */
+	documents?: any[];
 }
 
 export interface QuestionnaireData {
@@ -613,26 +587,8 @@ export interface SingleAppealResponse {
 	localPlanningDepartment?: string;
 	/** @example 1 */
 	lpaQuestionnaireId?: number;
-	neighbouringSite?: {
-		contacts?: {
-			address?: {
-				/** @example "1 Grove Cottage" */
-				addressLine1?: string;
-				/** @example "Shotesham Road" */
-				addressLine2?: string;
-				/** @example "NR35 2ND" */
-				postCode?: string;
-				/** @example "Woodton" */
-				town?: string;
-			};
-			/** @example "Fiona" */
-			firstName?: string;
-			/** @example "Burgess" */
-			lastName?: string;
-		}[];
-		/** @example true */
-		isAffected?: boolean;
-	};
+	/** @example true */
+	isAffectingNeighbouringSites?: boolean;
 	otherAppeals?: {
 		/** @example 1 */
 		appealId?: number;
@@ -1246,24 +1202,6 @@ export interface SingleLPAQuestionnaireResponse {
 	lpaQuestionnaireId?: number;
 	/** @example true */
 	meetsOrExceedsThresholdOrCriteriaInColumn2?: boolean;
-	neighbouringSiteContacts?: {
-		address?: {
-			/** @example "44 Rivervale" */
-			addressLine1?: string;
-			/** @example "Bridport" */
-			town?: string;
-			/** @example "DT6 5RN" */
-			postCode?: string;
-		};
-		/** @example "eva.sharma@example.com" */
-		email?: string;
-		/** @example "Eva" */
-		firstName?: string;
-		/** @example "Sharma" */
-		lastName?: string;
-		/** @example "01234567891" */
-		telephone?: string;
-	}[];
 	otherAppeals?: {
 		/** @example 1 */
 		appealId?: number;
@@ -1411,6 +1349,8 @@ export interface UpdateSiteVisitRequest {
 	visitStartTime?: string;
 	/** @example "Accompanied" */
 	visitType?: string;
+	/** @example "Unaccompanied" */
+	previousVisitType?: string;
 }
 
 export interface UpdateSiteVisitResponse {
@@ -1422,6 +1362,8 @@ export interface UpdateSiteVisitResponse {
 	visitStartTime?: string;
 	/** @example "Accompanied" */
 	visitType?: string;
+	/** @example "Unaccompanied" */
+	previousVisitType?: string;
 }
 
 export interface SingleSiteVisitResponse {
@@ -1833,4 +1775,59 @@ export interface ExistsOnHorizonResponse {
 	 * @example true
 	 */
 	caseFound?: boolean;
+}
+
+export interface UpdateServiceUserRequest {
+	serviceUser?: {
+		/**
+		 * ID in back-office
+		 * @example 12345
+		 */
+		serviceUserId: number;
+		/**
+		 * Type of user
+		 * @example "agent"
+		 */
+		userType: string;
+		/**
+		 * User's organisation (optional)
+		 * @example "Planning Support LTD"
+		 */
+		organisationName?: string;
+		/**
+		 * User's first name
+		 * @example "Harry"
+		 */
+		firstName: string;
+		/**
+		 * User's middle name (optional)
+		 * @example "James"
+		 */
+		middleName?: string;
+		/**
+		 * User's last name
+		 * @example "Potter"
+		 */
+		lastName: string;
+		/**
+		 * User's email address (optional)
+		 * @example "harry.potter@magic.com"
+		 */
+		email?: string;
+		/**
+		 * User's phone number (optional)
+		 * @example "01179123456"
+		 */
+		phoneNumber?: string;
+		/**
+		 * User's addressId in back-office (optional)
+		 * @example 13
+		 */
+		addressId?: number;
+	};
+}
+
+export interface UpdateServiceUserResponse {
+	/** @example 1 */
+	serviceUserId?: number;
 }

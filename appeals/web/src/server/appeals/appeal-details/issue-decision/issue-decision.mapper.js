@@ -1,7 +1,7 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import config from '@pins/appeals.web/environment/config.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
+import { dateToDisplayDate } from '#lib/dates.js';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
@@ -62,36 +62,31 @@ export function issueDecisionPage(appealDetails, inspectorDecision) {
 }
 
 /**
- * @param {Appeal} appealData
- * @param {number|undefined} folderId
- * @param {string} folderPath
- * @param {string} appealId
- * @param {import('@pins/express').ValidationErrors|undefined} errors
- * @returns {import('#appeals/appeal-documents/appeal-documents.types.js').DocumentUploadPageParameters}
+ * @returns {PageComponent[]}
  */
-export function decisionLetterUploadPage(appealData, folderId, folderPath, appealId, errors) {
-	const pathComponents = folderPath.split('/');
-	const documentStage = pathComponents[0];
-	const documentType = pathComponents[1];
-	const shortAppealReference = appealShortReference(appealData.appealReference);
+export function decisionLetterUploadPageBodyComponents() {
+	const checklistHtml = `<ul class="govuk-list govuk-list--bullet">
+	<li>added the correct appeal reference</li>
+	<li>added the decision date and visit date</li>
+	<li>added the correct site address</li>
+	<li>added the decision to the top and bottom of the letter</li>
+	<li>signed the letter</li>
+</ul>`;
 
-	return {
-		backButtonUrl: `/appeals-service/appeal-details/${appealData.appealId}/issue-decision/decision`,
-		appealId,
-		folderId: `${folderId}`,
-		useBlobEmulator: config.useBlobEmulator,
-		blobStorageHost:
-			config.useBlobEmulator === true ? config.blobEmulatorSasUrl : config.blobStorageUrl,
-		blobStorageContainer: config.blobStorageDefaultContainer,
-		multiple: false,
-		documentStage: documentStage,
-		pageTitle: `Appeal ${shortAppealReference}`,
-		pageHeadingText: 'Upload decision letter',
-		caseInfoText: `Appeal ${shortAppealReference}`,
-		documentType: documentType,
-		nextPageUrl: `/appeals-service/appeal-details/${appealData.appealId}/issue-decision/decision-letter-date`,
-		errors
-	};
+	return [
+		{
+			type: 'warning-text',
+			parameters: {
+				text: 'Before uploading, check that you have:'
+			}
+		},
+		{
+			type: 'html',
+			parameters: {
+				html: checklistHtml
+			}
+		}
+	];
 }
 
 /**
@@ -158,18 +153,13 @@ export function dateDecisionLetterPage(
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {Appeal} appealData
- * @param  {import('./issue-decision.types.js').InspectorDecisionRequest} session
- * @param {import('@pins/appeals.api').Schema.Folder|undefined} decisionLetterFolder
+ * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
  * @returns {PageContent}
  */
-export function checkAndConfirmPage(request, appealData, session, decisionLetterFolder) {
-	const decisionOutcome = mapDecisionOutcome(session?.outcome);
-	const letterDate = session && session.letterDate ? new Date(session.letterDate) : null;
-	const decisionDateText = letterDate
-		? `${letterDate.getDate()} ${letterDate.toLocaleString('default', {
-				month: 'long'
-		  })} ${letterDate.getFullYear()}`
-		: '';
+export function checkAndConfirmPage(request, appealData, session) {
+	const decisionOutcome = mapDecisionOutcome(session.inspectorDecision?.outcome);
+	const decisionLetter = session.fileUploadInfo?.[0]?.name;
+	const letterDate = new Date(session.inspectorDecision?.letterDate);
 
 	/** @type {PageComponent} */
 	const summaryListComponent = {
@@ -196,7 +186,9 @@ export function checkAndConfirmPage(request, appealData, session, decisionLetter
 					key: {
 						text: 'Decision letter'
 					},
-					value: displayPageFormatter.formatFolderValues(appealData.appealId, decisionLetterFolder),
+					value: {
+						text: decisionLetter
+					},
 					actions: {
 						items: [
 							{
@@ -211,7 +203,7 @@ export function checkAndConfirmPage(request, appealData, session, decisionLetter
 						text: 'Decision date'
 					},
 					value: {
-						text: decisionDateText
+						text: dateToDisplayDate(letterDate)
 					},
 					actions: {
 						items: [
@@ -236,12 +228,16 @@ export function checkAndConfirmPage(request, appealData, session, decisionLetter
 
 	/** @type {PageComponent} */
 	const insetConfirmComponent = {
-		type: 'html',
+		type: 'checkboxes',
 		parameters: {
-			html: `<div class="govuk-checkboxes__item govuk-!-margin-bottom-5">
-					<input class="govuk-checkboxes__input" id="ready-to-send" name="ready-to-send" type="checkbox" value="Yes">
-					<label class="govuk-label govuk-checkboxes__label" for="ready-to-send">This decision is ready to be sent to all parties</label>
-				</div>`
+			name: 'ready-to-send',
+			items: [
+				{
+					text: 'This decision is ready to be sent to the relevant parties',
+					value: 'yes',
+					checked: false
+				}
+			]
 		}
 	};
 
@@ -252,7 +248,7 @@ export function checkAndConfirmPage(request, appealData, session, decisionLetter
 		backLinkText: 'Back',
 		preHeading: `Appeal ${appealShortReference(appealData.appealReference)}`,
 		heading: title,
-		submitButtonText: 'Submit decision',
+		submitButtonText: 'Send decision',
 		pageComponents: [summaryListComponent, warningTextComponent, insetConfirmComponent]
 	};
 
@@ -356,12 +352,16 @@ export function checkAndConfirmInvalidPage(request, appealData, session) {
 
 	/** @type {PageComponent} */
 	const insetConfirmComponent = {
-		type: 'html',
+		type: 'checkboxes',
 		parameters: {
-			html: `<div class="govuk-checkboxes__item govuk-!-margin-bottom-5">
-					<input class="govuk-checkboxes__input" id="ready-to-send" name="ready-to-send" type="checkbox" value="Yes">
-					<label class="govuk-label govuk-checkboxes__label" for="ready-to-send">This decision is ready to be sent to all parties</label>
-				</div>`
+			name: 'ready-to-send',
+			items: [
+				{
+					text: 'This decision is ready to be sent to the relevant parties',
+					value: 'yes',
+					checked: false
+				}
+			]
 		}
 	};
 
@@ -372,7 +372,7 @@ export function checkAndConfirmInvalidPage(request, appealData, session) {
 		backLinkText: 'Back',
 		preHeading: `Appeal ${appealShortReference(appealData.appealReference)}`,
 		heading: title,
-		submitButtonText: 'Submit this decision',
+		submitButtonText: 'Send decision',
 		pageComponents: [summaryListComponent, warningTextComponent, insetConfirmComponent]
 	};
 
@@ -409,25 +409,19 @@ export function decisionConfirmationPage(appealData, appealIsInvalid) {
 			{
 				type: 'html',
 				parameters: {
-					html: '<span class="govuk-body">Relevant parties have been informed.</span>'
+					html: '<p class="govuk-body">The relevant parties have been informed. The appeal will be closed.</p>'
 				}
 			},
 			{
 				type: 'html',
 				parameters: {
-					html: '<h2>What happens next</h2>'
+					html: `<p class="govuk-body"><a href="/appeals-service/appeal-details/${appealData.appealId}" class="govuk-link">Go back to case details</a></p>`
 				}
 			},
 			{
 				type: 'html',
 				parameters: {
-					html: '<p class="govuk-body">The appeal will be closed.</p>'
-				}
-			},
-			{
-				type: 'html',
-				parameters: {
-					html: '<p class="govuk-body"><a href="/appeals-service/appeals-list" class="govuk-link">Go back to your list</a></p>'
+					html: `<p class="govuk-body"><a href="/appeals-service/appeal-details/${appealData.appealId}/costs/decision/upload-documents/${appealData.costs.decisionFolder.id}" class="govuk-link">Add costs decision</a></p>`
 				}
 			}
 		]
@@ -467,5 +461,5 @@ export function generateIssueDecisionUrl(appealId) {
  * @returns {string}
  */
 export function generateStartTimetableUrl(appealId) {
-	return `/appeals-service/appeal-details/${appealId}/start-case/date`;
+	return `/appeals-service/appeal-details/${appealId}/start-case/add`;
 }

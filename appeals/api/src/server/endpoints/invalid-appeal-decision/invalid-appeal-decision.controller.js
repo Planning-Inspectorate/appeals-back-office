@@ -15,6 +15,7 @@ import {
 export const postInvalidDecision = async (req, res) => {
 	const { appeal } = req;
 	const { invalidDecisionReason } = req.body;
+	const notifyClient = req.notifyClient;
 
 	if (appeal.appealStatus[0].status !== STATE_TARGET_ISSUE_DETERMINATION) {
 		res.status(400).send({ errors: { state: ERROR_INVALID_APPEAL_STATE } });
@@ -23,7 +24,8 @@ export const postInvalidDecision = async (req, res) => {
 	const decision = await publishInvalidDecision(
 		appeal,
 		invalidDecisionReason,
-		req.get('azureAdUserId') || ''
+		req.get('azureAdUserId') || '',
+		notifyClient
 	);
 
 	return res.send(decision);

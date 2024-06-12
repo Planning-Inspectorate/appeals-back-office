@@ -19,7 +19,7 @@ resources:
       type: github
       endpoint: Planning-Inspectorate
       name: Planning-Inspectorate/common-pipeline-templates
-      ref: refs/tags/release/3.11.0
+      ref: refs/tags/release/3.16.1
 
 variables:
   - template: variables/environments/${{ lower(parameters.environment )}}.yml@templates
@@ -42,13 +42,14 @@ jobs:
             - template: steps/azure_auth.yml@templates
             - template: steps/azure_get_secrets.yml@templates
               parameters:
+                keyVaultName: pins-kv-appeals-bo-${{ lower(parameters.environment) }}
                 secrets:
-                  - name: back-office-appeals-sql-connection-string
-                    variable: DATABASE_URL
+                  - name: appeals-bo-sql-admin-connection-string
+                    variable: appeals-bo-sql-admin-connection-string
             - template: steps/node_script.yml@templates
               parameters:
                 environmentVariables:
-                  DATABASE_URL: $(DATABASE_URL)
+                  DATABASE_URL: $(appeals-bo-sql-admin-connection-string)
                 script: npm run db:seed
                 workingDirectory: $(Build.Repository.LocalPath)/appeals/api
     workspace:

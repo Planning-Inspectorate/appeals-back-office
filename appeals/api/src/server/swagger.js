@@ -211,21 +211,7 @@ export const spec = {
 			],
 			localPlanningDepartment: 'Wiltshire Council',
 			lpaQuestionnaireId: 1,
-			neighbouringSite: {
-				contacts: [
-					{
-						address: {
-							addressLine1: '1 Grove Cottage',
-							addressLine2: 'Shotesham Road',
-							postCode: 'NR35 2ND',
-							town: 'Woodton'
-						},
-						firstName: 'Fiona',
-						lastName: 'Burgess'
-					}
-				],
-				isAffected: true
-			},
+			isAffectingNeighbouringSites: true,
 			otherAppeals: [
 				{
 					appealId: 1,
@@ -443,19 +429,6 @@ export const spec = {
 			],
 			lpaQuestionnaireId: 1,
 			meetsOrExceedsThresholdOrCriteriaInColumn2: true,
-			neighbouringSiteContacts: [
-				{
-					address: {
-						addressLine1: '44 Rivervale',
-						town: 'Bridport',
-						postCode: 'DT6 5RN'
-					},
-					email: 'eva.sharma@example.com',
-					firstName: 'Eva',
-					lastName: 'Sharma',
-					telephone: '01234567891'
-				}
-			],
 			otherAppeals: [
 				{
 					appealId: 1,
@@ -544,13 +517,17 @@ export const spec = {
 			visitDate: '2023-07-09',
 			visitEndTime: '12:00',
 			visitStartTime: '10:00',
-			visitType: 'Accompanied'
+			visitType: 'Accompanied',
+			previousVisitType: 'Unaccompanied',
+			siteVisitChangeType: 'all'
 		},
 		UpdateSiteVisitResponse: {
 			visitDate: '2023-07-09T01:00:00.000Z',
 			visitEndTime: '12:00',
 			visitStartTime: '10:00',
-			visitType: 'Accompanied'
+			visitType: 'Accompanied',
+			previousVisitType: 'Unaccompanied',
+			siteVisitChangeType: 'all'
 		},
 		SingleSiteVisitResponse: {
 			appealId: 2,
@@ -866,6 +843,79 @@ export const spec = {
 					type: 'boolean',
 					description: 'Case found status in Horizon',
 					example: true
+				}
+			}
+		},
+		UpdateServiceUserRequest: {
+			type: 'object',
+			properties: {
+				serviceUser: {
+					type: 'object',
+					properties: {
+						serviceUserId: {
+							type: 'number',
+							required: true,
+							description: 'ID in back-office',
+							example: 12345
+						},
+						userType: {
+							type: 'string',
+							required: true,
+							description: 'Type of user',
+							example: 'agent'
+						},
+						organisationName: {
+							type: 'string',
+							required: false,
+							description: "User's organisation (optional)",
+							example: 'Planning Support LTD'
+						},
+						firstName: {
+							type: 'string',
+							required: true,
+							description: "User's first name",
+							example: 'Harry'
+						},
+						middleName: {
+							type: 'string',
+							required: false,
+							description: "User's middle name (optional)",
+							example: 'James'
+						},
+						lastName: {
+							type: 'string',
+							required: true,
+							description: "User's last name",
+							example: 'Potter'
+						},
+						email: {
+							type: 'string',
+							required: false,
+							description: "User's email address (optional)",
+							example: 'harry.potter@magic.com'
+						},
+						phoneNumber: {
+							type: 'string',
+							required: false,
+							description: "User's phone number (optional)",
+							example: '01179123456'
+						},
+						addressId: {
+							type: 'number',
+							required: false,
+							description: "User's addressId in back-office (optional)",
+							example: 13
+						}
+					}
+				}
+			}
+		},
+		UpdateServiceUserResponse: {
+			type: 'object',
+			properties: {
+				serviceUserId: {
+					type: 'number',
+					example: 1
 				}
 			}
 		}

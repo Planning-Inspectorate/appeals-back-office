@@ -1,5 +1,4 @@
 import logger from '#lib/logger.js';
-import * as appealDetailsService from '../appeal-details.service.js';
 import usersService from '../../appeal-users/users-service.js';
 import config from '#environment/config.js';
 import { setAppealAssignee } from './assign-user.service.js';
@@ -28,9 +27,7 @@ const renderAssignUser = async (
 		body: { searchTerm }
 	} = request;
 
-	const appealDetails = await appealDetailsService
-		.getAppealDetailsFromId(request.apiClient, request.params.appealId)
-		.catch((error) => logger.error(error));
+	const appealDetails = request.currentAppeal;
 
 	if (appealDetails) {
 		const mappedPageContent = await assignUserPage(
@@ -43,13 +40,13 @@ const renderAssignUser = async (
 			request.session
 		);
 
-		return response.render('appeals/appeal/assign-user.njk', {
+		return response.status(200).render('appeals/appeal/assign-user.njk', {
 			pageContent: mappedPageContent,
 			errors
 		});
 	}
 
-	return response.render('app/404.njk');
+	return response.status(404).render('app/404.njk');
 };
 
 /**
@@ -75,10 +72,8 @@ const renderAssignOrUnassignUserCheckAndConfirm = async (
 			? config.referenceData.appeals.inspectorGroupId
 			: config.referenceData.appeals.caseOfficerGroupId;
 
-		const [appealDetails, user] = await Promise.all([
-			appealDetailsService.getAppealDetailsFromId(request.apiClient, request.params.appealId),
-			usersService.getUserByRoleAndId(groupId, request.session, assigneeId)
-		]);
+		const appealDetails = request.currentAppeal;
+		const user = await usersService.getUserByRoleAndId(groupId, request.session, assigneeId);
 
 		if (appealDetails && assigneeId) {
 			let existingUser = null;
@@ -102,14 +97,16 @@ const renderAssignOrUnassignUserCheckAndConfirm = async (
 				errors
 			);
 
-			return response.render('appeals/appeal/confirm-assign-unassign-user.njk', mappedPageContent);
+			return response
+				.status(200)
+				.render('appeals/appeal/confirm-assign-unassign-user.njk', mappedPageContent);
 		}
 
-		return response.render('app/404.njk');
+		return response.status(404).render('app/404.njk');
 	} catch (error) {
 		logger.error(error, error instanceof Error ? error.message : 'Something went wrong');
 
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };
 
@@ -153,7 +150,7 @@ export const postAssignUser = async (request, response, isInspector = false) => 
 	} catch (error) {
 		logger.error(error, error instanceof Error ? error.message : 'Something went wrong');
 
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };
 
@@ -223,7 +220,7 @@ export const postAssignOrUnassignUserCheckAndConfirm = async (
 	} catch (error) {
 		logger.error(error, error instanceof Error ? error.message : 'Something went wrong');
 
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };
 
@@ -276,9 +273,7 @@ export const postUnassignInspectorCheckAndConfirm = async (request, response) =>
 const renderAssignNewUser = async (request, response, isInspector = false) => {
 	const { errors } = request;
 
-	const appealDetails = await appealDetailsService
-		.getAppealDetailsFromId(request.apiClient, request.params.appealId)
-		.catch((error) => logger.error(error));
+	const appealDetails = request.currentAppeal;
 
 	if (appealDetails) {
 		const mappedPageContent = assignNewUserPage(
@@ -289,11 +284,11 @@ const renderAssignNewUser = async (request, response, isInspector = false) => {
 		);
 
 		if (appealDetails) {
-			return response.render('appeals/appeal/assign-new-user.njk', mappedPageContent);
+			return response.status(200).render('appeals/appeal/assign-new-user.njk', mappedPageContent);
 		}
 	}
 
-	return response.render('app/404.njk');
+	return response.status(404).render('app/404.njk');
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
@@ -337,7 +332,7 @@ export const postAssignNewUser = async (request, response, isInspector = false) 
 	} catch (error) {
 		logger.error(error, error instanceof Error ? error.message : 'Something went wrong');
 
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };
 

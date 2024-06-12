@@ -72,12 +72,18 @@ describe('documents upload', () => {
 			.get(`/appeals/${validAppealId}/document-folders/1`)
 			.reply(200, validFolders[0]);
 
-		// `/appeals-service/appeal-details/${appealId}/documents/${folderId}/upload`
 		const response = await request.get(getControllerEndpoint(validAppealId, validFolderId));
 		expect(response.status).toBe(200);
 
 		const html = parseHtml(response.text);
 		expect(html.innerHTML).toMatchSnapshot();
+
+		const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+		expect(unprettifiedElement.innerHTML).toContain('Upload documents</h1>');
+		expect(unprettifiedElement.innerHTML).toContain('<form method="POST"');
+		expect(unprettifiedElement.innerHTML).toContain('Choose file</button>');
+		expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 	});
 
 	it('should render upload form if appeal ID, folder ID and document ID are found', async () => {

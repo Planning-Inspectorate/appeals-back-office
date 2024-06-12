@@ -2,7 +2,7 @@ import formatAddress from '#utils/format-address.js';
 import formatValidationOutcomeResponse from '#utils/format-validation-outcome-response.js';
 import isFPA from '#utils/is-fpa.js';
 import { mapFoldersLayoutForAppealSection } from '../documents/documents.mapper.js';
-import { CONFIG_APPEAL_STAGES } from '#endpoints/constants.js';
+import { STAGE } from '@pins/appeals/constants/documents.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.RepositoryGetByIdResultItem} RepositoryGetByIdResultItem */
 /** @typedef {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} SingleAppellantCaseResponse */
@@ -99,7 +99,7 @@ const formatAppellantCase = (appeal, folders = null) => {
 const formatFoldersAndDocuments = (folders) => {
 	if (folders) {
 		return {
-			documents: mapFoldersLayoutForAppealSection(CONFIG_APPEAL_STAGES.appellantCase, folders)
+			documents: mapFoldersLayoutForAppealSection(STAGE.APPELLANT_CASE, folders)
 		};
 	}
 

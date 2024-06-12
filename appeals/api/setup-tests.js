@@ -2,6 +2,13 @@
 import { jest } from '@jest/globals';
 import config from '#config/config.js';
 import { NODE_ENV_PRODUCTION } from '#endpoints/constants.js';
+// load .env.test file
+import dotenv from 'dotenv';
+import path from 'node:path';
+import url from 'url';
+
+const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
+dotenv.config({ path: path.join(__dirname, '.env.test') });
 
 const mockAppealRelationshipAdd = jest.fn().mockResolvedValue({});
 const mockAppealRelationshipRemove = jest.fn().mockResolvedValue({});
@@ -129,6 +136,8 @@ const mockAuditTrailCreate = jest.fn().mockResolvedValue({});
 const mockDocumentVersionAuditCreate = jest.fn().mockResolvedValue({});
 const mockAppealTypes = jest.fn().mockResolvedValue({});
 const mockNeighbouringSites = jest.fn().mockResolvedValue({});
+const mockServiceUserUpdate = jest.fn().mockResolvedValue({});
+const mockServiceUserFindUnique = jest.fn().mockResolvedValue({});
 
 class MockPrismaClient {
 	get address() {
@@ -536,8 +545,21 @@ class MockPrismaClient {
 		};
 	}
 
+	get serviceUser() {
+		return {
+			update: mockServiceUserUpdate,
+			findUnique: mockServiceUserFindUnique
+		};
+	}
+
 	$transaction(queries = []) {
-		return Promise.all(queries);
+		if (typeof queries === 'function') {
+			// transactions can be a function, run with an instance of the client
+			return queries(this);
+		} else {
+			// or just an array of queries to run
+			return Promise.all(queries);
+		}
 	}
 }
 
@@ -568,6 +590,7 @@ jest.unstable_mockModule('./src/server/infrastructure/event-client.js', () => ({
 const mockGotGet = jest.fn();
 const mockGotPost = jest.fn();
 const mockSendEmail = jest.fn();
+global.mockSendEmail = mockSendEmail;
 
 jest.unstable_mockModule('jsonwebtoken', () => ({
 	default: {

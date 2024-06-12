@@ -1,6 +1,6 @@
 import appealRepository from '#repositories/appeal.repository.js';
 import transitionState from '#state/transition-state.js';
-import { broadcastAppealState } from '#endpoints/integrations/integrations.service.js';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { STATE_TARGET_COMPLETE } from '#endpoints/constants.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.RepositoryGetByIdResultItem} Appeal */
@@ -33,7 +33,7 @@ export const publishDecision = async (appeal, outcome, documentDate, document, a
 			appeal.appealStatus,
 			STATE_TARGET_COMPLETE
 		);
-		await broadcastAppealState(appeal.id);
+		await broadcasters.broadcastAppeal(appeal.id);
 
 		return result;
 	}

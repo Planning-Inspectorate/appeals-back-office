@@ -66,3 +66,33 @@ dump.rdb
 
 # Dummy data
 dummy_user_data.json
+
+# Local .terraform directories
+**/.terraform/*
+**/.terraform
+**/.terragrunt-cache
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+# Ignore CLI configuration files
+.terraformrc
+terraform.rc
+
+# Ignore override files as they are usually used to override resources locally and so
+# are not checked in
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Terraform lock files in modules
+.terraform.lock.hcl
+
+# Pre-commit hooks
+providers-tmp.tf
+
+# Structurizr
+workspace.json
+.structurizr/*

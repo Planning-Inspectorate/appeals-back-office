@@ -4,12 +4,10 @@ import supertest from 'supertest';
 import { jest } from '@jest/globals';
 import {
 	lpaQuestionnaireDataNotValidated,
-	lpaQuestionnaireDataNotValidatedWithDocuments,
 	lpaQuestionnaireDataIncompleteOutcome,
 	lpaQuestionnaireDataCompleteOutcome,
 	lpaQuestionnaireIncompleteReasons,
 	documentFolderInfo,
-	documentFolderInfoWithoutDraftDocuments,
 	additionalDocumentsFolderInfo,
 	documentFileInfo,
 	documentFileVersionsInfo,
@@ -20,17 +18,21 @@ import {
 	documentRedactionStatuses,
 	activeDirectoryUsersData,
 	appealData,
-	notCheckedDocumentFolderInfoDocuments
+	notCheckedDocumentFolderInfoDocuments,
+	lpaQuestionnaireData,
+	fileUploadInfo
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { textInputCharacterLimits } from '../../../appeal.constants.js';
 import usersService from '#appeals/appeal-users/users-service.js';
 import { cloneDeep } from 'lodash-es';
 import { addDays } from 'date-fns';
+import { dateToDisplayDate } from '#lib/dates.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details/1/lpa-questionnaire/2';
+const notificationBannerElement = '.govuk-notification-banner';
 
 const incompleteReasonIds = lpaQuestionnaireIncompleteReasons.map((reason) => reason.id);
 const incompleteReasonsWithText = lpaQuestionnaireIncompleteReasons.filter(
@@ -42,9 +44,218 @@ const incompleteReasonsWithoutText = lpaQuestionnaireIncompleteReasons.filter(
 const incompleteReasonsWithTextIds = incompleteReasonsWithText.map((reason) => reason.id);
 const incompleteReasonsWithoutTextIds = incompleteReasonsWithoutText.map((reason) => reason.id);
 
+const lpaqAdditionalDocumentsFolderInfo = {
+	...additionalDocumentsFolderInfo,
+	path: 'lpa-questionnaire/additionalDocuments'
+};
+
 describe('LPA Questionnaire review', () => {
 	beforeEach(installMockApi);
 	afterEach(teardown);
+
+	describe('Notification banners', () => {
+		it('should render a success notification banner when "is correct appeal type" is updated', async () => {
+			nock('http://test/').patch(`/appeals/1/lpa-questionnaires/2`).reply(200, {});
+			nock('http://test/')
+				.get(`/appeals/1/lpa-questionnaires/2`)
+				.reply(200, lpaQuestionnaireData)
+				.persist();
+
+			const validData = {
+				correctAppealTypeRadio: 'no'
+			};
+
+			await request.post(`${baseUrl}/is-correct-appeal-type/change`).send(validData);
+
+			const caseDetailsResponse = await request.get(`${baseUrl}`);
+
+			const notificationBannerElementHTML = parseHtml(caseDetailsResponse.text, {
+				rootElement: notificationBannerElement
+			}).innerHTML;
+			expect(notificationBannerElementHTML).toMatchSnapshot();
+			expect(notificationBannerElementHTML).toContain('Success');
+			expect(notificationBannerElementHTML).toContain(
+				'Correct appeal type (LPA response) has been updated'
+			);
+		}, 10000);
+
+		it('should render a success notification banner when the neighbouring site affected value is updated', async () => {
+			nock('http://test/').patch(`/appeals/1/lpa-questionnaires/1`).reply(200, {});
+			nock('http://test/')
+				.get(`/appeals/1/lpa-questionnaires/2`)
+				.reply(200, lpaQuestionnaireData)
+				.persist();
+			await request.get(`${baseUrl}/neighbouring-sites/change/affected`);
+
+			await request
+				.post(`${baseUrl}/neighbouring-sites/change/affected`)
+				.send({ neighbouringSiteAffected: 'yes' });
+
+			const caseDetailsResponse = await request.get(`${baseUrl}`);
+
+			const notificationBannerElementHTML = parseHtml(caseDetailsResponse.text, {
+				rootElement: notificationBannerElement
+			}).innerHTML;
+			expect(notificationBannerElementHTML).toMatchSnapshot();
+			expect(notificationBannerElementHTML).toContain('Success');
+			expect(notificationBannerElementHTML).toContain('Neighbouring site affected status updated');
+		}, 10000);
+
+		it('should render a "Inspector access (lpa) updated" success notification banner when the inspector access (lpa) is updated', async () => {
+			const appealId = appealData.appealId;
+			const lpaQuestionnaireId = appealData.lpaQuestionnaireId;
+			const validData = {
+				inspectorAccessRadio: 'yes',
+				inspectorAccessDetails: 'Details'
+			};
+
+			nock('http://test/')
+				.get('/appeals/1/lpa-questionnaires/2')
+				.reply(200, lpaQuestionnaireDataNotValidated);
+
+			nock('http://test/')
+				.patch(`/appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`)
+				.reply(200, {
+					...validData
+				});
+
+			await request.post(`${baseUrl}/inspector-access/change/lpa`).send(validData);
+
+			const response = await request.get(`${baseUrl}`);
+			const notificationBannerElementHTML = parseHtml(response.text, {
+				rootElement: notificationBannerElement
+			}).innerHTML;
+
+			expect(notificationBannerElementHTML).toMatchSnapshot();
+			expect(notificationBannerElementHTML).toContain('Success');
+			expect(notificationBannerElementHTML).toContain('Inspector access (lpa) updated');
+		}, 10000);
+
+		it('should render a "Safety risks updated" success notification banner when the safety risks (lpa) is updated', async () => {
+			const appealId = appealData.appealId;
+			const lpaQuestionnaireId = appealData.lpaQuestionnaireId;
+			const validData = {
+				safetyRisksRadio: 'yes',
+				safetyRisksDetails: 'Details'
+			};
+
+			nock('http://test/')
+				.get('/appeals/1/lpa-questionnaires/2')
+				.reply(200, lpaQuestionnaireDataNotValidated);
+
+			nock('http://test/')
+				.patch(`/appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`)
+				.reply(200, {
+					...validData
+				});
+
+			await request.post(`${baseUrl}/safety-risks/change/lpa`).send(validData);
+
+			const response = await request.get(`${baseUrl}`);
+			const notificationBannerElementHTML = parseHtml(response.text, {
+				rootElement: notificationBannerElement
+			}).innerHTML;
+
+			expect(notificationBannerElementHTML).toMatchSnapshot();
+			expect(notificationBannerElementHTML).toContain('Success');
+			expect(notificationBannerElementHTML).toContain(
+				'Site health and safety risks (LPA answer) updated'
+			);
+		}, 10000);
+
+		it('should render a "Neighbouring site added" success notification banner when a neighbouring site was added', async () => {
+			nock('http://test/').get(`/appeals/1`).reply(200, appealData).persist();
+			nock('http://test/')
+				.get(`/appeals/1/lpa-questionnaires/2`)
+				.reply(200, lpaQuestionnaireData)
+				.persist();
+			nock('http://test/')
+				.post(`/appeals/1/neighbouring-sites`)
+				.reply(200, {
+					siteId: 1,
+					address: {
+						addressLine1: '1 Grove Cottage',
+						addressLine2: 'Shotesham Road',
+						country: 'United Kingdom',
+						county: 'Devon',
+						postcode: 'NR35 2ND',
+						town: 'Woodton'
+					}
+				});
+
+			await request.post(`${baseUrl}/neighbouring-sites/add/lpa`).send({
+				addressLine1: '1 Grove Cottage',
+				addressLine2: null,
+				county: 'Devon',
+				postCode: 'NR35 2ND',
+				town: 'Woodton'
+			});
+
+			await request.post(`${baseUrl}/neighbouring-sites/add/lpa/check-and-confirm`);
+
+			const response = await request.get(`${baseUrl}`);
+			const notificationBannerElementHTML = parseHtml(response.text, {
+				rootElement: notificationBannerElement
+			}).innerHTML;
+			expect(notificationBannerElementHTML).toMatchSnapshot();
+			expect(notificationBannerElementHTML).toContain('Neighbouring site added');
+			expect(notificationBannerElementHTML).toContain('Success');
+		});
+
+		it('should render a "Neighbouring site updated" success notification banner when an inspector/3rd party neighbouring site was updated', async () => {
+			nock('http://test/').patch(`/appeals/1/neighbouring-sites`).reply(200, {
+				siteId: 1
+			});
+			nock('http://test/').get(`/appeals/1`).reply(200, appealData).persist();
+			nock('http://test/')
+				.get(`/appeals/1/lpa-questionnaires/2`)
+				.reply(200, lpaQuestionnaireData)
+				.persist();
+
+			await request.post(`${baseUrl}/neighbouring-sites/change/site/1`).send({
+				addressLine1: '2 Grove Cottage',
+				addressLine2: null,
+				county: 'Devon',
+				postCode: 'NR35 2ND',
+				town: 'Woodton'
+			});
+
+			await request.post(`${baseUrl}/neighbouring-sites/change/site/1/check-and-confirm`);
+
+			const response = await request.get(`${baseUrl}`);
+			const notificationBannerElementHTML = parseHtml(response.text, {
+				rootElement: notificationBannerElement
+			}).innerHTML;
+			expect(notificationBannerElementHTML).toMatchSnapshot();
+			expect(notificationBannerElementHTML).toContain('Neighbouring site updated');
+			expect(notificationBannerElementHTML).toContain('Success');
+		});
+
+		it('should render a "Neighbouring site removed" success notification banner when an inspector/3rd party neighbouring site was removed', async () => {
+			const appealReference = '1';
+
+			nock('http://test/').delete(`/appeals/${appealReference}/neighbouring-sites`).reply(200, {
+				siteId: 1
+			});
+			nock('http://test/').get(`/appeals/1`).reply(200, appealData).persist();
+			nock('http://test/')
+				.get(`/appeals/1/lpa-questionnaires/2`)
+				.reply(200, lpaQuestionnaireData)
+				.persist();
+			await request.post(`${baseUrl}/neighbouring-sites/remove/site/1`).send({
+				'remove-neighbouring-site': 'yes'
+			});
+
+			const response = await request.get(`${baseUrl}`);
+
+			const notificationBannerElementHTML = parseHtml(response.text, {
+				rootElement: notificationBannerElement
+			}).innerHTML;
+			expect(notificationBannerElementHTML).toMatchSnapshot();
+			expect(notificationBannerElementHTML).toContain('Success');
+			expect(notificationBannerElementHTML).toContain('Neighbouring site removed');
+		});
+	});
 
 	describe('GET /', () => {
 		it('should render the LPA Questionnaire page with the expected content', async () => {
@@ -57,21 +268,6 @@ describe('LPA Questionnaire review', () => {
 
 			expect(element.innerHTML).toMatchSnapshot();
 		}, 10000);
-
-		it('should render the LPA Questionnaire page with draft documents notification banner with links to add metadata page for each folder containing draft documents, and no links for folders with only non-draft documents', async () => {
-			nock('http://test/')
-				.get('/appeals/1/lpa-questionnaires/2')
-				.reply(200, lpaQuestionnaireDataNotValidatedWithDocuments);
-			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
-			nock('http://test/')
-				.get('/appeals/1/document-folders/2')
-				.reply(200, documentFolderInfoWithoutDraftDocuments);
-
-			const response = await request.get(`${baseUrl}`);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-		});
 	});
 
 	describe('GET / with unchecked documents', () => {
@@ -83,7 +279,7 @@ describe('LPA Questionnaire review', () => {
 		it('should render a notification banner when a file is unscanned', async () => {
 			//Create a document with virus scan still in progress
 			let updatedLPAQuestionnaireData = cloneDeep(lpaQuestionnaireDataIncompleteOutcome);
-			updatedLPAQuestionnaireData.documents.conservationAreaMap.documents.push(
+			updatedLPAQuestionnaireData.documents.conservationMap.documents.push(
 				notCheckedDocumentFolderInfoDocuments
 			);
 			nock('http://test/')
@@ -98,7 +294,7 @@ describe('LPA Questionnaire review', () => {
 		it('should render an error when a file has a virus', async () => {
 			//Create a document with failed virus check
 			let updatedLPAQuestionnaireData = cloneDeep(lpaQuestionnaireDataIncompleteOutcome);
-			updatedLPAQuestionnaireData.documents.conservationAreaMap.documents.push({
+			updatedLPAQuestionnaireData.documents.conservationMap.documents.push({
 				...notCheckedDocumentFolderInfoDocuments,
 				// @ts-ignore
 				virusCheckStatus: 'failed_virus_check'
@@ -832,6 +1028,23 @@ describe('LPA Questionnaire review', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Upload documents</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<div class="govuk-grid-row pins-file-upload"'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Choose file</button>');
+
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+			);
+			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
+			expect(unprettifiedElement.innerHTML).not.toContain('Warning</span>');
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'<input class="govuk-checkboxes__input" id="additionalDocumentsConfirmation"'
+			);
 		});
 
 		it('should render document upload page with additional documents warning text and confirmation checkbox, and without late entry status tag and associated details component, if the folder is additional documents, and the lpa questionnaire has no validation outcome', async () => {
@@ -848,6 +1061,23 @@ describe('LPA Questionnaire review', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Add additional documents</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<div class="govuk-grid-row pins-file-upload"'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Choose file</button>');
+
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+			);
+			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
+			expect(unprettifiedElement.innerHTML).toContain('Warning</span>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<input class="govuk-checkboxes__input" id="additionalDocumentsConfirmation"'
+			);
 		});
 
 		it('should render document upload page with additional documents warning text and confirmation checkbox, and without late entry status tag and associated details component, if the folder is additional documents, and the lpa questionnaire has a validation outcome of incomplete', async () => {
@@ -864,6 +1094,23 @@ describe('LPA Questionnaire review', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Add additional documents</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<div class="govuk-grid-row pins-file-upload"'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Choose file</button>');
+
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+			);
+			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
+			expect(unprettifiedElement.innerHTML).toContain('Warning</span>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<input class="govuk-checkboxes__input" id="additionalDocumentsConfirmation"'
+			);
 		});
 
 		it('should render document upload page with late entry status tag and associated details component, and without additional documents warning text and confirmation checkbox, if the folder is additional documents, and the lpa questionnaire validation outcome is complete', async () => {
@@ -880,6 +1127,23 @@ describe('LPA Questionnaire review', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Add additional documents</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<div class="govuk-grid-row pins-file-upload"'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Choose file</button>');
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('What is late entry?</span>');
+			expect(unprettifiedElement.innerHTML).not.toContain('Warning</span>');
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'<input class="govuk-checkboxes__input" id="additionalDocumentsConfirmation"'
+			);
 		});
 	});
 
@@ -905,6 +1169,23 @@ describe('LPA Questionnaire review', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Upload an updated document</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<div class="govuk-grid-row pins-file-upload"'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Choose file</button>');
+
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+			);
+			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
+			expect(unprettifiedElement.innerHTML).not.toContain('Warning</span>');
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'<input class="govuk-checkboxes__input" id="additionalDocumentsConfirmation"'
+			);
 		});
 
 		it('should render document upload page with additional documents warning text and confirmation checkbox, and without late entry status tag and associated details component, if the folder is additional documents, and the lpa questionnaire has no validation outcome', async () => {
@@ -921,6 +1202,23 @@ describe('LPA Questionnaire review', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Update additional document</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<div class="govuk-grid-row pins-file-upload"'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Choose file</button>');
+
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+			);
+			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
+			expect(unprettifiedElement.innerHTML).toContain('Warning</span>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<input class="govuk-checkboxes__input" id="additionalDocumentsConfirmation"'
+			);
 		});
 
 		it('should render document upload page with additional documents warning text and confirmation checkbox, and without late entry status tag and associated details component, if the folder is additional documents, and the lpa questionnaire has a validation outcome of incomplete', async () => {
@@ -937,6 +1235,23 @@ describe('LPA Questionnaire review', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Update additional document</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<div class="govuk-grid-row pins-file-upload"'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Choose file</button>');
+
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+			);
+			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
+			expect(unprettifiedElement.innerHTML).toContain('Warning</span>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<input class="govuk-checkboxes__input" id="additionalDocumentsConfirmation"'
+			);
 		});
 
 		it('should render document upload page with late entry status tag and associated details component, and without additional documents warning text and confirmation checkbox, if the folder is additional documents, and the lpa questionnaire validation outcome is complete', async () => {
@@ -953,34 +1268,96 @@ describe('LPA Questionnaire review', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Update additional document</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<div class="govuk-grid-row pins-file-upload"'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Choose file</button>');
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('What is late entry?</span>');
+			expect(unprettifiedElement.innerHTML).not.toContain('Warning</span>');
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'<input class="govuk-checkboxes__input" id="additionalDocumentsConfirmation"'
+			);
 		});
 	});
 
 	describe('GET /lpa-questionnaire/1/add-document-details/:folderId/', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData);
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
-				.reply(200, documentRedactionStatuses);
+				.reply(200, documentRedactionStatuses)
+				.persist();
 		});
 		afterEach(() => {
 			nock.cleanAll();
+		});
+
+		it('should render a 500 error page if fileUploadInfo is not present in the session', async () => {
+			nock('http://test/')
+				.get('/appeals/1/lpa-questionnaires/1')
+				.reply(200, lpaQuestionnaireDataNotValidated);
+			nock('http://test/')
+				.get('/appeals/1/document-folders/1')
+				.reply(200, documentFolderInfo)
+				.persist();
+
+			const response = await request.get(
+				'/appeals-service/appeal-details/1/lpa-questionnaire/1/add-document-details/1'
+			);
+
+			expect(response.statusCode).toBe(500);
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Sorry, there is a problem with the service</h1>'
+			);
 		});
 
 		it('should render the add document details page with one item per unpublished document, and without a late entry status tag and associated details component, if the folder is not additional documents', async () => {
 			nock('http://test/')
 				.get('/appeals/1/lpa-questionnaires/1')
 				.reply(200, lpaQuestionnaireDataNotValidated);
-			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
+			nock('http://test/')
+				.get('/appeals/1/document-folders/1')
+				.reply(200, documentFolderInfo)
+				.persist();
+
+			const addDocumentsResponse = await request
+				.post(`/appeals-service/appeal-details/1/lpa-questionnaire/1/add-documents/1`)
+				.send({
+					'upload-info': fileUploadInfo
+				});
+
+			expect(addDocumentsResponse.statusCode).toBe(302);
 
 			const response = await request.get(
 				'/appeals-service/appeal-details/1/lpa-questionnaire/1/add-document-details/1'
 			);
-			const element = parseHtml(response.text);
 
-			expect(element.innerHTML).toMatchSnapshot();
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+			expect(unprettifiedElement.innerHTML).toContain('Changed description documents</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
+			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
+
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+			);
+			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 		});
 
 		it('should render the add document details page with one item per unpublished document, and without a late entry status tag and associated details component, if the folder is additional documents, and the lpa questionnaire has no validation outcome', async () => {
@@ -989,14 +1366,33 @@ describe('LPA Questionnaire review', () => {
 				.reply(200, lpaQuestionnaireDataNotValidated);
 			nock('http://test/')
 				.get('/appeals/1/document-folders/1')
-				.reply(200, additionalDocumentsFolderInfo);
+				.reply(200, lpaqAdditionalDocumentsFolderInfo)
+				.persist();
+
+			const addDocumentsResponse = await request
+				.post('/appeals-service/appeal-details/1/lpa-questionnaire/1/add-documents/1')
+				.send({
+					'upload-info': fileUploadInfo
+				});
+
+			expect(addDocumentsResponse.statusCode).toBe(302);
 
 			const response = await request.get(
 				'/appeals-service/appeal-details/1/lpa-questionnaire/1/add-document-details/1'
 			);
-			const element = parseHtml(response.text);
 
-			expect(element.innerHTML).toMatchSnapshot();
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+			expect(unprettifiedElement.innerHTML).toContain('Additional documents</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
+			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
+
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+			);
+			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 		});
 
 		it('should render the add document details page with one item per unpublished document, and without a late entry status tag and associated details component, if the folder is additional documents, and the lpa questionnaire has a validation outcome of incomplete', async () => {
@@ -1005,14 +1401,33 @@ describe('LPA Questionnaire review', () => {
 				.reply(200, lpaQuestionnaireDataIncompleteOutcome);
 			nock('http://test/')
 				.get('/appeals/1/document-folders/1')
-				.reply(200, additionalDocumentsFolderInfo);
+				.reply(200, lpaqAdditionalDocumentsFolderInfo)
+				.persist();
+
+			const addDocumentsResponse = await request
+				.post('/appeals-service/appeal-details/1/lpa-questionnaire/1/add-documents/1')
+				.send({
+					'upload-info': fileUploadInfo
+				});
+
+			expect(addDocumentsResponse.statusCode).toBe(302);
 
 			const response = await request.get(
 				'/appeals-service/appeal-details/1/lpa-questionnaire/1/add-document-details/1'
 			);
-			const element = parseHtml(response.text);
 
-			expect(element.innerHTML).toMatchSnapshot();
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+			expect(unprettifiedElement.innerHTML).toContain('Additional documents</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
+			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
+
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+			);
+			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 		});
 
 		it('should render the add document details page with one item per unpublished document, and with a late entry status tag and associated details component, if the folder is additional documents, and the lpa questionnaire has a validation outcome of complete', async () => {
@@ -1021,23 +1436,51 @@ describe('LPA Questionnaire review', () => {
 				.reply(200, lpaQuestionnaireDataCompleteOutcome);
 			nock('http://test/')
 				.get('/appeals/1/document-folders/1')
-				.reply(200, additionalDocumentsFolderInfo);
+				.reply(200, lpaqAdditionalDocumentsFolderInfo)
+				.persist();
+
+			const addDocumentsResponse = await request
+				.post('/appeals-service/appeal-details/1/lpa-questionnaire/1/add-documents/1')
+				.send({
+					'upload-info': fileUploadInfo
+				});
+
+			expect(addDocumentsResponse.statusCode).toBe(302);
 
 			const response = await request.get(
 				'/appeals-service/appeal-details/1/lpa-questionnaire/1/add-document-details/1'
 			);
-			const element = parseHtml(response.text);
 
-			expect(element.innerHTML).toMatchSnapshot();
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+			expect(unprettifiedElement.innerHTML).toContain('Additional documents</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
+			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('What is late entry?</span>');
 		});
 	});
 
 	describe('POST /lpa-questionnaire/1/add-document-details/:folderId/', () => {
-		beforeEach(() => {
+		/**
+		 * @type {import("superagent").Response}
+		 */
+		let addDocumentsResponse;
+
+		beforeEach(async () => {
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
-				.reply(200, documentRedactionStatuses);
-			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
+				.reply(200, documentRedactionStatuses)
+				.persist();
+			nock('http://test/')
+				.get('/appeals/1/document-folders/1')
+				.reply(200, documentFolderInfo)
+				.persist();
 			nock('http://test/')
 				.patch('/appeals/1/documents')
 				.reply(200, {
@@ -1049,6 +1492,10 @@ describe('LPA Questionnaire review', () => {
 						}
 					]
 				});
+
+			addDocumentsResponse = await request.post(`${baseUrl}/add-documents/1`).send({
+				'upload-info': fileUploadInfo
+			});
 		});
 
 		afterEach(() => {
@@ -1056,14 +1503,23 @@ describe('LPA Questionnaire review', () => {
 		});
 
 		it('should re-render the document details page with the expected error message if the request body is in an incorrect format', async () => {
+			expect(addDocumentsResponse.statusCode).toBe(302);
+
 			const response = await request.post(`${baseUrl}/add-document-details/1`).send({});
 
-			const element = parseHtml(response.text);
+			expect(response.statusCode).toBe(200);
 
-			expect(element.innerHTML).toMatchSnapshot();
+			const unprettifiedElement = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			});
+			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('There is a problem with the service</a>');
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate day is empty', async () => {
+			expect(addDocumentsResponse.statusCode).toBe(302);
+
 			const response = await request.post(`${baseUrl}/add-document-details/1`).send({
 				items: [
 					{
@@ -1078,12 +1534,19 @@ describe('LPA Questionnaire review', () => {
 				]
 			});
 
-			const element = parseHtml(response.text);
+			expect(response.statusCode).toBe(200);
 
-			expect(element.innerHTML).toMatchSnapshot();
+			const unprettifiedElement = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			});
+			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('Received date day cannot be empty</a>');
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate day is non-numeric', async () => {
+			expect(addDocumentsResponse.statusCode).toBe(302);
+
 			const response = await request.post(`${baseUrl}/add-document-details/1`).send({
 				items: [
 					{
@@ -1098,12 +1561,19 @@ describe('LPA Questionnaire review', () => {
 				]
 			});
 
-			const element = parseHtml(response.text);
+			expect(response.statusCode).toBe(200);
 
-			expect(element.innerHTML).toMatchSnapshot();
+			const unprettifiedElement = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			});
+			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('Received date day must be a number</a>');
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate day is less than 1', async () => {
+			expect(addDocumentsResponse.statusCode).toBe(302);
+
 			const response = await request.post(`${baseUrl}/add-document-details/1`).send({
 				items: [
 					{
@@ -1118,12 +1588,21 @@ describe('LPA Questionnaire review', () => {
 				]
 			});
 
-			const element = parseHtml(response.text);
+			expect(response.statusCode).toBe(200);
 
-			expect(element.innerHTML).toMatchSnapshot();
+			const unprettifiedElement = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			});
+			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Received date day must be between 1 and 31</a>'
+			);
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate day is greater than 31', async () => {
+			expect(addDocumentsResponse.statusCode).toBe(302);
+
 			const response = await request.post(`${baseUrl}/add-document-details/1`).send({
 				items: [
 					{
@@ -1138,12 +1617,21 @@ describe('LPA Questionnaire review', () => {
 				]
 			});
 
-			const element = parseHtml(response.text);
+			expect(response.statusCode).toBe(200);
 
-			expect(element.innerHTML).toMatchSnapshot();
+			const unprettifiedElement = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			});
+			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Received date day must be between 1 and 31</a>'
+			);
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate month is empty', async () => {
+			expect(addDocumentsResponse.statusCode).toBe(302);
+
 			const response = await request.post(`${baseUrl}/add-document-details/1`).send({
 				items: [
 					{
@@ -1158,12 +1646,19 @@ describe('LPA Questionnaire review', () => {
 				]
 			});
 
-			const element = parseHtml(response.text);
+			expect(response.statusCode).toBe(200);
 
-			expect(element.innerHTML).toMatchSnapshot();
+			const unprettifiedElement = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			});
+			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('Received date month cannot be empty</a>');
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate month is non-numeric', async () => {
+			expect(addDocumentsResponse.statusCode).toBe(302);
+
 			const response = await request.post(`${baseUrl}/add-document-details/1`).send({
 				items: [
 					{
@@ -1178,12 +1673,19 @@ describe('LPA Questionnaire review', () => {
 				]
 			});
 
-			const element = parseHtml(response.text);
+			expect(response.statusCode).toBe(200);
 
-			expect(element.innerHTML).toMatchSnapshot();
+			const unprettifiedElement = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			});
+			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('Received date month must be a number</a>');
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate month is less than 1', async () => {
+			expect(addDocumentsResponse.statusCode).toBe(302);
+
 			const response = await request.post(`${baseUrl}/add-document-details/1`).send({
 				items: [
 					{
@@ -1198,12 +1700,21 @@ describe('LPA Questionnaire review', () => {
 				]
 			});
 
-			const element = parseHtml(response.text);
+			expect(response.statusCode).toBe(200);
 
-			expect(element.innerHTML).toMatchSnapshot();
+			const unprettifiedElement = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			});
+			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Received date month must be between 1 and 12</a>'
+			);
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate month is greater than 12', async () => {
+			expect(addDocumentsResponse.statusCode).toBe(302);
+
 			const response = await request.post(`${baseUrl}/add-document-details/1`).send({
 				items: [
 					{
@@ -1218,12 +1729,21 @@ describe('LPA Questionnaire review', () => {
 				]
 			});
 
-			const element = parseHtml(response.text);
+			expect(response.statusCode).toBe(200);
 
-			expect(element.innerHTML).toMatchSnapshot();
+			const unprettifiedElement = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			});
+			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Received date month must be between 1 and 12</a>'
+			);
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate year is empty', async () => {
+			expect(addDocumentsResponse.statusCode).toBe(302);
+
 			const response = await request.post(`${baseUrl}/add-document-details/1`).send({
 				items: [
 					{
@@ -1238,12 +1758,19 @@ describe('LPA Questionnaire review', () => {
 				]
 			});
 
-			const element = parseHtml(response.text);
+			expect(response.statusCode).toBe(200);
 
-			expect(element.innerHTML).toMatchSnapshot();
+			const unprettifiedElement = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			});
+			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('Received date year cannot be empty</a>');
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate year is non-numeric', async () => {
+			expect(addDocumentsResponse.statusCode).toBe(302);
+
 			const response = await request.post(`${baseUrl}/add-document-details/1`).send({
 				items: [
 					{
@@ -1258,12 +1785,19 @@ describe('LPA Questionnaire review', () => {
 				]
 			});
 
-			const element = parseHtml(response.text);
+			expect(response.statusCode).toBe(200);
 
-			expect(element.innerHTML).toMatchSnapshot();
+			const unprettifiedElement = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			});
+			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('Received date year must be a number</a>');
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate is not a valid date', async () => {
+			expect(addDocumentsResponse.statusCode).toBe(302);
+
 			const response = await request.post(`${baseUrl}/add-document-details/1`).send({
 				items: [
 					{
@@ -1278,12 +1812,19 @@ describe('LPA Questionnaire review', () => {
 				]
 			});
 
-			const element = parseHtml(response.text);
+			expect(response.statusCode).toBe(200);
 
-			expect(element.innerHTML).toMatchSnapshot();
+			const unprettifiedElement = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			});
+			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('Received date must be a valid date</a>');
 		});
 
-		it('should re-render the document details page with the expected error message if receivedDate is a date in the future', async () => {
+		it('should re-render the document details page with the expected error message if receivedDate is in the future', async () => {
+			expect(addDocumentsResponse.statusCode).toBe(302);
+
 			const futureDate = addDays(new Date(), 1);
 			const response = await request.post(`${baseUrl}/add-document-details/1`).send({
 				items: [
@@ -1299,12 +1840,19 @@ describe('LPA Questionnaire review', () => {
 				]
 			});
 
-			const element = parseHtml(response.text);
+			expect(response.statusCode).toBe(200);
 
-			expect(element.innerHTML).toMatchSnapshot();
+			const unprettifiedElement = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			});
+			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('Received date cannot be a future date</a>');
 		});
 
 		it('should send a patch request to the appeal documents endpoint and redirect to the lpa questionnaire page, if complete and valid document details were provided', async () => {
+			expect(addDocumentsResponse.statusCode).toBe(302);
+
 			const response = await request.post(`${baseUrl}/add-document-details/1`).send({
 				items: [
 					{
@@ -1320,6 +1868,226 @@ describe('LPA Questionnaire review', () => {
 			});
 
 			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2864/check-your-answers'
+			);
+		});
+	});
+
+	describe('GET /lpa-questionnaire/1/add-documents/:folderId/check-your-answers', () => {
+		beforeEach(() => {
+			nock.cleanAll();
+			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/')
+				.get('/appeals/document-redaction-statuses')
+				.reply(200, documentRedactionStatuses)
+				.persist();
+			nock('http://test/')
+				.get('/appeals/1/document-folders/1')
+				.reply(200, documentFolderInfo)
+				.persist();
+		});
+		afterEach(() => {
+			nock.cleanAll();
+		});
+
+		it('should render a 500 error page if fileUploadInfo is not present in the session', async () => {
+			const response = await request.get(`${baseUrl}/add-documents/1/check-your-answers`);
+
+			expect(response.statusCode).toBe(500);
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Sorry, there is a problem with the service</h1>'
+			);
+		});
+
+		it('should render the add documents check and confirm page with summary list row displaying info on the uploaded document', async () => {
+			const addDocumentsResponse = await request.post(`${baseUrl}/add-documents/1`).send({
+				'upload-info': fileUploadInfo
+			});
+
+			expect(addDocumentsResponse.statusCode).toBe(302);
+
+			const response = await request.get(`${baseUrl}/add-documents/1/check-your-answers`);
+
+			expect(response.statusCode).toBe(200);
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Check your answers</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('Name</th>');
+			expect(unprettifiedElement.innerHTML).toContain('Received</th>');
+			expect(unprettifiedElement.innerHTML).toContain('Redaction status</th>');
+			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</td>');
+			expect(unprettifiedElement.innerHTML).toContain(`${dateToDisplayDate(new Date())}</td>`);
+			expect(unprettifiedElement.innerHTML).toContain('Unredacted</td>');
+			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
+		});
+	});
+
+	describe('POST /lpa-questionnaire/1/add-documents/:folderId/check-your-answers', () => {
+		beforeEach(() => {
+			nock.cleanAll();
+			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/')
+				.get('/appeals/document-redaction-statuses')
+				.reply(200, documentRedactionStatuses)
+				.persist();
+			nock('http://test/')
+				.get('/appeals/1/document-folders/1')
+				.reply(200, documentFolderInfo)
+				.persist();
+		});
+		afterEach(() => {
+			nock.cleanAll();
+		});
+
+		it('should render a 500 error page if fileUploadInfo is not present in the session', async () => {
+			const response = await request.post(`${baseUrl}/add-documents/1/check-your-answers`).send({});
+
+			expect(response.statusCode).toBe(500);
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Sorry, there is a problem with the service</h1>'
+			);
+		});
+
+		it('should send an API request to create a new document and redirect to the appellant case page', async () => {
+			const mockDocumentsEndpoint = nock('http://test/').post('/appeals/1/documents').reply(200);
+
+			const addDocumentsResponse = await request.post(`${baseUrl}/add-documents/1`).send({
+				'upload-info': fileUploadInfo
+			});
+
+			expect(addDocumentsResponse.statusCode).toBe(302);
+
+			const response = await request.post(`${baseUrl}/add-documents/1/check-your-answers`).send({});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/lpa-questionnaire/2'
+			);
+
+			expect(mockDocumentsEndpoint.isDone()).toBe(true);
+		});
+	});
+
+	describe('GET /lpa-questionnaire/1/add-documents/:folderId/:documentId/check-your-answers', () => {
+		beforeEach(() => {
+			nock.cleanAll();
+			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/')
+				.get('/appeals/document-redaction-statuses')
+				.reply(200, documentRedactionStatuses)
+				.persist();
+			nock('http://test/')
+				.get('/appeals/1/document-folders/1')
+				.reply(200, documentFolderInfo)
+				.persist();
+			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+		});
+		afterEach(() => {
+			nock.cleanAll();
+		});
+
+		it('should render a 500 error page if fileUploadInfo is not present in the session', async () => {
+			const response = await request.get(`${baseUrl}/add-documents/1/check-your-answers`);
+
+			expect(response.statusCode).toBe(500);
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Sorry, there is a problem with the service</h1>'
+			);
+		});
+
+		it('should render the add documents check and confirm page with summary list row displaying info on the uploaded document', async () => {
+			const addDocumentsResponse = await request.post(`${baseUrl}/add-documents/1/1`).send({
+				'upload-info': fileUploadInfo
+			});
+
+			expect(addDocumentsResponse.statusCode).toBe(302);
+
+			const response = await request.get(`${baseUrl}/add-documents/1/check-your-answers`);
+
+			expect(response.statusCode).toBe(200);
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Check your answers</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('Name</th>');
+			expect(unprettifiedElement.innerHTML).toContain('Received</th>');
+			expect(unprettifiedElement.innerHTML).toContain('Redaction status</th>');
+			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</td>');
+			expect(unprettifiedElement.innerHTML).toContain(`${dateToDisplayDate(new Date())}</td>`);
+			expect(unprettifiedElement.innerHTML).toContain('Unredacted</td>');
+			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
+		});
+	});
+
+	describe('POST /lpa-questionnaire/1/add-documents/:folderId/:documentId/check-your-answers', () => {
+		beforeEach(() => {
+			nock.cleanAll();
+			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/')
+				.get('/appeals/document-redaction-statuses')
+				.reply(200, documentRedactionStatuses)
+				.persist();
+			nock('http://test/')
+				.get('/appeals/1/document-folders/1')
+				.reply(200, documentFolderInfo)
+				.persist();
+			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+		});
+		afterEach(() => {
+			nock.cleanAll();
+		});
+
+		it('should render a 500 error page if fileUploadInfo is not present in the session', async () => {
+			const response = await request
+				.post(`${baseUrl}/add-documents/1/1/check-your-answers`)
+				.send({});
+
+			expect(response.statusCode).toBe(500);
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Sorry, there is a problem with the service</h1>'
+			);
+		});
+
+		it('should send an API request to update the document and redirect to the appellant case page', async () => {
+			const mockDocumentsEndpoint = nock('http://test/').post('/appeals/1/documents/1').reply(200);
+
+			const addDocumentsResponse = await request.post(`${baseUrl}/add-documents/1/1`).send({
+				'upload-info': fileUploadInfo
+			});
+
+			expect(addDocumentsResponse.statusCode).toBe(302);
+
+			const response = await request
+				.post(`${baseUrl}/add-documents/1/1/check-your-answers`)
+				.send({});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/lpa-questionnaire/2'
+			);
+			expect(mockDocumentsEndpoint.isDone()).toBe(true);
 		});
 	});
 
@@ -1331,25 +2099,46 @@ describe('LPA Questionnaire review', () => {
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses);
-			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 		});
 		afterEach(() => {
 			nock.cleanAll();
 		});
 
 		it('should render a 404 error page if the folderId is not valid', async () => {
-			const response = await request.get(`${baseUrl}/manage-documents/99/`);
-			const element = parseHtml(response.text);
+			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
+			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 
+			const response = await request.get(`${baseUrl}/manage-documents/99/`);
+
+			expect(response.statusCode).toBe(404);
+			const element = parseHtml(response.text);
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Page not found</h1>');
 		});
 
 		it('should render the manage documents listing page with one document item for each document present in the folder, with late entry status tags in the date received column for documents marked as late entry, if the folderId is valid', async () => {
+			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
+
 			const response = await request.get(`${baseUrl}/manage-documents/1/`);
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Manage folder</span><h1');
+			expect(unprettifiedElement.innerHTML).toContain('Changed description documents</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('Name</th>');
+			expect(unprettifiedElement.innerHTML).toContain('Date received</th>');
+			expect(unprettifiedElement.innerHTML).toContain('Redaction status</th>');
+			expect(unprettifiedElement.innerHTML).toContain('Actions</th>');
+			expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFolderInfo.pdf</span>');
+			expect(unprettifiedElement.innerHTML).toContain('sample-20s-documentFolderInfo.mp4</span>');
+			expect(unprettifiedElement.innerHTML).toContain('ph0-documentFolderInfo.jpeg</span>');
+			expect(unprettifiedElement.innerHTML).toContain('ph1-documentFolderInfo.jpeg</a>');
 		});
 	});
 
@@ -1365,8 +2154,11 @@ describe('LPA Questionnaire review', () => {
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses);
-			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+			nock('http://test/')
+				.get('/appeals/1/document-folders/1')
+				.reply(200, documentFolderInfo)
+				.persist();
+			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo).persist();
 		});
 
 		it('should render a 404 error page if the folderId is not valid', async () => {
@@ -1375,9 +2167,14 @@ describe('LPA Questionnaire review', () => {
 				.reply(200, documentFileVersionsInfo);
 
 			const response = await request.get(`${baseUrl}/manage-documents/99/1`);
-			const element = parseHtml(response.text);
 
+			expect(response.statusCode).toBe(404);
+			const element = parseHtml(response.text);
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Page not found</h1>');
 		});
 
 		it('should render a 404 error page if the documentId is not valid', async () => {
@@ -1386,9 +2183,14 @@ describe('LPA Questionnaire review', () => {
 				.reply(200, documentFileVersionsInfo);
 
 			const response = await request.get(`${baseUrl}/manage-documents/1/99`);
-			const element = parseHtml(response.text);
 
+			expect(response.statusCode).toBe(404);
+			const element = parseHtml(response.text);
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Page not found</h1>');
 		});
 
 		it('should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is null', async () => {
@@ -1400,6 +2202,28 @@ describe('LPA Questionnaire review', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Manage document</span><h1');
+			expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFileVersionsInfo.pdf</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('Virus scanning</strong>');
+			expect(unprettifiedElement.innerHTML).toContain('Version</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('Date received</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('Redaction status</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('Document versions</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('Version history</span>');
+			expect(unprettifiedElement.innerHTML).toContain('Version</th>');
+			expect(unprettifiedElement.innerHTML).toContain('Name</th>');
+			expect(unprettifiedElement.innerHTML).toContain('Activity</th>');
+			expect(unprettifiedElement.innerHTML).toContain('Redaction status</th>');
+			expect(unprettifiedElement.innerHTML).toContain('Action</th>');
+			expect(unprettifiedElement.innerHTML).not.toContain('Virus detected</strong>');
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'test-pdf-documentFileVersionsInfo.pdf</a>'
+			);
+			expect(unprettifiedElement.innerHTML).not.toContain('Upload a new version</a>');
+			expect(unprettifiedElement.innerHTML).not.toContain('Remove current version</a>');
 		});
 
 		it('should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "not_checked"', async () => {
@@ -1411,6 +2235,18 @@ describe('LPA Questionnaire review', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Manage document</span><h1');
+			expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFileVersionsInfo.pdf</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('Virus scanning</strong>');
+			expect(unprettifiedElement.innerHTML).not.toContain('Virus detected</strong>');
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'test-pdf-documentFileVersionsInfo.pdf</a>'
+			);
+			expect(unprettifiedElement.innerHTML).not.toContain('Upload a new version</a>');
+			expect(unprettifiedElement.innerHTML).not.toContain('Remove current version</a>');
 		});
 
 		it('should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "failed_virus_check"', async () => {
@@ -1419,9 +2255,27 @@ describe('LPA Questionnaire review', () => {
 				.reply(200, documentFileVersionsInfoVirusFound);
 
 			const response = await request.get(`${baseUrl}/manage-documents/1/1`);
+
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Manage document</span><h1');
+			expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFileVersionsInfo.pdf</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('class="govuk-error-summary"');
+			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'The selected file contains a virus. Upload a different version.</a>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Virus detected</strong>');
+			expect(unprettifiedElement.innerHTML).toContain('Upload a new version</a>');
+			expect(unprettifiedElement.innerHTML).toContain('Remove current version</a>');
+			expect(unprettifiedElement.innerHTML).not.toContain('Virus scanning</strong>');
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'test-pdf-documentFileVersionsInfo.pdf</a>'
+			);
 		});
 
 		it('should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "checked"', async () => {
@@ -1433,6 +2287,16 @@ describe('LPA Questionnaire review', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Manage document</span><h1');
+			expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFileVersionsInfo.pdf</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFileVersionsInfo.pdf</a>');
+			expect(unprettifiedElement.innerHTML).toContain('Upload a new version</a>');
+			expect(unprettifiedElement.innerHTML).toContain('Remove current version</a>');
+			expect(unprettifiedElement.innerHTML).not.toContain('Virus detected</strong>');
+			expect(unprettifiedElement.innerHTML).not.toContain('Virus scanning</strong>');
 		});
 
 		it('should render the manage individual document page without late entry tag in the date received row if the latest version of the document is not marked as late entry', async () => {
@@ -1444,6 +2308,11 @@ describe('LPA Questionnaire review', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Manage document</span><h1');
+			expect(unprettifiedElement.innerHTML).not.toContain('Late entry</strong>');
 		});
 
 		it('should render the manage individual document page with late entry tag in the date received row if the latest version of the document is marked as late entry, and a document history item for each version, with late entry tag in the history item document name column for versions marked as late entry', async () => {
@@ -1455,18 +2324,16 @@ describe('LPA Questionnaire review', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Manage document</span><h1');
+			expect(unprettifiedElement.innerHTML).toContain('Late entry</strong>');
 		});
 	});
 
 	describe('GET /lpa-questionnaire/1/manage-documents/:folderId/:documentId/:versionId/delete', () => {
 		beforeEach(() => {
-			// @ts-ignore
-			usersService.getUsersByRole = jest.fn().mockResolvedValue(activeDirectoryUsersData);
-			// @ts-ignore
-			usersService.getUserByRoleAndId = jest.fn().mockResolvedValue(activeDirectoryUsersData[0]);
-			// @ts-ignore
-			usersService.getUserById = jest.fn().mockResolvedValue(activeDirectoryUsersData[0]);
-
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses);
@@ -1474,7 +2341,7 @@ describe('LPA Questionnaire review', () => {
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 		});
 
-		it('should render the delete document page with single document verson', async () => {
+		it('should render the delete document page with the expected content when there is a single document version', async () => {
 			nock('http://test/')
 				.get('/appeals/1/documents/1/versions')
 				.reply(200, documentFileVersionsInfoChecked);
@@ -1483,10 +2350,29 @@ describe('LPA Questionnaire review', () => {
 
 			const element = parseHtml(response.text);
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Manage versions</span><h1');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Are you sure you want to remove this version?</h1>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<strong class="govuk-warning-text__text"><span class="govuk-warning-text__assistive">Warning</span> Removing the only version of a document will delete the document from the case</strong>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="delete-file-answer" type="radio" value="yes">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="delete-file-answer" type="radio" value="yes-and-upload-another-document">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="delete-file-answer" type="radio" value="no">'
+			);
 		});
 
-		it('should render the delete document page with multiple document versons', async () => {
-			const multipleVersionsDocument = { ...documentFileVersionsInfoChecked };
+		it('should render the delete document page with the expected content when there are multiple document versions', async () => {
+			const multipleVersionsDocument = cloneDeep(documentFileVersionsInfoChecked);
 			multipleVersionsDocument.documentVersion.push(multipleVersionsDocument.documentVersion[0]);
 
 			nock('http://test/')
@@ -1497,6 +2383,25 @@ describe('LPA Questionnaire review', () => {
 
 			const element = parseHtml(response.text);
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Manage versions</span><h1');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Are you sure you want to remove this version?</h1>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="delete-file-answer" type="radio" value="yes">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="delete-file-answer" type="radio" value="no">'
+			);
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'name="delete-file-answer" type="radio" value="yes-and-upload-another-document">'
+			);
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'<strong class="govuk-warning-text__text"><span class="govuk-warning-text__assistive">Warning</span> Removing the only version of a document will delete the document from the case</strong>'
+			);
 		});
 	});
 });

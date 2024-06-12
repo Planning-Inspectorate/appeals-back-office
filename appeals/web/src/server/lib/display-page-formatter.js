@@ -53,7 +53,7 @@ export const formatListOfNotificationMethodsToHtml = (notificationMethods) => {
  */
 export const formatAnswerAndDetails = (answer, details) => {
 	if (!details) {
-		return '';
+		details = '';
 	}
 	return answer === 'Yes'
 		? `${buildHtmSpan(answer)}<br>${buildHtmSpan(details)}`
@@ -247,7 +247,7 @@ export const formatDocumentValues = (appealId, listOfDocuments, addLateEntryStat
 
 /**
  * @param {number} appealId
- * @param {Folder|undefined} folder
+ * @param {import('@pins/appeals.api/src/server/endpoints/appeals.js').SingleFolderResponse|undefined} folder
  * @returns {HtmlProperty & ClassesProperty}
  */
 export const formatFolderValues = (appealId, folder) => {
@@ -256,7 +256,6 @@ export const formatFolderValues = (appealId, folder) => {
 			const documentInfo = {
 				id: document.id,
 				name: document.name,
-				// @ts-ignore - id property not present on import('@pins/appeals.api').Schema.Folder but present in data returned from document-folders endpoint...
 				folderId: folder.id,
 				caseId: appealId,
 				virusCheckStatus: document.latestDocumentVersion.virusCheckStatus,

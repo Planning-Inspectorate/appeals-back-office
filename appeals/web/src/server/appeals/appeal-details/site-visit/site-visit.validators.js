@@ -36,7 +36,7 @@ export const validateVisitEndTime = createTimeInputValidator(
 	'end time',
 	// @ts-ignore
 	(value, { req }) => {
-		return req.body['visit-type'] !== 'unaccompanied';
+		return req.body['visit-type'] === 'accessRequired';
 	}
 );
 export const validateVisitStartTimeBeforeEndTime = createStartTimeBeforeEndTimeValidator(
@@ -47,7 +47,7 @@ export const validateVisitStartTimeBeforeEndTime = createStartTimeBeforeEndTimeV
 	// @ts-ignore
 	(value, { req }) => {
 		return (
-			req.body['visit-type'] !== 'unaccompanied' ||
+			req.body['visit-type'] === 'accessRequired' ||
 			(req.body['visit-start-time-hour'].length &&
 				req.body['visit-start-time-minute'].length &&
 				req.body['visit-end-time-hour'].length &&

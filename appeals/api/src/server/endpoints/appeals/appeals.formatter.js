@@ -111,16 +111,22 @@ const formatAppeal = (
 		const formattedAppeal = {
 			...(appeal.agent && {
 				agent: {
+					serviceUserId: appeal.agent.id,
 					firstName: appeal.agent.firstName || '',
 					lastName: appeal.agent.lastName || '',
-					email: appeal.agent.email
+					organisationName: appeal.agent.organisationName || null,
+					email: appeal.agent.email,
+					phoneNumber: appeal.agent.phoneNumber
 				}
 			}),
 			...(appeal.appellant && {
 				appellant: {
+					serviceUserId: appeal.appellant.id,
 					firstName: appeal.appellant.firstName || '',
 					lastName: appeal.appellant.lastName || '',
-					email: appeal.appellant?.email || null
+					organisationName: appeal.appellant.organisationName || null,
+					email: appeal.appellant?.email || null,
+					phoneNumber: appeal.appellant.phoneNumber || null
 				}
 			}),
 			allocationDetails: appeal.allocation
@@ -132,13 +138,15 @@ const formatAppeal = (
 				: null,
 			appealId: appeal.id,
 			appealReference: appeal.reference,
-			appealSite: formatAddress(appeal.address),
+			appealSite: { addressId: appeal.address?.id, ...formatAddress(appeal.address) },
 			neighbouringSites: appeal.neighbouringSites?.map((site) => {
 				return {
 					siteId: site.id,
+					source: site.source,
 					address: formatAddress(site.address)
 				};
 			}),
+			isAffectingNeighbouringSites: appeal.lpaQuestionnaire?.isAffectingNeighbouringSites,
 			appealStatus: appeal.appealStatus[0].status,
 			...(transferAppealTypeInfo && {
 				transferStatus: {
@@ -164,7 +172,8 @@ const formatAppeal = (
 			caseOfficer: appeal.caseOfficer?.azureAdUserId || null,
 			costs: {
 				appellantFolder: costsFolders.find((f) => f.path.endsWith('appellant')),
-				lpaFolder: costsFolders.find((f) => f.path.endsWith('lpa'))
+				lpaFolder: costsFolders.find((f) => f.path.endsWith('lpa')),
+				decisionFolder: costsFolders.find((f) => f.path.endsWith('decision'))
 			},
 			decision:
 				decisionInfo &&
@@ -183,22 +192,22 @@ const formatAppeal = (
 			healthAndSafety: {
 				appellantCase: {
 					details: appeal.appellantCase?.healthAndSafetyIssues || null,
-					hasIssues: appeal.appellantCase?.hasHealthAndSafetyIssues || null
+					hasIssues: appeal.appellantCase?.hasHealthAndSafetyIssues
 				},
 				lpaQuestionnaire: {
 					details: appeal.lpaQuestionnaire?.healthAndSafetyDetails || null,
-					hasIssues: appeal.lpaQuestionnaire?.doesSiteHaveHealthAndSafetyIssues || null
+					hasIssues: appeal.lpaQuestionnaire?.doesSiteHaveHealthAndSafetyIssues
 				}
 			},
 			inspector: appeal.inspector?.azureAdUserId || null,
 			inspectorAccess: {
 				appellantCase: {
-					details: appeal.appellantCase?.visibilityRestrictions || null,
-					isRequired: !appeal.appellantCase?.isSiteVisibleFromPublicRoad
+					details: appeal.appellantCase?.inspectorAccessDetails || null,
+					isRequired: appeal.appellantCase?.doesSiteRequireInspectorAccess
 				},
 				lpaQuestionnaire: {
 					details: appeal.lpaQuestionnaire?.inspectorAccessDetails || null,
-					isRequired: appeal.lpaQuestionnaire?.doesSiteRequireInspectorAccess || null
+					isRequired: appeal.lpaQuestionnaire?.doesSiteRequireInspectorAccess
 				}
 			},
 			otherAppeals: formatRelatedAppeals(appeal.relatedAppeals || [], appeal.id, referencedAppeals),
@@ -215,15 +224,6 @@ const formatAppeal = (
 				0,
 			localPlanningDepartment: appeal.lpa.name,
 			lpaQuestionnaireId: appeal.lpaQuestionnaire?.id || null,
-			neighbouringSite: {
-				contacts:
-					appeal.lpaQuestionnaire?.neighbouringSiteContact?.map((contact) => ({
-						address: formatAddress(contact.address),
-						firstName: contact.firstName,
-						lastName: contact.lastName
-					})) || null,
-				isAffected: appeal.lpaQuestionnaire?.isAffectingNeighbouringSites || null
-			},
 			planningApplicationReference: appeal.planningApplicationReference,
 			procedureType: appeal.lpaQuestionnaire?.procedureType?.name || 'Written',
 			siteVisit: {
@@ -239,11 +239,13 @@ const formatAppeal = (
 			documentationSummary: {
 				appellantCase: {
 					status: formatAppellantCaseDocumentationStatus(appeal),
-					dueDate: appeal.dueDate
+					dueDate: appeal.dueDate,
+					receivedAt: appeal.createdAt
 				},
 				lpaQuestionnaire: {
 					status: formatLpaQuestionnaireDocumentationStatus(appeal),
-					dueDate: appeal.appealTimetable?.lpaQuestionnaireDueDate || null
+					dueDate: appeal.appealTimetable?.lpaQuestionnaireDueDate || null,
+					receivedAt: appeal.lpaQuestionnaire?.receivedAt || null
 				}
 			}
 		};

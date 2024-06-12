@@ -5,6 +5,7 @@
  * @property {string} visitStartTime
  * @property {string} visitEndTime
  * @property {import('@pins/appeals/types/inspector.js').SiteVisitType} apiVisitType
+ * @property {string} previousVisitType
  */
 
 /**
@@ -23,23 +24,13 @@ export async function createSiteVisit(
 	visitStartTime,
 	visitEndTime
 ) {
-	if (visitStartTime !== '' && visitEndTime !== '') {
-		return apiClient
-			.post(`appeals/${appealId}/site-visits`, {
-				json: {
-					visitDate,
-					visitStartTime,
-					visitEndTime,
-					visitType
-				}
-			})
-			.json();
-	}
 	return apiClient
 		.post(`appeals/${appealId}/site-visits`, {
 			json: {
 				visitDate,
-				visitType
+				visitType,
+				...(visitStartTime !== '' && { visitStartTime }),
+				...(visitEndTime !== '' && { visitEndTime })
 			}
 		})
 		.json();
@@ -50,9 +41,11 @@ export async function createSiteVisit(
  * @param {number} appealId
  * @param {number} siteVisitId
  * @param {import('@pins/appeals/types/inspector.js').SiteVisitType} visitType
+ * @param {string} [previousVisitType]
  * @param {string} [visitDate]
  * @param {string} [visitStartTime]
  * @param {string} [visitEndTime]
+ * @param {string} [siteVisitChangeType]
  */
 export async function updateSiteVisit(
 	apiClient,
@@ -61,7 +54,9 @@ export async function updateSiteVisit(
 	visitType,
 	visitDate,
 	visitStartTime,
-	visitEndTime
+	visitEndTime,
+	previousVisitType,
+	siteVisitChangeType
 ) {
 	return apiClient
 		.patch(`appeals/${appealId}/site-visits/${siteVisitId}`, {
@@ -69,7 +64,9 @@ export async function updateSiteVisit(
 				visitType,
 				...(visitDate && { visitDate }),
 				visitStartTime,
-				visitEndTime
+				visitEndTime,
+				...(previousVisitType && { previousVisitType }),
+				siteVisitChangeType
 			}
 		})
 		.json();

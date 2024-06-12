@@ -76,6 +76,7 @@ export const appealData = {
 	appealId: 1,
 	appealReference: 'APP/Q9999/D/21/351062',
 	appealSite: {
+		addressId: 1,
 		addressLine1: '21 The Pavement',
 		county: 'Wandsworth',
 		postCode: 'SW4 0HY'
@@ -88,11 +89,13 @@ export const appealData = {
 	appealType: 'Householder',
 	appellantCaseId: 0,
 	agent: {
+		serviceUserId: 1,
 		firstName: 'Fiona',
 		lastName: 'Shell',
 		email: 'test2@example.com'
 	},
 	appellant: {
+		serviceUserId: 2,
 		firstName: 'Roger',
 		lastName: 'Simmons',
 		email: 'test3@example.com'
@@ -101,14 +104,20 @@ export const appealData = {
 	costs: {
 		appellantFolder: {
 			caseId: 1,
-			id: 1000,
+			id: 1,
 			path: 'appeal_costs/appellant',
 			documents: []
 		},
 		lpaFolder: {
 			caseId: 1,
-			id: 1000,
+			id: 2,
 			path: 'appeal_costs/lpa',
+			documents: []
+		},
+		decisionFolder: {
+			caseId: 1,
+			id: 3,
+			path: 'appeal_costs/decision',
 			documents: []
 		}
 	},
@@ -144,35 +153,26 @@ export const appealData = {
 	linkedAppeals: [],
 	localPlanningDepartment: 'Wiltshire Council',
 	lpaQuestionnaireId: 1,
-	neighbouringSite: {
-		contacts: [
-			{
-				address: {
-					addressLine1: '21 The Pavement',
-					county: 'Wandsworth',
-					postCode: 'SW4 0HY'
-				},
-				firstName: 'Haley',
-				lastName: 'Eland'
-			},
-			{
-				address: {
-					addressLine1: 'FOR TRAINERS ONLY',
-					addressLine2: '96 The Avenue',
-					county: 'Kent',
-					postCode: 'MD21 5XY'
-				},
-				firstName: 'Fiona',
-				lastName: 'Burgess'
-			}
-		],
-		isAffected: true
-	},
+
+	isAffectingNeighbouringSites: true,
+
 	neighbouringSites: [
 		{
 			siteId: 1,
+			source: 'lpa',
 			address: {
 				addressLine1: '1 Grove Cottage',
+				addressLine2: 'Shotesham Road',
+				town: 'Woodton',
+				county: 'Devon',
+				postCode: 'NR35 2ND'
+			}
+		},
+		{
+			siteId: 2,
+			source: 'back-office',
+			address: {
+				addressLine1: '2 Grove Cottage',
 				addressLine2: 'Shotesham Road',
 				town: 'Woodton',
 				county: 'Devon',
@@ -196,11 +196,13 @@ export const appealData = {
 	documentationSummary: {
 		appellantCase: {
 			status: 'received',
-			dueDate: '2024-10-02T10:27:06.626Z'
+			dueDate: '2024-10-02T10:27:06.626Z',
+			receivedAt: '2024-08-02T10:27:06.626Z'
 		},
 		lpaQuestionnaire: {
 			status: 'not_received',
-			dueDate: '2024-10-11T10:27:06.626Z'
+			dueDate: '2024-10-11T10:27:06.626Z',
+			receivedAt: '2024-08-02T10:27:06.626Z'
 		}
 	}
 };
@@ -226,54 +228,7 @@ export const appellantCaseDataNotValidated = {
 	},
 	planningApplicationReference: '48269/APP/2021/1482',
 	documents: {
-		applicationForm: {
-			folderId: 1,
-			path: 'appellant_case/applicationForm',
-			documents: []
-		},
-		decisionLetter: {
-			folderId: 2,
-			path: 'appellant_case/decisionLetter',
-			documents: []
-		},
-		designAndAccessStatement: {
-			folderId: 3,
-			path: 'appellant_case/designAndAccessStatement',
-			documents: []
-		},
-		planningObligation: {
-			folderId: 4,
-			path: 'appellant_case/planningObligation',
-			documents: []
-		},
-		plansDrawingsSupportingDocuments: {
-			folderId: 5,
-			path: 'appellant_case/plansDrawingsSupportingDocuments',
-			documents: []
-		},
-		separateOwnershipCertificate: {
-			folderId: 6,
-			path: 'appellant_case/separateOwnershipCertificate',
-			documents: []
-		},
-		newPlansOrDrawings: {
-			folderId: 7,
-			path: 'appellant_case/newPlansOrDrawings',
-			documents: []
-		},
-		newSupportingDocuments: {
-			folderId: 8,
-			path: 'appellant_case/newSupportingDocuments',
-			documents: []
-		},
-		appealStatement: {
-			folderId: 9,
-			path: 'appellant_case/appealStatement',
-			documents: []
-		},
-		additionalDocuments: {
-			folderId: 10,
-			path: 'appellant_case/additionalDocuments',
+		appellantCaseCorrespondence: {
 			documents: [
 				{
 					id: '00c43c8c-829a-4aa8-883a-fd6fc1f52c3d',
@@ -291,7 +246,34 @@ export const appellantCaseDataNotValidated = {
 					isLateEntry: false,
 					virusCheckStatus: 'checked'
 				}
-			]
+			],
+			folderId: 70461,
+			path: 'appellant-case/appellantCaseCorrespondence'
+		},
+		appellantCaseWithdrawalLetter: {
+			documents: [],
+			folderId: 70460,
+			path: 'appellant-case/appellantCaseWithdrawalLetter'
+		},
+		appellantStatement: {
+			documents: [],
+			folderId: 70456,
+			path: 'appellant-case/appellantStatement'
+		},
+		applicationDecisionLetter: {
+			documents: [],
+			folderId: 70458,
+			path: 'appellant-case/applicationDecisionLetter'
+		},
+		changedDescription: {
+			documents: [],
+			folderId: 70459,
+			path: 'appellant-case/changedDescription'
+		},
+		originalApplicationForm: {
+			documents: [],
+			folderId: 70457,
+			path: 'appellant-case/originalApplicationForm'
 		}
 	},
 	hasAdvertisedAppeal: null,
@@ -316,98 +298,7 @@ export const appellantCaseDataNotValidated = {
 		isVisible: true
 	}
 };
-
-export const appellantCaseDataNotValidatedWithDocuments = {
-	...appellantCaseDataNotValidated,
-	documents: {
-		...appellantCaseDataNotValidated.documents,
-		newSupportingDocuments: {
-			folderId: 1,
-			path: 'appellant_case/newSupportingDocuments',
-			documents: []
-		},
-		appealStatement: {
-			folderId: 2,
-			path: 'appellant_case/appealStatement',
-			documents: []
-		}
-	}
-};
-
-export const appellantCaseDataInvalidOutcome = {
-	...appellantCaseDataNotValidated,
-	validation: {
-		outcome: 'Invalid',
-		invalidReasons: [
-			{
-				name: {
-					id: 1,
-					name: 'Appellant name is not the same on the application form and appeal form',
-					hasText: false
-				},
-				text: []
-			},
-			{
-				name: {
-					id: 2,
-					name: 'Attachments and/or appendices have not been included to the full statement of case',
-					hasText: true
-				},
-				text: ['test reason 1']
-			},
-			{
-				name: {
-					id: 10,
-					name: 'Other',
-					hasText: true
-				},
-				text: ['test reason 2', 'test reason 3']
-			}
-		]
-	}
-};
-
-export const appellantCaseDataIncompleteOutcome = {
-	...appellantCaseDataNotValidated,
-	validation: {
-		outcome: 'Incomplete',
-		incompleteReasons: [
-			{
-				name: {
-					id: 1,
-					name: 'Appellant name is not the same on the application form and appeal form',
-					hasText: false
-				},
-				text: []
-			},
-			{
-				name: {
-					id: 2,
-					name: 'Attachments and/or appendices have not been included to the full statement of case',
-					hasText: true
-				},
-				text: ['test reason 1']
-			},
-			{
-				name: {
-					id: 10,
-					name: 'Other',
-					hasText: true
-				},
-				text: ['test reason 2', 'test reason 3']
-			}
-		]
-	}
-};
-
-export const appellantCaseDataValidOutcome = {
-	...appellantCaseDataNotValidated,
-	validation: {
-		outcome: 'Valid'
-	}
-};
-
-export const lpaQuestionnaireDataNotValidated = {
+export const lpaQuestionnaireData = {
 	affectsListedBuildingDetails: [
 		{
 			listEntry: '123456'
@@ -699,6 +590,422 @@ export const lpaQuestionnaireDataNotValidated = {
 					folderId: 3420,
 					caseId: 111,
 					isLateEntry: false,
+					virusCheckStatus: 'checked'
+				}
+			]
+		}
+	},
+	doesAffectAListedBuilding: true,
+	doesAffectAScheduledMonument: true,
+	doesSiteHaveHealthAndSafetyIssues: true,
+	doesSiteRequireInspectorAccess: true,
+	extraConditions: 'Some extra conditions',
+	hasCommunityInfrastructureLevy: true,
+	hasCompletedAnEnvironmentalStatement: true,
+	hasEmergingPlan: true,
+	hasExtraConditions: true,
+	hasOtherAppeals: null,
+	hasProtectedSpecies: true,
+	hasRepresentationsFromOtherParties: true,
+	hasResponsesOrStandingAdviceToUpload: true,
+	hasStatementOfCase: true,
+	hasStatutoryConsultees: true,
+	hasSupplementaryPlanningDocuments: true,
+	hasTreePreservationOrder: true,
+	healthAndSafetyDetails: 'There is no mobile signal at the property',
+	inCAOrrelatesToCA: true,
+	includesScreeningOption: true,
+	inquiryDays: 2,
+	inspectorAccessDetails: 'The entrance is at the back of the property',
+	isAffectingNeighbouringSites: true,
+	isCommunityInfrastructureLevyFormallyAdopted: true,
+	isCorrectAppealType: true,
+	isEnvironmentalStatementRequired: true,
+	isGypsyOrTravellerSite: true,
+	isListedBuilding: true,
+	isPublicRightOfWay: true,
+	isSensitiveArea: true,
+	isSiteVisible: true,
+	isTheSiteWithinAnAONB: true,
+	listedBuildingDetails: [
+		{
+			listEntry: '123456'
+		},
+		{
+			listEntry: '123457'
+		}
+	],
+	localPlanningDepartment: 'Dorset Council',
+	lpaNotificationMethods: [
+		{
+			name: 'A site notice'
+		},
+		{
+			name: 'Letter/email to interested parties'
+		}
+	],
+	lpaQuestionnaireId: 2,
+	meetsOrExceedsThresholdOrCriteriaInColumn2: true,
+	otherAppeals: [
+		{
+			appealId: 2,
+			appealReference: 'APP/Q9999/D/21/725284'
+		}
+	],
+	procedureType: 'Written',
+	scheduleType: 'Schedule 2',
+	sensitiveAreaDetails: 'The area is prone to flooding',
+	siteWithinGreenBelt: true,
+	statutoryConsulteesDetails: 'Some other people need to be consulted',
+	validation: null
+};
+
+export const appellantCaseDataNotValidatedWithDocuments = {
+	...appellantCaseDataNotValidated,
+	documents: {
+		...appellantCaseDataNotValidated.documents,
+		newSupportingDocuments: {
+			folderId: 1,
+			path: 'appellant_case/newSupportingDocuments',
+			documents: []
+		},
+		appealStatement: {
+			folderId: 2,
+			path: 'appellant_case/appealStatement',
+			documents: []
+		}
+	}
+};
+
+export const appellantCaseDataInvalidOutcome = {
+	...appellantCaseDataNotValidated,
+	validation: {
+		outcome: 'Invalid',
+		invalidReasons: [
+			{
+				name: {
+					id: 1,
+					name: 'Appellant name is not the same on the application form and appeal form',
+					hasText: false
+				},
+				text: []
+			},
+			{
+				name: {
+					id: 2,
+					name: 'Attachments and/or appendices have not been included to the full statement of case',
+					hasText: true
+				},
+				text: ['test reason 1']
+			},
+			{
+				name: {
+					id: 10,
+					name: 'Other',
+					hasText: true
+				},
+				text: ['test reason 2', 'test reason 3']
+			}
+		]
+	}
+};
+
+export const appellantCaseDataIncompleteOutcome = {
+	...appellantCaseDataNotValidated,
+	validation: {
+		outcome: 'Incomplete',
+		incompleteReasons: [
+			{
+				name: {
+					id: 1,
+					name: 'Appellant name is not the same on the application form and appeal form',
+					hasText: false
+				},
+				text: []
+			},
+			{
+				name: {
+					id: 2,
+					name: 'Attachments and/or appendices have not been included to the full statement of case',
+					hasText: true
+				},
+				text: ['test reason 1']
+			},
+			{
+				name: {
+					id: 10,
+					name: 'Other',
+					hasText: true
+				},
+				text: ['test reason 2', 'test reason 3']
+			}
+		]
+	}
+};
+
+export const appellantCaseDataValidOutcome = {
+	...appellantCaseDataNotValidated,
+	validation: {
+		outcome: 'Valid'
+	}
+};
+
+export const lpaQuestionnaireDataNotValidated = {
+	affectsListedBuildingDetails: [
+		{
+			listEntry: '123456'
+		}
+	],
+	appealId: 1,
+	appealReference: 'APP/Q9999/D/21/30498',
+	appealSite: {
+		addressLine1: '92 Huntsmoor Road',
+		town: 'Tadley',
+		postCode: 'RG26 4BX'
+	},
+	communityInfrastructureLevyAdoptionDate: '2023-05-09T01:00:00.000Z',
+	designatedSites: [
+		{
+			name: 'pSPA',
+			description: 'potential special protection area'
+		},
+		{
+			name: 'SAC',
+			description: 'special area of conservation'
+		}
+	],
+	developmentDescription: '',
+	documents: {
+		conservationMap: {
+			folderId: 1,
+			path: 'lpa-questionnaire/conservationMap',
+			documents: [
+				{
+					id: '9635631c-507c-4af2-98a1-da007e8bb56a',
+					name: 'conservationAreaMap.docx',
+					folderId: 1,
+					caseId: 1
+				}
+			]
+		},
+		whoNotified: {
+			folderId: 2,
+			path: 'lpa-questionnaire/whoNotified',
+			documents: [
+				{
+					id: '9635631c-507c-4af2-98a1-da007e8bb56b',
+					name: 'notifyingParties.docx',
+					folderId: 2,
+					caseId: 1
+				}
+			]
+		},
+		otherPartyRepresentations: {
+			folderId: 6,
+			path: 'lpa-questionnaire/otherPartyRepresentations',
+			documents: [
+				{
+					id: '9635631c-507c-4af2-98a1-da007e8bb56f',
+					name: 'representations.docx',
+					folderId: 6,
+					caseId: 1
+				}
+			]
+		},
+		planningOfficerReport: {
+			folderId: 7,
+			path: 'lpa-questionnaire/planningOfficerReport',
+			documents: [
+				{
+					id: '9635631c-507c-4af2-98a1-da007e8bb56g',
+					name: 'officersReport.docx',
+					folderId: 7,
+					caseId: 1
+				}
+			]
+		},
+		// communityInfrastructureLevy: {
+		// 	folderId: 8,
+		// 	path: 'lpa_questionnaire/communityInfrastructureLevy',
+		// 	documents: [
+		// 		{
+		// 			id: '9635631c-507c-4af2-98a1-da007e8bb56h',
+		// 			name: 'communityInfrastructureLevy.docx',
+		// 			folderId: 8,
+		// 			caseId: 1
+		// 		}
+		// 	]
+		// },
+		// consultationResponses: {
+		// 	folderId: 9,
+		// 	path: 'lpa_questionnaire/consultationResponses',
+		// 	documents: [
+		// 		{
+		// 			id: '9635631c-507c-4af2-98a1-da007e8bb56i',
+		// 			name: 'consultationResponses.docx',
+		// 			folderId: 9,
+		// 			caseId: 1
+		// 		}
+		// 	]
+		// },
+		// definitiveMapAndStatement: {
+		// 	folderId: 10,
+		// 	path: 'lpa_questionnaire/definitiveMapAndStatement',
+		// 	documents: [
+		// 		{
+		// 			id: '9635631c-507c-4af2-98a1-da007e8bb56j',
+		// 			name: 'definitiveMapAndStatement.docx',
+		// 			folderId: 10,
+		// 			caseId: 1
+		// 		}
+		// 	]
+		// },
+		// emergingPlans: {
+		// 	folderId: 11,
+		// 	path: 'lpa_questionnaire/emergingPlans',
+		// 	documents: [
+		// 		{
+		// 			id: '9635631c-507c-4af2-98a1-da007e8bb56k',
+		// 			name: 'emergingPlans.docx',
+		// 			folderId: 11,
+		// 			caseId: 1
+		// 		}
+		// 	]
+		// },
+		// environmentalStatementResponses: {
+		// 	folderId: 12,
+		// 	path: 'lpa_questionnaire/environmentalStatementResponses',
+		// 	documents: [
+		// 		{
+		// 			id: '9635631c-507c-4af2-98a1-da007e8bb56l',
+		// 			name: 'environmentalStatementResponses.docx',
+		// 			folderId: 12,
+		// 			caseId: 1
+		// 		}
+		// 	]
+		// },
+		// issuedScreeningOption: {
+		// 	folderId: 13,
+		// 	path: 'lpa_questionnaire/issuedScreeningOption',
+		// 	documents: [
+		// 		{
+		// 			id: '9635631c-507c-4af2-98a1-da007e8bb56m',
+		// 			name: 'issuedScreeningOption.docx',
+		// 			folderId: 13,
+		// 			caseId: 1
+		// 		}
+		// 	]
+		// },
+		// otherRelevantPolicies: {
+		// 	folderId: 14,
+		// 	path: 'lpa_questionnaire/otherRelevantPolicies',
+		// 	documents: [
+		// 		{
+		// 			id: '9635631c-507c-4af2-98a1-da007e8bb56n',
+		// 			name: 'otherRelevantPolicies.docx',
+		// 			folderId: 14,
+		// 			caseId: 1
+		// 		}
+		// 	]
+		// },
+		// policiesFromStatutoryDevelopment: {
+		// 	folderId: 15,
+		// 	path: 'lpa_questionnaire/policiesFromStatutoryDevelopment',
+		// 	documents: [
+		// 		{
+		// 			id: '9635631c-507c-4af2-98a1-da007e8bb56o',
+		// 			name: 'policiesFromStatutoryDevelopment.docx',
+		// 			folderId: 15,
+		// 			caseId: 1
+		// 		}
+		// 	]
+		// },
+		// relevantPartiesNotification: {
+		// 	folderId: 16,
+		// 	path: 'lpa_questionnaire/relevantPartiesNotification',
+		// 	documents: [
+		// 		{
+		// 			id: '9635631c-507c-4af2-98a1-da007e8bb56p',
+		// 			name: 'relevantPartiesNotification.docx',
+		// 			folderId: 16,
+		// 			caseId: 1
+		// 		}
+		// 	]
+		// },
+		// responsesOrAdvice: {
+		// 	folderId: 17,
+		// 	path: 'lpa_questionnaire/responsesOrAdvice',
+		// 	documents: [
+		// 		{
+		// 			id: '9635631c-507c-4af2-98a1-da007e8bb56q',
+		// 			name: 'responsesOrAdvice.docx',
+		// 			folderId: 17,
+		// 			caseId: 1
+		// 		}
+		// 	]
+		// },
+		// screeningDirection: {
+		// 	folderId: 18,
+		// 	path: 'lpa_questionnaire/screeningDirection',
+		// 	documents: [
+		// 		{
+		// 			id: '9635631c-507c-4af2-98a1-da007e8bb56r',
+		// 			name: 'screeningDirection.docx',
+		// 			folderId: 18,
+		// 			caseId: 1
+		// 		}
+		// 	]
+		// },
+		// supplementaryPlanningDocuments: {
+		// 	folderId: 19,
+		// 	path: 'lpa_questionnaire/supplementaryPlanningDocuments',
+		// 	documents: [
+		// 		{
+		// 			id: '9635631c-507c-4af2-98a1-da007e8bb56s',
+		// 			name: 'supplementaryPlanningDocuments.docx',
+		// 			folderId: 19,
+		// 			caseId: 1
+		// 		}
+		// 	]
+		// },
+		// treePreservationOrder: {
+		// 	folderId: 20,
+		// 	path: 'lpa_questionnaire/treePreservationOrder',
+		// 	documents: [
+		// 		{
+		// 			id: '9635631c-507c-4af2-98a1-da007e8bb56t',
+		// 			name: 'treePreservationOrder.docx',
+		// 			folderId: 20,
+		// 			caseId: 1
+		// 		}
+		// 	]
+		// },
+		lpaCaseCorrespondence: {
+			folderId: 21,
+			path: 'lpa-questionnaire/lpaCaseCorrespondence',
+			documents: [
+				{
+					id: '00c43c8c-829a-4aa8-883a-fd6fc1f52c3d',
+					name: 'ph1.jpeg',
+					folderId: 3420,
+					caseId: 111,
+					isLateEntry: true,
+					virusCheckStatus: 'checked'
+				},
+				{
+					id: 'a78446aa-167a-4bef-89b7-18bcb0da11c1',
+					name: 'ph0.jpeg',
+					folderId: 3420,
+					caseId: 111,
+					isLateEntry: false,
+					virusCheckStatus: 'checked'
+				},
+				{
+					id: 'a78446aa-167a-4bef-89b7-18bcb0da11c2',
+					name: 'test-doc.jpeg',
+					folderId: 3420,
+					caseId: 111,
+					isLateEntry: false,
 					virusCheckStatus: 'not_checked'
 				}
 			]
@@ -755,33 +1062,6 @@ export const lpaQuestionnaireDataNotValidated = {
 	],
 	lpaQuestionnaireId: 2,
 	meetsOrExceedsThresholdOrCriteriaInColumn2: true,
-	neighbouringSiteContacts: [
-		{
-			address: {
-				addressLine1: '19 Beauchamp Road',
-				town: 'Bristol',
-				postCode: 'BS7 8LQ'
-			},
-			contactId: 103,
-			email: 'test5@example.com',
-			firstName: 'Ryan',
-			lastName: 'Marshall',
-			telephone: '01234567891'
-		},
-		{
-			address: {
-				addressLine1: '96 The Avenue',
-				addressLine2: 'Maidstone',
-				county: 'Kent',
-				postCode: 'MD21 5XY'
-			},
-			contactId: 104,
-			email: 'test9@example.com',
-			firstName: 'Eva',
-			lastName: 'Sharma',
-			telephone: '01234567891'
-		}
-	],
 	otherAppeals: [
 		{
 			appealId: 2,
@@ -958,7 +1238,9 @@ export const siteVisitData = {
 	siteVisitId: 0,
 	visitEndTime: '10:44',
 	visitStartTime: '09:38',
-	visitType: 'Accompanied'
+	visitType: 'Accompanied',
+	previousVisitType: 'Unaccompanied',
+	siteVisitChangeType: 'date-time'
 };
 
 export const appealTypesData = [
@@ -1184,7 +1466,7 @@ export const documentFolderInfo = {
 			id: '97260151-4334-407f-a76a-0b5666cbcfa6',
 			name: 'ph0-documentFolderInfo.jpeg',
 			latestDocumentVersion: {
-				draft: true,
+				draft: false,
 				dateReceived: '2025-04-03T01:00:00.000Z',
 				redactionStatus: 3,
 				size: 58861,
@@ -1197,7 +1479,7 @@ export const documentFolderInfo = {
 			id: '97260151-4334-407f-a76a-0b5666cbcfa7',
 			name: 'ph1-documentFolderInfo.jpeg',
 			latestDocumentVersion: {
-				draft: true,
+				draft: false,
 				dateReceived: '2025-04-03T01:00:00.000Z',
 				redactionStatus: 2,
 				size: 58987,
@@ -1208,7 +1490,7 @@ export const documentFolderInfo = {
 		}
 	],
 	id: 2864,
-	path: 'appellant_case/newSupportingDocuments'
+	path: 'appellant-case/changedDescription'
 };
 
 export const documentFolderInfoWithoutDraftDocuments = {
@@ -1241,13 +1523,13 @@ export const documentFolderInfoWithoutDraftDocuments = {
 		}
 	],
 	id: 2864,
-	path: 'appellant_case/newSupportingDocuments'
+	path: 'appellant-case/changedDescription'
 };
 
 export const additionalDocumentsFolderInfo = {
 	...documentFolderInfo,
 	id: 2865,
-	path: 'appellant_case/additionalDocuments'
+	path: 'appellant-case/appellantCaseCorrespondence'
 };
 
 export const notCheckedDocumentFolderInfoDocuments = {
@@ -1628,15 +1910,6 @@ export const linkedAppeals = [
 		relationshipId: 3048
 	},
 	{
-		appealId: null,
-		appealReference: '76215416',
-		appealType: 'Unknown',
-		externalSource: true,
-		isParentAppeal: true,
-		linkingDate: '2024-02-21T10:15:10.436Z',
-		relationshipId: 3049
-	},
-	{
 		appealId: 5451,
 		appealReference: 'TEST-721086',
 		appealType: 'Householder',
@@ -1644,6 +1917,19 @@ export const linkedAppeals = [
 		isParentAppeal: false,
 		linkingDate: '2024-02-21T11:10:15.491Z',
 		relationshipId: 3057
+	}
+];
+
+export const linkedAppealsWithExternalLead = [
+	...linkedAppeals,
+	{
+		appealId: null,
+		appealReference: '76215416',
+		appealType: 'Unknown',
+		externalSource: true,
+		isParentAppeal: true,
+		linkingDate: '2024-02-21T10:15:10.436Z',
+		relationshipId: 3049
 	}
 ];
 
@@ -1722,6 +2008,101 @@ export const linkableAppeal = {
 	submissionDate: '2014-11-14T00:00:00+00:00',
 	source: 'back-office'
 };
+
+export const costsFolderInfoAppellant = {
+	caseId: 1,
+	documents: [
+		{
+			id: '15d19184-155b-4b6c-bba6-2bd2a61ca9a3',
+			name: 'test-pdf-documentFolderInfo.pdf',
+			latestDocumentVersion: {
+				draft: false,
+				dateReceived: '2023-02-01T01:00:00.000Z',
+				redactionStatus: 1,
+				size: 129363,
+				mime: 'application/pdf',
+				virusCheckStatus: 'checked',
+				isLateEntry: false
+			}
+		},
+		{
+			id: '47d8f073-c837-4f07-9161-c1a5626eba56',
+			name: 'sample-20s-documentFolderInfo.mp4',
+			latestDocumentVersion: {
+				draft: false,
+				dateReceived: '2024-03-02T01:00:00.000Z',
+				redactionStatus: 2,
+				size: 11815175,
+				mime: 'video/mp4',
+				virusCheckStatus: 'checked',
+				isLateEntry: false
+			}
+		}
+	],
+	id: 1,
+	path: 'appeal_costs/appellant'
+};
+
+export const costsFolderInfoLpa = {
+	...costsFolderInfoAppellant,
+	id: 2,
+	path: 'appeal_costs/lpa'
+};
+
+export const costsFolderInfoDecision = {
+	...costsFolderInfoAppellant,
+	id: 3,
+	path: 'appeal_costs/decision'
+};
+
+export const appealCostsDocumentItem = {
+	guid: 'd2197025-5edb-4477-8e98-2a1bf13ed2ea',
+	name: '_821df3b2-08ea-4f56-b8e7-97c3502cd73a_test-doc-alternate.docx',
+	folderId: 1,
+	createdAt: '2024-04-09T13:10:07.517Z',
+	isDeleted: false,
+	latestVersionId: 1,
+	caseId: 1,
+	latestDocumentVersion: {
+		documentGuid: 'd2197025-5edb-4477-8e98-2a1bf13ed2ea',
+		version: 1,
+		lastModified: null,
+		documentType: 'appellant',
+		published: false,
+		draft: false,
+		sourceSystem: 'back-office-appeals',
+		origin: null,
+		originalFilename: 'test-doc-alternate.docx',
+		fileName: 'test-doc-alternate.docx',
+		representative: null,
+		description: null,
+		owner: null,
+		author: null,
+		securityClassification: null,
+		mime: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+		horizonDataID: null,
+		fileMD5: null,
+		path: null,
+		virusCheckStatus: 'checked',
+		size: 656030,
+		stage: 'appeal_costs',
+		blobStorageContainer: 'document-service-uploads',
+		blobStoragePath:
+			'appeal/6014692/d2197025-5edb-4477-8e98-2a1bf13ed2ea/v1/test-doc-alternate.docx',
+		dateCreated: '2024-04-09T13:10:07.517Z',
+		datePublished: null,
+		dateReceived: '2024-04-09T13:10:07.562Z',
+		isDeleted: false,
+		isLateEntry: false,
+		redactionStatusId: 2,
+		redacted: false,
+		documentURI:
+			'https://127.0.0.1:10000/devstoreaccount1/document-service-uploads/document-service-uploads/appeal/6014692/d2197025-5edb-4477-8e98-2a1bf13ed2ea/v1/test-doc-alternate.docx'
+	}
+};
+
+export const fileUploadInfo =
+	'[{"name": "test-document.txt", "GUID": "1", "fileRowId": "1", "blobStoreUrl": "/", "mimeType": "txt", "documentType": "txt", "size": 1, "stage": "appellant-case"}]';
 
 export const baseSession = {
 	id: '',

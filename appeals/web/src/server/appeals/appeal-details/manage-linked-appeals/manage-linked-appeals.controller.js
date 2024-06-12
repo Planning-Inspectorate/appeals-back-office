@@ -34,12 +34,16 @@ const renderManageLinkedAppeals = async (request, response) => {
 		params: { appealId }
 	} = request;
 
-	const appealData = await getAppealDetailsFromId(request.apiClient, appealId);
+	const appealData = request.currentAppeal;
 	let leadAppealData;
 	let leadLinkedAppeal;
 
 	if (appealData.isChildAppeal === true) {
-		leadLinkedAppeal = appealData.linkedAppeals.find((linkedAppeal) => linkedAppeal.isParentAppeal);
+		leadLinkedAppeal = appealData.linkedAppeals.find(
+			(
+				/** @type {import('@pins/appeals.api/src/server/endpoints/appeals.js').LinkedAppeal} */ linkedAppeal
+			) => linkedAppeal.isParentAppeal
+		);
 
 		if (leadLinkedAppeal && leadLinkedAppeal.appealId) {
 			leadAppealData = await getAppealDetailsFromId(
@@ -49,7 +53,7 @@ const renderManageLinkedAppeals = async (request, response) => {
 		}
 
 		if (!leadLinkedAppeal || !leadAppealData) {
-			return response.render('app/500.njk');
+			return response.status(500).render('app/500.njk');
 		}
 	}
 
@@ -60,7 +64,7 @@ const renderManageLinkedAppeals = async (request, response) => {
 		leadAppealData
 	);
 
-	return response.render('patterns/display-page.pattern.njk', {
+	return response.status(200).render('patterns/display-page.pattern.njk', {
 		pageContent: mappedPageContent,
 		errors
 	});
@@ -79,16 +83,13 @@ export const getAddLinkedAppealReference = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const renderAddLinkedAppealReference = async (request, response) => {
-	const {
-		errors,
-		params: { appealId }
-	} = request;
+	const { errors } = request;
 
-	const appealDetails = await getAppealDetailsFromId(request.apiClient, appealId);
+	const appealDetails = request.currentAppeal;
 
 	const mappedPageContent = await addLinkedAppealPage(appealDetails);
 
-	return response.render('patterns/change-page.pattern.njk', {
+	return response.status(200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
 		errors
 	});
@@ -108,7 +109,7 @@ export const postAddLinkedAppeal = async (request, response) => {
 	} = request;
 
 	if (request.body.problemWithHorizon) {
-		return response.render('app/500.njk', {
+		return response.status(500).render('app/500.njk', {
 			titleCopy: 'Sorry, there is a problem with Horizon',
 			additionalCtas: [
 				{
@@ -139,15 +140,12 @@ export const getAddLinkedAppealCheckAndConfirm = async (request, response) => {
  */
 export const renderAddLinkedAppealCheckAndConfirm = async (request, response) => {
 	if (!objectContainsAllKeys(request.session, 'linkableAppeal')) {
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 
-	const {
-		errors,
-		params: { appealId }
-	} = request;
+	const { errors } = request;
 
-	const targetAppealDetails = await getAppealDetailsFromId(request.apiClient, appealId);
+	const targetAppealDetails = request.currentAppeal;
 	let linkCandidateAppealData;
 
 	if (request.session.linkableAppeal?.linkableAppealSummary.source === 'back-office') {
@@ -163,7 +161,7 @@ export const renderAddLinkedAppealCheckAndConfirm = async (request, response) =>
 		linkCandidateAppealData
 	);
 
-	return response.render('patterns/check-and-confirm-page.pattern.njk', {
+	return response.status(200).render('patterns/check-and-confirm-page.pattern.njk', {
 		pageContent: mappedPageContent,
 		errors
 	});
@@ -175,7 +173,7 @@ export const renderAddLinkedAppealCheckAndConfirm = async (request, response) =>
  */
 export const postAddLinkedAppealCheckAndConfirm = async (request, response) => {
 	if (!objectContainsAllKeys(request.session, 'linkableAppeal')) {
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 
 	const {
@@ -225,7 +223,7 @@ export const postAddLinkedAppealCheckAndConfirm = async (request, response) => {
 		logger.error(error);
 	}
 
-	return response.render('app/500.njk');
+	return response.status(500).render('app/500.njk');
 };
 
 /**
@@ -260,10 +258,13 @@ export const postUnlinkAppeal = async (request, response) => {
 		}
 		if (unlinkAppeal === 'yes') {
 			const appealRelationshipId = parseInt(relationshipId, 10);
-			const appealData = await getAppealDetailsFromId(request.apiClient, appealId);
+			const appealData = request.currentAppeal;
 			const childRef =
-				appealData.linkedAppeals.find((appeal) => appeal.relationshipId === appealRelationshipId)
-					?.appealReference || '';
+				appealData.linkedAppeals.find(
+					(
+						/** @type {import('@pins/appeals.api/src/server/endpoints/appeals.js').LinkedAppeal} */ linkedAppeal
+					) => linkedAppeal.relationshipId === appealRelationshipId
+				)?.appealReference || '';
 
 			await postUnlinkRequest(request.apiClient, appealId, appealRelationshipId);
 
@@ -283,7 +284,7 @@ export const postUnlinkAppeal = async (request, response) => {
 			`/appeals-service/appeal-details/${appealId}/change-appeal-type/change-appeal-final-date`
 		);
 	} catch (error) {
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };
 
@@ -298,11 +299,13 @@ const renderUnlinkAppeal = async (request, response) => {
 		params: { appealId, relationshipId, backLinkAppealId }
 	} = request;
 
-	const appealData = await getAppealDetailsFromId(request.apiClient, appealId);
+	const appealData = request.currentAppeal;
 
 	const childRef =
 		appealData.linkedAppeals.find(
-			(appeal) => appeal.relationshipId === parseInt(relationshipId, 10)
+			(
+				/** @type {import('@pins/appeals.api/src/server/endpoints/appeals.js').LinkedAppeal} */ linkedAppeal
+			) => linkedAppeal.relationshipId === parseInt(relationshipId, 10)
 		)?.appealReference || '';
 
 	const mappedPageContent = await unlinkAppealPage(
@@ -313,7 +316,7 @@ const renderUnlinkAppeal = async (request, response) => {
 		backLinkAppealId
 	);
 
-	return response.render('patterns/display-page.pattern.njk', {
+	return response.status(200).render('patterns/display-page.pattern.njk', {
 		pageContent: mappedPageContent,
 		errors
 	});

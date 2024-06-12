@@ -19,7 +19,6 @@ import { procedureTypesRoutes } from './procedure-types/procedure-types.routes.j
 import { scheduleTypesRoutes } from './schedule-types/schedule-types.routes.js';
 import { siteVisitTypesRoutes } from './site-visit-types/site-visit-types.routes.js';
 import { appellantCaseValidationOutcomesRoutes } from './appellant-case-validation-outcomes/appellant-case-validation-outcomes.routes.js';
-import { appellantsRoutes } from './appellants/appellants.routes.js';
 import { addressesRoutes } from './addresses/addresses.routes.js';
 import { appealTimetablesRoutes } from './appeal-timetables/appeal-timetables.routes.js';
 import { documentRedactionStatusesRoutes } from './document-redaction-statuses/document-redaction-statuses.routes.js';
@@ -33,6 +32,7 @@ import checkAzureAdUserIdHeaderExists from '#middleware/check-azure-ad-user-id-h
 import { linkedAppealsRoutes } from './linkable-appeals/linkable-appeal.routes.js';
 import { transferredAppealsRoutes } from './transferred-appeals/transferred-appeal.routes.js';
 import { neighbouringSitesRoutes } from './neighbouring-sites/neighbouring-sites.routes.js';
+import { serviceUserRoutes } from './service-user/service-user.routes.js';
 
 const router = createRouter();
 router.use(integrationsRoutes);
@@ -50,7 +50,6 @@ router.use(appellantCaseIncompleteReasonsRoutes);
 router.use(appellantCaseInvalidReasonsRoutes);
 router.use(appellantCasesRoutes);
 router.use(appellantCaseValidationOutcomesRoutes);
-router.use(appellantsRoutes);
 router.use(auditTrailsRoutes);
 router.use(designatedSitesRoutes);
 router.use(documentRedactionStatusesRoutes);
@@ -71,5 +70,6 @@ router.use(appealsRoutes);
 router.use(linkedAppealsRoutes);
 router.use(transferredAppealsRoutes);
 router.use(neighbouringSitesRoutes);
+router.use(serviceUserRoutes);
 
 export { router as appealsRoutes };

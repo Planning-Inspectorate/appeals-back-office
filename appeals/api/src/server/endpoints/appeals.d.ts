@@ -146,26 +146,11 @@ interface SingleLPAQuestionnaireResponse {
 	designatedSites?: DesignatedSiteDetails[] | null;
 	developmentDescription?: string | null;
 	documents: {
-		communityInfrastructureLevy: FolderInfo | {};
-		conservationAreaMap: FolderInfo | {};
-		consultationResponses: FolderInfo | {};
-		definitiveMapAndStatement: FolderInfo | {};
-		emergingPlans: FolderInfo | {};
-		environmentalStatementResponses: FolderInfo | {};
-		issuedScreeningOption: FolderInfo | {};
-		lettersToNeighbours: FolderInfo | {};
-		notifyingParties: FolderInfo | {};
-		officersReport: FolderInfo | {};
-		otherRelevantPolicies: FolderInfo | {};
-		policiesFromStatutoryDevelopment: FolderInfo | {};
-		pressAdvert: FolderInfo | {};
-		representations: FolderInfo | {};
-		responsesOrAdvice: FolderInfo | {};
-		screeningDirection: FolderInfo | {};
-		siteNotices: FolderInfo | {};
-		supplementaryPlanningDocuments: FolderInfo | {};
-		treePreservationOrder: FolderInfo | {};
-		additionalDocuments: FolderInfo | {};
+		whoNotified: FolderInfo | {};
+		conservationMap: FolderInfo | {};
+		lpaCaseCorrespondence: FolderInfo | {};
+		otherPartyRepresentations: FolderInfo | {};
+		planningOfficerReport: FolderInfo | {};
 	};
 	doesAffectAListedBuilding?: boolean | null;
 	doesAffectAScheduledMonument?: boolean | null;
@@ -205,20 +190,14 @@ interface SingleLPAQuestionnaireResponse {
 	lpaNotificationMethods?: LPANotificationMethodDetails[] | null;
 	lpaQuestionnaireId?: number;
 	meetsOrExceedsThresholdOrCriteriaInColumn2?: boolean | null;
-	neighbouringSiteContacts: NeighbouringSiteContactsResponse[] | null;
 	otherAppeals: string[];
 	procedureType?: string;
+	receivedAt: Date;
 	scheduleType?: string;
 	sensitiveAreaDetails?: string | null;
 	siteWithinGreenBelt?: boolean | null;
 	statutoryConsulteesDetails?: string | null;
 	validation: ValidationOutcomeResponse | null;
-}
-
-interface NeighbouringSiteContactsResponse {
-	address: AppealSite;
-	firstName: string | null;
-	lastName: string | null;
 }
 
 interface SingleAppealDetailsResponse {
@@ -235,29 +214,27 @@ interface SingleAppealDetailsResponse {
 	appealType?: string;
 	resubmitTypeId?: number;
 	appellantCaseId: number;
-	appellant?: {
-		firstName: string;
-		lastName: string;
-		email?: string | null;
-	};
-	agent?: {
-		firstName: string;
-		lastName: string;
-		email: string;
-	};
+	appellant?: ServiceUserResponse;
+	agent?: ServiceUserResponse;
 	caseOfficer: string | null;
 	costs: {
 		appellantFolder: {
 			id: number;
 			path: string;
 			caseId: number;
-			documents: DocumentInfo[];
+			documents: Schema.Document[];
 		};
 		lpaFolder: {
 			id: number;
 			path: string;
 			caseId: number;
-			documents: DocumentInfo[];
+			documents: Schema.Document[];
+		};
+		decisionFolder: {
+			id: number;
+			path: string;
+			caseId: number;
+			documents: Schema.Document[];
 		};
 	};
 	decision: {
@@ -295,10 +272,7 @@ interface SingleAppealDetailsResponse {
 	otherAppeals: RelatedAppeal[];
 	localPlanningDepartment: string;
 	lpaQuestionnaireId: number | null;
-	neighbouringSite: {
-		contacts: NeighbouringSiteContactsResponse[] | null;
-		isAffected: boolean | null;
-	};
+	isAffectingNeighbouringSites: boolean | null;
 	neighbouringSites: Schema.NeighbouringSite[] | null;
 	planningApplicationReference: string;
 	procedureType: string | null;
@@ -345,12 +319,12 @@ interface SingleAppellantCaseResponse {
 		isCorrect: boolean | null;
 	};
 	documents: {
-		appealStatement: FolderInfo | {};
-		applicationForm: FolderInfo | {};
-		decisionLetter: FolderInfo | {};
-		designAndAccessStatement?: FolderInfo | {};
-		newSupportingDocuments: FolderInfo | {};
-		additionalDocuments: FolderInfo | {};
+		appellantCaseCorrespondence: FolderInfo | {};
+		appellantCaseWithdrawalLetter: FolderInfo | {};
+		appellantStatement: FolderInfo | {};
+		applicationDecisionLetter: FolderInfo | {};
+		changedDescription: FolderInfo | {};
+		originalApplicationForm: FolderInfo | {};
 	};
 	hasAdvertisedAppeal: boolean | null;
 	hasDesignAndAccessStatement?: boolean | null;
@@ -428,42 +402,6 @@ interface FolderInfo {
 	documents: DocumentInfo[];
 }
 
-interface LatestDocumentVersionInfo {
-	published: boolean | null | undefined;
-	draft: boolean;
-	dateReceived: Date | null | undefined;
-	redactionStatusId: number | null | undefined;
-	documentGuid?: string | null | undefined;
-	version?: number | null | undefined;
-	lastModified?: any;
-	documentType?: string | null | undefined;
-	sourceSystem?: string | null | undefined;
-	origin?: any;
-	originalFilename?: string | null | undefined;
-	fileName?: string | null | undefined;
-	representative?: any;
-	description?: any;
-	owner?: any;
-	author?: any;
-	securityClassification?: any;
-	mime?: string | null | undefined;
-	horizonDataID?: any;
-	fileMD5?: any;
-	path?: any;
-	virusCheckStatus?: any;
-	size?: number | null | undefined;
-	stage?: string | null | undefined;
-	blobStorageContainer?: string | null | undefined;
-	blobStoragePath?: string | null | undefined;
-	dateCreated?: string | null | undefined;
-	datePublished?: any;
-	isDeleted?: boolean | null | undefined;
-	isLateEntry?: boolean | null | undefined;
-	redactionStatus?: number | null | undefined;
-	redacted?: boolean | null | undefined;
-	documentURI?: string | null | undefined;
-}
-
 interface DocumentInfo {
 	id: string;
 	name: string;
@@ -471,7 +409,7 @@ interface DocumentInfo {
 	folderId?: number;
 	caseId?: number;
 	virusCheckStatus?: any;
-	latestDocumentVersion?: LatestDocumentVersionInfo;
+	latestDocumentVersion?: Schema.DocumentVersion;
 	isLateEntry?: boolean;
 }
 
@@ -518,6 +456,8 @@ interface UpdateAppellantCaseRequest {
 	applicantSurname?: string;
 	areAllOwnersKnown?: boolean;
 	hasAdvertisedAppeal?: boolean;
+	doesSiteRequireInspectorAccess?: boolean;
+	inspectorAccessDetails?: string;
 	hasAttemptedToIdentifyOwners?: boolean;
 	hasHealthAndSafetyIssues?: boolean;
 	healthAndSafetyIssues?: string;
@@ -541,18 +481,24 @@ interface UpdateLPAQuestionnaireRequest {
 	designatedSites?: number[];
 	doesAffectAListedBuilding?: boolean;
 	doesAffectAScheduledMonument?: boolean;
+	doesSiteRequireInspectorAccess?: boolean;
+	doesSiteHaveHealthAndSafetyIssues?: boolean;
 	hasCompletedAnEnvironmentalStatement?: boolean;
 	hasProtectedSpecies?: boolean;
 	hasTreePreservationOrder?: boolean;
+	healthAndSafetyDetails?: string;
 	includesScreeningOption?: boolean;
 	incompleteReasons?: IncompleteInvalidReasons;
+	isAffectingNeighbouringSites?: boolean;
 	isConservationArea?: boolean;
+	isCorrectAppealType?: boolean;
 	isEnvironmentalStatementRequired?: boolean;
 	isGypsyOrTravellerSite?: boolean;
 	isListedBuilding?: boolean;
 	isPublicRightOfWay?: boolean;
 	isSensitiveArea?: boolean;
 	isTheSiteWithinAnAONB?: boolean;
+	inspectorAccessDetails?: string;
 	lpaQuestionnaireValidationOutcomeId?: number;
 	meetsOrExceedsThresholdOrCriteriaInColumn2?: boolean;
 	scheduleTypeId?: number;
@@ -566,6 +512,8 @@ interface UpdateLPAQuestionaireValidationOutcomeParams {
 		id: number;
 		appealStatus: AppealStatus[];
 		appealType: AppealType;
+		reference: string;
+		lpa: LPA;
 	};
 	azureAdUserId: string;
 	data: {
@@ -574,6 +522,7 @@ interface UpdateLPAQuestionaireValidationOutcomeParams {
 	};
 	lpaQuestionnaireId: number;
 	validationOutcome: ValidationOutcome;
+	siteAddress: string;
 }
 
 interface UpdateAppellantCaseValidationOutcomeParams {
@@ -594,6 +543,7 @@ interface UpdateAppellantCaseValidationOutcomeParams {
 	};
 	validationOutcome: ValidationOutcome;
 	validAt: Date;
+	siteAddress: string;
 }
 
 interface UpdateTimetableRequest {
@@ -607,6 +557,7 @@ interface UpdateAppealRequest {
 	dueDate?: string;
 	startedAt?: string;
 	validAt?: string;
+	planningApplicationReference?: string;
 	caseOfficer?: number | null;
 	inspector?: number | null;
 }
@@ -666,6 +617,35 @@ interface CreateAuditTrailRequest {
 	userId: number;
 }
 
+export interface CreateSiteVisitData {
+	appealId: number;
+	visitDate?: string;
+	visitEndTime?: string;
+	visitStartTime?: string;
+	visitType?: any;
+	appellantEmail: string;
+	lpaEmail: string;
+	appealReferenceNumber: string;
+	lpaReference: string;
+	siteAddress: string;
+}
+
+export interface UpdateSiteVisitData {
+	siteVisitId: number;
+	appealId: number;
+	visitDate?: string;
+	visitEndTime?: string;
+	visitStartTime?: string;
+	visitType?: any;
+	previousVisitType: string;
+	appellantEmail: string;
+	lpaEmail: string;
+	appealReferenceNumber: string;
+	lpaReference: string;
+	siteAddress: string;
+	siteVisitChangeType: string;
+}
+
 type GetAuditTrailsResponse = {
 	azureAdUserId: string;
 	details: string;
@@ -704,6 +684,15 @@ type IncompleteInvalidReasons = {
 	text?: string[];
 }[];
 
+type ServiceUserResponse = {
+	serviceUserId: number;
+	firstName: string;
+	lastName: string;
+	email?: string | null;
+	organisationName?: string | null;
+	phoneNumber?: string | null;
+};
+
 type AssignedUser = 'caseOfficer' | 'inspector';
 
 export {
@@ -716,7 +705,6 @@ export {
 	CreateAuditTrail,
 	CreateAuditTrailRequest,
 	DocumentationSummary,
-	LatestDocumentVersionInfo,
 	DocumentInfo,
 	FolderInfo,
 	NotValidReasonOption,
@@ -755,5 +743,6 @@ export {
 	ValidationOutcomeResponse,
 	SetAppealDecisionRequest,
 	SetInvalidAppealDecisionRequest,
-	AppealRelationshipRequest
+	AppealRelationshipRequest,
+	ServiceUserResponse
 };

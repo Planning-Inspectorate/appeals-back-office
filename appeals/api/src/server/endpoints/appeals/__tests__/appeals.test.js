@@ -5,6 +5,7 @@ import {
 	AUDIT_TRAIL_ASSIGNED_INSPECTOR,
 	AUDIT_TRAIL_REMOVED_CASE_OFFICER,
 	AUDIT_TRAIL_REMOVED_INSPECTOR,
+	ERROR_CANNOT_BE_EMPTY_STRING,
 	ERROR_FAILED_TO_SAVE_DATA,
 	ERROR_LENGTH_BETWEEN_2_AND_8_CHARACTERS,
 	ERROR_MUST_BE_BOOLEAN,
@@ -12,6 +13,7 @@ import {
 	ERROR_MUST_BE_GREATER_THAN_ZERO,
 	ERROR_MUST_BE_NUMBER,
 	ERROR_MUST_BE_SET_AS_HEADER,
+	ERROR_MUST_BE_STRING,
 	ERROR_MUST_BE_UUID,
 	ERROR_MUST_BE_VALID_APPEAL_STATE,
 	ERROR_MUST_NOT_BE_IN_FUTURE,
@@ -21,7 +23,6 @@ import {
 import { savedFolder } from '#tests/documents/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { householdAppeal, fullPlanningAppeal, linkedAppeals } from '#tests/appeals/mocks.js';
-import formatAddress from '#utils/format-address.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { getIdsOfReferencedAppeals, mapAppealToDueDate } from '../appeals.formatter.js';
 import { mapAppealStatuses } from '../appeals.controller.js';
@@ -680,19 +681,26 @@ describe('appeals routes', () => {
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
 					agent: {
+						serviceUserId: householdAppeal.agent.id,
 						firstName: householdAppeal.agent.firstName,
 						lastName: householdAppeal.agent.lastName,
-						email: householdAppeal.agent.email
+						email: householdAppeal.agent.email,
+						phoneNumber: householdAppeal.agent.phoneNumber,
+						organisationName: householdAppeal.agent.organisationName
 					},
 					appellant: {
+						serviceUserId: householdAppeal.appellant.id,
 						firstName: householdAppeal.appellant.firstName,
 						lastName: householdAppeal.appellant.lastName,
-						email: householdAppeal.appellant.email
+						email: householdAppeal.appellant.email,
+						phoneNumber: householdAppeal.appellant.phoneNumber,
+						organisationName: householdAppeal.appellant.organisationName
 					},
 					allocationDetails: null,
 					appealId: householdAppeal.id,
 					appealReference: householdAppeal.reference,
 					appealSite: {
+						addressId: householdAppeal.address.id,
 						addressLine1: householdAppeal.address.addressLine1,
 						addressLine2: householdAppeal.address.addressLine2,
 						town: householdAppeal.address.addressTown,
@@ -711,11 +719,13 @@ describe('appeals routes', () => {
 					documentationSummary: {
 						appellantCase: {
 							status: 'received',
-							dueDate: householdAppeal.dueDate
+							dueDate: householdAppeal.dueDate,
+							receivedAt: householdAppeal.createdAt.toISOString()
 						},
 						lpaQuestionnaire: {
 							dueDate: null,
-							status: 'received'
+							status: 'received',
+							receivedAt: householdAppeal.lpaQuestionnaire.receivedAt
 						}
 					},
 					healthAndSafety: {
@@ -731,8 +741,8 @@ describe('appeals routes', () => {
 					inspector: householdAppeal.inspector.azureAdUserId,
 					inspectorAccess: {
 						appellantCase: {
-							details: householdAppeal.appellantCase.visibilityRestrictions,
-							isRequired: !householdAppeal.appellantCase.isSiteVisibleFromPublicRoad
+							details: householdAppeal.appellantCase.inspectorAccessDetails,
+							isRequired: householdAppeal.appellantCase.doesSiteRequireInspectorAccess
 						},
 						lpaQuestionnaire: {
 							details: householdAppeal.lpaQuestionnaire.inspectorAccessDetails,
@@ -753,14 +763,7 @@ describe('appeals routes', () => {
 					otherAppeals: [],
 					localPlanningDepartment: householdAppeal.lpa.name,
 					lpaQuestionnaireId: householdAppeal.lpaQuestionnaire.id,
-					neighbouringSite: {
-						contacts: householdAppeal.lpaQuestionnaire.neighbouringSiteContact.map((contact) => ({
-							address: formatAddress(contact.address),
-							firstName: contact.firstName,
-							lastName: contact.lastName
-						})),
-						isAffected: householdAppeal.lpaQuestionnaire.isAffectingNeighbouringSites
-					},
+					isAffectingNeighbouringSites: true,
 					planningApplicationReference: householdAppeal.planningApplicationReference,
 					procedureType: householdAppeal.lpaQuestionnaire.procedureType.name,
 					siteVisit: {
@@ -789,19 +792,26 @@ describe('appeals routes', () => {
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
 					agent: {
+						serviceUserId: fullPlanningAppeal.agent.id,
 						firstName: fullPlanningAppeal.agent.firstName,
 						lastName: fullPlanningAppeal.agent.lastName,
-						email: fullPlanningAppeal.agent.email
+						email: fullPlanningAppeal.agent.email,
+						phoneNumber: fullPlanningAppeal.agent.phoneNumber,
+						organisationName: fullPlanningAppeal.agent.organisationName
 					},
 					appellant: {
+						serviceUserId: fullPlanningAppeal.appellant.id,
 						firstName: fullPlanningAppeal.appellant.firstName,
 						lastName: fullPlanningAppeal.appellant.lastName,
-						email: fullPlanningAppeal.appellant.email
+						email: fullPlanningAppeal.appellant.email,
+						phoneNumber: fullPlanningAppeal.appellant.phoneNumber,
+						organisationName: fullPlanningAppeal.appellant.organisationName
 					},
 					allocationDetails: null,
 					appealId: fullPlanningAppeal.id,
 					appealReference: fullPlanningAppeal.reference,
 					appealSite: {
+						addressId: fullPlanningAppeal.address.id,
 						addressLine1: fullPlanningAppeal.address.addressLine1,
 						addressLine2: fullPlanningAppeal.address.addressLine2,
 						town: fullPlanningAppeal.address.addressTown,
@@ -820,11 +830,13 @@ describe('appeals routes', () => {
 					documentationSummary: {
 						appellantCase: {
 							status: 'received',
-							dueDate: fullPlanningAppeal.dueDate
+							dueDate: fullPlanningAppeal.dueDate,
+							receivedAt: householdAppeal.createdAt.toISOString()
 						},
 						lpaQuestionnaire: {
 							dueDate: null,
-							status: 'received'
+							status: 'received',
+							receivedAt: householdAppeal.lpaQuestionnaire.receivedAt
 						}
 					},
 					healthAndSafety: {
@@ -840,8 +852,8 @@ describe('appeals routes', () => {
 					inspector: fullPlanningAppeal.inspector.azureAdUserId,
 					inspectorAccess: {
 						appellantCase: {
-							details: fullPlanningAppeal.appellantCase.visibilityRestrictions,
-							isRequired: !fullPlanningAppeal.appellantCase.isSiteVisibleFromPublicRoad
+							details: fullPlanningAppeal.appellantCase.inspectorAccessDetails,
+							isRequired: fullPlanningAppeal.appellantCase.doesSiteRequireInspectorAccess
 						},
 						lpaQuestionnaire: {
 							details: fullPlanningAppeal.lpaQuestionnaire.inspectorAccessDetails,
@@ -854,16 +866,7 @@ describe('appeals routes', () => {
 					otherAppeals: [],
 					localPlanningDepartment: fullPlanningAppeal.lpa.name,
 					lpaQuestionnaireId: fullPlanningAppeal.lpaQuestionnaire.id,
-					neighbouringSite: {
-						contacts: fullPlanningAppeal.lpaQuestionnaire.neighbouringSiteContact.map(
-							(contact) => ({
-								address: formatAddress(contact.address),
-								firstName: contact.firstName,
-								lastName: contact.lastName
-							})
-						),
-						isAffected: fullPlanningAppeal.lpaQuestionnaire.isAffectingNeighbouringSites
-					},
+					isAffectingNeighbouringSites: true,
 					planningApplicationReference: fullPlanningAppeal.planningApplicationReference,
 					procedureType: fullPlanningAppeal.lpaQuestionnaire.procedureType.name,
 					siteVisit: {
@@ -932,6 +935,32 @@ describe('appeals routes', () => {
 				expect(response.body).toEqual({
 					startedAt: '2023-05-05T01:00:00.000Z',
 					validAt: '2023-05-25T01:00:00.000Z'
+				});
+			});
+
+			test('updates the planning application reference', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+
+				const response = await request
+					.patch(`/appeals/${householdAppeal.id}`)
+					.send({
+						planningApplicationReference: '1234/A/567890'
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
+					data: {
+						planningApplicationReference: '1234/A/567890',
+						updatedAt: expect.any(Date)
+					},
+					where: {
+						id: householdAppeal.id
+					}
+				});
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual({
+					planningApplicationReference: '1234/A/567890'
 				});
 			});
 
@@ -1265,7 +1294,7 @@ describe('appeals routes', () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 
 				// @ts-ignore
-				databaseConnector.appeal.update.mockImplementation(() => {
+				databaseConnector.appeal.update.mockImplementationOnce(() => {
 					throw new Error(ERROR_FAILED_TO_SAVE_DATA);
 				});
 
@@ -1280,6 +1309,54 @@ describe('appeals routes', () => {
 				expect(response.body).toEqual({
 					errors: {
 						body: ERROR_FAILED_TO_SAVE_DATA
+					}
+				});
+			});
+
+			test('returns an error if the planning application reference is not a string', async () => {
+				const response = await request
+					.patch(`/appeals/${householdAppeal.id}`)
+					.send({
+						planningApplicationReference: 123
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						planningApplicationReference: ERROR_MUST_BE_STRING
+					}
+				});
+			});
+
+			test('returns an error if the planning application reference is empty', async () => {
+				const response = await request
+					.patch(`/appeals/${householdAppeal.id}`)
+					.send({
+						planningApplicationReference: ''
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						planningApplicationReference: ERROR_CANNOT_BE_EMPTY_STRING
+					}
+				});
+			});
+
+			test('returns an error if the planning application reference null', async () => {
+				const response = await request
+					.patch(`/appeals/${householdAppeal.id}`)
+					.send({
+						planningApplicationReference: null
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						planningApplicationReference: ERROR_MUST_BE_STRING
 					}
 				});
 			});
@@ -1318,19 +1395,26 @@ describe('appeals routes', () => {
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
 					agent: {
+						serviceUserId: householdAppeal.agent.id,
 						firstName: householdAppeal.agent.firstName,
 						lastName: householdAppeal.agent.lastName,
-						email: householdAppeal.agent.email
+						email: householdAppeal.agent.email,
+						phoneNumber: householdAppeal.agent.phoneNumber,
+						organisationName: householdAppeal.agent.organisationName
 					},
 					appellant: {
+						serviceUserId: householdAppeal.appellant.id,
 						firstName: householdAppeal.appellant.firstName,
 						lastName: householdAppeal.appellant.lastName,
-						email: householdAppeal.appellant.email
+						email: householdAppeal.appellant.email,
+						phoneNumber: householdAppeal.appellant.phoneNumber,
+						organisationName: householdAppeal.appellant.organisationName
 					},
 					allocationDetails: null,
 					appealId: householdAppeal.id,
 					appealReference: householdAppeal.reference,
 					appealSite: {
+						addressId: householdAppeal.address.id,
 						addressLine1: householdAppeal.address.addressLine1,
 						addressLine2: householdAppeal.address.addressLine2,
 						town: householdAppeal.address.addressTown,
@@ -1349,11 +1433,13 @@ describe('appeals routes', () => {
 					documentationSummary: {
 						appellantCase: {
 							status: 'received',
-							dueDate: householdAppeal.dueDate
+							dueDate: householdAppeal.dueDate,
+							receivedAt: householdAppeal.createdAt.toISOString()
 						},
 						lpaQuestionnaire: {
 							dueDate: null,
-							status: 'received'
+							status: 'received',
+							receivedAt: householdAppeal.lpaQuestionnaire.receivedAt
 						}
 					},
 					healthAndSafety: {
@@ -1369,8 +1455,8 @@ describe('appeals routes', () => {
 					inspector: householdAppeal.inspector.azureAdUserId,
 					inspectorAccess: {
 						appellantCase: {
-							details: householdAppeal.appellantCase.visibilityRestrictions,
-							isRequired: !householdAppeal.appellantCase.isSiteVisibleFromPublicRoad
+							details: householdAppeal.appellantCase.inspectorAccessDetails,
+							isRequired: householdAppeal.appellantCase.doesSiteRequireInspectorAccess
 						},
 						lpaQuestionnaire: {
 							details: householdAppeal.lpaQuestionnaire.inspectorAccessDetails,
@@ -1391,14 +1477,7 @@ describe('appeals routes', () => {
 					otherAppeals: [],
 					localPlanningDepartment: householdAppeal.lpa.name,
 					lpaQuestionnaireId: householdAppeal.lpaQuestionnaire.id,
-					neighbouringSite: {
-						contacts: householdAppeal.lpaQuestionnaire.neighbouringSiteContact.map((contact) => ({
-							address: formatAddress(contact.address),
-							firstName: contact.firstName,
-							lastName: contact.lastName
-						})),
-						isAffected: householdAppeal.lpaQuestionnaire.isAffectingNeighbouringSites
-					},
+					isAffectingNeighbouringSites: true,
 					planningApplicationReference: householdAppeal.planningApplicationReference,
 					procedureType: householdAppeal.lpaQuestionnaire.procedureType.name,
 					siteVisit: {
@@ -1427,19 +1506,26 @@ describe('appeals routes', () => {
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
 					agent: {
+						serviceUserId: fullPlanningAppeal.agent.id,
 						firstName: fullPlanningAppeal.agent.firstName,
 						lastName: fullPlanningAppeal.agent.lastName,
-						email: fullPlanningAppeal.agent.email
+						email: fullPlanningAppeal.agent.email,
+						phoneNumber: fullPlanningAppeal.agent.phoneNumber,
+						organisationName: fullPlanningAppeal.agent.organisationName
 					},
 					appellant: {
+						serviceUserId: fullPlanningAppeal.appellant.id,
 						firstName: fullPlanningAppeal.appellant.firstName,
 						lastName: fullPlanningAppeal.appellant.lastName,
-						email: fullPlanningAppeal.appellant.email
+						email: fullPlanningAppeal.appellant.email,
+						phoneNumber: fullPlanningAppeal.appellant.phoneNumber,
+						organisationName: fullPlanningAppeal.appellant.organisationName
 					},
 					allocationDetails: null,
 					appealId: fullPlanningAppeal.id,
 					appealReference: fullPlanningAppeal.reference,
 					appealSite: {
+						addressId: fullPlanningAppeal.address.id,
 						addressLine1: fullPlanningAppeal.address.addressLine1,
 						addressLine2: fullPlanningAppeal.address.addressLine2,
 						town: fullPlanningAppeal.address.addressTown,
@@ -1458,11 +1544,13 @@ describe('appeals routes', () => {
 					documentationSummary: {
 						appellantCase: {
 							status: 'received',
-							dueDate: fullPlanningAppeal.dueDate
+							dueDate: fullPlanningAppeal.dueDate,
+							receivedAt: householdAppeal.createdAt.toISOString()
 						},
 						lpaQuestionnaire: {
 							dueDate: null,
-							status: 'received'
+							status: 'received',
+							receivedAt: householdAppeal.lpaQuestionnaire.receivedAt
 						}
 					},
 					healthAndSafety: {
@@ -1478,8 +1566,8 @@ describe('appeals routes', () => {
 					inspector: fullPlanningAppeal.inspector.azureAdUserId,
 					inspectorAccess: {
 						appellantCase: {
-							details: fullPlanningAppeal.appellantCase.visibilityRestrictions,
-							isRequired: !fullPlanningAppeal.appellantCase.isSiteVisibleFromPublicRoad
+							details: fullPlanningAppeal.appellantCase.inspectorAccessDetails,
+							isRequired: fullPlanningAppeal.appellantCase.doesSiteRequireInspectorAccess
 						},
 						lpaQuestionnaire: {
 							details: fullPlanningAppeal.lpaQuestionnaire.inspectorAccessDetails,
@@ -1492,16 +1580,7 @@ describe('appeals routes', () => {
 					otherAppeals: [],
 					localPlanningDepartment: fullPlanningAppeal.lpa.name,
 					lpaQuestionnaireId: fullPlanningAppeal.lpaQuestionnaire.id,
-					neighbouringSite: {
-						contacts: fullPlanningAppeal.lpaQuestionnaire.neighbouringSiteContact.map(
-							(contact) => ({
-								address: formatAddress(contact.address),
-								firstName: contact.firstName,
-								lastName: contact.lastName
-							})
-						),
-						isAffected: fullPlanningAppeal.lpaQuestionnaire.isAffectingNeighbouringSites
-					},
+					isAffectingNeighbouringSites: true,
 					planningApplicationReference: fullPlanningAppeal.planningApplicationReference,
 					procedureType: fullPlanningAppeal.lpaQuestionnaire.procedureType.name,
 					siteVisit: {

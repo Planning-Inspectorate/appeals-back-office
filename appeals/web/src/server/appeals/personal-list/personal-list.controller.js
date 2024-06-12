@@ -26,7 +26,7 @@ export const viewPersonalList = async (request, response) => {
 	).catch((error) => logger.error(error));
 
 	if (!assignedAppeals) {
-		return response.status(404).render('app/404');
+		return response.status(404).render('app/404.njk');
 	}
 
 	const mappedPageContent = personalListPage(
@@ -43,7 +43,7 @@ export const viewPersonalList = async (request, response) => {
 		query
 	);
 
-	return response.render('patterns/display-page.pattern.njk', {
+	return response.status(200).render('patterns/display-page.pattern.njk', {
 		pageContent: mappedPageContent,
 		pagination,
 		pageIsPersonalList: true

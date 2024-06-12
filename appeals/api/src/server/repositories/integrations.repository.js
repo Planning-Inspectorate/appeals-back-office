@@ -1,11 +1,11 @@
 // @ts-nocheck
-// TODO: data and document types schema (PINS data model)
 import { databaseConnector } from '#utils/database-connector.js';
 import { mapDefaultCaseFolders } from '#endpoints/documents/documents.mapper.js';
 import { mapBlobPath } from '#endpoints/documents/documents.mapper.js';
 import { getDefaultRedactionStatus } from './document-metadata.repository.js';
-import { STATE_TARGET_ASSIGN_CASE_OFFICER } from '#endpoints/constants.js';
 import { createAppealReference } from '#utils/appeal-reference.js';
+import { STATUSES } from '@pins/appeals/constants/state.js';
+import { STAGE, DOCTYPE } from '@pins/appeals/constants/documents.js';
 
 import config from '#config/config.js';
 
@@ -31,7 +31,7 @@ export const createAppeal = async (data, documents) => {
 				reference,
 				appealStatus: {
 					create: {
-						status: STATE_TARGET_ASSIGN_CASE_OFFICER,
+						status: STATUSES.ASSIGN_CASE_OFFICER,
 						createdAt: new Date().toISOString()
 					}
 				}
@@ -106,21 +106,12 @@ export const createAppeal = async (data, documents) => {
 	return transaction;
 };
 
-export const createOrUpdateLpaQuestionnaire = async (
-	caseReference,
-	nearbyReferences,
-	data,
-	documents
-) => {
+export const createOrUpdateLpaQuestionnaire = async (caseReference, data, documents) => {
 	const unredactedStatus = await getDefaultRedactionStatus();
 	const transaction = await databaseConnector.$transaction(async (tx) => {
 		let appeal = await tx.appeal.findUnique({
 			where: { reference: caseReference }
 		});
-
-		// const otherAppeals = await tx.appeal.findMany({
-		// 	where: { reference: { in: nearbyReferences } }
-		// });
 
 		if (appeal) {
 			appeal = await tx.appeal.update({
@@ -132,12 +123,6 @@ export const createOrUpdateLpaQuestionnaire = async (
 							update: data
 						}
 					}
-					// ,
-					// otherAppeals: {
-					// 	set: otherAppeals.map((other) => {
-					// 		return { id: other.id };
-					// 	})
-					// }
 				}
 			});
 		}
@@ -221,8 +206,6 @@ export const createDocument = async (data) => {
 };
 
 const getFolderIdFromDocumentType = (caseFolders, documentType, stage) => {
-	const catchAllFolder = 'additionalDocuments';
-
 	const caseFolder = caseFolders.find(
 		(caseFolder) => caseFolder.path === `${stage}/${documentType}`
 	);
@@ -230,7 +213,16 @@ const getFolderIdFromDocumentType = (caseFolders, documentType, stage) => {
 		return caseFolder.id;
 	}
 
-	return caseFolders.find((caseFolder) => caseFolder.path === `${stage}/${catchAllFolder}`);
+	if (stage === STAGE.APPELLANT_CASE) {
+		return caseFolders.find(
+			(caseFolder) => caseFolder.path === `${stage}/${DOCTYPE.APPELLANT_CASE_CORRESPONDENCE}`
+		).id;
+	}
+	if (stage === STAGE.LPA_QUESTIONNAIRE) {
+		return caseFolders.find(
+			(caseFolder) => caseFolder.path === `${stage}/${DOCTYPE.LPA_CASE_CORRESPONDENCE}`
+		).id;
+	}
 };
 
 const getFindUniqueAppealQueryIncludes = () => {

@@ -331,11 +331,6 @@ const getAppealById = async (id) => {
 						}
 					},
 					lpaQuestionnaireValidationOutcome: true,
-					neighbouringSiteContact: {
-						include: {
-							address: true
-						}
-					},
 					procedureType: true,
 					scheduleType: true
 				}
@@ -387,13 +382,17 @@ const getAppealById = async (id) => {
  * @param {UpdateAppealRequest} data
  * @returns {PrismaPromise<object>}
  */
-const updateAppealById = (id, { dueDate, startedAt, validAt, caseOfficer, inspector }) =>
+const updateAppealById = (
+	id,
+	{ dueDate, startedAt, validAt, caseOfficer, inspector, planningApplicationReference }
+) =>
 	databaseConnector.appeal.update({
 		where: { id },
 		data: {
 			...(dueDate && { dueDate }),
 			...(startedAt && { startedAt }),
 			...(validAt && { validAt }),
+			...(planningApplicationReference && { planningApplicationReference }),
 			...(hasValueOrIsNull(caseOfficer) && { caseOfficerUserId: caseOfficer }),
 			...(hasValueOrIsNull(inspector) && { inspectorUserId: inspector }),
 			updatedAt: new Date()
@@ -559,11 +558,6 @@ const getAppealByAppealReference = async (appealReference) => {
 						}
 					},
 					lpaQuestionnaireValidationOutcome: true,
-					neighbouringSiteContact: {
-						include: {
-							address: true
-						}
-					},
 					procedureType: true,
 					scheduleType: true
 				}

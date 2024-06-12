@@ -1,9 +1,10 @@
-import { CONFIG_APPEAL_FOLDER_PATHS } from '#endpoints/constants.js';
+import { FOLDERS } from '@pins/appeals/constants/documents.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Folder} Folder */
 /** @typedef {import('@pins/appeals/index.js').MappedDocument} MappedDocument */
 /** @typedef {import('@pins/appeals/index.js').DocumentMetadata} DocumentMetadata */
 /** @typedef {import('@pins/appeals/index.js').BlobInfo} BlobInfo */
+/** @typedef {import('@pins/appeals/index.js').DocumentAuditTrailInfo} DocumentAuditTrailInfo */
 /** @typedef {import('@pins/appeals.api').Schema.DocumentVersion} DocumentVersion */
 /** @typedef {import('@pins/appeals.api').Appeals.FolderInfo} FolderInfo */
 
@@ -22,6 +23,7 @@ export const mapDocumentsForDatabase = (
 ) => {
 	return documents?.map((document) => {
 		return {
+			GUID: document.GUID,
 			name: document.documentName,
 			caseId,
 			folderId: document.folderId,
@@ -60,6 +62,24 @@ export const mapDocumentsForBlobStorage = (documents, caseReference, versionId =
 };
 
 /**
+ * @param {(DocumentVersion|null)[]} documents
+ * @returns {(DocumentAuditTrailInfo|null)[]}
+ */
+export const mapDocumentsForAuditTrail = (documents) => {
+	return documents.map((document) => {
+		if (document) {
+			const fileName = document.fileName || document.documentGuid;
+			return {
+				documentName: fileName,
+				GUID: document.documentGuid
+			};
+		}
+
+		return null;
+	});
+};
+
+/**
  * @param {string} guid
  * @param {string} caseReference
  * @param {string} name
@@ -84,7 +104,7 @@ export const mapCaseReferenceForStorageUrl = (caseReference) => {
  */
 export const mapDefaultCaseFolders = (caseId) => {
 	// @ts-ignore
-	return CONFIG_APPEAL_FOLDER_PATHS.map((/** @type {string} */ path) => {
+	return FOLDERS.map((/** @type {string} */ path) => {
 		return {
 			caseId,
 			path
@@ -100,7 +120,7 @@ export const mapDefaultCaseFolders = (caseId) => {
 export const mapFoldersLayoutForAppealSection = (sectionName, folders) => {
 	/** @type {Object<string, Object>} **/ const folderLayout = {};
 
-	for (const path of CONFIG_APPEAL_FOLDER_PATHS) {
+	for (const path of FOLDERS) {
 		if (path.indexOf(sectionName) === 0) {
 			const key = path.replace(`${sectionName}/`, '');
 			folderLayout[key] = mapFoldersLayoutForAppealFolder(folders, `${sectionName}/${key}`) || {};
@@ -128,6 +148,7 @@ const mapFoldersLayoutForAppealFolder = (folders, path) => {
 						return {
 							id: d.guid,
 							name: d.name,
+							createdAt: d.createdAt.toISOString(),
 							folderId: d.folderId,
 							caseId: folder.caseId,
 							isLateEntry: d.latestDocumentVersion?.isLateEntry,

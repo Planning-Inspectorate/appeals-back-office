@@ -157,6 +157,7 @@ model AppellantCase {
   hasAttemptedToIdentifyOwners                   Boolean?
   hasDesignAndAccessStatement                    Boolean?
   hasHealthAndSafetyIssues                       Boolean?
+  doesSiteRequireInspectorAccess                 Boolean?
   hasNewPlansOrDrawings                          Boolean?
   hasNewSupportingDocuments                      Boolean?
   hasOtherTenants                                Boolean?
@@ -210,18 +211,17 @@ model ServiceUser {
 /// Address model
 /// Contains information on addresses
 model Address {
-  id                      Int                       @id @default(autoincrement())
-  addressLine1            String?
-  addressLine2            String?
-  postcode                String?
-  addressCounty           String?
-  addressTown             String?
-  addressCountry          String?                   @default("United Kingdom")
-  Appeal                  Appeal[]
-  ServiceUser             ServiceUser[]
-  RepresentationContact   RepresentationContact[]
-  NeighbouringSiteContact NeighbouringSiteContact[]
-  NeighbouringSite        NeighbouringSite[]
+  id                    Int                     @id @default(autoincrement())
+  addressLine1          String?
+  addressLine2          String?
+  postcode              String?
+  addressCounty         String?
+  addressTown           String?
+  addressCountry        String?                 @default("United Kingdom")
+  Appeal                Appeal[]
+  ServiceUser           ServiceUser[]
+  RepresentationContact RepresentationContact[]
+  NeighbouringSites     NeighbouringSite[]
 }
 
 /// ValidationDecision model
@@ -308,7 +308,6 @@ model LPAQuestionnaire {
   listedBuildingDetails                              ListedBuildingDetails[]
   lpaQuestionnaireValidationOutcome                  LPAQuestionnaireValidationOutcome?                   @relation(fields: [lpaQuestionnaireValidationOutcomeId], references: [id])
   lpaQuestionnaireIncompleteReasonOnLPAQuestionnaire LPAQuestionnaireIncompleteReasonOnLPAQuestionnaire[]
-  neighbouringSiteContact                            NeighbouringSiteContact[]
 }
 
 /// ReviewQuestionnaire model
@@ -675,18 +674,7 @@ model NeighbouringSite {
   appealId  Int
   address   Address @relation(fields: [addressId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   addressId Int
-}
-
-model NeighbouringSiteContact {
-  id                 Int               @id @default(autoincrement())
-  addressId          Int?
-  lpaQuestionnaireId Int?
-  firstName          String
-  lastName           String?
-  telephone          String
-  email              String
-  lpaQuestionnaire   LPAQuestionnaire? @relation(fields: [lpaQuestionnaireId], references: [id])
-  address            Address?          @relation(fields: [addressId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  source    String  @default("back-office")
 }
 
 model SiteVisitType {

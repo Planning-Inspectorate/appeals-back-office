@@ -1,15 +1,13 @@
 import { Router as createRouter } from 'express';
 import * as controller from './outcome-incomplete.controller.js';
 import * as validators from './outcome-incomplete.validators.js';
-import { validateAppeal } from '#appeals/appeal-details/appeal-details.middleware.js';
 
 const router = createRouter({ mergeParams: true });
 
 router
 	.route('/')
-	.get(validateAppeal, controller.getIncompleteReason)
+	.get(controller.getIncompleteReason)
 	.post(
-		validateAppeal,
 		validators.validateIncompleteReason,
 		validators.validateIncompleteReasonTextItems,
 		controller.postIncompleteReason
@@ -17,9 +15,8 @@ router
 
 router
 	.route('/date')
-	.get(validateAppeal, controller.getUpdateDueDate)
+	.get(controller.getUpdateDueDate)
 	.post(
-		validateAppeal,
 		validators.validateDueDateFields,
 		validators.validateDueDateValid,
 		validators.validateDueDateInFuture,
@@ -27,6 +24,6 @@ router
 		controller.postUpdateDueDate
 	);
 
-router.route('/confirmation').get(validateAppeal, controller.getConfirmation);
+router.route('/confirmation').get(controller.getConfirmation);
 
 export default router;

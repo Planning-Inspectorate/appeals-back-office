@@ -23,7 +23,6 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
-import { addDraftDocumentsNotificationBanner } from '#lib/mappers/documents.mapper.js';
 
 /**
  * @typedef {import('#appeals/appeal-details/appeal-details.types.js').SingleLPAQuestionnaireResponse} LPAQuestionnaire
@@ -42,16 +41,9 @@ import { addDraftDocumentsNotificationBanner } from '#lib/mappers/documents.mapp
  * @param {Appeal} appealDetails
  * @param {string} currentRoute
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
- * @param {import('got').Got} apiClient
  * @returns {Promise<PageContent>}
  */
-export async function lpaQuestionnairePage(
-	lpaqDetails,
-	appealDetails,
-	currentRoute,
-	session,
-	apiClient
-) {
+export async function lpaQuestionnairePage(lpaqDetails, appealDetails, currentRoute, session) {
 	const mappedLpaqDetails = initialiseAndMapLPAQData(lpaqDetails, currentRoute);
 	const mappedAppealDetails = await initialiseAndMapAppealData(
 		appealDetails,
@@ -73,7 +65,14 @@ export async function lpaQuestionnairePage(
 					? [mappedAppealDetails.appeal.siteAddress.display.summaryListItem]
 					: []),
 				...(mappedAppealDetails.appeal.localPlanningAuthority.display.summaryListItem
-					? [mappedAppealDetails.appeal.localPlanningAuthority.display.summaryListItem]
+					? [
+							{
+								...mappedAppealDetails.appeal.localPlanningAuthority.display.summaryListItem,
+								key: {
+									text: 'LPA'
+								}
+							}
+					  ]
 					: [])
 			]
 		}
@@ -87,7 +86,10 @@ export async function lpaQuestionnairePage(
 
 	switch (appealType) {
 		case 'Householder':
-			appealTypeSpecificPageComponents = householderLpaQuestionnairePage(mappedLpaqDetails);
+			appealTypeSpecificPageComponents = householderLpaQuestionnairePage(
+				mappedLpaqDetails,
+				mappedAppealDetails
+			);
 			break;
 		default:
 			break;
@@ -106,8 +108,8 @@ export async function lpaQuestionnairePage(
 				},
 				actions: {
 					items:
-						(isFolderInfo(lpaqDetails.documents.additionalDocuments)
-							? lpaqDetails.documents.additionalDocuments.documents
+						(isFolderInfo(lpaqDetails.documents.lpaCaseCorrespondence)
+							? lpaqDetails.documents.lpaCaseCorrespondence.documents
 							: []
 						).length > 0
 							? [
@@ -117,8 +119,8 @@ export async function lpaQuestionnairePage(
 										href: mapDocumentManageUrl(
 											lpaqDetails.appealId,
 											lpaqDetails.lpaQuestionnaireId,
-											(isFolderInfo(lpaqDetails.documents.additionalDocuments) &&
-												lpaqDetails.documents.additionalDocuments.folderId) ||
+											(isFolderInfo(lpaqDetails.documents.lpaCaseCorrespondence) &&
+												lpaqDetails.documents.lpaCaseCorrespondence.folderId) ||
 												undefined
 										)
 									},
@@ -127,7 +129,7 @@ export async function lpaQuestionnairePage(
 										visuallyHiddenText: 'additional documents',
 										href: displayPageFormatter.formatDocumentActionLink(
 											lpaqDetails.appealId,
-											lpaqDetails.documents.additionalDocuments,
+											lpaqDetails.documents.lpaCaseCorrespondence,
 											buildDocumentUploadUrlTemplate(lpaqDetails.lpaQuestionnaireId)
 										)
 									}
@@ -138,7 +140,7 @@ export async function lpaQuestionnairePage(
 										visuallyHiddenText: 'additional documents',
 										href: displayPageFormatter.formatDocumentActionLink(
 											lpaqDetails.appealId,
-											lpaqDetails.documents.additionalDocuments,
+											lpaqDetails.documents.lpaCaseCorrespondence,
 											buildDocumentUploadUrlTemplate(lpaqDetails.lpaQuestionnaireId)
 										)
 									}
@@ -149,13 +151,28 @@ export async function lpaQuestionnairePage(
 		}
 	};
 
+	/** @type {PageComponent} */
+	const insetTextComponent = {
+		type: 'inset-text',
+		parameters: {
+			text: 'Confirming this review will inform the relevant parties of the outcome'
+		}
+	};
+
 	const reviewOutcomeRadiosInputInstruction =
 		mappedLpaqDetails.lpaq.reviewOutcome.input?.instructions.find(
 			inputInstructionIsRadiosInputInstruction
 		);
 
 	/** @type {PageComponent[]} */
-	const reviewOutcomeComponents = [];
+	const reviewOutcomeComponents = [
+		{
+			type: 'html',
+			parameters: {
+				html: '<h2>What is the outcome of your review?</h2>'
+			}
+		}
+	];
 
 	if (reviewOutcomeRadiosInputInstruction) {
 		reviewOutcomeComponents.push({
@@ -191,14 +208,6 @@ export async function lpaQuestionnairePage(
 		});
 	}
 
-	await addDraftDocumentsNotificationBanner(
-		appealDetails?.appealId,
-		lpaqDetails.documents,
-		session,
-		apiClient,
-		`/appeals-service/appeal-details/${appealDetails?.appealId}/lpa-questionnaire/${lpaqDetails.lpaQuestionnaireId}/add-document-details/{{folderId}}`
-	);
-
 	const notificationBanners = mapNotificationBannerComponentParameters(
 		session,
 		lpaqDetails,
@@ -219,8 +228,10 @@ export async function lpaQuestionnairePage(
 			caseSummary,
 			...appealTypeSpecificPageComponents,
 			additionalDocumentsSummary,
-			...reviewOutcomeComponents
-		]
+			...reviewOutcomeComponents,
+			insetTextComponent
+		],
+		submitButtonText: 'Confirm'
 	};
 
 	if (
@@ -432,7 +443,7 @@ export function checkAndConfirmPage(
 	const insetTextComponent = {
 		type: 'inset-text',
 		parameters: {
-			text: 'Confirming this review will inform the appellant and LPA of the outcome'
+			text: 'Confirming this review will inform the relevant parties of the outcome'
 		}
 	};
 
@@ -517,9 +528,10 @@ function mapNotificationBannerComponentParameters(session, lpaqData, appealId) {
 /**
  *
  * @param {{lpaq: MappedInstructions}} mappedLPAQData
+ * @param {{appeal: MappedInstructions}} mappedAppealDetails
  * @returns {PageComponent[]}
  */
-const householderLpaQuestionnairePage = (mappedLPAQData) => {
+const householderLpaQuestionnairePage = (mappedLPAQData, mappedAppealDetails) => {
 	/** @type {PageComponent[]} */
 	const pageComponents = [];
 
@@ -594,12 +606,6 @@ const householderLpaQuestionnairePage = (mappedLPAQData) => {
 		}
 	});
 
-	/** @type {SummaryListRowProperties[]} */
-	const neighbouringSitesSummaryLists = Object.keys(mappedLPAQData.lpaq)
-		.filter((key) => key.indexOf('neighbouringSiteAddress') >= 0)
-		.map((key) => mappedLPAQData.lpaq[key].display.summaryListItem)
-		.filter(isDefined);
-
 	pageComponents.push({
 		/** @type {'summary-list'} */
 		type: 'summary-list',
@@ -612,7 +618,7 @@ const householderLpaQuestionnairePage = (mappedLPAQData) => {
 			rows: [
 				mappedLPAQData.lpaq?.siteAccess?.display.summaryListItem,
 				mappedLPAQData.lpaq?.isAffectingNeighbouringSites?.display.summaryListItem,
-				...neighbouringSitesSummaryLists,
+				mappedAppealDetails.appeal.lpaNeighbouringSites?.display.summaryListItem,
 				mappedLPAQData.lpaq?.lpaHealthAndSafety?.display.summaryListItem
 			].filter(isDefined)
 		}
@@ -793,19 +799,7 @@ export function reviewCompletePage(appealId, appealReference) {
 			{
 				type: 'html',
 				parameters: {
-					html: `<span class="govuk-body">The review of LPA questionnaire is finished.</span>`
-				}
-			},
-			{
-				type: 'html',
-				parameters: {
-					html: `<h2>What happens next</h2>`
-				}
-			},
-			{
-				type: 'html',
-				parameters: {
-					html: `<p class="govuk-body">We've sent an email to the LPA to confirm their questionnaire is complete and that the review is finished.</p>`
+					html: '<p class="govuk-body">The relevant parties have been informed.</p>'
 				}
 			},
 			{

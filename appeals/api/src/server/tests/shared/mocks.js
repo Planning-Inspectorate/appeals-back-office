@@ -83,13 +83,19 @@ export const incompleteAppellantCaseOutcome = {
 	appellantCaseIncompleteReasonsOnAppellantCases: [
 		{
 			appellantCaseIncompleteReason: {
-				name: 'The original application form is incomplete or missing'
-			}
+				name: 'The original application form is incomplete'
+			},
+			appellantCaseIncompleteReasonText: []
 		},
 		{
 			appellantCaseIncompleteReason: {
 				name: 'Other'
-			}
+			},
+			appellantCaseIncompleteReasonText: [
+				{
+					text: 'Appellant contact information is incorrect or missing'
+				}
+			]
 		}
 	],
 	appellantCaseValidationOutcome: {
@@ -98,16 +104,22 @@ export const incompleteAppellantCaseOutcome = {
 };
 
 export const invalidAppellantCaseOutcome = {
-	appellantCaseIvalidReasonsOnAppellantCases: [
+	appellantCaseInvalidReasonsOnAppellantCases: [
 		{
 			appellantCaseInvalidReason: {
 				name: 'Appeal has not been submitted on time'
-			}
+			},
+			appellantCaseInvalidReasonText: []
 		},
 		{
 			appellantCaseInvalidReason: {
 				name: 'Other'
-			}
+			},
+			appellantCaseInvalidReasonText: [
+				{
+					text: 'The appeal site address does not match'
+				}
+			]
 		}
 	],
 	appellantCaseValidationOutcome: {

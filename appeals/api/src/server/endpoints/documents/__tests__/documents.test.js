@@ -2,11 +2,7 @@
 import { jest } from '@jest/globals';
 import * as folderRepository from '#repositories/folder.repository.js';
 import { householdAppeal } from '#tests/appeals/mocks.js';
-import {
-	azureAdUserId,
-	documentRedactionStatuses,
-	documentRedactionStatusIds
-} from '#tests/shared/mocks.js';
+import { azureAdUserId, documentRedactionStatuses } from '#tests/shared/mocks.js';
 import {
 	folder,
 	addDocumentsRequest,
@@ -22,16 +18,6 @@ import * as mappers from '../documents.mapper.js';
 import * as service from '../documents.service.js';
 import * as controller from '../documents.controller.js';
 import { request } from '../../../app-test.js';
-import joinDateAndTime from '#utils/join-date-and-time.js';
-import {
-	AUDIT_TRAIL_DOCUMENT_UPLOADED,
-	ERROR_DOCUMENT_REDACTION_STATUSES_MUST_BE_ONE_OF,
-	ERROR_MUST_BE_CORRECT_DATE_FORMAT,
-	ERROR_MUST_BE_NUMBER,
-	ERROR_MUST_BE_UUID,
-	ERROR_NOT_FOUND
-} from '#endpoints/constants.js';
-import stringTokenReplacement from '#utils/string-token-replacement.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 const { default: got } = await import('got');
@@ -61,7 +47,9 @@ describe('/appeals/:appealId/document-folders/:folderId', () => {
 				documents: [
 					{
 						id: savedFolder.documents[0].guid,
-						latestDocumentVersion: {},
+						latestDocumentVersion: {
+							documentType: 'appellantCostApplication'
+						},
 						name: savedFolder.documents[0].name
 					}
 				]
@@ -108,226 +96,12 @@ describe('/appeals/:appealId/documents', () => {
 		};
 	});
 
-	describe('PATCH', () => {
-		test('updates multiple documents', async () => {
-			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-			databaseConnector.documentRedactionStatus.findMany.mockResolvedValue(
-				documentRedactionStatuses
-			);
-
-			const response = await request
-				.patch(`/appeals/${householdAppeal.id}/documents`)
-				.send(requestBody)
-				.set('azureAdUserId', azureAdUserId);
-
-			expect(databaseConnector.documentVersion.update).toHaveBeenCalledTimes(2);
-			expect(response.status).toEqual(200);
-			expect(response.body).toEqual({
-				documents: [
-					{
-						id: requestBody.documents[0].id,
-						latestVersion: requestBody.documents[0].latestVersion,
-						receivedDate: joinDateAndTime(requestBody.documents[0].receivedDate),
-						redactionStatus: requestBody.documents[0].redactionStatus
-					},
-					{
-						id: requestBody.documents[1].id,
-						latestVersion: requestBody.documents[1].latestVersion,
-						receivedDate: joinDateAndTime(requestBody.documents[1].receivedDate),
-						redactionStatus: requestBody.documents[1].redactionStatus
-					}
-				]
-			});
-		});
-
-		test('returns an error if appealId is not numeric', async () => {
-			const response = await request
-				.patch('/appeals/one/documents')
-				.send(requestBody)
-				.set('azureAdUserId', azureAdUserId);
-
-			expect(response.status).toEqual(400);
-			expect(response.body).toEqual({
-				errors: {
-					appealId: ERROR_MUST_BE_NUMBER
-				}
-			});
-		});
-
-		test('returns an error if appealId is not found', async () => {
-			// @ts-ignore
-			databaseConnector.appeal.findUnique.mockResolvedValue(null);
-
-			const response = await request
-				.patch('/appeals/3/documents')
-				.send(requestBody)
-				.set('azureAdUserId', azureAdUserId);
-
-			expect(response.status).toEqual(404);
-			expect(response.body).toEqual({
-				errors: {
-					appealId: ERROR_NOT_FOUND
-				}
-			});
-		});
-
-		test('returns an error if documents.*.id is not given', async () => {
-			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-
-			delete requestBody.documents[0].id;
-
-			const response = await request
-				.patch(`/appeals/${householdAppeal.id}/documents`)
-				.send(requestBody)
-				.set('azureAdUserId', azureAdUserId);
-
-			expect(response.status).toEqual(400);
-			expect(response.body).toEqual({
-				errors: {
-					'documents[0].id': ERROR_MUST_BE_UUID
-				}
-			});
-		});
-
-		test('returns an error if documents.*.id is not a uuid', async () => {
-			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-
-			requestBody.documents[0].id = 1;
-
-			const response = await request
-				.patch(`/appeals/${householdAppeal.id}/documents`)
-				.send(requestBody)
-				.set('azureAdUserId', azureAdUserId);
-
-			expect(response.status).toEqual(400);
-			expect(response.body).toEqual({
-				errors: {
-					'documents[0].id': ERROR_MUST_BE_UUID
-				}
-			});
-		});
-
-		test('returns an error if documents.*.receivedDate is not given', async () => {
-			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-
-			delete requestBody.documents[0].receivedDate;
-
-			const response = await request
-				.patch(`/appeals/${householdAppeal.id}/documents`)
-				.send(requestBody)
-				.set('azureAdUserId', azureAdUserId);
-
-			expect(response.status).toEqual(400);
-			expect(response.body).toEqual({
-				errors: {
-					'documents[0].receivedDate': ERROR_MUST_BE_CORRECT_DATE_FORMAT
-				}
-			});
-		});
-
-		test('returns an error if documents.*.receivedDate is not in the correct format', async () => {
-			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-
-			requestBody.documents[0].receivedDate = '22/09/2023';
-
-			const response = await request
-				.patch(`/appeals/${householdAppeal.id}/documents`)
-				.send(requestBody)
-				.set('azureAdUserId', azureAdUserId);
-
-			expect(response.status).toEqual(400);
-			expect(response.body).toEqual({
-				errors: {
-					'documents[0].receivedDate': ERROR_MUST_BE_CORRECT_DATE_FORMAT
-				}
-			});
-		});
-
-		test('returns an error if documents.*.receivedDate does not contain leading zeros', async () => {
-			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-
-			requestBody.documents[0].receivedDate = '2023-5-5';
-
-			const response = await request
-				.patch(`/appeals/${householdAppeal.id}/documents`)
-				.send(requestBody)
-				.set('azureAdUserId', azureAdUserId);
-
-			expect(response.status).toEqual(400);
-			expect(response.body).toEqual({
-				errors: {
-					'documents[0].receivedDate': ERROR_MUST_BE_CORRECT_DATE_FORMAT
-				}
-			});
-		});
-
-		test('returns an error if documents.*.receivedDate is not a valid date', async () => {
-			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-
-			requestBody.documents[0].receivedDate = '2023-02-30';
-
-			const response = await request
-				.patch(`/appeals/${householdAppeal.id}/documents`)
-				.send(requestBody)
-				.set('azureAdUserId', azureAdUserId);
-
-			expect(response.status).toEqual(400);
-			expect(response.body).toEqual({
-				errors: {
-					'documents[0].receivedDate': ERROR_MUST_BE_CORRECT_DATE_FORMAT
-				}
-			});
-		});
-
-		test('returns an error if documents.*.redactionStatus is not given', async () => {
-			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-			databaseConnector.documentRedactionStatus.findMany.mockResolvedValue(
-				documentRedactionStatuses
-			);
-
-			delete requestBody.documents[0].redactionStatus;
-
-			const response = await request
-				.patch(`/appeals/${householdAppeal.id}/documents`)
-				.send(requestBody)
-				.set('azureAdUserId', azureAdUserId);
-
-			expect(response.status).toEqual(400);
-			expect(response.body).toEqual({
-				errors: {
-					documents: stringTokenReplacement(ERROR_DOCUMENT_REDACTION_STATUSES_MUST_BE_ONE_OF, [
-						documentRedactionStatusIds.join(', ')
-					])
-				}
-			});
-		});
-
-		test('returns an error if documents.*.redactionStatus is a value that does not exist', async () => {
-			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-			databaseConnector.documentRedactionStatus.findMany.mockResolvedValue(
-				documentRedactionStatuses
-			);
-
-			requestBody.documents[0].redactionStatus = 4;
-
-			const response = await request
-				.patch(`/appeals/${householdAppeal.id}/documents`)
-				.send(requestBody)
-				.set('azureAdUserId', azureAdUserId);
-
-			expect(response.status).toEqual(400);
-			expect(response.body).toEqual({
-				errors: {
-					documents: stringTokenReplacement(ERROR_DOCUMENT_REDACTION_STATUSES_MUST_BE_ONE_OF, [
-						documentRedactionStatusIds.join(', ')
-					])
-				}
-			});
-		});
+	afterEach(() => {
+		jest.clearAllMocks();
 	});
 
 	describe('POST', () => {
-		test('updates multiple documents', async () => {
+		test('creates multiple documents', async () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 			databaseConnector.documentRedactionStatus.findMany.mockResolvedValue(
 				documentRedactionStatuses
@@ -336,18 +110,36 @@ describe('/appeals/:appealId/documents', () => {
 				id: 1,
 				azureAdUserId
 			});
-
-			//databaseConnector.documentVersionAudit.create.mockResolvedValue();
+			databaseConnector.document.create = jest.fn().mockResolvedValue(documentCreated);
+			databaseConnector.documentVersion.create = jest
+				.fn()
+				.mockResolvedValue(documentVersionCreated);
 
 			databaseConnector.$transaction = jest.fn().mockImplementation((callback) =>
 				callback({
 					document: {
-						create: jest.fn().mockResolvedValue(documentCreated),
-						update: jest.fn().mockResolvedValue(documentUpdated)
+						create: jest.fn().mockResolvedValue([
+							{ ...documentCreated, guid: '987e66e0-1db4-404b-8213-8082919159e9' },
+							{ ...documentCreated, guid: '8b107895-b8c9-467f-aad0-c09daafeaaad' }
+						]),
+						update: jest.fn().mockResolvedValue([
+							{ ...documentUpdated, guid: '987e66e0-1db4-404b-8213-8082919159e9' },
+							{ ...documentUpdated, guid: '8b107895-b8c9-467f-aad0-c09daafeaaad' }
+						])
 					},
 					documentVersion: {
-						upsert: jest.fn().mockResolvedValue(documentVersionCreated),
-						findFirst: jest.fn().mockResolvedValue(documentVersionRetrieved)
+						create: jest.fn().mockResolvedValue([
+							{ ...documentVersionCreated, guid: '987e66e0-1db4-404b-8213-8082919159e9' },
+							{ ...documentVersionCreated, guid: '8b107895-b8c9-467f-aad0-c09daafeaaad' }
+						]),
+						upsert: jest.fn().mockResolvedValue([
+							{ ...documentVersionCreated, guid: '987e66e0-1db4-404b-8213-8082919159e9' },
+							{ ...documentVersionCreated, guid: '8b107895-b8c9-467f-aad0-c09daafeaaad' }
+						]),
+						findFirst: jest.fn().mockResolvedValue([
+							{ ...documentVersionRetrieved, guid: '987e66e0-1db4-404b-8213-8082919159e9' },
+							{ ...documentVersionRetrieved, guid: '8b107895-b8c9-467f-aad0-c09daafeaaad' }
+						])
 					}
 				})
 			);
@@ -361,52 +153,9 @@ describe('/appeals/:appealId/documents', () => {
 				})
 				.set('azureAdUserId', azureAdUserId);
 
-			expect(databaseConnector.documentVersion.update).toHaveBeenCalledTimes(2);
-			expect(databaseConnector.documentVersion.update).toHaveBeenCalledWith({
-				data: {
-					dateReceived: joinDateAndTime(requestBody.documents[0].receivedDate),
-					redactionStatus: {
-						connect: {
-							id: 1
-						}
-					},
-					draft: false
-				},
-				where: {
-					documentGuid_version: {
-						documentGuid: '987e66e0-1db4-404b-8213-8082919159e9',
-						version: 1
-					}
-				}
-			});
+			expect(databaseConnector.$transaction).toHaveBeenCalledTimes(2);
 			expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(2);
-			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
-				data: {
-					appealId: householdAppeal.id,
-					details: stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_UPLOADED, [documentUpdated.name, 1]),
-					loggedAt: expect.any(Date),
-					userId: householdAppeal.caseOfficer.id
-				}
-			});
 			expect(response.status).toEqual(200);
-			expect(response.body).toEqual({
-				documents: [
-					{
-						GUID: documentUpdated.guid,
-						blobStoreUrl: `appeal/${householdAppeal.reference.replace(/\//g, '-')}/${
-							documentUpdated.guid
-						}/v1/${documentUpdated.name}`,
-						documentName: documentUpdated.name
-					},
-					{
-						GUID: documentUpdated.guid,
-						blobStoreUrl: `appeal/${householdAppeal.reference.replace(/\//g, '-')}/${
-							documentUpdated.guid
-						}/v1/${documentUpdated.name}`,
-						documentName: documentUpdated.name
-					}
-				]
-			});
 		});
 	});
 });
@@ -479,6 +228,7 @@ describe('appeals documents', () => {
 					update: jest.fn().mockResolvedValue(documentUpdated)
 				},
 				documentVersion: {
+					create: jest.fn().mockResolvedValue(documentVersionCreated),
 					upsert: jest.fn().mockResolvedValue(documentVersionCreated),
 					findFirst: jest.fn().mockResolvedValue(documentVersionRetrieved)
 				}
@@ -488,7 +238,14 @@ describe('appeals documents', () => {
 				.fn()
 				.mockImplementation((callback) => callback(prismaMock));
 			const response = await service.addDocumentsToAppeal(addDocumentsRequest, householdAppeal);
-			expect(response).toEqual({ documents: [blobInfo] });
+			expect(response).toEqual({
+				documents: [
+					{
+						GUID: blobInfo.GUID,
+						documentName: blobInfo.documentName
+					}
+				]
+			});
 		});
 
 		test('post new document version', async () => {

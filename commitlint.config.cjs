@@ -10,6 +10,7 @@ const scopes = [
 	/functions\/(.*)/,
 	/packages\/(.*)/,
 	'tooling',
+	'infrastructure'
 ];
 
 // dependabot commit scopes

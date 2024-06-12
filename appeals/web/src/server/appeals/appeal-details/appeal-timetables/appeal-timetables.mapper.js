@@ -10,14 +10,6 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
  * @typedef {Object} AppealTimetablesMap
  * @property {string | null | undefined} sideNote
  * @property { object } page
- * @property { AppealTimetablesConfirmation } confirmation
- */
-
-/**
- * @typedef {Object} AppealTimetablesConfirmation
- * @property { string } title
- * @property { string } preHeading
- * @property { object[] } rows
  */
 
 /**
@@ -55,7 +47,7 @@ export const mapUpdateDueDatePage = (appealTimetables, timetableType, appealDeta
 		preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
 		heading: `${changeOrScheduleText} ${timetableTypeText} due date`,
 		submitButtonProperties: {
-			text: 'Continue',
+			text: 'Confirm',
 			type: 'submit'
 		},
 		pageComponents: [
@@ -100,65 +92,6 @@ export const mapUpdateDueDatePage = (appealTimetables, timetableType, appealDeta
 			}
 		});
 	}
-
-	return pageContent;
-};
-
-/**
- * @param {import('./appeal-timetables.service.js').AppealTimetables} appealTimetables
- * @param {AppealTimetableType} timetableType
- * @param {Appeal} appealDetails
- * @returns {PageContent}
- */
-export const mapConfirmationPage = (appealTimetables, timetableType, appealDetails) => {
-	const timetableTypeText = getTimetableTypeText(timetableType);
-	const titleText =
-		timetableType === 'lpaQuestionnaireDueDate' ? timetableTypeText : capitalize(timetableTypeText);
-
-	/** @type {PageContent} */
-	const pageContent = {
-		title: `${titleText} due date changed`,
-		pageComponents: [
-			{
-				type: 'panel',
-				parameters: {
-					titleText: `${titleText} due date changed`,
-					headingLevel: 1,
-					html: `Appeal reference<br><strong>${appealShortReference(
-						appealDetails.appealReference
-					)}</strong>`
-				}
-			},
-			{
-				type: 'html',
-				parameters: {
-					html: `<span class="govuk-body">New due date: ${dateToDisplayDate(
-						appealTimetables.lpaQuestionnaireDueDate
-					)}</span>`
-				}
-			},
-			{
-				type: 'html',
-				parameters: {
-					html: '<h2>What happens next</h2>'
-				}
-			},
-			{
-				type: 'html',
-				parameters: {
-					html: `<p class="govuk-body">The appellant${
-						timetableType === 'lpaQuestionnaireDueDate' ? ' and LPA have' : 'has'
-					} been informed.</p>`
-				}
-			},
-			{
-				type: 'html',
-				parameters: {
-					html: `<p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/${appealDetails.appealId}">Go back to case details</a></p>`
-				}
-			}
-		]
-	};
 
 	return pageContent;
 };

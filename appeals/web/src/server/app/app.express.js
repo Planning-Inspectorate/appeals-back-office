@@ -28,9 +28,14 @@ app.locals = locals;
 app.use((request, response, next) => {
 	const { req, statusCode } = response;
 
-	if (!/((\bfonts\b)|(\bimages\b)|(\bstyles\b)|(\bscripts\b))/.test(req.originalUrl)) {
+	// don't log any HEAD requests, or requests for static assets
+	if (
+		req.method !== 'HEAD' &&
+		!/((\bfonts\b)|(\bimages\b)|(\bstyles\b)|(\bscripts\b))/.test(req.originalUrl)
+	) {
 		pino.info(`[WEB] ${req.method} ${req.originalUrl.toString()} (Response code: ${statusCode})`);
 	}
+
 	next();
 });
 
@@ -148,7 +153,7 @@ app.use(
 // Catch undefined routes (404) and render generic 404 not found page
 app.use((request, response) => {
 	pino.warn(`[WEB] Page ${response.req.originalUrl} does not exist. Render 404 page`);
-	response.status(404).render('app/404');
+	response.status(404).render('app/404.njk');
 });
 
 export { app };
