@@ -94,12 +94,12 @@ export class AppealsListPage extends Page {
 		this.basePageElements.input().eq(index).clear().type(text);
 	}
 
-	fillInput1(text, index = 2) {
+	fillInput1(text, index = 1) {
 		this.appealsPageElements.input1().eq(index).clear().type(text);
 	}
 
 	fillInput2(text, index = 2) {
-		this.AppealsListPage.input().eq(index).clear().type(text);
+		this.basePageElements.input().eq(index).clear().type(text);
 	}
 
 	addAnotherButton() {
