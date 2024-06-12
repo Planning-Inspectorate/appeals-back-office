@@ -80,7 +80,7 @@ export const validAppellantCaseOutcome = {
 };
 
 export const incompleteAppellantCaseOutcome = {
-	appellantCaseIncompleteReasonsOnAppellantCases: [
+	appellantCaseIncompleteReasonsSelected: [
 		{
 			appellantCaseIncompleteReason: {
 				name: 'The original application form is incomplete'
@@ -104,7 +104,7 @@ export const incompleteAppellantCaseOutcome = {
 };
 
 export const invalidAppellantCaseOutcome = {
-	appellantCaseInvalidReasonsOnAppellantCases: [
+	appellantCaseInvalidReasonsSelected: [
 		{
 			appellantCaseInvalidReason: {
 				name: 'Appeal has not been submitted on time'
@@ -134,7 +134,7 @@ export const completeLPAQuestionnaireOutcome = {
 };
 
 export const incompleteLPAQuestionnaireOutcome = {
-	lpaQuestionnaireIncompleteReasonsOnLpaQuestionnaire: [
+	lpaQuestionnaireIncompleteReasonsSelected: [
 		{
 			lpaQuestionnaireIncompleteReason: {
 				name: 'Documents or information are missing'

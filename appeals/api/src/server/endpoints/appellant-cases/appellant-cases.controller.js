@@ -62,7 +62,14 @@ const updateAppellantCaseById = async (req, res) => {
 		validationOutcome
 			? await updateAppellantCaseValidationOutcome(
 					{
-						appeal,
+						appeal: {
+							appealStatus: appeal.appealStatus,
+							appealType: appeal.appealType,
+							appellant: appeal.appellant,
+							agent: appeal.agent,
+							id: appeal.id,
+							reference: appeal.reference
+						},
 						appellantCaseId,
 						azureAdUserId,
 						data,

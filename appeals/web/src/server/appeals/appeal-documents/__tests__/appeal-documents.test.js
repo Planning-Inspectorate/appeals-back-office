@@ -11,7 +11,9 @@ const invalidAppealId = 2;
 const validFolderId = 1;
 const invalidFolderId = 2;
 const documentId = '0e4ce48f-2d67-4659-9082-e80a15182386';
-const validFolders = [{ id: validFolderId, path: 'appellantCase/docs' }];
+const validFolders = [
+	{ folderId: validFolderId, path: 'appellantCase/docs', caseId: validAppealId }
+];
 
 const getControllerEndpoint = (
 	/** @type {number} */ appealId,
@@ -93,7 +95,16 @@ describe('documents upload', () => {
 			.reply(200, validFolders[0]);
 		nock('http://test/')
 			.get(`/appeals/${validAppealId}/documents/${documentId}`)
-			.reply(200, { latestDocumentVersion: {} });
+			.reply(200, {
+				caseId: validAppealId,
+				id: documentId,
+				name: 'Doc A',
+				latestDocumentVersion: {
+					fileName: 'A',
+					documentType: 'docs',
+					version: 1
+				}
+			});
 
 		const response = await request.get(
 			getControllerEndpoint(validAppealId, validFolderId, documentId)

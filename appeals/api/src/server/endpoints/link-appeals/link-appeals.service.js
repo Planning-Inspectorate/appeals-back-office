@@ -1,8 +1,8 @@
-/** @typedef {import('@pins/appeals.api').Appeals.RepositoryGetByIdResultItem} RepositoryGetByIdResultItem */
+/** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 
 /**
  * Checks if an appeal is linked to other appeals as a parent.
- * @param {RepositoryGetByIdResultItem} appeal The appeal to check for linked appeals.
+ * @param {Appeal} appeal The appeal to check for linked appeals.
  * @returns {boolean}
  */
 const isAppealLead = (appeal) => {
@@ -13,7 +13,7 @@ const isAppealLead = (appeal) => {
 
 /**
  * Checks if an appeal is linked to other appeals as a child.
- * @param {RepositoryGetByIdResultItem} appeal The appeal to check for linked appeals.
+ * @param {Appeal} appeal The appeal to check for linked appeals.
  * @returns {boolean}
  */
 const isAppealChild = (appeal) => {
@@ -24,7 +24,7 @@ const isAppealChild = (appeal) => {
 
 /**
  * Checks if an appeal can be linked, with a specific relationship type (parent/child).
- * @param {RepositoryGetByIdResultItem} appeal The appeal to check for linked appeals.
+ * @param {Appeal} appeal The appeal to check for linked appeals.
  * @param {'lead'|'child'} relationship The relationship to check for.
  * @returns {boolean}
  */

@@ -5,7 +5,7 @@ import { databaseConnector } from '#utils/database-connector.js';
  * @template T
  */
 /** @typedef {import('@pins/appeals.api').Schema.Document} Document */
-/** @typedef {import('@pins/appeals.api').Schema.DocumentVersions} DocumentVersions */
+/** @typedef {import('@pins/appeals.api').Schema.DocumentVersion} DocumentVersion */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateDocumentsRequest} UpdateDocumentsRequest */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateDocumentsAvCheckRequest} UpdateDocumentsAvCheckRequest */
 
@@ -17,7 +17,12 @@ export const getDocumentById = (guid) => {
 	return databaseConnector.document.findUnique({
 		where: { guid },
 		include: {
-			latestDocumentVersion: true
+			latestDocumentVersion: {
+				include: {
+					avScan: true,
+					redactionStatus: true
+				}
+			}
 		}
 	});
 };
@@ -27,10 +32,22 @@ export const getDocumentById = (guid) => {
  * @returns {PrismaPromise<Document|null>}
  */
 export const getDocumentWithAllVersionsById = (guid) => {
+	// @ts-ignore
 	return databaseConnector.document.findUnique({
 		where: { guid },
 		include: {
-			documentVersion: true,
+			latestDocumentVersion: {
+				include: {
+					avScan: true,
+					redactionStatus: true
+				}
+			},
+			versions: {
+				include: {
+					avScan: true,
+					redactionStatus: true
+				}
+			},
 			versionAudit: {
 				include: {
 					auditTrail: {
@@ -49,12 +66,20 @@ export const getDocumentWithAllVersionsById = (guid) => {
  * @returns {PrismaPromise<Document[]>}
  */
 export const getDocumentsByAppealId = (caseId) => {
+	// @ts-ignore
 	return databaseConnector.document.findMany({
 		where: {
 			isDeleted: false,
 			caseId
 		},
-		include: { latestDocumentVersion: true }
+		include: {
+			latestDocumentVersion: {
+				include: {
+					avScan: true,
+					redactionStatus: true
+				}
+			}
+		}
 	});
 };
 
@@ -68,7 +93,14 @@ export const getDocumentsInFolder = ({ folderId, skipValue, pageSize }) => {
 		orderBy: [{ createdAt: 'desc' }],
 		skip: skipValue,
 		take: pageSize,
-		include: { latestDocumentVersion: true }
+		include: {
+			latestDocumentVersion: {
+				include: {
+					avScan: true,
+					redactionStatus: true
+				}
+			}
+		}
 	});
 };
 
@@ -104,12 +136,11 @@ export const updateDocuments = (data) =>
 export const updateDocumentAvStatus = (data) =>
 	Promise.all(
 		data.map((document) =>
-			databaseConnector.documentVersion.update({
+			databaseConnector.documentVersionAvScan.create({
 				data: {
-					virusCheckStatus: document.virusCheckStatus
-				},
-				where: {
-					documentGuid_version: { documentGuid: document.id, version: document.version }
+					documentGuid: document.id,
+					version: document.version,
+					avScanSuccess: document.virusCheckStatus === 'checked'
 				}
 			})
 		)

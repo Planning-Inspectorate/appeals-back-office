@@ -12,9 +12,9 @@ import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatte
 // eslint-disable-next-line no-unused-vars
 import NotifyClient from '#utils/notify-client.js';
 
-/** @typedef {import('@pins/appeals.api').Appeals.RepositoryGetByIdResultItem} Appeal */
+/** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.InspectorDecision} Decision */
-/** @typedef {import('@pins/appeals.api').Schema.InspectorDecisionOutcomeType} DecisionType */
+/** @typedef {import('@pins/appeals.api').Appeals} DecisionType */
 
 /**
  *
@@ -44,7 +44,7 @@ export const publishInvalidDecision = async (
 			: 'Address not available';
 		const emailVariables = {
 			appeal_reference_number: appeal.reference,
-			lpa_reference: appeal.planningApplicationReference,
+			lpa_reference: appeal.applicationReference,
 			site_address: siteAddress,
 			reasons: invalidDecisionReason
 		};

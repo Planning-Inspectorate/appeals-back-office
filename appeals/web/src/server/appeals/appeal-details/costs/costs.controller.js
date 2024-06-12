@@ -90,7 +90,7 @@ export const postSelectDocumentType = async (request, response) => {
 	session.costsDocumentType = documentType;
 
 	return response.redirect(
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/upload-documents/${currentFolder?.id}`
+		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/upload-documents/${currentFolder?.folderId}`
 	);
 };
 
@@ -131,8 +131,8 @@ export const getDocumentUpload = async (request, response) => {
 		currentAppeal,
 		costsCategory === 'decision'
 			? `/appeals-service/appeal-details/${currentAppeal.appealId}`
-			: `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/select-document-type/${currentFolder.id}`,
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/add-document-details/${currentFolder.id}`,
+			: `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/select-document-type/${currentFolder.folderId}`,
+		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/add-document-details/${currentFolder.folderId}`,
 		false,
 		uploadPageHeadingText,
 		[],
@@ -157,7 +157,7 @@ export const postDocumentUploadPage = async (request, response) => {
 	postDocumentUpload(
 		request,
 		response,
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/add-document-details/${currentFolder.id}`
+		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/add-document-details/${currentFolder.folderId}`
 	);
 };
 
@@ -177,8 +177,8 @@ export const getDocumentVersionUpload = async (request, response) => {
 		request,
 		response,
 		currentAppeal,
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/manage-documents/${currentFolder.id}/${documentId}`,
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/add-document-details/${currentFolder.id}/${documentId}`,
+		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/manage-documents/${currentFolder.folderId}/${documentId}`,
+		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/add-document-details/${currentFolder.folderId}/${documentId}`,
 		false,
 		undefined, // TODO: should the upload new version page have a custom title, and if so what should it be?
 		[],
@@ -201,7 +201,7 @@ export const postDocumentVersionUpload = async (request, response) => {
 	postDocumentUpload(
 		request,
 		response,
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/add-document-details/${currentFolder.id}/${documentId}`
+		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/add-document-details/${currentFolder.folderId}/${documentId}`
 	);
 };
 
@@ -233,7 +233,7 @@ export const getAddDocumentDetails = async (request, response) => {
 		response,
 		`/appeals-service/appeal-details/${
 			currentAppeal.appealId
-		}/costs/${costsCategory}/upload-documents/${currentFolder?.id}${
+		}/costs/${costsCategory}/upload-documents/${currentFolder?.folderId}${
 			documentId ? `/${documentId}` : ''
 		}`,
 		false,
@@ -267,16 +267,16 @@ export const postAddDocumentDetails = async (request, response) => {
 	postDocumentDetails(
 		request,
 		response,
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/upload-documents/${currentFolder?.id}`,
+		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/upload-documents/${currentFolder?.folderId}`,
 		costsCategory === 'decision'
 			? `/appeals-service/appeal-details/${
 					currentAppeal.appealId
-			  }/costs/decision/check-and-confirm/${currentFolder?.id}${
+			  }/costs/decision/check-and-confirm/${currentFolder?.folderId}${
 					documentId ? `/${documentId}` : ''
 			  }`
 			: `/appeals-service/appeal-details/${
 					currentAppeal.appealId
-			  }/costs/${costsCategory}/check-your-answers/${currentFolder?.id}${
+			  }/costs/${costsCategory}/check-your-answers/${currentFolder?.folderId}${
 					documentId ? `/${documentId}` : ''
 			  }`,
 		costsCategoryLabel
@@ -304,7 +304,7 @@ export const getAddDocumentsCheckAndConfirm = async (request, response) => {
 		response,
 		`/appeals-service/appeal-details/${
 			currentAppeal.appealId
-		}/costs/${costsCategory}/add-document-details/${currentFolder.id}${
+		}/costs/${costsCategory}/add-document-details/${currentFolder.folderId}${
 			documentId ? `/${documentId}` : ''
 		}`
 	);
@@ -408,7 +408,7 @@ export const getManageFolder = async (request, response) => {
 		request,
 		response,
 		`/appeals-service/appeal-details/${request.params.appealId}`,
-		`/appeals-service/appeal-details/${request.params.appealId}/costs/${costsCategory}/manage-documents/${currentFolder.id}/{{documentId}}`,
+		`/appeals-service/appeal-details/${request.params.appealId}/costs/${costsCategory}/manage-documents/${currentFolder.folderId}/{{documentId}}`,
 		costsCategoryLabel
 	);
 };
@@ -428,9 +428,9 @@ export const getManageDocument = async (request, response) => {
 	renderManageDocument(
 		request,
 		response,
-		`/appeals-service/appeal-details/${request.params.appealId}/costs/${costsCategory}/manage-documents/${currentFolder.id}`,
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/upload-documents/${currentFolder?.id}/{{documentId}}`,
-		`/appeals-service/appeal-details/${request.params.appealId}/costs/${costsCategory}/manage-documents/${currentFolder.id}/{{documentId}}/{{versionId}}/delete`
+		`/appeals-service/appeal-details/${request.params.appealId}/costs/${costsCategory}/manage-documents/${currentFolder.folderId}`,
+		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/upload-documents/${currentFolder?.folderId}/{{documentId}}`,
+		`/appeals-service/appeal-details/${request.params.appealId}/costs/${costsCategory}/manage-documents/${currentFolder.folderId}/{{documentId}}/{{versionId}}/delete`
 	);
 };
 
@@ -448,7 +448,7 @@ export const getDeleteCostsDocument = async (request, response) => {
 	renderDeleteDocument(
 		request,
 		response,
-		`/appeals-service/appeal-details/${request.params.appealId}/costs/${costsCategory}/manage-documents/${currentFolder.id}/{{documentId}}`
+		`/appeals-service/appeal-details/${request.params.appealId}/costs/${costsCategory}/manage-documents/${currentFolder.folderId}/{{documentId}}`
 	);
 };
 

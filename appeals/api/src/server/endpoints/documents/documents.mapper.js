@@ -1,4 +1,5 @@
 import { FOLDERS } from '@pins/appeals/constants/documents.js';
+import { formatFolder } from './documents.formatter.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Folder} Folder */
 /** @typedef {import('@pins/appeals/index.js').MappedDocument} MappedDocument */
@@ -22,6 +23,8 @@ export const mapDocumentsForDatabase = (
 	documents
 ) => {
 	return documents?.map((document) => {
+		const storageHost = mapHost(blobStorageHost || '');
+
 		return {
 			GUID: document.GUID,
 			name: document.documentName,
@@ -31,10 +34,28 @@ export const mapDocumentsForDatabase = (
 			documentType: document.documentType,
 			documentSize: document.documentSize,
 			stage: document.stage,
+			blobStorageHost: storageHost,
 			blobStorageContainer,
-			blobStorageHost
+			blobStoragePath: document.blobStoragePath,
+			documentURI: `${storageHost}/${document.blobStoragePath}`,
+			redactionStatusId: document.redactionStatusId,
+			dateReceived: new Date(document.receivedDate)
 		};
 	});
+};
+
+/**
+ *
+ * @param {string} original
+ * @returns {string}
+ */
+const mapHost = (original) => {
+	const host = original.replace(/\/$/, '');
+	if (host.indexOf('?') > 0) {
+		return host.split('?')[0];
+	}
+
+	return host;
 };
 
 /**
@@ -53,7 +74,7 @@ export const mapDocumentsForBlobStorage = (documents, caseReference, versionId =
 				versionId,
 				GUID: document.documentGuid,
 				documentName: fileName,
-				blobStoreUrl: mapBlobPath(document.documentGuid, caseReference, fileName, versionId)
+				blobStoreUrl: document.blobStoragePath || ''
 			};
 		}
 
@@ -103,7 +124,6 @@ export const mapCaseReferenceForStorageUrl = (caseReference) => {
  * @returns {Folder[]}
  */
 export const mapDefaultCaseFolders = (caseId) => {
-	// @ts-ignore
 	return FOLDERS.map((/** @type {string} */ path) => {
 		return {
 			caseId,
@@ -133,28 +153,11 @@ export const mapFoldersLayoutForAppealSection = (sectionName, folders) => {
 /**
  * @param {Folder[]} folders
  * @param {string} path
- * @returns {FolderInfo | void}
+ * @returns {{ folderId: Number, path: string, documents: Object} | void}
  */
 const mapFoldersLayoutForAppealFolder = (folders, path) => {
 	const folder = folders.find((f) => f.path === path);
 	if (folder) {
-		return {
-			folderId: folder.id,
-			path: folder.path,
-			documents:
-				folder.documents
-					?.filter((d) => !d.isDeleted)
-					.map((d) => {
-						return {
-							id: d.guid,
-							name: d.name,
-							createdAt: d.createdAt.toISOString(),
-							folderId: d.folderId,
-							caseId: folder.caseId,
-							isLateEntry: d.latestDocumentVersion?.isLateEntry,
-							virusCheckStatus: d.latestDocumentVersion?.virusCheckStatus
-						};
-					}) || []
-		};
+		return formatFolder(folder);
 	}
 };

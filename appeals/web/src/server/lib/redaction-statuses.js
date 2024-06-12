@@ -4,9 +4,11 @@
  * @returns {number|undefined}
  */
 export function redactionStatusNameToId(redactionStatuses, name) {
-	return redactionStatuses.find(
-		(redactionStatus) => redactionStatus.name.toLowerCase() === name.toLowerCase()
-	)?.id;
+	return Number(
+		redactionStatuses.find(
+			(redactionStatus) => redactionStatus.name.toLowerCase() === name.toLowerCase()
+		)?.id
+	);
 }
 
 /**

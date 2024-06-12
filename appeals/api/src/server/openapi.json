@@ -1001,43 +1001,6 @@
 				}
 			}
 		},
-		"/appeals/designated-sites": {
-			"get": {
-				"tags": ["Designated Sites"],
-				"description": "Gets designated sites",
-				"parameters": [
-					{
-						"name": "azureAdUserId",
-						"in": "header",
-						"required": true,
-						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Designated sites",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/AllDesignatedSitesResponse"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/AllDesignatedSitesResponse"
-								}
-							}
-						}
-					},
-					"400": {
-						"description": "Bad Request"
-					}
-				}
-			}
-		},
 		"/appeals/document-redaction-statuses": {
 			"get": {
 				"tags": ["Document Redaction Statuses"],
@@ -1838,43 +1801,6 @@
 				}
 			}
 		},
-		"/appeals/planning-obligation-statuses": {
-			"get": {
-				"tags": ["Planning Obligation Statuses"],
-				"description": "Gets planning obligation statuses",
-				"parameters": [
-					{
-						"name": "azureAdUserId",
-						"in": "header",
-						"required": true,
-						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Planning obligation statuses",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/AllPlanningObligationStatusesResponse"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/AllPlanningObligationStatusesResponse"
-								}
-							}
-						}
-					},
-					"400": {
-						"description": "Bad Request"
-					}
-				}
-			}
-		},
 		"/appeals/procedure-types": {
 			"get": {
 				"tags": ["Procedure Types"],
@@ -1902,43 +1828,6 @@
 							"application/xml": {
 								"schema": {
 									"$ref": "#/components/schemas/AllProcedureTypesResponse"
-								}
-							}
-						}
-					},
-					"400": {
-						"description": "Bad Request"
-					}
-				}
-			}
-		},
-		"/appeals/schedule-types": {
-			"get": {
-				"tags": ["Schedule Types"],
-				"description": "Gets schedule types",
-				"parameters": [
-					{
-						"name": "azureAdUserId",
-						"in": "header",
-						"required": true,
-						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Schedule types",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/AllScheduleTypesResponse"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/AllScheduleTypesResponse"
 								}
 							}
 						}
@@ -3749,7 +3638,7 @@
 					},
 					"path": {
 						"type": "string",
-						"example": "appellant_case/appealStatement"
+						"example": "appellant-case/appealStatement"
 					},
 					"caseId": {
 						"type": "string",
@@ -3886,20 +3775,16 @@
 						"type": "boolean",
 						"example": false
 					},
-					"latestVersionId": {
-						"type": "number",
-						"example": 1
-					},
 					"caseId": {
 						"type": "number",
 						"example": 492
 					},
-					"documentVersion": {
+					"latestDocumentVersion": {
 						"type": "array",
 						"items": {
 							"type": "object",
 							"properties": {
-								"documentGuid": {
+								"documentId": {
 									"type": "string",
 									"example": "27d0fda4-8a9a-4f5a-a158-68eaea676158"
 								},
@@ -3907,160 +3792,61 @@
 									"type": "number",
 									"example": 1
 								},
-								"lastModified": {},
-								"documentType": {
-									"type": "string",
-									"example": "applicationForm"
-								},
-								"published": {
-									"type": "boolean",
-									"example": false
-								},
-								"sourceSystem": {
-									"type": "string",
-									"example": "back-office-appeals"
-								},
-								"origin": {},
-								"originalFilename": {
-									"type": "string",
-									"example": "mydoc.pdf"
-								},
 								"fileName": {
 									"type": "string",
 									"example": "mydoc.pdf"
 								},
-								"representative": {},
-								"description": {},
-								"owner": {},
-								"author": {},
-								"securityClassification": {},
-								"mime": {
+								"originalFilename": {
 									"type": "string",
-									"example": "application/pdf"
+									"example": "mydoc.pdf"
 								},
-								"horizonDataID": {},
-								"fileMD5": {},
-								"path": {},
-								"virusCheckStatus": {},
+								"dateReceived": {
+									"type": "string",
+									"example": "2024-06-11T19:42:22.713Z"
+								},
+								"redactionStatus": {
+									"type": "string",
+									"example": "Unredacted"
+								},
+								"virusCheckStatus": {
+									"type": "string",
+									"example": "scanned"
+								},
 								"size": {
 									"type": "number",
-									"example": 146995
+									"example": 4688
 								},
-								"stage": {
+								"mime": {
 									"type": "string",
-									"example": "appellant_case"
+									"example": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
 								},
-								"filter1": {},
+								"isLateEntry": {
+									"type": "boolean",
+									"example": false
+								},
+								"isDeleted": {
+									"type": "boolean",
+									"example": false
+								},
+								"documentType": {
+									"type": "string",
+									"example": "decision"
+								},
 								"blobStorageContainer": {
 									"type": "string",
 									"example": "document-service-uploads"
 								},
 								"blobStoragePath": {
 									"type": "string",
-									"example": "appeal/1345264/27d0fda4-8a9a-4f5a-a158-68eaea676158/v1/mydoc.pdf"
-								},
-								"dateCreated": {
-									"type": "string",
-									"example": "2023-08-17T15:22:20.827Z"
-								},
-								"datePublished": {},
-								"isDeleted": {
-									"type": "boolean",
-									"example": false
-								},
-								"isLateEntry": {
-									"type": "boolean",
-									"example": false
-								},
-								"examinationRefNo": {},
-								"filter2": {},
-								"publishedStatus": {
-									"type": "string",
-									"example": "awaiting_upload"
-								},
-								"publishedStatusPrev": {},
-								"redactionStatusId": {},
-								"redacted": {
-									"type": "boolean",
-									"example": false
-								},
-								"documentURI": {
-									"type": "string",
-									"example": "https://127.0.0.1:10000/devstoreaccount1/document-service-uploads/document-service-uploads/appeal/1345264/27d0fda4-8a9a-4f5a-a158-68eaea676158/v1/mydoc.pdf"
-								},
-								"dateReceived": {}
+									"example": "appeal/6000210/d9720f12-daf9-4f47-a842-00b9313491b8/v1/preview_renamed.xlsx"
+								}
 							}
 						}
 					},
 					"versionAudit": {
 						"type": "array",
-						"items": {
-							"type": "object",
-							"properties": {
-								"id": {
-									"type": "number",
-									"example": 1
-								},
-								"documentGuid": {
-									"type": "string",
-									"example": "27d0fda4-8a9a-4f5a-a158-68eaea676158"
-								},
-								"version": {
-									"type": "number",
-									"example": 1
-								},
-								"auditTrailId": {
-									"type": "number",
-									"example": 1
-								},
-								"action": {
-									"type": "string",
-									"example": "Create"
-								},
-								"auditTrail": {
-									"type": "object",
-									"properties": {
-										"id": {
-											"type": "number",
-											"example": 1
-										},
-										"appealId": {
-											"type": "number",
-											"example": 1
-										},
-										"userId": {
-											"type": "number",
-											"example": 1
-										},
-										"loggedAt": {
-											"type": "string",
-											"example": "2023-11-10"
-										},
-										"details": {
-											"type": "string",
-											"example": ""
-										},
-										"user": {
-											"type": "object",
-											"properties": {
-												"id": {
-													"type": "number",
-													"example": 1
-												},
-												"azureAdUserId": {
-													"type": "string",
-													"example": "6f930ec9-7f6f-448c-bb50-b3b898035959"
-												},
-												"sapId": {
-													"type": "string",
-													"example": ""
-												}
-											}
-										}
-									}
-								}
-							}
-						}
+						"example": [],
+						"items": {}
 					}
 				},
 				"xml": {
@@ -6258,6 +6044,10 @@
 					"previousVisitType": {
 						"type": "string",
 						"example": "Unaccompanied"
+					},
+					"siteVisitChangeType": {
+						"type": "string",
+						"example": "all"
 					}
 				},
 				"xml": {
@@ -6286,6 +6076,10 @@
 					"previousVisitType": {
 						"type": "string",
 						"example": "Unaccompanied"
+					},
+					"siteVisitChangeType": {
+						"type": "string",
+						"example": "all"
 					}
 				},
 				"xml": {
@@ -7021,7 +6815,7 @@
 								},
 								"virusCheckStatus": {
 									"type": "string",
-									"example": "checked"
+									"example": "scanned"
 								}
 							}
 						}
@@ -7049,7 +6843,7 @@
 								},
 								"virusCheckStatus": {
 									"type": "string",
-									"example": "checked"
+									"example": "scanned"
 								}
 							}
 						}

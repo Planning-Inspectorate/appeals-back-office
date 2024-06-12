@@ -1,8 +1,8 @@
 import { DOCUMENT_STATUS_NOT_RECEIVED, DOCUMENT_STATUS_RECEIVED } from '#endpoints/constants.js';
-/** @typedef {import('@pins/appeals.api').Appeals.RepositoryGetByIdResultItem} RepositoryGetByIdResultItem */
+/** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 
 /**
- * @param {RepositoryGetByIdResultItem} appeal
+ * @param {Appeal} appeal
  * @returns {string}
  */
 export const formatAppellantCaseDocumentationStatus = (appeal) => {
@@ -14,7 +14,7 @@ export const formatAppellantCaseDocumentationStatus = (appeal) => {
 };
 
 /**
- * @param {RepositoryGetByIdResultItem} appeal
+ * @param {Appeal} appeal
  * @returns {string}
  */
 export const formatLpaQuestionnaireDocumentationStatus = (appeal) => {

@@ -27,7 +27,7 @@ export const broadcastDocument = async (
 					appealType: true
 				}
 			},
-			documentVersion: {
+			versions: {
 				where: {
 					version
 				},
@@ -38,7 +38,7 @@ export const broadcastDocument = async (
 		}
 	});
 
-	if (!document || document.documentVersion?.length != 1) {
+	if (!document || document.versions?.length != 1) {
 		pino.error(
 			`Trying to broadcast info for document ${documentId} version ${version}, but it was not found.`
 		);

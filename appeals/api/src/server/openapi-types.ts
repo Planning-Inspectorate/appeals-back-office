@@ -210,7 +210,7 @@ export interface AddDocumentsResponse {
 export interface Folder {
 	/** @example 23 */
 	folderId?: number;
-	/** @example "appellant_case/appealStatement" */
+	/** @example "appellant-case/appealStatement" */
 	path?: string;
 	/** @example "1345264" */
 	caseId?: string;
@@ -286,98 +286,40 @@ export interface DocumentDetails {
 	createdAt?: string;
 	/** @example false */
 	isDeleted?: boolean;
-	/** @example 1 */
-	latestVersionId?: number;
 	/** @example 492 */
 	caseId?: number;
-	documentVersion?: {
+	latestDocumentVersion?: {
 		/** @example "27d0fda4-8a9a-4f5a-a158-68eaea676158" */
-		documentGuid?: string;
+		documentId?: string;
 		/** @example 1 */
 		version?: number;
-		lastModified?: any;
-		/** @example "applicationForm" */
-		documentType?: string;
-		/** @example false */
-		published?: boolean;
-		/** @example "back-office-appeals" */
-		sourceSystem?: string;
-		origin?: any;
-		/** @example "mydoc.pdf" */
-		originalFilename?: string;
 		/** @example "mydoc.pdf" */
 		fileName?: string;
-		representative?: any;
-		description?: any;
-		owner?: any;
-		author?: any;
-		securityClassification?: any;
-		/** @example "application/pdf" */
-		mime?: string;
-		horizonDataID?: any;
-		fileMD5?: any;
-		path?: any;
-		virusCheckStatus?: any;
-		/** @example 146995 */
+		/** @example "mydoc.pdf" */
+		originalFilename?: string;
+		/** @example "2024-06-11T19:42:22.713Z" */
+		dateReceived?: string;
+		/** @example "Unredacted" */
+		redactionStatus?: string;
+		/** @example "scanned" */
+		virusCheckStatus?: string;
+		/** @example 4688 */
 		size?: number;
-		/** @example "appellant_case" */
-		stage?: string;
-		filter1?: any;
-		/** @example "document-service-uploads" */
-		blobStorageContainer?: string;
-		/** @example "appeal/1345264/27d0fda4-8a9a-4f5a-a158-68eaea676158/v1/mydoc.pdf" */
-		blobStoragePath?: string;
-		/** @example "2023-08-17T15:22:20.827Z" */
-		dateCreated?: string;
-		datePublished?: any;
-		/** @example false */
-		isDeleted?: boolean;
+		/** @example "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" */
+		mime?: string;
 		/** @example false */
 		isLateEntry?: boolean;
-		examinationRefNo?: any;
-		filter2?: any;
-		/** @example "awaiting_upload" */
-		publishedStatus?: string;
-		publishedStatusPrev?: any;
-		redactionStatusId?: any;
 		/** @example false */
-		redacted?: boolean;
-		/** @example "https://127.0.0.1:10000/devstoreaccount1/document-service-uploads/document-service-uploads/appeal/1345264/27d0fda4-8a9a-4f5a-a158-68eaea676158/v1/mydoc.pdf" */
-		documentURI?: string;
-		dateReceived?: any;
+		isDeleted?: boolean;
+		/** @example "decision" */
+		documentType?: string;
+		/** @example "document-service-uploads" */
+		blobStorageContainer?: string;
+		/** @example "appeal/6000210/d9720f12-daf9-4f47-a842-00b9313491b8/v1/preview_renamed.xlsx" */
+		blobStoragePath?: string;
 	}[];
-	versionAudit?: {
-		/** @example 1 */
-		id?: number;
-		/** @example "27d0fda4-8a9a-4f5a-a158-68eaea676158" */
-		documentGuid?: string;
-		/** @example 1 */
-		version?: number;
-		/** @example 1 */
-		auditTrailId?: number;
-		/** @example "Create" */
-		action?: string;
-		auditTrail?: {
-			/** @example 1 */
-			id?: number;
-			/** @example 1 */
-			appealId?: number;
-			/** @example 1 */
-			userId?: number;
-			/** @example "2023-11-10" */
-			loggedAt?: string;
-			/** @example "" */
-			details?: string;
-			user?: {
-				/** @example 1 */
-				id?: number;
-				/** @example "6f930ec9-7f6f-448c-bb50-b3b898035959" */
-				azureAdUserId?: string;
-				/** @example "" */
-				sapId?: string;
-			};
-		};
-	}[];
+	/** @example [] */
+	versionAudit?: any[];
 }
 
 export interface AuditTrailUserInfo {
@@ -1351,6 +1293,8 @@ export interface UpdateSiteVisitRequest {
 	visitType?: string;
 	/** @example "Unaccompanied" */
 	previousVisitType?: string;
+	/** @example "all" */
+	siteVisitChangeType?: string;
 }
 
 export interface UpdateSiteVisitResponse {
@@ -1364,6 +1308,8 @@ export interface UpdateSiteVisitResponse {
 	visitType?: string;
 	/** @example "Unaccompanied" */
 	previousVisitType?: string;
+	/** @example "all" */
+	siteVisitChangeType?: string;
 }
 
 export interface SingleSiteVisitResponse {
@@ -1669,7 +1615,7 @@ export interface UpdateDocumentsAvCheckRequest {
 		id?: string;
 		/** @example 1 */
 		version?: number;
-		/** @example "checked" */
+		/** @example "scanned" */
 		virusCheckStatus?: string;
 	}[];
 }
@@ -1680,7 +1626,7 @@ export interface UpdateDocumentsAvCheckResponse {
 		id?: string;
 		/** @example 1 */
 		version?: number;
-		/** @example "checked" */
+		/** @example "scanned" */
 		virusCheckStatus?: string;
 	}[];
 }

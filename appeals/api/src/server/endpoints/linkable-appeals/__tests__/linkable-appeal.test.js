@@ -42,7 +42,7 @@ describe('/appeals/linkable-appeal/:appealReference', () => {
 						? '(' + householdAppeal.agent?.organisationName + ')'
 						: ''
 				}`,
-				submissionDate: new Date(householdAppeal.createdAt).toISOString(),
+				submissionDate: new Date(householdAppeal.caseCreatedDate).toISOString(),
 				source: 'back-office'
 			});
 		});

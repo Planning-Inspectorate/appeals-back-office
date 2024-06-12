@@ -25,6 +25,17 @@
 			"cwd": "${workspaceFolder}/appeals/api",
 			"console": "integratedTerminal",
 			"internalConsoleOptions": "neverOpen"
+		},
+		{
+			"type": "pwa-node",
+			"request": "launch",
+			"name": "Appeals Back-Office",
+			"runtimeExecutable": "npm",
+			"runtimeArgs": ["run", "dev", "--inspect-brk"],
+			"skipFiles": ["<node_internals>/**"],
+			"cwd": "${workspaceFolder}",
+			"console": "integratedTerminal",
+			"internalConsoleOptions": "neverOpen"
 		}
 	]
 }

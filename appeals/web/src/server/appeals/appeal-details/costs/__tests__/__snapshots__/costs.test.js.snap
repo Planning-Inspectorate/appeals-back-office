@@ -238,7 +238,7 @@ exports[`costs GET /costs/:costsCategory/manage-documents/:folderId should rende
                     </dl>
                 </td>
                 <td class="govuk-table__cell">2 March 2024</td>
-                <td class="govuk-table__cell">Unredacted</td>
+                <td class="govuk-table__cell">No redaction required</td>
                 <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/costs/appellant/manage-documents/1/47d8f073-c837-4f07-9161-c1a5626eba56"
                     class="govuk-link">View and edit <span class="govuk-visually-hidden">sample-20s-documentFolderInfo.mp4</span></a>
                 </td>
@@ -288,7 +288,7 @@ exports[`costs GET /costs/:costsCategory/manage-documents/:folderId should rende
                     </dl>
                 </td>
                 <td class="govuk-table__cell">2 March 2024</td>
-                <td class="govuk-table__cell">Unredacted</td>
+                <td class="govuk-table__cell">No redaction required</td>
                 <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/costs/decision/manage-documents/1/47d8f073-c837-4f07-9161-c1a5626eba56"
                     class="govuk-link">View and edit <span class="govuk-visually-hidden">sample-20s-documentFolderInfo.mp4</span></a>
                 </td>
@@ -338,7 +338,7 @@ exports[`costs GET /costs/:costsCategory/manage-documents/:folderId should rende
                     </dl>
                 </td>
                 <td class="govuk-table__cell">2 March 2024</td>
-                <td class="govuk-table__cell">Unredacted</td>
+                <td class="govuk-table__cell">No redaction required</td>
                 <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/costs/lpa/manage-documents/1/47d8f073-c837-4f07-9161-c1a5626eba56"
                     class="govuk-link">View and edit <span class="govuk-visually-hidden">sample-20s-documentFolderInfo.mp4</span></a>
                 </td>
@@ -432,259 +432,7 @@ exports[`costs GET /costs/:costsCategory/manage-documents/:folderId/:documentId 
 </main>"
 `;
 
-exports[`costs GET /costs/:costsCategory/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "checked" (appellant) 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Name</dt>
-                    <dd class="govuk-summary-list__value">
-                        <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/preview/">test-pdf-documentFileVersionsInfo.pdf</a>
-                        </div>
-                    </dd>
-                </div>
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Version</dt>
-                    <dd class="govuk-summary-list__value">1</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date received</dt>
-                    <dd class="govuk-summary-list__value">1 February 2023</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/appellant/change-document-details/1/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf date received</span></a>
-                    </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Redaction status</dt>
-                    <dd class="govuk-summary-list__value">Redacted</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/appellant/change-document-details/1/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf redaction status</span></a>
-                    </dd>
-                </div>
-            </dl>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><a href="/appeals-service/appeal-details/1/costs/appellant/upload-documents/1/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
-            role="button" draggable="false" class="govuk-button govuk-!-margin-right-2"
-            data-module="govuk-button" id="upload-updated-document"> Upload a new version</a>
-            <a             href="/appeals-service/appeal-details/1/costs/appellant/manage-documents/1/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete"
-            role="button" draggable="false" class="govuk-button govuk-button--secondary"
-            data-module="govuk-button" id="remove-document">Remove current version</a>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <h2>Document versions</h2>
-            <p class="govuk-body">View and remove versions of this document</p>
-            <details class="govuk-details"
-            data-module="govuk-details">
-                <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Version history</span>
-                </summary>
-                <div class="govuk-details__text">
-                    <table class="govuk-table govuk-!-font-size-16">
-                        <thead class="govuk-table__head">
-                            <tr class="govuk-table__row">
-                                <th scope="col" class="govuk-table__header">Version</th>
-                                <th scope="col" class="govuk-table__header">Name</th>
-                                <th scope="col" class="govuk-table__header">Activity</th>
-                                <th scope="col" class="govuk-table__header">Redaction status</th>
-                                <th scope="col" class="govuk-table__header">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody class="govuk-table__body">
-                            <tr class="govuk-table__row">
-                                <td class="govuk-table__cell">1</td>
-                                <td class="govuk-table__cell">
-                                    <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/preview/">test-pdf-documentFileVersionsInfo.pdf</a>
-                                    </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">CURRENT VERSION</strong>
-                                </td>
-                                <td class="govuk-table__cell">
-                                    <p class="govuk-body"><strong>Create</strong>: 13:14, 31 October 2023,
-                                        <br>by John Smith</p>
-                                </td>
-                                <td class="govuk-table__cell">Redacted</td>
-                                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/appellant/manage-documents/1/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete">Remove</a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </details>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`costs GET /costs/:costsCategory/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "checked" (decision) 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Name</dt>
-                    <dd class="govuk-summary-list__value">
-                        <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/preview/">test-pdf-documentFileVersionsInfo.pdf</a>
-                        </div>
-                    </dd>
-                </div>
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Version</dt>
-                    <dd class="govuk-summary-list__value">1</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date received</dt>
-                    <dd class="govuk-summary-list__value">1 February 2023</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/decision/change-document-details/1/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf date received</span></a>
-                    </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Redaction status</dt>
-                    <dd class="govuk-summary-list__value">Redacted</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/decision/change-document-details/1/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf redaction status</span></a>
-                    </dd>
-                </div>
-            </dl>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><a href="/appeals-service/appeal-details/1/costs/decision/upload-documents/1/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
-            role="button" draggable="false" class="govuk-button govuk-!-margin-right-2"
-            data-module="govuk-button" id="upload-updated-document"> Upload a new version</a>
-            <a             href="/appeals-service/appeal-details/1/costs/decision/manage-documents/1/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete"
-            role="button" draggable="false" class="govuk-button govuk-button--secondary"
-            data-module="govuk-button" id="remove-document">Remove current version</a>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <h2>Document versions</h2>
-            <p class="govuk-body">View and remove versions of this document</p>
-            <details class="govuk-details"
-            data-module="govuk-details">
-                <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Version history</span>
-                </summary>
-                <div class="govuk-details__text">
-                    <table class="govuk-table govuk-!-font-size-16">
-                        <thead class="govuk-table__head">
-                            <tr class="govuk-table__row">
-                                <th scope="col" class="govuk-table__header">Version</th>
-                                <th scope="col" class="govuk-table__header">Name</th>
-                                <th scope="col" class="govuk-table__header">Activity</th>
-                                <th scope="col" class="govuk-table__header">Redaction status</th>
-                                <th scope="col" class="govuk-table__header">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody class="govuk-table__body">
-                            <tr class="govuk-table__row">
-                                <td class="govuk-table__cell">1</td>
-                                <td class="govuk-table__cell">
-                                    <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/preview/">test-pdf-documentFileVersionsInfo.pdf</a>
-                                    </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">CURRENT VERSION</strong>
-                                </td>
-                                <td class="govuk-table__cell">
-                                    <p class="govuk-body"><strong>Create</strong>: 13:14, 31 October 2023,
-                                        <br>by John Smith</p>
-                                </td>
-                                <td class="govuk-table__cell">Redacted</td>
-                                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/decision/manage-documents/1/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete">Remove</a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </details>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`costs GET /costs/:costsCategory/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "checked" (lpa) 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Name</dt>
-                    <dd class="govuk-summary-list__value">
-                        <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/preview/">test-pdf-documentFileVersionsInfo.pdf</a>
-                        </div>
-                    </dd>
-                </div>
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Version</dt>
-                    <dd class="govuk-summary-list__value">1</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date received</dt>
-                    <dd class="govuk-summary-list__value">1 February 2023</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/lpa/change-document-details/1/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf date received</span></a>
-                    </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Redaction status</dt>
-                    <dd class="govuk-summary-list__value">Redacted</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/lpa/change-document-details/1/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf redaction status</span></a>
-                    </dd>
-                </div>
-            </dl>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><a href="/appeals-service/appeal-details/1/costs/lpa/upload-documents/1/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
-            role="button" draggable="false" class="govuk-button govuk-!-margin-right-2"
-            data-module="govuk-button" id="upload-updated-document"> Upload a new version</a>
-            <a             href="/appeals-service/appeal-details/1/costs/lpa/manage-documents/1/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete"
-            role="button" draggable="false" class="govuk-button govuk-button--secondary"
-            data-module="govuk-button" id="remove-document">Remove current version</a>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <h2>Document versions</h2>
-            <p class="govuk-body">View and remove versions of this document</p>
-            <details class="govuk-details"
-            data-module="govuk-details">
-                <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Version history</span>
-                </summary>
-                <div class="govuk-details__text">
-                    <table class="govuk-table govuk-!-font-size-16">
-                        <thead class="govuk-table__head">
-                            <tr class="govuk-table__row">
-                                <th scope="col" class="govuk-table__header">Version</th>
-                                <th scope="col" class="govuk-table__header">Name</th>
-                                <th scope="col" class="govuk-table__header">Activity</th>
-                                <th scope="col" class="govuk-table__header">Redaction status</th>
-                                <th scope="col" class="govuk-table__header">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody class="govuk-table__body">
-                            <tr class="govuk-table__row">
-                                <td class="govuk-table__cell">1</td>
-                                <td class="govuk-table__cell">
-                                    <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/preview/">test-pdf-documentFileVersionsInfo.pdf</a>
-                                    </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">CURRENT VERSION</strong>
-                                </td>
-                                <td class="govuk-table__cell">
-                                    <p class="govuk-body"><strong>Create</strong>: 13:14, 31 October 2023,
-                                        <br>by John Smith</p>
-                                </td>
-                                <td class="govuk-table__cell">Redacted</td>
-                                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/lpa/manage-documents/1/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete">Remove</a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </details>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`costs GET /costs/:costsCategory/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "failed_virus_check" (appellant) 1`] = `
+exports[`costs GET /costs/:costsCategory/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "affected" (appellant) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -787,7 +535,7 @@ exports[`costs GET /costs/:costsCategory/manage-documents/:folderId/:documentId 
 </main>"
 `;
 
-exports[`costs GET /costs/:costsCategory/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "failed_virus_check" (decision) 1`] = `
+exports[`costs GET /costs/:costsCategory/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "affected" (decision) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -890,7 +638,7 @@ exports[`costs GET /costs/:costsCategory/manage-documents/:folderId/:documentId 
 </main>"
 `;
 
-exports[`costs GET /costs/:costsCategory/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "failed_virus_check" (lpa) 1`] = `
+exports[`costs GET /costs/:costsCategory/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "affected" (lpa) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -993,8 +741,21 @@ exports[`costs GET /costs/:costsCategory/manage-documents/:folderId/:documentId 
 </main>"
 `;
 
-exports[`costs GET /costs/:costsCategory/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "not_checked" (appellant) 1`] = `
+exports[`costs GET /costs/:costsCategory/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "not_scanned" (appellant) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
+            data-module="govuk-notification-banner">
+                <div class="govuk-notification-banner__header">
+                    <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
+                </div>
+                <div class="govuk-notification-banner__content">
+                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/1/costs/appellant/manage-documents/1/1">Refresh page to see if scan has finished</a>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
             <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
@@ -1071,8 +832,21 @@ exports[`costs GET /costs/:costsCategory/manage-documents/:folderId/:documentId 
 </main>"
 `;
 
-exports[`costs GET /costs/:costsCategory/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "not_checked" (decision) 1`] = `
+exports[`costs GET /costs/:costsCategory/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "not_scanned" (decision) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
+            data-module="govuk-notification-banner">
+                <div class="govuk-notification-banner__header">
+                    <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
+                </div>
+                <div class="govuk-notification-banner__content">
+                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/1/costs/decision/manage-documents/1/1">Refresh page to see if scan has finished</a>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
             <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
@@ -1149,8 +923,21 @@ exports[`costs GET /costs/:costsCategory/manage-documents/:folderId/:documentId 
 </main>"
 `;
 
-exports[`costs GET /costs/:costsCategory/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "not_checked" (lpa) 1`] = `
+exports[`costs GET /costs/:costsCategory/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "not_scanned" (lpa) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
+            data-module="govuk-notification-banner">
+                <div class="govuk-notification-banner__header">
+                    <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
+                </div>
+                <div class="govuk-notification-banner__content">
+                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/1/costs/lpa/manage-documents/1/1">Refresh page to see if scan has finished</a>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
             <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
@@ -1227,8 +1014,273 @@ exports[`costs GET /costs/:costsCategory/manage-documents/:folderId/:documentId 
 </main>"
 `;
 
+exports[`costs GET /costs/:costsCategory/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "scanned" (appellant) 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
+            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Name</dt>
+                    <dd class="govuk-summary-list__value">
+                        <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/preview/">test-pdf-documentFileVersionsInfo.pdf</a>
+                        </div>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Version</dt>
+                    <dd class="govuk-summary-list__value">1</dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date received</dt>
+                    <dd class="govuk-summary-list__value">1 February 2023</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/appellant/change-document-details/1/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf date received</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Redaction status</dt>
+                    <dd class="govuk-summary-list__value">Redacted</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/appellant/change-document-details/1/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf redaction status</span></a>
+                    </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><a href="/appeals-service/appeal-details/1/costs/appellant/upload-documents/1/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
+            role="button" draggable="false" class="govuk-button govuk-!-margin-right-2"
+            data-module="govuk-button" id="upload-updated-document"> Upload a new version</a>
+            <a             href="/appeals-service/appeal-details/1/costs/appellant/manage-documents/1/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete"
+            role="button" draggable="false" class="govuk-button govuk-button--secondary"
+            data-module="govuk-button" id="remove-document">Remove current version</a>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <h2>Document versions</h2>
+            <p class="govuk-body">View and remove versions of this document</p>
+            <details class="govuk-details"
+            data-module="govuk-details">
+                <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Version history</span>
+                </summary>
+                <div class="govuk-details__text">
+                    <table class="govuk-table govuk-!-font-size-16">
+                        <thead class="govuk-table__head">
+                            <tr class="govuk-table__row">
+                                <th scope="col" class="govuk-table__header">Version</th>
+                                <th scope="col" class="govuk-table__header">Name</th>
+                                <th scope="col" class="govuk-table__header">Activity</th>
+                                <th scope="col" class="govuk-table__header">Redaction status</th>
+                                <th scope="col" class="govuk-table__header">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="govuk-table__body">
+                            <tr class="govuk-table__row">
+                                <td class="govuk-table__cell">1</td>
+                                <td class="govuk-table__cell">
+                                    <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/preview/">test-pdf-documentFileVersionsInfo.pdf</a>
+                                    </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">CURRENT VERSION</strong>
+                                </td>
+                                <td class="govuk-table__cell">
+                                    <p class="govuk-body"><strong>Create</strong>: 13:14, 31 October 2023,
+                                        <br>by John Smith</p>
+                                </td>
+                                <td class="govuk-table__cell">Redacted</td>
+                                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/appellant/manage-documents/1/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete">Remove</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </details>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`costs GET /costs/:costsCategory/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "scanned" (decision) 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
+            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Name</dt>
+                    <dd class="govuk-summary-list__value">
+                        <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/preview/">test-pdf-documentFileVersionsInfo.pdf</a>
+                        </div>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Version</dt>
+                    <dd class="govuk-summary-list__value">1</dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date received</dt>
+                    <dd class="govuk-summary-list__value">1 February 2023</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/decision/change-document-details/1/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf date received</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Redaction status</dt>
+                    <dd class="govuk-summary-list__value">Redacted</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/decision/change-document-details/1/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf redaction status</span></a>
+                    </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><a href="/appeals-service/appeal-details/1/costs/decision/upload-documents/1/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
+            role="button" draggable="false" class="govuk-button govuk-!-margin-right-2"
+            data-module="govuk-button" id="upload-updated-document"> Upload a new version</a>
+            <a             href="/appeals-service/appeal-details/1/costs/decision/manage-documents/1/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete"
+            role="button" draggable="false" class="govuk-button govuk-button--secondary"
+            data-module="govuk-button" id="remove-document">Remove current version</a>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <h2>Document versions</h2>
+            <p class="govuk-body">View and remove versions of this document</p>
+            <details class="govuk-details"
+            data-module="govuk-details">
+                <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Version history</span>
+                </summary>
+                <div class="govuk-details__text">
+                    <table class="govuk-table govuk-!-font-size-16">
+                        <thead class="govuk-table__head">
+                            <tr class="govuk-table__row">
+                                <th scope="col" class="govuk-table__header">Version</th>
+                                <th scope="col" class="govuk-table__header">Name</th>
+                                <th scope="col" class="govuk-table__header">Activity</th>
+                                <th scope="col" class="govuk-table__header">Redaction status</th>
+                                <th scope="col" class="govuk-table__header">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="govuk-table__body">
+                            <tr class="govuk-table__row">
+                                <td class="govuk-table__cell">1</td>
+                                <td class="govuk-table__cell">
+                                    <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/preview/">test-pdf-documentFileVersionsInfo.pdf</a>
+                                    </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">CURRENT VERSION</strong>
+                                </td>
+                                <td class="govuk-table__cell">
+                                    <p class="govuk-body"><strong>Create</strong>: 13:14, 31 October 2023,
+                                        <br>by John Smith</p>
+                                </td>
+                                <td class="govuk-table__cell">Redacted</td>
+                                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/decision/manage-documents/1/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete">Remove</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </details>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`costs GET /costs/:costsCategory/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "scanned" (lpa) 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
+            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Name</dt>
+                    <dd class="govuk-summary-list__value">
+                        <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/preview/">test-pdf-documentFileVersionsInfo.pdf</a>
+                        </div>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Version</dt>
+                    <dd class="govuk-summary-list__value">1</dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date received</dt>
+                    <dd class="govuk-summary-list__value">1 February 2023</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/lpa/change-document-details/1/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf date received</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Redaction status</dt>
+                    <dd class="govuk-summary-list__value">Redacted</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/lpa/change-document-details/1/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf redaction status</span></a>
+                    </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><a href="/appeals-service/appeal-details/1/costs/lpa/upload-documents/1/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
+            role="button" draggable="false" class="govuk-button govuk-!-margin-right-2"
+            data-module="govuk-button" id="upload-updated-document"> Upload a new version</a>
+            <a             href="/appeals-service/appeal-details/1/costs/lpa/manage-documents/1/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete"
+            role="button" draggable="false" class="govuk-button govuk-button--secondary"
+            data-module="govuk-button" id="remove-document">Remove current version</a>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <h2>Document versions</h2>
+            <p class="govuk-body">View and remove versions of this document</p>
+            <details class="govuk-details"
+            data-module="govuk-details">
+                <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Version history</span>
+                </summary>
+                <div class="govuk-details__text">
+                    <table class="govuk-table govuk-!-font-size-16">
+                        <thead class="govuk-table__head">
+                            <tr class="govuk-table__row">
+                                <th scope="col" class="govuk-table__header">Version</th>
+                                <th scope="col" class="govuk-table__header">Name</th>
+                                <th scope="col" class="govuk-table__header">Activity</th>
+                                <th scope="col" class="govuk-table__header">Redaction status</th>
+                                <th scope="col" class="govuk-table__header">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="govuk-table__body">
+                            <tr class="govuk-table__row">
+                                <td class="govuk-table__cell">1</td>
+                                <td class="govuk-table__cell">
+                                    <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/preview/">test-pdf-documentFileVersionsInfo.pdf</a>
+                                    </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">CURRENT VERSION</strong>
+                                </td>
+                                <td class="govuk-table__cell">
+                                    <p class="govuk-body"><strong>Create</strong>: 13:14, 31 October 2023,
+                                        <br>by John Smith</p>
+                                </td>
+                                <td class="govuk-table__cell">Redacted</td>
+                                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/lpa/manage-documents/1/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete">Remove</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </details>
+        </div>
+    </div>
+</main>"
+`;
+
 exports[`costs GET /costs/:costsCategory/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is null (appellant) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
+            data-module="govuk-notification-banner">
+                <div class="govuk-notification-banner__header">
+                    <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
+                </div>
+                <div class="govuk-notification-banner__content">
+                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/1/costs/appellant/manage-documents/1/1">Refresh page to see if scan has finished</a>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
             <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
@@ -1308,6 +1360,19 @@ exports[`costs GET /costs/:costsCategory/manage-documents/:folderId/:documentId 
 exports[`costs GET /costs/:costsCategory/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is null (decision) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
+            data-module="govuk-notification-banner">
+                <div class="govuk-notification-banner__header">
+                    <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
+                </div>
+                <div class="govuk-notification-banner__content">
+                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/1/costs/decision/manage-documents/1/1">Refresh page to see if scan has finished</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
             <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
@@ -1385,6 +1450,19 @@ exports[`costs GET /costs/:costsCategory/manage-documents/:folderId/:documentId 
 
 exports[`costs GET /costs/:costsCategory/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is null (lpa) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
+            data-module="govuk-notification-banner">
+                <div class="govuk-notification-banner__header">
+                    <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
+                </div>
+                <div class="govuk-notification-banner__content">
+                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/1/costs/lpa/manage-documents/1/1">Refresh page to see if scan has finished</a>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
             <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>

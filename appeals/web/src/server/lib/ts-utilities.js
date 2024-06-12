@@ -23,10 +23,13 @@ export function isDefined(value) {
  */
 
 /**
- * @param {FolderInfo|any} value
+ * @param {FolderInfo|any|null|undefined} value
  * @return {value is FolderInfo}
  */
 export function isFolderInfo(value) {
+	if (!value || value === null) {
+		return false;
+	}
 	return (
 		value !== null &&
 		value !== undefined &&
