@@ -1,4 +1,4 @@
-import msalNode from '@azure/msal-node';
+import * as msalNode from '@azure/msal-node';
 import { promisify } from 'node:util';
 import config from '#environment/config.js';
 import pino from '#lib/logger.js';
