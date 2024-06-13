@@ -24,7 +24,7 @@ resource "azurerm_storage_account" "documents" {
   blob_properties {
     cors_rule {
       allowed_headers    = ["*"]
-      allowed_methods    = ["GET", "OPTIONS", "PUT"]
+      allowed_methods    = ["GET", "OPTIONS", "PUT", "DELETE"]
       allowed_origins    = lookup(local.allowed_origins, var.environment, local.allowed_origins["default"])
       exposed_headers    = ["*"]
       max_age_in_seconds = "600"

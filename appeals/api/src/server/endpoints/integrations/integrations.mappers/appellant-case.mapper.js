@@ -1,72 +1,82 @@
-// @ts-nocheck
-// TODO: schemas (PINS data model)
+/** @typedef {import('pins-data-model').Schemas.AppellantSubmissionCommand} AppellantSubmissionCommand */
+/** @typedef {import('pins-data-model').Schemas.AppealHASCase} AppealHASCase */
+/** @typedef {import('@pins/appeals.api').Schema.AppellantCase} AppellantCase */
+/** @typedef {import('@pins/appeals.api').Schema.ServiceUser} ServiceUser */
 
-export const mapAppellantCaseIn = (appeal, appellant) => {
-	return {
-		applicantFirstName: appellant.firstName,
-		applicantSurname: appellant.lastName,
-		areAllOwnersKnown: appeal.areAllOwnersKnown || false,
-		hasAdvertisedAppeal: appeal.hasAdvertisedAppeal || false,
-		hasAttemptedToIdentifyOwners: appeal.hasAttemptedToIdentifyOwners || false,
-		hasDesignAndAccessStatement: appeal.hasDesignAndAccessStatement || false,
-		hasHealthAndSafetyIssues: appeal.doesSiteHaveHealthAndSafetyIssues || false,
-		hasNewPlansOrDrawings: appeal.hasNewPlansOrDrawings || false,
-		hasNewSupportingDocuments: appeal.hasNewSupportingDocuments || false,
-		hasOtherTenants: appeal.hasOtherTenants || false,
-		hasPlanningObligation: appeal.hasPlanningObligation || false,
-		hasSeparateOwnershipCertificate: appeal.hasSeparateOwnershipCertificate || false,
-		hasSubmittedDesignAndAccessStatement: appeal.hasSubmittedDesignAndAccessStatement || false,
-		hasToldOwners: appeal.hasToldOwners || false,
-		hasToldTenants: appeal.hasToldTenants || false,
-		healthAndSafetyIssues: appeal.healthAndSafetyIssuesDetails,
-		isAgriculturalHolding: appeal.isAgriculturalHolding || false,
-		isAgriculturalHoldingTenant: appeal.isAgriculturalHoldingTenant || false,
-		isAppellantNamedOnApplication: appeal.isAppellantNamedOnApplication || false,
-		isDevelopmentDescriptionStillCorrect: appeal.isDevelopmentDescriptionStillCorrect || false,
-		isSiteFullyOwned: appeal.isSiteFullyOwned || false,
-		isSitePartiallyOwned: appeal.isSitePartiallyOwned || false,
-		isSiteVisibleFromPublicRoad: appeal.isSiteVisible || false,
-		newDevelopmentDescription: appeal.newDevelopmentDescription || '',
-		visibilityRestrictions: appeal.visibilityRestrictions || '',
-		costsAppliedForIndicator: appeal.costsAppliedForIndicator || false,
-		decision: appeal.decision || '',
-		inspectorAccessDetails: appeal.inspectorAccessDetails || '',
-		originalCaseDecisionDate: appeal.originalCaseDecisionDate || new Date().toISOString()
+import { mapDate } from './date.mapper.js';
+
+/**
+ *
+ * @param {*} casedata
+ * @returns {*}
+ */
+export const mapAppellantCaseIn = (casedata) => {
+	const knowsAllOwners = {
+		connect: { key: casedata.knowsAllOwners }
 	};
+
+	const knowsOtherOwners = {
+		connect: { key: casedata.knowsOtherOwners }
+	};
+
+	const siteAccessDetails =
+		casedata.siteAccessDetails != null && casedata.siteAccessDetails.length > 0
+			? casedata.siteAccessDetails[0]
+			: null;
+
+	const siteSafetyDetails =
+		casedata.siteSafetyDetails != null && casedata.siteSafetyDetails.length > 0
+			? casedata.siteSafetyDetails[0]
+			: null;
+
+	const data = {
+		applicationDate: casedata.applicationDate,
+		applicationDecision: casedata.applicationDecision,
+		applicationDecisionDate: casedata.applicationDecisionDate,
+		caseSubmittedDate: casedata.caseSubmittedDate,
+		caseSubmissionDueDate: casedata.caseSubmissionDueDate,
+		siteAccessDetails,
+		siteSafetyDetails,
+		siteAreaSquareMetres: casedata.siteAreaSquareMetres,
+		floorSpaceSquareMetres: casedata.floorSpaceSquareMetres,
+		ownsAllLand: casedata.ownsAllLand,
+		ownsSomeLand: casedata.ownsSomeLand,
+		hasAdvertisedAppeal: casedata.hasAdvertisedAppeal,
+		appellantCostsAppliedFor: casedata.appellantCostsAppliedFor,
+		originalDevelopmentDescription: casedata.originalDevelopmentDescription,
+		changedDevelopmentDescription: casedata.changedDevelopmentDescription,
+		knowsAllOwners,
+		knowsOtherOwners
+	};
+
+	return data;
 };
 
-export const mapAppellantCaseOut = (appeal) => {
-	return {
-		applicantFirstName: appeal.applicantFirstName,
-		applicantSurname: appeal.applicantSurname,
-		areAllOwnersKnown: appeal.areAllOwnersKnown || false,
-		hasAdvertisedAppeal: appeal.hasAdvertisedAppeal || false,
-		hasAttemptedToIdentifyOwners: appeal.hasAttemptedToIdentifyOwners || false,
-		hasDesignAndAccessStatement: appeal.hasDesignAndAccessStatement || false,
-		hasHealthAndSafetyIssues: appeal.doesSiteHaveHealthAndSafetyIssues || false,
-		hasNewPlansOrDrawings: appeal.hasNewPlansOrDrawings || false,
-		hasNewSupportingDocuments: appeal.hasNewSupportingDocuments || false,
-		hasOtherTenants: appeal.hasOtherTenants || false,
-		hasPlanningObligation: appeal.hasPlanningObligation || false,
-		hasSeparateOwnershipCertificate: appeal.hasSeparateOwnershipCertificate || false,
-		hasSubmittedDesignAndAccessStatement: appeal.hasSubmittedDesignAndAccessStatement || false,
-		hasToldOwners: appeal.hasToldOwners || false,
-		hasToldTenants: appeal.hasToldTenants || false,
-		healthAndSafetyIssues: appeal.healthAndSafetyIssuesDetails,
-		isAgriculturalHolding: appeal.isAgriculturalHolding || false,
-		isAgriculturalHoldingTenant: appeal.isAgriculturalHoldingTenant || false,
-		isAppellantNamedOnApplication: appeal.isAppellantNamedOnApplication || false,
-		isDevelopmentDescriptionStillCorrect: appeal.isDevelopmentDescriptionStillCorrect || false,
-		isSiteFullyOwned: appeal.isSiteFullyOwned || false,
-		isSitePartiallyOwned: appeal.isSitePartiallyOwned || false,
-		isSiteVisibleFromPublicRoad: appeal.isSiteVisible || false,
-		newDevelopmentDescription: appeal.newDevelopmentDescription || '',
-		visibilityRestrictions: appeal.visibilityRestrictions || '',
-		costsAppliedForIndicator: appeal.costsAppliedForIndicator || false,
-		decision: appeal.decision || '',
-		inspectorAccessDetails: appeal.inspectorAccessDetails || '',
-		originalCaseDecisionDate: appeal.originalCaseDecisionDate
-			? appeal.originalCaseDecisionDate.toISOString()
-			: new Date().toISOString()
+/**
+ *
+ * @param {AppellantCase} casedata
+ * @returns {*}
+ */
+export const mapAppellantCaseOut = (casedata) => {
+	const data = {
+		applicationDate: mapDate(casedata.applicationDate),
+		applicationDecision: casedata.applicationDecision,
+		applicationDecisionDate: mapDate(casedata.applicationDecisionDate),
+		caseSubmittedDate: mapDate(casedata.caseSubmittedDate),
+		caseSubmissionDueDate: mapDate(casedata.caseSubmissionDueDate),
+		siteAccessDetails: [casedata.siteAccessDetails],
+		siteSafetyDetails: [casedata.siteSafetyDetails],
+		siteAreaSquareMetres: casedata.siteAreaSquareMetres,
+		floorSpaceSquareMetres: casedata.floorSpaceSquareMetres,
+		ownsAllLand: casedata.ownsAllLand,
+		ownsSomeLand: casedata.ownsSomeLand,
+		hasAdvertisedAppeal: casedata.hasAdvertisedAppeal,
+		appellantCostsAppliedFor: casedata.appellantCostsAppliedFor,
+		originalDevelopmentDescription: casedata.originalDevelopmentDescription,
+		changedDevelopmentDescription: casedata.changedDevelopmentDescription,
+		knowsAllOwners: casedata.knowsAllOwners?.key,
+		knowsOtherOwners: casedata.knowsOtherOwners?.key
 	};
+
+	return data;
 };

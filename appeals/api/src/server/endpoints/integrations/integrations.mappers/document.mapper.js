@@ -2,7 +2,7 @@ import config from '#config/config.js';
 import { randomUUID } from 'node:crypto';
 import { UUID_REGEX } from '#endpoints/constants.js';
 import { mapDate } from './date.mapper.js';
-import { ODW_SYSTEM_ID } from '#endpoints/constants.js';
+import { ODW_SYSTEM_ID } from '@pins/appeals/constants/common.js';
 import { ORIGIN, STAGE } from '@pins/appeals/constants/documents.js';
 import { getAvScanStatus } from '#endpoints/documents/documents.service.js';
 
@@ -44,7 +44,7 @@ export const mapDocumentIn = (doc) => {
  * @returns
  */
 export const mapDocumentOut = (data) => {
-	const latestDocumentVersion = data.versions.length === 1 ? data.versions[0] : null;
+	const latestDocumentVersion = data.versions?.length === 1 ? data.versions[0] : null;
 	const documentInput = {
 		...data,
 		latestDocumentVersion
@@ -56,7 +56,9 @@ export const mapDocumentOut = (data) => {
 
 	const isPublished = mapPublishingStatus(documentInput.latestDocumentVersion);
 	const virusCheckStatus = mapVirusCheckStatus(documentInput.latestDocumentVersion);
-	const redactedStatus = mapRedactionStatus(documentInput.latestDocumentVersion.redactionStatus || null);
+	const redactedStatus = mapRedactionStatus(
+		documentInput.latestDocumentVersion.redactionStatus || null
+	);
 
 	const doc = {
 		documentId: documentInput.guid,
@@ -78,7 +80,7 @@ export const mapDocumentOut = (data) => {
 			documentInput.latestDocumentVersion.lastModified ||
 				documentInput.latestDocumentVersion.dateCreated
 		),
-		caseType: documentInput.case?.appealType.key,
+		caseType: documentInput.case?.appealType?.key || null,
 		redactedStatus,
 		documentType: documentInput.latestDocumentVersion.documentType,
 		sourceSystem: ODW_SYSTEM_ID,

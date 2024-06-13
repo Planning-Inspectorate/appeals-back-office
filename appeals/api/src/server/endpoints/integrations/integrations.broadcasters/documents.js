@@ -5,7 +5,7 @@ import { producers } from '#infrastructure/topics.js';
 import { eventClient } from '#infrastructure/event-client.js';
 import { schemas, validateFromSchema } from '../integrations.validators.js';
 import { databaseConnector } from '#utils/database-connector.js';
-import { ODW_SYSTEM_ID } from '#endpoints/constants.js';
+import { ODW_SYSTEM_ID } from '@pins/appeals/constants/common.js';
 
 const entityInfo = {
 	name: 'AppealDocumentMetadata'
@@ -32,7 +32,8 @@ export const broadcastDocument = async (
 					version
 				},
 				include: {
-					redactionStatus: true
+					redactionStatus: true,
+					avScan: true
 				}
 			}
 		}

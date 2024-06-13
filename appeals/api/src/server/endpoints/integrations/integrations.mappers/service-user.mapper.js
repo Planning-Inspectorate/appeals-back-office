@@ -1,4 +1,8 @@
-import { ODW_AGENT_SVCUSR, ODW_APPELLANT_SVCUSR, ODW_SYSTEM_ID } from '#endpoints/constants.js';
+import {
+	ODW_AGENT_SVCUSR,
+	ODW_APPELLANT_SVCUSR,
+	ODW_SYSTEM_ID
+} from '@pins/appeals/constants/common.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.ServiceUser} ServiceUser */
 
@@ -10,13 +14,18 @@ import { ODW_AGENT_SVCUSR, ODW_APPELLANT_SVCUSR, ODW_SYSTEM_ID } from '#endpoint
 export const mapServiceUserIn = (data) => {
 	if (data) {
 		const serviceUser = {
+			organisationName: data.organisation,
+			salutation: data.salutation,
 			firstName: data.firstName,
 			lastName: data.lastName,
-			email: data.emailAddress
+			email: data.emailAddress,
+			webAddress: data.website,
+			phoneNumber: data.telephoneNumber,
+			otherPhoneNumber: data.otherPhoneNumber,
+			faxNumber: data.faxNumber
 		};
-		return {
-			create: serviceUser
-		};
+
+		return serviceUser;
 	}
 };
 

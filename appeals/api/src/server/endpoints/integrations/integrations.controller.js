@@ -8,29 +8,33 @@ import {
 	AUDIT_TRAIL_APPELLANT_IMPORT_MSG,
 	AUDIT_TRAIL_LPAQ_IMPORT_MSG,
 	AUDIT_TRAIL_DOCUMENT_IMPORTED,
-	AUDIT_TRAIL_SYSTEM_UUID,
-	ODW_APPELLANT_SVCUSR,
-	ODW_AGENT_SVCUSR
+	AUDIT_TRAIL_SYSTEM_UUID
 } from '#endpoints/constants.js';
+import { ODW_APPELLANT_SVCUSR, ODW_AGENT_SVCUSR } from '@pins/appeals/constants/common.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
-/** @typedef {import('#config/../openapi-types.js').AppellantCaseData} AppellantCaseData */
-/** @typedef {import('#config/../openapi-types.js').QuestionnaireData} QuestionnaireData */
+
+/** @typedef {import('pins-data-model').Schemas.AppealHASCase} AppealHASCase */
+/** @typedef {import('pins-data-model').Schemas.AppellantSubmissionCommand} AppellantSubmissionCommand */
 /** @typedef {import('#config/../openapi-types.js').AddDocumentsRequest} AddDocumentsRequest */
 
 /**
- * @param {{body: AppellantCaseData}} req
+ * @param {{body: AppellantSubmissionCommand}} req
  * @param {Response} res
  * @returns {Promise<Response>}
  */
 export const postAppealSubmission = async (req, res) => {
-	const { appeal, documents } = messageMappers.mapAppealSubmission(req.body);
-	const dbResult = await integrationService.importAppellantCase(appeal, documents);
+	const { appeal, documents, relatedReferences } = messageMappers.mapAppealSubmission(req.body);
+	const casedata = await integrationService.importAppellantCase(
+		appeal,
+		documents,
+		relatedReferences
+	);
 
-	const { id, reference, appellantId, agentId } = dbResult.appeal;
-	const { documentVersions } = dbResult;
+	const { documentVersions } = casedata;
+	const { id, reference, appellantId, agentId } = casedata.appeal;
 
 	await createAuditTrail({
 		appealId: id,
@@ -56,7 +60,7 @@ export const postAppealSubmission = async (req, res) => {
 	await integrationService.importDocuments(documents, documentVersions);
 
 	for (const document of documentVersions) {
-		await broadcasters.broadcastDocument(document.guid, EventType.Create);
+		await broadcasters.broadcastDocument(document.guid, 1, EventType.Create);
 
 		const auditTrail = await createAuditTrail({
 			appealId: id,
@@ -73,10 +77,11 @@ export const postAppealSubmission = async (req, res) => {
 };
 
 /**
- * @param {{body: QuestionnaireData}} req
+ * param {{body: QuestionnaireData}} req
  * @param {Response} res
  * @returns {Promise<Response>}
  */
+// @ts-ignore
 export const postLpaqSubmission = async (req, res) => {
 	const { caseReference, questionnaire, documents } = messageMappers.mapQuestionnaireSubmission(
 		req.body
@@ -103,7 +108,7 @@ export const postLpaqSubmission = async (req, res) => {
 	await integrationService.importDocuments(documents, documentVersions);
 
 	for (const document of documentVersions) {
-		await broadcasters.broadcastDocument(document.guid, EventType.Create);
+		await broadcasters.broadcastDocument(document.guid, 1, EventType.Create);
 
 		const auditTrail = await createAuditTrail({
 			appealId: id,

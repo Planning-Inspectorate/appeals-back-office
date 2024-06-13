@@ -1,8 +1,10 @@
-// @ts-nocheck
-
 import { randomUUID } from 'node:crypto';
 
-import { mapAddressIn, mapAddressOut } from './integrations.mappers/address.mapper.js';
+import {
+	mapAddressIn,
+	mapNeighboouringAddressIn,
+	mapAddressOut
+} from './integrations.mappers/address.mapper.js';
 import { mapLpaIn, mapLpaOut } from './integrations.mappers/lpa.mapper.js';
 import { mapDocumentIn, mapDocumentOut } from './integrations.mappers/document.mapper.js';
 import { mapServiceUserIn, mapServiceUserOut } from './integrations.mappers/service-user.mapper.js';
@@ -17,9 +19,11 @@ import {
 import { mapAppealTypeIn, mapAppealTypeOut } from './integrations.mappers/appeal-type.mapper.js';
 import { mapAppealAllocationOut } from './integrations.mappers/appeal-allocation.mapper.js';
 import { mapCaseDataOut } from './integrations.mappers/casedata.mapper.js';
+import { ODW_AGENT_SVCUSR, ODW_APPELLANT_SVCUSR } from '@pins/appeals/constants/common.js';
 
 const mappers = {
 	mapAddressIn,
+	mapNeighboouringAddressIn,
 	mapAddressOut,
 	mapLpaIn,
 	mapLpaOut,
@@ -37,35 +41,50 @@ const mappers = {
 	mapCaseDataOut
 };
 
-/** @typedef {import('#config/../openapi-types.js').AppellantCaseData} AppellantCaseData */
+/** @typedef {import('pins-data-model').Schemas.AppellantSubmissionCommand} AppellantSubmissionCommand */
 /** @typedef {import('#config/../openapi-types.js').QuestionnaireData} QuestionnaireData */
-/** @typedef {import('#config/../openapi-types.js').DocumentMetaImport} DocumentMetaImport */
+/** @typedef {import('#config/../openapi-types.js').DocumentVersionDetails} DocumentMetaImport */
 
-const mapAppealSubmission = (/** @type {AppellantCaseData} */ data) => {
-	const { appeal, documents } = data;
-	const { appellant, agent } = appeal;
+/**
+ * @param {AppellantSubmissionCommand} data
+ * @returns {{ appeal: *, documents: *[], relatedReferences: string[] }}
+ */
+const mapAppealSubmission = (data) => {
+	const { casedata, documents, users } = data;
+	const appellant = users?.find((user) => user.serviceUserType === ODW_APPELLANT_SVCUSR);
+	const agent = users?.find((user) => user.serviceUserType === ODW_AGENT_SVCUSR);
+
+	const neighbouringSitesInput = {
+		create: casedata.neighbouringSiteAddresses?.map((site) => {
+			return {
+				source: 'back-office',
+				address: {
+					create: mappers.mapNeighboouringAddressIn(site)
+				}
+			};
+		})
+	};
 
 	const appealInput = {
 		reference: randomUUID(),
-		appealType: { connect: { shorthand: mappers.mapAppealTypeIn(appeal.appealType) } },
-		appellant: mappers.mapServiceUserIn(appellant),
-		agent: mappers.mapServiceUserIn(agent),
+		appealType: { connect: { key: mappers.mapAppealTypeIn(casedata?.caseType) } },
+		appellant: { create: mappers.mapServiceUserIn(appellant) },
+		agent: { create: mappers.mapServiceUserIn(agent) },
 		lpa: {
-			connectOrCreate: {
-				where: { lpaCode: appeal.LPACode },
-				create: mappers.mapLpaIn(appeal)
-			}
+			connect: { lpaCode: casedata?.lpaCode }
 		},
-		planningApplicationReference: appeal.LPAApplicationReference,
-		address: { create: mappers.mapAddressIn(appeal) },
-		appellantCase: { create: mappers.mapAppellantCaseIn(appeal, appellant) }
+		applicationReference: casedata?.applicationReference,
+		address: { create: mappers.mapAddressIn(casedata) },
+		appellantCase: { create: mappers.mapAppellantCaseIn(casedata) },
+		neighbouringSites: neighbouringSitesInput
 	};
 
 	const documentsInput = (documents || []).map((document) => mappers.mapDocumentIn(document));
 
 	return {
 		appeal: appealInput,
-		documents: documentsInput
+		documents: documentsInput,
+		relatedReferences: casedata.nearbyCaseReferences ?? []
 	};
 };
 
@@ -76,21 +95,23 @@ const mapQuestionnaireSubmission = (/** @type {QuestionnaireData} */ data) => {
 
 	return {
 		questionnaire: questionnaireInput,
-		nearbyCaseReferences: questionnaire.nearbyCaseReferences,
+		nearbyCaseReferences: questionnaire?.nearbyCaseReferences,
 		documents: documentsInput,
-		caseReference: questionnaire.caseReference
+		caseReference: questionnaire?.caseReference
 	};
 };
 
-const mapDocumentSubmission = (/** @type {DocumentMetaImport} */ data) => {
-	return mappers.mapDocumentIn(data);
-};
-
+/**
+ *
+ * @param {*} appeal
+ * @returns
+ */
 const mapAppeal = (appeal) => {
 	const topic = {
-		appealType: mappers.mapAppealTypeOut(appeal.appealType.shorthand),
+		caseType: mappers.mapAppealTypeOut(appeal.appealType.shorthand),
+		caseId: appeal.id,
 		caseReference: appeal.reference,
-		LPAApplicationReference: appeal.planningApplicationReference,
+		applicationReference: appeal.planningApplicationReference,
 		...mappers.mapLpaOut(appeal),
 		...mappers.mapAddressOut(appeal),
 		...mappers.mapAppealAllocationOut(appeal.allocation, appeal.specialisms),
@@ -101,10 +122,22 @@ const mapAppeal = (appeal) => {
 	return topic;
 };
 
+/**
+ *
+ * @param {*} doc
+ * @returns
+ */
 const mapDocument = (doc) => {
 	return mappers.mapDocumentOut(doc);
 };
 
+/**
+ *
+ * @param {string} caseReference
+ * @param {*} user
+ * @param {string} userType
+ * @returns
+ */
 const mapServiceUser = (caseReference, user, userType) => {
 	if (caseReference && user && userType) {
 		return mappers.mapServiceUserOut(user, userType, caseReference);
@@ -114,7 +147,6 @@ const mapServiceUser = (caseReference, user, userType) => {
 export const messageMappers = {
 	mapAppealSubmission,
 	mapQuestionnaireSubmission,
-	mapDocumentSubmission,
 	mapServiceUser,
 	mapDocument,
 	mapAppeal

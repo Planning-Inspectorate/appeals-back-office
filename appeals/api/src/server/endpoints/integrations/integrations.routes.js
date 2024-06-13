@@ -1,9 +1,8 @@
 import { Router as createRouter } from 'express';
 import { asyncHandler } from '#middleware/async-handler.js';
 import {
-	//validateAppellantCase,
-	//validateLpaQuestionnaire,
-	validateDocument
+	validateAppellantCase
+	//validateLpaQuestionnaire
 } from './integrations.middleware.js';
 import * as controller from './integrations.controller.js';
 
@@ -28,7 +27,7 @@ router.post(
 		#swagger.responses[400] = {}
 		#swagger.responses[404] = {}
 	 */
-	//validateAppellantCase,
+	validateAppellantCase,
 	asyncHandler(controller.postAppealSubmission)
 );
 
@@ -53,29 +52,6 @@ router.post(
 	 */
 	//validateLpaQuestionnaire,
 	asyncHandler(controller.postLpaqSubmission)
-);
-
-router.post(
-	'/document-submission',
-	/*
-		#swagger.tags = ['Integration']
-		#swagger.path = '/appeals/document-submission'
-		#swagger.description = Imports a new document
-		#swagger.requestBody = {
-			in: 'body',
-			description: 'Document',
-			schema: { $ref: '#/definitions/DocumentMetaImport' },
-			required: true
-		}
-		#swagger.responses[200] = {
-			description: 'Document successfully created',
-			schema: { $ref: '#/definitions/DocumentDetails' }
-		}
-		#swagger.responses[400] = {}
-		#swagger.responses[404] = {}
-	 */
-	validateDocument,
-	asyncHandler(controller.postDocumentSubmission)
 );
 
 export { router as integrationsRoutes };
