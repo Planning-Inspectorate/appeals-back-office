@@ -53,6 +53,9 @@ export default joi
 						lpaqComplete: joi.object({
 							id: joi.string().required()
 						}),
+						lpaqIncomplete: joi.object({
+							id: joi.string().required()
+						}),
 						siteVisitSchedule: joi.object({
 							unaccompanied: joi.object({
 								appellant: joi.object({

@@ -59,6 +59,9 @@ const { value, error } = schema.validate({
 			lpaqComplete: {
 				id: 'c571ee53-69c8-400e-a4c0-44ded262a081'
 			},
+			lpaqIncomplete: {
+				id: '4701bc3c-2f24-4ed8-8841-14d93c3b9964'
+			},
 			siteVisitSchedule: {
 				unaccompanied: {
 					appellant: {

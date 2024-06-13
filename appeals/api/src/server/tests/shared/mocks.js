@@ -138,12 +138,22 @@ export const incompleteLPAQuestionnaireOutcome = {
 		{
 			lpaQuestionnaireIncompleteReason: {
 				name: 'Documents or information are missing'
-			}
+			},
+			lpaQuestionnaireIncompleteReasonText: [
+				{
+					text: 'Policy is missing'
+				}
+			]
 		},
 		{
 			lpaQuestionnaireIncompleteReason: {
 				name: 'Other'
-			}
+			},
+			lpaQuestionnaireIncompleteReasonText: [
+				{
+					text: 'Addresses are incorrect or missing'
+				}
+			]
 		}
 	],
 	lpaQuestionnaireValidationOutcome: {
