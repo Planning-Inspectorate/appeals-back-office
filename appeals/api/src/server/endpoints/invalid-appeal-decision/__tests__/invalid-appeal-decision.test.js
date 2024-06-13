@@ -1,9 +1,11 @@
 import { request } from '../../../app-test.js';
+// @ts-nocheck
 import { jest } from '@jest/globals';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { householdAppeal } from '#tests/appeals/mocks.js';
 import { documentCreated } from '#tests/documents/mocks.js';
 import { STATE_TARGET_ISSUE_DETERMINATION } from '#endpoints/constants.js';
+import config from '#config/config.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 
@@ -13,6 +15,7 @@ describe('invalid appeal decision routes', () => {
 		databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
 	});
 	afterEach(() => {
+		jest.resetAllMocks();
 		jest.clearAllMocks();
 	});
 	describe('POST', () => {
@@ -77,7 +80,7 @@ describe('invalid appeal decision routes', () => {
 				}
 			});
 		});
-		test('returns 200 when all good', async () => {
+		test('returns 200 and send 2 notify emails when all good', async () => {
 			const correctAppealState = {
 				...householdAppeal,
 				appealStatus: [
@@ -94,6 +97,12 @@ describe('invalid appeal decision routes', () => {
 			// @ts-ignore
 			databaseConnector.inspectorDecision.create.mockResolvedValue({});
 
+			// @ts-ignore
+			databaseConnector.user.upsert.mockResolvedValue({
+				id: 1,
+				azureAdUserId
+			});
+
 			const response = await request
 				.post(`/appeals/${householdAppeal.id}/inspector-decision-invalid`)
 				.send({
@@ -101,6 +110,40 @@ describe('invalid appeal decision routes', () => {
 				})
 				.set('azureAdUserId', azureAdUserId);
 
+			// eslint-disable-next-line no-undef
+			expect(mockSendEmail).toHaveBeenCalledTimes(2);
+			// eslint-disable-next-line no-undef
+			expect(mockSendEmail).toHaveBeenNthCalledWith(
+				1,
+				config.govNotify.template.decisionIsInvalidAppellant.id,
+				'test@136s7.com',
+				{
+					emailReplyToId: null,
+					personalisation: {
+						appeal_reference_number: correctAppealState.reference,
+						lpa_reference: correctAppealState.applicationReference,
+						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+						reasons: 'Invalid reason'
+					},
+					reference: null
+				}
+			);
+			// eslint-disable-next-line no-undef
+			expect(mockSendEmail).toHaveBeenNthCalledWith(
+				2,
+				config.govNotify.template.decisionIsInvalidLPA.id,
+				'maid@lpa-email.gov.uk',
+				{
+					emailReplyToId: null,
+					personalisation: {
+						appeal_reference_number: correctAppealState.reference,
+						lpa_reference: correctAppealState.applicationReference,
+						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+						reasons: 'Invalid reason'
+					},
+					reference: null
+				}
+			);
 			expect(response.status).toEqual(200);
 		});
 	});

@@ -1,6 +1,6 @@
 import appealRepository from '#repositories/appeal.repository.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
-import { broadcastAppealState } from '#endpoints/integrations/integrations.service.js';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import {
 	AUDIT_TRAIL_APPEAL_LINK_ADDED,
 	AUDIT_TRAIL_APPEAL_LINK_REMOVED,
@@ -69,7 +69,7 @@ export const linkAppeal = async (req, res) => {
 			details: AUDIT_TRAIL_APPEAL_LINK_ADDED
 		});
 
-		await broadcastAppealState(currentAppeal.id);
+		await broadcasters.broadcastAppeal(currentAppeal.id);
 		return res.send(result);
 	}
 
@@ -125,7 +125,7 @@ export const linkExternalAppeal = async (req, res) => {
 		details: AUDIT_TRAIL_APPEAL_LINK_ADDED
 	});
 
-	await broadcastAppealState(currentAppeal.id);
+	await broadcasters.broadcastAppeal(currentAppeal.id);
 	return res.send(result);
 };
 
@@ -156,7 +156,7 @@ export const associateAppeal = async (req, res) => {
 			details: AUDIT_TRAIL_APPEAL_RELATION_ADDED
 		});
 
-		await broadcastAppealState(currentAppeal.id);
+		await broadcasters.broadcastAppeal(currentAppeal.id);
 		return res.send(result);
 	}
 
@@ -193,7 +193,7 @@ export const associateExternalAppeal = async (req, res) => {
 		details: AUDIT_TRAIL_APPEAL_RELATION_ADDED
 	});
 
-	await broadcastAppealState(currentAppeal.id);
+	await broadcasters.broadcastAppeal(currentAppeal.id);
 	return res.send(result);
 };
 
@@ -215,6 +215,6 @@ export const unlinkAppeal = async (req, res) => {
 				: AUDIT_TRAIL_APPEAL_RELATION_REMOVED
 	});
 
-	await broadcastAppealState(currentAppeal.id);
+	await broadcasters.broadcastAppeal(currentAppeal.id);
 	return res.status(200).send(true);
 };

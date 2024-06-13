@@ -1,13 +1,13 @@
 import { isOutcomeIncomplete, isOutcomeInvalid } from './check-validation-outcome.js';
 
-/** @typedef {import('@pins/appeals.api').Schema.AppellantCaseIncompleteReasonOnAppellantCase} AppellantCaseIncompleteReasonOnAppellantCase */
-/** @typedef {import('@pins/appeals.api').Schema.AppellantCaseInvalidReasonOnAppellantCase} AppellantCaseInvalidReasonOnAppellantCase */
-/** @typedef {import('@pins/appeals.api').Schema.LPAQuestionnaireIncompleteReasonOnLPAQuestionnaire} LPAQuestionnaireIncompleteReasonOnLPAQuestionnaire */
+/** @typedef {import('@pins/appeals.api').Schema.AppellantCaseIncompleteReasonsSelected} AppellantCaseIncompleteReasonsSelected */
+/** @typedef {import('@pins/appeals.api').Schema.AppellantCaseInvalidReasonsSelected} AppellantCaseInvalidReasonsSelected */
+/** @typedef {import('@pins/appeals.api').Schema.LPAQuestionnaireIncompleteReasonsSelected} LPAQuestionnaireIncompleteReasonsSelected */
 /** @typedef {import('@pins/appeals.api').Appeals.ValidationOutcomeResponse} ValidationOutcomeResponse */
 /** @typedef {import('@pins/appeals.api').Appeals.IncompleteInvalidReasonsResponse} IncompleteInvalidReasonsResponse */
 
 /**
- * @param {AppellantCaseIncompleteReasonOnAppellantCase | AppellantCaseInvalidReasonOnAppellantCase | LPAQuestionnaireIncompleteReasonOnLPAQuestionnaire} reason
+ * @param {AppellantCaseIncompleteReasonsSelected | AppellantCaseInvalidReasonsSelected | LPAQuestionnaireIncompleteReasonsSelected} reason
  * @returns {IncompleteInvalidReasonsResponse}
  */
 const mapIncompleteInvalidReasons = (reason) => {
@@ -31,8 +31,8 @@ const mapIncompleteInvalidReasons = (reason) => {
 
 /**
  * @param {string | null} outcome
- * @param {Array<AppellantCaseIncompleteReasonOnAppellantCase | LPAQuestionnaireIncompleteReasonOnLPAQuestionnaire> | null} [incompleteReasons]
- * @param {AppellantCaseInvalidReasonOnAppellantCase[]} [invalidReasons]
+ * @param {Array<AppellantCaseIncompleteReasonsSelected | LPAQuestionnaireIncompleteReasonsSelected> | null} [incompleteReasons]
+ * @param {AppellantCaseInvalidReasonsSelected[]} [invalidReasons]
  * @returns {ValidationOutcomeResponse | null}
  */
 const formatValidationOutcomeResponse = (outcome, incompleteReasons, invalidReasons) => {

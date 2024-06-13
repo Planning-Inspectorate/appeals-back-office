@@ -14,11 +14,9 @@ export const validateAddOtherAppealsReference = createValidator(
 					req.apiClient,
 					reference
 				).catch((error) => {
-					console.log('reference validator error:');
-					console.log(error);
-					if (error.response.statusCode === 404) {
+					if (error.response?.statusCode === 404) {
 						return Promise.reject();
-					} else if (error.response.statusCode === 500) {
+					} else if (error.response?.statusCode === 500) {
 						req.body.problemWithHorizon = true;
 						return true; // avoids failing validation chain (scenario where Horizon is down is handled by rendering a special error page instead of a validation error)
 					}

@@ -18,6 +18,9 @@ trigger:
   branches:
     include:
       - main
+  paths:
+    exclude:
+      - infrastructure
 
 resources:
   repositories:
@@ -25,7 +28,7 @@ resources:
       type: github
       endpoint: Planning-Inspectorate
       name: Planning-Inspectorate/common-pipeline-templates
-      ref: refs/tags/release/3.11.0
+      ref: refs/tags/release/3.16.1
 
 extends:
   template: stages/wrapper_ci.yml@templates

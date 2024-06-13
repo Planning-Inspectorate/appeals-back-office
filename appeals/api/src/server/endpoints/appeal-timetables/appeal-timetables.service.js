@@ -1,10 +1,14 @@
 import { ERROR_NOT_FOUND } from '../constants.js';
 
-/** @typedef {import('express').RequestHandler} RequestHandler */
+/** @typedef {import('express').Request} Request */
+/** @typedef {import('express').Response} Response */
+/** @typedef {import('express').NextFunction} NextFunction */
 
 /**
- * @type {RequestHandler}
- * @returns {Promise<object | void>}
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ * @returns {Promise<Response | void>}
  */
 const checkAppealTimetableExists = async (req, res, next) => {
 	const {

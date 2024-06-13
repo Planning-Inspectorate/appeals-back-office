@@ -1,5 +1,4 @@
 import logger from '#lib/logger.js';
-import * as appealDetailsService from '../appeal-details.service.js';
 import * as siteVisitService from './site-visit.service.js';
 import {
 	mapWebVisitTypeToApiVisitType,
@@ -9,7 +8,7 @@ import {
 	stringIsSiteVisitConfirmationPageType,
 	siteVisitBookedPage,
 	mapPostScheduleOrManageSiteVisitCommonParameters as mapPostScheduleOrManageSiteVisitToUpdateOrCreateSiteVisitParameters,
-	mapPostScheduleOrManageSiteVisitConfirmationPageType
+	getSiteVisitChangeType
 } from './site-visit.mapper.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 
@@ -22,9 +21,7 @@ import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 const renderScheduleOrManageSiteVisit = async (request, response, pageType) => {
 	const { errors } = request;
 
-	const appealDetails = await appealDetailsService
-		.getAppealDetailsFromId(request.apiClient, request.params.appealId)
-		.catch((error) => logger.error(error));
+	const appealDetails = request.currentAppeal;
 
 	if (appealDetails) {
 		let {
@@ -55,13 +52,13 @@ const renderScheduleOrManageSiteVisit = async (request, response, pageType) => {
 			visitEndTimeMinute
 		);
 
-		return response.render('appeals/appeal/schedule-site-visit.njk', {
+		return response.status(200).render('patterns/change-page.pattern.njk', {
 			pageContent: mappedPageContent,
 			errors
 		});
 	}
 
-	return response.render('app/404.njk');
+	return response.status(404).render('app/404.njk');
 };
 
 /**
@@ -74,9 +71,7 @@ export const renderScheduleOrManageSiteVisitConfirmation = async (request, respo
 		params: { appealId, confirmationPageTypeToRender }
 	} = request;
 
-	const appealDetails = await appealDetailsService
-		.getAppealDetailsFromId(request.apiClient, request.params.appealId)
-		.catch((error) => logger.error(error));
+	const appealDetails = request.currentAppeal;
 
 	if (appealDetails) {
 		const siteVisitIdAsNumber = appealDetails.siteVisit?.siteVisitId;
@@ -91,18 +86,17 @@ export const renderScheduleOrManageSiteVisitConfirmation = async (request, respo
 			if (siteVisit && stringIsSiteVisitConfirmationPageType(confirmationPageTypeToRender)) {
 				const pageContent = scheduleOrManageSiteVisitConfirmationPage(
 					confirmationPageTypeToRender,
-					siteVisit,
 					appealDetails
 				);
 
-				return response.render('appeals/confirmation.njk', {
+				return response.status(200).render('appeals/confirmation.njk', {
 					pageContent
 				});
 			}
 		}
 	}
 
-	return response.render('app/404.njk');
+	return response.status(404).render('app/404.njk');
 };
 
 /**
@@ -111,9 +105,7 @@ export const renderScheduleOrManageSiteVisitConfirmation = async (request, respo
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const renderSiteVisitBooked = async (request, response) => {
-	const appealDetails = await appealDetailsService
-		.getAppealDetailsFromId(request.apiClient, request.params.appealId)
-		.catch((error) => logger.error(error));
+	const appealDetails = request.currentAppeal;
 
 	if (appealDetails) {
 		const siteVisitIdAsNumber = appealDetails.siteVisit?.siteVisitId;
@@ -124,13 +116,13 @@ export const renderSiteVisitBooked = async (request, response) => {
 				appealDetails.appealReference
 			);
 
-			return response.render('patterns/display-page.pattern.njk', {
+			return response.status(200).render('patterns/display-page.pattern.njk', {
 				pageContent
 			});
 		}
 	}
 
-	return response.render('app/404.njk');
+	return response.status(404).render('app/404.njk');
 };
 
 /**
@@ -141,9 +133,7 @@ export const renderSiteVisitBooked = async (request, response) => {
 const renderSetVisitType = async (request, response) => {
 	const { errors } = request;
 
-	const appealDetails = await appealDetailsService
-		.getAppealDetailsFromId(request.apiClient, request.params.appealId)
-		.catch((error) => logger.error(error));
+	const appealDetails = request.currentAppeal;
 
 	if (appealDetails) {
 		const {
@@ -152,13 +142,13 @@ const renderSetVisitType = async (request, response) => {
 
 		const mappedPageContent = setVisitTypePage(appealDetails, visitType);
 
-		return response.render('appeals/appeal/set-site-visit-type.njk', {
+		return response.status(200).render('appeals/appeal/set-site-visit-type.njk', {
 			pageContent: mappedPageContent,
 			errors
 		});
 	}
 
-	return response.render('app/404.njk');
+	return response.status(404).render('app/404.njk');
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
@@ -199,9 +189,7 @@ export const postScheduleOrManageSiteVisit = async (request, response, pageType)
 	} = request;
 
 	try {
-		const appealDetails = await appealDetailsService
-			.getAppealDetailsFromId(request.apiClient, appealId)
-			.catch((error) => logger.error(error));
+		const appealDetails = request.currentAppeal;
 
 		if (appealDetails) {
 			const {
@@ -232,7 +220,7 @@ export const postScheduleOrManageSiteVisit = async (request, response, pageType)
 				);
 
 			if (appealDetails.siteVisit?.siteVisitId) {
-				const confirmationPageTypeToRender = mapPostScheduleOrManageSiteVisitConfirmationPageType(
+				const confirmationPageTypeToRender = getSiteVisitChangeType(
 					appealDetails,
 					mappedUpdateOrCreateSiteVisitParameters
 				);
@@ -244,7 +232,9 @@ export const postScheduleOrManageSiteVisit = async (request, response, pageType)
 					mappedUpdateOrCreateSiteVisitParameters.apiVisitType,
 					mappedUpdateOrCreateSiteVisitParameters.visitDate,
 					mappedUpdateOrCreateSiteVisitParameters.visitStartTime,
-					mappedUpdateOrCreateSiteVisitParameters.visitEndTime
+					mappedUpdateOrCreateSiteVisitParameters.visitEndTime,
+					mappedUpdateOrCreateSiteVisitParameters.previousVisitType,
+					confirmationPageTypeToRender
 				);
 
 				return response.redirect(
@@ -265,14 +255,14 @@ export const postScheduleOrManageSiteVisit = async (request, response, pageType)
 				);
 			}
 		}
-		return response.render('app/404.njk');
+		return response.status(404).render('app/404.njk');
 	} catch (error) {
 		logger.error(
 			error,
 			error instanceof Error ? error.message : 'Something went wrong when scheduling the site visit'
 		);
 
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };
 
@@ -304,9 +294,7 @@ export const postSetVisitType = async (request, response) => {
 	} = request;
 
 	try {
-		const appealDetails = await appealDetailsService
-			.getAppealDetailsFromId(request.apiClient, appealId)
-			.catch((error) => logger.error(error));
+		const appealDetails = request.currentAppeal;
 
 		if (appealDetails) {
 			const {
@@ -335,7 +323,7 @@ export const postSetVisitType = async (request, response) => {
 			}
 		}
 
-		return response.render('app/404.njk');
+		return response.status(404).render('app/404.njk');
 	} catch (error) {
 		logger.error(
 			error,
@@ -344,6 +332,6 @@ export const postSetVisitType = async (request, response) => {
 				: 'Something went wrong when setting the site visit type'
 		);
 
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };

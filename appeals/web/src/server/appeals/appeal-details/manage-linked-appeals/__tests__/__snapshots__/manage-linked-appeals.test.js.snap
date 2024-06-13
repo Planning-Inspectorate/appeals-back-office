@@ -164,7 +164,7 @@ exports[`linked-appeals GET /linked-appeals/add should render the add linked app
                         <ul class="govuk-header__navigation-list">
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/personal-list">Assigned to me</a>
                             </li>
-                            <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/appeals-list">All cases</a>
+                            <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/all-cases">All cases</a>
                             </li>
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/auth/signout">Sign out</a>
                             </li>
@@ -336,7 +336,7 @@ exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render 
                         <ul class="govuk-header__navigation-list">
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/personal-list">Assigned to me</a>
                             </li>
-                            <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/appeals-list">All cases</a>
+                            <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/all-cases">All cases</a>
                             </li>
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/auth/signout">Sign out</a>
                             </li>
@@ -1002,7 +1002,7 @@ exports[`linked-appeals GET /linked-appeals/manage should render the manage link
     <table class="govuk-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
-                <th scope="col" class="govuk-table__header">Appeal ID</th>
+                <th scope="col" class="govuk-table__header">Appeal Ref</th>
                 <th scope="col" class="govuk-table__header">Appeal type</th>
                 <th scope="col" class="govuk-table__header">Action</th>
             </tr>
@@ -1021,7 +1021,7 @@ exports[`linked-appeals GET /linked-appeals/manage should render the manage link
     <table class="govuk-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
-                <th scope="col" class="govuk-table__header">Appeal ID</th>
+                <th scope="col" class="govuk-table__header">Appeal Ref</th>
                 <th scope="col" class="govuk-table__header">Appeal type</th>
                 <th scope="col" class="govuk-table__header">Action</th>
             </tr>
@@ -1052,7 +1052,7 @@ exports[`linked-appeals GET /linked-appeals/manage should render the manage link
     <table class="govuk-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
-                <th scope="col" class="govuk-table__header">Appeal ID</th>
+                <th scope="col" class="govuk-table__header">Appeal Ref</th>
                 <th scope="col" class="govuk-table__header">Appeal type</th>
                 <th scope="col" class="govuk-table__header">Action</th>
             </tr>

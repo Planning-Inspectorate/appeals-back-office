@@ -34,7 +34,7 @@ const renderAllocationDetailsLevels = async (request, response, errors = null) =
 			appealDetails
 		);
 
-		return response.render('patterns/display-page.pattern.njk', {
+		return response.status(200).render('patterns/display-page.pattern.njk', {
 			pageContent: mappedPageContent,
 			errors
 		});
@@ -50,7 +50,7 @@ const renderAllocationDetailsSpecialism = async (request, response, errors = nul
 	const appealDetails = request.currentAppeal;
 
 	if (!objectContainsAllKeys(request.session, ['appealId', 'allocationLevel'])) {
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 
 	const [allocationDetailsLevels, allocationDetailsSpecialisms] = await Promise.all([
@@ -75,12 +75,12 @@ const renderAllocationDetailsSpecialism = async (request, response, errors = nul
 			appealDetails
 		);
 
-		return response.render('patterns/display-page.pattern.njk', {
+		return response.status(200).render('patterns/display-page.pattern.njk', {
 			pageContent: mappedPageContent,
 			errors
 		});
 	} else {
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };
 
@@ -98,7 +98,7 @@ const renderAllocationDetailsCheckAnswers = async (request, response) => {
 			'allocationSpecialisms'
 		])
 	) {
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 
 	const [allocationDetailsLevels, allocationDetailsSpecialisms] = await Promise.all([
@@ -127,11 +127,11 @@ const renderAllocationDetailsCheckAnswers = async (request, response) => {
 			appealDetails
 		);
 
-		return response.render('patterns/display-page.pattern.njk', {
+		return response.status(200).render('patterns/display-page.pattern.njk', {
 			pageContent: mappedPageContent
 		});
 	} else {
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };
 
@@ -232,7 +232,7 @@ export const postAllocationDetailsCheckAnswers = async (request, response) => {
 	const appealDetails = request.currentAppeal;
 
 	if (!objectContainsAllKeys(request.session, ['allocationLevel', 'allocationSpecialisms'])) {
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 
 	try {

@@ -1,4 +1,5 @@
 import { APPEAL_TYPE_SHORTHAND_FPA, APPEAL_TYPE_SHORTHAND_HAS } from '#endpoints/constants.js';
+import { STATUSES } from '@pins/appeals/constants/state.js';
 
 import {
 	azureAdUserId,
@@ -16,15 +17,56 @@ export const auditTrails = [
 		user: {
 			azureAdUserId
 		}
+	},
+	{
+		details: 'Document blank.pdf uploaded (version 1)',
+		loggedAt: new Date().toISOString(),
+		user: {
+			azureAdUserId
+		}
+	},
+	{
+		details: 'Version 1 of document blank.pdf received date changed',
+		loggedAt: new Date().toISOString(),
+		user: {
+			azureAdUserId
+		}
+	},
+	{
+		details: 'Document blank.pdf (version 1) marked as redacted',
+		loggedAt: new Date().toISOString(),
+		user: {
+			azureAdUserId
+		}
+	},
+	{
+		details: 'Document blank.pdf (version 1) marked as unredacted',
+		loggedAt: new Date().toISOString(),
+		user: {
+			azureAdUserId
+		}
+	},
+	{
+		details: 'Document blank.pdf (version 1) marked as requiring no redaction',
+		loggedAt: new Date().toISOString(),
+		user: {
+			azureAdUserId
+		}
 	}
 ];
 
 export const householdAppeal = {
 	id: 1,
 	reference: '1345264',
+	procedureType: {
+		id: 1,
+		key: 'written',
+		name: 'Written'
+	},
+	neighbouringSites: [],
 	appealStatus: [
 		{
-			status: 'assign_case_officer',
+			status: STATUSES.ASSIGN_CASE_OFFICER,
 			valid: true
 		}
 	],
@@ -32,22 +74,27 @@ export const householdAppeal = {
 	lpa: {
 		name: 'Maidstone Borough Council',
 		lpaCode: 'MAID',
-		id: 1
+		id: 1,
+		email: 'maid@lpa-email.gov.uk'
 	},
-	planningApplicationReference: '48269/APP/2021/1482',
+	applicationReference: '48269/APP/2021/1482',
 	appellant: {
 		id: 1,
 		firstName: 'Lee',
 		lastName: 'Thornton',
-		email: 'test@1367.com'
+		email: 'test@1367.com',
+		phoneNumber: '01234 567 890',
+		organisationName: 'Thornton LTD'
 	},
 	agent: {
 		id: 1,
 		firstName: 'John',
 		lastName: 'Smith',
-		email: 'test@136s7.com'
+		email: 'test@136s7.com',
+		phoneNumber: '09876 543 210',
+		organisationName: 'Smith Inc.'
 	},
-	createdAt: new Date(2022, 4, 18),
+	caseCreatedDate: new Date(2022, 4, 18),
 	address: {
 		addressLine1: '96 The Avenue',
 		addressLine2: 'Leftfield',
@@ -59,11 +106,12 @@ export const householdAppeal = {
 	},
 	appealType: {
 		id: 2,
-		shorthand: APPEAL_TYPE_SHORTHAND_HAS,
-		type: 'household'
+		key: APPEAL_TYPE_SHORTHAND_HAS,
+		processCode: 'HAS',
+		type: 'Householder'
 	},
 	appellantCase: {
-		appellantCaseIncompleteReasonsOnAppellantCases: [],
+		appellantCaseIncompleteReasonsSelected: [],
 		appellantCaseValidationOutcome: null,
 		applicantFirstName: 'Fiona',
 		applicantSurname: 'Burgess',
@@ -75,7 +123,7 @@ export const householdAppeal = {
 		hasOtherTenants: null,
 		hasToldOwners: true,
 		hasToldTenants: null,
-		healthAndSafetyIssues: 'There is no mobile reception at the site',
+		siteAccessDetails: 'There is no mobile reception at the site',
 		id: 1,
 		isAgriculturalHolding: null,
 		isAgriculturalHoldingTenant: null,
@@ -83,6 +131,8 @@ export const householdAppeal = {
 		isSiteFullyOwned: false,
 		isSitePartiallyOwned: true,
 		isSiteVisibleFromPublicRoad: false,
+		doesSiteRequireInspectorAccess: true,
+		siteSafetyDetails: 'Small dog big character',
 		knowledgeOfOtherLandowners: {
 			name: 'Some'
 		},
@@ -92,7 +142,7 @@ export const householdAppeal = {
 		id: 1,
 		azureAdUserId: 'a8973f33-4d2e-486b-87b0-d068343ad9eb'
 	},
-	dueDate: '2023-08-10T01:00:00.000Z',
+	caseExtensionDate: '2023-08-10T01:00:00.000Z',
 	inspector: {
 		id: 2,
 		azureAdUserId: 'e8f89175-d02c-4a60-870e-dc954d5b530a'
@@ -114,14 +164,6 @@ export const householdAppeal = {
 		id: 1,
 		appealId: 1,
 		communityInfrastructureLevyAdoptionDate: null,
-		designatedSites: [
-			{
-				designatedSite: {
-					name: 'cSAC',
-					description: 'candidate special area of conservation'
-				}
-			}
-		],
 		developmentDescription: null,
 		doesAffectAListedBuilding: null,
 		doesAffectAScheduledMonument: null,
@@ -174,35 +216,7 @@ export const householdAppeal = {
 			}
 		],
 		meetsOrExceedsThresholdOrCriteriaInColumn2: null,
-		neighbouringSiteContact: [
-			{
-				addressId: 1,
-				firstName: 'Eva',
-				id: 1,
-				lastName: 'Sharma',
-				lpaQuestionnaireId: 1,
-				telephone: '01234567891',
-				email: 'eva.sharma@example.com',
-				address: {
-					id: 1,
-					addressLine1: '44 Rivervale',
-					addressLine2: null,
-					addressTown: 'Bridport',
-					postcode: 'DT6 5RN',
-					addressCounty: null,
-					addressCountry: null
-				}
-			}
-		],
-		procedureType: {
-			name: 'Written'
-		},
-		procedureTypeId: 3,
-		receivedAt: null,
-		scheduleType: {
-			name: 'Schedule 1'
-		},
-		scheduleTypeId: 1,
+		receivedAt: '2022-05-17T23:00:00.000Z',
 		sentAt: '2023-05-24T10:34:09.286Z',
 		siteWithinGreenBelt: null
 	}
@@ -213,8 +227,8 @@ export const fullPlanningAppeal = {
 	id: 2,
 	appealType: {
 		id: 1,
-		type: 'full planning',
-		shorthand: APPEAL_TYPE_SHORTHAND_FPA
+		key: APPEAL_TYPE_SHORTHAND_FPA,
+		type: 'Full Planning'
 	},
 	appellantCase: {
 		...householdAppeal.appellantCase,
@@ -228,9 +242,6 @@ export const fullPlanningAppeal = {
 		isAgriculturalHoldingTenant: true,
 		isDevelopmentDescriptionStillCorrect: false,
 		newDevelopmentDescription: 'A new extension has been added at the back',
-		planningObligationStatus: {
-			name: 'Finalised'
-		}
 	}
 };
 
@@ -249,7 +260,8 @@ export const householdAppealAppellantCaseIncomplete = {
 		...householdAppeal.appellantCase,
 		...incompleteAppellantCaseOutcome
 	},
-	id: 3
+	id: 3,
+	caseExtensionDate: '2099-07-14T01:00:00.000Z'
 };
 
 export const householdAppealAppellantCaseInvalid = {
@@ -318,3 +330,15 @@ export const linkedAppeals = [
 		externalSource: true
 	}
 ];
+
+export const serviceUser = {
+	id: 1,
+	organisationName: 'Fury LTD',
+	firstName: 'Nick',
+	middleName: null,
+	lastName: 'Fury',
+	email: 'nick.fury@mail.com',
+	website: null,
+	phoneNumber: null,
+	addressId: null
+};

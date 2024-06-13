@@ -1,5 +1,5 @@
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
-import { broadcastAppealState } from '#endpoints/integrations/integrations.service.js';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import appealTimetableRepository from '#repositories/appeal-timetable.repository.js';
 import { calculateTimetable, recalculateDateIfNotBusinessDay } from '#utils/business-days.js';
@@ -36,11 +36,11 @@ const startAppeal = async (req, res) => {
 		const startedAt = await recalculateDateIfNotBusinessDay(joinDateAndTime(startDate));
 
 		const azureAdUserId = req.get('azureAdUserId');
-		const timetable = await calculateTimetable(appeal.appealType.shorthand, startedAt);
+		const timetable = await calculateTimetable(appeal.appealType.key, startedAt);
 		if (timetable) {
 			await Promise.all([
 				await appealTimetableRepository.upsertAppealTimetableById(appeal.id, timetable),
-				await appealRepository.updateAppealById(appeal.id, { startedAt: startedAt.toISOString() })
+				await appealRepository.updateAppealById(appeal.id, { caseStartedDate: startedAt.toISOString() })
 			]);
 
 			await createAuditTrail({
@@ -69,7 +69,7 @@ const startAppeal = async (req, res) => {
 				STATE_TARGET_LPA_QUESTIONNAIRE_DUE
 			);
 
-			await broadcastAppealState(appeal.id);
+			await broadcasters.broadcastAppeal(appeal.id);
 			return res.send(timetable);
 		}
 
@@ -98,7 +98,7 @@ const updateAppealTimetableById = async (req, res) => {
 			details: AUDIT_TRAIL_CASE_TIMELINE_UPDATED
 		});
 
-		await broadcastAppealState(Number(params.appealId));
+		await broadcasters.broadcastAppeal(Number(params.appealId));
 	} catch (error) {
 		if (error) {
 			logger.error(error);

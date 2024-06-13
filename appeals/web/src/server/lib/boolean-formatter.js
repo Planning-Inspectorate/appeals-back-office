@@ -1,3 +1,5 @@
+import logger from './logger.js';
+
 /**
  *
  * @param {boolean | null | undefined} boolean
@@ -26,4 +28,18 @@ export function convertFromBooleanToYesNoWithOptionalDetails(boolean, optionalDe
 	}
 
 	return '';
+}
+
+/**
+ *
+ * @param {string | null | undefined} string
+ * @returns {Boolean}
+ */
+export function convertFromYesNoToBoolean(string) {
+	const lowerString = string?.toLowerCase();
+	if (lowerString !== 'yes' && lowerString !== 'no') {
+		logger.error('Not valid string');
+		throw new Error('Not valid string');
+	}
+	return lowerString === 'yes' ? true : false;
 }

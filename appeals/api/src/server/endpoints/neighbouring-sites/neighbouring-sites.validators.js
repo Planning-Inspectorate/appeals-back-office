@@ -10,8 +10,7 @@ import validateNumberParameter, {
 } from '#common/validators/number-parameter.js';
 import { ERROR_INVALID_POSTCODE } from '#endpoints/constants.js';
 
-const regexUkPostcode =
-	'^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([AZa-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z])))) [0-9][A-Za-z]{2})$';
+const regexUkPostcode = /^([A-Za-z]{1,2}\d[A-Za-z\d]? ?\d[A-Za-z]{2}|GIR ?0A{2})$/gm;
 
 const createNeighbouringSiteValidator = composeMiddleware(
 	validateRequiredStringParameter('postcode'),

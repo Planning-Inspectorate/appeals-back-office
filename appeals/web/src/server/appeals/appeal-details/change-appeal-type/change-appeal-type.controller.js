@@ -1,6 +1,5 @@
 import logger from '#lib/logger.js';
 import {
-	getAppealDetailsFromId,
 	getAppealTypesFromId,
 	postAppealChangeRequest,
 	postAppealTransferRequest,
@@ -50,7 +49,7 @@ export const postAppealType = async (request, response) => {
 		);
 	} catch (error) {
 		logger.error(error);
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };
 
@@ -62,11 +61,8 @@ export const postAppealType = async (request, response) => {
 const renderAppealType = async (request, response) => {
 	const { errors } = request;
 	const appealId = request.params.appealId;
-
-	const [appealData, appealTypes] = await Promise.all([
-		getAppealDetailsFromId(request.apiClient, appealId),
-		getAppealTypesFromId(request.apiClient, appealId)
-	]);
+	const appealData = request.currentAppeal;
+	const appealTypes = await getAppealTypesFromId(request.apiClient, appealId);
 
 	if (!appealTypes) {
 		throw new Error('error retrieving Appeal Types');
@@ -85,7 +81,7 @@ const renderAppealType = async (request, response) => {
 		request.session.changeAppealType
 	);
 
-	return response.render('patterns/change-page.pattern.njk', {
+	return response.status(200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
 		errors
 	});
@@ -134,7 +130,7 @@ export const postResubmitAppeal = async (request, response) => {
 		);
 	} catch (error) {
 		logger.error(error);
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };
 
@@ -146,11 +142,10 @@ export const postResubmitAppeal = async (request, response) => {
 const renderResubmitAppeal = async (request, response) => {
 	const { errors } = request;
 
-	const appealId = request.params.appealId;
-	const appealData = await getAppealDetailsFromId(request.apiClient, appealId);
+	const appealData = request.currentAppeal;
 	const mappedPageContent = resubmitAppealPage(appealData, request.session.changeAppealType);
 
-	return response.render('patterns/change-page.pattern.njk', {
+	return response.status(200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
 		errors
 	});
@@ -201,7 +196,7 @@ export const postChangeAppealFinalDate = async (request, response) => {
 		);
 	} catch (error) {
 		logger.error(error);
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };
 
@@ -218,8 +213,7 @@ const renderChangeAppealFinalDate = async (request, response) => {
 		'change-appeal-final-date-year': changeYear
 	} = request.body;
 
-	const appealId = request.params.appealId;
-	const appealData = await getAppealDetailsFromId(request.apiClient, appealId);
+	const appealData = request.currentAppeal;
 
 	const mappedPageContent = changeAppealFinalDatePage(
 		appealData,
@@ -228,7 +222,7 @@ const renderChangeAppealFinalDate = async (request, response) => {
 		changeYear
 	);
 
-	return response.render('patterns/change-page.pattern.njk', {
+	return response.status(200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
 		errors
 	});
@@ -248,16 +242,13 @@ export const getAddHorizonReference = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 const renderAddHorizonReference = async (request, response) => {
-	const {
-		errors,
-		params: { appealId }
-	} = request;
+	const { errors } = request;
 
-	const appealData = await getAppealDetailsFromId(request.apiClient, appealId);
+	const appealData = request.currentAppeal;
 
 	const mappedPageContent = addHorizonReferencePage(appealData);
 
-	return response.render('patterns/change-page.pattern.njk', {
+	return response.status(200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
 		errors
 	});
@@ -276,7 +267,7 @@ export const postAddHorizonReference = async (request, response) => {
 		} = request;
 
 		if (request.body.problemWithHorizon) {
-			return response.render('app/500.njk', {
+			return response.status(500).render('app/500.njk', {
 				titleCopy: 'Sorry, there is a problem with Horizon',
 				additionalCtas: [
 					{
@@ -303,7 +294,7 @@ export const postAddHorizonReference = async (request, response) => {
 		);
 	} catch (error) {
 		logger.error(error);
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };
 
@@ -325,22 +316,19 @@ const renderCheckTransfer = async (request, response) => {
 		!('changeAppealType' in request.session) ||
 		!('transferredAppealHorizonReference' in request.session.changeAppealType)
 	) {
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 
-	const {
-		errors,
-		params: { appealId }
-	} = request;
+	const { errors } = request;
 
-	const appealData = await getAppealDetailsFromId(request.apiClient, appealId);
+	const appealData = request.currentAppeal;
 	const mappedPageContent = await checkTransferPage(
 		request.apiClient,
 		appealData,
 		request.session.changeAppealType.transferredAppealHorizonReference
 	);
 
-	return response.render('patterns/check-and-confirm-page.pattern.njk', {
+	return response.status(200).render('patterns/check-and-confirm-page.pattern.njk', {
 		pageContent: mappedPageContent,
 		errors
 	});
@@ -356,7 +344,7 @@ export const postCheckTransfer = async (request, response) => {
 			!('changeAppealType' in request.session) ||
 			!('transferredAppealHorizonReference' in request.session.changeAppealType)
 		) {
-			return response.render('app/500.njk');
+			return response.status(500).render('app/500.njk');
 		}
 
 		const {
@@ -382,7 +370,7 @@ export const postCheckTransfer = async (request, response) => {
 		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {
 		logger.error(error);
-		return response.render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 };
 
@@ -391,11 +379,10 @@ export const postCheckTransfer = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const getConfirmResubmit = async (request, response) => {
-	const appealId = request.params.appealId;
-	const appealData = await getAppealDetailsFromId(request.apiClient, appealId);
+	const appealData = request.currentAppeal;
 	const pageContent = resubmitConfirmationPage(appealData);
 
-	return response.render('appeals/confirmation.njk', {
+	return response.status(200).render('appeals/confirmation.njk', {
 		pageContent
 	});
 };

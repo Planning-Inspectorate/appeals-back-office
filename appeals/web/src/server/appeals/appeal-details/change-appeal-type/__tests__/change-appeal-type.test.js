@@ -288,7 +288,7 @@ describe('change-appeal-type', () => {
 					'horizon-reference': '123'
 				});
 
-			expect(response.statusCode).toBe(200);
+			expect(response.statusCode).toBe(500);
 			const element = parseHtml(response.text);
 			expect(element.innerHTML).toMatchSnapshot();
 		});
@@ -312,7 +312,7 @@ describe('change-appeal-type', () => {
 		it('should render a 500 error page if the required data is not present in the session', async () => {
 			const response = await request.get(`${baseUrl}/1${changeAppealTypePath}${checkTransferPath}`);
 
-			expect(response.statusCode).toBe(200);
+			expect(response.statusCode).toBe(500);
 			const element = parseHtml(response.text);
 			expect(element.innerHTML).toMatchSnapshot();
 		});

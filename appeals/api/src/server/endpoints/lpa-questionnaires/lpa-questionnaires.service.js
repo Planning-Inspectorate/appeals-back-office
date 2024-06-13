@@ -1,11 +1,17 @@
 import lpaQuestionnaireRepository from '#repositories/lpa-questionnaire.repository.js';
-import { broadcastAppealState } from '#endpoints/integrations/integrations.service.js';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { recalculateDateIfNotBusinessDay } from '#utils/business-days.js';
-import { isOutcomeIncomplete } from '#utils/check-validation-outcome.js';
+import { isOutcomeComplete, isOutcomeIncomplete } from '#utils/check-validation-outcome.js';
 import transitionState from '#state/transition-state.js';
-import { AUDIT_TRAIL_SUBMISSION_INCOMPLETE, ERROR_NOT_FOUND } from '../constants.js';
+import {
+	AUDIT_TRAIL_SUBMISSION_INCOMPLETE,
+	ERROR_NOT_FOUND,
+	ERROR_NO_RECIPIENT_EMAIL,
+	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL
+} from '../constants.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
+import config from '#config/config.js';
 
 /** @typedef {import('express').RequestHandler} RequestHandler */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateLPAQuestionaireValidationOutcomeParams} UpdateLPAQuestionaireValidationOutcomeParams */
@@ -30,15 +36,13 @@ const checkLPAQuestionnaireExists = (req, res, next) => {
 
 /**
  * @param {UpdateLPAQuestionaireValidationOutcomeParams} param0
+ * @param { import('#endpoints/appeals.js').NotifyClient } notifyClient
  * @returns {Promise<Date | undefined>}
  */
-const updateLPAQuestionaireValidationOutcome = async ({
-	appeal,
-	azureAdUserId,
-	data,
-	lpaQuestionnaireId,
-	validationOutcome
-}) => {
+const updateLPAQuestionaireValidationOutcome = async (
+	{ appeal, azureAdUserId, data, lpaQuestionnaireId, validationOutcome, siteAddress },
+	notifyClient
+) => {
 	let timetable = undefined;
 
 	const { id: appealId, appealStatus, appealType } = appeal;
@@ -75,7 +79,24 @@ const updateLPAQuestionaireValidationOutcome = async ({
 		});
 	}
 
-	await broadcastAppealState(appealId);
+	if (isOutcomeComplete(validationOutcome.name)) {
+		const recipientEmail = appeal.lpa?.email;
+		if (!recipientEmail) {
+			throw new Error(ERROR_NO_RECIPIENT_EMAIL);
+		}
+		try {
+			await notifyClient.sendEmail(config.govNotify.template.lpaqComplete, recipientEmail, {
+				appeal_reference_number: appeal.reference,
+				site_address: siteAddress
+			});
+		} catch (error) {
+			if (error) {
+				throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
+			}
+		}
+	}
+
+	await broadcasters.broadcastAppeal(appealId);
 
 	return timetable?.lpaQuestionnaireDueDate;
 };

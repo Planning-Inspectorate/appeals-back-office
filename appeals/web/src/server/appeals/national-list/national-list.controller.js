@@ -52,7 +52,7 @@ export const viewNationalList = async (request, response) => {
 	).catch((error) => logger.error(error));
 
 	if (!appeals) {
-		return response.status(404).render('app/404');
+		return response.status(404).render('app/404.njk');
 	}
 
 	const mappedPageContent = nationalListPage(
@@ -72,7 +72,7 @@ export const viewNationalList = async (request, response) => {
 		query
 	);
 
-	return response.render('patterns/display-page.pattern.njk', {
+	return response.status(200).render('patterns/display-page.pattern.njk', {
 		pageContent: mappedPageContent,
 		pagination,
 		pageIsNationalList: true

@@ -13,9 +13,19 @@ describe('neighbouring-sites', () => {
 	afterEach(teardown);
 
 	describe('GET /add', () => {
-		it('should render getAllNeighbouringSite page', async () => {
+		it('should render getAllNeighbouringSite page for lpa', async () => {
 			const appealId = appealData.appealId.toString();
-			const response = await request.get(`${baseUrl}/${appealId}/neighbouring-sites/add`);
+			const response = await request.get(`${baseUrl}/${appealId}/neighbouring-sites/add/lpa`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+		});
+
+		it('should render getAllNeighbouringSite page for inspector', async () => {
+			const appealId = appealData.appealId.toString();
+			const response = await request.get(
+				`${baseUrl}/${appealId}/neighbouring-sites/add/back-office`
+			);
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
@@ -34,7 +44,7 @@ describe('neighbouring-sites', () => {
 				postCode: 'E1 8RU'
 			};
 			const response = await request
-				.post(`${baseUrl}/${appealId}/neighbouring-sites/add`)
+				.post(`${baseUrl}/${appealId}/neighbouring-sites/add/back-office`)
 				.send(invalidData);
 
 			expect(response.statusCode).toBe(200);
@@ -57,7 +67,7 @@ describe('neighbouring-sites', () => {
 				postCode: 'E1 8RU'
 			};
 			const response = await request
-				.post(`${baseUrl}/${appealId}/neighbouring-sites/add`)
+				.post(`${baseUrl}/${appealId}/neighbouring-sites/add/back-office`)
 				.send(invalidData);
 
 			expect(response.statusCode).toBe(200);
@@ -80,7 +90,7 @@ describe('neighbouring-sites', () => {
 				postCode: 'E1 8RU'
 			};
 			const response = await request
-				.post(`${baseUrl}/${appealId}/neighbouring-sites/add`)
+				.post(`${baseUrl}/${appealId}/neighbouring-sites/add/back-office`)
 				.send(invalidData);
 
 			expect(response.statusCode).toBe(200);
@@ -102,7 +112,7 @@ describe('neighbouring-sites', () => {
 				postCode: 'E1 8RU'
 			};
 			const response = await request
-				.post(`${baseUrl}/${appealId}/neighbouring-sites/add`)
+				.post(`${baseUrl}/${appealId}/neighbouring-sites/add/back-office`)
 				.send(invalidData);
 
 			expect(response.statusCode).toBe(200);
@@ -125,7 +135,7 @@ describe('neighbouring-sites', () => {
 				postCode: null
 			};
 			const response = await request
-				.post(`${baseUrl}/${appealId}/neighbouring-sites/add`)
+				.post(`${baseUrl}/${appealId}/neighbouring-sites/add/back-office`)
 				.send(invalidData);
 
 			expect(response.statusCode).toBe(200);
@@ -148,7 +158,7 @@ describe('neighbouring-sites', () => {
 				postCode: '111'
 			};
 			const response = await request
-				.post(`${baseUrl}/${appealId}/neighbouring-sites/add`)
+				.post(`${baseUrl}/${appealId}/neighbouring-sites/add/back-office`)
 				.send(invalidData);
 
 			expect(response.statusCode).toBe(200);
@@ -171,7 +181,7 @@ describe('neighbouring-sites', () => {
 				postCode: ''
 			};
 			const response = await request
-				.post(`${baseUrl}/${appealId}/neighbouring-sites/add`)
+				.post(`${baseUrl}/${appealId}/neighbouring-sites/add/back-office`)
 				.send(invalidData);
 
 			expect(response.statusCode).toBe(200);
@@ -194,13 +204,13 @@ describe('neighbouring-sites', () => {
 				postCode: 'E1 8RU'
 			};
 			const response = await request
-				.post(`${baseUrl}/${appealId}/neighbouring-sites/add`)
+				.post(`${baseUrl}/${appealId}/neighbouring-sites/add/back-office`)
 				.send(validData);
 
 			expect(response.statusCode).toBe(302);
 
 			expect(response.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/1/neighbouring-sites/add/check-and-confirm'
+				'Found. Redirecting to /appeals-service/appeal-details/1/neighbouring-sites/add/back-office/check-and-confirm'
 			);
 		});
 	});
@@ -215,10 +225,12 @@ describe('neighbouring-sites', () => {
 				postCode: 'E1 8RU'
 			};
 			const appealId = appealData.appealId.toString();
-			await request.post(`${baseUrl}/${appealId}/neighbouring-sites/add`).send(validData);
+			await request
+				.post(`${baseUrl}/${appealId}/neighbouring-sites/add/back-office`)
+				.send(validData);
 
 			const response = await request.get(
-				`${baseUrl}/${appealId}/neighbouring-sites/add/check-and-confirm`
+				`${baseUrl}/${appealId}/neighbouring-sites/add/back-office/check-and-confirm`
 			);
 			const element = parseHtml(response.text);
 
@@ -244,8 +256,8 @@ describe('neighbouring-sites', () => {
 						town: 'Woodton'
 					}
 				});
-			nock('http://test/').get(`/appeals/${appealData.appealId}`).reply(200, appealData);
-			await request.post(`${baseUrl}/1/neighbouring-sites/add`).send({
+			nock('http://test/').get(`/appeals/${appealData.appealId}`).reply(200, appealData).persist();
+			await request.post(`${baseUrl}/1/neighbouring-sites/add/back-office`).send({
 				addressLine1: '1 Grove Cottage',
 				addressLine2: null,
 				county: 'Devon',
@@ -254,12 +266,50 @@ describe('neighbouring-sites', () => {
 			});
 
 			const addLinkedAppealCheckAndConfirmPostResponse = await request.post(
-				`${baseUrl}/1/neighbouring-sites/add/check-and-confirm`
+				`${baseUrl}/1/neighbouring-sites/add/back-office/check-and-confirm`
 			);
 
 			expect(addLinkedAppealCheckAndConfirmPostResponse.statusCode).toBe(302);
 			expect(addLinkedAppealCheckAndConfirmPostResponse.text).toEqual(
 				'Found. Redirecting to /appeals-service/appeal-details/1'
+			);
+		});
+
+		it('should redirect to the lpa questionnaire page', async () => {
+			const appealReference = '1';
+
+			nock.cleanAll();
+			nock('http://test/')
+				.post(`/appeals/${appealReference}/neighbouring-sites`)
+				.reply(200, {
+					siteId: 1,
+					address: {
+						addressLine1: '1 Grove Cottage',
+						addressLine2: 'Shotesham Road',
+						country: 'United Kingdom',
+						county: 'Devon',
+						postcode: 'NR35 2ND',
+						town: 'Woodton'
+					}
+				});
+			nock('http://test/').get(`/appeals/${appealData.appealId}`).reply(200, appealData).persist();
+			await request
+				.post(`${baseUrl}/1/lpa-questionnaire/2/neighbouring-sites/add/back-office`)
+				.send({
+					addressLine1: '1 Grove Cottage',
+					addressLine2: null,
+					county: 'Devon',
+					postCode: 'NR35 2ND',
+					town: 'Woodton'
+				});
+
+			const addLinkedAppealCheckAndConfirmPostResponse = await request.post(
+				`${baseUrl}/1/lpa-questionnaire/2/neighbouring-sites/add/back-office/check-and-confirm`
+			);
+
+			expect(addLinkedAppealCheckAndConfirmPostResponse.statusCode).toBe(302);
+			expect(addLinkedAppealCheckAndConfirmPostResponse.text).toEqual(
+				'Found. Redirecting to /appeals-service/appeal-details/1/lpa-questionnaire/2'
 			);
 		});
 	});
@@ -274,23 +324,23 @@ describe('neighbouring-sites', () => {
 		});
 	});
 
-	describe('GET /remove/:siteId', () => {
+	describe('GET /remove/site/:siteId', () => {
 		it('should render the remove neighbouring site page', async () => {
 			const appealId = appealData.appealId.toString();
-			const response = await request.get(`${baseUrl}/${appealId}/neighbouring-sites/remove/1`);
+			const response = await request.get(`${baseUrl}/${appealId}/neighbouring-sites/remove/site/1`);
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
 		});
 	});
 
-	describe('POST /remove/:siteId', () => {
+	describe('POST /remove/site/:siteId', () => {
 		it('should re-render remove neighbouring if user has not selected a radio option', async () => {
 			const appealId = appealData.appealId.toString();
 
 			const invalidData = {};
 			const response = await request
-				.post(`${baseUrl}/${appealId}/neighbouring-sites/remove/1`)
+				.post(`${baseUrl}/${appealId}/neighbouring-sites/remove/site/1`)
 				.send(invalidData);
 
 			expect(response.statusCode).toBe(200);
@@ -309,7 +359,7 @@ describe('neighbouring-sites', () => {
 				'remove-neighbouring-site': 'no'
 			};
 			const response = await request
-				.post(`${baseUrl}/${appealId}/neighbouring-sites/remove/1`)
+				.post(`${baseUrl}/${appealId}/neighbouring-sites/remove/site/1`)
 				.send(validData);
 
 			expect(response.statusCode).toBe(302);
@@ -328,7 +378,7 @@ describe('neighbouring-sites', () => {
 				'remove-neighbouring-site': 'yes'
 			};
 			const response = await request
-				.post(`${baseUrl}/${appealId}/neighbouring-sites/remove/1`)
+				.post(`${baseUrl}/${appealId}/neighbouring-sites/remove/site/1`)
 				.send(validData);
 
 			expect(response.statusCode).toBe(302);
@@ -337,17 +387,17 @@ describe('neighbouring-sites', () => {
 		});
 	});
 
-	describe('GET /change/:siteId', () => {
+	describe('GET /change/site/:siteId', () => {
 		it('should render the change neighbouring site page', async () => {
 			const appealId = appealData.appealId.toString();
-			const response = await request.get(`${baseUrl}/${appealId}/neighbouring-sites/change/1`);
+			const response = await request.get(`${baseUrl}/${appealId}/neighbouring-sites/change/site/1`);
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
 		});
 	});
 
-	describe('POST /change/:siteId', () => {
+	describe('POST /change/site/:siteId', () => {
 		it('should re-render changeNeighbouringSite page if addressLine1 is null', async () => {
 			const appealId = appealData.appealId.toString();
 
@@ -359,7 +409,7 @@ describe('neighbouring-sites', () => {
 				postCode: 'E1 8RU'
 			};
 			const response = await request
-				.post(`${baseUrl}/${appealId}/neighbouring-sites/change/1`)
+				.post(`${baseUrl}/${appealId}/neighbouring-sites/change/site/1`)
 				.send(invalidData);
 
 			expect(response.statusCode).toBe(200);
@@ -382,7 +432,7 @@ describe('neighbouring-sites', () => {
 				postCode: 'E1 8RU'
 			};
 			const response = await request
-				.post(`${baseUrl}/${appealId}/neighbouring-sites/change/1`)
+				.post(`${baseUrl}/${appealId}/neighbouring-sites/change/site/1`)
 				.send(invalidData);
 
 			expect(response.statusCode).toBe(200);
@@ -405,7 +455,7 @@ describe('neighbouring-sites', () => {
 				postCode: 'E1 8RU'
 			};
 			const response = await request
-				.post(`${baseUrl}/${appealId}/neighbouring-sites/change/1`)
+				.post(`${baseUrl}/${appealId}/neighbouring-sites/change/site/1`)
 				.send(invalidData);
 
 			expect(response.statusCode).toBe(200);
@@ -427,7 +477,7 @@ describe('neighbouring-sites', () => {
 				postCode: 'E1 8RU'
 			};
 			const response = await request
-				.post(`${baseUrl}/${appealId}/neighbouring-sites/change/1`)
+				.post(`${baseUrl}/${appealId}/neighbouring-sites/change/site/1`)
 				.send(invalidData);
 
 			expect(response.statusCode).toBe(200);
@@ -450,7 +500,7 @@ describe('neighbouring-sites', () => {
 				postCode: null
 			};
 			const response = await request
-				.post(`${baseUrl}/${appealId}/neighbouring-sites/change/1`)
+				.post(`${baseUrl}/${appealId}/neighbouring-sites/change/site/1`)
 				.send(invalidData);
 
 			expect(response.statusCode).toBe(200);
@@ -473,7 +523,7 @@ describe('neighbouring-sites', () => {
 				postCode: '111'
 			};
 			const response = await request
-				.post(`${baseUrl}/${appealId}/neighbouring-sites/change/1`)
+				.post(`${baseUrl}/${appealId}/neighbouring-sites/change/site/1`)
 				.send(invalidData);
 
 			expect(response.statusCode).toBe(200);
@@ -496,7 +546,7 @@ describe('neighbouring-sites', () => {
 				postCode: ''
 			};
 			const response = await request
-				.post(`${baseUrl}/${appealId}/neighbouring-sites/change/1`)
+				.post(`${baseUrl}/${appealId}/neighbouring-sites/change/site/1`)
 				.send(invalidData);
 
 			expect(response.statusCode).toBe(200);
@@ -519,18 +569,18 @@ describe('neighbouring-sites', () => {
 				postCode: 'E1 8RU'
 			};
 			const response = await request
-				.post(`${baseUrl}/${appealId}/neighbouring-sites/change/1`)
+				.post(`${baseUrl}/${appealId}/neighbouring-sites/change/site/1`)
 				.send(validData);
 
 			expect(response.statusCode).toBe(302);
 
 			expect(response.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/1/neighbouring-sites/change/1/check-and-confirm'
+				'Found. Redirecting to /appeals-service/appeal-details/1/neighbouring-sites/change/site/1/check-and-confirm'
 			);
 		});
 	});
 
-	describe('GET /change/:siteId/check-and-confirm', () => {
+	describe('GET /change/site/:siteId/check-and-confirm', () => {
 		it('should render the check your answers page', async () => {
 			const validData = {
 				addressLine1: '123 Long Road',
@@ -541,16 +591,16 @@ describe('neighbouring-sites', () => {
 			};
 			const appealId = appealData.appealId.toString();
 			const addNeighbouringSiteResponse = await request
-				.post(`${baseUrl}/${appealId}/neighbouring-sites/change/1`)
+				.post(`${baseUrl}/${appealId}/neighbouring-sites/change/site/1`)
 				.send(validData)
 				.expect(302);
 
 			expect(addNeighbouringSiteResponse.headers.location).toBe(
-				`${baseUrl}/${appealId}/neighbouring-sites/change/1/check-and-confirm`
+				`${baseUrl}/${appealId}/neighbouring-sites/change/site/1/check-and-confirm`
 			);
 
 			const response = await request.get(
-				`${baseUrl}/${appealId}/neighbouring-sites/change/1/check-and-confirm`
+				`${baseUrl}/${appealId}/neighbouring-sites/change/site/1/check-and-confirm`
 			);
 			const element = parseHtml(response.text);
 
@@ -558,7 +608,7 @@ describe('neighbouring-sites', () => {
 		});
 	});
 
-	describe('POST /change/:siteId/check-and-confirm', () => {
+	describe('POST /change/site/:siteId/check-and-confirm', () => {
 		it('should redirect to the appeals details page', async () => {
 			const appealReference = '1';
 
@@ -566,9 +616,9 @@ describe('neighbouring-sites', () => {
 			nock('http://test/').patch(`/appeals/${appealReference}/neighbouring-sites`).reply(200, {
 				siteId: 1
 			});
-			nock('http://test/').get(`/appeals/${appealData.appealId}`).reply(200, appealData);
+			nock('http://test/').get(`/appeals/${appealData.appealId}`).reply(200, appealData).persist();
 
-			await request.post(`${baseUrl}/1/neighbouring-sites/change/1`).send({
+			await request.post(`${baseUrl}/1/neighbouring-sites/change/site/1`).send({
 				addressLine1: '2 Grove Cottage',
 				addressLine2: null,
 				county: 'Devon',
@@ -577,11 +627,78 @@ describe('neighbouring-sites', () => {
 			});
 
 			const response = await request.post(
-				`${baseUrl}/1/neighbouring-sites/change/1/check-and-confirm`
+				`${baseUrl}/1/neighbouring-sites/change/site/1/check-and-confirm`
 			);
 
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toEqual('Found. Redirecting to /appeals-service/appeal-details/1');
+		});
+	});
+
+	describe('GET /change/affected', () => {
+		it('should render the change neighbouringSiteAffected page from appeals details', async () => {
+			const appealId = appealData.appealId;
+			const response = await request.get(
+				`${baseUrl}/${appealId}/neighbouring-sites/change/affected`
+			);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+		});
+
+		it('should render the change neighbouringSiteAffected page from lpa questionnaire', async () => {
+			const appealId = appealData.appealId;
+			const lpaQuestionnaireId = appealData.lpaQuestionnaireId;
+			const response = await request.get(
+				`${baseUrl}/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/neighbouring-sites/change/affected`
+			);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+		});
+	});
+
+	describe('POST /change/affected', () => {
+		it('should re-direct to the appeals-details page when accessed from appeals-details', async () => {
+			const appealId = appealData.appealId;
+			const lpaQuestionnaireId = appealData.lpaQuestionnaireId;
+
+			nock('http://test/')
+				.patch(`/appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`)
+				.reply(200, {});
+
+			await request.get(`${baseUrl}/${appealId}/neighbouring-sites/change/affected`);
+
+			const response = await request
+				.post(`${baseUrl}/${appealId}/neighbouring-sites/change/affected`)
+				.send({ neighbouringSiteAffected: 'no' });
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toEqual('Found. Redirecting to /appeals-service/appeal-details/1');
+		});
+
+		it('should re-direct to the lpa questionnaire page when accessed from lpa questionnaire', async () => {
+			const appealId = appealData.appealId;
+			const lpaQuestionnaireId = appealData.lpaQuestionnaireId;
+
+			nock('http://test/')
+				.patch(`/appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`)
+				.reply(200, {});
+
+			await request.get(
+				`${baseUrl}/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/neighbouring-sites/change/affected`
+			);
+
+			const response = await request
+				.post(
+					`${baseUrl}/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/neighbouring-sites/change/affected`
+				)
+				.send({ neighbouringSiteAffected: 'yes' });
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toEqual(
+				'Found. Redirecting to /appeals-service/appeal-details/1/lpa-questionnaire/1'
+			);
 		});
 	});
 });

@@ -32,7 +32,7 @@ resources:
       type: github
       endpoint: Planning-Inspectorate
       name: Planning-Inspectorate/common-pipeline-templates
-      ref: refs/tags/release/3.11.0
+      ref: refs/tags/release/3.16.1
 
 jobs:
   - deployment: RegenerateApiKeys

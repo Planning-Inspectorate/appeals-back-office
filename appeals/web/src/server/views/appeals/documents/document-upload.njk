@@ -2,7 +2,7 @@
 
 {% from 'app/components/file-uploader.component.njk' import fileUploader %}
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
-{% set serviceName = 'Planning inspectorate' %}
+{% set serviceName = 'Casework Back Office System' %}
 
 {% block pageTitle %}
 	{{ pageTitle + ' - ' if pageTitle else '' }}{{ serviceName }}
@@ -27,20 +27,28 @@
 	{%- if displayLateEntryContent -%}
 		{%- include "../../app/includes/late-entry-information.njk" -%}
 	{%- endif -%}
+	{%- for component in pageBodyComponents -%}
+		{%- include "../components/page-component.njk" -%}
+	{%- endfor -%}
 	{{ fileUploader({
 		text: 'Continue',
 		formId: 1,
 		caseId: appealId,
+		caseReference: appealReference,
 		folderId: folderId,
 		documentId: documentId,
+		documentOriginalFileName: documentOriginalFileName,
+		documentVersion: documentVersion,
 		documentType: documentType,
 		documentStage: documentStage,
 		blobStorageHost: blobStorageHost,
 		useBlobEmulator: useBlobEmulator,
+		accessToken: accessToken,
 		blobStorageContainer: blobStorageContainer,
 		nextPageUrl: nextPageUrl if nextPageUrl else (['/appeals-service/appeal-details/', caseId] | join),
 		allowedTypes: allowedTypes if allowedTypes else (['pdf','doc','docx','ppt','pptx','xls','xlsx','jpg','jpeg','mpeg','mp3','mp4','mov','png','tif','tiff' ]),
 		multiple: multiple,
-		displayCorrectFolderConfirmationContent: displayCorrectFolderConfirmationContent
+		displayCorrectFolderConfirmationContent: displayCorrectFolderConfirmationContent,
+		uncommittedFiles: uncommittedFiles
 	}) }}
 {% endblock %}

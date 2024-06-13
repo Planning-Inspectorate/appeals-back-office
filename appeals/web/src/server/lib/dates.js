@@ -106,11 +106,8 @@ export const apiDateStringToDayMonthYear = (apiDateString) => {
 		logger.error('The date string provided parsed to an invalid date');
 		return;
 	}
-	return {
-		day: date.getDate(),
-		month: date.getMonth() + 1,
-		year: date.getFullYear()
-	};
+
+	return dateToDayMonthYear(date);
 };
 
 /**
@@ -168,5 +165,32 @@ export function webDateToDisplayDate(dayMonthYear, { condensed = false } = {}) {
 	const { day, month, year } = dayMonthYear;
 	const date = new Date(Date.UTC(year, month - 1, day));
 	const formatString = condensed ? 'd MMM yyyy' : 'd MMMM yyyy';
+
 	return formatInTimeZone(date, timeZone, formatString, { locale: enGB });
+}
+
+/**
+ * @param {Date} date
+ * @returns {import('../appeals/appeals.types.js').DayMonthYear}
+ */
+export function dateToDayMonthYear(date) {
+	return {
+		day: date.getDate(),
+		month: date.getMonth() + 1,
+		year: date.getFullYear()
+	};
+}
+
+/**
+ * @param {string|null|undefined} apiDateString - date in format YYYY-MM-DD
+ * @returns {string}
+ */
+export function apiDateStringToDisplayDate(apiDateString) {
+	const dayMonthYear = apiDateStringToDayMonthYear(apiDateString);
+
+	if (dayMonthYear) {
+		return webDateToDisplayDate(dayMonthYear);
+	}
+
+	return '';
 }

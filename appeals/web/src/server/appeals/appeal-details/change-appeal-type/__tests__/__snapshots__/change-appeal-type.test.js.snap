@@ -96,6 +96,8 @@ exports[`change-appeal-type GET /change-appeal-type/change-appeal-final-date sho
                         </div>
                     </fieldset>
                 </div>
+                <div class="govuk-inset-text">Confirming will ask the appellant to resubmit using the correct appeal
+                    type</div>
                 <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
             </form>
         </div>
@@ -407,10 +409,9 @@ exports[`change-appeal-type POST /change-appeal-type/confirm-resubmit should re-
                         <br><strong>351062</strong>
                     </div>
                 </div>
-                <p class="govuk-body">The appellant has been emailed to ask them to resubmit their appeal with
-                    the correct type.</p>
-                <p class="govuk-body">You can go <a href="/appeals-service/personal-list" class="govuk-link">back to your list</a> or
-                    <a                     href="/appeals-service/appeal-details/1" class="govuk-link">view the closed case</a>.</p>
+                <p class="govuk-body">The appellant has been asked to resubmit using the correct appeal type.</p>
+                <p                 class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1" class="govuk-link">Go back to case details</a>
+                    </p>
             </div>
         </div>
     </div>
@@ -513,6 +514,8 @@ exports[`change-appeal-type should re-render the final date page with an error m
                         </div>
                     </fieldset>
                 </div>
+                <div class="govuk-inset-text">Confirming will ask the appellant to resubmit using the correct appeal
+                    type</div>
                 <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
             </form>
         </div>
@@ -578,6 +581,8 @@ exports[`change-appeal-type should re-render the final date page with an error m
                         </div>
                     </fieldset>
                 </div>
+                <div class="govuk-inset-text">Confirming will ask the appellant to resubmit using the correct appeal
+                    type</div>
                 <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
             </form>
         </div>
@@ -639,6 +644,8 @@ exports[`change-appeal-type should re-render the final date page with an error m
                         </div>
                     </fieldset>
                 </div>
+                <div class="govuk-inset-text">Confirming will ask the appellant to resubmit using the correct appeal
+                    type</div>
                 <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
             </form>
         </div>
@@ -698,6 +705,8 @@ exports[`change-appeal-type should re-render the final date page with an error m
                         </div>
                     </fieldset>
                 </div>
+                <div class="govuk-inset-text">Confirming will ask the appellant to resubmit using the correct appeal
+                    type</div>
                 <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
             </form>
         </div>
@@ -757,6 +766,8 @@ exports[`change-appeal-type should re-render the final date page with an error m
                         </div>
                     </fieldset>
                 </div>
+                <div class="govuk-inset-text">Confirming will ask the appellant to resubmit using the correct appeal
+                    type</div>
                 <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
             </form>
         </div>
@@ -818,6 +829,8 @@ exports[`change-appeal-type should re-render the final date page with an error m
                         </div>
                     </fieldset>
                 </div>
+                <div class="govuk-inset-text">Confirming will ask the appellant to resubmit using the correct appeal
+                    type</div>
                 <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
             </form>
         </div>
@@ -879,6 +892,8 @@ exports[`change-appeal-type should re-render the final date page with an error m
                         </div>
                     </fieldset>
                 </div>
+                <div class="govuk-inset-text">Confirming will ask the appellant to resubmit using the correct appeal
+                    type</div>
                 <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
             </form>
         </div>

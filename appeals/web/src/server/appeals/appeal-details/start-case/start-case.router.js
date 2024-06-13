@@ -1,15 +1,21 @@
 import { Router as createRouter } from 'express';
 import * as controller from './start-case.controller.js';
 import asyncRoute from '#lib/async-route.js';
-import { validateAppeal } from '../appeal-details.middleware.js';
 
 const router = createRouter({ mergeParams: true });
 
 router
-	.route('/date')
-	.get(validateAppeal, asyncRoute(controller.getStartDate))
-	.post(validateAppeal, asyncRoute(controller.postStartDate));
+	.route('/add')
+	.get(asyncRoute(controller.getStartDate))
+	.post(asyncRoute(controller.postStartDate));
 
-router.route('/confirmation').get(validateAppeal, asyncRoute(controller.getConfirmation));
+router.route('/add/confirmation').get(asyncRoute(controller.getAddConfirmation));
+
+router
+	.route('/change')
+	.get(asyncRoute(controller.getChangeDate))
+	.post(asyncRoute(controller.postChangeDate));
+
+router.route('/change/confirmation').get(asyncRoute(controller.getChangeConfirmation));
 
 export default router;

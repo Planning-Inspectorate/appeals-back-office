@@ -5,7 +5,8 @@ import {
 	dayMonthYearToApiDateString,
 	dateToDisplayDate,
 	dateToDisplayTime,
-	apiDateStringToDayMonthYear
+	apiDateStringToDayMonthYear,
+	apiDateStringToDisplayDate
 } from '#lib/dates.js';
 import { kilobyte, megabyte, gigabyte } from '#appeals/appeal.constants.js';
 import { buildNotificationBanners } from '#lib/mappers/notification-banners.mapper.js';
@@ -13,17 +14,19 @@ import usersService from '#appeals/appeal-users/users-service.js';
 import { surnameFirstToFullName } from '#lib/person-name-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { redactionStatusIdToName } from '#lib/redaction-statuses.js';
+import { AVSCAN_STATUS } from '@pins/appeals/constants/documents.js';
+import { REDACTION_STATUS } from '@pins/appeals/constants/documents.js';
 
 /**
  * @typedef {import('../appeal-details/appeal-details.types.js').WebAppeal} Appeal
  * @typedef {import('@pins/appeals.api').Appeals.FolderInfo} FolderInfo
  * @typedef {import('@pins/appeals.api').Appeals.DocumentInfo} DocumentInfo
+ * @typedef {import('@pins/appeals.api').Appeals.DocumentVersionInfo} DocumentVersionInfo
  * @typedef {import('#lib/nunjucks-template-builders/tag-builders.js').HtmlLink} HtmlLink
  * @typedef {import('@pins/appeals.api').Schema.DocumentRedactionStatus} RedactionStatus
- * @typedef {import('@pins/appeals.api').Api.DocumentDetails} DocumentDetails
- * @typedef {import('@pins/appeals.api').Api.DocumentVersionDetails} DocumentVersionDetails
  * @typedef {import('@pins/appeals.api').Api.DocumentVersionAuditEntry} DocumentVersionAuditEntry
- * @typedef {FolderInfo & {id: string, caseId: string}} DocumentFolder
+ * @typedef {import('#lib/ts-utilities.js').FileUploadInfoItem} FileUploadInfoItem
  */
 
 /**
@@ -33,46 +36,71 @@ import { addNotificationBannerToSession } from '#lib/session-utilities.js';
  * @param {string} folderPath
  * @param {string} documentId
  * @param {string} documentName
+ * @param {number} latestVersion
  * @param {string} backButtonUrl
  * @param {string|undefined} nextPageUrl
  * @param {boolean} isLateEntry
+ * @param {any} session
  * @param {import('@pins/express').ValidationErrors|undefined} errors
- * @returns {import('#appeals/appeal-documents/appeal-documents.types.js').DocumentUploadPageParameters}
+ * @param {string} [pageHeadingTextOverride]
+ * @param {PageComponent[]} [pageBodyComponents]
+ * @param {boolean} [allowMultipleFiles]
+ * @param {string} [documentType]
+ * @returns {Promise<import('#appeals/appeal-documents/appeal-documents.types.js').DocumentUploadPageParameters>}
  */
-export function documentUploadPage(
+export async function documentUploadPage(
 	appealId,
 	appealReference,
 	folderId,
 	folderPath,
 	documentId,
 	documentName,
+	latestVersion,
 	backButtonUrl,
 	nextPageUrl,
 	isLateEntry,
-	errors
+	session,
+	errors,
+	pageHeadingTextOverride,
+	pageBodyComponents = [],
+	allowMultipleFiles,
+	documentType
 ) {
-	const isAdditionalDocument = folderPath.split('/')[1] === 'additionalDocuments';
-	const pageHeadingText = mapAddDocumentsPageHeading(isAdditionalDocument, documentId);
+	const isAdditionalDocument = folderPath.split('/')[1] === 'appellantCaseCorrespondence';
+	const pageHeadingText =
+		pageHeadingTextOverride || mapAddDocumentsPageHeading(isAdditionalDocument, documentId);
 	const pathComponents = folderPath.split('/');
 	const documentStage = pathComponents[0];
-	const documentType = pathComponents[1];
+	const documentTypeComputed = documentType || pathComponents[1];
+	const { fileUploadInfo } = session;
 
 	return {
 		backButtonUrl: backButtonUrl?.replace('{{folderId}}', folderId),
 		appealId,
+		appealReference,
 		folderId: folderId,
 		documentId,
+		documentOriginalFileName: documentName,
+		documentVersion: latestVersion,
 		useBlobEmulator: config.useBlobEmulator,
+		...(fileUploadInfo && {
+			uncommittedFiles: JSON.stringify({
+				files: fileUploadInfo.map(
+					(/** @type {FileUploadInfoItem} */ infoItem) => infoItem.blobStoreUrl
+				)
+			})
+		}),
 		blobStorageHost:
 			config.useBlobEmulator === true ? config.blobEmulatorSasUrl : config.blobStorageUrl,
 		blobStorageContainer: config.blobStorageDefaultContainer,
-		multiple: !documentId,
+		multiple: documentId ? false : allowMultipleFiles || false,
 		documentStage: documentStage,
 		serviceName: documentName || pageHeadingText,
-		pageTitle: 'Upload documents',
+		pageTitle: pageHeadingTextOverride || 'Upload documents',
 		appealShortReference: appealShortReference(appealReference),
-		pageHeadingText: pageHeadingText,
-		documentType: documentType,
+		pageHeadingText,
+		pageBodyComponents,
+		documentType: documentTypeComputed,
 		nextPageUrl:
 			nextPageUrl?.replace('{{folderId}}', folderId) ||
 			backButtonUrl?.replace('{{folderId}}', folderId),
@@ -139,7 +167,7 @@ const mapDocumentFileTypeAndSize = (document) => {
 	}
 
 	return `${mapDocumentFileNameToFileExtension(document.name)}, ${mapDocumentSizeToFileSizeString(
-		document.latestDocumentVersion?.size
+		Number(document.latestDocumentVersion?.size)
 	)}`;
 };
 
@@ -164,17 +192,17 @@ export function mapVirusCheckStatus(virusCheckStatus) {
 	};
 
 	switch (virusCheckStatus) {
-		case 'checked':
+		case AVSCAN_STATUS.SCANNED:
 			result.checked = true;
 			result.safe = true;
 			result.manageFolderPageActionText = 'View and edit';
 			break;
-		case 'failed_virus_check':
+		case AVSCAN_STATUS.AFFECTED:
 			result.checked = true;
 			result.statusText = 'virus_detected';
 			result.manageFolderPageActionText = 'Edit or remove';
 			break;
-		case 'not_checked':
+		case AVSCAN_STATUS.NOT_SCANNED:
 		default:
 			result.statusText = 'virus_scanning';
 			break;
@@ -189,16 +217,17 @@ export function mapVirusCheckStatus(virusCheckStatus) {
  */
 export function mapDocumentInfoVirusCheckStatus(document) {
 	return mapVirusCheckStatus(
-		document?.virusCheckStatus || document?.latestDocumentVersion?.virusCheckStatus
+		document.latestDocumentVersion?.virusCheckStatus ||
+			document?.latestDocumentVersion?.virusCheckStatus
 	);
 }
 
 /**
- * @param {DocumentVersionDetails|undefined} document
+ * @param {DocumentVersionInfo|undefined} document
  * @returns {DocumentVirusCheckStatus}
  */
 export function mapDocumentVersionDetailsVirusCheckStatus(document) {
-	return mapVirusCheckStatus(document?.virusCheckStatus);
+	return mapVirusCheckStatus(document?.virusCheckStatus || AVSCAN_STATUS.NOT_SCANNED);
 }
 
 /**
@@ -220,29 +249,34 @@ export function mapAddDocumentsPageHeading(isAdditionalDocument, documentId) {
 
 /**
  * @param {string} backLinkUrl
- * @param {FolderInfo & {id: string}} folder - API type needs to be updated here (should be Folder, but there are worse problems with that type)
+ * @param {FolderInfo} folder - API type needs to be updated here (should be Folder, but there are worse problems with that type)
+ * @param {FileUploadInfoItem[]} uploadInfo
  * @param {Object<string, any>} bodyItems
  * @param {RedactionStatus[]} redactionStatuses
+ * @param {string} [pageHeadingTextOverride]
  * @returns {PageContent}
  */
-export function addDocumentDetailsPage(backLinkUrl, folder, bodyItems, redactionStatuses) {
-	const incompleteDocuments = folder.documents.filter(
-		(document) => document.latestDocumentVersion?.draft === true
-	);
-
+export function addDocumentDetailsPage(
+	backLinkUrl,
+	folder,
+	uploadInfo,
+	bodyItems,
+	redactionStatuses,
+	pageHeadingTextOverride
+) {
 	/** @type {PageContent} */
 	const pageContent = {
-		title: 'Add document details',
+		title: pageHeadingTextOverride || 'Add document details',
 		backLinkText: 'Back',
-		backLinkUrl: backLinkUrl?.replace('{{folderId}}', folder.id),
+		backLinkUrl: backLinkUrl?.replace('{{folderId}}', folder.folderId.toString()),
 		preHeading: 'Add document details',
-		heading: `${folderPathToFolderNameText(folder.path)} documents`,
-		pageComponents: incompleteDocuments.flatMap((document, index) => {
-			return mapDocumentDetailsPageComponentsForDocument(
-				document,
-				index,
-				incompleteDocuments,
+		heading: pageHeadingTextOverride || `${folderPathToFolderNameText(folder.path)} documents`,
+		pageComponents: uploadInfo.flatMap((uploadInfoItem, index) => {
+			return mapFileUploadInfoItemToDocumentDetailsPageComponents(
+				uploadInfo,
+				uploadInfoItem,
 				bodyItems,
+				index,
 				redactionStatuses
 			);
 		})
@@ -252,28 +286,23 @@ export function addDocumentDetailsPage(backLinkUrl, folder, bodyItems, redaction
 }
 
 /**
- * @param {DocumentInfo} document
- * @param {number} index
- * @param {DocumentInfo[]} documents
+ * @param {FileUploadInfoItem[]} uploadInfo
+ * @param {FileUploadInfoItem} uploadInfoItem
  * @param {Object<string, any>} bodyItems
+ * @param {number} index
  * @param {RedactionStatus[]} redactionStatuses
  * @returns {PageComponent[]}
  */
-function mapDocumentDetailsPageComponentsForDocument(
-	document,
-	index,
-	documents,
+function mapFileUploadInfoItemToDocumentDetailsPageComponents(
+	uploadInfo,
+	uploadInfoItem,
 	bodyItems,
+	index,
 	redactionStatuses
 ) {
-	const latestVersionReceivedDate = apiDateStringToDayMonthYear(
-		`${document.latestDocumentVersion?.dateReceived}`
-	);
-	const latestVersionRedactionStatus = redactionStatuses.find(
-		(status) => status.id === document.latestDocumentVersion?.redactionStatus
-	);
+	const receivedDateDayMonthYear = apiDateStringToDayMonthYear(uploadInfoItem.receivedDate);
 	const bodyItem = bodyItems?.find(
-		(/** @type {{ documentId: string; }} */ item) => item.documentId === document.id
+		(/** @type {{ documentId: string; }} */ item) => item.documentId === uploadInfoItem.GUID
 	);
 	const bodyRecievedDateDay = bodyItem?.receivedDate?.day;
 	const bodyRecievedDateMonth = bodyItem?.receivedDate?.month;
@@ -283,14 +312,14 @@ function mapDocumentDetailsPageComponentsForDocument(
 	return [
 		{
 			wrapperHtml: {
-				opening: `<div class="govuk-form-group"><h2 class="govuk-heading-m">${document.name}</h2>`,
+				opening: `<div class="govuk-form-group"><h2 class="govuk-heading-m">${uploadInfoItem.name}</h2>`,
 				closing: ''
 			},
 			type: 'input',
 			parameters: {
 				type: 'hidden',
 				name: `items[${index}][documentId]`,
-				value: document.id
+				value: uploadInfoItem.GUID
 			}
 		},
 		{
@@ -309,21 +338,30 @@ function mapDocumentDetailsPageComponentsForDocument(
 						id: `items[${index}].receivedDate.day`,
 						name: '[day]',
 						label: 'Day',
-						value: bodyRecievedDateDay || latestVersionReceivedDate?.day || ''
+						value:
+							(bodyRecievedDateDay !== undefined
+								? bodyRecievedDateDay
+								: receivedDateDayMonthYear?.day) || ''
 					},
 					{
 						classes: 'govuk-input govuk-date-input__input govuk-input--width-2',
 						id: `items[${index}].receivedDate.month`,
 						name: '[month]',
 						label: 'Month',
-						value: bodyRecievedDateMonth || latestVersionReceivedDate?.month || ''
+						value:
+							(bodyRecievedDateMonth !== undefined
+								? bodyRecievedDateMonth
+								: receivedDateDayMonthYear?.month) || ''
 					},
 					{
 						classes: 'govuk-input govuk-date-input__input govuk-input--width-4',
 						id: `items[${index}].receivedDate.year`,
 						name: '[year]',
 						label: 'Year',
-						value: bodyRecievedDateYear || latestVersionReceivedDate?.year || ''
+						value:
+							(bodyRecievedDateYear !== undefined
+								? bodyRecievedDateYear
+								: receivedDateDayMonthYear?.year) || ''
 					}
 				]
 			}
@@ -331,7 +369,8 @@ function mapDocumentDetailsPageComponentsForDocument(
 		{
 			wrapperHtml: {
 				opening: '',
-				closing: index < documents.length - 1 ? '<hr class="govuk-!-margin-top-7"></div>' : '</div>'
+				closing:
+					index < uploadInfo.length - 1 ? '<hr class="govuk-!-margin-top-7"></div>' : '</div>'
 			},
 			type: 'radios',
 			parameters: {
@@ -345,16 +384,20 @@ function mapDocumentDetailsPageComponentsForDocument(
 					{
 						text: 'Redacted',
 						value: 'redacted',
-						checked: bodyRedactionStatus
-							? bodyItem?.redactionStatus === 'redacted'
-							: latestVersionRedactionStatus?.name.toLowerCase() === 'redacted'
+						checked:
+							(bodyRedactionStatus
+								? bodyRedactionStatus
+								: redactionStatusIdToName(redactionStatuses, uploadInfoItem.redactionStatus)) ===
+							'redacted'
 					},
 					{
 						text: 'Unredacted',
 						value: 'unredacted',
-						checked: bodyRedactionStatus
-							? bodyItem?.redactionStatus === 'unredacted'
-							: latestVersionRedactionStatus?.name.toLowerCase() === 'unredacted'
+						checked:
+							(bodyRedactionStatus
+								? bodyRedactionStatus
+								: redactionStatusIdToName(redactionStatuses, uploadInfoItem.redactionStatus)) ===
+							'unredacted'
 					},
 					{
 						divider: 'Or'
@@ -362,9 +405,11 @@ function mapDocumentDetailsPageComponentsForDocument(
 					{
 						text: 'No redaction required',
 						value: 'no redaction required',
-						checked: bodyRedactionStatus
-							? bodyItem?.redactionStatus === 'no redaction required'
-							: latestVersionRedactionStatus?.name.toLowerCase() === 'no redaction required'
+						checked:
+							(bodyRedactionStatus
+								? bodyRedactionStatus
+								: redactionStatusIdToName(redactionStatuses, uploadInfoItem.redactionStatus)) ===
+							'no redaction required'
 					}
 				]
 			}
@@ -373,7 +418,160 @@ function mapDocumentDetailsPageComponentsForDocument(
 }
 
 /**
- * @param {DocumentFolder} folder
+ * @param {DocumentVersionInfo} item
+ * @param {RedactionStatus[]} redactionStatuses
+ * @returns {PageComponent[]}
+ */
+function mapDocumentDetailsItemToDocumentDetailsPageComponents(item, redactionStatuses) {
+	const dateReceived = apiDateStringToDayMonthYear(item.dateReceived);
+	const bodyRecievedDateDay = dateReceived?.day;
+	const bodyRecievedDateMonth = dateReceived?.month;
+	const bodyRecievedDateYear = dateReceived?.year;
+	const bodyRedactionStatus = item?.redactionStatus;
+
+	/** @type {PageComponent[]} */
+	const pageComponents = [
+		{
+			wrapperHtml: {
+				opening: `<div class="govuk-form-group"><h2 class="govuk-heading-m">${item.originalFilename}</h2>`,
+				closing: ''
+			},
+			type: 'input',
+			parameters: {
+				type: 'hidden',
+				name: `items[0][documentId]`,
+				value: item.documentId
+			}
+		},
+		{
+			type: 'date-input',
+			parameters: {
+				id: `items[0]receivedDate`,
+				namePrefix: `items[0][receivedDate]`,
+				fieldset: {
+					legend: {
+						text: 'Date received'
+					}
+				},
+				items: [
+					{
+						classes: 'govuk-input govuk-date-input__input govuk-input--width-2',
+						id: `items[0].receivedDate.day`,
+						name: '[day]',
+						label: 'Day',
+						value: bodyRecievedDateDay || ''
+					},
+					{
+						classes: 'govuk-input govuk-date-input__input govuk-input--width-2',
+						id: `items[0].receivedDate.month`,
+						name: '[month]',
+						label: 'Month',
+						value: bodyRecievedDateMonth || ''
+					},
+					{
+						classes: 'govuk-input govuk-date-input__input govuk-input--width-4',
+						id: `items[0].receivedDate.year`,
+						name: '[year]',
+						label: 'Year',
+						value: bodyRecievedDateYear || ''
+					}
+				]
+			}
+		},
+		{
+			wrapperHtml: {
+				opening: '',
+				closing: '</div>'
+			},
+			type: 'radios',
+			parameters: {
+				name: `items[0][redactionStatus]`,
+				fieldset: {
+					legend: {
+						text: 'Redaction status'
+					}
+				},
+				items: [
+					{
+						text: 'Redacted',
+						value: 'redacted',
+						checked:
+							bodyRedactionStatus ===
+							redactionStatuses.find((status) => status.key === REDACTION_STATUS.REDACTED)?.name
+					},
+					{
+						text: 'Unredacted',
+						value: 'unredacted',
+						checked:
+							bodyRedactionStatus ===
+							redactionStatuses.find((status) => status.key === REDACTION_STATUS.UNREDACTED)?.name
+					},
+					{
+						divider: 'Or'
+					},
+					{
+						text: 'No redaction required',
+						value: 'no redaction required',
+						checked:
+							bodyRedactionStatus ===
+							redactionStatuses.find(
+								(status) => status.key === REDACTION_STATUS.NO_REDACTION_REQUIRED
+							)?.name
+					}
+				]
+			}
+		}
+	];
+
+	return pageComponents;
+}
+
+/**
+ * @param {string} backLinkUrl
+ * @param {string} appealReference
+ * @param {FileUploadInfoItem[]} fileUploadInfo
+ * @param {RedactionStatus[]} redactionStatuses
+ * @returns {PageContent}
+ */
+export function addDocumentsCheckAndConfirmPage(
+	backLinkUrl,
+	appealReference,
+	fileUploadInfo,
+	redactionStatuses
+) {
+	/** @type {PageContent} */
+	const pageContent = {
+		title: 'Check your answers',
+		backLinkUrl,
+		preHeading: `Appeal ${appealShortReference(appealReference)}`,
+		heading: 'Check your answers',
+		pageComponents: [
+			{
+				type: 'table',
+				parameters: {
+					head: [{ text: 'Name' }, { text: 'Received' }, { text: 'Redaction status' }],
+					rows: fileUploadInfo.map((/** @type {FileUploadInfoItem} */ infoItem) => [
+						{
+							text: infoItem.name
+						},
+						{
+							text: apiDateStringToDisplayDate(infoItem.receivedDate)
+						},
+						{
+							text: capitalize(redactionStatusIdToName(redactionStatuses, infoItem.redactionStatus))
+						}
+					]),
+					firstCellIsHeader: false
+				}
+			}
+		]
+	};
+
+	return pageContent;
+}
+
+/**
+ * @param {FolderInfo} folder
  * @param {DocumentInfo} document
  * @returns {HtmlProperty & ClassesProperty}
  */
@@ -439,7 +637,7 @@ function mapFolderDocumentInformationHtmlProperty(folder, document) {
 }
 
 /**
- * @param {DocumentFolder} folder
+ * @param {FolderInfo} folder
  * @param {DocumentInfo} document
  * @param {string} viewAndEditUrl
  * @returns {HtmlProperty & ClassesProperty}
@@ -453,7 +651,7 @@ function mapFolderDocumentActionsHtmlProperty(folder, document, viewAndEditUrl) 
 	if (document?.id) {
 		const virusCheckStatus = mapDocumentInfoVirusCheckStatus(document);
 		htmlProperty.html = `<a href="${viewAndEditUrl
-			.replace('{{folderId}}', folder.id.toString())
+			.replace('{{folderId}}', folder.folderId.toString())
 			.replace('{{documentId}}', document.id)}" class="govuk-link">${
 			virusCheckStatus.manageFolderPageActionText
 		} <span class="govuk-visually-hidden">${document.name}</span></a>`;
@@ -465,13 +663,21 @@ function mapFolderDocumentActionsHtmlProperty(folder, document, viewAndEditUrl) 
 /**
  * @param {string} backLinkUrl
  * @param {string} viewAndEditUrl
- * @param {DocumentFolder} folder - API type needs to be updated (should be Folder, but there are worse problems with that type)
+ * @param {FolderInfo} folder - API type needs to be updated (should be Folder, but there are worse problems with that type)
  * @param {RedactionStatus[]} redactionStatuses
  * @param {import('@pins/express/types/express.js').Request} request
+ * @param {string} [pageHeadingTextOverride]
  * @returns {PageContent}
  */
-export function manageFolderPage(backLinkUrl, viewAndEditUrl, folder, redactionStatuses, request) {
-	if (getDocumentsForVirusStatus(folder, 'not_checked').length > 0) {
+export function manageFolderPage(
+	backLinkUrl,
+	viewAndEditUrl,
+	folder,
+	redactionStatuses,
+	request,
+	pageHeadingTextOverride
+) {
+	if (getDocumentsForVirusStatus(folder, AVSCAN_STATUS.NOT_SCANNED).length > 0) {
 		addNotificationBannerToSession(
 			request.session,
 			'notCheckedDocument',
@@ -488,7 +694,7 @@ export function manageFolderPage(backLinkUrl, viewAndEditUrl, folder, redactionS
 
 	/** @type {PageComponent[]} */
 	const errorSummaryPageComponents = [];
-	const documentsWithFailedVirusCheck = getDocumentsForVirusStatus(folder, 'failed_virus_check');
+	const documentsWithFailedVirusCheck = getDocumentsForVirusStatus(folder, AVSCAN_STATUS.AFFECTED);
 
 	if (documentsWithFailedVirusCheck.length > 0) {
 		errorSummaryPageComponents.push({
@@ -509,9 +715,9 @@ export function manageFolderPage(backLinkUrl, viewAndEditUrl, folder, redactionS
 	const pageContent = {
 		title: 'Manage folder',
 		backLinkText: 'Back',
-		backLinkUrl: backLinkUrl?.replace('{{folderId}}', folder.id),
+		backLinkUrl: backLinkUrl?.replace('{{folderId}}', folder.folderId.toString()),
 		preHeading: 'Manage folder',
-		heading: `${folderPathToFolderNameText(folder.path)} documents`,
+		heading: pageHeadingTextOverride || `${folderPathToFolderNameText(folder.path)} documents`,
 		pageComponents: [
 			...notificationBannerComponents,
 			...errorSummaryPageComponents,
@@ -567,11 +773,7 @@ export function manageFolderPage(backLinkUrl, viewAndEditUrl, folder, redactionS
 									text: dateToDisplayDate(document?.latestDocumentVersion?.dateReceived)
 							  },
 						{
-							text:
-								mapRedactionStatusIdToName(
-									redactionStatuses,
-									document?.latestDocumentVersion?.redactionStatus
-								) || ''
+							text: document?.latestDocumentVersion?.redactionStatus
 						},
 						mapFolderDocumentActionsHtmlProperty(folder, document, viewAndEditUrl)
 					])
@@ -588,8 +790,8 @@ export function manageFolderPage(backLinkUrl, viewAndEditUrl, folder, redactionS
 }
 
 /**
- * @param {DocumentDetails} document
- * @param {DocumentVersionDetails|undefined} documentVersion
+ * @param {DocumentInfo} document
+ * @param {DocumentVersionInfo|undefined} documentVersion
  * @returns {HtmlProperty & ClassesProperty}
  */
 function mapVersionDocumentInformationHtmlProperty(document, documentVersion) {
@@ -619,10 +821,10 @@ function mapVersionDocumentInformationHtmlProperty(document, documentVersion) {
 					documentVersion &&
 					!documentVersion.isDeleted &&
 					document?.caseId &&
-					document?.guid
+					document?.id
 						? `<a class="govuk-link" href="${mapDocumentDownloadUrl(
 								document?.caseId,
-								document.guid
+								document.id
 						  )}">${document.name || ''}</a>`
 						: document.name || ''
 			}
@@ -654,8 +856,8 @@ function mapVersionDocumentInformationHtmlProperty(document, documentVersion) {
 }
 
 /**
- * @param {DocumentDetails} document
- * @param {DocumentVersionDetails} documentVersion
+ * @param {DocumentInfo} document
+ * @param {DocumentVersionInfo} documentVersion
  * @returns {HtmlProperty & ClassesProperty}
  */
 function mapDocumentNameHtmlProperty(document, documentVersion) {
@@ -680,10 +882,10 @@ function mapDocumentNameHtmlProperty(document, documentVersion) {
 					documentVersion &&
 					!documentVersion.isDeleted &&
 					document?.caseId &&
-					document?.guid
+					document?.id
 						? `<a class="govuk-link" href="${mapDocumentDownloadUrl(
 								document.caseId,
-								document.guid,
+								document.id,
 								documentVersion.version
 						  )}">${documentVersion.originalFilename || ''}</a>`
 						: documentVersion.originalFilename || ''
@@ -700,9 +902,8 @@ function mapDocumentNameHtmlProperty(document, documentVersion) {
 	}
 
 	if (
-		typeof document.latestVersionId === 'number' &&
 		typeof documentVersion.version === 'number' &&
-		documentVersion.version === document.latestVersionId
+		documentVersion.version === document.latestDocumentVersion?.version
 	) {
 		htmlProperty.pageComponents.push({
 			type: 'html',
@@ -747,8 +948,8 @@ function mapDocumentNameHtmlProperty(document, documentVersion) {
  * @param {string} uploadUpdatedDocumentUrl
  * @param {string} removeDocumentUrl
  * @param {RedactionStatus[]} redactionStatuses
- * @param {DocumentDetails} document
- * @param {FolderInfo & {id: string, caseId: string}} folder
+ * @param {DocumentInfo} document
+ * @param {FolderInfo} folder
  * @param {import('@pins/express/types/express.js').Request} request
  * @returns {Promise<PageContent>}
  */
@@ -783,13 +984,13 @@ export async function manageDocumentPage(
 	const notificationBannerComponents = buildNotificationBanners(
 		session,
 		'manageDocuments',
-		document?.caseId
+		Number(appealId)
 	);
 
-	const versionId = document?.latestVersionId?.toString() || '';
+	const versionId = latestVersion?.version?.toString() || '';
 	const uploadNewVersionUrl = uploadUpdatedDocumentUrl
-		.replace('{{folderId}}', folder.id)
-		.replace('{{documentId}}', document.guid || '');
+		.replace('{{folderId}}', folder.folderId.toString())
+		.replace('{{documentId}}', document.id || '');
 
 	/** @type {PageComponent[]} */
 	const pageComponents = [...notificationBannerComponents];
@@ -882,10 +1083,7 @@ export async function manageDocumentPage(
 				{
 					key: { text: 'Redaction status' },
 					value: {
-						text: mapRedactionStatusIdToName(
-							redactionStatuses,
-							getDocumentLatestVersion(document)?.redactionStatusId
-						)
+						text: getDocumentLatestVersion(document)?.redactionStatus
 					},
 					actions: {
 						items: [
@@ -920,8 +1118,8 @@ export async function manageDocumentPage(
 		};
 
 		const removeDocumentUrlProcessed = removeDocumentUrl
-			?.replace('{{folderId}}', folder.id)
-			.replace('{{documentId}}', document.guid || '')
+			?.replace('{{folderId}}', folder.folderId.toString())
+			.replace('{{documentId}}', document.id || '')
 			.replace('{{versionId}}', versionId);
 
 		/** @type {PageComponent} */
@@ -977,7 +1175,7 @@ export async function manageDocumentPage(
 							}
 						],
 						rows: await Promise.all(
-							(document.documentVersion || []).map(async (documentVersion) => {
+							(document.allVersions || []).map(async (documentVersion) => {
 								const versionVirusCheckStatus =
 									mapDocumentVersionDetailsVirusCheckStatus(documentVersion);
 
@@ -994,18 +1192,15 @@ export async function manageDocumentPage(
 										)
 									},
 									{
-										text: mapRedactionStatusIdToName(
-											redactionStatuses,
-											documentVersion.redactionStatusId
-										)
+										text: documentVersion.redactionStatus
 									},
 									{
 										html:
 											documentVersion.isDeleted || !versionVirusCheckStatus.checked
 												? ''
 												: `<a class="govuk-link" href="${removeDocumentUrl
-														?.replace('{{folderId}}', folder.id)
-														.replace('{{documentId}}', document.guid || '')
+														?.replace('{{folderId}}', folder.folderId.toString())
+														.replace('{{documentId}}', document.id || '')
 														.replace(
 															'{{versionId}}',
 															documentVersion.version?.toString() || ''
@@ -1028,7 +1223,9 @@ export async function manageDocumentPage(
 	const pageContent = {
 		title: 'Manage document',
 		backLinkText: 'Back',
-		backLinkUrl: backLinkUrl?.replace('{{folderId}}', folder.id),
+		backLinkUrl: backLinkUrl
+			?.replace('{{folderId}}', folder.folderId.toString())
+			.replace('{{documentId}}', document.id || ''),
 		preHeading: 'Manage document',
 		heading: document?.name || '',
 		pageComponents
@@ -1044,8 +1241,8 @@ export async function manageDocumentPage(
 /**
  * @param {string} backLinkUrl
  * @param {RedactionStatus[]} redactionStatuses
- * @param {DocumentDetails} document
- * @param {FolderInfo & {id: string, caseId: string}} folder - API type needs to be updated here (should be Folder, but there are worse problems with that type)
+ * @param {DocumentInfo} document
+ * @param {FolderInfo} folder - API type needs to be updated here (should be Folder, but there are worse problems with that type)
  * @param {string} versionId
  * @returns {Promise<PageContent>}
  */
@@ -1057,7 +1254,7 @@ export async function deleteDocumentPage(
 	versionId
 ) {
 	const totalDocumentVersions =
-		document.documentVersion?.filter((documentVersion) => !documentVersion.isDeleted).length || 1;
+		document.allVersions?.filter((documentVersion) => !documentVersion.isDeleted).length || 1;
 
 	const radioEntries = [
 		{
@@ -1078,11 +1275,21 @@ export async function deleteDocumentPage(
 		value: 'no'
 	});
 
+	/** @type {PageComponent} */
+	const warningText = {
+		type: 'warning-text',
+		parameters: {
+			text: 'Removing the only version of a document will delete the document from the case'
+		}
+	};
+
 	/** @type {PageContent} */
 	const pageContent = {
 		title: 'Remove document',
 		backLinkText: 'Back',
-		backLinkUrl: backLinkUrl?.replace('{{folderId}}', folder.id),
+		backLinkUrl: backLinkUrl
+			?.replace('{{folderId}}', folder.folderId.toString())
+			.replace('{{documentId}}', document.id || ''),
 		preHeading: 'Manage versions',
 		heading: 'Are you sure you want to remove this version?',
 		pageComponents: [
@@ -1109,19 +1316,7 @@ export async function deleteDocumentPage(
 					]
 				}
 			},
-			{
-				type: 'html',
-				parameters: {
-					html:
-						totalDocumentVersions === 1
-							? `<div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-								<strong class="govuk-warning-text__text">
-									<span class="govuk-warning-text__assistive">Warning</span> Removing the only version of a document will delete the document from the case
-								</strong>
-							</div>`
-							: ''
-				}
-			},
+			...(totalDocumentVersions === 1 ? [warningText] : []),
 			{
 				wrapperHtml: {
 					opening: '<form method="POST">',
@@ -1156,18 +1351,16 @@ export async function deleteDocumentPage(
 }
 
 /**
- * @param {DocumentDetails} document
- * @returns {DocumentVersionDetails|undefined}
+ * @param {DocumentInfo} document
+ * @returns {DocumentVersionInfo|undefined}
  */
 const getDocumentLatestVersion = (document) => {
-	return document?.documentVersion?.find(
-		(documentVersion) => documentVersion.version === document?.latestVersionId
-	);
+	return document?.latestDocumentVersion;
 };
 
 /**
  *
- * @param {DocumentVersionDetails} documentVersion
+ * @param {DocumentVersionInfo} documentVersion
  * @param {DocumentVersionAuditEntry[]} documentVersionAuditItems
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
  * @returns {Promise<string>}
@@ -1256,6 +1449,34 @@ export const mapDocumentDetailsFormDataToAPIRequest = (formData, redactionStatus
 };
 
 /**
+ * @param {DocumentDetailsFormData} formData
+ * @param {FileUploadInfoItem[]} fileUploadInfo
+ * @param {import('@pins/appeals.api').Schema.DocumentRedactionStatus[]} redactionStatuses
+ * @returns
+ */
+export const addDocumentDetailsFormDataToFileUploadInfo = (
+	formData,
+	fileUploadInfo,
+	redactionStatuses
+) => {
+	for (const item of formData.items) {
+		const matchingInfoItem = fileUploadInfo.find((infoItem) => infoItem.GUID === item.documentId);
+
+		if (matchingInfoItem) {
+			matchingInfoItem.receivedDate = dayMonthYearToApiDateString({
+				day: parseInt(item.receivedDate.day, 10),
+				month: parseInt(item.receivedDate.month, 10),
+				year: parseInt(item.receivedDate.year, 10)
+			});
+			matchingInfoItem.redactionStatus = mapRedactionStatusNameToId(
+				redactionStatuses,
+				item.redactionStatus
+			);
+		}
+	}
+};
+
+/**
  * @param {import('@pins/appeals.api').Schema.DocumentRedactionStatus[]} redactionStatuses
  * @param {string} redactionStatusName
  * @returns {number}
@@ -1263,7 +1484,7 @@ export const mapDocumentDetailsFormDataToAPIRequest = (formData, redactionStatus
 const mapRedactionStatusNameToId = (redactionStatuses, redactionStatusName) => {
 	for (const status of redactionStatuses) {
 		if (status.name.toLowerCase() === redactionStatusName.toLowerCase()) {
-			return status.id;
+			return Number(status.id);
 		}
 	}
 	return 0;
@@ -1280,7 +1501,7 @@ export const mapRedactionStatusIdToName = (redactionStatuses, redactionStatusId)
 	}
 
 	for (const status of redactionStatuses) {
-		if (status.id === redactionStatusId) {
+		if (status.id.toString() === redactionStatusId.toString()) {
 			return status.name;
 		}
 	}
@@ -1312,34 +1533,28 @@ export const folderPathToFolderNameText = (folderPath) => {
  * @property {{[key: string]: string} | null} [attributes]
  */
 
+/** @typedef {import('./appeal-documents.controller.js').DocumentDetailsItem} DocumentDetailsItem */
+/** @typedef {Object<string, any>} Document */
+
 /**
  * @param {string} backLinkUrl
- * @param {FolderInfo & {id: string}} folder - API type needs to be updated here (should be Folder, but there are worse problems with that type)
- * @param {import('./appeal-documents.controller.js').DocumentDetailsItem[]} bodyItems
+ * @param {FolderInfo} folder
+ * @param {Document} file
  * @param {RedactionStatus[]} redactionStatuses
  * @returns {PageContent}
  */
-export function changeDocumentDetailsPage(backLinkUrl, folder, bodyItems, redactionStatuses) {
-	const filteredDocuments = folder.documents.filter((document) =>
-		bodyItems.find((item) => item.documentId === document.id)
-	);
-
+export function changeDocumentDetailsPage(backLinkUrl, folder, file, redactionStatuses) {
 	/** @type {PageContent} */
 	const pageContent = {
 		title: 'Change document details',
 		backLinkText: 'Back',
-		backLinkUrl: backLinkUrl?.replace('{{folderId}}', folder.id),
+		backLinkUrl: backLinkUrl?.replace('{{folderId}}', folder.folderId.toString()),
 		preHeading: 'Change document details',
 		heading: `${folderPathToFolderNameText(folder.path)} documents`,
-		pageComponents: filteredDocuments.flatMap((document, index) => {
-			return mapDocumentDetailsPageComponentsForDocument(
-				document,
-				index,
-				filteredDocuments,
-				bodyItems,
-				redactionStatuses
-			);
-		})
+		pageComponents: mapDocumentDetailsItemToDocumentDetailsPageComponents(
+			file.latestDocumentVersion,
+			redactionStatuses
+		)
 	};
 
 	if (pageContent.pageComponents) {
@@ -1351,13 +1566,13 @@ export function changeDocumentDetailsPage(backLinkUrl, folder, bodyItems, redact
 
 /**
  *
- * @param {DocumentFolder} folder
- * @param {"not_checked"|"checked"|"failed_virus_check"} virusStatus
+ * @param {FolderInfo} folder
+ * @param {"not_scanned"|"scanned"|"affected"} virusStatus
  * @returns {DocumentInfo[]}
  */
 function getDocumentsForVirusStatus(folder, virusStatus) {
 	let matchingDocuments = [];
-	for (let document of Object.values(folder.documents)) {
+	for (let document of Object.values(folder.documents || [])) {
 		if (document?.latestDocumentVersion?.virusCheckStatus === virusStatus) {
 			matchingDocuments.push(document);
 		}

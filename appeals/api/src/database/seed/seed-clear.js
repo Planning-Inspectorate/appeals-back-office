@@ -4,6 +4,7 @@
 export async function deleteAllRecords(databaseConnector) {
 	const deleteDecisions = databaseConnector.inspectorDecision.deleteMany();
 	const deleteDocAudits = databaseConnector.documentVersionAudit.deleteMany();
+	const deleteDocAvScans = databaseConnector.documentVersionAvScan.deleteMany();
 	const deleteLPAs = databaseConnector.lPA.deleteMany();
 	const deleteAudits = databaseConnector.auditTrail.deleteMany();
 	const deleteFolders = databaseConnector.folder.deleteMany();
@@ -15,27 +16,18 @@ export async function deleteAllRecords(databaseConnector) {
 	const deleteAppealTimetable = databaseConnector.appealTimetable.deleteMany();
 	const deleteInspectorDecision = databaseConnector.inspectorDecision.deleteMany();
 	const deleteLPAQuestionnaire = databaseConnector.lPAQuestionnaire.deleteMany();
-	const deleteReviewQuestionnaire = databaseConnector.reviewQuestionnaire.deleteMany();
 	const deleteSiteVisit = databaseConnector.siteVisit.deleteMany();
-	const deleteValidationDecision = databaseConnector.validationDecision.deleteMany();
 	const deleteServiceCustomers = databaseConnector.serviceUser.deleteMany();
 	const deleteDocuments = databaseConnector.document.deleteMany();
 	const deleteDocumentsVersions = databaseConnector.documentVersion.deleteMany();
-	const deleteRepresentationContact = databaseConnector.representationContact.deleteMany();
-	const deleteRepresentation = databaseConnector.representation.deleteMany();
-	const deleteRepresentationAction = databaseConnector.representationAction.deleteMany();
-	const deleteListedBuildingDetails = databaseConnector.listedBuildingDetails.deleteMany();
-	const deleteDesignatedSitesOnLPAQuestionnaires =
-		databaseConnector.designatedSitesOnLPAQuestionnaires.deleteMany();
-	const deleteLPANotificationMethodsOnLPAQuestionnaires =
-		databaseConnector.lPANotificationMethodsOnLPAQuestionnaires.deleteMany();
+	const deleteLPANotificationSelected =
+		databaseConnector.lPANotificationMethodsSelected.deleteMany();
 	const deleteAppellantCaseIncompleteReasonOnAppellantCase =
-		databaseConnector.appellantCaseIncompleteReasonOnAppellantCase.deleteMany();
+		databaseConnector.appellantCaseIncompleteReasonsSelected.deleteMany();
 	const deleteAppellantCaseInvalidReasonOnAppellantCase =
-		databaseConnector.appellantCaseInvalidReasonOnAppellantCase.deleteMany();
+		databaseConnector.appellantCaseInvalidReasonsSelected.deleteMany();
 	const deleteLPAQuestionnaireIncompleteReasonOnLPAQuestionnaire =
-		databaseConnector.lPAQuestionnaireIncompleteReasonOnLPAQuestionnaire.deleteMany();
-	const deleteNeighbouringSiteContacts = databaseConnector.neighbouringSiteContact.deleteMany();
+		databaseConnector.lPAQuestionnaireIncompleteReasonsSelected.deleteMany();
 	const deleteNeighbouringSites = databaseConnector.neighbouringSite.deleteMany();
 	const deleteAppellantCaseIncompleteReasonText =
 		databaseConnector.appellantCaseIncompleteReasonText.deleteMany();
@@ -43,12 +35,12 @@ export async function deleteAllRecords(databaseConnector) {
 		databaseConnector.appellantCaseInvalidReasonText.deleteMany();
 	const deleteLPAQuestionnaireIncompleteReasonText =
 		databaseConnector.lPAQuestionnaireIncompleteReasonText.deleteMany();
+		const deleteListedBuildingDetails = databaseConnector.listedBuildingSelected.deleteMany();
+
 
 	// and reference data tables
 	const deleteAppealTypes = databaseConnector.appealType.deleteMany();
-	const deleteDesignatedSites = databaseConnector.designatedSite.deleteMany();
 	const deletelpaNotificationMethods = databaseConnector.lPANotificationMethods.deleteMany();
-	const planningObligationStatus = databaseConnector.planningObligationStatus.deleteMany();
 	const knowledgeOfOtherLandowners = databaseConnector.knowledgeOfOtherLandowners.deleteMany();
 	const deleteAppellantCaseIncompleteReason =
 		databaseConnector.appellantCaseIncompleteReason.deleteMany();
@@ -65,11 +57,6 @@ export async function deleteAllRecords(databaseConnector) {
 	const deleteLPAQUestionnaireIncompleteReason =
 		databaseConnector.lPAQuestionnaireIncompleteReason.deleteMany();
 
-	// Truncate calls on data tables
-	await deleteRepresentationAction;
-	await deleteRepresentationContact;
-	await deleteRepresentation;
-
 	// delete document versions, documents, and THEN the folders.  Has to be in this order for integrity constraints
 	// TODO: Currently an issue with cyclic references, hence this hack to clear the latestVersionId
 	await databaseConnector.$queryRawUnsafe(`UPDATE Document SET latestVersionId = NULL;`);
@@ -79,7 +66,7 @@ export async function deleteAllRecords(databaseConnector) {
 	);
 	// delete references to internal users on appeals
 	await databaseConnector.$queryRawUnsafe(`UPDATE Appeal SET appellantId = NULL, agentId = NULL;`);
-
+  await deleteDocAvScans;
 	await deleteDecisions;
 	await deleteDocAudits;
 	await deleteDocumentsVersions;
@@ -97,15 +84,11 @@ export async function deleteAllRecords(databaseConnector) {
 		deleteAppellantCaseInvalidReasonOnAppellantCase,
 		deleteAppellantCase,
 		deleteAppealStatus,
-		deleteValidationDecision,
-		deleteDesignatedSitesOnLPAQuestionnaires,
-		deleteLPANotificationMethodsOnLPAQuestionnaires,
+		deleteLPANotificationSelected,
 		deleteLPAQuestionnaireIncompleteReasonText,
 		deleteLPAQuestionnaireIncompleteReasonOnLPAQuestionnaire,
-		deleteNeighbouringSiteContacts,
 		deleteNeighbouringSites,
 		deleteLPAQuestionnaire,
-		deleteReviewQuestionnaire,
 		deleteSiteVisit,
 		deleteAppealTimetable,
 		deleteInspectorDecision,
@@ -119,9 +102,7 @@ export async function deleteAllRecords(databaseConnector) {
 
 	// after deleting the case data, can delete the reference lookup tables
 	await deleteAppealTypes;
-	await deleteDesignatedSites;
 	await deletelpaNotificationMethods;
-	await planningObligationStatus;
 	await knowledgeOfOtherLandowners;
 	await deleteAppellantCaseIncompleteReason;
 	await deleteAppellantCaseInvalidReason;

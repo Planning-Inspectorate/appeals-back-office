@@ -9,25 +9,17 @@ import {
 	appellantCaseList,
 	appellantsList,
 	agentsList,
-	completeValidationDecisionSample,
-	incompleteReviewQuestionnaireSample,
-	incompleteValidationDecisionSample,
-	invalidValidationDecisionSample,
 	localPlanningDepartmentList,
-	lpaQuestionnaireList,
-	neighbouringSiteContactsList
+	lpaQuestionnaireList
 } from './data-samples.js';
-import isFPA from '#utils/is-fpa.js';
 import { calculateTimetable } from '#utils/business-days.js';
 import {
 	APPEAL_TYPE_SHORTHAND_HAS,
-	STATE_TARGET_COMPLETE,
-	STATE_TARGET_ISSUE_DETERMINATION,
-	STATE_TARGET_READY_TO_START,
-	STATE_TARGET_ASSIGN_CASE_OFFICER,
 	CASE_RELATIONSHIP_LINKED,
 	CASE_RELATIONSHIP_RELATED
 } from '#endpoints/constants.js';
+
+import { STATUSES } from '@pins/appeals/constants/state.js';
 
 import neighbouringSitesRepository from '#repositories/neighbouring-sites.repository.js';
 import { mapDefaultCaseFolders } from '#endpoints/documents/documents.mapper.js';
@@ -85,14 +77,9 @@ function generateLpaReference() {
 const appealFactory = ({
 	typeShorthand,
 	statuses = {},
-	incompleteValidationDecision = false,
-	invalidValidationDecision = false,
-	completeValidationDecision = false,
 	lpaQuestionnaire = false,
 	startedAt = null,
 	validAt = null,
-	incompleteReviewQuestionnaire = false,
-	completeReviewQuestionnaire = false,
 	siteAddressList = addressesList,
 	assignCaseOfficer = false,
 	agent = true
@@ -102,11 +89,12 @@ const appealFactory = ({
 	const lpaInput = localPlanningDepartmentList[pickRandom(localPlanningDepartmentList)];
 
 	const appeal = {
-		appealType: { connect: { shorthand: typeShorthand } },
-		startedAt,
-		validAt,
+		appealType: { connect: { key: typeShorthand } },
+		caseStartedDate: startedAt,
+		caseValidDate: validAt,
 		reference: randomUUID(),
 		appealStatus: { create: statuses },
+		// @ts-ignore
 		appellantCase: { create: appellantCaseList[typeShorthand] },
 		appellant: {
 			create: appellantInput
@@ -122,7 +110,7 @@ const appealFactory = ({
 				create: lpaInput
 			}
 		},
-		planningApplicationReference: generateLpaReference(),
+		applicationReference: generateLpaReference(),
 		address: { create: siteAddressList[pickRandom(siteAddressList)] },
 		...(assignCaseOfficer && {
 			caseOfficer: {
@@ -132,20 +120,8 @@ const appealFactory = ({
 				}
 			}
 		}),
-		...(incompleteValidationDecision && {
-			validationDecision: { create: incompleteValidationDecisionSample }
-		}),
-		...(invalidValidationDecision && {
-			validationDecision: { create: invalidValidationDecisionSample }
-		}),
-		...(completeValidationDecision && {
-			validationDecision: { create: completeValidationDecisionSample }
-		}),
-		...(lpaQuestionnaire && { lpaQuestionnaire: { create: lpaQuestionnaireList[typeShorthand] } }),
-		...(incompleteReviewQuestionnaire && {
-			reviewQuestionnaire: { create: incompleteReviewQuestionnaireSample }
-		}),
-		...(completeReviewQuestionnaire && { reviewQuestionnaire: { create: { complete: true } } })
+		// @ts-ignore
+		...(lpaQuestionnaire && { lpaQuestionnaire: { create: lpaQuestionnaireList[typeShorthand] } })
 	};
 
 	return appeal;
@@ -401,19 +377,10 @@ export async function seedTestData(databaseConnector) {
 	appeals.reverse();
 
 	const lpaQuestionnaires = await databaseConnector.lPAQuestionnaire.findMany();
-	const designatedSites = await databaseConnector.designatedSite.findMany();
 	const lpaNotificationMethods = await databaseConnector.lPANotificationMethods.findMany();
-	const addresses = await databaseConnector.address.findMany();
 
 	for (const lpaQuestionnaire of lpaQuestionnaires) {
-		await databaseConnector.designatedSitesOnLPAQuestionnaires.createMany({
-			data: [1, 2].map((item) => ({
-				designatedSiteId: designatedSites[item].id,
-				lpaQuestionnaireId: lpaQuestionnaire.id
-			}))
-		});
-
-		await databaseConnector.listedBuildingDetails.createMany({
+		await databaseConnector.listedBuildingSelected.createMany({
 			data: ['123456', '654321', '789012', '210987'].map((listEntry, index) => ({
 				lpaQuestionnaireId: lpaQuestionnaire.id,
 				listEntry,
@@ -421,31 +388,25 @@ export async function seedTestData(databaseConnector) {
 			}))
 		});
 
-		await databaseConnector.lPANotificationMethodsOnLPAQuestionnaires.createMany({
+		await databaseConnector.lPANotificationMethodsSelected.createMany({
 			data: [1, 2].map((item) => ({
 				lpaQuestionnaireId: lpaQuestionnaire.id,
 				notificationMethodId: lpaNotificationMethods[item].id
 			}))
 		});
-
-		if (lpaQuestionnaire.isAffectingNeighbouringSites) {
-			await databaseConnector.neighbouringSiteContact.createMany({
-				data: [1, 2].map(() => ({
-					...neighbouringSiteContactsList[pickRandom(neighbouringSiteContactsList)],
-					addressId: addresses[pickRandom(addresses)].id,
-					lpaQuestionnaireId: lpaQuestionnaire.id
-				}))
-			});
-		}
 	}
 
 	const appealWithNeighbouringSitesId = appeals[10].id;
+
 	await neighbouringSitesRepository.addSite(
 		appealWithNeighbouringSitesId,
+		'back-office',
 		addressesList[pickRandom(addressesList)]
 	);
+
 	await neighbouringSitesRepository.addSite(
 		appealWithNeighbouringSitesId,
+		'lpa',
 		addressesList[pickRandom(addressesList)]
 	);
 
@@ -540,10 +501,10 @@ export async function seedTestData(databaseConnector) {
 	const appealStatus = await databaseConnector.appealStatus.findMany();
 	const siteVisitType = await databaseConnector.siteVisitType.findMany();
 
-	for (const { appealTypeId, id, startedAt } of appeals) {
-		if (startedAt) {
-			const appealType = appealTypes.filter(({ id }) => id === appealTypeId)[0].shorthand;
-			const appealTimetable = await calculateTimetable(appealType, startedAt);
+	for (const { appealTypeId, id, caseStartedDate } of appeals) {
+		if (caseStartedDate) {
+			const appealType = appealTypes.filter(({ id }) => id === appealTypeId)[0].key || APPEAL_TYPE_SHORTHAND_HAS;
+			const appealTimetable = await calculateTimetable(appealType, caseStartedDate);
 
 			await databaseConnector.appealTimetable.create({
 				data: {
@@ -557,7 +518,7 @@ export async function seedTestData(databaseConnector) {
 			({ appealId, status, valid }) =>
 				appealId === id &&
 				valid &&
-				[STATE_TARGET_ISSUE_DETERMINATION, STATE_TARGET_COMPLETE].includes(status)
+				[STATUSES.ISSUE_DETERMINATION, STATUSES.COMPLETE].includes(status)
 		);
 
 		if (statusWithSiteVisitSet) {
@@ -574,7 +535,6 @@ export async function seedTestData(databaseConnector) {
 	}
 
 	const appellantCases = await databaseConnector.appellantCase.findMany();
-	const planningObligationStatus = await databaseConnector.planningObligationStatus.findFirst();
 	const knowledgeOfOtherLandowners = await databaseConnector.knowledgeOfOtherLandowners.findMany({
 		where: {
 			name: 'Some'
@@ -604,25 +564,17 @@ export async function seedTestData(databaseConnector) {
 	];
 
 	for (const appellantCase of appellantCases) {
-		const appeal = appeals.find(({ id }) => id === appellantCase.appealId);
 		const status = appealStatus.find(({ appealId }) => appealId === appellantCase.appealId);
-		const appealType = appealTypes.find(({ id }) => id === appeal?.appealTypeId);
 		const validationOutcome =
-			status?.status !== STATE_TARGET_READY_TO_START &&
-			status?.status !== STATE_TARGET_ASSIGN_CASE_OFFICER
+			status?.status !== STATUSES.READY_TO_START && status?.status !== STATUSES.ASSIGN_CASE_OFFICER
 				? appellantCaseValidationOutcomes[2]
 				: null;
 
 		await databaseConnector.appellantCase.update({
 			where: { id: appellantCase.id },
 			data: {
-				hasAdvertisedAppeal: null,
-				...(appealType &&
-					isFPA(appealType) && { planningObligationStatusId: planningObligationStatus?.id }),
-				...(!appellantCase.isSiteFullyOwned && {
-					hasAdvertisedAppeal: true,
-					knowledgeOfOtherLandownersId: knowledgeOfOtherLandowners[0].id
-				}),
+				hasAdvertisedAppeal: true,
+				knowsOtherOwnersId: knowledgeOfOtherLandowners[0].id,
 				...(validationOutcome && {
 					appellantCaseValidationOutcomeId: validationOutcome.validationOutcomeId
 				})
@@ -630,7 +582,7 @@ export async function seedTestData(databaseConnector) {
 		});
 
 		if (validationOutcome?.incompleteReasons) {
-			await databaseConnector.appellantCaseIncompleteReasonOnAppellantCase.createMany({
+			await databaseConnector.appellantCaseIncompleteReasonsSelected.createMany({
 				data: validationOutcome?.incompleteReasons.map((item) => ({
 					appellantCaseIncompleteReasonId: item,
 					appellantCaseId: appellantCase.id
@@ -638,12 +590,12 @@ export async function seedTestData(databaseConnector) {
 			});
 			await databaseConnector.appeal.update({
 				where: { id: appellantCase.appealId },
-				data: { dueDate: new Date() }
+				data: { caseExtensionDate: new Date() }
 			});
 		}
 
 		if (validationOutcome?.invalidReasons) {
-			await databaseConnector.appellantCaseInvalidReasonOnAppellantCase.createMany({
+			await databaseConnector.appellantCaseInvalidReasonsSelected.createMany({
 				data: validationOutcome?.invalidReasons.map((item) => ({
 					appellantCaseInvalidReasonId: item,
 					appellantCaseId: appellantCase.id

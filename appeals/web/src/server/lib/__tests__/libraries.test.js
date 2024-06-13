@@ -44,6 +44,7 @@ import { getPaginationParametersFromQuery } from '#lib/pagination-utilities.js';
 import { linkedAppealStatus } from '#lib/appeals-formatter.js';
 import httpMocks from 'node-mocks-http';
 import { isInternalUrl } from '#lib/url-utilities.js';
+import { stringIsValidPostcodeFormat } from '#lib/postcode.js';
 
 describe('Libraries', () => {
 	describe('addressFormatter', () => {
@@ -1360,11 +1361,11 @@ describe('linkedAppealStatus', () => {
 
 describe('isInternalUrl', () => {
 	test('should return true for fully qualified internal HTTP URL', () => {
-		const url = 'http://localhost/appeals-service/appeals-list';
+		const url = 'http://localhost/appeals-service/all-cases';
 
 		const request = httpMocks.createRequest({
 			method: 'GET',
-			url: '/appeals-service/appeals-list',
+			url: '/appeals-service/all-cases',
 			secure: true,
 			headers: {
 				host: 'localhost'
@@ -1376,10 +1377,10 @@ describe('isInternalUrl', () => {
 
 	describe('isInternalUrl', () => {
 		test('should return true for fully qualified internal HTTPS URL', () => {
-			const url = 'https://localhost/appeals-service/appeals-list';
+			const url = 'https://localhost/appeals-service/all-cases';
 			const request = httpMocks.createRequest({
 				method: 'GET',
-				url: '/appeals-service/appeals-list',
+				url: '/appeals-service/all-cases',
 				secure: true,
 				headers: {
 					host: 'localhost'
@@ -1415,10 +1416,10 @@ describe('isInternalUrl', () => {
 		});
 
 		test('should handle URLs without protocols', () => {
-			const url = '//localhost/appeals-service/appeals-list';
+			const url = '//localhost/appeals-service/all-cases';
 			const request = httpMocks.createRequest({
 				method: 'GET',
-				url: '/appeals-service/appeals-list',
+				url: '/appeals-service/all-cases',
 				secure: false,
 				headers: {
 					host: 'localhost'
@@ -1426,5 +1427,61 @@ describe('isInternalUrl', () => {
 			});
 			expect(isInternalUrl(url, request)).toBe(true);
 		});
+	});
+});
+
+describe('stringIsValidPostcodeFormat', () => {
+	it('returns true when passed a string in valid UK postcode format (uppercase)', () => {
+		expect(stringIsValidPostcodeFormat('A1 1AA')).toBe(true);
+		expect(stringIsValidPostcodeFormat('A11 1AA')).toBe(true);
+		expect(stringIsValidPostcodeFormat('AA1 1AA')).toBe(true);
+		expect(stringIsValidPostcodeFormat('AA11 1AA')).toBe(true);
+		expect(stringIsValidPostcodeFormat('A1A 1AA')).toBe(true);
+		expect(stringIsValidPostcodeFormat('AA1A 1AA')).toBe(true);
+	});
+
+	it('returns when passed a string in valid UK postcode format (lowercase)', () => {
+		expect(stringIsValidPostcodeFormat('a1 1aa')).toBe(true);
+		expect(stringIsValidPostcodeFormat('a11 1aa')).toBe(true);
+		expect(stringIsValidPostcodeFormat('aa1 1aa')).toBe(true);
+		expect(stringIsValidPostcodeFormat('aa11 1aa')).toBe(true);
+		expect(stringIsValidPostcodeFormat('a1a 1aa')).toBe(true);
+		expect(stringIsValidPostcodeFormat('aa1a 1aa')).toBe(true);
+	});
+
+	it('returns when passed a string in valid UK postcode format (without space separator)', () => {
+		expect(stringIsValidPostcodeFormat('a11aa')).toBe(true);
+		expect(stringIsValidPostcodeFormat('a111aa')).toBe(true);
+		expect(stringIsValidPostcodeFormat('aa11aa')).toBe(true);
+		expect(stringIsValidPostcodeFormat('aa111aa')).toBe(true);
+		expect(stringIsValidPostcodeFormat('a1a1aa')).toBe(true);
+		expect(stringIsValidPostcodeFormat('aa1a1aa')).toBe(true);
+	});
+
+	it('returns false when passed null or undefined', () => {
+		expect(stringIsValidPostcodeFormat(null)).toBe(false);
+		expect(stringIsValidPostcodeFormat(undefined)).toBe(false);
+	});
+
+	it('returns false when passed a string not in valid UK postcode format', () => {
+		// invalid separator
+		expect(stringIsValidPostcodeFormat('A1-1AA')).toBe(false);
+		expect(stringIsValidPostcodeFormat('A1_1AA')).toBe(false);
+		expect(stringIsValidPostcodeFormat('A1.1AA')).toBe(false);
+
+		// invalid outward code
+		expect(stringIsValidPostcodeFormat('AA 1AA')).toBe(false);
+		expect(stringIsValidPostcodeFormat('11 1AA')).toBe(false);
+		expect(stringIsValidPostcodeFormat('1A 1AA')).toBe(false);
+		expect(stringIsValidPostcodeFormat('1 1AA')).toBe(false);
+		expect(stringIsValidPostcodeFormat('A 1AA')).toBe(false);
+
+		// invalid inward code
+		expect(stringIsValidPostcodeFormat('A1 AAA')).toBe(false);
+		expect(stringIsValidPostcodeFormat('A1 AA1')).toBe(false);
+		expect(stringIsValidPostcodeFormat('A1 A11')).toBe(false);
+		expect(stringIsValidPostcodeFormat('A1 111')).toBe(false);
+		expect(stringIsValidPostcodeFormat('A1 11A')).toBe(false);
+		expect(stringIsValidPostcodeFormat('A1 1A')).toBe(false);
 	});
 });

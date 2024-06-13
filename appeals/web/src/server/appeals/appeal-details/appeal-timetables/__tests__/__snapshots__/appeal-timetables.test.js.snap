@@ -36,7 +36,7 @@ exports[`Appeal Timetables should render "Change Final Comment Review Date" page
             </div>
         </div>
         <div class="govuk-button-group">
-            <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+            <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
         </div>
     </form>
 </main>"
@@ -93,7 +93,7 @@ exports[`Appeal Timetables should render "Change Final Comment Review Date" with
             </div>
         </div>
         <div class="govuk-button-group">
-            <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+            <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
         </div>
     </form>
 </main>"
@@ -156,7 +156,7 @@ exports[`Appeal Timetables should render "Change Final Comment Review Date" with
             </div>
         </div>
         <div class="govuk-button-group">
-            <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+            <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
         </div>
     </form>
 </main>"
@@ -198,7 +198,7 @@ exports[`Appeal Timetables should render "Change LPA questionnaire Date" page 1`
             </div>
         </div>
         <div class="govuk-button-group">
-            <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+            <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
         </div>
     </form>
 </main>"
@@ -240,7 +240,7 @@ exports[`Appeal Timetables should render "Change issue determination" page 1`] =
             </div>
         </div>
         <div class="govuk-button-group">
-            <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+            <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
         </div>
     </form>
 </main>"
@@ -282,7 +282,7 @@ exports[`Appeal Timetables should render "Change statement review Date" page 1`]
             </div>
         </div>
         <div class="govuk-button-group">
-            <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+            <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
         </div>
     </form>
 </main>"
@@ -323,7 +323,7 @@ exports[`Appeal Timetables should render "Schedule Final Comment Review Date" pa
             </div>
         </div>
         <div class="govuk-button-group">
-            <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+            <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
         </div>
     </form>
 </main>"
@@ -364,7 +364,7 @@ exports[`Appeal Timetables should render "Schedule LPA questionnaire Date" page 
             </div>
         </div>
         <div class="govuk-button-group">
-            <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+            <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
         </div>
     </form>
 </main>"
@@ -405,7 +405,7 @@ exports[`Appeal Timetables should render "Schedule issue determination" page 1`]
             </div>
         </div>
         <div class="govuk-button-group">
-            <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+            <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
         </div>
     </form>
 </main>"
@@ -446,7 +446,7 @@ exports[`Appeal Timetables should render "Schedule statement review Date" page 1
             </div>
         </div>
         <div class="govuk-button-group">
-            <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+            <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
         </div>
     </form>
 </main>"

@@ -1,4 +1,4 @@
-import { errorAddressLine1, errorPostcode, errorTown } from '../address-error-handler.js';
+import { errorAddressLine1, errorPostcode, errorTown } from '../change-screen-error-handlers.js';
 
 describe('Address', () => {
 	describe('First line error', () => {
