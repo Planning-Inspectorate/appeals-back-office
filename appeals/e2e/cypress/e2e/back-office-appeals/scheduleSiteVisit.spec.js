@@ -25,8 +25,8 @@ describe('Appeals feature', () => {
 		updateDueDatePage.enterVisitEndTimeHour('14');
 		updateDueDatePage.enterVisitEndTimeMinute('00');
 		appealsListPage.clickButtonByText('Confirm');
-		appealsListPage.clickLinkByText('Go back to case details'),
-			appealsListPage.checkAnswer('Visit type', 'Accompanied');
+		appealsListPage.clickLinkByText('Go back to case details');
+		appealsListPage.checkAnswer('Visit type', 'Accompanied');
 	});
 
 	it('Change to access required site visit from case timetable', () => {
@@ -42,8 +42,8 @@ describe('Appeals feature', () => {
 		updateDueDatePage.enterVisitEndTimeHour('14');
 		updateDueDatePage.enterVisitEndTimeMinute('00');
 		appealsListPage.clickButtonByText('Confirm');
-		appealsListPage.clickLinkByText('Go back to case details'),
-			appealsListPage.checkAnswer('Visit type', 'Access required');
+		appealsListPage.clickLinkByText('Go back to case details');
+		appealsListPage.checkAnswer('Visit type', 'Access required');
 	});
 
 	it('Change to Unaccommpanied site visit without time from case timetable', () => {
@@ -59,8 +59,8 @@ describe('Appeals feature', () => {
 		updateDueDatePage.removeVisitEndTimeHour();
 		updateDueDatePage.removeVisitEndTimeMinute();
 		appealsListPage.clickButtonByText('Confirm');
-		appealsListPage.clickLinkByText('Go back to case details'),
-			appealsListPage.checkAnswer('Visit type', 'Unaccompanied');
+		appealsListPage.clickLinkByText('Go back to case details');
+		appealsListPage.checkAnswer('Visit type', 'Unaccompanied');
 	});
 
 	it('Change to Unaccommpanied site visit with time from case timetable', () => {
@@ -76,8 +76,8 @@ describe('Appeals feature', () => {
 		updateDueDatePage.enterVisitEndTimeHour('12');
 		updateDueDatePage.enterVisitEndTimeMinute('00');
 		appealsListPage.clickButtonByText('Confirm');
-		appealsListPage.clickLinkByText('Go back to case details'),
-			appealsListPage.checkAnswer('Visit type', 'Unaccompanied');
+		appealsListPage.clickLinkByText('Go back to case details');
+		appealsListPage.checkAnswer('Visit type', 'Unaccompanied');
 	});
 
 	it.skip('Change to accommpanied site visit from Site details', () => {
@@ -86,8 +86,8 @@ describe('Appeals feature', () => {
 		appealsListPage.clickChangeVisitTypeHasSiteDetails();
 		appealsListPage.selectRadioButtonByValue('Accompanied');
 		appealsListPage.clickButtonByText('Continue');
-		appealsListPage.validateBannerMessage('Site visit type has been selected'),
-			appealsListPage.checkAnswer('Visit Type', 'Accompanied');
+		appealsListPage.validateBannerMessage('Site visit type has been selected');
+		appealsListPage.checkAnswer('Visit Type', 'Accompanied');
 	});
 
 	it.skip('Change to access required site visit from Site details', () => {
@@ -96,8 +96,8 @@ describe('Appeals feature', () => {
 		appealsListPage.clickChangeVisitTypeHasSiteDetails();
 		appealsListPage.selectRadioButtonByValue('Access required');
 		appealsListPage.clickButtonByText('Continue');
-		appealsListPage.validateBannerMessage('Site visit type has been selected'),
-			appealsListPage.checkAnswer('Visit Type', 'Access required');
+		appealsListPage.validateBannerMessage('Site visit type has been selected');
+		appealsListPage.checkAnswer('Visit Type', 'Access required');
 	});
 
 	it.skip('Change to Unaccommpanied site visit from Site details', () => {
@@ -106,7 +106,7 @@ describe('Appeals feature', () => {
 		appealsListPage.clickChangeVisitTypeHasSiteDetails();
 		appealsListPage.selectRadioButtonByValue('Unaccompanied');
 		appealsListPage.clickButtonByText('Continue');
-		appealsListPage.validateBannerMessage('Site visit type has been selected'),
-			appealsListPage.checkAnswer('Visit Type', 'Unaccompanied');
+		appealsListPage.validateBannerMessage('Site visit type has been selected');
+		appealsListPage.checkAnswer('Visit Type', 'Unaccompanied');
 	});
 });
