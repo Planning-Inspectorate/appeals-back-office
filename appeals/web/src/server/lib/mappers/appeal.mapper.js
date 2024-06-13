@@ -912,14 +912,16 @@ export async function initialiseAndMapAppealData(
 		}
 	};
 
-	let startedAtActionLink = {};
+	let startedAtActionLink = null;
 
 	if (appealDetails.validAt) {
 		if (appealDetails.startedAt) {
-			startedAtActionLink = {
-				text: 'Change',
-				href: `${currentRoute}/#`
-			};
+			if (appealDetails.documentationSummary?.lpaQuestionnaire?.status === 'not_received') {
+				startedAtActionLink = {
+					text: 'Change',
+					href: `${currentRoute}/start-case/change`
+				};
+			}
 		} else {
 			startedAtActionLink = {
 				text: 'Add',
@@ -945,7 +947,7 @@ export async function initialiseAndMapAppealData(
 						: ''
 				},
 				actions: {
-					items: [startedAtActionLink]
+					items: startedAtActionLink && [startedAtActionLink]
 				},
 				classes: 'appeal-start-date'
 			}

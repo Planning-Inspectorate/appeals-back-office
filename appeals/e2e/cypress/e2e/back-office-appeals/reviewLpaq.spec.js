@@ -7,14 +7,14 @@ import { UpdateDueDatePage } from '../../page_objects/updateDueDatePage';
 const appealsListPage = new AppealsListPage();
 const updateDueDatePage = new UpdateDueDatePage();
 
-describe.skip('Appeals feature', () => {
+describe('Appeals feature', () => {
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
 	it('Complete LPAQ', () => {
-		cy.visit('/appeals-service/appeals-list');
-		appealsListPage.clickAppealFromList(18);
+		cy.visit('/appeals-service/all-cases');
+		appealsListPage.clickAppealFromList(30);
 		appealsListPage.clickReviewLpaq(7);
 		appealsListPage.selectRadioButtonByValue('Complete');
 		appealsListPage.clickButtonByText('Continue');
@@ -25,59 +25,42 @@ describe.skip('Appeals feature', () => {
 	});
 
 	it('incomplete LPAQ', () => {
-		cy.visit('/appeals-service/appeals-list');
-		appealsListPage.clickAppealFromList(18);
+		cy.visit('/appeals-service/all-cases');
+		appealsListPage.clickAppealFromList(30);
 		appealsListPage.clickReviewLpaq(7);
 		appealsListPage.selectRadioButtonByValue('Incomplete');
 		appealsListPage.clickButtonByText('Continue');
 		appealsListPage.chooseCheckboxByIndex(1);
 		appealsListPage.fillInput1('Hello here is some extra info, have a nice day 7384_+!£ =');
 		appealsListPage.clickButtonByText('Continue');
-		updateDueDatePage.enterDateDay('29');
+		updateDueDatePage.enterDateDay('19');
 		updateDueDatePage.enterDateMonth('12');
 		updateDueDatePage.enterDateYear('2024');
 		appealsListPage.clickButtonByText('Save and Continue');
 		appealsListPage.clickButtonByText('Confirm');
-		appealsListPage.clickLinkByText('Go to case details');
+		appealsListPage.clickLinkByText('Go back to case details');
 		const status = 'Incomplete';
 		const testData = { rowIndex: 1, cellIndex: 0, textToMatch: status, strict: true };
 		appealsListPage.verifyTableCellText(testData);
 	});
 
 	it('incomplete LPAQ add another', () => {
-		cy.visit('/appeals-service/appeals-list');
-		appealsListPage.clickAppealFromList(18);
+		cy.visit('/appeals-service/all-cases');
+		appealsListPage.clickAppealFromList(31);
 		appealsListPage.clickReviewLpaq(7);
 		appealsListPage.selectRadioButtonByValue('Incomplete');
 		appealsListPage.clickButtonByText('Continue');
 		appealsListPage.chooseCheckboxByIndex(1);
 		appealsListPage.fillInput1('Hello here is some extra info, have a nice day 7384_+!£ =');
-		appealsListPage.addAnotherButton();
+		appealsListPage.addAnotherButtonLpaq();
 		appealsListPage.fillInput2('Hello here is some extra info, have a nice day 7384_+!£ =');
 		appealsListPage.clickButtonByText('Continue');
-		updateDueDatePage.enterDateDay('29');
+		updateDueDatePage.enterDateDay('19');
 		updateDueDatePage.enterDateMonth('12');
 		updateDueDatePage.enterDateYear('2024');
 		appealsListPage.clickButtonByText('Save and Continue');
 		appealsListPage.clickButtonByText('Confirm');
-		appealsListPage.clickLinkByText('Go to case details');
-		const status = 'Incomplete';
-		const testData = { rowIndex: 1, cellIndex: 0, textToMatch: status, strict: true };
-		appealsListPage.verifyTableCellText(testData);
-	});
-
-	it('incomplete LPAQ skip due date', () => {
-		cy.visit('/appeals-service/appeals-list');
-		appealsListPage.clickAppealFromList(18);
-		appealsListPage.clickReviewLpaq(7);
-		appealsListPage.selectRadioButtonByValue('Incomplete');
-		appealsListPage.clickButtonByText('Continue');
-		appealsListPage.fillInput1('Hello here is some extra info, have a nice day 7384_+!£ =');
-		appealsListPage.chooseCheckboxByIndex(1);
-		appealsListPage.clickButtonByText('Continue');
-		appealsListPage.clickButtonByText('Skip');
-		appealsListPage.clickButtonByText('Confirm');
-		appealsListPage.clickLinkByText('Go to case details');
+		appealsListPage.clickLinkByText('Go back to case details');
 		const status = 'Incomplete';
 		const testData = { rowIndex: 1, cellIndex: 0, textToMatch: status, strict: true };
 		appealsListPage.verifyTableCellText(testData);

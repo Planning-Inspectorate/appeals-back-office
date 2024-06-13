@@ -9,6 +9,13 @@ router
 	.get(asyncRoute(controller.getStartDate))
 	.post(asyncRoute(controller.postStartDate));
 
-router.route('/confirmation').get(asyncRoute(controller.getConfirmation));
+router.route('/add/confirmation').get(asyncRoute(controller.getAddConfirmation));
+
+router
+	.route('/change')
+	.get(asyncRoute(controller.getChangeDate))
+	.post(asyncRoute(controller.postChangeDate));
+
+router.route('/change/confirmation').get(asyncRoute(controller.getChangeConfirmation));
 
 export default router;
