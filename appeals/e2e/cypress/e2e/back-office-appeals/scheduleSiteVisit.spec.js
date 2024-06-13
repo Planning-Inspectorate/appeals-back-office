@@ -21,7 +21,7 @@ describe('Appeals feature', () => {
 		updateDueDatePage.enterVisitMonth('12');
 		updateDueDatePage.enterVisitYear('2025');
 		updateDueDatePage.enterVisitStartTimeHour('10');
-		updateDueDatePage.enterVisitStartTimeMiinute('00');
+		updateDueDatePage.enterVisitStartTimeMinute('00');
 		updateDueDatePage.enterVisitEndTimeHour('14');
 		updateDueDatePage.enterVisitEndTimeMinute('00');
 		appealsListPage.clickButtonByText('Confirm');
@@ -38,7 +38,7 @@ describe('Appeals feature', () => {
 		updateDueDatePage.enterVisitMonth('12');
 		updateDueDatePage.enterVisitYear('2025');
 		updateDueDatePage.enterVisitStartTimeHour('10');
-		updateDueDatePage.enterVisitStartTimeMiinute('00');
+		updateDueDatePage.enterVisitStartTimeMinute('00');
 		updateDueDatePage.enterVisitEndTimeHour('14');
 		updateDueDatePage.enterVisitEndTimeMinute('00');
 		appealsListPage.clickButtonByText('Confirm');
@@ -72,7 +72,7 @@ describe('Appeals feature', () => {
 		updateDueDatePage.enterVisitMonth('12');
 		updateDueDatePage.enterVisitYear('2025');
 		updateDueDatePage.enterVisitStartTimeHour('08');
-		updateDueDatePage.enterVisitStartTimeMiinute('00');
+		updateDueDatePage.enterVisitStartTimeMinute('00');
 		updateDueDatePage.enterVisitEndTimeHour('12');
 		updateDueDatePage.enterVisitEndTimeMinute('00');
 		appealsListPage.clickButtonByText('Confirm');
