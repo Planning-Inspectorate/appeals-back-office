@@ -19,11 +19,10 @@ import {
 	CASE_RELATIONSHIP_RELATED
 } from '#endpoints/constants.js';
 
-import { STATUSES } from '@pins/appeals/constants/state.js';
-
 import neighbouringSitesRepository from '#repositories/neighbouring-sites.repository.js';
-import { mapDefaultCaseFolders } from '#endpoints/documents/documents.mapper.js';
 import { createAppealReference } from '#utils/appeal-reference.js';
+import { FOLDERS } from '@pins/appeals/constants/documents.js';
+import { STATUSES } from '@pins/appeals/constants/state.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.AppealSite} AppealSite */
 
@@ -362,7 +361,14 @@ export async function seedTestData(databaseConnector) {
 	for (const appealData of appealsData.reverse()) {
 		// @ts-ignore
 		const appeal = await databaseConnector.appeal.create({ data: appealData });
-		await databaseConnector.folder.createMany({ data: mapDefaultCaseFolders(appeal.id) });
+		const defaultFolders = FOLDERS.map((/** @type {string} */ path) => {
+			return {
+				caseId: appeal.id,
+				path
+			};
+		});
+
+		await databaseConnector.folder.createMany({ data: defaultFolders });
 		const appealWithReference = await databaseConnector.appeal.update({
 			where: {
 				id: appeal.id
@@ -503,7 +509,8 @@ export async function seedTestData(databaseConnector) {
 
 	for (const { appealTypeId, id, caseStartedDate } of appeals) {
 		if (caseStartedDate) {
-			const appealType = appealTypes.filter(({ id }) => id === appealTypeId)[0].key || APPEAL_TYPE_SHORTHAND_HAS;
+			const appealType =
+				appealTypes.filter(({ id }) => id === appealTypeId)[0].key || APPEAL_TYPE_SHORTHAND_HAS;
 			const appealTimetable = await calculateTimetable(appealType, caseStartedDate);
 
 			await databaseConnector.appealTimetable.create({
