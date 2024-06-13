@@ -1,4 +1,5 @@
 import lpaQuestionnaireRepository from '#repositories/lpa-questionnaire.repository.js';
+import appealRepository from '#repositories/appeal.repository.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { recalculateDateIfNotBusinessDay } from '#utils/business-days.js';
 import { isOutcomeComplete, isOutcomeIncomplete } from '#utils/check-validation-outcome.js';
@@ -11,10 +12,12 @@ import {
 } from '../constants.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
+import formatDate from '#utils/date-formatter.js';
+import { getFormattedReasons } from '#utils/appeal-formatter.js';
 import config from '#config/config.js';
 
 /** @typedef {import('express').RequestHandler} RequestHandler */
-/** @typedef {import('@pins/appeals.api').Appeals.UpdateLPAQuestionaireValidationOutcomeParams} UpdateLPAQuestionaireValidationOutcomeParams */
+/** @typedef {import('@pins/appeals.api').Appeals.UpdateLPAQuestionnaireValidationOutcomeParams} UpdateLPAQuestionnaireValidationOutcomeParams */
 
 /**
  * @type {RequestHandler}
@@ -35,17 +38,17 @@ const checkLPAQuestionnaireExists = (req, res, next) => {
 };
 
 /**
- * @param {UpdateLPAQuestionaireValidationOutcomeParams} param0
+ * @param {UpdateLPAQuestionnaireValidationOutcomeParams} param0
  * @param { import('#endpoints/appeals.js').NotifyClient } notifyClient
  * @returns {Promise<Date | undefined>}
  */
-const updateLPAQuestionaireValidationOutcome = async (
+const updateLPAQuestionnaireValidationOutcome = async (
 	{ appeal, azureAdUserId, data, lpaQuestionnaireId, validationOutcome, siteAddress },
 	notifyClient
 ) => {
 	let timetable = undefined;
 
-	const { id: appealId, appealStatus, appealType } = appeal;
+	const { id: appealId, appealStatus, appealType, applicationReference: lpaReference } = appeal;
 	const { lpaQuestionnaireDueDate, incompleteReasons } = data;
 
 	if (lpaQuestionnaireDueDate) {
@@ -96,9 +99,40 @@ const updateLPAQuestionaireValidationOutcome = async (
 		}
 	}
 
+	const updatedAppeal = await appealRepository.getAppealById(Number(appealId));
+	if (updatedAppeal) {
+		const { lpaQuestionnaire: updatedLpaQuestionnaire } = updatedAppeal;
+
+		if (isOutcomeIncomplete(validationOutcome.name)) {
+			const recipientEmail = appeal.lpa?.email;
+			if (!recipientEmail) {
+				throw new Error(ERROR_NO_RECIPIENT_EMAIL);
+			}
+
+			const incompleteReasonsList = getFormattedReasons(
+				// @ts-ignore
+				updatedLpaQuestionnaire?.lpaQuestionnaireIncompleteReasonsSelected
+			);
+
+			try {
+				await notifyClient.sendEmail(config.govNotify.template.lpaqIncomplete, recipientEmail, {
+					appeal_reference_number: appeal.reference,
+					lpa_reference: lpaReference,
+					site_address: siteAddress,
+					due_date: formatDate(new Date(lpaQuestionnaireDueDate), false),
+					reasons: incompleteReasonsList
+				});
+			} catch (error) {
+				if (error) {
+					throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
+				}
+			}
+		}
+	}
+
 	await broadcasters.broadcastAppeal(appealId);
 
 	return timetable?.lpaQuestionnaireDueDate;
 };
 
-export { checkLPAQuestionnaireExists, updateLPAQuestionaireValidationOutcome };
+export { checkLPAQuestionnaireExists, updateLPAQuestionnaireValidationOutcome };

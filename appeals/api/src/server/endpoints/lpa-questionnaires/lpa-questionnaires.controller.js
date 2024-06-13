@@ -2,7 +2,7 @@ import { ERROR_FAILED_TO_SAVE_DATA } from '#endpoints/constants.js';
 import { STAGE } from '@pins/appeals/constants/documents.js';
 import { getFoldersForAppeal } from '#endpoints/documents/documents.service.js';
 import { formatLpaQuestionnaire } from './lpa-questionnaires.formatter.js';
-import { updateLPAQuestionaireValidationOutcome } from './lpa-questionnaires.service.js';
+import { updateLPAQuestionnaireValidationOutcome } from './lpa-questionnaires.service.js';
 import lpaQuestionnaireRepository from '#repositories/lpa-questionnaire.repository.js';
 import logger from '#utils/logger.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
@@ -69,7 +69,7 @@ const updateLPAQuestionnaireById = async (req, res) => {
 
 	try {
 		validationOutcome
-			? (body.lpaQuestionnaireDueDate = await updateLPAQuestionaireValidationOutcome(
+			? (body.lpaQuestionnaireDueDate = await updateLPAQuestionnaireValidationOutcome(
 					{
 						appeal,
 						azureAdUserId,
