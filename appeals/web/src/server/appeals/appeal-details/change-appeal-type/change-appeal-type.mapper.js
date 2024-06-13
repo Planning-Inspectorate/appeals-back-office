@@ -56,7 +56,7 @@ export function appealTypePage(appealDetails, appealTypes, changeAppeal) {
  */
 export function mapAppealTypesToSelectItemParameters(appealTypes, changeAppeal) {
 	return appealTypes
-		.sort((a, b) => a.code.localeCompare(b.code))
+		.sort((a, b) => a.key.localeCompare(b.key))
 		.map((appealType) => ({
 			value: appealType.id.toString(),
 			text: mapAppealTypeToDisplayText(appealType),
@@ -283,7 +283,7 @@ async function mapAppealResubmitTypeIdToAppealType(apiClient, appealDetails) {
  * @returns
  */
 function mapAppealTypeToDisplayText(appealType) {
-	return `(${appealType.code}) ${appealType.type}`;
+	return `(${appealType.key}) ${appealType.type}`;
 }
 
 /**
@@ -346,7 +346,8 @@ export function changeAppealFinalDatePage(appealDetails, changeDay, changeMonth,
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-type/resubmit`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'What is the final date the appellant must resubmit by?',
-		pageComponents: [selectDateComponent, insetTextComponent]
+		pageComponents: [selectDateComponent, insetTextComponent],
+		submitButtonText: 'Confirm'
 	};
 
 	return pageContent;
