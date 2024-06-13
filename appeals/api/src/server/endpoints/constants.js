@@ -150,9 +150,6 @@ export const LENGTH_10 = 10;
 export const LENGTH_300 = 300;
 
 export const NODE_ENV_PRODUCTION = 'production';
-export const ODW_SYSTEM_ID = 'back-office-appeals';
-export const ODW_APPELLANT_SVCUSR = 'Appellant';
-export const ODW_AGENT_SVCUSR = 'Agent';
 
 export const SITE_VISIT_TYPE_UNACCOMPANIED = 'Unaccompanied';
 export const SITE_VISIT_TYPE_ACCOMPANIED = 'Accompanied';

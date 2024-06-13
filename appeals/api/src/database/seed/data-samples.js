@@ -2,9 +2,7 @@
  * Sample data used for development and testing
  */
 
-import {
-	APPEAL_TYPE_SHORTHAND_HAS
-} from '../../server/endpoints/constants.js';
+import { APPEAL_TYPE_SHORTHAND_HAS } from '../../server/endpoints/constants.js';
 
 /**
  * @typedef {import('@pins/appeals.api').Schema.LPAQuestionnaire} LPAQuestionnaire
@@ -106,6 +104,11 @@ export const agentsList = personList.map(({ firstName, lastName, company, email 
 }));
 
 export const localPlanningDepartmentList = [
+	{
+		lpaCode: 'Q9999',
+		name: 'Integration Testing Borough Council',
+		email: 'int2@lpa-email.gov.uk'
+	},
 	{
 		lpaCode: 'MAID',
 		name: 'Maidstone Borough Council',
@@ -310,15 +313,15 @@ export const incompleteReviewQuestionnaireSample = {
 export const appellantCaseList = {
 	[APPEAL_TYPE_SHORTHAND_HAS]: {
 		siteAreaSquareMetres: 30.9,
-    floorSpaceSquareMetres: 9.7,
-    ownsAllLand: true,
-    ownsSomeLand: false,
-    //knowsOtherOwners: "Some",
-    //knowsAllOwners: "No",
-    hasAdvertisedAppeal: false,
-    //ownersInformed: null,
-    //originalDevelopmentDescription: "adipisicing aliqua",
-    //changedDevelopmentDescription: true
+		floorSpaceSquareMetres: 9.7,
+		ownsAllLand: true,
+		ownsSomeLand: false,
+		//knowsOtherOwners: "Some",
+		//knowsAllOwners: "No",
+		hasAdvertisedAppeal: false
+		//ownersInformed: null,
+		//originalDevelopmentDescription: "adipisicing aliqua",
+		//changedDevelopmentDescription: true
 	}
 };
 

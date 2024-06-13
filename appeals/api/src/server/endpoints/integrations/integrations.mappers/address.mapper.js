@@ -1,13 +1,23 @@
 // @ts-nocheck
 // TODO: schemas (PINS data model)
 
-export const mapAddressIn = (appeal) => {
+export const mapAddressIn = (casedata) => {
 	return {
-		addressLine1: appeal.siteAddressLine1,
-		addressLine2: appeal.siteAddressLine2,
-		addressCounty: appeal.siteAddressCounty,
-		postcode: appeal.siteAddressPostcode,
-		addressTown: appeal.siteAddressTown
+		addressLine1: casedata.siteAddressLine1,
+		addressLine2: casedata.siteAddressLine2,
+		addressCounty: casedata.siteAddressCounty,
+		postcode: casedata.siteAddressPostcode,
+		addressTown: casedata.siteAddressTown
+	};
+};
+
+export const mapNeighboouringAddressIn = (casedata) => {
+	return {
+		addressLine1: casedata.neighbouringSiteAddressLine1,
+		addressLine2: casedata.neighbouringSiteAddressLine2,
+		addressCounty: casedata.neighbouringSiteAddressCounty,
+		postcode: casedata.neighbouringSiteAddressPostcode,
+		addressTown: casedata.neighbouringSiteAddressTown
 	};
 };
 

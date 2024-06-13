@@ -9,9 +9,16 @@ import { databaseConnector } from '#utils/database-connector.js';
 import { EventType } from '@pins/event-client';
 import BackOfficeAppError from '#utils/app-error.js';
 
-const importAppellantCase = async (/** @type {*} */ data, /** @type {*} */ documents) => {
+/**
+ *
+ * @param {*} data
+ * @param {*} documents
+ * @param {string[] | null} relatedReferences
+ * @returns
+ */
+const importAppellantCase = async (data, documents, relatedReferences) => {
 	await checkExistingDocumentIDs(documents);
-	const result = await createAppeal(data, documents);
+	const result = await createAppeal(data, documents, relatedReferences || []);
 
 	if (!result?.appeal) {
 		throw new BackOfficeAppError(`Failure importing appellant case. Appeal could not be created.`);

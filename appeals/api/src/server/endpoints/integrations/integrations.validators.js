@@ -4,17 +4,17 @@ import { loadAllSchemas } from 'pins-data-model';
 import BackOfficeAppError from '#utils/app-error.js';
 import { setCache, getCache } from '#utils/cache-data.js';
 
+//1.5.1
 export const schemas = {
 	commands: {
-		appealSubmission: '',
+		appealSubmission: 'appellant-submission',
 		lpaSubmission: '',
 		documentSubmission: ''
 	},
 	events: {
 		serviceUser: 'service-user',
 		document: 'appeal-document',
-		appeal: 'pins-appeal',
-		lpaSubmission: '',
+		appeal: 'appeal-has',
 		appealEvent: ''
 	}
 };

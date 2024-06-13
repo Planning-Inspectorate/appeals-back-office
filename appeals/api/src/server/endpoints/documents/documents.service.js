@@ -81,7 +81,7 @@ export const addDocumentsToAppeal = async (upload, appeal) => {
 
 	for (const document of documentsCreated) {
 		if (document?.documentGuid) {
-			await broadcasters.broadcastDocument(document?.documentGuid, 1, EventType.Create);
+			await broadcasters.broadcastDocument(document.documentGuid, 1, EventType.Create);
 		}
 	}
 

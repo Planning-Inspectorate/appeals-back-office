@@ -3239,125 +3239,232 @@
 			"AppellantCaseData": {
 				"type": "object",
 				"properties": {
-					"appeal": {
+					"casedata": {
 						"type": "object",
 						"properties": {
-							"LPACode": {
+							"caseType": {
+								"type": "string",
+								"example": "D"
+							},
+							"caseProcedure": {
+								"type": "string",
+								"example": "written"
+							},
+							"lpaCode": {
 								"type": "string",
 								"example": "Q9999"
 							},
-							"LPAName": {
+							"caseSubmittedDate": {
 								"type": "string",
-								"example": "System Test Borough Council"
+								"example": "1909-06-19T16:26:31.0Z"
 							},
-							"appealType": {
-								"type": "string",
-								"example": "Householder (HAS) Appeal"
-							},
-							"isListedBuilding": {
+							"enforcementNotice": {
 								"type": "boolean",
 								"example": false
 							},
-							"decision": {
+							"applicationReference": {
+								"type": "string",
+								"example": "ABC/123/QWER"
+							},
+							"applicationDate": {
+								"type": "string",
+								"example": "1922-01-01T09:44:51.0Z"
+							},
+							"applicationDecision": {
 								"type": "string",
 								"example": "refused"
 							},
-							"originalCaseDecisionDate": {
+							"applicationDecisionDate": {
 								"type": "string",
-								"example": "2023-07-07T13:53:31.6003126+00:00"
+								"example": "1892-04-13T01:13:33.0Z"
 							},
-							"costsAppliedForIndicator": {
-								"type": "boolean",
-								"example": false
-							},
-							"LPAApplicationReference": {
+							"caseSubmissionDueDate": {
 								"type": "string",
-								"example": "PL/12367232/B"
-							},
-							"appellant": {
-								"type": "object",
-								"properties": {
-									"firstName": {
-										"type": "string",
-										"example": "Paul"
-									},
-									"lastName": {
-										"type": "string",
-										"example": "Pogba"
-									},
-									"emailAddress": {
-										"type": "string",
-										"example": "test@example.com"
-									}
-								}
-							},
-							"agent": {
-								"type": "object",
-								"properties": {
-									"firstName": {
-										"type": "string",
-										"example": "Ray"
-									},
-									"lastName": {
-										"type": "string",
-										"example": "Liotta"
-									},
-									"emailAddress": {
-										"type": "string",
-										"example": "test@example.com"
-									}
-								}
+								"example": "1891-09-22T22:28:18.0Z"
 							},
 							"siteAddressLine1": {
 								"type": "string",
-								"example": "123 Fake Street"
+								"example": "irure laborum anim do eu"
 							},
 							"siteAddressLine2": {
 								"type": "string",
-								"example": "Short Lane"
+								"example": "Excepteur cillum Duis culpa dolor"
 							},
 							"siteAddressTown": {
 								"type": "string",
-								"example": "Testville"
+								"example": "sit pariatur incididunt"
 							},
-							"siteAddressCounty": {
-								"type": "string",
-								"example": "Testshire"
-							},
+							"siteAddressCounty": {},
 							"siteAddressPostcode": {
 								"type": "string",
-								"example": "M1 1BB"
+								"example": "ut voluptate labore ullamco ex"
 							},
-							"isSiteFullyOwned": {
+							"siteAccessDetails": {
+								"type": "array",
+								"example": [
+									"fugiat veniam qui pariatur",
+									"in consectetur id",
+									"voluptate mollit culpa",
+									"magna"
+								],
+								"items": {
+									"type": "string"
+								}
+							},
+							"siteSafetyDetails": {
+								"type": "array",
+								"example": ["sint do"],
+								"items": {
+									"type": "string"
+								}
+							},
+							"siteAreaSquareMetres": {
+								"type": "number",
+								"example": 30.9
+							},
+							"floorSpaceSquareMetres": {
+								"type": "number",
+								"example": 9.7
+							},
+							"ownsAllLand": {
 								"type": "boolean",
 								"example": true
 							},
-							"hasToldOwners": {
+							"ownsSomeLand": {
 								"type": "boolean",
-								"example": true
+								"example": false
 							},
-							"isSiteVisible": {
-								"type": "boolean",
-								"example": true
-							},
-							"inspectorAccessDetails": {
+							"knowsOtherOwners": {
 								"type": "string",
-								"example": "Small lane from main road"
+								"example": "Some"
 							},
-							"doesSiteHaveHealthAndSafetyIssues": {
+							"knowsAllOwners": {
+								"type": "string",
+								"example": "No"
+							},
+							"advertisedAppeal": {
+								"type": "boolean",
+								"example": false
+							},
+							"ownersInformed": {},
+							"originalDevelopmentDescription": {
+								"type": "string",
+								"example": "adipisicing aliqua"
+							},
+							"changedDevelopmentDescription": {
 								"type": "boolean",
 								"example": true
 							},
-							"healthAndSafetyIssuesDetails": {
-								"type": "string",
-								"example": "There's an american bully onsite"
+							"nearbyCaseReferences": {
+								"type": "array",
+								"example": ["7000111", "7000112", "7000113", "7000114", "7000115"],
+								"items": {
+									"type": "string"
+								}
+							},
+							"neighbouringSiteAddresses": {
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"neighbouringSiteAddressLine1": {
+											"type": "string",
+											"example": "in"
+										},
+										"neighbouringSiteAddressLine2": {
+											"type": "string",
+											"example": "dolore minim"
+										},
+										"neighbouringSiteAddressTown": {
+											"type": "string",
+											"example": "sunt ut"
+										},
+										"neighbouringSiteAddressCounty": {
+											"type": "string",
+											"example": "reprehenderit Ut dolore"
+										},
+										"neighbouringSiteAddressPostcode": {
+											"type": "string",
+											"example": "dolor"
+										},
+										"neighbouringSiteAccessDetails": {
+											"type": "string",
+											"example": "nulla adipisicing"
+										},
+										"neighbouringSiteSafetyDetails": {}
+									}
+								}
+							},
+							"appellantCostsAppliedFor": {
+								"type": "boolean",
+								"example": false
 							}
 						}
 					},
 					"documents": {
 						"type": "array",
-						"example": [],
-						"items": {}
+						"items": {
+							"type": "object",
+							"properties": {
+								"documentId": {
+									"type": "string",
+									"example": "4547fec8-16b2-47bb-836d-4d0baac04079"
+								},
+								"filename": {
+									"type": "string",
+									"example": "exercitation reprehenderit laborum eu enim"
+								},
+								"originalFilename": {
+									"type": "string",
+									"example": "cupidatat"
+								},
+								"size": {
+									"type": "number",
+									"example": 23810727
+								},
+								"mime": {
+									"type": "string",
+									"example": "non cupidatat ea"
+								},
+								"documentURI": {
+									"type": "string",
+									"example": "elit est Excepteur cupidatat"
+								},
+								"dateCreated": {
+									"type": "string",
+									"example": "1890-01-01T22:21:50.0Z"
+								},
+								"documentType": {
+									"type": "string",
+									"example": "originalApplicationForm"
+								}
+							}
+						}
+					},
+					"users": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"salutation": {},
+								"firstName": {
+									"type": "string",
+									"example": "Ray"
+								},
+								"lastName": {
+									"type": "string",
+									"example": "Liotta"
+								},
+								"emailAddress": {
+									"type": "string",
+									"example": "test@example.com"
+								},
+								"serviceUserType": {
+									"type": "string",
+									"example": "Agent"
+								}
+							}
+						}
 					}
 				},
 				"xml": {

@@ -33,64 +33,108 @@ export interface ValidateDate {
 }
 
 export interface AppellantCaseData {
-	appeal?: {
+	casedata?: {
+		/** @example "D" */
+		caseType?: string;
+		/** @example "written" */
+		caseProcedure?: string;
 		/** @example "Q9999" */
-		LPACode?: string;
-		/** @example "System Test Borough Council" */
-		LPAName?: string;
-		/** @example "Householder (HAS) Appeal" */
-		appealType?: string;
+		lpaCode?: string;
+		/** @example "1909-06-19T16:26:31.0Z" */
+		caseSubmittedDate?: string;
 		/** @example false */
-		isListedBuilding?: boolean;
+		enforcementNotice?: boolean;
+		/** @example "ABC/123/QWER" */
+		applicationReference?: string;
+		/** @example "1922-01-01T09:44:51.0Z" */
+		applicationDate?: string;
 		/** @example "refused" */
-		decision?: string;
-		/** @example "2023-07-07T13:53:31.6003126+00:00" */
-		originalCaseDecisionDate?: string;
-		/** @example false */
-		costsAppliedForIndicator?: boolean;
-		/** @example "PL/12367232/B" */
-		LPAApplicationReference?: string;
-		appellant?: {
-			/** @example "Paul" */
-			firstName?: string;
-			/** @example "Pogba" */
-			lastName?: string;
-			/** @example "test@example.com" */
-			emailAddress?: string;
-		};
-		agent?: {
-			/** @example "Ray" */
-			firstName?: string;
-			/** @example "Liotta" */
-			lastName?: string;
-			/** @example "test@example.com" */
-			emailAddress?: string;
-		};
-		/** @example "123 Fake Street" */
+		applicationDecision?: string;
+		/** @example "1892-04-13T01:13:33.0Z" */
+		applicationDecisionDate?: string;
+		/** @example "1891-09-22T22:28:18.0Z" */
+		caseSubmissionDueDate?: string;
+		/** @example "irure laborum anim do eu" */
 		siteAddressLine1?: string;
-		/** @example "Short Lane" */
+		/** @example "Excepteur cillum Duis culpa dolor" */
 		siteAddressLine2?: string;
-		/** @example "Testville" */
+		/** @example "sit pariatur incididunt" */
 		siteAddressTown?: string;
-		/** @example "Testshire" */
-		siteAddressCounty?: string;
-		/** @example "M1 1BB" */
+		siteAddressCounty?: any;
+		/** @example "ut voluptate labore ullamco ex" */
 		siteAddressPostcode?: string;
+		/** @example ["fugiat veniam qui pariatur","in consectetur id","voluptate mollit culpa","magna"] */
+		siteAccessDetails?: string[];
+		/** @example ["sint do"] */
+		siteSafetyDetails?: string[];
+		/** @example 30.9 */
+		siteAreaSquareMetres?: number;
+		/** @example 9.7 */
+		floorSpaceSquareMetres?: number;
 		/** @example true */
-		isSiteFullyOwned?: boolean;
+		ownsAllLand?: boolean;
+		/** @example false */
+		ownsSomeLand?: boolean;
+		/** @example "Some" */
+		knowsOtherOwners?: string;
+		/** @example "No" */
+		knowsAllOwners?: string;
+		/** @example false */
+		advertisedAppeal?: boolean;
+		ownersInformed?: any;
+		/** @example "adipisicing aliqua" */
+		originalDevelopmentDescription?: string;
 		/** @example true */
-		hasToldOwners?: boolean;
-		/** @example true */
-		isSiteVisible?: boolean;
-		/** @example "Small lane from main road" */
-		inspectorAccessDetails?: string;
-		/** @example true */
-		doesSiteHaveHealthAndSafetyIssues?: boolean;
-		/** @example "There's an american bully onsite" */
-		healthAndSafetyIssuesDetails?: string;
+		changedDevelopmentDescription?: boolean;
+		/** @example ["7000111","7000112","7000113","7000114","7000115"] */
+		nearbyCaseReferences?: string[];
+		neighbouringSiteAddresses?: {
+			/** @example "in" */
+			neighbouringSiteAddressLine1?: string;
+			/** @example "dolore minim" */
+			neighbouringSiteAddressLine2?: string;
+			/** @example "sunt ut" */
+			neighbouringSiteAddressTown?: string;
+			/** @example "reprehenderit Ut dolore" */
+			neighbouringSiteAddressCounty?: string;
+			/** @example "dolor" */
+			neighbouringSiteAddressPostcode?: string;
+			/** @example "nulla adipisicing" */
+			neighbouringSiteAccessDetails?: string;
+			neighbouringSiteSafetyDetails?: any;
+		}[];
+		/** @example false */
+		appellantCostsAppliedFor?: boolean;
 	};
-	/** @example [] */
-	documents?: any[];
+	documents?: {
+		/** @example "4547fec8-16b2-47bb-836d-4d0baac04079" */
+		documentId?: string;
+		/** @example "exercitation reprehenderit laborum eu enim" */
+		filename?: string;
+		/** @example "cupidatat" */
+		originalFilename?: string;
+		/** @example 23810727 */
+		size?: number;
+		/** @example "non cupidatat ea" */
+		mime?: string;
+		/** @example "elit est Excepteur cupidatat" */
+		documentURI?: string;
+		/** @example "1890-01-01T22:21:50.0Z" */
+		dateCreated?: string;
+		/** @example "originalApplicationForm" */
+		documentType?: string;
+	}[];
+	users?: {
+		salutation?: any;
+		/** @example "Ray" */
+		firstName?: string;
+		/** @example "Liotta" */
+		lastName?: string;
+		/** @example "test@example.com" */
+		emailAddress?: string;
+		/** @example "Agent" */
+		serviceUserType?: string;
+	}[];
 }
 
 export interface QuestionnaireData {

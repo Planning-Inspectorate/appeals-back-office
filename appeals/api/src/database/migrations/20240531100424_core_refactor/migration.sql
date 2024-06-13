@@ -97,6 +97,8 @@ ALTER TABLE [dbo].[AppellantCaseIncompleteReasonOnAppellantCase] DROP CONSTRAINT
 -- DropForeignKey
 ALTER TABLE [dbo].[AppellantCaseIncompleteReasonOnAppellantCase] DROP CONSTRAINT [AppellantCaseIncompleteReasonOnAppellantCase_appellantCaseIncompleteReasonId_fkey];
 
+-- Delete data
+DELETE FROM [dbo].[AppellantCaseIncompleteReasonText]
 -- DropForeignKey
 ALTER TABLE [dbo].[AppellantCaseIncompleteReasonText] DROP CONSTRAINT [AppellantCaseIncompleteReasonText_appellantCaseIncompleteReasonId_appellantCaseId_fkey];
 
@@ -106,6 +108,8 @@ ALTER TABLE [dbo].[AppellantCaseInvalidReasonOnAppellantCase] DROP CONSTRAINT [A
 -- DropForeignKey
 ALTER TABLE [dbo].[AppellantCaseInvalidReasonOnAppellantCase] DROP CONSTRAINT [AppellantCaseInvalidReasonOnAppellantCase_appellantCaseInvalidReasonId_fkey];
 
+-- Delete data
+DELETE FROM [dbo].[AppellantCaseInvalidReasonText]
 -- DropForeignKey
 ALTER TABLE [dbo].[AppellantCaseInvalidReasonText] DROP CONSTRAINT [AppellantCaseInvalidReasonText_appellantCaseInvalidReasonId_appellantCaseId_fkey];
 
@@ -136,6 +140,8 @@ ALTER TABLE [dbo].[LPAQuestionnaireIncompleteReasonOnLPAQuestionnaire] DROP CONS
 -- DropForeignKey
 ALTER TABLE [dbo].[LPAQuestionnaireIncompleteReasonOnLPAQuestionnaire] DROP CONSTRAINT [LPAQuestionnaireIncompleteReasonOnLPAQuestionnaire_lpaQuestionnaireIncompleteReasonId_fkey];
 
+-- Delete data
+DELETE FROM [dbo].[LPAQuestionnaireIncompleteReasonText]
 -- DropForeignKey
 ALTER TABLE [dbo].[LPAQuestionnaireIncompleteReasonText] DROP CONSTRAINT [LPAQuestionnaireIncompleteReasonText_lpaQuestionnaireIncompleteReasonId_lpaQuestionnaireId_fkey];
 

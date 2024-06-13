@@ -2,16 +2,14 @@
 // TODO: schemas (PINS data model)
 // TODO: add local data model for LPA
 
-export const mapLpaIn = (appeal) => {
+export const mapLpaIn = (casedata) => {
 	return {
-		lpaCode: appeal.LPACode,
-		name: appeal.LPAName
+		lpaCode: casedata.lpaCode
 	};
 };
 
 export const mapLpaOut = (appeal) => {
 	return {
-		LPACode: appeal.lpa.lpaCode,
-		LPAName: appeal.lpa.name
+		lpaCode: appeal.lpa.lpaCode
 	};
 };

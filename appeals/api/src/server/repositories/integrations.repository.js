@@ -9,16 +9,14 @@ import { STAGE, DOCTYPE } from '@pins/appeals/constants/documents.js';
 
 import config from '#config/config.js';
 
-export const loadAppeal = async (id) => {
-	const appeal = await databaseConnector.appeal.findUnique({
-		where: { id },
-		include: getFindUniqueAppealQueryIncludes()
-	});
-
-	return appeal;
-};
-
-export const createAppeal = async (data, documents) => {
+/**
+ *
+ * @param {*} data
+ * @param {*} documents
+ * @param {string[]} relatedReferences
+ * @returns
+ */
+export const createAppeal = async (data, documents, relatedReferences) => {
 	const unredactedStatus = await getDefaultRedactionStatus();
 	const transaction = await databaseConnector.$transaction(async (tx) => {
 		let appeal = await tx.appeal.create({ data });
@@ -90,6 +88,35 @@ export const createAppeal = async (data, documents) => {
 					}
 				}
 			});
+		}
+
+		if (relatedReferences.length > 0) {
+			const relatedAppeals = await tx.appeal.findMany({
+				where: {
+					reference: { in: relatedReferences }
+				}
+			});
+
+			const appealRelationships = relatedReferences.map((ref) => {
+				const foundAppeal = relatedAppeals.find((a) => a.reference === ref);
+				const item = {
+					type: 'related',
+					parentRef: reference,
+					childRef: ref,
+					parentId: appeal.id,
+					childId: foundAppeal?.id || null,
+					externalSource: foundAppeal?.reference ? false : true,
+					externaAppealType: null
+				};
+
+				return item;
+			});
+
+			if (appealRelationships.length > 0) {
+				await tx.appealRelationship.createMany({
+					data: appealRelationships
+				});
+			}
 		}
 
 		appeal = await tx.appeal.findUnique({
