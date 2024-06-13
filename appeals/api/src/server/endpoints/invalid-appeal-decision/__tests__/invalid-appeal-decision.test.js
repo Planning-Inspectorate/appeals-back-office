@@ -121,7 +121,7 @@ describe('invalid appeal decision routes', () => {
 					emailReplyToId: null,
 					personalisation: {
 						appeal_reference_number: correctAppealState.reference,
-						lpa_reference: correctAppealState.planningApplicationReference,
+						lpa_reference: correctAppealState.applicationReference,
 						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 						reasons: 'Invalid reason'
 					},
@@ -137,7 +137,7 @@ describe('invalid appeal decision routes', () => {
 					emailReplyToId: null,
 					personalisation: {
 						appeal_reference_number: correctAppealState.reference,
-						lpa_reference: correctAppealState.planningApplicationReference,
+						lpa_reference: correctAppealState.applicationReference,
 						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 						reasons: 'Invalid reason'
 					},

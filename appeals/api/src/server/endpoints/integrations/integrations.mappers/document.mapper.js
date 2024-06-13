@@ -1,20 +1,23 @@
-// @ts-nocheck
-// TODO: schemas (PINS data model)
-
 import config from '#config/config.js';
 import { randomUUID } from 'node:crypto';
 import { UUID_REGEX } from '#endpoints/constants.js';
 import { mapDate } from './date.mapper.js';
 import { ODW_SYSTEM_ID } from '#endpoints/constants.js';
-import {
-	AVSCAN_STATUS,
-	REDACTION_STATUS,
-	ORIGIN,
-	STAGE
-} from '@pins/appeals/constants/documents.js';
+import { ORIGIN, STAGE } from '@pins/appeals/constants/documents.js';
+import { getAvScanStatus } from '#endpoints/documents/documents.service.js';
 
+/** @typedef {import('@pins/appeals.api').Schema.Document} Document */
+/** @typedef {import('@pins/appeals.api').Schema.DocumentVersion} DocumentVersion */
+/** @typedef {import('@pins/appeals.api').Schema.DocumentRedactionStatus} DocumentRedactionStatus */
+
+/**
+ *
+ * @param {*} doc
+ * @returns
+ */
 export const mapDocumentIn = (doc) => {
 	const { filename, ...metadata } = doc;
+	// @ts-ignore
 	const { originalFilename, originalGuid } = mapDocumentUrl(metadata.documentURI, filename);
 
 	let documentGuid = originalGuid;
@@ -35,8 +38,13 @@ export const mapDocumentIn = (doc) => {
 	};
 };
 
+/**
+ *
+ * @param {Document} data
+ * @returns
+ */
 export const mapDocumentOut = (data) => {
-	const latestDocumentVersion = data.documentVersion.length === 1 ? data.documentVersion[0] : null;
+	const latestDocumentVersion = data.versions.length === 1 ? data.versions[0] : null;
 	const documentInput = {
 		...data,
 		latestDocumentVersion
@@ -48,12 +56,12 @@ export const mapDocumentOut = (data) => {
 
 	const isPublished = mapPublishingStatus(documentInput.latestDocumentVersion);
 	const virusCheckStatus = mapVirusCheckStatus(documentInput.latestDocumentVersion);
-	const redactedStatus = mapRedactionStatus(documentInput.latestDocumentVersion.redactionStatus);
+	const redactedStatus = mapRedactionStatus(documentInput.latestDocumentVersion.redactionStatus || null);
 
 	const doc = {
 		documentId: documentInput.guid,
 		caseId: documentInput.caseId,
-		caseReference: documentInput.case.reference,
+		caseReference: documentInput.case?.reference,
 		version: documentInput.latestDocumentVersion.version,
 		filename: documentInput.latestDocumentVersion.fileName,
 		originalFilename: documentInput.latestDocumentVersion.originalFilename,
@@ -70,7 +78,7 @@ export const mapDocumentOut = (data) => {
 			documentInput.latestDocumentVersion.lastModified ||
 				documentInput.latestDocumentVersion.dateCreated
 		),
-		caseType: documentInput.case.appealType.shorthand,
+		caseType: documentInput.case?.appealType.key,
 		redactedStatus,
 		documentType: documentInput.latestDocumentVersion.documentType,
 		sourceSystem: ODW_SYSTEM_ID,
@@ -85,6 +93,12 @@ export const mapDocumentOut = (data) => {
 	return doc;
 };
 
+/**
+ *
+ * @param {string} documentURI
+ * @param {string} fileName
+ * @returns
+ */
 const mapDocumentUrl = (documentURI, fileName) => {
 	const url = new URL(documentURI);
 	if (!url) {
@@ -107,31 +121,38 @@ const mapDocumentUrl = (documentURI, fileName) => {
 	};
 };
 
+/**
+ *
+ * @param {DocumentVersion} documentVersion
+ * @returns
+ */
 const mapVirusCheckStatus = (documentVersion) => {
-	if (documentVersion.virusCheckStatus === 'checked') {
-		return AVSCAN_STATUS.SCANNED;
-	}
-	if (documentVersion.virusCheckStatus === 'not_checked') {
-		return AVSCAN_STATUS.NOT_SCANNED;
-	}
-
-	return AVSCAN_STATUS.AFFECTED;
+	return getAvScanStatus(documentVersion);
 };
 
+/**
+ *
+ * @param {DocumentVersion} documentVersion
+ * @returns
+ */
 const mapPublishingStatus = (documentVersion) => {
 	return documentVersion.stage !== STAGE.INTERNAL;
 };
 
+/**
+ *
+ * @param {DocumentRedactionStatus | null} status
+ * @returns
+ */
 const mapRedactionStatus = (status) => {
-	if (status.name === 'No redaction required') {
-		return REDACTION_STATUS.NO_REDACTION_REQUIRED;
-	}
-	if (status.name === 'Redacted') {
-		return REDACTION_STATUS.REDACTED;
-	}
-	return REDACTION_STATUS.UNREDACTED;
+	return status?.key || null;
 };
 
+/**
+ *
+ * @param {string | null} stage
+ * @returns
+ */
 const mapOrigin = (stage) => {
 	if (stage === STAGE.APPELLANT_CASE) {
 		return ORIGIN.CITIZEN;

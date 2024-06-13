@@ -1,3 +1,5 @@
+import { REDACTION_STATUS } from '@pins/appeals/constants/documents.js';
+import { AVSCAN_STATUS } from '@pins/appeals/constants/documents.js';
 import { sample } from 'lodash-es';
 
 export const localPlanningDepartments = [
@@ -103,20 +105,20 @@ export const appealData = {
 	caseOfficer: null,
 	costs: {
 		appellantFolder: {
-			caseId: 1,
-			id: 1,
+			caseId: '1',
+			folderId: 1,
 			path: 'appeal_costs/appellant',
 			documents: []
 		},
 		lpaFolder: {
-			caseId: 1,
-			id: 2,
+			caseId: '1',
+			folderId: 2,
 			path: 'appeal_costs/lpa',
 			documents: []
 		},
 		decisionFolder: {
-			caseId: 1,
-			id: 3,
+			caseId: '1',
+			folderId: 3,
 			path: 'appeal_costs/decision',
 			documents: []
 		}
@@ -236,7 +238,7 @@ export const appellantCaseDataNotValidated = {
 					folderId: 3420,
 					caseId: 111,
 					isLateEntry: true,
-					virusCheckStatus: 'checked'
+					virusCheckStatus: AVSCAN_STATUS.SCANNED
 				},
 				{
 					id: 'a78446aa-167a-4bef-89b7-18bcb0da11c1',
@@ -244,7 +246,7 @@ export const appellantCaseDataNotValidated = {
 					folderId: 3420,
 					caseId: 111,
 					isLateEntry: false,
-					virusCheckStatus: 'checked'
+					virusCheckStatus: AVSCAN_STATUS.SCANNED
 				}
 			],
 			folderId: 70461,
@@ -277,7 +279,6 @@ export const appellantCaseDataNotValidated = {
 		}
 	},
 	hasAdvertisedAppeal: null,
-	hasNewSupportingDocuments: false,
 	healthAndSafety: {
 		details: null,
 		hasIssues: false
@@ -574,7 +575,7 @@ export const lpaQuestionnaireData = {
 					folderId: 3420,
 					caseId: 111,
 					isLateEntry: true,
-					virusCheckStatus: 'checked'
+					virusCheckStatus: AVSCAN_STATUS.SCANNED
 				},
 				{
 					id: 'a78446aa-167a-4bef-89b7-18bcb0da11c1',
@@ -582,7 +583,7 @@ export const lpaQuestionnaireData = {
 					folderId: 3420,
 					caseId: 111,
 					isLateEntry: false,
-					virusCheckStatus: 'checked'
+					virusCheckStatus: AVSCAN_STATUS.SCANNED
 				},
 				{
 					id: 'a78446aa-167a-4bef-89b7-18bcb0da11c2',
@@ -590,7 +591,7 @@ export const lpaQuestionnaireData = {
 					folderId: 3420,
 					caseId: 111,
 					isLateEntry: false,
-					virusCheckStatus: 'checked'
+					virusCheckStatus: AVSCAN_STATUS.SCANNED
 				}
 			]
 		}
@@ -990,7 +991,7 @@ export const lpaQuestionnaireDataNotValidated = {
 					folderId: 3420,
 					caseId: 111,
 					isLateEntry: true,
-					virusCheckStatus: 'checked'
+					virusCheckStatus: AVSCAN_STATUS.SCANNED
 				},
 				{
 					id: 'a78446aa-167a-4bef-89b7-18bcb0da11c1',
@@ -998,7 +999,7 @@ export const lpaQuestionnaireDataNotValidated = {
 					folderId: 3420,
 					caseId: 111,
 					isLateEntry: false,
-					virusCheckStatus: 'checked'
+					virusCheckStatus: AVSCAN_STATUS.SCANNED
 				},
 				{
 					id: 'a78446aa-167a-4bef-89b7-18bcb0da11c2',
@@ -1006,7 +1007,7 @@ export const lpaQuestionnaireDataNotValidated = {
 					folderId: 3420,
 					caseId: 111,
 					isLateEntry: false,
-					virusCheckStatus: 'not_checked'
+					virusCheckStatus: AVSCAN_STATUS.NOT_SCANNED
 				}
 			]
 		}
@@ -1326,34 +1327,20 @@ export const documentFileInfo = {
 	folderId: 1269,
 	createdAt: '2023-10-11T13:57:41.592Z',
 	isDeleted: false,
-	latestVersionId: 1,
-	caseId: 1,
-	receivedAt: null,
-	documentRedactionStatusId: null,
-	documentRedactionStatus: null,
+	caseId: '1',
 	latestDocumentVersion: {
-		documentGuid: 'd51f408c-7c6f-4f49-bcc0-abbb5bea3be6',
+		documentId: 'd51f408c-7c6f-4f49-bcc0-abbb5bea3be6',
 		version: 1,
-		lastModified: null,
 		documentType: 'conservationAreaMap',
-		published: false,
-		sourceSystem: 'back-office',
-		origin: null,
 		originalFilename: 'ph0-documentFileInfo.jpeg',
 		fileName: 'ph0-documentFileInfo.jpeg',
-		representative: null,
-		description: null,
-		owner: null,
-		author: null,
-		securityClassification: null,
 		mime: 'image/jpeg',
 		horizonDataID: null,
 		fileMD5: null,
 		path: null,
-		virusCheckStatus: 'checked',
+		virusCheckStatus: AVSCAN_STATUS.SCANNED,
 		size: 58861,
 		stage: 'lpa_questionnaire',
-		filter1: null,
 		blobStorageContainer: 'document-service-uploads',
 		blobStoragePath:
 			'appeal/APP-Q9999-D-21-655112/d51f408c-7c6f-4f49-bcc0-abbb5bea3be6/v1/ph0.jpeg',
@@ -1361,67 +1348,9 @@ export const documentFileInfo = {
 		datePublished: null,
 		isDeleted: false,
 		isLateEntry: false,
-		examinationRefNo: null,
-		filter2: null,
-		publishedStatus: 'awaiting_upload',
-		publishedStatusPrev: null,
 		redactedStatus: null,
-		redacted: false,
 		documentURI:
 			'https://127.0.0.1:10000/devstoreaccount1/document-service-uploads/document-service-uploads/appeal/APP-Q9999-D-21-655112/d51f408c-7c6f-4f49-bcc0-abbb5bea3be6/v1/ph0.jpeg',
-		dateReceived: '2023-10-11T13:57:41.592Z'
-	}
-};
-
-export const documentFileInfoPublished = {
-	guid: 'd51f408c-7c6f-4f49-bcc0-abbb5bea3be7',
-	name: 'test-document-documentFileInfoPublished.pdf',
-	folderId: 1269,
-	createdAt: '2023-10-11T13:57:41.592Z',
-	isDeleted: false,
-	latestVersionId: 1,
-	caseId: 1,
-	receivedAt: null,
-	documentRedactionStatusId: null,
-	documentRedactionStatus: null,
-	latestDocumentVersion: {
-		documentGuid: 'd51f408c-7c6f-4f49-bcc0-abbb5bea3be7',
-		version: 1,
-		lastModified: null,
-		documentType: 'conservationAreaMap',
-		published: true,
-		sourceSystem: 'back-office',
-		origin: null,
-		originalFilename: 'test-document-documentFileInfoPublished.pdf',
-		fileName: 'test-document-documentFileInfoPublished.pdf',
-		representative: null,
-		description: null,
-		owner: null,
-		author: null,
-		securityClassification: null,
-		mime: 'application/pdf',
-		horizonDataID: null,
-		fileMD5: null,
-		path: null,
-		virusCheckStatus: 'checked',
-		size: 58861,
-		stage: 'lpa_questionnaire',
-		filter1: null,
-		blobStorageContainer: 'document-service-uploads',
-		blobStoragePath:
-			'appeal/APP-Q9999-D-21-655112/d51f408c-7c6f-4f49-bcc0-abbb5bea3be7/v1/test-document.pdf',
-		dateCreated: '2023-10-11T13:57:41.592Z',
-		datePublished: null,
-		isDeleted: false,
-		isLateEntry: false,
-		examinationRefNo: null,
-		filter2: null,
-		publishedStatus: 'published',
-		publishedStatusPrev: null,
-		redactedStatus: null,
-		redacted: false,
-		documentURI:
-			'https://127.0.0.1:10000/devstoreaccount1/document-service-uploads/document-service-uploads/appeal/APP-Q9999-D-21-655112/d51f408c-7c6f-4f49-bcc0-abbb5bea3be7/v1/test-document.pdf',
 		dateReceived: '2023-10-11T13:57:41.592Z'
 	}
 };
@@ -1443,7 +1372,7 @@ export const documentFolderInfo = {
 			latestDocumentVersion: {
 				draft: false,
 				dateReceived: '2023-02-01T01:00:00.000Z',
-				redactionStatus: 1,
+				redactionStatus: 'Redacted',
 				size: 129363,
 				mime: 'application/pdf',
 				isLateEntry: false
@@ -1455,10 +1384,10 @@ export const documentFolderInfo = {
 			latestDocumentVersion: {
 				draft: false,
 				dateReceived: '2024-03-02T01:00:00.000Z',
-				redactionStatus: 2,
+				redactionStatus: 'Unredacted',
 				size: 11815175,
 				mime: 'video/mp4',
-				virusCheckStatus: 'not_checked',
+				virusCheckStatus: AVSCAN_STATUS.NOT_SCANNED,
 				isLateEntry: true
 			}
 		},
@@ -1468,10 +1397,10 @@ export const documentFolderInfo = {
 			latestDocumentVersion: {
 				draft: false,
 				dateReceived: '2025-04-03T01:00:00.000Z',
-				redactionStatus: 3,
+				redactionStatus: 'No redaction required',
 				size: 58861,
 				mime: 'image/jpeg',
-				virusCheckStatus: 'failed_virus_check',
+				virusCheckStatus: AVSCAN_STATUS.AFFECTED,
 				isLateEntry: false
 			}
 		},
@@ -1481,15 +1410,15 @@ export const documentFolderInfo = {
 			latestDocumentVersion: {
 				draft: false,
 				dateReceived: '2025-04-03T01:00:00.000Z',
-				redactionStatus: 2,
+				redactionStatus: 'Unredacted',
 				size: 58987,
 				mime: 'image/jpeg',
-				virusCheckStatus: 'checked',
+				virusCheckStatus: AVSCAN_STATUS.SCANNED,
 				isLateEntry: true
 			}
 		}
 	],
-	id: 2864,
+	folderId: 2864,
 	path: 'appellant-case/changedDescription'
 };
 
@@ -1502,7 +1431,7 @@ export const documentFolderInfoWithoutDraftDocuments = {
 			latestDocumentVersion: {
 				draft: false,
 				dateReceived: '2023-02-01T01:00:00.000Z',
-				redactionStatus: 1,
+				redactionStatus: 'Redacted',
 				size: 129363,
 				mime: 'application/pdf',
 				isLateEntry: false
@@ -1514,21 +1443,21 @@ export const documentFolderInfoWithoutDraftDocuments = {
 			latestDocumentVersion: {
 				draft: false,
 				dateReceived: '2024-03-02T01:00:00.000Z',
-				redactionStatus: 2,
+				redactionStatus: 'Unredacted',
 				size: 11815175,
 				mime: 'video/mp4',
-				virusCheckStatus: 'not_checked',
+				virusCheckStatus: AVSCAN_STATUS.NOT_SCANNED,
 				isLateEntry: true
 			}
 		}
 	],
-	id: 2864,
+	folderId: 2864,
 	path: 'appellant-case/changedDescription'
 };
 
 export const additionalDocumentsFolderInfo = {
 	...documentFolderInfo,
-	id: 2865,
+	folderId: 2865,
 	path: 'appellant-case/appellantCaseCorrespondence'
 };
 
@@ -1537,7 +1466,7 @@ export const notCheckedDocumentFolderInfoDocuments = {
 	name: 'applicationForm.docx',
 	folderId: 1,
 	caseId: 1,
-	virusCheckStatus: 'not_checked'
+	virusCheckStatus: AVSCAN_STATUS.NOT_SCANNED
 };
 
 export const scanFailedDocumentFolderInfoDocuments = {
@@ -1545,69 +1474,78 @@ export const scanFailedDocumentFolderInfoDocuments = {
 	name: 'applicationForm.docx',
 	folderId: 1,
 	caseId: 1,
-	virusCheckStatus: 'failed_virus_check'
+	virusCheckStatus: AVSCAN_STATUS.AFFECTED
 };
 
 export const documentRedactionStatuses = [
 	{
 		id: 1,
+		key: REDACTION_STATUS.REDACTED,
 		name: 'Redacted'
 	},
 	{
 		id: 2,
+		key: REDACTION_STATUS.UNREDACTED,
 		name: 'Unredacted'
 	},
 	{
 		id: 3,
+		key: REDACTION_STATUS.NO_REDACTION_REQUIRED,
 		name: 'No redaction required'
 	}
 ];
 
 export const documentFileVersionsInfo = {
-	guid: '15d19184-155b-4b6c-bba6-2bd2a61ca9a3',
+	id: '15d19184-155b-4b6c-bba6-2bd2a61ca9a3',
 	name: 'test-pdf-documentFileVersionsInfo.pdf',
 	folderId: 2864,
 	createdAt: '2023-10-31T13:14:14.474Z',
-	isDeleted: false,
-	latestVersionId: 1,
 	caseId: 103,
-	documentVersion: [
+	latestDocumentVersion: {
+		documentId: '15d19184-155b-4b6c-bba6-2bd2a61ca9a3',
+		version: 1,
+		documentType: 'newSupportingDocuments',
+		originalFilename: 'test-pdf-documentFileVersionsInfo.pdf',
+		fileName: 'test-pdf-documentFileVersionsInfo.pdf',
+		mime: 'application/pdf',
+		horizonDataID: null,
+		fileMD5: null,
+		path: null,
+		virusCheckStatus: AVSCAN_STATUS.NOT_SCANNED,
+		size: 129363,
+		stage: 'appellant_case',
+		blobStorageContainer: 'document-service-uploads',
+		blobStoragePath:
+			'appeal/APP-Q9999-D-21-254218/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/v1/test-pdf.pdf',
+		dateCreated: '2023-10-31T13:14:14.474Z',
+		isDeleted: false,
+		isLateEntry: false,
+		redactionStatus: 'Redacted',
+		documentURI:
+			'https://127.0.0.1:10000/devstoreaccount1/document-service-uploads/document-service-uploads/appeal/APP-Q9999-D-21-254218/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/v1/test-pdf.pdf',
+		dateReceived: '2023-02-01T01:00:00.000Z'
+	},
+	allVersions: [
 		{
-			documentGuid: '15d19184-155b-4b6c-bba6-2bd2a61ca9a3',
+			documentId: '15d19184-155b-4b6c-bba6-2bd2a61ca9a3',
 			version: 1,
-			lastModified: null,
 			documentType: 'newSupportingDocuments',
-			published: true,
-			sourceSystem: 'back-office-appeals',
-			origin: null,
 			originalFilename: 'test-pdf-documentFileVersionsInfo.pdf',
 			fileName: 'test-pdf-documentFileVersionsInfo.pdf',
-			representative: null,
-			description: null,
-			owner: null,
-			author: null,
-			securityClassification: null,
 			mime: 'application/pdf',
 			horizonDataID: null,
 			fileMD5: null,
 			path: null,
-			virusCheckStatus: null,
+			virusCheckStatus: AVSCAN_STATUS.NOT_SCANNED,
 			size: 129363,
 			stage: 'appellant_case',
-			filter1: null,
 			blobStorageContainer: 'document-service-uploads',
 			blobStoragePath:
 				'appeal/APP-Q9999-D-21-254218/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/v1/test-pdf.pdf',
 			dateCreated: '2023-10-31T13:14:14.474Z',
-			datePublished: null,
 			isDeleted: false,
 			isLateEntry: false,
-			examinationRefNo: null,
-			filter2: null,
-			publishedStatus: 'awaiting_upload',
-			publishedStatusPrev: null,
-			redactionStatusId: 1,
-			redacted: false,
+			redactionStatus: 'Redacted',
 			documentURI:
 				'https://127.0.0.1:10000/devstoreaccount1/document-service-uploads/document-service-uploads/appeal/APP-Q9999-D-21-254218/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/v1/test-pdf.pdf',
 			dateReceived: '2023-02-01T01:00:00.000Z'
@@ -1638,30 +1576,42 @@ export const documentFileVersionsInfo = {
 
 export const documentFileVersionsInfoNotChecked = {
 	...documentFileVersionsInfo,
-	documentVersion: [
+	latestDocumentVersion: {
+		...documentFileVersionsInfo.allVersions[0],
+		virusCheckStatus: AVSCAN_STATUS.NOT_SCANNED
+	},
+	allVersions: [
 		{
-			...documentFileVersionsInfo.documentVersion[0],
-			virusCheckStatus: 'not_checked'
+			...documentFileVersionsInfo.allVersions[0],
+			virusCheckStatus: AVSCAN_STATUS.NOT_SCANNED
 		}
 	]
 };
 
 export const documentFileVersionsInfoVirusFound = {
 	...documentFileVersionsInfo,
-	documentVersion: [
+	latestDocumentVersion: {
+		...documentFileVersionsInfo.allVersions[0],
+		virusCheckStatus: AVSCAN_STATUS.AFFECTED
+	},
+	allVersions: [
 		{
-			...documentFileVersionsInfo.documentVersion[0],
-			virusCheckStatus: 'failed_virus_check'
+			...documentFileVersionsInfo.allVersions[0],
+			virusCheckStatus: AVSCAN_STATUS.AFFECTED
 		}
 	]
 };
 
 export const documentFileVersionsInfoChecked = {
 	...documentFileVersionsInfo,
-	documentVersion: [
+	latestDocumentVersion: {
+		...documentFileVersionsInfo.allVersions[0],
+		virusCheckStatus: AVSCAN_STATUS.SCANNED
+	},
+	allVersions: [
 		{
-			...documentFileVersionsInfo.documentVersion[0],
-			virusCheckStatus: 'checked'
+			...documentFileVersionsInfo.allVersions[0],
+			virusCheckStatus: AVSCAN_STATUS.SCANNED
 		}
 	]
 };
@@ -1669,14 +1619,14 @@ export const documentFileVersionsInfoChecked = {
 export const documentFileMultipleVersionsInfoWithLatestAsLateEntry = {
 	...documentFileVersionsInfo,
 	latestVersionId: 2,
-	documentVersion: [
+	allVersions: [
 		{
-			...documentFileVersionsInfo.documentVersion[0],
+			...documentFileVersionsInfo.allVersions[0],
 			version: 2,
 			isLateEntry: true
 		},
 		{
-			...documentFileVersionsInfo.documentVersion[0],
+			...documentFileVersionsInfo.allVersions[0],
 			version: 1,
 			isLateEntry: false
 		}
@@ -2018,10 +1968,10 @@ export const costsFolderInfoAppellant = {
 			latestDocumentVersion: {
 				draft: false,
 				dateReceived: '2023-02-01T01:00:00.000Z',
-				redactionStatus: 1,
+				redactionStatus: 'Redacted',
 				size: 129363,
 				mime: 'application/pdf',
-				virusCheckStatus: 'checked',
+				virusCheckStatus: AVSCAN_STATUS.SCANNED,
 				isLateEntry: false
 			}
 		},
@@ -2031,27 +1981,27 @@ export const costsFolderInfoAppellant = {
 			latestDocumentVersion: {
 				draft: false,
 				dateReceived: '2024-03-02T01:00:00.000Z',
-				redactionStatus: 2,
+				redactionStatus: 'No redaction required',
 				size: 11815175,
 				mime: 'video/mp4',
-				virusCheckStatus: 'checked',
+				virusCheckStatus: AVSCAN_STATUS.SCANNED,
 				isLateEntry: false
 			}
 		}
 	],
-	id: 1,
+	folderId: 1,
 	path: 'appeal_costs/appellant'
 };
 
 export const costsFolderInfoLpa = {
 	...costsFolderInfoAppellant,
-	id: 2,
+	folderId: 2,
 	path: 'appeal_costs/lpa'
 };
 
 export const costsFolderInfoDecision = {
 	...costsFolderInfoAppellant,
-	id: 3,
+	folderId: 3,
 	path: 'appeal_costs/decision'
 };
 
@@ -2083,7 +2033,7 @@ export const appealCostsDocumentItem = {
 		horizonDataID: null,
 		fileMD5: null,
 		path: null,
-		virusCheckStatus: 'checked',
+		virusCheckStatus: AVSCAN_STATUS.SCANNED,
 		size: 656030,
 		stage: 'appeal_costs',
 		blobStorageContainer: 'document-service-uploads',

@@ -35,7 +35,7 @@ describe('costs', () => {
 		for (const costsCategory of costsCategories) {
 			it(`should render the select document type page (${costsCategory})`, async () => {
 				const response = await request.get(
-					`${baseUrl}/1/costs/appellant/select-document-type/${appealData.costs.appellantFolder.id}`
+					`${baseUrl}/1/costs/appellant/select-document-type/${appealData.costs.appellantFolder?.folderId}`
 				);
 				const element = parseHtml(response.text);
 
@@ -61,7 +61,7 @@ describe('costs', () => {
 
 			it(`should re-render the select document type page with the expected error message when no document type was selected (${costsCategory})`, async () => {
 				const response = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/select-document-type/${costsFolder.id}`)
+					.post(`${baseUrl}/1/costs/${costsCategory}/select-document-type/${costsFolder.folderId}`)
 					.send({});
 
 				const element = parseHtml(response.text);
@@ -81,14 +81,14 @@ describe('costs', () => {
 
 			it(`should redirect to the upload documents page when a document type was selected (${costsCategory})`, async () => {
 				const response = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/select-document-type/${costsFolder.id}`)
+					.post(`${baseUrl}/1/costs/${costsCategory}/select-document-type/${costsFolder.folderId}`)
 					.send({
 						'costs-document-type': '1'
 					});
 
 				expect(response.statusCode).toBe(302);
 				expect(response.text).toEqual(
-					`Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/upload-documents/${costsFolder.id}`
+					`Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/upload-documents/${costsFolder.folderId}`
 				);
 			});
 		}
@@ -118,7 +118,7 @@ describe('costs', () => {
 
 			it(`should render a 500 error page if required data is not present in the session (${costsCategory})`, async () => {
 				const response = await request.get(
-					`${baseUrl}/1/costs/${costsCategory}/upload-documents/${costsFolder.id}`
+					`${baseUrl}/1/costs/${costsCategory}/upload-documents/${costsFolder.folderId}`
 				);
 				const element = parseHtml(response.text);
 
@@ -133,18 +133,18 @@ describe('costs', () => {
 
 			it(`should render the upload documents page (${costsCategory})`, async () => {
 				const selectDocumentTypeResponse = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/select-document-type/${costsFolder.id}`)
+					.post(`${baseUrl}/1/costs/${costsCategory}/select-document-type/${costsFolder.folderId}`)
 					.send({
 						'costs-document-type': '1'
 					});
 
 				expect(selectDocumentTypeResponse.statusCode).toBe(302);
 				expect(selectDocumentTypeResponse.text).toContain(
-					`Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/upload-documents/${costsFolder.id}`
+					`Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/upload-documents/${costsFolder.folderId}`
 				);
 
 				const response = await request.get(
-					`${baseUrl}/1/costs/${costsCategory}/upload-documents/${costsFolder.id}`
+					`${baseUrl}/1/costs/${costsCategory}/upload-documents/${costsFolder.folderId}`
 				);
 				const element = parseHtml(response.text);
 
@@ -164,7 +164,7 @@ describe('costs', () => {
 
 		it('should render the upload documents page (decision)', async () => {
 			const response = await request.get(
-				`${baseUrl}/1/costs/decision/upload-documents/${appealData.costs.decisionFolder.id}`
+				`${baseUrl}/1/costs/decision/upload-documents/${appealData.costs.decisionFolder?.folderId}`
 			);
 			const element = parseHtml(response.text);
 
@@ -212,18 +212,18 @@ describe('costs', () => {
 
 			it(`should render a 500 error page if upload-info is not present in the request body (${costsCategory})`, async () => {
 				const selectDocumentTypeResponse = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/select-document-type/${costsFolder.id}`)
+					.post(`${baseUrl}/1/costs/${costsCategory}/select-document-type/${costsFolder.folderId}`)
 					.send({
 						'costs-document-type': '1'
 					});
 
 				expect(selectDocumentTypeResponse.statusCode).toBe(302);
 				expect(selectDocumentTypeResponse.text).toContain(
-					`Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/upload-documents/${costsFolder.id}`
+					`Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/upload-documents/${costsFolder.folderId}`
 				);
 
 				const response = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/upload-documents/${costsFolder.id}`)
+					.post(`${baseUrl}/1/costs/${costsCategory}/upload-documents/${costsFolder.folderId}`)
 					.send({});
 
 				expect(response.statusCode).toBe(500);
@@ -239,18 +239,18 @@ describe('costs', () => {
 
 			it(`should render a 500 error page if request body upload-info is in an incorrect format (${costsCategory})`, async () => {
 				const selectDocumentTypeResponse = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/select-document-type/${costsFolder.id}`)
+					.post(`${baseUrl}/1/costs/${costsCategory}/select-document-type/${costsFolder.folderId}`)
 					.send({
 						'costs-document-type': '1'
 					});
 
 				expect(selectDocumentTypeResponse.statusCode).toBe(302);
 				expect(selectDocumentTypeResponse.text).toContain(
-					`Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/upload-documents/${costsFolder.id}`
+					`Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/upload-documents/${costsFolder.folderId}`
 				);
 
 				const response = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/upload-documents/${costsFolder.id}`)
+					.post(`${baseUrl}/1/costs/${costsCategory}/upload-documents/${costsFolder.folderId}`)
 					.send({
 						'upload-info': ''
 					});
@@ -268,25 +268,25 @@ describe('costs', () => {
 
 			it(`should redirect to the add document details page if upload-info is present in the request body and in the correct format (${costsCategory})`, async () => {
 				const selectDocumentTypeResponse = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/select-document-type/${costsFolder.id}`)
+					.post(`${baseUrl}/1/costs/${costsCategory}/select-document-type/${costsFolder.folderId}`)
 					.send({
 						'costs-document-type': '1'
 					});
 
 				expect(selectDocumentTypeResponse.statusCode).toBe(302);
 				expect(selectDocumentTypeResponse.text).toContain(
-					`Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/upload-documents/${costsFolder.id}`
+					`Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/upload-documents/${costsFolder.folderId}`
 				);
 
 				const response = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/upload-documents/${costsFolder.id}`)
+					.post(`${baseUrl}/1/costs/${costsCategory}/upload-documents/${costsFolder.folderId}`)
 					.send({
 						'upload-info': fileUploadInfo
 					});
 
 				expect(response.statusCode).toBe(302);
 				expect(response.text).toBe(
-					`Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/add-document-details/${costsFolder.id}`
+					`Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/add-document-details/${costsFolder.folderId}`
 				);
 			});
 		}
@@ -317,7 +317,7 @@ describe('costs', () => {
 
 			it(`should render the upload document version page (${costsCategory})`, async () => {
 				const response = await request.get(
-					`${baseUrl}/1/costs/${costsCategory}/upload-documents/${costsFolder.id}/1`
+					`${baseUrl}/1/costs/${costsCategory}/upload-documents/${costsFolder.folderId}/1`
 				);
 				const element = parseHtml(response.text);
 
@@ -362,7 +362,7 @@ describe('costs', () => {
 
 			it(`should render a 500 error page if upload-info is not present in the request body (${costsCategory})`, async () => {
 				const response = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/upload-documents/${costsFolder.id}/1`)
+					.post(`${baseUrl}/1/costs/${costsCategory}/upload-documents/${costsFolder.folderId}/1`)
 					.send({});
 
 				expect(response.statusCode).toBe(500);
@@ -378,7 +378,7 @@ describe('costs', () => {
 
 			it(`should render a 500 error page if request body upload-info is in an incorrect format (${costsCategory})`, async () => {
 				const response = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/upload-documents/${costsFolder.id}/1`)
+					.post(`${baseUrl}/1/costs/${costsCategory}/upload-documents/${costsFolder.folderId}/1`)
 					.send({
 						'upload-info': ''
 					});
@@ -396,14 +396,14 @@ describe('costs', () => {
 
 			it(`should redirect to the add document details page if upload-info is present in the request body and in the correct format (${costsCategory})`, async () => {
 				const response = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/upload-documents/${costsFolder.id}/1`)
+					.post(`${baseUrl}/1/costs/${costsCategory}/upload-documents/${costsFolder.folderId}/1`)
 					.send({
 						'upload-info': fileUploadInfo
 					});
 
 				expect(response.statusCode).toBe(302);
 				expect(response.text).toBe(
-					`Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/add-document-details/${costsFolder.id}/1`
+					`Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/add-document-details/${costsFolder.folderId}/1`
 				);
 			});
 		}
@@ -437,18 +437,18 @@ describe('costs', () => {
 
 			it(`should render a 500 error page if fileUploadInfo is not present in the session (${costsCategory})`, async () => {
 				const selectDocumentTypeResponse = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/select-document-type/${costsFolder.id}`)
+					.post(`${baseUrl}/1/costs/${costsCategory}/select-document-type/${costsFolder.folderId}`)
 					.send({
 						'costs-document-type': '1'
 					});
 
 				expect(selectDocumentTypeResponse.statusCode).toBe(302);
 				expect(selectDocumentTypeResponse.text).toContain(
-					`Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/upload-documents/${costsFolder.id}`
+					`Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/upload-documents/${costsFolder.folderId}`
 				);
 
 				const response = await request.get(
-					`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.id}`
+					`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.folderId}`
 				);
 
 				expect(response.statusCode).toBe(500);
@@ -464,25 +464,25 @@ describe('costs', () => {
 
 			it(`should render the document details page with one item per uploaded document (${costsCategory})`, async () => {
 				const selectDocumentTypeResponse = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/select-document-type/${costsFolder.id}`)
+					.post(`${baseUrl}/1/costs/${costsCategory}/select-document-type/${costsFolder.folderId}`)
 					.send({
 						'costs-document-type': '1'
 					});
 
 				expect(selectDocumentTypeResponse.statusCode).toBe(302);
 				expect(selectDocumentTypeResponse.text).toContain(
-					`Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/upload-documents/${costsFolder.id}`
+					`Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/upload-documents/${costsFolder.folderId}`
 				);
 
 				const addDocumentsResponse = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/upload-documents/${costsFolder.id}`)
+					.post(`${baseUrl}/1/costs/${costsCategory}/upload-documents/${costsFolder.folderId}`)
 					.send({
 						'upload-info': fileUploadInfo
 					});
 
 				expect(addDocumentsResponse.statusCode).toBe(302);
 				expect(addDocumentsResponse.text).toContain(
-					`Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/add-document-details/${costsFolder.id}`
+					`Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/add-document-details/${costsFolder.folderId}`
 				);
 
 				let expectedH1Text = '';
@@ -500,7 +500,7 @@ describe('costs', () => {
 				}
 
 				const response = await request.get(
-					`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.id}`
+					`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.folderId}`
 				);
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
@@ -514,29 +514,29 @@ describe('costs', () => {
 
 			it(`should render a back link to the upload document page (${costsCategory})`, async () => {
 				const selectDocumentTypeResponse = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/select-document-type/${costsFolder.id}`)
+					.post(`${baseUrl}/1/costs/${costsCategory}/select-document-type/${costsFolder.folderId}`)
 					.send({
 						'costs-document-type': '1'
 					});
 
 				expect(selectDocumentTypeResponse.statusCode).toBe(302);
 				expect(selectDocumentTypeResponse.text).toContain(
-					`Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/upload-documents/${costsFolder.id}`
+					`Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/upload-documents/${costsFolder.folderId}`
 				);
 
 				const addDocumentsResponse = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/upload-documents/${costsFolder.id}`)
+					.post(`${baseUrl}/1/costs/${costsCategory}/upload-documents/${costsFolder.folderId}`)
 					.send({
 						'upload-info': fileUploadInfo
 					});
 
 				expect(addDocumentsResponse.statusCode).toBe(302);
 				expect(addDocumentsResponse.text).toContain(
-					`Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/add-document-details/${costsFolder.id}`
+					`Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/add-document-details/${costsFolder.folderId}`
 				);
 
 				const response = await request.get(
-					`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.id}`
+					`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.folderId}`
 				);
 				const element = parseHtml(response.text, {
 					rootElement: '.govuk-back-link',
@@ -544,7 +544,7 @@ describe('costs', () => {
 				});
 
 				expect(element.innerHTML).toContain(
-					`href="/appeals-service/appeal-details/1/costs/${costsCategory}/upload-documents/${costsFolder.id}"`
+					`href="/appeals-service/appeal-details/1/costs/${costsCategory}/upload-documents/${costsFolder.folderId}"`
 				);
 			});
 		}
@@ -578,7 +578,7 @@ describe('costs', () => {
 
 			it(`should render a 500 error page if fileUploadInfo is not present in the session (${costsCategory})`, async () => {
 				const response = await request.get(
-					`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.id}/1`
+					`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.folderId}/1`
 				);
 
 				expect(response.statusCode).toBe(500);
@@ -594,14 +594,14 @@ describe('costs', () => {
 
 			it(`should render the document details page with one item per uploaded document (${costsCategory})`, async () => {
 				const addDocumentsResponse = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/upload-documents/${costsFolder.id}/1`)
+					.post(`${baseUrl}/1/costs/${costsCategory}/upload-documents/${costsFolder.folderId}/1`)
 					.send({
 						'upload-info': fileUploadInfo
 					});
 
 				expect(addDocumentsResponse.statusCode).toBe(302);
 				expect(addDocumentsResponse.text).toContain(
-					`Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/add-document-details/${costsFolder.id}/1`
+					`Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/add-document-details/${costsFolder.folderId}/1`
 				);
 
 				let expectedH1Text = '';
@@ -619,7 +619,7 @@ describe('costs', () => {
 				}
 
 				const response = await request.get(
-					`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.id}/1`
+					`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.folderId}/1`
 				);
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
@@ -633,18 +633,18 @@ describe('costs', () => {
 
 			it(`should render a back link to the upload document version page (${costsCategory})`, async () => {
 				const addDocumentsResponse = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/upload-documents/${costsFolder.id}/1`)
+					.post(`${baseUrl}/1/costs/${costsCategory}/upload-documents/${costsFolder.folderId}/1`)
 					.send({
 						'upload-info': fileUploadInfo
 					});
 
 				expect(addDocumentsResponse.statusCode).toBe(302);
 				expect(addDocumentsResponse.text).toContain(
-					`Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/add-document-details/${costsFolder.id}/1`
+					`Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/add-document-details/${costsFolder.folderId}/1`
 				);
 
 				const response = await request.get(
-					`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.id}/1`
+					`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.folderId}/1`
 				);
 				const element = parseHtml(response.text, {
 					rootElement: '.govuk-back-link',
@@ -652,7 +652,7 @@ describe('costs', () => {
 				});
 
 				expect(element.innerHTML).toContain(
-					`href="/appeals-service/appeal-details/1/costs/${costsCategory}/upload-documents/${costsFolder.id}/1"`
+					`href="/appeals-service/appeal-details/1/costs/${costsCategory}/upload-documents/${costsFolder.folderId}/1"`
 				);
 			});
 		}
@@ -703,12 +703,12 @@ describe('costs', () => {
 				const costsFolder = appealData.costs[`${costsCategory}Folder`];
 
 				selectDocumentTypeResponse = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/select-document-type/${costsFolder.id}`)
+					.post(`${baseUrl}/1/costs/${costsCategory}/select-document-type/${costsFolder.folderId}`)
 					.send({
 						'costs-document-type': '1'
 					});
 				addDocumentsResponse = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/upload-documents/${costsFolder.id}`)
+					.post(`${baseUrl}/1/costs/${costsCategory}/upload-documents/${costsFolder.folderId}`)
 					.send({
 						'upload-info': fileUploadInfo
 					});
@@ -771,7 +771,7 @@ describe('costs', () => {
 									month: '2',
 									year: '2030'
 								},
-								redactionStatus: 'unredacted'
+								redactionStatus: 2
 							}
 						]
 					});
@@ -803,7 +803,7 @@ describe('costs', () => {
 									month: '2',
 									year: '2030'
 								},
-								redactionStatus: 'unredacted'
+								redactionStatus: 2
 							}
 						]
 					});
@@ -835,7 +835,7 @@ describe('costs', () => {
 									month: '2',
 									year: '2030'
 								},
-								redactionStatus: 'unredacted'
+								redactionStatus: 2
 							}
 						]
 					});
@@ -869,7 +869,7 @@ describe('costs', () => {
 									month: '2',
 									year: '2030'
 								},
-								redactionStatus: 'unredacted'
+								redactionStatus: 2
 							}
 						]
 					});
@@ -903,7 +903,7 @@ describe('costs', () => {
 									month: '',
 									year: '2030'
 								},
-								redactionStatus: 'unredacted'
+								redactionStatus: 2
 							}
 						]
 					});
@@ -935,7 +935,7 @@ describe('costs', () => {
 									month: 'a',
 									year: '2030'
 								},
-								redactionStatus: 'unredacted'
+								redactionStatus: 2
 							}
 						]
 					});
@@ -967,7 +967,7 @@ describe('costs', () => {
 									month: '0',
 									year: '2030'
 								},
-								redactionStatus: 'unredacted'
+								redactionStatus: 2
 							}
 						]
 					});
@@ -1001,7 +1001,7 @@ describe('costs', () => {
 									month: '13',
 									year: '2030'
 								},
-								redactionStatus: 'unredacted'
+								redactionStatus: 2
 							}
 						]
 					});
@@ -1035,7 +1035,7 @@ describe('costs', () => {
 									month: '2',
 									year: ''
 								},
-								redactionStatus: 'unredacted'
+								redactionStatus: 2
 							}
 						]
 					});
@@ -1067,7 +1067,7 @@ describe('costs', () => {
 									month: '2',
 									year: 'a'
 								},
-								redactionStatus: 'unredacted'
+								redactionStatus: 2
 							}
 						]
 					});
@@ -1099,7 +1099,7 @@ describe('costs', () => {
 									month: '2',
 									year: '2023'
 								},
-								redactionStatus: 'unredacted'
+								redactionStatus: 2
 							}
 						]
 					});
@@ -1121,7 +1121,7 @@ describe('costs', () => {
 				expect(addDocumentsResponse.statusCode).toBe(302);
 
 				const response = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.id}`)
+					.post(`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.folderId}`)
 					.send({
 						items: [
 							{
@@ -1131,7 +1131,7 @@ describe('costs', () => {
 									month: '2',
 									year: '2023'
 								},
-								redactionStatus: 'unredacted'
+								redactionStatus: 2
 							}
 						]
 					});
@@ -1139,8 +1139,8 @@ describe('costs', () => {
 				expect(response.statusCode).toBe(302);
 				expect(response.text).toEqual(
 					costsCategory === 'decision'
-						? `Found. Redirecting to /appeals-service/appeal-details/1/costs/decision/check-and-confirm/${costsFolder.id}`
-						: `Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/check-your-answers/${costsFolder.id}`
+						? `Found. Redirecting to /appeals-service/appeal-details/1/costs/decision/check-and-confirm/${costsFolder.folderId}`
+						: `Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/check-your-answers/${costsFolder.folderId}`
 				);
 			});
 		}
@@ -1192,12 +1192,12 @@ describe('costs', () => {
 				const costsFolder = appealData.costs[`${costsCategory}Folder`];
 
 				selectDocumentTypeResponse = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/select-document-type/${costsFolder.id}`)
+					.post(`${baseUrl}/1/costs/${costsCategory}/select-document-type/${costsFolder.folderId}`)
 					.send({
 						'costs-document-type': '1'
 					});
 				addDocumentsResponse = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/upload-documents/${costsFolder.id}/1`)
+					.post(`${baseUrl}/1/costs/${costsCategory}/upload-documents/${costsFolder.folderId}/1`)
 					.send({
 						'upload-info': fileUploadInfo
 					});
@@ -1230,7 +1230,9 @@ describe('costs', () => {
 				expect(addDocumentsResponse.statusCode).toBe(302);
 
 				const response = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.id}/1`)
+					.post(
+						`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.folderId}/1`
+					)
 					.send({});
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
@@ -1250,7 +1252,9 @@ describe('costs', () => {
 				expect(addDocumentsResponse.statusCode).toBe(302);
 
 				const response = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.id}/1`)
+					.post(
+						`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.folderId}/1`
+					)
 					.send({
 						items: [
 							{
@@ -1260,7 +1264,7 @@ describe('costs', () => {
 									month: '2',
 									year: '2030'
 								},
-								redactionStatus: 'unredacted'
+								redactionStatus: 2
 							}
 						]
 					});
@@ -1282,7 +1286,9 @@ describe('costs', () => {
 				expect(addDocumentsResponse.statusCode).toBe(302);
 
 				const response = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.id}/1`)
+					.post(
+						`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.folderId}/1`
+					)
 					.send({
 						items: [
 							{
@@ -1292,7 +1298,7 @@ describe('costs', () => {
 									month: '2',
 									year: '2030'
 								},
-								redactionStatus: 'unredacted'
+								redactionStatus: 2
 							}
 						]
 					});
@@ -1314,7 +1320,9 @@ describe('costs', () => {
 				expect(addDocumentsResponse.statusCode).toBe(302);
 
 				const response = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.id}/1`)
+					.post(
+						`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.folderId}/1`
+					)
 					.send({
 						items: [
 							{
@@ -1324,7 +1332,7 @@ describe('costs', () => {
 									month: '2',
 									year: '2030'
 								},
-								redactionStatus: 'unredacted'
+								redactionStatus: 2
 							}
 						]
 					});
@@ -1348,7 +1356,9 @@ describe('costs', () => {
 				expect(addDocumentsResponse.statusCode).toBe(302);
 
 				const response = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.id}/1`)
+					.post(
+						`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.folderId}/1`
+					)
 					.send({
 						items: [
 							{
@@ -1358,7 +1368,7 @@ describe('costs', () => {
 									month: '2',
 									year: '2030'
 								},
-								redactionStatus: 'unredacted'
+								redactionStatus: 2
 							}
 						]
 					});
@@ -1382,7 +1392,9 @@ describe('costs', () => {
 				expect(addDocumentsResponse.statusCode).toBe(302);
 
 				const response = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.id}/1`)
+					.post(
+						`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.folderId}/1`
+					)
 					.send({
 						items: [
 							{
@@ -1392,7 +1404,7 @@ describe('costs', () => {
 									month: '',
 									year: '2030'
 								},
-								redactionStatus: 'unredacted'
+								redactionStatus: 2
 							}
 						]
 					});
@@ -1414,7 +1426,9 @@ describe('costs', () => {
 				expect(addDocumentsResponse.statusCode).toBe(302);
 
 				const response = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.id}/1`)
+					.post(
+						`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.folderId}/1`
+					)
 					.send({
 						items: [
 							{
@@ -1424,7 +1438,7 @@ describe('costs', () => {
 									month: 'a',
 									year: '2030'
 								},
-								redactionStatus: 'unredacted'
+								redactionStatus: 2
 							}
 						]
 					});
@@ -1446,7 +1460,9 @@ describe('costs', () => {
 				expect(addDocumentsResponse.statusCode).toBe(302);
 
 				const response = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.id}/1`)
+					.post(
+						`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.folderId}/1`
+					)
 					.send({
 						items: [
 							{
@@ -1456,7 +1472,7 @@ describe('costs', () => {
 									month: '0',
 									year: '2030'
 								},
-								redactionStatus: 'unredacted'
+								redactionStatus: 2
 							}
 						]
 					});
@@ -1480,7 +1496,9 @@ describe('costs', () => {
 				expect(addDocumentsResponse.statusCode).toBe(302);
 
 				const response = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.id}/1`)
+					.post(
+						`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.folderId}/1`
+					)
 					.send({
 						items: [
 							{
@@ -1490,7 +1508,7 @@ describe('costs', () => {
 									month: '13',
 									year: '2030'
 								},
-								redactionStatus: 'unredacted'
+								redactionStatus: 2
 							}
 						]
 					});
@@ -1514,7 +1532,9 @@ describe('costs', () => {
 				expect(addDocumentsResponse.statusCode).toBe(302);
 
 				const response = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.id}/1`)
+					.post(
+						`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.folderId}/1`
+					)
 					.send({
 						items: [
 							{
@@ -1524,7 +1544,7 @@ describe('costs', () => {
 									month: '2',
 									year: ''
 								},
-								redactionStatus: 'unredacted'
+								redactionStatus: 2
 							}
 						]
 					});
@@ -1546,7 +1566,9 @@ describe('costs', () => {
 				expect(addDocumentsResponse.statusCode).toBe(302);
 
 				const response = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.id}/1`)
+					.post(
+						`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.folderId}/1`
+					)
 					.send({
 						items: [
 							{
@@ -1556,7 +1578,7 @@ describe('costs', () => {
 									month: '2',
 									year: 'a'
 								},
-								redactionStatus: 'unredacted'
+								redactionStatus: 2
 							}
 						]
 					});
@@ -1578,7 +1600,9 @@ describe('costs', () => {
 				expect(addDocumentsResponse.statusCode).toBe(302);
 
 				const response = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.id}/1`)
+					.post(
+						`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.folderId}/1`
+					)
 					.send({
 						items: [
 							{
@@ -1588,7 +1612,7 @@ describe('costs', () => {
 									month: '2',
 									year: '2023'
 								},
-								redactionStatus: 'unredacted'
+								redactionStatus: 2
 							}
 						]
 					});
@@ -1610,7 +1634,9 @@ describe('costs', () => {
 				expect(addDocumentsResponse.statusCode).toBe(302);
 
 				const response = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.id}/1`)
+					.post(
+						`${baseUrl}/1/costs/${costsCategory}/add-document-details/${costsFolder.folderId}/1`
+					)
 					.send({
 						items: [
 							{
@@ -1620,7 +1646,7 @@ describe('costs', () => {
 									month: '2',
 									year: '2023'
 								},
-								redactionStatus: 'unredacted'
+								redactionStatus: 2
 							}
 						]
 					});
@@ -1628,8 +1654,8 @@ describe('costs', () => {
 				expect(response.statusCode).toBe(302);
 				expect(response.text).toEqual(
 					costsCategory === 'decision'
-						? `Found. Redirecting to /appeals-service/appeal-details/1/costs/decision/check-and-confirm/${costsFolder.id}/1`
-						: `Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/check-your-answers/${costsFolder.id}/1`
+						? `Found. Redirecting to /appeals-service/appeal-details/1/costs/decision/check-and-confirm/${costsFolder.folderId}/1`
+						: `Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/check-your-answers/${costsFolder.folderId}/1`
 				);
 			});
 		}
@@ -1665,7 +1691,7 @@ describe('costs', () => {
 				const costsFolder = appealData.costs[`${costsCategory}Folder`];
 
 				selectDocumentTypeResponse = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/select-document-type/${costsFolder.id}`)
+					.post(`${baseUrl}/1/costs/${costsCategory}/select-document-type/${costsFolder.folderId}`)
 					.send({
 						'costs-document-type': '1'
 					});
@@ -1683,7 +1709,7 @@ describe('costs', () => {
 				expect(selectDocumentTypeResponse.statusCode).toBe(302);
 
 				const response = await request.get(
-					`${baseUrl}/1/costs/${costsCategory}/check-your-answers/${costsFolder.id}`
+					`${baseUrl}/1/costs/${costsCategory}/check-your-answers/${costsFolder.folderId}`
 				);
 
 				expect(response.statusCode).toBe(500);
@@ -1701,7 +1727,7 @@ describe('costs', () => {
 				expect(selectDocumentTypeResponse.statusCode).toBe(302);
 
 				const addDocumentsResponse = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/upload-documents/${costsFolder.id}`)
+					.post(`${baseUrl}/1/costs/${costsCategory}/upload-documents/${costsFolder.folderId}`)
 					.send({
 						'upload-info': fileUploadInfo
 					});
@@ -1709,7 +1735,7 @@ describe('costs', () => {
 				expect(addDocumentsResponse.statusCode).toBe(302);
 
 				const response = await request.get(
-					`${baseUrl}/1/costs/${costsCategory}/check-your-answers/${costsFolder.id}`
+					`${baseUrl}/1/costs/${costsCategory}/check-your-answers/${costsFolder.folderId}`
 				);
 
 				expect(response.statusCode).toBe(200);
@@ -1760,7 +1786,7 @@ describe('costs', () => {
 				const costsFolder = appealData.costs[`${costsCategory}Folder`];
 
 				selectDocumentTypeResponse = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/select-document-type/${costsFolder.id}`)
+					.post(`${baseUrl}/1/costs/${costsCategory}/select-document-type/${costsFolder.folderId}`)
 					.send({
 						'costs-document-type': '1'
 					});
@@ -1778,7 +1804,7 @@ describe('costs', () => {
 				expect(selectDocumentTypeResponse.statusCode).toBe(302);
 
 				const response = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/check-your-answers/${costsFolder.id}`)
+					.post(`${baseUrl}/1/costs/${costsCategory}/check-your-answers/${costsFolder.folderId}`)
 					.send({});
 
 				expect(response.statusCode).toBe(500);
@@ -1797,7 +1823,7 @@ describe('costs', () => {
 
 				const mockDocumentsEndpoint = nock('http://test/').post('/appeals/1/documents').reply(200);
 				const addDocumentsResponse = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/upload-documents/${costsFolder.id}`)
+					.post(`${baseUrl}/1/costs/${costsCategory}/upload-documents/${costsFolder.folderId}`)
 					.send({
 						'upload-info': fileUploadInfo
 					});
@@ -1805,7 +1831,7 @@ describe('costs', () => {
 				expect(addDocumentsResponse.statusCode).toBe(302);
 
 				const response = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/check-your-answers/${costsFolder.id}`)
+					.post(`${baseUrl}/1/costs/${costsCategory}/check-your-answers/${costsFolder.folderId}`)
 					.send({});
 
 				expect(response.statusCode).toBe(302);
@@ -1847,7 +1873,7 @@ describe('costs', () => {
 
 			it(`should render a 500 error page if fileUploadInfo is not present in the session (${costsCategory})`, async () => {
 				const response = await request.get(
-					`${baseUrl}/1/costs/${costsCategory}/check-your-answers/${costsFolder.id}/1`
+					`${baseUrl}/1/costs/${costsCategory}/check-your-answers/${costsFolder.folderId}/1`
 				);
 
 				expect(response.statusCode).toBe(500);
@@ -1863,7 +1889,7 @@ describe('costs', () => {
 
 			it(`should render the add documents check and confirm page with summary list row displaying info on the uploaded document (${costsCategory})`, async () => {
 				const addDocumentsResponse = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/upload-documents/${costsFolder.id}/1`)
+					.post(`${baseUrl}/1/costs/${costsCategory}/upload-documents/${costsFolder.folderId}/1`)
 					.send({
 						'upload-info': fileUploadInfo
 					});
@@ -1871,7 +1897,7 @@ describe('costs', () => {
 				expect(addDocumentsResponse.statusCode).toBe(302);
 
 				const response = await request.get(
-					`${baseUrl}/1/costs/${costsCategory}/check-your-answers/${costsFolder.id}/1`
+					`${baseUrl}/1/costs/${costsCategory}/check-your-answers/${costsFolder.folderId}/1`
 				);
 
 				expect(response.statusCode).toBe(200);
@@ -1924,7 +1950,7 @@ describe('costs', () => {
 
 			it('should render a 500 error page if fileUploadInfo is not present in the session', async () => {
 				const response = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/check-your-answers/${costsFolder.id}/1`)
+					.post(`${baseUrl}/1/costs/${costsCategory}/check-your-answers/${costsFolder.folderId}/1`)
 					.send({});
 
 				expect(response.statusCode).toBe(500);
@@ -1943,7 +1969,7 @@ describe('costs', () => {
 					.post('/appeals/1/documents/1')
 					.reply(200);
 				const addDocumentsResponse = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/upload-documents/${costsFolder.id}/1`)
+					.post(`${baseUrl}/1/costs/${costsCategory}/upload-documents/${costsFolder.folderId}/1`)
 					.send({
 						'upload-info': fileUploadInfo
 					});
@@ -1951,7 +1977,7 @@ describe('costs', () => {
 				expect(addDocumentsResponse.statusCode).toBe(302);
 
 				const response = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/check-your-answers/${costsFolder.id}/1`)
+					.post(`${baseUrl}/1/costs/${costsCategory}/check-your-answers/${costsFolder.folderId}/1`)
 					.send({});
 
 				expect(response.statusCode).toBe(302);
@@ -2103,7 +2129,7 @@ describe('costs', () => {
 				expect(unprettifiedElement.innerHTML).not.toContain('Remove current version');
 			});
 
-			it(`should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "not_checked" (${costsCategory})`, async () => {
+			it(`should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "not_scanned" (${costsCategory})`, async () => {
 				nock('http://test/')
 					.get('/appeals/1/documents/1/versions')
 					.reply(200, documentFileVersionsInfoNotChecked);
@@ -2127,7 +2153,7 @@ describe('costs', () => {
 				expect(unprettifiedElement.innerHTML).not.toContain('Remove current version');
 			});
 
-			it(`should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "failed_virus_check" (${costsCategory})`, async () => {
+			it(`should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "affected" (${costsCategory})`, async () => {
 				nock('http://test/')
 					.get('/appeals/1/documents/1/versions')
 					.reply(200, documentFileVersionsInfoVirusFound);
@@ -2160,7 +2186,7 @@ describe('costs', () => {
 				);
 			});
 
-			it(`should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "checked" (${costsCategory})`, async () => {
+			it(`should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "scanned" (${costsCategory})`, async () => {
 				nock('http://test/')
 					.get('/appeals/1/documents/1/versions')
 					.reply(200, documentFileVersionsInfoChecked);
@@ -2251,7 +2277,7 @@ describe('costs', () => {
 
 			it(`should render the delete document page with the expected content when there are multiple document versions (${costsCategory})`, async () => {
 				const multipleVersionsDocument = cloneDeep(documentFileVersionsInfoChecked);
-				multipleVersionsDocument.documentVersion.push(multipleVersionsDocument.documentVersion[0]);
+				multipleVersionsDocument.allVersions.push(multipleVersionsDocument.allVersions[0]);
 
 				nock('http://test/')
 					.get('/appeals/1/documents/1/versions')
@@ -2310,7 +2336,6 @@ describe('costs', () => {
 				isDeleted: true,
 				latestVersionId: null,
 				caseId: 1,
-				documentVersion: [],
 				latestDocumentVersion: null
 			});
 		});
@@ -2379,14 +2404,19 @@ describe('costs', () => {
 
 			it(`should render a 500 page, if answer "yes, and upload another document" was provided, and there is more than one version of the document`, async () => {
 				const multipleVersionsDocument = cloneDeep(documentFileVersionsInfo);
-				multipleVersionsDocument.documentVersion.push(multipleVersionsDocument.documentVersion[0]);
+				multipleVersionsDocument.allVersions.push({
+					...multipleVersionsDocument.allVersions[0],
+					version: 2
+				});
 
 				nock('http://test/')
 					.get('/appeals/1/documents/1/versions')
 					.reply(200, multipleVersionsDocument);
 
 				const response = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/manage-documents/${costsFolder.id}/1/1/delete`)
+					.post(
+						`${baseUrl}/1/costs/${costsCategory}/manage-documents/${costsFolder.folderId}/1/1/delete`
+					)
 					.send({
 						'delete-file-answer': 'yes-and-upload-another-document'
 					});
@@ -2404,14 +2434,16 @@ describe('costs', () => {
 					.reply(200, documentFileVersionsInfo);
 
 				const response = await request
-					.post(`${baseUrl}/1/costs/${costsCategory}/manage-documents/${costsFolder.id}/1/1/delete`)
+					.post(
+						`${baseUrl}/1/costs/${costsCategory}/manage-documents/${costsFolder.folderId}/1/1/delete`
+					)
 					.send({
 						'delete-file-answer': 'yes-and-upload-another-document'
 					});
 
 				expect(response.statusCode).toBe(302);
 				expect(response.text).toEqual(
-					`Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/select-document-type/${costsFolder.id}`
+					`Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/select-document-type/${costsFolder.folderId}`
 				);
 			});
 		}

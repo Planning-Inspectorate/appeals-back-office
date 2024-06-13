@@ -21,8 +21,8 @@ const futureDate = '2099-09-01';
 const futureDateAndTime = joinDateAndTime(futureDate);
 const houseAppealWithTimetable = {
 	...householdAppeal,
-	startedAt: new Date(2022, 4, 18),
-	validAt: new Date(2022, 4, 20),
+	caseStartedDate: new Date(2022, 4, 18),
+	caseValidDate: new Date(2022, 4, 20),
 	appealTimetable: {
 		appealId: 1,
 		finalCommentReviewDate: null,
@@ -35,8 +35,8 @@ const houseAppealWithTimetable = {
 
 const fullPlanningAppealWithTimetable = {
 	...fullPlanningAppeal,
-	startedAt: new Date(2022, 4, 18),
-	validAt: new Date(2022, 4, 20),
+	caseStartedDate: new Date(2022, 4, 18),
+	caseValidDate: new Date(2022, 4, 20),
 	appealTimetable: {
 		appealId: 1,
 		finalCommentReviewDate: null,
@@ -355,7 +355,7 @@ describe('appeal timetables routes', () => {
 				expect(response.body).toEqual({
 					errors: {
 						finalCommentReviewDate: stringTokenReplacement(ERROR_MUST_NOT_HAVE_TIMETABLE_DATE, [
-							appealType.type
+							appealType.key
 						])
 					}
 				});
@@ -747,7 +747,7 @@ describe('appeal timetables routes', () => {
 				expect(response.body).toEqual({
 					errors: {
 						statementReviewDate: stringTokenReplacement(ERROR_MUST_NOT_HAVE_TIMETABLE_DATE, [
-							appealType.type
+							appealType.key
 						])
 					}
 				});

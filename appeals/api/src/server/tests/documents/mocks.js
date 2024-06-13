@@ -11,11 +11,39 @@ const blobStoreUrl = `appeal/${mapCaseReferenceForStorageUrl(
 	householdAppeal.reference
 )}/${guid}/v1/${fileName}`;
 
+export const documentVersion = {
+	documentId: guid,
+	version: 1,
+	fileName,
+	originalFilename: fileName,
+	dateReceived: '2024-06-11T19:42:22.713Z',
+	redactionStatus: 'Unredacted',
+	virusCheckStatus: 'scanned',
+	size: 4688,
+	mime: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+	isLateEntry: false,
+	isDeleted: false,
+	documentType: 'decision',
+	blobStorageContainer: 'document-service-uploads',
+	blobStoragePath: 'appeal/6000210/d9720f12-daf9-4f47-a842-00b9313491b8/v1/preview_renamed.xlsx'
+};
+
 export const folder = {
 	folderId: 23,
-	path: 'appellant_case/appealStatement',
+	path: 'appellant-case/appealStatement',
 	caseId: householdAppeal.reference,
 	documents: []
+};
+
+export const documentDetails = {
+	guid: guid,
+	name: fileName,
+	folderId: 3779,
+	createdAt: '2023-08-17T15:22:20.827Z',
+	isDeleted: false,
+	caseId: 492,
+	latestDocumentVersion: [documentVersion],
+	versionAudit: []
 };
 
 export const addDocumentsRequest = {
@@ -51,13 +79,13 @@ export const documentCreated = {
 	name: fileName,
 	case: { reference: householdAppeal.reference },
 	latestDocumentVersion: {
-		version: 1
+		version: 1,
+		redactionStatus: {
+			id: 1,
+			name: 'Redacted'
+		}
 	},
-	receivedAt: new Date().toISOString(),
-	redactionStatus: {
-		id: 1,
-		name: 'Redacted'
-	}
+	createdAt: new Date()
 };
 
 export const documentUpdated = {
@@ -97,20 +125,32 @@ export const blobInfo = {
 
 export const savedFolder = {
 	id: folderId,
-	path: 'appellant_case/appealStatement',
+	path: 'costs/appellant',
 	caseId: 1,
 	documents: [
 		{
+			id: '27d0fda4-8a9a-4f5a-a158-68eaea676158',
 			caseId: householdAppeal.id,
 			folderId,
 			guid,
 			name: originalFileName,
 			isDeleted: false,
+			createdAt: new Date(),
 			latestDocumentVersion: {
-				documentType: 'appellantCostApplication'
+				version: 1,
+				documentId: '27d0fda4-8a9a-4f5a-a158-68eaea676158',
+				documentType: 'appellantCostApplication',
+				avScan: []
 			}
 		}
 	]
+};
+
+export const decisionFolder = {
+	id: folderId,
+	path: 'appeal-decision/caseDecisionLetter',
+	caseId: 1,
+	documents: []
 };
 
 export const documentMeta = {
@@ -210,18 +250,6 @@ export const documentVersionAuditEntry = {
 	}
 };
 
-export const documentDetails = {
-	guid: guid,
-	name: fileName,
-	folderId: 3779,
-	createdAt: '2023-08-17T15:22:20.827Z',
-	isDeleted: false,
-	latestVersionId: 1,
-	caseId: 492,
-	documentVersion: [documentVersionDetails],
-	versionAudit: [documentVersionAuditEntry]
-};
-
 export const folderWithDocs = {
 	folderId: 1,
 	path: 'path/to/document/folder',
@@ -233,4 +261,39 @@ export const folderWithDocs = {
 			caseId: 2
 		}
 	]
+};
+
+export const documentInfoResponse = {
+	caseId: 1,
+	folderId: 23,
+	id: '27d0fda4-8a9a-4f5a-a158-68eaea676158',
+	name: 'mydoc.pdf',
+	isDeleted: false,
+	createdAt: '2024-06-12T09:15:50.120Z',
+	versionAudit: [],
+	latestDocumentVersion: {
+		documentId: undefined,
+		version: undefined,
+		fileName: '',
+		originalFilename: '',
+		dateReceived: '',
+		redactionStatus: undefined,
+		virusCheckStatus: '',
+		size: '',
+		mime: '',
+		isLateEntry: undefined,
+		isDeleted: undefined,
+		documentType: 'appellantCostApplication',
+		stage: '',
+		blobStorageContainer: '',
+		blobStoragePath: '',
+		documentURI: ''
+	}
+};
+
+export const folderInfoResponse = {
+	caseId: '1',
+	documents: [documentInfoResponse],
+	folderId: 23,
+	path: 'costs/appellant'
 };

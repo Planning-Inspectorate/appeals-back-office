@@ -14,7 +14,7 @@ import commonRepository from './common.repository.js';
  * @returns {Promise<object>}
  */
 const updateLPAQuestionnaireById = (id, data) => {
-	const { appealId, designatedSites, incompleteReasons, timetable } = data;
+	const { appealId, incompleteReasons, timetable } = data;
 	const transaction = [];
 
 	transaction.push(
@@ -42,23 +42,10 @@ const updateLPAQuestionnaireById = (id, data) => {
 				isTheSiteWithinAnAONB: data.isTheSiteWithinAnAONB,
 				lpaQuestionnaireValidationOutcomeId: data.validationOutcomeId,
 				meetsOrExceedsThresholdOrCriteriaInColumn2: data.meetsOrExceedsThresholdOrCriteriaInColumn2,
-				scheduleTypeId: data.scheduleTypeId,
 				sensitiveAreaDetails: data.sensitiveAreaDetails
 			}
 		})
 	);
-
-	if (designatedSites) {
-		transaction.push(
-			...commonRepository.updateManyToManyRelationTable({
-				id,
-				data: designatedSites,
-				databaseTable: 'designatedSitesOnLPAQuestionnaires',
-				relationOne: 'lpaQuestionnaireId',
-				relationTwo: 'designatedSiteId'
-			})
-		);
-	}
 
 	if (incompleteReasons) {
 		transaction.push(
@@ -66,7 +53,7 @@ const updateLPAQuestionnaireById = (id, data) => {
 				id,
 				relationOne: 'lpaQuestionnaireId',
 				relationTwo: 'lpaQuestionnaireIncompleteReasonId',
-				manyToManyRelationTable: 'lPAQuestionnaireIncompleteReasonOnLPAQuestionnaire',
+				manyToManyRelationTable: 'lPAQuestionnaireIncompleteReasonsSelected',
 				incompleteInvalidReasonTextTable: 'lPAQuestionnaireIncompleteReasonText',
 				data: incompleteReasons
 			})

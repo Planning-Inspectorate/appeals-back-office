@@ -6,13 +6,14 @@ import {
 	getFileInfo,
 	getFileVersionsInfo
 } from '#appeals/appeal-documents/appeal.documents.service.js';
+import { AVSCAN_STATUS } from '@pins/appeals/constants/documents.js';
 
 // TODO: Clean up code
 
 /** @typedef {import('../auth/auth-session.service').SessionWithAuth} SessionWithAuth */
 /** @typedef {import('express').Response} Response */
 
-const validScanResult = 'checked';
+const validScanResult = AVSCAN_STATUS.SCANNED;
 
 /**
  * Download one document or redirects to its url if preview is active
@@ -89,11 +90,11 @@ export const getDocumentDownloadByVersion = async ({ apiClient, params, session 
 
 	const filesInfo = await getFileVersionsInfo(apiClient, caseId.toString(), fileGuid);
 
-	if (!filesInfo?.documentVersion) {
+	if (!filesInfo?.allVersions) {
 		return response.status(404);
 	}
 
-	const fileToDownloadInfo = filesInfo.documentVersion.find((fileInfo) => {
+	const fileToDownloadInfo = filesInfo.allVersions.find((fileInfo) => {
 		return fileInfo.version?.toString() === version;
 	});
 

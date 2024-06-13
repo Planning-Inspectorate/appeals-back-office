@@ -34,7 +34,12 @@ export const mapUser = async (id, session) => {
 export const mapMessageContent = async (appeal, log, docInfo, session) => {
 	let result = log;
 	result = await tryMapUsers(result, session);
-	result = await tryMapDocument(appeal.appealId, result, docInfo, appeal.lpaQuestionnaireId);
+	result = await tryMapDocument(
+		appeal.appealId,
+		result,
+		docInfo,
+		appeal?.lpaQuestionnaireId || null
+	);
 	result = await tryMapStatus(result);
 	result = await tryMapUrl(result);
 

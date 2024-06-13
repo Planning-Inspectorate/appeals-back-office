@@ -42,7 +42,7 @@ const postSiteVisit = async (req, res) => {
 		: 'Address not available';
 
 	const appellantEmail = String(appeal.agent?.email || appeal.appellant?.email || '');
-	const lpaEmail = appeal.lpa.email;
+	const lpaEmail = appeal.lpa?.email || '';
 
 	/** @type { CreateSiteVisitData } */
 	const siteVisitData = {
@@ -54,7 +54,7 @@ const postSiteVisit = async (req, res) => {
 		appellantEmail,
 		lpaEmail,
 		appealReferenceNumber: appeal.reference,
-		lpaReference: appeal.planningApplicationReference,
+		lpaReference: appeal.applicationReference || '',
 		siteAddress
 	};
 
@@ -90,7 +90,7 @@ const rearrangeSiteVisit = async (req, res) => {
 		: 'Address not available';
 
 	const appellantEmail = String(appeal.agent?.email || appeal.appellant?.email || '');
-	const lpaEmail = appeal.lpa.email;
+	const lpaEmail = appeal.lpa?.email || '';
 
 	/** @type { UpdateSiteVisitData } */
 	const updateSiteVisitData = {
@@ -105,11 +105,12 @@ const rearrangeSiteVisit = async (req, res) => {
 		appellantEmail,
 		lpaEmail,
 		appealReferenceNumber: appeal.reference,
-		lpaReference: appeal.planningApplicationReference,
+		lpaReference: appeal.applicationReference || '',
 		siteAddress
 	};
 
 	try {
+		// @ts-ignore
 		await updateSiteVisit(azureAdUserId, updateSiteVisitData, notifyClient);
 
 		return res.send(body);

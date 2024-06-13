@@ -8,6 +8,7 @@ import {
 	getDocumentIdValidator,
 	getDocumentValidator,
 	getDocumentsValidator,
+	patchDocumentsValidator,
 	patchDocumentsAvCheckValidator
 } from './documents.validators.js';
 import * as controller from './documents.controller.js';
@@ -147,6 +148,35 @@ router.post(
 	validateDocumentAndAddToRequest,
 	getDocumentValidator,
 	asyncHandler(controller.addDocumentVersion)
+);
+
+router.patch(
+	'/:appealId/documents',
+	/*
+		#swagger.tags = ['Documents']
+		#swagger.path = '/appeals/{appealId}/documents'
+		#swagger.description = Updates multiple documents
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: true,
+			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+		}
+		#swagger.requestBody = {
+			in: 'body',
+			description: 'Documents to update',
+			schema: { $ref: '#/definitions/UpdateDocumentsRequest' },
+			required: true
+		}
+		#swagger.responses[200] = {
+			description: 'Documents to update',
+			schema: { $ref: '#/definitions/UpdateDocumentsResponse' }
+		}
+		#swagger.responses[400] = {}
+		#swagger.responses[404] = {}
+	 */
+	patchDocumentsValidator,
+	checkAppealExistsByIdAndAddToRequest,
+	asyncHandler(controller.updateDocuments)
 );
 
 router.patch(

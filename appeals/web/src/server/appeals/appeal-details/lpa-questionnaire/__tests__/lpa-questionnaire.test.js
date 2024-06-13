@@ -297,7 +297,7 @@ describe('LPA Questionnaire review', () => {
 			updatedLPAQuestionnaireData.documents.conservationMap.documents.push({
 				...notCheckedDocumentFolderInfoDocuments,
 				// @ts-ignore
-				virusCheckStatus: 'failed_virus_check'
+				virusCheckStatus: 'affected'
 			});
 			nock('http://test/')
 				.get('/appeals/1/lpa-questionnaires/2')
@@ -1529,7 +1529,7 @@ describe('LPA Questionnaire review', () => {
 							month: '2',
 							year: '2030'
 						},
-						redactionStatus: 'unredacted'
+						redactionStatus: 2
 					}
 				]
 			});
@@ -1556,7 +1556,7 @@ describe('LPA Questionnaire review', () => {
 							month: '2',
 							year: '2030'
 						},
-						redactionStatus: 'unredacted'
+						redactionStatus: 2
 					}
 				]
 			});
@@ -1583,7 +1583,7 @@ describe('LPA Questionnaire review', () => {
 							month: '2',
 							year: '2030'
 						},
-						redactionStatus: 'unredacted'
+						redactionStatus: 2
 					}
 				]
 			});
@@ -1612,7 +1612,7 @@ describe('LPA Questionnaire review', () => {
 							month: '2',
 							year: '2030'
 						},
-						redactionStatus: 'unredacted'
+						redactionStatus: 2
 					}
 				]
 			});
@@ -1641,7 +1641,7 @@ describe('LPA Questionnaire review', () => {
 							month: '',
 							year: '2030'
 						},
-						redactionStatus: 'unredacted'
+						redactionStatus: 2
 					}
 				]
 			});
@@ -1668,7 +1668,7 @@ describe('LPA Questionnaire review', () => {
 							month: 'a',
 							year: '2030'
 						},
-						redactionStatus: 'unredacted'
+						redactionStatus: 2
 					}
 				]
 			});
@@ -1695,7 +1695,7 @@ describe('LPA Questionnaire review', () => {
 							month: '0',
 							year: '2030'
 						},
-						redactionStatus: 'unredacted'
+						redactionStatus: 2
 					}
 				]
 			});
@@ -1724,7 +1724,7 @@ describe('LPA Questionnaire review', () => {
 							month: '13',
 							year: '2030'
 						},
-						redactionStatus: 'unredacted'
+						redactionStatus: 2
 					}
 				]
 			});
@@ -1753,7 +1753,7 @@ describe('LPA Questionnaire review', () => {
 							month: '2',
 							year: ''
 						},
-						redactionStatus: 'unredacted'
+						redactionStatus: 2
 					}
 				]
 			});
@@ -1780,7 +1780,7 @@ describe('LPA Questionnaire review', () => {
 							month: '2',
 							year: 'a'
 						},
-						redactionStatus: 'unredacted'
+						redactionStatus: 2
 					}
 				]
 			});
@@ -1807,7 +1807,7 @@ describe('LPA Questionnaire review', () => {
 							month: '2',
 							year: '2023'
 						},
-						redactionStatus: 'unredacted'
+						redactionStatus: 2
 					}
 				]
 			});
@@ -1835,7 +1835,7 @@ describe('LPA Questionnaire review', () => {
 							month: futureDate.getMonth() + 1,
 							year: futureDate.getFullYear()
 						},
-						redactionStatus: 'unredacted'
+						redactionStatus: 2
 					}
 				]
 			});
@@ -1862,7 +1862,7 @@ describe('LPA Questionnaire review', () => {
 							month: '2',
 							year: '2023'
 						},
-						redactionStatus: 'unredacted'
+						redactionStatus: 2
 					}
 				]
 			});
@@ -2226,7 +2226,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).not.toContain('Remove current version</a>');
 		});
 
-		it('should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "not_checked"', async () => {
+		it('should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "not_scanned"', async () => {
 			nock('http://test/')
 				.get('/appeals/1/documents/1/versions')
 				.reply(200, documentFileVersionsInfoNotChecked);
@@ -2249,7 +2249,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).not.toContain('Remove current version</a>');
 		});
 
-		it('should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "failed_virus_check"', async () => {
+		it('should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "affected"', async () => {
 			nock('http://test/')
 				.get('/appeals/1/documents/1/versions')
 				.reply(200, documentFileVersionsInfoVirusFound);
@@ -2278,7 +2278,7 @@ describe('LPA Questionnaire review', () => {
 			);
 		});
 
-		it('should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "checked"', async () => {
+		it('should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "scanned"', async () => {
 			nock('http://test/')
 				.get('/appeals/1/documents/1/versions')
 				.reply(200, documentFileVersionsInfoChecked);
@@ -2373,7 +2373,7 @@ describe('LPA Questionnaire review', () => {
 
 		it('should render the delete document page with the expected content when there are multiple document versions', async () => {
 			const multipleVersionsDocument = cloneDeep(documentFileVersionsInfoChecked);
-			multipleVersionsDocument.documentVersion.push(multipleVersionsDocument.documentVersion[0]);
+			multipleVersionsDocument.allVersions.push(multipleVersionsDocument.allVersions[0]);
 
 			nock('http://test/')
 				.get('/appeals/1/documents/1/versions')

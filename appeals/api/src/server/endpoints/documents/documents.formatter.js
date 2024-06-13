@@ -1,36 +1,81 @@
 /** @typedef {import('@pins/appeals.api').Schema.Document} Document */
+/** @typedef {import('@pins/appeals.api').Schema.DocumentVersion} DocumentVersion */
 /** @typedef {import('@pins/appeals.api').Schema.Folder} Folder */
-/** @typedef {import('@pins/appeals.api').Appeals.SingleFolderResponse} SingleFolderResponse */
+/** @typedef {import('@pins/appeals.api').Appeals.FolderInfo} FolderInfo */
+/** @typedef {import('@pins/appeals.api').Appeals.DocumentInfo} DocumentInfo */
+/** @typedef {import('@pins/appeals.api').Appeals.DocumentVersionInfo} DocumentVersionInfo */
+
+import { getAvScanStatus } from './documents.service.js';
 
 /**
- * @param {Folder} folder
- * @returns {SingleFolderResponse}
+ * @param {Folder|undefined} folder
+ * @returns {FolderInfo|undefined}
  */
-const formatFolder = (folder) => ({
-	caseId: folder.caseId,
-	// @ts-ignore
-	documents:
-		folder.documents
-			?.filter((document) => {
-				return document.isDeleted === false;
-			})
-			.map((/** @type {Document} */ document) => ({
-				id: document.guid,
-				name: document.name,
-				latestDocumentVersion: {
-					published: document?.latestDocumentVersion?.published,
-					dateReceived: document?.latestDocumentVersion?.dateReceived,
-					redactionStatus: document?.latestDocumentVersion?.redactionStatusId,
-					virusCheckStatus: document?.latestDocumentVersion?.virusCheckStatus,
-					size: document?.latestDocumentVersion?.size,
-					mime: document?.latestDocumentVersion?.mime,
-					draft: document?.latestDocumentVersion?.draft,
-					isLateEntry: document?.latestDocumentVersion?.isLateEntry,
-					documentType: document?.latestDocumentVersion?.documentType
-				}
-			})) || null,
-	id: folder.id,
-	path: folder.path
-});
+const formatFolder = (folder) => {
+	if (folder) {
+		return {
+			caseId: folder.caseId.toString(),
+			documents:
+				folder.documents
+					?.filter((document) => {
+						return document.isDeleted === false;
+					})
+					.map((document) => formatDocument(document)) || null,
+			folderId: folder.id,
+			path: folder.path
+		};
+	}
+};
 
-export { formatFolder };
+/**
+ * @param {Document} document
+ * @returns {DocumentInfo}
+ */
+const formatDocument = (document) => {
+	// @ts-ignore
+	return {
+		caseId: document.caseId,
+		folderId: document.folderId,
+		id: document.guid,
+		name: document.name,
+		isDeleted: document.isDeleted,
+		createdAt: document.createdAt?.toISOString() || '',
+		versionAudit: document.versionAudit || [],
+		...(document.latestDocumentVersion && {
+			latestDocumentVersion: formatDocumentVersion(document.latestDocumentVersion)
+		}),
+		...(document.versions && {
+			allVersions: document.versions?.map((v) => formatDocumentVersion(v))
+		})
+	};
+};
+
+/**
+ * @param {DocumentVersion} latestDocumentVersion
+ * @returns {DocumentVersionInfo | undefined}
+ */
+const formatDocumentVersion = (latestDocumentVersion) => {
+	if (!latestDocumentVersion) {
+		return;
+	}
+	return {
+		documentId: latestDocumentVersion.documentGuid,
+		version: latestDocumentVersion.version,
+		fileName: latestDocumentVersion.fileName || '',
+		originalFilename: latestDocumentVersion.originalFilename || '',
+		dateReceived: latestDocumentVersion.dateReceived?.toISOString() || '',
+		redactionStatus: latestDocumentVersion.redactionStatus?.name || '',
+		virusCheckStatus: getAvScanStatus(latestDocumentVersion),
+		size: latestDocumentVersion?.size?.toString() || '',
+		mime: latestDocumentVersion?.mime || '',
+		isLateEntry: latestDocumentVersion?.isLateEntry,
+		isDeleted: latestDocumentVersion?.isDeleted,
+		documentType: latestDocumentVersion?.documentType || '',
+		stage: latestDocumentVersion?.stage || '',
+		blobStorageContainer: latestDocumentVersion?.blobStorageContainer || '',
+		blobStoragePath: latestDocumentVersion?.blobStoragePath || '',
+		documentURI: latestDocumentVersion?.documentURI || ''
+	};
+};
+
+export { formatFolder, formatDocument };
