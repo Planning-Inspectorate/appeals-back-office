@@ -342,6 +342,7 @@ describe('lpa questionnaires routes', () => {
 			});
 
 			test('updates an lpa questionnaire when the validation outcome is incomplete and lpaQuestionnaireDueDate is a weekday', async () => {
+				const householdAppeal = householdAppealLPAQuestionnaireIncomplete;
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				// @ts-ignore
@@ -397,6 +398,7 @@ describe('lpa questionnaires routes', () => {
 			});
 
 			test('updates an lpa questionnaire when the validation outcome is incomplete and lpaQuestionnaireDueDate is a weekend day with a bank holiday on the following Monday', async () => {
+				const householdAppeal = householdAppealLPAQuestionnaireIncomplete;
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				// @ts-ignore
@@ -452,6 +454,7 @@ describe('lpa questionnaires routes', () => {
 			});
 
 			test('updates an lpa questionnaire when the validation outcome is incomplete and lpaQuestionnaireDueDate is a bank holiday Friday with a folowing bank holiday Monday', async () => {
+				const householdAppeal = householdAppealLPAQuestionnaireIncomplete;
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				// @ts-ignore
@@ -507,6 +510,7 @@ describe('lpa questionnaires routes', () => {
 			});
 
 			test('updates an lpa questionnaire when the validation outcome is incomplete and lpaQuestionnaireDueDate is a bank holiday with a bank holiday the next day', async () => {
+				const householdAppeal = householdAppealLPAQuestionnaireIncomplete;
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				// @ts-ignore
@@ -562,6 +566,7 @@ describe('lpa questionnaires routes', () => {
 			});
 
 			test('updates an lpa questionnaire when the validation outcome is Incomplete without reason text', async () => {
+				const householdAppeal = householdAppealLPAQuestionnaireIncomplete;
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				// @ts-ignore
@@ -617,6 +622,7 @@ describe('lpa questionnaires routes', () => {
 			});
 
 			test('updates an lpa questionnaire when the validation outcome is Incomplete with reason text', async () => {
+				const householdAppeal = householdAppealLPAQuestionnaireIncomplete;
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				// @ts-ignore
@@ -710,6 +716,7 @@ describe('lpa questionnaires routes', () => {
 			});
 
 			test('updates an lpa questionnaire when the validation outcome is Incomplete with reason text containing blank strings', async () => {
+				const householdAppeal = householdAppealLPAQuestionnaireIncomplete;
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				// @ts-ignore
@@ -803,6 +810,7 @@ describe('lpa questionnaires routes', () => {
 			});
 
 			test('updates an lpa questionnaire when the validation outcome is Incomplete with reason text where blank strings takes the text over 10 items', async () => {
+				const householdAppeal = householdAppealLPAQuestionnaireIncomplete;
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				// @ts-ignore
@@ -872,6 +880,46 @@ describe('lpa questionnaires routes', () => {
 						text: 'A'
 					})
 				});
+				expect(response.status).toEqual(200);
+			});
+
+			test('sends a correctly formatted notify email when the outcome is incomplete for a household appeal', async () => {
+				const householdAppeal = householdAppealLPAQuestionnaireIncomplete;
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+
+				const body = {
+					incompleteReasons: [{ id: 1 }, { id: 2 }],
+					lpaQuestionnaireDueDate: '2099-06-22',
+					validationOutcome: 'Incomplete'
+				};
+				const { id, lpaQuestionnaire } = householdAppeal;
+				const response = await request
+					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
+					.send(body)
+					.set('azureAdUserId', azureAdUserId);
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).toHaveBeenCalledTimes(1);
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).toHaveBeenCalledWith(
+					config.govNotify.template.lpaqIncomplete.id,
+					'maid@lpa-email.gov.uk',
+					{
+						emailReplyToId: null,
+						personalisation: {
+							appeal_reference_number: '1345264',
+							lpa_reference: '48269/APP/2021/1482',
+							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+							due_date: '22 June 2099',
+							reasons: [
+								'Documents or information are missing: Policy is missing',
+								'Other: Addresses are incorrect or missing'
+							]
+						},
+						reference: null
+					}
+				);
 				expect(response.status).toEqual(200);
 			});
 

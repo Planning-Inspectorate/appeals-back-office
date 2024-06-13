@@ -344,11 +344,14 @@ interface UpdateLPAQuestionnaireRequest {
 	validationOutcomeId?: number;
 }
 
-interface UpdateLPAQuestionaireValidationOutcomeParams {
+interface UpdateLPAQuestionnaireValidationOutcomeParams {
 	appeal: {
 		id: number;
 		appealStatus: AppealStatus[];
 		appealType: AppealType;
+		lpa: LPA;
+		reference: string;
+		applicationReference: string;
 	};
 	azureAdUserId: string;
 	data: {
@@ -600,7 +603,7 @@ interface UpdateLPAQuestionnaireRequest {
 	validationOutcomeId?: number;
 }
 
-interface UpdateLPAQuestionaireValidationOutcomeParams {
+interface UpdateLPAQuestionnaireValidationOutcomeParams {
 	appeal: {
 		id: number;
 		appealStatus: AppealStatus[];
@@ -826,7 +829,7 @@ export {
 	UpdateAppellantRequest,
 	UpdateDocumentsRequest,
 	UpdateDocumentsAvCheckRequest,
-	UpdateLPAQuestionaireValidationOutcomeParams,
+	UpdateLPAQuestionnaireValidationOutcomeParams,
 	UpdateLPAQuestionnaireRequest,
 	UpdateTimetableRequest,
 	UsersToAssign,
