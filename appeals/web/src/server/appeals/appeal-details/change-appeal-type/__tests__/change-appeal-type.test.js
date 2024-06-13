@@ -50,7 +50,7 @@ describe('change-appeal-type', () => {
 			const response = await request
 				.post(`${baseUrl}/1${changeAppealTypePath}/${appealTypePath}`)
 				.send({
-					appealTypeId: ''
+					appealType: ''
 				});
 
 			expect(response.statusCode).toBe(200);
