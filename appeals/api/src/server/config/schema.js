@@ -50,6 +50,14 @@ export default joi
 						decisionIsInvalidLPA: joi.object({
 							id: joi.string()
 						}),
+						decisionIsAllowedSplitDismissed: joi.object({
+							appellant: joi.object({
+								id: joi.string().required()
+							}),
+							lpa: joi.object({
+								id: joi.string().required()
+							})
+						}),
 						lpaqComplete: joi.object({
 							id: joi.string().required()
 						}),

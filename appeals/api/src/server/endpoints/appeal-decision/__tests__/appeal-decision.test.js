@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { request } from '../../../app-test.js';
 import { jest } from '@jest/globals';
 import { azureAdUserId } from '#tests/shared/mocks.js';
@@ -9,10 +10,12 @@ import {
 	ERROR_MUST_BE_IN_PAST,
 	ERROR_CASE_OUTCOME_MUST_BE_ONE_OF,
 	ERROR_INVALID_APPEAL_STATE,
-	STATE_TARGET_ISSUE_DETERMINATION
+	STATE_TARGET_ISSUE_DETERMINATION,
+	FRONT_OFFICE_URL
 } from '#endpoints/constants.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
+import config from '#config/config.js';
 
 describe('appeal decision routes', () => {
 	beforeEach(() => {
@@ -173,6 +176,43 @@ describe('appeal decision routes', () => {
 					documentGuid: documentCreated.guid
 				})
 				.set('azureAdUserId', azureAdUserId);
+
+			// eslint-disable-next-line no-undef
+			expect(mockSendEmail).toHaveBeenCalledTimes(2);
+
+			// eslint-disable-next-line no-undef
+			expect(mockSendEmail).toHaveBeenCalledWith(
+				config.govNotify.template.decisionIsAllowedSplitDismissed.appellant.id,
+				'test@136s7.com',
+				{
+					emailReplyToId: null,
+					personalisation: {
+						appeal_reference_number: '1345264',
+						lpa_reference: '48269/APP/2021/1482',
+						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+						url: FRONT_OFFICE_URL,
+						decision_date: '4 June 2024'
+					},
+					reference: null
+				}
+			);
+
+			// eslint-disable-next-line no-undef
+			expect(mockSendEmail).toHaveBeenCalledWith(
+				config.govNotify.template.decisionIsAllowedSplitDismissed.lpa.id,
+				'maid@lpa-email.gov.uk',
+				{
+					emailReplyToId: null,
+					personalisation: {
+						appeal_reference_number: '1345264',
+						lpa_reference: '48269/APP/2021/1482',
+						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+						url: FRONT_OFFICE_URL,
+						decision_date: '4 June 2024'
+					},
+					reference: null
+				}
+			);
 
 			expect(response.status).toEqual(200);
 		});
