@@ -3,6 +3,7 @@ import {
 	ERROR_INVALID_APPEAL_STATE,
 	STATE_TARGET_ISSUE_DETERMINATION
 } from '#endpoints/constants.js';
+import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -20,11 +21,18 @@ export const postInspectorDecision = async (req, res) => {
 		res.status(400).send({ errors: { state: ERROR_INVALID_APPEAL_STATE } });
 	}
 
+	const notifyClient = req.notifyClient;
+	const siteAddress = appeal.address
+		? formatAddressSingleLine(appeal.address)
+		: 'Address not available';
+
 	const decision = await publishDecision(
 		appeal,
 		outcome,
 		documentDate,
 		document,
+		notifyClient,
+		siteAddress,
 		req.get('azureAdUserId') || ''
 	);
 
