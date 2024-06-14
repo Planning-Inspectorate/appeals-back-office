@@ -12,5 +12,6 @@ export default async function (context, msg) {
 		await copyBlob(originalURI, importedURI);
 	} catch (e) {
 		context.log.error('Not enough information to process this request', e);
+		throw e;
 	}
 }

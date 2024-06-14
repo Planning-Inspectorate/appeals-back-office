@@ -11,13 +11,17 @@ import { mapDate } from './date.mapper.js';
  * @returns {*}
  */
 export const mapAppellantCaseIn = (casedata) => {
-	const knowsAllOwners = {
-		connect: { key: casedata.knowsAllOwners }
-	};
+	const knowsAllOwners = casedata.knowsAllOwners
+		? {
+				connect: { key: casedata.knowsAllOwners }
+		  }
+		: null;
 
-	const knowsOtherOwners = {
-		connect: { key: casedata.knowsOtherOwners }
-	};
+	const knowsOtherOwners = casedata.knowsOtherOwners
+		? {
+				connect: { key: casedata.knowsOtherOwners }
+		  }
+		: null;
 
 	const siteAccessDetails =
 		casedata.siteAccessDetails != null && casedata.siteAccessDetails.length > 0
@@ -45,8 +49,8 @@ export const mapAppellantCaseIn = (casedata) => {
 		appellantCostsAppliedFor: casedata.appellantCostsAppliedFor,
 		originalDevelopmentDescription: casedata.originalDevelopmentDescription,
 		changedDevelopmentDescription: casedata.changedDevelopmentDescription,
-		knowsAllOwners,
-		knowsOtherOwners
+		...(knowsAllOwners && { knowsAllOwners }),
+		...(knowsOtherOwners && { knowsOtherOwners })
 	};
 
 	return data;

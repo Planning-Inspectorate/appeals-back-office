@@ -20,6 +20,7 @@ import { mapAppealTypeIn, mapAppealTypeOut } from './integrations.mappers/appeal
 import { mapAppealAllocationOut } from './integrations.mappers/appeal-allocation.mapper.js';
 import { mapCaseDataOut } from './integrations.mappers/casedata.mapper.js';
 import { ODW_AGENT_SVCUSR, ODW_APPELLANT_SVCUSR } from '@pins/appeals/constants/common.js';
+import { STAGE } from '@pins/appeals/constants/documents.js';
 
 const mappers = {
 	mapAddressIn,
@@ -79,7 +80,9 @@ const mapAppealSubmission = (data) => {
 		neighbouringSites: neighbouringSitesInput
 	};
 
-	const documentsInput = (documents || []).map((document) => mappers.mapDocumentIn(document));
+	const documentsInput = (documents || []).map((document) =>
+		mappers.mapDocumentIn(document, STAGE.APPELLANT_CASE)
+	);
 
 	return {
 		appeal: appealInput,
