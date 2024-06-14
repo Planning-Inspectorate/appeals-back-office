@@ -453,7 +453,8 @@ export function checkAndConfirmPage(
 		backLinkUrl: `/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/incomplete/date`,
 		preHeading: `Appeal ${appealShortReference(appealReference)}`,
 		heading: 'Check your answers before confirming your review',
-		pageComponents: [summaryListComponent, insetTextComponent]
+		pageComponents: [summaryListComponent, insetTextComponent],
+		submitButtonText: 'Confirm'
 	};
 
 	if (

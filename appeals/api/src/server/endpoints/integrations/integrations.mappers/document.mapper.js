@@ -5,6 +5,7 @@ import { mapDate } from './date.mapper.js';
 import { ODW_SYSTEM_ID } from '@pins/appeals/constants/common.js';
 import { ORIGIN, STAGE } from '@pins/appeals/constants/documents.js';
 import { getAvScanStatus } from '#endpoints/documents/documents.service.js';
+import { DOCTYPE } from '@pins/appeals/constants/documents.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Document} Document */
 /** @typedef {import('@pins/appeals.api').Schema.DocumentVersion} DocumentVersion */
@@ -13,26 +14,32 @@ import { getAvScanStatus } from '#endpoints/documents/documents.service.js';
 /**
  *
  * @param {*} doc
+ * @param {string | null} stage
  * @returns
  */
-export const mapDocumentIn = (doc) => {
-	const { filename, ...metadata } = doc;
+export const mapDocumentIn = (doc, stage = null) => {
+	const { filename, documentId, ...metadata } = doc;
+
 	// @ts-ignore
 	const { originalFilename, originalGuid } = mapDocumentUrl(metadata.documentURI, filename);
+	const description = metadata.description || 'Document imported';
 
 	let documentGuid = originalGuid;
-	const uuid = UUID_REGEX.exec(documentGuid);
+	const uuid = UUID_REGEX.exec(documentId) || UUID_REGEX.exec(documentGuid);
 	if (!uuid) {
 		documentGuid = randomUUID();
 	}
 
 	metadata.blobStorageContainer = config.BO_BLOB_CONTAINER;
 	metadata.blobStoragePath = `${documentGuid}/v1/${originalFilename}`;
+	metadata.documentType = metadata.documentType ?? DOCTYPE.DROPBOX;
+	metadata.stage = metadata.stage ?? stage ?? STAGE.INTERNAL;
 
 	return {
 		...metadata,
 		documentGuid,
 		fileName: originalFilename,
+		description,
 		dateCreated: (doc.dateCreated ? new Date(doc.dateCreated) : new Date()).toISOString(),
 		lastModified: (doc.lastModified ? new Date(doc.lastModified) : new Date()).toISOString()
 	};

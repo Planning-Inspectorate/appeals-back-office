@@ -62,14 +62,14 @@ export const getByCaseId = (caseId) => {
  * Returns array of folders in a folder or case (if parentFolderId is null)
  *
  * @param {number} caseId
- * @param {string} path
+ * @param {string[]} paths
  * @returns {PrismaPromise<Folder[]>}
  */
-export const getByCaseIdPath = (caseId, path) => {
+export const getByCaseIdAndPaths = (caseId, paths) => {
 	return databaseConnector.folder.findMany({
 		where: {
 			caseId,
-			path: { startsWith: path }
+			path: { in: paths }
 		},
 		include: {
 			documents: {

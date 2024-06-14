@@ -40,6 +40,7 @@ export const createAppeal = async (data, documents, relatedReferences) => {
 
 		if (documents) {
 			const caseFolders = await tx.folder.findMany({ where: { caseId: appeal.id } });
+
 			await tx.document.createMany({
 				data: documents.map((document) => {
 					return {
@@ -234,22 +235,52 @@ export const createDocument = async (data) => {
 
 const getFolderIdFromDocumentType = (caseFolders, documentType, stage) => {
 	const caseFolder = caseFolders.find(
-		(caseFolder) => caseFolder.path === `${stage}/${documentType}`
+		(caseFolder) => caseFolder.path.indexOf(`/${documentType}`) > 0
 	);
+
 	if (caseFolder) {
 		return caseFolder.id;
 	}
 
-	if (stage === STAGE.APPELLANT_CASE) {
-		return caseFolders.find(
+	if (documentType.indexOf('appellantCosts') > -1) {
+		const appellantCosts = caseFolders.find(
+			(caseFolder) => caseFolder.path === `${STAGE.COSTS}/appellant`
+		);
+
+		if (appellantCosts) {
+			return appellantCosts.id;
+		}
+	}
+	if (documentType.indexOf('lpaCosts') > -1) {
+		const lpaCosts = caseFolders.find((caseFolder) => caseFolder.path === `${STAGE.COSTS}/lpa`);
+
+		if (lpaCosts) {
+			return lpaCosts.id;
+		}
+	}
+
+	if (stage && stage === STAGE.APPELLANT_CASE) {
+		const appellantCorrespondence = caseFolders.find(
 			(caseFolder) => caseFolder.path === `${stage}/${DOCTYPE.APPELLANT_CASE_CORRESPONDENCE}`
-		).id;
+		);
+		if (appellantCorrespondence) {
+			return appellantCorrespondence.id;
+		}
 	}
-	if (stage === STAGE.LPA_QUESTIONNAIRE) {
-		return caseFolders.find(
+
+	if (stage && stage === STAGE.LPA_QUESTIONNAIRE) {
+		const lpaCorrespondence = caseFolders.find(
 			(caseFolder) => caseFolder.path === `${stage}/${DOCTYPE.LPA_CASE_CORRESPONDENCE}`
-		).id;
+		);
+
+		if (lpaCorrespondence) {
+			return lpaCorrespondence.id;
+		}
 	}
+
+	return caseFolders.find(
+		(caseFolder) => caseFolder.path === `${STAGE.INTERNAL}/${DOCTYPE.DROPBOX}`
+	)?.id;
 };
 
 const getFindUniqueAppealQueryIncludes = () => {

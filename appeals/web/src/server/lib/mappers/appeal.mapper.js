@@ -1150,6 +1150,27 @@ export async function initialiseAndMapAppealData(
 	};
 
 	/** @type {Instructions} */
+	mappedData.appeal.caseHistory = {
+		id: 'case-history',
+		display: {
+			summaryListItem: {
+				key: {
+					text: 'Case history'
+				},
+				actions: {
+					items: [
+						{
+							text: 'View',
+							href: `${currentRoute}/audit`,
+							visuallyHiddenText: 'View case history'
+						}
+					]
+				}
+			}
+		}
+	};
+
+	/** @type {Instructions} */
 	mappedData.appeal.appellantCase = {
 		id: 'appellant-case',
 		display: {

@@ -74,7 +74,7 @@ export function updateValidDatePage(
 		preHeading: `Appeal ${appealShortReference(appealReference)}`,
 		backLinkText: 'Back',
 		heading: title,
-		submitButtonText: 'Submit',
+		submitButtonText: 'Confirm',
 		pageComponents: [validDateTextComponent, selectDateComponent, insetTextComponent]
 	};
 

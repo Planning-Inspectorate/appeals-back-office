@@ -8,5 +8,5 @@ export interface AppealType {
 	id: number;
 	type: string;
 	shorthand: string;
-	code: string;
+	key: string;
 }

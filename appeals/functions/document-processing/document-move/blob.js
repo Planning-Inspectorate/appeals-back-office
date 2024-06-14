@@ -11,5 +11,9 @@ const storageClient = BlobStorageClient.fromUrl(config.BO_BLOB_STORAGE_ACCOUNT);
 export const copyBlob = async (sourceUrl, destinationUrl) => {
 	const blobPath = new URL(destinationUrl).pathname.replace(`/${config.BO_BLOB_CONTAINER}/`, '');
 	const blobClient = storageClient.getBlobClient(config.BO_BLOB_CONTAINER, blobPath);
+	if (!blobClient) {
+		throw new Error(`Could not get a blob reference to ${blobPath}`);
+	}
+
 	await blobClient.syncCopyFromURL(sourceUrl);
 };

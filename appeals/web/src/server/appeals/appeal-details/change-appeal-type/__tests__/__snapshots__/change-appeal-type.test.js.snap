@@ -98,7 +98,7 @@ exports[`change-appeal-type GET /change-appeal-type/change-appeal-final-date sho
                 </div>
                 <div class="govuk-inset-text">Confirming will ask the appellant to resubmit using the correct appeal
                     type</div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -516,7 +516,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                 </div>
                 <div class="govuk-inset-text">Confirming will ask the appellant to resubmit using the correct appeal
                     type</div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -583,7 +583,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                 </div>
                 <div class="govuk-inset-text">Confirming will ask the appellant to resubmit using the correct appeal
                     type</div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -646,7 +646,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                 </div>
                 <div class="govuk-inset-text">Confirming will ask the appellant to resubmit using the correct appeal
                     type</div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -707,7 +707,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                 </div>
                 <div class="govuk-inset-text">Confirming will ask the appellant to resubmit using the correct appeal
                     type</div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -768,7 +768,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                 </div>
                 <div class="govuk-inset-text">Confirming will ask the appellant to resubmit using the correct appeal
                     type</div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -831,7 +831,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                 </div>
                 <div class="govuk-inset-text">Confirming will ask the appellant to resubmit using the correct appeal
                     type</div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -894,7 +894,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                 </div>
                 <div class="govuk-inset-text">Confirming will ask the appellant to resubmit using the correct appeal
                     type</div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>

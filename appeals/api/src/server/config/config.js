@@ -56,6 +56,14 @@ const { value, error } = schema.validate({
 			decisionIsInvalidLPA: {
 				id: 'a0cb542f-24d3-4b22-826b-1e012892f922'
 			},
+			decisionIsAllowedSplitDismissed: {
+				appellant: {
+					id: '4accd6da-798f-4d68-9367-6058194bc511'
+				},
+				lpa: {
+					id: '09dbb936-bc1a-400b-a2f8-711078921bf5'
+				}
+			},
 			lpaqComplete: {
 				id: 'c571ee53-69c8-400e-a4c0-44ded262a081'
 			},

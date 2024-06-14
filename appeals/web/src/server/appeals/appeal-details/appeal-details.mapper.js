@@ -188,9 +188,9 @@ export async function appealDetailsPage(appealDetails, currentRoute, session) {
 
 	/** @type {PageComponent} */
 	const caseManagement = {
-		type: 'html',
+		type: 'summary-list',
 		parameters: {
-			html: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealDetails.appealId}/audit">Case history</a>`
+			rows: [mappedData.appeal.caseHistory.display.summaryListItem]
 		}
 	};
 
