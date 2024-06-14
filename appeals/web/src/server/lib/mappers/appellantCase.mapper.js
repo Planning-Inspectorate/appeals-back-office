@@ -47,7 +47,8 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
 							href: `${currentRoute}/service-user/change/appellant`,
-							visuallyHiddenText: 'Appellant'
+							visuallyHiddenText: 'Appellant',
+							attributes: { 'data-cy': 'appellant' }
 						})
 					]
 				},
@@ -71,7 +72,8 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
 							href: `${currentRoute}/service-user/change/agent`,
-							visuallyHiddenText: 'Agent'
+							visuallyHiddenText: 'Agent',
+							attributes: { 'data-cy': 'change-agent' }
 						})
 					]
 				},
@@ -96,7 +98,8 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 						{
 							text: 'Change',
 							visuallyHiddenText: 'LPA application reference',
-							href: `${currentRoute}/lpa-reference/change`
+							href: `${currentRoute}/lpa-reference/change`,
+							attributes: { 'data-cy': 'change-application-reference' }
 						}
 					]
 				}
@@ -134,7 +137,8 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 						{
 							text: 'Change',
 							visuallyHiddenText: 'Site address',
-							href: `${currentRoute}/site-address/change/${appealDetails.appealSite.addressId}`
+							href: `${currentRoute}/site-address/change/${appealDetails.appealSite.addressId}`,
+							attributes: { 'data-cy': 'change-site-address' }
 						}
 					]
 				}
@@ -164,7 +168,8 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 						{
 							text: 'Change',
 							visuallyHiddenText: 'local planning authority (LPA)',
-							href: `${currentRoute}/change-appeal-details/local-planning-authority`
+							href: `${currentRoute}/change-appeal-details/local-planning-authority`,
+							attributes: { 'data-cy': 'change-local-planning-authority' }
 						}
 					]
 				}
@@ -202,7 +207,8 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 						{
 							text: 'Change',
 							visuallyHiddenText: 'Site ownership',
-							href: `${currentRoute}/site-ownership/change`
+							href: `${currentRoute}/site-ownership/change`,
+							attributes: { 'data-cy': 'change-site-ownership' }
 						}
 					]
 				}
@@ -226,7 +232,8 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 						{
 							text: 'Change',
 							visuallyHiddenText: 'Site partially owned',
-							href: `${currentRoute}/change-appeal-details/site-partially-owned`
+							href: `${currentRoute}/change-appeal-details/site-partially-owned`,
+							attributes: { 'data-cy': 'change-site-partially-owned' }
 						}
 					]
 				}
@@ -275,7 +282,8 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 						{
 							text: 'Change',
 							visuallyHiddenText: 'All owners known',
-							href: `${currentRoute}/change-appeal-details/all-owners-known`
+							href: `${currentRoute}/change-appeal-details/all-owners-known`,
+							attributes: { 'data-cy': 'change-all-owners-known' }
 						}
 					]
 				}
@@ -324,7 +332,8 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 						{
 							text: 'Change',
 							visuallyHiddenText: 'Advertised appeal',
-							href: `${currentRoute}/change-appeal-details/advertised-appeal`
+							href: `${currentRoute}/change-appeal-details/advertised-appeal`,
+							attributes: { 'data-cy': 'change-advertised-appeal' }
 						}
 					]
 				}
@@ -377,7 +386,8 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 						{
 							text: 'Change',
 							href: `${currentRoute}/inspector-access/change/appellant`,
-							visuallyHiddenText: 'Inspector access required'
+							visuallyHiddenText: 'Inspector access required',
+							attributes: { 'data-cy': 'change-inspector-access' }
 						}
 					]
 				},
@@ -406,7 +416,8 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 						{
 							text: 'Change',
 							href: `${currentRoute}/safety-risks/change/appellant`,
-							visuallyHiddenText: 'potential safety risks'
+							visuallyHiddenText: 'potential safety risks',
+							attributes: { 'data-cy': 'change-appellant-case-health-and-safety' }
 						}
 					]
 				}
@@ -455,7 +466,8 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 								appellantCaseData.appealId,
 								appellantCaseData.documents.originalApplicationForm,
 								documentUploadUrlTemplate
-							)
+							),
+							attributes: { 'data-cy': 'add-application-form' }
 						}
 					]
 				}
@@ -492,7 +504,8 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 											isFolderInfo(appellantCaseData.documents.applicationDecisionLetter)
 												? appellantCaseData.documents.applicationDecisionLetter.folderId
 												: undefined
-										)
+										),
+										attributes: { 'data-cy': 'manage-decision-letter' }
 									}
 							  ]
 							: []),
@@ -503,7 +516,8 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 								appellantCaseData.appealId,
 								appellantCaseData.documents.applicationDecisionLetter,
 								documentUploadUrlTemplate
-							)
+							),
+							attributes: { 'data-cy': 'add-decision-letter' }
 						}
 					]
 				}
@@ -540,7 +554,8 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 											isFolderInfo(appellantCaseData.documents.appellantStatement)
 												? appellantCaseData.documents.appellantStatement.folderId
 												: undefined
-										)
+										),
+										attributes: { 'data-cy': 'manage-appeal-statement' }
 									}
 							  ]
 							: []),
@@ -551,7 +566,8 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 								appellantCaseData.appealId,
 								appellantCaseData.documents.appellantStatement,
 								documentUploadUrlTemplate
-							)
+							),
+							attributes: { 'data-cy': 'add-appeal-statement' }
 						}
 					]
 				}
@@ -618,7 +634,8 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 						{
 							text: 'Change',
 							visuallyHiddenText: 'Appellant case review outcome',
-							href: `/appeals-service/appeal-details/${appellantCaseData.appealId}/lpa-questionnaire`
+							href: `/appeals-service/appeal-details/${appellantCaseData.appealId}/lpa-questionnaire`,
+							attributes: { 'data-cy': 'change-review-outcome' }
 						}
 					]
 				}

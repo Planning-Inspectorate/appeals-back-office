@@ -359,7 +359,7 @@ function mapStatusDependentNotifications(appealDetails, session, accordionCompon
 				session,
 				'assignCaseOfficer',
 				appealDetails.appealId,
-				`<p class="govuk-notification-banner__heading">Appeal ready to be assigned to case officer</p><p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/${appealDetails.appealId}/assign-user/case-officer">Assign case officer</a></p>`
+				`<p class="govuk-notification-banner__heading">Appeal ready to be assigned to case officer</p><p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/${appealDetails.appealId}/assign-user/case-officer" data-cy="assign-case-officer">Assign case officer</a></p>`
 			);
 			break;
 		case 'issue_determination':
@@ -367,7 +367,7 @@ function mapStatusDependentNotifications(appealDetails, session, accordionCompon
 				session,
 				'readyForDecision',
 				appealDetails.appealId,
-				`<p class="govuk-notification-banner__heading">Ready for decision</p><p><a class="govuk-notification-banner__link" href="${generateIssueDecisionUrl(
+				`<p class="govuk-notification-banner__heading">Ready for decision</p><p><a class="govuk-notification-banner__link" data-cy="issue-determination" href="${generateIssueDecisionUrl(
 					appealDetails.appealId
 				)}">Issue decision</a></p>`
 			);
@@ -377,7 +377,7 @@ function mapStatusDependentNotifications(appealDetails, session, accordionCompon
 				session,
 				'appealValidAndReadyToStart',
 				appealDetails.appealId,
-				`<p class="govuk-notification-banner__heading">Appeal valid</p><p><a class="govuk-notification-banner__link" href="${generateStartTimetableUrl(
+				`<p class="govuk-notification-banner__heading">Appeal valid</p><p><a class="govuk-notification-banner__link" data-cy="ready-to-start" href="${generateStartTimetableUrl(
 					appealDetails.appealId
 				)}">Start case</a></p>`
 			);
@@ -387,7 +387,7 @@ function mapStatusDependentNotifications(appealDetails, session, accordionCompon
 				session,
 				'appealAwaitingTransfer',
 				appealDetails.appealId,
-				`<p class="govuk-notification-banner__heading">This appeal is awaiting transfer</p><p class="govuk-body">The appeal must be transferred to Horizon. When this is done, <a class="govuk-link" href="/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-type/add-horizon-reference">update the appeal with the new horizon reference</a>.</p>`
+				`<p class="govuk-notification-banner__heading">This appeal is awaiting transfer</p><p class="govuk-body">The appeal must be transferred to Horizon. When this is done, <a class="govuk-link" data-cy="awaiting-transfer" href="/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-type/add-horizon-reference">update the appeal with the new horizon reference</a>.</p>`
 			);
 			removeAccordionComponentsActions(accordionComponents);
 			break;

@@ -102,6 +102,7 @@ export function nationalListPage(
 					classes: 'govuk-caption-m govuk-!-margin-bottom-3 colour--secondary'
 				},
 				value: searchTerm,
+				attributes: { 'data-cy': 'search-term' },
 				...searchInputErrorMessage
 			}
 		},
@@ -124,7 +125,9 @@ export function nationalListPage(
 			type: 'html',
 			parameters: {
 				html: `${
-					searchTerm ? `<a class="govuk-link" href="${urlWithoutQuery}">Clear search</a>` : ''
+					searchTerm
+						? `<a class="govuk-link" href="${urlWithoutQuery}" data-cy="clear-search">Clear search</a>`
+						: ''
 				}</div></form><div class="govuk-section-break--visible govuk-!-margin-top-2 govuk-!-margin-bottom-6"></div></div></div>`
 			}
 		},
@@ -156,7 +159,7 @@ export function nationalListPage(
 						type: 'html',
 						parameters: {
 							html: searchTerm
-								? `<input type="hidden" name="searchTerm" value="${searchTerm}" />`
+								? `<input type="hidden" name="searchTerm" value="${searchTerm}" data-cy="search-term" />`
 								: ''
 						}
 					},
@@ -168,7 +171,8 @@ export function nationalListPage(
 							},
 							name: 'appealStatusFilter',
 							value: 'all',
-							items: appealStatusFilterItemsArray
+							items: appealStatusFilterItemsArray,
+							attributes: { 'data-cy': 'filter-by-case-status' }
 						}
 					},
 					{
@@ -179,7 +183,8 @@ export function nationalListPage(
 							},
 							name: 'inspectorStatusFilter',
 							value: 'all',
-							items: inspectorStatusFilterItemsArray
+							items: inspectorStatusFilterItemsArray,
+							attributes: { 'data-cy': 'filter-by-inspector-status' }
 						}
 					},
 					{
@@ -194,13 +199,14 @@ export function nationalListPage(
 							id: 'filters-submit',
 							type: 'submit',
 							classes: 'govuk-button--secondary',
-							text: 'Apply'
+							text: 'Apply',
+							attributes: { 'data-cy': 'filter-submit' }
 						}
 					},
 					{
 						type: 'html',
 						parameters: {
-							html: `<a class="govuk-link" href="${clearFilterUrl}">Clear filter</a></div></form>`
+							html: `<a class="govuk-link" href="${clearFilterUrl}" data-cy="filter-clear">Clear filter</a></div></form>`
 						}
 					}
 				]
@@ -240,7 +246,7 @@ export function nationalListPage(
 										appeal.appealId
 									}" aria-label="Appeal ${numberToAccessibleDigitLabel(
 										shortReference || ''
-									)}">${shortReference}</a>`
+									)}" data-cy="${shortReference}" >${shortReference}</a>`
 								},
 								{
 									text: addressToString(appeal.appealSite)
