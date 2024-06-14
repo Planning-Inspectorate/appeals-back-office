@@ -50,17 +50,23 @@ resource "azurerm_virtual_network_peering" "tooling_to_bo" {
 }
 
 resource "azurerm_virtual_network_peering" "bo_to_front_office" {
+  # only deploy if configured to connect to front office
+  count = var.front_office_infra_config.deploy_connections ? 1 : 0
+
   name                      = "${local.org}-peer-${local.service_name}-to-front-office-${var.environment}"
-  remote_virtual_network_id = data.azurerm_virtual_network.front_office_vnet.id
+  remote_virtual_network_id = data.azurerm_virtual_network.front_office_vnet[0].id
   resource_group_name       = azurerm_virtual_network.main.resource_group_name
   virtual_network_name      = azurerm_virtual_network.main.name
 }
 
 resource "azurerm_virtual_network_peering" "front_office_to_bo" {
+  # only deploy if configured to connect to front office
+  count = var.front_office_infra_config.deploy_connections ? 1 : 0
+
   name                      = "${local.org}-peer-front-office-to-${local.service_name}-${var.environment}"
   remote_virtual_network_id = azurerm_virtual_network.main.id
-  resource_group_name       = var.common_infra_config.network_rg
-  virtual_network_name      = var.common_infra_config.network_name
+  resource_group_name       = var.front_office_infra_config.network.rg
+  virtual_network_name      = var.front_office_infra_config.network.name
 }
 
 ## DNS Zones for Azure Services
