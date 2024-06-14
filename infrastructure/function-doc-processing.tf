@@ -77,8 +77,11 @@ resource "azurerm_role_assignment" "function_doc_processing_writer" {
   principal_id         = module.function_doc_processing.principal_id
 }
 
-resource "azurerm_role_assignment" "function_doc_processing_reader" {
-  scope                = azurerm_storage_container.appeal_documents.resource_manager_id
+resource "azurerm_role_assignment" "function_doc_processing_front_office_reader" {
+  # only include if configured to connect to front office
+  count = var.front_office_infra_config.deploy_connections ? 1 : 0
+
+  scope                = data.azurerm_storage_container.front_office_documents[0].resource_manager_id
   role_definition_name = "Storage Blob Data Reader"
   principal_id         = module.function_doc_processing.principal_id
 }
