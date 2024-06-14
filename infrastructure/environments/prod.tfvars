@@ -50,17 +50,20 @@ common_config = {
   }
 }
 
-common_infra_config = {
-  network_name = "pins-vnet-common-prod-ukw-001"
-  network_rg   = "pins-rg-common-prod-ukw-001"
-}
-
 documents_config = {
   account_replication_type = "GZRS"
   domain                   = "https://appeal-documents.planninginspectorate.gov.uk"
 }
 
 environment = "prod"
+
+front_office_infra_config = {
+  deploy_connections = true
+  network = {
+    name = "pins-vnet-common-prod-ukw-001"
+    rg   = "pins-rg-common-prod-ukw-001"
+  }
+}
 
 service_bus_config = {
   sku                           = "Premium"

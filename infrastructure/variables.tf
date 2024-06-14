@@ -64,14 +64,6 @@ variable "common_config" {
   })
 }
 
-variable "common_infra_config" {
-  description = "Config for the common infra"
-  type = object({
-    network_name = string
-    network_rg   = string
-  })
-}
-
 variable "documents_config" {
   description = "Domain name for docs storage account"
   type = object({
@@ -85,6 +77,17 @@ variable "documents_config" {
 variable "environment" {
   description = "The name of the environment in which resources will be deployed"
   type        = string
+}
+
+variable "front_office_infra_config" {
+  description = "Config for the front office infra"
+  type = object({
+    deploy_connections = bool # whether to deploy connections to the front office - enable after the FO is deployed
+    network = object({
+      name = string
+      rg   = string
+    })
+  })
 }
 
 variable "service_bus_config" {

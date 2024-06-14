@@ -50,17 +50,20 @@ common_config = {
   }
 }
 
-common_infra_config = {
-  network_name = "pins-vnet-common-training-ukw-001"
-  network_rg   = "pins-rg-common-training-ukw-001"
-}
-
 documents_config = {
   account_replication_type = "LRS"
   domain                   = "https://back-office-appeals-docs-training.planninginspectorate.gov.uk"
 }
 
 environment = "training"
+
+front_office_infra_config = {
+  deploy_connections = true
+  network = {
+    name = "pins-vnet-common-training-ukw-001"
+    rg   = "pins-rg-common-training-ukw-001"
+  }
+}
 
 service_bus_config = {
   sku                           = "Premium"
