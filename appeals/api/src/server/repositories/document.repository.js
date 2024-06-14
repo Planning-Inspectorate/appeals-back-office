@@ -1,4 +1,5 @@
 import { databaseConnector } from '#utils/database-connector.js';
+import { AVSCAN_STATUS } from '@pins/appeals/constants/documents.js';
 
 /**
  * @typedef {import('#db-client').Prisma.PrismaPromise<T>} PrismaPromise
@@ -140,7 +141,7 @@ export const updateDocumentAvStatus = (data) =>
 				data: {
 					documentGuid: document.id,
 					version: document.version,
-					avScanSuccess: document.virusCheckStatus === 'checked'
+					avScanSuccess: document.virusCheckStatus === AVSCAN_STATUS.SCANNED
 				}
 			})
 		)
