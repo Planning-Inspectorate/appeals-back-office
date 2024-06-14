@@ -26,11 +26,6 @@ export default async function (context, msg) {
 		return;
 	}
 
-	if (!msg.appeal) {
-		context.log.warn(`Ignoring invalid message, 'appeal' is required`, msg);
-		return;
-	}
-
 	try {
 		const res = await api.post(msg);
 

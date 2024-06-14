@@ -5,7 +5,7 @@ import {
 	mapDocumentsForBlobStorage,
 	mapDocumentsForAuditTrail
 } from './documents.mapper.js';
-import { getByCaseId, getByCaseIdPath, getById } from '#repositories/folder.repository.js';
+import { getByCaseId, getByCaseIdAndPaths, getById } from '#repositories/folder.repository.js';
 import {
 	addDocument,
 	addDocumentVersion,
@@ -19,6 +19,7 @@ import { STAGE } from '@pins/appeals/constants/documents.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { EventType } from '@pins/event-client';
 import { AVSCAN_STATUS } from '@pins/appeals/constants/documents.js';
+import { DOCTYPE } from '@pins/appeals/constants/documents.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Document} Document */
@@ -48,15 +49,79 @@ export const getFolderForAppeal = async (appeal, folderId) => {
 
 /**
  * @param {Appeal} appeal
- * @param {string?} path
+ * @param {string?} stage
  * @returns {Promise<Folder[]>}
  */
-export const getFoldersForAppeal = async (appeal, path = null) => {
-	if (path) {
-		return await getByCaseIdPath(appeal.id, path);
+export const getFoldersForAppeal = async (appeal, stage = null) => {
+	if (stage && stage != null) {
+		const paths = getFoldersForStage(stage);
+		return await getByCaseIdAndPaths(appeal.id, paths);
 	}
 
 	return await getByCaseId(appeal.id);
+};
+
+/**
+ *
+ * @param {string} path
+ * @returns {string[]}
+ */
+export const getFoldersForStage = (path) => {
+	const stage = path.indexOf('/') > -1 ? path.split('/')[0] : path;
+
+	/**
+	 * @type {string[]}
+	 */
+	let folders;
+	switch (stage) {
+		case STAGE.APPELLANT_CASE:
+			folders = [
+				`${STAGE.APPELLANT_CASE}/${DOCTYPE.APPELLANT_STATEMENT}`,
+				`${STAGE.APPELLANT_CASE}/${DOCTYPE.ORIGINAL_APPLICATION_FORM}`,
+				`${STAGE.APPELLANT_CASE}/${DOCTYPE.APPLICATION_DECISION}`,
+				`${STAGE.APPELLANT_CASE}/${DOCTYPE.CHANGED_DESCRIPTION}`,
+				`${STAGE.APPELLANT_CASE}/${DOCTYPE.APPELLANT_CASE_WITHDRAWAL}`,
+				`${STAGE.APPELLANT_CASE}/${DOCTYPE.APPELLANT_CASE_CORRESPONDENCE}`
+			];
+			break;
+		case STAGE.LPA_QUESTIONNAIRE:
+			folders = [
+				`${STAGE.LPA_QUESTIONNAIRE}/${DOCTYPE.WHO_NOTIFIED}`,
+				`${STAGE.LPA_QUESTIONNAIRE}/${DOCTYPE.CONSERVATION_MAP}`,
+				`${STAGE.LPA_QUESTIONNAIRE}/${DOCTYPE.OTHER_PARTY_REPS}`,
+				`${STAGE.LPA_QUESTIONNAIRE}/${DOCTYPE.PLANNING_OFFICER_REPORT}`,
+				`${STAGE.LPA_QUESTIONNAIRE}/${DOCTYPE.LPA_CASE_CORRESPONDENCE}`
+			];
+			break;
+		case STAGE.COSTS:
+			folders = [
+				`${STAGE.COSTS}/appellant`,
+				`${STAGE.COSTS}/lpa`,
+				`${STAGE.COSTS}/decision`
+				// `${STAGE.COSTS}/${DOCTYPE.APPELLANT_COST_APPLICATION}`,
+				// `${STAGE.COSTS}/${DOCTYPE.APPELLANT_COST_WITHDRAWAL}`,
+				// `${STAGE.COSTS}/${DOCTYPE.APPELLANT_COST_CORRESPONDENCE}`,
+				// `${STAGE.COSTS}/${DOCTYPE.LPA_COST_APPLICATION}`,
+				// `${STAGE.COSTS}/${DOCTYPE.LPA_COST_WITHDRAWAL}`,
+				// `${STAGE.COSTS}/${DOCTYPE.LPA_COST_CORRESPONDENCE}`,
+				// `${STAGE.COSTS}/${DOCTYPE.COST_DECISION_LETTER}`
+			];
+			break;
+		case STAGE.INTERNAL:
+			folders = [
+				`${STAGE.INTERNAL}/${DOCTYPE.CROSS_TEAM_CORRESPONDENCE}`,
+				`${STAGE.INTERNAL}/${DOCTYPE.INSPECTOR_CORRESPONDENCE}`,
+				`${STAGE.INTERNAL}/${DOCTYPE.DROPBOX}`
+			];
+			break;
+		case STAGE.APPEAL_DECISION:
+			folders = [`${STAGE.APPEAL_DECISION}/${DOCTYPE.CASE_DECISION_LETTER}`];
+			break;
+		default:
+			folders = [`${STAGE.INTERNAL}/${DOCTYPE.DROPBOX}`];
+	}
+
+	return folders;
 };
 
 /**
