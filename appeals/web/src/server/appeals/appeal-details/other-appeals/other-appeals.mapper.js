@@ -240,7 +240,7 @@ export function manageOtherAppealsPage(appealData, request) {
 				text: otherAppeal.appealType || ''
 			},
 			{
-				html: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealData.appealId}/other-appeals/remove/${shortAppealReference}/${otherAppeal.relationshipId}">Remove</a>`
+				html: `<a class="govuk-link" data-cy="remove-appeal-${appealData.appealReference}" href="/appeals-service/appeal-details/${appealData.appealId}/other-appeals/remove/${shortAppealReference}/${otherAppeal.relationshipId}">Remove</a>`
 			}
 		];
 	});

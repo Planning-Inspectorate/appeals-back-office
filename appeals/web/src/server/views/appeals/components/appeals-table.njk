@@ -3,7 +3,7 @@
 
 {%- macro appealsTable(params) -%}
 	{%- macro createReferenceCell(appeal) -%}
-		<a class="govuk-link" href="/appeals-service/appeal-details/{{appeal.appealId}}" aria-label="appeal {{ appeal.appealReference | appealShortReference | numberToAccessibleDigitLabel }}">
+		<a class="govuk-link" href="/appeals-service/appeal-details/{{appeal.appealId}}" aria-label="appeal {{ appeal.appealReference | appealShortReference | numberToAccessibleDigitLabel }}" data-cy="{{ appeal.appealReference | appealShortReference }}">
 			{{ appeal.appealReference | appealShortReference }}
 		</a>
 	{%- endmacro -%}

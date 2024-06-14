@@ -40,7 +40,8 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 						{
 							text: 'Change',
 							visuallyHiddenText: 'Listed building',
-							href: `${currentRoute}/change-lpa-questionnaire/is-listed-building`
+							href: `${currentRoute}/change-lpa-questionnaire/is-listed-building`,
+							attributes: { 'data-cy': 'change-is-listed-building' }
 						}
 					]
 				}
@@ -65,7 +66,8 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 							{
 								text: 'Change',
 								visuallyHiddenText: 'Listed building details',
-								href: `${currentRoute}/change-lpa-questionnaire/listed-building-details`
+								href: `${currentRoute}/change-lpa-questionnaire/listed-building-details`,
+								attributes: { 'data-cy': 'change-listed-building-details' }
 							}
 						]
 					}
@@ -90,7 +92,8 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 						{
 							text: 'Change',
 							visuallyHiddenText: 'Affects a listed building',
-							href: `${currentRoute}/change-lpa-questionnaire/does-affect-a-listed-building`
+							href: `${currentRoute}/change-lpa-questionnaire/does-affect-a-listed-building`,
+							attributes: { 'data-cy': 'change-does-affect-a-listed-building' }
 						}
 					]
 				}
@@ -140,7 +143,8 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 							{
 								text: 'Change',
 								visuallyHiddenText: 'Affects listed building details',
-								href: `${currentRoute}/change-lpa-questionnaire/affects-listed-building-details`
+								href: `${currentRoute}/change-lpa-questionnaire/affects-listed-building-details`,
+								attributes: { 'data-cy': 'change-affects-listed-building-details' }
 							}
 						]
 					}
@@ -165,7 +169,8 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 						{
 							text: 'Change',
 							visuallyHiddenText: 'Affects a scheduled monument',
-							href: `${currentRoute}/change-lpa-questionnaire/affects-scheduled-monument`
+							href: `${currentRoute}/change-lpa-questionnaire/affects-scheduled-monument`,
+							attributes: { 'data-cy': 'change-effects-scheduled-monument' }
 						}
 					]
 				}
@@ -212,7 +217,8 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 						{
 							text: 'Change',
 							visuallyHiddenText: 'Correct appeal type',
-							href: `${currentRoute}/is-correct-appeal-type/change`
+							href: `${currentRoute}/is-correct-appeal-type/change`,
+							attributes: { 'data-cy': 'change-is-correct-appeal-type' }
 						}
 					]
 				}
@@ -235,7 +241,8 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 						{
 							text: 'Change',
 							visuallyHiddenText: 'Conservation area',
-							href: `${currentRoute}/change-lpa-questionnaire/in-or-relates-to-ca`
+							href: `${currentRoute}/change-lpa-questionnaire/in-or-relates-to-ca`,
+							attributes: { 'data-cy': 'change-in-or-relates-to-ca' }
 						}
 					]
 				}
@@ -296,7 +303,8 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 											isFolderInfo(data.documents.conservationMap)
 												? data.documents.conservationMap.folderId
 												: undefined
-										)
+										),
+										attributes: { 'data-cy': 'manage-conservation-area-map' }
 									}
 							  ]
 							: []),
@@ -307,7 +315,8 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 								data.appealId,
 								data.documents.conservationMap,
 								buildDocumentUploadUrlTemplate(data.lpaQuestionnaireId)
-							)
+							),
+							attributes: { 'data-cy': 'add-conservation-area-map' }
 						}
 					]
 				}
@@ -331,7 +340,8 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 						{
 							text: 'Change',
 							visuallyHiddenText: 'Green belt',
-							href: `${currentRoute}/change-lpa-questionnaire/site-within-green-belt`
+							href: `${currentRoute}/change-lpa-questionnaire/site-within-green-belt`,
+							attributes: { 'data-cy': 'change-site-within-green-belt' }
 						}
 					]
 				}
@@ -390,7 +400,8 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 											isFolderInfo(data.documents.whoNotified)
 												? data.documents.whoNotified.folderId
 												: undefined
-										)
+										),
+										attributes: { 'data-cy': 'manage-notifying-parties' }
 									}
 							  ]
 							: []),
@@ -401,7 +412,8 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 								data.appealId,
 								data.documents.whoNotified,
 								buildDocumentUploadUrlTemplate(data.lpaQuestionnaireId)
-							)
+							),
+							attributes: { 'data-cy': 'add-notifying-parties' }
 						}
 					]
 				}
@@ -427,7 +439,8 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 						{
 							text: 'Change',
 							visuallyHiddenText: 'Notification methods',
-							href: `${currentRoute}/change-lpa-questionnaire/notification-methods`
+							href: `${currentRoute}/change-lpa-questionnaire/notification-methods`,
+							attributes: { 'data-cy': 'change-notification-methods' }
 						}
 					]
 				}
@@ -485,7 +498,8 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 						{
 							text: 'Change',
 							visuallyHiddenText: 'Representations from other parties',
-							href: `${currentRoute}/change-lpa-questionnaire/has-representations-from-other-parties`
+							href: `${currentRoute}/change-lpa-questionnaire/has-representations-from-other-parties`,
+							attributes: { 'data-cy': 'change-has-representations-from-other-parties' }
 						}
 					]
 				}
@@ -546,7 +560,8 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 											isFolderInfo(data.documents.otherPartyRepresentations)
 												? data.documents.otherPartyRepresentations.folderId
 												: undefined
-										)
+										),
+										attributes: { 'data-cy': 'manage-representations-from-other-parties' }
 									}
 							  ]
 							: []),
@@ -557,7 +572,8 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 								data.appealId,
 								data.documents.otherPartyRepresentations,
 								buildDocumentUploadUrlTemplate(data.lpaQuestionnaireId)
-							)
+							),
+							attributes: { 'data-cy': 'add-representations-from-other-parties' }
 						}
 					]
 				}
@@ -595,7 +611,8 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 											isFolderInfo(data.documents.planningOfficerReport)
 												? data.documents.planningOfficerReport.folderId
 												: undefined
-										)
+										),
+										attributes: { 'data-cy': 'manage-officers-report' }
 									}
 							  ]
 							: []),
@@ -606,7 +623,8 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 								data.appealId,
 								data.documents.planningOfficerReport,
 								buildDocumentUploadUrlTemplate(data.lpaQuestionnaireId)
-							)
+							),
+							attributes: { 'data-cy': 'add-officers-report' }
 						}
 					]
 				}
@@ -633,7 +651,8 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 						{
 							text: 'Change',
 							visuallyHiddenText: 'Site access required',
-							href: `${currentRoute}/inspector-access/change/lpa`
+							href: `${currentRoute}/inspector-access/change/lpa`,
+							attributes: { 'data-cy': 'change-does-site-require-inspector-access' }
 						}
 					]
 				}
@@ -680,7 +699,8 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 						{
 							text: 'Change',
 							visuallyHiddenText: 'Affects neighbouring sites',
-							href: `${currentRoute}/neighbouring-sites/change/affected`
+							href: `${currentRoute}/neighbouring-sites/change/affected`,
+							attributes: { 'data-cy': 'change-is-affecting-neighbouring-sites' }
 						}
 					]
 				}
@@ -731,7 +751,8 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 						{
 							text: 'Change',
 							href: `${currentRoute}/safety-risks/change/lpa`,
-							visuallyHiddenText: 'potential safety risks'
+							visuallyHiddenText: 'potential safety risks',
+							attributes: { 'data-cy': 'change-health-and-safety' }
 						}
 					]
 				},
@@ -757,7 +778,8 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 						{
 							text: 'Change',
 							visuallyHiddenText: 'Appeals near the site',
-							href: `${currentRoute}/change-lpa-questionnaire/other-appeals`
+							href: `${currentRoute}/change-lpa-questionnaire/other-appeals`,
+							attributes: { 'data-cy': 'change-other-appeals' }
 						}
 					]
 				}
@@ -896,7 +918,8 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 						{
 							text: 'Change',
 							visuallyHiddenText: 'LPA Questionnaire review outcome',
-							href: `/appeals-service/appeal-details/${data.appealId}/lpa-questionnaire/${data.lpaQuestionnaireId}`
+							href: `/appeals-service/appeal-details/${data.appealId}/lpa-questionnaire/${data.lpaQuestionnaireId}`,
+							attributes: { 'data-cy': 'change-review-outcome' }
 						}
 					]
 				}

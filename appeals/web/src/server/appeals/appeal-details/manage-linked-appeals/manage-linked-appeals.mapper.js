@@ -95,12 +95,14 @@ export function manageLinkedAppealsPage(appealData, appealId, leadLinkedAppeal, 
 							html: linkedAppeal.externalSource
 								? `<a class="govuk-link" href="${generateHorizonAppealUrl(
 										linkedAppeal?.appealId
-								  )}">${linkedAppeal?.appealReference}</a>`
+								  )}" data-cy="${linkedAppeal?.appealReference}"
+								  >${linkedAppeal?.appealReference}</a>`
 								: `<a class="govuk-link" href="/appeals-service/appeal-details/${
 										linkedAppeal?.appealId
 								  }" aria-label="Appeal ${numberToAccessibleDigitLabel(
 										appealShortReference(linkedAppeal?.appealReference) || ''
-								  )}">${appealShortReference(linkedAppeal?.appealReference)}</a>`
+								  )}" data-cy="${linkedAppeal?.appealReference}"
+								  >${appealShortReference(linkedAppeal?.appealReference)}</a>`
 						},
 						{
 							text:
@@ -109,7 +111,7 @@ export function manageLinkedAppealsPage(appealData, appealId, leadLinkedAppeal, 
 									: linkedAppeal.appealType) || 'Unknown'
 						},
 						{
-							html: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealData.appealId}/linked-appeals/unlink-appeal/${linkedAppeal.appealId}/${linkedAppeal.relationshipId}/${appealId}">Unlink</a>`
+							html: `<a class="govuk-link" data-cy="unlink-appeal-${appealData.appealReference}" href="/appeals-service/appeal-details/${appealData.appealId}/linked-appeals/unlink-appeal/${linkedAppeal.appealId}/${linkedAppeal.relationshipId}/${appealId}">Unlink</a>`
 						}
 					];
 				})

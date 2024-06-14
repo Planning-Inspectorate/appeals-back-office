@@ -74,7 +74,7 @@ export const notificationBannerDefinitions = {
 	},
 	notCheckedDocument: {
 		pages: ['lpaQuestionnaire', 'manageDocuments', 'appellantCase', 'manageFolder'],
-		html: '<p class="govuk-notification-banner__heading">Virus scan in progress</p></br><a class="govuk-notification-banner__link" href="./">Refresh page to see if scan has finished</a>'
+		html: '<p class="govuk-notification-banner__heading">Virus scan in progress</p></br><a class="govuk-notification-banner__link" href="./" data-cy/"refresh-page/" >Refresh page to see if scan has finished</a>'
 	},
 	appealAwaitingTransfer: {
 		pages: ['appealDetails'],

@@ -82,7 +82,7 @@ export const formatListOfLinkedAppeals = (listOfAppeals) => {
 
 			formattedLinks +=
 				linkUrl.length > 0
-					? `<li><a href="${linkUrl}" class="govuk-link" aria-label="${linkAriaLabel}">${shortAppealReference}</a> ${relationshipText}</li>`
+					? `<li><a href="${linkUrl}" class="govuk-link" data-cy="linked-appeal-${shortAppealReference}" aria-label="${linkAriaLabel}">${shortAppealReference}</a> ${relationshipText}</li>`
 					: `<li><span class="govuk-body">${shortAppealReference}</span> ${relationshipText}</li>`;
 		}
 
@@ -110,7 +110,7 @@ export const formatListOfRelatedAppeals = (listOfAppeals) => {
 
 			formattedLinks +=
 				linkUrl.length > 0
-					? `<li><a href="${linkUrl}" class="govuk-link" aria-label="${linkAriaLabel}">${shortAppealReference}</a></li>`
+					? `<li><a href="${linkUrl}" class="govuk-link" data-cy="related-appeal-${shortAppealReference}" aria-label="${linkAriaLabel}">${shortAppealReference}</a></li>`
 					: `<li><span class="govuk-body">${shortAppealReference}</span></li>`;
 		}
 
@@ -171,7 +171,7 @@ export const formatDocumentValues = (appealId, listOfDocuments, addLateEntryStat
 				documentPageComponents.push({
 					type: 'html',
 					parameters: {
-						html: `<a href='/documents/${appealId}/download/${document.id}/preview' target="'_blank'" class="govuk-link">${document.name}</a>`
+						html: `<a href='/documents/${appealId}/download/${document.id}/preview' data-cy='document-${document.id}' target="'_blank'" class="govuk-link">${document.name}</a>`
 					}
 				});
 			} else {
