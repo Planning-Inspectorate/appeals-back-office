@@ -9,8 +9,8 @@
 export function changeSiteAddress(apiClient, appealId, siteAddress, addressId) {
 	const formattedSiteAddress = {
 		addressLine1: siteAddress.addressLine1,
-		...(siteAddress.addressLine2 && { addressLine2: siteAddress.addressLine2 }),
-		...(siteAddress.county && { county: siteAddress.county }),
+		addressLine2: siteAddress.addressLine2,
+		county: siteAddress.county,
 		postcode: siteAddress.postCode,
 		town: siteAddress.town
 	};
