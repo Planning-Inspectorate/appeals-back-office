@@ -1288,9 +1288,9 @@ export async function initialiseAndMapAppealData(
 							appealHasAppellantCostsDocuments
 								? `<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="${currentRoute}/costs/appellant/manage-documents/${appealDetails?.costs?.appellantFolder?.folderId}">Manage</a></li>`
 								: ''
-						}<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="${currentRoute}/costs/appellant/select-document-type/${
+						}<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appeallant" href="${currentRoute}/costs/appellant/select-document-type/${
 						appealDetails?.costs?.appellantFolder?.folderId
-					}" data-cy="add-costs-appeallant" >Add</a></li></ul>`,
+					}" >Add</a></li></ul>`,
 					classes: 'appeal-costs-appellant-actions'
 				}
 			]
@@ -1324,9 +1324,9 @@ export async function initialiseAndMapAppealData(
 							appealHasLPACostsDocuments
 								? `<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="${currentRoute}/costs/lpa/manage-documents/${appealDetails?.costs?.lpaFolder?.folderId}">Manage</a></li>`
 								: ''
-						}<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="${currentRoute}/costs/lpa/select-document-type/${
+						}<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa" href="${currentRoute}/costs/lpa/select-document-type/${
 						appealDetails?.costs?.lpaFolder?.folderId
-					}" data-cy="add-costs-lpa" >Add</a></li></ul>`,
+					}" >Add</a></li></ul>`,
 					classes: 'appeal-costs-lpa-actions'
 				}
 			]
@@ -1360,9 +1360,9 @@ export async function initialiseAndMapAppealData(
 							appealHasCostsDecisionDocuments
 								? `<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="${currentRoute}/costs/decision/manage-documents/${appealDetails?.costs?.decisionFolder?.folderId}">Manage</a></li>`
 								: ''
-						}<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="${currentRoute}/costs/decision/upload-documents/${
+						}<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-decision" href="${currentRoute}/costs/decision/upload-documents/${
 						appealDetails?.costs?.decisionFolder?.folderId
-					}" data-cy="add-costs-decision" >Add</a></li></ul>`,
+					}" >Add</a></li></ul>`,
 					classes: 'appeal-costs-decision-actions'
 				}
 			]

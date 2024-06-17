@@ -937,10 +937,10 @@ describe('appeal-details', () => {
 			});
 
 			expect(linkedAppealsRowElement.innerHTML).toContain(
-				'href="/appeals-service/appeal-details/1/linked-appeals/manage"> Manage<span class="govuk-visually-hidden"> Linked appeals</span></a>'
+				'href="/appeals-service/appeal-details/1/linked-appeals/manage" data-cy="manage-linked-appeals"> Manage<span class="govuk-visually-hidden"> Linked appeals</span></a>'
 			);
 			expect(linkedAppealsRowElement.innerHTML).toContain(
-				'href="/appeals-service/appeal-details/1/linked-appeals/add"> Add<span class="govuk-visually-hidden"> Linked appeals</span></a>'
+				'href="/appeals-service/appeal-details/1/linked-appeals/add" data-cy="add-linked-appeal"> Add<span class="govuk-visually-hidden"> Linked appeals</span></a>'
 			);
 		});
 
