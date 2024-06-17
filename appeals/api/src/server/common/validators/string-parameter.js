@@ -31,7 +31,7 @@ const validateStringParameter = (parameterName, maxLength = LENGTH_300) =>
  */
 export const validateStringParameterAllowingEmpty = (parameterName, maxLength = LENGTH_300) =>
 	body(parameterName)
-		.optional()
+		.optional({ nullable: true })
 		.isString()
 		.withMessage(ERROR_MUST_BE_STRING)
 		.isLength({ max: maxLength })
