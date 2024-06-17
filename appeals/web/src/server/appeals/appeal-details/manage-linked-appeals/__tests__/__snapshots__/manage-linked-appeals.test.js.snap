@@ -1028,10 +1028,11 @@ exports[`linked-appeals GET /linked-appeals/manage should render the manage link
         </thead>
         <tbody class="govuk-table__body">
             <tr class="govuk-table__row">
-                <td class="govuk-table__cell"><a class="govuk-link" href="https://test-horizon-url.gov.uk?appealId=3">76215416</a>
+                <td class="govuk-table__cell"><a class="govuk-link" href="https://test-horizon-url.gov.uk?appealId=3"
+                    data-cy="76215416">76215416</a>
                 </td>
                 <td class="govuk-table__cell">Commercial</td>
-                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/unlink-appeal/3/3047/2">Unlink</a>
+                <td class="govuk-table__cell"><a class="govuk-link" data-cy="unlink-appeal-APP/Q9999/D/21/351062" href="/appeals-service/appeal-details/1/linked-appeals/unlink-appeal/3/3047/2">Unlink</a>
                 </td>
             </tr>
         </tbody>
@@ -1059,17 +1060,19 @@ exports[`linked-appeals GET /linked-appeals/manage should render the manage link
         </thead>
         <tbody class="govuk-table__body">
             <tr class="govuk-table__row">
-                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/2" aria-label="Appeal 7 2 5 2 8 4">725284</a>
+                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/2" aria-label="Appeal 7 2 5 2 8 4"
+                    data-cy="APP/Q9999/D/21/725284">725284</a>
                 </td>
                 <td class="govuk-table__cell">Householder</td>
-                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/unlink-appeal/2/3046/1">Unlink</a>
+                <td class="govuk-table__cell"><a class="govuk-link" data-cy="unlink-appeal-APP/Q9999/D/21/351062" href="/appeals-service/appeal-details/1/linked-appeals/unlink-appeal/2/3046/1">Unlink</a>
                 </td>
             </tr>
             <tr class="govuk-table__row">
-                <td class="govuk-table__cell"><a class="govuk-link" href="https://test-horizon-url.gov.uk?appealId=3">76215416</a>
+                <td class="govuk-table__cell"><a class="govuk-link" href="https://test-horizon-url.gov.uk?appealId=3"
+                    data-cy="76215416">76215416</a>
                 </td>
                 <td class="govuk-table__cell">Commercial</td>
-                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/unlink-appeal/3/3047/1">Unlink</a>
+                <td class="govuk-table__cell"><a class="govuk-link" data-cy="unlink-appeal-APP/Q9999/D/21/351062" href="/appeals-service/appeal-details/1/linked-appeals/unlink-appeal/3/3047/1">Unlink</a>
                 </td>
             </tr>
         </tbody>
