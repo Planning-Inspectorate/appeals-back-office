@@ -285,6 +285,21 @@ const formatAppeal = (
 						appeal.lpaQuestionnaire?.lpaqCreatedDate &&
 						appeal.lpaQuestionnaire?.lpaqCreatedDate.toISOString()
 				}
+			},
+			// TODO: BOAT-1265: replace these placeholder folders with real data
+			internalCorrespondence: {
+				crossTeam: {
+					caseId: appeal.id,
+					documents: [],
+					folderId: 99901,
+					path: 'internal-correspondence/crossTeam'
+				},
+				inspector: {
+					caseId: appeal.id,
+					documents: [],
+					folderId: 99902,
+					path: 'internal-correspondence/inspector'
+				}
 			}
 		};
 

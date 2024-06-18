@@ -126,6 +126,23 @@ export const notificationBannerDefinitions = {
 		type: 'success',
 		text: 'Costs document uploaded'
 	},
+	internalCorrespondenceDocumentAdded: {
+		pages: ['appealDetails'],
+		type: 'success',
+		text: 'Internal correspondence document uploaded'
+	},
+	serviceUserUpdated: {
+		pages: ['appealDetails', 'appellantCase'],
+		type: 'success'
+	},
+	lpaReferenceUpdated: {
+		type: 'success',
+		pages: ['appealDetails', 'appellantCase', 'lpaQuestionnaire']
+	},
+	inspectorAccessUpdated: {
+		type: 'success',
+		pages: ['appealDetails', 'appellantCase', 'lpaQuestionnaire']
+	},
 	neighbouringSiteAffected: {
 		type: 'success',
 		pages: ['appealDetails', 'lpaQuestionnaire']

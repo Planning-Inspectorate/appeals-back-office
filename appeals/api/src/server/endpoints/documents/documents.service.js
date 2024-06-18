@@ -39,6 +39,16 @@ import { DOCTYPE } from '@pins/appeals/constants/documents.js';
  * @returns {Promise<FolderInfo | null>}
  */
 export const getFolderForAppeal = async (appeal, folderId) => {
+	// TODO: BOAT-1265: remove placeholder (added to unblock web app changes)
+	if (folderId === '99901' || folderId === '99902') {
+		return {
+			caseId: `${appeal.id}`,
+			documents: [],
+			folderId: parseInt(folderId, 10),
+			path: `internal-correspondence/${folderId === '99901' ? 'crossTeam' : 'inspector'}`
+		};
+	}
+
 	const folder = await getById(Number(folderId));
 	if (folder && folder.caseId === appeal.id) {
 		return formatFolder(folder) || null;

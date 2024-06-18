@@ -169,7 +169,6 @@ export const appealData = {
 	linkedAppeals: [],
 	localPlanningDepartment: 'Wiltshire Council',
 	lpaQuestionnaireId: 1,
-
 	neighbouringSites: [
 		{
 			siteId: 1,
@@ -217,6 +216,20 @@ export const appealData = {
 			status: 'not_received',
 			dueDate: '2024-10-11T10:27:06.626Z',
 			receivedAt: '2024-08-02T10:27:06.626Z'
+		}
+	},
+	internalCorrespondence: {
+		crossTeam: {
+			caseId: '1',
+			folderId: 99901,
+			path: 'internal-correspondence/crossTeam',
+			documents: []
+		},
+		inspector: {
+			caseId: '1',
+			folderId: 99902,
+			path: 'internal-correspondence/inspector',
+			documents: []
 		}
 	}
 };
