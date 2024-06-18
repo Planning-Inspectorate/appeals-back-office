@@ -4,6 +4,7 @@ import { jest } from '@jest/globals';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { householdAppeal } from '#tests/appeals/mocks.js';
 import { documentCreated } from '#tests/documents/mocks.js';
+import formatDate from '#utils/date-formatter.js';
 import { add, sub } from 'date-fns';
 import {
 	ERROR_MUST_BE_CORRECT_DATE_FORMAT,
@@ -191,11 +192,7 @@ describe('appeal decision routes', () => {
 						lpa_reference: '48269/APP/2021/1482',
 						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 						url: FRONT_OFFICE_URL,
-						decision_date: today.toLocaleDateString('en-GB', {
-							day: 'numeric',
-							month: 'long',
-							year: 'numeric'
-						})
+						decision_date: formatDate(new Date(today || ''), false)
 					},
 					reference: null
 				}
@@ -212,11 +209,7 @@ describe('appeal decision routes', () => {
 						lpa_reference: '48269/APP/2021/1482',
 						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 						url: FRONT_OFFICE_URL,
-						decision_date: today.toLocaleDateString('en-GB', {
-							day: 'numeric',
-							month: 'long',
-							year: 'numeric'
-						})
+						decision_date: formatDate(new Date(today || ''), false)
 					},
 					reference: null
 				}
