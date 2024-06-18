@@ -191,7 +191,11 @@ describe('appeal decision routes', () => {
 						lpa_reference: '48269/APP/2021/1482',
 						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 						url: FRONT_OFFICE_URL,
-						decision_date: '4 June 2024'
+						decision_date: today.toLocaleDateString('en-GB', {
+							day: 'numeric',
+							month: 'long',
+							year: 'numeric'
+						})
 					},
 					reference: null
 				}
@@ -208,7 +212,11 @@ describe('appeal decision routes', () => {
 						lpa_reference: '48269/APP/2021/1482',
 						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 						url: FRONT_OFFICE_URL,
-						decision_date: '4 June 2024'
+						decision_date: today.toLocaleDateString('en-GB', {
+							day: 'numeric',
+							month: 'long',
+							year: 'numeric'
+						})
 					},
 					reference: null
 				}
