@@ -4,6 +4,7 @@ import got from 'got';
 import pino from '../logger.js';
 import * as authSession from '../../app/auth/auth-session.service.js';
 
+// @ts-ignore
 const [requestLogger, responseLogger, retryLogger] = createHttpLoggerHooks(
 	pino,
 	config.logLevelStdOut
