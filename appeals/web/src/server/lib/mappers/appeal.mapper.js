@@ -713,14 +713,16 @@ export async function initialiseAndMapAppealData(
 			if (appealDetails.documentationSummary?.lpaQuestionnaire?.status === 'not_received') {
 				startedAtActionLink = {
 					text: 'Change',
-					href: `${currentRoute}/start-case/change`
+					href: `${currentRoute}/start-case/change`,
+					attributes: { 'data-cy': 'change-start-case-date' }
 				};
 			}
 		} else {
 			startedAtActionLink = {
 				text: 'Add',
 				href: `${currentRoute}/start-case/add`,
-				visuallyHiddenText: 'The date the case was started'
+				visuallyHiddenText: 'The date the case was started',
+				attributes: { 'data-cy': 'add-start-case-date' }
 			};
 		}
 	}

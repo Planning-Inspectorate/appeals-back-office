@@ -2,111 +2,65 @@
 /// <reference types="cypress"/>
 
 import { users } from '../../fixtures/users';
-import { AppealsListPage } from '../../page_objects/appealsListPage';
-import { UpdateDueDatePage } from '../../page_objects/updateDueDatePage';
-const appealsListPage = new AppealsListPage();
-const updateDueDatePage = new UpdateDueDatePage();
+import { DateTimeSection } from '../../page_objects/dateTimeSection';
+import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
+import { happyPathHelper } from '../../support/happyPathHelper';
 
-describe('Appeals feature', () => {
+const dateTimeSection = new DateTimeSection();
+const caseDetailsPage = new CaseDetailsPage();
+
+describe('Schedule site visit', () => {
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
-	it('Change to accommpanied site visit from case timetable', () => {
-		cy.visit('/appeals-service/all-cases');
-		appealsListPage.clickAppealFromList(30);
-		appealsListPage.clickChangeVisitTypeHasCaseTimetable();
-		appealsListPage.selectRadioButtonByValue('Accompanied');
-		updateDueDatePage.enterVisitDay('29');
-		updateDueDatePage.enterVisitMonth('12');
-		updateDueDatePage.enterVisitYear('2025');
-		updateDueDatePage.enterVisitStartTimeHour('10');
-		updateDueDatePage.enterVisitStartTimeMinute('00');
-		updateDueDatePage.enterVisitEndTimeHour('14');
-		updateDueDatePage.enterVisitEndTimeMinute('00');
-		appealsListPage.clickButtonByText('Confirm');
-		appealsListPage.clickLinkByText('Go back to case details');
-		appealsListPage.checkAnswer('Visit type', 'Accompanied');
-	});
+	const visitTypeTestCases = ['Accompanied', 'Access required', 'Unaccompanied'];
 
-	it('Change to access required site visit from case timetable', () => {
-		cy.visit('/appeals-service/all-cases');
-		appealsListPage.clickAppealFromList(30);
-		appealsListPage.clickChangeVisitTypeHasCaseTimetable();
-		appealsListPage.selectRadioButtonByValue('Access Required');
-		updateDueDatePage.enterVisitDay('29');
-		updateDueDatePage.enterVisitMonth('12');
-		updateDueDatePage.enterVisitYear('2025');
-		updateDueDatePage.enterVisitStartTimeHour('10');
-		updateDueDatePage.enterVisitStartTimeMinute('00');
-		updateDueDatePage.enterVisitEndTimeHour('14');
-		updateDueDatePage.enterVisitEndTimeMinute('00');
-		appealsListPage.clickButtonByText('Confirm');
-		appealsListPage.clickLinkByText('Go back to case details');
-		appealsListPage.checkAnswer('Visit type', 'Access required');
-	});
+	visitTypeTestCases.forEach((visitType, index) => {
+		it.only(`Change to ${visitType} visit from Site details`, () => {
+			let visitDate = happyPathHelper.validVisitDate();
 
-	it('Change to Unaccommpanied site visit without time from case timetable', () => {
-		cy.visit('/appeals-service/all-cases');
-		appealsListPage.clickAppealFromList(30);
-		appealsListPage.clickChangeVisitTypeHasCaseTimetable();
-		appealsListPage.selectRadioButtonByValue('Unaccompanied');
-		updateDueDatePage.enterVisitDay('29');
-		updateDueDatePage.enterVisitMonth('12');
-		updateDueDatePage.enterVisitYear('2025');
-		updateDueDatePage.removeVisitStartTimeHour();
-		updateDueDatePage.removeVisitStartTimeMinute();
-		updateDueDatePage.removeVisitEndTimeHour();
-		updateDueDatePage.removeVisitEndTimeMinute();
-		appealsListPage.clickButtonByText('Confirm');
-		appealsListPage.clickLinkByText('Go back to case details');
-		appealsListPage.checkAnswer('Visit type', 'Unaccompanied');
-	});
+			cy.createCase().then((caseRef) => {
+				happyPathHelper.assignCaseOfficer(caseRef);
+				happyPathHelper.reviewAppellantCase(caseRef);
+				happyPathHelper.startCase(caseRef);
 
-	it('Change to Unaccommpanied site visit with time from case timetable', () => {
-		cy.visit('/appeals-service/all-cases');
-		appealsListPage.clickAppealFromList(30);
-		appealsListPage.clickChangeVisitTypeHasCaseTimetable();
-		appealsListPage.selectRadioButtonByValue('Unaccompanied');
-		updateDueDatePage.enterVisitDay('29');
-		updateDueDatePage.enterVisitMonth('12');
-		updateDueDatePage.enterVisitYear('2025');
-		updateDueDatePage.enterVisitStartTimeHour('08');
-		updateDueDatePage.enterVisitStartTimeMinute('00');
-		updateDueDatePage.enterVisitEndTimeHour('12');
-		updateDueDatePage.enterVisitEndTimeMinute('00');
-		appealsListPage.clickButtonByText('Confirm');
-		appealsListPage.clickLinkByText('Go back to case details');
-		appealsListPage.checkAnswer('Visit type', 'Unaccompanied');
-	});
+				caseDetailsPage.clickChangeVisitTypeHasSiteDetails();
+				caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch(visitType));
+				dateTimeSection.enterVisitDate(visitDate);
+				dateTimeSection.enterVisitStartTime('08', '00');
+				dateTimeSection.enterVisitEndTime('12', '00');
+				caseDetailsPage.clickButtonByText('Confirm');
+				caseDetailsPage.validateConfirmationPanelMessage(
+					'Site visit scheduled',
+					'Appeal reference ' + caseRef
+				);
+				caseDetailsPage.clickLinkByText('Go back to case details');
+				caseDetailsPage.validateAnswer('Visit Type', visitType);
+			});
+		});
 
-	it.skip('Change to accommpanied site visit from Site details', () => {
-		cy.visit('/appeals-service/all-cases');
-		appealsListPage.clickAppealFromList(30);
-		appealsListPage.clickChangeVisitTypeHasSiteDetails();
-		appealsListPage.selectRadioButtonByValue('Accompanied');
-		appealsListPage.clickButtonByText('Continue');
-		appealsListPage.validateBannerMessage('Site visit type has been selected');
-		appealsListPage.checkAnswer('Visit Type', 'Accompanied');
-	});
+		it.only(`Change to ${visitType} site visit with time from case timetable`, () => {
+			let visitDate = happyPathHelper.validVisitDate();
 
-	it.skip('Change to access required site visit from Site details', () => {
-		cy.visit('/appeals-service/all-cases');
-		appealsListPage.clickAppealFromList(30);
-		appealsListPage.clickChangeVisitTypeHasSiteDetails();
-		appealsListPage.selectRadioButtonByValue('Access required');
-		appealsListPage.clickButtonByText('Continue');
-		appealsListPage.validateBannerMessage('Site visit type has been selected');
-		appealsListPage.checkAnswer('Visit Type', 'Access required');
-	});
+			cy.createCase().then((caseRef) => {
+				happyPathHelper.assignCaseOfficer(caseRef);
+				happyPathHelper.reviewAppellantCase(caseRef);
+				happyPathHelper.startCase(caseRef);
 
-	it.skip('Change to Unaccommpanied site visit from Site details', () => {
-		cy.visit('/appeals-service/all-cases');
-		appealsListPage.clickAppealFromList(30);
-		appealsListPage.clickChangeVisitTypeHasSiteDetails();
-		appealsListPage.selectRadioButtonByValue('Unaccompanied');
-		appealsListPage.clickButtonByText('Continue');
-		appealsListPage.validateBannerMessage('Site visit type has been selected');
-		appealsListPage.checkAnswer('Visit Type', 'Unaccompanied');
+				caseDetailsPage.clickChangeVisitTypeHasCaseTimetable();
+				caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch(visitType));
+				dateTimeSection.enterVisitDate(visitDate);
+				dateTimeSection.enterVisitStartTime('08', '00');
+				dateTimeSection.enterVisitEndTime('12', '00');
+				caseDetailsPage.clickButtonByText('Confirm');
+				caseDetailsPage.validateConfirmationPanelMessage(
+					'Site visit scheduled',
+					'Appeal reference ' + caseRef
+				);
+				caseDetailsPage.clickLinkByText('Go back to case details');
+				caseDetailsPage.validateAnswer('Visit type', visitType);
+			});
+		});
 	});
 });

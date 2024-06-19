@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { BrowserAuthData } from '../fixtures/browser-auth-data';
+import { appealsApiClient } from './appealsApiClient';
 
 const cookiesToSet = ['domain', 'expiry', 'httpOnly', 'path', 'secure'];
 
@@ -67,6 +68,26 @@ Cypress.Commands.add('loginWithPuppeteer', (user) => {
 	});
 
 	return;
+});
+
+Cypress.Commands.add('getByData', (value) => {
+	return cy.get(`[data-cy="${value}"]`);
+});
+
+Cypress.Commands.add('createCase', (requestBody) => {
+	return cy.wrap(null).then(async () => {
+		const appealRef = await appealsApiClient.caseSubmission(requestBody);
+		cy.log('Generated case with ref ' + appealRef);
+		return appealRef;
+	});
+});
+
+Cypress.Commands.add('addLpaqSubmissionToCase', (reference) => {
+	return cy.wrap(null).then(async () => {
+		await appealsApiClient.lpqaSubmission(reference);
+		cy.log('Added LPA submission to case ref ' + reference);
+		return;
+	});
 });
 
 export function setLocalCookies(userId) {
