@@ -43,8 +43,8 @@ describe('appeal-details', () => {
 					rootElement: notificationBannerElement
 				}).innerHTML;
 				expect(notificationBannerElementHTML).toMatchSnapshot();
-				expect(notificationBannerElementHTML).toContain('Success');
-				expect(notificationBannerElementHTML).toContain('This appeal is awaiting transfer');
+				expect(notificationBannerElementHTML).toContain('Success</h3>');
+				expect(notificationBannerElementHTML).toContain('This appeal is awaiting transfer</p>');
 				expect(notificationBannerElementHTML).toContain(
 					'href="/appeals-service/appeal-details/2/change-appeal-type/add-horizon-reference'
 				);
@@ -65,13 +65,14 @@ describe('appeal-details', () => {
 				}).innerHTML;
 				expect(notificationBannerElementHTML).toMatchSnapshot();
 
-				expect(notificationBannerElementHTML).toContain('Important');
+				expect(notificationBannerElementHTML).toContain('Important</h3>');
 				expect(notificationBannerElementHTML).toContain(
-					'Appeal ready to be assigned to case officer'
+					'Appeal ready to be assigned to case officer</p>'
 				);
 				expect(notificationBannerElementHTML).toContain(
 					'href="/appeals-service/appeal-details/2/assign-user/case-officer"'
 				);
+				expect(notificationBannerElementHTML).toContain('Assign case officer</a>');
 			});
 
 			it('should render a "Horizon reference added" success notification banner, a "Transferred" status tag, and an inset text component with the appeal type and horizon link for the transferred appeal, when the appeal was successfully transferred to horizon', async () => {
@@ -121,20 +122,18 @@ describe('appeal-details', () => {
 				}).innerHTML;
 
 				expect(notificationBannerElementHTML).toMatchSnapshot();
-				expect(notificationBannerElementHTML).toMatch('Horizon reference added');
-				expect(notificationBannerElementHTML).toContain('Success');
+				expect(notificationBannerElementHTML).toContain('Success</h3>');
+				expect(notificationBannerElementHTML).toMatch('Horizon reference added</p>');
 
 				//TODO: BOAT-1100: Move the tag test to it's own test
 				expect(statusTagElementHTML).toMatchSnapshot();
 				expect(statusTagElementHTML).toMatch('Transferred');
-				//TODO:
+
 				expect(insetTextElementHTML).toMatchSnapshot();
 				expect(insetTextElementHTML).toMatch('This appeal needed to change to a');
 				expect(insetTextElementHTML).toMatch(
 					'It has been transferred to Horizon with the reference'
 				);
-				//TODO: BOAT-1097 The test should check that you have a link to Horizon
-				//expect(insetTextElementHTML).toMatch("<a href=")
 			});
 
 			it('should render a "Neighbouring site added" success notification banner when an inspector/3rd party neighbouring site was added', async () => {
@@ -174,8 +173,8 @@ describe('appeal-details', () => {
 					rootElement: notificationBannerElement
 				}).innerHTML;
 				expect(notificationBannerElementHTML).toMatchSnapshot();
-				expect(notificationBannerElementHTML).toContain('Neighbouring site added');
-				expect(notificationBannerElementHTML).toContain('Success');
+				expect(notificationBannerElementHTML).toContain('Success</h3>');
+				expect(notificationBannerElementHTML).toContain('Neighbouring site added</p>');
 			});
 
 			it('should render a "Neighbouring site updated" success notification banner when an inspector/3rd party neighbouring site was updated', async () => {
@@ -205,8 +204,8 @@ describe('appeal-details', () => {
 					rootElement: notificationBannerElement
 				}).innerHTML;
 				expect(notificationBannerElementHTML).toMatchSnapshot();
-				expect(notificationBannerElementHTML).toContain('Neighbouring site updated');
-				expect(notificationBannerElementHTML).toContain('Success');
+				expect(notificationBannerElementHTML).toContain('Success</h3>');
+				expect(notificationBannerElementHTML).toContain('Neighbouring site updated</p>');
 			});
 
 			it('should render a "Neighbouring site removed" success notification banner when an inspector/3rd party neighbouring site was removed', async () => {
@@ -231,8 +230,8 @@ describe('appeal-details', () => {
 					rootElement: notificationBannerElement
 				}).innerHTML;
 				expect(notificationBannerElementHTML).toMatchSnapshot();
-				expect(notificationBannerElementHTML).toContain('Success');
-				expect(notificationBannerElementHTML).toContain('Neighbouring site removed');
+				expect(notificationBannerElementHTML).toContain('Success</h3>');
+				expect(notificationBannerElementHTML).toContain('Neighbouring site removed</p>');
 			});
 
 			it('should render a "This appeal is now the lead for appeal" success notification banner when the appeal was successfully linked as the lead of a back-office appeal', async () => {
@@ -267,6 +266,8 @@ describe('appeal-details', () => {
 				const response = await request.get(`${baseUrl}/${appealData.appealId}`);
 				const element = parseHtml(response.text, { rootElement: notificationBannerElement });
 				expect(element.innerHTML).toMatchSnapshot();
+				expect(element.innerHTML).toContain('Success</h3>');
+				expect(element.innerHTML).toContain('This appeal is now the lead for appeal');
 			});
 
 			it('should render a success notification banner with appropriate content if the appeal was just linked as the child of a back-office appeal', async () => {
@@ -305,7 +306,8 @@ describe('appeal-details', () => {
 					rootElement: notificationBannerElement
 				}).innerHTML;
 				expect(notificationBannerElementHTML).toMatchSnapshot();
-				expect(notificationBannerElementHTML).toContain('Success');
+				expect(notificationBannerElementHTML).toContain('Success</h3>');
+				expect(notificationBannerElementHTML).toContain('This appeal is now a child of appeal');
 			});
 
 			it('should render a success notification banner with appropriate content if the appeal was just linked as the lead of a legacy (Horizon) appeal', async () => {
@@ -344,7 +346,8 @@ describe('appeal-details', () => {
 					rootElement: notificationBannerElement
 				}).innerHTML;
 				expect(notificationBannerElementHTML).toMatchSnapshot();
-				expect(notificationBannerElementHTML).toContain('Success');
+				expect(notificationBannerElementHTML).toContain('Success</h3>');
+				expect(notificationBannerElementHTML).toContain('This appeal is now the lead for appeal');
 			});
 
 			it('should render a success notification banner with appropriate content if the appeal was just linked as the child of a legacy (Horizon) appeal', async () => {
@@ -391,7 +394,8 @@ describe('appeal-details', () => {
 					rootElement: notificationBannerElement
 				}).innerHTML;
 				expect(notificationBannerElementHTML).toMatchSnapshot();
-				expect(notificationBannerElementHTML).toContain('Success');
+				expect(notificationBannerElementHTML).toContain('Success</h3>');
+				expect(notificationBannerElementHTML).toContain('This appeal is now a child of appeal');
 			});
 
 			it('should render a success notification banner when a user was successfully unassigned as inspector', async () => {
@@ -406,7 +410,8 @@ describe('appeal-details', () => {
 					rootElement: notificationBannerElement
 				}).innerHTML;
 				expect(notificationBannerElementHTML).toMatchSnapshot();
-				expect(notificationBannerElementHTML).toContain('Success');
+				expect(notificationBannerElementHTML).toContain('Success</h3>');
+				expect(notificationBannerElementHTML).toContain('Inspector has been removed</p>');
 			});
 
 			it('should render a success notification banner when a user was successfully assigned as case officer', async () => {
@@ -423,7 +428,8 @@ describe('appeal-details', () => {
 					rootElement: notificationBannerElement
 				}).innerHTML;
 				expect(notificationBannerElementHTML).toMatchSnapshot();
-				expect(notificationBannerElementHTML).toContain('Success');
+				expect(notificationBannerElementHTML).toContain('Success</h3>');
+				expect(notificationBannerElementHTML).toContain('Case officer has been assigned</p>');
 			});
 
 			it('should render a success notification banner when a user was successfully assigned as inspector', async () => {
@@ -438,7 +444,8 @@ describe('appeal-details', () => {
 					rootElement: notificationBannerElement
 				}).innerHTML;
 				expect(notificationBannerElementHTML).toMatchSnapshot();
-				expect(notificationBannerElementHTML).toContain('Success');
+				expect(notificationBannerElementHTML).toContain('Success</h3>');
+				expect(notificationBannerElementHTML).toContain('Inspector has been assigned</p>');
 			});
 
 			it('should render a success notification banner when the site visit type was updated', async () => {
@@ -455,7 +462,8 @@ describe('appeal-details', () => {
 				}).innerHTML;
 
 				expect(notificationBannerElementHTML).toMatchSnapshot();
-				expect(notificationBannerElementHTML).toContain('Site visit type has been selected');
+				expect(notificationBannerElementHTML).toContain('Success</h3>');
+				expect(notificationBannerElementHTML).toContain('Site visit type has been selected</p>');
 			});
 
 			it('should render a success notification banner when an appellant costs document was uploaded', async () => {
@@ -500,6 +508,7 @@ describe('appeal-details', () => {
 				}).innerHTML;
 
 				expect(notificationBannerElementHTML).toMatchSnapshot();
+				expect(notificationBannerElementHTML).toContain('Success</h3>');
 				expect(notificationBannerElementHTML).toContain('Appellant costs documents uploaded</p>');
 			});
 
@@ -545,6 +554,7 @@ describe('appeal-details', () => {
 				}).innerHTML;
 
 				expect(notificationBannerElementHTML).toMatchSnapshot();
+				expect(notificationBannerElementHTML).toContain('Success</h3>');
 				expect(notificationBannerElementHTML).toContain('LPA costs documents uploaded</p>');
 			});
 
@@ -592,6 +602,7 @@ describe('appeal-details', () => {
 				}).innerHTML;
 
 				expect(notificationBannerElementHTML).toMatchSnapshot();
+				expect(notificationBannerElementHTML).toContain('Success</h3>');
 				expect(notificationBannerElementHTML).toContain('Costs decision uploaded</p>');
 			});
 
@@ -613,7 +624,8 @@ describe('appeal-details', () => {
 					rootElement: notificationBannerElement
 				}).innerHTML;
 				expect(notificationBannerElementHTML).toMatchSnapshot();
-				expect(notificationBannerElementHTML).toContain('Agent details updated');
+				expect(notificationBannerElementHTML).toContain('Success</h3>');
+				expect(notificationBannerElementHTML).toContain('Agent details updated</p>');
 			});
 
 			it('should render a success notification banner when the lpa application reference was updated', async () => {
@@ -636,8 +648,10 @@ describe('appeal-details', () => {
 					rootElement: notificationBannerElement
 				}).innerHTML;
 				expect(notificationBannerElementHTML).toMatchSnapshot();
-				expect(notificationBannerElementHTML).toContain('LPA application reference updated');
+				expect(notificationBannerElementHTML).toContain('Success</h3>');
+				expect(notificationBannerElementHTML).toContain('LPA application reference updated</p>');
 			});
+
 			it('should render a success notification banner when the inspector access was updated', async () => {
 				const appealId = appealData.appealId;
 				const appellantCaseId = appealData.appellantCaseId;
@@ -661,7 +675,8 @@ describe('appeal-details', () => {
 					rootElement: notificationBannerElement
 				}).innerHTML;
 				expect(notificationBannerElementHTML).toMatchSnapshot();
-				expect(notificationBannerElementHTML).toContain('Inspector access (appellant) updated');
+				expect(notificationBannerElementHTML).toContain('Success</h3>');
+				expect(notificationBannerElementHTML).toContain('Inspector access (appellant) updated</p>');
 			});
 
 			it('should render a success notification banner when the safety risks was updated', async () => {
@@ -685,8 +700,9 @@ describe('appeal-details', () => {
 					rootElement: notificationBannerElement
 				}).innerHTML;
 				expect(notificationBannerElementHTML).toMatchSnapshot();
+				expect(notificationBannerElementHTML).toContain('Success</h3>');
 				expect(notificationBannerElementHTML).toContain(
-					'Site health and safety risks (appellant answer) updated'
+					'Site health and safety risks (appellant answer) updated</p>'
 				);
 			});
 
@@ -709,13 +725,14 @@ describe('appeal-details', () => {
 					rootElement: notificationBannerElement
 				}).innerHTML;
 				expect(notificationBannerElementHTML).toMatchSnapshot();
+				expect(notificationBannerElementHTML).toContain('Success</h3>');
 				expect(notificationBannerElementHTML).toContain(
-					'Neighbouring site affected status updated'
+					'Neighbouring site affected status updated</p>'
 				);
 			});
 		});
 
-		it('should render the received appeal details for a valid appealId with multiple linked/other appeals', async () => {
+		it('should render the received appeal details for a valid appealId with no linked/other appeals', async () => {
 			const appealId = appealData.appealId.toString();
 
 			nock('http://test/').get(`/appeals/${appealId}`).reply(200, undefined);
@@ -724,6 +741,16 @@ describe('appeal-details', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Case details</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Linked appeals</dt><dd class="govuk-summary-list__value"><span>No appeals</span>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Related appeals</dt><dd class="govuk-summary-list__value"><span>No appeals</span>'
+			);
 		});
 
 		it('should render the header with navigation containing links to the personal list, national list, and sign out route, without any active modifier classes', async () => {
@@ -763,9 +790,18 @@ describe('appeal-details', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Linked appeals</dt><dd class="govuk-summary-list__value"><ul class="govuk-list govuk-list--bullet"><li><a href="/appeals-service/appeal-details/1" class="govuk-link" data-cy="linked-appeal-725284" aria-label="Appeal 7 2 5 2 8 4">725284</a> (Child)</li></ul>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Related appeals</dt><dd class="govuk-summary-list__value"><ul class="govuk-list govuk-list--bullet"><li><a href="/appeals-service/appeal-details/3" class="govuk-link" data-cy="related-appeal-765413" aria-label="Appeal 7 6 5 4 1 3">765413</a></li></ul>'
+			);
 		});
 
-		it('should render the received appeal details for a valid appealId with no linked/other appeals', async () => {
+		it('should render the received appeal details for a valid appealId with multiple linked/other appeals', async () => {
 			const appealId = '3';
 
 			nock('http://test/')
@@ -773,14 +809,41 @@ describe('appeal-details', () => {
 				.reply(200, {
 					...appealData,
 					appealId,
-					linkedAppeals: [],
-					otherAppeals: []
+					linkedAppeals: [
+						{
+							appealId: 4,
+							appealReference: 'APP/Q9999/D/21/725284'
+						},
+						{
+							appealId: 5,
+							appealReference: 'APP/Q9999/D/21/725285'
+						}
+					],
+					otherAppeals: [
+						{
+							appealId: 6,
+							appealReference: 'APP/Q9999/D/21/765413'
+						},
+						{
+							appealId: 7,
+							appealReference: 'APP/Q9999/D/21/765414'
+						}
+					]
 				});
 
 			const response = await request.get(`${baseUrl}/${appealId}`);
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Linked appeals</dt><dd class="govuk-summary-list__value"><ul class="govuk-list govuk-list--bullet"><li><a href="/appeals-service/appeal-details/4" class="govuk-link" data-cy="linked-appeal-725284" aria-label="Appeal 7 2 5 2 8 4">725284</a> (Child)</li><li><a href="/appeals-service/appeal-details/5" class="govuk-link" data-cy="linked-appeal-725285" aria-label="Appeal 7 2 5 2 8 5">725285</a> (Child)</li></ul>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Related appeals</dt><dd class="govuk-summary-list__value"><ul class="govuk-list govuk-list--bullet"><li><a href="/appeals-service/appeal-details/6" class="govuk-link" data-cy="related-appeal-765413" aria-label="Appeal 7 6 5 4 1 3">765413</a></li><li><a href="/appeals-service/appeal-details/7" class="govuk-link" data-cy="related-appeal-765414" aria-label="Appeal 7 6 5 4 1 4">765414</a></li></ul>'
+			);
 		});
 
 		it('should render the received appeal details for a valid appealId without start date', async () => {
@@ -794,20 +857,30 @@ describe('appeal-details', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Case details</h1>');
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Start date</dt><dd class="govuk-summary-list__value"> Not added</dd>'
+			);
 		});
 
 		it('should render a page not found when the appealId is not valid/does not exist', async () => {
-			const appealIdThatDoesNotExist = 0;
+			const appealIdThatDoesNotExist = 999;
 
 			nock('http://test/').get(`/appeals/${appealIdThatDoesNotExist}`).reply(404);
 
 			const response = await request.get(`${baseUrl}/${appealIdThatDoesNotExist}`);
+
+			expect(response.statusCode).toBe(404);
+
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Page not found</h1>');
 		});
 
-		it('should render a Issue a decision action button when the appealStatus is ready for final review', async () => {
+		it('should render an Issue a decision notification banner with action link to issue decision flow when the appealStatus is ready for final review', async () => {
 			const appealId = '2';
 
 			nock('http://test/')
@@ -818,6 +891,15 @@ describe('appeal-details', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const notificationBannerElementHTML = parseHtml(response.text, {
+				rootElement: '.govuk-notification-banner'
+			}).innerHTML;
+			expect(notificationBannerElementHTML).toContain('Important</h3>');
+			expect(notificationBannerElementHTML).toContain('Ready for decision</p>');
+			expect(notificationBannerElementHTML).toContain(
+				'href="/appeals-service/appeal-details/1/issue-decision/decision">Issue decision</a>'
+			);
 		});
 
 		it('should render a Decision inset panel when the appealStatus is complete', async () => {
@@ -831,8 +913,17 @@ describe('appeal-details', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const insetTextElementHTML = parseHtml(response.text, {
+				rootElement: '.govuk-inset-text'
+			}).innerHTML;
+			expect(insetTextElementHTML).toContain('<p>Appeal completed:');
+			expect(insetTextElementHTML).toContain('<p>Decision:');
+			expect(insetTextElementHTML).toContain(
+				'<p><span class="govuk-body">View decision letter</span>'
+			);
 		});
-		//TODO: BOAT-1100: Move the tag test to it's own test
+
 		it('should render the appellant case status as "Incomplete" if the appellant case validation status is incomplete, and the due date is in the future', async () => {
 			const appealId = '2';
 
@@ -854,8 +945,13 @@ describe('appeal-details', () => {
 			expect(response.statusCode).toBe(200);
 			const element = parseHtml(response.text);
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Appellant case</th><td class="govuk-table__cell">Incomplete</td>'
+			);
 		});
-		//TODO: BOAT-1100: Move the tag test to it's own test
+
 		it('should render the appellant case status as "Incomplete" if the appellant case validation status is incomplete, and the due date is today', async () => {
 			// Do not fakes here stop nock from timing out, by stopping jest from freezing time
 			jest
@@ -878,12 +974,19 @@ describe('appeal-details', () => {
 				});
 
 			const response = await request.get(`${baseUrl}/${appealId}`);
+
 			jest.useRealTimers();
+
 			expect(response.statusCode).toBe(200);
 			const element = parseHtml(response.text);
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Appellant case</th><td class="govuk-table__cell">Incomplete</td>'
+			);
 		});
-		//TODO: BOAT-1100: Move the tag test to it's own test
+
 		it('should render the appellant case status as "Overdue" if the appellant case validation status is incomplete, and the due date is in the past', async () => {
 			const appealId = '2';
 
@@ -905,6 +1008,11 @@ describe('appeal-details', () => {
 			expect(response.statusCode).toBe(200);
 			const element = parseHtml(response.text);
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Appellant case</th><td class="govuk-table__cell">Overdue</td>'
+			);
 		});
 
 		it('should render an action link to the add linked appeal page in the linked appeals row, if there are no linked appeals', async () => {
@@ -915,6 +1023,14 @@ describe('appeal-details', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const linkedAppealsRowElement = parseHtml(response.text, {
+				rootElement: '.appeal-linked-appeals',
+				skipPrettyPrint: true
+			});
+			expect(linkedAppealsRowElement.innerHTML).toContain(
+				'<a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/add"'
+			);
 		});
 
 		it('should render action links to the manage linked appeals page and the add linked appeal page in the linked appeals row, if there are linked appeals', async () => {
@@ -972,7 +1088,7 @@ describe('appeal-details', () => {
 			);
 		});
 
-		it('should render the case reference for each linked appeal in the linked appeals row, each linking to the respective case details page, if there are linked appeals', async () => {
+		it('should render the case reference for each linked appeal in the linked appeals row, with each internal linked appeal item linking to the respective case details page, if there are linked appeals', async () => {
 			nock.cleanAll();
 			nock('http://test/')
 				.get(`/appeals/${appealData.appealId}`)
@@ -985,8 +1101,35 @@ describe('appeal-details', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const linkedAppealsRowElement = parseHtml(response.text, {
+				rootElement: '.appeal-linked-appeals',
+				skipPrettyPrint: true
+			});
+
+			expect(linkedAppealsRowElement.innerHTML).toContain(
+				'<a href="/appeals-service/appeal-details/5449"'
+			);
+			expect(linkedAppealsRowElement.innerHTML).toContain(
+				'aria-label="Appeal 7 8 4 7 0 6">784706</a>'
+			);
+			expect(linkedAppealsRowElement.innerHTML).toContain(
+				'<span class="govuk-body">87326527</span>'
+			);
+			expect(linkedAppealsRowElement.innerHTML).toContain(
+				'<a href="/appeals-service/appeal-details/5464"'
+			);
+			expect(linkedAppealsRowElement.innerHTML).toContain(
+				'aria-label="Appeal 1 4 0 0 7 9">140079</a>'
+			);
+			expect(linkedAppealsRowElement.innerHTML).toContain(
+				'<a href="/appeals-service/appeal-details/5451"'
+			);
+			expect(linkedAppealsRowElement.innerHTML).toContain(
+				'aria-label="Appeal 7 2 1 0 8 6">721086</a>'
+			);
 		});
-		//TODO: BOAT-1100: Move the tag test to it's own test
+
 		it('should render the lead or child status after the case reference link of each linked appeal in the linked appeals row, if there are linked appeals', async () => {
 			nock.cleanAll();
 			nock('http://test/')
@@ -1000,8 +1143,16 @@ describe('appeal-details', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const linkedAppealsRowElement = parseHtml(response.text, {
+				rootElement: '.appeal-linked-appeals',
+				skipPrettyPrint: true
+			});
+
+			expect(linkedAppealsRowElement.innerHTML).toContain('(Child)</li>');
+			expect(linkedAppealsRowElement.innerHTML).toContain('(Lead)</li>');
 		});
-		//TODO: BOAT-1100: Move the tag test to it's own test
+
 		it('should render a lead tag next to the appeal status tag if the appeal is a parent', async () => {
 			nock.cleanAll();
 			nock('http://test/')
@@ -1019,8 +1170,9 @@ describe('appeal-details', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Lead</strong>');
 		});
-		//TODO: BOAT-1100: Move the tag test to it's own test
+
 		it('should render a child tag next to the appeal status tag if the appeal is a child', async () => {
 			nock.cleanAll();
 			nock('http://test/')
@@ -1039,6 +1191,7 @@ describe('appeal-details', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Child</strong>');
 		});
 
 		it('should render a "Appeal valid" notification banner with a link to start case when status is "READY_TO_START"', async () => {
@@ -1051,8 +1204,13 @@ describe('appeal-details', () => {
 
 			expect(response.statusCode).toBe(200);
 			const element = parseHtml(response.text, { rootElement: '.govuk-notification-banner' });
-			expect(element.innerHTML).toContain('<a');
+
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Important</h3>');
+			expect(element.innerHTML).toContain('Appeal valid</p>');
+			expect(element.innerHTML).toContain(
+				'href="/appeals-service/appeal-details/2/start-case/add">Start case</a>'
+			);
 		});
 
 		describe('Costs', () => {
