@@ -84,7 +84,8 @@ export async function assignUserPage(
 					items: [
 						{
 							text: 'Choose',
-							href: `/appeals-service/appeal-details/${appealDetails.appealId}/assign-user/${userTypeRoute}/${result.id}/confirm`
+							href: `/appeals-service/appeal-details/${appealDetails.appealId}/assign-user/${userTypeRoute}/${result.id}/confirm`,
+							attributes: { 'data-cy': result.email.toLocaleLowerCase() }
 						}
 					]
 				}

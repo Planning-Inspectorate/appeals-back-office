@@ -15,6 +15,7 @@ pr:
   branches:
     include:
       - main
+      - feat/e2e-cypress-refactoring
   paths:
     include:
       - appeals/e2e/cypress/e2e/back-office-appeals
@@ -22,14 +23,15 @@ trigger: none
 
 jobs:
   - job: Run_Cypress_Tests_For_Appeals
-    pool:
-      vmImage: "ubuntu-latest"
+    pool: pins-odt-agent-pool-tests
 
     steps:
-      - task: NodeTool@0
-        inputs:
-          versionSpec: "18.x"
-        displayName: "Install Node.js"
+#      - task: ShellScript@2
+#        inputs:
+#          script: |
+#              . ${NVM_DIR}/nvm.sh
+#              nvm use 18
+#        displayName: 'Set Node Version'
 
       - task: ShellScript@2
         inputs:

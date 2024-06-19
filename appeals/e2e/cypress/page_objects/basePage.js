@@ -1,10 +1,13 @@
 // @ts-nocheck
 import { users } from '../fixtures/users';
 import { assertType } from '../support/utils/assertType';
+import { urlPaths } from '../support/urlPaths.js';
 
 // @ts-nocheck
 export class Page {
-	// S E L E C T O R S
+	/********************************************************
+	 ************************ Locators ***********************
+	 *********************************************************/
 
 	selectors = {
 		accordion: '.govuk-accordion',
@@ -15,7 +18,7 @@ export class Page {
 		backLink: '.govuk-back-link',
 		bannerHeader: '.govuk-notification-banner__heading',
 		bannerLink: '.govuk-notification-banner__link',
-		publish_bannerHeader: '#main-content > div > div > div > h1',
+		publish_bannerHeader: '#main-content > div > div > div > h1', // TODO Use specific data-cy selector
 		button: '.govuk-button',
 		body: '.govuk-body',
 		caption: '.govuk-caption-m',
@@ -41,7 +44,7 @@ export class Page {
 		tableBody: '.govuk-table__body',
 		tableCell: '.govuk-table__cell',
 		tableHeader: '.govuk-table__header',
-		publishtableHeader: '#main-content > div > div > div > div > p',
+		publishtableHeader: '#main-content > div > div > div > div > p', // TODO Use specific data-cy selector
 		tableRow: '.govuk-table__row',
 		tab: '.govuk-tabs__tab',
 		tag: '.govuk-tag',
@@ -52,12 +55,10 @@ export class Page {
 		summaryListValue: '.govuk-summary-list__value',
 		summaryErrorMessages: '.govuk-list.govuk-error-summary__list',
 		xlHeader: '.govuk-heading-xl',
-		projectManagement: 'span.font-weight--700:nth-child(2)',
-		unpublish: 'a.govuk-button:nth-child(5)',
-		caseRefTraining: ':nth-child(2) > .govuk-table__body > :nth-child(1) > :nth-child(2)'
+		projectManagement: 'span.font-weight--700:nth-child(2)', // TODO Use specific data-cy selector
+		unpublish: 'a.govuk-button:nth-child(5)', // TODO Use specific data-cy selector
+		caseRefTraining: ':nth-child(2) > .govuk-table__body > :nth-child(1) > :nth-child(2)' // TODO Use specific data-cy selector
 	};
-
-	// E L E M E N T S
 
 	basePageElements = {
 		accordion: (text) =>
@@ -114,18 +115,24 @@ export class Page {
 		unpublishLink: () => cy.get(this.selectors.unpublish)
 	};
 
-	// A C T I O N S
+	/********************************************************
+	 ************************ Actions ************************
+	 *********************************************************/
+
+	chooseSummaryListValue(value) {
+		this.basePageElements.summaryListValue(value);
+	}
 
 	chooseCheckboxByIndex(indexNumber) {
 		this.basePageElements.checkbox().eq(indexNumber).check();
 	}
 
-	checkAnswer(question, answer) {
-		this.basePageElements.answerCell(question).then(($elem) => {
-			cy.wrap($elem)
-				.invoke('text')
-				.then((text) => expect(text.trim()).to.equal(answer));
-		});
+	chooseCheckboxByText(value) {
+		cy.contains('label', value)
+			.invoke('attr', 'for')
+			.then((id) => {
+				cy.get(`#${id}`).check();
+			});
 	}
 
 	clickChangeLink(question) {
@@ -140,6 +147,10 @@ export class Page {
 
 	clickAccordionByText(text) {
 		this.basePageElements.accordion(text).click();
+	}
+
+	clickAccordionByButton(text) {
+		this.basePageElements.accordionButton(text).click();
 	}
 
 	clickBackLink(buttonText) {
@@ -187,10 +198,16 @@ export class Page {
 	}
 
 	selectRadioButtonByValue(value) {
-		this.basePageElements.radioButton().contains(value).click();
+		this.basePageElements.radioButton().contains(value, { matchCase: false }).click();
 	}
 
-	// A S S E R T I O N S
+	exactMatch(value) {
+		return new RegExp(`^\\s*${value}\\s*$`, 'm');
+	}
+
+	/***************************************************************
+	 ************************ Verfifications ************************
+	 ****************************************************************/
 
 	verifyTableCellText(options) {
 		this.basePageElements
@@ -207,11 +224,31 @@ export class Page {
 			});
 	}
 
-	validateBannerMessage(successMessage) {
-		this.basePageElements.bannerHeader().then(($banner) => {
-			expect($banner.text().trim()).eq(successMessage);
+	validateConfirmationPanelMessage(title, body) {
+		this.basePageElements.panelTitle(title);
+		this.basePageElements.panelBody(body);
+	}
+
+	validateBannerMessage(title, message) {
+		// this.basePageElements.bannerHeader().then(($banner) => {
+		// 	expect($banner.text().trim()).eq(successMessage);
+		// });
+
+		// Allow for multiple banners on a page
+		// TODO Move selectors out
+		cy.get('.govuk-notification-banner').each(($banner) => {
+			cy.wrap($banner)
+				.find('.govuk-notification-banner__title')
+				.then(($title) => {
+					if ($title.text().includes(title)) {
+						cy.wrap($banner)
+							.find('.govuk-notification-banner__heading')
+							.should('contain.text', message);
+					}
+				});
 		});
 	}
+
 	validatePublishBannerMessage(successMessage) {
 		this.basePageElements.publishBannerHeader().then(($banner) => {
 			expect($banner.text().trim()).eq(successMessage);
@@ -244,18 +281,6 @@ export class Page {
 
 	validateNumberOfRadioBtn(radioCount) {
 		this.basePageElements.radioButton().should('have.length', radioCount);
-	}
-
-	verifyCaseAdminIsSignedIn() {
-		this.basePageElements.loggedInUser().should('have.text', users.applications.caseAdmin.typeName);
-	}
-
-	verifyCaseTeamIsSignedIn() {
-		this.basePageElements.loggedInUser().should('have.text', users.applications.caseTeam.typeName);
-	}
-
-	verifyInspectorIsSignedIn() {
-		this.basePageElements.loggedInUser().should('have.text', users.applications.inspector.typeName);
 	}
 
 	verifyFolderDocuments(fileCount) {
@@ -292,7 +317,7 @@ export class Page {
 	}
 
 	navigateToAppealsService() {
-		cy.visit('/appeals-service/appeals-list');
+		cy.visit(urlPaths.appealsList);
 	}
 
 	goToDashboard() {
@@ -300,5 +325,13 @@ export class Page {
 	}
 	goToFolderDocumentPage() {
 		this.basePageElements.projectManagement().click();
+	}
+
+	validateAnswer(question, answer) {
+		this.basePageElements.answerCell(question).then(($elem) => {
+			cy.wrap($elem)
+				.invoke('text')
+				.then((text) => expect(text.trim()).to.equal(answer));
+		});
 	}
 }
