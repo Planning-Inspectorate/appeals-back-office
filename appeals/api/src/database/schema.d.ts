@@ -105,7 +105,6 @@ export interface Document extends schema.Document {
 	versionAudit?: DocumentVersionAudit[] | null;
 }
 export interface DocumentVersion extends schema.DocumentVersion {
-	avScan?: DocumentVersionAvScan[] | null;
 	redactionStatus?: DocumentRedactionStatus | null;
 }
 export interface DocumentVersionAvScan extends schema.DocumentVersionAvScan {}

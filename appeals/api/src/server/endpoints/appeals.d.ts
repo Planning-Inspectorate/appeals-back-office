@@ -758,11 +758,11 @@ type UpdateDocumentsRequest = {
 	draft: boolean;
 }[];
 
-type UpdateDocumentsAvCheckRequest = {
+type UpdateDocumentAvCheckRequest = {
 	id: string;
 	virusCheckStatus: string;
 	version: number;
-}[];
+};
 
 type ListedBuildingDetailsResponse = Pick<ListedBuildingDetails, 'listEntry'>[];
 

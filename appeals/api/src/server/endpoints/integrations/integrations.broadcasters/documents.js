@@ -32,8 +32,7 @@ export const broadcastDocument = async (
 					version
 				},
 				include: {
-					redactionStatus: true,
-					avScan: true
+					redactionStatus: true
 				}
 			}
 		}

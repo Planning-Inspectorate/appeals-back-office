@@ -293,11 +293,7 @@ export const getDocumentRedactionStatusIds = async () => {
  * @returns
  */
 export const getAvScanStatus = (documentVersion) => {
-	if (documentVersion.avScan && documentVersion.avScan.length > 0) {
-		return documentVersion.avScan[0].avScanSuccess ? AVSCAN_STATUS.SCANNED : AVSCAN_STATUS.AFFECTED;
-	}
-
-	return AVSCAN_STATUS.NOT_SCANNED;
+	return documentVersion.virusCheckStatus || AVSCAN_STATUS.NOT_SCANNED;
 };
 
 /**

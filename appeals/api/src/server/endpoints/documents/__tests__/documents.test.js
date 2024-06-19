@@ -26,6 +26,7 @@ describe('/appeals/:appealId/document-folders/:folderId', () => {
 	beforeEach(() => {
 		// @ts-ignore
 		databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
+		databaseConnector.documentVersionAvScan.upsert.mockResolvedValue({});
 	});
 	afterEach(() => {
 		jest.clearAllMocks();
@@ -180,6 +181,9 @@ describe('/appeals/:appealId/documents', () => {
 							{ ...documentVersionRetrieved, guid: '987e66e0-1db4-404b-8213-8082919159e9' },
 							{ ...documentVersionRetrieved, guid: '8b107895-b8c9-467f-aad0-c09daafeaaad' }
 						])
+					},
+					documentVersionAvScan: {
+						findUnique: jest.fn().mockResolvedValue({})
 					}
 				})
 			);
@@ -271,6 +275,9 @@ describe('appeals documents', () => {
 					create: jest.fn().mockResolvedValue(documentVersionCreated),
 					upsert: jest.fn().mockResolvedValue(documentVersionCreated),
 					findFirst: jest.fn().mockResolvedValue(documentVersionRetrieved)
+				},
+				documentVersionAvScan: {
+					findUnique: jest.fn().mockResolvedValue({})
 				}
 			};
 
@@ -308,6 +315,9 @@ describe('appeals documents', () => {
 				documentVersion: {
 					create: jest.fn().mockResolvedValue(documentVersionCreated),
 					findFirst: jest.fn().mockResolvedValue(documentVersionRetrieved)
+				},
+				documentVersionAvScan: {
+					findUnique: jest.fn().mockResolvedValue({})
 				}
 			};
 
@@ -395,7 +405,7 @@ describe('appeals documents', () => {
 
 			expect(response.status).toEqual(400);
 		});
-		test('validate AV scan result: document not found', async () => {
+		test('validate AV scan result: document not found / scan result requested', async () => {
 			databaseConnector.document.findUnique.mockReturnValue(null);
 			const requestBody = {
 				documents: [
@@ -412,9 +422,10 @@ describe('appeals documents', () => {
 				.send(requestBody)
 				.set('azureAdUserId', azureAdUserId);
 
-			expect(response.status).toEqual(404);
+			expect(databaseConnector.documentVersionAvScan.upsert).toHaveBeenCalled();
+			expect(response.status).toEqual(200);
 		});
-		test('validate AV scan result: version not found', async () => {
+		test('validate AV scan result: version not found / scan result requested', async () => {
 			databaseConnector.document.findUnique.mockReturnValue(documentCreated);
 			const requestBody = {
 				documents: [
@@ -431,7 +442,39 @@ describe('appeals documents', () => {
 				.send(requestBody)
 				.set('azureAdUserId', azureAdUserId);
 
-			expect(response.status).toEqual(404);
+			expect(databaseConnector.documentVersionAvScan.upsert).toHaveBeenCalled();
+			expect(response.status).toEqual(200);
+		});
+		test('validate AV scan result: document found', async () => {
+			databaseConnector.document.findUnique.mockReturnValue({
+				...documentCreated,
+				allVersions: [documentCreated.latestDocumentVersion]
+			});
+			databaseConnector.documentVersion.update.mockReturnValue({
+				...documentCreated,
+				latestDocumentVersion: {
+					...documentCreated.latestDocumentVersion,
+					virusCheckStatus: 'scanned'
+				}
+			});
+			const requestBody = {
+				documents: [
+					{
+						id: documentCreated.guid,
+						version: documentCreated.latestDocumentVersion.version,
+						virusCheckStatus: 'scanned'
+					}
+				]
+			};
+
+			const response = await request
+				.patch(`/appeals/documents/avcheck`)
+				.send(requestBody)
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(databaseConnector.documentVersionAvScan.upsert).toHaveBeenCalled();
+			expect(databaseConnector.document.findUnique).toHaveBeenCalled();
+			expect(response.status).toEqual(200);
 		});
 	});
 });

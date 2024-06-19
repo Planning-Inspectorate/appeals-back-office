@@ -42,7 +42,7 @@ const validateDocumentRedactionStatusIds = async (documents) => {
 };
 
 /**
- * @param {UpdateDocumentsAvCheckRequest} documents
+ * @param {UpdateDocumentsAvCheckRequest[]} documents
  * @returns {Promise<boolean>}
  */
 const validateAvCheckResult = async (documents) => {

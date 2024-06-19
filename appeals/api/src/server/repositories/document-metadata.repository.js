@@ -3,6 +3,7 @@ import documentRedactionStatusRepository from '#repositories/document-redaction-
 import { findPreviousVersion } from '#utils/find-previous-version.js';
 import { randomUUID } from 'node:crypto';
 import { REDACTION_STATUS } from '@pins/appeals/constants/documents.js';
+import { AVSCAN_STATUS } from '@pins/appeals/constants/documents.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Document} Document */
 /** @typedef {import('@pins/appeals.api').Schema.DocumentVersion} DocumentVersion */
@@ -45,6 +46,18 @@ export const addDocument = async (metadata, context) => {
 		metadata.documentGuid = guid;
 		metadata.version = 1;
 		metadata.fileName = name;
+		const scanStatus = await tx.documentVersionAvScan.findUnique({
+			where: {
+				documentGuid_version: {
+					documentGuid: guid,
+					version: metadata.version
+				}
+			}
+		});
+		if (scanStatus) {
+			metadata.virusCheckStatus =
+				scanStatus.avScanSuccess === true ? AVSCAN_STATUS.SCANNED : AVSCAN_STATUS.AFFECTED;
+		}
 
 		delete metadata.GUID;
 
@@ -65,7 +78,7 @@ export const addDocument = async (metadata, context) => {
 		});
 
 		const latestVersion = await tx.documentVersion.findFirst({
-			include: { document: true, avScan: true },
+			include: { document: true },
 			where: { documentGuid: guid, version: metadata.version }
 		});
 
@@ -102,6 +115,19 @@ export const addDocumentVersion = async ({ documentGuid, ...metadata }) => {
 		metadata.version = newVersionId;
 		metadata.fileName = name;
 
+		const scanStatus = await tx.documentVersionAvScan.findUnique({
+			where: {
+				documentGuid_version: {
+					documentGuid,
+					version: metadata.version
+				}
+			}
+		});
+		if (scanStatus) {
+			metadata.virusCheckStatus =
+				scanStatus.avScanSuccess === true ? AVSCAN_STATUS.SCANNED : AVSCAN_STATUS.AFFECTED;
+		}
+
 		await tx.documentVersion.create({
 			data: {
 				...metadata,
@@ -120,7 +146,7 @@ export const addDocumentVersion = async ({ documentGuid, ...metadata }) => {
 		});
 
 		const latestVersion = await tx.documentVersion.findFirst({
-			include: { document: true, avScan: true },
+			include: { document: true },
 			where: { documentGuid, version: newVersionId }
 		});
 
