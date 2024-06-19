@@ -18,7 +18,6 @@ export const getById = (id) => {
 				include: {
 					latestDocumentVersion: {
 						include: {
-							avScan: true,
 							redactionStatus: true
 						}
 					}
@@ -45,7 +44,6 @@ export const getByCaseId = (caseId) => {
 				include: {
 					latestDocumentVersion: {
 						include: {
-							avScan: true,
 							redactionStatus: true
 						}
 					}
@@ -76,7 +74,6 @@ export const getByCaseIdAndPaths = (caseId, paths) => {
 				include: {
 					latestDocumentVersion: {
 						include: {
-							avScan: true,
 							redactionStatus: true
 						}
 					}

@@ -42,6 +42,8 @@ const mockDocumentMetdataFindFirst = jest.fn().mockResolvedValue({});
 const mockDocumentMetdataFindUnique = jest.fn().mockResolvedValue({});
 const mockDocumentMetdataUpsert = jest.fn().mockResolvedValue({});
 const mockDocumentMetdataUpdate = jest.fn().mockResolvedValue({});
+const mockDocumentAvScanFindFirst = jest.fn().mockResolvedValue({});
+const mockDocumentAvScanUpsert = jest.fn().mockResolvedValue({});
 const mockAddressCreate = jest.fn().mockResolvedValue({});
 const mockAddressDelete = jest.fn().mockResolvedValue({});
 const mockAddressUpdate = jest.fn().mockResolvedValue({});
@@ -58,15 +60,9 @@ const mockLPAQuestionnaireValidationOutcomeFindMany = jest.fn().mockResolvedValu
 const mockLPAQuestionnaireValidationOutcomeFindUnique = jest.fn().mockResolvedValue({});
 const mockLPAQuestionnaireIncompleteReasonFindUnique = jest.fn().mockResolvedValue({});
 const mockLPAQuestionnaireIncompleteReasonFindMany = jest.fn().mockResolvedValue({});
-const mockLPAQuestionnaireIncompleteReasonsSelectedDeleteMany = jest
-	.fn()
-	.mockResolvedValue({});
-const mockLPAQuestionnaireIncompleteReasonsSelectedCreateMany = jest
-	.fn()
-	.mockResolvedValue({});
-const mockLPAQuestionnaireIncompleteReasonsSelectedUpdate = jest
-	.fn()
-	.mockResolvedValue({});
+const mockLPAQuestionnaireIncompleteReasonsSelectedDeleteMany = jest.fn().mockResolvedValue({});
+const mockLPAQuestionnaireIncompleteReasonsSelectedCreateMany = jest.fn().mockResolvedValue({});
+const mockLPAQuestionnaireIncompleteReasonsSelectedUpdate = jest.fn().mockResolvedValue({});
 const mockSiteVisitCreate = jest.fn().mockResolvedValue({});
 const mockSiteVisitUpdate = jest.fn().mockResolvedValue({});
 const mockSiteVisitTypeFindUnique = jest.fn().mockResolvedValue({});
@@ -173,6 +169,13 @@ class MockPrismaClient {
 	get documentVersionAudit() {
 		return {
 			create: mockDocumentVersionAuditCreate
+		};
+	}
+
+	get documentVersionAvScan() {
+		return {
+			upsert: mockDocumentAvScanUpsert,
+			findUnique: mockDocumentAvScanFindFirst
 		};
 	}
 

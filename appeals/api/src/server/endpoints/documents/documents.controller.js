@@ -316,17 +316,18 @@ const updateDocumentsAvCheckStatus = async (req, res) => {
 	const { body } = req;
 	try {
 		const documents = body.documents;
+		await documentRepository.createDocumentAvStatus(documents);
+
 		for (const document of documents) {
-			const latestDocument = await documentRepository.getDocumentWithAllVersionsById(document.id);
-			if (!latestDocument) {
-				return res.status(404).send({ errors: { body: ERROR_NOT_FOUND } });
-			}
-			const versionList = latestDocument.versions?.map((v) => v.version);
-			if (!versionList || versionList.indexOf(document.version) < 0) {
-				return res.status(404).send({ errors: { body: ERROR_NOT_FOUND } });
+			const latestDocument = await documentRepository.getDocumentByIdAndVersion(
+				document.id,
+				document.version
+			);
+			const versionList = latestDocument?.versions?.map((v) => v.version);
+			if (versionList && versionList.indexOf(document.version) > -1) {
+				await documentRepository.updateDocumentAvStatus(document);
 			}
 		}
-		await documentRepository.updateDocumentAvStatus(documents);
 	} catch (error) {
 		if (error) {
 			logger.error(error);

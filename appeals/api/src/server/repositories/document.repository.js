@@ -8,7 +8,7 @@ import { AVSCAN_STATUS } from '@pins/appeals/constants/documents.js';
 /** @typedef {import('@pins/appeals.api').Schema.Document} Document */
 /** @typedef {import('@pins/appeals.api').Schema.DocumentVersion} DocumentVersion */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateDocumentsRequest} UpdateDocumentsRequest */
-/** @typedef {import('@pins/appeals.api').Appeals.UpdateDocumentsAvCheckRequest} UpdateDocumentsAvCheckRequest */
+/** @typedef {import('@pins/appeals.api').Appeals.UpdateDocumentsAvCheckRequest} UpdateDocumentAvCheckRequest */
 
 /**
  * @param {string} guid
@@ -20,8 +20,25 @@ export const getDocumentById = (guid) => {
 		include: {
 			latestDocumentVersion: {
 				include: {
-					avScan: true,
 					redactionStatus: true
+				}
+			}
+		}
+	});
+};
+
+/**
+ * @param {string} guid
+ * @param {Number} version
+ * @returns {PrismaPromise<Document|null>}
+ */
+export const getDocumentByIdAndVersion = (guid, version) => {
+	return databaseConnector.document.findUnique({
+		where: { guid },
+		include: {
+			versions: {
+				where: {
+					version
 				}
 			}
 		}
@@ -39,13 +56,11 @@ export const getDocumentWithAllVersionsById = (guid) => {
 		include: {
 			latestDocumentVersion: {
 				include: {
-					avScan: true,
 					redactionStatus: true
 				}
 			},
 			versions: {
 				include: {
-					avScan: true,
 					redactionStatus: true
 				}
 			},
@@ -76,7 +91,6 @@ export const getDocumentsByAppealId = (caseId) => {
 		include: {
 			latestDocumentVersion: {
 				include: {
-					avScan: true,
 					redactionStatus: true
 				}
 			}
@@ -97,7 +111,6 @@ export const getDocumentsInFolder = ({ folderId, skipValue, pageSize }) => {
 		include: {
 			latestDocumentVersion: {
 				include: {
-					avScan: true,
 					redactionStatus: true
 				}
 			}
@@ -131,18 +144,44 @@ export const updateDocuments = (data) =>
 	);
 
 /**
- * @param {UpdateDocumentsAvCheckRequest} data
+ * @param {UpdateDocumentAvCheckRequest[]} data
  * @returns
  */
-export const updateDocumentAvStatus = (data) =>
+export const createDocumentAvStatus = (data) =>
 	Promise.all(
 		data.map((document) =>
-			databaseConnector.documentVersionAvScan.create({
-				data: {
+			databaseConnector.documentVersionAvScan.upsert({
+				create: {
 					documentGuid: document.id,
 					version: document.version,
 					avScanSuccess: document.virusCheckStatus === AVSCAN_STATUS.SCANNED
+				},
+				update: {
+					avScanSuccess: document.virusCheckStatus === AVSCAN_STATUS.SCANNED
+				},
+				where: {
+					documentGuid_version: {
+						documentGuid: document.id,
+						version: document.version
+					}
 				}
 			})
 		)
 	);
+
+/**
+ * @param {UpdateDocumentAvCheckRequest} document
+ * @returns
+ */
+export const updateDocumentAvStatus = (document) =>
+	databaseConnector.documentVersion.update({
+		data: {
+			virusCheckStatus: document.virusCheckStatus
+		},
+		where: {
+			documentGuid_version: {
+				documentGuid: document.id,
+				version: document.version
+			}
+		}
+	});
