@@ -424,7 +424,7 @@ function mapStatusDependentNotifications(appealDetails, session, accordionCompon
 				session,
 				'assignCaseOfficer',
 				appealDetails.appealId,
-				`<p class="govuk-notification-banner__heading">Appeal ready to be assigned to case officer</p><p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/${appealDetails.appealId}/assign-user/case-officer" data-cy="assign-case-officer">Assign case officer</a></p>`
+				`<p class="govuk-notification-banner__heading">Appeal ready to be assigned to case officer</p><p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/${appealDetails.appealId}/assign-user/case-officer" data-cy="banner-assign-case-officer">Assign case officer</a></p>`
 			);
 			break;
 		case 'issue_determination':
