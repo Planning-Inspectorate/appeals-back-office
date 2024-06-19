@@ -3,6 +3,7 @@ import config from '@pins/appeals.web/environment/config.js';
 import got from 'got';
 import pino from './logger.js';
 
+// @ts-ignore
 const [requestLogger, responseLogger] = createHttpLoggerHooks(pino, config.logLevelStdOut);
 
 export const prefixUrl = 'https://graph.microsoft.com/v1.0/';
