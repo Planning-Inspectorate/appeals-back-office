@@ -89,7 +89,8 @@ const deleteUnwantedFixtures = () => {
 		'sample-img.jpg',
 		'sample-video.mp4',
 		'users.js',
-		'test.pdf'
+		'test.pdf',
+		'url-paths.js'
 	];
 	fs.readdir(folderPath, (err, files) => {
 		if (err) {

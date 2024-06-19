@@ -4,6 +4,8 @@
 import { users } from '../../fixtures/users';
 import { AppealsListPage } from '../../page_objects/appealsListPage';
 import { UpdateDueDatePage } from '../../page_objects/updateDueDatePage';
+import { urlPaths } from '../../fixtures/url-paths.js';
+
 const appealsListPage = new AppealsListPage();
 const updateDueDatePage = new UpdateDueDatePage();
 
@@ -13,8 +15,8 @@ describe('Appeals feature', () => {
 	});
 
 	it('Validate appellant case', () => {
-		cy.visit('/appeals-service/all-cases');
-		appealsListPage.clickAppealFromList(10);
+		cy.visit(urlPaths.appealsList);
+		appealsListPage.clickAppealFromList(10); // TODO Change to use page.clickAppealByRef(ref)
 		appealsListPage.clickReviewAppellantCase(3);
 		appealsListPage.selectRadioButtonByValue('Valid');
 		appealsListPage.clickButtonByText('Continue');
@@ -29,8 +31,8 @@ describe('Appeals feature', () => {
 	});
 
 	it('Invalidate appellant case', () => {
-		cy.visit('/appeals-service/all-cases');
-		appealsListPage.clickAppealFromList(11);
+		cy.visit(urlPaths.appealsList);
+		appealsListPage.clickAppealFromList(11); // TODO Change to use page.clickAppealByRef(ref)
 		appealsListPage.clickReviewAppellantCase(3);
 		appealsListPage.selectRadioButtonByValue('Invalid');
 		appealsListPage.clickButtonByText('Continue');
@@ -44,8 +46,8 @@ describe('Appeals feature', () => {
 	});
 
 	it('incomplete appellant case', () => {
-		cy.visit('/appeals-service/all-cases');
-		appealsListPage.clickAppealFromList(12);
+		cy.visit(urlPaths.appealsList);
+		appealsListPage.clickAppealFromList(12); // TODO Change to use page.clickAppealByRef(ref)
 		appealsListPage.clickReviewAppellantCase(3);
 		appealsListPage.selectRadioButtonByValue('Incomplete');
 		appealsListPage.clickButtonByText('Continue');
@@ -64,8 +66,8 @@ describe('Appeals feature', () => {
 	});
 
 	it('incomplete appellant case reason: add another', () => {
-		cy.visit('/appeals-service/all-cases');
-		appealsListPage.clickAppealFromList(15);
+		cy.visit(urlPaths.appealsList);
+		appealsListPage.clickAppealFromList(15); // TODO Change to use page.clickAppealByRef(ref)
 		appealsListPage.clickReviewAppellantCase(3);
 		appealsListPage.selectRadioButtonByValue('Incomplete');
 		appealsListPage.clickButtonByText('Continue');

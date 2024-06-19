@@ -77,6 +77,12 @@ export class UpdateDueDatePage extends Page {
 		this.updateDueDateElements.clickSkipButton(text).click();
 	}
 
+	enterVisitDate(date) {
+		enterVisitDay(date.getFullYear());
+		enterVisitMonth(date.getMonth() + 1);
+		enterVisitYear(date.getDate());
+	}
+
 	enterVisitDay(text, index = 0) {
 		cy.get('#visit-date-day');
 		this.updateDueDateElements.enterVisitDay().eq(index).clear().type(text);

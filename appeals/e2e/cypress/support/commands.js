@@ -69,6 +69,10 @@ Cypress.Commands.add('loginWithPuppeteer', (user) => {
 	return;
 });
 
+Cypress.Commands.add('getByData', (value) => {
+	return cy.get(`[data-cy=${value}]`);
+});
+
 export function setLocalCookies(userId) {
 	cy.readFile(
 		`${BrowserAuthData.BrowserAuthDataFolder}/${userId}-${BrowserAuthData.CookiesFile}`

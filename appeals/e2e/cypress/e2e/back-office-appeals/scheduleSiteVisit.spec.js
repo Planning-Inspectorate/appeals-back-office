@@ -4,7 +4,11 @@
 import { users } from '../../fixtures/users';
 import { AppealsListPage } from '../../page_objects/appealsListPage';
 import { UpdateDueDatePage } from '../../page_objects/updateDueDatePage';
+import { urlPaths } from '../../fixtures/url-paths.js';
+import { AppealsDetailPage } from '../../page_objects/appealsDetailPage.js';
+
 const appealsListPage = new AppealsListPage();
+const appealsDetailPage = new AppealsDetailPage();
 const updateDueDatePage = new UpdateDueDatePage();
 
 describe('Appeals feature', () => {
@@ -13,13 +17,17 @@ describe('Appeals feature', () => {
 	});
 
 	it('Change to accommpanied site visit from case timetable', () => {
-		cy.visit('/appeals-service/all-cases');
-		appealsListPage.clickAppealFromList(30);
-		appealsListPage.clickChangeVisitTypeHasCaseTimetable();
+		let visitDate = new Date();
+		visitDate.setMonth(futureDate.getMonth() + 10); // TODO What is a suitable dynamic date to use here?
+
+		cy.visit(urlPaths.appealsList);
+		appealsListPage.clickAppealFromList(30); // TODO Change to use page.clickAppealByRef(ref)
+		appealsDetailPage.clickChangeVisitTypeHasCaseTimetable();
 		appealsListPage.selectRadioButtonByValue('Accompanied');
-		updateDueDatePage.enterVisitDay('29');
-		updateDueDatePage.enterVisitMonth('12');
-		updateDueDatePage.enterVisitYear('2025');
+		// updateDueDatePage.enterVisitDay('29');
+		// updateDueDatePage.enterVisitMonth('12');
+		// updateDueDatePage.enterVisitYear('2025');
+		updateDueDatePage.enterVisitDate(visitDate);
 		updateDueDatePage.enterVisitStartTimeHour('10');
 		updateDueDatePage.enterVisitStartTimeMinute('00');
 		updateDueDatePage.enterVisitEndTimeHour('14');
@@ -30,13 +38,17 @@ describe('Appeals feature', () => {
 	});
 
 	it('Change to access required site visit from case timetable', () => {
-		cy.visit('/appeals-service/all-cases');
-		appealsListPage.clickAppealFromList(30);
+		let visitDate = new Date();
+		visitDate.setMonth(futureDate.getMonth() + 10); // TODO What is a suitable dynamic date to use here?
+
+		cy.visit(urlPaths.appealsList);
+		appealsListPage.clickAppealFromList(30); // TODO Change to use page.clickAppealByRef(ref)
 		appealsListPage.clickChangeVisitTypeHasCaseTimetable();
 		appealsListPage.selectRadioButtonByValue('Access Required');
-		updateDueDatePage.enterVisitDay('29');
-		updateDueDatePage.enterVisitMonth('12');
-		updateDueDatePage.enterVisitYear('2025');
+		// updateDueDatePage.enterVisitDay('29');
+		// updateDueDatePage.enterVisitMonth('12');
+		// updateDueDatePage.enterVisitYear('2025');
+		updateDueDatePage.enterVisitDate(visitDate);
 		updateDueDatePage.enterVisitStartTimeHour('10');
 		updateDueDatePage.enterVisitStartTimeMinute('00');
 		updateDueDatePage.enterVisitEndTimeHour('14');
@@ -47,13 +59,17 @@ describe('Appeals feature', () => {
 	});
 
 	it('Change to Unaccommpanied site visit without time from case timetable', () => {
-		cy.visit('/appeals-service/all-cases');
-		appealsListPage.clickAppealFromList(30);
+		let visitDate = new Date();
+		visitDate.setMonth(futureDate.getMonth() + 10); // TODO What is a suitable dynamic date to use here?
+
+		cy.visit(urlPaths.appealsList);
+		appealsListPage.clickAppealFromList(30); // TODO Change to use page.clickAppealByRef(ref)
 		appealsListPage.clickChangeVisitTypeHasCaseTimetable();
 		appealsListPage.selectRadioButtonByValue('Unaccompanied');
-		updateDueDatePage.enterVisitDay('29');
-		updateDueDatePage.enterVisitMonth('12');
-		updateDueDatePage.enterVisitYear('2025');
+		// updateDueDatePage.enterVisitDay('29');
+		// updateDueDatePage.enterVisitMonth('12');
+		// updateDueDatePage.enterVisitYear('2025');
+		updateDueDatePage.enterVisitDate(visitDate);
 		updateDueDatePage.removeVisitStartTimeHour();
 		updateDueDatePage.removeVisitStartTimeMinute();
 		updateDueDatePage.removeVisitEndTimeHour();
@@ -64,13 +80,17 @@ describe('Appeals feature', () => {
 	});
 
 	it('Change to Unaccommpanied site visit with time from case timetable', () => {
-		cy.visit('/appeals-service/all-cases');
-		appealsListPage.clickAppealFromList(30);
+		let visitDate = new Date();
+		visitDate.setMonth(futureDate.getMonth() + 10); // TODO What is a suitable dynamic date to use here?
+
+		cy.visit(urlPaths.appealsList);
+		appealsListPage.clickAppealFromList(30); // TODO Change to use page.clickAppealByRef(ref)
 		appealsListPage.clickChangeVisitTypeHasCaseTimetable();
 		appealsListPage.selectRadioButtonByValue('Unaccompanied');
-		updateDueDatePage.enterVisitDay('29');
-		updateDueDatePage.enterVisitMonth('12');
-		updateDueDatePage.enterVisitYear('2025');
+		// updateDueDatePage.enterVisitDay('29');
+		// updateDueDatePage.enterVisitMonth('12');
+		// updateDueDatePage.enterVisitYear('2025');
+		updateDueDatePage.enterVisitDate(visitDate);
 		updateDueDatePage.enterVisitStartTimeHour('08');
 		updateDueDatePage.enterVisitStartTimeMinute('00');
 		updateDueDatePage.enterVisitEndTimeHour('12');
@@ -81,8 +101,8 @@ describe('Appeals feature', () => {
 	});
 
 	it.skip('Change to accommpanied site visit from Site details', () => {
-		cy.visit('/appeals-service/all-cases');
-		appealsListPage.clickAppealFromList(30);
+		cy.visit(urlPaths.appealsList);
+		appealsListPage.clickAppealFromList(30); // TODO Change to use page.clickAppealByRef(ref)
 		appealsListPage.clickChangeVisitTypeHasSiteDetails();
 		appealsListPage.selectRadioButtonByValue('Accompanied');
 		appealsListPage.clickButtonByText('Continue');
@@ -91,8 +111,8 @@ describe('Appeals feature', () => {
 	});
 
 	it.skip('Change to access required site visit from Site details', () => {
-		cy.visit('/appeals-service/all-cases');
-		appealsListPage.clickAppealFromList(30);
+		cy.visit(urlPaths.appealsList);
+		appealsListPage.clickAppealFromList(30); // TODO Change to use page.clickAppealByRef(ref)
 		appealsListPage.clickChangeVisitTypeHasSiteDetails();
 		appealsListPage.selectRadioButtonByValue('Access required');
 		appealsListPage.clickButtonByText('Continue');
@@ -101,8 +121,8 @@ describe('Appeals feature', () => {
 	});
 
 	it.skip('Change to Unaccommpanied site visit from Site details', () => {
-		cy.visit('/appeals-service/all-cases');
-		appealsListPage.clickAppealFromList(30);
+		cy.visit(urlPaths.appealsList);
+		appealsListPage.clickAppealFromList(30); // TODO Change to use page.clickAppealByRef(ref)
 		appealsListPage.clickChangeVisitTypeHasSiteDetails();
 		appealsListPage.selectRadioButtonByValue('Unaccompanied');
 		appealsListPage.clickButtonByText('Continue');

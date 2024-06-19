@@ -13,8 +13,8 @@ describe.skip('Appeals feature', () => {
 	});
 
 	it('Start case', () => {
-		cy.visit('/appeals-service/all-cases');
-		appealsListPage.clickAppealFromList(12);
+		cy.visit(urlPaths.appealsList);
+		appealsListPage.clickAppealFromList(12); // TODO Change to use page.clickAppealByRef(ref)
 		appealsListPage.clickStartCaseBanner('Start case');
 		appealsListPage.clickButtonByText('Confirm');
 		appealsListPage.clickLinkByText('Go back to case details');

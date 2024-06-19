@@ -55,41 +55,44 @@ export class AppealsListPage extends Page {
 			.click();
 	}
 
+	clickAppealByRef(ref) {
+		cy.getByData(ref).click();
+	}
+
 	clickStartCaseBanner(text) {
 		this.basePageElements.bannerLink(text).click();
 	}
 
 	clickReviewLpaq(position) {
 		this.clickAccordionByButton('Documentation');
-		this.basePageElements
-			.tableCell()
-			.eq(position - 2)
-			.find(this.selectors.link)
-			.click();
+		// this.basePageElements
+		// 	.tableCell()
+		// 	.eq(position - 2)
+		// 	.find(this.selectors.link)
+		// 	.click();
+		cy.getByData('review-lpa-questionnaire').click();
 	}
 
 	clickReviewAppellantCase(position) {
 		this.clickAccordionByButton('Documentation');
-		this.basePageElements
-			.tableCell()
-			.eq(position - 1)
-			.find(this.selectors.link)
-			.click();
-	}
-
-	clickChangeVisitTypeHasCaseTimetable() {
-		this.clickAccordionByText('Timetable');
-		cy.get('.appeal-site-visit > .govuk-summary-list__actions > .govuk-link').click();
+		// this.basePageElements
+		// 	.tableCell()
+		// 	.eq(position - 1)
+		// 	.find(this.selectors.link)
+		// 	.click();
+		cy.getByData('review-appellant-case').click();
 	}
 
 	clickChangeVisitTypeHasSiteDetails() {
 		this.clickAccordionByText('Site');
-		cy.get(
-			':nth-child(3) > .govuk-accordion__section-header > .govuk-accordion__section-heading > .govuk-accordion__section-button'
-		)
-			//cy.get('.appeal-site-visit > .govuk-summary-list__actions > .govuk-link')
-			.click();
+		cy.getByData('change-set-visit-type').click();
+		// cy.get(
+		// 	':nth-child(3) > .govuk-accordion__section-header > .govuk-accordion__section-heading > .govuk-accordion__section-button'
+		// )
+		// 	//cy.get('.appeal-site-visit > .govuk-summary-list__actions > .govuk-link')
+		// 	.click();
 	}
+
 	fillInput(text, index = 0) {
 		this.basePageElements.input().eq(index).clear().type(text);
 	}
@@ -129,25 +132,14 @@ export class AppealsListPage extends Page {
 		this.selectRadioButtonByValue(outcome);
 	}
 
-	verifyBannerTitle() {
-		cy.contains(this.selectors.bannerTitle);
-	}
-
-	verifyBannerContent() {
-		cy.contains(this.selectors.bannerContent);
-	}
-
 	clickCaseOfficer() {
-		this.clickAccordionByText('Case Team');
-		cy.get('.govuk-summary-list > :nth-child(1) > .govuk-summary-list__actions > .govuk-link')
-			.last()
-			.click();
+		this.clickAccordionByText('Team');
+		cy.getByData('change-case-officer').click();
 	}
+
 	clickInspector() {
-		this.clickAccordionByText('Case Team');
-		cy.get('.govuk-summary-list > :nth-child(2) > .govuk-summary-list__actions > .govuk-link')
-			.last()
-			.click();
+		this.clickAccordionByText('Team');
+		cy.getByData('assign-inspector').click();
 	}
 
 	checkAnswerSummaryValue(answer) {
@@ -165,9 +157,17 @@ export class AppealsListPage extends Page {
 			.eq(position - 1)
 			.should('not.have.text');
 	}
+
+	// ASSERTIONS
 	verifySectionHeader(expectedText) {
 		this.basePageElements.sectionHeader().filter('h1').should('have.text', expectedText);
 	}
-}
 
-//ASSERTIONS
+	verifyBannerTitle() {
+		cy.contains(this.selectors.bannerTitle);
+	}
+
+	verifyBannerContent() {
+		cy.contains(this.selectors.bannerContent);
+	}
+}

@@ -4,6 +4,8 @@
 import { users } from '../../fixtures/users';
 import { AppealsListPage } from '../../page_objects/appealsListPage';
 import { UpdateDueDatePage } from '../../page_objects/updateDueDatePage';
+import { urlPaths } from '../../fixtures/url-paths.js';
+
 const appealsListPage = new AppealsListPage();
 const updateDueDatePage = new UpdateDueDatePage();
 
@@ -13,8 +15,8 @@ describe('Appeals feature', () => {
 	});
 
 	it('Complete LPAQ', () => {
-		cy.visit('/appeals-service/all-cases');
-		appealsListPage.clickAppealFromList(30);
+		cy.visit(urlPaths.appealsList);
+		appealsListPage.clickAppealFromList(30); // TODO Change to use page.clickAppealByRef(ref)
 		appealsListPage.clickReviewLpaq(7);
 		appealsListPage.selectRadioButtonByValue('Complete');
 		appealsListPage.clickButtonByText('Continue');
@@ -25,8 +27,8 @@ describe('Appeals feature', () => {
 	});
 
 	it('incomplete LPAQ', () => {
-		cy.visit('/appeals-service/all-cases');
-		appealsListPage.clickAppealFromList(30);
+		cy.visit(urlPaths.appealsList);
+		appealsListPage.clickAppealFromList(30); // TODO Change to use page.clickAppealByRef(ref)
 		appealsListPage.clickReviewLpaq(7);
 		appealsListPage.selectRadioButtonByValue('Incomplete');
 		appealsListPage.clickButtonByText('Continue');
@@ -45,8 +47,8 @@ describe('Appeals feature', () => {
 	});
 
 	it('incomplete LPAQ add another', () => {
-		cy.visit('/appeals-service/all-cases');
-		appealsListPage.clickAppealFromList(31);
+		cy.visit(urlPaths.appealsList);
+		appealsListPage.clickAppealFromList(31); // TODO Change to use page.clickAppealByRef(ref)
 		appealsListPage.clickReviewLpaq(7);
 		appealsListPage.selectRadioButtonByValue('Incomplete');
 		appealsListPage.clickButtonByText('Continue');
