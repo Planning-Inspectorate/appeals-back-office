@@ -15,6 +15,7 @@ describe('change-lpa-reference', () => {
 	describe('GET /change', () => {
 		beforeEach(installMockApi);
 		afterEach(teardown);
+
 		it('should render changeLpaReference page when loaded from appeal details', async () => {
 			const appealId = appealData.appealId;
 			const response = await request.get(`${baseUrl}/${appealId}/lpa-reference/change`);
@@ -22,7 +23,8 @@ describe('change-lpa-reference', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change the LPA application reference');
+			expect(elementInnerHtml).toContain('Change the LPA application reference</h1>');
+			expect(elementInnerHtml).toContain('Continue</button>');
 		});
 
 		it('should render changeLpaReference page when loaded from appellant case', async () => {
@@ -34,7 +36,8 @@ describe('change-lpa-reference', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change the LPA application reference');
+			expect(elementInnerHtml).toContain('Change the LPA application reference</h1>');
+			expect(elementInnerHtml).toContain('Continue</button>');
 		});
 	});
 
@@ -54,11 +57,18 @@ describe('change-lpa-reference', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Enter the LPA application reference');
-			expect(elementInnerHtml).toContain('govuk-error-summary');
+			expect(elementInnerHtml).toContain('Change the LPA application reference</h1>');
+
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Enter the LPA application reference</a>');
 		});
 
-		it('should re-direct appeal-details page when planningApplicationReference is valid and was opened in appeal details', async () => {
+		it('should redirect to the appeal-details page when planningApplicationReference is valid and was opened in appeal details', async () => {
 			const appealId = appealData.appealId.toString();
 			nock('http://test/').patch(`/appeals/${appealId}`).reply(200, {
 				planningApplicationReference: '12345/A/67890'
@@ -73,11 +83,10 @@ describe('change-lpa-reference', () => {
 				.send(validData);
 
 			expect(response.statusCode).toBe(302);
-
 			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
 		});
 
-		it('should re-direct appellant case page when planningApplicationReference is valid and was opened in appellant case', async () => {
+		it('should redirect to the appellant case page when planningApplicationReference is valid and was opened in appellant case', async () => {
 			const appealId = appealData.appealId.toString();
 			nock('http://test/').patch(`/appeals/${appealId}`).reply(200, {
 				planningApplicationReference: '12345/A/67890'
@@ -92,7 +101,6 @@ describe('change-lpa-reference', () => {
 				.send(validData);
 
 			expect(response.statusCode).toBe(302);
-
 			expect(response.text).toBe(
 				'Found. Redirecting to /appeals-service/appeal-details/1/appellant-case'
 			);
