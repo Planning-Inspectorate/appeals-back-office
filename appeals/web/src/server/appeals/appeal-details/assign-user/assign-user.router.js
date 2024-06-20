@@ -30,7 +30,7 @@ assignUserRouter
 	.get(asyncRoute(controller.getAssignCaseOfficerCheckAndConfirm))
 	.post(
 		assertGroupAccess(config.referenceData.appeals.caseOfficerGroupId),
-		validators.validatePostConfirmation,
+		validators.validatePostConfirmation(),
 		asyncRoute(controller.postAssignCaseOfficerCheckAndConfirm)
 	);
 
@@ -39,7 +39,7 @@ assignUserRouter
 	.get(asyncRoute(controller.getAssignInspectorCheckAndConfirm))
 	.post(
 		assertGroupAccess(config.referenceData.appeals.caseOfficerGroupId),
-		validators.validatePostConfirmation,
+		validators.validatePostConfirmation(false, true),
 		asyncRoute(controller.postAssignInspectorCheckAndConfirm)
 	);
 
@@ -50,7 +50,7 @@ unassignUserRouter
 	.get(asyncRoute(controller.getUnassignInspectorCheckAndConfirm))
 	.post(
 		assertGroupAccess(config.referenceData.appeals.caseOfficerGroupId),
-		validators.validatePostConfirmation,
+		validators.validatePostConfirmation(true, true),
 		asyncRoute(controller.postUnassignInspectorCheckAndConfirm)
 	);
 
@@ -61,7 +61,7 @@ assignNewUserRouter
 	.get(asyncRoute(controller.getAssignNewCaseOfficer))
 	.post(
 		assertGroupAccess(config.referenceData.appeals.caseOfficerGroupId),
-		validators.validatePostConfirmation,
+		validators.validateNewUserPostConfirmation(),
 		asyncRoute(controller.postAssignNewCaseOfficer)
 	);
 
@@ -70,7 +70,7 @@ assignNewUserRouter
 	.get(asyncRoute(controller.getAssignNewInspector))
 	.post(
 		assertGroupAccess(config.referenceData.appeals.caseOfficerGroupId),
-		validators.validatePostConfirmation,
+		validators.validateNewUserPostConfirmation(true),
 		asyncRoute(controller.postAssignNewInspector)
 	);
 
