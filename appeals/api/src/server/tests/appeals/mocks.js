@@ -111,6 +111,7 @@ export const householdAppeal = {
 		type: 'Householder'
 	},
 	appellantCase: {
+		id: 1,
 		appellantCaseIncompleteReasonsSelected: [],
 		appellantCaseValidationOutcome: null,
 		applicantFirstName: 'Fiona',
@@ -124,7 +125,7 @@ export const householdAppeal = {
 		hasToldOwners: true,
 		hasToldTenants: null,
 		siteAccessDetails: 'There is no mobile reception at the site',
-		id: 1,
+		siteSafetyDetails: 'Small dog big character',
 		isAgriculturalHolding: null,
 		isAgriculturalHoldingTenant: null,
 		isAppellantNamedOnApplication: false,
@@ -132,7 +133,6 @@ export const householdAppeal = {
 		isSitePartiallyOwned: true,
 		isSiteVisibleFromPublicRoad: false,
 		doesSiteRequireInspectorAccess: true,
-		siteSafetyDetails: 'Small dog big character',
 		knowledgeOfOtherLandowners: {
 			name: 'Some'
 		},
@@ -163,41 +163,14 @@ export const householdAppeal = {
 	lpaQuestionnaire: {
 		id: 1,
 		appealId: 1,
-		communityInfrastructureLevyAdoptionDate: null,
-		developmentDescription: null,
-		doesAffectAListedBuilding: null,
-		doesAffectAScheduledMonument: null,
-		doesSiteHaveHealthAndSafetyIssues: true,
-		doesSiteRequireInspectorAccess: true,
-		extraConditions: null,
-		hasCommunityInfrastructureLevy: null,
-		hasCompletedAnEnvironmentalStatement: null,
-		hasEmergingPlan: null,
-		hasExtraConditions: null,
-		hasProtectedSpecies: null,
-		hasRepresentationsFromOtherParties: null,
-		hasResponsesOrStandingAdviceToUpload: null,
-		hasStatementOfCase: null,
-		hasStatutoryConsultees: null,
-		hasSupplementaryPlanningDocuments: null,
-		hasTreePreservationOrder: null,
-		healthAndSafetyDetails: 'There may be no mobile reception at the site',
-		inCAOrrelatesToCA: null,
-		includesScreeningOption: null,
-		inspectorAccessDetails:
-			'There is a tall hedge around the site which obstructs the view of the site',
-		isAffectingNeighbouringSites: true,
-		isCommunityInfrastructureLevyFormallyAdopted: null,
-		isConservationArea: true,
+		siteSafetyDetails: 'There may be no mobile reception at the site',
+		siteAccessDetails: 'There is a tall hedge around the site which obstructs the view of the site',
+		inConservationArea: true,
 		isCorrectAppealType: true,
-		isDevelopmentInOrNearDesignatedSites: null,
-		isEnvironmentalStatementRequired: null,
-		isGypsyOrTravellerSite: null,
-		isListedBuilding: null,
-		isPublicRightOfWay: null,
-		isSensitiveArea: null,
-		isSiteVisible: null,
-		isTheSiteWithinAnAONB: null,
+		lpaStatement: null,
+		newConditionDetails: null,
+		lpaCostsAppliedFor: false,
+		siteWithinGreenBelt: null,
 		listedBuildingDetails: [
 			{
 				listEntry: '1',
@@ -215,10 +188,8 @@ export const householdAppeal = {
 				}
 			}
 		],
-		meetsOrExceedsThresholdOrCriteriaInColumn2: null,
-		receivedAt: '2022-05-17T23:00:00.000Z',
-		sentAt: '2023-05-24T10:34:09.286Z',
-		siteWithinGreenBelt: null
+		lpaqCreatedDate: '2022-05-17T23:00:00.000Z',
+		lpaQuestionnaireSubmittedDate: '2023-05-24T10:34:09.286Z'
 	}
 };
 
@@ -241,7 +212,7 @@ export const fullPlanningAppeal = {
 		isAgriculturalHolding: true,
 		isAgriculturalHoldingTenant: true,
 		isDevelopmentDescriptionStillCorrect: false,
-		newDevelopmentDescription: 'A new extension has been added at the back',
+		newDevelopmentDescription: 'A new extension has been added at the back'
 	}
 };
 

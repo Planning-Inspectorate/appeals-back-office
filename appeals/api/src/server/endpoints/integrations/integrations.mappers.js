@@ -2,7 +2,7 @@ import { randomUUID } from 'node:crypto';
 
 import {
 	mapAddressIn,
-	mapNeighboouringAddressIn,
+	mapNeighbouringAddressIn,
 	mapAddressOut
 } from './integrations.mappers/address.mapper.js';
 import { mapLpaIn, mapLpaOut } from './integrations.mappers/lpa.mapper.js';
@@ -21,10 +21,11 @@ import { mapAppealAllocationOut } from './integrations.mappers/appeal-allocation
 import { mapCaseDataOut } from './integrations.mappers/casedata.mapper.js';
 import { ODW_AGENT_SVCUSR, ODW_APPELLANT_SVCUSR } from '@pins/appeals/constants/common.js';
 import { STAGE } from '@pins/appeals/constants/documents.js';
+import { FOLDERS } from '@pins/appeals/constants/documents.js';
 
 const mappers = {
 	mapAddressIn,
-	mapNeighboouringAddressIn,
+	mapNeighbouringAddressIn,
 	mapAddressOut,
 	mapLpaIn,
 	mapLpaOut,
@@ -43,8 +44,8 @@ const mappers = {
 };
 
 /** @typedef {import('pins-data-model').Schemas.AppellantSubmissionCommand} AppellantSubmissionCommand */
-/** @typedef {import('#config/../openapi-types.js').QuestionnaireData} QuestionnaireData */
-/** @typedef {import('#config/../openapi-types.js').DocumentVersionDetails} DocumentMetaImport */
+/** @typedef {import('pins-data-model').Schemas.LPAQuestionnaireCommand} LPAQuestionnaireCommand */
+/** @typedef {Pick<LPAQuestionnaireCommand, 'casedata'>} LPAQuestionnaire */
 
 /**
  * @param {AppellantSubmissionCommand} data
@@ -60,7 +61,7 @@ const mapAppealSubmission = (data) => {
 			return {
 				source: 'back-office',
 				address: {
-					create: mappers.mapNeighboouringAddressIn(site)
+					create: mappers.mapNeighbouringAddressIn(site)
 				}
 			};
 		})
@@ -76,8 +77,13 @@ const mapAppealSubmission = (data) => {
 		},
 		applicationReference: casedata?.applicationReference,
 		address: { create: mappers.mapAddressIn(casedata) },
-		appellantCase: { create: mappers.mapAppellantCaseIn(casedata) },
-		neighbouringSites: neighbouringSitesInput
+		appellantCase: { create: mappers.mapAppellantCaseIn({ casedata }) },
+		neighbouringSites: neighbouringSitesInput,
+		folders: {
+			create: FOLDERS.map((/** @type {string} */ path) => {
+				return { path };
+			})
+		}
 	};
 
 	const documentsInput = (documents || []).map((document) =>
@@ -91,16 +97,36 @@ const mapAppealSubmission = (data) => {
 	};
 };
 
-const mapQuestionnaireSubmission = (/** @type {QuestionnaireData} */ data) => {
-	const { questionnaire, documents } = data;
-	const questionnaireInput = mappers.mapQuestionnaireIn(questionnaire);
-	const documentsInput = (documents || []).map((document) => mappers.mapDocumentIn(document));
+/**
+ *
+ * @param {LPAQuestionnaireCommand} data
+ * @returns {{ questionnaire: *, documents: *[], relatedReferences: string[], caseReference: string }}
+ */
+const mapQuestionnaireSubmission = (data) => {
+	const { casedata, documents } = data;
+	const questionnaireInput = {
+		...mappers.mapQuestionnaireIn({ casedata }),
+		neighbouringSites: {
+			create: casedata.neighbouringSiteAddresses?.map((site) => {
+				return {
+					source: 'lpa',
+					address: {
+						create: mappers.mapNeighbouringAddressIn(site)
+					}
+				};
+			})
+		}
+	};
+
+	const documentsInput = (documents || []).map((document) =>
+		mappers.mapDocumentIn(document, STAGE.LPA_QUESTIONNAIRE)
+	);
 
 	return {
 		questionnaire: questionnaireInput,
-		nearbyCaseReferences: questionnaire?.nearbyCaseReferences,
+		relatedReferences: casedata?.nearbyCaseReferences ?? [],
 		documents: documentsInput,
-		caseReference: questionnaire?.caseReference
+		caseReference: casedata?.caseReference
 	};
 };
 

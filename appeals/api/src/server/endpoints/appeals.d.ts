@@ -60,22 +60,22 @@ interface SingleAppealDetailsResponse {
 	healthAndSafety: {
 		appellantCase: {
 			details?: string | null;
-			hasIssues?: boolean | null;
+			hasIssues: boolean;
 		};
 		lpaQuestionnaire: {
 			details?: string | null;
-			hasIssues?: boolean | null;
+			hasIssues: boolean;
 		};
 	};
 	inspector?: string | null;
 	inspectorAccess: {
 		appellantCase: {
 			details?: string | null;
-			isRequired?: boolean | null;
+			isRequired: boolean;
 		};
 		lpaQuestionnaire: {
 			details?: string | null;
-			isRequired?: boolean | null;
+			isRequired: boolean;
 		};
 	};
 	isParentAppeal?: boolean | null;
@@ -84,8 +84,7 @@ interface SingleAppealDetailsResponse {
 	otherAppeals: RelatedAppeal[];
 	localPlanningDepartment: string;
 	lpaQuestionnaireId?: number | null;
-	isAffectingNeighbouringSites?: boolean | null;
-	neighbouringSites: Schema.NeighbouringSite[];
+	neighbouringSites: NeighbouringSite[];
 	planningApplicationReference: string;
 	procedureType?: string | null;
 	siteVisit?: {
@@ -108,58 +107,6 @@ interface UpdateAppealRequest {
 	caseOfficer?: number | null;
 	inspector?: number | null;
 }
-
-/*
-appealId: appeal.id,
-	appealReference: appeal.reference,
-	appealSite: {
-		addressId: appeal.address?.id,
-		addressLine1: appeal.address?.addressLine1 || '',
-		addressLine2: appeal.address?.addressLine2 || '',
-		town: appeal.address?.addressTown || '',
-		county: appeal.address?.addressCounty || '',
-		postCode: appeal.address?.postcode
-	},
-	appellantCaseId: appeal.appellantCase?.id,
-	appellant: {
-		firstName: appeal.appellant?.firstName,
-		surname: appeal.appellant?.lastName
-	},
-	applicant: {
-		firstName: appeal.appellant?.firstName,
-		surname: appeal.appellant?.lastName
-	},
-	documents: {
-		appellantCaseCorrespondence: {},
-		appellantCaseWithdrawalLetter: {},
-		appellantStatement: {},
-		applicationDecisionLetter: {},
-		changedDescription: {},
-		originalApplicationForm: {}
-	},
-	hasAdvertisedAppeal: appeal.appellantCase?.hasAdvertisedAppeal,
-	healthAndSafety: {
-		details: appeal.appellantCase?.siteSafetyDetails,
-		hasIssues: true
-	},
-	localPlanningDepartment: appeal.lpa.name,
-	planningApplicationReference: appeal.applicationReference,
-	procedureType: appeal.procedureType?.name,
-	siteOwnership: {
-		areAllOwnersKnown: appeal.appellantCase?.knowsAllOwners,
-		changedDevelopmentDescription: appeal.appellantCase?.changedDevelopmentDescription,
-		originalDevelopmentDescription: appeal.appellantCase?.originalDevelopmentDescription,
-		isFullyOwned: appeal.appellantCase?.ownsAllLand,
-		isPartiallyOwned: appeal.appellantCase?.ownsSomeLand,
-		knowsAllLandowners: appeal.appellantCase?.knowsOtherOwners?.name,
-		knowsOtherLandowners: appeal.appellantCase?.knowsOtherOwners?.name
-	},
-	validation: formatValidationOutcomeResponse(
-		appeal.appellantCase?.appellantCaseValidationOutcome?.name || null,
-		appeal.appellantCase?.appellantCaseIncompleteReasonsSelected,
-		appeal.appellantCase?.appellantCaseInvalidReasonsSelected
-	)
-*/
 
 interface SingleAppellantCaseResponse {
 	appealId: number;
@@ -251,13 +198,12 @@ interface UpdateAppellantCaseValidationOutcomeParams {
 }
 
 interface SingleLPAQuestionnaireResponse {
-	affectsListedBuildingDetails: ListedBuildingDetailsResponse | null;
+	lpaQuestionnaireId: number;
 	appealId: number;
 	appealReference: string;
 	appealSite: AppealSite;
-	communityInfrastructureLevyAdoptionDate?: Date | null;
-	designatedSites?: DesignatedSiteDetails[] | null;
-	developmentDescription?: string | null;
+	localPlanningDepartment?: string;
+	procedureType?: string;
 	documents: {
 		whoNotified?: FolderInfo | null;
 		conservationMap?: FolderInfo | null;
@@ -265,82 +211,40 @@ interface SingleLPAQuestionnaireResponse {
 		otherPartyRepresentations?: FolderInfo | null;
 		planningOfficerReport?: FolderInfo | null;
 	};
-	doesAffectAListedBuilding?: boolean | null;
-	doesAffectAScheduledMonument?: boolean | null;
-	doesSiteHaveHealthAndSafetyIssues?: boolean | null;
-	doesSiteRequireInspectorAccess?: boolean | null;
-	extraConditions?: string | null;
-	hasCommunityInfrastructureLevy?: boolean | null;
-	hasCompletedAnEnvironmentalStatement?: boolean | null;
-	hasEmergingPlan?: boolean | null;
-	hasExtraConditions?: boolean | null;
-	hasOtherAppeals?: boolean | null;
-	hasProtectedSpecies?: boolean | null;
-	hasRepresentationsFromOtherParties?: boolean | null;
-	hasResponsesOrStandingAdviceToUpload?: boolean | null;
-	hasStatementOfCase?: boolean | null;
-	hasStatutoryConsultees?: boolean | null;
-	hasSupplementaryPlanningDocuments?: boolean | null;
-	hasTreePreservationOrder?: boolean | null;
-	healthAndSafetyDetails?: string | null;
-	inCAOrrelatesToCA?: boolean | null;
-	includesScreeningOption?: boolean | null;
-	inquiryDays?: number | null;
-	inspectorAccessDetails?: string | null;
-	isAffectingNeighbouringSites?: boolean | null;
-	isCommunityInfrastructureLevyFormallyAdopted?: boolean | null;
-	isConservationArea?: boolean | null;
-	isCorrectAppealType: boolean | null;
-	isEnvironmentalStatementRequired?: boolean | null;
-	isGypsyOrTravellerSite?: boolean | null;
-	isListedBuilding?: boolean | null;
-	isPublicRightOfWay?: boolean | null;
-	isSensitiveArea?: boolean | null;
-	isSiteVisible?: boolean | null;
-	isTheSiteWithinAnAONB?: boolean | null;
-	listedBuildingDetails: ListedBuildingDetailsResponse | null;
-	localPlanningDepartment: string | null;
-	lpaNotificationMethods?: LPANotificationMethodDetails[] | null;
-	lpaQuestionnaireId?: number;
-	meetsOrExceedsThresholdOrCriteriaInColumn2?: boolean | null;
-	otherAppeals: string[];
-	procedureType?: string;
-	receivedAt: Date;
-	scheduleType?: string;
-	sensitiveAreaDetails?: string | null;
-	siteWithinGreenBelt?: boolean | null;
-	statutoryConsulteesDetails?: string | null;
 	validation: ValidationOutcomeResponse | null;
+	lpaNotificationMethods?: LPANotificationMethodDetails[] | null;
+	affectsListedBuildingDetails?: ListedBuildingDetailsResponse | null;
+	listedBuildingDetails?: ListedBuildingDetailsResponse | null;
+
+	healthAndSafetyDetails?: string | null;
+	doesSiteHaveHealthAndSafetyIssues?: boolean | null;
+	inspectorAccessDetails?: string | null;
+	doesSiteRequireInspectorAccess?: boolean | null;
+	isConservationArea?: boolean | null;
+	siteWithinGreenBelt?: boolean | null;
+	isCorrectAppealType?: boolean | null;
+
+	submittedAt?: Date | null;
+	receivedAt: Date;
+	otherAppeals?: string[] | null;
+
+	costsAppliedFor?: boolean | null;
+	lpaStatement?: string | null;
+	extraConditions?: string | null;
+	hasExtraConditions?: boolean | null;
 }
 
 interface UpdateLPAQuestionnaireRequest {
 	appealId?: number;
-	designatedSites?: number[];
-	doesAffectAListedBuilding?: boolean;
-	doesAffectAScheduledMonument?: boolean;
-	doesSiteRequireInspectorAccess?: boolean;
-	doesSiteHaveHealthAndSafetyIssues?: boolean;
-	hasCompletedAnEnvironmentalStatement?: boolean;
-	hasProtectedSpecies?: boolean;
-	hasTreePreservationOrder?: boolean;
+	lpaStatement?: string;
+	inspectorAccessDetails?: string;
 	healthAndSafetyDetails?: string;
-	includesScreeningOption?: boolean;
-	incompleteReasons?: IncompleteInvalidReasons;
-	isAffectingNeighbouringSites?: boolean;
+	siteWithinGreenBelt?: boolean;
+	extraConditions?: string;
+	lpaCostsAppliedFor?: boolean;
 	isConservationArea?: boolean;
 	isCorrectAppealType?: boolean;
-	isEnvironmentalStatementRequired?: boolean;
-	isGypsyOrTravellerSite?: boolean;
-	isListedBuilding?: boolean;
-	isPublicRightOfWay?: boolean;
-	isSensitiveArea?: boolean;
-	isTheSiteWithinAnAONB?: boolean;
-	inspectorAccessDetails?: string;
-	lpaQuestionnaireValidationOutcomeId?: number;
-	meetsOrExceedsThresholdOrCriteriaInColumn2?: boolean;
-	scheduleTypeId?: number;
-	sensitiveAreaDetails?: string;
-	timetable?: TimetableDeadlineDate;
+	incompleteReasons?: IncompleteInvalidReasons;
 	validationOutcomeId?: number;
 }
 
@@ -348,10 +252,10 @@ interface UpdateLPAQuestionnaireValidationOutcomeParams {
 	appeal: {
 		id: number;
 		appealStatus: AppealStatus[];
-		appealType: AppealType;
-		lpa: LPA;
+		appealType?: AppealType | null;
+		lpa?: LPA | null;
 		reference: string;
-		applicationReference: string;
+		applicationReference?: string | null;
 	};
 	azureAdUserId: string;
 	data: {
@@ -406,12 +310,18 @@ interface AppealAllocation {
 }
 
 interface AppealSite {
-	addressId?: number;
-	addressLine1?: string;
+	addressId?: number | null;
+	addressLine1: string;
 	addressLine2?: string | null;
 	town?: string;
 	county?: string | null;
-	postCode?: string | null;
+	postCode: string;
+}
+
+interface NeighbouringSite {
+	siteId: number;
+	source: string;
+	address: AppealSite;
 }
 
 interface AppealTimetable {
@@ -607,9 +517,9 @@ interface UpdateLPAQuestionnaireValidationOutcomeParams {
 	appeal: {
 		id: number;
 		appealStatus: AppealStatus[];
-		appealType: AppealType;
+		appealType?: AppealType | null;
 		reference: string;
-		lpa: LPA;
+		lpa?: LPA | null;
 	};
 	azureAdUserId: string;
 	data: {

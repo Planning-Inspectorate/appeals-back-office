@@ -73,8 +73,6 @@ router.patch(
 		ERROR_INVALID_LPA_QUESTIONNAIRE_VALIDATION_OUTCOME
 	),
 	checkLookupValuesAreValid('incompleteReasons', 'lPAQuestionnaireIncompleteReason'),
-	checkLookupValuesAreValid('designatedSites', 'designatedSite'),
-	checkLookupValuesAreValid('scheduleType', 'scheduleType'),
 	asyncHandler(updateLPAQuestionnaireById)
 );
 

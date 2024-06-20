@@ -1,9 +1,6 @@
 import { Router as createRouter } from 'express';
 import { asyncHandler } from '#middleware/async-handler.js';
-import {
-	validateAppellantCase
-	//validateLpaQuestionnaire
-} from './integrations.middleware.js';
+import { validateAppellantCase, validateLpaQuestionnaire } from './integrations.middleware.js';
 import * as controller from './integrations.controller.js';
 
 const router = createRouter();
@@ -50,7 +47,7 @@ router.post(
 		#swagger.responses[400] = {}
 		#swagger.responses[404] = {}
 	 */
-	//validateLpaQuestionnaire,
+	validateLpaQuestionnaire,
 	asyncHandler(controller.postLpaqSubmission)
 );
 

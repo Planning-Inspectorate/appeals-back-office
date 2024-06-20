@@ -34,148 +34,159 @@ export interface ValidateDate {
 
 export interface AppellantCaseData {
 	casedata?: {
-		/** @example "D" */
-		caseType?: string;
-		/** @example "written" */
-		caseProcedure?: string;
-		/** @example "Q9999" */
-		lpaCode?: string;
-		/** @example "1909-06-19T16:26:31.0Z" */
-		caseSubmittedDate?: string;
+		/** @example true */
+		advertisedAppeal?: boolean;
 		/** @example false */
-		enforcementNotice?: boolean;
-		/** @example "ABC/123/QWER" */
-		applicationReference?: string;
-		/** @example "1922-01-01T09:44:51.0Z" */
+		appellantCostsAppliedFor?: boolean;
+		/** @example "2024-01-01T00:00:00.000Z" */
 		applicationDate?: string;
 		/** @example "refused" */
 		applicationDecision?: string;
-		/** @example "1892-04-13T01:13:33.0Z" */
+		/** @example "2024-01-01T00:00:00.000Z" */
 		applicationDecisionDate?: string;
-		/** @example "1891-09-22T22:28:18.0Z" */
+		/** @example "123" */
+		applicationReference?: string;
+		/** @example "written" */
+		caseProcedure?: string;
+		/** @example "2024-03-25T23:59:59.999Z" */
 		caseSubmissionDueDate?: string;
-		/** @example "irure laborum anim do eu" */
-		siteAddressLine1?: string;
-		/** @example "Excepteur cillum Duis culpa dolor" */
-		siteAddressLine2?: string;
-		/** @example "sit pariatur incididunt" */
-		siteAddressTown?: string;
-		siteAddressCounty?: any;
-		/** @example "ut voluptate labore ullamco ex" */
-		siteAddressPostcode?: string;
-		/** @example ["fugiat veniam qui pariatur","in consectetur id","voluptate mollit culpa","magna"] */
-		siteAccessDetails?: string[];
-		/** @example ["sint do"] */
-		siteSafetyDetails?: string[];
-		/** @example 30.9 */
-		siteAreaSquareMetres?: number;
-		/** @example 9.7 */
-		floorSpaceSquareMetres?: number;
-		/** @example true */
-		ownsAllLand?: boolean;
+		/** @example "2024-03-25T23:59:59.999Z" */
+		caseSubmittedDate?: string;
+		/** @example "D" */
+		caseType?: string;
 		/** @example false */
-		ownsSomeLand?: boolean;
+		changedDevelopmentDescription?: boolean;
+		/** @example false */
+		enforcementNotice?: boolean;
+		/** @example 22 */
+		floorSpaceSquareMetres?: number;
+		/** @example "Some" */
+		knowsAllOwners?: string;
 		/** @example "Some" */
 		knowsOtherOwners?: string;
-		/** @example "No" */
-		knowsAllOwners?: string;
-		/** @example false */
-		advertisedAppeal?: boolean;
-		ownersInformed?: any;
-		/** @example "adipisicing aliqua" */
+		/** @example "Q9999" */
+		lpaCode?: string;
+		/** @example ["1000000"] */
+		nearbyCaseReferences?: string[];
+		/** @example [] */
+		neighbouringSiteAddresses?: any[];
+		/** @example "A test description" */
 		originalDevelopmentDescription?: string;
 		/** @example true */
-		changedDevelopmentDescription?: boolean;
-		/** @example ["7000111","7000112","7000113","7000114","7000115"] */
-		nearbyCaseReferences?: string[];
-		neighbouringSiteAddresses?: {
-			/** @example "in" */
-			neighbouringSiteAddressLine1?: string;
-			/** @example "dolore minim" */
-			neighbouringSiteAddressLine2?: string;
-			/** @example "sunt ut" */
-			neighbouringSiteAddressTown?: string;
-			/** @example "reprehenderit Ut dolore" */
-			neighbouringSiteAddressCounty?: string;
-			/** @example "dolor" */
-			neighbouringSiteAddressPostcode?: string;
-			/** @example "nulla adipisicing" */
-			neighbouringSiteAccessDetails?: string;
-			neighbouringSiteSafetyDetails?: any;
-		}[];
-		/** @example false */
-		appellantCostsAppliedFor?: boolean;
+		ownersInformed?: boolean;
+		/** @example true */
+		ownsAllLand?: boolean;
+		/** @example true */
+		ownsSomeLand?: boolean;
+		/** @example ["Come and see"] */
+		siteAccessDetails?: string[];
+		/** @example "Somewhere" */
+		siteAddressCounty?: string;
+		/** @example "Somewhere" */
+		siteAddressLine1?: string;
+		/** @example "Somewhere St" */
+		siteAddressLine2?: string;
+		/** @example "SOM3 W3R" */
+		siteAddressPostcode?: string;
+		/** @example "Somewhereville" */
+		siteAddressTown?: string;
+		/** @example 22 */
+		siteAreaSquareMetres?: number;
+		/** @example ["It's dangerous"] */
+		siteSafetyDetails?: string[];
 	};
 	documents?: {
-		/** @example "4547fec8-16b2-47bb-836d-4d0baac04079" */
-		documentId?: string;
-		/** @example "exercitation reprehenderit laborum eu enim" */
-		filename?: string;
-		/** @example "cupidatat" */
-		originalFilename?: string;
-		/** @example 23810727 */
-		size?: number;
-		/** @example "non cupidatat ea" */
-		mime?: string;
-		/** @example "elit est Excepteur cupidatat" */
-		documentURI?: string;
-		/** @example "1890-01-01T22:21:50.0Z" */
+		/** @example "2024-03-01T13:48:35.847Z" */
 		dateCreated?: string;
-		/** @example "originalApplicationForm" */
+		/** @example "001" */
+		documentId?: string;
+		/** @example "appellantCostsApplication" */
 		documentType?: string;
+		/** @example "https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg" */
+		documentURI?: string;
+		/** @example "img1.jpg" */
+		filename?: string;
+		/** @example "image/jpeg" */
+		mime?: string;
+		/** @example "oimg.jpg" */
+		originalFilename?: string;
+		/** @example 10293 */
+		size?: number;
 	}[];
 	users?: {
-		salutation?: any;
-		/** @example "Ray" */
-		firstName?: string;
-		/** @example "Liotta" */
-		lastName?: string;
-		/** @example "test@example.com" */
+		/** @example "test@test.com" */
 		emailAddress?: string;
-		/** @example "Agent" */
+		/** @example "Testy" */
+		firstName?: string;
+		/** @example "McTest" */
+		lastName?: string;
+		salutation?: any;
+		/** @example "Appellant" */
 		serviceUserType?: string;
 	}[];
 }
 
 export interface QuestionnaireData {
-	questionnaire?: {
-		/** @example "6000526" */
+	casedata?: {
+		/** @example "6000000" */
 		caseReference?: string;
-		/** @example "Q9999" */
-		LPACode?: string;
+		/** @example "2024-05-31T23:00:00.000Z" */
+		lpaQuestionnaireSubmittedDate?: string;
+		/** @example "cupidatat ipsum eu culpa" */
+		lpaStatement?: string;
+		/** @example ["Here it is"] */
+		siteAccessDetails?: string[];
+		/** @example ["Fine"] */
+		siteSafetyDetails?: string[];
 		/** @example true */
-		isAppealTypeAppropriate?: boolean;
+		isCorrectAppealType?: boolean;
+		/** @example false */
+		isGreenBelt?: boolean;
 		/** @example true */
-		doesTheDevelopmentAffectTheSettingOfAListedBuilding?: boolean;
-		affectedListedBuildings?: {
-			/** @example "1021477" */
-			listEntry?: string;
-		}[];
-		/** @example true */
-		inCAOrRelatesToCA?: boolean;
-		/** @example true */
-		siteWithinGreenBelt?: boolean;
-		/** @example ["A public notice at the site","Letters to neighbours","Advert in the local press"] */
-		howYouNotifiedPeople?: string[];
-		/** @example true */
-		hasRepresentationsFromOtherParties?: boolean;
-		/** @example true */
-		doesSiteRequireInspectorAccess?: boolean;
-		/** @example true */
-		doPlansAffectNeighbouringSite?: boolean;
-		/** @example true */
-		doesSiteHaveHealthAndSafetyIssues?: boolean;
-		/** @example "There are bears. Lots of bears." */
-		healthAndSafetyIssuesDetails?: string;
-		/** @example ["abc/123456","lpa/945357"] */
+		inConservationArea?: boolean;
+		/** @example "cupidatat" */
+		newConditionDetails?: string;
+		/** @example ["notice","letter"] */
+		notificationMethod?: string[];
+		/** @example ["1000000"] */
 		nearbyCaseReferences?: string[];
-		/** @example true */
-		hasExtraConditions?: boolean;
-		/** @example "Here are some extra conditions." */
-		extraConditions?: string;
+		neighbouringSiteAddresses?: {
+			/** @example "deserunt in irure do" */
+			neighbouringSiteAddressLine1?: string;
+			neighbouringSiteAddressLine2?: any;
+			/** @example "laboris ut enim et laborum" */
+			neighbouringSiteAddressTown?: string;
+			/** @example "reprehenderit eu mollit Excepteur sit" */
+			neighbouringSiteAddressCounty?: string;
+			/** @example "aliqua in qui ipsum" */
+			neighbouringSiteAddressPostcode?: string;
+			neighbouringSiteAccessDetails?: any;
+			/** @example "magna proident incididunt in non" */
+			neighbouringSiteSafetyDetails?: string;
+		}[];
+		/** @example ["10001","10002"] */
+		affectedListedBuildingNumbers?: string[];
+		/** @example false */
+		lpaCostsAppliedFor?: boolean;
 	};
-	/** @example [] */
-	documents?: any[];
+	documents?: {
+		/** @example "2024-03-01T13:48:35.847Z" */
+		dateCreated?: string;
+		/** @example "001" */
+		documentId?: string;
+		/** @example "lpaCostsApplication" */
+		documentType?: string;
+		/** @example "https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg" */
+		documentURI?: string;
+		/** @example "img3.jpg" */
+		filename?: string;
+		/** @example "image/jpeg" */
+		mime?: string;
+		/** @example "oimg.jpg" */
+		originalFilename?: string;
+		/** @example 10293 */
+		size?: number;
+	}[];
 }
 
 export interface DecisionInfo {

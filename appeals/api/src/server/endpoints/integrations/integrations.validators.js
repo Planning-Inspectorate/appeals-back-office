@@ -8,7 +8,7 @@ import { setCache, getCache } from '#utils/cache-data.js';
 export const schemas = {
 	commands: {
 		appealSubmission: 'appellant-submission',
-		lpaSubmission: '',
+		lpaSubmission: 'lpa-questionnaire',
 		documentSubmission: ''
 	},
 	events: {

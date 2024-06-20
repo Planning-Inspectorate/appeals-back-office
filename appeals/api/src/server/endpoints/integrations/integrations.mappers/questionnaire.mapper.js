@@ -1,103 +1,89 @@
-// @ts-nocheck
-// TODO: schemas (PINS data model)
-// TODO: address mismatch in the commented fields below
+/** @typedef {import('pins-data-model').Schemas.LPAQuestionnaireCommand} LPAQuestionnaireCommand */
+/** @typedef {import('@pins/appeals.api').Schema.LPAQuestionnaire} LPAQuestionnaire */
 
-export const mapQuestionnaireIn = (appeal) => {
+/**
+ *
+ * @param {Pick<LPAQuestionnaireCommand, 'casedata'>} command
+ * @returns {*}
+ */
+export const mapQuestionnaireIn = (command) => {
+	const casedata = command.casedata;
+	const siteAccessDetails =
+		casedata.siteAccessDetails != null && casedata.siteAccessDetails.length > 0
+			? casedata.siteAccessDetails[0]
+			: null;
+
+	const siteSafetyDetails =
+		casedata.siteSafetyDetails != null && casedata.siteSafetyDetails.length > 0
+			? casedata.siteSafetyDetails[0]
+			: null;
+
+	const lpaNotificationMethods =
+		casedata.notificationMethod != null && casedata.notificationMethod.length > 0
+			? {
+					create: casedata.notificationMethod.map((method) => {
+						return {
+							lpaNotificationMethod: {
+								connectOrCreate: {
+									create: {
+										key: method,
+										name: method
+									},
+									where: {
+										key: method
+									}
+								}
+							}
+						};
+					})
+			  }
+			: null;
+
+	const listedBuildingDetails = casedata.affectedListedBuildingNumbers
+		? {
+				create: casedata.affectedListedBuildingNumbers.map((entry) => {
+					return {
+						listEntry: entry,
+						affectsListedBuilding: true
+					};
+				})
+		  }
+		: null;
+
 	return {
-		extraConditions: appeal.extraConditions || '',
-		receivedAt: new Date().toISOString(),
-		sentAt: appeal.sentAt || new Date().toISOString(),
-		communityInfrastructureLevyAdoptionDate: appeal.communityInfrastructureLevyAdoptionDate,
-		developmentDescription: appeal.developmentDescription,
-		doesAffectAListedBuilding: appeal.doesTheDevelopmentAffectTheSettingOfAListedBuilding || false,
-		doesAffectAScheduledMonument: appeal.doesAffectAScheduledMonument || false,
-		doesSiteHaveHealthAndSafetyIssues: appeal.doesSiteHaveHealthAndSafetyIssues || false,
-		doesSiteRequireInspectorAccess: appeal.doesSiteRequireInspectorAccess || false,
-		hasCommunityInfrastructureLevy: appeal.hasCommunityInfrastructureLevy || false,
-		hasCompletedAnEnvironmentalStatement: appeal.hasCompletedAnEnvironmentalStatement || false,
-		hasEmergingPlan: appeal.hasEmergingPlan || false,
-		hasExtraConditions: appeal.hasExtraConditions || false,
-		hasOtherAppeals: appeal.hasOtherAppeals || false,
-		hasProtectedSpecies: appeal.hasProtectedSpecies || false,
-		hasRepresentationsFromOtherParties: appeal.hasRepresentationsFromOtherParties || false,
-		hasResponsesOrStandingAdviceToUpload: appeal.hasResponsesOrStandingAdviceToUpload || false,
-		hasStatementOfCase: appeal.hasStatementOfCase || false,
-		hasStatutoryConsultees: appeal.hasStatutoryConsultees || false,
-		hasSupplementaryPlanningDocuments: appeal.hasSupplementaryPlanningDocuments || false,
-		hasTreePreservationOrder: appeal.hasTreePreservationOrder || false,
-		healthAndSafetyDetails:
-			appeal.healthAndSafetyIssuesDetails || appeal.healthAndSafetyIssuesDetails,
-		inCAOrrelatesToCA: appeal.inCAOrRelatesToCA || false,
-		includesScreeningOption: appeal.includesScreeningOption || false,
-		inquiryDays: appeal.inquiryDays,
-		inspectorAccessDetails: appeal.inspectorAccessDetails,
-		isCommunityInfrastructureLevyFormallyAdopted:
-			appeal.isCommunityInfrastructureLevyFormallyAdopted || false,
-		isDevelopmentInOrNearDesignatedSites: appeal.isDevelopmentInOrNearDesignatedSites || false,
-		isEnvironmentalStatementRequired: appeal.isEnvironmentalStatementRequired || false,
-		isGypsyOrTravellerSite: appeal.isGypsyOrTravellerSite || false,
-		isListedBuilding: appeal.isListedBuilding || false,
-		isPublicRightOfWay: appeal.isPublicRightOfWay || false,
-		isSensitiveArea: appeal.isSensitiveArea || false,
-		isSiteVisible: appeal.isSiteVisible || false,
-		isTheSiteWithinAnAONB: appeal.isTheSiteWithinAnAONB || false,
-		meetsOrExceedsThresholdOrCriteriaInColumn2:
-			appeal.meetsOrExceedsThresholdOrCriteriaInColumn2 || false,
-		sensitiveAreaDetails: appeal.sensitiveAreaDetails,
-		siteWithinGreenBelt: appeal.siteWithinGreenBelt || false,
-		statutoryConsulteesDetails: appeal.statutoryConsulteesDetails,
-		isAffectingNeighbouringSites:
-			appeal.isAffectingNeighbouringSites || appeal.doPlansAffectNeighbouringSite || false,
-		isConservationArea: appeal.isConservationArea || false,
-		isCorrectAppealType: appeal.isCorrectAppealType || appeal.isAppealTypeAppropriate || false
+		lpaQuestionnaireSubmittedDate: casedata.lpaQuestionnaireSubmittedDate,
+		lpaStatement: casedata.lpaStatement,
+		isCorrectAppealType: casedata.isCorrectAppealType,
+		siteWithinGreenBelt: casedata.inGreenBelt,
+		inConservationArea: casedata.inConservationArea,
+		newConditionDetails: casedata.newConditionDetails,
+		lpaCostsAppliedFor: casedata.lpaCostsAppliedFor,
+		siteAccessDetails,
+		siteSafetyDetails,
+		lpaNotificationMethods,
+		listedBuildingDetails
 	};
 };
 
-export const mapQuestionnaireOut = (appeal) => {
+/**
+ *
+ * @param {LPAQuestionnaire} casedata
+ * @returns {*}
+ */
+export const mapQuestionnaireOut = (casedata) => {
 	return {
-		extraConditions: appeal?.extraConditions || '',
-		receivedAt: appeal?.receivedAt,
-		sentAt: appeal?.sentAt,
-		communityInfrastructureLevyAdoptionDate: appeal?.communityInfrastructureLevyAdoptionDate,
-		developmentDescription: appeal?.developmentDescription,
-		doesAffectAListedBuilding: appeal?.doesTheDevelopmentAffectTheSettingOfAListedBuilding || false,
-		doesAffectAScheduledMonument: appeal?.doesAffectAScheduledMonument || false,
-		doesSiteHaveHealthAndSafetyIssues: appeal?.doesSiteHaveHealthAndSafetyIssues || false,
-		doesSiteRequireInspectorAccess: appeal?.doesSiteRequireInspectorAccess || false,
-		hasCommunityInfrastructureLevy: appeal?.hasCommunityInfrastructureLevy || false,
-		hasCompletedAnEnvironmentalStatement: appeal?.hasCompletedAnEnvironmentalStatement || false,
-		hasEmergingPlan: appeal?.hasEmergingPlan || false,
-		hasExtraConditions: appeal?.hasExtraConditions || false,
-		hasOtherAppeals: appeal?.hasOtherAppeals || false,
-		hasProtectedSpecies: appeal?.hasProtectedSpecies || false,
-		hasRepresentationsFromOtherParties: appeal?.hasRepresentationsFromOtherParties || false,
-		hasResponsesOrStandingAdviceToUpload: appeal?.hasResponsesOrStandingAdviceToUpload || false,
-		hasStatementOfCase: appeal?.hasStatementOfCase || false,
-		hasStatutoryConsultees: appeal?.hasStatutoryConsultees || false,
-		hasSupplementaryPlanningDocuments: appeal?.hasSupplementaryPlanningDocuments || false,
-		hasTreePreservationOrder: appeal?.hasTreePreservationOrder || false,
-		healthAndSafetyIssuesDetails: appeal?.healthAndSafetyIssuesDetails,
-		inCAOrrelatesToCA: appeal?.inCAOrRelatesToCA || false,
-		includesScreeningOption: appeal?.includesScreeningOption || false,
-		inquiryDays: appeal?.inquiryDays,
-		//inspectorAccessDetails: appeal?.inspectorAccessDetails,
-		isCommunityInfrastructureLevyFormallyAdopted:
-			appeal?.isCommunityInfrastructureLevyFormallyAdopted || false,
-		isDevelopmentInOrNearDesignatedSites: appeal?.isDevelopmentInOrNearDesignatedSites || false,
-		isEnvironmentalStatementRequired: appeal?.isEnvironmentalStatementRequired || false,
-		isGypsyOrTravellerSite: appeal?.isGypsyOrTravellerSite || false,
-		isListedBuilding: appeal?.isListedBuilding || false,
-		isPublicRightOfWay: appeal?.isPublicRightOfWay || false,
-		isSensitiveArea: appeal?.isSensitiveArea || false,
-		isSiteVisible: appeal?.isSiteVisible || false,
-		isTheSiteWithinAnAONB: appeal?.isTheSiteWithinAnAONB || false,
-		meetsOrExceedsThresholdOrCriteriaInColumn2:
-			appeal?.meetsOrExceedsThresholdOrCriteriaInColumn2 || false,
-		sensitiveAreaDetails: appeal?.sensitiveAreaDetails,
-		siteWithinGreenBelt: appeal?.siteWithinGreenBelt || false,
-		statutoryConsulteesDetails: appeal?.statutoryConsulteesDetails,
-		doPlansAffectNeighbouringSite: appeal?.isAffectingNeighbouringSites || false,
-		isConservationArea: appeal?.isConservationArea || false,
-		isAppealTypeAppropriate: appeal?.isCorrectAppealType || false
+		lpaQuestionnaireSubmittedDate: casedata.lpaQuestionnaireSubmittedDate,
+		lpaStatement: casedata.lpaStatement,
+		siteAccessDetails: [casedata.siteAccessDetails],
+		siteSafetyDetails: [casedata.siteSafetyDetails],
+		isCorrectAppealType: casedata.isCorrectAppealType,
+		isGreenBelt: casedata.siteWithinGreenBelt,
+		inConservationArea: casedata.inConservationArea,
+		newConditionDetails: casedata.newConditionDetails,
+		notificationMethod: casedata.lpaNotificationMethods.map(
+			(method) => method.lpaNotificationMethod.key
+		),
+		lpaCostsAppliedFor: casedata.lpaCostsAppliedFor,
+		listedBuildingDetails: casedata.listedBuildingDetails.map((entry) => entry.listEntry)
 	};
 };

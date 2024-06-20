@@ -493,7 +493,7 @@ export const postDeleteDocumentPage = async (request, response) => {
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
- * @returns {Promise<void|import('../appeal-details.types.js').SingleLPAQuestionnaireResponse>}
+ * @returns {Promise<void|import('@pins/appeals.api').Appeals.SingleLPAQuestionnaireResponse>}
  */
 async function getLpaQuestionnaireDetails(request) {
 	return await lpaQuestionnaireService
