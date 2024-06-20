@@ -20,7 +20,7 @@ describe('inspector-access', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change the inspector access (LPA answer)');
+			expect(elementInnerHtml).toContain('Change the inspector access (LPA answer)</h1>');
 		});
 
 		it('should render changeInspectorAccess page for the appellant answer when source is appellant from appeals details', async () => {
@@ -32,7 +32,7 @@ describe('inspector-access', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change the inspector access (appellant answer)');
+			expect(elementInnerHtml).toContain('Change the inspector access (appellant answer)</h1>');
 		});
 
 		it('should render changeInspectorAccess page for the lpa answer when source is lpa from lpa questionnaire', async () => {
@@ -45,7 +45,7 @@ describe('inspector-access', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change the inspector access (LPA answer)');
+			expect(elementInnerHtml).toContain('Change the inspector access (LPA answer)</h1>');
 		});
 
 		it('should render changeInspectorAccess page for the appellant answer when source is appellant from appellant case', async () => {
@@ -58,7 +58,7 @@ describe('inspector-access', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change the inspector access (appellant answer)');
+			expect(elementInnerHtml).toContain('Change the inspector access (appellant answer)</h1>');
 		});
 	});
 
@@ -79,8 +79,17 @@ describe('inspector-access', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Provide details when inspector access is required');
-			expect(elementInnerHtml).toContain('govuk-error-summary');
+			expect(elementInnerHtml).toContain('Change the inspector access (LPA answer)</h1>');
+
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHtml).toContain(
+				'Provide details when inspector access is required</a>'
+			);
 		});
 
 		it('should re-direct to appeals-details page when data is valid for lpa and came from appeal-details', async () => {

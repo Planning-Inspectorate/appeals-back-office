@@ -101,10 +101,45 @@ exports[`issue-decision GET /decision-letter-date should render the decision let
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
-            <p class="govuk-body">Try again later.</p>
-            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
-                the problem persists.</p>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Enter date of decision letter</h1>
+                </div>
+            </div>
+            <form method="POST" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset" role="group" aria-describedby="decision-letter-date-hint">
+                        <div id="decision-letter-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                        <div class="govuk-date-input" id="decision-letter-date">
+                            <div class="govuk-date-input__item">
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label govuk-date-input__label" for="decision-letter-date-day">Day</label>
+                                    <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                    id="decision-letter-date-day" name="decision-letter-date-day" type="text"
+                                    inputmode="numeric">
+                                </div>
+                            </div>
+                            <div class="govuk-date-input__item">
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label govuk-date-input__label" for="decision-letter-date-month">Month</label>
+                                    <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                    id="decision-letter-date-month" name="decision-letter-date-month" type="text"
+                                    inputmode="numeric">
+                                </div>
+                            </div>
+                            <div class="govuk-date-input__item">
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label govuk-date-input__label" for="decision-letter-date-year">Year</label>
+                                    <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                    id="decision-letter-date-year" name="decision-letter-date-year" type="text"
+                                    inputmode="numeric">
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+            </form>
         </div>
     </div>
 </main>"
@@ -183,14 +218,49 @@ exports[`issue-decision GET /invalid-reason should render the invalid reason pag
 </main>"
 `;
 
-exports[`issue-decision GET /issue-decision/check-your-decision should render the check your decision letter page 1`] = `
+exports[`issue-decision GET /issue-decision/check-your-decision should render the check your decision page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
-            <p class="govuk-body">Try again later.</p>
-            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
-                the problem persists.</p>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Check your answers</h1>
+                </div>
+            </div>
+            <form method="POST" novalidate="novalidate">
+                <dl class="govuk-summary-list">
+                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision</dt>
+                        <dd class="govuk-summary-list__value">Allowed</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/decision"> Change</a>
+                        </dd>
+                    </div>
+                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
+                        <dd class="govuk-summary-list__value">test-document.txt</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/decision-letter-upload"> Change</a>
+                        </dd>
+                    </div>
+                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision date</dt>
+                        <dd class="govuk-summary-list__value">1 January 2023</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/decision-letter-date"> Change</a>
+                        </dd>
+                    </div>
+                </dl>
+                <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+                    <strong                     class="govuk-warning-text__text"><span class="govuk-warning-text__assistive">Warning</span> You are about
+                        to send the decision to relevant parties and close the appeal. Make sure
+                        you have reviewed the decision information.</strong>
+                </div>
+                <div class="govuk-form-group">
+                    <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                        <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" id="ready-to-send" name="ready-to-send"
+                            type="checkbox" value="yes">
+                            <label class="govuk-label govuk-checkboxes__label" for="ready-to-send">This decision is ready to be sent to the relevant parties</label>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Send decision</button>
+            </form>
         </div>
     </div>
 </main>"
@@ -260,65 +330,6 @@ exports[`issue-decision POST /decision-letter-date should re-render the decision
                                     <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
                                     id="decision-letter-date-month" name="decision-letter-date-month" type="text"
                                     value="11" inputmode="numeric">
-                                </div>
-                            </div>
-                            <div class="govuk-date-input__item">
-                                <div class="govuk-form-group">
-                                    <label class="govuk-label govuk-date-input__label" for="decision-letter-date-year">Year</label>
-                                    <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
-                                    id="decision-letter-date-year" name="decision-letter-date-year" type="text"
-                                    value="2024" inputmode="numeric">
-                                </div>
-                            </div>
-                        </div>
-                    </fieldset>
-                </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
-            </form>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`issue-decision POST /decision-letter-date should re-render the decision letter date page with an error message if the provided date is not a business day 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-error-summary" data-module="govuk-error-summary">
-                <div role="alert">
-                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
-                    <div class="govuk-error-summary__body">
-                        <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Date must be today or in the past</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Enter date of decision letter</h1>
-                </div>
-            </div>
-            <form method="POST" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <fieldset class="govuk-fieldset" role="group" aria-describedby="decision-letter-date-hint">
-                        <div id="decision-letter-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                        <div class="govuk-date-input" id="decision-letter-date">
-                            <div class="govuk-date-input__item">
-                                <div class="govuk-form-group">
-                                    <label class="govuk-label govuk-date-input__label" for="decision-letter-date-day">Day</label>
-                                    <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                    id="decision-letter-date-day" name="decision-letter-date-day" type="text"
-                                    value="25" inputmode="numeric">
-                                </div>
-                            </div>
-                            <div class="govuk-date-input__item">
-                                <div class="govuk-form-group">
-                                    <label class="govuk-label govuk-date-input__label" for="decision-letter-date-month">Month</label>
-                                    <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                    id="decision-letter-date-month" name="decision-letter-date-month" type="text"
-                                    value="12" inputmode="numeric">
                                 </div>
                             </div>
                             <div class="govuk-date-input__item">
