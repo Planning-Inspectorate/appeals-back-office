@@ -33,29 +33,14 @@ const updateLPAQuestionnaireById = async (req, res) => {
 		appeal,
 		body,
 		body: {
-			designatedSites,
-			doesAffectAListedBuilding,
-			doesAffectAScheduledMonument,
-			doesSiteRequireInspectorAccess,
-			doesSiteHaveHealthAndSafetyIssues,
-			hasCompletedAnEnvironmentalStatement,
-			hasProtectedSpecies,
-			hasTreePreservationOrder,
-			healthAndSafetyDetails,
-			includesScreeningOption,
+			lpaStatement,
 			inspectorAccessDetails,
-			isAffectingNeighbouringSites,
+			healthAndSafetyDetails,
+			siteWithinGreenBelt,
+			extraConditions,
+			lpaCostsAppliedFor,
 			isConservationArea,
-			isEnvironmentalStatementRequired,
-			isGypsyOrTravellerSite,
-			isListedBuilding,
-			isPublicRightOfWay,
-			isSensitiveArea,
-			isTheSiteWithinAnAONB,
-			isCorrectAppealType,
-			meetsOrExceedsThresholdOrCriteriaInColumn2,
-			scheduleType,
-			sensitiveAreaDetails
+			isCorrectAppealType
 		},
 		params,
 		validationOutcome
@@ -81,29 +66,14 @@ const updateLPAQuestionnaireById = async (req, res) => {
 					notifyClient
 			  ))
 			: await lpaQuestionnaireRepository.updateLPAQuestionnaireById(lpaQuestionnaireId, {
-					designatedSites,
-					doesAffectAListedBuilding,
-					doesAffectAScheduledMonument,
-					doesSiteRequireInspectorAccess,
-					doesSiteHaveHealthAndSafetyIssues,
-					hasCompletedAnEnvironmentalStatement,
-					hasProtectedSpecies,
-					hasTreePreservationOrder,
-					healthAndSafetyDetails,
-					includesScreeningOption,
+					lpaStatement,
 					inspectorAccessDetails,
+					healthAndSafetyDetails,
+					siteWithinGreenBelt,
+					extraConditions,
+					lpaCostsAppliedFor,
 					isConservationArea,
-					isEnvironmentalStatementRequired,
-					isAffectingNeighbouringSites,
-					isCorrectAppealType,
-					isGypsyOrTravellerSite,
-					isListedBuilding,
-					isPublicRightOfWay,
-					isSensitiveArea,
-					isTheSiteWithinAnAONB,
-					meetsOrExceedsThresholdOrCriteriaInColumn2,
-					scheduleTypeId: scheduleType,
-					sensitiveAreaDetails
+					isCorrectAppealType
 			  });
 	} catch (error) {
 		if (error) {
@@ -117,28 +87,14 @@ const updateLPAQuestionnaireById = async (req, res) => {
 				validationOutcome
 		  }
 		: {
-				designatedSites,
-				doesAffectAListedBuilding,
-				doesAffectAScheduledMonument,
-				doesSiteRequireInspectorAccess,
-				doesSiteHaveHealthAndSafetyIssues,
-				hasCompletedAnEnvironmentalStatement,
-				hasProtectedSpecies,
-				hasTreePreservationOrder,
-				healthAndSafetyDetails,
-				includesScreeningOption,
+				lpaStatement,
 				inspectorAccessDetails,
+				healthAndSafetyDetails,
+				siteWithinGreenBelt,
+				extraConditions,
+				lpaCostsAppliedFor,
 				isConservationArea,
-				isAffectingNeighbouringSites,
-				isEnvironmentalStatementRequired,
-				isGypsyOrTravellerSite,
-				isListedBuilding,
-				isPublicRightOfWay,
-				isSensitiveArea,
-				isTheSiteWithinAnAONB,
-				meetsOrExceedsThresholdOrCriteriaInColumn2,
-				scheduleType: scheduleType,
-				sensitiveAreaDetails
+				isCorrectAppealType
 		  };
 
 	return res.send(response);

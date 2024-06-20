@@ -1,5 +1,5 @@
 /**
- * @typedef {import('../appeal-details.types.js').SingleLPAQuestionnaireResponse} LpaQuestionnaire
+ * @typedef {import('@pins/appeals.api').Appeals.SingleLPAQuestionnaireResponse} LpaQuestionnaire
  */
 
 /**

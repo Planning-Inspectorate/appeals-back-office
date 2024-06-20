@@ -1,16 +1,15 @@
 /** @typedef {import('pins-data-model').Schemas.AppellantSubmissionCommand} AppellantSubmissionCommand */
-/** @typedef {import('pins-data-model').Schemas.AppealHASCase} AppealHASCase */
 /** @typedef {import('@pins/appeals.api').Schema.AppellantCase} AppellantCase */
-/** @typedef {import('@pins/appeals.api').Schema.ServiceUser} ServiceUser */
 
 import { mapDate } from './date.mapper.js';
 
 /**
  *
- * @param {*} casedata
+ * @param {Pick<AppellantSubmissionCommand, 'casedata'>} command
  * @returns {*}
  */
-export const mapAppellantCaseIn = (casedata) => {
+export const mapAppellantCaseIn = (command) => {
+	const casedata = command.casedata;
 	const knowsAllOwners = casedata.knowsAllOwners
 		? {
 				connect: { key: casedata.knowsAllOwners }

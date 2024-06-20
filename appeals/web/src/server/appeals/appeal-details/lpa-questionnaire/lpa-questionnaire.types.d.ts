@@ -23,6 +23,6 @@ export interface LPAQuestionnaireValidationOutcomeRequest {
 }
 
 export interface LPAQuestionnaireValidationOutcomeResponse {
-	outcome: LPAQuestionnaireValidationOutcome | string;
+	outcome: string;
 	incompleteReasons?: NotValidReasonResponse[];
 }

@@ -136,7 +136,7 @@ export const appealData = {
 		},
 		lpaQuestionnaire: {
 			details: null,
-			hasIssues: null
+			hasIssues: false
 		}
 	},
 	inspector: null,
@@ -147,7 +147,7 @@ export const appealData = {
 		},
 		lpaQuestionnaire: {
 			details: null,
-			isRequired: null
+			isRequired: false
 		}
 	},
 	isParentAppeal: false,
@@ -155,8 +155,6 @@ export const appealData = {
 	linkedAppeals: [],
 	localPlanningDepartment: 'Wiltshire Council',
 	lpaQuestionnaireId: 1,
-
-	isAffectingNeighbouringSites: true,
 
 	neighbouringSites: [
 		{

@@ -11,7 +11,7 @@ export const mapAddressIn = (casedata) => {
 	};
 };
 
-export const mapNeighboouringAddressIn = (casedata) => {
+export const mapNeighbouringAddressIn = (casedata) => {
 	return {
 		addressLine1: casedata.neighbouringSiteAddressLine1,
 		addressLine2: casedata.neighbouringSiteAddressLine2,

@@ -146,7 +146,6 @@ const formatAppeal = (
 						address: formatAddress(site.address)
 					};
 				}) || [],
-			isAffectingNeighbouringSites: appeal.lpaQuestionnaire?.isAffectingNeighbouringSites,
 			appealStatus: appeal.appealStatus[0].status,
 			...(transferAppealTypeInfo && {
 				transferStatus: {
@@ -195,8 +194,8 @@ const formatAppeal = (
 					hasIssues: appeal.appellantCase?.siteSafetyDetails !== null
 				},
 				lpaQuestionnaire: {
-					details: appeal.lpaQuestionnaire?.healthAndSafetyDetails || null,
-					hasIssues: appeal.lpaQuestionnaire?.doesSiteHaveHealthAndSafetyIssues
+					details: appeal.lpaQuestionnaire?.siteSafetyDetails,
+					hasIssues: appeal.lpaQuestionnaire?.siteSafetyDetails !== null
 				}
 			},
 			inspector: appeal.inspector?.azureAdUserId || null,
@@ -206,8 +205,8 @@ const formatAppeal = (
 					isRequired: appeal.appellantCase?.siteAccessDetails !== null
 				},
 				lpaQuestionnaire: {
-					details: appeal.lpaQuestionnaire?.inspectorAccessDetails || null,
-					isRequired: appeal.lpaQuestionnaire?.doesSiteRequireInspectorAccess
+					details: appeal.lpaQuestionnaire?.siteAccessDetails,
+					isRequired: appeal.lpaQuestionnaire?.siteAccessDetails !== null
 				}
 			},
 			otherAppeals: formatRelatedAppeals(appeal.relatedAppeals || [], appeal.id, referencedAppeals),
@@ -224,15 +223,17 @@ const formatAppeal = (
 				0,
 			localPlanningDepartment: appeal.lpa?.name || '',
 			lpaQuestionnaireId: appeal.lpaQuestionnaire?.id || null,
-			planningApplicationReference: appeal.applicationReference,
+			planningApplicationReference: appeal.applicationReference || '',
 			procedureType: appeal.procedureType?.name || 'Written',
-			siteVisit: {
-				siteVisitId: appeal.siteVisit?.id || null,
-				visitDate: appeal.siteVisit?.visitDate || null,
-				visitStartTime: appeal.siteVisit?.visitStartTime || null,
-				visitEndTime: appeal.siteVisit?.visitEndTime || null,
-				visitType: appeal.siteVisit?.siteVisitType?.name || null
-			},
+			...(appeal.siteVisit?.id && {
+				siteVisit: {
+					siteVisitId: appeal.siteVisit.id,
+					visitDate: appeal.siteVisit.visitDate || null,
+					visitStartTime: appeal.siteVisit.visitStartTime,
+					visitEndTime: appeal.siteVisit?.visitEndTime || null,
+					visitType: appeal.siteVisit.siteVisitType.name
+				}
+			}),
 			createdAt: appeal.caseCreatedDate,
 			startedAt: appeal.caseStartedDate,
 			validAt: appeal.caseValidDate,
@@ -245,7 +246,7 @@ const formatAppeal = (
 				lpaQuestionnaire: {
 					status: formatLpaQuestionnaireDocumentationStatus(appeal),
 					dueDate: appeal.appealTimetable?.lpaQuestionnaireDueDate || null,
-					receivedAt: appeal.lpaQuestionnaire?.receivedAt || null
+					receivedAt: appeal.lpaQuestionnaire?.lpaqCreatedDate || null
 				}
 			}
 		};

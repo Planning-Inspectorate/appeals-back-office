@@ -8,7 +8,7 @@ import {
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
- * @typedef {{ address: import("@pins/appeals.api/src/server/endpoints/appeals.js").AppealSite; siteId: string; }} NeighbouringSitesItem
+ * @typedef {{ address: import("@pins/appeals.api/src/server/endpoints/appeals.js").AppealSite; siteId: number; }} NeighbouringSitesItem
  * @typedef {'lpa'|'back-office'} Source
  */
 
@@ -478,14 +478,14 @@ export function changeNeighbouringSiteAffectedPage(appealData, origin) {
 					id: 'neighbouring-site-affected',
 					items: [
 						{
-							value: 'yes',
 							text: 'Yes',
-							checked: appealData.isAffectingNeighbouringSites
+							value: 'yes',
+							checked: appealData.neighbouringSites?.length > 0
 						},
 						{
-							value: 'no',
 							text: 'No',
-							checked: !appealData.isAffectingNeighbouringSites
+							value: 'no',
+							checked: !appealData.neighbouringSites || appealData.neighbouringSites.length == 0
 						}
 					]
 				}

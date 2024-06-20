@@ -18,6 +18,7 @@ import stringTokenReplacement from '#utils/string-token-replacement.js';
 
 /** @typedef {import('pins-data-model').Schemas.AppealHASCase} AppealHASCase */
 /** @typedef {import('pins-data-model').Schemas.AppellantSubmissionCommand} AppellantSubmissionCommand */
+/** @typedef {import('pins-data-model').Schemas.LPAQuestionnaireCommand} LPAQuestionnaireCommand */
 /** @typedef {import('#config/../openapi-types.js').AddDocumentsRequest} AddDocumentsRequest */
 
 /**
@@ -77,25 +78,23 @@ export const postAppealSubmission = async (req, res) => {
 };
 
 /**
- * param {{body: QuestionnaireData}} req
+ * @param {{body: LPAQuestionnaireCommand}} req
  * @param {Response} res
  * @returns {Promise<Response>}
  */
-// @ts-ignore
 export const postLpaqSubmission = async (req, res) => {
-	const { caseReference, questionnaire, documents } = messageMappers.mapQuestionnaireSubmission(
-		req.body
-	);
-	const dbResult = await integrationService.importLPAQuestionnaire(
-		// @ts-ignore
+	const { caseReference, questionnaire, documents, relatedReferences } =
+		messageMappers.mapQuestionnaireSubmission(req.body);
+	const casedata = await integrationService.importLPAQuestionnaire(
 		caseReference,
 		questionnaire,
-		documents
+		documents,
+		relatedReferences
 	);
 
+	const { documentVersions } = casedata;
 	// @ts-ignore
-	const { id, reference } = dbResult.appeal;
-	const { documentVersions } = dbResult;
+	const { id, reference } = casedata.appeal;
 
 	await createAuditTrail({
 		appealId: id,

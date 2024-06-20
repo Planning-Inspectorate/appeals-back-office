@@ -362,7 +362,7 @@ exports[`appeal-details GET /:appealId should not render action links to the man
                 aria-labelledby="accordion-default1-heading-2">
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-lpa-inspector-access"><dt class="govuk-summary-list__key"> Inspection access (LPA answer)</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inspector-access/change/lpa"
                                     data-cy="change-inspection-access-lpa"> Change<span class="govuk-visually-hidden"> inspection access (L P A answer)</span></a>
@@ -415,7 +415,7 @@ exports[`appeal-details GET /:appealId should not render action links to the man
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/safety-risks/change/lpa"
                                     data-cy="change-lpa-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
@@ -715,7 +715,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                 aria-labelledby="accordion-default1-heading-2">
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-lpa-inspector-access"><dt class="govuk-summary-list__key"> Inspection access (LPA answer)</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inspector-access/change/lpa"
                                     data-cy="change-inspection-access-lpa"> Change<span class="govuk-visually-hidden"> inspection access (L P A answer)</span></a>
@@ -768,7 +768,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/lpa"
                                     data-cy="change-lpa-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
@@ -1064,7 +1064,7 @@ exports[`appeal-details GET /:appealId should render a Issue a decision action b
                 aria-labelledby="accordion-default1-heading-2">
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-lpa-inspector-access"><dt class="govuk-summary-list__key"> Inspection access (LPA answer)</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inspector-access/change/lpa"
                                     data-cy="change-inspection-access-lpa"> Change<span class="govuk-visually-hidden"> inspection access (L P A answer)</span></a>
@@ -1117,7 +1117,7 @@ exports[`appeal-details GET /:appealId should render a Issue a decision action b
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/lpa"
                                     data-cy="change-lpa-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
@@ -1409,7 +1409,7 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                 aria-labelledby="accordion-default1-heading-2">
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-lpa-inspector-access"><dt class="govuk-summary-list__key"> Inspection access (LPA answer)</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inspector-access/change/lpa"
                                     data-cy="change-inspection-access-lpa"> Change<span class="govuk-visually-hidden"> inspection access (L P A answer)</span></a>
@@ -1462,7 +1462,7 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/safety-risks/change/lpa"
                                     data-cy="change-lpa-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
@@ -1757,7 +1757,7 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                 aria-labelledby="accordion-default1-heading-2">
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-lpa-inspector-access"><dt class="govuk-summary-list__key"> Inspection access (LPA answer)</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inspector-access/change/lpa"
                                     data-cy="change-inspection-access-lpa"> Change<span class="govuk-visually-hidden"> inspection access (L P A answer)</span></a>
@@ -1810,7 +1810,7 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/safety-risks/change/lpa"
                                     data-cy="change-lpa-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
@@ -2120,7 +2120,7 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
                 aria-labelledby="accordion-default1-heading-2">
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-lpa-inspector-access"><dt class="govuk-summary-list__key"> Inspection access (LPA answer)</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inspector-access/change/lpa"
                                     data-cy="change-inspection-access-lpa"> Change<span class="govuk-visually-hidden"> inspection access (L P A answer)</span></a>
@@ -2173,7 +2173,7 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/safety-risks/change/lpa"
                                     data-cy="change-lpa-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
@@ -2453,7 +2453,7 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                 aria-labelledby="accordion-default1-heading-2">
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-lpa-inspector-access"><dt class="govuk-summary-list__key"> Inspection access (LPA answer)</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inspector-access/change/lpa"
                                     data-cy="change-inspection-access-lpa"> Change<span class="govuk-visually-hidden"> inspection access (L P A answer)</span></a>
@@ -2506,7 +2506,7 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/safety-risks/change/lpa"
                                     data-cy="change-lpa-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
@@ -2786,7 +2786,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                 aria-labelledby="accordion-default1-heading-2">
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-lpa-inspector-access"><dt class="govuk-summary-list__key"> Inspection access (LPA answer)</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inspector-access/change/lpa"
                                     data-cy="change-inspection-access-lpa"> Change<span class="govuk-visually-hidden"> inspection access (L P A answer)</span></a>
@@ -2839,7 +2839,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/lpa"
                                     data-cy="change-lpa-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
@@ -3119,7 +3119,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                 aria-labelledby="accordion-default1-heading-2">
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-lpa-inspector-access"><dt class="govuk-summary-list__key"> Inspection access (LPA answer)</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inspector-access/change/lpa"
                                     data-cy="change-inspection-access-lpa"> Change<span class="govuk-visually-hidden"> inspection access (L P A answer)</span></a>
@@ -3172,7 +3172,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/lpa"
                                     data-cy="change-lpa-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
@@ -3452,7 +3452,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                 aria-labelledby="accordion-default1-heading-2">
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-lpa-inspector-access"><dt class="govuk-summary-list__key"> Inspection access (LPA answer)</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inspector-access/change/lpa"
                                     data-cy="change-inspection-access-lpa"> Change<span class="govuk-visually-hidden"> inspection access (L P A answer)</span></a>
@@ -3505,7 +3505,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/lpa"
                                     data-cy="change-lpa-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
@@ -3802,7 +3802,7 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                 aria-labelledby="accordion-default1-heading-2">
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-lpa-inspector-access"><dt class="govuk-summary-list__key"> Inspection access (LPA answer)</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inspector-access/change/lpa"
                                     data-cy="change-inspection-access-lpa"> Change<span class="govuk-visually-hidden"> inspection access (L P A answer)</span></a>
@@ -3855,7 +3855,7 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/safety-risks/change/lpa"
                                     data-cy="change-lpa-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
@@ -4292,7 +4292,7 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                 aria-labelledby="accordion-default1-heading-2">
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-lpa-inspector-access"><dt class="govuk-summary-list__key"> Inspection access (LPA answer)</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inspector-access/change/lpa"
                                     data-cy="change-inspection-access-lpa"> Change<span class="govuk-visually-hidden"> inspection access (L P A answer)</span></a>
@@ -4345,7 +4345,7 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/safety-risks/change/lpa"
                                     data-cy="change-lpa-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
@@ -4625,7 +4625,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                 aria-labelledby="accordion-default1-heading-2">
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-lpa-inspector-access"><dt class="govuk-summary-list__key"> Inspection access (LPA answer)</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inspector-access/change/lpa"
                                     data-cy="change-inspection-access-lpa"> Change<span class="govuk-visually-hidden"> inspection access (L P A answer)</span></a>
@@ -4678,7 +4678,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/safety-risks/change/lpa"
                                     data-cy="change-lpa-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
@@ -4958,7 +4958,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                 aria-labelledby="accordion-default3-heading-2">
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-lpa-inspector-access"><dt class="govuk-summary-list__key"> Inspection access (LPA answer)</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inspector-access/change/lpa"
                                     data-cy="change-inspection-access-lpa"> Change<span class="govuk-visually-hidden"> inspection access (L P A answer)</span></a>
@@ -5011,7 +5011,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/safety-risks/change/lpa"
                                     data-cy="change-lpa-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
@@ -5315,7 +5315,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                 aria-labelledby="accordion-default2-heading-2">
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-lpa-inspector-access"><dt class="govuk-summary-list__key"> Inspection access (LPA answer)</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inspector-access/change/lpa"
                                     data-cy="change-inspection-access-lpa"> Change<span class="govuk-visually-hidden"> inspection access (L P A answer)</span></a>
@@ -5368,7 +5368,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/lpa"
                                     data-cy="change-lpa-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
@@ -5648,7 +5648,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                 aria-labelledby="accordion-default1-heading-2">
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-lpa-inspector-access"><dt class="govuk-summary-list__key"> Inspection access (LPA answer)</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inspector-access/change/lpa"
                                     data-cy="change-inspection-access-lpa"> Change<span class="govuk-visually-hidden"> inspection access (L P A answer)</span></a>
@@ -5701,7 +5701,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/lpa"
                                     data-cy="change-lpa-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
@@ -6105,7 +6105,7 @@ exports[`appeal-details should not render a back button 1`] = `
                             aria-labelledby="accordion-default2-heading-2">
                                 <dl class="govuk-summary-list">
                                     <div class="govuk-summary-list__row appeal-lpa-inspector-access"><dt class="govuk-summary-list__key"> Inspection access (LPA answer)</dt>
-                                        <dd                                         class="govuk-summary-list__value"><span>No answer provided</span>
+                                        <dd                                         class="govuk-summary-list__value"><span>No</span>
                                             </dd>
                                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inspector-access/change/lpa"
                                                 data-cy="change-inspection-access-lpa"> Change<span class="govuk-visually-hidden"> inspection access (L P A answer)</span></a>
@@ -6158,7 +6158,7 @@ exports[`appeal-details should not render a back button 1`] = `
                                             </dd>
                                     </div>
                                     <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                                        <dd                                         class="govuk-summary-list__value"><span>No answer provided</span>
+                                        <dd                                         class="govuk-summary-list__value"><span>No</span>
                                             </dd>
                                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/lpa"
                                                 data-cy="change-lpa-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>

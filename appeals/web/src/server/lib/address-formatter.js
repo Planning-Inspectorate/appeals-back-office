@@ -53,9 +53,13 @@ export const appealSiteToAddressString = (appealSite) => {
 };
 
 /**
- * @param {import('@pins/appeals.api').Appeals.AppealSite} appealSite
+ * @param {import('@pins/appeals.api').Appeals.AppealSite | undefined} appealSite
  * @returns {string}
  */
 export const appealSiteToMultilineAddressStringHtml = (appealSite) => {
-	return addressToMultilineStringHtml(appealSiteToAddress(appealSite));
+	if (appealSite) {
+		return addressToMultilineStringHtml(appealSiteToAddress(appealSite));
+	}
+
+	return '';
 };

@@ -229,45 +229,16 @@ export const addressListForTrainers = addressesList.map((address) => ({
  */
 export const lpaQuestionnaireList = {
 	[APPEAL_TYPE_SHORTHAND_HAS]: {
-		communityInfrastructureLevyAdoptionDate: new Date('2023-05-09T01:00:00.000Z'),
-		developmentDescription: '',
-		doesAffectAListedBuilding: true,
-		doesAffectAScheduledMonument: true,
-		doesSiteHaveHealthAndSafetyIssues: true,
-		doesSiteRequireInspectorAccess: true,
-		extraConditions: 'Some extra conditions',
-		hasCommunityInfrastructureLevy: true,
-		hasCompletedAnEnvironmentalStatement: true,
-		hasEmergingPlan: true,
-		hasExtraConditions: true,
-		hasProtectedSpecies: true,
-		hasRepresentationsFromOtherParties: true,
-		hasResponsesOrStandingAdviceToUpload: true,
-		hasStatementOfCase: true,
-		hasStatutoryConsultees: true,
-		hasSupplementaryPlanningDocuments: true,
-		hasTreePreservationOrder: true,
-		healthAndSafetyDetails: 'There is no mobile signal at the property',
-		inCAOrrelatesToCA: true,
-		includesScreeningOption: true,
-		inquiryDays: 2,
-		inspectorAccessDetails: 'The entrance is at the back of the property',
-		isAffectingNeighbouringSites: true,
-		isCommunityInfrastructureLevyFormallyAdopted: true,
+		siteSafetyDetails: 'There may be no mobile reception at the site',
+		siteAccessDetails: 'There is a tall hedge around the site which obstructs the view of the site',
+		inConservationArea: true,
 		isCorrectAppealType: true,
-		isEnvironmentalStatementRequired: true,
-		isGypsyOrTravellerSite: true,
-		isListedBuilding: true,
-		isPublicRightOfWay: true,
-		isSensitiveArea: true,
-		isSiteVisible: true,
-		isTheSiteWithinAnAONB: true,
-		meetsOrExceedsThresholdOrCriteriaInColumn2: true,
-		receivedAt: new Date(2022, 3, 21),
-		sensitiveAreaDetails: 'The area is prone to flooding',
-		sentAt: new Date(2022, 3, 2),
-		siteWithinGreenBelt: true,
-		statutoryConsulteesDetails: 'Some other people need to be consulted'
+		lpaStatement: null,
+		newConditionDetails: null,
+		lpaCostsAppliedFor: false,
+		siteWithinGreenBelt: null,
+		lpaqCreatedDate: new Date(2023, 4, 9),
+		lpaQuestionnaireSubmittedDate: new Date(2023, 4, 9)
 	}
 };
 
@@ -316,12 +287,9 @@ export const appellantCaseList = {
 		floorSpaceSquareMetres: 9.7,
 		ownsAllLand: true,
 		ownsSomeLand: false,
-		//knowsOtherOwners: "Some",
-		//knowsAllOwners: "No",
-		hasAdvertisedAppeal: false
-		//ownersInformed: null,
-		//originalDevelopmentDescription: "adipisicing aliqua",
-		//changedDevelopmentDescription: true
+		hasAdvertisedAppeal: false,
+		originalDevelopmentDescription: 'adipisicing aliqua',
+		changedDevelopmentDescription: false
 	}
 };
 

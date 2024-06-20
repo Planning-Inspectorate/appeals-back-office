@@ -1,7 +1,10 @@
 import { request } from '#tests/../app-test.js';
 import { jest } from '@jest/globals';
-import { ERROR_INVALID_APPELLANT_CASE_DATA } from '#endpoints/constants.js';
-import { validAppellantCase } from '#tests/integrations/mocks.js';
+import {
+	ERROR_INVALID_APPELLANT_CASE_DATA,
+	ERROR_INVALID_LPAQ_DATA
+} from '#endpoints/constants.js';
+import { validAppellantCase, validLpaQuestionnaire } from '#tests/integrations/mocks.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 
@@ -69,6 +72,76 @@ describe('/appeals/case-submission', () => {
 				errors: {
 					details: ["/casedata: must have required property 'applicationReference'"],
 					integration: ERROR_INVALID_APPELLANT_CASE_DATA
+				}
+			});
+		});
+	});
+});
+
+describe('/appeals/lpaq-submission', () => {
+	beforeEach(() => {
+		// @ts-ignore
+		databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
+	});
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
+	describe('POST invalid LPA submission', () => {
+		test('invalid LPA response payload: no appeal', async () => {
+			const { casedata, ...invalidPayload } = validLpaQuestionnaire;
+			const response = await request.post('/appeals/lpaq-submission').send(invalidPayload);
+
+			expect(casedata).not.toBeUndefined();
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual({
+				errors: {
+					details: ["/: must have required property 'casedata'"],
+					integration: ERROR_INVALID_LPAQ_DATA
+				}
+			});
+		});
+
+		test('invalid LPA response payload: no caseReference', async () => {
+			const { caseReference, ...invalidPayload } = validLpaQuestionnaire.casedata;
+			const payload = { casedata: { ...invalidPayload }, documents: [] };
+			const response = await request.post('/appeals/lpaq-submission').send(payload);
+
+			expect(caseReference).not.toBeUndefined();
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual({
+				errors: {
+					details: ["/casedata: must have required property 'caseReference'"],
+					integration: ERROR_INVALID_LPAQ_DATA
+				}
+			});
+		});
+
+		test('invalid LPA response payload: no lpaCostsAppliedFor', async () => {
+			const { lpaCostsAppliedFor, ...invalidPayload } = validLpaQuestionnaire.casedata;
+			const payload = { casedata: { ...invalidPayload }, documents: [] };
+			const response = await request.post('/appeals/lpaq-submission').send(payload);
+
+			expect(lpaCostsAppliedFor).not.toBeUndefined();
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual({
+				errors: {
+					details: ["/casedata: must have required property 'lpaCostsAppliedFor'"],
+					integration: ERROR_INVALID_LPAQ_DATA
+				}
+			});
+		});
+
+		test('invalid LPA response payload: no isGreenBelt', async () => {
+			const { isGreenBelt, ...invalidPayload } = validLpaQuestionnaire.casedata;
+			const payload = { casedata: { ...invalidPayload }, documents: [] };
+			const response = await request.post('/appeals/lpaq-submission').send(payload);
+
+			expect(isGreenBelt).not.toBeUndefined();
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual({
+				errors: {
+					details: ["/casedata: must have required property 'isGreenBelt'"],
+					integration: ERROR_INVALID_LPAQ_DATA
 				}
 			});
 		});

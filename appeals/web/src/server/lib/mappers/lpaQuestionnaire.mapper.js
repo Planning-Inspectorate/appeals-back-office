@@ -16,7 +16,7 @@ import { isFolderInfo } from '#lib/ts-utilities.js';
  */
 
 /**
- * @param {import("#appeals/appeal-details/appeal-details.types.js").SingleLPAQuestionnaireResponse} data
+ * @param {import('@pins/appeals.api').Appeals.SingleLPAQuestionnaireResponse} data
  * @param {string} currentRoute
  * @returns {{lpaq: MappedInstructions}}
  */
@@ -25,106 +25,106 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 	const mappedData = {};
 	mappedData.lpaq = {};
 	/** @type {Instructions} */
-	mappedData.lpaq.isListedBuilding = {
-		id: 'is-listed-building',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Listed building'
-				},
-				value: {
-					text: convertFromBooleanToYesNo(data.isListedBuilding) || ''
-				},
-				actions: {
-					items: [
-						{
-							text: 'Change',
-							visuallyHiddenText: 'Listed building',
-							href: `${currentRoute}/change-lpa-questionnaire/is-listed-building`,
-							attributes: { 'data-cy': 'change-is-listed-building' }
-						}
-					]
-				}
-			}
-		}
-	};
+	// mappedData.lpaq.isListedBuilding = {
+	// 	id: 'is-listed-building',
+	// 	display: {
+	// 		summaryListItem: {
+	// 			key: {
+	// 				text: 'Listed building'
+	// 			},
+	// 			value: {
+	// 				text: convertFromBooleanToYesNo(data.isListedBuilding) || ''
+	// 			},
+	// 			actions: {
+	// 				items: [
+	// 					{
+	// 						text: 'Change',
+	// 						visuallyHiddenText: 'Listed building',
+	// 						href: `${currentRoute}/change-lpa-questionnaire/is-listed-building`,
+	// 						attributes: { 'data-cy': 'change-is-listed-building' }
+	// 					}
+	// 				]
+	// 			}
+	// 		}
+	// 	}
+	// };
 
-	if (data.isListedBuilding) {
-		/** @type {Instructions} */
-		mappedData.lpaq.listedBuildingDetails = {
-			id: 'listed-building-details',
-			display: {
-				summaryListItem: {
-					key: {
-						text: 'Listed building details'
-					},
-					value: {
-						html: displayPageFormatter.formatListOfListedBuildingNumbers(data.listedBuildingDetails)
-					},
-					actions: {
-						items: [
-							{
-								text: 'Change',
-								visuallyHiddenText: 'Listed building details',
-								href: `${currentRoute}/change-lpa-questionnaire/listed-building-details`,
-								attributes: { 'data-cy': 'change-listed-building-details' }
-							}
-						]
-					}
-				}
-			}
-		};
-	}
+	// if (data.isListedBuilding) {
+	// 	/** @type {Instructions} */
+	// 	mappedData.lpaq.listedBuildingDetails = {
+	// 		id: 'listed-building-details',
+	// 		display: {
+	// 			summaryListItem: {
+	// 				key: {
+	// 					text: 'Listed building details'
+	// 				},
+	// 				value: {
+	// 					html: displayPageFormatter.formatListOfListedBuildingNumbers(data.listedBuildingDetails)
+	// 				},
+	// 				actions: {
+	// 					items: [
+	// 						{
+	// 							text: 'Change',
+	// 							visuallyHiddenText: 'Listed building details',
+	// 							href: `${currentRoute}/change-lpa-questionnaire/listed-building-details`,
+	// 							attributes: { 'data-cy': 'change-listed-building-details' }
+	// 						}
+	// 					]
+	// 				}
+	// 			}
+	// 		}
+	// 	};
+	// }
 
 	/** @type {Instructions} */
-	mappedData.lpaq.doesAffectAListedBuilding = {
-		id: 'does-affect-a-listed-building',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Affects a listed building'
-				},
-				value: {
-					text: convertFromBooleanToYesNo(data.doesAffectAListedBuilding) || ''
-				},
-				actions: {
-					items: [
-						{
-							text: 'Change',
-							visuallyHiddenText: 'Affects a listed building',
-							href: `${currentRoute}/change-lpa-questionnaire/does-affect-a-listed-building`,
-							attributes: { 'data-cy': 'change-does-affect-a-listed-building' }
-						}
-					]
-				}
-			}
-		},
-		input: {
-			displayName: 'Affects a listed building',
-			instructions: [
-				{
-					type: 'radios',
-					properties: {
-						name: 'doesAffectAListedBuilding',
-						items: [
-							{
-								text: 'Yes',
-								value: 'yes',
-								checked: data.isListedBuilding || false
-							},
-							{
-								text: 'No',
-								value: 'no',
-								checked: !data.isListedBuilding
-							}
-						]
-					}
-				}
-			]
-		}
-	};
+	// mappedData.lpaq.doesAffectAListedBuilding = {
+	// 	id: 'does-affect-a-listed-building',
+	// 	display: {
+	// 		summaryListItem: {
+	// 			key: {
+	// 				text: 'Affects a listed building'
+	// 			},
+	// 			value: {
+	// 				text: convertFromBooleanToYesNo(data.doesAffectAListedBuilding) || ''
+	// 			},
+	// 			actions: {
+	// 				items: [
+	// 					{
+	// 						text: 'Change',
+	// 						visuallyHiddenText: 'Affects a listed building',
+	// 						href: `${currentRoute}/change-lpa-questionnaire/does-affect-a-listed-building`,
+	// 						attributes: { 'data-cy': 'change-does-affect-a-listed-building' }
+	// 					}
+	// 				]
+	// 			}
+	// 		}
+	// 	},
+	// 	input: {
+	// 		displayName: 'Affects a listed building',
+	// 		instructions: [
+	// 			{
+	// 				type: 'radios',
+	// 				properties: {
+	// 					name: 'doesAffectAListedBuilding',
+	// 					items: [
+	// 						{
+	// 							text: 'Yes',
+	// 							value: 'yes',
+	// 							checked: data.isListedBuilding || false
+	// 						},
+	// 						{
+	// 							text: 'No',
+	// 							value: 'no',
+	// 							checked: !data.isListedBuilding
+	// 						}
+	// 					]
+	// 				}
+	// 			}
+	// 		]
+	// 	}
+	// };
 
-	if (data.isListedBuilding) {
+	if (data.affectsListedBuildingDetails) {
 		/** @type {Instructions} */
 		mappedData.lpaq.affectsListedBuildingDetails = {
 			id: 'affects-listed-building-details',
@@ -135,7 +135,7 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 					},
 					value: {
 						html: displayPageFormatter.formatListOfListedBuildingNumbers(
-							data.affectsListedBuildingDetails
+							data.listedBuildingDetails || []
 						)
 					},
 					actions: {
@@ -154,52 +154,52 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 	}
 
 	/** @type {Instructions} */
-	mappedData.lpaq.doesAffectAScheduledMonument = {
-		id: 'affects-scheduled-monument',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Affects a scheduled monument'
-				},
-				value: {
-					html: convertFromBooleanToYesNo(data.doesAffectAScheduledMonument) || ''
-				},
-				actions: {
-					items: [
-						{
-							text: 'Change',
-							visuallyHiddenText: 'Affects a scheduled monument',
-							href: `${currentRoute}/change-lpa-questionnaire/affects-scheduled-monument`,
-							attributes: { 'data-cy': 'change-effects-scheduled-monument' }
-						}
-					]
-				}
-			}
-		},
-		input: {
-			displayName: 'Affects a scheduled monument',
-			instructions: [
-				{
-					type: 'radios',
-					properties: {
-						name: 'affectsAScheduledMonument',
-						items: [
-							{
-								text: 'Yes',
-								value: 'yes',
-								checked: data.doesAffectAScheduledMonument || false
-							},
-							{
-								text: 'No',
-								value: 'no',
-								checked: !data.doesAffectAScheduledMonument
-							}
-						]
-					}
-				}
-			]
-		}
-	};
+	// mappedData.lpaq.doesAffectAScheduledMonument = {
+	// 	id: 'affects-scheduled-monument',
+	// 	display: {
+	// 		summaryListItem: {
+	// 			key: {
+	// 				text: 'Affects a scheduled monument'
+	// 			},
+	// 			value: {
+	// 				html: convertFromBooleanToYesNo(data.doesAffectAScheduledMonument) || ''
+	// 			},
+	// 			actions: {
+	// 				items: [
+	// 					{
+	// 						text: 'Change',
+	// 						visuallyHiddenText: 'Affects a scheduled monument',
+	// 						href: `${currentRoute}/change-lpa-questionnaire/affects-scheduled-monument`,
+	// 						attributes: { 'data-cy': 'change-effects-scheduled-monument' }
+	// 					}
+	// 				]
+	// 			}
+	// 		}
+	// 	},
+	// 	input: {
+	// 		displayName: 'Affects a scheduled monument',
+	// 		instructions: [
+	// 			{
+	// 				type: 'radios',
+	// 				properties: {
+	// 					name: 'affectsAScheduledMonument',
+	// 					items: [
+	// 						{
+	// 							text: 'Yes',
+	// 							value: 'yes',
+	// 							checked: data.doesAffectAScheduledMonument || false
+	// 						},
+	// 						{
+	// 							text: 'No',
+	// 							value: 'no',
+	// 							checked: !data.doesAffectAScheduledMonument
+	// 						}
+	// 					]
+	// 				}
+	// 			}
+	// 		]
+	// 	}
+	// };
 
 	/** @type {Instructions} */
 	mappedData.lpaq.isCorrectAppealType = {
@@ -225,53 +225,54 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 			}
 		}
 	};
+
 	/** @type {Instructions} */
-	mappedData.lpaq.inCAOrrelatesToCA = {
-		id: 'in-or-relates-to-ca',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Conservation area'
-				},
-				value: {
-					text: convertFromBooleanToYesNo(data.inCAOrrelatesToCA) || ''
-				},
-				actions: {
-					items: [
-						{
-							text: 'Change',
-							visuallyHiddenText: 'Conservation area',
-							href: `${currentRoute}/change-lpa-questionnaire/in-or-relates-to-ca`,
-							attributes: { 'data-cy': 'change-in-or-relates-to-ca' }
-						}
-					]
-				}
-			}
-		},
-		input: {
-			displayName: 'In or relates to conservation area',
-			instructions: [
-				{
-					type: 'radios',
-					properties: {
-						name: 'inOrRelatesToCa',
-						items: [
-							{
-								text: 'Yes',
-								value: 'yes',
-								checked: data.inCAOrrelatesToCA || false
-							},
-							{
-								text: 'No',
-								value: 'no',
-								checked: !data.inCAOrrelatesToCA
-							}
-						]
-					}
-				}
-			]
-		}
-	};
+	// mappedData.lpaq.inCAOrrelatesToCA = {
+	// 	id: 'in-or-relates-to-ca',
+	// 	display: {
+	// 		summaryListItem: {
+	// 			key: {
+	// 				text: 'Conservation area'
+	// 			},
+	// 			value: {
+	// 				text: convertFromBooleanToYesNo(data.inCAOrrelatesToCA) || ''
+	// 			},
+	// 			actions: {
+	// 				items: [
+	// 					{
+	// 						text: 'Change',
+	// 						visuallyHiddenText: 'Conservation area',
+	// 						href: `${currentRoute}/change-lpa-questionnaire/in-or-relates-to-ca`,
+	// 						attributes: { 'data-cy': 'change-in-or-relates-to-ca' }
+	// 					}
+	// 				]
+	// 			}
+	// 		}
+	// 	},
+	// 	input: {
+	// 		displayName: 'In or relates to conservation area',
+	// 		instructions: [
+	// 			{
+	// 				type: 'radios',
+	// 				properties: {
+	// 					name: 'inOrRelatesToCa',
+	// 					items: [
+	// 						{
+	// 							text: 'Yes',
+	// 							value: 'yes',
+	// 							checked: data.inCAOrrelatesToCA || false
+	// 						},
+	// 						{
+	// 							text: 'No',
+	// 							value: 'no',
+	// 							checked: !data.inCAOrrelatesToCA
+	// 						}
+	// 					]
+	// 				}
+	// 			}
+	// 		]
+	// 	}
+	// };
 
 	/** @type {Instructions} */
 	mappedData.lpaq.conservationAreaMap = {
@@ -373,53 +374,53 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 	};
 
 	/** @type {Instructions} */
-	mappedData.lpaq.notifyingParties = {
-		id: 'notifying-parties',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Who was notified'
-				},
-				value: displayPageFormatter.formatDocumentValues(
-					data.appealId,
-					isFolderInfo(data.documents.whoNotified) ? data.documents.whoNotified.documents || [] : []
-				),
-				actions: {
-					items: [
-						...((isFolderInfo(data.documents.whoNotified)
-							? data.documents.whoNotified.documents || []
-							: []
-						).length
-							? [
-									{
-										text: 'Manage',
-										visuallyHiddenText: 'Who was notified',
-										href: mapDocumentManageUrl(
-											data.appealId,
-											data.lpaQuestionnaireId,
-											isFolderInfo(data.documents.whoNotified)
-												? data.documents.whoNotified.folderId
-												: undefined
-										),
-										attributes: { 'data-cy': 'manage-notifying-parties' }
-									}
-							  ]
-							: []),
-						{
-							text: 'Add',
-							visuallyHiddenText: 'Who was notified',
-							href: displayPageFormatter.formatDocumentActionLink(
-								data.appealId,
-								data.documents.whoNotified,
-								buildDocumentUploadUrlTemplate(data.lpaQuestionnaireId)
-							),
-							attributes: { 'data-cy': 'add-notifying-parties' }
-						}
-					]
-				}
-			}
-		}
-	};
+	// mappedData.lpaq.notifyingParties = {
+	// 	id: 'notifying-parties',
+	// 	display: {
+	// 		summaryListItem: {
+	// 			key: {
+	// 				text: 'Who was notified'
+	// 			},
+	// 			value: displayPageFormatter.formatDocumentValues(
+	// 				data.appealId,
+	// 				isFolderInfo(data.documents.whoNotified) ? data.documents.whoNotified.documents || [] : []
+	// 			),
+	// 			actions: {
+	// 				items: [
+	// 					...((isFolderInfo(data.documents.whoNotified)
+	// 						? data.documents.whoNotified.documents || []
+	// 						: []
+	// 					).length
+	// 						? [
+	// 								{
+	// 									text: 'Manage',
+	// 									visuallyHiddenText: 'Who was notified',
+	// 									href: mapDocumentManageUrl(
+	// 										data.appealId,
+	// 										data.lpaQuestionnaireId,
+	// 										isFolderInfo(data.documents.whoNotified)
+	// 											? data.documents.whoNotified.folderId
+	// 											: undefined
+	// 									),
+	// 									attributes: { 'data-cy': 'manage-notifying-parties' }
+	// 								}
+	// 						  ]
+	// 						: []),
+	// 					{
+	// 						text: 'Add',
+	// 						visuallyHiddenText: 'Who was notified',
+	// 						href: displayPageFormatter.formatDocumentActionLink(
+	// 							data.appealId,
+	// 							data.documents.whoNotified,
+	// 							buildDocumentUploadUrlTemplate(data.lpaQuestionnaireId)
+	// 						),
+	// 						attributes: { 'data-cy': 'add-notifying-parties' }
+	// 					}
+	// 				]
+	// 			}
+	// 		}
+	// 	}
+	// };
 
 	/** @type {Instructions} */
 	mappedData.lpaq.lpaNotificationMethods = {
@@ -483,52 +484,52 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 	};
 
 	/** @type {Instructions} */
-	mappedData.lpaq.hasRepresentationsFromOtherParties = {
-		id: 'has-representations-from-other-parties',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Representations from other parties'
-				},
-				value: {
-					text: convertFromBooleanToYesNo(data.hasRepresentationsFromOtherParties) || ''
-				},
-				actions: {
-					items: [
-						{
-							text: 'Change',
-							visuallyHiddenText: 'Representations from other parties',
-							href: `${currentRoute}/change-lpa-questionnaire/has-representations-from-other-parties`,
-							attributes: { 'data-cy': 'change-has-representations-from-other-parties' }
-						}
-					]
-				}
-			}
-		},
-		input: {
-			displayName: 'Has representations from other parties',
-			instructions: [
-				{
-					type: 'radios',
-					properties: {
-						name: 'hasRepresentationsFromOtherParties',
-						items: [
-							{
-								text: 'Yes',
-								value: 'yes',
-								checked: data.hasRepresentationsFromOtherParties || false
-							},
-							{
-								text: 'No',
-								value: 'no',
-								checked: !data.hasRepresentationsFromOtherParties
-							}
-						]
-					}
-				}
-			]
-		}
-	};
+	// mappedData.lpaq.hasRepresentationsFromOtherParties = {
+	// 	id: 'has-representations-from-other-parties',
+	// 	display: {
+	// 		summaryListItem: {
+	// 			key: {
+	// 				text: 'Representations from other parties'
+	// 			},
+	// 			value: {
+	// 				text: convertFromBooleanToYesNo(data.hasRepresentationsFromOtherParties) || ''
+	// 			},
+	// 			actions: {
+	// 				items: [
+	// 					{
+	// 						text: 'Change',
+	// 						visuallyHiddenText: 'Representations from other parties',
+	// 						href: `${currentRoute}/change-lpa-questionnaire/has-representations-from-other-parties`,
+	// 						attributes: { 'data-cy': 'change-has-representations-from-other-parties' }
+	// 					}
+	// 				]
+	// 			}
+	// 		}
+	// 	},
+	// 	input: {
+	// 		displayName: 'Has representations from other parties',
+	// 		instructions: [
+	// 			{
+	// 				type: 'radios',
+	// 				properties: {
+	// 					name: 'hasRepresentationsFromOtherParties',
+	// 					items: [
+	// 						{
+	// 							text: 'Yes',
+	// 							value: 'yes',
+	// 							checked: data.hasRepresentationsFromOtherParties || false
+	// 						},
+	// 						{
+	// 							text: 'No',
+	// 							value: 'no',
+	// 							checked: !data.hasRepresentationsFromOtherParties
+	// 						}
+	// 					]
+	// 				}
+	// 			}
+	// 		]
+	// 	}
+	// };
 
 	/** @type {Instructions} */
 	mappedData.lpaq.representations = {
@@ -684,52 +685,52 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 	};
 
 	/** @type {Instructions} */
-	mappedData.lpaq.isAffectingNeighbouringSites = {
-		id: 'is-affecting-neighbouring-sites',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Affects neighbouring sites'
-				},
-				value: {
-					text: convertFromBooleanToYesNo(data.isAffectingNeighbouringSites) || ''
-				},
-				actions: {
-					items: [
-						{
-							text: 'Change',
-							visuallyHiddenText: 'Affects neighbouring sites',
-							href: `${currentRoute}/neighbouring-sites/change/affected`,
-							attributes: { 'data-cy': 'change-is-affecting-neighbouring-sites' }
-						}
-					]
-				}
-			}
-		},
-		input: {
-			displayName: 'Is affecting neighbouring sites',
-			instructions: [
-				{
-					type: 'radios',
-					properties: {
-						name: 'isAffectingNeighbouringSites',
-						items: [
-							{
-								text: 'Yes',
-								value: 'yes',
-								checked: data.isAffectingNeighbouringSites || false
-							},
-							{
-								text: 'No',
-								value: 'no',
-								checked: !data.isAffectingNeighbouringSites
-							}
-						]
-					}
-				}
-			]
-		}
-	};
+	// mappedData.lpaq.isAffectingNeighbouringSites = {
+	// 	id: 'is-affecting-neighbouring-sites',
+	// 	display: {
+	// 		summaryListItem: {
+	// 			key: {
+	// 				text: 'Affects neighbouring sites'
+	// 			},
+	// 			value: {
+	// 				text: convertFromBooleanToYesNo(data.isAffectingNeighbouringSites) || ''
+	// 			},
+	// 			actions: {
+	// 				items: [
+	// 					{
+	// 						text: 'Change',
+	// 						visuallyHiddenText: 'Affects neighbouring sites',
+	// 						href: `${currentRoute}/neighbouring-sites/change/affected`,
+	// 						attributes: { 'data-cy': 'change-is-affecting-neighbouring-sites' }
+	// 					}
+	// 				]
+	// 			}
+	// 		}
+	// 	},
+	// 	input: {
+	// 		displayName: 'Is affecting neighbouring sites',
+	// 		instructions: [
+	// 			{
+	// 				type: 'radios',
+	// 				properties: {
+	// 					name: 'isAffectingNeighbouringSites',
+	// 					items: [
+	// 						{
+	// 							text: 'Yes',
+	// 							value: 'yes',
+	// 							checked: data.isAffectingNeighbouringSites || false
+	// 						},
+	// 						{
+	// 							text: 'No',
+	// 							value: 'no',
+	// 							checked: !data.isAffectingNeighbouringSites
+	// 						}
+	// 					]
+	// 				}
+	// 			}
+	// 		]
+	// 	}
+	// };
 
 	/** @type {Instructions} */
 	mappedData.lpaq.lpaHealthAndSafety = {
@@ -762,46 +763,46 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 	};
 
 	/** @type {Instructions} */
-	mappedData.lpaq.otherAppeals = {
-		id: 'other-appeals',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Appeals near the site'
-				},
-				value: {
-					html:
-						displayPageFormatter.formatListOfRelatedAppeals(data.otherAppeals) || 'No other appeals'
-				},
-				actions: {
-					items: [
-						{
-							text: 'Change',
-							visuallyHiddenText: 'Appeals near the site',
-							href: `${currentRoute}/change-lpa-questionnaire/other-appeals`,
-							attributes: { 'data-cy': 'change-other-appeals' }
-						}
-					]
-				}
-			}
-		},
-		input: {
-			displayName: 'Other appeals',
-			instructions: [
-				{
-					type: 'input',
-					properties: {
-						id: 'other-appeals',
-						name: 'otherAppeals',
-						value: displayPageFormatter.nullToEmptyString(data.otherAppeals),
-						label: {
-							text: 'What appeals are the other associated with this appeal?'
-						}
-					}
-				}
-			]
-		}
-	};
+	// mappedData.lpaq.otherAppeals = {
+	// 	id: 'other-appeals',
+	// 	display: {
+	// 		summaryListItem: {
+	// 			key: {
+	// 				text: 'Appeals near the site'
+	// 			},
+	// 			value: {
+	// 				html:
+	// 					displayPageFormatter.formatListOfRelatedAppeals(data.otherAppeals) || 'No other appeals'
+	// 			},
+	// 			actions: {
+	// 				items: [
+	// 					{
+	// 						text: 'Change',
+	// 						visuallyHiddenText: 'Appeals near the site',
+	// 						href: `${currentRoute}/change-lpa-questionnaire/other-appeals`,
+	// 						attributes: { 'data-cy': 'change-other-appeals' }
+	// 					}
+	// 				]
+	// 			}
+	// 		}
+	// 	},
+	// 	input: {
+	// 		displayName: 'Other appeals',
+	// 		instructions: [
+	// 			{
+	// 				type: 'input',
+	// 				properties: {
+	// 					id: 'other-appeals',
+	// 					name: 'otherAppeals',
+	// 					value: displayPageFormatter.nullToEmptyString(data.otherAppeals),
+	// 					label: {
+	// 						text: 'What appeals are the other associated with this appeal?'
+	// 					}
+	// 				}
+	// 			}
+	// 		]
+	// 	}
+	// };
 
 	/** @type {Instructions} */
 	mappedData.lpaq.newConditions = {
