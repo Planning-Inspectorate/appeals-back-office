@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { request } from '../../../app-test.js';
 import { jest } from '@jest/globals';
 import {
@@ -9,12 +10,14 @@ import {
 	ERROR_MUST_BE_CORRECT_DATE_FORMAT,
 	ERROR_MUST_BE_IN_FUTURE,
 	ERROR_MUST_NOT_HAVE_TIMETABLE_DATE,
-	ERROR_NOT_FOUND
+	ERROR_NOT_FOUND,
+	FRONT_OFFICE_URL
 } from '../../constants.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { householdAppeal, fullPlanningAppeal } from '#tests/appeals/mocks.js';
 import joinDateAndTime from '#utils/join-date-and-time.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
+import config from '#config/config.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 const futureDate = '2099-09-01';
@@ -822,6 +825,53 @@ describe('appeal timetables routes', () => {
 						}
 					})
 				);
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).toHaveBeenCalledTimes(2);
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).toHaveBeenCalledWith(
+					config.govNotify.template.appealValidStartCase.appellant.id,
+					'test@136s7.com',
+					{
+						emailReplyToId: null,
+						personalisation: {
+							appeal_reference_number: '1345264',
+							lpa_reference: '48269/APP/2021/1482',
+							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+							url: FRONT_OFFICE_URL,
+							start_date: '5 June 2023',
+							questionnaire_due_date: '12 June 2023',
+							local_planning_authority: 'Maidstone Borough Council',
+							appeal_type: 'Householder',
+							procedure_type: 'a written procedure',
+							appellant_email_address: 'test@136s7.com'
+						},
+						reference: null
+					}
+				);
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).toHaveBeenCalledWith(
+					config.govNotify.template.appealValidStartCase.lpa.id,
+					'maid@lpa-email.gov.uk',
+					{
+						emailReplyToId: null,
+						personalisation: {
+							appeal_reference_number: '1345264',
+							lpa_reference: '48269/APP/2021/1482',
+							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+							url: FRONT_OFFICE_URL,
+							start_date: '5 June 2023',
+							questionnaire_due_date: '12 June 2023',
+							local_planning_authority: 'Maidstone Borough Council',
+							appeal_type: 'Householder',
+							procedure_type: 'a written procedure',
+							appellant_email_address: 'test@136s7.com'
+						},
+						reference: null
+					}
+				);
 				expect(response.status).toEqual(200);
 			});
 
@@ -856,6 +906,54 @@ describe('appeal timetables routes', () => {
 						userId: householdAppeal.caseOfficer.id
 					}
 				});
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).toHaveBeenCalledTimes(2);
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).toHaveBeenCalledWith(
+					config.govNotify.template.appealValidStartCase.appellant.id,
+					'test@136s7.com',
+					{
+						emailReplyToId: null,
+						personalisation: {
+							appeal_reference_number: '1345264',
+							lpa_reference: '48269/APP/2021/1482',
+							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+							url: FRONT_OFFICE_URL,
+							start_date: '22 May 2023',
+							questionnaire_due_date: '30 May 2023',
+							local_planning_authority: 'Maidstone Borough Council',
+							appeal_type: 'Householder',
+							procedure_type: 'a written procedure',
+							appellant_email_address: 'test@136s7.com'
+						},
+						reference: null
+					}
+				);
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).toHaveBeenCalledWith(
+					config.govNotify.template.appealValidStartCase.lpa.id,
+					'maid@lpa-email.gov.uk',
+					{
+						emailReplyToId: null,
+						personalisation: {
+							appeal_reference_number: '1345264',
+							lpa_reference: '48269/APP/2021/1482',
+							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+							url: FRONT_OFFICE_URL,
+							start_date: '22 May 2023',
+							questionnaire_due_date: '30 May 2023',
+							local_planning_authority: 'Maidstone Borough Council',
+							appeal_type: 'Householder',
+							procedure_type: 'a written procedure',
+							appellant_email_address: 'test@136s7.com'
+						},
+						reference: null
+					}
+				);
+
 				expect(response.status).toEqual(200);
 			});
 		});
