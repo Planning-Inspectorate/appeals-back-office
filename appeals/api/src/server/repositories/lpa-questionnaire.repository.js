@@ -21,28 +21,15 @@ const updateLPAQuestionnaireById = (id, data) => {
 		databaseConnector.lPAQuestionnaire.update({
 			where: { id },
 			data: {
-				doesAffectAListedBuilding: data.doesAffectAListedBuilding,
-				doesAffectAScheduledMonument: data.doesAffectAScheduledMonument,
-				doesSiteRequireInspectorAccess: data.doesSiteRequireInspectorAccess,
-				doesSiteHaveHealthAndSafetyIssues: data.doesSiteHaveHealthAndSafetyIssues,
-				healthAndSafetyDetails: data.healthAndSafetyDetails,
-				hasCompletedAnEnvironmentalStatement: data.hasCompletedAnEnvironmentalStatement,
-				hasProtectedSpecies: data.hasProtectedSpecies,
-				hasTreePreservationOrder: data.hasTreePreservationOrder,
-				includesScreeningOption: data.includesScreeningOption,
-				inspectorAccessDetails: data.inspectorAccessDetails,
-				isConservationArea: data.isConservationArea,
-				isCorrectAppealType: data.isCorrectAppealType,
-				isEnvironmentalStatementRequired: data.isEnvironmentalStatementRequired,
-				isAffectingNeighbouringSites: data.isAffectingNeighbouringSites,
-				isGypsyOrTravellerSite: data.isGypsyOrTravellerSite,
-				isListedBuilding: data.isListedBuilding,
-				isPublicRightOfWay: data.isPublicRightOfWay,
-				isSensitiveArea: data.isSensitiveArea,
-				isTheSiteWithinAnAONB: data.isTheSiteWithinAnAONB,
 				lpaQuestionnaireValidationOutcomeId: data.validationOutcomeId,
-				meetsOrExceedsThresholdOrCriteriaInColumn2: data.meetsOrExceedsThresholdOrCriteriaInColumn2,
-				sensitiveAreaDetails: data.sensitiveAreaDetails
+				lpaStatement: data.lpaStatement,
+				siteAccessDetails: data.inspectorAccessDetails,
+				siteSafetyDetails: data.healthAndSafetyDetails,
+				siteWithinGreenBelt: data.siteWithinGreenBelt,
+				newConditionDetails: data.extraConditions,
+				lpaCostsAppliedFor: data.lpaCostsAppliedFor,
+				inConservationArea: data.isConservationArea,
+				isCorrectAppealType: data.isCorrectAppealType
 			}
 		})
 	);

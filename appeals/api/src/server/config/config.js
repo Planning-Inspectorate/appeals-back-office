@@ -64,6 +64,14 @@ const { value, error } = schema.validate({
 					id: '09dbb936-bc1a-400b-a2f8-711078921bf5'
 				}
 			},
+			appealValidStartCase: {
+				appellant: {
+					id: '1e5169b5-88b4-4d86-bbe5-77cc464ffc04'
+				},
+				lpa: {
+					id: 'c4701212-4b6a-4b55-801a-c86c7dbea54b'
+				}
+			},
 			lpaqComplete: {
 				id: 'c571ee53-69c8-400e-a4c0-44ded262a081'
 			},

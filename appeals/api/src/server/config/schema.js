@@ -58,6 +58,14 @@ export default joi
 								id: joi.string().required()
 							})
 						}),
+						appealValidStartCase: joi.object({
+							appellant: joi.object({
+								id: joi.string().required()
+							}),
+							lpa: joi.object({
+								id: joi.string().required()
+							})
+						}),
 						lpaqComplete: joi.object({
 							id: joi.string().required()
 						}),

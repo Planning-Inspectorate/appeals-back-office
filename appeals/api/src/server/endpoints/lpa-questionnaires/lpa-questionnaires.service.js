@@ -117,7 +117,7 @@ const updateLPAQuestionnaireValidationOutcome = async (
 			try {
 				await notifyClient.sendEmail(config.govNotify.template.lpaqIncomplete, recipientEmail, {
 					appeal_reference_number: appeal.reference,
-					lpa_reference: lpaReference,
+					lpa_reference: lpaReference || 'No LPA reference',
 					site_address: siteAddress,
 					due_date: formatDate(new Date(lpaQuestionnaireDueDate), false),
 					reasons: incompleteReasonsList

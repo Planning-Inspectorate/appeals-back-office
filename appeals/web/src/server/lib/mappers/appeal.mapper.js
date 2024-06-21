@@ -698,7 +698,7 @@ export async function initialiseAndMapAppealData(
 				},
 				value: {
 					html:
-						convertFromBooleanToYesNo(appealDetails.isAffectingNeighbouringSites) ||
+						convertFromBooleanToYesNo(appealDetails.neighbouringSites?.length > 0) ||
 						'No answer provided'
 				},
 				actions: {
@@ -725,12 +725,13 @@ export async function initialiseAndMapAppealData(
 							{
 								text: 'Yes',
 								value: 'yes',
-								checked: appealDetails.isAffectingNeighbouringSites
+								checked: appealDetails.neighbouringSites?.length > 0
 							},
 							{
 								text: 'No',
 								value: 'no',
-								checked: !appealDetails.isAffectingNeighbouringSites
+								checked:
+									!appealDetails.neighbouringSites || appealDetails.neighbouringSites.length == 0
 							}
 						]
 					}

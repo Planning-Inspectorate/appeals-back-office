@@ -88,6 +88,7 @@ describe('lpaQuestionnaire-mapper', () => {
 	beforeAll(async () => {
 		currentRoute = 'testroute/';
 		validMappedData = await initialiseAndMapLPAQData(
+			// @ts-ignore
 			lpaQuestionnaireDataIncompleteOutcome,
 			currentRoute
 		);

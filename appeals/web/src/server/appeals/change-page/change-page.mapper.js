@@ -31,7 +31,7 @@ export async function appealChangePage(question, appealData, currentRoute, sessi
  *
  * @param {string} question
  * @param {Appeal} appealData
- * @param {import('../appeal-details/appeal-details.types.js').SingleLPAQuestionnaireResponse} lpaqData
+ * @param {import('@pins/appeals.api').Appeals.SingleLPAQuestionnaireResponse} lpaqData
  * @param {string} currentRoute
  * @returns {PageContent}
  */

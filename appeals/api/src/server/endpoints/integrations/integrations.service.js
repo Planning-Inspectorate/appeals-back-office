@@ -27,13 +27,22 @@ const importAppellantCase = async (data, documents, relatedReferences) => {
 	}
 };
 
-const importLPAQuestionnaire = async (
-	/** @type {string} */ caseReference,
-	/** @type {*} */ data,
-	/** @type {*} */ documents
-) => {
+/**
+ *
+ * @param {string} caseReference
+ * @param {*} data
+ * @param {*} documents
+ * @param {string[] | null} relatedReferences
+ * @returns
+ */
+const importLPAQuestionnaire = async (caseReference, data, documents, relatedReferences) => {
 	await checkExistingDocumentIDs(documents);
-	const result = await createOrUpdateLpaQuestionnaire(caseReference, data, documents);
+	const result = await createOrUpdateLpaQuestionnaire(
+		caseReference,
+		data,
+		documents,
+		relatedReferences || []
+	);
 
 	if (!result?.appeal) {
 		throw new BackOfficeAppError(

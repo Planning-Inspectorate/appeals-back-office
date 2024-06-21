@@ -25,7 +25,7 @@ import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
 
 /**
- * @typedef {import('#appeals/appeal-details/appeal-details.types.js').SingleLPAQuestionnaireResponse} LPAQuestionnaire
+ * @typedef {import('@pins/appeals.api').Appeals.SingleLPAQuestionnaireResponse} LPAQuestionnaire
  * @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} Appeal
  * @typedef {import('../../appeals.types.js').DayMonthYear} DayMonthYear
  * @typedef {import('./lpa-questionnaire.types.js').LPAQuestionnaireValidationOutcome} LPAQuestionnaireValidationOutcome
@@ -649,7 +649,7 @@ const householderLpaQuestionnairePage = (mappedLPAQData, mappedAppealDetails) =>
  * @param {NotValidReasonOption[]} reasonOptions
  * @param {BodyValidationOutcome} [bodyValidationOutcome]
  * @param {SessionValidationOutcome} [sessionValidationOutcome]
- * @param {import('./lpa-questionnaire.types.js').LPAQuestionnaireValidationOutcomeResponse|null} [existingValidationOutcome]
+ * @param {import('@pins/appeals.api').Appeals.ValidationOutcomeResponse | null} [existingValidationOutcome]
  * @returns {import('../../appeals.types.js').CheckboxItemParameter[]}
  */
 export function mapIncompleteReasonOptionsToCheckboxItemParameters(
@@ -663,7 +663,7 @@ export function mapIncompleteReasonOptionsToCheckboxItemParameters(
 	/** @type {number[]|undefined} */
 	let existingReasonIds;
 
-	if (existingValidationOutcome?.outcome.toLowerCase() === 'incomplete') {
+	if (existingValidationOutcome?.outcome?.toLowerCase() === 'incomplete') {
 		existingReasons = existingValidationOutcome?.incompleteReasons || [];
 		existingReasonIds = existingReasons.map((reason) => reason.name?.id);
 	}

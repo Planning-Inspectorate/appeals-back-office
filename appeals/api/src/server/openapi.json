@@ -442,53 +442,6 @@
 				}
 			}
 		},
-		"/appeals/document-submission": {
-			"post": {
-				"tags": ["Integration"],
-				"description": "Imports a new document",
-				"parameters": [],
-				"responses": {
-					"200": {
-						"description": "Document successfully created",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/DocumentDetails"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/DocumentDetails"
-								}
-							}
-						}
-					},
-					"400": {
-						"description": "Bad Request"
-					},
-					"404": {
-						"description": "Not Found"
-					}
-				},
-				"requestBody": {
-					"in": "body",
-					"description": "Document",
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/DocumentMetaImport"
-							}
-						},
-						"application/xml": {
-							"schema": {
-								"$ref": "#/components/schemas/DocumentMetaImport"
-							}
-						}
-					}
-				}
-			}
-		},
 		"/appeals/validate-business-date": {
 			"post": {
 				"tags": ["Utilities"],
@@ -3242,33 +3195,17 @@
 					"casedata": {
 						"type": "object",
 						"properties": {
-							"caseType": {
-								"type": "string",
-								"example": "D"
+							"advertisedAppeal": {
+								"type": "boolean",
+								"example": true
 							},
-							"caseProcedure": {
-								"type": "string",
-								"example": "written"
-							},
-							"lpaCode": {
-								"type": "string",
-								"example": "Q9999"
-							},
-							"caseSubmittedDate": {
-								"type": "string",
-								"example": "1909-06-19T16:26:31.0Z"
-							},
-							"enforcementNotice": {
+							"appellantCostsAppliedFor": {
 								"type": "boolean",
 								"example": false
 							},
-							"applicationReference": {
-								"type": "string",
-								"example": "ABC/123/QWER"
-							},
 							"applicationDate": {
 								"type": "string",
-								"example": "1922-01-01T09:44:51.0Z"
+								"example": "2024-01-01T00:00:00.000Z"
 							},
 							"applicationDecision": {
 								"type": "string",
@@ -3276,55 +3213,71 @@
 							},
 							"applicationDecisionDate": {
 								"type": "string",
-								"example": "1892-04-13T01:13:33.0Z"
+								"example": "2024-01-01T00:00:00.000Z"
+							},
+							"applicationReference": {
+								"type": "string",
+								"example": "123"
+							},
+							"caseProcedure": {
+								"type": "string",
+								"example": "written"
 							},
 							"caseSubmissionDueDate": {
 								"type": "string",
-								"example": "1891-09-22T22:28:18.0Z"
+								"example": "2024-03-25T23:59:59.999Z"
 							},
-							"siteAddressLine1": {
+							"caseSubmittedDate": {
 								"type": "string",
-								"example": "irure laborum anim do eu"
+								"example": "2024-03-25T23:59:59.999Z"
 							},
-							"siteAddressLine2": {
+							"caseType": {
 								"type": "string",
-								"example": "Excepteur cillum Duis culpa dolor"
+								"example": "D"
 							},
-							"siteAddressTown": {
-								"type": "string",
-								"example": "sit pariatur incididunt"
+							"changedDevelopmentDescription": {
+								"type": "boolean",
+								"example": false
 							},
-							"siteAddressCounty": {},
-							"siteAddressPostcode": {
-								"type": "string",
-								"example": "ut voluptate labore ullamco ex"
-							},
-							"siteAccessDetails": {
-								"type": "array",
-								"example": [
-									"fugiat veniam qui pariatur",
-									"in consectetur id",
-									"voluptate mollit culpa",
-									"magna"
-								],
-								"items": {
-									"type": "string"
-								}
-							},
-							"siteSafetyDetails": {
-								"type": "array",
-								"example": ["sint do"],
-								"items": {
-									"type": "string"
-								}
-							},
-							"siteAreaSquareMetres": {
-								"type": "number",
-								"example": 30.9
+							"enforcementNotice": {
+								"type": "boolean",
+								"example": false
 							},
 							"floorSpaceSquareMetres": {
 								"type": "number",
-								"example": 9.7
+								"example": 22
+							},
+							"knowsAllOwners": {
+								"type": "string",
+								"example": "Some"
+							},
+							"knowsOtherOwners": {
+								"type": "string",
+								"example": "Some"
+							},
+							"lpaCode": {
+								"type": "string",
+								"example": "Q9999"
+							},
+							"nearbyCaseReferences": {
+								"type": "array",
+								"example": ["1000000"],
+								"items": {
+									"type": "string"
+								}
+							},
+							"neighbouringSiteAddresses": {
+								"type": "array",
+								"example": [],
+								"items": {}
+							},
+							"originalDevelopmentDescription": {
+								"type": "string",
+								"example": "A test description"
+							},
+							"ownersInformed": {
+								"type": "boolean",
+								"example": true
 							},
 							"ownsAllLand": {
 								"type": "boolean",
@@ -3332,72 +3285,45 @@
 							},
 							"ownsSomeLand": {
 								"type": "boolean",
-								"example": false
-							},
-							"knowsOtherOwners": {
-								"type": "string",
-								"example": "Some"
-							},
-							"knowsAllOwners": {
-								"type": "string",
-								"example": "No"
-							},
-							"advertisedAppeal": {
-								"type": "boolean",
-								"example": false
-							},
-							"ownersInformed": {},
-							"originalDevelopmentDescription": {
-								"type": "string",
-								"example": "adipisicing aliqua"
-							},
-							"changedDevelopmentDescription": {
-								"type": "boolean",
 								"example": true
 							},
-							"nearbyCaseReferences": {
+							"siteAccessDetails": {
 								"type": "array",
-								"example": ["7000111", "7000112", "7000113", "7000114", "7000115"],
+								"example": ["Come and see"],
 								"items": {
 									"type": "string"
 								}
 							},
-							"neighbouringSiteAddresses": {
-								"type": "array",
-								"items": {
-									"type": "object",
-									"properties": {
-										"neighbouringSiteAddressLine1": {
-											"type": "string",
-											"example": "in"
-										},
-										"neighbouringSiteAddressLine2": {
-											"type": "string",
-											"example": "dolore minim"
-										},
-										"neighbouringSiteAddressTown": {
-											"type": "string",
-											"example": "sunt ut"
-										},
-										"neighbouringSiteAddressCounty": {
-											"type": "string",
-											"example": "reprehenderit Ut dolore"
-										},
-										"neighbouringSiteAddressPostcode": {
-											"type": "string",
-											"example": "dolor"
-										},
-										"neighbouringSiteAccessDetails": {
-											"type": "string",
-											"example": "nulla adipisicing"
-										},
-										"neighbouringSiteSafetyDetails": {}
-									}
-								}
+							"siteAddressCounty": {
+								"type": "string",
+								"example": "Somewhere"
 							},
-							"appellantCostsAppliedFor": {
-								"type": "boolean",
-								"example": false
+							"siteAddressLine1": {
+								"type": "string",
+								"example": "Somewhere"
+							},
+							"siteAddressLine2": {
+								"type": "string",
+								"example": "Somewhere St"
+							},
+							"siteAddressPostcode": {
+								"type": "string",
+								"example": "SOM3 W3R"
+							},
+							"siteAddressTown": {
+								"type": "string",
+								"example": "Somewhereville"
+							},
+							"siteAreaSquareMetres": {
+								"type": "number",
+								"example": 22
+							},
+							"siteSafetyDetails": {
+								"type": "array",
+								"example": ["It's dangerous"],
+								"items": {
+									"type": "string"
+								}
 							}
 						}
 					},
@@ -3406,37 +3332,37 @@
 						"items": {
 							"type": "object",
 							"properties": {
-								"documentId": {
-									"type": "string",
-									"example": "4547fec8-16b2-47bb-836d-4d0baac04079"
-								},
-								"filename": {
-									"type": "string",
-									"example": "exercitation reprehenderit laborum eu enim"
-								},
-								"originalFilename": {
-									"type": "string",
-									"example": "cupidatat"
-								},
-								"size": {
-									"type": "number",
-									"example": 23810727
-								},
-								"mime": {
-									"type": "string",
-									"example": "non cupidatat ea"
-								},
-								"documentURI": {
-									"type": "string",
-									"example": "elit est Excepteur cupidatat"
-								},
 								"dateCreated": {
 									"type": "string",
-									"example": "1890-01-01T22:21:50.0Z"
+									"example": "2024-03-01T13:48:35.847Z"
+								},
+								"documentId": {
+									"type": "string",
+									"example": "001"
 								},
 								"documentType": {
 									"type": "string",
-									"example": "originalApplicationForm"
+									"example": "appellantCostsApplication"
+								},
+								"documentURI": {
+									"type": "string",
+									"example": "https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg"
+								},
+								"filename": {
+									"type": "string",
+									"example": "img1.jpg"
+								},
+								"mime": {
+									"type": "string",
+									"example": "image/jpeg"
+								},
+								"originalFilename": {
+									"type": "string",
+									"example": "oimg.jpg"
+								},
+								"size": {
+									"type": "number",
+									"example": 10293
 								}
 							}
 						}
@@ -3446,22 +3372,22 @@
 						"items": {
 							"type": "object",
 							"properties": {
-								"salutation": {},
+								"emailAddress": {
+									"type": "string",
+									"example": "test@test.com"
+								},
 								"firstName": {
 									"type": "string",
-									"example": "Ray"
+									"example": "Testy"
 								},
 								"lastName": {
 									"type": "string",
-									"example": "Liotta"
+									"example": "McTest"
 								},
-								"emailAddress": {
-									"type": "string",
-									"example": "test@example.com"
-								},
+								"salutation": {},
 								"serviceUserType": {
 									"type": "string",
-									"example": "Agent"
+									"example": "Appellant"
 								}
 							}
 						}
@@ -3474,97 +3400,147 @@
 			"QuestionnaireData": {
 				"type": "object",
 				"properties": {
-					"questionnaire": {
+					"casedata": {
 						"type": "object",
 						"properties": {
 							"caseReference": {
 								"type": "string",
-								"example": "6000526"
+								"example": "6000000"
 							},
-							"LPACode": {
+							"lpaQuestionnaireSubmittedDate": {
 								"type": "string",
-								"example": "Q9999"
+								"example": "2024-05-31T23:00:00.000Z"
 							},
-							"isAppealTypeAppropriate": {
+							"lpaStatement": {
+								"type": "string",
+								"example": "cupidatat ipsum eu culpa"
+							},
+							"siteAccessDetails": {
+								"type": "array",
+								"example": ["Here it is"],
+								"items": {
+									"type": "string"
+								}
+							},
+							"siteSafetyDetails": {
+								"type": "array",
+								"example": ["Fine"],
+								"items": {
+									"type": "string"
+								}
+							},
+							"isCorrectAppealType": {
 								"type": "boolean",
 								"example": true
 							},
-							"doesTheDevelopmentAffectTheSettingOfAListedBuilding": {
+							"isGreenBelt": {
+								"type": "boolean",
+								"example": false
+							},
+							"inConservationArea": {
 								"type": "boolean",
 								"example": true
 							},
-							"affectedListedBuildings": {
+							"newConditionDetails": {
+								"type": "string",
+								"example": "cupidatat"
+							},
+							"notificationMethod": {
+								"type": "array",
+								"example": ["notice", "letter"],
+								"items": {
+									"type": "string"
+								}
+							},
+							"nearbyCaseReferences": {
+								"type": "array",
+								"example": ["1000000"],
+								"items": {
+									"type": "string"
+								}
+							},
+							"neighbouringSiteAddresses": {
 								"type": "array",
 								"items": {
 									"type": "object",
 									"properties": {
-										"listEntry": {
+										"neighbouringSiteAddressLine1": {
 											"type": "string",
-											"example": "1021477"
+											"example": "deserunt in irure do"
+										},
+										"neighbouringSiteAddressLine2": {},
+										"neighbouringSiteAddressTown": {
+											"type": "string",
+											"example": "laboris ut enim et laborum"
+										},
+										"neighbouringSiteAddressCounty": {
+											"type": "string",
+											"example": "reprehenderit eu mollit Excepteur sit"
+										},
+										"neighbouringSiteAddressPostcode": {
+											"type": "string",
+											"example": "aliqua in qui ipsum"
+										},
+										"neighbouringSiteAccessDetails": {},
+										"neighbouringSiteSafetyDetails": {
+											"type": "string",
+											"example": "magna proident incididunt in non"
 										}
 									}
 								}
 							},
-							"inCAOrRelatesToCA": {
-								"type": "boolean",
-								"example": true
-							},
-							"siteWithinGreenBelt": {
-								"type": "boolean",
-								"example": true
-							},
-							"howYouNotifiedPeople": {
+							"affectedListedBuildingNumbers": {
 								"type": "array",
-								"example": [
-									"A public notice at the site",
-									"Letters to neighbours",
-									"Advert in the local press"
-								],
+								"example": ["10001", "10002"],
 								"items": {
 									"type": "string"
 								}
 							},
-							"hasRepresentationsFromOtherParties": {
+							"lpaCostsAppliedFor": {
 								"type": "boolean",
-								"example": true
-							},
-							"doesSiteRequireInspectorAccess": {
-								"type": "boolean",
-								"example": true
-							},
-							"doPlansAffectNeighbouringSite": {
-								"type": "boolean",
-								"example": true
-							},
-							"doesSiteHaveHealthAndSafetyIssues": {
-								"type": "boolean",
-								"example": true
-							},
-							"healthAndSafetyIssuesDetails": {
-								"type": "string",
-								"example": "There are bears. Lots of bears."
-							},
-							"nearbyCaseReferences": {
-								"type": "array",
-								"example": ["abc/123456", "lpa/945357"],
-								"items": {
-									"type": "string"
-								}
-							},
-							"hasExtraConditions": {
-								"type": "boolean",
-								"example": true
-							},
-							"extraConditions": {
-								"type": "string",
-								"example": "Here are some extra conditions."
+								"example": false
 							}
 						}
 					},
 					"documents": {
 						"type": "array",
-						"example": [],
-						"items": {}
+						"items": {
+							"type": "object",
+							"properties": {
+								"dateCreated": {
+									"type": "string",
+									"example": "2024-03-01T13:48:35.847Z"
+								},
+								"documentId": {
+									"type": "string",
+									"example": "001"
+								},
+								"documentType": {
+									"type": "string",
+									"example": "lpaCostsApplication"
+								},
+								"documentURI": {
+									"type": "string",
+									"example": "https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg"
+								},
+								"filename": {
+									"type": "string",
+									"example": "img3.jpg"
+								},
+								"mime": {
+									"type": "string",
+									"example": "image/jpeg"
+								},
+								"originalFilename": {
+									"type": "string",
+									"example": "oimg.jpg"
+								},
+								"size": {
+									"type": "number",
+									"example": 10293
+								}
+							}
+						}
 					}
 				},
 				"xml": {

@@ -86,3 +86,10 @@ export const FOLDERS = [
 	`${STAGE.INTERNAL}/${DOCTYPE.DROPBOX}`,
 	`${STAGE.APPEAL_DECISION}/${DOCTYPE.CASE_DECISION_LETTER}`
 ];
+
+/** @type {Object<string, string>} */
+export const PROCEDURE_TYPE_MAP = {
+	written: 'a written procedure',
+	hearing: 'a hearing',
+	inquiry: 'an inquiry'
+};

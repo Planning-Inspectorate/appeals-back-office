@@ -2,7 +2,7 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
- * @typedef {import('#appeals/appeal-details/appeal-details.types.js').SingleLPAQuestionnaireResponse} LPAQuestionnaire
+ * @typedef {import('@pins/appeals.api').Appeals.SingleLPAQuestionnaireResponse} LPAQuestionnaire
  */
 /**
  * @param {Appeal} appealData

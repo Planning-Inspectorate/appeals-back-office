@@ -218,12 +218,8 @@ model AppellantCase {
   id                                     Int                                      @id @default(autoincrement())
   appeal                                 Appeal                                   @relation(fields: [appealId], references: [id])
   appealId                               Int                                      @unique
-  appellantCaseIncompleteReason          AppellantCaseIncompleteReason?           @relation(fields: [appellantCaseIncompleteReasonId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  appellantCaseIncompleteReasonId        Int?
   appellantCaseIncompleteReasonsSelected AppellantCaseIncompleteReasonsSelected[]
   appellantCaseInvalidReasonsSelected    AppellantCaseInvalidReasonsSelected[]
-  appellantCaseInvalidReason             AppellantCaseInvalidReason?              @relation(fields: [appellantCaseInvalidReasonId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  appellantCaseInvalidReasonId           Int?
   appellantCaseValidationOutcome         AppellantCaseValidationOutcome?          @relation(fields: [appellantCaseValidationOutcomeId], references: [id])
   appellantCaseValidationOutcomeId       Int?
   applicationDate                        DateTime                                 @default(now())
@@ -261,7 +257,6 @@ model AppellantCaseIncompleteReason {
   id                                     Int                                      @id @default(autoincrement())
   name                                   String                                   @unique
   hasText                                Boolean                                  @default(false)
-  appellantCase                          AppellantCase[]
   appellantCaseIncompleteReasonsSelected AppellantCaseIncompleteReasonsSelected[]
 }
 
@@ -271,7 +266,6 @@ model AppellantCaseInvalidReason {
   id                                  Int                                   @id @default(autoincrement())
   name                                String                                @unique
   hasText                             Boolean                               @default(false)
-  appellantCase                       AppellantCase[]
   appellantCaseInvalidReasonsSelected AppellantCaseInvalidReasonsSelected[]
 }
 
@@ -333,56 +327,24 @@ model KnowledgeOfOtherLandowners {
 /// Contains responses from Local Planning Authority (LPA).
 /// regarding a specific appeal.
 model LPAQuestionnaire {
-  id                                           Int                                         @id @default(autoincrement())
-  appeal                                       Appeal                                      @relation(fields: [appealId], references: [id])
-  appealId                                     Int                                         @unique
-  lpaQuestionnaireValidationOutcome            LPAQuestionnaireValidationOutcome?          @relation(fields: [lpaQuestionnaireValidationOutcomeId], references: [id])
-  lpaQuestionnaireValidationOutcomeId          Int?
-  communityInfrastructureLevyAdoptionDate      DateTime?
-  developmentDescription                       String?
-  doesAffectAListedBuilding                    Boolean?
-  doesAffectAScheduledMonument                 Boolean?
-  doesSiteHaveHealthAndSafetyIssues            Boolean?
-  doesSiteRequireInspectorAccess               Boolean?
-  extraConditions                              String?
-  hasCommunityInfrastructureLevy               Boolean?
-  hasCompletedAnEnvironmentalStatement         Boolean?
-  hasEmergingPlan                              Boolean?
-  hasExtraConditions                           Boolean?
-  hasOtherAppeals                              Boolean?
-  hasProtectedSpecies                          Boolean?
-  hasRepresentationsFromOtherParties           Boolean?
-  hasResponsesOrStandingAdviceToUpload         Boolean?
-  hasStatementOfCase                           Boolean?
-  hasStatutoryConsultees                       Boolean?
-  hasSupplementaryPlanningDocuments            Boolean?
-  hasTreePreservationOrder                     Boolean?
-  healthAndSafetyDetails                       String?
-  inCAOrrelatesToCA                            Boolean?
-  includesScreeningOption                      Boolean?
-  inquiryDays                                  Int?
-  inspectorAccessDetails                       String?
-  isAffectingNeighbouringSites                 Boolean?
-  isCommunityInfrastructureLevyFormallyAdopted Boolean?
-  isConservationArea                           Boolean?
-  isCorrectAppealType                          Boolean?
-  isDevelopmentInOrNearDesignatedSites         Boolean?
-  isGypsyOrTravellerSite                       Boolean?
-  isListedBuilding                             Boolean?
-  isPublicRightOfWay                           Boolean?
-  isSensitiveArea                              Boolean?
-  isSiteVisible                                Boolean?
-  isTheSiteWithinAnAONB                        Boolean?
-  meetsOrExceedsThresholdOrCriteriaInColumn2   Boolean?
-  receivedAt                                   DateTime?
-  isEnvironmentalStatementRequired             Boolean?
-  sensitiveAreaDetails                         String?
-  sentAt                                       DateTime                                    @default(now())
-  siteWithinGreenBelt                          Boolean?
-  statutoryConsulteesDetails                   String?
-  lpaQuestionnaireIncompleteReasonsSelected    LPAQuestionnaireIncompleteReasonsSelected[]
-  listedBuildingDetails                        ListedBuildingSelected[]
-  lpaNotificationMethods                       LPANotificationMethodsSelected[]
+  id                                        Int                                         @id @default(autoincrement())
+  appeal                                    Appeal                                      @relation(fields: [appealId], references: [id])
+  appealId                                  Int                                         @unique
+  lpaQuestionnaireIncompleteReasonsSelected LPAQuestionnaireIncompleteReasonsSelected[]
+  lpaQuestionnaireValidationOutcome         LPAQuestionnaireValidationOutcome?          @relation(fields: [lpaQuestionnaireValidationOutcomeId], references: [id])
+  lpaQuestionnaireValidationOutcomeId       Int?
+  lpaNotificationMethods                    LPANotificationMethodsSelected[]
+  lpaqCreatedDate                           DateTime                                    @default(now())
+  lpaQuestionnaireSubmittedDate             DateTime?
+  lpaStatement                              String?
+  newConditionDetails                       String?
+  siteAccessDetails                         String?
+  siteSafetyDetails                         String?
+  siteWithinGreenBelt                       Boolean?
+  listedBuildingDetails                     ListedBuildingSelected[]
+  isCorrectAppealType                       Boolean?
+  inConservationArea                        Boolean?
+  lpaCostsAppliedFor                        Boolean?
 }
 
 /// LPAQuestionnaireValidationOutcome model

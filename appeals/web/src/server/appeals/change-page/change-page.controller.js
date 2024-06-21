@@ -13,7 +13,8 @@ const renderChangePage = async (request, response) => {
 		const currentUrlFragments = currentUrl.split('/').filter((fragment) => fragment.length > 0);
 		const origin = currentUrlFragments[currentUrlFragments.length - 2];
 		const appealId = request.params.appealId;
-		const appealData = await getAppealDetailsFromId(request.apiClient, appealId);
+		const appealData =
+			request.currentAppeal ?? (await getAppealDetailsFromId(request.apiClient, appealId));
 		let mappedPageContent;
 
 		switch (origin) {

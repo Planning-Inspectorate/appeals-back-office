@@ -10,7 +10,22 @@ import { formatAppellantCase } from '#endpoints/appellant-cases/appellant-cases.
  * @returns {SingleLPAQuestionnaireResponse}
  */
 export const baseExpectedLPAQuestionnaireResponse = (appeal) => ({
-	affectsListedBuildingDetails: appeal.lpaQuestionnaire?.listedBuildingDetails
+	healthAndSafetyDetails: appeal.lpaQuestionnaire?.siteSafetyDetails,
+	doesSiteHaveHealthAndSafetyIssues: appeal.lpaQuestionnaire?.siteSafetyDetails !== null,
+	inspectorAccessDetails: appeal.lpaQuestionnaire?.siteAccessDetails,
+	doesSiteRequireInspectorAccess: appeal.lpaQuestionnaire?.siteAccessDetails !== null,
+	isConservationArea: appeal.lpaQuestionnaire?.inConservationArea,
+	siteWithinGreenBelt: appeal.lpaQuestionnaire?.siteWithinGreenBelt,
+	isCorrectAppealType: appeal.lpaQuestionnaire?.isCorrectAppealType,
+	submittedAt: appeal.lpaQuestionnaire?.lpaQuestionnaireSubmittedDate || null, //new
+	// @ts-ignore
+	receivedAt: appeal.lpaQuestionnaire?.lpaqCreatedDate,
+	procedureType: appeal.procedureType?.name,
+	costsAppliedFor: appeal.lpaQuestionnaire?.lpaCostsAppliedFor, //new
+	lpaStatement: appeal.lpaQuestionnaire?.lpaStatement, //new
+	extraConditions: appeal.lpaQuestionnaire?.newConditionDetails, //check
+	hasExtraConditions: appeal.lpaQuestionnaire?.newConditionDetails !== null,
+	listedBuildingDetails: appeal.lpaQuestionnaire?.listedBuildingDetails
 		? [
 				{
 					listEntry: appeal.lpaQuestionnaire?.listedBuildingDetails[1].listEntry
@@ -26,68 +41,24 @@ export const baseExpectedLPAQuestionnaireResponse = (appeal) => ({
 		postCode: 'MD21 5XY',
 		town: 'Maidstone'
 	},
-	communityInfrastructureLevyAdoptionDate:
-		appeal.lpaQuestionnaire?.communityInfrastructureLevyAdoptionDate,
-	developmentDescription: appeal.lpaQuestionnaire?.developmentDescription,
 	documents: {
+		// @ts-ignore
 		whoNotified: {},
+		// @ts-ignore
 		conservationMap: {},
+		// @ts-ignore
 		lpaCaseCorrespondence: {},
+		// @ts-ignore
 		otherPartyRepresentations: {},
+		// @ts-ignore
 		planningOfficerReport: {}
 	},
-	doesAffectAListedBuilding: appeal.lpaQuestionnaire?.doesAffectAListedBuilding,
-	doesAffectAScheduledMonument: appeal.lpaQuestionnaire?.doesAffectAScheduledMonument,
-	doesSiteHaveHealthAndSafetyIssues: appeal.lpaQuestionnaire?.doesSiteHaveHealthAndSafetyIssues,
-	doesSiteRequireInspectorAccess: appeal.lpaQuestionnaire?.doesSiteRequireInspectorAccess,
-	extraConditions: appeal.lpaQuestionnaire?.extraConditions,
-	hasCommunityInfrastructureLevy: appeal.lpaQuestionnaire?.hasCommunityInfrastructureLevy,
-	hasCompletedAnEnvironmentalStatement:
-		appeal.lpaQuestionnaire?.hasCompletedAnEnvironmentalStatement,
-	hasEmergingPlan: appeal.lpaQuestionnaire?.hasEmergingPlan,
-	hasExtraConditions: appeal.lpaQuestionnaire?.hasExtraConditions,
-	hasProtectedSpecies: appeal.lpaQuestionnaire?.hasProtectedSpecies,
-	hasRepresentationsFromOtherParties: appeal.lpaQuestionnaire?.hasRepresentationsFromOtherParties,
-	hasResponsesOrStandingAdviceToUpload:
-		appeal.lpaQuestionnaire?.hasResponsesOrStandingAdviceToUpload,
-	hasStatementOfCase: appeal.lpaQuestionnaire?.hasStatementOfCase,
-	hasStatutoryConsultees: appeal.lpaQuestionnaire?.hasStatutoryConsultees,
-	hasSupplementaryPlanningDocuments: appeal.lpaQuestionnaire?.hasSupplementaryPlanningDocuments,
-	hasTreePreservationOrder: appeal.lpaQuestionnaire?.hasTreePreservationOrder,
-	healthAndSafetyDetails: appeal.lpaQuestionnaire?.healthAndSafetyDetails,
-	inCAOrrelatesToCA: appeal.lpaQuestionnaire?.inCAOrrelatesToCA,
-	includesScreeningOption: appeal.lpaQuestionnaire?.includesScreeningOption,
-	inspectorAccessDetails: appeal.lpaQuestionnaire?.inspectorAccessDetails,
-	isAffectingNeighbouringSites: appeal.lpaQuestionnaire?.isAffectingNeighbouringSites,
-	isCommunityInfrastructureLevyFormallyAdopted:
-		appeal.lpaQuestionnaire?.isCommunityInfrastructureLevyFormallyAdopted,
-	isConservationArea: appeal.lpaQuestionnaire?.isConservationArea || null,
-	isCorrectAppealType: appeal.lpaQuestionnaire?.isCorrectAppealType || null,
-	isEnvironmentalStatementRequired: appeal.lpaQuestionnaire?.isEnvironmentalStatementRequired,
-	isGypsyOrTravellerSite: appeal.lpaQuestionnaire?.isGypsyOrTravellerSite,
-	isListedBuilding: appeal.lpaQuestionnaire?.isListedBuilding,
-	isPublicRightOfWay: appeal.lpaQuestionnaire?.isPublicRightOfWay,
-	isSensitiveArea: appeal.lpaQuestionnaire?.isSensitiveArea,
-	isSiteVisible: appeal.lpaQuestionnaire?.isSiteVisible,
-	isTheSiteWithinAnAONB: appeal.lpaQuestionnaire?.isTheSiteWithinAnAONB,
-	listedBuildingDetails: appeal.lpaQuestionnaire?.listedBuildingDetails
-		? [
-				{
-					listEntry: appeal.lpaQuestionnaire?.listedBuildingDetails[0].listEntry
-				}
-		  ]
-		: null,
-	localPlanningDepartment: appeal.lpa.name,
+
+	localPlanningDepartment: appeal.lpa?.name,
 	lpaNotificationMethods: appeal.lpaQuestionnaire?.lpaNotificationMethods?.map(
 		({ lpaNotificationMethod: { name } }) => ({ name })
 	),
-	lpaQuestionnaireId: appeal.lpaQuestionnaire?.id,
-	meetsOrExceedsThresholdOrCriteriaInColumn2:
-		appeal.lpaQuestionnaire?.meetsOrExceedsThresholdOrCriteriaInColumn2,
-	procedureType: appeal?.procedureType?.name,
-	receivedAt: appeal.lpaQuestionnaire?.receivedAt || new Date(),
-	siteWithinGreenBelt: appeal.lpaQuestionnaire?.siteWithinGreenBelt,
-	otherAppeals: [],
+	lpaQuestionnaireId: appeal.lpaQuestionnaire?.id || 1,
 	validation: formatValidationOutcomeResponse(
 		// @ts-ignore
 		appeal.lpaQuestionnaire?.lpaQuestionnaireValidationOutcome?.name,
@@ -112,4 +83,4 @@ export const baseExpectedAppellantCaseResponse = (appeal) => {
 			originalApplicationForm: {}
 		}
 	};
-}
+};
