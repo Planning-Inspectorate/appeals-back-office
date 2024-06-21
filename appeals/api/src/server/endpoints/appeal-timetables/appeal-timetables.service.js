@@ -1,5 +1,24 @@
-import { ERROR_NOT_FOUND } from '../constants.js';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
+import appealRepository from '#repositories/appeal.repository.js';
+import appealTimetableRepository from '#repositories/appeal-timetable.repository.js';
+import { calculateTimetable, recalculateDateIfNotBusinessDay } from '#utils/business-days.js';
+import joinDateAndTime from '#utils/join-date-and-time.js';
+import logger from '#utils/logger.js';
+import {
+	AUDIT_TRAIL_CASE_TIMELINE_CREATED,
+	AUDIT_TRAIL_SYSTEM_UUID,
+	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL,
+	ERROR_NOT_FOUND,
+	FRONT_OFFICE_URL,
+	STATE_TARGET_LPA_QUESTIONNAIRE_DUE
+} from '../constants.js';
+import transitionState from '#state/transition-state.js';
+import formatDate from '#utils/date-formatter.js';
+import config from '#config/config.js';
+import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
+import { PROCEDURE_TYPE_MAP } from '@pins/appeals/constants/documents.js';
 
+/** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
 /** @typedef {import('express').NextFunction} NextFunction */
@@ -24,4 +43,95 @@ const checkAppealTimetableExists = async (req, res, next) => {
 	next();
 };
 
-export { checkAppealTimetableExists };
+/**
+ *
+ * @param {Appeal} appeal
+ * @param {string} startDate
+ * @param { import('#endpoints/appeals.js').NotifyClient } notifyClient
+ * @param {string} siteAddress
+ * @param {string} azureAdUserId
+ * @returns
+ */
+const startCase = async (appeal, startDate, notifyClient, siteAddress, azureAdUserId) => {
+	try {
+		const appealType = appeal.appealType || null;
+		if (!appealType) {
+			throw new Error('Appeal type is required to start a case.');
+		}
+		const startedAt = await recalculateDateIfNotBusinessDay(joinDateAndTime(startDate));
+		const timetable = await calculateTimetable(appealType.key, startedAt);
+
+		if (timetable) {
+			await Promise.all([
+				appealTimetableRepository.upsertAppealTimetableById(appeal.id, timetable),
+				appealRepository.updateAppealById(appeal.id, { caseStartedDate: startedAt.toISOString() })
+			]);
+
+			await createAuditTrail({
+				appealId: appeal.id,
+				azureAdUserId,
+				details: AUDIT_TRAIL_CASE_TIMELINE_CREATED
+			});
+
+			const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
+			const lpaEmail = appeal.lpa?.email || '';
+
+			const emailVariables = {
+				appeal_reference_number: appeal.reference,
+				lpa_reference: appeal.applicationReference || '',
+				site_address: siteAddress,
+				url: FRONT_OFFICE_URL,
+				start_date: formatDate(new Date(startDate || ''), false),
+				questionnaire_due_date: formatDate(
+					new Date(timetable.lpaQuestionnaireDueDate || ''),
+					false
+				),
+				local_planning_authority: appeal.lpa?.name || '',
+				appeal_type: appeal.appealType?.type || '',
+				procedure_type: PROCEDURE_TYPE_MAP[appeal.procedureType?.key || 'written'],
+				appellant_email_address: recipientEmail || ''
+			};
+
+			if (recipientEmail) {
+				try {
+					await notifyClient.sendEmail(
+						config.govNotify.template.appealValidStartCase.appellant,
+						recipientEmail,
+						emailVariables
+					);
+				} catch (error) {
+					throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
+				}
+			}
+
+			if (lpaEmail) {
+				try {
+					await notifyClient.sendEmail(
+						config.govNotify.template.appealValidStartCase.lpa,
+						lpaEmail,
+						emailVariables
+					);
+				} catch (error) {
+					throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
+				}
+			}
+
+			await transitionState(
+				appeal.id,
+				appealType,
+				azureAdUserId || AUDIT_TRAIL_SYSTEM_UUID,
+				appeal.appealStatus,
+				STATE_TARGET_LPA_QUESTIONNAIRE_DUE
+			);
+
+			await broadcasters.broadcastAppeal(appeal.id);
+			return { success: true, timetable };
+		}
+	} catch (error) {
+		logger.error(`Error starting case for appeal ID ${appeal.id}: ${error}`);
+	}
+
+	return { success: false };
+};
+
+export { checkAppealTimetableExists, startCase };
