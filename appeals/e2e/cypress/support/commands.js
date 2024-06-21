@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { BrowserAuthData } from '../fixtures/browser-auth-data';
+import { requestWithRetry } from './utils/requestWithRetry.js';
 
 const cookiesToSet = ['domain', 'expiry', 'httpOnly', 'path', 'secure'];
 
@@ -30,15 +31,36 @@ Cypress.Commands.add('validateDownloadedFile', (fileName) => {
 });
 
 Cypress.Commands.add('login', (user) => {
-	cy.task('CookiesFileExists', user.id).then((exists) => {
-		if (!exists) {
-			cy.log(`No cookies 🍪 found!\nLogging in as: ${user.id}`);
-			cy.loginWithPuppeteer(user);
-		} else {
-			cy.log(`Found some cookies! 🍪\nSetting cookies for: ${user.id}`);
-			setLocalCookies(user.id);
-		}
-	});
+	cy.log('Determine if login is required');
+	return cy
+		.wrap(
+			requestWithRetry(Cypress.config('baseUrl'), {}, 3)
+				.then((response) => {
+					cy.log('Request succeeded, no auth required:', response);
+					return null;
+				})
+				.catch((response) => {
+					cy.log('Request failed after 3 retries, auth required:', response);
+					return response;
+				})
+		)
+		.then((result) => {
+			// Check if the previous promise resolved to null (no auth required)
+			if (result === null) {
+				return;
+			}
+
+			// Continue with the remaining logic if auth is required
+			cy.task('CookiesFileExists', user.id).then((exists) => {
+				if (!exists) {
+					cy.log(`No cookies 🍪 found!\nLogging in as: ${user.id}`);
+					cy.loginWithPuppeteer(user);
+				} else {
+					cy.log(`Found some cookies! 🍪\nSetting cookies for: ${user.id}`);
+					setLocalCookies(user.id);
+				}
+			});
+		});
 });
 
 Cypress.Commands.add('loginWithPuppeteer', (user) => {
