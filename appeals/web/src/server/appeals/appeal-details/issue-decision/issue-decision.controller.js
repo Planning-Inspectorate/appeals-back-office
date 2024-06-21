@@ -105,8 +105,8 @@ export const postDecisionLetterUpload = async (request, response) => {
 	}
 
 	request.currentFolder = {
-		id: currentAppeal.decision?.folderId,
-		path: 'appeal_decision/decisionLetter'
+		folderId: currentAppeal.decision?.folderId,
+		path: `${STAGE.APPEAL_DECISION}/${DOCTYPE.CASE_DECISION_LETTER}`
 	};
 
 	postDocumentUpload(
@@ -183,7 +183,6 @@ export const postDateDecisionLetter = async (request, response) => {
 		);
 	} catch (error) {
 		logger.error(error);
-
 		return response.status(500).render('app/500.njk');
 	}
 };
@@ -323,8 +322,8 @@ export const postCheckDecision = async (request, response) => {
 		}
 
 		request.currentFolder = {
-			id: currentAppeal.decision?.folderId,
-			path: 'appeal_decision/decisionLetter'
+			folderId: currentAppeal.decision?.folderId,
+			path: `${STAGE.APPEAL_DECISION}/${DOCTYPE.CASE_DECISION_LETTER}`
 		};
 
 		if (errors) {
