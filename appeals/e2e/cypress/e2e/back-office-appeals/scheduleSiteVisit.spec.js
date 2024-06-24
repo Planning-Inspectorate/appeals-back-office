@@ -4,7 +4,7 @@
 import { users } from '../../fixtures/users';
 import { AppealsListPage } from '../../page_objects/appealsListPage';
 import { UpdateDueDatePage } from '../../page_objects/updateDueDatePage';
-import { urlPaths } from '../../fixtures/url-paths.js';
+import { urlPaths } from '../../support/url-paths.js';
 import { AppealsDetailPage } from '../../page_objects/appealsDetailPage.js';
 
 const appealsListPage = new AppealsListPage();

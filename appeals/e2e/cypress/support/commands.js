@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { BrowserAuthData } from '../fixtures/browser-auth-data';
 import { requestWithRetry } from './utils/requestWithRetry.js';
-import { urlPaths } from '../fixtures/url-paths.js';
+import { urlPaths } from './url-paths.js';
 
 const cookiesToSet = ['domain', 'expiry', 'httpOnly', 'path', 'secure'];
 
