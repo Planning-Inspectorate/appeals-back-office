@@ -28,6 +28,7 @@ import usersService from '#appeals/appeal-users/users-service.js';
 import { cloneDeep } from 'lodash-es';
 import { addDays } from 'date-fns';
 import { dateToDisplayDate } from '#lib/dates.js';
+import { AVSCAN_STATUS } from '@pins/appeals/constants/documents.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -267,6 +268,27 @@ describe('LPA Questionnaire review', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('LPA questionnaire</h1>');
+			expect(element.innerHTML).toContain('1. Constraints, designations and other issues</h2>');
+			expect(element.innerHTML).toContain('2. Notifying relevant parties of the application</h2>');
+			expect(element.innerHTML).toContain('3. Consultation responses and representations</h2>');
+			expect(element.innerHTML).toContain(
+				'4. Planning officer’s report and supplementary documents</h2>'
+			);
+			expect(element.innerHTML).toContain('5. Site access</h2>');
+			expect(element.innerHTML).toContain('6. Appeal process</h2>');
+			expect(element.innerHTML).toContain('Additional documents</h2>');
+			expect(element.innerHTML).toContain('What is the outcome of your review?</h2>');
+			expect(element.innerHTML).toContain('Confirm</button>');
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="review-outcome" type="radio" value="complete">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="review-outcome" type="radio" value="incomplete">'
+			);
 		}, 10000);
 	});
 
@@ -289,15 +311,26 @@ describe('LPA Questionnaire review', () => {
 			const response = await request.get(`${baseUrl}`);
 			const element = parseHtml(response.text);
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const notificationBannerElementHTML = parseHtml(response.text, {
+				rootElement: notificationBannerElement,
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(notificationBannerElementHTML).toContain('Important</h3>');
+			expect(notificationBannerElementHTML).toContain('Virus scan in progress</p>');
 		});
 
 		it('should render an error when a file has a virus', async () => {
 			//Create a document with failed virus check
-			let updatedLPAQuestionnaireData = cloneDeep(lpaQuestionnaireDataIncompleteOutcome);
+			let updatedLPAQuestionnaireData = cloneDeep(lpaQuestionnaireDataNotValidated);
 			updatedLPAQuestionnaireData.documents.conservationMap.documents.push({
 				...notCheckedDocumentFolderInfoDocuments,
 				// @ts-ignore
-				virusCheckStatus: 'affected'
+				latestDocumentVersion: {
+					...notCheckedDocumentFolderInfoDocuments.latestDocumentVersion,
+					virusCheckStatus: AVSCAN_STATUS.AFFECTED
+				}
 			});
 			nock('http://test/')
 				.get('/appeals/1/lpa-questionnaires/2')
@@ -306,6 +339,15 @@ describe('LPA Questionnaire review', () => {
 			const response = await request.get(`${baseUrl}`);
 			const element = parseHtml(response.text);
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary'
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain(
+				'One or more documents in this LPA questionnaire contains a virus. Upload a different version of each document that contains a virus.</a>'
+			);
 		});
 	});
 
@@ -322,6 +364,13 @@ describe('LPA Questionnaire review', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary'
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Review outcome must be provided</a>');
 		});
 
 		it('should redirect to the complete page if no errors are present and posted outcome is "complete"', async () => {
@@ -336,6 +385,9 @@ describe('LPA Questionnaire review', () => {
 			});
 
 			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/lpa-questionnaire/2/confirmation'
+			);
 		});
 	});
 
@@ -358,6 +410,13 @@ describe('LPA Questionnaire review', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Why is the LPA questionnaire incomplete?</h1>');
+			expect(element.innerHTML).toContain('Continue</button>');
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('data-module="govuk-checkboxes">');
+			expect(unprettifiedElement.innerHTML).toContain('Add another</button>');
 		});
 	});
 
@@ -382,6 +441,16 @@ describe('LPA Questionnaire review', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain(
+				'Please select one or more reasons why the LPA questionnaire is incomplete</a>'
+			);
 		});
 
 		it('should re-render the incomplete reason page with the expected error message if a single incomplete reason with text was provided but the matching text property is an empty string', async () => {
@@ -393,6 +462,16 @@ describe('LPA Questionnaire review', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain(
+				'All selected checkboxes with text fields must have at least one reason provided</a>'
+			);
 		});
 
 		it('should re-render the incomplete reason page with the expected error message if a single incomplete reason with text was provided but the matching text property is an empty array', async () => {
@@ -404,6 +483,16 @@ describe('LPA Questionnaire review', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain(
+				'All selected checkboxes with text fields must have at least one reason provided</a>'
+			);
 		});
 
 		it('should re-render the incomplete reason page with the expected error message if multiple incomplete reasons with text were provided but any of the matching text properties are empty strings', async () => {
@@ -416,6 +505,16 @@ describe('LPA Questionnaire review', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain(
+				'All selected checkboxes with text fields must have at least one reason provided</a>'
+			);
 		});
 
 		it('should re-render the incomplete reason page with the expected error message if multiple incomplete reasons with text were provided but any of the matching text properties are empty arrays', async () => {
@@ -431,6 +530,16 @@ describe('LPA Questionnaire review', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain(
+				'All selected checkboxes with text fields must have at least one reason provided</a>'
+			);
 		});
 
 		it('should re-render the incomplete reason page with the expected error message if a single incomplete reason with text was provided but the matching text property exceeds the character limit', async () => {
@@ -444,6 +553,14 @@ describe('LPA Questionnaire review', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Text in text fields cannot exceed 1000 characters</a>');
 		});
 
 		it('should re-render the incomplete reason page with the expected error message if multiple incomplete reasons with text were provided but any of the matching text properties exceed the character limit', async () => {
@@ -458,6 +575,14 @@ describe('LPA Questionnaire review', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Text in text fields cannot exceed 1000 characters</a>');
 		});
 
 		it('should redirect to the check and confirm page if a single incomplete reason without text was provided', async () => {
@@ -466,6 +591,9 @@ describe('LPA Questionnaire review', () => {
 			});
 
 			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/lpa-questionnaire/2/incomplete/date'
+			);
 		});
 
 		it('should redirect to the check and confirm page if a single incomplete reason with text within the character limit was provided', async () => {
@@ -477,6 +605,9 @@ describe('LPA Questionnaire review', () => {
 			});
 
 			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/lpa-questionnaire/2/incomplete/date'
+			);
 		});
 
 		it('should redirect to the check and confirm page if multiple incomplete reasons without text were provided', async () => {
@@ -485,6 +616,9 @@ describe('LPA Questionnaire review', () => {
 			});
 
 			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/lpa-questionnaire/2/incomplete/date'
+			);
 		});
 
 		it('should redirect to the check and confirm page if multiple incomplete reasons with text within the character limit were provided', async () => {
@@ -500,6 +634,9 @@ describe('LPA Questionnaire review', () => {
 			});
 
 			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/lpa-questionnaire/2/incomplete/date'
+			);
 		});
 	});
 
@@ -636,6 +773,7 @@ describe('LPA Questionnaire review', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Sorry, there is a problem with the service</h1>');
 		});
 
 		it('should re-render the update date page with the expected error message if no date was provided', async () => {
@@ -659,6 +797,17 @@ describe('LPA Questionnaire review', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Date day cannot be empty</a>');
+			expect(errorSummaryHtml).toContain('Date month cannot be empty</a>');
+			expect(errorSummaryHtml).toContain('Date year cannot be empty</a>');
+			expect(errorSummaryHtml).toContain('Date must be a valid date</a>');
 		});
 
 		it('should re-render the update date page with the expected error message if provided date is not in the future', async () => {
@@ -682,6 +831,14 @@ describe('LPA Questionnaire review', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Date must be in the future</a>');
 		});
 
 		it('should re-render the update date page with the expected error message if an invalid day was provided', async () => {
@@ -708,6 +865,14 @@ describe('LPA Questionnaire review', () => {
 
 			expect(element.innerHTML).toMatchSnapshot();
 
+			let errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Date day must be between 1 and 31</a>');
+
 			response = await request.post(`${baseUrl}/incomplete/date`).send({
 				'due-date-day': '32',
 				'due-date-month': '1',
@@ -720,6 +885,14 @@ describe('LPA Questionnaire review', () => {
 
 			expect(element.innerHTML).toMatchSnapshot();
 
+			errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Date day must be between 1 and 31</a>');
+
 			response = await request.post(`${baseUrl}/incomplete/date`).send({
 				'due-date-day': 'first',
 				'due-date-month': '1',
@@ -731,6 +904,14 @@ describe('LPA Questionnaire review', () => {
 			element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Date day must be a number</a>');
 		});
 
 		it('should re-render the update date page with the expected error message if an invalid month was provided', async () => {
@@ -757,6 +938,14 @@ describe('LPA Questionnaire review', () => {
 
 			expect(element.innerHTML).toMatchSnapshot();
 
+			let errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Date month must be between 1 and 12</a>');
+
 			response = await request.post(`${baseUrl}/incomplete/date`).send({
 				'due-date-day': '1',
 				'due-date-month': '13',
@@ -769,6 +958,14 @@ describe('LPA Questionnaire review', () => {
 
 			expect(element.innerHTML).toMatchSnapshot();
 
+			errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Date month must be between 1 and 12</a>');
+
 			response = await request.post(`${baseUrl}/incomplete/date`).send({
 				'due-date-day': '1',
 				'due-date-month': 'dec',
@@ -780,6 +977,14 @@ describe('LPA Questionnaire review', () => {
 			element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Date month must be a number</a>');
 		});
 
 		it('should re-render the update date page with the expected error message if an invalid year was provided', async () => {
@@ -806,6 +1011,14 @@ describe('LPA Questionnaire review', () => {
 
 			expect(element.innerHTML).toMatchSnapshot();
 
+			let errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Date year must be 4 digits</a>');
+
 			response = await request.post(`${baseUrl}/incomplete/date`).send({
 				'due-date-day': '1',
 				'due-date-month': '1',
@@ -817,6 +1030,14 @@ describe('LPA Questionnaire review', () => {
 			element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Date year must be a number</a>');
 		});
 
 		it('should re-render the update date page with the expected error message if an invalid date was provided', async () => {
@@ -842,9 +1063,19 @@ describe('LPA Questionnaire review', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Date must be a valid date</a>');
 		});
 
 		it('should redirect to the check and confirm page if a valid date was provided', async () => {
+			nock('http://test/').post('/appeals/validate-business-date').reply(200, { success: true });
+
 			// prerequisites to set session data
 			lpaQPostResponse = await request.post(baseUrl).send({
 				'review-outcome': 'incomplete'
@@ -857,12 +1088,15 @@ describe('LPA Questionnaire review', () => {
 			expect(incompleteReasonPostResponse.statusCode).toBe(302);
 
 			const response = await request.post(`${baseUrl}/incomplete/date`).send({
-				'due-date-day': '1',
+				'due-date-day': '2',
 				'due-date-month': '12',
-				'due-date-year': '3000'
+				'due-date-year': '2024'
 			});
 
-			expect(response.statusCode).toBe(200);
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/lpa-questionnaire/2/check-your-answers'
+			);
 		});
 	});
 
@@ -882,6 +1116,7 @@ describe('LPA Questionnaire review', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Sorry, there is a problem with the service</h1>');
 		});
 
 		it('should render the check your answers page with the expected content if outcome is "incomplete" and required data is present in the session', async () => {
@@ -908,6 +1143,20 @@ describe('LPA Questionnaire review', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Check your answers before confirming your review</h1>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Review outcome</dt><dd class="govuk-summary-list__value"> Incomplete</dd>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Incomplete reasons</dt>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Confirming this review will inform the relevant parties of the outcome</div>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 		});
 	});
 
@@ -939,6 +1188,9 @@ describe('LPA Questionnaire review', () => {
 
 			expect(mockedlpaQuestionnairesEndpoint.isDone()).toBe(true);
 			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/lpa-questionnaire/2/incomplete/confirmation'
+			);
 		});
 	});
 
@@ -952,6 +1204,7 @@ describe('LPA Questionnaire review', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Sorry, there is a problem with the service</h1>');
 		});
 
 		it('should render the confirmation page with the expected content if required data is present in the session', async () => {
@@ -994,6 +1247,14 @@ describe('LPA Questionnaire review', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('LPA questionnaire incomplete</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'The relevant parties have been informed.</p>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Go back to case details</a>');
 		});
 	});
 
@@ -1003,6 +1264,14 @@ describe('LPA Questionnaire review', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('LPA questionnaire complete</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'The relevant parties have been informed.</p>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Go back to case details</a>');
 		});
 	});
 

@@ -1502,7 +1502,15 @@ export const notCheckedDocumentFolderInfoDocuments = {
 	name: 'applicationForm.docx',
 	folderId: 1,
 	caseId: 1,
-	virusCheckStatus: AVSCAN_STATUS.NOT_SCANNED
+	latestDocumentVersion: {
+		draft: false,
+		dateReceived: '2024-03-02T01:00:00.000Z',
+		redactionStatus: 'Unredacted',
+		size: 11815175,
+		mime: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+		virusCheckStatus: AVSCAN_STATUS.NOT_SCANNED,
+		isLateEntry: true
+	}
 };
 
 export const scanFailedDocumentFolderInfoDocuments = {
@@ -1510,7 +1518,15 @@ export const scanFailedDocumentFolderInfoDocuments = {
 	name: 'applicationForm.docx',
 	folderId: 1,
 	caseId: 1,
-	virusCheckStatus: AVSCAN_STATUS.AFFECTED
+	latestDocumentVersion: {
+		draft: false,
+		dateReceived: '2024-03-02T01:00:00.000Z',
+		redactionStatus: 'Unredacted',
+		size: 11815175,
+		mime: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+		virusCheckStatus: AVSCAN_STATUS.AFFECTED,
+		isLateEntry: true
+	}
 };
 
 export const documentRedactionStatuses = [
