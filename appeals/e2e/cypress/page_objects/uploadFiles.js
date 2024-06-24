@@ -62,12 +62,13 @@ export class FileUploadPage extends Page {
 	}
 	verifyDocumentSelectError() {
 		cy.get('.govuk-list > li:nth-child(1) > a:nth-child(1)').contains(
+			// TODO Change to use specific data-cy selector
 			'Select documents to make changes to statuses'
 		);
 	}
 
 	backToProjectDocumentationPage() {
-		cy.get('li:nth-child(1) a:nth-child(1)').click();
+		cy.get('li:nth-child(1) a:nth-child(1)').click(); // TODO Change to use specific data-cy selector
 	}
 	verifyFileIsUploaded() {
 		cy.wait(5000);

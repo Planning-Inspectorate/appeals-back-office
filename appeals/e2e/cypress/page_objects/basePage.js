@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { users } from '../fixtures/users';
 import { assertType } from '../support/utils/assertType';
+import { urlPaths } from '../../fixtures/url-paths.js';
 
 // @ts-nocheck
 export class Page {
@@ -15,7 +16,7 @@ export class Page {
 		backLink: '.govuk-back-link',
 		bannerHeader: '.govuk-notification-banner__heading',
 		bannerLink: '.govuk-notification-banner__link',
-		publish_bannerHeader: '#main-content > div > div > div > h1',
+		publish_bannerHeader: '#main-content > div > div > div > h1', // TODO Use specific data-cy selector
 		button: '.govuk-button',
 		body: '.govuk-body',
 		caption: '.govuk-caption-m',
@@ -41,7 +42,7 @@ export class Page {
 		tableBody: '.govuk-table__body',
 		tableCell: '.govuk-table__cell',
 		tableHeader: '.govuk-table__header',
-		publishtableHeader: '#main-content > div > div > div > div > p',
+		publishtableHeader: '#main-content > div > div > div > div > p', // TODO Use specific data-cy selector
 		tableRow: '.govuk-table__row',
 		tab: '.govuk-tabs__tab',
 		tag: '.govuk-tag',
@@ -52,9 +53,9 @@ export class Page {
 		summaryListValue: '.govuk-summary-list__value',
 		summaryErrorMessages: '.govuk-list.govuk-error-summary__list',
 		xlHeader: '.govuk-heading-xl',
-		projectManagement: 'span.font-weight--700:nth-child(2)',
-		unpublish: 'a.govuk-button:nth-child(5)',
-		caseRefTraining: ':nth-child(2) > .govuk-table__body > :nth-child(1) > :nth-child(2)'
+		projectManagement: 'span.font-weight--700:nth-child(2)', // TODO Use specific data-cy selector
+		unpublish: 'a.govuk-button:nth-child(5)', // TODO Use specific data-cy selector
+		caseRefTraining: ':nth-child(2) > .govuk-table__body > :nth-child(1) > :nth-child(2)' // TODO Use specific data-cy selector
 	};
 
 	// E L E M E N T S
@@ -292,7 +293,7 @@ export class Page {
 	}
 
 	navigateToAppealsService() {
-		cy.visit('/appeals-service/appeals-list');
+		cy.visit(urlPaths.appealsList);
 	}
 
 	goToDashboard() {

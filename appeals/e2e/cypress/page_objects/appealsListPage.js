@@ -3,8 +3,6 @@
 import { Page } from './basePage';
 
 export class AppealsListPage extends Page {
-	// Examples
-
 	_selectors = {
 		input1: '.govuk-input',
 		link: 'govuk-link',
@@ -12,10 +10,25 @@ export class AppealsListPage extends Page {
 		summaryListValue: '.govuk-summary-list__value'
 	};
 
-	clickMyUniqueElement() {
-		// Selector from this class this._selectors
-		cy.get(this._selectors.uniqueSelector).click();
-	}
+	_cyDataSelectors = {
+		reviewLpaQuestionnaire: 'review-lpa-questionnaire',
+		reviewAppellantCase: 'review-appellant-case',
+		changeSetVisitType: 'change-set-visit-type',
+		changeCaseOfficer: 'change-case-officer',
+		assignInspector: 'assign-inspector'
+	};
+
+	elements = {
+		reviewLpaQuestionnaire: () => cy.getByData(this._cyDataSelectors.reviewLpaQuestionnaire),
+		reviewAppeallantCase: () => cy.getByData(this._cyDataSelectors.reviewAppellantCase),
+		changeSetVisitType: () => cy.getByData(this._cyDataSelectors.changeSetVisitType),
+		changeCaseOfficer: () => cy.getByData(this._cyDataSelectors.changeCaseOfficer),
+		assignInspector: () => cy.getByData(this._cyDataSelectors.assignInspector),
+		answerCellAppeals: (answer) =>
+			cy.contains(this._selectors.summaryListValue, answer, { matchCase: false }),
+		link: () => cy.get(this._selectors.link),
+		input1: () => cy.get(this._selectors.input1)
+	};
 
 	useBaseElementOrSelector() {
 		// Methods that returns an element
@@ -30,12 +43,7 @@ export class AppealsListPage extends Page {
 
 	//ELEMENTS
 
-	appealsPageElements = {
-		answerCellAppeals: (answer) =>
-			cy.contains(this.selectors.summaryListValue, answer, { matchCase: false }),
-		link: () => cy.get(this._selectors.link),
-		input1: () => cy.get(this._selectors.input1)
-	};
+	appealsPageElements = {};
 
 	inputCheckboxes = {
 		input: () => cy.get(this.selectors.input1)
@@ -65,32 +73,17 @@ export class AppealsListPage extends Page {
 
 	clickReviewLpaq(position) {
 		this.clickAccordionByButton('Documentation');
-		// this.basePageElements
-		// 	.tableCell()
-		// 	.eq(position - 2)
-		// 	.find(this.selectors.link)
-		// 	.click();
-		cy.getByData('review-lpa-questionnaire').click();
+		this.elements.reviewLpaQuestionnaire().click();
 	}
 
-	clickReviewAppellantCase(position) {
+	clickReviewAppellantCase() {
 		this.clickAccordionByButton('Documentation');
-		// this.basePageElements
-		// 	.tableCell()
-		// 	.eq(position - 1)
-		// 	.find(this.selectors.link)
-		// 	.click();
-		cy.getByData('review-appellant-case').click();
+		this.elements.reviewAppeallantCase().click();
 	}
 
 	clickChangeVisitTypeHasSiteDetails() {
 		this.clickAccordionByText('Site');
-		cy.getByData('change-set-visit-type').click();
-		// cy.get(
-		// 	':nth-child(3) > .govuk-accordion__section-header > .govuk-accordion__section-heading > .govuk-accordion__section-button'
-		// )
-		// 	//cy.get('.appeal-site-visit > .govuk-summary-list__actions > .govuk-link')
-		// 	.click();
+		this.elements.changeSetVisitType().click();
 	}
 
 	fillInput(text, index = 0) {
@@ -98,7 +91,7 @@ export class AppealsListPage extends Page {
 	}
 
 	fillInput1(text, index = 1) {
-		this.appealsPageElements.input1().eq(index).clear().type(text);
+		this.elements.input1().eq(index).clear().type(text);
 	}
 
 	fillInput2(text, index = 2) {
@@ -121,25 +114,25 @@ export class AppealsListPage extends Page {
 	selectAppellantOutcome(outcome) {
 		this.clickAccordionByText('Documentation');
 		cy.contains(this.selectors.tableHeader, 'Appellant case');
-		this.clickAppealFromList(2);
+		this.clickAppealFromList(2); // TODO Change this to use clickAppealByRef()
 		this.selectRadioButtonByValue(outcome);
 	}
 
 	selectLpaqOutcome(outcome) {
 		this.clickAccordionByText('Documentation');
 		cy.contains(this.selectors.tableHeader, 'LPA Questionnaire');
-		this.clickAppealFromList(3);
+		this.clickAppealFromList(3); // TODO Change this to use clickAppealByRef()
 		this.selectRadioButtonByValue(outcome);
 	}
 
 	clickCaseOfficer() {
 		this.clickAccordionByText('Team');
-		cy.getByData('change-case-officer').click();
+		this.elements.changeCaseOfficer().click();
 	}
 
 	clickInspector() {
 		this.clickAccordionByText('Team');
-		cy.getByData('assign-inspector').click();
+		this.elements.assignInspector().click();
 	}
 
 	checkAnswerSummaryValue(answer) {

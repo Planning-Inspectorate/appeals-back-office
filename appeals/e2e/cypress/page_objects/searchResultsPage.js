@@ -5,10 +5,10 @@ export class SearchResultsPage extends Page {
 	elements = {
 		searchResults: () => cy.get(this.selectors.smallHeader),
 		searchApplicationsError: () => cy.get('#searchApplications-error'),
-		searchResultsCount: () => cy.get('#main-content > div:nth-child(3) > p'),
-		searchResultsTableCount: () => cy.get('#main-content > div:nth-child(3) > table'),
-		invalidSearchCount: () => cy.get('#main-content > div:nth-child(3) > p:nth-child(1)'),
-		verifyViewLink: () => cy.get('tbody tr:nth-child(1) td:nth-child(3) a:nth-child(1)')
+		searchResultsCount: () => cy.get('#main-content > div:nth-child(3) > p'), // TODO Change to use specific data-cy selector
+		searchResultsTableCount: () => cy.get('#main-content > div:nth-child(3) > table'), // TODO Change to use specific data-cy selector
+		invalidSearchCount: () => cy.get('#main-content > div:nth-child(3) > p:nth-child(1)'), // TODO Change to use specific data-cy selector
+		verifyViewLink: () => cy.get('tbody tr:nth-child(1) td:nth-child(3) a:nth-child(1)') // TODO Change to use specific data-cy selector
 	};
 
 	// U S E R  A C T I O N S

@@ -23,10 +23,10 @@ export class S51AdvicePage extends Page {
 		changeLink: (question) =>
 			cy.contains(this.selectors.tableCell, question, { matchCase: false }).nextUntil('a'),
 		changetitleLink: () =>
-			cy.get('#advice-properties > dl > div:nth-child(1) > dd.govuk-summary-list__actions > a'),
-		saveAndReturnTile: () => cy.get('#main-content > form > button'),
+			cy.get('#advice-properties > dl > div:nth-child(1) > dd.govuk-summary-list__actions > a'), // TODO Change to use specific data-cy selector
+		saveAndReturnTile: () => cy.get('#main-content > form > button'), // TODO Change to use specific data-cy selector
 		verifyTitleUpdated: () =>
-			cy.get('#advice-properties > dl > div:nth-child(1) > dd.govuk-summary-list__value')
+			cy.get('#advice-properties > dl > div:nth-child(1) > dd.govuk-summary-list__value') // TODO Change to use specific data-cy selector
 	};
 
 	checkAnswer(question, answer, strict = true) {

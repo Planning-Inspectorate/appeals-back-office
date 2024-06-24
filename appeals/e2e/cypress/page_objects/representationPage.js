@@ -17,12 +17,12 @@ export class RepresentationPage extends Page {
 		month: () => cy.get('#received-date-month'),
 		year: () => cy.get('#received-date-year'),
 		reprsentationContent: () => cy.get('#originalRepresentation'),
-		skipLink: () => cy.get('#main-content > div > div > a'),
+		skipLink: () => cy.get('#main-content > div > div > a'), // TODO Change to use specific data-cy selector
 		submitForReview: () => cy.get('.govuk-button'),
 		searchRepresentation: () => cy.get('#searchTerm'),
 		searchRepresentationButton: () =>
-			cy.get('#main-content > form > div:nth-child(6) > div:nth-child(2) > button'),
-		searchResults: () => cy.get('#main-content > form > div:nth-child(7) > div:nth-child(1)')
+			cy.get('#main-content > form > div:nth-child(6) > div:nth-child(2) > button'), // TODO Change to use specific data-cy selector
+		searchResults: () => cy.get('#main-content > form > div:nth-child(7) > div:nth-child(1)') // TODO Change to use specific data-cy selector
 	};
 	chooseAddressDetails(optionNumber) {
 		this.elements.selectAddress().select(optionNumber);
