@@ -19,6 +19,16 @@ describe('neighbouring-sites', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Add neighbouring site (LPA)</h1>');
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('name="addressLine1" type="text">');
+			expect(unprettifiedElement.innerHTML).toContain('name="addressLine2" type="text">');
+			expect(unprettifiedElement.innerHTML).toContain('name="town" type="text">');
+			expect(unprettifiedElement.innerHTML).toContain('name="county" type="text">');
+			expect(unprettifiedElement.innerHTML).toContain('name="postCode" type="text">');
+			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
 
 		it('should render getAllNeighbouringSite page for inspector', async () => {
@@ -29,6 +39,16 @@ describe('neighbouring-sites', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Add neighbouring site (Inspector/third party)</h1>');
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('name="addressLine1" type="text">');
+			expect(unprettifiedElement.innerHTML).toContain('name="addressLine2" type="text">');
+			expect(unprettifiedElement.innerHTML).toContain('name="town" type="text">');
+			expect(unprettifiedElement.innerHTML).toContain('name="county" type="text">');
+			expect(unprettifiedElement.innerHTML).toContain('name="postCode" type="text">');
+			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
 	});
 
@@ -52,8 +72,15 @@ describe('neighbouring-sites', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Enter the first line of the address');
-			expect(element.innerHTML).toContain('govuk-error-summary');
+			expect(element.innerHTML).toContain('Add neighbouring site (Inspector/third party)</h1>');
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Enter the first line of the address</a>');
 		});
 
 		it('should re-render getAllNeighbouringSite page if addressLine1 is an empty string', async () => {
@@ -75,8 +102,15 @@ describe('neighbouring-sites', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Enter the first line of the address');
-			expect(element.innerHTML).toContain('govuk-error-summary');
+			expect(element.innerHTML).toContain('Add neighbouring site (Inspector/third party)</h1>');
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Enter the first line of the address</a>');
 		});
 
 		it('should re-render getAllNeighbouringSite page if town is null', async () => {
@@ -97,8 +131,15 @@ describe('neighbouring-sites', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Enter the town');
-			expect(element.innerHTML).toContain('govuk-error-summary');
+			expect(element.innerHTML).toContain('Add neighbouring site (Inspector/third party)</h1>');
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Enter the town</a>');
 		});
 
 		it('should re-render getAllNeighbouringSite page if town is an empty string', async () => {
@@ -120,8 +161,15 @@ describe('neighbouring-sites', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Enter the town');
-			expect(element.innerHTML).toContain('govuk-error-summary');
+			expect(element.innerHTML).toContain('Add neighbouring site (Inspector/third party)</h1>');
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Enter the town</a>');
 		});
 
 		it('should re-render getAllNeighbouringSite page if the postcode is null', async () => {
@@ -143,8 +191,15 @@ describe('neighbouring-sites', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Enter postcode');
-			expect(element.innerHTML).toContain('govuk-error-summary');
+			expect(element.innerHTML).toContain('Add neighbouring site (Inspector/third party)</h1>');
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Enter postcode</a>');
 		});
 
 		it('should re-render getAllNeighbouringSite page if the postcode is invalid', async () => {
@@ -166,8 +221,15 @@ describe('neighbouring-sites', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Invalid postcode');
-			expect(element.innerHTML).toContain('govuk-error-summary');
+			expect(element.innerHTML).toContain('Add neighbouring site (Inspector/third party)</h1>');
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Invalid postcode</a>');
 		});
 
 		it('should re-render getAllNeighbouringSite page if the postcode is an empty string', async () => {
@@ -189,8 +251,15 @@ describe('neighbouring-sites', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Enter postcode');
-			expect(element.innerHTML).toContain('govuk-error-summary');
+			expect(element.innerHTML).toContain('Add neighbouring site (Inspector/third party)</h1>');
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Enter postcode</a>');
 		});
 
 		it('should re-direct to the check and confirm page if the data is valid', async () => {
@@ -235,6 +304,9 @@ describe('neighbouring-sites', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Check your answers</h1>');
+			expect(element.innerHTML).toContain('Address</dt>');
+			expect(element.innerHTML).toContain('Confirm</button>');
 		});
 	});
 
@@ -321,6 +393,22 @@ describe('neighbouring-sites', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Manage neighbouring sites</h1>');
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Neighbouring sites (LPAQ)</caption>');
+			expect(unprettifiedElement.innerHTML).toContain('Address</th>');
+			expect(unprettifiedElement.innerHTML).toContain('Action</th>');
+			expect(unprettifiedElement.innerHTML).toContain('Change</a>');
+			expect(unprettifiedElement.innerHTML).toContain('Remove</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Neighbouring sites (inspector and/or third party request)</caption>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Address</th>');
+			expect(unprettifiedElement.innerHTML).toContain('Action</th>');
+			expect(unprettifiedElement.innerHTML).toContain('Change</a>');
+			expect(unprettifiedElement.innerHTML).toContain('Remove</a>');
 		});
 	});
 
@@ -331,6 +419,19 @@ describe('neighbouring-sites', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Remove neighbouring site</h1>');
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Address</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('Do you want to remove this site?</legend>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="remove-neighbouring-site" type="radio" value="yes">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="remove-neighbouring-site" type="radio" value="no">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
 	});
 
@@ -348,8 +449,15 @@ describe('neighbouring-sites', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Answer must be provided');
-			expect(element.innerHTML).toContain('govuk-error-summary');
+			expect(element.innerHTML).toContain('Remove neighbouring site</h1>');
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Answer must be provided</a>');
 		});
 
 		it('should redirect to the manage page if you select no', async () => {
@@ -394,6 +502,23 @@ describe('neighbouring-sites', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Change neighbouring site address</h1>');
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Address line 1</label>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="addressLine1" type="text" value="1 Grove Cottage">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="addressLine2" type="text" value="Shotesham Road">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('name="town" type="text" value="Woodton">');
+			expect(unprettifiedElement.innerHTML).toContain('name="county" type="text" value="Devon">');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="postCode" type="text" value="NR35 2ND">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
 	});
 
@@ -417,8 +542,15 @@ describe('neighbouring-sites', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Enter the first line of the address');
-			expect(element.innerHTML).toContain('govuk-error-summary');
+			expect(element.innerHTML).toContain('Change neighbouring site address</h1>');
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Enter the first line of the address</a>');
 		});
 
 		it('should re-render changeNeighbouringSite page if addressLine1 is an empty string', async () => {
@@ -440,8 +572,15 @@ describe('neighbouring-sites', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Enter the first line of the address');
-			expect(element.innerHTML).toContain('govuk-error-summary');
+			expect(element.innerHTML).toContain('Change neighbouring site address</h1>');
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Enter the first line of the address</a>');
 		});
 
 		it('should re-render changeNeighbouringSite page if town is null', async () => {
@@ -462,8 +601,15 @@ describe('neighbouring-sites', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Enter the town');
-			expect(element.innerHTML).toContain('govuk-error-summary');
+			expect(element.innerHTML).toContain('Change neighbouring site address</h1>');
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Enter the town</a>');
 		});
 
 		it('should re-render changeNeighbouringSite page if town is an empty string', async () => {
@@ -485,8 +631,15 @@ describe('neighbouring-sites', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Enter the town');
-			expect(element.innerHTML).toContain('govuk-error-summary');
+			expect(element.innerHTML).toContain('Change neighbouring site address</h1>');
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Enter the town</a>');
 		});
 
 		it('should re-render changeNeighbouringSite page if the postcode is null', async () => {
@@ -508,8 +661,15 @@ describe('neighbouring-sites', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Enter postcode');
-			expect(element.innerHTML).toContain('govuk-error-summary');
+			expect(element.innerHTML).toContain('Change neighbouring site address</h1>');
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Enter postcode</a>');
 		});
 
 		it('should re-render changeNeighbouringSite page if the postcode is invalid', async () => {
@@ -531,8 +691,15 @@ describe('neighbouring-sites', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Invalid postcode');
-			expect(element.innerHTML).toContain('govuk-error-summary');
+			expect(element.innerHTML).toContain('Change neighbouring site address</h1>');
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Invalid postcode</a>');
 		});
 
 		it('should re-render changeNeighbouringSite page if the postcode is an empty string', async () => {
@@ -554,8 +721,15 @@ describe('neighbouring-sites', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Enter postcode');
-			expect(element.innerHTML).toContain('govuk-error-summary');
+			expect(element.innerHTML).toContain('Change neighbouring site address</h1>');
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Enter postcode</a>');
 		});
 
 		it('should re-direct to the check and confirm page if the data is valid', async () => {
@@ -605,6 +779,9 @@ describe('neighbouring-sites', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Check your answers</h1>');
+			expect(element.innerHTML).toContain('Address</dt>');
+			expect(element.innerHTML).toContain('Confirm</button>');
 		});
 	});
 
@@ -644,6 +821,17 @@ describe('neighbouring-sites', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Could a neighbouring site be affected?</h1>');
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="neighbouringSiteAffected" type="radio" value="yes"'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="neighbouringSiteAffected" type="radio" value="no"'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
 
 		it('should render the change neighbouringSiteAffected page from lpa questionnaire', async () => {
@@ -655,6 +843,17 @@ describe('neighbouring-sites', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Could a neighbouring site be affected?</h1>');
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="neighbouringSiteAffected" type="radio" value="yes"'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="neighbouringSiteAffected" type="radio" value="no"'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
 	});
 
