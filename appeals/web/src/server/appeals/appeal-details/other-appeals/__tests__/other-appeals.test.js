@@ -40,6 +40,9 @@ describe('other-appeals', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('What is the appeal reference?</h1>');
+			expect(element.innerHTML).toContain('name="addOtherAppealsReference" type="text">');
+			expect(element.innerHTML).toContain('Continue</button>');
 		});
 	});
 
@@ -51,6 +54,15 @@ describe('other-appeals', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('What is the appeal reference?</h1>');
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Enter an appeal reference</a>');
 		});
 
 		it('should re-render the "What is the appeal reference?" page with error "Enter a valid appeal reference", if the provided appeal reference was invalid', async () => {
@@ -61,6 +73,15 @@ describe('other-appeals', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('What is the appeal reference?</h1>');
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Enter a valid appeal reference</a>');
 		});
 
 		it('should redirect to the "Related appeal details" page if related appeal reference is valid', async () => {
@@ -85,7 +106,30 @@ describe('other-appeals', () => {
 
 			const response = await request.get(`${baseUrl}/1/other-appeals/confirm`);
 			const element = parseHtml(response.text);
+
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Related appeal details</h1>');
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Appeal reference</strong></td>');
+			expect(unprettifiedElement.innerHTML).toContain('Appeal type</strong></td>');
+			expect(unprettifiedElement.innerHTML).toContain('Site address</strong></td>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Local planning authority (LPA)</strong></td>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Appellant name</strong></td>');
+			expect(unprettifiedElement.innerHTML).toContain('Agent name</strong></td>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Do you want to relate these appeals?</legend>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="relateAppealsAnswer" type="radio" value="yes">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="relateAppealsAnswer" type="radio" value="no">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
 	});
 
@@ -99,12 +143,21 @@ describe('other-appeals', () => {
 				.send({ addOtherAppealsReference: '3' });
 			expect(addPageResponse.statusCode).toBe(302);
 
-			const confirmationPageResponse = await request
+			const response = await request
 				.post(`${baseUrl}/1/other-appeals/confirm`)
 				.send({ relateAppealsAnswer: '' });
 
-			const element = parseHtml(confirmationPageResponse.text);
+			const element = parseHtml(response.text);
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Related appeal details</h1>');
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('You must answer if you want to relate appeals</a>');
 		});
 
 		it('should redirect back to appeal details page if the answer was provided (answer no)', async () => {
@@ -149,6 +202,11 @@ describe('other-appeals', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Manage related appeals</h1>');
+			expect(element.innerHTML).toContain('Related appeals</h2>');
+			expect(element.innerHTML).toContain('Appeal Reference</th>');
+			expect(element.innerHTML).toContain('Appeal type</th>');
+			expect(element.innerHTML).toContain('Action</th>');
 		});
 
 		it('should render the "Do you want to remove the relationship?" page', async () => {
@@ -156,6 +214,19 @@ describe('other-appeals', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain(
+				'Do you want to remove the relationship between appeal 2 and appeal 351062?</h1>'
+			);
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="removeAppealRelationship" type="radio" value="yes">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="removeAppealRelationship" type="radio" value="no">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
 
 		it('should render the "Do you want to remove the relationship?" page with the error if the answer was not provided', async () => {
@@ -165,6 +236,19 @@ describe('other-appeals', () => {
 
 			const element = parseHtml(response.text);
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain(
+				'Do you want to remove the relationship between appeal 2 and appeal 351062?</h1>'
+			);
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain(
+				'You must answer if you want to remove the relationship</a>'
+			);
 		});
 
 		it('should redirect back to "Manage related appeals" page if the answer was provided (answer no)', async () => {
