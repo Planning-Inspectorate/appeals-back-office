@@ -14,7 +14,7 @@ describe('Appeals feature', () => {
 	it('Case officer should be able to assign themselves to a case using name search', () => {
 		cy.visit(urlPaths.appealsList);
 		page.clickAppealByRef('6000054'); // TODO Change to use page.clickAppealByRef(ref)
-		page.clickCaseOfficer(15);
+		page.clickCaseOfficer();
 		page.nationalListSearch('case'); // Doesn't work locally
 		page.basePageElements.summaryListValue('caseteamofficer.test@planninginspectorate.gov.uk');
 		page.clickLinkByText('Choose');
@@ -26,8 +26,8 @@ describe('Appeals feature', () => {
 
 	it('Inspector should be able to assign themselves to a case using name search', () => {
 		cy.visit(urlPaths.appealsList);
-		page.clickAppealFromList(18);
-		page.clickInspector(15);
+		page.clickAppealFromList(18); // TODO Change to use page.clickAppealByRef(ref)
+		page.clickInspector();
 		page.nationalListSearch('test');
 		page.basePageElements.summaryListValue('inspectorappeals.test@planninginspectorate.gov.uk');
 		page.clickLinkByText('Choose');
@@ -39,8 +39,8 @@ describe('Appeals feature', () => {
 
 	it('Case officer should be able to change assigned user', () => {
 		cy.visit(urlPaths.appealsList);
-		page.clickAppealFromList(18);
-		page.clickCaseOfficer(16);
+		page.clickAppealFromList(18); // TODO Change to use page.clickAppealByRef(ref)
+		page.clickCaseOfficer();
 		page.nationalListSearch('Rachel');
 		page.basePageElements.summaryListValue('rachel.harvey@planninginspectorate.gov.uk');
 		page.clickLinkByText('Choose');
@@ -52,8 +52,8 @@ describe('Appeals feature', () => {
 
 	it('Inspector should be able to change assigned user', () => {
 		cy.visit(urlPaths.appealsList);
-		page.clickAppealFromList(18);
-		page.clickInspector(17);
+		page.clickAppealFromList(18); // TODO Change to use page.clickAppealByRef(ref)
+		page.clickInspector();
 		page.nationalListSearch('Rachel');
 		page.basePageElements.summaryListValue('rachel.harvey@planninginspectorate.gov.uk');
 		page.clickLinkByText('Choose');
@@ -64,8 +64,8 @@ describe('Appeals feature', () => {
 	});
 	it('Case officer should be able to remove assigned user', () => {
 		cy.visit(urlPaths.appealsList);
-		page.clickAppealFromList(18);
-		page.clickCaseOfficer(16);
+		page.clickAppealFromList(18); // TODO Change to use page.clickAppealByRef(ref)
+		page.clickCaseOfficer();
 		page.basePageElements.summaryListValue('rachel.harvey@planninginspectorate.gov.uk');
 		page.clickLinkByText('Remove');
 		page.selectRadioButtonByValue('Yes');
@@ -78,8 +78,8 @@ describe('Appeals feature', () => {
 
 	it('Inspector should be able to remove assigned user', () => {
 		cy.visit(urlPaths.appealsList);
-		page.clickAppealFromList(18);
-		page.clickInspector(17);
+		page.clickAppealFromList(18); // TODO Change to use page.clickAppealByRef(ref)
+		page.clickInspector();
 		page.basePageElements.summaryListValue('rachel.harvey@planninginspectorate.gov.uk');
 		page.clickLinkByText('Remove');
 		page.selectRadioButtonByValue('Yes');

@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { BrowserAuthData } from '../fixtures/browser-auth-data';
 import { requestWithRetry } from './utils/requestWithRetry.js';
+import { urlPaths } from '../fixtures/url-paths.js';
 
 const cookiesToSet = ['domain', 'expiry', 'httpOnly', 'path', 'secure'];
 
@@ -31,10 +32,11 @@ Cypress.Commands.add('validateDownloadedFile', (fileName) => {
 });
 
 Cypress.Commands.add('login', (user) => {
-	cy.log('Determine if login is required');
+	const loginUrl = urlPaths.appealsList;
+
 	return cy
 		.wrap(
-			requestWithRetry(Cypress.config('baseUrl'), {}, 3)
+			requestWithRetry(loginUrl, {}, 3)
 				.then((response) => {
 					cy.log('Request succeeded, no auth required:', response);
 					return null;

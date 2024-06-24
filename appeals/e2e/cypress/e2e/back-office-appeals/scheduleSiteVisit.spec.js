@@ -24,9 +24,6 @@ describe('Appeals feature', () => {
 		appealsListPage.clickAppealFromList(30); // TODO Change to use page.clickAppealByRef(ref)
 		appealsDetailPage.clickChangeVisitTypeHasCaseTimetable();
 		appealsListPage.selectRadioButtonByValue('Accompanied');
-		// updateDueDatePage.enterVisitDay('29');
-		// updateDueDatePage.enterVisitMonth('12');
-		// updateDueDatePage.enterVisitYear('2025');
 		updateDueDatePage.enterVisitDate(visitDate);
 		updateDueDatePage.enterVisitStartTimeHour('10');
 		updateDueDatePage.enterVisitStartTimeMinute('00');
@@ -45,9 +42,6 @@ describe('Appeals feature', () => {
 		appealsListPage.clickAppealFromList(30); // TODO Change to use page.clickAppealByRef(ref)
 		appealsListPage.clickChangeVisitTypeHasCaseTimetable();
 		appealsListPage.selectRadioButtonByValue('Access Required');
-		// updateDueDatePage.enterVisitDay('29');
-		// updateDueDatePage.enterVisitMonth('12');
-		// updateDueDatePage.enterVisitYear('2025');
 		updateDueDatePage.enterVisitDate(visitDate);
 		updateDueDatePage.enterVisitStartTimeHour('10');
 		updateDueDatePage.enterVisitStartTimeMinute('00');
@@ -66,9 +60,6 @@ describe('Appeals feature', () => {
 		appealsListPage.clickAppealFromList(30); // TODO Change to use page.clickAppealByRef(ref)
 		appealsListPage.clickChangeVisitTypeHasCaseTimetable();
 		appealsListPage.selectRadioButtonByValue('Unaccompanied');
-		// updateDueDatePage.enterVisitDay('29');
-		// updateDueDatePage.enterVisitMonth('12');
-		// updateDueDatePage.enterVisitYear('2025');
 		updateDueDatePage.enterVisitDate(visitDate);
 		updateDueDatePage.removeVisitStartTimeHour();
 		updateDueDatePage.removeVisitStartTimeMinute();
@@ -87,9 +78,6 @@ describe('Appeals feature', () => {
 		appealsListPage.clickAppealFromList(30); // TODO Change to use page.clickAppealByRef(ref)
 		appealsListPage.clickChangeVisitTypeHasCaseTimetable();
 		appealsListPage.selectRadioButtonByValue('Unaccompanied');
-		// updateDueDatePage.enterVisitDay('29');
-		// updateDueDatePage.enterVisitMonth('12');
-		// updateDueDatePage.enterVisitYear('2025');
 		updateDueDatePage.enterVisitDate(visitDate);
 		updateDueDatePage.enterVisitStartTimeHour('08');
 		updateDueDatePage.enterVisitStartTimeMinute('00');

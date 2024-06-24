@@ -15,15 +15,15 @@ describe('Appeals feature', () => {
 	});
 
 	it('Validate appellant case', () => {
+		let dueDate = new Date(2024, 5, 10); // TODO Should this stay static or be dynamically calculated?
+
 		cy.visit(urlPaths.appealsList);
 		appealsListPage.clickAppealFromList(10); // TODO Change to use page.clickAppealByRef(ref)
-		appealsListPage.clickReviewAppellantCase(3);
+		appealsListPage.clickReviewAppellantCase();
 		appealsListPage.selectRadioButtonByValue('Valid');
 		appealsListPage.clickButtonByText('Continue');
-		updateDueDatePage.validDateDay('10'),
-			updateDueDatePage.validDateMonth('6'),
-			updateDueDatePage.validDateYear('2024'),
-			appealsListPage.clickButtonByText('Submit');
+		updateDueDatePage.enterValidDate(dueDate);
+		appealsListPage.clickButtonByText('Submit');
 		appealsListPage.clickLinkByText('Go back to case details');
 		const status = 'Valid';
 		const testData = { rowIndex: 0, cellIndex: 0, textToMatch: status, strict: true };
@@ -33,7 +33,7 @@ describe('Appeals feature', () => {
 	it('Invalidate appellant case', () => {
 		cy.visit(urlPaths.appealsList);
 		appealsListPage.clickAppealFromList(11); // TODO Change to use page.clickAppealByRef(ref)
-		appealsListPage.clickReviewAppellantCase(3);
+		appealsListPage.clickReviewAppellantCase();
 		appealsListPage.selectRadioButtonByValue('Invalid');
 		appealsListPage.clickButtonByText('Continue');
 		appealsListPage.chooseCheckboxByIndex(1);
@@ -46,17 +46,17 @@ describe('Appeals feature', () => {
 	});
 
 	it('incomplete appellant case', () => {
+		let dueDate = new Date(2024, 11, 30); // TODO Should this stay static or be dynamically calculated?
+
 		cy.visit(urlPaths.appealsList);
 		appealsListPage.clickAppealFromList(12); // TODO Change to use page.clickAppealByRef(ref)
-		appealsListPage.clickReviewAppellantCase(3);
+		appealsListPage.clickReviewAppellantCase();
 		appealsListPage.selectRadioButtonByValue('Incomplete');
 		appealsListPage.clickButtonByText('Continue');
 		appealsListPage.chooseCheckboxByIndex(3);
 		appealsListPage.fillInput1('Hello here is some extra info, have a nice day 7384_+!£ =');
 		appealsListPage.clickButtonByText('Continue');
-		updateDueDatePage.enterDateDay('30');
-		updateDueDatePage.enterDateMonth('12');
-		updateDueDatePage.enterDateYear('2024');
+		updateDueDatePage.enterValidDate(dueDate);
 		appealsListPage.clickButtonByText('Save and Continue');
 		appealsListPage.clickButtonByText('Confirm');
 		appealsListPage.clickLinkByText('Go back to case details');
@@ -66,9 +66,11 @@ describe('Appeals feature', () => {
 	});
 
 	it('incomplete appellant case reason: add another', () => {
+		let dueDate = new Date(2024, 11, 30); // TODO Should this stay static or be dynamically calculated?
+
 		cy.visit(urlPaths.appealsList);
 		appealsListPage.clickAppealFromList(15); // TODO Change to use page.clickAppealByRef(ref)
-		appealsListPage.clickReviewAppellantCase(3);
+		appealsListPage.clickReviewAppellantCase();
 		appealsListPage.selectRadioButtonByValue('Incomplete');
 		appealsListPage.clickButtonByText('Continue');
 		appealsListPage.chooseCheckboxByIndex(3);
@@ -76,9 +78,7 @@ describe('Appeals feature', () => {
 		appealsListPage.addAnotherButton();
 		appealsListPage.fillInput2('Hello here is some extra info, have a nice day 7384_+!£ =');
 		appealsListPage.clickButtonByText('Continue');
-		updateDueDatePage.enterDateDay('30');
-		updateDueDatePage.enterDateMonth('12');
-		updateDueDatePage.enterDateYear('2024');
+		updateDueDatePage.enterValidDate(dueDate);
 		appealsListPage.clickButtonByText('Save and Continue');
 		appealsListPage.clickButtonByText('Confirm');
 		appealsListPage.clickLinkByText('Go back to case details');

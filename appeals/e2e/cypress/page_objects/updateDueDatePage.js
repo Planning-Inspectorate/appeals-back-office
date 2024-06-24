@@ -46,33 +46,42 @@ export class UpdateDueDatePage extends Page {
 
 	// A C T I O N S
 
+	enterDate(date) {
+		enterDateDay(date.getFullYear());
+		enterDateMonth(date.getMonth() + 1);
+		enterDateYear(date.getDate());
+	}
+
 	enterDateDay(text, index = 0) {
-		cy.get('#due-date-day');
 		this.updateDueDateElements.enterDateDay().eq(index).clear().type(text);
 	}
 
 	enterDateMonth(text, index = 0) {
-		cy.get('#due-date-month');
 		this.updateDueDateElements.enterDateMonth().eq(index).clear().type(text);
 	}
+
 	enterDateYear(text, index = 0) {
-		cy.get('#due-date-year');
 		this.updateDueDateElements.enterDateYear().eq(index).clear().type(text);
 	}
 
+	enterValidDate(date) {
+		validDateDay(date.getFullYear());
+		validDateMonth(date.getMonth() + 1);
+		validDateYear(date.getDate());
+	}
+
 	validDateDay(text, index = 0) {
-		cy.get('#valid-date-day');
 		this.updateDueDateElements.validDateDay().eq(index).clear().type(text);
 	}
 
 	validDateMonth(text, index = 0) {
-		cy.get('#valid-date-month');
 		this.updateDueDateElements.validDateMonth().eq(index).clear().type(text);
 	}
+
 	validDateYear(text, index = 0) {
-		cy.get('#valid-date-year');
 		this.updateDueDateElements.validDateYear().eq(index).clear().type(text);
 	}
+
 	clickSkipButton(text) {
 		this.updateDueDateElements.clickSkipButton(text).click();
 	}
@@ -84,53 +93,42 @@ export class UpdateDueDatePage extends Page {
 	}
 
 	enterVisitDay(text, index = 0) {
-		cy.get('#visit-date-day');
 		this.updateDueDateElements.enterVisitDay().eq(index).clear().type(text);
 	}
 
 	enterVisitMonth(text, index = 0) {
-		cy.get('#visit-date-month');
 		this.updateDueDateElements.enterVisitMonth().eq(index).clear().type(text);
 	}
 	enterVisitYear(text, index = 0) {
-		cy.get('#visit-date-year');
 		this.updateDueDateElements.enterVisitYear().eq(index).clear().type(text);
 	}
 
 	enterVisitStartTimeHour(text, index = 0) {
-		cy.get('#visit-start-time-hour');
 		this.updateDueDateElements.enterVisitStartHour().eq(index).clear().type(text);
 	}
 
 	enterVisitStartTimeMinute(text, index = 0) {
-		cy.get('#visit-start-time-minute');
 		this.updateDueDateElements.enterVisitStartMinute().eq(index).clear().type(text);
 	}
 	enterVisitEndTimeHour(text, index = 0) {
-		cy.get('#visit-end-time-hour');
 		this.updateDueDateElements.enterVisitEndHour().eq(index).clear().type(text);
 	}
 	enterVisitEndTimeMinute(text, index = 0) {
-		cy.get('#visit-end-time-minute');
 		this.updateDueDateElements.enterVisitEndMinute().eq(index).clear().type(text);
 	}
 
 	removeVisitStartTimeHour(index = 0) {
-		cy.get('#visit-start-time-hour');
 		this.updateDueDateElements.enterVisitStartHour().eq(index).clear();
 	}
 
 	removeVisitStartTimeMinute(index = 0) {
-		cy.get('#visit-start-time-minute');
 		this.updateDueDateElements.enterVisitStartMinute().eq(index).clear();
 	}
 
 	removeVisitEndTimeHour(index = 0) {
-		cy.get('#visit-end-time-hour');
 		this.updateDueDateElements.enterVisitEndHour().eq(index).clear();
 	}
 	removeVisitEndTimeMinute(index = 0) {
-		cy.get('#visit-end-time-minute');
 		this.updateDueDateElements.enterVisitEndMinute().eq(index).clear();
 	}
 }

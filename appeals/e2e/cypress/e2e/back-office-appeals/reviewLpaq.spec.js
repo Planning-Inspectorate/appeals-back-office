@@ -27,6 +27,8 @@ describe('Appeals feature', () => {
 	});
 
 	it('incomplete LPAQ', () => {
+		let date = new Date(2024, 11, 19); // TODO Should this stay static or be dynamically calculated?
+
 		cy.visit(urlPaths.appealsList);
 		appealsListPage.clickAppealFromList(30); // TODO Change to use page.clickAppealByRef(ref)
 		appealsListPage.clickReviewLpaq(7);
@@ -35,9 +37,7 @@ describe('Appeals feature', () => {
 		appealsListPage.chooseCheckboxByIndex(1);
 		appealsListPage.fillInput1('Hello here is some extra info, have a nice day 7384_+!£ =');
 		appealsListPage.clickButtonByText('Continue');
-		updateDueDatePage.enterDateDay('19');
-		updateDueDatePage.enterDateMonth('12');
-		updateDueDatePage.enterDateYear('2024');
+		updateDueDatePage.enterDate(date);
 		appealsListPage.clickButtonByText('Save and Continue');
 		appealsListPage.clickButtonByText('Confirm');
 		appealsListPage.clickLinkByText('Go back to case details');
@@ -47,6 +47,8 @@ describe('Appeals feature', () => {
 	});
 
 	it('incomplete LPAQ add another', () => {
+		let date = new Date(2024, 11, 19); // TODO Should this stay static or be dynamically calculated?
+
 		cy.visit(urlPaths.appealsList);
 		appealsListPage.clickAppealFromList(31); // TODO Change to use page.clickAppealByRef(ref)
 		appealsListPage.clickReviewLpaq(7);
@@ -57,9 +59,7 @@ describe('Appeals feature', () => {
 		appealsListPage.addAnotherButtonLpaq();
 		appealsListPage.fillInput2('Hello here is some extra info, have a nice day 7384_+!£ =');
 		appealsListPage.clickButtonByText('Continue');
-		updateDueDatePage.enterDateDay('19');
-		updateDueDatePage.enterDateMonth('12');
-		updateDueDatePage.enterDateYear('2024');
+		updateDueDatePage.enterDate(date);
 		appealsListPage.clickButtonByText('Save and Continue');
 		appealsListPage.clickButtonByText('Confirm');
 		appealsListPage.clickLinkByText('Go back to case details');
