@@ -151,70 +151,71 @@ export const localPlanningDepartmentList = [
 	}
 ];
 
+/** @type {AppealSite[]} */
 export const addressesList = [
 	{
 		addressLine1: '96 The Avenue',
 		addressLine2: 'Maidstone',
-		addressCounty: 'Kent',
-		postcode: 'MD21 5XY'
+		county: 'Kent',
+		postCode: 'MD21 5XY'
 	},
 	{
 		addressLine1: '55 Butcher Street',
-		addressTown: 'Thurnscoe',
-		postcode: 'S63 0RB'
+		town: 'Thurnscoe',
+		postCode: 'S63 0RB'
 	},
 	{
 		addressLine1: '8 The Chase',
-		addressTown: 'Findon',
-		postcode: 'BN14 0TT'
+		town: 'Findon',
+		postCode: 'BN14 0TT'
 	},
 	{
 		addressLine1: '96 The Avenue',
 		addressLine2: 'Maidstone',
-		addressCounty: 'Kent',
-		postcode: 'MD21 5XY'
+		county: 'Kent',
+		postCode: 'MD21 5XY'
 	},
 	{
 		addressLine1: '44 Rivervale',
-		addressTown: 'Bridport',
-		postcode: 'DT6 5RN'
+		town: 'Bridport',
+		postCode: 'DT6 5RN'
 	},
 	{
 		addressLine1: '92 Huntsmoor Road',
-		addressTown: 'Tadley',
-		postcode: 'RG26 4BX'
+		town: 'Tadley',
+		postCode: 'RG26 4BX'
 	},
 	{
 		addressLine1: '1 Grove Cottage',
 		addressLine2: 'Shotesham Road',
-		addressTown: 'Woodton',
-		postcode: 'NR35 2ND'
+		town: 'Woodton',
+		postCode: 'NR35 2ND'
 	},
 	{
 		addressLine1: '19 Beauchamp Road',
-		addressTown: 'Bristol',
-		postcode: 'BS7 8LQ'
+		town: 'Bristol',
+		postCode: 'BS7 8LQ'
 	},
 	{
 		addressLine1: '92 Huntsmoor Road',
-		addressCounty: 'Tadley',
-		postcode: 'RG26 4BX'
+		county: 'Tadley',
+		postCode: 'RG26 4BX'
 	},
 	{
 		addressLine1: '72 Clapham High St',
-		addressCounty: 'Wandsworth',
-		postcode: 'SW4 7UL'
+		county: 'Wandsworth',
+		postCode: 'SW4 7UL'
 	},
 	{
 		addressLine1: '21 The Pavement',
-		addressCounty: 'Wandsworth',
-		postcode: 'SW4 0HY'
+		county: 'Wandsworth',
+		postCode: 'SW4 0HY'
 	},
 	{
 		addressLine1: 'Copthalls',
 		addressLine2: 'Clevedon Road',
-		addressTown: 'West Hill',
-		postcode: 'BS48 1PN'
+		town: 'West Hill',
+		postCode: 'BS48 1PN'
 	}
 ];
 

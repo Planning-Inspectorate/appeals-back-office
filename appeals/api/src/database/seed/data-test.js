@@ -81,6 +81,15 @@ const appealFactory = ({
 	const appellantInput = appellantsList[pickRandom(appellantsList)];
 	const agentInput = agentsList[pickRandom(agentsList)];
 	const lpaInput = localPlanningDepartmentList[pickRandom(localPlanningDepartmentList)];
+	const randomAddress = siteAddressList[pickRandom(siteAddressList)];
+	const formattedAddress = {
+		addressLine1: randomAddress.addressLine1,
+		addressLine2: randomAddress.addressLine2 || null,
+		addressCounty: randomAddress.county || null,
+		addressTown: randomAddress.town || null,
+		postcode: randomAddress.postCode,
+		addressCountry: null
+	};
 
 	const appeal = {
 		appealType: { connect: { key: typeShorthand } },
@@ -105,7 +114,7 @@ const appealFactory = ({
 			}
 		},
 		applicationReference: generateLpaReference(),
-		address: { create: siteAddressList[pickRandom(siteAddressList)] },
+		address: { create: formattedAddress },
 		...(assignCaseOfficer && {
 			caseOfficer: {
 				connectOrCreate: {
@@ -435,18 +444,21 @@ export async function seedTestData(databaseConnector) {
 
 	const appealWithNeighbouringSitesId = appeals[10].id;
 
+	const randomAddress = addressesList[pickRandom(addressesList)];
+	const formattedAddress = {
+		addressLine1: randomAddress.addressLine1,
+		addressLine2: randomAddress.addressLine2 || null,
+		addressCounty: randomAddress.county || null,
+		addressTown: randomAddress.town || undefined,
+		postcode: randomAddress.postCode
+	};
+
 	await neighbouringSitesRepository.addSite(
 		appealWithNeighbouringSitesId,
 		'back-office',
-		addressesList[pickRandom(addressesList)]
+		formattedAddress
 	);
-
-	await neighbouringSitesRepository.addSite(
-		appealWithNeighbouringSitesId,
-		'lpa',
-		addressesList[pickRandom(addressesList)]
-	);
-
+	await neighbouringSitesRepository.addSite(appealWithNeighbouringSitesId, 'lpa', formattedAddress);
 	const linkedAppeals = [
 		{
 			parentRef: appeals[0].reference,
