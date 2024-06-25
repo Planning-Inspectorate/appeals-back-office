@@ -387,7 +387,11 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 					text: 'Site ownership'
 				},
 				value: {
-					text: appellantCaseData.siteOwnership.isFullyOwned ? 'Fully owned' : 'Partially owned'
+					text: appellantCaseData.siteOwnership.ownsAllLand
+						? 'Fully owned'
+						: appellantCaseData.siteOwnership.ownsSomeLand
+						? 'Partially owned'
+						: 'Not owned'
 				},
 				actions: {
 					items: [

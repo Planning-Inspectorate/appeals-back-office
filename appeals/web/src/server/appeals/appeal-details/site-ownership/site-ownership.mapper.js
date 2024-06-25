@@ -12,7 +12,8 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 export const changeSiteOwnershipPage = (appealData, appellantCaseData, storedSessionData) => {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
-	let isFullyOwned = appellantCaseData.siteOwnership.isFullyOwned;
+	let isFullyOwned = appellantCaseData.siteOwnership.ownsAllLand;
+	let isPartiallyOwned = appellantCaseData.siteOwnership.ownsSomeLand;
 
 	if (storedSessionData?.radio) {
 		isFullyOwned = storedSessionData.radio === 'fully';
@@ -46,7 +47,12 @@ export const changeSiteOwnershipPage = (appealData, appellantCaseData, storedSes
 						{
 							value: 'partially',
 							text: 'Partially owned by appellant',
-							checked: !isFullyOwned
+							checked: isPartiallyOwned
+						},
+						{
+							value: 'none',
+							text: 'Not owned by appellant',
+							checked: !isFullyOwned && !isPartiallyOwned
 						}
 					]
 				}

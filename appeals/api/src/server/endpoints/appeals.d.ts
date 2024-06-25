@@ -135,8 +135,8 @@ interface SingleAppellantCaseResponse {
 		areAllOwnersKnown: string | null;
 		knowsOtherLandowners: string | null;
 		ownersInformed: boolean | null;
-		isFullyOwned: boolean | null;
-		isPartiallyOwned: boolean | null;
+		ownsAllLand: boolean | null;
+		ownsSomeLand: boolean | null;
 	};
 	floorSpaceSquareMetres: decimal | null;
 	siteAreaSquareMetres: decimal | null;
@@ -171,8 +171,8 @@ interface UpdateAppellantCaseRequest {
 	hasAttemptedToIdentifyOwners?: boolean;
 	hasHealthAndSafetyIssues?: boolean;
 	healthAndSafetyIssues?: string;
-	isSiteFullyOwned?: boolean;
-	isSitePartiallyOwned?: boolean;
+	ownsAllLand?: boolean;
+	ownsSomeLand?: boolean;
 	isSiteVisibleFromPublicRoad?: boolean;
 	visibilityRestrictions?: string;
 }

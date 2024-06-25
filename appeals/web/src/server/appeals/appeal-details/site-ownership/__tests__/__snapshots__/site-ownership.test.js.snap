@@ -22,6 +22,11 @@ exports[`site-ownership GET /change should render the siteOwnership change page 
                             type="radio" value="partially">
                             <label class="govuk-label govuk-radios__label" for="siteOwnershipRadio-2">Partially owned by appellant</label>
                         </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="siteOwnershipRadio-3" name="siteOwnershipRadio"
+                            type="radio" value="none">
+                            <label class="govuk-label govuk-radios__label" for="siteOwnershipRadio-3">Not owned by appellant</label>
+                        </div>
                     </div>
                 </div>
                 <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>

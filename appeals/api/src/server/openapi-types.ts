@@ -738,10 +738,10 @@ export interface SingleAppellantCaseResponse {
 		/** @example true */
 		hasToldOwners?: boolean;
 		/** @example false */
-		isFullyOwned?: boolean;
+		ownsAllLand?: boolean;
 		/** @example true */
-		isPartiallyOwned?: boolean;
-		/** @example "Some" */
+		ownsSomeLand?: boolean;
+		/** @example "false" */
 		knowsOtherLandowners?: string;
 	};
 	validation?: {

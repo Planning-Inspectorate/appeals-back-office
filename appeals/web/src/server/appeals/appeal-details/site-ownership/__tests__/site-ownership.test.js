@@ -70,5 +70,22 @@ describe('site-ownership', () => {
 				'Found. Redirecting to /appeals-service/appeal-details/1/appellant-case'
 			);
 		});
+
+		it('should re-direct to appellant-case if site is not owned', async () => {
+			const validData = {
+				siteOwnershipRadio: 'none'
+			};
+
+			nock('http://test/')
+				.patch(`/appeals/${appealId}/appellant-cases/${appellantCaseId}`)
+				.reply(200, validData);
+
+			const response = await request.post(`${baseUrl}/site-ownership/change`).send(validData);
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/appellant-case'
+			);
+		});
 	});
 });
