@@ -117,6 +117,10 @@ interface SingleAppellantCaseResponse {
 		firstName: string | null;
 		surname: string | null;
 	};
+	applicationDate: Date;
+	applicationDecisionDate: Date | null;
+	caseSubmissionDueDate: Date | null;
+	caseSubmittedDate: Date | null;
 	isAppellantNamedOnApplication: boolean | null;
 	planningApplicationReference: string;
 	hasAdvertisedAppeal: boolean | null;
@@ -126,9 +130,11 @@ interface SingleAppellantCaseResponse {
 	};
 	localPlanningDepartment: string;
 	procedureType?: string;
+	enforcementNotice?: boolean | null;
 	siteOwnership: {
 		areAllOwnersKnown: string | null;
 		knowsOtherLandowners: string | null;
+		ownersInformed: boolean | null;
 		isFullyOwned: boolean | null;
 		isPartiallyOwned: boolean | null;
 		floorSpaceSquareMetres: decimal | null;
@@ -215,7 +221,6 @@ interface SingleLPAQuestionnaireResponse {
 	lpaNotificationMethods?: LPANotificationMethodDetails[] | null;
 	affectsListedBuildingDetails?: ListedBuildingDetailsResponse | null;
 	listedBuildingDetails?: ListedBuildingDetailsResponse | null;
-
 	healthAndSafetyDetails?: string | null;
 	doesSiteHaveHealthAndSafetyIssues?: boolean | null;
 	inspectorAccessDetails?: string | null;
@@ -223,11 +228,9 @@ interface SingleLPAQuestionnaireResponse {
 	isConservationArea?: boolean | null;
 	siteWithinGreenBelt?: boolean | null;
 	isCorrectAppealType?: boolean | null;
-
 	submittedAt?: Date | null;
 	receivedAt: Date;
 	otherAppeals?: string[] | null;
-
 	costsAppliedFor?: boolean | null;
 	lpaStatement?: string | null;
 	extraConditions?: string | null;

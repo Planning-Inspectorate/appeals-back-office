@@ -25,13 +25,14 @@ const futureDateAndTime = joinDateAndTime(futureDate);
 const houseAppealWithTimetable = {
 	...householdAppeal,
 	caseStartedDate: new Date(2022, 4, 18),
+	caseValidationDate: new Date(2022, 4, 20),
 	caseValidDate: new Date(2022, 4, 20),
 	appealTimetable: {
 		appealId: 1,
 		finalCommentReviewDate: null,
 		id: 1,
 		issueDeterminationDate: null,
-		lpaQuestionnaireDueDate: '2023-05-16T01:00:00.000Z',
+		lpaQuestionnaireDueDate: new Date('2023-05-16T01:00:00.000Z'),
 		statementReviewDate: null
 	}
 };
@@ -39,13 +40,14 @@ const houseAppealWithTimetable = {
 const fullPlanningAppealWithTimetable = {
 	...fullPlanningAppeal,
 	caseStartedDate: new Date(2022, 4, 18),
+	caseValidationDate: new Date(2022, 4, 20),
 	caseValidDate: new Date(2022, 4, 20),
 	appealTimetable: {
 		appealId: 1,
 		finalCommentReviewDate: null,
 		id: 1,
 		issueDeterminationDate: null,
-		lpaQuestionnaireDueDate: '2023-05-16T01:00:00.000Z',
+		lpaQuestionnaireDueDate: new Date('2023-05-16T01:00:00.000Z'),
 		statementReviewDate: null
 	}
 };

@@ -55,8 +55,11 @@ const formatLpaQuestionnaire = (appeal, folders = null) => {
 				isConservationArea: lpaQuestionnaire.inConservationArea,
 				siteWithinGreenBelt: lpaQuestionnaire.siteWithinGreenBelt,
 				isCorrectAppealType: lpaQuestionnaire.isCorrectAppealType,
-				submittedAt: lpaQuestionnaire.lpaQuestionnaireSubmittedDate,
-				receivedAt: lpaQuestionnaire.lpaqCreatedDate,
+				submittedAt:
+					lpaQuestionnaire.lpaQuestionnaireSubmittedDate &&
+					lpaQuestionnaire.lpaQuestionnaireSubmittedDate?.toISOString(),
+				receivedAt:
+					lpaQuestionnaire.lpaqCreatedDate && lpaQuestionnaire.lpaqCreatedDate.toISOString(),
 				costsAppliedFor: lpaQuestionnaire.lpaCostsAppliedFor,
 				lpaStatement: lpaQuestionnaire.lpaStatement,
 				extraConditions: lpaQuestionnaire.newConditionDetails,

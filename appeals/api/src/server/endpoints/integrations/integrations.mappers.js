@@ -3,7 +3,10 @@ import { randomUUID } from 'node:crypto';
 import {
 	mapAddressIn,
 	mapNeighbouringAddressIn,
-	mapAddressOut
+	mapAddressOut,
+	mapNeighbouringAddressOut,
+	mapSiteAccessDetailsOut,
+	mapSiteSafetyDetailsOut
 } from './integrations.mappers/address.mapper.js';
 import { mapLpaIn, mapLpaOut } from './integrations.mappers/lpa.mapper.js';
 import { mapDocumentIn, mapDocumentOut } from './integrations.mappers/document.mapper.js';
@@ -18,15 +21,25 @@ import {
 } from './integrations.mappers/questionnaire.mapper.js';
 import { mapAppealTypeIn, mapAppealTypeOut } from './integrations.mappers/appeal-type.mapper.js';
 import { mapAppealAllocationOut } from './integrations.mappers/appeal-allocation.mapper.js';
-import { mapCaseDataOut } from './integrations.mappers/casedata.mapper.js';
+import {
+	mapAppealStatusOut,
+	mapAppealDatesOut,
+	mapAppealValidationOut,
+	mapQuestionnaireValidationOut,
+	mapAppealRelationships
+} from './integrations.mappers/casedata.mapper.js';
 import { ODW_AGENT_SVCUSR, ODW_APPELLANT_SVCUSR } from '@pins/appeals/constants/common.js';
 import { STAGE } from '@pins/appeals/constants/documents.js';
 import { FOLDERS } from '@pins/appeals/constants/documents.js';
+
+/** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
+/** @typedef {import('pins-data-model').Schemas.AppealHASCase} AppealHASCase */
 
 const mappers = {
 	mapAddressIn,
 	mapNeighbouringAddressIn,
 	mapAddressOut,
+	mapNeighbouringAddressOut,
 	mapLpaIn,
 	mapLpaOut,
 	mapDocumentIn,
@@ -40,7 +53,13 @@ const mappers = {
 	mapServiceUserIn,
 	mapServiceUserOut,
 	mapAppealAllocationOut,
-	mapCaseDataOut
+	mapAppealStatusOut,
+	mapAppealDatesOut,
+	mapSiteAccessDetailsOut,
+	mapSiteSafetyDetailsOut,
+	mapAppealValidationOut,
+	mapQuestionnaireValidationOut,
+	mapAppealRelationships
 };
 
 /** @typedef {import('pins-data-model').Schemas.AppellantSubmissionCommand} AppellantSubmissionCommand */
@@ -132,22 +151,43 @@ const mapQuestionnaireSubmission = (data) => {
 
 /**
  *
- * @param {*} appeal
- * @returns
+ * @param {Appeal} appeal
+ * @returns {AppealHASCase}
  */
 const mapAppeal = (appeal) => {
 	const topic = {
-		caseType: mappers.mapAppealTypeOut(appeal.appealType.shorthand),
+		// Main info
+		caseStatus: mappers.mapAppealStatusOut(appeal),
+		caseType: mappers.mapAppealTypeOut(appeal.appealType),
+		caseProcedure: appeal.procedureType?.key || 'written',
 		caseId: appeal.id,
 		caseReference: appeal.reference,
-		applicationReference: appeal.planningApplicationReference,
+		applicationReference: appeal.applicationReference,
 		...mappers.mapLpaOut(appeal),
+		...mappers.mapAppealAllocationOut(appeal.allocation, appeal.specialisms || []),
+		// EntraID users
+		caseOfficerId: appeal.caseOfficer?.azureAdUserId || null,
+		inspectorId: appeal.inspector?.azureAdUserId || null,
+		// Site info
+		...mappers.mapSiteAccessDetailsOut(appeal),
+		...mappers.mapSiteSafetyDetailsOut(appeal),
 		...mappers.mapAddressOut(appeal),
-		...mappers.mapAppealAllocationOut(appeal.allocation, appeal.specialisms),
+		// Submissions
 		...mappers.mapAppellantCaseOut(appeal.appellantCase),
-		...mappers.mapQuestionnaireOut(appeal.lpaQuestionnaire)
+		...mappers.mapQuestionnaireOut(appeal.lpaQuestionnaire),
+		...mappers.mapAppealDatesOut(appeal),
+		...mappers.mapAppealValidationOut(appeal),
+		...mappers.mapQuestionnaireValidationOut(appeal),
+		neighbouringSiteAddresses: mappers.mapNeighbouringAddressOut(appeal.neighbouringSites || []),
+		affectedListedBuildingNumbers:
+			appeal.lpaQuestionnaire?.listedBuildingDetails?.map((lb) => lb.listEntry) || null,
+		// Decision
+		caseDecisionOutcome: appeal.inspectorDecision?.outcome || null,
+		// linked and related appeals
+		...mapAppealRelationships(appeal)
 	};
 
+	// @ts-ignore
 	return topic;
 };
 

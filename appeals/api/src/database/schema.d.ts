@@ -3,6 +3,8 @@ import * as schema from '#utils/db-client';
 import { CaseOfficer, Inspector } from '@pins/appeals';
 
 export interface Appeal extends schema.Appeal {
+	parentAppeals: AppealRelationship[];
+	childAppeals: AppealRelationship[];
 	appealStatus: AppealStatus[];
 	appealType?: AppealType | null;
 	lpa?: LPA | null;
@@ -18,8 +20,8 @@ export interface Appeal extends schema.Appeal {
 	appealTimetable?: AppealTimetable | null;
 	appellantCase?: AppellantCase | null;
 	lpaQuestionnaire?: LPAQuestionnaire | null;
-	caseOfficer?: CaseOfficer | null;
-	inspector?: Inspector | null;
+	caseOfficer?: User | null;
+	inspector?: User | null;
 	siteVisit?: SiteVisit | null;
 	inspectorDecision?: InspectorDecision | null;
 	neighbouringSites?: NeighbouringSite[] | null;

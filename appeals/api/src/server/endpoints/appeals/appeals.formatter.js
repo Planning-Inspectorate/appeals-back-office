@@ -156,10 +156,19 @@ const formatAppeal = (
 			appealTimetable: appeal.appealTimetable
 				? {
 						appealTimetableId: appeal.appealTimetable.id,
-						lpaQuestionnaireDueDate: appeal.appealTimetable.lpaQuestionnaireDueDate || null,
+						lpaQuestionnaireDueDate:
+							(appeal.appealTimetable.lpaQuestionnaireDueDate &&
+								appeal.appealTimetable.lpaQuestionnaireDueDate) ||
+							null,
 						...(isFPA(appeal.appealType?.key || '') && {
-							finalCommentReviewDate: appeal.appealTimetable.finalCommentReviewDate || null,
-							statementReviewDate: appeal.appealTimetable.statementReviewDate || null
+							finalCommentReviewDate:
+								(appeal.appealTimetable.finalCommentReviewDate &&
+									appeal.appealTimetable.finalCommentReviewDate) ||
+								null,
+							statementReviewDate:
+								(appeal.appealTimetable.statementReviewDate &&
+									appeal.appealTimetable.statementReviewDate) ||
+								null
 						})
 				  }
 				: null,
@@ -182,7 +191,8 @@ const formatAppeal = (
 							folderId: decisionFolders[0].id,
 							outcome: appeal.inspectorDecision.outcome,
 							documentId: appeal.inspectorDecision?.decisionLetterGuid,
-							letterDate: decisionInfo.letterDate,
+							letterDate:
+								(decisionInfo.letterDate && decisionInfo.letterDate?.toISOString()) || null,
 							virusCheckStatus: decisionInfo.virusCheckStatus
 					  }
 					: {
@@ -228,25 +238,29 @@ const formatAppeal = (
 			...(appeal.siteVisit?.id && {
 				siteVisit: {
 					siteVisitId: appeal.siteVisit.id,
-					visitDate: appeal.siteVisit.visitDate || null,
+					visitDate: appeal.siteVisit.visitDate?.toISOString() || null,
 					visitStartTime: appeal.siteVisit.visitStartTime,
 					visitEndTime: appeal.siteVisit?.visitEndTime || null,
 					visitType: appeal.siteVisit.siteVisitType.name
 				}
 			}),
-			createdAt: appeal.caseCreatedDate,
-			startedAt: appeal.caseStartedDate,
-			validAt: appeal.caseValidDate,
+			createdAt: appeal.caseCreatedDate.toISOString(),
+			startedAt: appeal.caseStartedDate && appeal.caseStartedDate?.toISOString(),
+			validAt: appeal.caseValidDate && appeal.caseValidDate?.toISOString(),
 			documentationSummary: {
 				appellantCase: {
 					status: formatAppellantCaseDocumentationStatus(appeal),
-					dueDate: appeal.caseExtensionDate,
-					receivedAt: appeal.caseCreatedDate
+					dueDate: appeal.caseExtensionDate && appeal.caseExtensionDate?.toISOString(),
+					receivedAt: appeal.caseCreatedDate.toISOString()
 				},
 				lpaQuestionnaire: {
 					status: formatLpaQuestionnaireDocumentationStatus(appeal),
-					dueDate: appeal.appealTimetable?.lpaQuestionnaireDueDate || null,
-					receivedAt: appeal.lpaQuestionnaire?.lpaqCreatedDate || null
+					dueDate:
+						appeal.appealTimetable?.lpaQuestionnaireDueDate &&
+						appeal.appealTimetable?.lpaQuestionnaireDueDate.toISOString(),
+					receivedAt:
+						appeal.lpaQuestionnaire?.lpaqCreatedDate &&
+						appeal.lpaQuestionnaire?.lpaqCreatedDate.toISOString()
 				}
 			}
 		};

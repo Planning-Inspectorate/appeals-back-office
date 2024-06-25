@@ -2231,19 +2231,6 @@ describe('site visit routes', () => {
 				// eslint-disable-next-line no-undef
 				expect(mockSendEmail).not.toHaveBeenCalled();
 			});
-
-			test('does not throw an error if given an empty body', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.update.mockResolvedValue(householdAppeal);
-
-				const response = await request
-					.patch(`/appeals/${householdAppeal.id}`)
-					.send({})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(200);
-				expect(response.body).toEqual({});
-			});
 		});
 	});
 

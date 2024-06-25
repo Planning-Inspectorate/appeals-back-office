@@ -11,11 +11,14 @@ const entityInfo = {
 	name: 'AppealDocumentMetadata'
 };
 
-export const broadcastDocument = async (
-	/** @type {string} */ documentId,
-	/** @type {number} */ version,
-	/** @type {string} */ updateType
-) => {
+/**
+ *
+ * @param {string} documentId
+ * @param {number} version
+ * @param {string} updateType
+ * @returns
+ */
+export const broadcastDocument = async (documentId, version, updateType) => {
 	if (!config.serviceBusEnabled) {
 		return false;
 	}

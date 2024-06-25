@@ -1,10 +1,6 @@
 import { databaseConnector } from '#utils/database-connector.js';
 import { hasValueOrIsNull } from '#endpoints/appeals/appeals.service.js';
-import {
-	DATABASE_ORDER_BY_DESC,
-	CASE_RELATIONSHIP_LINKED,
-	CASE_RELATIONSHIP_RELATED
-} from '#endpoints/constants.js';
+import { CASE_RELATIONSHIP_LINKED, CASE_RELATIONSHIP_RELATED } from '#endpoints/constants.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.InspectorDecision} InspectorDecision */
@@ -32,6 +28,8 @@ const getAppealById = async (id) => {
 		include: {
 			address: true,
 			procedureType: true,
+			parentAppeals: true,
+			childAppeals: true,
 			neighbouringSites: {
 				include: { address: true }
 			},
@@ -97,22 +95,7 @@ const getAppealById = async (id) => {
 	});
 
 	if (appeal) {
-		const appealRelationships = await databaseConnector.appealRelationship.findMany({
-			where: {
-				OR: [
-					{
-						parentRef: {
-							equals: appeal.reference
-						}
-					},
-					{
-						childRef: {
-							equals: appeal.reference
-						}
-					}
-				]
-			}
-		});
+		const appealRelationships = [...(appeal.parentAppeals || []), ...(appeal.childAppeals || [])];
 
 		const linkedAppeals = appealRelationships.filter(
 			(relationship) => relationship.type === CASE_RELATIONSHIP_LINKED
@@ -251,30 +234,9 @@ const getAppealByAppealReference = async (appealReference) => {
 			reference: appealReference
 		},
 		include: {
+			parentAppeals: true,
+			childAppeals: true,
 			address: true,
-			allocation: true,
-			specialisms: {
-				include: {
-					specialism: true
-				}
-			},
-			appellantCase: {
-				include: {
-					appellantCaseIncompleteReasonsSelected: {
-						include: {
-							appellantCaseIncompleteReason: true,
-							appellantCaseIncompleteReasonText: true
-						}
-					},
-					appellantCaseInvalidReasonsSelected: {
-						include: {
-							appellantCaseInvalidReason: true,
-							appellantCaseInvalidReasonText: true
-						}
-					},
-					appellantCaseValidationOutcome: true
-				}
-			},
 			appellant: true,
 			agent: true,
 			lpa: true,
@@ -283,66 +245,25 @@ const getAppealByAppealReference = async (appealReference) => {
 					valid: true
 				}
 			},
-			appealTimetable: true,
-			appealType: true,
-			auditTrail: {
-				include: {
-					user: true
-				},
-				orderBy: {
-					loggedAt: DATABASE_ORDER_BY_DESC
-				}
-			},
-			caseOfficer: true,
-			inspector: true,
-			inspectorDecision: true,
-			lpaQuestionnaire: {
-				include: {
-					listedBuildingDetails: true,
-					lpaNotificationMethods: {
-						include: {
-							lpaNotificationMethod: true
-						}
-					},
-					lpaQuestionnaireIncompleteReasonsSelected: {
-						include: {
-							lpaQuestionnaireIncompleteReason: true,
-							lpaQuestionnaireIncompleteReasonText: true
-						}
-					},
-					lpaQuestionnaireValidationOutcome: true
-				}
-			},
-			siteVisit: {
-				include: {
-					siteVisitType: true
-				}
-			}
+			appealType: true
 		}
 	});
 
 	if (appeal) {
-		const linkedAppeals = await databaseConnector.appealRelationship.findMany({
-			where: {
-				OR: [
-					{
-						parentRef: {
-							equals: appeal.reference
-						}
-					},
-					{
-						childRef: {
-							equals: appeal.reference
-						}
-					}
-				]
-			}
-		});
+		const appealRelationships = [...(appeal.parentAppeals || []), ...(appeal.childAppeals || [])];
+
+		const linkedAppeals = appealRelationships.filter(
+			(relationship) => relationship.type === CASE_RELATIONSHIP_LINKED
+		);
+		const relatedAppeals = appealRelationships.filter(
+			(relationship) => relationship.type === CASE_RELATIONSHIP_RELATED
+		);
 
 		// @ts-ignore
 		return {
 			...appeal,
-			linkedAppeals
+			linkedAppeals,
+			relatedAppeals
 		};
 	}
 };
@@ -397,6 +318,7 @@ const getAppealsByIds = async (linkedAppealIds) => {
 		}
 	});
 
+	// @ts-ignore
 	return appeals;
 };
 

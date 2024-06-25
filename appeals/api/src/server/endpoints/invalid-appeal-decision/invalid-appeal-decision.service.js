@@ -44,12 +44,12 @@ export const publishInvalidDecision = async (
 			: 'Address not available';
 		const emailVariables = {
 			appeal_reference_number: appeal.reference,
-			lpa_reference: appeal.applicationReference,
+			lpa_reference: appeal.applicationReference || '',
 			site_address: siteAddress,
 			reasons: invalidDecisionReason
 		};
 
-		if (!recipientEmail) {
+		if (!recipientEmail || !appeal.lpa?.email) {
 			throw new Error(ERROR_NO_RECIPIENT_EMAIL);
 		}
 		try {
