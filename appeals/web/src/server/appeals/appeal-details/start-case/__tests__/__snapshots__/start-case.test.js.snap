@@ -1,5 +1,23 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`start-case GET /start-case/add should render the start case page with the expected content 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Start case</h1>
+        </div>
+    </div>
+    <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+        <strong         class="govuk-warning-text__text"><span class="govuk-warning-text__assistive">Warning</span> Confirming will
+            activate the timetable on 25 June 2024. Start letters will be sent to the
+            relevant parties.</strong>
+    </div>
+    <form action="" method="POST" novalidate>
+        <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+    </form>
+</main>"
+`;
+
 exports[`start-case GET /start-case/add/confirmation should render "Case started" confirmation page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-width-container">
@@ -17,6 +35,24 @@ exports[`start-case GET /start-case/add/confirmation should render "Case started
             </div>
         </div>
     </div>
+</main>"
+`;
+
+exports[`start-case GET /start-case/change should render the change start date page with the expected content 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Change start date</h1>
+        </div>
+    </div>
+    <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+        <strong         class="govuk-warning-text__text"><span class="govuk-warning-text__assistive">Warning</span> Confirming will
+            change the start day to 25 June 2024 and update the case timetable. New
+            start letters will be sent to relevant parties.</strong>
+    </div>
+    <form action="" method="POST" novalidate>
+        <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+    </form>
 </main>"
 `;
 
