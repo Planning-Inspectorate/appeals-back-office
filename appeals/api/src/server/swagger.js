@@ -308,8 +308,8 @@ export const spec = {
 				areAllOwnersKnown: true,
 				hasAttemptedToIdentifyOwners: true,
 				hasToldOwners: true,
-				isFullyOwned: false,
-				isPartiallyOwned: true,
+				ownsAllLand: false,
+				ownsSomeLand: true,
 				knowsOtherLandowners: 'Some'
 			},
 			validation: {

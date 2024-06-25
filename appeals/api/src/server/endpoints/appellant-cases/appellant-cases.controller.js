@@ -42,8 +42,8 @@ const updateAppellantCaseById = async (req, res) => {
 			hasHealthAndSafetyIssues,
 			healthAndSafetyIssues,
 			inspectorAccessDetails,
-			isSiteFullyOwned,
-			isSitePartiallyOwned,
+			ownsAllLand,
+			ownsSomeLand,
 			isSiteVisibleFromPublicRoad,
 			visibilityRestrictions
 		},
@@ -89,8 +89,8 @@ const updateAppellantCaseById = async (req, res) => {
 					hasHealthAndSafetyIssues,
 					healthAndSafetyIssues,
 					inspectorAccessDetails,
-					isSiteFullyOwned,
-					isSitePartiallyOwned,
+					ownsAllLand,
+					ownsSomeLand,
 					isSiteVisibleFromPublicRoad,
 					visibilityRestrictions
 			  });
@@ -113,8 +113,8 @@ const updateAppellantCaseById = async (req, res) => {
 				hasAttemptedToIdentifyOwners,
 				hasHealthAndSafetyIssues,
 				healthAndSafetyIssues,
-				isSiteFullyOwned,
-				isSitePartiallyOwned,
+				ownsAllLand,
+				ownsSomeLand,
 				isSiteVisibleFromPublicRoad,
 				visibilityRestrictions
 		  };

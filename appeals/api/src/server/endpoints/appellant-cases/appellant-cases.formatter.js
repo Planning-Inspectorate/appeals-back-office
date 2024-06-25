@@ -54,8 +54,8 @@ const formatAppellantCase = (appeal, folders = null) => {
 				areAllOwnersKnown: appellantCase.knowsAllOwners?.name || null,
 				knowsOtherLandowners: appellantCase.knowsOtherOwners?.name || null,
 				ownersInformed: appellantCase.ownersInformed || null,
-				isFullyOwned: appellantCase.ownsAllLand || null,
-				isPartiallyOwned: appellantCase.ownsSomeLand || null
+				ownsAllLand: appellantCase.ownsAllLand || null,
+				ownsSomeLand: appellantCase.ownsSomeLand || null
 			},
 			floorSpaceSquareMetres: appellantCase.floorSpaceSquareMetres || null,
 			siteAreaSquareMetres: appellantCase.siteAreaSquareMetres || null,

@@ -323,8 +323,8 @@ export const appellantCaseDataNotValidated = {
 		areAllOwnersKnown: null,
 		hasAttemptedToIdentifyOwners: null,
 		hasToldOwners: null,
-		isFullyOwned: true,
-		isPartiallyOwned: null,
+		ownsAllLand: true,
+		ownsSomeLand: null,
 		knowsOtherLandowners: null
 	},
 	validation: null,

@@ -4722,11 +4722,11 @@
 								"type": "boolean",
 								"example": true
 							},
-							"isFullyOwned": {
+							"ownsAllLand": {
 								"type": "boolean",
 								"example": false
 							},
-							"isPartiallyOwned": {
+							"ownsSomeLand": {
 								"type": "boolean",
 								"example": true
 							},
