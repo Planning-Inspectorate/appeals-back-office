@@ -55,10 +55,10 @@ const formatAppellantCase = (appeal, folders = null) => {
 				knowsOtherLandowners: appellantCase.knowsOtherOwners?.name || null,
 				ownersInformed: appellantCase.ownersInformed || null,
 				isFullyOwned: appellantCase.ownsAllLand || null,
-				isPartiallyOwned: appellantCase.ownsSomeLand || null,
-				floorSpaceSquareMetres: appellantCase.floorSpaceSquareMetres || null,
-				siteAreaSquareMetres: appellantCase.siteAreaSquareMetres || null
+				isPartiallyOwned: appellantCase.ownsSomeLand || null
 			},
+			floorSpaceSquareMetres: appellantCase.floorSpaceSquareMetres || null,
+			siteAreaSquareMetres: appellantCase.siteAreaSquareMetres || null,
 			developmentDescription: {
 				details: appellantCase.originalDevelopmentDescription || null,
 				isCorrect: appellantCase.changedDevelopmentDescription !== true
@@ -68,6 +68,8 @@ const formatAppellantCase = (appeal, folders = null) => {
 				appellantCase.appellantCaseIncompleteReasonsSelected,
 				appellantCase.appellantCaseInvalidReasonsSelected
 			),
+			applicationDecision: appellantCase.applicationDecision || null,
+			appellantCostsAppliedFor: appellantCase.appellantCostsAppliedFor,
 			...formatFoldersAndDocuments(folders)
 		};
 	}
