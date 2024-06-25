@@ -91,23 +91,23 @@ export async function appellantCasePage(appellantCaseData, appealDetails, curren
 		parameters: {
 			card: {
 				title: {
-					text: '1. Appellant'
+					text: '1. Appellant details'
 				}
 			},
 			rows: [
 				mappedAppellantCaseData.appellant.display.summaryListItem,
-				mappedAppellantCaseData.applicationReference.display.summaryListItem
+				...(appealDetails.agent ? [mappedAppellantCaseData.agent.display.summaryListItem] : [])
 			]
 		}
 	};
 
-	if (appealDetails.agent) {
-		appellantSummary.parameters.rows.splice(
-			1,
-			0,
-			mappedAppellantCaseData.agent.display.summaryListItem
-		);
-	}
+	// if (appealDetails.agent) {
+	// 	appellantSummary.parameters.rows.splice(
+	// 		1,
+	// 		0,
+	// 		mappedAppellantCaseData.agent.display.summaryListItem
+	// 	);
+	// }
 
 	/**
 	 * @type {PageComponent}
@@ -117,16 +117,49 @@ export async function appellantCasePage(appellantCaseData, appealDetails, curren
 		parameters: {
 			card: {
 				title: {
-					text: '2. Appeal site'
+					text: '2. Site details'
 				}
 			},
 			rows: [
 				mappedAppellantCaseData.siteAddress.display.summaryListItem,
+				mappedAppellantCaseData.siteArea.display.summaryListItem,
+				mappedAppellantCaseData.inGreenBelt.display.summaryListItem,
 				mappedAppellantCaseData.siteOwnership.display.summaryListItem,
-				mappedAppellantCaseData.allOwnersKnown.display.summaryListItem,
-				mappedAppellantCaseData.advertisedAppeal.display.summaryListItem,
 				mappedAppellantCaseData.inspectorAccess.display.summaryListItem,
 				mappedAppellantCaseData.healthAndSafetyIssues.display.summaryListItem
+			]
+		}
+	};
+
+	/**
+	 * @type {PageComponent}
+	 */
+	const applicationSummary = {
+		type: 'summary-list',
+		parameters: {
+			attributes: {
+				id: 'application-summary'
+			},
+			card: {
+				title: {
+					text: '3. Application details'
+				}
+			},
+			rows: [
+				removeSummaryListActions(
+					mappedAppellantCaseData.localPlanningAuthority.display.summaryListItem
+				),
+				removeSummaryListActions(
+					mappedAppellantCaseData.applicationReference.display.summaryListItem
+				),
+				mappedAppellantCaseData.applicationDate.display.summaryListItem,
+				mappedAppellantCaseData.applicationForm.display.summaryListItem,
+				mappedAppellantCaseData.developmentDescription.display.summaryListItem,
+				mappedAppellantCaseData.changedDevelopmentDescription.display.summaryListItem,
+				mappedAppellantCaseData.changedDevelopmentDescriptionDocument.display.summaryListItem,
+				mappedAppellantCaseData.applicationDecisionDate.display.summaryListItem,
+				mappedAppellantCaseData.decisionLetter.display.summaryListItem,
+				mappedAppellantCaseData.applicationDecision.display.summaryListItem
 			]
 		}
 	};
@@ -142,13 +175,15 @@ export async function appellantCasePage(appellantCaseData, appealDetails, curren
 			},
 			card: {
 				title: {
-					text: '3. Appeal status'
+					text: '4. Appeal details'
 				}
 			},
 			rows: [
-				mappedAppellantCaseData.applicationForm.display.summaryListItem,
-				mappedAppellantCaseData.decisionLetter.display.summaryListItem,
-				mappedAppellantCaseData.appealStatement.display.summaryListItem
+				removeSummaryListActions(mappedAppellantCaseData.appealType.display.summaryListItem),
+				mappedAppellantCaseData.appealStatement.display.summaryListItem,
+				mappedAppellantCaseData.relatedAppeals.display.summaryListItem,
+				mappedAppellantCaseData.appellantCostsApplication.display.summaryListItem,
+				mappedAppellantCaseData.costsDocument.display.summaryListItem
 			]
 		}
 	};
@@ -271,6 +306,7 @@ export async function appellantCasePage(appellantCaseData, appealDetails, curren
 			appellantCaseSummary,
 			appellantSummary,
 			appealSiteSummary,
+			applicationSummary,
 			appealSummary,
 			additionalDocumentsSummary,
 			...reviewOutcomeComponents

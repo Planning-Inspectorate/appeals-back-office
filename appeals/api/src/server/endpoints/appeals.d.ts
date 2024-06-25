@@ -137,13 +137,18 @@ interface SingleAppellantCaseResponse {
 		ownersInformed: boolean | null;
 		isFullyOwned: boolean | null;
 		isPartiallyOwned: boolean | null;
-		floorSpaceSquareMetres: decimal | null;
-		siteAreaSquareMetres: decimal | null;
 	};
+	floorSpaceSquareMetres: decimal | null;
+	siteAreaSquareMetres: decimal | null;
 	developmentDescription?: {
 		details: string | null;
 		isCorrect: boolean | null;
 	};
+	applicationDecisionDate: string | null;
+	applicationDate: string | null;
+	applicationDecision: string | null;
+	enforcementNotice: null;
+	appellantCostsAppliedFor: boolean | null;
 	documents: {
 		appellantCaseCorrespondence?: FolderInfo | null;
 		appellantCaseWithdrawalLetter?: FolderInfo | null;
