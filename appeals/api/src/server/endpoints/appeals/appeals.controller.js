@@ -214,11 +214,11 @@ const updateAppealById = async (req, res) => {
 				details = stringTokenReplacement(AUDIT_TRAIL_ASSIGNED_INSPECTOR, [inspector]);
 			} else if (caseOfficer === null && appeal.caseOfficer) {
 				details = stringTokenReplacement(AUDIT_TRAIL_REMOVED_CASE_OFFICER, [
-					appeal.caseOfficer.azureAdUserId
+					appeal.caseOfficer.azureAdUserId || ''
 				]);
 			} else if (inspector === null && appeal.inspector) {
 				details = stringTokenReplacement(AUDIT_TRAIL_REMOVED_INSPECTOR, [
-					appeal.inspector.azureAdUserId
+					appeal.inspector.azureAdUserId || ''
 				]);
 			}
 

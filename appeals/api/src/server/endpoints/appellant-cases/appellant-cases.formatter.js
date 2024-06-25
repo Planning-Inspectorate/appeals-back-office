@@ -16,7 +16,6 @@ const formatAppellantCase = (appeal, folders = null) => {
 	const { appellantCase } = appeal;
 
 	if (appellantCase) {
-		// @ts-ignore
 		return {
 			appealId: appeal.id,
 			appealReference: appeal.reference,
@@ -30,6 +29,18 @@ const formatAppellantCase = (appeal, folders = null) => {
 				surname: appeal.appellant?.lastName || ''
 			},
 			isAppellantNamedOnApplication: appeal.agent == null,
+			// @ts-ignore
+			applicationDate: appellantCase.applicationDate && appellantCase.applicationDate.toISOString(),
+			// @ts-ignore
+			applicationDecisionDate:
+				appellantCase.applicationDecisionDate &&
+				appellantCase.applicationDecisionDate?.toISOString(),
+			// @ts-ignore
+			caseSubmissionDueDate:
+				appellantCase.caseSubmissionDueDate && appellantCase.caseSubmissionDueDate?.toISOString(),
+			// @ts-ignore
+			caseSubmittedDate:
+				appellantCase.caseSubmittedDate && appellantCase.caseSubmittedDate?.toISOString(),
 			planningApplicationReference: appeal.applicationReference || '',
 			hasAdvertisedAppeal: appellantCase.hasAdvertisedAppeal,
 			healthAndSafety: {
@@ -38,14 +49,16 @@ const formatAppellantCase = (appeal, folders = null) => {
 			},
 			localPlanningDepartment: appeal.lpa?.name || '',
 			procedureType: appeal.procedureType?.name,
+			enforcementNotice: appellantCase?.enforcementNotice || null,
 			siteOwnership: {
 				areAllOwnersKnown: appellantCase.knowsAllOwners?.name || null,
 				knowsOtherLandowners: appellantCase.knowsOtherOwners?.name || null,
+				ownersInformed: appellantCase.ownersInformed || null,
 				isFullyOwned: appellantCase.ownsAllLand || null,
-				isPartiallyOwned: appellantCase.ownsSomeLand || null,
-				floorSpaceSquareMetres: appellantCase.floorSpaceSquareMetres || null,
-				siteAreaSquareMetres: appellantCase.siteAreaSquareMetres || null
+				isPartiallyOwned: appellantCase.ownsSomeLand || null
 			},
+			floorSpaceSquareMetres: appellantCase.floorSpaceSquareMetres || null,
+			siteAreaSquareMetres: appellantCase.siteAreaSquareMetres || null,
 			developmentDescription: {
 				details: appellantCase.originalDevelopmentDescription || null,
 				isCorrect: appellantCase.changedDevelopmentDescription !== true
@@ -55,6 +68,8 @@ const formatAppellantCase = (appeal, folders = null) => {
 				appellantCase.appellantCaseIncompleteReasonsSelected,
 				appellantCase.appellantCaseInvalidReasonsSelected
 			),
+			applicationDecision: appellantCase.applicationDecision || null,
+			appellantCostsAppliedFor: appellantCase.appellantCostsAppliedFor,
 			...formatFoldersAndDocuments(folders)
 		};
 	}

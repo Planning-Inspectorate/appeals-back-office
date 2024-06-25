@@ -1,11 +1,13 @@
 import { convertFromBooleanToYesNo } from '../boolean-formatter.js';
 import { appealSiteToAddressString } from '#lib/address-formatter.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
-import { mapAddressInput } from './global-mapper-formatter.js';
 import { isFolderInfo } from '#lib/ts-utilities.js';
 import { mapActionComponent } from './component-permissions.mapper.js';
 import { permissionNames } from '#environment/permissions.js';
 import { formatServiceUserAsHtmlList } from '#lib/service-user-formatter.js';
+import { generateLinkedAppealsManageLinkHref } from './appeal.mapper.js';
+import { dateToDisplayDate } from '#lib/dates.js';
+import { capitalize } from 'lodash-es';
 
 /**
  * @typedef {import('@pins/appeals.api').Appeals.FolderInfo} FolderInfo
@@ -57,6 +59,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		}
 	};
 
+	/** @type {Instructions} */
 	mappedData.agent = {
 		id: 'agent',
 		display: {
@@ -104,21 +107,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 					]
 				}
 			}
-		},
-		input: {
-			displayName: 'LPA application reference',
-			instructions: [
-				{
-					type: 'input',
-					properties: {
-						name: 'application-reference',
-						value: appellantCaseData.planningApplicationReference
-					}
-				}
-			]
-		},
-		submitApi: '#',
-		inputItemApi: '#'
+		}
 	};
 
 	/** @type {Instructions} */
@@ -143,13 +132,225 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 					]
 				}
 			}
-		},
-		input: {
-			displayName: 'Site address',
-			instructions: mapAddressInput(appellantCaseData.appealSite)
-		},
-		submitApi: '#',
-		inputItemApi: '#'
+		}
+	};
+
+	/** @type {Instructions} */
+	mappedData.siteArea = {
+		id: 'site-area',
+		display: {
+			summaryListItem: {
+				key: {
+					text: 'Site area (m²)'
+				},
+				value: {
+					text: appellantCaseData.siteAreaSquareMetres
+				},
+				actions: {
+					items: [
+						{
+							text: 'Change',
+							visuallyHiddenText: 'Site area in metres squared',
+							href: `${currentRoute}/#`
+						}
+					]
+				}
+			}
+		}
+	};
+
+	/** @type {Instructions} */
+	mappedData.inGreenBelt = {
+		id: 'site-area',
+		display: {
+			summaryListItem: {
+				key: {
+					text: 'In green belt'
+				},
+				value: {
+					text: 'Not currently in datamodel but is in v2 of the appellant submission' // 'Yes' //TODO: link to DB value withinGreenBelt
+				},
+				actions: {
+					items: [
+						{
+							text: 'Change',
+							visuallyHiddenText: 'In green belt',
+							href: `${currentRoute}/#`
+						}
+					]
+				}
+			}
+		}
+	};
+
+	/** @type {Instructions} */
+	mappedData.applicationDecisionDate = {
+		id: 'application-decision-date',
+		display: {
+			summaryListItem: {
+				key: {
+					text: 'Decision date'
+				},
+				value: {
+					text: dateToDisplayDate(appellantCaseData.applicationDecisionDate)
+				},
+				actions: {
+					items: [
+						{
+							text: 'Change',
+							visuallyHiddenText: 'Decision date',
+							href: `${currentRoute}/#`
+						}
+					]
+				}
+			}
+		}
+	};
+
+	/** @type {Instructions} */
+	mappedData.applicationDate = {
+		id: 'application-date',
+		display: {
+			summaryListItem: {
+				key: {
+					text: 'Application date'
+				},
+				value: {
+					text: dateToDisplayDate(appellantCaseData.applicationDate)
+				},
+				actions: {
+					items: [
+						{
+							text: 'Change',
+							visuallyHiddenText: 'Application date',
+							href: `${currentRoute}/#`
+						}
+					]
+				}
+			}
+		}
+	};
+
+	/** @type {Instructions} */
+	mappedData.developmentDescription = {
+		id: 'development-description',
+		display: {
+			summaryListItem: {
+				key: {
+					text: 'Development description'
+				},
+				value: {
+					text: appellantCaseData.developmentDescription?.details ?? 'Not provided'
+				},
+				actions: {
+					items: [
+						{
+							text: 'Change',
+							visuallyHiddenText: 'Development description',
+							href: `${currentRoute}/#`
+						}
+					]
+				}
+			}
+		}
+	};
+
+	/** @type {Instructions} */
+	mappedData.changedDevelopmentDescription = {
+		id: 'changed-development-description',
+		display: {
+			summaryListItem: {
+				key: {
+					text: 'LPA changed the development description'
+				},
+				value: {
+					text: convertFromBooleanToYesNo(!appellantCaseData.developmentDescription?.isCorrect)
+				},
+				actions: {
+					items: [
+						{
+							text: 'Change',
+							visuallyHiddenText: 'LPA changed the development description',
+							href: `${currentRoute}/#`
+						}
+					]
+				}
+			}
+		}
+	};
+
+	/** @type {Instructions} */
+	mappedData.applicationDecision = {
+		id: 'application-decision',
+		display: {
+			summaryListItem: {
+				key: {
+					text: 'Outcome'
+				},
+				value: {
+					text: capitalize(appellantCaseData.applicationDecision ?? '')
+				},
+				actions: {
+					items: [
+						{
+							text: 'Change',
+							visuallyHiddenText: 'Application outcome',
+							href: `${currentRoute}/#`
+						}
+					]
+				}
+			}
+		}
+	};
+
+	//TODO: update with new document type
+	/** @type {Instructions} */
+	mappedData.changedDevelopmentDescriptionDocument = {
+		id: 'changed-development-description.document',
+		display: {
+			summaryListItem: {
+				key: {
+					text: 'Agreement to change description evidence'
+				},
+				value: displayPageFormatter.formatDocumentValues(
+					appellantCaseData.appealId,
+					isFolderInfo(appellantCaseData.documents.originalApplicationForm)
+						? appellantCaseData.documents.originalApplicationForm.documents
+						: []
+				),
+				actions: {
+					items: [
+						...((
+							(isFolderInfo(appellantCaseData.documents.originalApplicationForm) &&
+								appellantCaseData.documents.originalApplicationForm.documents) ||
+							[]
+						).length
+							? [
+									{
+										text: 'Manage',
+										visuallyHiddenText: 'Agreement to change description evidence',
+										href: mapDocumentManageUrl(
+											appellantCaseData.appealId,
+											isFolderInfo(appellantCaseData.documents.originalApplicationForm)
+												? appellantCaseData.documents.originalApplicationForm.folderId
+												: undefined
+										)
+									}
+							  ]
+							: []),
+						{
+							text: 'Add',
+							visuallyHiddenText: 'Agreement to change description evidence',
+							href: displayPageFormatter.formatDocumentActionLink(
+								appellantCaseData.appealId,
+								appellantCaseData.documents.originalApplicationForm,
+								documentUploadUrlTemplate
+							)
+						}
+					]
+				}
+			}
+		}
 	};
 
 	/** @type {Instructions} */
@@ -174,21 +375,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 					]
 				}
 			}
-		},
-		input: {
-			displayName: 'Local planning authority (LPA)',
-			instructions: [
-				{
-					type: 'input',
-					properties: {
-						name: 'local-planning-authority',
-						value: appellantCaseData.localPlanningDepartment
-					}
-				}
-			]
-		},
-		submitApi: '#',
-		inputItemApi: '#'
+		}
 	};
 
 	/** @type {Instructions} */
@@ -217,53 +404,28 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 	};
 
 	/** @type {Instructions} */
-	mappedData.sitePartiallyOwned = {
-		id: 'site-partially-owned',
+	mappedData.appealType = {
+		id: 'appeal-type',
 		display: {
 			summaryListItem: {
 				key: {
-					text: 'Site partially owned'
+					text: 'Appeal type'
 				},
 				value: {
-					text: convertFromBooleanToYesNo(appellantCaseData.siteOwnership.isPartiallyOwned) || ''
+					text: appealDetails.appealType
 				},
 				actions: {
 					items: [
 						{
 							text: 'Change',
-							visuallyHiddenText: 'Site partially owned',
-							href: `${currentRoute}/change-appeal-details/site-partially-owned`,
-							attributes: { 'data-cy': 'change-site-partially-owned' }
+							visuallyHiddenText: 'Appeal type',
+							href: `${currentRoute}/#`,
+							attributes: { 'data-cy': 'change-appeal-type' }
 						}
 					]
 				}
 			}
-		},
-		input: {
-			displayName: 'Site partially owned',
-			instructions: [
-				{
-					type: 'radios',
-					properties: {
-						name: 'site-partially-owned',
-						items: [
-							{
-								text: 'Yes',
-								value: 'yes',
-								checked: appellantCaseData.siteOwnership.isPartiallyOwned
-							},
-							{
-								text: 'No',
-								value: 'no',
-								checked: !appellantCaseData.siteOwnership.isPartiallyOwned
-							}
-						]
-					}
-				}
-			]
-		},
-		submitApi: '#',
-		inputItemApi: '#'
+		}
 	};
 
 	/** @type {Instructions} */
@@ -338,32 +500,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 					]
 				}
 			}
-		},
-		input: {
-			displayName: 'Advertised appeal',
-			instructions: [
-				{
-					type: 'radios',
-					properties: {
-						name: 'advertised-appeal',
-						items: [
-							{
-								text: 'Yes',
-								value: 'yes',
-								checked: appellantCaseData.hasAdvertisedAppeal
-							},
-							{
-								text: 'No',
-								value: 'no',
-								checked: !appellantCaseData.hasAdvertisedAppeal
-							}
-						]
-					}
-				}
-			]
-		},
-		submitApi: '#',
-		inputItemApi: '#'
+		}
 	};
 
 	/** @type {Instructions} */
@@ -372,7 +509,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		display: {
 			summaryListItem: {
 				key: {
-					text: 'Inspection access required'
+					text: 'Inspector access required'
 				},
 				value: {
 					html: displayPageFormatter.formatAnswerAndDetails(
@@ -672,6 +809,117 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 					}
 				}
 			]
+		}
+	};
+
+	/** @type {Instructions} */
+	mappedData.relatedAppeals = {
+		id: 'related-appeals',
+		display: {
+			summaryListItem: {
+				key: {
+					text: 'Related appeals'
+				},
+				value: {
+					html:
+						displayPageFormatter.formatListOfRelatedAppeals(appealDetails.otherAppeals) ||
+						'No related appeals'
+				},
+				actions: {
+					items:
+						appealDetails.otherAppeals.length === 0 //Add filter by application related appeals
+							? mapActionComponent(permissionNames.updateCase, session, [
+									...(appealDetails.otherAppeals.length > 0
+										? [
+												{
+													text: 'Manage',
+													href: generateLinkedAppealsManageLinkHref(appealDetails),
+													visuallyHiddenText: 'Related appeals'
+												}
+										  ]
+										: []),
+									{
+										text: 'Add',
+										href: `/appeals-service/appeal-details/${appealDetails.appealId}/related-appeals/add`,
+										visuallyHiddenText: 'Related appeals'
+									}
+							  ])
+							: []
+				},
+				classes: 'appeal-related-appeals'
+			}
+		}
+	};
+
+	mappedData.appellantCostsApplication = {
+		id: 'appellant-costs-application',
+		display: {
+			summaryListItem: {
+				key: {
+					text: 'Applied for award of appeal costs'
+				},
+				value: {
+					text: convertFromBooleanToYesNo(appellantCaseData.appellantCostsAppliedFor)
+				},
+				actions: {
+					items: [
+						{
+							text: 'Change',
+							visuallyHiddenText: 'Applied for award of appeal costs',
+							href: `${currentRoute}/#`
+						}
+					]
+				}
+			}
+		}
+	};
+
+	/** @type {Instructions} */
+	mappedData.costsDocument = {
+		id: 'costs-appellant',
+		display: {
+			summaryListItem: {
+				key: {
+					text: 'Costs document'
+				},
+				value: displayPageFormatter.formatDocumentValues(
+					appellantCaseData.appealId,
+					isFolderInfo(appealDetails.costs.appellantFolder)
+						? appealDetails.costs.appellantFolder.documents
+						: []
+				),
+				actions: {
+					items: [
+						...((
+							(isFolderInfo(appealDetails.costs.appellantFolder) &&
+								appealDetails.costs.appellantFolder.documents) ||
+							[]
+						).length
+							? [
+									{
+										text: 'Manage',
+										visuallyHiddenText: 'Costs document',
+										href: mapDocumentManageUrl(
+											appellantCaseData.appealId,
+											isFolderInfo(appealDetails.costs.appellantFolder)
+												? appealDetails.costs.appellantFolder.folderId
+												: undefined
+										)
+									}
+							  ]
+							: []),
+						{
+							text: 'Add',
+							visuallyHiddenText: 'Application form',
+							href: displayPageFormatter.formatDocumentActionLink(
+								appellantCaseData.appealId,
+								appealDetails.costs.appellantFolder,
+								documentUploadUrlTemplate
+							)
+						}
+					]
+				}
+			}
 		}
 	};
 

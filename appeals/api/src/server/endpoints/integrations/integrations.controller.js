@@ -19,7 +19,6 @@ import stringTokenReplacement from '#utils/string-token-replacement.js';
 /** @typedef {import('pins-data-model').Schemas.AppealHASCase} AppealHASCase */
 /** @typedef {import('pins-data-model').Schemas.AppellantSubmissionCommand} AppellantSubmissionCommand */
 /** @typedef {import('pins-data-model').Schemas.LPAQuestionnaireCommand} LPAQuestionnaireCommand */
-/** @typedef {import('#config/../openapi-types.js').AddDocumentsRequest} AddDocumentsRequest */
 
 /**
  * @param {{body: AppellantSubmissionCommand}} req

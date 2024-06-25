@@ -106,9 +106,10 @@ describe('appeal linked appeals routes', () => {
 
 			test('returns 400 when an internal appeal is already a parent', async () => {
 				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValueOnce(householdAppeal);
-				// @ts-ignore
-				databaseConnector.appealRelationship.findMany.mockResolvedValueOnce(linkedAppeals);
+				databaseConnector.appeal.findUnique.mockResolvedValueOnce({
+					...householdAppeal,
+					childAppeals: linkedAppeals
+				});
 
 				const response = await request
 					.post(`/appeals/${householdAppeal.id}/link-appeal`)

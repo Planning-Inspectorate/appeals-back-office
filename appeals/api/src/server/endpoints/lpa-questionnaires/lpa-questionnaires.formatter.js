@@ -27,42 +27,46 @@ const formatListedBuildingDetails = (affectsListedBuilding, values) =>
  */
 const formatLpaQuestionnaire = (appeal, folders = null) => {
 	const { address, id, lpa, lpaQuestionnaire, reference } = appeal;
-
-	return lpaQuestionnaire
-		? {
-				lpaQuestionnaireId: lpaQuestionnaire.id,
-				appealId: id,
-				appealReference: reference,
-				appealSite: formatAddress(address),
-				localPlanningDepartment: lpa?.name,
-				procedureType: appeal.procedureType?.name,
-				...formatFoldersAndDocuments(folders),
-				validation: formatValidationOutcomeResponse(
-					lpaQuestionnaire.lpaQuestionnaireValidationOutcome?.name || null,
-					lpaQuestionnaire.lpaQuestionnaireIncompleteReasonsSelected
-				),
-				lpaNotificationMethods: lpaQuestionnaire.lpaNotificationMethods?.map(
-					({ lpaNotificationMethod: { name } }) => ({ name })
-				),
-				listedBuildingDetails: formatListedBuildingDetails(
-					true,
-					lpaQuestionnaire.listedBuildingDetails
-				),
-				healthAndSafetyDetails: lpaQuestionnaire.siteSafetyDetails,
-				doesSiteHaveHealthAndSafetyIssues: lpaQuestionnaire.siteSafetyDetails !== null,
-				inspectorAccessDetails: lpaQuestionnaire.siteAccessDetails,
-				doesSiteRequireInspectorAccess: lpaQuestionnaire.siteAccessDetails !== null,
-				isConservationArea: lpaQuestionnaire.inConservationArea,
-				siteWithinGreenBelt: lpaQuestionnaire.siteWithinGreenBelt,
-				isCorrectAppealType: lpaQuestionnaire.isCorrectAppealType,
-				submittedAt: lpaQuestionnaire.lpaQuestionnaireSubmittedDate,
-				receivedAt: lpaQuestionnaire.lpaqCreatedDate,
-				costsAppliedFor: lpaQuestionnaire.lpaCostsAppliedFor,
-				lpaStatement: lpaQuestionnaire.lpaStatement,
-				extraConditions: lpaQuestionnaire.newConditionDetails,
-				hasExtraConditions: lpaQuestionnaire.newConditionDetails !== null
-		  }
-		: {};
+	if (lpaQuestionnaire) {
+		return {
+			lpaQuestionnaireId: lpaQuestionnaire.id,
+			appealId: id,
+			appealReference: reference,
+			appealSite: formatAddress(address),
+			localPlanningDepartment: lpa?.name,
+			procedureType: appeal.procedureType?.name,
+			...formatFoldersAndDocuments(folders),
+			validation: formatValidationOutcomeResponse(
+				lpaQuestionnaire.lpaQuestionnaireValidationOutcome?.name || null,
+				lpaQuestionnaire.lpaQuestionnaireIncompleteReasonsSelected
+			),
+			lpaNotificationMethods: lpaQuestionnaire.lpaNotificationMethods?.map(
+				({ lpaNotificationMethod: { name } }) => ({ name })
+			),
+			listedBuildingDetails: formatListedBuildingDetails(
+				true,
+				lpaQuestionnaire.listedBuildingDetails
+			),
+			healthAndSafetyDetails: lpaQuestionnaire.siteSafetyDetails,
+			doesSiteHaveHealthAndSafetyIssues: lpaQuestionnaire.siteSafetyDetails !== null,
+			inspectorAccessDetails: lpaQuestionnaire.siteAccessDetails,
+			doesSiteRequireInspectorAccess: lpaQuestionnaire.siteAccessDetails !== null,
+			isConservationArea: lpaQuestionnaire.inConservationArea,
+			siteWithinGreenBelt: lpaQuestionnaire.siteWithinGreenBelt,
+			isCorrectAppealType: lpaQuestionnaire.isCorrectAppealType,
+			submittedAt:
+				lpaQuestionnaire.lpaQuestionnaireSubmittedDate &&
+				lpaQuestionnaire.lpaQuestionnaireSubmittedDate?.toISOString(),
+			receivedAt:
+				lpaQuestionnaire.lpaqCreatedDate && lpaQuestionnaire.lpaqCreatedDate?.toISOString(),
+			costsAppliedFor: lpaQuestionnaire.lpaCostsAppliedFor,
+			lpaStatement: lpaQuestionnaire.lpaStatement,
+			extraConditions: lpaQuestionnaire.newConditionDetails,
+			hasExtraConditions: lpaQuestionnaire.newConditionDetails !== null
+		};
+	} else {
+		return {};
+	}
 };
 
 /**

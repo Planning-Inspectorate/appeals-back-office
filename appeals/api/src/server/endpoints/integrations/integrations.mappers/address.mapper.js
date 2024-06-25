@@ -1,6 +1,11 @@
-// @ts-nocheck
-// TODO: schemas (PINS data model)
+/** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
+/** @typedef {import('@pins/appeals.api').Schema.NeighbouringSite} NeighbouringSite */
 
+/**
+ *
+ * @param {*} casedata
+ * @returns
+ */
 export const mapAddressIn = (casedata) => {
 	return {
 		addressLine1: casedata.siteAddressLine1,
@@ -11,6 +16,11 @@ export const mapAddressIn = (casedata) => {
 	};
 };
 
+/**
+ *
+ * @param {*} casedata
+ * @returns
+ */
 export const mapNeighbouringAddressIn = (casedata) => {
 	return {
 		addressLine1: casedata.neighbouringSiteAddressLine1,
@@ -21,12 +31,66 @@ export const mapNeighbouringAddressIn = (casedata) => {
 	};
 };
 
+/**
+ *
+ * @param {Appeal} appeal
+ * @returns
+ */
 export const mapAddressOut = (appeal) => {
 	return {
-		siteAddressLine1: appeal.address.addressLine1,
-		siteAddressLine2: appeal.address.addressLine2 || '',
-		siteAddressCounty: appeal.address.addressCounty || '',
-		siteAddressPostcode: appeal.address.postcode,
-		siteAddressTown: appeal.address.addressTown || ''
+		siteAddressLine1: appeal.address?.addressLine1,
+		siteAddressLine2: appeal.address?.addressLine2 || '',
+		siteAddressCounty: appeal.address?.addressCounty || '',
+		siteAddressPostcode: appeal.address?.postcode,
+		siteAddressTown: appeal.address?.addressTown || ''
+	};
+};
+
+/**
+ *
+ * @param {NeighbouringSite[]} sites
+ * @returns
+ */
+export const mapNeighbouringAddressOut = (sites) => {
+	if (!sites || sites.length === 0) {
+		return null;
+	}
+
+	return sites.map((site) => {
+		return {
+			addressLine1: site.address?.addressLine1,
+			addressLine2: site.address?.addressLine2,
+			addressCounty: site.address?.addressCounty,
+			postcode: site.address?.postcode,
+			addressTown: site.address?.addressTown
+		};
+	});
+};
+
+/**
+ *
+ * @param {Appeal} appeal
+ * @returns
+ */
+export const mapSiteAccessDetailsOut = (appeal) => {
+	return {
+		siteAccessDetails: [
+			appeal?.appellantCase?.siteAccessDetails,
+			appeal?.lpaQuestionnaire?.siteAccessDetails
+		].filter((item) => item && item !== null)
+	};
+};
+
+/**
+ *
+ * @param {Appeal} appeal
+ * @returns
+ */
+export const mapSiteSafetyDetailsOut = (appeal) => {
+	return {
+		siteSafetyDetails: [
+			appeal?.appellantCase?.siteSafetyDetails,
+			appeal?.lpaQuestionnaire?.siteSafetyDetails
+		].filter((item) => item && item !== null)
 	};
 };

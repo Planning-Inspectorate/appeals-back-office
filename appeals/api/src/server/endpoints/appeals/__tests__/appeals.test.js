@@ -677,11 +677,10 @@ describe('appeals routes', () => {
 				// @ts-ignore
 				databaseConnector.folder.findMany.mockResolvedValue([decisionFolder]);
 				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-				// @ts-ignore
-				databaseConnector.appealRelationship.findMany
-					// @ts-ignore
-					.mockResolvedValueOnce(linkedAppeals);
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...householdAppeal,
+					childAppeals: linkedAppeals
+				});
 
 				const response = await request
 					.get(`/appeals/${householdAppeal.id}`)
@@ -729,13 +728,11 @@ describe('appeals routes', () => {
 					documentationSummary: {
 						appellantCase: {
 							status: 'received',
-							dueDate: householdAppeal.caseExtensionDate,
 							receivedAt: householdAppeal.caseCreatedDate.toISOString()
 						},
 						lpaQuestionnaire: {
-							dueDate: null,
 							status: 'received',
-							receivedAt: householdAppeal.lpaQuestionnaire.lpaqCreatedDate
+							receivedAt: householdAppeal.lpaQuestionnaire.lpaqCreatedDate.toISOString()
 						}
 					},
 					healthAndSafety: {
@@ -765,7 +762,7 @@ describe('appeals routes', () => {
 						return {
 							appealReference: a.childRef,
 							isParentAppeal: false,
-							linkingDate: a.linkingDate,
+							linkingDate: a.linkingDate.toISOString(),
 							appealType: 'Unknown',
 							externalSource: true
 						};
@@ -777,14 +774,12 @@ describe('appeals routes', () => {
 					procedureType: householdAppeal.procedureType.name,
 					siteVisit: {
 						siteVisitId: householdAppeal.siteVisit.id,
-						visitDate: householdAppeal.siteVisit.visitDate,
+						visitDate: householdAppeal.siteVisit.visitDate.toISOString(),
 						visitStartTime: householdAppeal.siteVisit.visitStartTime,
 						visitEndTime: householdAppeal.siteVisit.visitEndTime,
 						visitType: householdAppeal.siteVisit.siteVisitType.name
 					},
 					createdAt: householdAppeal.caseCreatedDate.toISOString()
-					//startedAt: householdAppeal.startedAt.toISOString(),
-					//validAt: householdAppeal.validAt.toISOString()
 				});
 			});
 
@@ -840,13 +835,11 @@ describe('appeals routes', () => {
 					documentationSummary: {
 						appellantCase: {
 							status: 'received',
-							dueDate: fullPlanningAppeal.caseExtensionDate,
 							receivedAt: householdAppeal.caseCreatedDate.toISOString()
 						},
 						lpaQuestionnaire: {
-							dueDate: null,
 							status: 'received',
-							receivedAt: householdAppeal.lpaQuestionnaire.lpaqCreatedDate
+							receivedAt: householdAppeal.lpaQuestionnaire.lpaqCreatedDate.toISOString()
 						}
 					},
 					healthAndSafety: {
@@ -880,14 +873,12 @@ describe('appeals routes', () => {
 					procedureType: fullPlanningAppeal.procedureType.name,
 					siteVisit: {
 						siteVisitId: fullPlanningAppeal.siteVisit.id,
-						visitDate: fullPlanningAppeal.siteVisit.visitDate,
+						visitDate: fullPlanningAppeal.siteVisit.visitDate.toISOString(),
 						visitStartTime: fullPlanningAppeal.siteVisit.visitStartTime,
 						visitEndTime: fullPlanningAppeal.siteVisit.visitEndTime,
 						visitType: fullPlanningAppeal.siteVisit.siteVisitType.name
 					},
 					createdAt: householdAppeal.caseCreatedDate.toISOString()
-					//startedAt: fullPlanningAppeal.startedAt.toISOString(),
-					//validAt: householdAppeal.validAt.toISOString()
 				});
 			});
 
@@ -1392,11 +1383,10 @@ describe('appeals/case-reference/:caseReference', () => {
 			// @ts-ignore
 			databaseConnector.folder.findMany.mockResolvedValue([decisionFolder]);
 			// @ts-ignore
-			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-			// @ts-ignore
-			databaseConnector.appealRelationship.findMany
-				// @ts-ignore
-				.mockResolvedValueOnce(linkedAppeals);
+			databaseConnector.appeal.findUnique.mockResolvedValue({
+				...householdAppeal,
+				childAppeals: linkedAppeals
+			});
 
 			const response = await request
 				.get(`/appeals/case-reference/${householdAppeal.reference}`)
@@ -1444,13 +1434,11 @@ describe('appeals/case-reference/:caseReference', () => {
 				documentationSummary: {
 					appellantCase: {
 						status: 'received',
-						dueDate: householdAppeal.caseExtensionDate,
 						receivedAt: householdAppeal.caseCreatedDate.toISOString()
 					},
 					lpaQuestionnaire: {
-						dueDate: null,
 						status: 'received',
-						receivedAt: householdAppeal.lpaQuestionnaire.lpaqCreatedDate
+						receivedAt: householdAppeal.lpaQuestionnaire.lpaqCreatedDate.toISOString()
 					}
 				},
 				healthAndSafety: {
@@ -1480,7 +1468,7 @@ describe('appeals/case-reference/:caseReference', () => {
 					return {
 						appealReference: a.childRef,
 						isParentAppeal: false,
-						linkingDate: a.linkingDate,
+						linkingDate: a.linkingDate.toISOString(),
 						appealType: 'Unknown',
 						externalSource: true
 					};
@@ -1492,14 +1480,12 @@ describe('appeals/case-reference/:caseReference', () => {
 				procedureType: householdAppeal.procedureType.name,
 				siteVisit: {
 					siteVisitId: householdAppeal.siteVisit.id,
-					visitDate: householdAppeal.siteVisit.visitDate,
+					visitDate: householdAppeal.siteVisit.visitDate.toISOString(),
 					visitStartTime: householdAppeal.siteVisit.visitStartTime,
 					visitEndTime: householdAppeal.siteVisit.visitEndTime,
 					visitType: householdAppeal.siteVisit.siteVisitType.name
 				},
 				createdAt: householdAppeal.caseCreatedDate.toISOString()
-				//startedAt: householdAppeal.startedAt.toISOString(),
-				//validAt: householdAppeal.validAt.toISOString()
 			});
 		});
 
@@ -1555,13 +1541,11 @@ describe('appeals/case-reference/:caseReference', () => {
 				documentationSummary: {
 					appellantCase: {
 						status: 'received',
-						dueDate: fullPlanningAppeal.caseExtensionDate,
 						receivedAt: householdAppeal.caseCreatedDate.toISOString()
 					},
 					lpaQuestionnaire: {
-						dueDate: null,
 						status: 'received',
-						receivedAt: householdAppeal.lpaQuestionnaire.lpaqCreatedDate
+						receivedAt: householdAppeal.lpaQuestionnaire.lpaqCreatedDate.toISOString()
 					}
 				},
 				healthAndSafety: {
@@ -1595,14 +1579,12 @@ describe('appeals/case-reference/:caseReference', () => {
 				procedureType: fullPlanningAppeal.procedureType.name,
 				siteVisit: {
 					siteVisitId: fullPlanningAppeal.siteVisit.id,
-					visitDate: fullPlanningAppeal.siteVisit.visitDate,
+					visitDate: fullPlanningAppeal.siteVisit.visitDate.toISOString(),
 					visitStartTime: fullPlanningAppeal.siteVisit.visitStartTime,
 					visitEndTime: fullPlanningAppeal.siteVisit.visitEndTime,
 					visitType: fullPlanningAppeal.siteVisit.siteVisitType.name
 				},
 				createdAt: fullPlanningAppeal.caseCreatedDate.toISOString()
-				//startedAt: fullPlanningAppeal.startedAt.toISOString(),
-				//validAt: fullPlanningAppeal.validAt.toISOString()
 			});
 		});
 		test('returns an error if appealId is not found', async () => {

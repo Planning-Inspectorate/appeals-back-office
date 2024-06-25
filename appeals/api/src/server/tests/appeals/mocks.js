@@ -56,6 +56,7 @@ export const auditTrails = [
 ];
 
 export const householdAppeal = {
+	caseCreatedDate: new Date('2024-03-25T23:59:59.999Z'),
 	id: 1,
 	reference: '1345264',
 	procedureType: {
@@ -94,7 +95,6 @@ export const householdAppeal = {
 		phoneNumber: '09876 543 210',
 		organisationName: 'Smith Inc.'
 	},
-	caseCreatedDate: new Date(2022, 4, 18),
 	address: {
 		addressLine1: '96 The Avenue',
 		addressLine2: 'Leftfield',
@@ -114,35 +114,29 @@ export const householdAppeal = {
 		id: 1,
 		appellantCaseIncompleteReasonsSelected: [],
 		appellantCaseValidationOutcome: null,
-		applicantFirstName: 'Fiona',
-		applicantSurname: 'Burgess',
-		areAllOwnersKnown: true,
+		appellantCostsAppliedFor: null,
+		applicationDate: new Date(2022, 2, 18),
+		applicationDecision: 'refused',
+		applicationDecisionDate: new Date(2022, 2, 18),
+		caseSubmissionDueDate: new Date(2022, 2, 18),
+		caseSubmittedDate: new Date(2022, 2, 18),
+		changedDevelopmentDescription: false,
+		enforcementNotice: null,
+		floorSpaceSquareMetres: null,
 		hasAdvertisedAppeal: true,
-		hasAttemptedToIdentifyOwners: true,
-		hasHealthAndSafetyIssues: true,
-		hasNewSupportingDocuments: false,
-		hasOtherTenants: null,
-		hasToldOwners: true,
-		hasToldTenants: null,
+		knowsAllOwners: null,
+		knowsOtherOwners: null,
+		originalDevelopmentDescription: 'A test description',
+		ownersInformed: true,
+		ownsAllLand: true,
+		ownsSomeLand: true,
 		siteAccessDetails: 'There is no mobile reception at the site',
-		siteSafetyDetails: 'Small dog big character',
-		isAgriculturalHolding: null,
-		isAgriculturalHoldingTenant: null,
-		isAppellantNamedOnApplication: false,
-		isSiteFullyOwned: false,
-		isSitePartiallyOwned: true,
-		isSiteVisibleFromPublicRoad: false,
-		doesSiteRequireInspectorAccess: true,
-		knowledgeOfOtherLandowners: {
-			name: 'Some'
-		},
-		visibilityRestrictions: 'The site is behind a tall hedge'
+		siteSafetyDetails: 'Small dog big character'
 	},
 	caseOfficer: {
 		id: 1,
 		azureAdUserId: 'a8973f33-4d2e-486b-87b0-d068343ad9eb'
 	},
-	caseExtensionDate: '2023-08-10T01:00:00.000Z',
 	inspector: {
 		id: 2,
 		azureAdUserId: 'e8f89175-d02c-4a60-870e-dc954d5b530a'
@@ -150,7 +144,7 @@ export const householdAppeal = {
 	siteVisit: {
 		id: 1,
 		appealId: 1,
-		visitDate: '2022-03-31T01:00:00.000Z',
+		visitDate: new Date('2022-03-31T01:00:00.000Z'),
 		visitEndTime: '03:00',
 		visitStartTime: '01:00',
 		siteVisitType: {
@@ -158,8 +152,8 @@ export const householdAppeal = {
 			name: 'Access required'
 		}
 	},
-	linkedAppeals: [],
-	otherAppeals: [],
+	parentAppeals: [],
+	childAppeals: [],
 	lpaQuestionnaire: {
 		id: 1,
 		appealId: 1,
@@ -188,8 +182,8 @@ export const householdAppeal = {
 				}
 			}
 		],
-		lpaqCreatedDate: '2022-05-17T23:00:00.000Z',
-		lpaQuestionnaireSubmittedDate: '2023-05-24T10:34:09.286Z'
+		lpaqCreatedDate: new Date(2024, 5, 24),
+		lpaQuestionnaireSubmittedDate: new Date(2024, 5, 24)
 	}
 };
 
@@ -232,7 +226,7 @@ export const householdAppealAppellantCaseIncomplete = {
 		...incompleteAppellantCaseOutcome
 	},
 	id: 3,
-	caseExtensionDate: '2099-07-14T01:00:00.000Z'
+	caseExtensionDate: new Date(2099, 6, 14)
 };
 
 export const householdAppealAppellantCaseInvalid = {
@@ -294,7 +288,7 @@ export const linkedAppeals = [
 		parentId: householdAppeal.id,
 		parentRef: householdAppeal.reference,
 		childRef: '76215416',
-		linkingDate: '2024-01-01',
+		linkingDate: new Date(2024, 1, 1),
 		appealType: householdAppeal.appealType,
 		relationshipId: 1,
 		type: 'linked',
