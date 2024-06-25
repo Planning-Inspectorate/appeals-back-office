@@ -19,7 +19,16 @@ describe('service-user', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Update agent details');
+			expect(element.innerHTML).toContain('Update agent details</h1>');
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('name="firstName" type="text"');
+			expect(unprettifiedElement.innerHTML).toContain('name="lastName" type="text"');
+			expect(unprettifiedElement.innerHTML).toContain('name="organisationName" type="text"');
+			expect(unprettifiedElement.innerHTML).toContain('name="emailAddress" type="text"');
+			expect(unprettifiedElement.innerHTML).toContain('name="phoneNumber" type="text"');
+			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
 
 		it('should render the change service user page for an appellant', async () => {
@@ -28,7 +37,16 @@ describe('service-user', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Update appellant details');
+			expect(element.innerHTML).toContain('Update appellant details</h1>');
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('name="firstName" type="text"');
+			expect(unprettifiedElement.innerHTML).toContain('name="lastName" type="text"');
+			expect(unprettifiedElement.innerHTML).toContain('name="organisationName" type="text"');
+			expect(unprettifiedElement.innerHTML).toContain('name="emailAddress" type="text"');
+			expect(unprettifiedElement.innerHTML).toContain('name="phoneNumber" type="text"');
+			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
 
 		it('should render the 500 error page when the service user type is not a valid string', async () => {
@@ -37,14 +55,14 @@ describe('service-user', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).not.toContain('Update appellant details');
-			expect(element.innerHTML).not.toContain('Update agent details');
-			expect(element.innerHTML).toContain('Sorry, there is a problem with the service');
+			expect(element.innerHTML).not.toContain('Update appellant details</h1>');
+			expect(element.innerHTML).not.toContain('Update agent details</h1>');
+			expect(element.innerHTML).toContain('Sorry, there is a problem with the service</h1>');
 		});
 	});
 
 	describe('POST /change/:userType', () => {
-		it('should re-render changeServiceUser with the error "Enter first Name" if firstName is null', async () => {
+		it('should re-render changeServiceUser with the expected error message if firstName is null', async () => {
 			const appealId = appealData.appealId;
 			const invalidData = {
 				firstName: null,
@@ -60,10 +78,18 @@ describe('service-user', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Enter first name');
-			expect(element.innerHTML).toContain('govuk-error-summary');
+			expect(element.innerHTML).toContain('Update agent details</h1>');
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Enter the first name</a>');
 		});
-		it('should re-render changeServiceUser with the error "Enter first name" if firstName is empty', async () => {
+
+		it('should re-render changeServiceUser with the expected error message if firstName is empty', async () => {
 			const appealId = appealData.appealId;
 			const invalidData = {
 				firstName: '',
@@ -79,10 +105,18 @@ describe('service-user', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Enter first name');
-			expect(element.innerHTML).toContain('govuk-error-summary');
+			expect(element.innerHTML).toContain('Update agent details</h1>');
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Enter the first name</a>');
 		});
-		it('should re-render changeServiceUser with the error "Enter first name" if firstName is undefined', async () => {
+
+		it('should re-render changeServiceUser with with the expected error message if firstName is undefined', async () => {
 			const appealId = appealData.appealId;
 			const invalidData = {
 				lastName: 'Jones',
@@ -97,10 +131,18 @@ describe('service-user', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Enter first name');
-			expect(element.innerHTML).toContain('govuk-error-summary');
+			expect(element.innerHTML).toContain('Update agent details</h1>');
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Enter the first name</a>');
 		});
-		it('should re-render changeServiceUser with the error "Enter last name" if lastName is null', async () => {
+
+		it('should re-render changeServiceUser with with the expected error message if lastName is null', async () => {
 			const appealId = appealData.appealId;
 			const invalidData = {
 				firstName: 'Jessica',
@@ -116,10 +158,18 @@ describe('service-user', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Enter last name');
-			expect(element.innerHTML).toContain('govuk-error-summary');
+			expect(element.innerHTML).toContain('Update agent details</h1>');
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Enter the last name</a>');
 		});
-		it('should re-render changeServiceUser with the error "Enter last name" if lastName is empty', async () => {
+
+		it('should re-render changeServiceUser with the expected error message if lastName is empty', async () => {
 			const appealId = appealData.appealId;
 			const invalidData = {
 				firstName: 'Jessica',
@@ -135,10 +185,18 @@ describe('service-user', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Enter last name');
-			expect(element.innerHTML).toContain('govuk-error-summary');
+			expect(element.innerHTML).toContain('Update agent details</h1>');
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Enter the last name</a>');
 		});
-		it('should re-render changeServiceUser with the error "Enter last name" if lastName is undefined', async () => {
+
+		it('should re-render changeServiceUser with the expected error message if lastName is undefined', async () => {
 			const appealId = appealData.appealId;
 			const invalidData = {
 				firstName: 'Jessica',
@@ -153,10 +211,18 @@ describe('service-user', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Enter last name');
-			expect(element.innerHTML).toContain('govuk-error-summary');
+			expect(element.innerHTML).toContain('Update agent details</h1>');
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Enter the last name</a>');
 		});
-		it('should re-render changeServiceUser with the error "Enter a valid email" if email is not an email', async () => {
+
+		it('should re-render changeServiceUser with the expected error message if email is not an email', async () => {
 			const appealId = appealData.appealId;
 			const invalidData = {
 				firstName: 'Jessica',
@@ -172,9 +238,17 @@ describe('service-user', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Enter a valid email');
-			expect(element.innerHTML).toContain('govuk-error-summary');
+			expect(element.innerHTML).toContain('Update agent details</h1>');
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Enter a valid email or clear the email field</a>');
 		});
+
 		it('should re-direct to appeals details if firstName, lastName, and email are valid', async () => {
 			const appealId = appealData.appealId;
 			nock('http://test/').patch(`/appeals/${appealId}/service-user`).reply(200, {
@@ -192,6 +266,7 @@ describe('service-user', () => {
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
 		});
+
 		it('should re-direct to appeals details if firstName, lastName are valid, and organisation, phone number, and email is empty', async () => {
 			const appealId = appealData.appealId;
 			nock('http://test/').patch(`/appeals/${appealId}/service-user`).reply(200, {

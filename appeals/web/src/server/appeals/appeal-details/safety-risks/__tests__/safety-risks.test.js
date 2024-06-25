@@ -20,7 +20,22 @@ describe('safety-risks', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change the site health and safety risks (LPA answer)');
+			expect(elementInnerHtml).toContain(
+				'Change the site health and safety risks (LPA answer)</h1>'
+			);
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="safetyRisksRadio" type="radio" value="yes"'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<textarea class="govuk-textarea" id="safety-risk-details" name="safetyRisksDetails" rows="3">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="safetyRisksRadio" type="radio" value="no"'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
 
 		it('should render changeSafetyRisksAccess page for the appellant answer when source is appellant from appeals details', async () => {
@@ -29,10 +44,25 @@ describe('safety-risks', () => {
 
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
+			console.log(elementInnerHtml);
+
 			expect(elementInnerHtml).toMatchSnapshot();
 			expect(elementInnerHtml).toContain(
-				'Change the site health and safety risks (appellant answer)'
+				'Change the site health and safety risks (appellant answer)</h1>'
 			);
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="safetyRisksRadio" type="radio" value="yes"'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<textarea class="govuk-textarea" id="safety-risk-details" name="safetyRisksDetails" rows="3">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="safetyRisksRadio" type="radio" value="no"'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
 
 		it('should render changeSafetyRisksAccess page for the LPA answer when source is LPA from LPA questionnaire', async () => {
@@ -45,7 +75,22 @@ describe('safety-risks', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change the site health and safety risks (LPA answer)');
+			expect(elementInnerHtml).toContain(
+				'Change the site health and safety risks (LPA answer)</h1>'
+			);
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="safetyRisksRadio" type="radio" value="yes"'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<textarea class="govuk-textarea" id="safety-risk-details" name="safetyRisksDetails" rows="3">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="safetyRisksRadio" type="radio" value="no"'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
 
 		it('should render changeSafetyRisksAccess page for the appellant answer when source is appellant from appellant case', async () => {
@@ -59,8 +104,21 @@ describe('safety-risks', () => {
 
 			expect(elementInnerHtml).toMatchSnapshot();
 			expect(elementInnerHtml).toContain(
-				'Change the site health and safety risks (appellant answer)'
+				'Change the site health and safety risks (appellant answer)</h1>'
 			);
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="safetyRisksRadio" type="radio" value="yes"'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<textarea class="govuk-textarea" id="safety-risk-details" name="safetyRisksDetails" rows="3">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="safetyRisksRadio" type="radio" value="no"'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
 	});
 
@@ -81,8 +139,17 @@ describe('safety-risks', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Provide details of health and safety risks');
-			expect(elementInnerHtml).toContain('govuk-error-summary');
+			expect(elementInnerHtml).toContain(
+				'Change the site health and safety risks (LPA answer)</h1>'
+			);
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Provide details of health and safety risks</a>');
 		});
 
 		it('should re-direct to appeals-details page when data is valid for LPA and came from appeal-details', async () => {
@@ -104,7 +171,6 @@ describe('safety-risks', () => {
 				.send(validData);
 
 			expect(response.statusCode).toBe(302);
-
 			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
 		});
 
@@ -127,7 +193,6 @@ describe('safety-risks', () => {
 				.send(validData);
 
 			expect(response.statusCode).toBe(302);
-
 			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
 		});
 
@@ -150,7 +215,6 @@ describe('safety-risks', () => {
 				.send(validData);
 
 			expect(response.statusCode).toBe(302);
-
 			expect(response.text).toBe(
 				'Found. Redirecting to /appeals-service/appeal-details/1/appellant-case'
 			);
@@ -177,7 +241,6 @@ describe('safety-risks', () => {
 				.send(validData);
 
 			expect(response.statusCode).toBe(302);
-
 			expect(response.text).toBe(
 				`Found. Redirecting to /appeals-service/appeal-details/1/lpa-questionnaire/${lpaQuestionnaireId}`
 			);
