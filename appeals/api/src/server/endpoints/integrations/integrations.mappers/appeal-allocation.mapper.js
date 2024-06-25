@@ -1,10 +1,21 @@
-// @ts-nocheck
+/** @typedef {import('@pins/appeals.api').Schema.AppealAllocation} AppealAllocation */
+/** @typedef {import('@pins/appeals.api').Schema.AppealSpecialism} AppealSpecialism */
 
+/**
+ *
+ * @param {AppealAllocation | null | undefined} allocation
+ * @param {AppealSpecialism[]} specialisms
+ * @returns
+ */
 export const mapAppealAllocationOut = (allocation, specialisms) =>
 	allocation
 		? {
-				level: allocation.level,
-				band: allocation.band,
-				specialism: specialisms?.map((s) => s.specialism?.name) || []
+				allocationLevel: allocation.level,
+				allocationBand: allocation.band,
+				caseSpecialisms: specialisms?.map((s) => s.specialism?.name) || []
 		  }
-		: null;
+		: {
+				allocationLevel: null,
+				allocationBand: null,
+				caseSpecialisms: null
+		  };

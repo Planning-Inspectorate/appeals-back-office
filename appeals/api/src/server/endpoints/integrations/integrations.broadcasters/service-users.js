@@ -7,12 +7,15 @@ import { schemas, validateFromSchema } from '../integrations.validators.js';
 import { databaseConnector } from '#utils/database-connector.js';
 import { ODW_SYSTEM_ID } from '@pins/appeals/constants/common.js';
 
-export const broadcastServiceUser = async (
-	/** @type {Number} */ userId,
-	/** @type {string} */ updateType,
-	/** @type {string} */ roleName,
-	/** @type {string} */ caseReference
-) => {
+/**
+ *
+ * @param {number} userId
+ * @param {string} updateType
+ * @param {string} roleName
+ * @param {string} caseReference
+ * @returns
+ */
+export const broadcastServiceUser = async (userId, updateType, roleName, caseReference) => {
 	if (!config.serviceBusEnabled) {
 		return false;
 	}

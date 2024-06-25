@@ -6,7 +6,7 @@ import { mapDate } from './date.mapper.js';
 /**
  *
  * @param {Pick<AppellantSubmissionCommand, 'casedata'>} command
- * @returns {*}
+ * @returns
  */
 export const mapAppellantCaseIn = (command) => {
 	const casedata = command.casedata;
@@ -44,10 +44,11 @@ export const mapAppellantCaseIn = (command) => {
 		floorSpaceSquareMetres: casedata.floorSpaceSquareMetres,
 		ownsAllLand: casedata.ownsAllLand,
 		ownsSomeLand: casedata.ownsSomeLand,
-		hasAdvertisedAppeal: casedata.hasAdvertisedAppeal,
+		hasAdvertisedAppeal: casedata.advertisedAppeal,
 		appellantCostsAppliedFor: casedata.appellantCostsAppliedFor,
 		originalDevelopmentDescription: casedata.originalDevelopmentDescription,
 		changedDevelopmentDescription: casedata.changedDevelopmentDescription,
+		ownersInformed: casedata.ownersInformed,
 		...(knowsAllOwners && { knowsAllOwners }),
 		...(knowsOtherOwners && { knowsOtherOwners })
 	};
@@ -57,28 +58,36 @@ export const mapAppellantCaseIn = (command) => {
 
 /**
  *
- * @param {AppellantCase} casedata
- * @returns {*}
+ * @param {AppellantCase | null | undefined} casedata
+ * @returns
  */
 export const mapAppellantCaseOut = (casedata) => {
+	if (!casedata) {
+		return {};
+	}
+
 	const data = {
 		applicationDate: mapDate(casedata.applicationDate),
 		applicationDecision: casedata.applicationDecision,
 		applicationDecisionDate: mapDate(casedata.applicationDecisionDate),
 		caseSubmittedDate: mapDate(casedata.caseSubmittedDate),
 		caseSubmissionDueDate: mapDate(casedata.caseSubmissionDueDate),
-		siteAccessDetails: [casedata.siteAccessDetails],
-		siteSafetyDetails: [casedata.siteSafetyDetails],
-		siteAreaSquareMetres: casedata.siteAreaSquareMetres,
-		floorSpaceSquareMetres: casedata.floorSpaceSquareMetres,
-		ownsAllLand: casedata.ownsAllLand,
-		ownsSomeLand: casedata.ownsSomeLand,
-		hasAdvertisedAppeal: casedata.hasAdvertisedAppeal,
-		appellantCostsAppliedFor: casedata.appellantCostsAppliedFor,
-		originalDevelopmentDescription: casedata.originalDevelopmentDescription,
-		changedDevelopmentDescription: casedata.changedDevelopmentDescription,
-		knowsAllOwners: casedata.knowsAllOwners?.key,
-		knowsOtherOwners: casedata.knowsOtherOwners?.key
+		siteAreaSquareMetres: casedata.siteAreaSquareMetres
+			? Number(casedata.siteAreaSquareMetres)
+			: null,
+		floorSpaceSquareMetres: casedata.floorSpaceSquareMetres
+			? Number(casedata.floorSpaceSquareMetres)
+			: null,
+		ownsAllLand: casedata.ownsAllLand || null,
+		ownsSomeLand: casedata.ownsSomeLand || null,
+		advertisedAppeal: casedata.hasAdvertisedAppeal || null,
+		appellantCostsAppliedFor: casedata.appellantCostsAppliedFor || null,
+		originalDevelopmentDescription: casedata.originalDevelopmentDescription || null,
+		changedDevelopmentDescription: casedata.changedDevelopmentDescription || null,
+		knowsAllOwners: casedata.knowsAllOwners?.name || null,
+		knowsOtherOwners: casedata.knowsOtherOwners?.name || null,
+		ownersInformed: casedata.ownersInformed || null,
+		enforcementNotice: casedata.enforcementNotice || null
 	};
 
 	return data;

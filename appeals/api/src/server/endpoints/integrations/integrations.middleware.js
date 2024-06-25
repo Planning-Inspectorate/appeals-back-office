@@ -57,7 +57,7 @@ export const validateLpaQuestionnaire = async (req, res, next) => {
 		});
 	}
 
-	const appealExists = await findAppealByReference(body?.questionnaire?.caseReference);
+	const appealExists = await findAppealByReference(body?.casedata?.caseReference);
 	if (!appealExists) {
 		pino.error(
 			`Error associating LPA submission to an existing appeal with reference '${body?.questionnaire?.caseReference}'`

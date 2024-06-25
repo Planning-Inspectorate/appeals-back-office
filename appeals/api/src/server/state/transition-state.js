@@ -12,7 +12,7 @@ import { AUDIT_TRAIL_PROGRESSED_TO_STATUS } from '#endpoints/constants.js';
 
 /**
  * @param {number} appealId
- * @param {AppealType | null} appealType
+ * @param {AppealType | null | undefined} appealType
  * @param {string} azureAdUserId
  * @param {AppealStatus[]} currentState
  * @param {string} trigger

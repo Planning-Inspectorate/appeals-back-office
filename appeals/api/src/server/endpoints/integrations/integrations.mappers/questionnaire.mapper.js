@@ -1,6 +1,8 @@
 /** @typedef {import('pins-data-model').Schemas.LPAQuestionnaireCommand} LPAQuestionnaireCommand */
 /** @typedef {import('@pins/appeals.api').Schema.LPAQuestionnaire} LPAQuestionnaire */
 
+import { mapDate } from './date.mapper.js';
+
 /**
  *
  * @param {Pick<LPAQuestionnaireCommand, 'casedata'>} command
@@ -67,23 +69,24 @@ export const mapQuestionnaireIn = (command) => {
 
 /**
  *
- * @param {LPAQuestionnaire} casedata
- * @returns {*}
+ * @param {LPAQuestionnaire | null | undefined} casedata
+ * @returns
  */
 export const mapQuestionnaireOut = (casedata) => {
 	return {
-		lpaQuestionnaireSubmittedDate: casedata.lpaQuestionnaireSubmittedDate,
-		lpaStatement: casedata.lpaStatement,
-		siteAccessDetails: [casedata.siteAccessDetails],
-		siteSafetyDetails: [casedata.siteSafetyDetails],
-		isCorrectAppealType: casedata.isCorrectAppealType,
-		isGreenBelt: casedata.siteWithinGreenBelt,
-		inConservationArea: casedata.inConservationArea,
-		newConditionDetails: casedata.newConditionDetails,
-		notificationMethod: casedata.lpaNotificationMethods.map(
-			(method) => method.lpaNotificationMethod.key
-		),
-		lpaCostsAppliedFor: casedata.lpaCostsAppliedFor,
-		listedBuildingDetails: casedata.listedBuildingDetails.map((entry) => entry.listEntry)
+		lpaQuestionnaireSubmittedDate: mapDate(casedata?.lpaQuestionnaireSubmittedDate),
+		lpaQuestionnaireCreatedDate: mapDate(casedata?.lpaqCreatedDate),
+		lpaStatement: casedata?.lpaStatement || null,
+		isCorrectAppealType: casedata?.isCorrectAppealType || null,
+		isGreenBelt: casedata?.siteWithinGreenBelt || null,
+		inConservationArea: casedata?.inConservationArea || null,
+		newConditionDetails: casedata?.newConditionDetails || null,
+		notificationMethod: casedata?.lpaNotificationMethods
+			? casedata?.lpaNotificationMethods.map((method) => method.lpaNotificationMethod.key)
+			: null,
+		lpaCostsAppliedFor: casedata?.lpaCostsAppliedFor || null,
+		listedBuildingDetails: casedata?.listedBuildingDetails
+			? casedata?.listedBuildingDetails.map((entry) => entry.listEntry)
+			: null
 	};
 };
