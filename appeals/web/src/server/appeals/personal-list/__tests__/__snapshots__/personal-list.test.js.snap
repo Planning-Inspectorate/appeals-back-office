@@ -225,7 +225,7 @@ exports[`personal-list GET / should render a message when there are no cases ass
             <h1 class="govuk-heading-l govuk-!-margin-bottom-6">There are currently no cases assigned to you.</h1>
         </div>
     </div><a href="/appeals-service/all-cases" role="button" draggable="false" class="govuk-button govuk-button--secondary"
-    data-module="govuk-button" id="remove-document"> Search all cases</a>
+    data-module="govuk-button" id="search-all-cases"> Search all cases</a>
 </main>"
 `;
 

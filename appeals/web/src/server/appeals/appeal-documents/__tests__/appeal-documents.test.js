@@ -113,6 +113,13 @@ describe('documents upload', () => {
 
 		const html = parseHtml(response.text);
 		expect(html.innerHTML).toMatchSnapshot();
+
+		const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+		expect(unprettifiedElement.innerHTML).toContain('Upload an updated document</h1>');
+		expect(unprettifiedElement.innerHTML).toContain('<form method="POST"');
+		expect(unprettifiedElement.innerHTML).toContain('Choose file</button>');
+		expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 	});
 
 	it('should render appeal ID and folder ID as data attributes', async () => {

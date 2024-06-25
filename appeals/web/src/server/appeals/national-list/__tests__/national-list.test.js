@@ -27,6 +27,40 @@ describe('national-list', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Search all cases</h1>');
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Enter appeal reference or postcode (include spaces)</label>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('name="searchTerm" type="text"');
+			expect(unprettifiedElement.innerHTML).toContain('Search</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Filters</span>');
+			expect(unprettifiedElement.innerHTML).toContain('Filter by case status</label>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<select class="govuk-select" id="" name="appealStatusFilter"'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('<option value="all"');
+			expect(unprettifiedElement.innerHTML).toContain('<option value="assign_case_officer"');
+			expect(unprettifiedElement.innerHTML).toContain('<option value="ready_to_start"');
+			expect(unprettifiedElement.innerHTML).toContain('<option value="lpa_questionnaire_due"');
+			expect(unprettifiedElement.innerHTML).toContain('<option value="issue_determination"');
+			expect(unprettifiedElement.innerHTML).toContain('<option value="complete"');
+			expect(unprettifiedElement.innerHTML).toContain('Filter by inspector status</label>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<select class="govuk-select" id="" name="inspectorStatusFilter"'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('<option value="all"');
+			expect(unprettifiedElement.innerHTML).toContain('<option value="assigned"');
+			expect(unprettifiedElement.innerHTML).toContain('<option value="unassigned"');
+			expect(unprettifiedElement.innerHTML).toContain('Apply</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Clear filter</a>');
+			expect(unprettifiedElement.innerHTML).toContain('Appeal reference</th>');
+			expect(unprettifiedElement.innerHTML).toContain('Site address</th>');
+			expect(unprettifiedElement.innerHTML).toContain('Local planning authority (LPA)</th>');
+			expect(unprettifiedElement.innerHTML).toContain('Appeal type</th>');
+			expect(unprettifiedElement.innerHTML).toContain('Status</th>');
 		});
 
 		it('should render national list - search term', async () => {
@@ -38,6 +72,11 @@ describe('national-list', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Search all cases</h1>');
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('2 results for BS7 8LQ</h2>');
 		});
 
 		it('should render national list - search term - no result', async () => {
@@ -54,6 +93,11 @@ describe('national-list', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Search all cases</h1>');
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('No results found for NORESULT</h2>');
 		});
 
 		it('should render national list - 10 pages - all page indexes in one row', async () => {
@@ -65,6 +109,25 @@ describe('national-list', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Search all cases</h1>');
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<nav class="govuk-pagination" role="navigation" aria-label="results">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'aria-label="Page 1" aria-current="page"> 1</a>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('aria-label="Page 2"> 2</a>');
+			expect(unprettifiedElement.innerHTML).toContain('aria-label="Page 3"> 3</a>');
+			expect(unprettifiedElement.innerHTML).toContain('aria-label="Page 4"> 4</a>');
+			expect(unprettifiedElement.innerHTML).toContain('aria-label="Page 5"> 5</a>');
+			expect(unprettifiedElement.innerHTML).toContain('aria-label="Page 6"> 6</a>');
+			expect(unprettifiedElement.innerHTML).toContain('aria-label="Page 7"> 7</a>');
+			expect(unprettifiedElement.innerHTML).toContain('aria-label="Page 8"> 8</a>');
+			expect(unprettifiedElement.innerHTML).toContain('aria-label="Page 9"> 9</a>');
+			expect(unprettifiedElement.innerHTML).toContain('aria-label="Page 10"> 10</a>');
 		});
 
 		it('should render national list - 15 pages - pagination with ellipsis logic', async () => {
@@ -76,6 +139,21 @@ describe('national-list', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Search all cases</h1>');
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<nav class="govuk-pagination" role="navigation" aria-label="results">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'aria-label="Page 1" aria-current="page"> 1</a>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('aria-label="Page 2"> 2</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<li class="govuk-pagination__item govuk-pagination__item--ellipses">&ctdot;</li>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('aria-label="Page 15"> 15</a>');
 		});
 
 		it('should render national list - search term - filter applied', async () => {
@@ -96,6 +174,22 @@ describe('national-list', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Search all cases</h1>');
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'1 result for BS7 8LQ (filters applied)</h2>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Filter by case status</label>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<select class="govuk-select" id="" name="appealStatusFilter"'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<option value="lpa_questionnaire_due" selected'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Apply</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Clear filter</a>');
 		});
 
 		it('should render national list - no search term - filter applied', async () => {
@@ -114,15 +208,43 @@ describe('national-list', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Search all cases</h1>');
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('1 result (filters applied)</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('Filter by case status</label>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<select class="govuk-select" id="" name="appealStatusFilter"'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<option value="lpa_questionnaire_due" selected'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Apply</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Clear filter</a>');
 		});
 
 		it('should render the header with navigation containing links to the personal list, national list (with active modifier class), and sign out route', async () => {
 			nock('http://test/').get('/appeals?pageNumber=1&pageSize=30').reply(200, appealsNationalList);
 
 			const response = await request.get(baseUrl);
-			const element = parseHtml(response.text, { rootElement: 'header' });
+			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Search all cases</h1>');
+
+			const headerNavigationHtml = parseHtml(response.text, {
+				rootElement: '.pins-header-navigation',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(headerNavigationHtml).toContain(
+				'href="/appeals-service/personal-list">Assigned to me</a>'
+			);
+			expect(headerNavigationHtml).toContain(
+				'<li class="govuk-header__navigation-item govuk-header__navigation-item--active"><a class="govuk-header__link" href="/appeals-service/all-cases">All cases</a>'
+			);
+			expect(headerNavigationHtml).toContain('href="/auth/signout">Sign out</a>');
 		});
 	});
 });
