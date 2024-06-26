@@ -5,11 +5,7 @@ import * as displayPageFormatter from '#lib/display-page-formatter.js';
 import usersService from '../../appeals/appeal-users/users-service.js';
 import config from '#environment/config.js';
 import { surnameFirstToFullName } from '#lib/person-name-formatter.js';
-import {
-	conditionalFormatter,
-	dateAndTimeFormatter,
-	mapAddressInput
-} from './global-mapper-formatter.js';
+import { dateAndTimeFormatter } from './global-mapper-formatter.js';
 import { convert24hTo12hTimeStringFormat } from '#lib/times.js';
 import { linkedAppealStatus } from '#lib/appeals-formatter.js';
 import { generateIssueDecisionUrl } from '#appeals/appeal-details/issue-decision/issue-decision.mapper.js';
@@ -80,28 +76,7 @@ export async function initialiseAndMapAppealData(
 				},
 				classes: 'appeal-appeal-type'
 			}
-		},
-		input: {
-			displayName: 'Appeal type',
-			instructions: [
-				{
-					type: 'radios',
-					properties: {
-						name: 'appeal-type',
-						items: [
-							{
-								value: '1013',
-								text: 'Householder planning',
-								checked:
-									displayPageFormatter.nullToEmptyString(appealDetails.appealType) === 'Householder'
-							}
-						]
-					}
-				}
-			]
-		},
-		submitApi: '#',
-		inputItemApi: '#'
+		}
 	};
 
 	/** @type {Instructions} */
@@ -127,37 +102,7 @@ export async function initialiseAndMapAppealData(
 				},
 				classes: 'appeal-case-procedure'
 			}
-		},
-		input: {
-			displayName: 'Case procedure',
-			instructions: [
-				{
-					type: 'checkboxes',
-					properties: {
-						name: 'case-procedure',
-						items: [
-							{
-								value: '3',
-								text: 'Written Representation',
-								checked: appealDetails.procedureType === 'Written'
-							},
-							{
-								value: '1',
-								text: 'Hearing',
-								checked: appealDetails.procedureType === 'Hearing'
-							},
-							{
-								value: '2',
-								text: 'Inquiry',
-								checked: appealDetails.procedureType === 'Inquiry'
-							}
-						]
-					}
-				}
-			]
-		},
-		submitApi: `/appeals/${appealDetails.appealId}/lpa-questionnaire/${appealDetails.lpaQuestionnaireId}`,
-		inputItemApi: '#'
+		}
 	};
 
 	/** @type {Instructions} */
@@ -254,24 +199,7 @@ export async function initialiseAndMapAppealData(
 				},
 				classes: 'appeal-linked-appeals'
 			}
-		},
-		input: {
-			displayName: 'Linked appeals',
-			instructions: [
-				{
-					type: 'input',
-					properties: {
-						id: 'linked-appeals',
-						name: 'linkedAppeals',
-						value: displayPageFormatter.nullToEmptyString(appealDetails.linkedAppeals),
-						label: {
-							text: 'What appeals are linked to this appeal?'
-						}
-					}
-				}
-			]
-		},
-		submitApi: '#'
+		}
 	};
 
 	mappedData.appeal.leadOrChild = {
@@ -319,24 +247,7 @@ export async function initialiseAndMapAppealData(
 				},
 				classes: 'appeal-other-appeals'
 			}
-		},
-		input: {
-			displayName: 'Related appeals',
-			instructions: [
-				{
-					type: 'input',
-					properties: {
-						id: 'other-appeals',
-						name: 'otherAppeals',
-						value: displayPageFormatter.nullToEmptyString(appealDetails.otherAppeals),
-						label: {
-							text: 'What appeals are the other associated with this appeal?'
-						}
-					}
-				}
-			]
-		},
-		submitApi: '#'
+		}
 	};
 
 	/** @type {Instructions} */
@@ -374,46 +285,7 @@ export async function initialiseAndMapAppealData(
 				},
 				classes: 'appeal-allocation-details'
 			}
-		},
-		input: {
-			// TODO: Multipage change?
-			displayName: 'Allocation level',
-			instructions: [
-				{
-					type: 'checkboxes',
-					properties: {
-						name: 'allocationDetails',
-						items: [
-							{
-								value: '3',
-								text: 'Written Representation',
-								hint: {
-									text: 'For appeals where the issues are clear from written statements and a site visit. This is the quickest and most common way to make an appeal.'
-								},
-								checked: appealDetails.procedureType === 'Written'
-							},
-							{
-								value: '1',
-								text: 'Hearing',
-								hint: {
-									text: 'For appeals with more complex issues. The Inspector leads a discussion to answer questions they have about the appeal.'
-								},
-								checked: appealDetails.procedureType === 'Hearing'
-							},
-							{
-								value: '2',
-								text: 'Inquiry',
-								hint: {
-									text: 'For appeals with very complex issues. Appeal evidence is tested by legal representatives, who question witnesses under oath.'
-								},
-								checked: appealDetails.procedureType === 'Inquiry'
-							}
-						]
-					}
-				}
-			]
-		},
-		submitApi: '#'
+		}
 	};
 
 	/** @type {Instructions} */
@@ -444,7 +316,6 @@ export async function initialiseAndMapAppealData(
 		}
 	};
 
-	// TODO: Add radio options
 	/** @type {Instructions} */
 	mappedData.appeal.decision = {
 		id: 'decision',
@@ -469,26 +340,7 @@ export async function initialiseAndMapAppealData(
 				},
 				classes: 'appeal-decision'
 			}
-		},
-		input: {
-			displayName: 'Decision',
-			instructions: [
-				{
-					type: 'radios',
-					properties: {
-						name: 'appealDecision',
-						value: displayPageFormatter.nullToEmptyString(appealDetails.decision),
-						items: [
-							{
-								text: '',
-								value: '#'
-							}
-						]
-					}
-				}
-			]
-		},
-		submitApi: '#'
+		}
 	};
 
 	/** @type {Instructions} */
@@ -514,9 +366,6 @@ export async function initialiseAndMapAppealData(
 				},
 				classes: 'appeal-site-address'
 			}
-		},
-		input: {
-			instructions: mapAddressInput(appealDetails.appealSite)
 		}
 	};
 
@@ -593,37 +442,6 @@ export async function initialiseAndMapAppealData(
 				},
 				classes: 'appeal-lpa-inspector-access'
 			}
-		},
-		input: {
-			displayName: 'Inspection access (LPA answer)',
-			instructions: [
-				{
-					type: 'radios',
-					properties: {
-						name: 'lpaInspectorAccess',
-						items: [
-							{
-								text: 'Yes',
-								value: 'yes',
-								conditional: conditionalFormatter(
-									'lpa-inspector-access-text',
-									'lpaInspectorAccessText',
-									'Tell us why the inspector will need to enter the appeal site',
-									displayPageFormatter.nullToEmptyString(
-										appealDetails.inspectorAccess.lpaQuestionnaire.details
-									)
-								),
-								checked: appealDetails.inspectorAccess.lpaQuestionnaire.isRequired
-							},
-							{
-								text: 'No',
-								value: 'no',
-								checked: !appealDetails.inspectorAccess.lpaQuestionnaire.isRequired
-							}
-						]
-					}
-				}
-			]
 		}
 	};
 
@@ -654,37 +472,6 @@ export async function initialiseAndMapAppealData(
 				},
 				classes: 'appeal-appellant-inspector-access'
 			}
-		},
-		input: {
-			displayName: 'Inspection access (appellant answer)',
-			instructions: [
-				{
-					type: 'radios',
-					properties: {
-						name: 'appellantCaseInspectorAccess',
-						items: [
-							{
-								text: 'Yes',
-								value: 'yes',
-								conditional: conditionalFormatter(
-									'appellant-case-inspector-access-text',
-									'appellantCaseInspectorAccessText',
-									'Tell us why the inspector will need to enter the appeal site',
-									displayPageFormatter.nullToEmptyString(
-										appealDetails.inspectorAccess.appellantCase.details
-									)
-								),
-								checked: appealDetails.inspectorAccess.appellantCase.isRequired
-							},
-							{
-								text: 'No',
-								value: 'no',
-								checked: !appealDetails.inspectorAccess.appellantCase.isRequired
-							}
-						]
-					}
-				}
-			]
 		}
 	};
 
@@ -713,30 +500,6 @@ export async function initialiseAndMapAppealData(
 				},
 				classes: 'appeal-neighbouring-site-is-affected'
 			}
-		},
-		input: {
-			displayName: 'Could a neighbouring site be affected?',
-			instructions: [
-				{
-					type: 'radios',
-					properties: {
-						name: 'neighbouringSiteIsAffected',
-						items: [
-							{
-								text: 'Yes',
-								value: 'yes',
-								checked: appealDetails.neighbouringSites?.length > 0
-							},
-							{
-								text: 'No',
-								value: 'no',
-								checked:
-									!appealDetails.neighbouringSites || appealDetails.neighbouringSites.length == 0
-							}
-						]
-					}
-				}
-			]
 		}
 	};
 
