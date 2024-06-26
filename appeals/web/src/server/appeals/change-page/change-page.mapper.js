@@ -32,11 +32,12 @@ export async function appealChangePage(question, appealData, currentRoute, sessi
  * @param {string} question
  * @param {Appeal} appealData
  * @param {import('@pins/appeals.api').Appeals.SingleLPAQuestionnaireResponse} lpaqData
+ * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
  * @param {string} currentRoute
  * @returns {PageContent}
  */
-export function lpaQuestionnaireChangePage(question, appealData, lpaqData, currentRoute) {
-	const mappedData = initialiseAndMapLPAQData(lpaqData, currentRoute);
+export function lpaQuestionnaireChangePage(question, appealData, lpaqData, session, currentRoute) {
+	const mappedData = initialiseAndMapLPAQData(lpaqData, appealData, session, currentRoute);
 	const instructionsForQuestion = getInstructions(question, mappedData.lpaq);
 
 	return mapInstructionsToChangePage(

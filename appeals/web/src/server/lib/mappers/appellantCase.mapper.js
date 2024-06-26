@@ -123,12 +123,12 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 				},
 				actions: {
 					items: [
-						{
+						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
 							visuallyHiddenText: 'Site address',
 							href: `${currentRoute}/site-address/change/${appealDetails.appealSite.addressId}`,
 							attributes: { 'data-cy': 'change-site-address' }
-						}
+						})
 					]
 				}
 			}
@@ -148,11 +148,11 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 				},
 				actions: {
 					items: [
-						{
+						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
 							visuallyHiddenText: 'Site area in metres squared',
 							href: `${currentRoute}/#`
-						}
+						})
 					]
 				}
 			}
@@ -172,11 +172,11 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 				},
 				actions: {
 					items: [
-						{
+						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
 							visuallyHiddenText: 'In green belt',
 							href: `${currentRoute}/#`
-						}
+						})
 					]
 				}
 			}
@@ -196,11 +196,11 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 				},
 				actions: {
 					items: [
-						{
+						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
 							visuallyHiddenText: 'Decision date',
 							href: `${currentRoute}/#`
-						}
+						})
 					]
 				}
 			}
@@ -220,11 +220,11 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 				},
 				actions: {
 					items: [
-						{
+						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
 							visuallyHiddenText: 'Application date',
 							href: `${currentRoute}/#`
-						}
+						})
 					]
 				}
 			}
@@ -244,11 +244,11 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 				},
 				actions: {
 					items: [
-						{
+						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
 							visuallyHiddenText: 'Development description',
 							href: `${currentRoute}/#`
-						}
+						})
 					]
 				}
 			}
@@ -268,11 +268,11 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 				},
 				actions: {
 					items: [
-						{
+						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
 							visuallyHiddenText: 'LPA changed the development description',
 							href: `${currentRoute}/#`
-						}
+						})
 					]
 				}
 			}
@@ -292,11 +292,11 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 				},
 				actions: {
 					items: [
-						{
+						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
 							visuallyHiddenText: 'Application outcome',
 							href: `${currentRoute}/#`
-						}
+						})
 					]
 				}
 			}
@@ -326,7 +326,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 							[]
 						).length
 							? [
-									{
+									mapActionComponent(permissionNames.updateCase, session, {
 										text: 'Manage',
 										visuallyHiddenText: 'Agreement to change description evidence',
 										href: mapDocumentManageUrl(
@@ -335,10 +335,10 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 												? appellantCaseData.documents.originalApplicationForm.folderId
 												: undefined
 										)
-									}
+									})
 							  ]
 							: []),
-						{
+						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Add',
 							visuallyHiddenText: 'Agreement to change description evidence',
 							href: displayPageFormatter.formatDocumentActionLink(
@@ -346,7 +346,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 								appellantCaseData.documents.originalApplicationForm,
 								documentUploadUrlTemplate
 							)
-						}
+						})
 					]
 				}
 			}
@@ -391,12 +391,12 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 				},
 				actions: {
 					items: [
-						{
+						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
 							visuallyHiddenText: 'Site ownership',
 							href: `${currentRoute}/site-ownership/change`,
 							attributes: { 'data-cy': 'change-site-ownership' }
-						}
+						})
 					]
 				}
 			}
@@ -416,12 +416,12 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 				},
 				actions: {
 					items: [
-						{
+						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
 							visuallyHiddenText: 'Appeal type',
 							href: `${currentRoute}/#`,
 							attributes: { 'data-cy': 'change-appeal-type' }
-						}
+						})
 					]
 				}
 			}
@@ -441,41 +441,16 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 				},
 				actions: {
 					items: [
-						{
+						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
 							visuallyHiddenText: 'All owners known',
 							href: `${currentRoute}/change-appeal-details/all-owners-known`,
 							attributes: { 'data-cy': 'change-all-owners-known' }
-						}
+						})
 					]
 				}
 			}
-		},
-		input: {
-			displayName: 'All owners known',
-			instructions: [
-				{
-					type: 'radios',
-					properties: {
-						name: 'all-owners-known',
-						items: [
-							{
-								text: 'Yes',
-								value: 'yes',
-								checked: appellantCaseData.siteOwnership.areAllOwnersKnown
-							},
-							{
-								text: 'No',
-								value: 'no',
-								checked: !appellantCaseData.siteOwnership.areAllOwnersKnown
-							}
-						]
-					}
-				}
-			]
-		},
-		submitApi: '#',
-		inputItemApi: '#'
+		}
 	};
 
 	/** @type {Instructions} */
@@ -491,12 +466,12 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 				},
 				actions: {
 					items: [
-						{
+						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
 							visuallyHiddenText: 'Advertised appeal',
 							href: `${currentRoute}/change-appeal-details/advertised-appeal`,
 							attributes: { 'data-cy': 'change-advertised-appeal' }
-						}
+						})
 					]
 				}
 			}
@@ -520,12 +495,12 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 				},
 				actions: {
 					items: [
-						{
+						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
 							href: `${currentRoute}/inspector-access/change/appellant`,
 							visuallyHiddenText: 'Inspector access required',
 							attributes: { 'data-cy': 'change-inspector-access' }
-						}
+						})
 					]
 				},
 				classes: 'appellantcase-inspector-access'
@@ -550,12 +525,12 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 				},
 				actions: {
 					items: [
-						{
+						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
 							href: `${currentRoute}/safety-risks/change/appellant`,
 							visuallyHiddenText: 'potential safety risks',
 							attributes: { 'data-cy': 'change-appellant-case-health-and-safety' }
-						}
+						})
 					]
 				}
 			}
@@ -584,7 +559,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 							[]
 						).length
 							? [
-									{
+									mapActionComponent(permissionNames.updateCase, session, {
 										text: 'Manage',
 										visuallyHiddenText: 'Application form',
 										href: mapDocumentManageUrl(
@@ -593,10 +568,10 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 												? appellantCaseData.documents.originalApplicationForm.folderId
 												: undefined
 										)
-									}
+									})
 							  ]
 							: []),
-						{
+						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Add',
 							visuallyHiddenText: 'Application form',
 							href: displayPageFormatter.formatDocumentActionLink(
@@ -605,7 +580,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 								documentUploadUrlTemplate
 							),
 							attributes: { 'data-cy': 'add-application-form' }
-						}
+						})
 					]
 				}
 			}
@@ -633,7 +608,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 							: []
 						).length
 							? [
-									{
+									mapActionComponent(permissionNames.updateCase, session, {
 										text: 'Manage',
 										visuallyHiddenText: 'Decision letter',
 										href: mapDocumentManageUrl(
@@ -643,10 +618,10 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 												: undefined
 										),
 										attributes: { 'data-cy': 'manage-decision-letter' }
-									}
+									})
 							  ]
 							: []),
-						{
+						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Add',
 							visuallyHiddenText: 'Decision letter',
 							href: displayPageFormatter.formatDocumentActionLink(
@@ -655,7 +630,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 								documentUploadUrlTemplate
 							),
 							attributes: { 'data-cy': 'add-decision-letter' }
-						}
+						})
 					]
 				}
 			}
@@ -683,7 +658,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 							: []
 						).length
 							? [
-									{
+									mapActionComponent(permissionNames.updateCase, session, {
 										text: 'Manage',
 										visuallyHiddenText: 'Appeal statement',
 										href: mapDocumentManageUrl(
@@ -693,10 +668,10 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 												: undefined
 										),
 										attributes: { 'data-cy': 'manage-appeal-statement' }
-									}
+									})
 							  ]
 							: []),
-						{
+						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Add',
 							visuallyHiddenText: 'Appeal statement',
 							href: displayPageFormatter.formatDocumentActionLink(
@@ -705,7 +680,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 								documentUploadUrlTemplate
 							),
 							attributes: { 'data-cy': 'add-appeal-statement' }
-						}
+						})
 					]
 				}
 			}
@@ -863,11 +838,11 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 				},
 				actions: {
 					items: [
-						{
+						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
 							visuallyHiddenText: 'Applied for award of appeal costs',
 							href: `${currentRoute}/#`
-						}
+						})
 					]
 				}
 			}
@@ -896,7 +871,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 							[]
 						).length
 							? [
-									{
+									mapActionComponent(permissionNames.updateCase, session, {
 										text: 'Manage',
 										visuallyHiddenText: 'Costs document',
 										href: mapDocumentManageUrl(
@@ -905,10 +880,10 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 												? appealDetails.costs.appellantFolder.folderId
 												: undefined
 										)
-									}
+									})
 							  ]
 							: []),
-						{
+						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Add',
 							visuallyHiddenText: 'Application form',
 							href: displayPageFormatter.formatDocumentActionLink(
@@ -916,7 +891,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 								appealDetails.costs.appellantFolder,
 								documentUploadUrlTemplate
 							)
-						}
+						})
 					]
 				}
 			}

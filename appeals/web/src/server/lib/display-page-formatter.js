@@ -125,7 +125,7 @@ export const formatListOfRelatedAppeals = (listOfAppeals) => {
  * @returns {string}
  */
 export const formatListOfListedBuildingNumbers = (
-	/** @type {string | any[]} */ listOfListedBuildingNumbers
+	/** @type {import('@pins/appeals.api/src/server/endpoints/appeals.js').ListedBuildingDetailsResponse | string | any[]} */ listOfListedBuildingNumbers
 ) => {
 	if (listOfListedBuildingNumbers.length > 0) {
 		let formattedLinks = ``;

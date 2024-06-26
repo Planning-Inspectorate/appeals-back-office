@@ -1,7 +1,8 @@
 import { convertFromBooleanToYesNo } from '../boolean-formatter.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
-import { conditionalFormatter } from './global-mapper-formatter.js';
 import { isFolderInfo } from '#lib/ts-utilities.js';
+import { mapActionComponent } from './component-permissions.mapper.js';
+import { permissionNames } from '#environment/permissions.js';
 
 /**
  * @typedef StatusTag
@@ -16,190 +17,48 @@ import { isFolderInfo } from '#lib/ts-utilities.js';
  */
 
 /**
- * @param {import('@pins/appeals.api').Appeals.SingleLPAQuestionnaireResponse} data
+ * @param {import('@pins/appeals.api').Appeals.SingleLPAQuestionnaireResponse} lpaQuestionnaireData
+ * @param {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} appealDetails
  * @param {string} currentRoute
+ * @param {import('../../app/auth/auth-session.service').SessionWithAuth} session
  * @returns {{lpaq: MappedInstructions}}
  */
-export function initialiseAndMapLPAQData(data, currentRoute) {
+export function initialiseAndMapLPAQData(
+	lpaQuestionnaireData,
+	appealDetails,
+	session,
+	currentRoute
+) {
 	/** @type {{lpaq: MappedInstructions}} */
 	const mappedData = {};
 	mappedData.lpaq = {};
-	/** @type {Instructions} */
-	// mappedData.lpaq.isListedBuilding = {
-	// 	id: 'is-listed-building',
-	// 	display: {
-	// 		summaryListItem: {
-	// 			key: {
-	// 				text: 'Listed building'
-	// 			},
-	// 			value: {
-	// 				text: convertFromBooleanToYesNo(data.isListedBuilding) || ''
-	// 			},
-	// 			actions: {
-	// 				items: [
-	// 					{
-	// 						text: 'Change',
-	// 						visuallyHiddenText: 'Listed building',
-	// 						href: `${currentRoute}/change-lpa-questionnaire/is-listed-building`,
-	// 						attributes: { 'data-cy': 'change-is-listed-building' }
-	// 					}
-	// 				]
-	// 			}
-	// 		}
-	// 	}
-	// };
-
-	// if (data.isListedBuilding) {
-	// 	/** @type {Instructions} */
-	// 	mappedData.lpaq.listedBuildingDetails = {
-	// 		id: 'listed-building-details',
-	// 		display: {
-	// 			summaryListItem: {
-	// 				key: {
-	// 					text: 'Listed building details'
-	// 				},
-	// 				value: {
-	// 					html: displayPageFormatter.formatListOfListedBuildingNumbers(data.listedBuildingDetails)
-	// 				},
-	// 				actions: {
-	// 					items: [
-	// 						{
-	// 							text: 'Change',
-	// 							visuallyHiddenText: 'Listed building details',
-	// 							href: `${currentRoute}/change-lpa-questionnaire/listed-building-details`,
-	// 							attributes: { 'data-cy': 'change-listed-building-details' }
-	// 						}
-	// 					]
-	// 				}
-	// 			}
-	// 		}
-	// 	};
-	// }
 
 	/** @type {Instructions} */
-	// mappedData.lpaq.doesAffectAListedBuilding = {
-	// 	id: 'does-affect-a-listed-building',
-	// 	display: {
-	// 		summaryListItem: {
-	// 			key: {
-	// 				text: 'Affects a listed building'
-	// 			},
-	// 			value: {
-	// 				text: convertFromBooleanToYesNo(data.doesAffectAListedBuilding) || ''
-	// 			},
-	// 			actions: {
-	// 				items: [
-	// 					{
-	// 						text: 'Change',
-	// 						visuallyHiddenText: 'Affects a listed building',
-	// 						href: `${currentRoute}/change-lpa-questionnaire/does-affect-a-listed-building`,
-	// 						attributes: { 'data-cy': 'change-does-affect-a-listed-building' }
-	// 					}
-	// 				]
-	// 			}
-	// 		}
-	// 	},
-	// 	input: {
-	// 		displayName: 'Affects a listed building',
-	// 		instructions: [
-	// 			{
-	// 				type: 'radios',
-	// 				properties: {
-	// 					name: 'doesAffectAListedBuilding',
-	// 					items: [
-	// 						{
-	// 							text: 'Yes',
-	// 							value: 'yes',
-	// 							checked: data.isListedBuilding || false
-	// 						},
-	// 						{
-	// 							text: 'No',
-	// 							value: 'no',
-	// 							checked: !data.isListedBuilding
-	// 						}
-	// 					]
-	// 				}
-	// 			}
-	// 		]
-	// 	}
-	// };
-
-	if (data.affectsListedBuildingDetails) {
-		/** @type {Instructions} */
-		mappedData.lpaq.affectsListedBuildingDetails = {
-			id: 'affects-listed-building-details',
-			display: {
-				summaryListItem: {
-					key: {
-						text: 'Affected listed building details'
-					},
-					value: {
-						html: displayPageFormatter.formatListOfListedBuildingNumbers(
-							data.listedBuildingDetails || []
-						)
-					},
-					actions: {
-						items: [
-							{
-								text: 'Change',
-								visuallyHiddenText: 'Affects listed building details',
-								href: `${currentRoute}/change-lpa-questionnaire/affects-listed-building-details`,
-								attributes: { 'data-cy': 'change-affects-listed-building-details' }
-							}
-						]
-					}
+	mappedData.lpaq.affectsListedBuildingDetails = {
+		id: 'affects-listed-building-details',
+		display: {
+			summaryListItem: {
+				key: {
+					text: 'Listed buildings'
+				},
+				value: {
+					html: displayPageFormatter.formatListOfListedBuildingNumbers(
+						lpaQuestionnaireData.listedBuildingDetails || []
+					)
+				},
+				actions: {
+					items: [
+						mapActionComponent(permissionNames.updateCase, session, {
+							text: 'Change',
+							visuallyHiddenText: 'Affects listed building details',
+							href: `${currentRoute}/change-lpa-questionnaire/affects-listed-building-details`,
+							attributes: { 'lpaQuestionnaireData-cy': 'change-affects-listed-building-details' }
+						})
+					]
 				}
 			}
-		};
-	}
-
-	/** @type {Instructions} */
-	// mappedData.lpaq.doesAffectAScheduledMonument = {
-	// 	id: 'affects-scheduled-monument',
-	// 	display: {
-	// 		summaryListItem: {
-	// 			key: {
-	// 				text: 'Affects a scheduled monument'
-	// 			},
-	// 			value: {
-	// 				html: convertFromBooleanToYesNo(data.doesAffectAScheduledMonument) || ''
-	// 			},
-	// 			actions: {
-	// 				items: [
-	// 					{
-	// 						text: 'Change',
-	// 						visuallyHiddenText: 'Affects a scheduled monument',
-	// 						href: `${currentRoute}/change-lpa-questionnaire/affects-scheduled-monument`,
-	// 						attributes: { 'data-cy': 'change-effects-scheduled-monument' }
-	// 					}
-	// 				]
-	// 			}
-	// 		}
-	// 	},
-	// 	input: {
-	// 		displayName: 'Affects a scheduled monument',
-	// 		instructions: [
-	// 			{
-	// 				type: 'radios',
-	// 				properties: {
-	// 					name: 'affectsAScheduledMonument',
-	// 					items: [
-	// 						{
-	// 							text: 'Yes',
-	// 							value: 'yes',
-	// 							checked: data.doesAffectAScheduledMonument || false
-	// 						},
-	// 						{
-	// 							text: 'No',
-	// 							value: 'no',
-	// 							checked: !data.doesAffectAScheduledMonument
-	// 						}
-	// 					]
-	// 				}
-	// 			}
-	// 		]
-	// 	}
-	// };
+		}
+	};
 
 	/** @type {Instructions} */
 	mappedData.lpaq.isCorrectAppealType = {
@@ -210,69 +69,21 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 					text: 'Correct appeal type'
 				},
 				value: {
-					html: convertFromBooleanToYesNo(data.isCorrectAppealType) || ''
+					html: convertFromBooleanToYesNo(lpaQuestionnaireData.isCorrectAppealType) || ''
 				},
 				actions: {
 					items: [
-						{
+						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
 							visuallyHiddenText: 'Correct appeal type',
 							href: `${currentRoute}/is-correct-appeal-type/change`,
-							attributes: { 'data-cy': 'change-is-correct-appeal-type' }
-						}
+							attributes: { 'lpaQuestionnaireData-cy': 'change-is-correct-appeal-type' }
+						})
 					]
 				}
 			}
 		}
 	};
-
-	/** @type {Instructions} */
-	// mappedData.lpaq.inCAOrrelatesToCA = {
-	// 	id: 'in-or-relates-to-ca',
-	// 	display: {
-	// 		summaryListItem: {
-	// 			key: {
-	// 				text: 'Conservation area'
-	// 			},
-	// 			value: {
-	// 				text: convertFromBooleanToYesNo(data.inCAOrrelatesToCA) || ''
-	// 			},
-	// 			actions: {
-	// 				items: [
-	// 					{
-	// 						text: 'Change',
-	// 						visuallyHiddenText: 'Conservation area',
-	// 						href: `${currentRoute}/change-lpa-questionnaire/in-or-relates-to-ca`,
-	// 						attributes: { 'data-cy': 'change-in-or-relates-to-ca' }
-	// 					}
-	// 				]
-	// 			}
-	// 		}
-	// 	},
-	// 	input: {
-	// 		displayName: 'In or relates to conservation area',
-	// 		instructions: [
-	// 			{
-	// 				type: 'radios',
-	// 				properties: {
-	// 					name: 'inOrRelatesToCa',
-	// 					items: [
-	// 						{
-	// 							text: 'Yes',
-	// 							value: 'yes',
-	// 							checked: data.inCAOrrelatesToCA || false
-	// 						},
-	// 						{
-	// 							text: 'No',
-	// 							value: 'no',
-	// 							checked: !data.inCAOrrelatesToCA
-	// 						}
-	// 					]
-	// 				}
-	// 			}
-	// 		]
-	// 	}
-	// };
 
 	/** @type {Instructions} */
 	mappedData.lpaq.conservationAreaMap = {
@@ -283,42 +94,42 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 					text: 'Conservation area map and guidance'
 				},
 				value: displayPageFormatter.formatDocumentValues(
-					data.appealId,
-					isFolderInfo(data.documents.conservationMap)
-						? data.documents.conservationMap.documents || []
+					lpaQuestionnaireData.appealId,
+					isFolderInfo(lpaQuestionnaireData.documents.conservationMap)
+						? lpaQuestionnaireData.documents.conservationMap.documents || []
 						: []
 				),
 				actions: {
 					items: [
-						...((isFolderInfo(data.documents.conservationMap)
-							? data.documents.conservationMap.documents || []
+						...((isFolderInfo(lpaQuestionnaireData.documents.conservationMap)
+							? lpaQuestionnaireData.documents.conservationMap.documents || []
 							: []
 						).length
 							? [
-									{
+									mapActionComponent(permissionNames.updateCase, session, {
 										text: 'Manage',
 										visuallyHiddenText: 'Conservation area map and guidance',
 										href: mapDocumentManageUrl(
-											data.appealId,
-											data.lpaQuestionnaireId,
-											isFolderInfo(data.documents.conservationMap)
-												? data.documents.conservationMap.folderId
+											lpaQuestionnaireData.appealId,
+											lpaQuestionnaireData.lpaQuestionnaireId,
+											isFolderInfo(lpaQuestionnaireData.documents.conservationMap)
+												? lpaQuestionnaireData.documents.conservationMap.folderId
 												: undefined
 										),
-										attributes: { 'data-cy': 'manage-conservation-area-map' }
-									}
+										attributes: { 'lpaQuestionnaireData-cy': 'manage-conservation-area-map' }
+									})
 							  ]
 							: []),
-						{
+						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Add',
 							visuallyHiddenText: 'Conservation area map and guidance',
 							href: displayPageFormatter.formatDocumentActionLink(
-								data.appealId,
-								data.documents.conservationMap,
-								buildDocumentUploadUrlTemplate(data.lpaQuestionnaireId)
+								lpaQuestionnaireData.appealId,
+								lpaQuestionnaireData.documents.conservationMap,
+								buildDocumentUploadUrlTemplate(lpaQuestionnaireData.lpaQuestionnaireId)
 							),
-							attributes: { 'data-cy': 'add-conservation-area-map' }
-						}
+							attributes: { 'lpaQuestionnaireData-cy': 'add-conservation-area-map' }
+						})
 					]
 				}
 			}
@@ -334,93 +145,72 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 					text: 'Green belt'
 				},
 				value: {
-					text: convertFromBooleanToYesNo(data.siteWithinGreenBelt) || ''
+					text: convertFromBooleanToYesNo(lpaQuestionnaireData.siteWithinGreenBelt) || ''
 				},
 				actions: {
 					items: [
-						{
+						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
 							visuallyHiddenText: 'Green belt',
 							href: `${currentRoute}/change-lpa-questionnaire/site-within-green-belt`,
-							attributes: { 'data-cy': 'change-site-within-green-belt' }
-						}
+							attributes: { 'lpaQuestionnaireData-cy': 'change-site-within-green-belt' }
+						})
 					]
 				}
 			}
-		},
-		input: {
-			displayName: 'Site within green belt',
-			instructions: [
-				{
-					type: 'radios',
-					properties: {
-						name: 'siteWithinGreenBelt',
-						items: [
-							{
-								text: 'Yes',
-								value: 'yes',
-								checked: data.siteWithinGreenBelt || false
-							},
-							{
-								text: 'No',
-								value: 'no',
-								checked: !data.siteWithinGreenBelt
-							}
-						]
-					}
-				}
-			]
 		}
 	};
 
 	/** @type {Instructions} */
-	// mappedData.lpaq.notifyingParties = {
-	// 	id: 'notifying-parties',
-	// 	display: {
-	// 		summaryListItem: {
-	// 			key: {
-	// 				text: 'Who was notified'
-	// 			},
-	// 			value: displayPageFormatter.formatDocumentValues(
-	// 				data.appealId,
-	// 				isFolderInfo(data.documents.whoNotified) ? data.documents.whoNotified.documents || [] : []
-	// 			),
-	// 			actions: {
-	// 				items: [
-	// 					...((isFolderInfo(data.documents.whoNotified)
-	// 						? data.documents.whoNotified.documents || []
-	// 						: []
-	// 					).length
-	// 						? [
-	// 								{
-	// 									text: 'Manage',
-	// 									visuallyHiddenText: 'Who was notified',
-	// 									href: mapDocumentManageUrl(
-	// 										data.appealId,
-	// 										data.lpaQuestionnaireId,
-	// 										isFolderInfo(data.documents.whoNotified)
-	// 											? data.documents.whoNotified.folderId
-	// 											: undefined
-	// 									),
-	// 									attributes: { 'data-cy': 'manage-notifying-parties' }
-	// 								}
-	// 						  ]
-	// 						: []),
-	// 					{
-	// 						text: 'Add',
-	// 						visuallyHiddenText: 'Who was notified',
-	// 						href: displayPageFormatter.formatDocumentActionLink(
-	// 							data.appealId,
-	// 							data.documents.whoNotified,
-	// 							buildDocumentUploadUrlTemplate(data.lpaQuestionnaireId)
-	// 						),
-	// 						attributes: { 'data-cy': 'add-notifying-parties' }
-	// 					}
-	// 				]
-	// 			}
-	// 		}
-	// 	}
-	// };
+	mappedData.lpaq.notifyingParties = {
+		id: 'notifying-parties',
+		display: {
+			summaryListItem: {
+				key: {
+					text: 'Who was notified'
+				},
+				value: displayPageFormatter.formatDocumentValues(
+					lpaQuestionnaireData.appealId,
+					isFolderInfo(lpaQuestionnaireData.documents.whoNotified)
+						? lpaQuestionnaireData.documents.whoNotified.documents || []
+						: []
+				),
+				actions: {
+					items: [
+						...((isFolderInfo(lpaQuestionnaireData.documents.whoNotified)
+							? lpaQuestionnaireData.documents.whoNotified.documents || []
+							: []
+						).length
+							? [
+									mapActionComponent(permissionNames.updateCase, session, {
+										text: 'Manage',
+										visuallyHiddenText: 'Who was notified',
+										href: mapDocumentManageUrl(
+											lpaQuestionnaireData.appealId,
+											lpaQuestionnaireData.lpaQuestionnaireId,
+											isFolderInfo(lpaQuestionnaireData.documents.whoNotified)
+												? lpaQuestionnaireData.documents.whoNotified.folderId
+												: undefined
+										),
+										attributes: { 'lpaQuestionnaireData-cy': 'manage-notifying-parties' }
+									})
+							  ]
+							: []),
+						mapActionComponent(permissionNames.updateCase, session, {
+							text: 'Add',
+							visuallyHiddenText: 'Who was notified',
+							href: displayPageFormatter.formatDocumentActionLink(
+								lpaQuestionnaireData.appealId,
+								lpaQuestionnaireData.documents.whoNotified,
+								buildDocumentUploadUrlTemplate(lpaQuestionnaireData.lpaQuestionnaireId)
+							),
+							attributes: { 'lpaQuestionnaireData-cy': 'add-notifying-parties' }
+						})
+					]
+				}
+			}
+		}
+	};
 
 	/** @type {Instructions} */
 	mappedData.lpaq.lpaNotificationMethods = {
@@ -432,104 +222,22 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 				},
 				value: {
 					html: displayPageFormatter.formatListOfNotificationMethodsToHtml(
-						data.lpaNotificationMethods
+						lpaQuestionnaireData.lpaNotificationMethods
 					)
 				},
 				actions: {
 					items: [
-						{
+						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
 							visuallyHiddenText: 'Notification methods',
 							href: `${currentRoute}/change-lpa-questionnaire/notification-methods`,
-							attributes: { 'data-cy': 'change-notification-methods' }
-						}
+							attributes: { 'lpaQuestionnaireData-cy': 'change-notification-methods' }
+						})
 					]
 				}
 			}
-		},
-		input: {
-			displayName: 'Notification methods',
-			instructions: [
-				{
-					type: 'checkboxes',
-					properties: {
-						name: 'notification-methods',
-						items: [
-							{
-								value: '1017',
-								text: 'A site notice',
-								checked: data.lpaNotificationMethods?.some(
-									(value) => value.name === 'A site notice'
-								)
-							},
-							{
-								value: '1018',
-								text: 'Letters or emails to interested parties',
-								checked: data.lpaNotificationMethods?.some(
-									(value) => value.name === 'Letter/email to interested parties'
-								)
-							},
-							{
-								value: '1019',
-								text: 'An advert in the local press',
-								checked: data.lpaNotificationMethods?.some(
-									(value) => value.name === 'A press advert'
-								)
-							}
-						]
-					}
-				}
-			]
 		}
 	};
-
-	/** @type {Instructions} */
-	// mappedData.lpaq.hasRepresentationsFromOtherParties = {
-	// 	id: 'has-representations-from-other-parties',
-	// 	display: {
-	// 		summaryListItem: {
-	// 			key: {
-	// 				text: 'Representations from other parties'
-	// 			},
-	// 			value: {
-	// 				text: convertFromBooleanToYesNo(data.hasRepresentationsFromOtherParties) || ''
-	// 			},
-	// 			actions: {
-	// 				items: [
-	// 					{
-	// 						text: 'Change',
-	// 						visuallyHiddenText: 'Representations from other parties',
-	// 						href: `${currentRoute}/change-lpa-questionnaire/has-representations-from-other-parties`,
-	// 						attributes: { 'data-cy': 'change-has-representations-from-other-parties' }
-	// 					}
-	// 				]
-	// 			}
-	// 		}
-	// 	},
-	// 	input: {
-	// 		displayName: 'Has representations from other parties',
-	// 		instructions: [
-	// 			{
-	// 				type: 'radios',
-	// 				properties: {
-	// 					name: 'hasRepresentationsFromOtherParties',
-	// 					items: [
-	// 						{
-	// 							text: 'Yes',
-	// 							value: 'yes',
-	// 							checked: data.hasRepresentationsFromOtherParties || false
-	// 						},
-	// 						{
-	// 							text: 'No',
-	// 							value: 'no',
-	// 							checked: !data.hasRepresentationsFromOtherParties
-	// 						}
-	// 					]
-	// 				}
-	// 			}
-	// 		]
-	// 	}
-	// };
 
 	/** @type {Instructions} */
 	mappedData.lpaq.representations = {
@@ -540,42 +248,44 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 					text: 'Representations from other parties documents'
 				},
 				value: displayPageFormatter.formatDocumentValues(
-					data.appealId,
-					isFolderInfo(data.documents.otherPartyRepresentations)
-						? data.documents.otherPartyRepresentations.documents || []
+					lpaQuestionnaireData.appealId,
+					isFolderInfo(lpaQuestionnaireData.documents.otherPartyRepresentations)
+						? lpaQuestionnaireData.documents.otherPartyRepresentations.documents || []
 						: []
 				),
 				actions: {
 					items: [
-						...((isFolderInfo(data.documents.otherPartyRepresentations)
-							? data.documents.otherPartyRepresentations.documents || []
+						...((isFolderInfo(lpaQuestionnaireData.documents.otherPartyRepresentations)
+							? lpaQuestionnaireData.documents.otherPartyRepresentations.documents || []
 							: []
 						).length
 							? [
-									{
+									mapActionComponent(permissionNames.updateCase, session, {
 										text: 'Manage',
 										visuallyHiddenText: 'Representations from other parties documents',
 										href: mapDocumentManageUrl(
-											data.appealId,
-											data.lpaQuestionnaireId,
-											isFolderInfo(data.documents.otherPartyRepresentations)
-												? data.documents.otherPartyRepresentations.folderId
+											lpaQuestionnaireData.appealId,
+											lpaQuestionnaireData.lpaQuestionnaireId,
+											isFolderInfo(lpaQuestionnaireData.documents.otherPartyRepresentations)
+												? lpaQuestionnaireData.documents.otherPartyRepresentations.folderId
 												: undefined
 										),
-										attributes: { 'data-cy': 'manage-representations-from-other-parties' }
-									}
+										attributes: {
+											'lpaQuestionnaireData-cy': 'manage-representations-from-other-parties'
+										}
+									})
 							  ]
 							: []),
-						{
+						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Add',
 							visuallyHiddenText: 'Representations from other parties documents',
 							href: displayPageFormatter.formatDocumentActionLink(
-								data.appealId,
-								data.documents.otherPartyRepresentations,
-								buildDocumentUploadUrlTemplate(data.lpaQuestionnaireId)
+								lpaQuestionnaireData.appealId,
+								lpaQuestionnaireData.documents.otherPartyRepresentations,
+								buildDocumentUploadUrlTemplate(lpaQuestionnaireData.lpaQuestionnaireId)
 							),
-							attributes: { 'data-cy': 'add-representations-from-other-parties' }
-						}
+							attributes: { 'lpaQuestionnaireData-cy': 'add-representations-from-other-parties' }
+						})
 					]
 				}
 			}
@@ -591,42 +301,42 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 					text: "Planning officer's report"
 				},
 				value: displayPageFormatter.formatDocumentValues(
-					data.appealId,
-					isFolderInfo(data.documents.planningOfficerReport)
-						? data.documents.planningOfficerReport.documents || []
+					lpaQuestionnaireData.appealId,
+					isFolderInfo(lpaQuestionnaireData.documents.planningOfficerReport)
+						? lpaQuestionnaireData.documents.planningOfficerReport.documents || []
 						: []
 				),
 				actions: {
 					items: [
-						...((isFolderInfo(data.documents.planningOfficerReport)
-							? data.documents.planningOfficerReport.documents || []
+						...((isFolderInfo(lpaQuestionnaireData.documents.planningOfficerReport)
+							? lpaQuestionnaireData.documents.planningOfficerReport.documents || []
 							: []
 						).length
 							? [
-									{
+									mapActionComponent(permissionNames.updateCase, session, {
 										text: 'Manage',
 										visuallyHiddenText: "Planning officer's report",
 										href: mapDocumentManageUrl(
-											data.appealId,
-											data.lpaQuestionnaireId,
-											isFolderInfo(data.documents.planningOfficerReport)
-												? data.documents.planningOfficerReport.folderId
+											lpaQuestionnaireData.appealId,
+											lpaQuestionnaireData.lpaQuestionnaireId,
+											isFolderInfo(lpaQuestionnaireData.documents.planningOfficerReport)
+												? lpaQuestionnaireData.documents.planningOfficerReport.folderId
 												: undefined
 										),
-										attributes: { 'data-cy': 'manage-officers-report' }
-									}
+										attributes: { 'lpaQuestionnaireData-cy': 'manage-officers-report' }
+									})
 							  ]
 							: []),
-						{
+						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Add',
 							visuallyHiddenText: "Planning officer's report",
 							href: displayPageFormatter.formatDocumentActionLink(
-								data.appealId,
-								data.documents.planningOfficerReport,
-								buildDocumentUploadUrlTemplate(data.lpaQuestionnaireId)
+								lpaQuestionnaireData.appealId,
+								lpaQuestionnaireData.documents.planningOfficerReport,
+								buildDocumentUploadUrlTemplate(lpaQuestionnaireData.lpaQuestionnaireId)
 							),
-							attributes: { 'data-cy': 'add-officers-report' }
-						}
+							attributes: { 'lpaQuestionnaireData-cy': 'add-officers-report' }
+						})
 					]
 				}
 			}
@@ -643,94 +353,24 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 				},
 				value: {
 					html: displayPageFormatter.formatAnswerAndDetails(
-						convertFromBooleanToYesNo(data.doesSiteRequireInspectorAccess) ?? 'No answer provided',
-						data.inspectorAccessDetails
+						convertFromBooleanToYesNo(lpaQuestionnaireData.doesSiteRequireInspectorAccess) ??
+							'No answer provided',
+						lpaQuestionnaireData.inspectorAccessDetails
 					)
 				},
 				actions: {
 					items: [
-						{
+						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
 							visuallyHiddenText: 'Site access required',
 							href: `${currentRoute}/inspector-access/change/lpa`,
-							attributes: { 'data-cy': 'change-does-site-require-inspector-access' }
-						}
+							attributes: { 'lpaQuestionnaireData-cy': 'change-does-site-require-inspector-access' }
+						})
 					]
 				}
 			}
-		},
-		input: {
-			displayName: 'Does site require inspector access',
-			instructions: [
-				{
-					type: 'radios',
-					properties: {
-						name: 'doesSiteRequireInspectorAccess',
-						items: [
-							{
-								text: 'Yes',
-								value: 'yes',
-								checked: data.doesSiteRequireInspectorAccess || false
-							},
-							{
-								text: 'No',
-								value: 'no',
-								checked: !data.doesSiteRequireInspectorAccess
-							}
-						]
-					}
-				}
-			]
 		}
 	};
-
-	/** @type {Instructions} */
-	// mappedData.lpaq.isAffectingNeighbouringSites = {
-	// 	id: 'is-affecting-neighbouring-sites',
-	// 	display: {
-	// 		summaryListItem: {
-	// 			key: {
-	// 				text: 'Affects neighbouring sites'
-	// 			},
-	// 			value: {
-	// 				text: convertFromBooleanToYesNo(data.isAffectingNeighbouringSites) || ''
-	// 			},
-	// 			actions: {
-	// 				items: [
-	// 					{
-	// 						text: 'Change',
-	// 						visuallyHiddenText: 'Affects neighbouring sites',
-	// 						href: `${currentRoute}/neighbouring-sites/change/affected`,
-	// 						attributes: { 'data-cy': 'change-is-affecting-neighbouring-sites' }
-	// 					}
-	// 				]
-	// 			}
-	// 		}
-	// 	},
-	// 	input: {
-	// 		displayName: 'Is affecting neighbouring sites',
-	// 		instructions: [
-	// 			{
-	// 				type: 'radios',
-	// 				properties: {
-	// 					name: 'isAffectingNeighbouringSites',
-	// 					items: [
-	// 						{
-	// 							text: 'Yes',
-	// 							value: 'yes',
-	// 							checked: data.isAffectingNeighbouringSites || false
-	// 						},
-	// 						{
-	// 							text: 'No',
-	// 							value: 'no',
-	// 							checked: !data.isAffectingNeighbouringSites
-	// 						}
-	// 					]
-	// 				}
-	// 			}
-	// 		]
-	// 	}
-	// };
 
 	/** @type {Instructions} */
 	mappedData.lpaq.lpaHealthAndSafety = {
@@ -742,19 +382,19 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 				},
 				value: {
 					html: displayPageFormatter.formatAnswerAndDetails(
-						convertFromBooleanToYesNo(data.doesSiteHaveHealthAndSafetyIssues) ||
+						convertFromBooleanToYesNo(lpaQuestionnaireData.doesSiteHaveHealthAndSafetyIssues) ||
 							'No answer provided',
-						data.healthAndSafetyDetails
+						lpaQuestionnaireData.healthAndSafetyDetails
 					)
 				},
 				actions: {
 					items: [
-						{
+						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
 							href: `${currentRoute}/safety-risks/change/lpa`,
 							visuallyHiddenText: 'potential safety risks',
-							attributes: { 'data-cy': 'change-health-and-safety' }
-						}
+							attributes: { 'lpaQuestionnaireData-cy': 'change-health-and-safety' }
+						})
 					]
 				},
 				classes: 'lpa-health-and-safety'
@@ -762,47 +402,47 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 		}
 	};
 
+	const otherAppealsItems = [];
+
+	if (appealDetails.otherAppeals.length) {
+		otherAppealsItems.push(
+			mapActionComponent(permissionNames.updateCase, session, {
+				text: 'Manage',
+				href: `${currentRoute}/other-appeals/manage`,
+				visuallyHiddenText: 'Related appeals',
+				attributes: { 'data-cy': 'manage-related-appeals' }
+			})
+		);
+	}
+
+	otherAppealsItems.push(
+		mapActionComponent(permissionNames.updateCase, session, {
+			text: 'Add',
+			href: `${currentRoute}/other-appeals/add`,
+			visuallyHiddenText: 'Related appeals',
+			attributes: { 'data-cy': 'add-related-appeals' }
+		})
+	);
+
 	/** @type {Instructions} */
-	// mappedData.lpaq.otherAppeals = {
-	// 	id: 'other-appeals',
-	// 	display: {
-	// 		summaryListItem: {
-	// 			key: {
-	// 				text: 'Appeals near the site'
-	// 			},
-	// 			value: {
-	// 				html:
-	// 					displayPageFormatter.formatListOfRelatedAppeals(data.otherAppeals) || 'No other appeals'
-	// 			},
-	// 			actions: {
-	// 				items: [
-	// 					{
-	// 						text: 'Change',
-	// 						visuallyHiddenText: 'Appeals near the site',
-	// 						href: `${currentRoute}/change-lpa-questionnaire/other-appeals`,
-	// 						attributes: { 'data-cy': 'change-other-appeals' }
-	// 					}
-	// 				]
-	// 			}
-	// 		}
-	// 	},
-	// 	input: {
-	// 		displayName: 'Other appeals',
-	// 		instructions: [
-	// 			{
-	// 				type: 'input',
-	// 				properties: {
-	// 					id: 'other-appeals',
-	// 					name: 'otherAppeals',
-	// 					value: displayPageFormatter.nullToEmptyString(data.otherAppeals),
-	// 					label: {
-	// 						text: 'What appeals are the other associated with this appeal?'
-	// 					}
-	// 				}
-	// 			}
-	// 		]
-	// 	}
-	// };
+	mappedData.lpaq.otherAppeals = {
+		id: 'other-appeals',
+		display: {
+			summaryListItem: {
+				key: {
+					text: 'Appeals near the site'
+				},
+				value: {
+					html:
+						displayPageFormatter.formatListOfRelatedAppeals(appealDetails.otherAppeals || []) ||
+						'No other appeals'
+				},
+				actions: {
+					items: otherAppealsItems
+				}
+			}
+		}
+	};
 
 	/** @type {Instructions} */
 	mappedData.lpaq.newConditions = {
@@ -814,63 +454,34 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 				},
 				value: {
 					html: displayPageFormatter.formatAnswerAndDetails(
-						convertFromBooleanToYesNo(data.hasExtraConditions) || '',
-						data.extraConditions
+						convertFromBooleanToYesNo(lpaQuestionnaireData.hasExtraConditions) || '',
+						lpaQuestionnaireData.extraConditions
 					)
 				},
 				actions: {
 					items: [
-						{
+						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
 							visuallyHiddenText: 'Extra conditions',
 							href: `${currentRoute}/change-lpa-questionnaire/extra-conditions`
-						}
+						})
 					]
 				}
 			}
-		},
-		input: {
-			displayName: 'Extra conditions',
-			instructions: [
-				{
-					type: 'radios',
-					properties: {
-						name: 'extraConditions',
-						items: [
-							{
-								text: 'Yes',
-								value: 'yes',
-								conditional: conditionalFormatter(
-									'extra-conditions-text',
-									'extraConditionsText',
-									'Tell us about the new conditions',
-									displayPageFormatter.nullToEmptyString(data.extraConditions)
-								),
-								checked: data.hasExtraConditions || false
-							},
-							{
-								text: 'No',
-								value: 'no',
-								checked: !data.hasExtraConditions
-							}
-						]
-					}
-				}
-			]
 		}
 	};
 
 	/** @type {Instructions} */
-	mappedData.lpaq.additionalDocuments = {
-		id: 'additional-documents',
+	mappedData.lpaq.additionalDocumentsContents = {
+		id: 'additional-documents-contents',
 		display: {
-			...((isFolderInfo(data.documents.lpaCaseCorrespondence)
-				? data.documents.lpaCaseCorrespondence.documents || []
+			...((isFolderInfo(lpaQuestionnaireData.documents.lpaCaseCorrespondence)
+				? lpaQuestionnaireData.documents.lpaCaseCorrespondence.documents || []
 				: []
 			).length > 0
 				? {
-						summaryListItems: (isFolderInfo(data.documents.lpaCaseCorrespondence)
-							? data.documents.lpaCaseCorrespondence.documents || []
+						summaryListItems: (isFolderInfo(lpaQuestionnaireData.documents.lpaCaseCorrespondence)
+							? lpaQuestionnaireData.documents.lpaCaseCorrespondence.documents || []
 							: []
 						).map((/** @type {DocumentInfo} */ document) => ({
 							key: {
@@ -878,7 +489,7 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 								classes: 'govuk-visually-hidden'
 							},
 							value: displayPageFormatter.formatDocumentValues(
-								data.appealId,
+								lpaQuestionnaireData.appealId,
 								[document],
 								document.latestDocumentVersion?.isLateEntry || false
 							),
@@ -904,6 +515,62 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 	};
 
 	/** @type {Instructions} */
+	mappedData.lpaq.additionalDocuments = {
+		id: 'additional-documents',
+		display: {
+			cardItem: {
+				classes: 'pins-summary-list--fullwidth-value',
+				card: {
+					title: {
+						text: 'Additional documents'
+					},
+					actions: {
+						items:
+							(isFolderInfo(lpaQuestionnaireData.documents.lpaCaseCorrespondence)
+								? lpaQuestionnaireData.documents.lpaCaseCorrespondence.documents
+								: []
+							).length > 0
+								? [
+										mapActionComponent(permissionNames.updateCase, session, {
+											text: 'Manage',
+											visuallyHiddenText: 'additional documents',
+											href: mapDocumentManageUrl(
+												lpaQuestionnaireData.appealId,
+												lpaQuestionnaireData.lpaQuestionnaireId,
+												(isFolderInfo(lpaQuestionnaireData.documents.lpaCaseCorrespondence) &&
+													lpaQuestionnaireData.documents.lpaCaseCorrespondence.folderId) ||
+													undefined
+											)
+										}),
+										mapActionComponent(permissionNames.updateCase, session, {
+											text: 'Add',
+											visuallyHiddenText: 'additional documents',
+											href: displayPageFormatter.formatDocumentActionLink(
+												lpaQuestionnaireData.appealId,
+												lpaQuestionnaireData.documents.lpaCaseCorrespondence,
+												buildDocumentUploadUrlTemplate(lpaQuestionnaireData.lpaQuestionnaireId)
+											)
+										})
+								  ]
+								: [
+										mapActionComponent(permissionNames.updateCase, session, {
+											text: 'Add',
+											visuallyHiddenText: 'additional documents',
+											href: displayPageFormatter.formatDocumentActionLink(
+												lpaQuestionnaireData.appealId,
+												lpaQuestionnaireData.documents.lpaCaseCorrespondence,
+												buildDocumentUploadUrlTemplate(lpaQuestionnaireData.lpaQuestionnaireId)
+											)
+										})
+								  ]
+					}
+				},
+				rows: mappedData.lpaq.additionalDocumentsContents.display.summaryListItems
+			}
+		}
+	};
+
+	/** @type {Instructions} */
 	mappedData.lpaq.reviewOutcome = {
 		id: 'review-outcome',
 		display: {
@@ -912,16 +579,16 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 					text: 'LPA Questionnaire review outcome'
 				},
 				value: {
-					text: data.validation?.outcome || 'Not yet reviewed'
+					text: lpaQuestionnaireData.validation?.outcome || 'Not yet reviewed'
 				},
 				actions: {
 					items: [
-						{
+						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
 							visuallyHiddenText: 'LPA Questionnaire review outcome',
-							href: `/appeals-service/appeal-details/${data.appealId}/lpa-questionnaire/${data.lpaQuestionnaireId}`,
-							attributes: { 'data-cy': 'change-review-outcome' }
-						}
+							href: `/appeals-service/appeal-details/${lpaQuestionnaireData.appealId}/lpa-questionnaire/${lpaQuestionnaireData.lpaQuestionnaireId}`,
+							attributes: { 'lpaQuestionnaireData-cy': 'change-review-outcome' }
+						})
 					]
 				}
 			}
@@ -933,7 +600,7 @@ export function initialiseAndMapLPAQData(data, currentRoute) {
 					type: 'radios',
 					properties: {
 						name: 'review-outcome',
-						value: data.validation?.outcome,
+						value: lpaQuestionnaireData.validation?.outcome,
 						items: [
 							{
 								value: 'complete',

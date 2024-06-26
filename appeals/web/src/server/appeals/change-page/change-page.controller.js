@@ -28,6 +28,7 @@ const renderChangePage = async (request, response) => {
 					request.params.question,
 					appealData,
 					lpaqData,
+					request.session,
 					currentUrl
 				);
 

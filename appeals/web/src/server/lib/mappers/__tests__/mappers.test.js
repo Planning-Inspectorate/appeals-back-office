@@ -82,14 +82,22 @@ describe('lpaQuestionnaire-mapper', () => {
 	 */
 	let currentRoute;
 	/**
+	 * @type {SessionWithAuth}
+	 */
+	let session;
+	/**
 	 * @type {MappedLPAQInstructions}
 	 */
 	let validMappedData;
 	beforeAll(async () => {
 		currentRoute = 'testroute/';
+		// @ts-ignore
+		session = { account: createAccountInfo() };
 		validMappedData = await initialiseAndMapLPAQData(
 			// @ts-ignore
 			lpaQuestionnaireDataIncompleteOutcome,
+			appealData,
+			session,
 			currentRoute
 		);
 	});
