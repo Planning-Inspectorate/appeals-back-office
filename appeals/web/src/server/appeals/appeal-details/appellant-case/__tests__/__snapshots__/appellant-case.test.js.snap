@@ -1,6 +1,270 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`appellant-case GET /appellant-case should render a "Inspector access (appellant) updated" success notification banner when the inspector access (appellant) is updated 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-notification-banner govuk-notification-banner--success"
+            role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+                <div class="govuk-notification-banner__header">
+                    <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
+                </div>
+                <div class="govuk-notification-banner__content">
+                    <p class="govuk-notification-banner__heading">Inspector access (appellant) updated</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Appellant case</h1>
+        </div>
+    </div>
+    <dl class="govuk-summary-list govuk-summary-list--no-border">
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+            <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA</dt>
+            <dd class="govuk-summary-list__value">Worthing Borough Council</dd>
+        </div>
+    </dl>
+    <div class="govuk-summary-card">
+        <div class="govuk-summary-card__title-wrapper">
+            <h2 class="govuk-summary-card__title">1. Appellant details</h2>
+        </div>
+        <div class="govuk-summary-card__content">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
+                    <dd class="govuk-summary-list__value">
+                        <ul class="govuk-list">
+                            <li>Roger Simmons</li>
+                            <li>test3@example.com</li>
+                        </ul>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/service-user/change/appellant"
+                        data-cy="appellant"> Change<span class="govuk-visually-hidden"> Appellant</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent</dt>
+                    <dd class="govuk-summary-list__value">
+                        <ul class="govuk-list">
+                            <li>Fiona Shell</li>
+                            <li>test2@example.com</li>
+                        </ul>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/service-user/change/agent"
+                        data-cy="change-agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
+                    </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-summary-card">
+        <div class="govuk-summary-card__title-wrapper">
+            <h2 class="govuk-summary-card__title">2. Site details</h2>
+        </div>
+        <div class="govuk-summary-card__content">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
+                        data-cy="change-site-address"> Change<span class="govuk-visually-hidden"> Site address</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site area (m²)</dt>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> Site area in metres squared</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> In green belt</dt>
+                    <dd class="govuk-summary-list__value">Not currently in datamodel but is in v2 of the appellant submission</dd>
+                    <dd                     class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> In green belt</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site ownership</dt>
+                    <dd class="govuk-summary-list__value">Fully owned</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-ownership/change"
+                        data-cy="change-site-ownership"> Change<span class="govuk-visually-hidden"> Site ownership</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row appellantcase-inspector-access"><dt class="govuk-summary-list__key"> Inspector access required</dt>
+                    <dd                     class="govuk-summary-list__value"><span>No</span>
+                        </dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/inspector-access/change/appellant"
+                            data-cy="change-inspector-access"> Change<span class="govuk-visually-hidden"> Inspector access required</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks</dt>
+                    <dd class="govuk-summary-list__value"><span>Yes</span>
+                        <br><span>Dogs on site</span>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/safety-risks/change/appellant"
+                        data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks</span></a>
+                    </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-summary-card">
+        <div class="govuk-summary-card__title-wrapper">
+            <h2 class="govuk-summary-card__title">3. Application details</h2>
+        </div>
+        <div class="govuk-summary-card__content">
+            <dl class="govuk-summary-list" id="application-summary">
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
+                    <dd                     class="govuk-summary-list__value">Worthing Borough Council</dd>
+                </div>
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> LPA application reference</dt>
+                    <dd                     class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application date</dt>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> Application date</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70457"
+                        data-cy="add-application-form"> Add<span class="govuk-visually-hidden"> Application form</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Development description</dt>
+                    <dd class="govuk-summary-list__value">Not provided</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> Development description</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA changed the development description</dt>
+                    <dd                     class="govuk-summary-list__value">Yes</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> LPA changed the development description</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agreement to change description evidence</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70457"> Add<span class="govuk-visually-hidden"> Agreement to change description evidence</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision date</dt>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> Decision date</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70458"
+                        data-cy="add-decision-letter"> Add<span class="govuk-visually-hidden"> Decision letter</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Outcome</dt>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> Application outcome</span></a>
+                    </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-summary-card">
+        <div class="govuk-summary-card__title-wrapper">
+            <h2 class="govuk-summary-card__title">4. Appeal details</h2>
+        </div>
+        <div class="govuk-summary-card__content">
+            <dl class="govuk-summary-list" id="appeal-summary">
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Appeal type</dt>
+                    <dd class="govuk-summary-list__value">Householder</dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal statement</dt>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70456"
+                        data-cy="add-appeal-statement"> Add<span class="govuk-visually-hidden"> Appeal statement</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row appeal-related-appeals"><dt class="govuk-summary-list__key"> Related appeals</dt>
+                    <dd class="govuk-summary-list__value"><span>No appeals</span>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/related-appeals/add"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Applied for award of appeal costs</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> Applied for award of appeal costs</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Costs document</dt>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"> Add<span class="govuk-visually-hidden"> Application form</span></a>
+                    </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-summary-card">
+        <div class="govuk-summary-card__title-wrapper">
+            <h2 class="govuk-summary-card__title">Additional documents</h2>
+            <ul class="govuk-summary-card__actions">
+                <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/manage-documents/70461/"> Manage<span class="govuk-visually-hidden"> additional documents</span></a>
+                </li>
+                <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70461"> Add<span class="govuk-visually-hidden"> additional documents</span></a>
+                </li>
+            </ul>
+        </div>
+        <div class="govuk-summary-card__content">
+            <dl class="govuk-summary-list pins-summary-list--fullwidth-value">
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
+                    <dd                     class="govuk-summary-list__value">
+                        <ul class="govuk-list">
+                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/preview'
+                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="'_blank'"
+                                class="govuk-link">ph1.jpeg</a>
+                            </li>
+                        </ul>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
+                    <dd                     class="govuk-summary-list__value">
+                        <ul class="govuk-list">
+                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/preview'
+                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="'_blank'"
+                                class="govuk-link">ph0.jpeg</a>
+                            </li>
+                        </ul>
+                        </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <form action="" method="POST" novalidate>
+                <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">What is the outcome of your review?</legend>
+                        <div class="govuk-radios"
+                        data-module="govuk-radios">
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="reviewOutcome" name="reviewOutcome"
+                                type="radio" value="valid">
+                                <label class="govuk-label govuk-radios__label" for="reviewOutcome">Valid</label>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="reviewOutcome-2" name="reviewOutcome"
+                                type="radio" value="invalid">
+                                <label class="govuk-label govuk-radios__label" for="reviewOutcome-2">Invalid</label>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="reviewOutcome-3" name="reviewOutcome"
+                                type="radio" value="incomplete">
+                                <label class="govuk-label govuk-radios__label" for="reviewOutcome-3">Incomplete</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <button class="govuk-button" data-module="govuk-button">Continue</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case GET /appellant-case should render a "Inspector access (appellant) updated" success notification banner when the inspector access (appellant) is updated 2`] = `
 "<div class="govuk-notification-banner govuk-notification-banner--success"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
@@ -223,7 +487,9 @@ exports[`appellant-case GET /appellant-case should render a "LPA application ref
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><span><div class="govuk-body govuk-!-margin-bottom-2">ph1.jpeg</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/preview'
+                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="'_blank'"
+                                class="govuk-link">ph1.jpeg</a>
                             </li>
                         </ul>
                         </dd>
@@ -231,7 +497,9 @@ exports[`appellant-case GET /appellant-case should render a "LPA application ref
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><span><div class="govuk-body govuk-!-margin-bottom-2">ph0.jpeg</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/preview'
+                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="'_blank'"
+                                class="govuk-link">ph0.jpeg</a>
                             </li>
                         </ul>
                         </dd>
@@ -273,6 +541,270 @@ exports[`appellant-case GET /appellant-case should render a "LPA application ref
 `;
 
 exports[`appellant-case GET /appellant-case should render a "Site health and safety risks updated" success notification banner when the planning application reference is updated 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-notification-banner govuk-notification-banner--success"
+            role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+                <div class="govuk-notification-banner__header">
+                    <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
+                </div>
+                <div class="govuk-notification-banner__content">
+                    <p class="govuk-notification-banner__heading">Site health and safety risks (appellant answer) updated</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Appellant case</h1>
+        </div>
+    </div>
+    <dl class="govuk-summary-list govuk-summary-list--no-border">
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+            <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA</dt>
+            <dd class="govuk-summary-list__value">Worthing Borough Council</dd>
+        </div>
+    </dl>
+    <div class="govuk-summary-card">
+        <div class="govuk-summary-card__title-wrapper">
+            <h2 class="govuk-summary-card__title">1. Appellant details</h2>
+        </div>
+        <div class="govuk-summary-card__content">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
+                    <dd class="govuk-summary-list__value">
+                        <ul class="govuk-list">
+                            <li>Roger Simmons</li>
+                            <li>test3@example.com</li>
+                        </ul>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/service-user/change/appellant"
+                        data-cy="appellant"> Change<span class="govuk-visually-hidden"> Appellant</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent</dt>
+                    <dd class="govuk-summary-list__value">
+                        <ul class="govuk-list">
+                            <li>Fiona Shell</li>
+                            <li>test2@example.com</li>
+                        </ul>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/service-user/change/agent"
+                        data-cy="change-agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
+                    </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-summary-card">
+        <div class="govuk-summary-card__title-wrapper">
+            <h2 class="govuk-summary-card__title">2. Site details</h2>
+        </div>
+        <div class="govuk-summary-card__content">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
+                        data-cy="change-site-address"> Change<span class="govuk-visually-hidden"> Site address</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site area (m²)</dt>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> Site area in metres squared</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> In green belt</dt>
+                    <dd class="govuk-summary-list__value">Not currently in datamodel but is in v2 of the appellant submission</dd>
+                    <dd                     class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> In green belt</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site ownership</dt>
+                    <dd class="govuk-summary-list__value">Fully owned</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-ownership/change"
+                        data-cy="change-site-ownership"> Change<span class="govuk-visually-hidden"> Site ownership</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row appellantcase-inspector-access"><dt class="govuk-summary-list__key"> Inspector access required</dt>
+                    <dd                     class="govuk-summary-list__value"><span>No</span>
+                        </dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/inspector-access/change/appellant"
+                            data-cy="change-inspector-access"> Change<span class="govuk-visually-hidden"> Inspector access required</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks</dt>
+                    <dd class="govuk-summary-list__value"><span>Yes</span>
+                        <br><span>Dogs on site</span>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/safety-risks/change/appellant"
+                        data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks</span></a>
+                    </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-summary-card">
+        <div class="govuk-summary-card__title-wrapper">
+            <h2 class="govuk-summary-card__title">3. Application details</h2>
+        </div>
+        <div class="govuk-summary-card__content">
+            <dl class="govuk-summary-list" id="application-summary">
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
+                    <dd                     class="govuk-summary-list__value">Worthing Borough Council</dd>
+                </div>
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> LPA application reference</dt>
+                    <dd                     class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application date</dt>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> Application date</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70457"
+                        data-cy="add-application-form"> Add<span class="govuk-visually-hidden"> Application form</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Development description</dt>
+                    <dd class="govuk-summary-list__value">Not provided</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> Development description</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA changed the development description</dt>
+                    <dd                     class="govuk-summary-list__value">Yes</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> LPA changed the development description</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agreement to change description evidence</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70457"> Add<span class="govuk-visually-hidden"> Agreement to change description evidence</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision date</dt>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> Decision date</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70458"
+                        data-cy="add-decision-letter"> Add<span class="govuk-visually-hidden"> Decision letter</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Outcome</dt>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> Application outcome</span></a>
+                    </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-summary-card">
+        <div class="govuk-summary-card__title-wrapper">
+            <h2 class="govuk-summary-card__title">4. Appeal details</h2>
+        </div>
+        <div class="govuk-summary-card__content">
+            <dl class="govuk-summary-list" id="appeal-summary">
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Appeal type</dt>
+                    <dd class="govuk-summary-list__value">Householder</dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal statement</dt>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70456"
+                        data-cy="add-appeal-statement"> Add<span class="govuk-visually-hidden"> Appeal statement</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row appeal-related-appeals"><dt class="govuk-summary-list__key"> Related appeals</dt>
+                    <dd class="govuk-summary-list__value"><span>No appeals</span>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/related-appeals/add"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Applied for award of appeal costs</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> Applied for award of appeal costs</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Costs document</dt>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"> Add<span class="govuk-visually-hidden"> Application form</span></a>
+                    </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-summary-card">
+        <div class="govuk-summary-card__title-wrapper">
+            <h2 class="govuk-summary-card__title">Additional documents</h2>
+            <ul class="govuk-summary-card__actions">
+                <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/manage-documents/70461/"> Manage<span class="govuk-visually-hidden"> additional documents</span></a>
+                </li>
+                <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70461"> Add<span class="govuk-visually-hidden"> additional documents</span></a>
+                </li>
+            </ul>
+        </div>
+        <div class="govuk-summary-card__content">
+            <dl class="govuk-summary-list pins-summary-list--fullwidth-value">
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
+                    <dd                     class="govuk-summary-list__value">
+                        <ul class="govuk-list">
+                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/preview'
+                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="'_blank'"
+                                class="govuk-link">ph1.jpeg</a>
+                            </li>
+                        </ul>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
+                    <dd                     class="govuk-summary-list__value">
+                        <ul class="govuk-list">
+                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/preview'
+                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="'_blank'"
+                                class="govuk-link">ph0.jpeg</a>
+                            </li>
+                        </ul>
+                        </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <form action="" method="POST" novalidate>
+                <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">What is the outcome of your review?</legend>
+                        <div class="govuk-radios"
+                        data-module="govuk-radios">
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="reviewOutcome" name="reviewOutcome"
+                                type="radio" value="valid">
+                                <label class="govuk-label govuk-radios__label" for="reviewOutcome">Valid</label>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="reviewOutcome-2" name="reviewOutcome"
+                                type="radio" value="invalid">
+                                <label class="govuk-label govuk-radios__label" for="reviewOutcome-2">Invalid</label>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="reviewOutcome-3" name="reviewOutcome"
+                                type="radio" value="incomplete">
+                                <label class="govuk-label govuk-radios__label" for="reviewOutcome-3">Incomplete</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <button class="govuk-button" data-module="govuk-button">Continue</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case GET /appellant-case should render a "Site health and safety risks updated" success notification banner when the planning application reference is updated 2`] = `
 "<div class="govuk-notification-banner govuk-notification-banner--success"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
@@ -285,6 +817,270 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 `;
 
 exports[`appellant-case GET /appellant-case should render a "Site updated" notification when the site address has been updated 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-notification-banner govuk-notification-banner--success"
+            role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+                <div class="govuk-notification-banner__header">
+                    <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
+                </div>
+                <div class="govuk-notification-banner__content">
+                    <p class="govuk-notification-banner__heading">Site address updated</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Appellant case</h1>
+        </div>
+    </div>
+    <dl class="govuk-summary-list govuk-summary-list--no-border">
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+            <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA</dt>
+            <dd class="govuk-summary-list__value">Worthing Borough Council</dd>
+        </div>
+    </dl>
+    <div class="govuk-summary-card">
+        <div class="govuk-summary-card__title-wrapper">
+            <h2 class="govuk-summary-card__title">1. Appellant details</h2>
+        </div>
+        <div class="govuk-summary-card__content">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
+                    <dd class="govuk-summary-list__value">
+                        <ul class="govuk-list">
+                            <li>Roger Simmons</li>
+                            <li>test3@example.com</li>
+                        </ul>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/service-user/change/appellant"
+                        data-cy="appellant"> Change<span class="govuk-visually-hidden"> Appellant</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent</dt>
+                    <dd class="govuk-summary-list__value">
+                        <ul class="govuk-list">
+                            <li>Fiona Shell</li>
+                            <li>test2@example.com</li>
+                        </ul>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/service-user/change/agent"
+                        data-cy="change-agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
+                    </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-summary-card">
+        <div class="govuk-summary-card__title-wrapper">
+            <h2 class="govuk-summary-card__title">2. Site details</h2>
+        </div>
+        <div class="govuk-summary-card__content">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
+                        data-cy="change-site-address"> Change<span class="govuk-visually-hidden"> Site address</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site area (m²)</dt>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> Site area in metres squared</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> In green belt</dt>
+                    <dd class="govuk-summary-list__value">Not currently in datamodel but is in v2 of the appellant submission</dd>
+                    <dd                     class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> In green belt</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site ownership</dt>
+                    <dd class="govuk-summary-list__value">Fully owned</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-ownership/change"
+                        data-cy="change-site-ownership"> Change<span class="govuk-visually-hidden"> Site ownership</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row appellantcase-inspector-access"><dt class="govuk-summary-list__key"> Inspector access required</dt>
+                    <dd                     class="govuk-summary-list__value"><span>No</span>
+                        </dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/inspector-access/change/appellant"
+                            data-cy="change-inspector-access"> Change<span class="govuk-visually-hidden"> Inspector access required</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks</dt>
+                    <dd class="govuk-summary-list__value"><span>Yes</span>
+                        <br><span>Dogs on site</span>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/safety-risks/change/appellant"
+                        data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks</span></a>
+                    </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-summary-card">
+        <div class="govuk-summary-card__title-wrapper">
+            <h2 class="govuk-summary-card__title">3. Application details</h2>
+        </div>
+        <div class="govuk-summary-card__content">
+            <dl class="govuk-summary-list" id="application-summary">
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
+                    <dd                     class="govuk-summary-list__value">Worthing Borough Council</dd>
+                </div>
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> LPA application reference</dt>
+                    <dd                     class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application date</dt>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> Application date</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70457"
+                        data-cy="add-application-form"> Add<span class="govuk-visually-hidden"> Application form</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Development description</dt>
+                    <dd class="govuk-summary-list__value">Not provided</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> Development description</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA changed the development description</dt>
+                    <dd                     class="govuk-summary-list__value">Yes</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> LPA changed the development description</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agreement to change description evidence</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70457"> Add<span class="govuk-visually-hidden"> Agreement to change description evidence</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision date</dt>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> Decision date</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70458"
+                        data-cy="add-decision-letter"> Add<span class="govuk-visually-hidden"> Decision letter</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Outcome</dt>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> Application outcome</span></a>
+                    </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-summary-card">
+        <div class="govuk-summary-card__title-wrapper">
+            <h2 class="govuk-summary-card__title">4. Appeal details</h2>
+        </div>
+        <div class="govuk-summary-card__content">
+            <dl class="govuk-summary-list" id="appeal-summary">
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Appeal type</dt>
+                    <dd class="govuk-summary-list__value">Householder</dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal statement</dt>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70456"
+                        data-cy="add-appeal-statement"> Add<span class="govuk-visually-hidden"> Appeal statement</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row appeal-related-appeals"><dt class="govuk-summary-list__key"> Related appeals</dt>
+                    <dd class="govuk-summary-list__value"><span>No appeals</span>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/related-appeals/add"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Applied for award of appeal costs</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> Applied for award of appeal costs</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Costs document</dt>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"> Add<span class="govuk-visually-hidden"> Application form</span></a>
+                    </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-summary-card">
+        <div class="govuk-summary-card__title-wrapper">
+            <h2 class="govuk-summary-card__title">Additional documents</h2>
+            <ul class="govuk-summary-card__actions">
+                <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/manage-documents/70461/"> Manage<span class="govuk-visually-hidden"> additional documents</span></a>
+                </li>
+                <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70461"> Add<span class="govuk-visually-hidden"> additional documents</span></a>
+                </li>
+            </ul>
+        </div>
+        <div class="govuk-summary-card__content">
+            <dl class="govuk-summary-list pins-summary-list--fullwidth-value">
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
+                    <dd                     class="govuk-summary-list__value">
+                        <ul class="govuk-list">
+                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/preview'
+                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="'_blank'"
+                                class="govuk-link">ph1.jpeg</a>
+                            </li>
+                        </ul>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
+                    <dd                     class="govuk-summary-list__value">
+                        <ul class="govuk-list">
+                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/preview'
+                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="'_blank'"
+                                class="govuk-link">ph0.jpeg</a>
+                            </li>
+                        </ul>
+                        </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <form action="" method="POST" novalidate>
+                <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">What is the outcome of your review?</legend>
+                        <div class="govuk-radios"
+                        data-module="govuk-radios">
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="reviewOutcome" name="reviewOutcome"
+                                type="radio" value="valid">
+                                <label class="govuk-label govuk-radios__label" for="reviewOutcome">Valid</label>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="reviewOutcome-2" name="reviewOutcome"
+                                type="radio" value="invalid">
+                                <label class="govuk-label govuk-radios__label" for="reviewOutcome-2">Invalid</label>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="reviewOutcome-3" name="reviewOutcome"
+                                type="radio" value="incomplete">
+                                <label class="govuk-label govuk-radios__label" for="reviewOutcome-3">Incomplete</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <button class="govuk-button" data-module="govuk-button">Continue</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case GET /appellant-case should render a "Site updated" notification when the site address has been updated 2`] = `
 "<div class="govuk-notification-banner govuk-notification-banner--success"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
@@ -297,6 +1093,270 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 `;
 
 exports[`appellant-case GET /appellant-case should render a success notification banner when a service user was updated 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-notification-banner govuk-notification-banner--success"
+            role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+                <div class="govuk-notification-banner__header">
+                    <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
+                </div>
+                <div class="govuk-notification-banner__content">
+                    <p class="govuk-notification-banner__heading">Agent details updated</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Appellant case</h1>
+        </div>
+    </div>
+    <dl class="govuk-summary-list govuk-summary-list--no-border">
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+            <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA</dt>
+            <dd class="govuk-summary-list__value">Worthing Borough Council</dd>
+        </div>
+    </dl>
+    <div class="govuk-summary-card">
+        <div class="govuk-summary-card__title-wrapper">
+            <h2 class="govuk-summary-card__title">1. Appellant details</h2>
+        </div>
+        <div class="govuk-summary-card__content">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
+                    <dd class="govuk-summary-list__value">
+                        <ul class="govuk-list">
+                            <li>Roger Simmons</li>
+                            <li>test3@example.com</li>
+                        </ul>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/service-user/change/appellant"
+                        data-cy="appellant"> Change<span class="govuk-visually-hidden"> Appellant</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent</dt>
+                    <dd class="govuk-summary-list__value">
+                        <ul class="govuk-list">
+                            <li>Fiona Shell</li>
+                            <li>test2@example.com</li>
+                        </ul>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/service-user/change/agent"
+                        data-cy="change-agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
+                    </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-summary-card">
+        <div class="govuk-summary-card__title-wrapper">
+            <h2 class="govuk-summary-card__title">2. Site details</h2>
+        </div>
+        <div class="govuk-summary-card__content">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
+                        data-cy="change-site-address"> Change<span class="govuk-visually-hidden"> Site address</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site area (m²)</dt>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> Site area in metres squared</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> In green belt</dt>
+                    <dd class="govuk-summary-list__value">Not currently in datamodel but is in v2 of the appellant submission</dd>
+                    <dd                     class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> In green belt</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site ownership</dt>
+                    <dd class="govuk-summary-list__value">Fully owned</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-ownership/change"
+                        data-cy="change-site-ownership"> Change<span class="govuk-visually-hidden"> Site ownership</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row appellantcase-inspector-access"><dt class="govuk-summary-list__key"> Inspector access required</dt>
+                    <dd                     class="govuk-summary-list__value"><span>No</span>
+                        </dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/inspector-access/change/appellant"
+                            data-cy="change-inspector-access"> Change<span class="govuk-visually-hidden"> Inspector access required</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks</dt>
+                    <dd class="govuk-summary-list__value"><span>Yes</span>
+                        <br><span>Dogs on site</span>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/safety-risks/change/appellant"
+                        data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks</span></a>
+                    </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-summary-card">
+        <div class="govuk-summary-card__title-wrapper">
+            <h2 class="govuk-summary-card__title">3. Application details</h2>
+        </div>
+        <div class="govuk-summary-card__content">
+            <dl class="govuk-summary-list" id="application-summary">
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
+                    <dd                     class="govuk-summary-list__value">Worthing Borough Council</dd>
+                </div>
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> LPA application reference</dt>
+                    <dd                     class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application date</dt>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> Application date</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70457"
+                        data-cy="add-application-form"> Add<span class="govuk-visually-hidden"> Application form</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Development description</dt>
+                    <dd class="govuk-summary-list__value">Not provided</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> Development description</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA changed the development description</dt>
+                    <dd                     class="govuk-summary-list__value">Yes</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> LPA changed the development description</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agreement to change description evidence</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70457"> Add<span class="govuk-visually-hidden"> Agreement to change description evidence</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision date</dt>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> Decision date</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70458"
+                        data-cy="add-decision-letter"> Add<span class="govuk-visually-hidden"> Decision letter</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Outcome</dt>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> Application outcome</span></a>
+                    </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-summary-card">
+        <div class="govuk-summary-card__title-wrapper">
+            <h2 class="govuk-summary-card__title">4. Appeal details</h2>
+        </div>
+        <div class="govuk-summary-card__content">
+            <dl class="govuk-summary-list" id="appeal-summary">
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Appeal type</dt>
+                    <dd class="govuk-summary-list__value">Householder</dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal statement</dt>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70456"
+                        data-cy="add-appeal-statement"> Add<span class="govuk-visually-hidden"> Appeal statement</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row appeal-related-appeals"><dt class="govuk-summary-list__key"> Related appeals</dt>
+                    <dd class="govuk-summary-list__value"><span>No appeals</span>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/related-appeals/add"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Applied for award of appeal costs</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> Applied for award of appeal costs</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Costs document</dt>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"> Add<span class="govuk-visually-hidden"> Application form</span></a>
+                    </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-summary-card">
+        <div class="govuk-summary-card__title-wrapper">
+            <h2 class="govuk-summary-card__title">Additional documents</h2>
+            <ul class="govuk-summary-card__actions">
+                <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/manage-documents/70461/"> Manage<span class="govuk-visually-hidden"> additional documents</span></a>
+                </li>
+                <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70461"> Add<span class="govuk-visually-hidden"> additional documents</span></a>
+                </li>
+            </ul>
+        </div>
+        <div class="govuk-summary-card__content">
+            <dl class="govuk-summary-list pins-summary-list--fullwidth-value">
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
+                    <dd                     class="govuk-summary-list__value">
+                        <ul class="govuk-list">
+                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/preview'
+                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="'_blank'"
+                                class="govuk-link">ph1.jpeg</a>
+                            </li>
+                        </ul>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
+                    <dd                     class="govuk-summary-list__value">
+                        <ul class="govuk-list">
+                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/preview'
+                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="'_blank'"
+                                class="govuk-link">ph0.jpeg</a>
+                            </li>
+                        </ul>
+                        </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <form action="" method="POST" novalidate>
+                <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">What is the outcome of your review?</legend>
+                        <div class="govuk-radios"
+                        data-module="govuk-radios">
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="reviewOutcome" name="reviewOutcome"
+                                type="radio" value="valid">
+                                <label class="govuk-label govuk-radios__label" for="reviewOutcome">Valid</label>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="reviewOutcome-2" name="reviewOutcome"
+                                type="radio" value="invalid">
+                                <label class="govuk-label govuk-radios__label" for="reviewOutcome-2">Invalid</label>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="reviewOutcome-3" name="reviewOutcome"
+                                type="radio" value="incomplete">
+                                <label class="govuk-label govuk-radios__label" for="reviewOutcome-3">Incomplete</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <button class="govuk-button" data-module="govuk-button">Continue</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case GET /appellant-case should render a success notification banner when a service user was updated 2`] = `
 "<div class="govuk-notification-banner govuk-notification-banner--success"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
@@ -506,7 +1566,9 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><span><div class="govuk-body govuk-!-margin-bottom-2">ph1.jpeg</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/preview'
+                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="'_blank'"
+                                class="govuk-link">ph1.jpeg</a>
                             </li>
                         </ul>
                         </dd>
@@ -514,7 +1576,9 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><span><div class="govuk-body govuk-!-margin-bottom-2">ph0.jpeg</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/preview'
+                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="'_blank'"
+                                class="govuk-link">ph0.jpeg</a>
                             </li>
                         </ul>
                         </dd>
@@ -556,513 +1620,29 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
 `;
 
 exports[`appellant-case GET /appellant-case with unchecked documents should render a notification banner when a file is unscanned 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Appellant case</h1>
-        </div>
+"<div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
+data-module="govuk-notification-banner">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
     </div>
-    <dl class="govuk-summary-list govuk-summary-list--no-border">
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
-            <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA</dt>
-            <dd class="govuk-summary-list__value">Worthing Borough Council</dd>
-        </div>
-    </dl>
-    <div class="govuk-summary-card">
-        <div class="govuk-summary-card__title-wrapper">
-            <h2 class="govuk-summary-card__title">1. Appellant details</h2>
-        </div>
-        <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
-                    <dd class="govuk-summary-list__value">
-                        <ul class="govuk-list">
-                            <li>Roger Simmons</li>
-                            <li>test3@example.com</li>
-                        </ul>
-                    </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/service-user/change/appellant"
-                        data-cy="appellant"> Change<span class="govuk-visually-hidden"> Appellant</span></a>
-                    </dd>
-                </div>
-                <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent</dt>
-                    <dd class="govuk-summary-list__value">
-                        <ul class="govuk-list">
-                            <li>Fiona Shell</li>
-                            <li>test2@example.com</li>
-                        </ul>
-                    </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/service-user/change/agent"
-                        data-cy="change-agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
-                    </dd>
-                </div>
-            </dl>
-        </div>
+    <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/1/appellant-case">Refresh page to see if scan has finished</a>
     </div>
-    <div class="govuk-summary-card">
-        <div class="govuk-summary-card__title-wrapper">
-            <h2 class="govuk-summary-card__title">2. Site details</h2>
-        </div>
-        <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
-                    <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
-                        data-cy="change-site-address"> Change<span class="govuk-visually-hidden"> Site address</span></a>
-                    </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site area (m²)</dt>
-                    <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> Site area in metres squared</span></a>
-                    </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> In green belt</dt>
-                    <dd class="govuk-summary-list__value">Not currently in datamodel but is in v2 of the appellant submission</dd>
-                    <dd                     class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> In green belt</span></a>
-                        </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site ownership</dt>
-                    <dd class="govuk-summary-list__value">Fully owned</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-ownership/change"
-                        data-cy="change-site-ownership"> Change<span class="govuk-visually-hidden"> Site ownership</span></a>
-                    </dd>
-                </div>
-                <div class="govuk-summary-list__row appellantcase-inspector-access"><dt class="govuk-summary-list__key"> Inspector access required</dt>
-                    <dd                     class="govuk-summary-list__value"><span>No</span>
-                        </dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/inspector-access/change/appellant"
-                            data-cy="change-inspector-access"> Change<span class="govuk-visually-hidden"> Inspector access required</span></a>
-                        </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks</dt>
-                    <dd class="govuk-summary-list__value"><span>Yes</span>
-                        <br><span>Dogs on site</span>
-                    </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/safety-risks/change/appellant"
-                        data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks</span></a>
-                    </dd>
-                </div>
-            </dl>
-        </div>
-    </div>
-    <div class="govuk-summary-card">
-        <div class="govuk-summary-card__title-wrapper">
-            <h2 class="govuk-summary-card__title">3. Application details</h2>
-        </div>
-        <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list" id="application-summary">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
-                    <dd                     class="govuk-summary-list__value">Worthing Borough Council</dd>
-                </div>
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> LPA application reference</dt>
-                    <dd                     class="govuk-summary-list__value">48269/APP/2021/1482</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application date</dt>
-                    <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> Application date</span></a>
-                    </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
-                    <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70457"
-                        data-cy="add-application-form"> Add<span class="govuk-visually-hidden"> Application form</span></a>
-                    </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Development description</dt>
-                    <dd class="govuk-summary-list__value">Not provided</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> Development description</span></a>
-                    </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA changed the development description</dt>
-                    <dd                     class="govuk-summary-list__value">Yes</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> LPA changed the development description</span></a>
-                        </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agreement to change description evidence</dt>
-                    <dd                     class="govuk-summary-list__value"></dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70457"> Add<span class="govuk-visually-hidden"> Agreement to change description evidence</span></a>
-                        </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision date</dt>
-                    <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> Decision date</span></a>
-                    </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
-                    <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70458"
-                        data-cy="add-decision-letter"> Add<span class="govuk-visually-hidden"> Decision letter</span></a>
-                    </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Outcome</dt>
-                    <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> Application outcome</span></a>
-                    </dd>
-                </div>
-            </dl>
-        </div>
-    </div>
-    <div class="govuk-summary-card">
-        <div class="govuk-summary-card__title-wrapper">
-            <h2 class="govuk-summary-card__title">4. Appeal details</h2>
-        </div>
-        <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list" id="appeal-summary">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Appeal type</dt>
-                    <dd class="govuk-summary-list__value">Householder</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal statement</dt>
-                    <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70456"
-                        data-cy="add-appeal-statement"> Add<span class="govuk-visually-hidden"> Appeal statement</span></a>
-                    </dd>
-                </div>
-                <div class="govuk-summary-list__row appeal-related-appeals"><dt class="govuk-summary-list__key"> Related appeals</dt>
-                    <dd class="govuk-summary-list__value"><span>No appeals</span>
-                    </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/related-appeals/add"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
-                    </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Applied for award of appeal costs</dt>
-                    <dd                     class="govuk-summary-list__value"></dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> Applied for award of appeal costs</span></a>
-                        </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Costs document</dt>
-                    <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"> Add<span class="govuk-visually-hidden"> Application form</span></a>
-                    </dd>
-                </div>
-            </dl>
-        </div>
-    </div>
-    <div class="govuk-summary-card">
-        <div class="govuk-summary-card__title-wrapper">
-            <h2 class="govuk-summary-card__title">Additional documents</h2>
-            <ul class="govuk-summary-card__actions">
-                <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/manage-documents/70461/"> Manage<span class="govuk-visually-hidden"> additional documents</span></a>
-                </li>
-                <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70461"> Add<span class="govuk-visually-hidden"> additional documents</span></a>
-                </li>
-            </ul>
-        </div>
-        <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list pins-summary-list--fullwidth-value">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
-                    <dd                     class="govuk-summary-list__value">
-                        <ul class="govuk-list">
-                            <li><span><div class="govuk-body govuk-!-margin-bottom-2">ph1.jpeg</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
-                            </li>
-                        </ul>
-                        </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
-                    <dd                     class="govuk-summary-list__value">
-                        <ul class="govuk-list">
-                            <li><span><div class="govuk-body govuk-!-margin-bottom-2">ph0.jpeg</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
-                            </li>
-                        </ul>
-                        </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
-                    <dd                     class="govuk-summary-list__value">
-                        <ul class="govuk-list">
-                            <li><span><div class="govuk-body govuk-!-margin-bottom-2">test-doc.jpeg</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
-                            </li>
-                        </ul>
-                        </dd>
-                </div>
-            </dl>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <form action="" method="POST" novalidate>
-                <div class="govuk-form-group">
-                    <fieldset class="govuk-fieldset">
-                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">What is the outcome of your review?</legend>
-                        <div class="govuk-radios"
-                        data-module="govuk-radios">
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="reviewOutcome" name="reviewOutcome"
-                                type="radio" value="valid">
-                                <label class="govuk-label govuk-radios__label" for="reviewOutcome">Valid</label>
-                            </div>
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="reviewOutcome-2" name="reviewOutcome"
-                                type="radio" value="invalid">
-                                <label class="govuk-label govuk-radios__label" for="reviewOutcome-2">Invalid</label>
-                            </div>
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="reviewOutcome-3" name="reviewOutcome"
-                                type="radio" value="incomplete">
-                                <label class="govuk-label govuk-radios__label" for="reviewOutcome-3">Incomplete</label>
-                            </div>
-                        </div>
-                    </fieldset>
-                </div>
-                <button class="govuk-button" data-module="govuk-button">Continue</button>
-            </form>
-        </div>
-    </div>
-</main>"
+</div>"
 `;
 
 exports[`appellant-case GET /appellant-case with unchecked documents should render an error when a file has a virus 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Appellant case</h1>
-        </div>
-    </div>
-    <dl class="govuk-summary-list govuk-summary-list--no-border">
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
-            <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA</dt>
-            <dd class="govuk-summary-list__value">Worthing Borough Council</dd>
-        </div>
-    </dl>
-    <div class="govuk-summary-card">
-        <div class="govuk-summary-card__title-wrapper">
-            <h2 class="govuk-summary-card__title">1. Appellant details</h2>
-        </div>
-        <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
-                    <dd class="govuk-summary-list__value">
-                        <ul class="govuk-list">
-                            <li>Roger Simmons</li>
-                            <li>test3@example.com</li>
-                        </ul>
-                    </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/service-user/change/appellant"
-                        data-cy="appellant"> Change<span class="govuk-visually-hidden"> Appellant</span></a>
-                    </dd>
-                </div>
-                <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent</dt>
-                    <dd class="govuk-summary-list__value">
-                        <ul class="govuk-list">
-                            <li>Fiona Shell</li>
-                            <li>test2@example.com</li>
-                        </ul>
-                    </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/service-user/change/agent"
-                        data-cy="change-agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
-                    </dd>
-                </div>
-            </dl>
-        </div>
-    </div>
-    <div class="govuk-summary-card">
-        <div class="govuk-summary-card__title-wrapper">
-            <h2 class="govuk-summary-card__title">2. Site details</h2>
-        </div>
-        <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
-                    <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
-                        data-cy="change-site-address"> Change<span class="govuk-visually-hidden"> Site address</span></a>
-                    </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site area (m²)</dt>
-                    <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> Site area in metres squared</span></a>
-                    </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> In green belt</dt>
-                    <dd class="govuk-summary-list__value">Not currently in datamodel but is in v2 of the appellant submission</dd>
-                    <dd                     class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> In green belt</span></a>
-                        </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site ownership</dt>
-                    <dd class="govuk-summary-list__value">Fully owned</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-ownership/change"
-                        data-cy="change-site-ownership"> Change<span class="govuk-visually-hidden"> Site ownership</span></a>
-                    </dd>
-                </div>
-                <div class="govuk-summary-list__row appellantcase-inspector-access"><dt class="govuk-summary-list__key"> Inspector access required</dt>
-                    <dd                     class="govuk-summary-list__value"><span>No</span>
-                        </dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/inspector-access/change/appellant"
-                            data-cy="change-inspector-access"> Change<span class="govuk-visually-hidden"> Inspector access required</span></a>
-                        </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Potential safety risks</dt>
-                    <dd class="govuk-summary-list__value"><span>Yes</span>
-                        <br><span>Dogs on site</span>
-                    </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/safety-risks/change/appellant"
-                        data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks</span></a>
-                    </dd>
-                </div>
-            </dl>
-        </div>
-    </div>
-    <div class="govuk-summary-card">
-        <div class="govuk-summary-card__title-wrapper">
-            <h2 class="govuk-summary-card__title">3. Application details</h2>
-        </div>
-        <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list" id="application-summary">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
-                    <dd                     class="govuk-summary-list__value">Worthing Borough Council</dd>
-                </div>
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> LPA application reference</dt>
-                    <dd                     class="govuk-summary-list__value">48269/APP/2021/1482</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application date</dt>
-                    <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> Application date</span></a>
-                    </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
-                    <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70457"
-                        data-cy="add-application-form"> Add<span class="govuk-visually-hidden"> Application form</span></a>
-                    </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Development description</dt>
-                    <dd class="govuk-summary-list__value">Not provided</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> Development description</span></a>
-                    </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA changed the development description</dt>
-                    <dd                     class="govuk-summary-list__value">Yes</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> LPA changed the development description</span></a>
-                        </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agreement to change description evidence</dt>
-                    <dd                     class="govuk-summary-list__value"></dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70457"> Add<span class="govuk-visually-hidden"> Agreement to change description evidence</span></a>
-                        </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision date</dt>
-                    <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> Decision date</span></a>
-                    </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
-                    <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70458"
-                        data-cy="add-decision-letter"> Add<span class="govuk-visually-hidden"> Decision letter</span></a>
-                    </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Outcome</dt>
-                    <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> Application outcome</span></a>
-                    </dd>
-                </div>
-            </dl>
-        </div>
-    </div>
-    <div class="govuk-summary-card">
-        <div class="govuk-summary-card__title-wrapper">
-            <h2 class="govuk-summary-card__title">4. Appeal details</h2>
-        </div>
-        <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list" id="appeal-summary">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Appeal type</dt>
-                    <dd class="govuk-summary-list__value">Householder</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal statement</dt>
-                    <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70456"
-                        data-cy="add-appeal-statement"> Add<span class="govuk-visually-hidden"> Appeal statement</span></a>
-                    </dd>
-                </div>
-                <div class="govuk-summary-list__row appeal-related-appeals"><dt class="govuk-summary-list__key"> Related appeals</dt>
-                    <dd class="govuk-summary-list__value"><span>No appeals</span>
-                    </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/related-appeals/add"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
-                    </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Applied for award of appeal costs</dt>
-                    <dd                     class="govuk-summary-list__value"></dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> Applied for award of appeal costs</span></a>
-                        </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Costs document</dt>
-                    <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"> Add<span class="govuk-visually-hidden"> Application form</span></a>
-                    </dd>
-                </div>
-            </dl>
-        </div>
-    </div>
-    <div class="govuk-summary-card">
-        <div class="govuk-summary-card__title-wrapper">
-            <h2 class="govuk-summary-card__title">Additional documents</h2>
-            <ul class="govuk-summary-card__actions">
-                <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/manage-documents/70461/"> Manage<span class="govuk-visually-hidden"> additional documents</span></a>
-                </li>
-                <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70461"> Add<span class="govuk-visually-hidden"> additional documents</span></a>
+"<div class="govuk-error-summary" data-module="govuk-error-summary">
+    <div role="alert">
+        <h2 class="govuk-error-summary__title"> There is a problem</h2>
+        <div class="govuk-error-summary__body">
+            <ul class="govuk-list govuk-error-summary__list">
+                <li><a href="#appeal-summary">One or more documents in this appellant case contains a virus. Upload a different version of each document that contains a virus.</a>
                 </li>
             </ul>
         </div>
-        <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list pins-summary-list--fullwidth-value">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
-                    <dd                     class="govuk-summary-list__value">
-                        <ul class="govuk-list">
-                            <li><span><div class="govuk-body govuk-!-margin-bottom-2">ph1.jpeg</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
-                            </li>
-                        </ul>
-                        </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
-                    <dd                     class="govuk-summary-list__value">
-                        <ul class="govuk-list">
-                            <li><span><div class="govuk-body govuk-!-margin-bottom-2">ph0.jpeg</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
-                            </li>
-                        </ul>
-                        </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
-                    <dd                     class="govuk-summary-list__value">
-                        <ul class="govuk-list">
-                            <li><span><div class="govuk-body govuk-!-margin-bottom-2">test-doc.jpeg</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
-                            </li>
-                        </ul>
-                        </dd>
-                </div>
-            </dl>
-        </div>
     </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <form action="" method="POST" novalidate>
-                <div class="govuk-form-group">
-                    <fieldset class="govuk-fieldset">
-                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">What is the outcome of your review?</legend>
-                        <div class="govuk-radios"
-                        data-module="govuk-radios">
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="reviewOutcome" name="reviewOutcome"
-                                type="radio" value="valid">
-                                <label class="govuk-label govuk-radios__label" for="reviewOutcome">Valid</label>
-                            </div>
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="reviewOutcome-2" name="reviewOutcome"
-                                type="radio" value="invalid">
-                                <label class="govuk-label govuk-radios__label" for="reviewOutcome-2">Invalid</label>
-                            </div>
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="reviewOutcome-3" name="reviewOutcome"
-                                type="radio" value="incomplete">
-                                <label class="govuk-label govuk-radios__label" for="reviewOutcome-3">Incomplete</label>
-                            </div>
-                        </div>
-                    </fieldset>
-                </div>
-                <button class="govuk-button" data-module="govuk-button">Continue</button>
-            </form>
-        </div>
-    </div>
-</main>"
+</div>"
 `;
 
 exports[`appellant-case GET /appellant-case/add-document-details/:folderId/ should render a 500 error page if fileUploadInfo is not present in the session 1`] = `
@@ -3191,7 +3771,9 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><span><div class="govuk-body govuk-!-margin-bottom-2">ph1.jpeg</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/preview'
+                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="'_blank'"
+                                class="govuk-link">ph1.jpeg</a>
                             </li>
                         </ul>
                         </dd>
@@ -3199,7 +3781,9 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><span><div class="govuk-body govuk-!-margin-bottom-2">ph0.jpeg</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/preview'
+                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="'_blank'"
+                                class="govuk-link">ph0.jpeg</a>
                             </li>
                         </ul>
                         </dd>
@@ -4474,6 +5058,62 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
             </div>
         </div>
         <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+    </form>
+</main>"
+`;
+
+exports[`appellant-case POST /appellant-case/incomplete/date should re-render the update date page with the expected error message if a date that is not a business day was provided 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#">Date must be a business day</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full"><span class="govuk-caption-xl govuk-!-margin-bottom-1">Appeal 351062</span>
+            <h1             class="govuk-fieldset__legend--xl govuk-!-margin-top-0">Update appeal due date</h1>
+        </div>
+    </div>
+    <form method="post" novalidate="novalidate">
+        <div class="govuk-form-group">
+            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+            <div class="govuk-date-input" id="due-date">
+                <div class="govuk-date-input__item">
+                    <div class="govuk-form-group">
+                        <label class="govuk-label govuk-date-input__label" for="due-date-day">Day</label>
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                        id="due-date-day" name="due-date-day" type="text" value="1" inputmode="numeric">
+                    </div>
+                </div>
+                <div class="govuk-date-input__item">
+                    <div class="govuk-form-group">
+                        <label class="govuk-label govuk-date-input__label" for="due-date-month">Month</label>
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                        id="due-date-month" name="due-date-month" type="text" value="12" inputmode="numeric">
+                    </div>
+                </div>
+                <div class="govuk-date-input__item">
+                    <div class="govuk-form-group">
+                        <label class="govuk-label govuk-date-input__label" for="due-date-year">Year</label>
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                        id="due-date-year" name="due-date-year" type="text" value="3000" inputmode="numeric">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="govuk-button-group">
+            <button type="submit" class="govuk-button" data-module="govuk-button">Save and continue</button>
+        </div>
     </form>
 </main>"
 `;

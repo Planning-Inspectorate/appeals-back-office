@@ -31,6 +31,11 @@ describe('change-appeal-type', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('What type should this appeal be?</h1>');
+			expect(element.innerHTML).toContain(
+				'<input class="govuk-radios__input" id="appealType" name="appealType" type="radio"'
+			);
+			expect(element.innerHTML).toContain('Continue</button>');
 		});
 	});
 
@@ -44,6 +49,9 @@ describe('change-appeal-type', () => {
 
 			expect(response.statusCode).toBe(302);
 			expect(response.headers.location).toContain(resubmitPath);
+			expect(response.text).toContain(
+				'Found. Redirecting to /appeals-service/appeal-details/1/change-appeal-type/resubmit'
+			);
 		});
 
 		it('should re-render the appeal type page with an error message if required field is missing', async () => {
@@ -56,6 +64,15 @@ describe('change-appeal-type', () => {
 			expect(response.statusCode).toBe(200);
 			const element = parseHtml(response.text);
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('What type should this appeal be?</h1>');
+
+			const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHTML).toContain('Please choose an appeal type</a>');
 		});
 	});
 
@@ -65,6 +82,19 @@ describe('change-appeal-type', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain(
+				'Should the appellant be asked to resubmit this appeal?</h1>'
+			);
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="appealResubmit" type="radio" value="true">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="appealResubmit" type="radio" value="false">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
 	});
 
@@ -78,6 +108,9 @@ describe('change-appeal-type', () => {
 
 			expect(response.statusCode).toBe(302);
 			expect(response.headers.location).toContain(changeAppealFinalDatePath);
+			expect(response.text).toContain(
+				'Found. Redirecting to /appeals-service/appeal-details/1/change-appeal-type/change-appeal-final-date'
+			);
 		});
 
 		it('should re-render the resubmit page with an error message if required field is missing', async () => {
@@ -88,8 +121,23 @@ describe('change-appeal-type', () => {
 				});
 
 			expect(response.statusCode).toBe(200);
+
 			const element = parseHtml(response.text);
+
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain(
+				'Should the appellant be asked to resubmit this appeal?</h1>'
+			);
+
+			const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHTML).toContain(
+				'Please specify if the appeal should be resubmitted</a>'
+			);
 		});
 	});
 
@@ -101,6 +149,25 @@ describe('change-appeal-type', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain(
+				'What is the final date the appellant must resubmit by?</h1>'
+			);
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="change-appeal-final-date-day" type="text" inputmode="numeric">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="change-appeal-final-date-month" type="text" inputmode="numeric">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="change-appeal-final-date-year" type="text" inputmode="numeric">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Confirming will ask the appellant to resubmit using the correct appeal type</div>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 		});
 	});
 
@@ -132,6 +199,9 @@ describe('change-appeal-type', () => {
 
 			expect(response.statusCode).toBe(302);
 			expect(response.headers.location).toContain(confirmationPath);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/change-appeal-type/confirm-resubmit'
+			);
 		});
 	});
 
@@ -141,8 +211,23 @@ describe('change-appeal-type', () => {
 			.send({});
 
 		expect(response.statusCode).toBe(200);
+
 		const element = parseHtml(response.text);
 		expect(element.innerHTML).toMatchSnapshot();
+		expect(element.innerHTML).toContain(
+			'What is the final date the appellant must resubmit by?</h1>'
+		);
+
+		const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
+			rootElement: '.govuk-error-summary',
+			skipPrettyPrint: true
+		}).innerHTML;
+
+		expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
+		expect(unprettifiedErrorSummaryHTML).toContain('Final date day cannot be empty</a>');
+		expect(unprettifiedErrorSummaryHTML).toContain('Final date month cannot be empty</a>');
+		expect(unprettifiedErrorSummaryHTML).toContain('Final date year cannot be empty</a>');
+		expect(unprettifiedErrorSummaryHTML).toContain('Final date must be a valid date</a>');
 	});
 
 	it('should re-render the final date page with an error message if the provided date day is invalid', async () => {
@@ -155,8 +240,21 @@ describe('change-appeal-type', () => {
 			});
 
 		expect(response.statusCode).toBe(200);
+
 		const element = parseHtml(response.text);
 		expect(element.innerHTML).toMatchSnapshot();
+		expect(element.innerHTML).toContain(
+			'What is the final date the appellant must resubmit by?</h1>'
+		);
+
+		const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
+			rootElement: '.govuk-error-summary',
+			skipPrettyPrint: true
+		}).innerHTML;
+
+		expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
+		expect(unprettifiedErrorSummaryHTML).toContain('Final date day must be between 1 and 31</a>');
+		expect(unprettifiedErrorSummaryHTML).toContain('Final date must be a valid date</a>');
 	});
 
 	it('should re-render the final date page with an error message if the provided date month is invalid', async () => {
@@ -169,8 +267,21 @@ describe('change-appeal-type', () => {
 			});
 
 		expect(response.statusCode).toBe(200);
+
 		const element = parseHtml(response.text);
 		expect(element.innerHTML).toMatchSnapshot();
+		expect(element.innerHTML).toContain(
+			'What is the final date the appellant must resubmit by?</h1>'
+		);
+
+		const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
+			rootElement: '.govuk-error-summary',
+			skipPrettyPrint: true
+		}).innerHTML;
+
+		expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
+		expect(unprettifiedErrorSummaryHTML).toContain('Final date month must be between 1 and 12</a>');
+		expect(unprettifiedErrorSummaryHTML).toContain('Final date must be a valid date</a>');
 	});
 
 	it('should re-render the final date page with an error message if the provided date year is invalid', async () => {
@@ -183,8 +294,21 @@ describe('change-appeal-type', () => {
 			});
 
 		expect(response.statusCode).toBe(200);
+
 		const element = parseHtml(response.text);
 		expect(element.innerHTML).toMatchSnapshot();
+		expect(element.innerHTML).toContain(
+			'What is the final date the appellant must resubmit by?</h1>'
+		);
+
+		const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
+			rootElement: '.govuk-error-summary',
+			skipPrettyPrint: true
+		}).innerHTML;
+
+		expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
+		expect(unprettifiedErrorSummaryHTML).toContain('Final date year must be a number</a>');
+		expect(unprettifiedErrorSummaryHTML).toContain('Final date must be a valid date</a>');
 	});
 
 	it('should re-render the final date page with an error message if an invalid date was provided', async () => {
@@ -197,36 +321,46 @@ describe('change-appeal-type', () => {
 			});
 
 		expect(response.statusCode).toBe(200);
+
 		const element = parseHtml(response.text);
 		expect(element.innerHTML).toMatchSnapshot();
-	});
+		expect(element.innerHTML).toContain(
+			'What is the final date the appellant must resubmit by?</h1>'
+		);
 
-	it('should re-render the final date page with an error message if the provided date is not in the past', async () => {
-		const response = await request
-			.post(`${baseUrl}/1${changeAppealTypePath}/${changeAppealFinalDatePath}`)
-			.send({
-				'change-appeal-final-date-day': 29,
-				'change-appeal-final-date-month': 2,
-				'change-appeal-final-date-year': 2023
-			});
+		const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
+			rootElement: '.govuk-error-summary',
+			skipPrettyPrint: true
+		}).innerHTML;
 
-		expect(response.statusCode).toBe(200);
-		const element = parseHtml(response.text);
-		expect(element.innerHTML).toMatchSnapshot();
+		expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
+		expect(unprettifiedErrorSummaryHTML).toContain('Final date must be a valid date</a>');
 	});
 
 	it('should re-render the final date page with an error message if the provided date is not a business day', async () => {
 		const response = await request
 			.post(`${baseUrl}/1${changeAppealTypePath}/${changeAppealFinalDatePath}`)
 			.send({
-				'change-appeal-final-date-day': 1,
+				'change-appeal-final-date-day': 4,
 				'change-appeal-final-date-month': 1,
-				'change-appeal-final-date-year': 3000
+				'change-appeal-final-date-year': 2030
 			});
 
 		expect(response.statusCode).toBe(200);
+
 		const element = parseHtml(response.text);
 		expect(element.innerHTML).toMatchSnapshot();
+		expect(element.innerHTML).toContain(
+			'What is the final date the appellant must resubmit by?</h1>'
+		);
+
+		const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
+			rootElement: '.govuk-error-summary',
+			skipPrettyPrint: true
+		}).innerHTML;
+
+		expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
+		expect(unprettifiedErrorSummaryHTML).toContain('Date must be a business day</a>');
 	});
 
 	describe('POST /change-appeal-type/confirm-resubmit', () => {
@@ -234,8 +368,15 @@ describe('change-appeal-type', () => {
 			const response = await request.get(`${baseUrl}/1${changeAppealTypePath}/${confirmationPath}`);
 
 			expect(response.statusCode).toBe(200);
+
 			const element = parseHtml(response.text);
+
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Appeal closed</h1>');
+			expect(element.innerHTML).toContain(
+				'The appellant has been asked to resubmit using the correct appeal type.</p>'
+			);
+			expect(element.innerHTML).toContain('Go back to case details</a>');
 		});
 	});
 
@@ -247,6 +388,16 @@ describe('change-appeal-type', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain(
+				'What is the reference of the new appeal on Horizon?</h1>'
+			);
+
+			const unprettifiedElement = parseHtml(element.innerHTML, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'id="horizon-reference" name="horizon-reference" type="text">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
 	});
 
@@ -259,8 +410,21 @@ describe('change-appeal-type', () => {
 				});
 
 			expect(response.statusCode).toBe(200);
+
 			const element = parseHtml(response.text);
+
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain(
+				'What is the reference of the new appeal on Horizon?</h1>'
+			);
+
+			const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHTML).toContain('Enter a valid Horizon appeal reference</a>');
 		});
 
 		it('should re-render the add horizon reference page with an error message if an appeal matching the provided horizon reference was not found in horizon', async () => {
@@ -275,8 +439,21 @@ describe('change-appeal-type', () => {
 				});
 
 			expect(response.statusCode).toBe(200);
+
 			const element = parseHtml(response.text);
+
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain(
+				'What is the reference of the new appeal on Horizon?</h1>'
+			);
+
+			const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHTML).toContain('Enter a valid Horizon appeal reference</a>');
 		});
 
 		it('should render a custom error page stating that there is a problem with Horizon, if the transferred-appeal endpoint returns a 500', async () => {
@@ -291,6 +468,7 @@ describe('change-appeal-type', () => {
 			expect(response.statusCode).toBe(500);
 			const element = parseHtml(response.text);
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Sorry, there is a problem with Horizon</h1>');
 		});
 
 		it('should redirect to the check transfer page if an appeal matching the provided horizon reference was found in horizon', async () => {
@@ -305,6 +483,9 @@ describe('change-appeal-type', () => {
 				});
 
 			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/change-appeal-type/check-transfer'
+			);
 		});
 	});
 
@@ -315,6 +496,7 @@ describe('change-appeal-type', () => {
 			expect(response.statusCode).toBe(500);
 			const element = parseHtml(response.text);
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Sorry, there is a problem with the service</h1>');
 		});
 
 		it('should render the check transfer page, with the appeal reference of the transferred appeal displayed in the summary, if the required data is present in the session', async () => {
@@ -333,8 +515,24 @@ describe('change-appeal-type', () => {
 			const response = await request.get(`${baseUrl}/1${changeAppealTypePath}${checkTransferPath}`);
 
 			expect(response.statusCode).toBe(200);
+
 			const element = parseHtml(response.text);
+
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Details of the transferred appeal</h1>');
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<dt class="govuk-summary-list__key"> Appeal reference</dt><dd class="govuk-summary-list__value"> 123</dd>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'You must email the appellant to let them know the appeal type has been changed.</strong>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="confirm" type="checkbox" value="yes">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 		});
 	});
 
@@ -348,6 +546,7 @@ describe('change-appeal-type', () => {
 
 			const element = parseHtml(response.text);
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Sorry, there is a problem with the service</h1>');
 		});
 
 		it('should re-render the check transfer page with an error message if the required data is present in the session, but the confirmation checkbox was not checked', async () => {
@@ -368,8 +567,19 @@ describe('change-appeal-type', () => {
 				.send({});
 
 			expect(response.statusCode).toBe(200);
+
 			const element = parseHtml(response.text);
+
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Details of the transferred appeal</h1>');
+
+			const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHTML).toContain('Confirmation must be provided</a>');
 		});
 
 		it('should redirect to the case details page if the required data is present in the session and the confirmation checkbox was checked', async () => {
@@ -395,6 +605,7 @@ describe('change-appeal-type', () => {
 				});
 
 			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
 		});
 	});
 });

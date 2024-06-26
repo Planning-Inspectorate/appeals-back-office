@@ -67,7 +67,6 @@ describe('costs', () => {
 				const element = parseHtml(response.text);
 
 				expect(element.innerHTML).toMatchSnapshot();
-
 				expect(element.innerHTML).toContain('What is the document type?</h1>');
 				expect(element.innerHTML).toContain('govuk-error-summary');
 
@@ -75,8 +74,8 @@ describe('costs', () => {
 					rootElement: '.govuk-error-summary'
 				});
 
-				expect(errorSummaryElement.innerHTML).toContain('There is a problem');
-				expect(errorSummaryElement.innerHTML).toContain('Select a document type');
+				expect(errorSummaryElement.innerHTML).toContain('There is a problem</h2>');
+				expect(errorSummaryElement.innerHTML).toContain('Select a document type</a>');
 			});
 
 			it(`should redirect to the upload documents page when a document type was selected (${costsCategory})`, async () => {
@@ -120,6 +119,9 @@ describe('costs', () => {
 				const response = await request.get(
 					`${baseUrl}/1/costs/${costsCategory}/upload-documents/${costsFolder.folderId}`
 				);
+
+				expect(response.statusCode).toBe(500);
+
 				const element = parseHtml(response.text);
 
 				expect(element.innerHTML).toMatchSnapshot();

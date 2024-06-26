@@ -236,7 +236,25 @@ export const appellantCaseDataNotValidated = {
 					folderId: 3420,
 					caseId: 111,
 					isLateEntry: true,
-					virusCheckStatus: AVSCAN_STATUS.SCANNED
+					latestDocumentVersion: {
+						blobStorageContainer: 'document-service-uploads',
+						blobStoragePath: 'appeal/6000111/115fbb69-b485-45c6-abd2-341e43139582/v1/ph1.jpeg',
+						dateReceived: '2024-06-19T00:00:00.000Z',
+						documentId: '115fbb69-b485-45c6-abd2-341e43139582',
+						documentType: 'appellantCaseCorrespondence',
+						documentURI:
+							'https://127.0.0.1:10000/devstoreaccount1/document-service-uploads/appeal/6000035/115fbb69-b485-45c6-abd2-341e43139582/v1/ph1.jpeg',
+						fileName: 'ph1.jpeg',
+						isDeleted: false,
+						isLateEntry: false,
+						mime: 'image/jpeg',
+						originalFilename: 'ph1.jpeg',
+						redactionStatus: 'Unredacted',
+						size: '58861',
+						stage: 'appellant-case',
+						version: 1,
+						virusCheckStatus: AVSCAN_STATUS.SCANNED
+					}
 				},
 				{
 					id: 'a78446aa-167a-4bef-89b7-18bcb0da11c1',
@@ -244,7 +262,25 @@ export const appellantCaseDataNotValidated = {
 					folderId: 3420,
 					caseId: 111,
 					isLateEntry: false,
-					virusCheckStatus: AVSCAN_STATUS.SCANNED
+					latestDocumentVersion: {
+						blobStorageContainer: 'document-service-uploads',
+						blobStoragePath: 'appeal/6000111/115fbb69-b485-45c6-abd2-341e43139582/v1/ph0.jpeg',
+						dateReceived: '2024-06-19T00:00:00.000Z',
+						documentId: '115fbb69-b485-45c6-abd2-341e43139582',
+						documentType: 'appellantCaseCorrespondence',
+						documentURI:
+							'https://127.0.0.1:10000/devstoreaccount1/document-service-uploads/appeal/6000035/115fbb69-b485-45c6-abd2-341e43139582/v1/ph0.jpeg',
+						fileName: 'ph0.jpeg',
+						isDeleted: false,
+						isLateEntry: false,
+						mime: 'image/jpeg',
+						originalFilename: 'ph0.jpeg',
+						redactionStatus: 'Unredacted',
+						size: '58861',
+						stage: 'appellant-case',
+						version: 1,
+						virusCheckStatus: AVSCAN_STATUS.SCANNED
+					}
 				}
 			],
 			folderId: 70461,
@@ -1464,7 +1500,15 @@ export const notCheckedDocumentFolderInfoDocuments = {
 	name: 'applicationForm.docx',
 	folderId: 1,
 	caseId: 1,
-	virusCheckStatus: AVSCAN_STATUS.NOT_SCANNED
+	latestDocumentVersion: {
+		draft: false,
+		dateReceived: '2024-03-02T01:00:00.000Z',
+		redactionStatus: 'Unredacted',
+		size: 11815175,
+		mime: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+		virusCheckStatus: AVSCAN_STATUS.NOT_SCANNED,
+		isLateEntry: true
+	}
 };
 
 export const scanFailedDocumentFolderInfoDocuments = {
@@ -1472,7 +1516,15 @@ export const scanFailedDocumentFolderInfoDocuments = {
 	name: 'applicationForm.docx',
 	folderId: 1,
 	caseId: 1,
-	virusCheckStatus: AVSCAN_STATUS.AFFECTED
+	latestDocumentVersion: {
+		draft: false,
+		dateReceived: '2024-03-02T01:00:00.000Z',
+		redactionStatus: 'Unredacted',
+		size: 11815175,
+		mime: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+		virusCheckStatus: AVSCAN_STATUS.AFFECTED,
+		isLateEntry: true
+	}
 };
 
 export const documentRedactionStatuses = [

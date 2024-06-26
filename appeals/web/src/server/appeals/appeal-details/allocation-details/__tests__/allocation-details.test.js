@@ -12,7 +12,7 @@ describe('Allocation Details', () => {
 	beforeEach(installMockApi);
 	afterEach(teardown);
 
-	it(`should render "Select the allocation level" Page`, async () => {
+	it('should render "Select the allocation level" Page', async () => {
 		nock('http://test/')
 			.get('/appeals/appeal-allocation-levels')
 			.reply(200, allocationDetailsData.levels);
@@ -21,6 +21,8 @@ describe('Allocation Details', () => {
 		const element = parseHtml(response.text);
 
 		expect(element.innerHTML).toMatchSnapshot();
+		expect(element.innerHTML).toContain('Select allocation level</h1>');
+		expect(element.innerHTML).toContain('Continue</button>');
 	});
 
 	it('should render "Select the allocation level" with error (no answer provided)', async () => {
@@ -35,17 +37,22 @@ describe('Allocation Details', () => {
 		const element = parseHtml(response.text);
 
 		expect(element.innerHTML).toMatchSnapshot();
+		expect(element.innerHTML).toContain('There is a problem</h2>');
+		expect(element.innerHTML).toContain('Allocation level must be provided</a>');
 	});
 
-	it(`should redirect to "Allocation specialism" page if no errors are present and posted allocation-level is provided`, async () => {
+	it('should redirect to "Allocation specialism" page if no errors are present and posted allocation-level is provided', async () => {
 		const response = await request.post(`${baseUrl}/allocation-level`).send({
 			'allocation-level': 'A'
 		});
 
 		expect(response.statusCode).toBe(302);
+		expect(response.text).toBe(
+			'Found. Redirecting to /appeals-service/appeal-details/1/allocation-details/allocation-specialism'
+		);
 	});
 
-	it(`should render "Select allocation specialism" Page`, async () => {
+	it('should render "Select allocation specialism" Page', async () => {
 		// post to preceding pages in the flow is necessary to set required data in the session
 		nock('http://test/')
 			.get('/appeals/appeal-allocation-levels')
@@ -62,6 +69,7 @@ describe('Allocation Details', () => {
 		const element = parseHtml(response.text);
 
 		expect(element.innerHTML).toMatchSnapshot();
+		expect(element.innerHTML).toContain('Select allocation specialism(s)</h1>');
 	});
 
 	it('should render "Select allocation specialism" with error (no answer provided)', async () => {
@@ -84,9 +92,11 @@ describe('Allocation Details', () => {
 		const element = parseHtml(response.text);
 
 		expect(element.innerHTML).toMatchSnapshot();
+		expect(element.innerHTML).toContain('There is a problem</h2>');
+		expect(element.innerHTML).toContain('Please select one or more allocation specialisms</a>');
 	});
 
-	it(`should redirect to "Check answer" page if no errors are present and posted allocation-specialisms is provided`, async () => {
+	it('should redirect to "Check answer" page if no errors are present and posted allocation-specialisms is provided', async () => {
 		// post to preceding pages in the flow is necessary to set required data in the session
 		nock('http://test/')
 			.get('/appeals/appeal-allocation-levels')
@@ -104,9 +114,12 @@ describe('Allocation Details', () => {
 		});
 
 		expect(response.statusCode).toBe(302);
+		expect(response.text).toBe(
+			'Found. Redirecting to /appeals-service/appeal-details/1/allocation-details/check-answers'
+		);
 	});
 
-	it(`should render "Check answers" Page`, async () => {
+	it('should render "Check answers" Page', async () => {
 		// post to preceding pages in the flow is necessary to set required data in the session
 		nock('http://test/')
 			.get('/appeals/appeal-allocation-levels')
@@ -127,9 +140,14 @@ describe('Allocation Details', () => {
 		const element = parseHtml(response.text);
 
 		expect(element.innerHTML).toMatchSnapshot();
+		expect(element.innerHTML).toContain('Check answers</h1>');
+		expect(element.innerHTML).toContain('Level</strong>');
+		expect(element.innerHTML).toContain('Band</strong>');
+		expect(element.innerHTML).toContain('Specialism</strong>');
+		expect(element.innerHTML).toContain('Confirm</button>');
 	});
 
-	it(`should redirect to "Case details" page if no errors are present and posted allocation-specialisms is provided`, async () => {
+	it('should redirect to "Case details" page if no errors are present and posted allocation-specialisms is provided', async () => {
 		// post to preceding pages in the flow is necessary to set required data in the session
 		nock('http://test/')
 			.get('/appeals/appeal-allocation-levels')
@@ -150,5 +168,6 @@ describe('Allocation Details', () => {
 		const response = await request.post(`${baseUrl}/check-answers`);
 
 		expect(response.statusCode).toBe(302);
+		expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
 	});
 });

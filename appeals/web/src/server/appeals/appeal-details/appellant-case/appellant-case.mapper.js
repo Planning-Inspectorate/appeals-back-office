@@ -742,7 +742,7 @@ function getDocumentsForVirusStatus(appellantCaseData, virusStatus) {
 	for (const folder of Object.values(appellantCaseData.documents)) {
 		if (folder && 'documents' in folder && folder.documents) {
 			const documentsOfStatus = folder.documents.filter(
-				(item) => item.latestDocumentVersion?.virusCheckStatus === virusStatus
+				(document) => document.latestDocumentVersion?.virusCheckStatus === virusStatus
 			);
 			for (const document of documentsOfStatus) {
 				unscannedFiles.push(document);
