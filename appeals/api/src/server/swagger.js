@@ -152,92 +152,122 @@ export const spec = {
 			pageSize: 30
 		},
 		SingleAppealResponse: {
-			agentName: null,
-			allocationDetails: {
-				level: 'A',
-				band: 3,
-				specialisms: ['Historic heritage', 'Architecture design']
+			agent: {
+				serviceUserId: 199,
+				firstName: 'Some',
+				lastName: 'User',
+				organisationName: 'Some Company',
+				email: 'an email address',
+				phoneNumber: null
 			},
-			appealId: 1,
-			appealReference: 'APP/Q9999/D/21/235348',
+			appellant: {
+				serviceUserId: 200,
+				firstName: 'Another',
+				lastName: 'User',
+				organisationName: null,
+				phoneNumber: null
+			},
+			allocationDetails: null,
+			appealId: 118,
+			appealReference: '6000118',
 			appealSite: {
-				addressLine1: '19 Beauchamp Road',
-				town: 'Bristol',
-				postCode: 'BS7 8LQ'
+				addressId: 122,
+				addressLine1: 'FOR TRAINERS ONLY',
+				addressLine2: '44 Rivervale',
+				town: 'Bridport',
+				postCode: 'DT6 5RN'
 			},
-			appealStatus: 'awaiting_lpa_questionnaire',
-			appealTimetable: {
-				finalCommentReviewDate: '2023-06-28T01:00:00.000Z',
-				lpaQuestionnaireDueDate: '2023-05-16T01:00:00.000Z',
-				statementReviewDate: '2023-06-14T01:00:00.000Z'
+			costs: {
+				appellantFolder: {
+					caseId: '118',
+					documents: [],
+					folderId: 2118,
+					path: 'costs/appellant'
+				},
+				lpaFolder: {
+					caseId: '118',
+					documents: [],
+					folderId: 2119,
+					path: 'costs/lpa'
+				},
+				decisionFolder: {
+					caseId: '118',
+					documents: [],
+					folderId: 2120,
+					path: 'costs/decision'
+				}
 			},
-			appealType: 'household',
-			appellantCaseId: 1,
-			appellantName: 'Fiona Burgess',
-			appellantOwnsWholeSite: true,
-			caseOfficer: '13de469c-8de6-4908-97cd-330ea73df618',
-			decision: 'Not issued yet',
+			internalCorrespondence: {
+				crossTeam: {
+					caseId: '118',
+					documents: [],
+					folderId: 2121,
+					path: 'internal/crossTeamCorrespondence'
+				},
+				inspector: {
+					caseId: '118',
+					documents: [],
+					folderId: 2122,
+					path: 'internal/inspectorCorrespondence'
+				}
+			},
+			neighbouringSites: [],
+			appealStatus: 'ready_to_start',
+			appealTimetable: null,
+			appealType: 'Householder',
+			appellantCaseId: 118,
+			caseOfficer: '00000000-0000-0000-0000-000000000000',
+			decision: {
+				folderId: 2124
+			},
 			healthAndSafety: {
 				appellantCase: {
-					details: 'There is no mobile reception at the site',
-					hasIssues: true
+					details: null,
+					hasIssues: false
 				},
 				lpaQuestionnaire: {
-					details: 'There may be no mobile reception at the site',
 					hasIssues: true
 				}
 			},
-			inspector: 'f7ea429b-65d8-4c44-8fc2-7f1a34069855',
+			inspector: null,
 			inspectorAccess: {
 				appellantCase: {
-					details: 'There is a tall hedge around the site which obstructs the view of the site',
-					isRequired: true
+					details: null,
+					isRequired: false
 				},
 				lpaQuestionnaire: {
-					details: 'There may be a tall hedge around the site',
 					isRequired: true
 				}
 			},
-			isParentAppeal: true,
+			otherAppeals: [],
 			linkedAppeals: [
 				{
-					appealId: 1,
-					appealReference: 'APP/Q9999/D/21/725284',
-					isParentAppeal: false,
-					linkingDate: '2024-02-14T11:16:24.085Z',
-					appealType: 'Householder',
-					relationshipId: 1
+					appealId: 120,
+					appealReference: '6000120',
+					isParentAppeal: true,
+					linkingDate: '2024-06-26T11:57:40.270Z',
+					appealType: '(D) Householder',
+					relationshipId: 24,
+					externalSource: false
 				}
 			],
-			localPlanningDepartment: 'Wiltshire Council',
-			lpaQuestionnaireId: 1,
-			isAffectingNeighbouringSites: true,
-			otherAppeals: [
-				{
-					appealId: 1,
-					appealReference: 'APP/Q9999/D/21/725284'
-				}
-			],
-			planningApplicationReference: '48269/APP/2021/1482',
+			isParentAppeal: false,
+			isChildAppeal: true,
+			localPlanningDepartment: 'Some Borough Council',
+			lpaQuestionnaireId: null,
+			planningApplicationReference: '52279/APP/1/151419',
 			procedureType: 'Written',
-			siteVisit: {
-				siteVisitId: 1,
-				visitDate: '2022-03-31T12:00:00.000Z',
-				visitStartTime: '10:00',
-				visitEndTime: '12:00',
-				visitType: 'Accompanied'
-			},
-			createdAt: '2022-05-17T23:00:00.000Z',
-			startedAt: '2022-05-17T23:00:00.000Z',
-			validAt: '2022-05-17T23:00:00.000Z',
+			createdAt: '2024-06-26T11:57:39.953Z',
+			startedAt: null,
+			validAt: '2024-06-12T22:57:37.724Z',
 			documentationSummary: {
 				appellantCase: {
 					status: 'received',
-					dueDate: null
+					dueDate: null,
+					receivedAt: '2024-06-26T11:57:39.953Z'
 				},
 				lpaQuestionnaire: {
-					status: 'not_received',
-					dueDate: '2023-06-18T00:00:00.000Z'
+					status: 'not_received'
 				}
 			}
 		},

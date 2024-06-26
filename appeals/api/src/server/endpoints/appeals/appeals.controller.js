@@ -1,5 +1,5 @@
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
-import { getFoldersForAppeal } from '#endpoints/documents/documents.service.js';
+import { getRootFoldersForAppeal } from '#endpoints/documents/documents.service.js';
 import { getPageCount } from '#utils/database-pagination.js';
 import { sortAppeals } from '#utils/appeal-sorter.js';
 import { getAppealTypeByTypeId } from '#repositories/appeal-type.repository.js';
@@ -27,7 +27,6 @@ import {
 	STATE_TARGET_COMPLETE,
 	STATE_TARGET_VALIDATION
 } from '../constants.js';
-import { STAGE } from '@pins/appeals/constants/documents.js';
 import {
 	formatAppeal,
 	formatAppeals,
@@ -137,10 +136,7 @@ const getMyAppeals = async (req, res) => {
  */
 const getAppeal = async (req, res) => {
 	const { appeal } = req;
-	const [decisionFolders, costsFolders] = await Promise.all([
-		getFoldersForAppeal(appeal, STAGE.APPEAL_DECISION),
-		getFoldersForAppeal(appeal, STAGE.COSTS)
-	]);
+	const appealRootFolders = await getRootFoldersForAppeal(appeal);
 
 	let transferAppealTypeInfo;
 	if (appeal.caseResubmittedTypeId && appeal.caseTransferredId) {
@@ -177,8 +173,7 @@ const getAppeal = async (req, res) => {
 
 	const formattedAppeal = formatAppeal(
 		appeal,
-		decisionFolders,
-		costsFolders,
+		appealRootFolders,
 		transferAppealTypeInfo,
 		decisionInfo,
 		formattedAppealWithLinkedTypes

@@ -58,6 +58,7 @@ const getAllAppeals = (pageNumber, pageSize, searchTerm, status, hasInspector) =
 		})
 	};
 
+	// @ts-ignore
 	return databaseConnector.$transaction([
 		databaseConnector.appeal.count({
 			where
@@ -118,6 +119,7 @@ const getUserAppeals = (userId, pageNumber, pageSize, status) => {
 		}
 	};
 
+	// @ts-ignore
 	return databaseConnector.$transaction([
 		databaseConnector.appeal.count({
 			where

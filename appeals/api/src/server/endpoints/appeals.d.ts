@@ -56,6 +56,10 @@ interface SingleAppealDetailsResponse {
 		letterDate?: Date | null;
 		virusCheckStatus?: string | null;
 	};
+	internalCorrespondence: {
+		crossTeam?: FolderInfo | null;
+		inspector?: FolderInfo | null;
+	};
 	documentationSummary: DocumentationSummary;
 	healthAndSafety: {
 		appellantCase: {
