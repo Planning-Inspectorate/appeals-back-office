@@ -104,7 +104,9 @@ const fetchRolesAndUsersFromGraph = async (roleName, session) => {
 		const data = [];
 		let gotAllPages = false;
 		let numberOfPagesReturned = 0;
-		let url = `groups/${roleName}/members?$select=id,displayName,givenName,surname,userPrincipalName`;
+		// use the transitive members API to fetch all members of a group, even if that membership is inherited from another group
+		// https://learn.microsoft.com/en-us/graph/api/group-list-transitivemembers?view=graph-rest-1.0&tabs=http
+		let url = `groups/${roleName}/transitiveMembers?$select=id,displayName,givenName,surname,userPrincipalName`;
 
 		while (!gotAllPages) {
 			const page = await getData(url, {
