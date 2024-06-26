@@ -23,6 +23,16 @@ describe('site-ownership', () => {
 
 			expect(elementInnerHtml).toMatchSnapshot();
 			expect(elementInnerHtml).toContain('Change the site ownership</h1>');
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="siteOwnershipRadio" type="radio" value="fully"'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="siteOwnershipRadio" type="radio" value="partially"'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
 	});
 

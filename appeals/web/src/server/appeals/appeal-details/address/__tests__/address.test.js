@@ -22,7 +22,8 @@ describe('site-address', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Change site address');
+			expect(element.innerHTML).toContain('Change site address</h1>');
+			expect(element.innerHTML).toContain('Continue</button>');
 		});
 	});
 
@@ -45,7 +46,8 @@ describe('site-address', () => {
 			const element = parseHtml(response.text, { rootElement: errorRoot });
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Enter the first line of the address');
+			expect(element.innerHTML).toContain('There is a problem</h2>');
+			expect(element.innerHTML).toContain('Enter the first line of the address</a>');
 		});
 
 		it('should re-render updateSiteAddress page if addressLine1 is an empty string', async () => {
@@ -67,7 +69,8 @@ describe('site-address', () => {
 			const element = parseHtml(response.text, { rootElement: errorRoot });
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Enter the first line of the address');
+			expect(element.innerHTML).toContain('There is a problem</h2>');
+			expect(element.innerHTML).toContain('Enter the first line of the address</a>');
 		});
 
 		it('should re-render updateSiteAddress page if town is null', async () => {
@@ -88,7 +91,8 @@ describe('site-address', () => {
 			const element = parseHtml(response.text, { rootElement: errorRoot });
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Enter the town');
+			expect(element.innerHTML).toContain('There is a problem</h2>');
+			expect(element.innerHTML).toContain('Enter the town</a>');
 		});
 
 		it('should re-render updateSiteAddress page if town is an empty string', async () => {
@@ -110,7 +114,8 @@ describe('site-address', () => {
 			const element = parseHtml(response.text, { rootElement: errorRoot });
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Enter the town');
+			expect(element.innerHTML).toContain('There is a problem</h2>');
+			expect(element.innerHTML).toContain('Enter the town</a>');
 		});
 
 		it('should re-render updateSiteAddress page if the postcode is null', async () => {
@@ -132,7 +137,8 @@ describe('site-address', () => {
 			const element = parseHtml(response.text, { rootElement: errorRoot });
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Enter postcode');
+			expect(element.innerHTML).toContain('There is a problem</h2>');
+			expect(element.innerHTML).toContain('Enter postcode</a>');
 		});
 
 		it('should re-render updateSiteAddress page if the postcode is invalid', async () => {
@@ -154,7 +160,8 @@ describe('site-address', () => {
 			const element = parseHtml(response.text, { rootElement: errorRoot });
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Invalid postcode');
+			expect(element.innerHTML).toContain('There is a problem</h2>');
+			expect(element.innerHTML).toContain('Invalid postcode</a>');
 		});
 
 		it('should re-render updateSiteAddress page if the postcode is an empty string', async () => {
@@ -176,7 +183,8 @@ describe('site-address', () => {
 			const element = parseHtml(response.text, { rootElement: errorRoot });
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Enter postcode');
+			expect(element.innerHTML).toContain('There is a problem</h2>');
+			expect(element.innerHTML).toContain('Enter postcode</a>');
 		});
 
 		it('should redirect to the appellant case page', async () => {

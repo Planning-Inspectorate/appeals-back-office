@@ -46,7 +46,7 @@ export function personalListPage(
 		},
 		type: 'button',
 		parameters: {
-			id: 'remove-document',
+			id: 'search-all-cases',
 			href: '/appeals-service/all-cases',
 			classes: 'govuk-button--secondary',
 			text: 'Search all cases'

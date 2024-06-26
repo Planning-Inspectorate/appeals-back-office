@@ -72,7 +72,7 @@ describe('linked-appeals', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Manage linked appeals');
+			expect(element.innerHTML).toContain('Manage linked appeals</h1>');
 			expect(element.innerHTML).toContain('Child appeals of');
 			expect(element.innerHTML).not.toContain('Lead appeal of');
 			expect(element.innerHTML).not.toContain('Other child appeals of');
@@ -84,7 +84,7 @@ describe('linked-appeals', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Manage linked appeals');
+			expect(element.innerHTML).toContain('Manage linked appeals</h1>');
 			expect(element.innerHTML).toContain('Lead appeal of');
 			expect(element.innerHTML).toContain('Other child appeals of');
 			expect(element.innerHTML).not.toContain('Child appeals of');
@@ -100,6 +100,9 @@ describe('linked-appeals', () => {
 			const element = parseHtml(response.text, { rootElement: 'body' });
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('What is the appeal reference?</h1>');
+			expect(element.innerHTML).toContain('name="appeal-reference" type="text">');
+			expect(element.innerHTML).toContain('Continue</button>');
 		});
 	});
 
@@ -117,6 +120,15 @@ describe('linked-appeals', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('What is the appeal reference?</h1>');
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Enter an appeal reference</a>');
 		});
 
 		it('should re-render the add linked appeal reference page with the expected error message if the reference was provided but no matching appeal was found', async () => {
@@ -130,6 +142,16 @@ describe('linked-appeals', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			expect(element.innerHTML).toContain('What is the appeal reference?</h1>');
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Enter a valid appeal reference</a>');
 		});
 
 		it('should redirect to the check and confirm page if the reference was provided and a matching appeal was found', async () => {
@@ -881,6 +903,15 @@ describe('linked-appeals', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Details of the appeal you&#39;re linking to</h1>');
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Choose an option</a>');
 		});
 
 		it('should redirect back to the add linked appeal reference page if the "cancel" radio option was selected', async () => {
@@ -1134,6 +1165,19 @@ describe('linked-appeals', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain(
+				'Do you want to unlink the appeal from appeal 351062?</h1>'
+			);
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="unlinkAppeal" type="radio" value="yes">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="unlinkAppeal" type="radio" value="no">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
 	});
 
@@ -1178,6 +1222,17 @@ describe('linked-appeals', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain(
+				'Do you want to unlink the appeal from appeal 351062?</h1>'
+			);
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Please choose an option</a>');
 		});
 	});
 });

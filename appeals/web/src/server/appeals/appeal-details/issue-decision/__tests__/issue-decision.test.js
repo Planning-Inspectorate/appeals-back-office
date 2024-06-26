@@ -210,6 +210,11 @@ describe('issue-decision', () => {
 		});
 
 		it('should render a 500 error page if fileUploadInfo is not present in the session', async () => {
+			await request
+				.post(`${baseUrl}/1/issue-decision/decision`)
+				.send({ decision: 'Allowed' })
+				.expect(302);
+
 			const response = await request.get(
 				`${baseUrl}/1${issueDecisionPath}/${decisionLetterDatePath}`
 			);
@@ -226,6 +231,11 @@ describe('issue-decision', () => {
 		});
 
 		it('should render the decision letter date page with the expected content if fileUploadInfo is present in the session', async () => {
+			await request
+				.post(`${baseUrl}/1/issue-decision/decision`)
+				.send({ decision: 'Allowed' })
+				.expect(302);
+
 			const uploadDecisionLetterResponse = await request
 				.post(`${baseUrl}/1${issueDecisionPath}/${decisionLetterUploadPath}`)
 				.send({
@@ -240,6 +250,20 @@ describe('issue-decision', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Enter date of decision letter</h1>');
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="decision-letter-date-day" type="text" inputmode="numeric">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="decision-letter-date-month" type="text" inputmode="numeric">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="decision-letter-date-year" type="text" inputmode="numeric">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
 	});
 
@@ -285,8 +309,21 @@ describe('issue-decision', () => {
 				});
 
 			expect(response.statusCode).toBe(200);
+
 			const element = parseHtml(response.text);
+
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Enter date of decision letter</h1>');
+
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHtml).toContain(
+				'Decision letter date day must be between 1 and 31</a>'
+			);
 		});
 
 		it('should re-render the decision letter date page with an error message if the provided date month is invalid', async () => {
@@ -302,8 +339,21 @@ describe('issue-decision', () => {
 				});
 
 			expect(response.statusCode).toBe(200);
+
 			const element = parseHtml(response.text);
+
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Enter date of decision letter</h1>');
+
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHtml).toContain(
+				'Decision letter date month must be between 1 and 12</a>'
+			);
 		});
 
 		it('should re-render the decision letter date page with an error message if the provided date year is invalid', async () => {
@@ -319,15 +369,27 @@ describe('issue-decision', () => {
 				});
 
 			expect(response.statusCode).toBe(200);
+
 			const element = parseHtml(response.text);
+
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Enter date of decision letter</h1>');
+
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHtml).toContain(
+				'Decision letter date year must be a number</a>'
+			);
 		});
 
 		it('should re-render the decision letter date page with an error message if the provided date year is not in the past', async () => {
 			expect(issueDecisionResponse.statusCode).toBe(302);
 			expect(uploadDecisionLetterResponse.statusCode).toBe(302);
 
-			teardown;
 			const response = await request
 				.post(`${baseUrl}/1${issueDecisionPath}/${decisionLetterDatePath}`)
 				.send({
@@ -337,26 +399,19 @@ describe('issue-decision', () => {
 				});
 
 			expect(response.statusCode).toBe(200);
+
 			const element = parseHtml(response.text);
+
 			expect(element.innerHTML).toMatchSnapshot();
-		});
+			expect(element.innerHTML).toContain('Enter date of decision letter</h1>');
 
-		it('should re-render the decision letter date page with an error message if the provided date is not a business day', async () => {
-			expect(issueDecisionResponse.statusCode).toBe(302);
-			expect(uploadDecisionLetterResponse.statusCode).toBe(302);
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
 
-			teardown;
-			const response = await request
-				.post(`${baseUrl}/1${issueDecisionPath}/${decisionLetterDatePath}`)
-				.send({
-					'decision-letter-date-day': 25,
-					'decision-letter-date-month': 12,
-					'decision-letter-date-year': 2024
-				});
-
-			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Date must be today or in the past</a>');
 		});
 
 		it('should redirect to the check your decision page if the provided date is fully populated and valid', async () => {
@@ -390,6 +445,18 @@ describe('issue-decision', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Why is the appeal invalid?</h1>');
+			expect(element.innerHTML).toContain(
+				'This information will be shared with all parties.</div>'
+			);
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<textarea class="govuk-textarea govuk-js-character-count" id="decision-invalid-reason" name="decisionInvalidReason"'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('You can enter up to 1000 characters</div>');
+			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
 	});
 
@@ -405,6 +472,15 @@ describe('issue-decision', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Why is the appeal invalid?</h1>');
+
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Enter invalid reason text</a>');
 		});
 
 		it('should re-render the invalid reason page with the expected error message if the provided invalid reason text exceeds the character limit', async () => {
@@ -418,6 +494,17 @@ describe('issue-decision', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Why is the appeal invalid?</h1>');
+
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHtml).toContain(
+				'Invalid reason text must be 1000 characters or less</a>'
+			);
 		});
 
 		it('should process the invalid reason page and redirect', async () => {
@@ -435,13 +522,69 @@ describe('issue-decision', () => {
 	});
 
 	describe('GET /issue-decision/check-your-decision', () => {
-		it('should render the check your decision letter page', async () => {
+		/**
+		 * @type {import("superagent").Response}
+		 */
+		let issueDecisionResponse;
+		/**
+		 * @type {import("superagent").Response}
+		 */
+		let uploadDecisionLetterResponse;
+
+		beforeEach(async () => {
+			nock('http://test/').get('/appeals/1').reply(200, inspectorDecisionData);
+			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+			nock('http://test/')
+				.get('/appeals/document-redaction-statuses')
+				.reply(200, documentRedactionStatuses);
+
+			issueDecisionResponse = await request
+				.post(`${baseUrl}/1/issue-decision/decision`)
+				.send({ decision: 'Allowed' });
+
+			uploadDecisionLetterResponse = await request
+				.post(`${baseUrl}/1${issueDecisionPath}/${decisionLetterUploadPath}`)
+				.send({
+					'upload-info': fileUploadInfo
+				});
+
+			const mockLetterDecisionDate = {
+				'decision-letter-date-day': '1',
+				'decision-letter-date-month': '1',
+				'decision-letter-date-year': '2023'
+			};
+
+			await request
+				.post(`${baseUrl}/1/issue-decision/decision-letter-date`)
+				.send(mockLetterDecisionDate)
+				.expect(302);
+		});
+		afterEach(teardown);
+
+		it('should render the check your decision page', async () => {
+			expect(issueDecisionResponse.statusCode).toBe(302);
+			expect(uploadDecisionLetterResponse.statusCode).toBe(302);
+
 			const response = await request.get(
 				`${baseUrl}/1${issueDecisionPath}/${checkYourDecisionPath}`
 			);
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Check your answers</h1>');
+			expect(element.innerHTML).toContain('Decision</dt>');
+			expect(element.innerHTML).toContain('Decision letter</dt>');
+			expect(element.innerHTML).toContain('Decision date</dt>');
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Warning</span> You are about to send the decision to relevant parties and close the appeal. Make sure you have reviewed the decision information.</strong>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="ready-to-send" type="checkbox" value="yes">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Send decision</button>');
 		});
 	});
 
@@ -462,6 +605,29 @@ describe('issue-decision', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Check your answers</h1>');
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Invalid</dd>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'href="/appeals-service/appeal-details/1/issue-decision/decision"> Change</a>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<dt class="govuk-summary-list__key"> Reasons</dt><dd class="govuk-summary-list__value"> Reasons!</dd>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'href="/appeals-service/appeal-details/1/issue-decision/invalid-reason"> Change</a>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Warning</span> You are about to send the decision to relevant parties and close the appeal. Make sure you have reviewed the decision information.'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="ready-to-send" type="checkbox" value="yes">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Send decision</button>');
 		});
 	});
 

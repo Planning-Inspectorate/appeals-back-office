@@ -85,6 +85,28 @@ describe('appellant-case', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Appellant case</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('1. Appellant details</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('2. Site details</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('3. Application details</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('4. Appeal details</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('Additional documents</h2>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'What is the outcome of your review?</legend>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="reviewOutcome" type="radio" value="valid">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="reviewOutcome" type="radio" value="invalid">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="reviewOutcome" type="radio" value="incomplete">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
 
 		it('should render a "LPA application reference" success notification banner when the planning application reference is updated', async () => {
@@ -102,11 +124,15 @@ describe('appellant-case', () => {
 				.send(validData);
 
 			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
-			const notificationBannerElementHTML = parseHtml(response.text).innerHTML;
 
-			expect(notificationBannerElementHTML).toMatchSnapshot();
-			expect(notificationBannerElementHTML).toContain('Success');
-			expect(notificationBannerElementHTML).toContain('LPA application reference updated');
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const notificationBannerElementHTML = parseHtml(response.text, {
+				rootElement: '.govuk-notification-banner'
+			}).innerHTML;
+			expect(notificationBannerElementHTML).toContain('Success</h3>');
+			expect(notificationBannerElementHTML).toContain('LPA application reference updated</p>');
 		});
 
 		it('should render a "Site health and safety risks updated" success notification banner when the planning application reference is updated', async () => {
@@ -128,14 +154,18 @@ describe('appellant-case', () => {
 				.send(validData);
 
 			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
+
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+
 			const notificationBannerElementHTML = parseHtml(response.text, {
 				rootElement: notificationBannerElement
 			}).innerHTML;
 
 			expect(notificationBannerElementHTML).toMatchSnapshot();
-			expect(notificationBannerElementHTML).toContain('Success');
+			expect(notificationBannerElementHTML).toContain('Success</h3>');
 			expect(notificationBannerElementHTML).toContain(
-				'Site health and safety risks (appellant answer) updated'
+				'Site health and safety risks (appellant answer) updated</p>'
 			);
 		});
 
@@ -158,13 +188,17 @@ describe('appellant-case', () => {
 				.send(validData);
 
 			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
+
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+
 			const notificationBannerElementHTML = parseHtml(response.text, {
 				rootElement: notificationBannerElement
 			}).innerHTML;
 
 			expect(notificationBannerElementHTML).toMatchSnapshot();
-			expect(notificationBannerElementHTML).toContain('Success');
-			expect(notificationBannerElementHTML).toContain('Inspector access (appellant) updated');
+			expect(notificationBannerElementHTML).toContain('Success</h3>');
+			expect(notificationBannerElementHTML).toContain('Inspector access (appellant) updated</p>');
 		});
 
 		it('should render a success notification banner when a service user was updated', async () => {
@@ -182,11 +216,15 @@ describe('appellant-case', () => {
 
 			const caseDetailsResponse = await request.get(`${baseUrl}/1/appellant-case`);
 
+			const element = parseHtml(caseDetailsResponse.text);
+			expect(element.innerHTML).toMatchSnapshot();
+
 			const notificationBannerElementHTML = parseHtml(caseDetailsResponse.text, {
 				rootElement: notificationBannerElement
 			}).innerHTML;
 			expect(notificationBannerElementHTML).toMatchSnapshot();
-			expect(notificationBannerElementHTML).toContain('Agent details updated');
+			expect(notificationBannerElementHTML).toContain('Success</h3>');
+			expect(notificationBannerElementHTML).toContain('Agent details updated</p>');
 		});
 
 		it('should render a "Site updated" notification when the site address has been updated', async () => {
@@ -209,13 +247,17 @@ describe('appellant-case', () => {
 			});
 
 			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
+
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+
 			const notificationBannerElementHTML = parseHtml(response.text, {
 				rootElement: notificationBannerElement
 			}).innerHTML;
 
 			expect(notificationBannerElementHTML).toMatchSnapshot();
-			expect(notificationBannerElementHTML).toContain('Success');
-			expect(notificationBannerElementHTML).toContain('Site address updated');
+			expect(notificationBannerElementHTML).toContain('Success</h3>');
+			expect(notificationBannerElementHTML).toContain('Site address updated</p>');
 		});
 	});
 
@@ -245,7 +287,11 @@ describe('appellant-case', () => {
 									folderId: 3420,
 									caseId: 111,
 									isLateEntry: false,
-									virusCheckStatus: 'not_scanned'
+									latestDocumentVersion: {
+										...appellantCaseDataNotValidated.documents.appellantCaseCorrespondence
+											.documents[0].latestDocumentVersion,
+										virusCheckStatus: 'not_scanned'
+									}
 								}
 							]
 						}
@@ -253,8 +299,14 @@ describe('appellant-case', () => {
 				});
 
 			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
+			const notificationBannerElementHTML = parseHtml(response.text, {
+				rootElement: '.govuk-notification-banner'
+			}).innerHTML;
+			expect(notificationBannerElementHTML).toMatchSnapshot();
+			expect(notificationBannerElementHTML).toContain('Virus scan in progress</p>');
+			expect(notificationBannerElementHTML).toContain(
+				'Refresh page to see if scan has finished</a>'
+			);
 		});
 
 		it('should render an error when a file has a virus', async () => {
@@ -274,7 +326,11 @@ describe('appellant-case', () => {
 									folderId: 3420,
 									caseId: 111,
 									isLateEntry: false,
-									virusCheckStatus: 'affected'
+									latestDocumentVersion: {
+										...appellantCaseDataNotValidated.documents.appellantCaseCorrespondence
+											.documents[0].latestDocumentVersion,
+										virusCheckStatus: 'affected'
+									}
 								}
 							]
 						}
@@ -282,8 +338,20 @@ describe('appellant-case', () => {
 				});
 
 			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary'
+			}).innerHTML;
+			expect(errorSummaryHtml).toMatchSnapshot();
+
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHtml).toContain(
+				'One or more documents in this appellant case contains a virus. Upload a different version of each document that contains a virus.</a>'
+			);
 		});
 	});
 
@@ -306,6 +374,14 @@ describe('appellant-case', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Please select an outcome</a>');
 		});
 
 		it('should send a patch request to the appellant-cases API endpoint and redirect to the confirmation page if selected review outcome value is "valid"', async () => {
@@ -318,6 +394,9 @@ describe('appellant-case', () => {
 			});
 
 			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/appellant-case/valid/date'
+			);
 		});
 
 		it('should redirect to the invalid reason page if selected review outcome value is "invalid"', async () => {
@@ -330,6 +409,9 @@ describe('appellant-case', () => {
 			});
 
 			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/appellant-case/invalid'
+			);
 		});
 
 		it('should redirect to the incomplete reason page if selected review outcome value is "incomplete"', async () => {
@@ -342,6 +424,9 @@ describe('appellant-case', () => {
 			});
 
 			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/appellant-case/incomplete'
+			);
 		});
 	});
 
@@ -366,6 +451,9 @@ describe('appellant-case', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Why is the appeal invalid?</h1>');
+			expect(element.innerHTML).toContain('data-module="govuk-checkboxes">');
+			expect(element.innerHTML).toContain('Continue</button>');
 		});
 	});
 
@@ -389,8 +477,16 @@ describe('appellant-case', () => {
 				.send({});
 
 			const element = parseHtml(response.text);
-
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHtml).toContain(
+				'Please select one or more reasons why the appeal is invalid</a>'
+			);
 		});
 
 		it('should re-render the invalid reason page with the expected error message if a single invalid reason with text was provided but the matching text property is an empty string', async () => {
@@ -402,8 +498,16 @@ describe('appellant-case', () => {
 				});
 
 			const element = parseHtml(response.text);
-
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHtml).toContain(
+				'All selected checkboxes with text fields must have at least one reason provided</a>'
+			);
 		});
 
 		it('should re-render the invalid reason page with the expected error message if a single invalid reason with text was provided but the matching text property is an empty array', async () => {
@@ -415,8 +519,16 @@ describe('appellant-case', () => {
 				});
 
 			const element = parseHtml(response.text);
-
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHtml).toContain(
+				'All selected checkboxes with text fields must have at least one reason provided</a>'
+			);
 		});
 
 		it('should re-render the invalid reason page with the expected error message if multiple invalid reasons with text were provided but any of the matching text properties are empty strings', async () => {
@@ -429,8 +541,16 @@ describe('appellant-case', () => {
 				});
 
 			const element = parseHtml(response.text);
-
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHtml).toContain(
+				'All selected checkboxes with text fields must have at least one reason provided</a>'
+			);
 		});
 
 		it('should re-render the invalid reason page with the expected error message if multiple invalid reasons with text were provided but any of the matching text properties are empty arays', async () => {
@@ -443,8 +563,16 @@ describe('appellant-case', () => {
 				});
 
 			const element = parseHtml(response.text);
-
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHtml).toContain(
+				'All selected checkboxes with text fields must have at least one reason provided</a>'
+			);
 		});
 
 		it('should re-render the invalid reason page with the expected error message if a single invalid reason with text was provided but the matching text property exceeds the character limit', async () => {
@@ -458,8 +586,16 @@ describe('appellant-case', () => {
 				});
 
 			const element = parseHtml(response.text);
-
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHtml).toContain(
+				'Text in text fields cannot exceed 1000 characters</a>'
+			);
 		});
 
 		it('should re-render the invalid reason page with the expected error message if multiple invalid reasons with text were provided but any of the matching text properties exceed the character limit', async () => {
@@ -474,8 +610,16 @@ describe('appellant-case', () => {
 				});
 
 			const element = parseHtml(response.text);
-
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHtml).toContain(
+				'Text in text fields cannot exceed 1000 characters</a>'
+			);
 		});
 
 		it('should redirect to the check and confirm page if a single invalid reason without text was provided', async () => {
@@ -486,6 +630,9 @@ describe('appellant-case', () => {
 				});
 
 			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/appellant-case/check-your-answers'
+			);
 		});
 
 		it('should redirect to the check and confirm page if a single invalid reason with text within the character limit was provided', async () => {
@@ -499,6 +646,9 @@ describe('appellant-case', () => {
 				});
 
 			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/appellant-case/check-your-answers'
+			);
 		});
 
 		it('should redirect to the check and confirm page if multiple invalid reasons without text were provided', async () => {
@@ -509,6 +659,9 @@ describe('appellant-case', () => {
 				});
 
 			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/appellant-case/check-your-answers'
+			);
 		});
 
 		it('should redirect to the check and confirm page if multiple invalid reasons with text within the character limit were provided', async () => {
@@ -526,6 +679,9 @@ describe('appellant-case', () => {
 				});
 
 			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/appellant-case/check-your-answers'
+			);
 		});
 	});
 
@@ -550,6 +706,9 @@ describe('appellant-case', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Why is the appeal incomplete?</h1>');
+			expect(element.innerHTML).toContain('data-module="govuk-checkboxes">');
+			expect(element.innerHTML).toContain('Continue</button>');
 		});
 	});
 
@@ -573,8 +732,16 @@ describe('appellant-case', () => {
 				.send({});
 
 			const element = parseHtml(response.text);
-
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHtml).toContain(
+				'Please select one or more reasons why the appeal is incomplete</a>'
+			);
 		});
 
 		it('should re-render the incomplete reason page with the expected error message if a single incomplete reason with text was provided but the matching text property is an empty string', async () => {
@@ -586,8 +753,16 @@ describe('appellant-case', () => {
 				});
 
 			const element = parseHtml(response.text);
-
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHtml).toContain(
+				'All selected checkboxes with text fields must have at least one reason provided</a>'
+			);
 		});
 
 		it('should re-render the incomplete reason page with the expected error message if a single incomplete reason with text was provided but the matching text property is an empty array', async () => {
@@ -599,8 +774,16 @@ describe('appellant-case', () => {
 				});
 
 			const element = parseHtml(response.text);
-
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHtml).toContain(
+				'All selected checkboxes with text fields must have at least one reason provided</a>'
+			);
 		});
 
 		it('should re-render the incomplete reason page with the expected error message if multiple incomplete reasons with text were provided but any of the matching text properties are empty strings', async () => {
@@ -613,8 +796,16 @@ describe('appellant-case', () => {
 				});
 
 			const element = parseHtml(response.text);
-
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHtml).toContain(
+				'All selected checkboxes with text fields must have at least one reason provided</a>'
+			);
 		});
 
 		it('should re-render the incomplete reason page with the expected error message if multiple incomplete reasons with text were provided but any of the matching text properties are empty arrays', async () => {
@@ -627,8 +818,16 @@ describe('appellant-case', () => {
 				});
 
 			const element = parseHtml(response.text);
-
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHtml).toContain(
+				'All selected checkboxes with text fields must have at least one reason provided</a>'
+			);
 		});
 
 		it('should re-render the incomplete reason page with the expected error message if a single incomplete reason with text was provided but the matching text property exceeds the character limit', async () => {
@@ -642,8 +841,16 @@ describe('appellant-case', () => {
 				});
 
 			const element = parseHtml(response.text);
-
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHtml).toContain(
+				'Text in text fields cannot exceed 1000 characters</a>'
+			);
 		});
 
 		it('should re-render the incomplete reason page with the expected error message if multiple incomplete reasons with text were provided but any of the matching text properties exceed the character limit', async () => {
@@ -658,11 +865,19 @@ describe('appellant-case', () => {
 				});
 
 			const element = parseHtml(response.text);
-
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHtml).toContain(
+				'Text in text fields cannot exceed 1000 characters</a>'
+			);
 		});
 
-		it('should redirect to the check and confirm page if a single incomplete reason without text was provided', async () => {
+		it('should redirect to the update due date page if a single incomplete reason without text was provided', async () => {
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}${incompleteOutcomePagePath}`)
 				.send({
@@ -670,9 +885,12 @@ describe('appellant-case', () => {
 				});
 
 			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/appellant-case/incomplete/date'
+			);
 		});
 
-		it('should redirect to the check and confirm page a single incomplete reason with text within the character limit was provided', async () => {
+		it('should redirect to the update due date page a single incomplete reason with text within the character limit was provided', async () => {
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}${incompleteOutcomePagePath}`)
 				.send({
@@ -684,9 +902,12 @@ describe('appellant-case', () => {
 				});
 
 			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/appellant-case/incomplete/date'
+			);
 		});
 
-		it('should redirect to the check and confirm page if multiple incomplete reasons without text were provided', async () => {
+		it('should redirect to the update due date page if multiple incomplete reasons without text were provided', async () => {
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}${incompleteOutcomePagePath}`)
 				.send({
@@ -694,9 +915,12 @@ describe('appellant-case', () => {
 				});
 
 			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/appellant-case/incomplete/date'
+			);
 		});
 
-		it('should redirect to the check and confirm page if multiple incomplete reasons with text within the character limit were provided', async () => {
+		it('should redirect to the update due date page if multiple incomplete reasons with text within the character limit were provided', async () => {
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}${incompleteOutcomePagePath}`)
 				.send({
@@ -711,6 +935,9 @@ describe('appellant-case', () => {
 				});
 
 			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/appellant-case/incomplete/date'
+			);
 		});
 	});
 
@@ -836,6 +1063,7 @@ describe('appellant-case', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Sorry, there is a problem with the service</h1>');
 		});
 
 		it('should re-render the update date page with the expected error message if no date was provided', async () => {
@@ -864,8 +1092,17 @@ describe('appellant-case', () => {
 				});
 
 			const element = parseHtml(response.text);
-
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Date day cannot be empty</a>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Date month cannot be empty</a>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Date year cannot be empty</a>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Date must be a valid date</a>');
 		});
 
 		it('should re-render the update date page with the expected error message if provided date is not in the future', async () => {
@@ -894,8 +1131,14 @@ describe('appellant-case', () => {
 				});
 
 			const element = parseHtml(response.text);
-
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Date must be in the future</a>');
 		});
 
 		it('should re-render the update date page with the expected error message if an invalid day was provided', async () => {
@@ -960,6 +1203,13 @@ describe('appellant-case', () => {
 			element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Date day must be a number</a>');
 		});
 
 		it('should re-render the update date page with the expected error message if an invalid month was provided', async () => {
@@ -1024,6 +1274,13 @@ describe('appellant-case', () => {
 			element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Date month must be a number</a>');
 		});
 
 		it('should re-render the update date page with the expected error message if an invalid year was provided', async () => {
@@ -1072,6 +1329,13 @@ describe('appellant-case', () => {
 			element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Date year must be a number</a>');
 		});
 
 		it('should re-render the update date page with the expected error message if an invalid date was provided', async () => {
@@ -1104,9 +1368,16 @@ describe('appellant-case', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Date must be a valid date</a>');
 		});
 
-		it('should redirect to the check and confirm page if a valid date was provided', async () => {
+		it('should re-render the update date page with the expected error message if a date that is not a business day was provided', async () => {
 			// post to incomplete reason page controller is necessary to set required data in the session
 			const incompleteReasonPostResponse = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}/${incompleteOutcomePagePath}`)
@@ -1132,6 +1403,50 @@ describe('appellant-case', () => {
 				});
 
 			expect(response.statusCode).toBe(200);
+
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Date must be a business day</a>');
+		});
+
+		it('should redirect to the check and confirm page if a valid date was provided', async () => {
+			// post to incomplete reason page controller is necessary to set required data in the session
+			const incompleteReasonPostResponse = await request
+				.post(`${baseUrl}/1${appellantCasePagePath}/${incompleteOutcomePagePath}`)
+				.send({
+					incompleteReason: [incompleteReasonsWithTextIds[0], incompleteReasonsWithTextIds[1]],
+					[`incompleteReason-${incompleteReasonsWithTextIds[0]}`]: [
+						'test reason text 1',
+						'test reason text 2'
+					],
+					[`incompleteReason-${incompleteReasonsWithTextIds[1]}`]: 'test reason text 1'
+				});
+
+			expect(incompleteReasonPostResponse.statusCode).toBe(302);
+
+			nock('http://test/').post(`/appeals/validate-business-date`).reply(200, { result: true });
+
+			const response = await request
+				.post(
+					`${baseUrl}/1${appellantCasePagePath}${incompleteOutcomePagePath}${updateDueDatePagePath}`
+				)
+				.send({
+					'due-date-day': '2',
+					'due-date-month': '12',
+					'due-date-year': '2024'
+				});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/appellant-case/check-your-answers'
+			);
 		});
 	});
 
@@ -1153,9 +1468,13 @@ describe('appellant-case', () => {
 			const response = await request.get(
 				`${baseUrl}/1${appellantCasePagePath}${checkYourAnswersPagePath}`
 			);
+
+			expect(response.statusCode).toBe(500);
+
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Sorry, there is a problem with the service</h1>');
 		});
 
 		it('should render the check your answers page with the expected content if outcome is "invalid" and required data is present in the session', async () => {
@@ -1179,6 +1498,19 @@ describe('appellant-case', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Check your answers before confirming your review</h1>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Review outcome</dt><dd class="govuk-summary-list__value"> Invalid</dd>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Confirming this review will inform the relevant parties of the outcome</div>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 		});
 
 		it('should render the check your answers page with the expected content if outcome is "incomplete" and required data is present in the session', async () => {
@@ -1215,6 +1547,19 @@ describe('appellant-case', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Check your answers before confirming your review</h1>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Review outcome</dt><dd class="govuk-summary-list__value"> Incomplete</dd>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Confirming this review will inform the relevant parties of the outcome</div>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 		});
 	});
 
@@ -1249,6 +1594,9 @@ describe('appellant-case', () => {
 
 			expect(mockedAppellantCasesEndpoint.isDone()).toBe(true);
 			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/appellant-case/invalid/confirmation'
+			);
 		});
 
 		it('should send a patch request to the appellant-cases API endpoint and redirect to the decision incomplete confirmation page, if posted outcome was "incomplete"', async () => {
@@ -1271,6 +1619,9 @@ describe('appellant-case', () => {
 
 			expect(mockedAppellantCasesEndpoint.isDone()).toBe(true);
 			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/appellant-case/incomplete/confirmation'
+			);
 		});
 	});
 
@@ -1290,6 +1641,26 @@ describe('appellant-case', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Enter valid date for case</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'This is the date all case documentation was received and the appeal was valid.</p>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="valid-date-day" type="text" inputmode="numeric">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="valid-date-month" type="text" inputmode="numeric">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="valid-date-year" type="text" inputmode="numeric">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Confirming will inform the relevant parties of the valid date</div>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 		});
 	});
 
@@ -1301,6 +1672,26 @@ describe('appellant-case', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Enter valid date for case</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'This is the date all case documentation was received and the appeal was valid.</p>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="valid-date-day" type="text" inputmode="numeric">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="valid-date-month" type="text" inputmode="numeric">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="valid-date-year" type="text" inputmode="numeric">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Confirming will inform the relevant parties of the valid date</div>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 		});
 	});
 
@@ -1332,8 +1723,22 @@ describe('appellant-case', () => {
 				});
 
 			expect(response.statusCode).toBe(200);
+
 			const element = parseHtml(response.text);
+
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Enter valid date for case</h1>');
+
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Date day cannot be empty</a>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Date month cannot be empty</a>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Date year cannot be empty</a>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Date must be a valid date</a>');
 		});
 
 		it('should re-render the valid date page with the expected error message if provided date is not in the past', async () => {
@@ -1346,8 +1751,19 @@ describe('appellant-case', () => {
 				});
 
 			expect(response.statusCode).toBe(200);
+
 			const element = parseHtml(response.text);
+
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Enter valid date for case</h1>');
+
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Date must be today or in the past</a>');
 		});
 
 		it('should re-render the valid date page with the expected error message if an invalid day was provided', async () => {
@@ -1384,17 +1800,47 @@ describe('appellant-case', () => {
 				});
 
 			expect(response.statusCode).toBe(200);
+
 			element = parseHtml(response.text);
+
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Enter valid date for case</h1>');
+
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Date day must be a number</a>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Date must be a valid date</a>');
 		});
 
 		describe('should re-render the update date page with the expected error message if an invalid month was provided', () => {
 			const testCases = [
-				{ day: '1', month: '0', year: '3000', description: 'month "0"' },
-				{ day: '1', month: '13', year: '3000', description: 'month "13"' },
-				{ day: '1', month: 'dec', year: '3000', description: 'month "dec"' }
+				{
+					day: '1',
+					month: '0',
+					year: '3000',
+					description: 'month "0"',
+					expectedErrorMessageHtml: 'Date month must be between 1 and 12</a>'
+				},
+				{
+					day: '1',
+					month: '13',
+					year: '3000',
+					description: 'month "13"',
+					expectedErrorMessageHtml: 'Date month must be between 1 and 12</a>'
+				},
+				{
+					day: '1',
+					month: 'dec',
+					year: '3000',
+					description: 'month "dec"',
+					expectedErrorMessageHtml: 'Date month must be a number</a>'
+				}
 			];
-			testCases.forEach(({ day, month, year, description }) => {
+			testCases.forEach(({ day, month, year, description, expectedErrorMessageHtml }) => {
 				it(`should re-render the update date page with the expected error message if an invalid ${description} was provided`, async () => {
 					const response = await request
 						.post(`${baseUrl}/1${appellantCasePagePath}${validOutcomePagePath}${validDatePagePath}`)
@@ -1407,6 +1853,15 @@ describe('appellant-case', () => {
 					expect(response.statusCode).toBe(200);
 					const element = parseHtml(response.text);
 					expect(element.innerHTML).toMatchSnapshot();
+
+					const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+						rootElement: '.govuk-error-summary',
+						skipPrettyPrint: true
+					}).innerHTML;
+
+					expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+					expect(unprettifiedErrorSummaryHtml).toContain(expectedErrorMessageHtml);
+					expect(unprettifiedErrorSummaryHtml).toContain('Date must be a valid date</a>');
 				});
 			});
 		});
@@ -1421,8 +1876,20 @@ describe('appellant-case', () => {
 				});
 
 			expect(response.statusCode).toBe(200);
+
 			const element = parseHtml(response.text);
+
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Enter valid date for case</h1>');
+
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Date year must be 4 digits</a>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Date must be a valid date</a>');
 		});
 
 		it('should re-render the valid date page with the expected error message if an invalid year "abc" was provided', async () => {
@@ -1435,8 +1902,20 @@ describe('appellant-case', () => {
 				});
 
 			expect(response.statusCode).toBe(200);
+
 			const element = parseHtml(response.text);
+
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Enter valid date for case</h1>');
+
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Date year must be a number</a>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Date must be a valid date</a>');
 		});
 
 		it('should re-render the valid date page with the expected error message if an invalid date was provided', async () => {
@@ -1449,8 +1928,19 @@ describe('appellant-case', () => {
 				});
 
 			expect(response.statusCode).toBe(200);
+
 			const element = parseHtml(response.text);
+
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Enter valid date for case</h1>');
+
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Date must be a valid date</a>');
 		});
 
 		it('should re-render the valid date page with the expected error message if date was in past but prior to the date the case was received', async () => {
@@ -1463,8 +1953,21 @@ describe('appellant-case', () => {
 				});
 
 			expect(response.statusCode).toBe(200);
+
 			const element = parseHtml(response.text);
+
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Enter valid date for case</h1>');
+
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHtml).toContain(
+				'The valid date must be on or after the date the case was received.</a>'
+			);
 		});
 
 		it('should redirect to the confirm page if a valid date was provided', async () => {
@@ -1478,6 +1981,9 @@ describe('appellant-case', () => {
 
 			expect(response.statusCode).toBe(302);
 			expect(response.headers.location).toContain(confirmationPagePath);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/appellant-case/valid/confirmation'
+			);
 		});
 	});
 
@@ -1489,6 +1995,13 @@ describe('appellant-case', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Appeal invalid</h1>');
+			expect(element.innerHTML).toContain(
+				'The appeal has been closed. The relevant parties have been informed.</p>'
+			);
+			expect(element.innerHTML).toContain(
+				'href="/appeals-service/appeal-details/1">Go back to case details</a>'
+			);
 		});
 	});
 
@@ -1500,6 +2013,16 @@ describe('appellant-case', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Appeal incomplete</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'The relevant parties have been informed. We have told them what to do next and the due date for missing information.</p>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'href="/appeals-service/appeal-details/1">Go back to case details</a>'
+			);
 		});
 	});
 

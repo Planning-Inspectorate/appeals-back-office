@@ -19,7 +19,7 @@ const finalCommentReviewData = {
 describe('Appeal Timetables', () => {
 	afterEach(teardown);
 
-	it(`should render "Schedule Final Comment Review Date" page`, async () => {
+	it('should render "Schedule Final Comment Review Date" page', async () => {
 		const appealData = {
 			...baseAppealData,
 			appealTimetable: {
@@ -33,15 +33,34 @@ describe('Appeal Timetables', () => {
 		const element = parseHtml(response.text);
 
 		expect(element.innerHTML).toMatchSnapshot();
+		expect(element.innerHTML).toContain('Schedule final comment review due date</h1>');
+		expect(element.innerHTML).toContain('name="due-date-day" type="text" inputmode="numeric">');
+		expect(element.innerHTML).toContain('name="due-date-month" type="text" inputmode="numeric">');
+		expect(element.innerHTML).toContain('name="due-date-year" type="text" inputmode="numeric">');
+		expect(element.innerHTML).toContain('Confirm</button>');
 	});
 
-	it(`should render "Change Final Comment Review Date" page`, async () => {
+	it('should render "Change Final Comment Review Date" page', async () => {
 		nock('http://test/').get('/appeals/1').reply(200, finalCommentReviewData);
 
 		const response = await request.get(`${baseUrl}/final-comment-review`);
 		const element = parseHtml(response.text);
 
 		expect(element.innerHTML).toMatchSnapshot();
+		expect(element.innerHTML).toContain('Change final comment review due date</h1>');
+		expect(element.innerHTML).toContain(
+			'The current due date for the final comment review is 9 August 2023'
+		);
+		expect(element.innerHTML).toContain(
+			'name="due-date-day" type="text" value="9" inputmode="numeric">'
+		);
+		expect(element.innerHTML).toContain(
+			'name="due-date-month" type="text" value="8" inputmode="numeric">'
+		);
+		expect(element.innerHTML).toContain(
+			'name="due-date-year" type="text" value="2023" inputmode="numeric">'
+		);
+		expect(element.innerHTML).toContain('Confirm</button>');
 	});
 
 	it('should render "Change Final Comment Review Date" with error (no answer provided)', async () => {
@@ -55,6 +74,11 @@ describe('Appeal Timetables', () => {
 		const element = parseHtml(response.text);
 
 		expect(element.innerHTML).toMatchSnapshot();
+		expect(element.innerHTML).toContain('Change final comment review due date</h1>');
+		expect(element.innerHTML).toContain('There is a problem</h2>');
+		expect(element.innerHTML).toContain('Date day cannot be empty</a>');
+		expect(element.innerHTML).toContain('Date month cannot be empty</a>');
+		expect(element.innerHTML).toContain('Date year cannot be empty</a>');
 	});
 
 	it('should render "Change Final Comment Review Date" with error (api error)', async () => {
@@ -75,9 +99,12 @@ describe('Appeal Timetables', () => {
 		const element = parseHtml(response.text);
 
 		expect(element.innerHTML).toMatchSnapshot();
+		expect(element.innerHTML).toContain('Change final comment review due date</h1>');
+		expect(element.innerHTML).toContain('There is a problem</h2>');
+		expect(element.innerHTML).toContain('Date must be a business day</a>');
 	});
 
-	it('should render "Change Final Comment Review Date" confirmation page', async () => {
+	it('should redirect to the case details page', async () => {
 		nock('http://test/').get('/appeals/1').reply(200, finalCommentReviewData);
 		nock('http://test/').patch('/appeals/1/appeal-timetables/1').reply(200, {
 			finalCommentReviewDate: '2050-01-02T01:00:00.000Z'
@@ -90,9 +117,10 @@ describe('Appeal Timetables', () => {
 		});
 
 		expect(response.statusCode).toBe(302);
+		expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
 	});
 
-	it(`should render "Schedule issue determination" page`, async () => {
+	it('should render "Schedule issue determination" page', async () => {
 		const appealData = {
 			...baseAppealData,
 			appealTimetable: {
@@ -106,9 +134,14 @@ describe('Appeal Timetables', () => {
 		const element = parseHtml(response.text);
 
 		expect(element.innerHTML).toMatchSnapshot();
+		expect(element.innerHTML).toContain('Schedule issue determination due date</h1>');
+		expect(element.innerHTML).toContain('name="due-date-day" type="text" inputmode="numeric">');
+		expect(element.innerHTML).toContain('name="due-date-month" type="text" inputmode="numeric">');
+		expect(element.innerHTML).toContain('name="due-date-year" type="text" inputmode="numeric">');
+		expect(element.innerHTML).toContain('Confirm</button>');
 	});
 
-	it(`should render "Change issue determination" page`, async () => {
+	it('should render "Change issue determination" page', async () => {
 		const appealData = {
 			...baseAppealData,
 			appealTimetable: {
@@ -123,9 +156,20 @@ describe('Appeal Timetables', () => {
 		const element = parseHtml(response.text);
 
 		expect(element.innerHTML).toMatchSnapshot();
+		expect(element.innerHTML).toContain('Change issue determination due date</h1>');
+		expect(element.innerHTML).toContain(
+			'name="due-date-day" type="text" value="9" inputmode="numeric">'
+		);
+		expect(element.innerHTML).toContain(
+			'name="due-date-month" type="text" value="8" inputmode="numeric">'
+		);
+		expect(element.innerHTML).toContain(
+			'name="due-date-year" type="text" value="2023" inputmode="numeric">'
+		);
+		expect(element.innerHTML).toContain('Confirm</button>');
 	});
 
-	it(`should render "Schedule LPA questionnaire Date" page`, async () => {
+	it('should render "Schedule LPA questionnaire Date" page', async () => {
 		const appealData = {
 			...baseAppealData,
 			appealTimetable: {
@@ -139,9 +183,14 @@ describe('Appeal Timetables', () => {
 		const element = parseHtml(response.text);
 
 		expect(element.innerHTML).toMatchSnapshot();
+		expect(element.innerHTML).toContain('Schedule LPA questionnaire due date</h1>');
+		expect(element.innerHTML).toContain('name="due-date-day" type="text" inputmode="numeric">');
+		expect(element.innerHTML).toContain('name="due-date-month" type="text" inputmode="numeric">');
+		expect(element.innerHTML).toContain('name="due-date-year" type="text" inputmode="numeric">');
+		expect(element.innerHTML).toContain('Confirm</button>');
 	});
 
-	it(`should render "Change LPA questionnaire Date" page`, async () => {
+	it('should render "Change LPA questionnaire Date" page', async () => {
 		const appealData = {
 			...baseAppealData,
 			appealTimetable: {
@@ -156,9 +205,20 @@ describe('Appeal Timetables', () => {
 		const element = parseHtml(response.text);
 
 		expect(element.innerHTML).toMatchSnapshot();
+		expect(element.innerHTML).toContain('Change LPA questionnaire due date</h1>');
+		expect(element.innerHTML).toContain(
+			'name="due-date-day" type="text" value="9" inputmode="numeric">'
+		);
+		expect(element.innerHTML).toContain(
+			'name="due-date-month" type="text" value="8" inputmode="numeric">'
+		);
+		expect(element.innerHTML).toContain(
+			'name="due-date-year" type="text" value="2023" inputmode="numeric">'
+		);
+		expect(element.innerHTML).toContain('Confirm</button>');
 	});
 
-	it(`should render "Schedule statement review Date" page`, async () => {
+	it('should render "Schedule statement review Date" page', async () => {
 		const appealData = {
 			...baseAppealData,
 			appealTimetable: {
@@ -172,9 +232,14 @@ describe('Appeal Timetables', () => {
 		const element = parseHtml(response.text);
 
 		expect(element.innerHTML).toMatchSnapshot();
+		expect(element.innerHTML).toContain('Schedule statement review due date</h1>');
+		expect(element.innerHTML).toContain('name="due-date-day" type="text" inputmode="numeric">');
+		expect(element.innerHTML).toContain('name="due-date-month" type="text" inputmode="numeric">');
+		expect(element.innerHTML).toContain('name="due-date-year" type="text" inputmode="numeric">');
+		expect(element.innerHTML).toContain('Confirm</button>');
 	});
 
-	it(`should render "Change statement review Date" page`, async () => {
+	it('should render "Change statement review Date" page', async () => {
 		const appealData = {
 			...baseAppealData,
 			appealTimetable: {
@@ -189,5 +254,16 @@ describe('Appeal Timetables', () => {
 		const element = parseHtml(response.text);
 
 		expect(element.innerHTML).toMatchSnapshot();
+		expect(element.innerHTML).toContain('Change statement review due date</h1>');
+		expect(element.innerHTML).toContain(
+			'name="due-date-day" type="text" value="9" inputmode="numeric">'
+		);
+		expect(element.innerHTML).toContain(
+			'name="due-date-month" type="text" value="8" inputmode="numeric">'
+		);
+		expect(element.innerHTML).toContain(
+			'name="due-date-year" type="text" value="2023" inputmode="numeric">'
+		);
+		expect(element.innerHTML).toContain('Confirm</button>');
 	});
 });

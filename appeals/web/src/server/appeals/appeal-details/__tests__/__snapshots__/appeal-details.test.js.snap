@@ -972,355 +972,6 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
 </main>"
 `;
 
-exports[`appeal-details GET /:appealId should render a Issue a decision action button when the appealStatus is ready for final review 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-            data-module="govuk-notification-banner">
-                <div class="govuk-notification-banner__header">
-                    <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
-                </div>
-                <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">Ready for decision</p>
-                    <p><a class="govuk-notification-banner__link" data-cy="issue-determination"
-                        href="/appeals-service/appeal-details/1/issue-decision/decision">Issue decision</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Case details</h1>
-        </div>
-    </div><strong class="govuk-tag govuk-tag--pink single-line govuk-!-margin-bottom-4">Issue decision</strong>
-    <dl     class="govuk-summary-list govuk-summary-list--no-border">
-        <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
-            <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-        </div>
-        <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
-            <dd             class="govuk-summary-list__value">Wiltshire Council</dd>
-        </div>
-        </dl>
-        <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default1">
-            <div class="govuk-accordion__section">
-                <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-1"> Overview</span></h2>
-                </div>
-                <div id="accordion-default1-content-1" class="govuk-accordion__section-content"
-                aria-labelledby="accordion-default1-heading-1">
-                    <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row appeal-appeal-type"><dt class="govuk-summary-list__key"> Appeal type</dt>
-                            <dd class="govuk-summary-list__value">Householder</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-type/appeal-type"
-                                data-cy="change-appeal-type"> Change<span class="govuk-visually-hidden"> Appeal type</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-case-procedure"><dt class="govuk-summary-list__key"> Case procedure</dt>
-                            <dd class="govuk-summary-list__value">Written</dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-linked-appeals"><dt class="govuk-summary-list__key"> Linked appeals</dt>
-                            <dd class="govuk-summary-list__value"><span>No appeals</span>
-                            </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/add"
-                                data-cy="add-linked-appeal"> Add<span class="govuk-visually-hidden"> Linked appeals</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-other-appeals"><dt class="govuk-summary-list__key"> Related appeals</dt>
-                            <dd class="govuk-summary-list__value"><span>No appeals</span>
-                            </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/other-appeals/add"
-                                data-cy="add-related-appeals"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
-                            <dd class="govuk-summary-list__value">Level: A
-                                <br>Band: 3
-                                <br>Specialisms:
-                                <ul class="govuk-!-margin-0">
-                                    <li>Historic heritage</li>
-                                    <li>Architecture design</li>
-                                </ul>
-                            </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"
-                                data-cy="change-allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
-                            <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
-                            <dd class="govuk-summary-list__value">dismissed</dd>
-                        </div>
-                    </dl>
-                </div>
-            </div>
-            <div class="govuk-accordion__section">
-                <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-2"> Site</span></h2>
-                </div>
-                <div id="accordion-default1-content-2" class="govuk-accordion__section-content"
-                aria-labelledby="accordion-default1-heading-2">
-                    <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row appeal-lpa-inspector-access"><dt class="govuk-summary-list__key"> Inspection access (LPA answer)</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No</span>
-                                </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inspector-access/change/lpa"
-                                    data-cy="change-inspection-access-lpa"> Change<span class="govuk-visually-hidden"> inspection access (L P A answer)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-appellant-inspector-access"><dt class="govuk-summary-list__key"> Inspection access (appellant answer)</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No</span>
-                                </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inspector-access/change/appellant"
-                                    data-cy="change-inspection-access-appellant"> Change<span class="govuk-visually-hidden"> inspection access (appellant answer)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
-                            <dd                             class="govuk-summary-list__value">Yes</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/change/affected"
-                                    data-cy="change-neighbouuring-site-is-affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
-                            <dd                             class="govuk-summary-list__value">
-                                <ul class="govuk-list govuk-list--bullet">
-                                    <li>1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
-                                </ul>
-                                </dd>
-                                <dd class="govuk-summary-list__actions">
-                                    <ul class="govuk-summary-list__actions-list">
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A)</span></a>
-                                        </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/lpa"
-                                            data-cy="add-neighbouring-site-lpa"> Add<span class="govuk-visually-hidden"> Neighbouring sites (LPA)</span></a>
-                                        </li>
-                                    </ul>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
-                            <dd                             class="govuk-summary-list__value">
-                                <ul class="govuk-list govuk-list--bullet">
-                                    <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
-                                </ul>
-                                </dd>
-                                <dd class="govuk-summary-list__actions">
-                                    <ul class="govuk-summary-list__actions-list">
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage"
-                                            data-cy="manage-neighbouring-sites-inspector"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
-                                        </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/back-office"
-                                            data-cy="add-neighbouring-sites-inspector"> Add<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
-                                        </li>
-                                    </ul>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No</span>
-                                </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/lpa"
-                                    data-cy="change-lpa-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
-                            <dd                             class="govuk-summary-list__value"><span>Yes</span>
-                                <br><span>Dogs on site</span>
-                                </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/appellant"
-                                    data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
-                            <dd class="govuk-summary-list__value">Accompanied</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/visit-booked"
-                                data-cy="change-set-visit-type"> Change<span class="govuk-visually-hidden"> visit type</span></a>
-                            </dd>
-                        </div>
-                    </dl>
-                </div>
-            </div>
-            <div class="govuk-accordion__section">
-                <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-3"> Timetable</span></h2>
-                </div>
-                <div id="accordion-default1-content-3" class="govuk-accordion__section-content"
-                aria-labelledby="accordion-default1-heading-3">
-                    <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
-                            <dd class="govuk-summary-list__value">23 May 2023</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/valid/date"
-                                data-cy="change-valid-date"> Change<span class="govuk-visually-hidden"> The date all case documentation was received and the appeal was valid</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-start-date"><dt class="govuk-summary-list__key"> Start date</dt>
-                            <dd class="govuk-summary-list__value">23 May 2023</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/start-case/change"> Change</a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-lpa-questionnaire-due-date"><dt class="govuk-summary-list__key"> LPA questionnaire due</dt>
-                            <dd class="govuk-summary-list__value">11 October 2023</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appeal-timetables/lpa-questionnaire"
-                                data-cy="change-lpa-questionnaire-due-date"> Change<span class="govuk-visually-hidden"> L P A questionnaire due</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-site-visit"><dt class="govuk-summary-list__key"> Site visit</dt>
-                            <dd class="govuk-summary-list__value">
-                                <ul class="govuk-list govuk-!-margin-top-0 govuk-!-padding-left-0">
-                                    <li>9 October 2023</li>
-                                    <li>9:38am - 10:44am</li>
-                                </ul>
-                            </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/manage-visit"
-                                data-cy="change-schedule-visit"> Change<span class="govuk-visually-hidden"> site visit</span></a>
-                            </dd>
-                        </div>
-                    </dl>
-                </div>
-            </div>
-            <div class="govuk-accordion__section">
-                <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-4"> Documentation</span></h2>
-                </div>
-                <div id="accordion-default1-content-4" class="govuk-accordion__section-content"
-                aria-labelledby="accordion-default1-heading-4">
-                    <table class="govuk-table">
-                        <thead class="govuk-table__head">
-                            <tr class="govuk-table__row">
-                                <th scope="col" class="govuk-table__header">Documentation</th>
-                                <th scope="col" class="govuk-table__header">Status</th>
-                                <th scope="col" class="govuk-table__header">Received</th>
-                                <th scope="col" class="govuk-table__header">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody class="govuk-table__body">
-                            <tr class="govuk-table__row">
-                                <th scope="row" class="govuk-table__header">Appellant case</th>
-                                <td class="govuk-table__cell">Received</td>
-                                <td class="govuk-table__cell">2 August 2024</td>
-                                <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/2/appellant-case" data-cy="review-appellant-case"
-                                    class="govuk-link">Review <span class="govuk-visually-hidden">appellant case</span></a>
-                                </td>
-                            </tr>
-                            <tr class="govuk-table__row">
-                                <th scope="row" class="govuk-table__header">LPA questionnaire</th>
-                                <td class="govuk-table__cell">Not received</td>
-                                <td class="govuk-table__cell">2 August 2024</td>
-                                <td class="govuk-table__cell"></td>
-                            </tr>
-                            <tr class="govuk-table__row">
-                                <th scope="row" class="govuk-table__header appeal-costs-appellant-documentation">Costs (appellant)</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-status"></td>
-                                <td class="govuk-table__cell appeal-costs-appellant-due-date"></td>
-                                <td class="govuk-table__cell appeal-costs-appellant-actions">
-                                    <ul class="govuk-summary-list__actions-list">
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appeallant" href="/appeals-service/appeal-details/2/costs/appellant/select-document-type/1">Add</a>
-                                        </li>
-                                    </ul>
-                                </td>
-                            </tr>
-                            <tr class="govuk-table__row">
-                                <th scope="row" class="govuk-table__header appeal-costs-lpa-documentation">Costs (LPA)</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-status"></td>
-                                <td class="govuk-table__cell appeal-costs-lpa-due-date"></td>
-                                <td class="govuk-table__cell appeal-costs-lpa-actions">
-                                    <ul class="govuk-summary-list__actions-list">
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa" href="/appeals-service/appeal-details/2/costs/lpa/select-document-type/2">Add</a>
-                                        </li>
-                                    </ul>
-                                </td>
-                            </tr>
-                            <tr class="govuk-table__row">
-                                <th scope="row" class="govuk-table__header appeal-costs-decision-documentation">Costs decision</th>
-                                <td class="govuk-table__cell appeal-costs-decision-status"></td>
-                                <td class="govuk-table__cell appeal-costs-decision-due-date"></td>
-                                <td class="govuk-table__cell appeal-costs-decision-actions">
-                                    <ul class="govuk-summary-list__actions-list">
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-decision" href="/appeals-service/appeal-details/2/costs/decision/upload-documents/3">Add</a>
-                                        </li>
-                                    </ul>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="govuk-accordion__section">
-                <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-5"> Contacts</span></h2>
-                </div>
-                <div id="accordion-default1-content-5" class="govuk-accordion__section-content"
-                aria-labelledby="accordion-default1-heading-5">
-                    <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
-                            <dd class="govuk-summary-list__value">
-                                <ul class="govuk-list">
-                                    <li>Roger Simmons</li>
-                                    <li>test3@example.com</li>
-                                </ul>
-                            </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/service-user/change/appellant"
-                                data-cy="change-appellant"> Change<span class="govuk-visually-hidden"> Appellant</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent</dt>
-                            <dd class="govuk-summary-list__value">
-                                <ul class="govuk-list">
-                                    <li>Fiona Shell</li>
-                                    <li>test2@example.com</li>
-                                </ul>
-                            </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/service-user/change/agent"
-                                data-cy="change-agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
-                            <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                        </div>
-                    </dl>
-                </div>
-            </div>
-            <div class="govuk-accordion__section">
-                <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-6"> Team</span></h2>
-                </div>
-                <div id="accordion-default1-content-6" class="govuk-accordion__section-content"
-                aria-labelledby="accordion-default1-heading-6">
-                    <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
-                            <dd class="govuk-summary-list__value"></dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/assign-user/case-officer"
-                                data-cy="assign-case-officer"> Assign<span class="govuk-visually-hidden"> case officer</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-inspector"><dt class="govuk-summary-list__key"> Inspector</dt>
-                            <dd class="govuk-summary-list__value"></dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/assign-user/inspector"
-                                data-cy="assign-inspector"> Assign<span class="govuk-visually-hidden"> inspector</span></a>
-                            </dd>
-                        </div>
-                    </dl>
-                </div>
-            </div>
-            <div class="govuk-accordion__section">
-                <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-7"> Case management</span></h2>
-                </div>
-                <div id="accordion-default1-content-7" class="govuk-accordion__section-content"
-                aria-labelledby="accordion-default1-heading-7">
-                    <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
-                            <dd class="govuk-summary-list__value"></dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/audit"> View<span class="govuk-visually-hidden"> View case history</span></a>
-                            </dd>
-                        </div>
-                    </dl>
-                </div>
-            </div>
-        </div>
-</main>"
-`;
-
 exports[`appeal-details GET /:appealId should render a child tag next to the appeal status tag if the appeal is a child 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
@@ -2018,10 +1669,11 @@ exports[`appeal-details GET /:appealId should render a page not found when the a
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
-            <p class="govuk-body">Try again later.</p>
-            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
-                the problem persists.</p>
+            <h1 class="govuk-heading-xl">Page not found</h1>
+            <p class="govuk-body">If you typed the web address, check it is correct.</p>
+            <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
+            <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
+                the problem persists</p>
         </div>
     </div>
 </main>"
@@ -2368,6 +2020,355 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
                             <dd class="govuk-summary-list__value"></dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit"> View<span class="govuk-visually-hidden"> View case history</span></a>
+                            </dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+        </div>
+</main>"
+`;
+
+exports[`appeal-details GET /:appealId should render an Issue a decision notification banner with action link to issue decision flow when the appealStatus is ready for final review 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
+            data-module="govuk-notification-banner">
+                <div class="govuk-notification-banner__header">
+                    <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
+                </div>
+                <div class="govuk-notification-banner__content">
+                    <p class="govuk-notification-banner__heading">Ready for decision</p>
+                    <p><a class="govuk-notification-banner__link" data-cy="issue-determination"
+                        href="/appeals-service/appeal-details/1/issue-decision/decision">Issue decision</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Case details</h1>
+        </div>
+    </div><strong class="govuk-tag govuk-tag--pink single-line govuk-!-margin-bottom-4">Issue decision</strong>
+    <dl     class="govuk-summary-list govuk-summary-list--no-border">
+        <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
+            <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
+        </div>
+        <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
+            <dd             class="govuk-summary-list__value">Wiltshire Council</dd>
+        </div>
+        </dl>
+        <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default1">
+            <div class="govuk-accordion__section">
+                <div class="govuk-accordion__section-header">
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-1"> Overview</span></h2>
+                </div>
+                <div id="accordion-default1-content-1" class="govuk-accordion__section-content"
+                aria-labelledby="accordion-default1-heading-1">
+                    <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row appeal-appeal-type"><dt class="govuk-summary-list__key"> Appeal type</dt>
+                            <dd class="govuk-summary-list__value">Householder</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-type/appeal-type"
+                                data-cy="change-appeal-type"> Change<span class="govuk-visually-hidden"> Appeal type</span></a>
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-case-procedure"><dt class="govuk-summary-list__key"> Case procedure</dt>
+                            <dd class="govuk-summary-list__value">Written</dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-linked-appeals"><dt class="govuk-summary-list__key"> Linked appeals</dt>
+                            <dd class="govuk-summary-list__value"><span>No appeals</span>
+                            </dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/add"
+                                data-cy="add-linked-appeal"> Add<span class="govuk-visually-hidden"> Linked appeals</span></a>
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-other-appeals"><dt class="govuk-summary-list__key"> Related appeals</dt>
+                            <dd class="govuk-summary-list__value"><span>No appeals</span>
+                            </dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/other-appeals/add"
+                                data-cy="add-related-appeals"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
+                            <dd class="govuk-summary-list__value">Level: A
+                                <br>Band: 3
+                                <br>Specialisms:
+                                <ul class="govuk-!-margin-0">
+                                    <li>Historic heritage</li>
+                                    <li>Architecture design</li>
+                                </ul>
+                            </dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"
+                                data-cy="change-allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
+                            <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
+                            <dd class="govuk-summary-list__value">dismissed</dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+            <div class="govuk-accordion__section">
+                <div class="govuk-accordion__section-header">
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-2"> Site</span></h2>
+                </div>
+                <div id="accordion-default1-content-2" class="govuk-accordion__section-content"
+                aria-labelledby="accordion-default1-heading-2">
+                    <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row appeal-lpa-inspector-access"><dt class="govuk-summary-list__key"> Inspection access (LPA answer)</dt>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inspector-access/change/lpa"
+                                    data-cy="change-inspection-access-lpa"> Change<span class="govuk-visually-hidden"> inspection access (L P A answer)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-appellant-inspector-access"><dt class="govuk-summary-list__key"> Inspection access (appellant answer)</dt>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inspector-access/change/appellant"
+                                    data-cy="change-inspection-access-appellant"> Change<span class="govuk-visually-hidden"> inspection access (appellant answer)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
+                            <dd                             class="govuk-summary-list__value">Yes</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/change/affected"
+                                    data-cy="change-neighbouuring-site-is-affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
+                            <dd                             class="govuk-summary-list__value">
+                                <ul class="govuk-list govuk-list--bullet">
+                                    <li>1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
+                                </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A)</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/lpa"
+                                            data-cy="add-neighbouring-site-lpa"> Add<span class="govuk-visually-hidden"> Neighbouring sites (LPA)</span></a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                            <dd                             class="govuk-summary-list__value">
+                                <ul class="govuk-list govuk-list--bullet">
+                                    <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
+                                </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage"
+                                            data-cy="manage-neighbouring-sites-inspector"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/back-office"
+                                            data-cy="add-neighbouring-sites-inspector"> Add<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/lpa"
+                                    data-cy="change-lpa-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
+                            <dd                             class="govuk-summary-list__value"><span>Yes</span>
+                                <br><span>Dogs on site</span>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/appellant"
+                                    data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
+                            <dd class="govuk-summary-list__value">Accompanied</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/visit-booked"
+                                data-cy="change-set-visit-type"> Change<span class="govuk-visually-hidden"> visit type</span></a>
+                            </dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+            <div class="govuk-accordion__section">
+                <div class="govuk-accordion__section-header">
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-3"> Timetable</span></h2>
+                </div>
+                <div id="accordion-default1-content-3" class="govuk-accordion__section-content"
+                aria-labelledby="accordion-default1-heading-3">
+                    <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
+                            <dd class="govuk-summary-list__value">23 May 2023</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/valid/date"
+                                data-cy="change-valid-date"> Change<span class="govuk-visually-hidden"> The date all case documentation was received and the appeal was valid</span></a>
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-start-date"><dt class="govuk-summary-list__key"> Start date</dt>
+                            <dd class="govuk-summary-list__value">23 May 2023</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/start-case/change"> Change</a>
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-lpa-questionnaire-due-date"><dt class="govuk-summary-list__key"> LPA questionnaire due</dt>
+                            <dd class="govuk-summary-list__value">11 October 2023</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appeal-timetables/lpa-questionnaire"
+                                data-cy="change-lpa-questionnaire-due-date"> Change<span class="govuk-visually-hidden"> L P A questionnaire due</span></a>
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-site-visit"><dt class="govuk-summary-list__key"> Site visit</dt>
+                            <dd class="govuk-summary-list__value">
+                                <ul class="govuk-list govuk-!-margin-top-0 govuk-!-padding-left-0">
+                                    <li>9 October 2023</li>
+                                    <li>9:38am - 10:44am</li>
+                                </ul>
+                            </dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/manage-visit"
+                                data-cy="change-schedule-visit"> Change<span class="govuk-visually-hidden"> site visit</span></a>
+                            </dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+            <div class="govuk-accordion__section">
+                <div class="govuk-accordion__section-header">
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-4"> Documentation</span></h2>
+                </div>
+                <div id="accordion-default1-content-4" class="govuk-accordion__section-content"
+                aria-labelledby="accordion-default1-heading-4">
+                    <table class="govuk-table">
+                        <thead class="govuk-table__head">
+                            <tr class="govuk-table__row">
+                                <th scope="col" class="govuk-table__header">Documentation</th>
+                                <th scope="col" class="govuk-table__header">Status</th>
+                                <th scope="col" class="govuk-table__header">Received</th>
+                                <th scope="col" class="govuk-table__header">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="govuk-table__body">
+                            <tr class="govuk-table__row">
+                                <th scope="row" class="govuk-table__header">Appellant case</th>
+                                <td class="govuk-table__cell">Received</td>
+                                <td class="govuk-table__cell">2 August 2024</td>
+                                <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/2/appellant-case" data-cy="review-appellant-case"
+                                    class="govuk-link">Review <span class="govuk-visually-hidden">appellant case</span></a>
+                                </td>
+                            </tr>
+                            <tr class="govuk-table__row">
+                                <th scope="row" class="govuk-table__header">LPA questionnaire</th>
+                                <td class="govuk-table__cell">Not received</td>
+                                <td class="govuk-table__cell">2 August 2024</td>
+                                <td class="govuk-table__cell"></td>
+                            </tr>
+                            <tr class="govuk-table__row">
+                                <th scope="row" class="govuk-table__header appeal-costs-appellant-documentation">Costs (appellant)</th>
+                                <td class="govuk-table__cell appeal-costs-appellant-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-due-date"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-actions">
+                                    <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appeallant" href="/appeals-service/appeal-details/2/costs/appellant/select-document-type/1">Add</a>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="govuk-table__row">
+                                <th scope="row" class="govuk-table__header appeal-costs-lpa-documentation">Costs (LPA)</th>
+                                <td class="govuk-table__cell appeal-costs-lpa-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-due-date"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-actions">
+                                    <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa" href="/appeals-service/appeal-details/2/costs/lpa/select-document-type/2">Add</a>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="govuk-table__row">
+                                <th scope="row" class="govuk-table__header appeal-costs-decision-documentation">Costs decision</th>
+                                <td class="govuk-table__cell appeal-costs-decision-status"></td>
+                                <td class="govuk-table__cell appeal-costs-decision-due-date"></td>
+                                <td class="govuk-table__cell appeal-costs-decision-actions">
+                                    <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-decision" href="/appeals-service/appeal-details/2/costs/decision/upload-documents/3">Add</a>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="govuk-accordion__section">
+                <div class="govuk-accordion__section-header">
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-5"> Contacts</span></h2>
+                </div>
+                <div id="accordion-default1-content-5" class="govuk-accordion__section-content"
+                aria-labelledby="accordion-default1-heading-5">
+                    <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
+                            <dd class="govuk-summary-list__value">
+                                <ul class="govuk-list">
+                                    <li>Roger Simmons</li>
+                                    <li>test3@example.com</li>
+                                </ul>
+                            </dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/service-user/change/appellant"
+                                data-cy="change-appellant"> Change<span class="govuk-visually-hidden"> Appellant</span></a>
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent</dt>
+                            <dd class="govuk-summary-list__value">
+                                <ul class="govuk-list">
+                                    <li>Fiona Shell</li>
+                                    <li>test2@example.com</li>
+                                </ul>
+                            </dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/service-user/change/agent"
+                                data-cy="change-agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
+                            <dd class="govuk-summary-list__value">Wiltshire Council</dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+            <div class="govuk-accordion__section">
+                <div class="govuk-accordion__section-header">
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-6"> Team</span></h2>
+                </div>
+                <div id="accordion-default1-content-6" class="govuk-accordion__section-content"
+                aria-labelledby="accordion-default1-heading-6">
+                    <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
+                            <dd class="govuk-summary-list__value"></dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/assign-user/case-officer"
+                                data-cy="assign-case-officer"> Assign<span class="govuk-visually-hidden"> case officer</span></a>
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-inspector"><dt class="govuk-summary-list__key"> Inspector</dt>
+                            <dd class="govuk-summary-list__value"></dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/assign-user/inspector"
+                                data-cy="assign-inspector"> Assign<span class="govuk-visually-hidden"> inspector</span></a>
+                            </dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+            <div class="govuk-accordion__section">
+                <div class="govuk-accordion__section-header">
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-7"> Case management</span></h2>
+                </div>
+                <div id="accordion-default1-content-7" class="govuk-accordion__section-content"
+                aria-labelledby="accordion-default1-heading-7">
+                    <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
+                            <dd class="govuk-summary-list__value"></dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/audit"> View<span class="govuk-visually-hidden"> View case history</span></a>
                             </dd>
                         </div>
                     </dl>
@@ -3709,7 +3710,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
 </main>"
 `;
 
-exports[`appeal-details GET /:appealId should render the case reference for each linked appeal in the linked appeals row, each linking to the respective case details page, if there are linked appeals 1`] = `
+exports[`appeal-details GET /:appealId should render the case reference for each linked appeal in the linked appeals row, with each internal linked appeal item linking to the respective case details page, if there are linked appeals 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
@@ -4556,6 +4557,368 @@ exports[`appeal-details GET /:appealId should render the received appeal details
             <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Case details</h1>
         </div>
     </div><strong class="govuk-tag govuk-tag--grey single-line govuk-!-margin-bottom-4">Received appeal</strong>
+    <strong     class="govuk-tag govuk-tag--grey single-line govuk-!-margin-left-1 govuk-!-margin-bottom-4"></strong>
+        <dl class="govuk-summary-list govuk-summary-list--no-border">
+            <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
+                <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
+            </div>
+            <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
+                <dd                 class="govuk-summary-list__value">Wiltshire Council</dd>
+            </div>
+        </dl>
+        <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default3">
+            <div class="govuk-accordion__section">
+                <div class="govuk-accordion__section-header">
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default3-heading-1"> Overview</span></h2>
+                </div>
+                <div id="accordion-default3-content-1" class="govuk-accordion__section-content"
+                aria-labelledby="accordion-default3-heading-1">
+                    <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row appeal-appeal-type"><dt class="govuk-summary-list__key"> Appeal type</dt>
+                            <dd class="govuk-summary-list__value">Householder</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/change-appeal-type/appeal-type"
+                                data-cy="change-appeal-type"> Change<span class="govuk-visually-hidden"> Appeal type</span></a>
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-case-procedure"><dt class="govuk-summary-list__key"> Case procedure</dt>
+                            <dd class="govuk-summary-list__value">Written</dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-linked-appeals"><dt class="govuk-summary-list__key"> Linked appeals</dt>
+                            <dd class="govuk-summary-list__value">
+                                <ul class="govuk-list govuk-list--bullet">
+                                    <li><a href="/appeals-service/appeal-details/4" class="govuk-link" data-cy="linked-appeal-725284"
+                                        aria-label="Appeal 7 2 5 2 8 4">725284</a> (Child)</li>
+                                    <li><a href="/appeals-service/appeal-details/5" class="govuk-link" data-cy="linked-appeal-725285"
+                                        aria-label="Appeal 7 2 5 2 8 5">725285</a> (Child)</li>
+                                </ul>
+                            </dd>
+                            <dd class="govuk-summary-list__actions">
+                                <ul class="govuk-summary-list__actions-list">
+                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/3/linked-appeals/manage"
+                                        data-cy="manage-linked-appeals"> Manage<span class="govuk-visually-hidden"> Linked appeals</span></a>
+                                    </li>
+                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/3/linked-appeals/add"
+                                        data-cy="add-linked-appeal"> Add<span class="govuk-visually-hidden"> Linked appeals</span></a>
+                                    </li>
+                                </ul>
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-other-appeals"><dt class="govuk-summary-list__key"> Related appeals</dt>
+                            <dd class="govuk-summary-list__value">
+                                <ul class="govuk-list govuk-list--bullet">
+                                    <li><a href="/appeals-service/appeal-details/6" class="govuk-link" data-cy="related-appeal-765413"
+                                        aria-label="Appeal 7 6 5 4 1 3">765413</a>
+                                    </li>
+                                    <li><a href="/appeals-service/appeal-details/7" class="govuk-link" data-cy="related-appeal-765414"
+                                        aria-label="Appeal 7 6 5 4 1 4">765414</a>
+                                    </li>
+                                </ul>
+                            </dd>
+                            <dd class="govuk-summary-list__actions">
+                                <ul class="govuk-summary-list__actions-list">
+                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/3/other-appeals/manage"
+                                        data-cy="manage-related-appeals"> Manage<span class="govuk-visually-hidden"> Related appeals</span></a>
+                                    </li>
+                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/3/other-appeals/add"
+                                        data-cy="add-related-appeals"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
+                                    </li>
+                                </ul>
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
+                            <dd class="govuk-summary-list__value">Level: A
+                                <br>Band: 3
+                                <br>Specialisms:
+                                <ul class="govuk-!-margin-0">
+                                    <li>Historic heritage</li>
+                                    <li>Architecture design</li>
+                                </ul>
+                            </dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/allocation-details/allocation-level"
+                                data-cy="change-allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
+                            <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
+                            <dd class="govuk-summary-list__value">dismissed</dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+            <div class="govuk-accordion__section">
+                <div class="govuk-accordion__section-header">
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default3-heading-2"> Site</span></h2>
+                </div>
+                <div id="accordion-default3-content-2" class="govuk-accordion__section-content"
+                aria-labelledby="accordion-default3-heading-2">
+                    <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row appeal-lpa-inspector-access"><dt class="govuk-summary-list__key"> Inspection access (LPA answer)</dt>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inspector-access/change/lpa"
+                                    data-cy="change-inspection-access-lpa"> Change<span class="govuk-visually-hidden"> inspection access (L P A answer)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-appellant-inspector-access"><dt class="govuk-summary-list__key"> Inspection access (appellant answer)</dt>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inspector-access/change/appellant"
+                                    data-cy="change-inspection-access-appellant"> Change<span class="govuk-visually-hidden"> inspection access (appellant answer)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
+                            <dd                             class="govuk-summary-list__value">Yes</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/neighbouring-sites/change/affected"
+                                    data-cy="change-neighbouuring-site-is-affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
+                            <dd                             class="govuk-summary-list__value">
+                                <ul class="govuk-list govuk-list--bullet">
+                                    <li>1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
+                                </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/3/neighbouring-sites/manage"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A)</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/3/neighbouring-sites/add/lpa"
+                                            data-cy="add-neighbouring-site-lpa"> Add<span class="govuk-visually-hidden"> Neighbouring sites (LPA)</span></a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                            <dd                             class="govuk-summary-list__value">
+                                <ul class="govuk-list govuk-list--bullet">
+                                    <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
+                                </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/3/neighbouring-sites/manage"
+                                            data-cy="manage-neighbouring-sites-inspector"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/3/neighbouring-sites/add/back-office"
+                                            data-cy="add-neighbouring-sites-inspector"> Add<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/safety-risks/change/lpa"
+                                    data-cy="change-lpa-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
+                            <dd                             class="govuk-summary-list__value"><span>Yes</span>
+                                <br><span>Dogs on site</span>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/safety-risks/change/appellant"
+                                    data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
+                            <dd class="govuk-summary-list__value">Accompanied</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/site-visit/visit-booked"
+                                data-cy="change-set-visit-type"> Change<span class="govuk-visually-hidden"> visit type</span></a>
+                            </dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+            <div class="govuk-accordion__section">
+                <div class="govuk-accordion__section-header">
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default3-heading-3"> Timetable</span></h2>
+                </div>
+                <div id="accordion-default3-content-3" class="govuk-accordion__section-content"
+                aria-labelledby="accordion-default3-heading-3">
+                    <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
+                            <dd class="govuk-summary-list__value">23 May 2023</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/appellant-case/valid/date"
+                                data-cy="change-valid-date"> Change<span class="govuk-visually-hidden"> The date all case documentation was received and the appeal was valid</span></a>
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-start-date"><dt class="govuk-summary-list__key"> Start date</dt>
+                            <dd class="govuk-summary-list__value">23 May 2023</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/start-case/change"> Change</a>
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-lpa-questionnaire-due-date"><dt class="govuk-summary-list__key"> LPA questionnaire due</dt>
+                            <dd class="govuk-summary-list__value">11 October 2023</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/appeal-timetables/lpa-questionnaire"
+                                data-cy="change-lpa-questionnaire-due-date"> Change<span class="govuk-visually-hidden"> L P A questionnaire due</span></a>
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-site-visit"><dt class="govuk-summary-list__key"> Site visit</dt>
+                            <dd class="govuk-summary-list__value">
+                                <ul class="govuk-list govuk-!-margin-top-0 govuk-!-padding-left-0">
+                                    <li>9 October 2023</li>
+                                    <li>9:38am - 10:44am</li>
+                                </ul>
+                            </dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/site-visit/manage-visit"
+                                data-cy="change-schedule-visit"> Change<span class="govuk-visually-hidden"> site visit</span></a>
+                            </dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+            <div class="govuk-accordion__section">
+                <div class="govuk-accordion__section-header">
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default3-heading-4"> Documentation</span></h2>
+                </div>
+                <div id="accordion-default3-content-4" class="govuk-accordion__section-content"
+                aria-labelledby="accordion-default3-heading-4">
+                    <table class="govuk-table">
+                        <thead class="govuk-table__head">
+                            <tr class="govuk-table__row">
+                                <th scope="col" class="govuk-table__header">Documentation</th>
+                                <th scope="col" class="govuk-table__header">Status</th>
+                                <th scope="col" class="govuk-table__header">Received</th>
+                                <th scope="col" class="govuk-table__header">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="govuk-table__body">
+                            <tr class="govuk-table__row">
+                                <th scope="row" class="govuk-table__header">Appellant case</th>
+                                <td class="govuk-table__cell">Received</td>
+                                <td class="govuk-table__cell">2 August 2024</td>
+                                <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/3/appellant-case" data-cy="review-appellant-case"
+                                    class="govuk-link">Review <span class="govuk-visually-hidden">appellant case</span></a>
+                                </td>
+                            </tr>
+                            <tr class="govuk-table__row">
+                                <th scope="row" class="govuk-table__header">LPA questionnaire</th>
+                                <td class="govuk-table__cell">Not received</td>
+                                <td class="govuk-table__cell">2 August 2024</td>
+                                <td class="govuk-table__cell"></td>
+                            </tr>
+                            <tr class="govuk-table__row">
+                                <th scope="row" class="govuk-table__header appeal-costs-appellant-documentation">Costs (appellant)</th>
+                                <td class="govuk-table__cell appeal-costs-appellant-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-due-date"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-actions">
+                                    <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appeallant" href="/appeals-service/appeal-details/3/costs/appellant/select-document-type/1">Add</a>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="govuk-table__row">
+                                <th scope="row" class="govuk-table__header appeal-costs-lpa-documentation">Costs (LPA)</th>
+                                <td class="govuk-table__cell appeal-costs-lpa-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-due-date"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-actions">
+                                    <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa" href="/appeals-service/appeal-details/3/costs/lpa/select-document-type/2">Add</a>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="govuk-table__row">
+                                <th scope="row" class="govuk-table__header appeal-costs-decision-documentation">Costs decision</th>
+                                <td class="govuk-table__cell appeal-costs-decision-status"></td>
+                                <td class="govuk-table__cell appeal-costs-decision-due-date"></td>
+                                <td class="govuk-table__cell appeal-costs-decision-actions">
+                                    <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-decision" href="/appeals-service/appeal-details/3/costs/decision/upload-documents/3">Add</a>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="govuk-accordion__section">
+                <div class="govuk-accordion__section-header">
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default3-heading-5"> Contacts</span></h2>
+                </div>
+                <div id="accordion-default3-content-5" class="govuk-accordion__section-content"
+                aria-labelledby="accordion-default3-heading-5">
+                    <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
+                            <dd class="govuk-summary-list__value">
+                                <ul class="govuk-list">
+                                    <li>Roger Simmons</li>
+                                    <li>test3@example.com</li>
+                                </ul>
+                            </dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/service-user/change/appellant"
+                                data-cy="change-appellant"> Change<span class="govuk-visually-hidden"> Appellant</span></a>
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent</dt>
+                            <dd class="govuk-summary-list__value">
+                                <ul class="govuk-list">
+                                    <li>Fiona Shell</li>
+                                    <li>test2@example.com</li>
+                                </ul>
+                            </dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/service-user/change/agent"
+                                data-cy="change-agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
+                            <dd class="govuk-summary-list__value">Wiltshire Council</dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+            <div class="govuk-accordion__section">
+                <div class="govuk-accordion__section-header">
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default3-heading-6"> Team</span></h2>
+                </div>
+                <div id="accordion-default3-content-6" class="govuk-accordion__section-content"
+                aria-labelledby="accordion-default3-heading-6">
+                    <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
+                            <dd class="govuk-summary-list__value"></dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/assign-user/case-officer"
+                                data-cy="assign-case-officer"> Assign<span class="govuk-visually-hidden"> case officer</span></a>
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-inspector"><dt class="govuk-summary-list__key"> Inspector</dt>
+                            <dd class="govuk-summary-list__value"></dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/assign-user/inspector"
+                                data-cy="assign-inspector"> Assign<span class="govuk-visually-hidden"> inspector</span></a>
+                            </dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+            <div class="govuk-accordion__section">
+                <div class="govuk-accordion__section-header">
+                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default3-heading-7"> Case management</span></h2>
+                </div>
+                <div id="accordion-default3-content-7" class="govuk-accordion__section-content"
+                aria-labelledby="accordion-default3-heading-7">
+                    <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
+                            <dd class="govuk-summary-list__value"></dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/audit"> View<span class="govuk-visually-hidden"> View case history</span></a>
+                            </dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+        </div>
+</main>"
+`;
+
+exports[`appeal-details GET /:appealId should render the received appeal details for a valid appealId with no linked/other appeals 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Case details</h1>
+        </div>
+    </div><strong class="govuk-tag govuk-tag--grey single-line govuk-!-margin-bottom-4">Received appeal</strong>
     <dl     class="govuk-summary-list govuk-summary-list--no-border">
         <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
             <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
@@ -4873,339 +5236,6 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
                             <dd class="govuk-summary-list__value"></dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit"> View<span class="govuk-visually-hidden"> View case history</span></a>
-                            </dd>
-                        </div>
-                    </dl>
-                </div>
-            </div>
-        </div>
-</main>"
-`;
-
-exports[`appeal-details GET /:appealId should render the received appeal details for a valid appealId with no linked/other appeals 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Case details</h1>
-        </div>
-    </div><strong class="govuk-tag govuk-tag--grey single-line govuk-!-margin-bottom-4">Received appeal</strong>
-    <dl     class="govuk-summary-list govuk-summary-list--no-border">
-        <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
-            <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-        </div>
-        <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
-            <dd             class="govuk-summary-list__value">Wiltshire Council</dd>
-        </div>
-        </dl>
-        <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default3">
-            <div class="govuk-accordion__section">
-                <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default3-heading-1"> Overview</span></h2>
-                </div>
-                <div id="accordion-default3-content-1" class="govuk-accordion__section-content"
-                aria-labelledby="accordion-default3-heading-1">
-                    <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row appeal-appeal-type"><dt class="govuk-summary-list__key"> Appeal type</dt>
-                            <dd class="govuk-summary-list__value">Householder</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/change-appeal-type/appeal-type"
-                                data-cy="change-appeal-type"> Change<span class="govuk-visually-hidden"> Appeal type</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-case-procedure"><dt class="govuk-summary-list__key"> Case procedure</dt>
-                            <dd class="govuk-summary-list__value">Written</dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-linked-appeals"><dt class="govuk-summary-list__key"> Linked appeals</dt>
-                            <dd class="govuk-summary-list__value"><span>No appeals</span>
-                            </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/linked-appeals/add"
-                                data-cy="add-linked-appeal"> Add<span class="govuk-visually-hidden"> Linked appeals</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-other-appeals"><dt class="govuk-summary-list__key"> Related appeals</dt>
-                            <dd class="govuk-summary-list__value"><span>No appeals</span>
-                            </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/other-appeals/add"
-                                data-cy="add-related-appeals"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
-                            <dd class="govuk-summary-list__value">Level: A
-                                <br>Band: 3
-                                <br>Specialisms:
-                                <ul class="govuk-!-margin-0">
-                                    <li>Historic heritage</li>
-                                    <li>Architecture design</li>
-                                </ul>
-                            </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/allocation-details/allocation-level"
-                                data-cy="change-allocation-level"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
-                            <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
-                            <dd class="govuk-summary-list__value">dismissed</dd>
-                        </div>
-                    </dl>
-                </div>
-            </div>
-            <div class="govuk-accordion__section">
-                <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default3-heading-2"> Site</span></h2>
-                </div>
-                <div id="accordion-default3-content-2" class="govuk-accordion__section-content"
-                aria-labelledby="accordion-default3-heading-2">
-                    <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row appeal-lpa-inspector-access"><dt class="govuk-summary-list__key"> Inspection access (LPA answer)</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No</span>
-                                </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inspector-access/change/lpa"
-                                    data-cy="change-inspection-access-lpa"> Change<span class="govuk-visually-hidden"> inspection access (L P A answer)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-appellant-inspector-access"><dt class="govuk-summary-list__key"> Inspection access (appellant answer)</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No</span>
-                                </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inspector-access/change/appellant"
-                                    data-cy="change-inspection-access-appellant"> Change<span class="govuk-visually-hidden"> inspection access (appellant answer)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
-                            <dd                             class="govuk-summary-list__value">Yes</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/neighbouring-sites/change/affected"
-                                    data-cy="change-neighbouuring-site-is-affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
-                            <dd                             class="govuk-summary-list__value">
-                                <ul class="govuk-list govuk-list--bullet">
-                                    <li>1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
-                                </ul>
-                                </dd>
-                                <dd class="govuk-summary-list__actions">
-                                    <ul class="govuk-summary-list__actions-list">
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/3/neighbouring-sites/manage"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A)</span></a>
-                                        </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/3/neighbouring-sites/add/lpa"
-                                            data-cy="add-neighbouring-site-lpa"> Add<span class="govuk-visually-hidden"> Neighbouring sites (LPA)</span></a>
-                                        </li>
-                                    </ul>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
-                            <dd                             class="govuk-summary-list__value">
-                                <ul class="govuk-list govuk-list--bullet">
-                                    <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
-                                </ul>
-                                </dd>
-                                <dd class="govuk-summary-list__actions">
-                                    <ul class="govuk-summary-list__actions-list">
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/3/neighbouring-sites/manage"
-                                            data-cy="manage-neighbouring-sites-inspector"> Manage<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
-                                        </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/3/neighbouring-sites/add/back-office"
-                                            data-cy="add-neighbouring-sites-inspector"> Add<span class="govuk-visually-hidden"> Neighbouring sites (inspector and or third party request)</span></a>
-                                        </li>
-                                    </ul>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No</span>
-                                </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/safety-risks/change/lpa"
-                                    data-cy="change-lpa-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
-                            <dd                             class="govuk-summary-list__value"><span>Yes</span>
-                                <br><span>Dogs on site</span>
-                                </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/safety-risks/change/appellant"
-                                    data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
-                            <dd class="govuk-summary-list__value">Accompanied</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/site-visit/visit-booked"
-                                data-cy="change-set-visit-type"> Change<span class="govuk-visually-hidden"> visit type</span></a>
-                            </dd>
-                        </div>
-                    </dl>
-                </div>
-            </div>
-            <div class="govuk-accordion__section">
-                <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default3-heading-3"> Timetable</span></h2>
-                </div>
-                <div id="accordion-default3-content-3" class="govuk-accordion__section-content"
-                aria-labelledby="accordion-default3-heading-3">
-                    <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
-                            <dd class="govuk-summary-list__value">23 May 2023</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/appellant-case/valid/date"
-                                data-cy="change-valid-date"> Change<span class="govuk-visually-hidden"> The date all case documentation was received and the appeal was valid</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-start-date"><dt class="govuk-summary-list__key"> Start date</dt>
-                            <dd class="govuk-summary-list__value">23 May 2023</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/start-case/change"> Change</a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-lpa-questionnaire-due-date"><dt class="govuk-summary-list__key"> LPA questionnaire due</dt>
-                            <dd class="govuk-summary-list__value">11 October 2023</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/appeal-timetables/lpa-questionnaire"
-                                data-cy="change-lpa-questionnaire-due-date"> Change<span class="govuk-visually-hidden"> L P A questionnaire due</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-site-visit"><dt class="govuk-summary-list__key"> Site visit</dt>
-                            <dd class="govuk-summary-list__value">
-                                <ul class="govuk-list govuk-!-margin-top-0 govuk-!-padding-left-0">
-                                    <li>9 October 2023</li>
-                                    <li>9:38am - 10:44am</li>
-                                </ul>
-                            </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/site-visit/manage-visit"
-                                data-cy="change-schedule-visit"> Change<span class="govuk-visually-hidden"> site visit</span></a>
-                            </dd>
-                        </div>
-                    </dl>
-                </div>
-            </div>
-            <div class="govuk-accordion__section">
-                <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default3-heading-4"> Documentation</span></h2>
-                </div>
-                <div id="accordion-default3-content-4" class="govuk-accordion__section-content"
-                aria-labelledby="accordion-default3-heading-4">
-                    <table class="govuk-table">
-                        <thead class="govuk-table__head">
-                            <tr class="govuk-table__row">
-                                <th scope="col" class="govuk-table__header">Documentation</th>
-                                <th scope="col" class="govuk-table__header">Status</th>
-                                <th scope="col" class="govuk-table__header">Received</th>
-                                <th scope="col" class="govuk-table__header">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody class="govuk-table__body">
-                            <tr class="govuk-table__row">
-                                <th scope="row" class="govuk-table__header">Appellant case</th>
-                                <td class="govuk-table__cell">Received</td>
-                                <td class="govuk-table__cell">2 August 2024</td>
-                                <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/3/appellant-case" data-cy="review-appellant-case"
-                                    class="govuk-link">Review <span class="govuk-visually-hidden">appellant case</span></a>
-                                </td>
-                            </tr>
-                            <tr class="govuk-table__row">
-                                <th scope="row" class="govuk-table__header">LPA questionnaire</th>
-                                <td class="govuk-table__cell">Not received</td>
-                                <td class="govuk-table__cell">2 August 2024</td>
-                                <td class="govuk-table__cell"></td>
-                            </tr>
-                            <tr class="govuk-table__row">
-                                <th scope="row" class="govuk-table__header appeal-costs-appellant-documentation">Costs (appellant)</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-status"></td>
-                                <td class="govuk-table__cell appeal-costs-appellant-due-date"></td>
-                                <td class="govuk-table__cell appeal-costs-appellant-actions">
-                                    <ul class="govuk-summary-list__actions-list">
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appeallant" href="/appeals-service/appeal-details/3/costs/appellant/select-document-type/1">Add</a>
-                                        </li>
-                                    </ul>
-                                </td>
-                            </tr>
-                            <tr class="govuk-table__row">
-                                <th scope="row" class="govuk-table__header appeal-costs-lpa-documentation">Costs (LPA)</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-status"></td>
-                                <td class="govuk-table__cell appeal-costs-lpa-due-date"></td>
-                                <td class="govuk-table__cell appeal-costs-lpa-actions">
-                                    <ul class="govuk-summary-list__actions-list">
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa" href="/appeals-service/appeal-details/3/costs/lpa/select-document-type/2">Add</a>
-                                        </li>
-                                    </ul>
-                                </td>
-                            </tr>
-                            <tr class="govuk-table__row">
-                                <th scope="row" class="govuk-table__header appeal-costs-decision-documentation">Costs decision</th>
-                                <td class="govuk-table__cell appeal-costs-decision-status"></td>
-                                <td class="govuk-table__cell appeal-costs-decision-due-date"></td>
-                                <td class="govuk-table__cell appeal-costs-decision-actions">
-                                    <ul class="govuk-summary-list__actions-list">
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-decision" href="/appeals-service/appeal-details/3/costs/decision/upload-documents/3">Add</a>
-                                        </li>
-                                    </ul>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="govuk-accordion__section">
-                <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default3-heading-5"> Contacts</span></h2>
-                </div>
-                <div id="accordion-default3-content-5" class="govuk-accordion__section-content"
-                aria-labelledby="accordion-default3-heading-5">
-                    <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
-                            <dd class="govuk-summary-list__value">
-                                <ul class="govuk-list">
-                                    <li>Roger Simmons</li>
-                                    <li>test3@example.com</li>
-                                </ul>
-                            </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/service-user/change/appellant"
-                                data-cy="change-appellant"> Change<span class="govuk-visually-hidden"> Appellant</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent</dt>
-                            <dd class="govuk-summary-list__value">
-                                <ul class="govuk-list">
-                                    <li>Fiona Shell</li>
-                                    <li>test2@example.com</li>
-                                </ul>
-                            </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/service-user/change/agent"
-                                data-cy="change-agent"> Change<span class="govuk-visually-hidden"> Agent</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
-                            <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                        </div>
-                    </dl>
-                </div>
-            </div>
-            <div class="govuk-accordion__section">
-                <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default3-heading-6"> Team</span></h2>
-                </div>
-                <div id="accordion-default3-content-6" class="govuk-accordion__section-content"
-                aria-labelledby="accordion-default3-heading-6">
-                    <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
-                            <dd class="govuk-summary-list__value"></dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/assign-user/case-officer"
-                                data-cy="assign-case-officer"> Assign<span class="govuk-visually-hidden"> case officer</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-inspector"><dt class="govuk-summary-list__key"> Inspector</dt>
-                            <dd class="govuk-summary-list__value"></dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/assign-user/inspector"
-                                data-cy="assign-inspector"> Assign<span class="govuk-visually-hidden"> inspector</span></a>
-                            </dd>
-                        </div>
-                    </dl>
-                </div>
-            </div>
-            <div class="govuk-accordion__section">
-                <div class="govuk-accordion__section-header">
-                    <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default3-heading-7"> Case management</span></h2>
-                </div>
-                <div id="accordion-default3-content-7" class="govuk-accordion__section-content"
-                aria-labelledby="accordion-default3-heading-7">
-                    <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
-                            <dd class="govuk-summary-list__value"></dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/audit"> View<span class="govuk-visually-hidden"> View case history</span></a>
                             </dd>
                         </div>
                     </dl>
