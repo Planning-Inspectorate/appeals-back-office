@@ -129,6 +129,20 @@ export const appealData = {
 		documentId: 'e1e90a49-fab3-44b8-a21a-bb73af089f6b',
 		letterDate: new Date('2023-12-25T00:00:00.000Z')
 	},
+	internalCorrespondence: {
+		crossTeam: {
+			caseId: '1',
+			folderId: 10,
+			path: 'internal/crossTeam',
+			documents: []
+		},
+		inspector: {
+			caseId: '1',
+			folderId: 11,
+			path: 'internal/inspector',
+			documents: []
+		}
+	},
 	healthAndSafety: {
 		appellantCase: {
 			details: 'Dogs on site',

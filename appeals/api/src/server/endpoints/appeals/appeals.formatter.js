@@ -16,6 +16,8 @@ import {
 	STATE_TARGET_COMPLETE
 } from '#endpoints/constants.js';
 import { formatFolder } from '#endpoints/documents/documents.formatter.js';
+import { STAGE } from '@pins/appeals/constants/documents.js';
+import { DOCTYPE } from '@pins/appeals/constants/documents.js';
 
 const approxStageCompletion = {
 	STATE_TARGET_READY_TO_START: 5,
@@ -91,8 +93,7 @@ const formatMyAppeals = (appeal, linkedAppeals) => ({
 
 /**
  * @param {Appeal} appeal
- * @param {Folder[]} decisionFolders
- * @param {Folder[]} costsFolders
+ * @param {Folder[]} rootFolders
  * @param {{ transferredAppealType: string, transferredAppealReference: string } | null} transferAppealTypeInfo
  * @param {{ letterDate: Date|null, virusCheckStatus: string|null } | null} decisionInfo
  * @param { Appeal[] | null} referencedAppeals
@@ -100,13 +101,39 @@ const formatMyAppeals = (appeal, linkedAppeals) => ({
  */
 const formatAppeal = (
 	appeal,
-	decisionFolders,
-	costsFolders,
+	rootFolders,
 	transferAppealTypeInfo = null,
 	decisionInfo = null,
 	referencedAppeals = null
 ) => {
 	if (appeal) {
+		const decisionFolder = formatFolder(
+			rootFolders.find((f) => f.path === `${STAGE.APPEAL_DECISION}/${DOCTYPE.CASE_DECISION_LETTER}`)
+		);
+
+		const appealFolders = {
+			costs: {
+				// TODO: BOAT-1393
+				appellantFolder: formatFolder(
+					rootFolders.find((f) => f.path === `${STAGE.COSTS}/appellant`)
+				),
+				lpaFolder: formatFolder(rootFolders.find((f) => f.path === `${STAGE.COSTS}/lpa`)),
+				decisionFolder: formatFolder(rootFolders.find((f) => f.path === `${STAGE.COSTS}/decision`))
+			},
+			internalCorrespondence: {
+				crossTeam: formatFolder(
+					rootFolders.find(
+						(f) => f.path === `${STAGE.INTERNAL}/${DOCTYPE.CROSS_TEAM_CORRESPONDENCE}`
+					)
+				),
+				inspector: formatFolder(
+					rootFolders.find(
+						(f) => f.path === `${STAGE.INTERNAL}/${DOCTYPE.INSPECTOR_CORRESPONDENCE}`
+					)
+				)
+			}
+		};
+
 		const formattedAppeal = {
 			...(appeal.agent && {
 				agent: {
@@ -138,6 +165,7 @@ const formatAppeal = (
 			appealId: appeal.id,
 			appealReference: appeal.reference,
 			appealSite: { addressId: appeal.address?.id, ...formatAddress(appeal.address) },
+			...appealFolders,
 			neighbouringSites:
 				appeal.neighbouringSites?.map((site) => {
 					return {
@@ -178,17 +206,12 @@ const formatAppeal = (
 			}),
 			appellantCaseId: appeal.appellantCase?.id || 0,
 			caseOfficer: appeal.caseOfficer?.azureAdUserId || null,
-			costs: {
-				appellantFolder: formatFolder(costsFolders.find((f) => f.path?.endsWith('appellant'))),
-				lpaFolder: formatFolder(costsFolders.find((f) => f.path?.endsWith('lpa'))),
-				decisionFolder: formatFolder(costsFolders.find((f) => f.path?.endsWith('decision')))
-			},
 			decision:
 				decisionInfo &&
 				appeal.inspectorDecision?.outcome &&
 				appeal.inspectorDecision?.decisionLetterGuid
 					? {
-							folderId: decisionFolders[0].id,
+							folderId: decisionFolder?.folderId,
 							outcome: appeal.inspectorDecision.outcome,
 							documentId: appeal.inspectorDecision?.decisionLetterGuid,
 							letterDate:
@@ -196,7 +219,7 @@ const formatAppeal = (
 							virusCheckStatus: decisionInfo.virusCheckStatus
 					  }
 					: {
-							folderId: decisionFolders[0].id
+							folderId: decisionFolder?.folderId
 					  },
 			healthAndSafety: {
 				appellantCase: {

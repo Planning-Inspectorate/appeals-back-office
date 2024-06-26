@@ -62,6 +62,30 @@ export const getFoldersForAppeal = async (appeal, stage = null) => {
 };
 
 /**
+ * @param {Appeal} appeal
+ * @returns {Promise<Folder[]>}
+ */
+export const getRootFoldersForAppeal = async (appeal) => {
+	return await getByCaseIdAndPaths(appeal.id, [
+		`${STAGE.COSTS}/appellant`,
+		`${STAGE.COSTS}/lpa`,
+		`${STAGE.COSTS}/decision`,
+		// TODO: BOAT-1393
+		// `${STAGE.COSTS}/${DOCTYPE.APPELLANT_COST_APPLICATION}`,
+		// `${STAGE.COSTS}/${DOCTYPE.APPELLANT_COST_WITHDRAWAL}`,
+		// `${STAGE.COSTS}/${DOCTYPE.APPELLANT_COST_CORRESPONDENCE}`,
+		// `${STAGE.COSTS}/${DOCTYPE.LPA_COST_APPLICATION}`,
+		// `${STAGE.COSTS}/${DOCTYPE.LPA_COST_WITHDRAWAL}`,
+		// `${STAGE.COSTS}/${DOCTYPE.LPA_COST_CORRESPONDENCE}`,
+		// `${STAGE.COSTS}/${DOCTYPE.COST_DECISION_LETTER}`,
+		`${STAGE.INTERNAL}/${DOCTYPE.CROSS_TEAM_CORRESPONDENCE}`,
+		`${STAGE.INTERNAL}/${DOCTYPE.INSPECTOR_CORRESPONDENCE}`,
+		`${STAGE.INTERNAL}/${DOCTYPE.DROPBOX}`,
+		`${STAGE.APPEAL_DECISION}/${DOCTYPE.CASE_DECISION_LETTER}`
+	]);
+};
+
+/**
  *
  * @param {string} path
  * @returns {string[]}

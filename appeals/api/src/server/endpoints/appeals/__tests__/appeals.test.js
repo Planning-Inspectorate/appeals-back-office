@@ -722,6 +722,7 @@ describe('appeals routes', () => {
 					appellantCaseId: 1,
 					caseOfficer: householdAppeal.caseOfficer.azureAdUserId,
 					costs: {},
+					internalCorrespondence: {},
 					decision: {
 						folderId: savedFolder.id
 					},
@@ -832,6 +833,7 @@ describe('appeals routes', () => {
 					decision: {
 						folderId: savedFolder.id
 					},
+					internalCorrespondence: {},
 					documentationSummary: {
 						appellantCase: {
 							status: 'received',
@@ -1430,6 +1432,7 @@ describe('appeals/case-reference/:caseReference', () => {
 				decision: {
 					folderId: savedFolder.id
 				},
+				internalCorrespondence: {},
 				documentationSummary: {
 					appellantCase: {
 						status: 'received',
@@ -1537,6 +1540,7 @@ describe('appeals/case-reference/:caseReference', () => {
 				decision: {
 					folderId: savedFolder.id
 				},
+				internalCorrespondence: {},
 				documentationSummary: {
 					appellantCase: {
 						status: 'received',

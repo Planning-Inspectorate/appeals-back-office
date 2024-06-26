@@ -4189,96 +4189,235 @@
 			"SingleAppealResponse": {
 				"type": "object",
 				"properties": {
-					"agentName": {},
-					"allocationDetails": {
+					"agent": {
 						"type": "object",
 						"properties": {
-							"level": {
-								"type": "string",
-								"example": "A"
-							},
-							"band": {
+							"serviceUserId": {
 								"type": "number",
-								"example": 3
+								"example": 199
 							},
-							"specialisms": {
-								"type": "array",
-								"example": ["Historic heritage", "Architecture design"],
-								"items": {
-									"type": "string"
-								}
-							}
+							"firstName": {
+								"type": "string",
+								"example": "Some"
+							},
+							"lastName": {
+								"type": "string",
+								"example": "User"
+							},
+							"organisationName": {
+								"type": "string",
+								"example": "Some Company"
+							},
+							"email": {
+								"type": "string",
+								"example": "an email address"
+							},
+							"phoneNumber": {}
 						}
 					},
+					"appellant": {
+						"type": "object",
+						"properties": {
+							"serviceUserId": {
+								"type": "number",
+								"example": 200
+							},
+							"firstName": {
+								"type": "string",
+								"example": "Another"
+							},
+							"lastName": {
+								"type": "string",
+								"example": "User"
+							},
+							"organisationName": {},
+							"phoneNumber": {}
+						}
+					},
+					"allocationDetails": {},
 					"appealId": {
 						"type": "number",
-						"example": 1
+						"example": 118
 					},
 					"appealReference": {
 						"type": "string",
-						"example": "APP/Q9999/D/21/235348"
+						"example": "6000118"
 					},
 					"appealSite": {
 						"type": "object",
 						"properties": {
+							"addressId": {
+								"type": "number",
+								"example": 122
+							},
 							"addressLine1": {
 								"type": "string",
-								"example": "19 Beauchamp Road"
+								"example": "FOR TRAINERS ONLY"
+							},
+							"addressLine2": {
+								"type": "string",
+								"example": "44 Rivervale"
 							},
 							"town": {
 								"type": "string",
-								"example": "Bristol"
+								"example": "Bridport"
 							},
 							"postCode": {
 								"type": "string",
-								"example": "BS7 8LQ"
+								"example": "DT6 5RN"
 							}
 						}
+					},
+					"costs": {
+						"type": "object",
+						"properties": {
+							"appellantFolder": {
+								"type": "object",
+								"properties": {
+									"caseId": {
+										"type": "string",
+										"example": "118"
+									},
+									"documents": {
+										"type": "array",
+										"example": [],
+										"items": {}
+									},
+									"folderId": {
+										"type": "number",
+										"example": 2118
+									},
+									"path": {
+										"type": "string",
+										"example": "costs/appellant"
+									}
+								}
+							},
+							"lpaFolder": {
+								"type": "object",
+								"properties": {
+									"caseId": {
+										"type": "string",
+										"example": "118"
+									},
+									"documents": {
+										"type": "array",
+										"example": [],
+										"items": {}
+									},
+									"folderId": {
+										"type": "number",
+										"example": 2119
+									},
+									"path": {
+										"type": "string",
+										"example": "costs/lpa"
+									}
+								}
+							},
+							"decisionFolder": {
+								"type": "object",
+								"properties": {
+									"caseId": {
+										"type": "string",
+										"example": "118"
+									},
+									"documents": {
+										"type": "array",
+										"example": [],
+										"items": {}
+									},
+									"folderId": {
+										"type": "number",
+										"example": 2120
+									},
+									"path": {
+										"type": "string",
+										"example": "costs/decision"
+									}
+								}
+							}
+						}
+					},
+					"internalCorrespondence": {
+						"type": "object",
+						"properties": {
+							"crossTeam": {
+								"type": "object",
+								"properties": {
+									"caseId": {
+										"type": "string",
+										"example": "118"
+									},
+									"documents": {
+										"type": "array",
+										"example": [],
+										"items": {}
+									},
+									"folderId": {
+										"type": "number",
+										"example": 2121
+									},
+									"path": {
+										"type": "string",
+										"example": "internal/crossTeamCorrespondence"
+									}
+								}
+							},
+							"inspector": {
+								"type": "object",
+								"properties": {
+									"caseId": {
+										"type": "string",
+										"example": "118"
+									},
+									"documents": {
+										"type": "array",
+										"example": [],
+										"items": {}
+									},
+									"folderId": {
+										"type": "number",
+										"example": 2122
+									},
+									"path": {
+										"type": "string",
+										"example": "internal/inspectorCorrespondence"
+									}
+								}
+							}
+						}
+					},
+					"neighbouringSites": {
+						"type": "array",
+						"example": [],
+						"items": {}
 					},
 					"appealStatus": {
 						"type": "string",
-						"example": "awaiting_lpa_questionnaire"
+						"example": "ready_to_start"
 					},
-					"appealTimetable": {
-						"type": "object",
-						"properties": {
-							"finalCommentReviewDate": {
-								"type": "string",
-								"example": "2023-06-28T01:00:00.000Z"
-							},
-							"lpaQuestionnaireDueDate": {
-								"type": "string",
-								"example": "2023-05-16T01:00:00.000Z"
-							},
-							"statementReviewDate": {
-								"type": "string",
-								"example": "2023-06-14T01:00:00.000Z"
-							}
-						}
-					},
+					"appealTimetable": {},
 					"appealType": {
 						"type": "string",
-						"example": "household"
+						"example": "Householder"
 					},
 					"appellantCaseId": {
 						"type": "number",
-						"example": 1
-					},
-					"appellantName": {
-						"type": "string",
-						"example": "Fiona Burgess"
-					},
-					"appellantOwnsWholeSite": {
-						"type": "boolean",
-						"example": true
+						"example": 118
 					},
 					"caseOfficer": {
 						"type": "string",
-						"example": "13de469c-8de6-4908-97cd-330ea73df618"
+						"example": "00000000-0000-0000-0000-000000000000"
 					},
 					"decision": {
-						"type": "string",
-						"example": "Not issued yet"
+						"type": "object",
+						"properties": {
+							"folderId": {
+								"type": "number",
+								"example": 2124
+							}
+						}
 					},
 					"healthAndSafety": {
 						"type": "object",
@@ -4286,23 +4425,16 @@
 							"appellantCase": {
 								"type": "object",
 								"properties": {
-									"details": {
-										"type": "string",
-										"example": "There is no mobile reception at the site"
-									},
+									"details": {},
 									"hasIssues": {
 										"type": "boolean",
-										"example": true
+										"example": false
 									}
 								}
 							},
 							"lpaQuestionnaire": {
 								"type": "object",
 								"properties": {
-									"details": {
-										"type": "string",
-										"example": "There may be no mobile reception at the site"
-									},
 									"hasIssues": {
 										"type": "boolean",
 										"example": true
@@ -4311,33 +4443,23 @@
 							}
 						}
 					},
-					"inspector": {
-						"type": "string",
-						"example": "f7ea429b-65d8-4c44-8fc2-7f1a34069855"
-					},
+					"inspector": {},
 					"inspectorAccess": {
 						"type": "object",
 						"properties": {
 							"appellantCase": {
 								"type": "object",
 								"properties": {
-									"details": {
-										"type": "string",
-										"example": "There is a tall hedge around the site which obstructs the view of the site"
-									},
+									"details": {},
 									"isRequired": {
 										"type": "boolean",
-										"example": true
+										"example": false
 									}
 								}
 							},
 							"lpaQuestionnaire": {
 								"type": "object",
 								"properties": {
-									"details": {
-										"type": "string",
-										"example": "There may be a tall hedge around the site"
-									},
 									"isRequired": {
 										"type": "boolean",
 										"example": true
@@ -4346,9 +4468,10 @@
 							}
 						}
 					},
-					"isParentAppeal": {
-						"type": "boolean",
-						"example": true
+					"otherAppeals": {
+						"type": "array",
+						"example": [],
+						"items": {}
 					},
 					"linkedAppeals": {
 						"type": "array",
@@ -4357,103 +4480,64 @@
 							"properties": {
 								"appealId": {
 									"type": "number",
-									"example": 1
+									"example": 120
 								},
 								"appealReference": {
 									"type": "string",
-									"example": "APP/Q9999/D/21/725284"
+									"example": "6000120"
 								},
 								"isParentAppeal": {
 									"type": "boolean",
-									"example": false
+									"example": true
 								},
 								"linkingDate": {
 									"type": "string",
-									"example": "2024-02-14T11:16:24.085Z"
+									"example": "2024-06-26T11:57:40.270Z"
 								},
 								"appealType": {
 									"type": "string",
-									"example": "Householder"
+									"example": "(D) Householder"
 								},
 								"relationshipId": {
 									"type": "number",
-									"example": 1
+									"example": 24
+								},
+								"externalSource": {
+									"type": "boolean",
+									"example": false
 								}
 							}
 						}
 					},
-					"localPlanningDepartment": {
-						"type": "string",
-						"example": "Wiltshire Council"
+					"isParentAppeal": {
+						"type": "boolean",
+						"example": false
 					},
-					"lpaQuestionnaireId": {
-						"type": "number",
-						"example": 1
-					},
-					"isAffectingNeighbouringSites": {
+					"isChildAppeal": {
 						"type": "boolean",
 						"example": true
 					},
-					"otherAppeals": {
-						"type": "array",
-						"items": {
-							"type": "object",
-							"properties": {
-								"appealId": {
-									"type": "number",
-									"example": 1
-								},
-								"appealReference": {
-									"type": "string",
-									"example": "APP/Q9999/D/21/725284"
-								}
-							}
-						}
+					"localPlanningDepartment": {
+						"type": "string",
+						"example": "Some Borough Council"
 					},
+					"lpaQuestionnaireId": {},
 					"planningApplicationReference": {
 						"type": "string",
-						"example": "48269/APP/2021/1482"
+						"example": "52279/APP/1/151419"
 					},
 					"procedureType": {
 						"type": "string",
 						"example": "Written"
 					},
-					"siteVisit": {
-						"type": "object",
-						"properties": {
-							"siteVisitId": {
-								"type": "number",
-								"example": 1
-							},
-							"visitDate": {
-								"type": "string",
-								"example": "2022-03-31T12:00:00.000Z"
-							},
-							"visitStartTime": {
-								"type": "string",
-								"example": "10:00"
-							},
-							"visitEndTime": {
-								"type": "string",
-								"example": "12:00"
-							},
-							"visitType": {
-								"type": "string",
-								"example": "Accompanied"
-							}
-						}
-					},
 					"createdAt": {
 						"type": "string",
-						"example": "2022-05-17T23:00:00.000Z"
+						"example": "2024-06-26T11:57:39.953Z"
 					},
-					"startedAt": {
-						"type": "string",
-						"example": "2022-05-17T23:00:00.000Z"
-					},
+					"startedAt": {},
 					"validAt": {
 						"type": "string",
-						"example": "2022-05-17T23:00:00.000Z"
+						"example": "2024-06-12T22:57:37.724Z"
 					},
 					"documentationSummary": {
 						"type": "object",
@@ -4465,7 +4549,11 @@
 										"type": "string",
 										"example": "received"
 									},
-									"dueDate": {}
+									"dueDate": {},
+									"receivedAt": {
+										"type": "string",
+										"example": "2024-06-26T11:57:39.953Z"
+									}
 								}
 							},
 							"lpaQuestionnaire": {
@@ -4474,10 +4562,6 @@
 									"status": {
 										"type": "string",
 										"example": "not_received"
-									},
-									"dueDate": {
-										"type": "string",
-										"example": "2023-06-18T00:00:00.000Z"
 									}
 								}
 							}

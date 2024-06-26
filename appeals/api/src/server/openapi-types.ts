@@ -491,140 +491,183 @@ export interface AllAppeals {
 }
 
 export interface SingleAppealResponse {
-	agentName?: any;
-	allocationDetails?: {
-		/** @example "A" */
-		level?: string;
-		/** @example 3 */
-		band?: number;
-		/** @example ["Historic heritage","Architecture design"] */
-		specialisms?: string[];
+	agent?: {
+		/** @example 199 */
+		serviceUserId?: number;
+		/** @example "Some" */
+		firstName?: string;
+		/** @example "User" */
+		lastName?: string;
+		/** @example "Some Company" */
+		organisationName?: string;
+		/** @example "an email address" */
+		email?: string;
+		phoneNumber?: any;
 	};
-	/** @example 1 */
+	appellant?: {
+		/** @example 200 */
+		serviceUserId?: number;
+		/** @example "Another" */
+		firstName?: string;
+		/** @example "User" */
+		lastName?: string;
+		organisationName?: any;
+		phoneNumber?: any;
+	};
+	allocationDetails?: any;
+	/** @example 118 */
 	appealId?: number;
-	/** @example "APP/Q9999/D/21/235348" */
+	/** @example "6000118" */
 	appealReference?: string;
 	appealSite?: {
-		/** @example "19 Beauchamp Road" */
+		/** @example 122 */
+		addressId?: number;
+		/** @example "FOR TRAINERS ONLY" */
 		addressLine1?: string;
-		/** @example "Bristol" */
+		/** @example "44 Rivervale" */
+		addressLine2?: string;
+		/** @example "Bridport" */
 		town?: string;
-		/** @example "BS7 8LQ" */
+		/** @example "DT6 5RN" */
 		postCode?: string;
 	};
-	/** @example "awaiting_lpa_questionnaire" */
-	appealStatus?: string;
-	appealTimetable?: {
-		/** @example "2023-06-28T01:00:00.000Z" */
-		finalCommentReviewDate?: string;
-		/** @example "2023-05-16T01:00:00.000Z" */
-		lpaQuestionnaireDueDate?: string;
-		/** @example "2023-06-14T01:00:00.000Z" */
-		statementReviewDate?: string;
+	costs?: {
+		appellantFolder?: {
+			/** @example "118" */
+			caseId?: string;
+			/** @example [] */
+			documents?: any[];
+			/** @example 2118 */
+			folderId?: number;
+			/** @example "costs/appellant" */
+			path?: string;
+		};
+		lpaFolder?: {
+			/** @example "118" */
+			caseId?: string;
+			/** @example [] */
+			documents?: any[];
+			/** @example 2119 */
+			folderId?: number;
+			/** @example "costs/lpa" */
+			path?: string;
+		};
+		decisionFolder?: {
+			/** @example "118" */
+			caseId?: string;
+			/** @example [] */
+			documents?: any[];
+			/** @example 2120 */
+			folderId?: number;
+			/** @example "costs/decision" */
+			path?: string;
+		};
 	};
-	/** @example "household" */
+	internalCorrespondence?: {
+		crossTeam?: {
+			/** @example "118" */
+			caseId?: string;
+			/** @example [] */
+			documents?: any[];
+			/** @example 2121 */
+			folderId?: number;
+			/** @example "internal/crossTeamCorrespondence" */
+			path?: string;
+		};
+		inspector?: {
+			/** @example "118" */
+			caseId?: string;
+			/** @example [] */
+			documents?: any[];
+			/** @example 2122 */
+			folderId?: number;
+			/** @example "internal/inspectorCorrespondence" */
+			path?: string;
+		};
+	};
+	/** @example [] */
+	neighbouringSites?: any[];
+	/** @example "ready_to_start" */
+	appealStatus?: string;
+	appealTimetable?: any;
+	/** @example "Householder" */
 	appealType?: string;
-	/** @example 1 */
+	/** @example 118 */
 	appellantCaseId?: number;
-	/** @example "Fiona Burgess" */
-	appellantName?: string;
-	/** @example true */
-	appellantOwnsWholeSite?: boolean;
-	/** @example "13de469c-8de6-4908-97cd-330ea73df618" */
+	/** @example "00000000-0000-0000-0000-000000000000" */
 	caseOfficer?: string;
-	/** @example "Not issued yet" */
-	decision?: string;
+	decision?: {
+		/** @example 2124 */
+		folderId?: number;
+	};
 	healthAndSafety?: {
 		appellantCase?: {
-			/** @example "There is no mobile reception at the site" */
-			details?: string;
-			/** @example true */
+			details?: any;
+			/** @example false */
 			hasIssues?: boolean;
 		};
 		lpaQuestionnaire?: {
-			/** @example "There may be no mobile reception at the site" */
-			details?: string;
 			/** @example true */
 			hasIssues?: boolean;
 		};
 	};
-	/** @example "f7ea429b-65d8-4c44-8fc2-7f1a34069855" */
-	inspector?: string;
+	inspector?: any;
 	inspectorAccess?: {
 		appellantCase?: {
-			/** @example "There is a tall hedge around the site which obstructs the view of the site" */
-			details?: string;
-			/** @example true */
+			details?: any;
+			/** @example false */
 			isRequired?: boolean;
 		};
 		lpaQuestionnaire?: {
-			/** @example "There may be a tall hedge around the site" */
-			details?: string;
 			/** @example true */
 			isRequired?: boolean;
 		};
 	};
-	/** @example true */
-	isParentAppeal?: boolean;
+	/** @example [] */
+	otherAppeals?: any[];
 	linkedAppeals?: {
-		/** @example 1 */
+		/** @example 120 */
 		appealId?: number;
-		/** @example "APP/Q9999/D/21/725284" */
+		/** @example "6000120" */
 		appealReference?: string;
-		/** @example false */
+		/** @example true */
 		isParentAppeal?: boolean;
-		/** @example "2024-02-14T11:16:24.085Z" */
+		/** @example "2024-06-26T11:57:40.270Z" */
 		linkingDate?: string;
-		/** @example "Householder" */
+		/** @example "(D) Householder" */
 		appealType?: string;
-		/** @example 1 */
+		/** @example 24 */
 		relationshipId?: number;
+		/** @example false */
+		externalSource?: boolean;
 	}[];
-	/** @example "Wiltshire Council" */
-	localPlanningDepartment?: string;
-	/** @example 1 */
-	lpaQuestionnaireId?: number;
+	/** @example false */
+	isParentAppeal?: boolean;
 	/** @example true */
-	isAffectingNeighbouringSites?: boolean;
-	otherAppeals?: {
-		/** @example 1 */
-		appealId?: number;
-		/** @example "APP/Q9999/D/21/725284" */
-		appealReference?: string;
-	}[];
-	/** @example "48269/APP/2021/1482" */
+	isChildAppeal?: boolean;
+	/** @example "Some Borough Council" */
+	localPlanningDepartment?: string;
+	lpaQuestionnaireId?: any;
+	/** @example "52279/APP/1/151419" */
 	planningApplicationReference?: string;
 	/** @example "Written" */
 	procedureType?: string;
-	siteVisit?: {
-		/** @example 1 */
-		siteVisitId?: number;
-		/** @example "2022-03-31T12:00:00.000Z" */
-		visitDate?: string;
-		/** @example "10:00" */
-		visitStartTime?: string;
-		/** @example "12:00" */
-		visitEndTime?: string;
-		/** @example "Accompanied" */
-		visitType?: string;
-	};
-	/** @example "2022-05-17T23:00:00.000Z" */
+	/** @example "2024-06-26T11:57:39.953Z" */
 	createdAt?: string;
-	/** @example "2022-05-17T23:00:00.000Z" */
-	startedAt?: string;
-	/** @example "2022-05-17T23:00:00.000Z" */
+	startedAt?: any;
+	/** @example "2024-06-12T22:57:37.724Z" */
 	validAt?: string;
 	documentationSummary?: {
 		appellantCase?: {
 			/** @example "received" */
 			status?: string;
 			dueDate?: any;
+			/** @example "2024-06-26T11:57:39.953Z" */
+			receivedAt?: string;
 		};
 		lpaQuestionnaire?: {
 			/** @example "not_received" */
 			status?: string;
-			/** @example "2023-06-18T00:00:00.000Z" */
-			dueDate?: string;
 		};
 	};
 }
@@ -741,7 +784,7 @@ export interface SingleAppellantCaseResponse {
 		ownsAllLand?: boolean;
 		/** @example true */
 		ownsSomeLand?: boolean;
-		/** @example "false" */
+		/** @example "Some" */
 		knowsOtherLandowners?: string;
 	};
 	validation?: {
