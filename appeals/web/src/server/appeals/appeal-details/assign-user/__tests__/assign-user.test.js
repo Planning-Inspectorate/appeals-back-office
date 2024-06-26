@@ -3,7 +3,6 @@ import supertest from 'supertest';
 import { jest } from '@jest/globals';
 import { parseHtml } from '@pins/platform';
 import { createTestEnvironment } from '#testing/index.js';
-import config from '#environment/config.js';
 import usersService from '#appeals/appeal-users/users-service.js';
 import { activeDirectoryUsersData } from '#testing/app/fixtures/referencedata.js';
 
@@ -19,12 +18,6 @@ describe('assign-user', () => {
 		usersService.getUsersByRole = jest.fn().mockResolvedValue(activeDirectoryUsersData);
 		// @ts-ignore
 		usersService.getUserByRoleAndId = jest.fn().mockResolvedValue(activeDirectoryUsersData[0]);
-
-		nock('https://graph.microsoft.com/')
-			.get(
-				`/v1.0/groups/${config.referenceData.appeals.caseOfficerGroupId}/members?$select=id,displayName,userPrincipalName`
-			)
-			.reply(200, activeDirectoryUsersData);
 	});
 	afterEach(teardown);
 
