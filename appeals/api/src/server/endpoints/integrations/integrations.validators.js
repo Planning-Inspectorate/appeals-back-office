@@ -15,7 +15,7 @@ export const schemas = {
 		serviceUser: 'service-user',
 		document: 'appeal-document',
 		appeal: 'appeal-has',
-		appealEvent: ''
+		appealEvent: 'appeal-event'
 	}
 };
 

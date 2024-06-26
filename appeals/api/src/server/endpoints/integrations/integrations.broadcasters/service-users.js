@@ -24,6 +24,7 @@ export const broadcastServiceUser = async (userId, updateType, roleName, caseRef
 	});
 
 	if (!user) {
+		pino.error(`Trying to broadcast info for service-user ${userId}, but it was not found.`);
 		return false;
 	}
 

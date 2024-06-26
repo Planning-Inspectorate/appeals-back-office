@@ -149,7 +149,8 @@ export const householdAppeal = {
 		visitStartTime: '01:00',
 		siteVisitType: {
 			id: 1,
-			name: 'Access required'
+			name: 'Access required',
+			key: 'site_visit_access_required'
 		}
 	},
 	parentAppeals: [],

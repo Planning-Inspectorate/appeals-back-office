@@ -14,7 +14,7 @@ import { databaseConnector } from '#utils/database-connector.js';
  * 	visitStartTime?: string;
  * 	siteVisitTypeId?: number;
  * }} data
- * @returns {PrismaPromise<SiteVisit>}
+ * @returns
  */
 const createSiteVisitById = (data) =>
 	databaseConnector.siteVisit.create({

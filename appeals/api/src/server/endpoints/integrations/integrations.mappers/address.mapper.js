@@ -48,6 +48,21 @@ export const mapAddressOut = (appeal) => {
 
 /**
  *
+ * @param {Appeal} appeal
+ * @returns
+ */
+export const mapEventAddressOut = (appeal) => {
+	return {
+		addressLine1: appeal.address?.addressLine1,
+		addressLine2: appeal.address?.addressLine2 || '',
+		addressCounty: appeal.address?.addressCounty || '',
+		addressPostcode: appeal.address?.postcode,
+		addressTown: appeal.address?.addressTown || ''
+	};
+};
+
+/**
+ *
  * @param {NeighbouringSite[]} sites
  * @returns
  */

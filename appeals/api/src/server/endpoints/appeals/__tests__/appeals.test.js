@@ -1387,7 +1387,6 @@ describe('appeals/case-reference/:caseReference', () => {
 				...householdAppeal,
 				childAppeals: linkedAppeals
 			});
-
 			const response = await request
 				.get(`/appeals/case-reference/${householdAppeal.reference}`)
 				.set('azureAdUserId', azureAdUserId);

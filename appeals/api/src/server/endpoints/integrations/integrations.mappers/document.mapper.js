@@ -10,6 +10,7 @@ import { DOCTYPE } from '@pins/appeals/constants/documents.js';
 /** @typedef {import('@pins/appeals.api').Schema.Document} Document */
 /** @typedef {import('@pins/appeals.api').Schema.DocumentVersion} DocumentVersion */
 /** @typedef {import('@pins/appeals.api').Schema.DocumentRedactionStatus} DocumentRedactionStatus */
+/** @typedef {import('pins-data-model').Schemas.AppealDocument} AppealDocument */
 
 /**
  *
