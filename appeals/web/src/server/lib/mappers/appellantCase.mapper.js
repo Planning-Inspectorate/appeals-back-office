@@ -378,6 +378,21 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		}
 	};
 
+	/**
+	 * @param {Boolean | null} ownsAllLand
+	 * @param {Boolean | null} ownsSomeLand
+	 * @returns {string}
+	 */
+	const siteOwnershipText = (ownsAllLand, ownsSomeLand) => {
+		if (ownsAllLand) {
+			return 'Fully owned';
+		} else if (ownsSomeLand) {
+			return 'Partially owned';
+		} else {
+			return 'Not owned';
+		}
+	};
+
 	/** @type {Instructions} */
 	mappedData.siteOwnership = {
 		id: 'site-ownership',
@@ -387,11 +402,10 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 					text: 'Site ownership'
 				},
 				value: {
-					text: appellantCaseData.siteOwnership.ownsAllLand
-						? 'Fully owned'
-						: appellantCaseData.siteOwnership.ownsSomeLand
-						? 'Partially owned'
-						: 'Not owned'
+					text: siteOwnershipText(
+						appellantCaseData.siteOwnership.ownsAllLand,
+						appellantCaseData.siteOwnership.ownsSomeLand
+					)
 				},
 				actions: {
 					items: [
