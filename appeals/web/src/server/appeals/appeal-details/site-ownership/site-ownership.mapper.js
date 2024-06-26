@@ -17,6 +17,7 @@ export const changeSiteOwnershipPage = (appealData, appellantCaseData, storedSes
 
 	if (storedSessionData?.radio) {
 		isFullyOwned = storedSessionData.radio === 'fully';
+		isPartiallyOwned = storedSessionData.radio === 'partially';
 	}
 
 	/** @type {PageContent} */
