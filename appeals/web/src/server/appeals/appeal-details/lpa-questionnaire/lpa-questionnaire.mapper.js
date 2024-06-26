@@ -100,7 +100,7 @@ export async function lpaQuestionnairePage(lpaqDetails, appealDetails, currentRo
 	 */
 	const additionalDocumentsSummary = {
 		type: 'summary-list',
-		parameters: { ...mappedLpaqDetails.lpaq.additionalDocuments.display.cardItem }
+		parameters: { ...mappedLpaqDetails.lpaq?.additionalDocuments?.display.cardItem }
 	};
 
 	/** @type {PageComponent} */
