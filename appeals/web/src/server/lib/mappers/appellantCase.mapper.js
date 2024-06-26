@@ -5,7 +5,6 @@ import { isFolderInfo } from '#lib/ts-utilities.js';
 import { mapActionComponent } from './component-permissions.mapper.js';
 import { permissionNames } from '#environment/permissions.js';
 import { formatServiceUserAsHtmlList } from '#lib/service-user-formatter.js';
-import { generateLinkedAppealsManageLinkHref } from './appeal.mapper.js';
 import { dateToDisplayDate } from '#lib/dates.js';
 import { capitalize } from 'lodash-es';
 
@@ -805,6 +804,28 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		}
 	};
 
+	const otherAppealsItems = [];
+
+	if (appealDetails.otherAppeals.length) {
+		otherAppealsItems.push(
+			mapActionComponent(permissionNames.updateCase, session, {
+				text: 'Manage',
+				href: `${currentRoute}/other-appeals/manage`,
+				visuallyHiddenText: 'Related appeals',
+				attributes: { 'data-cy': 'manage-related-appeals' }
+			})
+		);
+	}
+
+	otherAppealsItems.push(
+		mapActionComponent(permissionNames.updateCase, session, {
+			text: 'Add',
+			href: `${currentRoute}/other-appeals/add`,
+			visuallyHiddenText: 'Related appeals',
+			attributes: { 'data-cy': 'add-related-appeals' }
+		})
+	);
+
 	/** @type {Instructions} */
 	mappedData.relatedAppeals = {
 		id: 'related-appeals',
@@ -819,25 +840,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 						'No related appeals'
 				},
 				actions: {
-					items:
-						appealDetails.otherAppeals.length === 0 //Add filter by application related appeals
-							? mapActionComponent(permissionNames.updateCase, session, [
-									...(appealDetails.otherAppeals.length > 0
-										? [
-												{
-													text: 'Manage',
-													href: generateLinkedAppealsManageLinkHref(appealDetails),
-													visuallyHiddenText: 'Related appeals'
-												}
-										  ]
-										: []),
-									{
-										text: 'Add',
-										href: `/appeals-service/appeal-details/${appealDetails.appealId}/related-appeals/add`,
-										visuallyHiddenText: 'Related appeals'
-									}
-							  ])
-							: []
+					items: otherAppealsItems
 				},
 				classes: 'appeal-related-appeals'
 			}

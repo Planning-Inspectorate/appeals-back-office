@@ -104,7 +104,7 @@ export const formatListOfRelatedAppeals = (listOfAppeals) => {
 		for (let i = 0; i < listOfAppeals.length; i++) {
 			const shortAppealReference = appealShortReference(listOfAppeals[i].appealReference);
 			const linkUrl = listOfAppeals[i].externalSource
-				? generateHorizonAppealUrl(listOfAppeals[i].appealId)
+				? generateHorizonAppealUrl(listOfAppeals[i].externalId)
 				: `/appeals-service/appeal-details/${listOfAppeals[i].appealId}`;
 			const linkAriaLabel = `Appeal ${numberToAccessibleDigitLabel(shortAppealReference || '')}`;
 

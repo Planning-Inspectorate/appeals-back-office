@@ -763,7 +763,7 @@ describe('appeals routes', () => {
 							appealReference: a.childRef,
 							isParentAppeal: false,
 							linkingDate: a.linkingDate.toISOString(),
-							appealType: 'Unknown',
+							appealType: null,
 							externalSource: true
 						};
 					}),
@@ -1468,7 +1468,7 @@ describe('appeals/case-reference/:caseReference', () => {
 						appealReference: a.childRef,
 						isParentAppeal: false,
 						linkingDate: a.linkingDate.toISOString(),
-						appealType: 'Unknown',
+						appealType: null,
 						externalSource: true
 					};
 				}),

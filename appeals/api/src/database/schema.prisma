@@ -61,17 +61,18 @@ model Appeal {
 /// Both linked and related appeals are stored here.
 /// Related appeals ignore the parent / child relationship.
 model AppealRelationship {
-  id                Int      @id @default(autoincrement())
-  type              String   @default("linked") // linked | related
-  parentRef         String
-  childRef          String
-  parent            Appeal?  @relation("parentAppeal", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  parentId          Int?
-  child             Appeal?  @relation("childAppeal", fields: [childId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  childId           Int?
-  externalSource    Boolean?
-  externaAppealType String?
-  linkingDate       DateTime @default(now())
+  id                 Int      @id @default(autoincrement())
+  type               String   @default("linked") // linked | related
+  parentRef          String
+  childRef           String
+  parent             Appeal?  @relation("parentAppeal", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  parentId           Int?
+  child              Appeal?  @relation("childAppeal", fields: [childId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  childId            Int?
+  externalSource     Boolean?
+  externalAppealType String?
+  externalId         String?
+  linkingDate        DateTime @default(now())
 }
 
 /// AppealType model

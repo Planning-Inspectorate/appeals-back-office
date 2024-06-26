@@ -101,14 +101,6 @@ export async function appellantCasePage(appellantCaseData, appealDetails, curren
 		}
 	};
 
-	// if (appealDetails.agent) {
-	// 	appellantSummary.parameters.rows.splice(
-	// 		1,
-	// 		0,
-	// 		mappedAppellantCaseData.agent.display.summaryListItem
-	// 	);
-	// }
-
 	/**
 	 * @type {PageComponent}
 	 */

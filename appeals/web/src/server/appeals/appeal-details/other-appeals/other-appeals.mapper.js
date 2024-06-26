@@ -2,6 +2,7 @@ import { addressToString } from '#lib/address-formatter.js';
 import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { buildNotificationBanners } from '#lib/mappers/notification-banners.mapper.js';
+import { generateHorizonAppealUrl } from '#lib/display-page-formatter.js';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
@@ -13,9 +14,10 @@ import { buildNotificationBanners } from '#lib/mappers/notification-banners.mapp
  *
  * @param {Appeal} appealData
  * @param {string} appealReferenceInputValue
+ * @param {string} origin
  * @returns {Promise<PageContent>}
  */
-export async function addOtherAppealsPage(appealData, appealReferenceInputValue) {
+export async function addOtherAppealsPage(appealData, appealReferenceInputValue, origin) {
 	/** @type {PageComponent[]} */
 	const addOtherAppealsPageContent = [
 		{
@@ -54,7 +56,7 @@ export async function addOtherAppealsPage(appealData, appealReferenceInputValue)
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `Add related appeal - ${appealData.appealReference}`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}`,
+		backLinkUrl: origin,
 		preHeading: `Appeal ${appealData.appealReference}`,
 		heading: 'What is the appeal reference?',
 		pageComponents: [...addOtherAppealsPageContent]
@@ -66,9 +68,10 @@ export async function addOtherAppealsPage(appealData, appealReferenceInputValue)
 /**
  * @param {Appeal} currentAppeal
  * @param {import('@pins/appeals.api/src/server/endpoints/appeals.js').LinkableAppealSummary} relatedAppeal
+ * @param {string} origin
  * @returns {PageContent}
  */
-export function confirmOtherAppealsPage(currentAppeal, relatedAppeal) {
+export function confirmOtherAppealsPage(currentAppeal, relatedAppeal, origin) {
 	const relateAppealsAnswer = '';
 	/** @type {PageComponent[]} */
 	const pageComponents = [
@@ -188,14 +191,14 @@ export function confirmOtherAppealsPage(currentAppeal, relatedAppeal) {
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `Related appeal details - ${currentAppeal.appealReference}`,
-		backLinkUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/other-appeals/add`,
+		backLinkUrl: `${origin}/other-appeals/add`,
 		preHeading: `Appeal ${currentAppeal.appealReference}`,
 		heading: 'Related appeal details',
 		submitButtonProperties:
 			relatedAppealIsCurrentAppeal || appealsAlreadyRelated
 				? {
 						text: 'Return to search',
-						href: `/appeals-service/appeal-details/${currentAppeal.appealId}/other-appeals/add`
+						href: `${origin}/other-appeals/add`
 				  }
 				: {
 						text: 'Continue'
@@ -210,9 +213,10 @@ export function confirmOtherAppealsPage(currentAppeal, relatedAppeal) {
  *
  * @param {Appeal} appealData
  * @param {import('@pins/express/types/express.js').Request} request
+ * @param {string} origin
  * @returns {PageContent}
  */
-export function manageOtherAppealsPage(appealData, request) {
+export function manageOtherAppealsPage(appealData, request, origin) {
 	const notificationBanners = buildNotificationBanners(
 		request.session,
 		'manageRelatedAppeals',
@@ -229,7 +233,11 @@ export function manageOtherAppealsPage(appealData, request) {
 			{
 				html:
 					otherAppeal.externalSource === true
-						? `${shortAppealReference} (Horizon)`
+						? `<a class="govuk-link" href="${generateHorizonAppealUrl(
+								otherAppeal.externalId
+						  )}" aria-label="Appeal ${numberToAccessibleDigitLabel(
+								shortAppealReference || ''
+						  )}">${shortAppealReference} (Horizon)</a>`
 						: `<a class="govuk-link" href="/appeals-service/appeal-details/${
 								otherAppeal.appealId
 						  }" aria-label="Appeal ${numberToAccessibleDigitLabel(
@@ -237,10 +245,10 @@ export function manageOtherAppealsPage(appealData, request) {
 						  )}">${shortAppealReference}</a>`
 			},
 			{
-				text: otherAppeal.appealType || ''
+				text: otherAppeal.appealType || otherAppeal.externalAppealType || 'Unknown'
 			},
 			{
-				html: `<a class="govuk-link" data-cy="remove-appeal-${appealData.appealReference}" href="/appeals-service/appeal-details/${appealData.appealId}/other-appeals/remove/${shortAppealReference}/${otherAppeal.relationshipId}">Remove</a>`
+				html: `<a class="govuk-link" data-cy="remove-appeal-${appealData.appealReference}" href="${origin}/other-appeals/remove/${shortAppealReference}/${otherAppeal.relationshipId}">Remove</a>`
 			}
 		];
 	});
@@ -268,7 +276,7 @@ export function manageOtherAppealsPage(appealData, request) {
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `Manage related appeals - ${shortAppealReference}`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}`,
+		backLinkUrl: origin,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'Manage related appeals',
 		pageComponents
@@ -281,9 +289,10 @@ export function manageOtherAppealsPage(appealData, request) {
  *
  * @param {Appeal} appealData
  * @param {string} relatedAppealShortReference
+ * @param {string} origin
  * @returns {PageContent}
  */
-export function removeAppealRelationshipPage(appealData, relatedAppealShortReference) {
+export function removeAppealRelationshipPage(appealData, relatedAppealShortReference, origin) {
 	/** @type {PageComponent} */
 	const selectAppealTypeRadiosComponent = {
 		type: 'radios',
@@ -313,7 +322,7 @@ export function removeAppealRelationshipPage(appealData, relatedAppealShortRefer
 	/** @type {PageContent} */
 	const pageContent = {
 		title: titleAndHeading,
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/other-appeals/manage`,
+		backLinkUrl: `${origin}/other-appeals/manage`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: titleAndHeading,
 		pageComponents: [selectAppealTypeRadiosComponent]

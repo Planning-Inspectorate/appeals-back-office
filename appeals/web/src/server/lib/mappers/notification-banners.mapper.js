@@ -83,7 +83,7 @@ export const notificationBannerDefinitions = {
 		html: '<p class="govuk-notification-banner__heading">This appeal is awaiting transfer</p><p class="govuk-body">The appeal must be transferred to Horizon. When this is done, update the appeal with the new horizon reference.</p>'
 	},
 	horizonReferenceAdded: {
-		pages: ['appealDetails'],
+		pages: ['appealDetails', 'appellantCase', 'lpaQuestionnaire'],
 		type: 'success',
 		text: 'Horizon reference added'
 	},
@@ -92,17 +92,18 @@ export const notificationBannerDefinitions = {
 	},
 	appealLinked: {
 		type: 'success',
-		pages: ['appealDetails']
+		pages: ['appealDetails', 'appellantCase', 'lpaQuestionnaire']
 	},
 	appealUnlinked: {
-		pages: ['appealDetails']
+		pages: ['appealDetails', 'appellantCase', 'lpaQuestionnaire'],
+		type: 'success'
 	},
 	otherAppeal: {
-		pages: ['appealDetails'],
+		pages: ['appealDetails', 'appellantCase', 'lpaQuestionnaire'],
 		type: 'success'
 	},
 	otherAppealRemoved: {
-		pages: ['appealDetails', 'manageRelatedAppeals'],
+		pages: ['appealDetails', 'manageRelatedAppeals', 'appellantCase', 'lpaQuestionnaire'],
 		type: 'success'
 	},
 	neighbouringSiteAdded: {

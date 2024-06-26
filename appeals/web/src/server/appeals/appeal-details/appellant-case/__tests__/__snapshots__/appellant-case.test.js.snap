@@ -180,7 +180,8 @@ exports[`appellant-case GET /appellant-case should render a "Inspector access (a
                 <div class="govuk-summary-list__row appeal-related-appeals"><dt class="govuk-summary-list__key"> Related appeals</dt>
                     <dd class="govuk-summary-list__value"><span>No appeals</span>
                     </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/related-appeals/add"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/other-appeals/add"
+                        data-cy="add-related-appeals"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Applied for award of appeal costs</dt>
@@ -456,7 +457,8 @@ exports[`appellant-case GET /appellant-case should render a "LPA application ref
                 <div class="govuk-summary-list__row appeal-related-appeals"><dt class="govuk-summary-list__key"> Related appeals</dt>
                     <dd class="govuk-summary-list__value"><span>No appeals</span>
                     </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/related-appeals/add"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/other-appeals/add"
+                        data-cy="add-related-appeals"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Applied for award of appeal costs</dt>
@@ -720,7 +722,8 @@ exports[`appellant-case GET /appellant-case should render a "Site health and saf
                 <div class="govuk-summary-list__row appeal-related-appeals"><dt class="govuk-summary-list__key"> Related appeals</dt>
                     <dd class="govuk-summary-list__value"><span>No appeals</span>
                     </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/related-appeals/add"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/other-appeals/add"
+                        data-cy="add-related-appeals"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Applied for award of appeal costs</dt>
@@ -996,7 +999,8 @@ exports[`appellant-case GET /appellant-case should render a "Site updated" notif
                 <div class="govuk-summary-list__row appeal-related-appeals"><dt class="govuk-summary-list__key"> Related appeals</dt>
                     <dd class="govuk-summary-list__value"><span>No appeals</span>
                     </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/related-appeals/add"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/other-appeals/add"
+                        data-cy="add-related-appeals"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Applied for award of appeal costs</dt>
@@ -1272,7 +1276,8 @@ exports[`appellant-case GET /appellant-case should render a success notification
                 <div class="govuk-summary-list__row appeal-related-appeals"><dt class="govuk-summary-list__key"> Related appeals</dt>
                     <dd class="govuk-summary-list__value"><span>No appeals</span>
                     </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/related-appeals/add"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/other-appeals/add"
+                        data-cy="add-related-appeals"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Applied for award of appeal costs</dt>
@@ -1535,7 +1540,8 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 <div class="govuk-summary-list__row appeal-related-appeals"><dt class="govuk-summary-list__key"> Related appeals</dt>
                     <dd class="govuk-summary-list__value"><span>No appeals</span>
                     </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/related-appeals/add"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/other-appeals/add"
+                        data-cy="add-related-appeals"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Applied for award of appeal costs</dt>
@@ -3740,7 +3746,8 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                 <div class="govuk-summary-list__row appeal-related-appeals"><dt class="govuk-summary-list__key"> Related appeals</dt>
                     <dd class="govuk-summary-list__value"><span>No appeals</span>
                     </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/related-appeals/add"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/other-appeals/add"
+                        data-cy="add-related-appeals"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Applied for award of appeal costs</dt>
