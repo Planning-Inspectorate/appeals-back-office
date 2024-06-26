@@ -16,6 +16,11 @@ import { generateIssueDecisionUrl } from '#appeals/appeal-details/issue-decision
 import { mapActionComponent } from './component-permissions.mapper.js';
 import { permissionNames } from '#environment/permissions.js';
 import { formatServiceUserAsHtmlList } from '#lib/service-user-formatter.js';
+import {
+	mapDocumentDownloadUrl,
+	mapVirusCheckStatus
+} from '#appeals/appeal-documents/appeal-documents.mapper.js';
+import { STATUSES } from '@pins/appeals/constants/state.js';
 
 /**
  * @param {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} appealDetails
@@ -1334,6 +1339,33 @@ export async function initialiseAndMapAppealData(
 		}
 	};
 
+	/** @type {Instructions} */
+	mappedData.appeal.appealDecision = {
+		id: 'appeal-decision',
+		display: {
+			tableItem: [
+				{
+					text: 'Appeal decision',
+					classes: 'appeal-decision-documentation'
+				},
+				{
+					text: appealDetails.appealStatus === 'complete' ? 'Sent' : 'Awaiting decision',
+					classes: 'appeal-decision-status'
+				},
+				{
+					text: '',
+					classes: 'appeal-decision-due-date'
+				},
+				{
+					html: `<ul class="govuk-summary-list__actions-list">${generateAppealDecisionActionListItems(
+						appealDetails
+					)}</ul>`,
+					classes: 'appeal-decision-actions'
+				}
+			]
+		}
+	};
+
 	const appealHasCostsDecisionDocuments = appealDetails?.costs?.decisionFolder?.documents?.filter(
 		(document) => document.latestDocumentVersion?.isDeleted === false
 	).length;
@@ -1466,4 +1498,35 @@ function mapLeadOrChildStatus(appealDetails) {
 	}
 
 	return {};
+}
+
+/**
+ * @param {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} appealDetails
+ * @returns {string}
+ */
+function generateAppealDecisionActionListItems(appealDetails) {
+	switch (appealDetails.appealStatus) {
+		case STATUSES.ISSUE_DETERMINATION:
+			return `<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="${generateIssueDecisionUrl(
+				appealDetails.appealId
+			)}">Issue</a></li>`;
+		case STATUSES.COMPLETE:
+			// eslint-disable-next-line no-case-declarations
+			const downloadLink = `<a class="govuk-link" href="${
+				appealDetails.decision?.documentId
+					? mapDocumentDownloadUrl(appealDetails.appealId, appealDetails.decision?.documentId)
+					: '#'
+			}">View</a>`;
+
+			// eslint-disable-next-line no-case-declarations
+			const virusCheckStatus = mapVirusCheckStatus(
+				appealDetails.decision.virusCheckStatus || 'not_scanned'
+			);
+
+			return `<li class="govuk-summary-list__actions-list-item">${
+				virusCheckStatus.checked && virusCheckStatus.safe ? downloadLink : 'Virus scanning'
+			}</li>`;
+		default:
+			return '';
+	}
 }
