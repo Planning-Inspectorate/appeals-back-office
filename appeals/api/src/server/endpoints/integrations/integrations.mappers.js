@@ -31,9 +31,18 @@ import {
 import { ODW_AGENT_SVCUSR, ODW_APPELLANT_SVCUSR } from '@pins/appeals/constants/common.js';
 import { STAGE } from '@pins/appeals/constants/documents.js';
 import { FOLDERS } from '@pins/appeals/constants/documents.js';
+import { mapSiteVisitOut } from './integrations.mappers/site-visit.mapper.js';
 
+/** @typedef {import('pins-data-model').Schemas.AppellantSubmissionCommand} AppellantSubmissionCommand */
+/** @typedef {import('pins-data-model').Schemas.LPAQuestionnaireCommand} LPAQuestionnaireCommand */
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
+/** @typedef {import('@pins/appeals.api').Schema.ServiceUser} ServiceUser */
+/** @typedef {import('@pins/appeals.api').Schema.Document} Document */
+/** @typedef {import('@pins/appeals.api').Schema.SiteVisit} SiteVisit */
 /** @typedef {import('pins-data-model').Schemas.AppealHASCase} AppealHASCase */
+/** @typedef {import('pins-data-model').Schemas.ServiceUser} AppealServiceUser */
+/** @typedef {import('pins-data-model').Schemas.AppealDocument} AppealDocument */
+/** @typedef {import('pins-data-model').Schemas.AppealEvent} AppealEvent */
 
 const mappers = {
 	mapAddressIn,
@@ -59,12 +68,9 @@ const mappers = {
 	mapSiteSafetyDetailsOut,
 	mapAppealValidationOut,
 	mapQuestionnaireValidationOut,
-	mapAppealRelationships
+	mapAppealRelationships,
+	mapSiteVisitOut
 };
-
-/** @typedef {import('pins-data-model').Schemas.AppellantSubmissionCommand} AppellantSubmissionCommand */
-/** @typedef {import('pins-data-model').Schemas.LPAQuestionnaireCommand} LPAQuestionnaireCommand */
-/** @typedef {Pick<LPAQuestionnaireCommand, 'casedata'>} LPAQuestionnaire */
 
 /**
  * @param {AppellantSubmissionCommand} data
@@ -193,7 +199,7 @@ const mapAppeal = (appeal) => {
 
 /**
  *
- * @param {*} doc
+ * @param {Document} doc
  * @returns
  */
 const mapDocument = (doc) => {
@@ -202,8 +208,23 @@ const mapDocument = (doc) => {
 
 /**
  *
+ * @param {SiteVisit} siteVisit
+ * @returns
+ */
+const mapSiteVisit = (siteVisit) => mapSiteVisitOut(siteVisit);
+
+// {
+// try {
+// 	return mapSiteVisitOut(siteVisit);
+// } catch (e) {
+// 	console.log('site-visit-map', e)
+// }
+//}
+
+/**
+ *
  * @param {string} caseReference
- * @param {*} user
+ * @param {ServiceUser} user
  * @param {string} userType
  * @returns
  */
@@ -218,5 +239,6 @@ export const messageMappers = {
 	mapQuestionnaireSubmission,
 	mapServiceUser,
 	mapDocument,
-	mapAppeal
+	mapAppeal,
+	mapSiteVisit
 };

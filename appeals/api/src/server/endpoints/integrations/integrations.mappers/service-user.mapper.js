@@ -5,6 +5,7 @@ import {
 } from '@pins/appeals/constants/common.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.ServiceUser} ServiceUser */
+/** @typedef {import('pins-data-model').Schemas.ServiceUser} AppealServiceUser */
 
 /**
  *
@@ -34,7 +35,7 @@ export const mapServiceUserIn = (data) => {
  * @param {ServiceUser} data
  * @param {string} serviceUserType
  * @param {string} caseReference
- * @returns {import('pins-data-model').Schemas.ServiceUser | null}
+ * @returns {AppealServiceUser | undefined}
  */
 export const mapServiceUserOut = (data, serviceUserType, caseReference) => {
 	if (data) {
@@ -65,8 +66,6 @@ export const mapServiceUserOut = (data, serviceUserType, caseReference) => {
 
 		return user;
 	}
-
-	return null;
 };
 
 /**

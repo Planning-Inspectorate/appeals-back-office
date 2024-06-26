@@ -93,6 +93,7 @@ export interface LPANotificationMethodsSelected extends schema.LPANotificationMe
 }
 export interface SiteVisit extends schema.SiteVisit {
 	siteVisitType: SiteVisitType;
+	appeal: Appeal;
 }
 export interface SiteVisitType extends schema.SiteVisitType {}
 export interface InspectorDecision extends schema.InspectorDecision {}

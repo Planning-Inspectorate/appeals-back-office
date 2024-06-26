@@ -2,6 +2,7 @@ export const producers = {
 	boCaseData: 'appeal-has',
 	boDocument: 'appeal-document',
 	boServiceUser: 'appeal-service-user',
+	boEventData: 'appeal-event',
 	boBlobMove: 'appeal-document-to-move'
 };
 
