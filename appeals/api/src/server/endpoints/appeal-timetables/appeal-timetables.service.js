@@ -6,6 +6,7 @@ import joinDateAndTime from '#utils/join-date-and-time.js';
 import logger from '#utils/logger.js';
 import {
 	AUDIT_TRAIL_CASE_TIMELINE_CREATED,
+	AUDIT_TRAIL_CASE_TIMELINE_UPDATED,
 	AUDIT_TRAIL_SYSTEM_UUID,
 	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL,
 	ERROR_NOT_FOUND,
@@ -47,7 +48,7 @@ const checkAppealTimetableExists = async (req, res, next) => {
  *
  * @param {Appeal} appeal
  * @param {string} startDate
- * @param { import('#endpoints/appeals.js').NotifyClient } notifyClient
+ * @param {import('#endpoints/appeals.js').NotifyClient } notifyClient
  * @param {string} siteAddress
  * @param {string} azureAdUserId
  * @returns
@@ -60,6 +61,14 @@ const startCase = async (appeal, startDate, notifyClient, siteAddress, azureAdUs
 		}
 		const startedAt = await recalculateDateIfNotBusinessDay(joinDateAndTime(startDate));
 		const timetable = await calculateTimetable(appealType.key, startedAt);
+
+		const appellantTemplate = appeal.caseStartedDate
+			? config.govNotify.template.appealStartDateChange.appellant
+			: config.govNotify.template.appealValidStartCase.appellant;
+
+		const lpaTemplate = appeal.caseStartedDate
+			? config.govNotify.template.appealStartDateChange.lpa
+			: config.govNotify.template.appealValidStartCase.lpa;
 
 		if (timetable) {
 			await Promise.all([
@@ -94,11 +103,7 @@ const startCase = async (appeal, startDate, notifyClient, siteAddress, azureAdUs
 
 			if (recipientEmail) {
 				try {
-					await notifyClient.sendEmail(
-						config.govNotify.template.appealValidStartCase.appellant,
-						recipientEmail,
-						emailVariables
-					);
+					await notifyClient.sendEmail(appellantTemplate, recipientEmail, emailVariables);
 				} catch (error) {
 					throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
 				}
@@ -106,11 +111,7 @@ const startCase = async (appeal, startDate, notifyClient, siteAddress, azureAdUs
 
 			if (lpaEmail) {
 				try {
-					await notifyClient.sendEmail(
-						config.govNotify.template.appealValidStartCase.lpa,
-						lpaEmail,
-						emailVariables
-					);
+					await notifyClient.sendEmail(lpaTemplate, lpaEmail, emailVariables);
 				} catch (error) {
 					throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
 				}
@@ -133,5 +134,22 @@ const startCase = async (appeal, startDate, notifyClient, siteAddress, azureAdUs
 
 	return { success: false };
 };
+/**
+ * @param {number} appealTimetableId
+ * @param {object} body
+ * @param {string} azureAdUserId
+ * @returns {Promise<void>}
+ */
+const updateAppealTimetable = async (appealTimetableId, body, azureAdUserId) => {
+	await appealTimetableRepository.updateAppealTimetableById(appealTimetableId, body);
 
-export { checkAppealTimetableExists, startCase };
+	await createAuditTrail({
+		appealId: appealTimetableId,
+		azureAdUserId,
+		details: AUDIT_TRAIL_CASE_TIMELINE_UPDATED
+	});
+
+	await broadcasters.broadcastAppeal(appealTimetableId);
+};
+
+export { checkAppealTimetableExists, startCase, updateAppealTimetable };

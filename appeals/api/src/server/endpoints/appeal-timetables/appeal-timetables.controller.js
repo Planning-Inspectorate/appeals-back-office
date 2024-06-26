@@ -1,15 +1,8 @@
-import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
-import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
-import appealTimetableRepository from '#repositories/appeal-timetable.repository.js';
 import logger from '#utils/logger.js';
 import { format } from 'date-fns';
-import {
-	AUDIT_TRAIL_CASE_TIMELINE_UPDATED,
-	DEFAULT_DATE_FORMAT_DATABASE,
-	ERROR_FAILED_TO_SAVE_DATA
-} from '../constants.js';
+import { DEFAULT_DATE_FORMAT_DATABASE, ERROR_FAILED_TO_SAVE_DATA } from '../constants.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
-import { startCase } from './appeal-timetables.service.js';
+import { startCase, updateAppealTimetable } from './appeal-timetables.service.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -60,20 +53,10 @@ const updateAppealTimetableById = async (req, res) => {
 	const appealTimetableId = Number(params.appealTimetableId);
 
 	try {
-		await appealTimetableRepository.updateAppealTimetableById(appealTimetableId, body);
-
-		await createAuditTrail({
-			appealId: Number(params.appealId),
-			azureAdUserId: req.get('azureAdUserId'),
-			details: AUDIT_TRAIL_CASE_TIMELINE_UPDATED
-		});
-
-		await broadcasters.broadcastAppeal(Number(params.appealId));
+		await updateAppealTimetable(appealTimetableId, body, req.get('azureAdUserId') || '');
 	} catch (error) {
-		if (error) {
-			logger.error(error);
-			return res.status(500).send({ errors: { body: ERROR_FAILED_TO_SAVE_DATA } });
-		}
+		logger.error(error);
+		return res.status(500).send({ errors: { body: ERROR_FAILED_TO_SAVE_DATA } });
 	}
 
 	return res.send(body);
