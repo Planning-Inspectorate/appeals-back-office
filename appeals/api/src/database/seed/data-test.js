@@ -482,13 +482,6 @@ export async function seedTestData(databaseConnector) {
 			type: CASE_RELATIONSHIP_LINKED
 		},
 		{
-			parentRef: appeals[0].reference,
-			parentId: appeals[0].id,
-			childRef: '76215416',
-			externalSource: true,
-			type: CASE_RELATIONSHIP_LINKED
-		},
-		{
 			parentRef: appeals[4].reference,
 			parentId: appeals[4].id,
 			childRef: appeals[19].reference,
@@ -500,13 +493,6 @@ export async function seedTestData(databaseConnector) {
 			parentId: appeals[4].id,
 			childRef: appeals[20].reference,
 			childId: appeals[20].id,
-			type: CASE_RELATIONSHIP_LINKED
-		},
-		{
-			parentRef: '96215416',
-			childRef: appeals[21].reference,
-			childId: appeals[21].id,
-			externalSource: true,
 			type: CASE_RELATIONSHIP_LINKED
 		}
 	];
@@ -524,20 +510,6 @@ export async function seedTestData(databaseConnector) {
 			parentId: appeals[12].id,
 			childRef: appeals[13].reference,
 			childId: appeals[13].id,
-			type: CASE_RELATIONSHIP_RELATED
-		},
-		{
-			parentRef: appeals[0].reference,
-			parentId: appeals[0].id,
-			childRef: '76215416',
-			externalSource: true,
-			type: CASE_RELATIONSHIP_RELATED
-		},
-		{
-			parentRef: '96215416',
-			childRef: appeals[21].reference,
-			childId: appeals[21].id,
-			externalSource: true,
 			type: CASE_RELATIONSHIP_RELATED
 		}
 	];

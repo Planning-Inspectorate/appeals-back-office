@@ -145,12 +145,14 @@ describe('appeal linked appeals routes', () => {
 				expect(databaseConnector.appealRelationship.create).toHaveBeenCalledTimes(1);
 				expect(databaseConnector.appealRelationship.create).toHaveBeenCalledWith({
 					data: {
-						parentId: 20486402,
+						parentId: null,
 						parentRef: '1000000',
 						childRef: householdAppeal.reference,
 						childId: householdAppeal.id,
 						type: CASE_RELATIONSHIP_LINKED,
-						externalSource: true
+						externalSource: true,
+						externalAppealType: 'Planning Appeal (W)',
+						externalId: '20486402'
 					}
 				});
 			});
@@ -270,9 +272,11 @@ describe('appeal linked appeals routes', () => {
 						parentId: householdAppeal.id,
 						parentRef: householdAppeal.reference,
 						childRef: '123456',
-						childId: 20486402,
+						childId: null,
 						type: CASE_RELATIONSHIP_RELATED,
-						externalSource: true
+						externalSource: true,
+						externalAppealType: 'Planning Appeal (W)',
+						externalId: '20486402'
 					}
 				});
 			});

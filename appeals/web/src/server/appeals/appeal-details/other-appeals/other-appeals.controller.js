@@ -51,12 +51,14 @@ export const postAddOtherAppeals = async (request, response) => {
 		});
 	}
 
+	const currentUrl = request.originalUrl;
+
+	const origin = currentUrl.split('/').slice(0, -2).join('/');
+
 	request.session.appealId = request.currentAppeal.appealId;
 	request.session.relatedAppealReference = addOtherAppealsReference;
 
-	return response.redirect(
-		`/appeals-service/appeal-details/${request.currentAppeal.appealId}/other-appeals/confirm`
-	);
+	return response.redirect(`${origin}/other-appeals/confirm`);
 };
 
 /**
@@ -76,9 +78,14 @@ const renderAddOtherAppeals = async (
 		delete request.session.appealId;
 		delete request.session.relatedAppealReference;
 	}
+	const currentUrl = request.originalUrl;
+
+	const origin = currentUrl.split('/').slice(0, -2).join('/');
+
 	const mappedPageContent = await addOtherAppealsPage(
 		request.currentAppeal,
-		appealReferenceInputValue
+		appealReferenceInputValue,
+		origin
 	);
 
 	return response.status(200).render('patterns/display-page.pattern.njk', {
@@ -108,6 +115,10 @@ export const postConfirmOtherAppeals = async (request, response) => {
 
 	const { relateAppealsAnswer } = request.body;
 
+	const currentUrl = request.originalUrl;
+
+	const origin = currentUrl.split('/').slice(0, -2).join('/');
+
 	if (
 		!objectContainsAllKeys(request.session, [
 			'appealId',
@@ -126,9 +137,7 @@ export const postConfirmOtherAppeals = async (request, response) => {
 	if (relateAppealsAnswer === 'no') {
 		delete request.session.appealId;
 		delete request.session.relatedAppealReference;
-		return response.redirect(
-			`/appeals-service/appeal-details/${request.currentAppeal.appealId}/other-appeals/add`
-		);
+		return response.redirect(`${origin}/other-appeals/add`);
 	} else if (relateAppealsAnswer === 'yes') {
 		try {
 			const relatedAppealDetails = request.session.linkableAppeal.linkableAppealSummary;
@@ -175,7 +184,7 @@ export const postConfirmOtherAppeals = async (request, response) => {
 	delete request.session.appealId;
 	delete request.session.relatedAppealReference;
 
-	return response.redirect(`/appeals-service/appeal-details/${request.currentAppeal.appealId}`);
+	return response.redirect(origin);
 };
 
 /**
@@ -193,11 +202,18 @@ const renderConfirmOtherAppeals = async (request, response, errors = undefined) 
 	}
 
 	const { linkableAppeal } = request.session;
+	const currentUrl = request.originalUrl;
+
+	const origin = currentUrl.split('/').slice(0, -2).join('/');
 
 	try {
 		const relatedAppealDetails = linkableAppeal.linkableAppealSummary;
 
-		const mappedPageContent = confirmOtherAppealsPage(request.currentAppeal, relatedAppealDetails);
+		const mappedPageContent = confirmOtherAppealsPage(
+			request.currentAppeal,
+			relatedAppealDetails,
+			origin
+		);
 
 		return response.status(200).render('patterns/check-and-confirm-page.pattern.njk', {
 			pageContent: mappedPageContent,
@@ -222,7 +238,11 @@ const renderConfirmOtherAppeals = async (request, response, errors = undefined) 
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const getManageOtherAppeals = async (request, response) => {
-	const mappedPageContent = manageOtherAppealsPage(request.currentAppeal, request);
+	const currentUrl = request.originalUrl;
+
+	const origin = currentUrl.split('/').slice(0, -2).join('/');
+
+	const mappedPageContent = manageOtherAppealsPage(request.currentAppeal, request, origin);
 
 	return response.status(200).render('patterns/display-page.pattern.njk', {
 		pageContent: mappedPageContent
@@ -245,13 +265,18 @@ export const getRemoveOtherAppeals = async (request, response) => {
 const renderRemoveOtherAppeals = async (request, response) => {
 	const { relatedAppealShortReference } = request.params;
 
+	const currentUrl = request.originalUrl;
+
+	const origin = currentUrl.split('/').slice(0, -4).join('/');
+
 	if (!relatedAppealShortReference) {
 		return response.status(500).render('app/500.njk');
 	}
 
 	const mappedPageContent = removeAppealRelationshipPage(
 		request.currentAppeal,
-		relatedAppealShortReference
+		relatedAppealShortReference,
+		origin
 	);
 
 	return response.status(200).render('patterns/display-page.pattern.njk', {
@@ -275,8 +300,12 @@ export const postRemoveOtherAppeals = async (request, response) => {
 		const { appealId, relatedAppealShortReference, relationshipId } = request.params;
 		const { removeAppealRelationship } = request.body;
 
+		const currentUrl = request.originalUrl;
+
+		const origin = currentUrl.split('/').slice(0, -4).join('/');
+
 		if (removeAppealRelationship === 'no') {
-			return response.redirect(`/appeals-service/appeal-details/${appealId}/other-appeals/manage`);
+			return response.redirect(`${origin}/other-appeals/manage`);
 		} else if (removeAppealRelationship === 'yes') {
 			const appealRelationshipId = parseInt(relationshipId, 10);
 
@@ -292,11 +321,9 @@ export const postRemoveOtherAppeals = async (request, response) => {
 			const appealData = request.currentAppeal;
 
 			if (appealData.otherAppeals.length > 0) {
-				return response.redirect(
-					`/appeals-service/appeal-details/${appealId}/other-appeals/manage`
-				);
+				return response.redirect(`${origin}/other-appeals/manage`);
 			} else {
-				return response.redirect(`/appeals-service/appeal-details/${appealId}`);
+				return response.redirect(origin);
 			}
 		}
 	} catch (error) {

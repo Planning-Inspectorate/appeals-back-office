@@ -192,13 +192,14 @@ exports[`other-appeals GET /other-appeals/manage should render the "Manage relat
             <tr class="govuk-table__row">
                 <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/2" aria-label="Appeal 2">2</a>
                 </td>
-                <td class="govuk-table__cell"></td>
+                <td class="govuk-table__cell">Unknown</td>
                 <td class="govuk-table__cell"><a class="govuk-link" data-cy="remove-appeal-APP/Q9999/D/21/351062" href="/appeals-service/appeal-details/1/other-appeals/remove/2/100">Remove</a>
                 </td>
             </tr>
             <tr class="govuk-table__row">
-                <td class="govuk-table__cell">3 (Horizon)</td>
-                <td class="govuk-table__cell"></td>
+                <td class="govuk-table__cell"><a class="govuk-link" href="" aria-label="Appeal 3">3 (Horizon)</a>
+                </td>
+                <td class="govuk-table__cell">Unknown</td>
                 <td class="govuk-table__cell"><a class="govuk-link" data-cy="remove-appeal-APP/Q9999/D/21/351062" href="/appeals-service/appeal-details/1/other-appeals/remove/3/101">Remove</a>
                 </td>
             </tr>

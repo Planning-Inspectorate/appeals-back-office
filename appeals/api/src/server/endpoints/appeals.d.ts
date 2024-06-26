@@ -235,7 +235,7 @@ interface SingleLPAQuestionnaireResponse {
 	isCorrectAppealType?: boolean | null;
 	submittedAt?: Date | null;
 	receivedAt: Date;
-	otherAppeals?: string[] | null;
+	otherAppeals?: RelatedAppeal[] | null;
 	costsAppliedFor?: boolean | null;
 	lpaStatement?: string | null;
 	extraConditions?: string | null;
@@ -279,12 +279,14 @@ interface TimetableDeadlineDate {
 }
 
 interface RelatedAppeal {
-	appealId: number | null;
+	externalId: string | null;
 	appealReference: string;
 	linkingDate: Date;
-	appealType?: string;
+	appealType?: string | null;
 	relationshipId: number;
 	externalSource: boolean;
+	externalAppealType?: string | null;
+	appealId: number | null;
 }
 
 interface LinkedAppeal {
@@ -296,6 +298,7 @@ interface LinkedAppeal {
 	relationshipId: number;
 	externalSource: boolean;
 	externalAppealType?: string | null;
+	externalId?: string | null;
 }
 
 interface LinkableAppealSummary {

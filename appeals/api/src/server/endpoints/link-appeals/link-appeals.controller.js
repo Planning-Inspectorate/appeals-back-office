@@ -82,7 +82,7 @@ export const linkAppeal = async (req, res) => {
  * @returns {Promise<Response>}
  */
 export const linkExternalAppeal = async (req, res) => {
-	const { isCurrentAppealParent, linkedAppealReference, externalAppealType } = req.body;
+	const { isCurrentAppealParent, linkedAppealReference } = req.body;
 	const currentAppeal = req.appeal;
 	const currentAppealType = isCurrentAppealParent ? 'lead' : 'child';
 	if (!canLinkAppeals(currentAppeal, currentAppealType)) {
@@ -98,24 +98,27 @@ export const linkExternalAppeal = async (req, res) => {
 	const linkedAppealId = formattedLinkedAppeal.appealId
 		? parseInt(formattedLinkedAppeal.appealId)
 		: undefined;
+	console.log(linkedAppealId);
 	const relationship = isCurrentAppealParent
 		? {
 				parentId: currentAppeal.id,
 				parentRef: currentAppeal.reference,
 				childRef: formattedLinkedAppeal.appealReference || linkedAppealReference,
-				childId: linkedAppealId || null,
+				childId: null,
 				type: CASE_RELATIONSHIP_LINKED,
 				externalSource: true,
-				externalAppealType
+				externalAppealType: formattedLinkedAppeal.appealType,
+				externalId: linkedAppealId?.toString()
 		  }
 		: {
-				parentId: linkedAppealId || null,
+				parentId: null,
 				parentRef: formattedLinkedAppeal.appealReference || linkedAppealReference,
 				childRef: currentAppeal.reference,
 				childId: currentAppeal.id,
 				type: CASE_RELATIONSHIP_LINKED,
 				externalSource: true,
-				externalAppealType
+				externalAppealType: formattedLinkedAppeal.appealType,
+				externalId: linkedAppealId?.toString()
 		  };
 
 	const result = await appealRepository.linkAppeal(relationship);
@@ -181,10 +184,12 @@ export const associateExternalAppeal = async (req, res) => {
 	const relationship = {
 		parentId: currentAppeal.id,
 		parentRef: currentAppeal.reference,
-		childId: linkedAppealId || null,
+		childId: null,
 		childRef: linkedAppealReference,
 		type: CASE_RELATIONSHIP_RELATED,
-		externalSource: true
+		externalSource: true,
+		externalAppealType: formattedLinkedAppeal.appealType,
+		externalId: linkedAppealId?.toString()
 	};
 	const result = await appealRepository.linkAppeal(relationship);
 	await createAuditTrail({

@@ -21,6 +21,7 @@ import serviceUserRouter from '../service-user/service-user.router.js';
 import safetyRisksRouter from '../safety-risks/safety-risks.router.js';
 import siteAddressRouter from '../address/address.router.js';
 import siteOwnershipRouter from '../site-ownership/site-ownership.router.js';
+import otherAppealsRouter from '../other-appeals/other-appeals.router.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -77,6 +78,12 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	siteOwnershipRouter
+);
+router.use(
+	'/other-appeals',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	otherAppealsRouter
 );
 
 router

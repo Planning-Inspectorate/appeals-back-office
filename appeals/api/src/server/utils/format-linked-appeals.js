@@ -21,7 +21,9 @@ const formatLinkedAppeals = (linkedAppeals, reference, formattedAppealWithLinked
 				linkingDate: rel.linkingDate,
 				appealType: assignAppealType(formattedAppealWithLinkedTypes, rel.childId),
 				relationshipId: rel.id,
-				externalSource: rel.externalSource || false
+				externalSource: rel.externalSource || false,
+				externalId: rel.externalId,
+				externalAppealType: rel.externalAppealType
 			};
 		});
 	} else if (parentRelationship) {
@@ -33,7 +35,9 @@ const formatLinkedAppeals = (linkedAppeals, reference, formattedAppealWithLinked
 				linkingDate: parentRelationship.linkingDate,
 				appealType: assignAppealType(formattedAppealWithLinkedTypes, parentRelationship.parentId),
 				relationshipId: parentRelationship.id,
-				externalSource: parentRelationship.externalSource || false
+				externalSource: parentRelationship.externalSource || false,
+				externalId: parentRelationship.externalId,
+				externalAppealType: parentRelationship.externalAppealType
 			}
 		];
 	}
@@ -58,7 +62,9 @@ const formatRelatedAppeals = (relatedAppeals, currentAppealId, formattedAppealWi
 			externalSource: rel.externalSource === true,
 			linkingDate: rel.linkingDate,
 			appealType: assignAppealType(formattedAppealWithLinkedTypes, appealId),
-			relationshipId: rel.id
+			externalAppealType: rel.externalAppealType,
+			relationshipId: rel.id,
+			externalId: rel.externalId
 		};
 	});
 };
@@ -66,18 +72,18 @@ const formatRelatedAppeals = (relatedAppeals, currentAppealId, formattedAppealWi
 /**
  * @param {Appeal[] | null} formattedAppealWithLinkedTypes
  * @param {number| null} appealId
- * @returns {string}
+ * @returns {string | null}
  */
 const assignAppealType = (formattedAppealWithLinkedTypes, appealId) => {
 	if (formattedAppealWithLinkedTypes) {
 		const matchedAppeal = formattedAppealWithLinkedTypes.find((appeal) => appeal.id === appealId);
 
 		if (matchedAppeal && matchedAppeal.appealType) {
-			return `(${matchedAppeal.appealType.key}) ${matchedAppeal.appealType.type}`;
+			return `${matchedAppeal.appealType.type} (${matchedAppeal.appealType.key})`;
 		}
 	}
 
-	return 'Unknown';
+	return null;
 };
 
 export { formatLinkedAppeals, formatRelatedAppeals };
