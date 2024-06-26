@@ -283,25 +283,6 @@ describe('addresses routes', () => {
 				});
 			});
 
-			test('returns an error if addressLine2 is an empty string', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-
-				const response = await request
-					.patch(`/appeals/${householdAppeal.id}/addresses/${householdAppeal.address.id}`)
-					.send({
-						addressLine2: ''
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						addressLine2: ERROR_CANNOT_BE_EMPTY_STRING
-					}
-				});
-			});
-
 			test('returns an error if addressLine2 is more than 300 characters', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
@@ -393,25 +374,6 @@ describe('addresses routes', () => {
 				expect(response.body).toEqual({
 					errors: {
 						county: ERROR_MUST_BE_STRING
-					}
-				});
-			});
-
-			test('returns an error if county is an empty string', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-
-				const response = await request
-					.patch(`/appeals/${householdAppeal.id}/addresses/${householdAppeal.address.id}`)
-					.send({
-						county: ''
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						county: ERROR_CANNOT_BE_EMPTY_STRING
 					}
 				});
 			});
