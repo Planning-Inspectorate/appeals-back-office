@@ -169,6 +169,35 @@ describe('appellant-case', () => {
 			);
 		});
 
+		it('should render a "Site area updated" success notification banner when the site area is updated', async () => {
+			const appealId = appealData.appealId.toString();
+			const appellantCaseId = appealData.appellantCaseId.toString();
+			nock('http://test/')
+				.patch(`/appeals/${appealId}/appellant-cases/${appellantCaseId}`)
+				.reply(200, {
+					siteAreaSquareMetres: '31.5'
+				});
+
+			const validData = {
+				siteArea: '31.5'
+			};
+
+			await request.post(`${baseUrl}/site-area/change`).send(validData);
+
+			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
+
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const notificationBannerElementHTML = parseHtml(response.text, {
+				rootElement: notificationBannerElement
+			}).innerHTML;
+
+			expect(notificationBannerElementHTML).toMatchSnapshot();
+			expect(notificationBannerElementHTML).toContain('Success</h3>');
+			expect(notificationBannerElementHTML).toContain('Site area updated</p>');
+		});
+
 		it('should render a "Inspector access (appellant) updated" success notification banner when the inspector access (appellant) is updated', async () => {
 			const appealId = appealData.appealId;
 			const appellantCaseId = appealData.appellantCaseId;

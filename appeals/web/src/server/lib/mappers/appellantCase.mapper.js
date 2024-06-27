@@ -144,13 +144,15 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 				},
 				value: {
 					text: appellantCaseData.siteAreaSquareMetres
+						? `${appellantCaseData.siteAreaSquareMetres} m²`
+						: ''
 				},
 				actions: {
 					items: [
 						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
-							visuallyHiddenText: 'Site area in metres squared',
-							href: `${currentRoute}/#`
+							visuallyHiddenText: 'Site area in square metres ',
+							href: `${currentRoute}/site-area/change`
 						})
 					]
 				}

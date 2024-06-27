@@ -44,6 +44,7 @@ const updateAppellantCaseById = async (req, res) => {
 			inspectorAccessDetails,
 			ownsAllLand,
 			ownsSomeLand,
+			siteAreaSquareMetres,
 			isSiteVisibleFromPublicRoad,
 			visibilityRestrictions
 		},
@@ -92,6 +93,7 @@ const updateAppellantCaseById = async (req, res) => {
 					ownsAllLand,
 					ownsSomeLand,
 					isSiteVisibleFromPublicRoad,
+					siteAreaSquareMetres,
 					visibilityRestrictions
 			  });
 	} catch (error) {
@@ -116,6 +118,7 @@ const updateAppellantCaseById = async (req, res) => {
 				ownsAllLand,
 				ownsSomeLand,
 				isSiteVisibleFromPublicRoad,
+				siteAreaSquareMetres,
 				visibilityRestrictions
 		  };
 

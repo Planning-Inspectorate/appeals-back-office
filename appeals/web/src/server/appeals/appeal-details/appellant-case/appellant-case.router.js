@@ -22,6 +22,7 @@ import safetyRisksRouter from '../safety-risks/safety-risks.router.js';
 import siteAddressRouter from '../address/address.router.js';
 import siteOwnershipRouter from '../site-ownership/site-ownership.router.js';
 import otherAppealsRouter from '../other-appeals/other-appeals.router.js';
+import siteAreaRouter from '../site-area/site-area.router.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -84,6 +85,12 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	otherAppealsRouter
+);
+router.use(
+	'/site-area',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	siteAreaRouter
 );
 
 router
