@@ -82,7 +82,7 @@ export const postChangeServiceUser = async (request, response) => {
 
 		addNotificationBannerToSession(
 			request.session,
-			'serviceUserUpdated',
+			'changePage',
 			appealId,
 			`<p class="govuk-notification-banner__heading">${capitalize(userType)} details updated</p>`
 		);

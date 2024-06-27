@@ -126,35 +126,14 @@ export const notificationBannerDefinitions = {
 		type: 'success',
 		text: 'Costs document uploaded'
 	},
-	serviceUserUpdated: {
-		pages: ['appealDetails', 'appellantCase'],
-		type: 'success'
-	},
-	lpaReferenceUpdated: {
-		type: 'success',
-		pages: ['appealDetails', 'appellantCase', 'lpaQuestionnaire']
-	},
-	inspectorAccessUpdated: {
-		type: 'success',
-		pages: ['appealDetails', 'appellantCase', 'lpaQuestionnaire']
-	},
 	neighbouringSiteAffected: {
 		type: 'success',
 		pages: ['appealDetails', 'lpaQuestionnaire']
-	},
-	siteHealthAndSafetyUpdated: {
-		type: 'success',
-		pages: ['appealDetails', 'appellantCase', 'lpaQuestionnaire']
 	},
 	siteAddressUpdated: {
 		type: 'success',
 		pages: ['appellantCase'],
 		text: 'Site address updated'
-	},
-	siteOwnershipUpdated: {
-		type: 'success',
-		pages: ['appellantCase'],
-		text: 'Site ownership updated'
 	},
 	isAppealTypeCorrectUpdated: {
 		type: 'success',
@@ -165,6 +144,10 @@ export const notificationBannerDefinitions = {
 		type: 'success',
 		pages: ['appealDetails'],
 		text: 'LPA questionnaire due date changed'
+	},
+	changePage: {
+		type: 'success',
+		pages: ['appealDetails', 'appellantCase', 'lpaQuestionnaire']
 	}
 };
 

@@ -341,6 +341,7 @@ export const appellantCaseDataNotValidated = {
 		ownsSomeLand: null,
 		knowsOtherLandowners: null
 	},
+	siteAreaSquareMetres: '30.1',
 	validation: null,
 	visibility: {
 		details: null,

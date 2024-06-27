@@ -177,6 +177,7 @@ interface UpdateAppellantCaseRequest {
 	healthAndSafetyIssues?: string;
 	ownsAllLand?: boolean;
 	ownsSomeLand?: boolean;
+	siteAreaSquareMetres?: string;
 	isSiteVisibleFromPublicRoad?: boolean;
 	visibilityRestrictions?: string;
 }

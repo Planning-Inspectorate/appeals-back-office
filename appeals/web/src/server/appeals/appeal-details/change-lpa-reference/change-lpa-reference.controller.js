@@ -69,7 +69,7 @@ export const postChangeLpaReference = async (request, response) => {
 
 		addNotificationBannerToSession(
 			request.session,
-			'lpaReferenceUpdated',
+			'changePage',
 			appealId,
 			`<p class="govuk-notification-banner__heading">LPA application reference updated</p>`
 		);

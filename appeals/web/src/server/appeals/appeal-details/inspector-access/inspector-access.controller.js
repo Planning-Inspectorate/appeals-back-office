@@ -93,7 +93,7 @@ export const postChangeInspectorAccess = async (request, response) => {
 
 		addNotificationBannerToSession(
 			request.session,
-			'inspectorAccessUpdated',
+			'changePage',
 			appealId,
 			`<p class="govuk-notification-banner__heading">Inspector access (${source}) updated</p>`
 		);
