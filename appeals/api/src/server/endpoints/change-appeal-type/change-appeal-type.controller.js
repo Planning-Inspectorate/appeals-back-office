@@ -1,12 +1,9 @@
 import { databaseConnector } from '#utils/database-connector.js';
-import timetableRepository from '#repositories/appeal-timetable.repository.js';
-import {
-	STATE_TARGET_AWAITING_TRANSFER,
-	STATE_TARGET_CLOSED,
-	STATE_TARGET_TRANSFERRED
-} from '#endpoints/constants.js';
+import { STATE_TARGET_AWAITING_TRANSFER, STATE_TARGET_TRANSFERRED } from '#endpoints/constants.js';
 import transitionState from '#state/transition-state.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
+import { changeAppealType } from './change-appeal-type.service.js';
+import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -31,29 +28,21 @@ export const getAppealTypes = async (req, res) => {
  */
 export const requestChangeOfAppealType = async (req, res) => {
 	const appeal = req.appeal;
-	const azureAdUserId = String(req.get('azureAdUserId'));
 	const { newAppealTypeId, newAppealTypeFinalDate } = req.body;
 
-	Promise.all([
-		await databaseConnector.appeal.update({
-			where: { id: appeal.id },
-			data: {
-				caseResubmittedTypeId: newAppealTypeId,
-				caseUpdatedDate: new Date()
-			}
-		}),
-		await timetableRepository.upsertAppealTimetableById(appeal.id, {
-			resubmitAppealTypeDate: new Date(newAppealTypeFinalDate)
-		}),
-		await transitionState(
-			appeal.id,
-			appeal.appealType,
-			azureAdUserId,
-			appeal.appealStatus,
-			STATE_TARGET_CLOSED
-		),
-		await broadcasters.broadcastAppeal(appeal.id)
-	]);
+	const notifyClient = req.notifyClient;
+	const siteAddress = appeal.address
+		? formatAddressSingleLine(appeal.address)
+		: 'Address not available';
+
+	await changeAppealType(
+		appeal,
+		newAppealTypeId,
+		newAppealTypeFinalDate,
+		notifyClient,
+		siteAddress,
+		req.get('azureAdUserId') || ''
+	);
 
 	return res.send(true);
 };
