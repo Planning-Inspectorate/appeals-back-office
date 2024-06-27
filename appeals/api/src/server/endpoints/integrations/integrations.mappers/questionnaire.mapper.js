@@ -84,9 +84,6 @@ export const mapQuestionnaireOut = (casedata) => {
 		notificationMethod: casedata?.lpaNotificationMethods
 			? casedata?.lpaNotificationMethods.map((method) => method.lpaNotificationMethod.key)
 			: null,
-		lpaCostsAppliedFor: casedata?.lpaCostsAppliedFor || null,
-		listedBuildingDetails: casedata?.listedBuildingDetails
-			? casedata?.listedBuildingDetails.map((entry) => entry.listEntry)
-			: null
+		lpaCostsAppliedFor: casedata?.lpaCostsAppliedFor || null
 	};
 };
