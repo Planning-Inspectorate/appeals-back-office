@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { users } from '../fixtures/users';
 import { assertType } from '../support/utils/assertType';
-import { urlPaths } from '../../fixtures/url-paths.js';
+import { urlPaths } from '../support/urlPaths.js';
 
 // @ts-nocheck
 export class Page {
@@ -208,11 +208,26 @@ export class Page {
 			});
 	}
 
-	validateBannerMessage(successMessage) {
-		this.basePageElements.bannerHeader().then(($banner) => {
-			expect($banner.text().trim()).eq(successMessage);
+	validateBannerMessage(title, message) {
+		// this.basePageElements.bannerHeader().then(($banner) => {
+		// 	expect($banner.text().trim()).eq(successMessage);
+		// });
+
+		// Allow for multiple banners on a page
+		// TODO Move selectors out
+		cy.get('.govuk-notification-banner').each(($banner) => {
+			cy.wrap($banner)
+				.find('.govuk-notification-banner__title')
+				.then(($title) => {
+					if ($title.text().includes(title)) {
+						cy.wrap($banner)
+							.find('.govuk-notification-banner__heading')
+							.should('contain.text', message);
+					}
+				});
 		});
 	}
+
 	validatePublishBannerMessage(successMessage) {
 		this.basePageElements.publishBannerHeader().then(($banner) => {
 			expect($banner.text().trim()).eq(successMessage);

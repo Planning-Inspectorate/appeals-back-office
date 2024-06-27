@@ -3,7 +3,7 @@
 
 import { users } from '../../fixtures/users';
 import { AppealsListPage } from '../../page_objects/appealsListPage';
-import { urlPaths } from '../../support/url-paths.js';
+import { urlPaths } from '../../support/urlPaths';
 
 const page = new AppealsListPage();
 describe('Appeals feature', () => {

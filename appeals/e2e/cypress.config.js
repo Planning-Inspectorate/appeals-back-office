@@ -30,6 +30,7 @@ module.exports = defineConfig({
 			return config;
 		},
 		baseUrl: process.env.BASE_URL,
+		apiBaseUrl: process.env.API_BASE_URL,
 		env: {
 			PASSWORD: process.env.USER_PASSWORD,
 			CASE_TEAM_EMAIL: process.env.CASE_TEAM_EMAIL,

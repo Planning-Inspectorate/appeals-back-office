@@ -12,10 +12,13 @@ export class AppealsListPage extends Page {
 
 	_cyDataSelectors = {
 		reviewLpaQuestionnaire: 'review-lpa-questionnaire',
+
 		reviewAppellantCase: 'review-appellant-case',
 		changeSetVisitType: 'change-set-visit-type',
 		changeCaseOfficer: 'change-case-officer',
-		assignInspector: 'assign-inspector'
+		assignCaseOfficer: 'assign-case-officer',
+		assignInspector: 'assign-inspector',
+		changeInspector: 'change-inspector'
 	};
 
 	elements = {
@@ -23,7 +26,9 @@ export class AppealsListPage extends Page {
 		reviewAppeallantCase: () => cy.getByData(this._cyDataSelectors.reviewAppellantCase),
 		changeSetVisitType: () => cy.getByData(this._cyDataSelectors.changeSetVisitType),
 		changeCaseOfficer: () => cy.getByData(this._cyDataSelectors.changeCaseOfficer),
+		assignCaseOfficer: () => cy.getByData(this._cyDataSelectors.assignCaseOfficer),
 		assignInspector: () => cy.getByData(this._cyDataSelectors.assignInspector),
+		changeInspector: () => cy.getByData(this._cyDataSelectors.changeInspector),
 		answerCellAppeals: (answer) =>
 			cy.contains(this._selectors.summaryListValue, answer, { matchCase: false }),
 		link: () => cy.get(this._selectors.link),
@@ -125,18 +130,28 @@ export class AppealsListPage extends Page {
 		this.selectRadioButtonByValue(outcome);
 	}
 
-	clickCaseOfficer() {
+	clickAssignCaseOfficer() {
+		this.clickAccordionByText('Team');
+		this.elements.assignCaseOfficer().click();
+	}
+
+	clickChangeCaseOfficer() {
 		this.clickAccordionByText('Team');
 		this.elements.changeCaseOfficer().click();
 	}
 
-	clickInspector() {
+	clickAssignInspector() {
 		this.clickAccordionByText('Team');
 		this.elements.assignInspector().click();
 	}
 
+	clickChangeInspector() {
+		this.clickAccordionByText('Team');
+		this.elements.changeInspector().click();
+	}
+
 	checkAnswerSummaryValue(answer) {
-		this.appealsPageElements.answerCellAppeals(answer).then(($elem) => {
+		this.elements.answerCellAppeals(answer).then(($elem) => {
 			cy.wrap($elem)
 				.invoke('text')
 				.then((text) => expect(text.trim()).to.include(answer));
