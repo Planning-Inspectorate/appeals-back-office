@@ -96,6 +96,7 @@ model AppealTimetable {
   issueDeterminationDate  DateTime?
   lpaQuestionnaireDueDate DateTime?
   statementReviewDate     DateTime?
+  caseResubmissionDueDate DateTime?
 }
 
 /// AppealStatus model

@@ -346,6 +346,7 @@ interface AppealTimetable {
 	statementReviewDate?: Date | null;
 	issueDeterminationDate?: Date | null;
 	completeDate?: Date | null;
+	caseResubmissionDueDate?: Date | null;
 }
 
 interface UpdateTimetableRequest {

@@ -1,15 +1,19 @@
+// @ts-nocheck
 import { request } from '#tests/../app-test.js';
 import { jest } from '@jest/globals';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { householdAppeal } from '#tests/appeals/mocks.js';
+import formatDate from '#utils/date-formatter.js';
 import {
 	ERROR_NOT_FOUND,
 	ERROR_INVALID_APPEAL_STATE,
 	ERROR_CANNOT_BE_EMPTY_STRING,
-	ERROR_MUST_BE_STRING
+	ERROR_MUST_BE_STRING,
+	FRONT_OFFICE_URL
 } from '#endpoints/constants.js';
-
+import config from '#config/config.js';
 const { databaseConnector } = await import('#utils/database-connector.js');
+
 const appealTypes = [
 	{ id: 1, shorthand: 'A', code: 'A', type: 'TYPE A', enabled: false },
 	{ id: 2, shorthand: 'B', code: 'B', type: 'TYPE B', enabled: false }
@@ -112,6 +116,69 @@ describe('appeal change type resubmit routes', () => {
 					appealStatus: ERROR_INVALID_APPEAL_STATE
 				}
 			});
+		});
+		test('returns 200 when appeal status is correct', async () => {
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+			// @ts-ignore
+			databaseConnector.appealType.findMany.mockResolvedValue(appealTypes);
+
+			const response = await request
+				.post(`/appeals/${householdAppeal.id}/appeal-change-request`)
+				.send({
+					newAppealTypeId: 1,
+					newAppealTypeFinalDate: '3000-02-05'
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
+				data: {
+					caseResubmittedTypeId: 1,
+					caseUpdatedDate: expect.any(Date)
+				},
+				where: {
+					id: householdAppeal.id
+				}
+			});
+
+			expect(databaseConnector.appealTimetable.upsert).toHaveBeenCalledWith({
+				create: {
+					appealId: householdAppeal.id,
+					caseResubmissionDueDate: new Date('3000-02-05T01:00:00.000Z')
+				},
+				update: {
+					caseResubmissionDueDate: new Date('3000-02-05T01:00:00.000Z')
+				},
+				where: {
+					appealId: householdAppeal.id
+				},
+				include: {
+					appeal: true
+				}
+			});
+
+			// eslint-disable-next-line no-undef
+			expect(mockSendEmail).toHaveBeenCalledTimes(1);
+
+			// eslint-disable-next-line no-undef
+			expect(mockSendEmail).toHaveBeenCalledWith(
+				config.govNotify.template.appealTypeChangedNonHas.id,
+				'test@136s7.com',
+				{
+					emailReplyToId: null,
+					personalisation: {
+						appeal_reference_number: '1345264',
+						lpa_reference: '48269/APP/2021/1482',
+						appeal_type: 'Householder',
+						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+						url: FRONT_OFFICE_URL,
+						due_date: formatDate(new Date('3000-02-05'), false)
+					},
+					reference: null
+				}
+			);
+
+			expect(response.status).toEqual(200);
 		});
 	});
 });

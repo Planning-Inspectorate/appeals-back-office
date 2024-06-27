@@ -80,6 +80,9 @@ export default joi
 						lpaqIncomplete: joi.object({
 							id: joi.string().required()
 						}),
+						appealTypeChangedNonHas: joi.object({
+							id: joi.string().required()
+						}),
 						siteVisitSchedule: joi.object({
 							unaccompanied: joi.object({
 								appellant: joi.object({
