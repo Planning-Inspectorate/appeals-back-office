@@ -1,8 +1,12 @@
 import { loadEnvironment } from '@pins/platform';
 import url from 'node:url';
 import schema from './schema.js';
+import path from 'node:path';
 
-const environment = loadEnvironment(process.env.NODE_ENV);
+const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
+const apiDir = path.join(__dirname, '..', '..', '..'); // api package root, where .env files live
+
+const environment = loadEnvironment(process.env.NODE_ENV, apiDir);
 
 const { value, error } = schema.validate({
 	NODE_ENV: environment.NODE_ENV,
