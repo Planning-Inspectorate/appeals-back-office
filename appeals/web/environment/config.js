@@ -1,6 +1,11 @@
 import { loadEnvironment } from '@pins/platform';
 import schema from './schema.js';
 import { baseConfigFromEnvironment } from './base-config.js';
+import url from 'url';
+import path from 'path';
+
+const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
+const webDir = path.join(__dirname, '..'); // web package root, where .env files live
 
 /**
  * @typedef {import('./config.js').EnvironmentConfig} EnvironmentConfig
@@ -21,7 +26,7 @@ export function loadConfig() {
 	if (loadedConfig) {
 		return loadedConfig;
 	}
-	const environment = loadEnvironment(process.env.NODE_ENV);
+	const environment = loadEnvironment(process.env.NODE_ENV, webDir);
 	const baseConfig = baseConfigFromEnvironment(environment);
 	// defaults where needed
 	const {
