@@ -36,17 +36,13 @@ const updateAppellantCaseById = async (req, res) => {
 			applicantFirstName,
 			applicantSurname,
 			areAllOwnersKnown,
-			doesSiteRequireInspectorAccess,
 			hasAdvertisedAppeal,
 			hasAttemptedToIdentifyOwners,
-			hasHealthAndSafetyIssues,
-			healthAndSafetyIssues,
-			inspectorAccessDetails,
+			siteSafetyDetails,
+			siteAccessDetails,
 			ownsAllLand,
 			ownsSomeLand,
-			siteAreaSquareMetres,
-			isSiteVisibleFromPublicRoad,
-			visibilityRestrictions
+			siteAreaSquareMetres
 		},
 		params,
 		validationOutcome
@@ -84,17 +80,13 @@ const updateAppellantCaseById = async (req, res) => {
 					applicantFirstName,
 					applicantSurname,
 					areAllOwnersKnown,
-					doesSiteRequireInspectorAccess,
 					hasAdvertisedAppeal,
 					hasAttemptedToIdentifyOwners,
-					hasHealthAndSafetyIssues,
-					healthAndSafetyIssues,
-					inspectorAccessDetails,
+					siteSafetyDetails,
+					siteAccessDetails,
 					ownsAllLand,
 					ownsSomeLand,
-					isSiteVisibleFromPublicRoad,
-					siteAreaSquareMetres,
-					visibilityRestrictions
+					siteAreaSquareMetres
 			  });
 	} catch (error) {
 		if (error) {
@@ -113,13 +105,11 @@ const updateAppellantCaseById = async (req, res) => {
 				areAllOwnersKnown,
 				hasAdvertisedAppeal,
 				hasAttemptedToIdentifyOwners,
-				hasHealthAndSafetyIssues,
-				healthAndSafetyIssues,
+				siteSafetyDetails,
+				siteAccessDetails,
 				ownsAllLand,
 				ownsSomeLand,
-				isSiteVisibleFromPublicRoad,
-				siteAreaSquareMetres,
-				visibilityRestrictions
+				siteAreaSquareMetres
 		  };
 
 	return res.send(response);
