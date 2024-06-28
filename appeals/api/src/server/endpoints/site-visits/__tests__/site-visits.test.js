@@ -1144,7 +1144,7 @@ describe('site visit routes', () => {
 
 				// eslint-disable-next-line no-undef
 				expect(mockSendEmail).toHaveBeenCalledWith(
-					config.govNotify.template.siteVisitChange.accompaniedToAccessRequired.appellant.id,
+					config.govNotify.template.siteVisitChange.unaccompaniedToAccessRequired.appellant.id,
 					'test@136s7.com',
 					{
 						emailReplyToId: null,
@@ -2247,7 +2247,7 @@ describe('site visit routes', () => {
 				'visit-type'
 			);
 			expect(result).toEqual({
-				appellant: { id: 'f9bd99e7-f3f1-4836-a2dc-018dfdece854' }
+				appellant: { id: 'mock-site-visit-change-unaccompanied-to-access-required-appellant-id' }
 			});
 		});
 
@@ -2258,7 +2258,7 @@ describe('site visit routes', () => {
 				'visit-type'
 			);
 			expect(result).toEqual({
-				appellant: { id: 'a4964a74-af84-45c2-a61b-162a92f94087' }
+				appellant: { id: 'mock-site-visit-change-access-required-to-unaccompanied-appellant-id' }
 			});
 		});
 
@@ -2269,8 +2269,8 @@ describe('site visit routes', () => {
 				'visit-type'
 			);
 			expect(result).toEqual({
-				appellant: { id: '771691cb-81cc-444a-8db0-dbbd4f66b61f' },
-				lpa: { id: '03a6616e-3e0c-4f28-acd5-f4e873847457' }
+				appellant: { id: 'mock-site-visit-change-unaccompanied-to-accompanied-appellant-id' },
+				lpa: { id: 'mock-site-visit-change-unaccompanied-to-accompanied-lpa-id' }
 			});
 		});
 
@@ -2281,8 +2281,8 @@ describe('site visit routes', () => {
 				'visit-type'
 			);
 			expect(result).toEqual({
-				appellant: { id: '0b7d9246-99b8-43d7-8205-02a3c9762691' },
-				lpa: { id: '03a6616e-3e0c-4f28-acd5-f4e873847457' }
+				appellant: { id: 'mock-site-visit-change-access-required-to-accompanied-appellant-id' },
+				lpa: { id: 'mock-site-visit-change-access-required-to-accompanied-lpa-id' }
 			});
 		});
 
@@ -2293,8 +2293,8 @@ describe('site visit routes', () => {
 				'visit-type'
 			);
 			expect(result).toEqual({
-				appellant: { id: 'f9bd99e7-f3f1-4836-a2dc-018dfdece854' },
-				lpa: { id: '15acdaee-ca9d-4001-bb93-9f50ab29226d' }
+				appellant: { id: 'mock-site-visit-change-accompanied-to-access-required-appellant-id' },
+				lpa: { id: 'mock-site-visit-change-accompanied-to-access-required-lpa-id' }
 			});
 		});
 
@@ -2305,8 +2305,8 @@ describe('site visit routes', () => {
 				'visit-type'
 			);
 			expect(result).toEqual({
-				appellant: { id: '5056b6fe-095f-45ad-abb5-0a582ef274c3' },
-				lpa: { id: '15acdaee-ca9d-4001-bb93-9f50ab29226d' }
+				appellant: { id: 'mock-site-visit-change-accompanied-to-unaccompanied-appellant-id' },
+				lpa: { id: 'mock-site-visit-change-accompanied-to-unaccompanied-lpa-id' }
 			});
 		});
 
@@ -2332,15 +2332,15 @@ describe('site visit routes', () => {
 		test('returns appellant template ID for Access Required visit date/time change', () => {
 			const result = fetchVisitNotificationTemplateIds('Access required', 'AnyType', 'date-time');
 			expect(result).toEqual({
-				appellant: { id: '1b963d2c-ae50-45c4-abbb-149481c69074' }
+				appellant: { id: 'mock-site-visit-change-access-required-date-change-appellant-id' }
 			});
 		});
 
 		test('returns appellant and lpa template IDs for Accompanied visit date/time change', () => {
 			const result = fetchVisitNotificationTemplateIds('Accompanied', 'AnyType', 'date-time');
 			expect(result).toEqual({
-				appellant: { id: '3bd2cd75-bf1e-4256-8a4c-5c5739bc0ecc' },
-				lpa: { id: '5d23f669-a1d2-4232-9171-10f956dfb400' }
+				appellant: { id: 'mock-site-visit-change-accompanied-date-change-appellant-id' },
+				lpa: { id: 'mock-site-visit-change-accompanied-date-change-lpa-id' }
 			});
 		});
 	});
