@@ -82,7 +82,6 @@ export const documentRedactionStatuses = [
 	}
 ];
 
-
 /**
  * An array of LPA notification methods.
  *
@@ -101,7 +100,6 @@ export const lpaNotificationMethods = [
 		name: 'A press advert'
 	}
 ];
-
 
 /**
  * An array of knowledge of other landowners values.
@@ -310,7 +308,7 @@ export async function seedStaticData(databaseConnector) {
 	for (const appealType of appealTypes) {
 		await databaseConnector.appealType.upsert({
 			create: appealType,
-			where: { type: appealType.type  },
+			where: { type: appealType.type },
 			update: appealType
 		});
 	}
@@ -332,7 +330,7 @@ export async function seedStaticData(databaseConnector) {
 		await databaseConnector.knowledgeOfOtherLandowners.upsert({
 			create: knowledgeOfOtherLandownersValue,
 			where: { name: knowledgeOfOtherLandownersValue.name },
-			update: knowledgeOfOtherLandownersValue,
+			update: knowledgeOfOtherLandownersValue
 		});
 	}
 	for (const siteVisitType of siteVisitTypes) {
@@ -349,7 +347,6 @@ export async function seedStaticData(databaseConnector) {
 			update: documentRedactionStatus
 		});
 	}
-
 	for (const appellantCaseValidationOutcome of appellantCaseValidationOutcomes) {
 		await databaseConnector.appellantCaseValidationOutcome.upsert({
 			create: appellantCaseValidationOutcome,

@@ -9,9 +9,9 @@ import {
 	appellantCaseList,
 	appellantsList,
 	agentsList,
-	localPlanningDepartmentList,
 	lpaQuestionnaireList
 } from './data-samples.js';
+import { localPlanningDepartmentList } from './LPAs/dev.js';
 import { calculateTimetable } from '#utils/business-days.js';
 import {
 	APPEAL_TYPE_SHORTHAND_HAS,
