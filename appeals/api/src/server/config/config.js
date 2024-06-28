@@ -42,133 +42,183 @@ const { value, error } = schema.validate({
 			key: environment.GOV_NOTIFY_API_KEY
 		},
 		template: {
-			validAppellantCase: {
-				id: '3b4b74b4-b604-411b-9c98-5be2c6f3bdfd'
-			},
 			appealConfirmed: {
-				id: '783f94cc-1d6d-4153-8ad7-9070e449a57c'
+				id: environment.GOV_NOTIFY_APPEAL_CONFIRMED_ID || 'mock-appeal-confirmed-id'
 			},
 			appealIncomplete: {
-				id: 'f9cbd646-be00-45e2-96fc-f47e585e5b5e'
+				id: environment.GOV_NOTIFY_APPEAL_INCOMPLETE_ID || 'mock-appeal-incomplete-id'
 			},
 			appealInvalid: {
-				id: '59c8337a-e854-4fc4-8c83-aa958b91bd99'
-			},
-			decisionIsInvalidAppellant: {
-				id: 'bd117483-e7fe-4655-8f57-cf597ad57710'
-			},
-			decisionIsInvalidLPA: {
-				id: 'a0cb542f-24d3-4b22-826b-1e012892f922'
-			},
-			decisionIsAllowedSplitDismissed: {
-				appellant: {
-					id: '4accd6da-798f-4d68-9367-6058194bc511'
-				},
-				lpa: {
-					id: '09dbb936-bc1a-400b-a2f8-711078921bf5'
-				}
-			},
-			appealValidStartCase: {
-				appellant: {
-					id: '1e5169b5-88b4-4d86-bbe5-77cc464ffc04'
-				},
-				lpa: {
-					id: 'c4701212-4b6a-4b55-801a-c86c7dbea54b'
-				}
+				id: environment.GOV_NOTIFY_APPEAL_INVALID_ID || 'mock-appeal-invalid-id'
 			},
 			appealStartDateChange: {
 				appellant: {
-					id: '8e650ba9-ffb9-4fa8-bfb7-96c9bdebd8ec'
+					id:
+						environment.GOV_NOTIFY_APPEAL_START_DATE_CHANGE_APPELLANT_ID ||
+						'mock-appeal-start-date-change-appellant-id'
 				},
 				lpa: {
-					id: '8ccb2010-c1b6-4345-bde3-cc17f9d786ce'
+					id:
+						environment.GOV_NOTIFY_APPEAL_START_DATE_CHANGE_LPA_ID ||
+						'mock-appeal-start-date-change-lpa-id'
 				}
-			},
-			lpaqComplete: {
-				id: 'c571ee53-69c8-400e-a4c0-44ded262a081'
 			},
 			appealTypeChangedNonHas: {
-				id: '32201ca6-1fcc-4be0-b067-427c57327be9'
+				id:
+					environment.GOV_NOTIFY_APPEAL_TYPE_CHANGED_NON_HAS_ID ||
+					'mock-appeal-type-changed-non-has-id'
 			},
-			lpaqIncomplete: {
-				id: '4701bc3c-2f24-4ed8-8841-14d93c3b9964'
-			},
-			siteVisitSchedule: {
-				unaccompanied: {
-					appellant: {
-						id: 'a33bb800-56d9-46a4-ba64-35d9d0263666'
-					}
+			appealValidStartCase: {
+				appellant: {
+					id:
+						environment.GOV_NOTIFY_APPEAL_VALID_START_CASE_APPELLANT_ID ||
+						'mock-appeal-valid-start-case-appellant-id'
 				},
-				accompanied: {
-					appellant: {
-						id: '4002346f-fd65-42fe-b663-36600b85080c'
-					},
-					lpa: {
-						id: '03a6616e-3e0c-4f28-acd5-f4e873847457'
-					}
-				},
-				accessRequired: {
-					appellant: {
-						id: '44ff947d-f93d-4333-9366-97ab7a5aa722'
-					}
+				lpa: {
+					id:
+						environment.GOV_NOTIFY_APPEAL_VALID_START_CASE_LPA_ID ||
+						'mock-appeal-valid-start-case-lpa-id'
 				}
 			},
+			decisionIsAllowedSplitDismissed: {
+				appellant: {
+					id:
+						environment.GOV_NOTIFY_DECISION_IS_ALLOWED_SPLIT_DISMISSED_APPELLANT_ID ||
+						'mock-decision-is-allowed-split-dismissed-appellant-id'
+				},
+				lpa: {
+					id:
+						environment.GOV_NOTIFY_DECISION_IS_ALLOWED_SPLIT_DISMISSED_LPA_ID ||
+						'mock-decision-is-allowed-split-dismissed-lpa-id'
+				}
+			},
+			decisionIsInvalidAppellant: {
+				id:
+					environment.GOV_NOTIFY_DECISION_IS_INVALID_APPELLANT_ID ||
+					'mock-decision-is-invalid-appellant-id'
+			},
+			decisionIsInvalidLPA: {
+				id: environment.GOV_NOTIFY_DECISION_IS_INVALID_LPA_ID || 'mock-decision-is-invalid-lpa-id'
+			},
+			lpaqComplete: {
+				id: environment.GOV_NOTIFY_LPAQ_COMPLETE_ID || 'mock-lpaq-complete-id'
+			},
+			lpaqIncomplete: {
+				id: environment.GOV_NOTIFY_LPAQ_INCOMPLETE_ID || 'mock-lpaq-incomplete-id'
+			},
 			siteVisitChange: {
-				unaccompaniedToAccessRequired: {
+				accompaniedDateChange: {
 					appellant: {
-						id: 'f9bd99e7-f3f1-4836-a2dc-018dfdece854'
-					}
-				},
-				unaccompaniedToAccompanied: {
-					appellant: {
-						id: '771691cb-81cc-444a-8db0-dbbd4f66b61f'
+						id:
+							environment.GOV_NOTIFY_SITE_VISIT_CHANGE_ACCOMPANIED_DATE_CHANGE_APPELLANT_ID ||
+							'mock-site-visit-change-accompanied-date-change-appellant-id'
 					},
 					lpa: {
-						id: '03a6616e-3e0c-4f28-acd5-f4e873847457'
-					}
-				},
-				accessRequiredToAccompanied: {
-					appellant: {
-						id: '0b7d9246-99b8-43d7-8205-02a3c9762691'
-					},
-					lpa: {
-						id: '03a6616e-3e0c-4f28-acd5-f4e873847457'
-					}
-				},
-				accessRequiredToUnaccompanied: {
-					appellant: {
-						id: 'a4964a74-af84-45c2-a61b-162a92f94087'
+						id:
+							environment.GOV_NOTIFY_SITE_VISIT_CHANGE_ACCOMPANIED_DATE_CHANGE_LPA_ID ||
+							'mock-site-visit-change-accompanied-date-change-lpa-id'
 					}
 				},
 				accompaniedToAccessRequired: {
 					appellant: {
-						id: 'f9bd99e7-f3f1-4836-a2dc-018dfdece854'
+						id:
+							environment.GOV_NOTIFY_SITE_VISIT_CHANGE_ACCOMPANIED_TO_ACCESS_REQUIRED_APPELLANT_ID ||
+							'mock-site-visit-change-accompanied-to-access-required-appellant-id'
 					},
 					lpa: {
-						id: '15acdaee-ca9d-4001-bb93-9f50ab29226d'
+						id:
+							environment.GOV_NOTIFY_SITE_VISIT_CHANGE_ACCOMPANIED_TO_ACCESS_REQUIRED_LPA_ID ||
+							'mock-site-visit-change-accompanied-to-access-required-lpa-id'
 					}
 				},
 				accompaniedToUnaccompanied: {
 					appellant: {
-						id: '5056b6fe-095f-45ad-abb5-0a582ef274c3'
+						id:
+							environment.GOV_NOTIFY_SITE_VISIT_CHANGE_ACCOMPANIED_TO_UNACCOMPANIED_APPELLANT_ID ||
+							'mock-site-visit-change-accompanied-to-unaccompanied-appellant-id'
 					},
 					lpa: {
-						id: '15acdaee-ca9d-4001-bb93-9f50ab29226d'
+						id:
+							environment.GOV_NOTIFY_SITE_VISIT_CHANGE_ACCOMPANIED_TO_UNACCOMPANIED_LPA_ID ||
+							'mock-site-visit-change-accompanied-to-unaccompanied-lpa-id'
 					}
 				},
 				accessRequiredDateChange: {
 					appellant: {
-						id: '1b963d2c-ae50-45c4-abbb-149481c69074'
+						id:
+							environment.GOV_NOTIFY_SITE_VISIT_CHANGE_ACCESS_REQUIRED_DATE_CHANGE_APPELLANT_ID ||
+							'mock-site-visit-change-access-required-date-change-appellant-id'
 					}
 				},
-				accompaniedDateChange: {
+				accessRequiredToAccompanied: {
 					appellant: {
-						id: '3bd2cd75-bf1e-4256-8a4c-5c5739bc0ecc'
+						id:
+							environment.GOV_NOTIFY_SITE_VISIT_CHANGE_ACCESS_REQUIRED_TO_ACCOMPANIED_APPELLANT_ID ||
+							'mock-site-visit-change-access-required-to-accompanied-appellant-id'
 					},
 					lpa: {
-						id: '5d23f669-a1d2-4232-9171-10f956dfb400'
+						id:
+							environment.GOV_NOTIFY_SITE_VISIT_CHANGE_ACCESS_REQUIRED_TO_ACCOMPANIED_LPA_ID ||
+							'mock-site-visit-change-access-required-to-accompanied-lpa-id'
+					}
+				},
+				accessRequiredToUnaccompanied: {
+					appellant: {
+						id:
+							environment.GOV_NOTIFY_SITE_VISIT_CHANGE_ACCESS_REQUIRED_TO_UNACCOMPANIED_APPELLANT_ID ||
+							'mock-site-visit-change-access-required-to-unaccompanied-appellant-id'
+					}
+				},
+				unaccompaniedToAccessRequired: {
+					appellant: {
+						id:
+							environment.GOV_NOTIFY_SITE_VISIT_CHANGE_UNACCOMPANIED_TO_ACCESS_REQUIRED_APPELLANT_ID ||
+							'mock-site-visit-change-unaccompanied-to-access-required-appellant-id'
+					}
+				},
+				unaccompaniedToAccompanied: {
+					appellant: {
+						id:
+							environment.GOV_NOTIFY_SITE_VISIT_CHANGE_UNACCOMPANIED_TO_ACCOMPANIED_APPELLANT_ID ||
+							'mock-site-visit-change-unaccompanied-to-accompanied-appellant-id'
+					},
+					lpa: {
+						id:
+							environment.GOV_NOTIFY_SITE_VISIT_CHANGE_UNACCOMPANIED_TO_ACCOMPANIED_LPA_ID ||
+							'mock-site-visit-change-unaccompanied-to-accompanied-lpa-id'
 					}
 				}
+			},
+			siteVisitSchedule: {
+				accompanied: {
+					appellant: {
+						id:
+							environment.GOV_NOTIFY_SITE_VISIT_SCHEDULE_ACCOMPANIED_APPELLANT_ID ||
+							'mock-site-visit-schedule-accompanied-appellant-id'
+					},
+					lpa: {
+						id:
+							environment.GOV_NOTIFY_SITE_VISIT_SCHEDULE_ACCOMPANIED_LPA_ID ||
+							'mock-site-visit-schedule-accompanied-lpa-id'
+					}
+				},
+				accessRequired: {
+					appellant: {
+						id:
+							environment.GOV_NOTIFY_SITE_VISIT_SCHEDULE_ACCESS_REQUIRED_APPELLANT_ID ||
+							'mock-site-visit-schedule-access-required-appellant-id'
+					}
+				},
+				unaccompanied: {
+					appellant: {
+						id:
+							environment.GOV_NOTIFY_SITE_VISIT_SCHEDULE_UNACCOMPANIED_APPELLANT_ID ||
+							'mock-site-visit-schedule-unaccompanied-appellant-id'
+					}
+				}
+			},
+			validAppellantCase: {
+				id: environment.GOV_NOTIFY_VALID_APPELLANT_CASE_ID || 'mock-valid-appellant-case-id'
 			}
 		},
 		testMailbox: environment.TEST_MAILBOX || 'test@example.com'
