@@ -159,7 +159,8 @@ const setAppealDecision = (id, { documentDate, documentGuid, version = 1, outcom
 					}
 				},
 				outcome,
-				decisionLetterGuid: documentGuid
+				decisionLetterGuid: documentGuid,
+				caseDecisionOutcomeDate: new Date(documentDate)
 			}
 		}),
 		databaseConnector.documentVersion.update({
@@ -194,7 +195,8 @@ const setInvalidAppealDecision = (id, { invalidDecisionReason, outcome }) => {
 					}
 				},
 				outcome,
-				invalidDecisionReason
+				invalidDecisionReason,
+				caseDecisionOutcomeDate: new Date()
 			}
 		})
 	]);

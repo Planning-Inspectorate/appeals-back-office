@@ -450,12 +450,13 @@ model SiteVisitType {
 /// InspectorDecision model
 /// Contains decision made by an inspector on an appeal after a site visit.
 model InspectorDecision {
-  id                    Int     @id @default(autoincrement())
-  appeal                Appeal  @relation(fields: [appealId], references: [id])
-  appealId              Int     @unique
-  outcome               String
-  decisionLetterGuid    String?
-  invalidDecisionReason String?
+  id                      Int       @id @default(autoincrement())
+  appeal                  Appeal    @relation(fields: [appealId], references: [id])
+  appealId                Int       @unique
+  outcome                 String
+  decisionLetterGuid      String?
+  invalidDecisionReason   String?
+  caseDecisionOutcomeDate DateTime?
 }
 
 /// Folder model
