@@ -182,7 +182,7 @@ describe('appellant-case', () => {
 				siteArea: '31.5'
 			};
 
-			await request.post(`${baseUrl}/site-area/change`).send(validData);
+			await request.post(`${baseUrl}/${appealId}/appellant-case/site-area/change`).send(validData);
 
 			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
 
