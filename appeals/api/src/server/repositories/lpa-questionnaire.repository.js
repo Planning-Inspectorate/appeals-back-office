@@ -23,8 +23,8 @@ const updateLPAQuestionnaireById = (id, data) => {
 			data: {
 				lpaQuestionnaireValidationOutcomeId: data.validationOutcomeId,
 				lpaStatement: data.lpaStatement,
-				siteAccessDetails: data.inspectorAccessDetails,
-				siteSafetyDetails: data.healthAndSafetyDetails,
+				siteAccessDetails: data.siteAccessDetails,
+				siteSafetyDetails: data.siteSafetyDetails,
 				siteWithinGreenBelt: data.siteWithinGreenBelt,
 				newConditionDetails: data.extraConditions,
 				lpaCostsAppliedFor: data.lpaCostsAppliedFor,

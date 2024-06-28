@@ -43,6 +43,10 @@ const formatAppellantCase = (appeal, folders = null) => {
 				appellantCase.caseSubmittedDate && appellantCase.caseSubmittedDate?.toISOString(),
 			planningApplicationReference: appeal.applicationReference || '',
 			hasAdvertisedAppeal: appellantCase.hasAdvertisedAppeal,
+			siteAccessRequired: {
+				details: appellantCase.siteAccessDetails,
+				hasIssues: appellantCase.siteAccessDetails !== null
+			},
 			healthAndSafety: {
 				details: appellantCase.siteSafetyDetails,
 				hasIssues: appellantCase.siteSafetyDetails !== null

@@ -14,16 +14,17 @@ export function changeLpaInspectorAccess(
 	lpaQuestionnaireId,
 	updatedLpaInspectorAccess
 ) {
-	/** @type {{[x: string]: string | boolean}} */
-	const formattedData = {
-		doesSiteRequireInspectorAccess: convertFromYesNoToBoolean(updatedLpaInspectorAccess.radio)
-	};
-	if (convertFromYesNoToBoolean(updatedLpaInspectorAccess.radio)) {
-		formattedData.inspectorAccessDetails = updatedLpaInspectorAccess.details;
+	let siteAccessDetails;
+
+	siteAccessDetails = updatedLpaInspectorAccess.details;
+
+	if (!convertFromYesNoToBoolean(updatedLpaInspectorAccess.radio)) {
+		siteAccessDetails = null;
 	}
+
 	return apiClient.patch(`appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`, {
 		json: {
-			...formattedData
+			siteAccessDetails
 		}
 	});
 }
@@ -42,16 +43,16 @@ export function changeAppellantInspectorAccess(
 	appellantCaseId,
 	updatedAppellantInspectorAccess
 ) {
-	/** @type {{[x: string]: string | boolean}} */
-	const formattedData = {
-		doesSiteRequireInspectorAccess: convertFromYesNoToBoolean(updatedAppellantInspectorAccess.radio)
-	};
-	if (convertFromYesNoToBoolean(updatedAppellantInspectorAccess.radio)) {
-		formattedData.inspectorAccessDetails = updatedAppellantInspectorAccess.details;
+	let siteAccessDetails;
+	siteAccessDetails = updatedAppellantInspectorAccess.details;
+
+	if (!convertFromYesNoToBoolean(updatedAppellantInspectorAccess.radio)) {
+		siteAccessDetails = null;
 	}
+
 	return apiClient.patch(`appeals/${appealId}/appellant-cases/${appellantCaseId}`, {
 		json: {
-			...formattedData
+			siteAccessDetails
 		}
 	});
 }

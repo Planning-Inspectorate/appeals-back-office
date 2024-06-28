@@ -170,16 +170,12 @@ interface UpdateAppellantCaseRequest {
 	applicantSurname?: string;
 	areAllOwnersKnown?: boolean;
 	hasAdvertisedAppeal?: boolean;
-	doesSiteRequireInspectorAccess?: boolean;
-	inspectorAccessDetails?: string;
+	siteAccessDetails?: string;
 	hasAttemptedToIdentifyOwners?: boolean;
-	hasHealthAndSafetyIssues?: boolean;
-	healthAndSafetyIssues?: string;
+	siteSafetyDetails?: string;
 	ownsAllLand?: boolean;
 	ownsSomeLand?: boolean;
 	siteAreaSquareMetres?: string;
-	isSiteVisibleFromPublicRoad?: boolean;
-	visibilityRestrictions?: string;
 }
 
 interface UpdateAppellantCaseValidationOutcome {
@@ -250,8 +246,8 @@ interface SingleLPAQuestionnaireResponse {
 interface UpdateLPAQuestionnaireRequest {
 	appealId?: number;
 	lpaStatement?: string;
-	inspectorAccessDetails?: string;
-	healthAndSafetyDetails?: string;
+	siteAccessDetails?: string;
+	siteSafetyDetails?: string;
 	siteWithinGreenBelt?: boolean;
 	extraConditions?: string;
 	lpaCostsAppliedFor?: boolean;

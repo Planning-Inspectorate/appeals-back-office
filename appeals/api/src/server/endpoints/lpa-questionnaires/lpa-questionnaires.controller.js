@@ -34,8 +34,8 @@ const updateLPAQuestionnaireById = async (req, res) => {
 		body,
 		body: {
 			lpaStatement,
-			inspectorAccessDetails,
-			healthAndSafetyDetails,
+			siteAccessDetails,
+			siteSafetyDetails,
 			siteWithinGreenBelt,
 			extraConditions,
 			lpaCostsAppliedFor,
@@ -67,8 +67,8 @@ const updateLPAQuestionnaireById = async (req, res) => {
 			  ))
 			: await lpaQuestionnaireRepository.updateLPAQuestionnaireById(lpaQuestionnaireId, {
 					lpaStatement,
-					inspectorAccessDetails,
-					healthAndSafetyDetails,
+					siteAccessDetails,
+					siteSafetyDetails,
 					siteWithinGreenBelt,
 					extraConditions,
 					lpaCostsAppliedFor,
@@ -88,8 +88,8 @@ const updateLPAQuestionnaireById = async (req, res) => {
 		  }
 		: {
 				lpaStatement,
-				inspectorAccessDetails,
-				healthAndSafetyDetails,
+				siteAccessDetails,
+				siteSafetyDetails,
 				siteWithinGreenBelt,
 				extraConditions,
 				lpaCostsAppliedFor,

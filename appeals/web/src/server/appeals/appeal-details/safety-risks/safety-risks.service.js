@@ -14,16 +14,16 @@ export function changeLpaSafetyRisks(
 	lpaQuestionnaireId,
 	updatedHeathAndSafetyRisks
 ) {
-	/** @type {{[x: string]: string | boolean}} */
-	const formattedData = {
-		doesSiteHaveHealthAndSafetyIssues: convertFromYesNoToBoolean(updatedHeathAndSafetyRisks.radio)
-	};
-	if (convertFromYesNoToBoolean(updatedHeathAndSafetyRisks.radio)) {
-		formattedData.healthAndSafetyDetails = updatedHeathAndSafetyRisks.details;
+	let siteSafetyDetails;
+	siteSafetyDetails = updatedHeathAndSafetyRisks.details;
+
+	if (!convertFromYesNoToBoolean(updatedHeathAndSafetyRisks.radio)) {
+		siteSafetyDetails = null;
 	}
+
 	return apiClient.patch(`appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`, {
 		json: {
-			...formattedData
+			siteSafetyDetails
 		}
 	});
 }
@@ -42,16 +42,16 @@ export function changeAppellantSafetyRisks(
 	appellantCaseId,
 	updatedHeathAndSafetyRisks
 ) {
-	/** @type {{[x: string]: string | boolean}} */
-	const formattedData = {
-		hasHealthAndSafetyIssues: convertFromYesNoToBoolean(updatedHeathAndSafetyRisks.radio)
-	};
-	if (convertFromYesNoToBoolean(updatedHeathAndSafetyRisks.radio)) {
-		formattedData.healthAndSafetyIssues = updatedHeathAndSafetyRisks.details;
+	let siteSafetyDetails;
+	siteSafetyDetails = updatedHeathAndSafetyRisks.details;
+
+	if (!convertFromYesNoToBoolean(updatedHeathAndSafetyRisks.radio)) {
+		siteSafetyDetails = null;
 	}
+
 	return apiClient.patch(`appeals/${appealId}/appellant-cases/${appellantCaseId}`, {
 		json: {
-			...formattedData
+			siteSafetyDetails
 		}
 	});
 }
