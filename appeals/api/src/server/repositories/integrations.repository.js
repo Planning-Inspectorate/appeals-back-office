@@ -134,7 +134,7 @@ const setAppealRelationships = async (tx, appealId, caseReference, relatedRefere
 						parentId: appealId,
 						childId: foundAppeal?.id || null,
 						externalSource: foundAppeal?.reference ? false : true,
-						externaAppealType: null
+						externalAppealType: null
 					};
 
 					return item;

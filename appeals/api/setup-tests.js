@@ -2,13 +2,6 @@
 import { jest } from '@jest/globals';
 import config from '#config/config.js';
 import { NODE_ENV_PRODUCTION } from '#endpoints/constants.js';
-// load .env.test file
-import dotenv from 'dotenv';
-import path from 'node:path';
-import url from 'url';
-
-const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
-dotenv.config({ path: path.join(__dirname, '.env.test') });
 
 const mockAppealRelationshipAdd = jest.fn().mockResolvedValue({});
 const mockAppealRelationshipRemove = jest.fn().mockResolvedValue({});
