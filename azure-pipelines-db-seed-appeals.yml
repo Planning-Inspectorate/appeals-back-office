@@ -69,14 +69,14 @@ jobs:
                 workingDirectory: $(Build.Repository.LocalPath)/appeals/api
             - template: steps/node_script.yml@templates
               parameters:
-                condition: and(eq('${{ parameters.environment }}', 'Training'))
+                condition: eq('${{ parameters.environment }}', 'Training')
                 environmentVariables:
                   DATABASE_URL: $(appeals-bo-sql-admin-connection-string)
                 script: npm run db:seed:training
                 workingDirectory: $(Build.Repository.LocalPath)/appeals/api
             - template: steps/node_script.yml@templates
               parameters:
-                condition: and(eq('${{ parameters.environment }}', 'Prod'))
+                condition: eq('${{ parameters.environment }}', 'Prod')
                 environmentVariables:
                   DATABASE_URL: $(appeals-bo-sql-admin-connection-string)
                 script: npm run db:seed:prod
