@@ -1,15 +1,15 @@
 import { databaseConnector } from '../../server/utils/database-connector.js';
 import { seedStaticData } from './data-static.js';
 import { seedLPAs } from './seed-lpas.js';
-import { localPlanningDepartmentList } from './LPAs/prod.js';
+import { localPlanningDepartmentList } from './LPAs/training.js';
 
 /**
- * Seed the production database with the required static data
+ * Seed the training database with the required static data
  *
  * @throws {Error} If any database operation fails.
  * @returns {Promise<void>}
  */
-const seedProduction = async () => {
+const seedTraining = async () => {
 	try {
 		await seedStaticData(databaseConnector);
 		await seedLPAs(databaseConnector, localPlanningDepartmentList);
@@ -21,4 +21,4 @@ const seedProduction = async () => {
 	}
 };
 
-await seedProduction();
+await seedTraining();
