@@ -18,7 +18,7 @@ export const postInvalidDecision = async (req, res) => {
 	const notifyClient = req.notifyClient;
 
 	if (appeal.appealStatus[0].status !== STATE_TARGET_ISSUE_DETERMINATION) {
-		res.status(400).send({ errors: { state: ERROR_INVALID_APPEAL_STATE } });
+		return res.status(400).send({ errors: { state: ERROR_INVALID_APPEAL_STATE } });
 	}
 
 	const decision = await publishInvalidDecision(
