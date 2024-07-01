@@ -1,6 +1,6 @@
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { HTTPError } from 'got/dist/source/core/errors.js';
+import { HTTPError } from 'got';
 import { getAppellantCaseFromAppealId } from '../appellant-case/appellant-case.service.js';
 import { changeSiteAreaPage } from './site-area.mapper.js';
 import { changeSiteArea } from './site-area.service.js';
