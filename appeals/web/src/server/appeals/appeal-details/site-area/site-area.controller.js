@@ -1,5 +1,6 @@
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { HTTPError } from 'got/dist/source/core/errors.js';
 import { getAppellantCaseFromAppealId } from '../appellant-case/appellant-case.service.js';
 import { changeSiteAreaPage } from './site-area.mapper.js';
 import { changeSiteArea } from './site-area.service.js';
@@ -41,7 +42,11 @@ const renderChangeSiteArea = async (request, response) => {
 	} catch (error) {
 		logger.error(error);
 		delete request.session.siteArea;
-		return response.status(500).render('app/500.njk');
+		if (error instanceof HTTPError && error.response.statusCode === 404) {
+			return response.status(404).render('app/404.njk');
+		} else {
+			return response.status(500).render('app/500.njk');
+		}
 	}
 };
 
