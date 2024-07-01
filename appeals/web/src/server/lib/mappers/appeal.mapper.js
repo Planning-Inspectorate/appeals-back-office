@@ -12,6 +12,12 @@ import { generateIssueDecisionUrl } from '#appeals/appeal-details/issue-decision
 import { mapActionComponent } from './component-permissions.mapper.js';
 import { permissionNames } from '#environment/permissions.js';
 import { formatServiceUserAsHtmlList } from '#lib/service-user-formatter.js';
+import {
+	mapDocumentDownloadUrl,
+	mapVirusCheckStatus
+} from '#appeals/appeal-documents/appeal-documents.mapper.js';
+import { STATUSES } from '@pins/appeals/constants/state.js';
+import { AVSCAN_STATUS } from '@pins/appeals/constants/documents.js';
 
 /**
  * @param {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} appealDetails
@@ -1097,6 +1103,33 @@ export async function initialiseAndMapAppealData(
 		}
 	};
 
+	/** @type {Instructions} */
+	mappedData.appeal.appealDecision = {
+		id: 'appeal-decision',
+		display: {
+			tableItem: [
+				{
+					text: 'Appeal decision',
+					classes: 'appeal-decision-documentation'
+				},
+				{
+					text: appealDetails.appealStatus === 'complete' ? 'Sent' : 'Awaiting decision',
+					classes: 'appeal-decision-status'
+				},
+				{
+					text: '',
+					classes: 'appeal-decision-due-date'
+				},
+				{
+					html: `<ul class="govuk-summary-list__actions-list">${generateAppealDecisionActionListItems(
+						appealDetails
+					)}</ul>`,
+					classes: 'appeal-decision-actions'
+				}
+			]
+		}
+	};
+
 	const appealHasCostsDecisionDocuments = appealDetails?.costs?.decisionFolder?.documents?.filter(
 		(document) => document.latestDocumentVersion?.isDeleted === false
 	).length;
@@ -1229,4 +1262,55 @@ function mapLeadOrChildStatus(appealDetails) {
 	}
 
 	return {};
+}
+
+/**
+ * @param {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} appealDetails
+ * @returns {string}
+ */
+function generateAppealDecisionActionListItems(appealDetails) {
+	switch (appealDetails.appealStatus) {
+		case STATUSES.ISSUE_DETERMINATION: {
+			return `<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="${generateIssueDecisionUrl(
+				appealDetails.appealId
+			)}">Issue</a></li>`;
+		}
+		case STATUSES.COMPLETE: {
+			return `<li class="govuk-summary-list__actions-list-item">${generateDecisionDocumentDownloadHtml(
+				appealDetails
+			)}</li>`;
+		}
+		default: {
+			return '';
+		}
+	}
+}
+
+/**
+ * @param {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} appealDetails
+ * @param {string} [linkText]
+ * @returns {string}
+ */
+export function generateDecisionDocumentDownloadHtml(appealDetails, linkText = 'View') {
+	const virusCheckStatus = mapVirusCheckStatus(
+		appealDetails.decision.virusCheckStatus || AVSCAN_STATUS.NOT_SCANNED
+	);
+
+	let html = '';
+
+	if (virusCheckStatus.checked) {
+		if (virusCheckStatus.safe) {
+			html = `<a class="govuk-link" href="${
+				appealDetails.decision?.documentId
+					? mapDocumentDownloadUrl(appealDetails.appealId, appealDetails.decision?.documentId)
+					: '#'
+			}">${linkText}</a>`;
+		} else {
+			html = '<strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong>';
+		}
+	} else {
+		html = '<strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>';
+	}
+
+	return html;
 }

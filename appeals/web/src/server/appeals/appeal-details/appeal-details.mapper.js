@@ -1,20 +1,21 @@
 import logger from '../../lib/logger.js';
 import config from '#environment/config.js';
-import { initialiseAndMapAppealData } from '#lib/mappers/appeal.mapper.js';
+import {
+	initialiseAndMapAppealData,
+	generateDecisionDocumentDownloadHtml
+} from '#lib/mappers/appeal.mapper.js';
 import { buildNotificationBanners } from '#lib/mappers/notification-banners.mapper.js';
 import { isDefined } from '#lib/ts-utilities.js';
 import { removeSummaryListActions } from '#lib/mappers/mapper-utilities.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import {
-	mapDocumentDownloadUrl,
-	mapVirusCheckStatus
-} from '#appeals/appeal-documents/appeal-documents.mapper.js';
+import { mapVirusCheckStatus } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import {
 	generateIssueDecisionUrl,
 	generateStartTimetableUrl
 } from '#appeals/appeal-details/issue-decision/issue-decision.mapper.js';
+import { AVSCAN_STATUS } from '@pins/appeals/constants/documents.js';
 
 export const pageHeading = 'Case details';
 
@@ -152,6 +153,7 @@ export async function appealDetailsPage(appealDetails, currentRoute, session) {
 				mappedData.appeal.lpaQuestionnaire.display.tableItem,
 				mappedData.appeal.costsAppellant.display.tableItem,
 				mappedData.appeal.costsLpa.display.tableItem,
+				mappedData.appeal.appealDecision.display.tableItem,
 				mappedData.appeal.costsDecision.display.tableItem
 			].filter(isDefined),
 			firstCellIsHeader: true
@@ -269,44 +271,27 @@ export async function appealDetailsPage(appealDetails, currentRoute, session) {
 			: new Date();
 
 		const virusCheckStatus = mapVirusCheckStatus(
-			appealDetails.decision.virusCheckStatus || 'not_scanned'
+			appealDetails.decision.virusCheckStatus || AVSCAN_STATUS.NOT_SCANNED
 		);
-		const letterDownloadUrl = appealDetails.decision?.documentId
-			? mapDocumentDownloadUrl(appealDetails.appealId, appealDetails.decision?.documentId)
-			: '#';
 
-		if (virusCheckStatus.checked && virusCheckStatus.safe) {
-			statusTagsComponentGroup.push({
-				type: 'inset-text',
-				parameters: {
-					html: `<p>
-						Appeal completed: ${letterDate.toLocaleDateString('en-gb', {
-							day: 'numeric',
-							month: 'long',
-							year: 'numeric'
-						})}
-							</p>
-							<p>Decision: ${appealDetails.decision?.outcome}</p>
-							<p><a class="govuk-link" target="_blank" href="${letterDownloadUrl}">View decision letter</a></p>`
-				}
-			});
-		} else {
-			statusTagsComponentGroup.push({
-				type: 'inset-text',
-				parameters: {
-					html: `<p>
-						Appeal completed: ${letterDate.toLocaleDateString('en-gb', {
-							day: 'numeric',
-							month: 'long',
-							year: 'numeric'
-						})}
-							</p>
-							<p>Decision: ${appealDetails.decision?.outcome}</p>
-							<p><span class="govuk-body">View decision letter</span>
-							<strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></p>`
-				}
-			});
-		}
+		statusTagsComponentGroup.push({
+			type: 'inset-text',
+			parameters: {
+				html: `<p>
+					Appeal completed: ${letterDate.toLocaleDateString('en-gb', {
+						day: 'numeric',
+						month: 'long',
+						year: 'numeric'
+					})}
+						</p>
+						<p>Decision: ${appealDetails.decision?.outcome}</p>
+						<p>${
+							!(virusCheckStatus.checked && virusCheckStatus.safe)
+								? '<span class="govuk-body">View decision letter</span> '
+								: ''
+						}${generateDecisionDocumentDownloadHtml(appealDetails, 'View decision letter')}</p>`
+			}
+		});
 
 		shortAppealReference;
 	}
