@@ -224,7 +224,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
 							visuallyHiddenText: 'Application date',
-							href: `${currentRoute}/#`
+							href: `${currentRoute}/application-date/change`
 						})
 					]
 				}
