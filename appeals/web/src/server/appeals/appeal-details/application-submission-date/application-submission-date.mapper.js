@@ -15,11 +15,11 @@ export const changeApplicationSubmissionDatePage = (
 	storedSessionData
 ) => {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
+	const formattedApplicationDate = new Date(appellantCaseData.applicationDate);
 
-	const day = storedSessionData?.day ?? new Date(appellantCaseData.applicationDate).getDate();
-	const month =
-		storedSessionData?.month ?? new Date(appellantCaseData.applicationDate).getMonth() + 1;
-	const year = storedSessionData?.year ?? new Date(appellantCaseData.applicationDate).getFullYear();
+	const day = storedSessionData?.day ?? formattedApplicationDate.getDate();
+	const month = storedSessionData?.month ?? formattedApplicationDate.getMonth() + 1;
+	const year = storedSessionData?.year ?? formattedApplicationDate.getFullYear();
 
 	/** @type {PageContent} */
 	const pageContent = {

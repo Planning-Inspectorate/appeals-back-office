@@ -1,5 +1,6 @@
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { HTTPError } from 'got';
 import { getAppellantCaseFromAppealId } from '../appellant-case/appellant-case.service.js';
 import { changeSiteOwnershipPage } from './site-ownership.mapper.js';
 import { changeSiteOwnership } from './site-ownership.service.js';
@@ -24,10 +25,7 @@ const renderChangeSiteOwnership = async (request, response) => {
 			request.apiClient,
 			currentAppeal.appealId,
 			currentAppeal.appellantCaseId
-		).catch((error) => {
-			logger.error(error);
-			return response.status(404).render('app/404.njk');
-		});
+		);
 
 		const mappedPageContents = changeSiteOwnershipPage(
 			currentAppeal,
@@ -44,7 +42,11 @@ const renderChangeSiteOwnership = async (request, response) => {
 	} catch (error) {
 		logger.error(error);
 		delete request.session.siteOwnership;
-		return response.status(500).render('app/500.njk');
+		if (error instanceof HTTPError && error.response.statusCode === 404) {
+			return response.status(404).render('app/404.njk');
+		} else {
+			return response.status(500).render('app/500.njk');
+		}
 	}
 };
 

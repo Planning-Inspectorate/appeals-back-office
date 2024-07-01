@@ -1,6 +1,7 @@
 import logger from '#lib/logger.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { HTTPError } from 'got';
 import { getAppellantCaseFromAppealId } from '../appellant-case/appellant-case.service.js';
 import { changeApplicationSubmissionDatePage } from './application-submission-date.mapper.js';
 import { changeApplicationSubmissionDate } from './application-submission-date.service.js';
@@ -24,10 +25,7 @@ const renderChangeApplicationSubmissionDate = async (request, response) => {
 			apiClient,
 			currentAppeal.appealId,
 			currentAppeal.appellantCaseId
-		).catch((error) => {
-			logger.error(error);
-			return response.status(404).render('app/404.njk');
-		});
+		);
 
 		const mappedPageContents = changeApplicationSubmissionDatePage(
 			currentAppeal,
@@ -43,7 +41,11 @@ const renderChangeApplicationSubmissionDate = async (request, response) => {
 	} catch (error) {
 		logger.error(error);
 		delete request.session.applicationSubmissionDate;
-		return response.status(500).render('app/500.njk');
+		if (error instanceof HTTPError && error.response.statusCode === 404) {
+			return response.status(404).render('app/404.njk');
+		} else {
+			return response.status(500).render('app/500.njk');
+		}
 	}
 };
 
@@ -85,8 +87,10 @@ export const postChangeApplicationSubmissionDate = async (request, response) => 
 			return response.status(500).render('app/500.njk');
 		}
 
-		const updatedApplicationDateDayString = `0${updatedApplicationDateDay}`.slice(-2);
-		const updatedApplicationDateMonthString = `0${updatedApplicationDateMonth}`.slice(-2);
+		const updatedApplicationDateDayString = updatedApplicationDateDay.toString().padStart(2, '0');
+		const updatedApplicationDateMonthString = updatedApplicationDateMonth
+			.toString()
+			.padStart(2, '0');
 
 		const { currentAppeal, apiClient } = request;
 
