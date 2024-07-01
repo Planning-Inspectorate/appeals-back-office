@@ -21,6 +21,7 @@ import {
 	mapVirusCheckStatus
 } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 import { STATUSES } from '@pins/appeals/constants/state.js';
+import { AVSCAN_STATUS } from '@pins/appeals/constants/documents.js';
 
 /**
  * @param {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} appealDetails
@@ -1506,27 +1507,47 @@ function mapLeadOrChildStatus(appealDetails) {
  */
 function generateAppealDecisionActionListItems(appealDetails) {
 	switch (appealDetails.appealStatus) {
-		case STATUSES.ISSUE_DETERMINATION:
+		case STATUSES.ISSUE_DETERMINATION: {
 			return `<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="${generateIssueDecisionUrl(
 				appealDetails.appealId
 			)}">Issue</a></li>`;
-		case STATUSES.COMPLETE:
-			// eslint-disable-next-line no-case-declarations
-			const downloadLink = `<a class="govuk-link" href="${
+		}
+		case STATUSES.COMPLETE: {
+			return `<li class="govuk-summary-list__actions-list-item">${generateDecisionDocumentDownloadHtml(
+				appealDetails
+			)}</li>`;
+		}
+		default: {
+			return '';
+		}
+	}
+}
+
+/**
+ * @param {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} appealDetails
+ * @param {string} [linkText]
+ * @returns {string}
+ */
+export function generateDecisionDocumentDownloadHtml(appealDetails, linkText = 'View') {
+	const virusCheckStatus = mapVirusCheckStatus(
+		appealDetails.decision.virusCheckStatus || AVSCAN_STATUS.NOT_SCANNED
+	);
+
+	let html = '';
+
+	if (virusCheckStatus.checked) {
+		if (virusCheckStatus.safe) {
+			html = `<a class="govuk-link" href="${
 				appealDetails.decision?.documentId
 					? mapDocumentDownloadUrl(appealDetails.appealId, appealDetails.decision?.documentId)
 					: '#'
-			}">View</a>`;
-
-			// eslint-disable-next-line no-case-declarations
-			const virusCheckStatus = mapVirusCheckStatus(
-				appealDetails.decision.virusCheckStatus || 'not_scanned'
-			);
-
-			return `<li class="govuk-summary-list__actions-list-item">${
-				virusCheckStatus.checked && virusCheckStatus.safe ? downloadLink : 'Virus scanning'
-			}</li>`;
-		default:
-			return '';
+			}">${linkText}</a>`;
+		} else {
+			html = '<strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong>';
+		}
+	} else {
+		html = '<strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>';
 	}
+
+	return html;
 }

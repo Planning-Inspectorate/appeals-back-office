@@ -1478,6 +1478,234 @@ describe('appeal-details', () => {
 				);
 			});
 		});
+
+		describe('Appeal decision', () => {
+			it('should render a row in the case documentation accordion with "Appeal decision" in the Documentation (label) column', async () => {
+				const response = await request.get(`${baseUrl}/1`);
+
+				const columnHtml = parseHtml(response.text, {
+					rootElement: '.appeal-decision-documentation',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(columnHtml).toMatchSnapshot();
+				expect(columnHtml).toContain('Appeal decision</th>');
+			});
+
+			it('should render a row in the case documentation accordion with "Awaiting decision" in the Status column, if a decision has not yet been issued', async () => {
+				const response = await request.get(`${baseUrl}/1`);
+
+				const columnHtml = parseHtml(response.text, {
+					rootElement: '.appeal-decision-status',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(columnHtml).toMatchSnapshot();
+				expect(columnHtml).toContain('Awaiting decision</td>');
+			});
+
+			it('should render a row in the case documentation accordion with "Sent" in the Status column, if a decision has been issued', async () => {
+				const appealId = 2;
+
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealData,
+						appealId,
+						appealStatus: 'complete',
+						decision: {
+							documentId: '448efec9-43d4-406a-92b7-1aecbdcd5e87',
+							folderId: 72,
+							letterDate: '2024-06-26T00:00:00.000Z',
+							outcome: 'allowed',
+							virusCheckStatus: 'not_scanned'
+						}
+					});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				const columnHtml = parseHtml(response.text, {
+					rootElement: '.appeal-decision-status',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(columnHtml).toMatchSnapshot();
+				expect(columnHtml).toContain('Sent</td>');
+			});
+
+			it('should render a row in the case documentation accordion with no text in the Due date column', async () => {
+				const response = await request.get(`${baseUrl}/1`);
+
+				const columnHtml = parseHtml(response.text, {
+					rootElement: '.appeal-decision-due-date',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(columnHtml).toMatchSnapshot();
+				expect(columnHtml).toContain(
+					'<td class="govuk-table__cell appeal-decision-due-date"></td>'
+				);
+			});
+
+			it('should render a row in the case documentation accordion with "Issue" link to the issue decision start page in the Actions column, if the appeal status is "issue_determination"', async () => {
+				const appealId = 2;
+
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealData,
+						appealId,
+						appealStatus: 'issue_determination'
+					});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				const columnHtml = parseHtml(response.text, {
+					rootElement: '.appeal-decision-actions',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(columnHtml).toMatchSnapshot();
+				expect(columnHtml).toContain(
+					'href="/appeals-service/appeal-details/2/issue-decision/decision">Issue</a>'
+				);
+			});
+
+			it('should render a row in the case documentation accordion with no link in the Actions column, if the appeal status is anything other than "issue_determination" or "complete"', async () => {
+				const appealId = 2;
+
+				const statuses = [
+					'assign_case_officer',
+					'validation',
+					'ready_to_start',
+					'lpa_questionnaire_due',
+					'statement_review',
+					'final_comment_review',
+					'invalid',
+					'withdrawn',
+					'closed',
+					'awaiting_transfer',
+					'transferred'
+				];
+
+				for (const status of statuses) {
+					nock('http://test/')
+						.get(`/appeals/${appealId}`)
+						.reply(200, {
+							...appealData,
+							appealId,
+							appealStatus: status
+						});
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					const columnHtml = parseHtml(response.text, {
+						rootElement: '.appeal-decision-actions',
+						skipPrettyPrint: true
+					}).innerHTML;
+
+					expect(columnHtml).toMatchSnapshot();
+					expect(columnHtml).toContain(
+						status === 'awaiting_transfer'
+							? '<td class="govuk-table__cell appeal-decision-actions"></td>'
+							: '<td class="govuk-table__cell appeal-decision-actions"><ul class="govuk-summary-list__actions-list"></ul></td>'
+					);
+				}
+			});
+
+			it('should render a row in the case documentation accordion with "Virus scanning" status tag in the Actions column, if the appeal status is "complete" and the document virus scan is pending', async () => {
+				const appealId = 2;
+
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealData,
+						appealId,
+						appealStatus: 'complete',
+						decision: {
+							documentId: '448efec9-43d4-406a-92b7-1aecbdcd5e87',
+							folderId: 72,
+							letterDate: '2024-06-26T00:00:00.000Z',
+							outcome: 'allowed',
+							virusCheckStatus: 'not_scanned'
+						}
+					});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				const columnHtml = parseHtml(response.text, {
+					rootElement: '.appeal-decision-actions',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(columnHtml).toMatchSnapshot();
+				expect(columnHtml).toContain(
+					'<li class="govuk-summary-list__actions-list-item"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></li>'
+				);
+			});
+
+			it('should render a row in the case documentation accordion with "Virus found" status tag in the Actions column, if the appeal status is "complete" and the document virus scan is complete and the scan result indicates the document is unsafe', async () => {
+				const appealId = 2;
+
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealData,
+						appealId,
+						appealStatus: 'complete',
+						decision: {
+							documentId: '448efec9-43d4-406a-92b7-1aecbdcd5e87',
+							folderId: 72,
+							letterDate: '2024-06-26T00:00:00.000Z',
+							outcome: 'allowed',
+							virusCheckStatus: 'affected'
+						}
+					});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				const columnHtml = parseHtml(response.text, {
+					rootElement: '.appeal-decision-actions',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(columnHtml).toMatchSnapshot();
+				expect(columnHtml).toContain(
+					'<li class="govuk-summary-list__actions-list-item"><strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong></li>'
+				);
+			});
+
+			it('should render a row in the case documentation accordion with "View" download link to the decision document in the Actions column, if the appeal status is "complete" and the document virus scan is complete and the scan result indicates the document is safe', async () => {
+				const appealId = 2;
+
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealData,
+						appealId,
+						appealStatus: 'complete',
+						decision: {
+							documentId: '448efec9-43d4-406a-92b7-1aecbdcd5e87',
+							folderId: 72,
+							letterDate: '2024-06-26T00:00:00.000Z',
+							outcome: 'allowed',
+							virusCheckStatus: 'scanned'
+						}
+					});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				const columnHtml = parseHtml(response.text, {
+					rootElement: '.appeal-decision-actions',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(columnHtml).toMatchSnapshot();
+				expect(columnHtml).toContain(
+					'<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/documents/2/download/448efec9-43d4-406a-92b7-1aecbdcd5e87/preview/">View</a></li>'
+				);
+			});
+		});
 	});
 
 	it('should not render a back button', async () => {
