@@ -288,6 +288,86 @@ describe('appellant-case', () => {
 			expect(notificationBannerElementHTML).toContain('Success</h3>');
 			expect(notificationBannerElementHTML).toContain('Site address updated</p>');
 		});
+
+		it('should render an "Appeal is invalid" notification banner with the expected content when the appellant case has been reviewed with an outcome of "invalid"', async () => {
+			nock.cleanAll();
+			nock('http://test/').get('/appeals/1').reply(200, appealData);
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, appellantCaseDataInvalidOutcome);
+
+			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
+
+			const notificationBannerHTML = parseHtml(response.text, {
+				rootElement: '.govuk-notification-banner'
+			}).innerHTML;
+
+			expect(notificationBannerHTML).toMatchSnapshot();
+
+			const unprettifiedNotificationBannerHTML = parseHtml(response.text, {
+				rootElement: '.govuk-notification-banner',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(unprettifiedNotificationBannerHTML).toContain('Appeal is invalid</h3>');
+			expect(unprettifiedNotificationBannerHTML).toContain(
+				'<details class="govuk-details" data-module="govuk-details">'
+			);
+			expect(unprettifiedNotificationBannerHTML).toContain(
+				'Incorrect name and/or missing documents</span>'
+			);
+			expect(unprettifiedNotificationBannerHTML).toContain(
+				'Appellant name is not the same on the application form and appeal form</li>'
+			);
+			expect(unprettifiedNotificationBannerHTML).toContain(
+				'Attachments and/or appendices have not been included to the full statement of case</span>'
+			);
+			expect(unprettifiedNotificationBannerHTML).toContain('test reason 1</li>');
+			expect(unprettifiedNotificationBannerHTML).toContain('Other</span>');
+			expect(unprettifiedNotificationBannerHTML).toContain('test reason 2</li>');
+			expect(unprettifiedNotificationBannerHTML).toContain('test reason 3</li>');
+		});
+
+		it('should render an "Appeal is incomplete" notification banner with the expected content when the appellant case has been reviewed with an outcome of "incomplete"', async () => {
+			nock.cleanAll();
+			nock('http://test/').get('/appeals/1').reply(200, appealData);
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, appellantCaseDataIncompleteOutcome);
+
+			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
+
+			const notificationBannerHTML = parseHtml(response.text, {
+				rootElement: '.govuk-notification-banner'
+			}).innerHTML;
+
+			expect(notificationBannerHTML).toMatchSnapshot();
+
+			const unprettifiedNotificationBannerHTML = parseHtml(response.text, {
+				rootElement: '.govuk-notification-banner',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(unprettifiedNotificationBannerHTML).toContain('Appeal is incomplete</h3>');
+			expect(unprettifiedNotificationBannerHTML).toContain(
+				'<details class="govuk-details" data-module="govuk-details">'
+			);
+			expect(unprettifiedNotificationBannerHTML).toContain('Due date has changed</span>');
+			expect(unprettifiedNotificationBannerHTML).toContain('2 October 2024</p>');
+			expect(unprettifiedNotificationBannerHTML).toContain(
+				'Incorrect name and/or missing documents</span>'
+			);
+			expect(unprettifiedNotificationBannerHTML).toContain(
+				'Appellant name is not the same on the application form and appeal form</li>'
+			);
+			expect(unprettifiedNotificationBannerHTML).toContain(
+				'Attachments and/or appendices have not been included to the full statement of case</span>'
+			);
+			expect(unprettifiedNotificationBannerHTML).toContain('test reason 1</li>');
+			expect(unprettifiedNotificationBannerHTML).toContain('Other</span>');
+			expect(unprettifiedNotificationBannerHTML).toContain('test reason 2</li>');
+			expect(unprettifiedNotificationBannerHTML).toContain('test reason 3</li>');
+		});
 	});
 
 	describe('GET /appellant-case with unchecked documents', () => {
