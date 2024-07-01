@@ -24,10 +24,7 @@ const renderChangeSiteArea = async (request, response) => {
 			request.apiClient,
 			currentAppeal.appealId,
 			currentAppeal.appellantCaseId
-		).catch((error) => {
-			logger.error(error);
-			return response.status(404).render('app/404.njk');
-		});
+		);
 
 		const mappedPageContents = changeSiteAreaPage(
 			currentAppeal,
