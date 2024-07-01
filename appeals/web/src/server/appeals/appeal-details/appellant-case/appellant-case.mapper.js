@@ -2,6 +2,7 @@ import config from '#environment/config.js';
 import { inputInstructionIsRadiosInputInstruction } from '#lib/mappers/global-mapper-formatter.js';
 import {
 	apiDateStringToDayMonthYear,
+	apiDateStringToDisplayDate,
 	dayMonthYearToApiDateString,
 	webDateToDisplayDate
 } from '#lib/dates.js';
@@ -281,7 +282,8 @@ export async function appellantCasePage(appellantCaseData, appealDetails, curren
 		existingValidationOutcome === 'invalid'
 			? appellantCaseData.validation?.invalidReasons || []
 			: appellantCaseData.validation?.incompleteReasons || [],
-		appealDetails?.appealId
+		appealDetails?.appealId,
+		appealDetails?.documentationSummary.appellantCase?.dueDate
 	);
 
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);
@@ -557,13 +559,15 @@ export function checkAndConfirmPage(
  * @param {AppellantCaseValidationOutcome|undefined} validationOutcome
  * @param {IncompleteInvalidReasonsResponse[]} notValidReasons
  * @param {number} appealId
+ * @param {string|null} [appealDueDate]
  * @returns {PageComponent[]}
  */
 export function mapNotificationBannerComponentParameters(
 	session,
 	validationOutcome,
 	notValidReasons,
-	appealId
+	appealId,
+	appealDueDate
 ) {
 	if (validationOutcome === 'invalid' || validationOutcome === 'incomplete') {
 		if (!Array.isArray(notValidReasons)) {
@@ -598,6 +602,16 @@ export function mapNotificationBannerComponentParameters(
 						0,
 						listClasses
 					)
+				}
+			});
+		}
+
+		if (validationOutcome === 'incomplete' && appealDueDate) {
+			detailsPageComponents.unshift({
+				type: 'details',
+				parameters: {
+					summaryText: 'Due date has changed',
+					html: `<p class="govuk-body">${apiDateStringToDisplayDate(appealDueDate)}</p>`
 				}
 			});
 		}
