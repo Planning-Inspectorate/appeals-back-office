@@ -25,7 +25,7 @@ export const appealsNationalList = {
 				town: 'West Hill',
 				postCode: 'BS48 1PN'
 			},
-			appealStatus: 'lpa_questionnaire_due',
+			appealStatus: 'lpa_questionnaire',
 			appealType: 'Householder',
 			createdAt: '2023-04-17T09:49:22.021Z',
 			localPlanningDepartment: 'Wiltshire Council',
@@ -57,7 +57,7 @@ export const appealsNationalList = {
 	statuses: [
 		'assign_case_officer',
 		'ready_to_start',
-		'lpa_questionnaire_due',
+		'lpa_questionnaire',
 		'issue_determination',
 		'complete'
 	],
@@ -1709,7 +1709,7 @@ export const assignedAppealsPage1 = {
 				county: 'Wandsworth',
 				postCode: 'SW4 7UL'
 			},
-			appealStatus: 'lpa_questionnaire_due',
+			appealStatus: 'lpa_questionnaire',
 			appealType: 'Householder',
 			createdAt: '2024-01-02T11:43:21.830Z',
 			localPlanningDepartment: 'Maidstone Borough Council',
@@ -1792,7 +1792,7 @@ export const assignedAppealsPage1 = {
 			isChildAppeal: false
 		}
 	],
-	statuses: ['ready_to_start', 'lpa_questionnaire_due', 'issue_determination'],
+	statuses: ['ready_to_start', 'lpa_questionnaire', 'issue_determination'],
 	page: 1,
 	pageCount: 2,
 	pageSize: 5
@@ -1865,7 +1865,7 @@ export const assignedAppealsPage2 = {
 			dueDate: '2024-01-07T11:43:21.298Z'
 		}
 	],
-	statuses: ['ready_to_start', 'lpa_questionnaire_due', 'issue_determination'],
+	statuses: ['ready_to_start', 'lpa_questionnaire', 'issue_determination'],
 	page: 2,
 	pageCount: 2,
 	pageSize: 5
@@ -1890,7 +1890,7 @@ export const assignedAppealsPage3 = {
 			dueDate: '2024-01-07T11:43:21.226Z'
 		}
 	],
-	statuses: ['ready_to_start', 'lpa_questionnaire_due', 'issue_determination'],
+	statuses: ['ready_to_start', 'lpa_questionnaire', 'issue_determination'],
 	page: 2,
 	pageCount: 2,
 	pageSize: 1

@@ -35,7 +35,7 @@ describe('personal-list', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Show cases with status</label>');
 			expect(unprettifiedElement.innerHTML).toContain('<option value="all"');
 			expect(unprettifiedElement.innerHTML).toContain('<option value="ready_to_start"');
-			expect(unprettifiedElement.innerHTML).toContain('option value="lpa_questionnaire_due"');
+			expect(unprettifiedElement.innerHTML).toContain('option value="lpa_questionnaire"');
 			expect(unprettifiedElement.innerHTML).toContain('<option value="issue_determination"');
 			expect(unprettifiedElement.innerHTML).toContain('Apply</button>');
 			expect(unprettifiedElement.innerHTML).toContain('Clear filter</a>');
@@ -73,7 +73,7 @@ describe('personal-list', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Show cases with status</label>');
 			expect(unprettifiedElement.innerHTML).toContain('<option value="all"');
 			expect(unprettifiedElement.innerHTML).toContain('<option value="ready_to_start"');
-			expect(unprettifiedElement.innerHTML).toContain('option value="lpa_questionnaire_due"');
+			expect(unprettifiedElement.innerHTML).toContain('option value="lpa_questionnaire"');
 			expect(unprettifiedElement.innerHTML).toContain('<option value="issue_determination"');
 			expect(unprettifiedElement.innerHTML).toContain('Apply</button>');
 			expect(unprettifiedElement.innerHTML).toContain('Clear filter</a>');
@@ -96,11 +96,11 @@ describe('personal-list', () => {
 
 		it('should render the second page of the personal list with applied filter, the expected content and pagination', async () => {
 			nock('http://test/')
-				.get('/appeals/my-appeals?pageNumber=2&pageSize=1&status=lpa_questionnaire_due')
+				.get('/appeals/my-appeals?pageNumber=2&pageSize=1&status=lpa_questionnaire')
 				.reply(200, assignedAppealsPage3);
 
 			const response = await request.get(
-				`${baseUrl}${'?pageNumber=2&pageSize=1&appealStatusFilter=lpa_questionnaire_due'}`
+				`${baseUrl}${'?pageNumber=2&pageSize=1&appealStatusFilter=lpa_questionnaire'}`
 			);
 			const element = parseHtml(response.text);
 
@@ -113,9 +113,7 @@ describe('personal-list', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Show cases with status</label>');
 			expect(unprettifiedElement.innerHTML).toContain('<option value="all"');
 			expect(unprettifiedElement.innerHTML).toContain('<option value="ready_to_start"');
-			expect(unprettifiedElement.innerHTML).toContain(
-				'option value="lpa_questionnaire_due" selected'
-			);
+			expect(unprettifiedElement.innerHTML).toContain('option value="lpa_questionnaire" selected');
 			expect(unprettifiedElement.innerHTML).toContain('<option value="issue_determination"');
 			expect(unprettifiedElement.innerHTML).toContain('Apply</button>');
 			expect(unprettifiedElement.innerHTML).toContain('Clear filter</a>');
@@ -246,10 +244,10 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 		);
 	});
 
-	it('should return "Awaiting appellant update" link for review_appellant_case status with incomplete appellant case', () => {
+	it('should return "Awaiting appellant update" link for validation status with incomplete appellant case', () => {
 		const result = mapAppealStatusToActionRequiredHtml(
 			appealId,
-			'review_appellant_case',
+			'validation',
 			lpaQuestionnaireId,
 			'Incomplete',
 			'',
@@ -261,10 +259,10 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 		);
 	});
 
-	it('should return "Awaiting appellant update" text for review_appellant_case status with incomplete appellant case and isInspector true', () => {
+	it('should return "Awaiting appellant update" text for validation status with incomplete appellant case and isInspector true', () => {
 		const result = mapAppealStatusToActionRequiredHtml(
 			appealId,
-			'review_appellant_case',
+			'validation',
 			lpaQuestionnaireId,
 			'Incomplete',
 			'',
@@ -274,23 +272,23 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 		expect(result).toEqual('Awaiting appellant update');
 	});
 
-	it('should return "Awaiting LPA Questionnaire" for lpa_questionnaire_due status with no LPA Questionnaire ID', () => {
+	it('should return "Awaiting LPA questionnaire" for lpa_questionnaire status with no LPA questionnaire ID', () => {
 		const result = mapAppealStatusToActionRequiredHtml(
 			appealId,
-			'lpa_questionnaire_due',
+			'lpa_questionnaire',
 			null,
 			'',
 			'',
 			'',
 			false
 		);
-		expect(result).toEqual('Awaiting LPA Questionnaire');
+		expect(result).toEqual('Awaiting LPA questionnaire');
 	});
 
-	it('should return "Awaiting LPA update" link for lpa_questionnaire_due status with incomplete LPA Questionnaire', () => {
+	it('should return "Awaiting LPA update" link for lpa_questionnaire status with incomplete LPA questionnaire', () => {
 		const result = mapAppealStatusToActionRequiredHtml(
 			appealId,
-			'lpa_questionnaire_due',
+			'lpa_questionnaire',
 			lpaQuestionnaireId,
 			'',
 			'Incomplete',
@@ -302,10 +300,10 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 		);
 	});
 
-	it('should return "Awaiting LPA update" text for lpa_questionnaire_due status with incomplete LPA Questionnaire and isInspector true', () => {
+	it('should return "Awaiting LPA update" text for lpa_questionnaire status with incomplete LPA questionnaire and isInspector true', () => {
 		const result = mapAppealStatusToActionRequiredHtml(
 			appealId,
-			'lpa_questionnaire_due',
+			'lpa_questionnaire',
 			lpaQuestionnaireId,
 			'',
 			'Incomplete',
@@ -315,10 +313,10 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 		expect(result).toEqual('Awaiting LPA update');
 	});
 
-	it('should return "Review LPA Questionnaire" for lpa_questionnaire_due status with LPA Questionnaire', () => {
+	it('should return "Review LPA questionnaire" for lpa_questionnaire status with LPA questionnaire', () => {
 		const result = mapAppealStatusToActionRequiredHtml(
 			appealId,
-			'lpa_questionnaire_due',
+			'lpa_questionnaire',
 			lpaQuestionnaireId,
 			'',
 			'',
@@ -326,34 +324,34 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			false
 		);
 		expect(result).toEqual(
-			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}">Review LPA Questionnaire</a>`
+			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}">Review LPA questionnaire</a>`
 		);
 	});
 
-	it('should return "Review LPA Questionnaire" for lpa_questionnaire_due status with LPA Questionnaire and isInspector true', () => {
+	it('should return "Review LPA questionnaire" for lpa_questionnaire status with LPA questionnaire and isInspector true', () => {
 		const result = mapAppealStatusToActionRequiredHtml(
 			appealId,
-			'lpa_questionnaire_due',
+			'lpa_questionnaire',
 			lpaQuestionnaireId,
 			'',
 			'',
 			'',
 			true
 		);
-		expect(result).toEqual('Review LPA Questionnaire');
+		expect(result).toEqual('Review LPA questionnaire');
 	});
 
-	it('should return "LPA Questionnaire Overdue" for lpa_questionnaire_due status with LPA Questionnaire overdue', () => {
+	it('should return "LPA questionnaire overdue" for lpa_questionnaire status with LPA questionnaire overdue', () => {
 		const result = mapAppealStatusToActionRequiredHtml(
 			appealId,
-			'lpa_questionnaire_due',
+			'lpa_questionnaire',
 			null,
 			'',
 			'',
 			'2024-01-01',
 			false
 		);
-		expect(result).toEqual('LPA Questionnaire Overdue');
+		expect(result).toEqual('LPA questionnaire overdue');
 	});
 
 	it('should return "Issue decision" link for issue_determination status', () => {
@@ -386,7 +384,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 		);
 	});
 
-	it('should return "View appellant case" link for any other status', () => {
+	it('should return "View case" link for any other status', () => {
 		const result = mapAppealStatusToActionRequiredHtml(
 			appealId,
 			'some_other_status',
@@ -397,7 +395,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			false
 		);
 		expect(result).toEqual(
-			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}">View appellant case</a>`
+			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}">View case</a>`
 		);
 	});
 });

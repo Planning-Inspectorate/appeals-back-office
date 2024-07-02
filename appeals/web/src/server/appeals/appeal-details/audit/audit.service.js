@@ -119,7 +119,7 @@ const tryMapStatus = async (log) => {
 		'progressed to <strong class="govuk-tag govuk-tag--turquoise single-line govuk-!-margin-bottom-4">Ready to start</strong>'
 	);
 	result = result.replace(
-		'progressed to lpa_questionnaire_due',
+		'progressed to lpa_questionnaire',
 		'progressed to <strong class="govuk-tag govuk-tag--yellow single-line govuk-!-margin-bottom-4">LPA questionnaire</strong>'
 	);
 	result = result.replace(

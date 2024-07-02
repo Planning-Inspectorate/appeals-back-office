@@ -10,7 +10,7 @@ const baseUrl = '/appeals-service/all-cases';
 const statuses = [
 	'assign_case_officer',
 	'ready_to_start',
-	'lpa_questionnaire_due',
+	'lpa_questionnaire',
 	'issue_determination',
 	'complete'
 ];
@@ -44,7 +44,7 @@ describe('national-list', () => {
 			expect(unprettifiedElement.innerHTML).toContain('<option value="all"');
 			expect(unprettifiedElement.innerHTML).toContain('<option value="assign_case_officer"');
 			expect(unprettifiedElement.innerHTML).toContain('<option value="ready_to_start"');
-			expect(unprettifiedElement.innerHTML).toContain('<option value="lpa_questionnaire_due"');
+			expect(unprettifiedElement.innerHTML).toContain('<option value="lpa_questionnaire"');
 			expect(unprettifiedElement.innerHTML).toContain('<option value="issue_determination"');
 			expect(unprettifiedElement.innerHTML).toContain('<option value="complete"');
 			expect(unprettifiedElement.innerHTML).toContain('Filter by inspector status</label>');
@@ -158,7 +158,7 @@ describe('national-list', () => {
 
 		it('should render national list - search term - filter applied', async () => {
 			nock('http://test/')
-				.get('/appeals?pageNumber=1&pageSize=30&searchTerm=BS7%208LQ&status=lpa_questionnaire_due')
+				.get('/appeals?pageNumber=1&pageSize=30&searchTerm=BS7%208LQ&status=lpa_questionnaire')
 				.reply(200, {
 					itemCount: 1,
 					items: [appealsNationalList.items[0]],
@@ -169,7 +169,7 @@ describe('national-list', () => {
 				});
 
 			const response = await request.get(
-				`${baseUrl}?searchTerm=BS7%208LQ&appealStatusFilter=lpa_questionnaire_due`
+				`${baseUrl}?searchTerm=BS7%208LQ&appealStatusFilter=lpa_questionnaire`
 			);
 			const element = parseHtml(response.text);
 
@@ -185,16 +185,14 @@ describe('national-list', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<select class="govuk-select" id="" name="appealStatusFilter"'
 			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				'<option value="lpa_questionnaire_due" selected'
-			);
+			expect(unprettifiedElement.innerHTML).toContain('<option value="lpa_questionnaire" selected');
 			expect(unprettifiedElement.innerHTML).toContain('Apply</button>');
 			expect(unprettifiedElement.innerHTML).toContain('Clear filter</a>');
 		});
 
 		it('should render national list - no search term - filter applied', async () => {
 			nock('http://test/')
-				.get('/appeals?pageNumber=1&pageSize=30&status=lpa_questionnaire_due')
+				.get('/appeals?pageNumber=1&pageSize=30&status=lpa_questionnaire')
 				.reply(200, {
 					itemCount: 1,
 					items: [appealsNationalList.items[0]],
@@ -204,7 +202,7 @@ describe('national-list', () => {
 					pageSize: 30
 				});
 
-			const response = await request.get(`${baseUrl}?appealStatusFilter=lpa_questionnaire_due`);
+			const response = await request.get(`${baseUrl}?appealStatusFilter=lpa_questionnaire`);
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
@@ -217,9 +215,7 @@ describe('national-list', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<select class="govuk-select" id="" name="appealStatusFilter"'
 			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				'<option value="lpa_questionnaire_due" selected'
-			);
+			expect(unprettifiedElement.innerHTML).toContain('<option value="lpa_questionnaire" selected');
 			expect(unprettifiedElement.innerHTML).toContain('Apply</button>');
 			expect(unprettifiedElement.innerHTML).toContain('Clear filter</a>');
 		});

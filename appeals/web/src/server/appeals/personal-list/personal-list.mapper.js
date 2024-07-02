@@ -7,6 +7,7 @@ import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
 import * as authSession from '../../app/auth/auth-session.service.js';
 import { appealStatusToStatusTag } from '#lib/nunjucks-filters/status-tag.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
+import { STATUSES } from '@pins/appeals/constants/state.js';
 
 /** @typedef {import('@pins/appeals').AppealList} AppealList */
 /** @typedef {import('@pins/appeals').Pagination} Pagination */
@@ -248,8 +249,8 @@ export function mapAppealStatusToActionRequiredHtml(
 	const appealDueDate = new Date(dueDate);
 
 	switch (appealStatus) {
-		case 'ready_to_start':
-		case 'review_appellant_case':
+		case STATUSES.READY_TO_START:
+		case STATUSES.VALIDATION:
 			if (appellantCaseStatus == 'Incomplete') {
 				if (isInspector) {
 					return 'Awaiting appellant update';
@@ -257,9 +258,10 @@ export function mapAppealStatusToActionRequiredHtml(
 				return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/appellant-case">Awaiting appellant update</a>`;
 			}
 			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/appellant-case">Review appellant case</a>`;
-		case 'lpa_questionnaire_due':
+		case STATUSES.LPA_QUESTIONNAIRE:
+		case 'lpa_questionnaire_due': // TODO: remove once status value updates are complete
 			if (currentDate > appealDueDate) {
-				return 'LPA Questionnaire Overdue';
+				return 'LPA questionnaire overdue';
 			}
 			if (lpaQuestionnaireStatus == 'Incomplete') {
 				if (isInspector) {
@@ -269,16 +271,16 @@ export function mapAppealStatusToActionRequiredHtml(
 			}
 			if (lpaQuestionnaireId) {
 				if (isInspector) {
-					return 'Review LPA Questionnaire';
+					return 'Review LPA questionnaire';
 				}
-				return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}">Review LPA Questionnaire</a>`;
+				return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}">Review LPA questionnaire</a>`;
 			}
-			return 'Awaiting LPA Questionnaire';
-		case 'issue_determination':
+			return 'Awaiting LPA questionnaire';
+		case STATUSES.ISSUE_DETERMINATION:
 			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/issue-decision/decision">Issue decision</a>`;
-		case 'awaiting_transfer':
+		case STATUSES.AWAITING_TRANSFER:
 			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/change-appeal-type/add-horizon-reference">Update Horizon reference</a>`;
 		default:
-			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}">View appellant case</a>`;
+			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}">View case</a>`;
 	}
 }
