@@ -580,7 +580,8 @@ export function mapNotificationBannerComponentParameters(
 
 		const listClasses = 'govuk-!-margin-top-0';
 
-		const detailsPageComponents = (notValidReasons || [])
+		/** @type {PageComponent[]} */
+		const bannerContentPageComponents = (notValidReasons || [])
 			.filter((reason) => reason.name.hasText)
 			.map((reason) => ({
 				type: 'details',
@@ -593,7 +594,7 @@ export function mapNotificationBannerComponentParameters(
 		const reasonsWithoutText = (notValidReasons || []).filter((reason) => !reason.name.hasText);
 
 		if (reasonsWithoutText.length > 0) {
-			detailsPageComponents.unshift({
+			bannerContentPageComponents.unshift({
 				type: 'details',
 				parameters: {
 					summaryText: 'Incorrect name and/or missing documents',
@@ -607,11 +608,20 @@ export function mapNotificationBannerComponentParameters(
 		}
 
 		if (validationOutcome === 'incomplete' && appealDueDate) {
-			detailsPageComponents.unshift({
-				type: 'details',
+			bannerContentPageComponents.unshift({
+				type: 'summary-list',
 				parameters: {
-					summaryText: 'Due date has changed',
-					html: `<p class="govuk-body">${apiDateStringToDisplayDate(appealDueDate)}</p>`
+					classes: 'govuk-summary-list--no-border govuk-!-margin-bottom-4',
+					rows: [
+						{
+							key: {
+								text: 'Due date'
+							},
+							value: {
+								text: apiDateStringToDisplayDate(appealDueDate)
+							}
+						}
+					]
 				}
 			});
 		}
@@ -620,7 +630,7 @@ export function mapNotificationBannerComponentParameters(
 			appealId,
 			titleText: `Appeal is ${String(validationOutcome)}`,
 			html: '',
-			pageComponents: detailsPageComponents
+			pageComponents: bannerContentPageComponents
 		};
 	}
 

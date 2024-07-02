@@ -352,8 +352,8 @@ describe('appellant-case', () => {
 			expect(unprettifiedNotificationBannerHTML).toContain(
 				'<details class="govuk-details" data-module="govuk-details">'
 			);
-			expect(unprettifiedNotificationBannerHTML).toContain('Due date has changed</span>');
-			expect(unprettifiedNotificationBannerHTML).toContain('2 October 2024</p>');
+			expect(unprettifiedNotificationBannerHTML).toContain('Due date</dt>');
+			expect(unprettifiedNotificationBannerHTML).toContain('2 October 2024</dd>');
 			expect(unprettifiedNotificationBannerHTML).toContain(
 				'Incorrect name and/or missing documents</span>'
 			);
