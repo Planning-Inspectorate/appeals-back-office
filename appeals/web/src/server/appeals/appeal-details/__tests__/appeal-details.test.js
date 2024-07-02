@@ -1578,7 +1578,7 @@ describe('appeal-details', () => {
 					'assign_case_officer',
 					'validation',
 					'ready_to_start',
-					'lpa_questionnaire_due',
+					'lpa_questionnaire',
 					'statement_review',
 					'final_comment_review',
 					'invalid',

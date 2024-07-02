@@ -9,7 +9,9 @@
 	{%- switch (status | string | lower) -%}
 		{%- case 'ready_to_start' -%}
 			{%- set statusTagColor = 'turquoise' -%}
-		{%- case 'lpa_questionnaire_due' -%}
+		{%- case 'lpa_questionnaire' -%}
+			{%- set statusTagColor = 'yellow' -%}
+		{%- case 'lpa_questionnaire_due' -%} {# TODO: remove once status value updates are complete #}
 			{%- set statusTagColor = 'yellow' -%}
 		{%- case 'validation' -%}
 			{%- set statusTagColor = 'orange' -%}
