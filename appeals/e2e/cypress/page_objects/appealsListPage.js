@@ -154,7 +154,9 @@ export class AppealsListPage extends Page {
 		this.elements.answerCellAppeals(answer).then(($elem) => {
 			cy.wrap($elem)
 				.invoke('text')
-				.then((text) => expect(text.trim()).to.include(answer));
+				.then((text) =>
+					expect(text.trim().toLocaleLowerCase()).to.include(answer.toLocaleLowerCase())
+				);
 		});
 	}
 
@@ -164,6 +166,10 @@ export class AppealsListPage extends Page {
 			.summaryListValue()
 			.eq(position - 1)
 			.should('not.have.text');
+	}
+
+	clickChooseCaseOfficerResult(email) {
+		cy.getByData(email.toLocaleLowerCase()).click();
 	}
 
 	// ASSERTIONS

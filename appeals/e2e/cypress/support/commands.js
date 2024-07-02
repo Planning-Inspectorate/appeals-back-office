@@ -71,7 +71,7 @@ Cypress.Commands.add('loginWithPuppeteer', (user) => {
 });
 
 Cypress.Commands.add('getByData', (value) => {
-	return cy.get(`[data-cy=${value}]`);
+	return cy.get(`[data-cy="${value}"]`);
 });
 
 Cypress.Commands.add('createCase', () => {

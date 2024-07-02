@@ -262,18 +262,6 @@ export class Page {
 		this.basePageElements.radioButton().should('have.length', radioCount);
 	}
 
-	verifyCaseAdminIsSignedIn() {
-		this.basePageElements.loggedInUser().should('have.text', users.applications.caseAdmin.typeName);
-	}
-
-	verifyCaseTeamIsSignedIn() {
-		this.basePageElements.loggedInUser().should('have.text', users.applications.caseTeam.typeName);
-	}
-
-	verifyInspectorIsSignedIn() {
-		this.basePageElements.loggedInUser().should('have.text', users.applications.inspector.typeName);
-	}
-
 	verifyFolderDocuments(fileCount) {
 		cy.wait(6000);
 		cy.get('.pins-files-list > .govuk-table .govuk-table__row').should(
