@@ -1657,13 +1657,11 @@ data-module="govuk-notification-banner">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Appeal is incomplete</h3>
     </div>
     <div class="govuk-notification-banner__content">
-        <details class="govuk-details" data-module="govuk-details">
-            <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Due date has changed</span>
-            </summary>
-            <div class="govuk-details__text">
-                <p class="govuk-body">2 October 2024</p>
+        <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-bottom-4">
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Due date</dt>
+                <dd class="govuk-summary-list__value">2 October 2024</dd>
             </div>
-        </details>
+        </dl>
         <details class="govuk-details" data-module="govuk-details">
             <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Incorrect name and/or missing documents</span>
             </summary>
