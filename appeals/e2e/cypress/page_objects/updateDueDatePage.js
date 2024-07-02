@@ -47,9 +47,9 @@ export class UpdateDueDatePage extends Page {
 	// A C T I O N S
 
 	enterDate(date) {
-		enterDateDay(date.getFullYear());
-		enterDateMonth(date.getMonth() + 1);
-		enterDateYear(date.getDate());
+		this.enterDateDay(date.getDate());
+		this.enterDateMonth(date.getMonth() + 1);
+		this.enterDateYear(date.getFullYear());
 	}
 
 	enterDateDay(text, index = 0) {
@@ -65,9 +65,9 @@ export class UpdateDueDatePage extends Page {
 	}
 
 	enterValidDate(date) {
-		validDateDay(date.getFullYear());
-		validDateMonth(date.getMonth() + 1);
-		validDateYear(date.getDate());
+		this.validDateDay(date.getDate());
+		this.validDateMonth(date.getMonth() + 1);
+		this.validDateYear(date.getFullYear());
 	}
 
 	validDateDay(text, index = 0) {

@@ -76,7 +76,7 @@ export class AppealsListPage extends Page {
 		this.basePageElements.bannerLink(text).click();
 	}
 
-	clickReviewLpaq(position) {
+	clickReviewLpaq() {
 		this.clickAccordionByButton('Documentation');
 		this.elements.reviewLpaQuestionnaire().click();
 	}
@@ -92,14 +92,6 @@ export class AppealsListPage extends Page {
 	}
 
 	fillInput(text, index = 0) {
-		this.basePageElements.input().eq(index).clear().type(text);
-	}
-
-	fillInput1(text, index = 1) {
-		this.elements.input1().eq(index).clear().type(text);
-	}
-
-	fillInput2(text, index = 2) {
 		this.basePageElements.input().eq(index).clear().type(text);
 	}
 
