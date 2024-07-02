@@ -31,7 +31,8 @@ describe('Appeals feature', () => {
 	});
 
 	it('incomplete LPAQ', () => {
-		let date = new Date(2024, 11, 19); // TODO Should this stay static or be dynamically calculated?
+		let futureDate = new Date();
+		futureDate.setMonth(futureDate.getMonth() + 6);
 
 		cy.createCase().then((caseRef) => {
 			cy.addLpaqSubmissionToCase(caseRef).then(() => {
@@ -43,7 +44,7 @@ describe('Appeals feature', () => {
 				appealsListPage.chooseCheckboxByIndex(1);
 				appealsListPage.fillInput('Hello here is some extra info, have a nice day 7384_+!£ =', 1);
 				appealsListPage.clickButtonByText('Continue');
-				updateDueDatePage.enterDate(date);
+				updateDueDatePage.enterDate(futureDate);
 				appealsListPage.clickButtonByText('Save and Continue');
 				appealsListPage.clickButtonByText('Confirm');
 				appealsListPage.clickLinkByText('Go back to case details');
@@ -55,7 +56,8 @@ describe('Appeals feature', () => {
 	});
 
 	it('incomplete LPAQ add another', () => {
-		let date = new Date(2024, 11, 19); // TODO Should this stay static or be dynamically calculated?
+		let futureDate = new Date();
+		futureDate.setMonth(futureDate.getMonth() + 6);
 
 		cy.createCase().then((caseRef) => {
 			cy.addLpaqSubmissionToCase(caseRef).then(() => {
@@ -69,7 +71,7 @@ describe('Appeals feature', () => {
 				appealsListPage.addAnotherButtonLpaq();
 				appealsListPage.fillInput('Hello here is some extra info, have a nice day 7384_+!£ =', 2);
 				appealsListPage.clickButtonByText('Continue');
-				updateDueDatePage.enterDate(date);
+				updateDueDatePage.enterDate(futureDate);
 				appealsListPage.clickButtonByText('Save and Continue');
 				appealsListPage.clickButtonByText('Confirm');
 				appealsListPage.clickLinkByText('Go back to case details');
