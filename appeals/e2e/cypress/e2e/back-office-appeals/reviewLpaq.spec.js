@@ -14,7 +14,19 @@ describe('Appeals feature', () => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
+	it.only('LPAQ test', () => {
+		cy.createCase().then((caseRef) => {
+			cy.visit(urlPaths.appealsList);
+
+			cy.addLpaqSubmissionToCase(caseRef).then(() => {
+				page.clickAppealByRef(caseRef);
+			});
+		});
+	});
+
 	it('Complete LPAQ', () => {
+		// addLpaqSubmissionToCase
+
 		cy.visit(urlPaths.appealsList);
 		appealsListPage.clickAppealFromList(30); // TODO Change to use page.clickAppealByRef(ref)
 		appealsListPage.clickReviewLpaq(7);

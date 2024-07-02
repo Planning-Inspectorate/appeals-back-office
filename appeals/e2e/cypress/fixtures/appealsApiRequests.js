@@ -54,6 +54,47 @@ const appealsApiRequests = {
 				serviceUserType: 'Appellant'
 			}
 		]
+	},
+	lpaqSubmission: {
+		casedata: {
+			caseReference: '6000000',
+			lpaQuestionnaireSubmittedDate: '2024-05-31T23:00:00.000Z',
+			lpaStatement: 'cupidatat ipsum eu culpa',
+			siteAccessDetails: ['Here it is'],
+			siteSafetyDetails: ['Fine'],
+			isCorrectAppealType: true,
+			isGreenBelt: false,
+			inConservationArea: true,
+			newConditionDetails: 'cupidatat',
+			notificationMethod: ['notice', 'letter'],
+			nearbyCaseReferences: ['1000000'],
+			neighbouringSiteAddresses: [
+				{
+					neighbouringSiteAddressLine1: 'deserunt in irure do',
+					neighbouringSiteAddressLine2: 'string',
+					neighbouringSiteAddressTown: 'laboris ut enim et laborum',
+					neighbouringSiteAddressCounty: 'reprehenderit eu mollit Excepteur sit',
+					neighbouringSiteAddressPostcode: 'aliqua in qui ipsum',
+					neighbouringSiteAccessDetails: 'string',
+					neighbouringSiteSafetyDetails: 'magna proident incididunt in non'
+				}
+			],
+			affectedListedBuildingNumbers: ['10001', '10002'],
+			lpaCostsAppliedFor: false
+		},
+		documents: [
+			{
+				dateCreated: '2024-03-01T13:48:35.847Z',
+				documentId: '001',
+				documentType: 'lpaCostsApplication',
+				documentURI:
+					'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
+				filename: 'img3.jpg',
+				mime: 'image/jpeg',
+				originalFilename: 'oimg.jpg',
+				size: 10293
+			}
+		]
 	}
 };
 

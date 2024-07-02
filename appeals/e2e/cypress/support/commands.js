@@ -82,6 +82,14 @@ Cypress.Commands.add('createCase', () => {
 	});
 });
 
+Cypress.Commands.add('addLpaqSubmissionToCase', (reference) => {
+	return cy.wrap(null).then(async () => {
+		await appealsApiClient.lpqaSubmission(reference);
+		cy.log('Added LPA submission to case ref ' + reference);
+		return;
+	});
+});
+
 export function setLocalCookies(userId) {
 	cy.readFile(
 		`${BrowserAuthData.BrowserAuthDataFolder}/${userId}-${BrowserAuthData.CookiesFile}`
