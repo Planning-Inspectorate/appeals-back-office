@@ -16,8 +16,8 @@ import {
 	mapDocumentDownloadUrl,
 	mapVirusCheckStatus
 } from '#appeals/appeal-documents/appeal-documents.mapper.js';
-import { STATUSES } from '@pins/appeals/constants/state.js';
 import { AVSCAN_STATUS } from '@pins/appeals/constants/documents.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 /**
  * @param {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} appealDetails
@@ -1270,12 +1270,12 @@ function mapLeadOrChildStatus(appealDetails) {
  */
 function generateAppealDecisionActionListItems(appealDetails) {
 	switch (appealDetails.appealStatus) {
-		case STATUSES.ISSUE_DETERMINATION: {
+		case APPEAL_CASE_STATUS.ISSUE_DETERMINATION: {
 			return `<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="${generateIssueDecisionUrl(
 				appealDetails.appealId
 			)}">Issue</a></li>`;
 		}
-		case STATUSES.COMPLETE: {
+		case APPEAL_CASE_STATUS.COMPLETE: {
 			return `<li class="govuk-summary-list__actions-list-item">${generateDecisionDocumentDownloadHtml(
 				appealDetails
 			)}</li>`;

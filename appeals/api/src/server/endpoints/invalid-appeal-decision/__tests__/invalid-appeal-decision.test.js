@@ -4,8 +4,8 @@ import { jest } from '@jest/globals';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { householdAppeal } from '#tests/appeals/mocks.js';
 import { documentCreated } from '#tests/documents/mocks.js';
-import { STATE_TARGET_ISSUE_DETERMINATION } from '#endpoints/constants.js';
 import config from '#config/config.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 
@@ -85,7 +85,7 @@ describe('invalid appeal decision routes', () => {
 				...householdAppeal,
 				appealStatus: [
 					{
-						status: STATE_TARGET_ISSUE_DETERMINATION,
+						status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
 						valid: true
 					}
 				]

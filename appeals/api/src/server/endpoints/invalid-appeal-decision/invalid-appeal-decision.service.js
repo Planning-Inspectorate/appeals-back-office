@@ -4,13 +4,13 @@ import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.
 import {
 	CASE_OUTCOME_INVALID,
 	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL,
-	ERROR_NO_RECIPIENT_EMAIL,
-	STATE_TARGET_INVALID
+	ERROR_NO_RECIPIENT_EMAIL
 } from '#endpoints/constants.js';
 import config from '#config/config.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 // eslint-disable-next-line no-unused-vars
 import NotifyClient from '#utils/notify-client.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.InspectorDecision} Decision */
@@ -73,7 +73,7 @@ export const publishInvalidDecision = async (
 			appeal.appealType,
 			azureUserId,
 			appeal.appealStatus,
-			STATE_TARGET_INVALID
+			APPEAL_CASE_STATUS.INVALID
 		);
 		await broadcasters.broadcastAppeal(appeal.id);
 

@@ -98,7 +98,6 @@ export const linkExternalAppeal = async (req, res) => {
 	const linkedAppealId = formattedLinkedAppeal.appealId
 		? parseInt(formattedLinkedAppeal.appealId)
 		: undefined;
-	console.log(linkedAppealId);
 	const relationship = isCurrentAppealParent
 		? {
 				parentId: currentAppeal.id,

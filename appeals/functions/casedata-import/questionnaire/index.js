@@ -34,7 +34,7 @@ export default async function (context, msg) {
 	try {
 		const res = await api.post(msg);
 
-		const { caseReference } = res;
+		const { reference: caseReference } = res;
 
 		context.log.info(`LPA questionnaire created for appeal: ${caseReference}`);
 	} catch (e) {

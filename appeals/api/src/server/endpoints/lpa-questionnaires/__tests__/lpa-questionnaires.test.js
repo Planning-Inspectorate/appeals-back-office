@@ -15,8 +15,6 @@ import {
 	ERROR_ONLY_FOR_INCOMPLETE_VALIDATION_OUTCOME,
 	LENGTH_10,
 	LENGTH_8,
-	STATE_TARGET_STATEMENT_REVIEW,
-	STATE_TARGET_ISSUE_DETERMINATION,
 	AUDIT_TRAIL_SUBMISSION_INCOMPLETE
 } from '../../constants.js';
 import {
@@ -36,6 +34,7 @@ import stringTokenReplacement from '#utils/string-token-replacement.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 import config from '#config/config.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 describe('lpa questionnaires routes', () => {
 	beforeEach(() => {
@@ -167,7 +166,7 @@ describe('lpa questionnaires routes', () => {
 					...householdAppeal,
 					appealStatus: [
 						{
-							status: 'lpa_questionnaire_due',
+							status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 							valid: true
 						}
 					]
@@ -207,7 +206,7 @@ describe('lpa questionnaires routes', () => {
 					data: {
 						appealId: householdAppeal.id,
 						createdAt: expect.any(Date),
-						status: STATE_TARGET_ISSUE_DETERMINATION,
+						status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
 						valid: true
 					}
 				});
@@ -215,7 +214,7 @@ describe('lpa questionnaires routes', () => {
 					data: {
 						appealId: householdAppeal.id,
 						details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, [
-							STATE_TARGET_ISSUE_DETERMINATION
+							APPEAL_CASE_STATUS.ISSUE_DETERMINATION
 						]),
 						loggedAt: expect.any(Date),
 						userId: householdAppeal.caseOfficer.id
@@ -237,7 +236,7 @@ describe('lpa questionnaires routes', () => {
 					...householdAppeal,
 					appealStatus: [
 						{
-							status: 'lpa_questionnaire_due',
+							status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 							valid: true
 						}
 					]
@@ -281,7 +280,7 @@ describe('lpa questionnaires routes', () => {
 					...fullPlanningAppeal,
 					appealStatus: [
 						{
-							status: 'lpa_questionnaire_due',
+							status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 							valid: true
 						}
 					]
@@ -321,16 +320,14 @@ describe('lpa questionnaires routes', () => {
 					data: {
 						appealId: fullPlanningAppeal.id,
 						createdAt: expect.any(Date),
-						status: STATE_TARGET_STATEMENT_REVIEW,
+						status: 'statement_review',
 						valid: true
 					}
 				});
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 					data: {
 						appealId: fullPlanningAppeal.id,
-						details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, [
-							STATE_TARGET_STATEMENT_REVIEW
-						]),
+						details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, ['statement_review']),
 						loggedAt: expect.any(Date),
 						userId: fullPlanningAppeal.caseOfficer.id
 					}

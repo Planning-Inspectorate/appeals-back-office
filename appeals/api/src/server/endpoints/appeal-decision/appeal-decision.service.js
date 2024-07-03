@@ -1,13 +1,10 @@
 import appealRepository from '#repositories/appeal.repository.js';
 import transitionState from '#state/transition-state.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
-import {
-	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL,
-	FRONT_OFFICE_URL,
-	STATE_TARGET_COMPLETE
-} from '#endpoints/constants.js';
+import { ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL, FRONT_OFFICE_URL } from '#endpoints/constants.js';
 import formatDate from '#utils/date-formatter.js';
 import config from '#config/config.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.InspectorDecision} Decision */
@@ -80,7 +77,7 @@ export const publishDecision = async (
 			appeal.appealType || null,
 			azureUserId,
 			appeal.appealStatus,
-			STATE_TARGET_COMPLETE
+			APPEAL_CASE_STATUS.COMPLETE
 		);
 		await broadcasters.broadcastAppeal(appeal.id);
 

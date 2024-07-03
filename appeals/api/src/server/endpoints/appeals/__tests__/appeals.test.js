@@ -26,6 +26,7 @@ import { householdAppeal, fullPlanningAppeal, linkedAppeals } from '#tests/appea
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { getIdsOfReferencedAppeals, mapAppealToDueDate } from '../appeals.formatter.js';
 import { mapAppealStatuses } from '../appeals.controller.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 
@@ -1622,7 +1623,7 @@ describe('mapAppealToDueDate Tests', () => {
 		appealStatus: [
 			{
 				id: 2648,
-				status: 'ready_to_start',
+				status: APPEAL_CASE_STATUS.READY_TO_START,
 				createdAt: new Date('2024-01-09T16:14:31.387Z'),
 				valid: true,
 				appealId: 496,
@@ -1647,7 +1648,7 @@ describe('mapAppealToDueDate Tests', () => {
 			appealStatus: [
 				{
 					id: 2648,
-					status: 'ready_to_start',
+					status: APPEAL_CASE_STATUS.READY_TO_START,
 					createdAt: new Date('2024-01-09T16:14:31.387Z'),
 					valid: true,
 					appealId: 496,
@@ -1660,14 +1661,14 @@ describe('mapAppealToDueDate Tests', () => {
 	});
 
 	test('maps STATE_TARGET_READY_TO_START status', () => {
-		mockAppeal.appealStatus[0].status = 'ready_to_start';
+		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.READY_TO_START;
 		// @ts-ignore
 		const dueDate = mapAppealToDueDate(mockAppeal, 'Incomplete', new Date('2023-02-01'));
 		expect(dueDate).toEqual(new Date('2023-02-01'));
 	});
 
 	test('maps STATE_TARGET_READY_TO_START status with Incomplete status', () => {
-		mockAppeal.appealStatus[0].status = 'ready_to_start';
+		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.READY_TO_START;
 		const createdAtPlusFiveDate = new Date('2023-01-06T00:00:00.000Z');
 		// @ts-ignore
 		const dueDate = mapAppealToDueDate(mockAppeal, '', null);
@@ -1675,7 +1676,7 @@ describe('mapAppealToDueDate Tests', () => {
 	});
 
 	test('maps STATE_TARGET_LPA_QUESTIONNAIRE_DUE', () => {
-		mockAppeal.appealStatus[0].status = 'lpa_questionnaire_due';
+		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE;
 
 		const createdAtPlusTenDate = new Date('2023-01-11T00:00:00.000Z');
 		// @ts-ignore
@@ -1695,7 +1696,7 @@ describe('mapAppealToDueDate Tests', () => {
 				statementReviewDate: null
 			}
 		};
-		mockAppealWithTimetable.appealStatus[0].status = 'lpa_questionnaire_due';
+		mockAppealWithTimetable.appealStatus[0].status = APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE;
 
 		// @ts-ignore
 		const dueDate = mapAppealToDueDate(mockAppealWithTimetable, '', null);
@@ -1703,7 +1704,7 @@ describe('mapAppealToDueDate Tests', () => {
 	});
 
 	test('maps STATE_TARGET_ASSIGN_CASE_OFFICER', () => {
-		mockAppeal.appealStatus[0].status = 'assign_case_officer';
+		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER;
 
 		const createdAtPlusFifteenDate = new Date('2023-01-16T00:00:00.000Z');
 		// @ts-ignore
@@ -1712,7 +1713,7 @@ describe('mapAppealToDueDate Tests', () => {
 	});
 
 	test('maps STATE_TARGET_ISSUE_DETERMINATION', () => {
-		mockAppeal.appealStatus[0].status = 'issue_determination';
+		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.ISSUE_DETERMINATION;
 
 		const createdAtPlusThirtyDate = new Date('2023-01-31T00:00:00.000Z');
 		// @ts-ignore
@@ -1732,7 +1733,7 @@ describe('mapAppealToDueDate Tests', () => {
 				statementReviewDate: null
 			}
 		};
-		mockAppealWithTimetable.appealStatus[0].status = 'issue_determination';
+		mockAppealWithTimetable.appealStatus[0].status = APPEAL_CASE_STATUS.ISSUE_DETERMINATION;
 
 		// @ts-ignore
 		const dueDate = mapAppealToDueDate(mockAppealWithTimetable, '', null);
@@ -1817,17 +1818,17 @@ describe('mapAppealToDueDate Tests', () => {
 describe('mapAppealStatuses Tests', () => {
 	test('correctly orders statuses personal list', () => {
 		const preSortedStatuses = [
-			{ appealStatus: [{ status: 'issue_determination' }] },
-			{ appealStatus: [{ status: 'lpa_questionnaire_due' }] },
-			{ appealStatus: [{ status: 'awaiting_transfer' }] },
-			{ appealStatus: [{ status: 'ready_to_start' }] }
+			{ appealStatus: [{ status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION }] },
+			{ appealStatus: [{ status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE }] },
+			{ appealStatus: [{ status: APPEAL_CASE_STATUS.AWAITING_TRANSFER }] },
+			{ appealStatus: [{ status: APPEAL_CASE_STATUS.READY_TO_START }] }
 		];
 
 		const expectedOrder = [
-			'ready_to_start',
-			'lpa_questionnaire_due',
-			'issue_determination',
-			'awaiting_transfer'
+			APPEAL_CASE_STATUS.READY_TO_START,
+			APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+			APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+			APPEAL_CASE_STATUS.AWAITING_TRANSFER
 		];
 
 		const orderedStatuses = mapAppealStatuses(preSortedStatuses);
@@ -1836,22 +1837,21 @@ describe('mapAppealStatuses Tests', () => {
 
 	test('correctly orders statuses national list', () => {
 		const preSortedStatuses = [
-			{ appealStatus: [{ status: 'assign_case_officer' }] },
-			{ appealStatus: [{ status: 'ready_to_start' }] },
-			{ appealStatus: [{ status: 'issue_determination' }] },
-			{ appealStatus: [{ status: 'lpa_questionnaire_due' }] },
-			{ appealStatus: [{ status: 'awaiting_transfer' }] },
-			{ appealStatus: [{ status: 'ready_to_start' }] },
-			{ appealStatus: [{ status: 'complete' }] }
+			{ appealStatus: [{ status: APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER }] },
+			{ appealStatus: [{ status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION }] },
+			{ appealStatus: [{ status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE }] },
+			{ appealStatus: [{ status: APPEAL_CASE_STATUS.AWAITING_TRANSFER }] },
+			{ appealStatus: [{ status: APPEAL_CASE_STATUS.READY_TO_START }] },
+			{ appealStatus: [{ status: APPEAL_CASE_STATUS.COMPLETE }] }
 		];
 
 		const expectedOrder = [
-			'assign_case_officer',
-			'ready_to_start',
-			'lpa_questionnaire_due',
-			'issue_determination',
-			'awaiting_transfer',
-			'complete'
+			APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
+			APPEAL_CASE_STATUS.READY_TO_START,
+			APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+			APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+			APPEAL_CASE_STATUS.AWAITING_TRANSFER,
+			APPEAL_CASE_STATUS.COMPLETE
 		];
 
 		const orderedStatuses = mapAppealStatuses(preSortedStatuses);

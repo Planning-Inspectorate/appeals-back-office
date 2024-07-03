@@ -11,6 +11,7 @@ import {
 	ERROR_MUST_BE_STRING,
 	FRONT_OFFICE_URL
 } from '#endpoints/constants.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import config from '#config/config.js';
 const { databaseConnector } = await import('#utils/database-connector.js');
 
@@ -23,7 +24,7 @@ const appealsWithValidStatus = [
 		...householdAppeal,
 		appealStatus: [
 			{
-				status: 'lpa_questionnaire_due',
+				status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 				valid: true
 			}
 		]
@@ -32,7 +33,7 @@ const appealsWithValidStatus = [
 		...householdAppeal,
 		appealStatus: [
 			{
-				status: 'issue_determination',
+				status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
 				valid: true
 			}
 		]
@@ -43,7 +44,7 @@ const appealsWithInvalidStatus = [
 		...householdAppeal,
 		appealStatus: [
 			{
-				status: 'closed',
+				status: APPEAL_CASE_STATUS.CLOSED,
 				valid: true
 			}
 		]
@@ -237,7 +238,7 @@ describe('appeal change type transfer confirmation routes', () => {
 				...householdAppeal,
 				appealStatus: [
 					{
-						status: 'lpa_questionnaire_due',
+						status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 						valid: true
 					}
 				]
@@ -264,7 +265,7 @@ describe('appeal change type transfer confirmation routes', () => {
 				...householdAppeal,
 				appealStatus: [
 					{
-						status: 'awaiting_transfer',
+						status: APPEAL_CASE_STATUS.AWAITING_TRANSFER,
 						valid: true
 					}
 				]
@@ -291,7 +292,7 @@ describe('appeal change type transfer confirmation routes', () => {
 				...householdAppeal,
 				appealStatus: [
 					{
-						status: 'awaiting_transfer',
+						status: APPEAL_CASE_STATUS.AWAITING_TRANSFER,
 						valid: true
 					}
 				]
@@ -318,7 +319,7 @@ describe('appeal change type transfer confirmation routes', () => {
 				...householdAppeal,
 				appealStatus: [
 					{
-						status: 'awaiting_transfer',
+						status: APPEAL_CASE_STATUS.AWAITING_TRANSFER,
 						valid: true
 					}
 				]

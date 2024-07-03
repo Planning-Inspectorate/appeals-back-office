@@ -1,14 +1,11 @@
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { databaseConnector } from '#utils/database-connector.js';
-import {
-	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL,
-	FRONT_OFFICE_URL,
-	STATE_TARGET_CLOSED
-} from '../constants.js';
+import { ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL, FRONT_OFFICE_URL } from '../constants.js';
 import transitionState from '#state/transition-state.js';
 import formatDate from '#utils/date-formatter.js';
 import config from '#config/config.js';
 import timetableRepository from '#repositories/appeal-timetable.repository.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('express').Request} Request */
@@ -48,7 +45,7 @@ const changeAppealType = async (
 			appeal.appealType,
 			azureAdUserId,
 			appeal.appealStatus,
-			STATE_TARGET_CLOSED
+			APPEAL_CASE_STATUS.CLOSED
 		),
 		await broadcasters.broadcastAppeal(appeal.id)
 	]);

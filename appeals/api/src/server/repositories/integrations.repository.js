@@ -3,10 +3,10 @@ import { databaseConnector } from '#utils/database-connector.js';
 import { mapBlobPath } from '#endpoints/documents/documents.mapper.js';
 import { getDefaultRedactionStatus } from './document-metadata.repository.js';
 import { createAppealReference } from '#utils/appeal-reference.js';
-import { STATUSES } from '@pins/appeals/constants/state.js';
 import { STAGE, DOCTYPE } from '@pins/appeals/constants/documents.js';
 
 import config from '#config/config.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 /**
  *
@@ -26,7 +26,7 @@ export const createAppeal = async (data, documents, relatedReferences) => {
 				reference,
 				appealStatus: {
 					create: {
-						status: STATUSES.ASSIGN_CASE_OFFICER,
+						status: APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
 						createdAt: new Date().toISOString()
 					}
 				}
