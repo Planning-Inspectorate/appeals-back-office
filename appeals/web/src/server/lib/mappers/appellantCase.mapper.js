@@ -315,15 +315,15 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 				},
 				value: displayPageFormatter.formatDocumentValues(
 					appellantCaseData.appealId,
-					isFolderInfo(appellantCaseData.documents.originalApplicationForm)
-						? appellantCaseData.documents.originalApplicationForm.documents
+					isFolderInfo(appellantCaseData.documents.changedDescription)
+						? appellantCaseData.documents.changedDescription.documents
 						: []
 				),
 				actions: {
 					items: [
 						...((
-							(isFolderInfo(appellantCaseData.documents.originalApplicationForm) &&
-								appellantCaseData.documents.originalApplicationForm.documents) ||
+							(isFolderInfo(appellantCaseData.documents.changedDescription) &&
+								appellantCaseData.documents.changedDescription.documents) ||
 							[]
 						).length
 							? [
@@ -332,8 +332,8 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 										visuallyHiddenText: 'Agreement to change description evidence',
 										href: mapDocumentManageUrl(
 											appellantCaseData.appealId,
-											isFolderInfo(appellantCaseData.documents.originalApplicationForm)
-												? appellantCaseData.documents.originalApplicationForm.folderId
+											isFolderInfo(appellantCaseData.documents.changedDescription)
+												? appellantCaseData.documents.changedDescription.folderId
 												: undefined
 										)
 									})
@@ -344,7 +344,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 							visuallyHiddenText: 'Agreement to change description evidence',
 							href: displayPageFormatter.formatDocumentActionLink(
 								appellantCaseData.appealId,
-								appellantCaseData.documents.originalApplicationForm,
+								appellantCaseData.documents.changedDescription,
 								documentUploadUrlTemplate
 							)
 						})
