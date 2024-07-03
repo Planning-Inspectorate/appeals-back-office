@@ -29,7 +29,7 @@ export default async function (context, msg) {
 	try {
 		const res = await api.post(msg);
 
-		const { caseReference } = res;
+		const { reference: caseReference } = res;
 
 		context.log.info(`Appeal created: ${caseReference}`);
 	} catch (e) {

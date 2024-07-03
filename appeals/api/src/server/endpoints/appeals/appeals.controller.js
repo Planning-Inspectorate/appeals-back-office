@@ -18,14 +18,7 @@ import {
 	DEFAULT_PAGE_SIZE,
 	ERROR_FAILED_TO_SAVE_DATA,
 	ERROR_CANNOT_BE_EMPTY_STRING,
-	AUDIT_TRAIL_SYSTEM_UUID,
-	STATE_TARGET_READY_TO_START,
-	STATE_TARGET_ASSIGN_CASE_OFFICER,
-	STATE_TARGET_LPA_QUESTIONNAIRE_DUE,
-	STATE_TARGET_ISSUE_DETERMINATION,
-	STATE_TARGET_AWAITING_TRANSFER,
-	STATE_TARGET_COMPLETE,
-	STATE_TARGET_VALIDATION
+	AUDIT_TRAIL_SYSTEM_UUID
 } from '../constants.js';
 import {
 	formatAppeal,
@@ -36,6 +29,7 @@ import {
 import { assignUser, assignedUserType } from './appeals.service.js';
 import transitionState from '#state/transition-state.js';
 import { getDocumentById } from '#repositories/document.repository.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -151,7 +145,7 @@ const getAppeal = async (req, res) => {
 
 	let decisionInfo;
 	if (
-		appeal.appealStatus[0].status === STATE_TARGET_COMPLETE &&
+		appeal.appealStatus[0].status === APPEAL_CASE_STATUS.COMPLETE &&
 		appeal.inspectorDecision?.decisionLetterGuid
 	) {
 		const document = await getDocumentById(appeal.inspectorDecision.decisionLetterGuid);
@@ -230,7 +224,7 @@ const updateAppealById = async (req, res) => {
 					appeal.appealType,
 					azureUserId || AUDIT_TRAIL_SYSTEM_UUID,
 					appeal.appealStatus,
-					STATE_TARGET_VALIDATION
+					APPEAL_CASE_STATUS.VALIDATION
 				);
 			}
 		} else {
@@ -258,12 +252,13 @@ const updateAppealById = async (req, res) => {
  */
 const mapAppealStatuses = (rawStatuses) => {
 	const statusOrder = [
-		STATE_TARGET_ASSIGN_CASE_OFFICER,
-		STATE_TARGET_READY_TO_START,
-		STATE_TARGET_LPA_QUESTIONNAIRE_DUE,
-		STATE_TARGET_ISSUE_DETERMINATION,
-		STATE_TARGET_AWAITING_TRANSFER,
-		STATE_TARGET_COMPLETE
+		APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
+		APPEAL_CASE_STATUS.VALIDATION,
+		APPEAL_CASE_STATUS.READY_TO_START,
+		APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+		APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+		APPEAL_CASE_STATUS.AWAITING_TRANSFER,
+		APPEAL_CASE_STATUS.COMPLETE
 	];
 
 	const extractedStatuses = [

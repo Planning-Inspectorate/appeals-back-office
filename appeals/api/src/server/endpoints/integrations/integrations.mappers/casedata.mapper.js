@@ -1,16 +1,7 @@
 // @ts-nocheck
 
-import {
-	STATE_TARGET_CLOSED,
-	STATE_TARGET_COMPLETE,
-	STATE_TARGET_ISSUE_DETERMINATION,
-	STATE_TARGET_LPA_QUESTIONNAIRE_DUE,
-	STATE_TARGET_READY_TO_START,
-	STATE_TARGET_TRANSFERRED,
-	STATE_TARGET_WITHDRAWN
-} from '#endpoints/constants.js';
-import { STATUSES } from '@pins/appeals/constants/state.js';
 import formatValidationOutcomeResponse from '#utils/format-validation-outcome-response.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import { mapDate } from './date.mapper.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
@@ -31,25 +22,25 @@ export const mapAppealDatesOut = (appeal) => {
 		caseCreatedDate: mapDate(appeal.caseCreatedDate),
 		caseUpdatedDate: mapDate(appeal.caseUpdatedDate),
 		caseValidDate: mapDate(appeal.caseValidDate),
-		caseValidationDate: findStatusDate(appeal.appealStatus, STATE_TARGET_READY_TO_START),
+		caseValidationDate: findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.READY_TO_START),
 		caseExtensionDate: mapDate(appeal.caseExtensionDate),
 		caseStartedDate: mapDate(appeal.caseStartedDate),
-		casePublishedDate: findStatusDate(appeal.appealStatus, STATE_TARGET_READY_TO_START),
+		casePublishedDate: findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.READY_TO_START),
 		lpaQuestionnaireDueDate: mapDate(appeal.appealTimetable?.lpaQuestionnaireDueDate),
 		lpaQuestionnairePublishedDate: findStatusDate(
 			appeal.appealStatus,
-			STATE_TARGET_ISSUE_DETERMINATION
+			APPEAL_CASE_STATUS.ISSUE_DETERMINATION
 		),
 		lpaQuestionnaireValidationOutcomeDate: findStatusDate(
 			appeal.appealStatus,
-			STATE_TARGET_ISSUE_DETERMINATION
+			APPEAL_CASE_STATUS.ISSUE_DETERMINATION
 		),
-		caseWithdrawnDate: findStatusDate(appeal.appealStatus, STATE_TARGET_WITHDRAWN),
-		caseTransferredDate: findStatusDate(appeal.appealStatus, STATE_TARGET_TRANSFERRED),
-		transferredCaseClosedDate: findStatusDate(appeal.appealStatus, STATE_TARGET_CLOSED),
+		caseWithdrawnDate: findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.WITHDRAWN),
+		caseTransferredDate: findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.RANSFERRED),
+		transferredCaseClosedDate: findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.CLOSED),
 		caseDecisionOutcomeDate: mapDate(appeal.inspectorDecision?.caseDecisionOutcomeDate),
 		caseDecisionPublishedDate: null,
-		caseCompletedDate: findStatusDate(appeal.appealStatus, STATE_TARGET_COMPLETE)
+		caseCompletedDate: findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.COMPLETE)
 	};
 
 	return dates;
@@ -75,9 +66,6 @@ const findStatusDate = (appealStatuses, status) => {
  */
 export const mapAppealStatusOut = (appeal) => {
 	const status = appeal.appealStatus.find((status) => status.valid === true).status;
-	if (status === STATE_TARGET_LPA_QUESTIONNAIRE_DUE) {
-		return STATUSES.LPA_QUESTIONNAIRE;
-	}
 	return status;
 };
 

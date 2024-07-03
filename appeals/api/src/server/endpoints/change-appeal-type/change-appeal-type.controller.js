@@ -1,9 +1,9 @@
 import { databaseConnector } from '#utils/database-connector.js';
-import { STATE_TARGET_AWAITING_TRANSFER, STATE_TARGET_TRANSFERRED } from '#endpoints/constants.js';
 import transitionState from '#state/transition-state.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { changeAppealType } from './change-appeal-type.service.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -70,7 +70,7 @@ export const requestTransferOfAppeal = async (req, res) => {
 			appeal.appealType,
 			azureAdUserId,
 			appeal.appealStatus,
-			STATE_TARGET_AWAITING_TRANSFER
+			APPEAL_CASE_STATUS.AWAITING_TRANSFER
 		),
 		await broadcasters.broadcastAppeal(appeal.id)
 	]);
@@ -101,7 +101,7 @@ export const requestConfirmationTransferOfAppeal = async (req, res) => {
 			appeal.appealType,
 			azureAdUserId,
 			appeal.appealStatus,
-			STATE_TARGET_TRANSFERRED
+			APPEAL_CASE_STATUS.TRANSFERRED
 		),
 		await broadcasters.broadcastAppeal(appeal.id)
 	]);

@@ -1,12 +1,6 @@
 import { getSkipValue } from '#utils/database-pagination.js';
 import { databaseConnector } from '#utils/database-connector.js';
-import {
-	STATE_TARGET_CLOSED,
-	STATE_TARGET_COMPLETE,
-	STATE_TARGET_TRANSFERRED,
-	STATE_TARGET_INVALID,
-	STATE_TARGET_WITHDRAWN
-} from '#endpoints/constants.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.InspectorDecision} InspectorDecision */
@@ -107,11 +101,11 @@ const getUserAppeals = (userId, pageNumber, pageSize, status) => {
 					valid: true,
 					status: {
 						notIn: [
-							STATE_TARGET_COMPLETE,
-							STATE_TARGET_CLOSED,
-							STATE_TARGET_TRANSFERRED,
-							STATE_TARGET_INVALID,
-							STATE_TARGET_WITHDRAWN
+							APPEAL_CASE_STATUS.COMPLETE,
+							APPEAL_CASE_STATUS.CLOSED,
+							APPEAL_CASE_STATUS.TRANSFERRED,
+							APPEAL_CASE_STATUS.INVALID,
+							APPEAL_CASE_STATUS.WITHDRAWN
 						]
 					}
 				}
@@ -186,7 +180,12 @@ const getAppealsStatusesInPersonalList = (userId) => {
 	const where = {
 		AND: {
 			appealStatus: {
-				some: { valid: true, status: { notIn: [STATE_TARGET_COMPLETE, STATE_TARGET_CLOSED] } }
+				some: {
+					valid: true,
+					status: {
+						notIn: [APPEAL_CASE_STATUS.COMPLETE, APPEAL_CASE_STATUS.CLOSED]
+					}
+				}
 			}
 		},
 		...(userId && {

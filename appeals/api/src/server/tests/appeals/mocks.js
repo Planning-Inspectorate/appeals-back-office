@@ -1,5 +1,4 @@
 import { APPEAL_TYPE_SHORTHAND_FPA, APPEAL_TYPE_SHORTHAND_HAS } from '#endpoints/constants.js';
-import { STATUSES } from '@pins/appeals/constants/state.js';
 
 import {
 	azureAdUserId,
@@ -9,6 +8,7 @@ import {
 	completeLPAQuestionnaireOutcome,
 	incompleteLPAQuestionnaireOutcome
 } from '#tests/shared/mocks.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 export const auditTrails = [
 	{
@@ -67,7 +67,7 @@ export const householdAppeal = {
 	neighbouringSites: [],
 	appealStatus: [
 		{
-			status: STATUSES.ASSIGN_CASE_OFFICER,
+			status: APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
 			valid: true
 		}
 	],

@@ -1,14 +1,6 @@
-import {
-	ERROR_NOT_FOUND,
-	ERROR_INVALID_APPEAL_STATE,
-	STATE_TARGET_INVALID,
-	STATE_TARGET_CLOSED,
-	STATE_TARGET_COMPLETE,
-	STATE_TARGET_AWAITING_TRANSFER,
-	STATE_TARGET_TRANSFERRED,
-	STATE_TARGET_WITHDRAWN
-} from '#endpoints/constants.js';
+import { ERROR_NOT_FOUND, ERROR_INVALID_APPEAL_STATE } from '#endpoints/constants.js';
 import { getAllAppealTypes } from '#repositories/appeal-type.repository.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -47,12 +39,12 @@ export const validateAppealType = async (req, res, next) => {
 export const validateAppealStatus = async (req, res, next) => {
 	const isValidStatus =
 		[
-			STATE_TARGET_CLOSED,
-			STATE_TARGET_COMPLETE,
-			STATE_TARGET_INVALID,
-			STATE_TARGET_AWAITING_TRANSFER,
-			STATE_TARGET_TRANSFERRED,
-			STATE_TARGET_WITHDRAWN
+			APPEAL_CASE_STATUS.CLOSED,
+			APPEAL_CASE_STATUS.COMPLETE,
+			APPEAL_CASE_STATUS.INVALID,
+			APPEAL_CASE_STATUS.AWAITING_TRANSFER,
+			APPEAL_CASE_STATUS.TRANSFERRED,
+			APPEAL_CASE_STATUS.WITHDRAWN
 		].indexOf(req.appeal.appealStatus[0].status) === -1;
 
 	if (!isValidStatus) {
@@ -66,7 +58,7 @@ export const validateAppealStatus = async (req, res, next) => {
  * @returns {Promise<object|void>}
  */
 export const validateAppealStatusForTransfer = async (req, res, next) => {
-	const isValidStatus = req.appeal.appealStatus[0].status === STATE_TARGET_AWAITING_TRANSFER;
+	const isValidStatus = req.appeal.appealStatus[0].status === APPEAL_CASE_STATUS.AWAITING_TRANSFER;
 
 	if (!isValidStatus) {
 		return res.status(400).send({ errors: { appealStatus: ERROR_INVALID_APPEAL_STATE } });

@@ -14,12 +14,13 @@ import {
 } from '#repositories/document-metadata.repository.js';
 import { formatFolder } from './documents.formatter.js';
 import documentRedactionStatusRepository from '#repositories/document-redaction-status.repository.js';
-import { ERROR_NOT_FOUND, STATUSES } from '#endpoints/constants.js';
+import { ERROR_NOT_FOUND } from '#endpoints/constants.js';
 import { STAGE } from '@pins/appeals/constants/documents.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { EventType } from '@pins/event-client';
 import { AVSCAN_STATUS } from '@pins/appeals/constants/documents.js';
 import { DOCTYPE } from '@pins/appeals/constants/documents.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Document} Document */
@@ -350,17 +351,17 @@ const isLateEntry = (stage, status) => {
 	switch (stage) {
 		case STAGE.APPELLANT_CASE:
 			return (
-				status !== STATUSES.STATE_TARGET_ASSIGN_CASE_OFFICER &&
-				status !== STATUSES.STATE_TARGET_VALIDATION &&
-				status !== STATUSES.STATE_TARGET_READY_TO_START
+				status !== APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER &&
+				status !== APPEAL_CASE_STATUS.VALIDATION &&
+				status !== APPEAL_CASE_STATUS.READY_TO_START
 			);
 
 		case STAGE.LPA_QUESTIONNAIRE:
 			return (
-				status !== STATUSES.STATE_TARGET_ASSIGN_CASE_OFFICER &&
-				status !== STATUSES.STATE_TARGET_VALIDATION &&
-				status !== STATUSES.STATE_TARGET_READY_TO_START &&
-				status !== STATUSES.STATE_TARGET_LPA_QUESTIONNAIRE_DUE
+				status !== APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER &&
+				status !== APPEAL_CASE_STATUS.VALIDATION &&
+				status !== APPEAL_CASE_STATUS.READY_TO_START &&
+				status !== APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE
 			);
 	}
 

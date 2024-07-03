@@ -1,8 +1,6 @@
 import { publishInvalidDecision } from './invalid-appeal-decision.service.js';
-import {
-	ERROR_INVALID_APPEAL_STATE,
-	STATE_TARGET_ISSUE_DETERMINATION
-} from '#endpoints/constants.js';
+import { ERROR_INVALID_APPEAL_STATE } from '#endpoints/constants.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -17,7 +15,7 @@ export const postInvalidDecision = async (req, res) => {
 	const { invalidDecisionReason } = req.body;
 	const notifyClient = req.notifyClient;
 
-	if (appeal.appealStatus[0].status !== STATE_TARGET_ISSUE_DETERMINATION) {
+	if (appeal.appealStatus[0].status !== APPEAL_CASE_STATUS.ISSUE_DETERMINATION) {
 		return res.status(400).send({ errors: { state: ERROR_INVALID_APPEAL_STATE } });
 	}
 
@@ -25,6 +23,7 @@ export const postInvalidDecision = async (req, res) => {
 		appeal,
 		invalidDecisionReason,
 		req.get('azureAdUserId') || '',
+		// @ts-ignore
 		notifyClient
 	);
 

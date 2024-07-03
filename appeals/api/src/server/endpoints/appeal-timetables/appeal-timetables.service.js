@@ -10,14 +10,14 @@ import {
 	AUDIT_TRAIL_SYSTEM_UUID,
 	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL,
 	ERROR_NOT_FOUND,
-	FRONT_OFFICE_URL,
-	STATE_TARGET_LPA_QUESTIONNAIRE_DUE
+	FRONT_OFFICE_URL
 } from '../constants.js';
 import transitionState from '#state/transition-state.js';
 import formatDate from '#utils/date-formatter.js';
 import config from '#config/config.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { PROCEDURE_TYPE_MAP } from '@pins/appeals/constants/documents.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('express').Request} Request */
@@ -122,7 +122,7 @@ const startCase = async (appeal, startDate, notifyClient, siteAddress, azureAdUs
 				appealType,
 				azureAdUserId || AUDIT_TRAIL_SYSTEM_UUID,
 				appeal.appealStatus,
-				STATE_TARGET_LPA_QUESTIONNAIRE_DUE
+				APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE
 			);
 
 			await broadcasters.broadcastAppeal(appeal.id);
