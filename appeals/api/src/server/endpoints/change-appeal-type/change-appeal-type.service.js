@@ -18,6 +18,7 @@ import timetableRepository from '#repositories/appeal-timetable.repository.js';
 /**
  * @param {Appeal} appeal
  * @param {number} newAppealTypeId
+ * @param {string} newAppealType
  * @param {string} dueDate
  * @param {import('#endpoints/appeals.js').NotifyClient } notifyClient
  * @param {string} siteAddress
@@ -27,6 +28,7 @@ import timetableRepository from '#repositories/appeal-timetable.repository.js';
 const changeAppealType = async (
 	appeal,
 	newAppealTypeId,
+	newAppealType,
 	dueDate,
 	notifyClient,
 	siteAddress,
@@ -60,7 +62,7 @@ const changeAppealType = async (
 		site_address: siteAddress,
 		url: FRONT_OFFICE_URL,
 		due_date: formatDate(new Date(dueDate || ''), false),
-		appeal_type: appeal.appealType?.type || ''
+		appeal_type: newAppealType || ''
 	};
 
 	if (recipientEmail) {
