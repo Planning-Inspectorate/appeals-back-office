@@ -29,6 +29,10 @@ export const getAppealTypes = async (req, res) => {
 export const requestChangeOfAppealType = async (req, res) => {
 	const appeal = req.appeal;
 	const { newAppealTypeId, newAppealTypeFinalDate } = req.body;
+	const newAppealType = (
+		(req.appealTypes.find((appealType) => appealType.id === Number(newAppealTypeId)) || {}).type ||
+		''
+	).toLowerCase();
 
 	const notifyClient = req.notifyClient;
 	const siteAddress = appeal.address
@@ -38,6 +42,7 @@ export const requestChangeOfAppealType = async (req, res) => {
 	await changeAppealType(
 		appeal,
 		newAppealTypeId,
+		newAppealType || '',
 		newAppealTypeFinalDate,
 		notifyClient,
 		siteAddress,

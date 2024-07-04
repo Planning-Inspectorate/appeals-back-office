@@ -170,7 +170,7 @@ describe('appeal change type resubmit routes', () => {
 					personalisation: {
 						appeal_reference_number: '1345264',
 						lpa_reference: '48269/APP/2021/1482',
-						appeal_type: 'Householder',
+						appeal_type: 'type a',
 						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 						url: FRONT_OFFICE_URL,
 						due_date: formatDate(new Date('3000-02-05'), false)
