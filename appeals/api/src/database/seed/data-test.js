@@ -59,18 +59,18 @@ function generateLpaReference() {
  *
  * @param {{
  * 	typeShorthand: string,
- * 	APPEAL_CASE_STATUS?: object,
+ * 	status?: import('#db-client').Prisma.AppealStatusCreateWithoutAppealInput,
  *  lpaQuestionnaire?: boolean,
  *  startedAt?: Date | null,
  *  validAt?: Date | null,
  *  siteAddressList?: AppealSite[],
  *  assignCaseOfficer: boolean,
  *  agent?: boolean }} param0
- * @returns {object}
+ * @returns {import('#db-client').Prisma.AppealCreateInput}
  */
 const appealFactory = ({
 	typeShorthand,
-	APPEAL_CASE_STATUS = {},
+	status = {},
 	lpaQuestionnaire = false,
 	startedAt = null,
 	validAt = null,
@@ -96,8 +96,7 @@ const appealFactory = ({
 		caseStartedDate: startedAt,
 		caseValidDate: validAt,
 		reference: randomUUID(),
-		appealStatus: { create: APPEAL_CASE_STATUS },
-		// @ts-ignore
+		appealStatus: { create: status },
 		appellantCase: { create: appellantCaseList[typeShorthand] },
 		appellant: {
 			create: appellantInput
@@ -123,7 +122,6 @@ const appealFactory = ({
 				}
 			}
 		}),
-		// @ts-ignore
 		...(lpaQuestionnaire && { lpaQuestionnaire: { create: lpaQuestionnaireList[typeShorthand] } })
 	};
 
@@ -195,52 +193,52 @@ const newAppeals = [
 	}),
 	appealFactory({
 		typeShorthand: APPEAL_TYPE_SHORTHAND_HAS,
-		APPEAL_CASE_STATUS: { status: APPEAL_CASE_STATUS.VALIDATION, createdAt: getDateTwoWeeksAgo() },
+		status: { status: APPEAL_CASE_STATUS.VALIDATION, createdAt: getDateTwoWeeksAgo() },
 		assignCaseOfficer: true,
 		agent: false
 	}),
 	appealFactory({
 		typeShorthand: APPEAL_TYPE_SHORTHAND_HAS,
-		APPEAL_CASE_STATUS: { status: APPEAL_CASE_STATUS.VALIDATION, createdAt: getDateTwoWeeksAgo() },
+		status: { status: APPEAL_CASE_STATUS.VALIDATION, createdAt: getDateTwoWeeksAgo() },
 		assignCaseOfficer: true
 	}),
 	appealFactory({
 		typeShorthand: APPEAL_TYPE_SHORTHAND_HAS,
-		APPEAL_CASE_STATUS: { status: APPEAL_CASE_STATUS.VALIDATION, createdAt: getDateTwoWeeksAgo() },
+		status: { status: APPEAL_CASE_STATUS.VALIDATION, createdAt: getDateTwoWeeksAgo() },
 		assignCaseOfficer: true,
 		agent: false
 	}),
 	appealFactory({
 		typeShorthand: APPEAL_TYPE_SHORTHAND_HAS,
-		APPEAL_CASE_STATUS: { status: APPEAL_CASE_STATUS.VALIDATION, createdAt: getDateTwoWeeksAgo() },
+		status: { status: APPEAL_CASE_STATUS.VALIDATION, createdAt: getDateTwoWeeksAgo() },
 		assignCaseOfficer: true,
 		agent: false
 	}),
 	appealFactory({
 		typeShorthand: APPEAL_TYPE_SHORTHAND_HAS,
-		APPEAL_CASE_STATUS: { status: APPEAL_CASE_STATUS.VALIDATION, createdAt: getDateTwoWeeksAgo() },
+		status: { status: APPEAL_CASE_STATUS.VALIDATION, createdAt: getDateTwoWeeksAgo() },
 		assignCaseOfficer: true
 	}),
 	appealFactory({
 		typeShorthand: APPEAL_TYPE_SHORTHAND_HAS,
-		APPEAL_CASE_STATUS: { status: APPEAL_CASE_STATUS.VALIDATION, createdAt: getDateTwoWeeksAgo() },
+		status: { status: APPEAL_CASE_STATUS.VALIDATION, createdAt: getDateTwoWeeksAgo() },
 		assignCaseOfficer: true,
 		agent: false
 	}),
 	appealFactory({
 		typeShorthand: APPEAL_TYPE_SHORTHAND_HAS,
-		APPEAL_CASE_STATUS: { status: APPEAL_CASE_STATUS.VALIDATION, createdAt: getDateTwoWeeksAgo() },
+		status: { status: APPEAL_CASE_STATUS.VALIDATION, createdAt: getDateTwoWeeksAgo() },
 		assignCaseOfficer: true
 	}),
 	appealFactory({
 		typeShorthand: APPEAL_TYPE_SHORTHAND_HAS,
-		APPEAL_CASE_STATUS: { status: APPEAL_CASE_STATUS.VALIDATION, createdAt: getDateTwoWeeksAgo() },
+		status: { status: APPEAL_CASE_STATUS.VALIDATION, createdAt: getDateTwoWeeksAgo() },
 		assignCaseOfficer: true,
 		agent: false
 	}),
 	appealFactory({
 		typeShorthand: APPEAL_TYPE_SHORTHAND_HAS,
-		APPEAL_CASE_STATUS: { status: APPEAL_CASE_STATUS.VALIDATION, createdAt: getDateTwoWeeksAgo() },
+		status: { status: APPEAL_CASE_STATUS.VALIDATION, createdAt: getDateTwoWeeksAgo() },
 		assignCaseOfficer: true
 	})
 ];
@@ -248,7 +246,7 @@ const newAppeals = [
 const appealsLpaQuestionnaireDue = [
 	appealFactory({
 		typeShorthand: APPEAL_TYPE_SHORTHAND_HAS,
-		APPEAL_CASE_STATUS: {
+		status: {
 			status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 			createdAt: getDateTwoWeeksAgo()
 		},
@@ -259,7 +257,7 @@ const appealsLpaQuestionnaireDue = [
 	}),
 	appealFactory({
 		typeShorthand: APPEAL_TYPE_SHORTHAND_HAS,
-		APPEAL_CASE_STATUS: {
+		status: {
 			status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 			createdAt: getDateTwoWeeksAgo()
 		},
@@ -270,7 +268,7 @@ const appealsLpaQuestionnaireDue = [
 	}),
 	appealFactory({
 		typeShorthand: APPEAL_TYPE_SHORTHAND_HAS,
-		APPEAL_CASE_STATUS: {
+		status: {
 			status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 			createdAt: getDateTwoWeeksAgo()
 		},
@@ -281,7 +279,7 @@ const appealsLpaQuestionnaireDue = [
 	}),
 	appealFactory({
 		typeShorthand: APPEAL_TYPE_SHORTHAND_HAS,
-		APPEAL_CASE_STATUS: {
+		status: {
 			status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 			createdAt: getDateTwoWeeksAgo()
 		},
@@ -292,19 +290,7 @@ const appealsLpaQuestionnaireDue = [
 	}),
 	appealFactory({
 		typeShorthand: APPEAL_TYPE_SHORTHAND_HAS,
-		APPEAL_CASE_STATUS: {
-			status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
-			createdAt: getDateTwoWeeksAgo()
-		},
-		lpaQuestionnaire: true,
-		startedAt: new Date(),
-		validAt: getDateTwoWeeksAgo(),
-		siteAddressList: addressListForTrainers,
-		assignCaseOfficer: true
-	}),
-	appealFactory({
-		typeShorthand: APPEAL_TYPE_SHORTHAND_HAS,
-		APPEAL_CASE_STATUS: {
+		status: {
 			status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 			createdAt: getDateTwoWeeksAgo()
 		},
@@ -316,7 +302,7 @@ const appealsLpaQuestionnaireDue = [
 	}),
 	appealFactory({
 		typeShorthand: APPEAL_TYPE_SHORTHAND_HAS,
-		APPEAL_CASE_STATUS: {
+		status: {
 			status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 			createdAt: getDateTwoWeeksAgo()
 		},
@@ -328,7 +314,7 @@ const appealsLpaQuestionnaireDue = [
 	}),
 	appealFactory({
 		typeShorthand: APPEAL_TYPE_SHORTHAND_HAS,
-		APPEAL_CASE_STATUS: {
+		status: {
 			status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 			createdAt: getDateTwoWeeksAgo()
 		},
@@ -340,7 +326,7 @@ const appealsLpaQuestionnaireDue = [
 	}),
 	appealFactory({
 		typeShorthand: APPEAL_TYPE_SHORTHAND_HAS,
-		APPEAL_CASE_STATUS: {
+		status: {
 			status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 			createdAt: getDateTwoWeeksAgo()
 		},
@@ -352,7 +338,7 @@ const appealsLpaQuestionnaireDue = [
 	}),
 	appealFactory({
 		typeShorthand: APPEAL_TYPE_SHORTHAND_HAS,
-		APPEAL_CASE_STATUS: {
+		status: {
 			status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 			createdAt: getDateTwoWeeksAgo()
 		},
@@ -364,7 +350,19 @@ const appealsLpaQuestionnaireDue = [
 	}),
 	appealFactory({
 		typeShorthand: APPEAL_TYPE_SHORTHAND_HAS,
-		APPEAL_CASE_STATUS: {
+		status: {
+			status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+			createdAt: getDateTwoWeeksAgo()
+		},
+		lpaQuestionnaire: true,
+		startedAt: new Date(),
+		validAt: getDateTwoWeeksAgo(),
+		siteAddressList: addressListForTrainers,
+		assignCaseOfficer: true
+	}),
+	appealFactory({
+		typeShorthand: APPEAL_TYPE_SHORTHAND_HAS,
+		status: {
 			status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 			createdAt: getDateTwoWeeksAgo()
 		},
@@ -378,7 +376,7 @@ const appealsLpaQuestionnaireDue = [
 const appealsReadyToStart = [
 	appealFactory({
 		typeShorthand: APPEAL_TYPE_SHORTHAND_HAS,
-		APPEAL_CASE_STATUS: {
+		status: {
 			status: APPEAL_CASE_STATUS.READY_TO_START,
 			createdAt: getDateTwoWeeksAgo()
 		},
@@ -390,7 +388,7 @@ const appealsReadyToStart = [
 	}),
 	appealFactory({
 		typeShorthand: APPEAL_TYPE_SHORTHAND_HAS,
-		APPEAL_CASE_STATUS: {
+		status: {
 			status: APPEAL_CASE_STATUS.READY_TO_START,
 			createdAt: getDateTwoWeeksAgo()
 		},
@@ -402,7 +400,7 @@ const appealsReadyToStart = [
 	}),
 	appealFactory({
 		typeShorthand: APPEAL_TYPE_SHORTHAND_HAS,
-		APPEAL_CASE_STATUS: {
+		status: {
 			status: APPEAL_CASE_STATUS.READY_TO_START,
 			createdAt: getDateTwoWeeksAgo()
 		},
@@ -414,7 +412,7 @@ const appealsReadyToStart = [
 	}),
 	appealFactory({
 		typeShorthand: APPEAL_TYPE_SHORTHAND_HAS,
-		APPEAL_CASE_STATUS: {
+		status: {
 			status: APPEAL_CASE_STATUS.READY_TO_START,
 			createdAt: getDateTwoWeeksAgo()
 		},
@@ -426,7 +424,7 @@ const appealsReadyToStart = [
 	}),
 	appealFactory({
 		typeShorthand: APPEAL_TYPE_SHORTHAND_HAS,
-		APPEAL_CASE_STATUS: {
+		status: {
 			status: APPEAL_CASE_STATUS.READY_TO_START,
 			createdAt: getDateTwoWeeksAgo()
 		},
@@ -447,7 +445,6 @@ export async function seedTestData(databaseConnector) {
 	const appeals = [];
 
 	for (const appealData of appealsData.reverse()) {
-		// @ts-ignore
 		const appeal = await databaseConnector.appeal.create({ data: appealData });
 		const defaultFolders = FOLDERS.map((/** @type {string} */ path) => {
 			return {

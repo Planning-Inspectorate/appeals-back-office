@@ -179,6 +179,7 @@ export const addressListForTrainers = addressesList.map((address) => ({
 
 /**
  * An array of objects representing LPA questionnaire lists.
+ * @type {Object<string, import('#db-client').Prisma.LPAQuestionnaireCreateWithoutAppealInput}
  */
 export const lpaQuestionnaireList = {
 	[APPEAL_TYPE_SHORTHAND_HAS]: {
@@ -233,6 +234,7 @@ export const incompleteReviewQuestionnaireSample = {
 
 /**
  * An array of objects representing appeal case details provided by the appellant.
+ * @type {Object<string, import('#db-client').Prisma.AppellantCaseCreateWithoutAppealInput>}
  */
 export const appellantCaseList = {
 	[APPEAL_TYPE_SHORTHAND_HAS]: {
