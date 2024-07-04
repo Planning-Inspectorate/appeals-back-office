@@ -148,6 +148,18 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 </div>"
 `;
 
+exports[`appeal-details GET /:appealId Notification banners should render a success notification banner when a cross-team correspondence document was uploaded 1`] = `
+"<div class="govuk-notification-banner govuk-notification-banner--success"
+role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
+    </div>
+    <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">Cross-team correspondence documents uploaded</p>
+    </div>
+</div>"
+`;
+
 exports[`appeal-details GET /:appealId Notification banners should render a success notification banner when a service user was updated 1`] = `
 "<div class="govuk-notification-banner govuk-notification-banner--success"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
@@ -216,6 +228,18 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
     </div>
     <div class="govuk-notification-banner__content">
         <p class="govuk-notification-banner__heading">Appellant costs documents uploaded</p>
+    </div>
+</div>"
+`;
+
+exports[`appeal-details GET /:appealId Notification banners should render a success notification banner when an inspector correspondence document was uploaded 1`] = `
+"<div class="govuk-notification-banner govuk-notification-banner--success"
+role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
+    </div>
+    <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">Inspector correspondence documents uploaded</p>
     </div>
 </div>"
 `;
@@ -653,6 +677,16 @@ exports[`appeal-details GET /:appealId should not render action links to the man
                 <div id="accordion-default1-content-7" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-7">
                     <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/cross-team/upload-documents/10"> Add<span class="govuk-visually-hidden"> cross-team correspondence documents</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Inspector correspondence</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/inspector/upload-documents/11"> Add<span class="govuk-visually-hidden"> inspector correspondence documents</span></a>
+                                </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
                             <dd class="govuk-summary-list__value"></dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit"> View<span class="govuk-visually-hidden"> View case history</span></a>
@@ -1017,6 +1051,16 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                 <div id="accordion-default1-content-7" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-7">
                     <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/internal-correspondence/cross-team/upload-documents/10"> Add<span class="govuk-visually-hidden"> cross-team correspondence documents</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Inspector correspondence</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/internal-correspondence/inspector/upload-documents/11"> Add<span class="govuk-visually-hidden"> inspector correspondence documents</span></a>
+                                </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
                             <dd class="govuk-summary-list__value"></dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/audit"> View<span class="govuk-visually-hidden"> View case history</span></a>
@@ -1370,6 +1414,16 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                 <div id="accordion-default1-content-7" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-7">
                     <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/cross-team/upload-documents/10"> Add<span class="govuk-visually-hidden"> cross-team correspondence documents</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Inspector correspondence</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/inspector/upload-documents/11"> Add<span class="govuk-visually-hidden"> inspector correspondence documents</span></a>
+                                </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
                             <dd class="govuk-summary-list__value"></dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit"> View<span class="govuk-visually-hidden"> View case history</span></a>
@@ -1726,6 +1780,16 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                 <div id="accordion-default1-content-7" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-7">
                     <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/cross-team/upload-documents/10"> Add<span class="govuk-visually-hidden"> cross-team correspondence documents</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Inspector correspondence</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/inspector/upload-documents/11"> Add<span class="govuk-visually-hidden"> inspector correspondence documents</span></a>
+                                </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
                             <dd class="govuk-summary-list__value"></dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit"> View<span class="govuk-visually-hidden"> View case history</span></a>
@@ -2098,6 +2162,16 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
                 <div id="accordion-default1-content-7" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-7">
                     <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/cross-team/upload-documents/10"> Add<span class="govuk-visually-hidden"> cross-team correspondence documents</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Inspector correspondence</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/inspector/upload-documents/11"> Add<span class="govuk-visually-hidden"> inspector correspondence documents</span></a>
+                                </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
                             <dd class="govuk-summary-list__value"></dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit"> View<span class="govuk-visually-hidden"> View case history</span></a>
@@ -2458,6 +2532,16 @@ exports[`appeal-details GET /:appealId should render an Issue a decision notific
                 <div id="accordion-default1-content-7" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-7">
                     <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/internal-correspondence/cross-team/upload-documents/10"> Add<span class="govuk-visually-hidden"> cross-team correspondence documents</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Inspector correspondence</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/internal-correspondence/inspector/upload-documents/11"> Add<span class="govuk-visually-hidden"> inspector correspondence documents</span></a>
+                                </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
                             <dd class="govuk-summary-list__value"></dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/audit"> View<span class="govuk-visually-hidden"> View case history</span></a>
@@ -2799,6 +2883,16 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                 <div id="accordion-default1-content-7" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-7">
                     <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/cross-team/upload-documents/10"> Add<span class="govuk-visually-hidden"> cross-team correspondence documents</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Inspector correspondence</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/inspector/upload-documents/11"> Add<span class="govuk-visually-hidden"> inspector correspondence documents</span></a>
+                                </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
                             <dd class="govuk-summary-list__value"></dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit"> View<span class="govuk-visually-hidden"> View case history</span></a>
@@ -3140,6 +3234,16 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                 <div id="accordion-default1-content-7" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-7">
                     <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/internal-correspondence/cross-team/upload-documents/10"> Add<span class="govuk-visually-hidden"> cross-team correspondence documents</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Inspector correspondence</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/internal-correspondence/inspector/upload-documents/11"> Add<span class="govuk-visually-hidden"> inspector correspondence documents</span></a>
+                                </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
                             <dd class="govuk-summary-list__value"></dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/audit"> View<span class="govuk-visually-hidden"> View case history</span></a>
@@ -3481,6 +3585,16 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                 <div id="accordion-default1-content-7" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-7">
                     <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/internal-correspondence/cross-team/upload-documents/10"> Add<span class="govuk-visually-hidden"> cross-team correspondence documents</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Inspector correspondence</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/internal-correspondence/inspector/upload-documents/11"> Add<span class="govuk-visually-hidden"> inspector correspondence documents</span></a>
+                                </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
                             <dd class="govuk-summary-list__value"></dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/audit"> View<span class="govuk-visually-hidden"> View case history</span></a>
@@ -3822,6 +3936,16 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                 <div id="accordion-default1-content-7" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-7">
                     <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/internal-correspondence/cross-team/upload-documents/10"> Add<span class="govuk-visually-hidden"> cross-team correspondence documents</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Inspector correspondence</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/internal-correspondence/inspector/upload-documents/11"> Add<span class="govuk-visually-hidden"> inspector correspondence documents</span></a>
+                                </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
                             <dd class="govuk-summary-list__value"></dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/audit"> View<span class="govuk-visually-hidden"> View case history</span></a>
@@ -4180,6 +4304,16 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                 <div id="accordion-default1-content-7" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-7">
                     <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/cross-team/upload-documents/10"> Add<span class="govuk-visually-hidden"> cross-team correspondence documents</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Inspector correspondence</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/inspector/upload-documents/11"> Add<span class="govuk-visually-hidden"> inspector correspondence documents</span></a>
+                                </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
                             <dd class="govuk-summary-list__value"></dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit"> View<span class="govuk-visually-hidden"> View case history</span></a>
@@ -4678,6 +4812,16 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                 <div id="accordion-default1-content-7" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-7">
                     <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/cross-team/upload-documents/10"> Add<span class="govuk-visually-hidden"> cross-team correspondence documents</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Inspector correspondence</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/inspector/upload-documents/11"> Add<span class="govuk-visually-hidden"> inspector correspondence documents</span></a>
+                                </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
                             <dd class="govuk-summary-list__value"></dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit"> View<span class="govuk-visually-hidden"> View case history</span></a>
@@ -5048,6 +5192,16 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                 <div id="accordion-default3-content-7" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default3-heading-7">
                     <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/internal-correspondence/cross-team/upload-documents/10"> Add<span class="govuk-visually-hidden"> cross-team correspondence documents</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Inspector correspondence</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/internal-correspondence/inspector/upload-documents/11"> Add<span class="govuk-visually-hidden"> inspector correspondence documents</span></a>
+                                </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
                             <dd class="govuk-summary-list__value"></dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/audit"> View<span class="govuk-visually-hidden"> View case history</span></a>
@@ -5389,6 +5543,16 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                 <div id="accordion-default1-content-7" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-7">
                     <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/cross-team/upload-documents/10"> Add<span class="govuk-visually-hidden"> cross-team correspondence documents</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Inspector correspondence</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/inspector/upload-documents/11"> Add<span class="govuk-visually-hidden"> inspector correspondence documents</span></a>
+                                </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
                             <dd class="govuk-summary-list__value"></dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit"> View<span class="govuk-visually-hidden"> View case history</span></a>
@@ -5754,6 +5918,16 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                 <div id="accordion-default2-content-7" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default2-heading-7">
                     <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/internal-correspondence/cross-team/upload-documents/10"> Add<span class="govuk-visually-hidden"> cross-team correspondence documents</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Inspector correspondence</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/internal-correspondence/inspector/upload-documents/11"> Add<span class="govuk-visually-hidden"> inspector correspondence documents</span></a>
+                                </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
                             <dd class="govuk-summary-list__value"></dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/audit"> View<span class="govuk-visually-hidden"> View case history</span></a>
@@ -6078,6 +6252,16 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                 <div id="accordion-default1-content-7" class="govuk-accordion__section-content"
                 aria-labelledby="accordion-default1-heading-7">
                     <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/internal-correspondence/cross-team/upload-documents/10"> Add<span class="govuk-visually-hidden"> cross-team correspondence documents</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Inspector correspondence</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/internal-correspondence/inspector/upload-documents/11"> Add<span class="govuk-visually-hidden"> inspector correspondence documents</span></a>
+                                </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
                             <dd class="govuk-summary-list__value"></dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/audit"> View<span class="govuk-visually-hidden"> View case history</span></a>
@@ -6560,6 +6744,16 @@ exports[`appeal-details should not render a back button 1`] = `
                             <div id="accordion-default2-content-7" class="govuk-accordion__section-content"
                             aria-labelledby="accordion-default2-heading-7">
                                 <dl class="govuk-summary-list">
+                                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
+                                        <dd                                         class="govuk-summary-list__value"></dd>
+                                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/internal-correspondence/cross-team/upload-documents/10"> Add<span class="govuk-visually-hidden"> cross-team correspondence documents</span></a>
+                                            </dd>
+                                    </div>
+                                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Inspector correspondence</dt>
+                                        <dd                                         class="govuk-summary-list__value"></dd>
+                                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/internal-correspondence/inspector/upload-documents/11"> Add<span class="govuk-visually-hidden"> inspector correspondence documents</span></a>
+                                            </dd>
+                                    </div>
                                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
                                         <dd class="govuk-summary-list__value"></dd>
                                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/audit"> View<span class="govuk-visually-hidden"> View case history</span></a>

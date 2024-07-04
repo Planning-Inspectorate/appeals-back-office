@@ -192,7 +192,11 @@ export async function appealDetailsPage(appealDetails, currentRoute, session) {
 	const caseManagement = {
 		type: 'summary-list',
 		parameters: {
-			rows: [mappedData.appeal.caseHistory.display.summaryListItem]
+			rows: [
+				mappedData.appeal.crossTeamCorrespondence.display.summaryListItem,
+				mappedData.appeal.inspectorCorrespondence.display.summaryListItem,
+				mappedData.appeal.caseHistory.display.summaryListItem
+			]
 		}
 	};
 
