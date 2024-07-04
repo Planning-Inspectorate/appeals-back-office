@@ -11,9 +11,9 @@ import {
 	ERROR_MUST_BE_IN_PAST,
 	ERROR_CASE_OUTCOME_MUST_BE_ONE_OF,
 	ERROR_INVALID_APPEAL_STATE,
-	STATE_TARGET_ISSUE_DETERMINATION,
 	FRONT_OFFICE_URL
 } from '#endpoints/constants.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 import config from '#config/config.js';
@@ -152,7 +152,7 @@ describe('appeal decision routes', () => {
 				...householdAppeal,
 				appealStatus: [
 					{
-						status: STATE_TARGET_ISSUE_DETERMINATION,
+						status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
 						valid: true
 					}
 				]

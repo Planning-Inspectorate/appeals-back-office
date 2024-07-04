@@ -1,3 +1,11 @@
+import {
+	APPEAL_CASE_TYPE,
+	APPEAL_CASE_PROCEDURE,
+	APPEAL_REDACTED_STATUS,
+	APPEAL_KNOWS_OTHER_OWNERS,
+	APPEAL_EVENT_TYPE
+} from 'pins-data-model';
+
 /**
  * Static data required by the back-office service
  */
@@ -21,27 +29,27 @@
  *
  */
 export const appealTypes = [
-	{ key: 'D', type: 'Householder', processCode: 'HAS', enabled: true },
-	{ key: 'C', type: 'Enforcement notice appeal', enabled: false },
+	{ key: APPEAL_CASE_TYPE.D, type: 'Householder', processCode: 'HAS', enabled: true },
+	{ key: APPEAL_CASE_TYPE.C, type: 'Enforcement notice appeal', enabled: false },
 	{
-		key: 'F',
+		key: APPEAL_CASE_TYPE.F,
 		type: 'Enforcement listed building and conservation area appeal',
 		enabled: false
 	},
-	{ key: 'G', type: 'Discontinuance notice appeal', enabled: false },
-	{ key: 'H', type: 'Advertisement appeal', enabled: false },
-	{ key: 'L', type: 'Community infrastructure levy', enabled: false },
-	{ key: 'Q', type: 'Planning obligation appeal', enabled: false },
-	{ key: 'S', type: 'Affordable housing obligation appeal', enabled: false },
-	{ key: 'V', type: 'Call-in application', enabled: false },
-	{ key: 'W', type: 'Planning appeal', enabled: false },
-	{ key: 'X', type: 'Lawful development certificate appeal', enabled: false },
+	{ key: APPEAL_CASE_TYPE.G, type: 'Discontinuance notice appeal', enabled: false },
+	{ key: APPEAL_CASE_TYPE.H, type: 'Advertisement appeal', enabled: false },
+	{ key: APPEAL_CASE_TYPE.L, type: 'Community infrastructure levy', enabled: false },
+	{ key: APPEAL_CASE_TYPE.Q, type: 'Planning obligation appeal', enabled: false },
+	{ key: APPEAL_CASE_TYPE.S, type: 'Affordable housing obligation appeal', enabled: false },
+	{ key: APPEAL_CASE_TYPE.V, type: 'Call-in application', enabled: false },
+	{ key: APPEAL_CASE_TYPE.W, type: 'Planning appeal', enabled: false },
+	{ key: APPEAL_CASE_TYPE.X, type: 'Lawful development certificate appeal', enabled: false },
 	{
-		key: 'Y',
+		key: APPEAL_CASE_TYPE.Y,
 		type: 'Planned listed building and conservation area appeal',
 		enabled: false
 	},
-	{ key: 'Z', type: 'Commercial (CAS) appeal', enabled: false }
+	{ key: APPEAL_CASE_TYPE.Z, type: 'Commercial (CAS) appeal', enabled: false }
 ];
 
 /**
@@ -50,15 +58,15 @@ export const appealTypes = [
  */
 export const procedureTypes = [
 	{
-		key: 'hearing',
+		key: APPEAL_CASE_PROCEDURE.HEARING,
 		name: 'Hearing'
 	},
 	{
-		key: 'inquiry',
+		key: APPEAL_CASE_PROCEDURE.INQUIRY,
 		name: 'Inquiry'
 	},
 	{
-		key: 'written',
+		key: APPEAL_CASE_PROCEDURE.WRITTEN,
 		name: 'Written'
 	}
 ];
@@ -69,15 +77,15 @@ export const procedureTypes = [
  */
 export const documentRedactionStatuses = [
 	{
-		key: 'redacted',
+		key: APPEAL_REDACTED_STATUS.REDACTED,
 		name: 'Redacted'
 	},
 	{
-		key: 'not_redacted',
+		key: APPEAL_REDACTED_STATUS.NOT_REDACTED,
 		name: 'Unredacted'
 	},
 	{
-		key: 'no_redaction_required',
+		key: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED,
 		name: 'No redaction required'
 	}
 ];
@@ -107,16 +115,16 @@ export const lpaNotificationMethods = [
  */
 export const knowledgeOfOtherLandownersValues = [
 	{
-		key: 'yes',
-		name: 'Yes'
+		key: APPEAL_KNOWS_OTHER_OWNERS.YES.toLowerCase(),
+		name: APPEAL_KNOWS_OTHER_OWNERS.YES
 	},
 	{
-		key: 'some',
-		name: 'Some'
+		key: APPEAL_KNOWS_OTHER_OWNERS.SOME.toLowerCase(),
+		name: APPEAL_KNOWS_OTHER_OWNERS.SOME
 	},
 	{
-		key: 'no',
-		name: 'No'
+		key: APPEAL_KNOWS_OTHER_OWNERS.NO.toLowerCase(),
+		name: APPEAL_KNOWS_OTHER_OWNERS.NO
 	}
 ];
 
@@ -125,9 +133,9 @@ export const knowledgeOfOtherLandownersValues = [
  *
  */
 export const siteVisitTypes = [
-	{ key: 'site_visit_access_required', name: 'Access required' },
-	{ key: 'site_visit_accompanied', name: 'Accompanied' },
-	{ key: 'site_visit_unaccompanied', name: 'Unaccompanied' }
+	{ key: APPEAL_EVENT_TYPE.SITE_VISIT_ACCESS_REQUIRED, name: 'Access required' },
+	{ key: APPEAL_EVENT_TYPE.SITE_VISIT_ACCOMPANIED, name: 'Accompanied' },
+	{ key: APPEAL_EVENT_TYPE.SITE_VISIT_UNACCOMPANIED, name: 'Unaccompanied' }
 ];
 
 //////////////////////////////////

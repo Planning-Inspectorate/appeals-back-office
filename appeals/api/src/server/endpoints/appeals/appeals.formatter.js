@@ -6,18 +6,10 @@ import {
 	formatLpaQuestionnaireDocumentationStatus
 } from '#utils/format-documentation-status.js';
 import { add } from 'date-fns';
-import {
-	STATE_TARGET_FINAL_COMMENT_REVIEW,
-	STATE_TARGET_STATEMENT_REVIEW,
-	STATE_TARGET_ISSUE_DETERMINATION,
-	STATE_TARGET_LPA_QUESTIONNAIRE_DUE,
-	STATE_TARGET_READY_TO_START,
-	STATE_TARGET_ASSIGN_CASE_OFFICER,
-	STATE_TARGET_COMPLETE
-} from '#endpoints/constants.js';
 import { formatFolder } from '#endpoints/documents/documents.formatter.js';
 import { STAGE } from '@pins/appeals/constants/documents.js';
 import { DOCTYPE } from '@pins/appeals/constants/documents.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 const approxStageCompletion = {
 	STATE_TARGET_READY_TO_START: 5,
@@ -302,25 +294,25 @@ const formatAppeal = (
  */
 export const mapAppealToDueDate = (appeal, appellantCaseStatus, appellantCaseDueDate) => {
 	switch (appeal.appealStatus[0].status) {
-		case STATE_TARGET_READY_TO_START:
+		case APPEAL_CASE_STATUS.READY_TO_START:
 			if (appellantCaseStatus == 'Incomplete' && appellantCaseDueDate) {
 				return new Date(appellantCaseDueDate);
 			}
 			return add(new Date(appeal.caseCreatedDate), {
 				days: approxStageCompletion.STATE_TARGET_READY_TO_START
 			});
-		case STATE_TARGET_LPA_QUESTIONNAIRE_DUE:
+		case APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE:
 			if (appeal.appealTimetable?.lpaQuestionnaireDueDate) {
 				return new Date(appeal.appealTimetable?.lpaQuestionnaireDueDate);
 			}
 			return add(new Date(appeal.caseCreatedDate), {
 				days: approxStageCompletion.STATE_TARGET_LPA_QUESTIONNAIRE_DUE
 			});
-		case STATE_TARGET_ASSIGN_CASE_OFFICER:
+		case APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER:
 			return add(new Date(appeal.caseCreatedDate), {
 				days: approxStageCompletion.STATE_TARGET_ASSIGN_CASE_OFFICER
 			});
-		case STATE_TARGET_ISSUE_DETERMINATION: {
+		case APPEAL_CASE_STATUS.ISSUE_DETERMINATION: {
 			if (appeal.appealTimetable?.issueDeterminationDate) {
 				return new Date(appeal.appealTimetable?.issueDeterminationDate);
 			}
@@ -328,7 +320,11 @@ export const mapAppealToDueDate = (appeal, appellantCaseStatus, appellantCaseDue
 				days: approxStageCompletion.STATE_TARGET_ISSUE_DETERMINATION
 			});
 		}
-		case STATE_TARGET_STATEMENT_REVIEW: {
+		case APPEAL_CASE_STATUS.COMPLETE: {
+			return null;
+		}
+		//TODO: S78
+		case 'statement_review': {
 			if (appeal.appealTimetable?.statementReviewDate) {
 				return new Date(appeal.appealTimetable?.statementReviewDate);
 			}
@@ -336,16 +332,13 @@ export const mapAppealToDueDate = (appeal, appellantCaseStatus, appellantCaseDue
 				days: approxStageCompletion.STATE_TARGET_STATEMENT_REVIEW
 			});
 		}
-		case STATE_TARGET_FINAL_COMMENT_REVIEW: {
+		case 'final_comment_review': {
 			if (appeal.appealTimetable?.finalCommentReviewDate) {
 				return new Date(appeal.appealTimetable?.finalCommentReviewDate);
 			}
 			return add(new Date(appeal.caseCreatedDate), {
 				days: approxStageCompletion.STATE_TARGET_FINAL_COMMENT_REVIEW
 			});
-		}
-		case STATE_TARGET_COMPLETE: {
-			return null;
 		}
 		default: {
 			return undefined;

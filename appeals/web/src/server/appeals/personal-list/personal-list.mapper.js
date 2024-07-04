@@ -7,7 +7,7 @@ import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
 import * as authSession from '../../app/auth/auth-session.service.js';
 import { appealStatusToStatusTag } from '#lib/nunjucks-filters/status-tag.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
-import { STATUSES } from '@pins/appeals/constants/state.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 /** @typedef {import('@pins/appeals').AppealList} AppealList */
 /** @typedef {import('@pins/appeals').Pagination} Pagination */
@@ -249,8 +249,8 @@ export function mapAppealStatusToActionRequiredHtml(
 	const appealDueDate = new Date(dueDate);
 
 	switch (appealStatus) {
-		case STATUSES.READY_TO_START:
-		case STATUSES.VALIDATION:
+		case APPEAL_CASE_STATUS.READY_TO_START:
+		case APPEAL_CASE_STATUS.VALIDATION:
 			if (appellantCaseStatus == 'Incomplete') {
 				if (isInspector) {
 					return 'Awaiting appellant update';
@@ -258,8 +258,7 @@ export function mapAppealStatusToActionRequiredHtml(
 				return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/appellant-case">Awaiting appellant update</a>`;
 			}
 			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/appellant-case">Review appellant case</a>`;
-		case STATUSES.LPA_QUESTIONNAIRE:
-		case 'lpa_questionnaire_due': // TODO: remove once status value updates are complete
+		case APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE:
 			if (currentDate > appealDueDate) {
 				return 'LPA questionnaire overdue';
 			}
@@ -276,9 +275,9 @@ export function mapAppealStatusToActionRequiredHtml(
 				return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}">Review LPA questionnaire</a>`;
 			}
 			return 'Awaiting LPA questionnaire';
-		case STATUSES.ISSUE_DETERMINATION:
+		case APPEAL_CASE_STATUS.ISSUE_DETERMINATION:
 			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/issue-decision/decision">Issue decision</a>`;
-		case STATUSES.AWAITING_TRANSFER:
+		case APPEAL_CASE_STATUS.AWAITING_TRANSFER:
 			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/change-appeal-type/add-horizon-reference">Update Horizon reference</a>`;
 		default:
 			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}">View case</a>`;

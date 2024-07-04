@@ -155,20 +155,6 @@ export const SITE_VISIT_TYPE_UNACCOMPANIED = 'Unaccompanied';
 export const SITE_VISIT_TYPE_ACCOMPANIED = 'Accompanied';
 export const SITE_VISIT_TYPE_ACCESS_REQUIRED = 'Access required';
 
-export const STATE_TARGET_ASSIGN_CASE_OFFICER = 'assign_case_officer';
-export const STATE_TARGET_VALIDATION = 'validation';
-export const STATE_TARGET_READY_TO_START = 'ready_to_start';
-export const STATE_TARGET_LPA_QUESTIONNAIRE_DUE = 'lpa_questionnaire_due';
-export const STATE_TARGET_STATEMENT_REVIEW = 'statement_review';
-export const STATE_TARGET_FINAL_COMMENT_REVIEW = 'final_comment_review';
-export const STATE_TARGET_ISSUE_DETERMINATION = 'issue_determination';
-export const STATE_TARGET_COMPLETE = 'complete';
-export const STATE_TARGET_INVALID = 'invalid';
-export const STATE_TARGET_WITHDRAWN = 'withdrawn';
-export const STATE_TARGET_CLOSED = 'closed';
-export const STATE_TARGET_AWAITING_TRANSFER = 'awaiting_transfer';
-export const STATE_TARGET_TRANSFERRED = 'transferred';
-
 export const STATE_TYPE_FINAL = 'final';
 
 export const USER_TYPE_CASE_OFFICER = 'caseOfficer';
@@ -176,22 +162,6 @@ export const USER_TYPE_INSPECTOR = 'inspector';
 
 export const CASE_RELATIONSHIP_LINKED = 'linked';
 export const CASE_RELATIONSHIP_RELATED = 'related';
-
-export const STATUSES = {
-	STATE_TARGET_ASSIGN_CASE_OFFICER,
-	STATE_TARGET_VALIDATION,
-	STATE_TARGET_READY_TO_START,
-	STATE_TARGET_LPA_QUESTIONNAIRE_DUE,
-	STATE_TARGET_STATEMENT_REVIEW,
-	STATE_TARGET_FINAL_COMMENT_REVIEW,
-	STATE_TARGET_ISSUE_DETERMINATION,
-	STATE_TARGET_COMPLETE,
-	STATE_TARGET_INVALID,
-	STATE_TARGET_WITHDRAWN,
-	STATE_TARGET_CLOSED,
-	STATE_TARGET_AWAITING_TRANSFER,
-	STATE_TARGET_TRANSFERRED
-};
 
 // Static config
 export const CONFIG_BANKHOLIDAYS_FEED_URL = 'https://www.gov.uk/bank-holidays.json';

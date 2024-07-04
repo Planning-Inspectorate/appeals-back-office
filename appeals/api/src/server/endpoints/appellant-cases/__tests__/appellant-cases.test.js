@@ -5,8 +5,7 @@ import {
 	ERROR_MUST_BE_NUMBER,
 	ERROR_NOT_FOUND,
 	LENGTH_8,
-	AUDIT_TRAIL_SUBMISSION_INCOMPLETE,
-	STATE_TARGET_READY_TO_START
+	AUDIT_TRAIL_SUBMISSION_INCOMPLETE
 } from '../../constants.js';
 import {
 	appellantCaseIncompleteReasons,
@@ -30,6 +29,7 @@ import stringTokenReplacement from '#utils/string-token-replacement.js';
 
 const { databaseConnector } = await import('../../../utils/database-connector.js');
 import config from '#config/config.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 describe('appellant cases routes', () => {
 	beforeEach(() => {
@@ -250,13 +250,9 @@ describe('appellant cases routes', () => {
 					appellantCaseIncompleteReasons
 				);
 				// @ts-ignore
-				databaseConnector.appellantCaseIncompleteReasonsSelected.deleteMany.mockResolvedValue(
-					true
-				);
+				databaseConnector.appellantCaseIncompleteReasonsSelected.deleteMany.mockResolvedValue(true);
 				// @ts-ignore
-				databaseConnector.appellantCaseIncompleteReasonsSelected.createMany.mockResolvedValue(
-					true
-				);
+				databaseConnector.appellantCaseIncompleteReasonsSelected.createMany.mockResolvedValue(true);
 
 				const body = {
 					appealDueDate: '2099-07-14',
@@ -321,13 +317,9 @@ describe('appellant cases routes', () => {
 					appellantCaseIncompleteReasons
 				);
 				// @ts-ignore
-				databaseConnector.appellantCaseIncompleteReasonsSelected.deleteMany.mockResolvedValue(
-					true
-				);
+				databaseConnector.appellantCaseIncompleteReasonsSelected.deleteMany.mockResolvedValue(true);
 				// @ts-ignore
-				databaseConnector.appellantCaseIncompleteReasonsSelected.createMany.mockResolvedValue(
-					true
-				);
+				databaseConnector.appellantCaseIncompleteReasonsSelected.createMany.mockResolvedValue(true);
 
 				const body = {
 					appealDueDate: '2099-07-14',
@@ -404,13 +396,9 @@ describe('appellant cases routes', () => {
 					appellantCaseIncompleteReasons
 				);
 				// @ts-ignore
-				databaseConnector.appellantCaseIncompleteReasonsSelected.deleteMany.mockResolvedValue(
-					true
-				);
+				databaseConnector.appellantCaseIncompleteReasonsSelected.deleteMany.mockResolvedValue(true);
 				// @ts-ignore
-				databaseConnector.appellantCaseIncompleteReasonsSelected.createMany.mockResolvedValue(
-					true
-				);
+				databaseConnector.appellantCaseIncompleteReasonsSelected.createMany.mockResolvedValue(true);
 				// @ts-ignore
 				databaseConnector.user.upsert.mockResolvedValue({
 					id: 1,
@@ -500,13 +488,9 @@ describe('appellant cases routes', () => {
 					appellantCaseIncompleteReasons
 				);
 				// @ts-ignore
-				databaseConnector.appellantCaseIncompleteReasonsSelected.deleteMany.mockResolvedValue(
-					true
-				);
+				databaseConnector.appellantCaseIncompleteReasonsSelected.deleteMany.mockResolvedValue(true);
 				// @ts-ignore
-				databaseConnector.appellantCaseIncompleteReasonsSelected.createMany.mockResolvedValue(
-					true
-				);
+				databaseConnector.appellantCaseIncompleteReasonsSelected.createMany.mockResolvedValue(true);
 				// @ts-ignore
 				databaseConnector.user.upsert.mockResolvedValue({
 					id: 1,
@@ -627,13 +611,9 @@ describe('appellant cases routes', () => {
 					appellantCaseInvalidReasons
 				);
 				// @ts-ignore
-				databaseConnector.appellantCaseInvalidReasonsSelected.deleteMany.mockResolvedValue(
-					true
-				);
+				databaseConnector.appellantCaseInvalidReasonsSelected.deleteMany.mockResolvedValue(true);
 				// @ts-ignore
-				databaseConnector.appellantCaseInvalidReasonsSelected.createMany.mockResolvedValue(
-					true
-				);
+				databaseConnector.appellantCaseInvalidReasonsSelected.createMany.mockResolvedValue(true);
 				// @ts-ignore
 				databaseConnector.user.upsert.mockResolvedValue({
 					id: 1,
@@ -709,13 +689,9 @@ describe('appellant cases routes', () => {
 					appellantCaseInvalidReasons
 				);
 				// @ts-ignore
-				databaseConnector.appellantCaseInvalidReasonsSelected.deleteMany.mockResolvedValue(
-					true
-				);
+				databaseConnector.appellantCaseInvalidReasonsSelected.deleteMany.mockResolvedValue(true);
 				// @ts-ignore
-				databaseConnector.appellantCaseInvalidReasonsSelected.createMany.mockResolvedValue(
-					true
-				);
+				databaseConnector.appellantCaseInvalidReasonsSelected.createMany.mockResolvedValue(true);
 				// @ts-ignore
 				databaseConnector.user.upsert.mockResolvedValue({
 					id: 1,
@@ -791,13 +767,9 @@ describe('appellant cases routes', () => {
 					appellantCaseInvalidReasons
 				);
 				// @ts-ignore
-				databaseConnector.appellantCaseInvalidReasonsSelected.deleteMany.mockResolvedValue(
-					true
-				);
+				databaseConnector.appellantCaseInvalidReasonsSelected.deleteMany.mockResolvedValue(true);
 				// @ts-ignore
-				databaseConnector.appellantCaseInvalidReasonsSelected.createMany.mockResolvedValue(
-					true
-				);
+				databaseConnector.appellantCaseInvalidReasonsSelected.createMany.mockResolvedValue(true);
 				// @ts-ignore
 				databaseConnector.user.upsert.mockResolvedValue({
 					id: 1,
@@ -938,7 +910,7 @@ describe('appellant cases routes', () => {
 					data: {
 						appealId: householdAppeal.id,
 						createdAt: expect.any(Date),
-						status: STATE_TARGET_READY_TO_START,
+						status: APPEAL_CASE_STATUS.READY_TO_START,
 						valid: true
 					}
 				});
@@ -962,6 +934,5 @@ describe('appellant cases routes', () => {
 				expect(response.status).toEqual(200);
 			});
 		});
-
 	});
 });
