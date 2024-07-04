@@ -11,6 +11,8 @@ import {
 	costsFolderInfoAppellant,
 	costsFolderInfoLpa,
 	costsFolderInfoDecision,
+	folderInfoCrossTeamCorrespondence,
+	folderInfoInspectorCorrespondence,
 	documentRedactionStatuses,
 	appealCostsDocumentItem,
 	linkedAppealsWithExternalLead,
@@ -728,6 +730,86 @@ describe('appeal-details', () => {
 				expect(notificationBannerElementHTML).toContain('Success</h3>');
 				expect(notificationBannerElementHTML).toContain(
 					'Neighbouring site affected status updated</p>'
+				);
+			});
+
+			it('should render a success notification banner when a cross-team correspondence document was uploaded', async () => {
+				nock('http://test/')
+					.get('/appeals/1/document-folders/4')
+					.reply(200, folderInfoCrossTeamCorrespondence)
+					.persist();
+				nock('http://test/')
+					.get('/appeals/document-redaction-statuses')
+					.reply(200, documentRedactionStatuses);
+				nock('http://test/').post('/appeals/1/documents').reply(200);
+
+				const addDocumentsResponse = await request
+					.post(`${baseUrl}/1/internal-correspondence/cross-team/upload-documents/4`)
+					.send({
+						'upload-info': fileUploadInfo
+					});
+
+				expect(addDocumentsResponse.statusCode).toBe(302);
+
+				const postCheckAndConfirmResponse = await request
+					.post(`${baseUrl}/1/internal-correspondence/cross-team/check-your-answers/4`)
+					.send({});
+
+				expect(postCheckAndConfirmResponse.statusCode).toBe(302);
+				expect(postCheckAndConfirmResponse.text).toBe(
+					'Found. Redirecting to /appeals-service/appeal-details/1'
+				);
+
+				const caseDetailsResponse = await request.get(`${baseUrl}/1`);
+
+				const notificationBannerElementHTML = parseHtml(caseDetailsResponse.text, {
+					rootElement: notificationBannerElement
+				}).innerHTML;
+
+				expect(notificationBannerElementHTML).toMatchSnapshot();
+				expect(notificationBannerElementHTML).toContain('Success</h3>');
+				expect(notificationBannerElementHTML).toContain(
+					'Cross-team correspondence documents uploaded</p>'
+				);
+			});
+
+			it('should render a success notification banner when an inspector correspondence document was uploaded', async () => {
+				nock('http://test/')
+					.get('/appeals/1/document-folders/5')
+					.reply(200, folderInfoInspectorCorrespondence)
+					.persist();
+				nock('http://test/')
+					.get('/appeals/document-redaction-statuses')
+					.reply(200, documentRedactionStatuses);
+				nock('http://test/').post('/appeals/1/documents').reply(200);
+
+				const addDocumentsResponse = await request
+					.post(`${baseUrl}/1/internal-correspondence/inspector/upload-documents/5`)
+					.send({
+						'upload-info': fileUploadInfo
+					});
+
+				expect(addDocumentsResponse.statusCode).toBe(302);
+
+				const postCheckAndConfirmResponse = await request
+					.post(`${baseUrl}/1/internal-correspondence/inspector/check-your-answers/5`)
+					.send({});
+
+				expect(postCheckAndConfirmResponse.statusCode).toBe(302);
+				expect(postCheckAndConfirmResponse.text).toBe(
+					'Found. Redirecting to /appeals-service/appeal-details/1'
+				);
+
+				const caseDetailsResponse = await request.get(`${baseUrl}/1`);
+
+				const notificationBannerElementHTML = parseHtml(caseDetailsResponse.text, {
+					rootElement: notificationBannerElement
+				}).innerHTML;
+
+				expect(notificationBannerElementHTML).toMatchSnapshot();
+				expect(notificationBannerElementHTML).toContain('Success</h3>');
+				expect(notificationBannerElementHTML).toContain(
+					'Inspector correspondence documents uploaded</p>'
 				);
 			});
 		});

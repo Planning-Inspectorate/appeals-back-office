@@ -28,6 +28,7 @@ import { permissionNames } from '#environment/permissions.js';
 import changeLpaReferenceRouter from './change-lpa-reference/change-lpa-reference.router.js';
 import changeInspectorAccessRouter from './inspector-access/inspector-access.router.js';
 import safetyRisksRouter from './safety-risks/safety-risks.router.js';
+import internalCorrespondenceRouter from './internal-correspondence/internal-correspondence.router.js';
 
 const router = createRouter();
 
@@ -150,5 +151,11 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	safetyRisksRouter
+);
+router.use(
+	'/:appealId/internal-correspondence',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	internalCorrespondenceRouter
 );
 export default router;

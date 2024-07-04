@@ -958,6 +958,94 @@ export async function initialiseAndMapAppealData(
 	};
 
 	/** @type {Instructions} */
+	mappedData.appeal.crossTeamCorrespondence = {
+		id: 'cross-team-correspondence',
+		display: {
+			summaryListItem: {
+				key: {
+					text: 'Cross-team correspondence'
+				},
+				actions: {
+					items:
+						appealDetails.internalCorrespondence?.crossTeam?.documents &&
+						appealDetails.internalCorrespondence?.crossTeam?.documents.length > 0
+							? [
+									{
+										text: 'Manage',
+										visuallyHiddenText: 'cross-team correspondence documents',
+										href: `${currentRoute}/internal-correspondence/cross-team/manage-documents/${appealDetails.internalCorrespondence?.crossTeam?.folderId}`
+									},
+									{
+										text: 'Add',
+										visuallyHiddenText: 'cross-team correspondence documents',
+										href: displayPageFormatter.formatDocumentActionLink(
+											appealDetails.appealId,
+											appealDetails.internalCorrespondence?.crossTeam,
+											`${currentRoute}/internal-correspondence/cross-team/upload-documents/${appealDetails.internalCorrespondence?.crossTeam?.folderId}`
+										)
+									}
+							  ]
+							: [
+									{
+										text: 'Add',
+										visuallyHiddenText: 'cross-team correspondence documents',
+										href: displayPageFormatter.formatDocumentActionLink(
+											appealDetails.appealId,
+											appealDetails.internalCorrespondence?.crossTeam,
+											`${currentRoute}/internal-correspondence/cross-team/upload-documents/${appealDetails.internalCorrespondence?.crossTeam?.folderId}`
+										)
+									}
+							  ]
+				}
+			}
+		}
+	};
+
+	/** @type {Instructions} */
+	mappedData.appeal.inspectorCorrespondence = {
+		id: 'inspector-correspondence',
+		display: {
+			summaryListItem: {
+				key: {
+					text: 'Inspector correspondence'
+				},
+				actions: {
+					items:
+						appealDetails.internalCorrespondence?.inspector?.documents &&
+						appealDetails.internalCorrespondence?.inspector?.documents.length > 0
+							? [
+									{
+										text: 'Manage',
+										visuallyHiddenText: 'inspector correspondence documents',
+										href: `${currentRoute}/internal-correspondence/inspector/manage-documents/${appealDetails.internalCorrespondence?.inspector?.folderId}`
+									},
+									{
+										text: 'Add',
+										visuallyHiddenText: 'inspector correspondence documents',
+										href: displayPageFormatter.formatDocumentActionLink(
+											appealDetails.appealId,
+											appealDetails.internalCorrespondence?.inspector,
+											`${currentRoute}/internal-correspondence/inspector/upload-documents/${appealDetails.internalCorrespondence?.inspector?.folderId}`
+										)
+									}
+							  ]
+							: [
+									{
+										text: 'Add',
+										visuallyHiddenText: 'inspector correspondence documents',
+										href: displayPageFormatter.formatDocumentActionLink(
+											appealDetails.appealId,
+											appealDetails.internalCorrespondence?.inspector,
+											`${currentRoute}/internal-correspondence/inspector/upload-documents/${appealDetails.internalCorrespondence?.inspector?.folderId}`
+										)
+									}
+							  ]
+				}
+			}
+		}
+	};
+
+	/** @type {Instructions} */
 	mappedData.appeal.caseHistory = {
 		id: 'case-history',
 		display: {

@@ -169,7 +169,6 @@ export const appealData = {
 	linkedAppeals: [],
 	localPlanningDepartment: 'Wiltshire Council',
 	lpaQuestionnaireId: 1,
-
 	neighbouringSites: [
 		{
 			siteId: 1,
@@ -2068,6 +2067,18 @@ export const costsFolderInfoDecision = {
 	...costsFolderInfoAppellant,
 	folderId: 3,
 	path: 'appeal_costs/decision'
+};
+
+export const folderInfoCrossTeamCorrespondence = {
+	...costsFolderInfoAppellant,
+	folderId: 10,
+	path: 'internal/crossTeamCorrespondence'
+};
+
+export const folderInfoInspectorCorrespondence = {
+	...costsFolderInfoAppellant,
+	folderId: 11,
+	path: 'internal/inspectorCorrespondence'
 };
 
 export const appealCostsDocumentItem = {

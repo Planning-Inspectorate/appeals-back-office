@@ -101,6 +101,10 @@ interface SingleAppealDetailsResponse {
 	createdAt: Date;
 	startedAt?: Date | null;
 	validAt?: Date | null;
+	internalCorrespondence: {
+		crossTeam?: FolderInfo | null;
+		inspector?: FolderInfo | null;
+	};
 }
 
 interface UpdateAppealRequest {
