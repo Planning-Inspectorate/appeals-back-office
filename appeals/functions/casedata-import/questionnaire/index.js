@@ -1,5 +1,6 @@
 import { EventType } from '@pins/event-client';
 import api from './back-office-api-client.js';
+import { HTTPError } from 'got';
 
 /**
  *
@@ -33,7 +34,11 @@ export default async function (context, msg) {
 
 		context.log.info(`LPA questionnaire created for appeal: ${caseReference}`);
 	} catch (e) {
-		context.log.error('Error creating LPA questionnaire', e);
+		if (e instanceof HTTPError) {
+			context.log.error('Error creating LPA questionnaire', e.message, e.response?.body);
+		} else {
+			context.log.error('Error creating LPA questionnaire', e);
+		}
 		throw e;
 	}
 }
