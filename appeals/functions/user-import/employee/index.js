@@ -1,5 +1,6 @@
 import { EventType } from '@pins/event-client';
 import api from './back-office-api-client.js';
+import { HTTPError } from 'got';
 
 /**
  *
@@ -33,7 +34,11 @@ export default async function (context, msg) {
 
 		context.log.info(`Employee created: ${id}`);
 	} catch (e) {
-		context.log.error('Error creating employee', e);
+		if (e instanceof HTTPError) {
+			context.log.error('Error creating employee', e.message, e.response?.body);
+		} else {
+			context.log.error('Error creating employee', e);
+		}
 		throw e;
 	}
 }
