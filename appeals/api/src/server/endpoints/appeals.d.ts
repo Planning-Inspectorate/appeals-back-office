@@ -185,6 +185,7 @@ interface UpdateAppellantCaseRequest {
 	ownsSomeLand?: boolean;
 	siteAreaSquareMetres?: string;
 	applicationDate?: string;
+	applicationDecisionDate?: string;
 }
 
 interface UpdateAppellantCaseValidationOutcome {

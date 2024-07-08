@@ -43,7 +43,8 @@ const updateAppellantCaseById = async (req, res) => {
 			ownsAllLand,
 			ownsSomeLand,
 			siteAreaSquareMetres,
-			applicationDate
+			applicationDate,
+			applicationDecisionDate
 		},
 		params,
 		validationOutcome
@@ -88,7 +89,8 @@ const updateAppellantCaseById = async (req, res) => {
 					ownsAllLand,
 					ownsSomeLand,
 					siteAreaSquareMetres,
-					applicationDate
+					applicationDate,
+					applicationDecisionDate
 			  });
 	} catch (error) {
 		if (error) {
@@ -112,7 +114,8 @@ const updateAppellantCaseById = async (req, res) => {
 				ownsAllLand,
 				ownsSomeLand,
 				siteAreaSquareMetres,
-				applicationDate
+				applicationDate,
+				applicationDecisionDate
 		  };
 
 	return res.send(response);

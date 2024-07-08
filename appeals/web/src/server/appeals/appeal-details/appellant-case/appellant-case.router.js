@@ -24,6 +24,7 @@ import siteOwnershipRouter from '../site-ownership/site-ownership.router.js';
 import otherAppealsRouter from '../other-appeals/other-appeals.router.js';
 import siteAreaRouter from '../site-area/site-area.router.js';
 import applicationSubmissionDateRouter from '../application-submission-date/application-submission-date.router.js';
+import applicationDecisionDateRouter from '../application-decision-date/application-decision-date.router.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -98,6 +99,13 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	applicationSubmissionDateRouter
+);
+
+router.use(
+	'/application-decision-date',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	applicationDecisionDateRouter
 );
 
 router
