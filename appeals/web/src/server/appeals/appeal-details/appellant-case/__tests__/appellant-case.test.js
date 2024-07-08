@@ -153,8 +153,7 @@ describe('appellant-case', () => {
 			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
 
 			const element = parseHtml(response.text);
-			console.log(element.innerHTML);
-			console.log(appealId);
+
 			expect(element.innerHTML).toMatchSnapshot();
 
 			const notificationBannerElementHTML = parseHtml(response.text, {
