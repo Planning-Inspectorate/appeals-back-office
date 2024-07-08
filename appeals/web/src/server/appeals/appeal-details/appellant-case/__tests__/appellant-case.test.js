@@ -135,6 +135,68 @@ describe('appellant-case', () => {
 			expect(notificationBannerElementHTML).toContain('LPA application reference updated</p>');
 		});
 
+		it('should render a "Application decision date removed" notification banner when the application decision date is removed', async () => {
+			const appealId = appealData.appealId;
+			const appellantCaseId = appealData.appellantCaseId;
+			const validData = {
+				'application-decision-radio': 'no'
+			};
+
+			nock('http://test/')
+				.patch(`/appeals/${appealId}/appellant-cases/${appellantCaseId}`)
+				.reply(200, validData);
+
+			await request
+				.post(`${baseUrl}/${appealId}/appellant-case/application-decision-date/change`)
+				.send(validData);
+
+			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
+
+			const element = parseHtml(response.text);
+			console.log(element.innerHTML);
+			console.log(appealId);
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const notificationBannerElementHTML = parseHtml(response.text, {
+				rootElement: notificationBannerElement
+			}).innerHTML;
+
+			expect(notificationBannerElementHTML).toMatchSnapshot();
+			expect(notificationBannerElementHTML).toContain('Success</h3>');
+			expect(notificationBannerElementHTML).toContain('Application decision date removed</p>');
+		});
+
+		it('should render a "Application decision date updated" notification banner when the application decision date is updated', async () => {
+			const appealId = appealData.appealId.toString();
+			const appellantCaseId = appealData.appellantCaseId;
+			const validData = {
+				'application-decision-date-day': '11',
+				'application-decision-date-month': '06',
+				'application-decision-date-year': '2021'
+			};
+
+			nock('http://test/')
+				.patch(`/appeals/${appealId}/appellant-cases/${appellantCaseId}`)
+				.reply(200, { ...validData });
+
+			await request
+				.post(`${baseUrl}/${appealId}/appellant-case/application-decision-date/change/set-date`)
+				.send(validData);
+
+			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
+
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const notificationBannerElementHTML = parseHtml(response.text, {
+				rootElement: notificationBannerElement
+			}).innerHTML;
+
+			expect(notificationBannerElementHTML).toMatchSnapshot();
+			expect(notificationBannerElementHTML).toContain('Success</h3>');
+			expect(notificationBannerElementHTML).toContain('Application decision date updated');
+		});
+
 		it('should render a "Site health and safety risks updated" success notification banner when the planning application reference is updated', async () => {
 			const appealId = appealData.appealId;
 			const appellantCaseId = appealData.appellantCaseId;
