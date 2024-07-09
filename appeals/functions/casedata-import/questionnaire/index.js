@@ -26,11 +26,6 @@ export default async function (context, msg) {
 		return;
 	}
 
-	if (!msg.questionnaire) {
-		context.log.warn(`Ignoring invalid message, 'questionnaire' is required`, msg);
-		return;
-	}
-
 	try {
 		const res = await api.post(msg);
 
