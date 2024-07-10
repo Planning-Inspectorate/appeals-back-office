@@ -181,6 +181,22 @@ const setAppealDecision = (id, { documentDate, documentGuid, version = 1, outcom
 
 /**
  * @param {number} id
+ * @param {Date} withdrawalRequestDate
+ * @returns {PrismaPromise<import('#db-client').Appeal>}
+ */
+const setAppealWithdrawal = (id, withdrawalRequestDate) => {
+	return databaseConnector.appeal.update({
+		data: {
+			withdrawalRequestDate
+		},
+		where: {
+			id
+		}
+	});
+};
+
+/**
+ * @param {number} id
  * @param {SetInvalidAppealDecisionRequest} data
  * @returns {PrismaPromise<[InspectorDecision, DocumentVersion]>}
  */
@@ -330,6 +346,7 @@ export default {
 	getAppealByAppealReference,
 	updateAppealById,
 	setAppealDecision,
+	setAppealWithdrawal,
 	setInvalidAppealDecision,
 	linkAppeal,
 	unlinkAppeal,

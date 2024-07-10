@@ -692,6 +692,11 @@ exports[`appeal-details GET /:appealId should not render action links to the man
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit"> View<span class="govuk-visually-hidden"> View case history</span></a>
                             </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
+                            <dd class="govuk-summary-list__value"></dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/start"> Start<span class="govuk-visually-hidden"> Start appeal withdrawal</span></a>
+                            </dd>
+                        </div>
                     </dl>
                 </div>
             </div>
@@ -1066,6 +1071,11 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/audit"> View<span class="govuk-visually-hidden"> View case history</span></a>
                             </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
+                            <dd class="govuk-summary-list__value"></dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/withdrawal/start"> Start<span class="govuk-visually-hidden"> Start appeal withdrawal</span></a>
+                            </dd>
+                        </div>
                     </dl>
                 </div>
             </div>
@@ -1427,6 +1437,11 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
                             <dd class="govuk-summary-list__value"></dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit"> View<span class="govuk-visually-hidden"> View case history</span></a>
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
+                            <dd class="govuk-summary-list__value"></dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/start"> Start<span class="govuk-visually-hidden"> Start appeal withdrawal</span></a>
                             </dd>
                         </div>
                     </dl>
@@ -1793,6 +1808,11 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
                             <dd class="govuk-summary-list__value"></dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit"> View<span class="govuk-visually-hidden"> View case history</span></a>
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
+                            <dd class="govuk-summary-list__value"></dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/start"> Start<span class="govuk-visually-hidden"> Start appeal withdrawal</span></a>
                             </dd>
                         </div>
                     </dl>
@@ -2177,6 +2197,11 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit"> View<span class="govuk-visually-hidden"> View case history</span></a>
                             </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
+                            <dd class="govuk-summary-list__value"></dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/start"> Start<span class="govuk-visually-hidden"> Start appeal withdrawal</span></a>
+                            </dd>
+                        </div>
                     </dl>
                 </div>
             </div>
@@ -2547,6 +2572,11 @@ exports[`appeal-details GET /:appealId should render an Issue a decision notific
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/audit"> View<span class="govuk-visually-hidden"> View case history</span></a>
                             </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
+                            <dd class="govuk-summary-list__value"></dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/withdrawal/start"> Start<span class="govuk-visually-hidden"> Start appeal withdrawal</span></a>
+                            </dd>
+                        </div>
                     </dl>
                 </div>
             </div>
@@ -2896,6 +2926,11 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
                             <dd class="govuk-summary-list__value"></dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit"> View<span class="govuk-visually-hidden"> View case history</span></a>
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
+                            <dd class="govuk-summary-list__value"></dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/start"> Start<span class="govuk-visually-hidden"> Start appeal withdrawal</span></a>
                             </dd>
                         </div>
                     </dl>
@@ -3249,6 +3284,11 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/audit"> View<span class="govuk-visually-hidden"> View case history</span></a>
                             </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
+                            <dd class="govuk-summary-list__value"></dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/withdrawal/start"> Start<span class="govuk-visually-hidden"> Start appeal withdrawal</span></a>
+                            </dd>
+                        </div>
                     </dl>
                 </div>
             </div>
@@ -3600,6 +3640,11 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/audit"> View<span class="govuk-visually-hidden"> View case history</span></a>
                             </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
+                            <dd class="govuk-summary-list__value"></dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/withdrawal/start"> Start<span class="govuk-visually-hidden"> Start appeal withdrawal</span></a>
+                            </dd>
+                        </div>
                     </dl>
                 </div>
             </div>
@@ -3949,6 +3994,11 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
                             <dd class="govuk-summary-list__value"></dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/audit"> View<span class="govuk-visually-hidden"> View case history</span></a>
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
+                            <dd class="govuk-summary-list__value"></dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/withdrawal/start"> Start<span class="govuk-visually-hidden"> Start appeal withdrawal</span></a>
                             </dd>
                         </div>
                     </dl>
@@ -4317,6 +4367,11 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
                             <dd class="govuk-summary-list__value"></dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit"> View<span class="govuk-visually-hidden"> View case history</span></a>
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
+                            <dd class="govuk-summary-list__value"></dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/start"> Start<span class="govuk-visually-hidden"> Start appeal withdrawal</span></a>
                             </dd>
                         </div>
                     </dl>
@@ -4827,6 +4882,11 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit"> View<span class="govuk-visually-hidden"> View case history</span></a>
                             </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
+                            <dd class="govuk-summary-list__value"></dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/start"> Start<span class="govuk-visually-hidden"> Start appeal withdrawal</span></a>
+                            </dd>
+                        </div>
                     </dl>
                 </div>
             </div>
@@ -5207,6 +5267,11 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/audit"> View<span class="govuk-visually-hidden"> View case history</span></a>
                             </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
+                            <dd class="govuk-summary-list__value"></dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/withdrawal/start"> Start<span class="govuk-visually-hidden"> Start appeal withdrawal</span></a>
+                            </dd>
+                        </div>
                     </dl>
                 </div>
             </div>
@@ -5556,6 +5621,11 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
                             <dd class="govuk-summary-list__value"></dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit"> View<span class="govuk-visually-hidden"> View case history</span></a>
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
+                            <dd class="govuk-summary-list__value"></dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/start"> Start<span class="govuk-visually-hidden"> Start appeal withdrawal</span></a>
                             </dd>
                         </div>
                     </dl>
@@ -5933,6 +6003,11 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/audit"> View<span class="govuk-visually-hidden"> View case history</span></a>
                             </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
+                            <dd class="govuk-summary-list__value"></dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/withdrawal/start"> Start<span class="govuk-visually-hidden"> Start appeal withdrawal</span></a>
+                            </dd>
+                        </div>
                     </dl>
                 </div>
             </div>
@@ -6265,6 +6340,11 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
                             <dd class="govuk-summary-list__value"></dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/audit"> View<span class="govuk-visually-hidden"> View case history</span></a>
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
+                            <dd class="govuk-summary-list__value"></dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/withdrawal/start"> Start<span class="govuk-visually-hidden"> Start appeal withdrawal</span></a>
                             </dd>
                         </div>
                     </dl>
@@ -6757,6 +6837,11 @@ exports[`appeal-details should not render a back button 1`] = `
                                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
                                         <dd class="govuk-summary-list__value"></dd>
                                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/audit"> View<span class="govuk-visually-hidden"> View case history</span></a>
+                                        </dd>
+                                    </div>
+                                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
+                                        <dd class="govuk-summary-list__value"></dd>
+                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/withdrawal/start"> Start<span class="govuk-visually-hidden"> Start appeal withdrawal</span></a>
                                         </dd>
                                     </div>
                                 </dl>

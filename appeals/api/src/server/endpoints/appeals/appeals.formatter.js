@@ -123,6 +123,14 @@ const formatAppeal = (
 						(f) => f.path === `${STAGE.INTERNAL}/${DOCTYPE.INSPECTOR_CORRESPONDENCE}`
 					)
 				)
+			},
+			withdrawal: {
+				withdrawalFolder: formatFolder(
+					rootFolders.find(
+						(f) => f.path === `${STAGE.APPELLANT_CASE}/${DOCTYPE.APPELLANT_CASE_WITHDRAWAL}`
+					)
+				),
+				withdrawalRequestDate: appeal.withdrawalRequestDate
 			}
 		};
 

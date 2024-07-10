@@ -30,6 +30,7 @@ import { linkedAppealsRoutes } from './linkable-appeals/linkable-appeal.routes.j
 import { transferredAppealsRoutes } from './transferred-appeals/transferred-appeal.routes.js';
 import { neighbouringSitesRoutes } from './neighbouring-sites/neighbouring-sites.routes.js';
 import { serviceUserRoutes } from './service-user/service-user.routes.js';
+import { withdrawalRoutes } from './withdrawal/withdrawal.routes.js';
 
 const router = createRouter();
 router.use(integrationsRoutes);
@@ -65,5 +66,6 @@ router.use(linkedAppealsRoutes);
 router.use(transferredAppealsRoutes);
 router.use(neighbouringSitesRoutes);
 router.use(serviceUserRoutes);
+router.use(withdrawalRoutes);
 
 export { router as appealsRoutes };

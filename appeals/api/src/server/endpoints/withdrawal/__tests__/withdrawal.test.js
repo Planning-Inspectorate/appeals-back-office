@@ -1,0 +1,87 @@
+// @ts-nocheck
+import { request } from '../../../app-test.js';
+import { jest } from '@jest/globals';
+import { azureAdUserId } from '#tests/shared/mocks.js';
+import { householdAppeal } from '#tests/appeals/mocks.js';
+import { add, sub } from 'date-fns';
+import { ERROR_MUST_BE_CORRECT_DATE_FORMAT, ERROR_MUST_BE_IN_PAST } from '#endpoints/constants.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
+
+const { databaseConnector } = await import('#utils/database-connector.js');
+
+describe('appeal decision routes', () => {
+	beforeEach(() => {
+		databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
+	});
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
+	describe('POST', () => {
+		test('returns 400 when date is incorrect', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+
+			const response = await request
+				.post(`/appeals/${householdAppeal.id}/withdrawal`)
+				.send({
+					withdrawalRequestDate: '2023-13-10'
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual({
+				errors: {
+					withdrawalRequestDate: ERROR_MUST_BE_CORRECT_DATE_FORMAT
+				}
+			});
+		});
+		test('returns 400 when date is in the future', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+
+			const today = add(new Date(), { days: 1 });
+			const year = today.toLocaleString('default', { year: 'numeric' });
+			const month = today.toLocaleString('default', { month: '2-digit' });
+			const day = today.toLocaleString('default', { day: '2-digit' });
+
+			const response = await request
+				.post(`/appeals/${householdAppeal.id}/withdrawal`)
+				.send({
+					withdrawalRequestDate: [year, month, day].join('-')
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual({
+				errors: {
+					withdrawalRequestDate: ERROR_MUST_BE_IN_PAST
+				}
+			});
+		});
+
+		test('returns 200 when all good', async () => {
+			const correctAppealState = {
+				...householdAppeal,
+				appealStatus: [
+					{
+						status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+						valid: true
+					}
+				]
+			};
+			databaseConnector.appeal.findUnique.mockResolvedValue(correctAppealState);
+
+			const today = sub(new Date(), { days: 10 });
+			const year = today.toLocaleString('default', { year: 'numeric' });
+			const month = today.toLocaleString('default', { month: '2-digit' });
+			const day = today.toLocaleString('default', { day: '2-digit' });
+
+			const response = await request
+				.post(`/appeals/${householdAppeal.id}/withdrawal`)
+				.send({
+					withdrawalRequestDate: [year, month, day].join('-')
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(200);
+		});
+	});
+});
