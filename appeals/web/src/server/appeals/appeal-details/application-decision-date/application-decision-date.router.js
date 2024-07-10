@@ -16,6 +16,7 @@ router
 	.post(
 		validators.validateDateFields,
 		validators.validateDateValid,
+		validators.validatePastDate,
 		controllers.postChangeApplicationSetDecisionDate
 	);
 
