@@ -948,6 +948,15 @@ export const spec = {
 					example: 1
 				}
 			}
+		},
+		WithdrawalRequestRequest: {
+			type: 'object',
+			properties: {
+				withdrawalRequestDate: {
+					type: 'string',
+					example: '2023-10-11'
+				}
+			}
 		}
 	},
 	components: {}

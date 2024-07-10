@@ -29,6 +29,7 @@ import changeLpaReferenceRouter from './change-lpa-reference/change-lpa-referenc
 import changeInspectorAccessRouter from './inspector-access/inspector-access.router.js';
 import safetyRisksRouter from './safety-risks/safety-risks.router.js';
 import internalCorrespondenceRouter from './internal-correspondence/internal-correspondence.router.js';
+import withdrawalRouter from './withdrawal/withdrawal.router.js';
 
 const router = createRouter();
 
@@ -158,4 +159,11 @@ router.use(
 	assertUserHasPermission(permissionNames.updateCase),
 	internalCorrespondenceRouter
 );
+router.use(
+	'/:appealId/withdrawal',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	withdrawalRouter
+);
+
 export default router;

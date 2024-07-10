@@ -71,6 +71,7 @@ export const getRootFoldersForAppeal = async (appeal) => {
 		`${STAGE.COSTS}/appellant`,
 		`${STAGE.COSTS}/lpa`,
 		`${STAGE.COSTS}/decision`,
+		`${STAGE.APPELLANT_CASE}/${DOCTYPE.APPELLANT_CASE_WITHDRAWAL}`,
 		// TODO: BOAT-1393
 		// `${STAGE.COSTS}/${DOCTYPE.APPELLANT_COST_APPLICATION}`,
 		// `${STAGE.COSTS}/${DOCTYPE.APPELLANT_COST_WITHDRAWAL}`,

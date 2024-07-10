@@ -1875,3 +1875,8 @@ export interface UpdateServiceUserResponse {
 	/** @example 1 */
 	serviceUserId?: number;
 }
+
+export interface WithdrawalRequestRequest {
+	/** @example "2023-10-11" */
+	withdrawalRequestDate?: string;
+}

@@ -105,6 +105,10 @@ interface SingleAppealDetailsResponse {
 		crossTeam?: FolderInfo | null;
 		inspector?: FolderInfo | null;
 	};
+	withdrawal: {
+		withdrawalFolder?: FolderInfo | null;
+		withdrawalRequestDate: Date | null;
+	};
 }
 
 interface UpdateAppealRequest {

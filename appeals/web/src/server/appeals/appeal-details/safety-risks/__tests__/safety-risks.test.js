@@ -44,8 +44,6 @@ describe('safety-risks', () => {
 
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
-			console.log(elementInnerHtml);
-
 			expect(elementInnerHtml).toMatchSnapshot();
 			expect(elementInnerHtml).toContain(
 				'Change the site health and safety risks (appellant answer)</h1>'

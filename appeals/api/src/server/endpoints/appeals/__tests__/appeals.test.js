@@ -724,6 +724,7 @@ describe('appeals routes', () => {
 					caseOfficer: householdAppeal.caseOfficer.azureAdUserId,
 					costs: {},
 					internalCorrespondence: {},
+					withdrawal: {},
 					decision: {
 						folderId: savedFolder.id
 					},
@@ -881,7 +882,8 @@ describe('appeals routes', () => {
 						visitEndTime: fullPlanningAppeal.siteVisit.visitEndTime,
 						visitType: fullPlanningAppeal.siteVisit.siteVisitType.name
 					},
-					createdAt: householdAppeal.caseCreatedDate.toISOString()
+					createdAt: householdAppeal.caseCreatedDate.toISOString(),
+					withdrawal: {}
 				});
 			});
 
@@ -1488,7 +1490,8 @@ describe('appeals/case-reference/:caseReference', () => {
 					visitEndTime: householdAppeal.siteVisit.visitEndTime,
 					visitType: householdAppeal.siteVisit.siteVisitType.name
 				},
-				createdAt: householdAppeal.caseCreatedDate.toISOString()
+				createdAt: householdAppeal.caseCreatedDate.toISOString(),
+				withdrawal: {}
 			});
 		});
 
@@ -1588,7 +1591,8 @@ describe('appeals/case-reference/:caseReference', () => {
 					visitEndTime: fullPlanningAppeal.siteVisit.visitEndTime,
 					visitType: fullPlanningAppeal.siteVisit.siteVisitType.name
 				},
-				createdAt: fullPlanningAppeal.caseCreatedDate.toISOString()
+				createdAt: fullPlanningAppeal.caseCreatedDate.toISOString(),
+				withdrawal: {}
 			});
 		});
 		test('returns an error if appealId is not found', async () => {

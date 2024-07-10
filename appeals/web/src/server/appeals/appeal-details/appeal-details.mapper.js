@@ -9,13 +9,17 @@ import { isDefined } from '#lib/ts-utilities.js';
 import { removeSummaryListActions } from '#lib/mappers/mapper-utilities.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { mapVirusCheckStatus } from '#appeals/appeal-documents/appeal-documents.mapper.js';
+import {
+	mapVirusCheckStatus,
+	mapDocumentDownloadUrl
+} from '#appeals/appeal-documents/appeal-documents.mapper.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import {
 	generateIssueDecisionUrl,
 	generateStartTimetableUrl
 } from '#appeals/appeal-details/issue-decision/issue-decision.mapper.js';
 import { AVSCAN_STATUS } from '@pins/appeals/constants/documents.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 export const pageHeading = 'Case details';
 
@@ -195,7 +199,8 @@ export async function appealDetailsPage(appealDetails, currentRoute, session) {
 			rows: [
 				mappedData.appeal.crossTeamCorrespondence.display.summaryListItem,
 				mappedData.appeal.inspectorCorrespondence.display.summaryListItem,
-				mappedData.appeal.caseHistory.display.summaryListItem
+				mappedData.appeal.caseHistory.display.summaryListItem,
+				mappedData.appeal.appealWithdrawal.display.summaryListItem
 			]
 		}
 	};
@@ -268,7 +273,8 @@ export async function appealDetailsPage(appealDetails, currentRoute, session) {
 		statusTagsComponentGroup.push(leadOrChildTag);
 	}
 
-	const isAppealComplete = appealDetails.appealStatus === 'complete';
+	const isAppealComplete = appealDetails.appealStatus === APPEAL_CASE_STATUS.COMPLETE;
+	const isAppealWithdrawn = appealDetails.appealStatus === APPEAL_CASE_STATUS.WITHDRAWN;
 	if (isAppealComplete && statusTag && appealDetails.decision.documentId) {
 		const letterDate = appealDetails.decision?.letterDate
 			? new Date(appealDetails.decision.letterDate)
@@ -298,6 +304,57 @@ export async function appealDetailsPage(appealDetails, currentRoute, session) {
 		});
 
 		shortAppealReference;
+	} else if (
+		isAppealWithdrawn &&
+		statusTag &&
+		appealDetails?.withdrawal?.withdrawalFolder?.documents?.length
+	) {
+		const withdrawalRequestDate =
+			appealDetails.withdrawal?.withdrawalRequestDate &&
+			new Date(appealDetails.withdrawal?.withdrawalRequestDate);
+
+		const virusCheckStatus = mapVirusCheckStatus(
+			appealDetails?.withdrawal.withdrawalFolder.documents[0].latestDocumentVersion
+				.virusCheckStatus || AVSCAN_STATUS.NOT_SCANNED
+		);
+
+		const withdrawalDocumentDownloadUrl = mapDocumentDownloadUrl(
+			appealDetails.appealId,
+			appealDetails?.withdrawal.withdrawalFolder.documents[0].id
+		);
+
+		if (withdrawalRequestDate && withdrawalDocumentDownloadUrl) {
+			if (virusCheckStatus.checked && virusCheckStatus.safe) {
+				statusTagsComponentGroup.push({
+					type: 'inset-text',
+					parameters: {
+						html: `<p>
+							Withdrawn: ${withdrawalRequestDate.toLocaleDateString('en-gb', {
+								day: 'numeric',
+								month: 'long',
+								year: 'numeric'
+							})}
+								</p>
+								<p><a class="govuk-link" target="_blank" href="${withdrawalDocumentDownloadUrl}">View withdrawal request</a></p>`
+					}
+				});
+			} else {
+				statusTagsComponentGroup.push({
+					type: 'inset-text',
+					parameters: {
+						html: `<p>
+							Withdrawn: ${withdrawalRequestDate.toLocaleDateString('en-gb', {
+								day: 'numeric',
+								month: 'long',
+								year: 'numeric'
+							})}
+								</p>
+								<p><span class="govuk-body">View withdrawal request</span>
+								<strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></p>`
+					}
+				});
+			}
+		}
 	}
 
 	if (appealDetails.appealStatus === 'transferred') {

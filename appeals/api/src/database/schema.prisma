@@ -32,6 +32,7 @@ model Appeal {
   caseStartedDate       DateTime?
   casePublishedDate     DateTime?
   caseCompletedDate     DateTime?
+  withdrawalRequestDate DateTime?
   caseResubmittedTypeId Int?
   caseTransferredId     String?
   specialisms           AppealSpecialism[]

@@ -575,7 +575,7 @@ export function addDocumentsCheckAndConfirmPage(
  * @param {DocumentInfo} document
  * @returns {HtmlProperty & ClassesProperty}
  */
-function mapFolderDocumentInformationHtmlProperty(folder, document) {
+export function mapFolderDocumentInformationHtmlProperty(folder, document) {
 	/** @type {HtmlProperty} */
 	const htmlProperty = {
 		html: '',
@@ -642,7 +642,7 @@ function mapFolderDocumentInformationHtmlProperty(folder, document) {
  * @param {string} viewAndEditUrl
  * @returns {HtmlProperty & ClassesProperty}
  */
-function mapFolderDocumentActionsHtmlProperty(folder, document, viewAndEditUrl) {
+export function mapFolderDocumentActionsHtmlProperty(folder, document, viewAndEditUrl) {
 	/** @type {HtmlProperty} */
 	const htmlProperty = {
 		html: ''
@@ -1451,7 +1451,7 @@ export const mapDocumentDetailsFormDataToAPIRequest = (formData, redactionStatus
 /**
  * @param {DocumentDetailsFormData} formData
  * @param {FileUploadInfoItem[]} fileUploadInfo
- * @param {import('@pins/appeals.api').Schema.DocumentRedactionStatus[]} redactionStatuses
+ * @param {import('@pins/appeals.api').Schema.DocumentRedactionStatus[] | undefined} redactionStatuses
  * @returns
  */
 export const addDocumentDetailsFormDataToFileUploadInfo = (
@@ -1463,15 +1463,25 @@ export const addDocumentDetailsFormDataToFileUploadInfo = (
 		const matchingInfoItem = fileUploadInfo.find((infoItem) => infoItem.GUID === item.documentId);
 
 		if (matchingInfoItem) {
-			matchingInfoItem.receivedDate = dayMonthYearToApiDateString({
-				day: parseInt(item.receivedDate.day, 10),
-				month: parseInt(item.receivedDate.month, 10),
-				year: parseInt(item.receivedDate.year, 10)
-			});
-			matchingInfoItem.redactionStatus = mapRedactionStatusNameToId(
-				redactionStatuses,
-				item.redactionStatus
-			);
+			if (
+				item.receivedDate &&
+				item.receivedDate.day &&
+				item.receivedDate.month &&
+				item.receivedDate.year
+			) {
+				matchingInfoItem.receivedDate = dayMonthYearToApiDateString({
+					day: parseInt(item.receivedDate.day, 10),
+					month: parseInt(item.receivedDate.month, 10),
+					year: parseInt(item.receivedDate.year, 10)
+				});
+			}
+
+			if (redactionStatuses && item.redactionStatus) {
+				matchingInfoItem.redactionStatus = mapRedactionStatusNameToId(
+					redactionStatuses,
+					item.redactionStatus
+				);
+			}
 		}
 	}
 };
@@ -1570,7 +1580,7 @@ export function changeDocumentDetailsPage(backLinkUrl, folder, file, redactionSt
  * @param {"not_scanned"|"scanned"|"affected"} virusStatus
  * @returns {DocumentInfo[]}
  */
-function getDocumentsForVirusStatus(folder, virusStatus) {
+export function getDocumentsForVirusStatus(folder, virusStatus) {
 	let matchingDocuments = [];
 	for (let document of Object.values(folder.documents || [])) {
 		if (document?.latestDocumentVersion?.virusCheckStatus === virusStatus) {

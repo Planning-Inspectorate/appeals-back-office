@@ -3105,6 +3105,71 @@
 					}
 				}
 			}
+		},
+		"/appeals/{appealId}/withdrawal": {
+			"post": {
+				"tags": ["Withdrawal"],
+				"description": "Withdraws an appeal and sets appeal status to 'withdrawn",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Gets the appeal or null",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Appeal"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Appeal"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Withdrawal request",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/WithdrawalRequestRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/WithdrawalRequestRequest"
+							}
+						}
+					}
+				}
+			}
 		}
 	},
 	"components": {
@@ -7203,6 +7268,15 @@
 					"serviceUserId": {
 						"type": "number",
 						"example": 1
+					}
+				}
+			},
+			"WithdrawalRequestRequest": {
+				"type": "object",
+				"properties": {
+					"withdrawalRequestDate": {
+						"type": "string",
+						"example": "2023-10-11"
 					}
 				}
 			}

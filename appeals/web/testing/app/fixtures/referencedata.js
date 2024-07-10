@@ -169,6 +169,15 @@ export const appealData = {
 	linkedAppeals: [],
 	localPlanningDepartment: 'Wiltshire Council',
 	lpaQuestionnaireId: 1,
+	withdrawal: {
+		withdrawalFolder: {
+			caseId: '25',
+			documents: [],
+			folderId: 437,
+			path: 'appellant-case/appellantCaseWithdrawalLetter'
+		},
+		withdrawalRequestDate: null
+	},
 	neighbouringSites: [
 		{
 			siteId: 1,
@@ -2129,6 +2138,48 @@ export const appealCostsDocumentItem = {
 
 export const fileUploadInfo =
 	'[{"name": "test-document.txt", "GUID": "1", "fileRowId": "1", "blobStoreUrl": "/", "mimeType": "txt", "documentType": "txt", "size": 1, "stage": "appellant-case"}]';
+
+export const withdrawalRequestData = {
+	withdrawal: {
+		withdrawalFolder: {
+			caseId: '38',
+			documents: [
+				{
+					caseId: 38,
+					folderId: 671,
+					id: '614dbbaa-da49-40df-8e39-e6f299225425',
+					name: 'withdrawal-request-document.pdf',
+					isDeleted: false,
+					createdAt: '2024-07-03T11:22:31.639Z',
+					versionAudit: [],
+					latestDocumentVersion: {
+						documentId: '614dbbaa-da49-40df-8e39-e6f299225425',
+						version: 1,
+						fileName: 'withdrawal-request-document.pdf',
+						originalFilename: 'withdrawal-request-document.pdf',
+						dateReceived: '2024-07-03T00:00:00.000Z',
+						redactionStatus: 'No redaction required',
+						virusCheckStatus: 'scanned',
+						size: '3028',
+						mime: 'application/pdf',
+						isLateEntry: false,
+						isDeleted: false,
+						documentType: 'appellantCaseWithdrawalLetter',
+						stage: 'appellant-case',
+						blobStorageContainer: 'document-service-uploads',
+						blobStoragePath:
+							'appeal/6000038/614dbbaa-da49-40df-8e39-e6f299225425/v1/a-sample-1.pdf',
+						documentURI:
+							'https://127.0.0.1:10000/devstoreaccount1/document-service-uploads/appeal/6000038/614dbbaa-da49-40df-8e39-e6f299225425/v1/a-sample-1.pdf'
+					}
+				}
+			],
+			folderId: 671,
+			path: 'appellant-case/appellantCaseWithdrawalLetter'
+		},
+		withdrawalRequestDate: '2024-07-08T10:27:06.626Z'
+	}
+};
 
 export const baseSession = {
 	id: '',

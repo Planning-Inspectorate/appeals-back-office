@@ -385,6 +385,10 @@ export interface WebAppeal extends SingleAppealDetailsResponse {
 		visitEndTime: string | null;
 		visitType: string | null;
 	};
+	withdrawal: {
+		withdrawalFolder?: FolderInfo | null;
+		withdrawalRequestDate: string | null;
+	};
 }
 
 export interface WebServiceUser {
