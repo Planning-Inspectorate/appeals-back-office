@@ -63,10 +63,10 @@ export const postChangeApplicationHasDecisionDate = async (request, response) =>
 	try {
 		const radio = request.body['application-decision-radio'];
 		const { currentAppeal, apiClient } = request;
+		console.log(radio);
 
 		const { appealId, appellantCaseId } = currentAppeal;
 		if (radio === 'yes') {
-			request.session.radio = radio;
 			return response.redirect(`${request.originalUrl}/set-date`);
 		} else {
 			await changeApplicationDecisionDate(apiClient, appealId, appellantCaseId, null);
@@ -138,7 +138,6 @@ const renderChangeApplicationSetDecisionDate = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const postChangeApplicationSetDecisionDate = async (request, response) => {
-	console.log(request.body);
 	request.session.applicationDecisionDate = {
 		day: request.body['application-decision-date-day'],
 		month: request.body['application-decision-date-month'],
@@ -163,7 +162,7 @@ export const postChangeApplicationSetDecisionDate = async (request, response) =>
 			Number.isNaN(updatedApplicationDecisionMonth) ||
 			Number.isNaN(updatedApplicationDecisionYear)
 		) {
-			return response.status(500).render('app/500.njk');
+			return response.status(400).render('app/500.njk');
 		}
 
 		const updatedApplicationDecisionDayString = updatedApplicationDecisionDay
