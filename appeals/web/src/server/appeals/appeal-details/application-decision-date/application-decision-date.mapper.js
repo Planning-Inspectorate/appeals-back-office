@@ -75,7 +75,11 @@ export const changeApplicationSetDecisionDatePage = (
 	let year = storedSessionData?.year ?? '';
 
 	if (appellantCaseData.applicationDecisionDate && !storedSessionData) {
-		const formattedApplicationDecisionDate = new Date(appellantCaseData.applicationDecisionDate);
+		const formattedApplicationDecisionDate = new Date(
+			appellantCaseData.applicationDecisionDate.toLocaleString('en-GB', {
+				timeZone: 'Europe/London'
+			})
+		);
 
 		day = formattedApplicationDecisionDate.getDate().toString();
 		month = (formattedApplicationDecisionDate.getMonth() + 1).toString();
