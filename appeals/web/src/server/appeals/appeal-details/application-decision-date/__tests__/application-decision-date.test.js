@@ -171,5 +171,62 @@ describe('application-date', () => {
 
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
 		});
+		it('should re-render to applicationdecisionDate change page if date is in the future', async () => {
+			const tommorow = new Date();
+			tommorow.setDate(tommorow.getDate() + 1);
+			const invalidData = {
+				'application-decision-date-day': tommorow.getDate(),
+				'application-decision-date-month': tommorow.getMonth() + 1,
+				'application-decision-date-year': tommorow.getFullYear()
+			};
+
+			nock('http://test/')
+				.get(`/appeals/${appealId}/appellant-cases/${appellantCaseId}`)
+				.reply(200, appellantCaseDataNotValidated);
+
+			const response = await request
+				.post(`${baseUrl}/application-decision-date/change/set-date`)
+				.send(invalidData);
+
+			const elementInnerHtml = parseHtml(response.text).innerHTML;
+
+			expect(elementInnerHtml).toMatchSnapshot();
+			expect(elementInnerHtml).toContain('Change the application decision date</h1>');
+
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+		});
+		it('should re-render to applicationdecisionDate change page if date is today', async () => {
+			const today = new Date();
+			const invalidData = {
+				'application-decision-date-day': today.getDate(),
+				'application-decision-date-month': today.getMonth() + 1,
+				'application-decision-date-year': today.getFullYear()
+			};
+
+			nock('http://test/')
+				.get(`/appeals/${appealId}/appellant-cases/${appellantCaseId}`)
+				.reply(200, appellantCaseDataNotValidated);
+
+			const response = await request
+				.post(`${baseUrl}/application-decision-date/change/set-date`)
+				.send(invalidData);
+
+			const elementInnerHtml = parseHtml(response.text).innerHTML;
+
+			expect(elementInnerHtml).toMatchSnapshot();
+			expect(elementInnerHtml).toContain('Change the application decision date</h1>');
+
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+		});
 	});
 });

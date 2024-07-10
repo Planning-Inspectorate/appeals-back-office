@@ -63,10 +63,12 @@ export const postChangeApplicationHasDecisionDate = async (request, response) =>
 	try {
 		const radio = request.body['application-decision-radio'];
 		const { currentAppeal, apiClient } = request;
-		console.log(radio);
 
 		const { appealId, appellantCaseId } = currentAppeal;
 		if (radio === 'yes') {
+			request.session.applicationDecisionDate = {
+				radio: radio
+			};
 			return response.redirect(`${request.originalUrl}/set-date`);
 		} else {
 			await changeApplicationDecisionDate(apiClient, appealId, appellantCaseId, null);
@@ -139,6 +141,7 @@ const renderChangeApplicationSetDecisionDate = async (request, response) => {
  */
 export const postChangeApplicationSetDecisionDate = async (request, response) => {
 	request.session.applicationDecisionDate = {
+		...request.session.applicationDecisionDate,
 		day: request.body['application-decision-date-day'],
 		month: request.body['application-decision-date-month'],
 		year: request.body['application-decision-date-year']

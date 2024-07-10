@@ -13,3 +13,4 @@ export function changeApplicationDecisionDate(apiClient, appealId, appellantCase
 		}
 	});
 }
+('day-month-year');
