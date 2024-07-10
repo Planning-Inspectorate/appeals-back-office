@@ -11,17 +11,18 @@ import { DOCTYPE } from '@pins/appeals/constants/documents.js';
 /** @typedef {import('@pins/appeals.api').Schema.DocumentVersion} DocumentVersion */
 /** @typedef {import('@pins/appeals.api').Schema.DocumentRedactionStatus} DocumentRedactionStatus */
 /** @typedef {import('pins-data-model').Schemas.AppealDocument} AppealDocument */
+/** @typedef {import('pins-data-model').Schemas.AppellantSubmissionCommand['documents'][number]} AppellantSubmissionDocument */
+/** @typedef {import('pins-data-model').Schemas.LPAQuestionnaireCommand['documents'][number]} LPAQuestionnaireCommandDocument */
 
 /**
  *
- * @param {*} doc
+ * @param {AppellantSubmissionDocument|LPAQuestionnaireCommandDocument} doc
  * @param {string | null} stage
  * @returns
  */
 export const mapDocumentIn = (doc, stage = null) => {
 	const { filename, documentId, ...metadata } = doc;
 
-	// @ts-ignore
 	const { originalFilename, originalGuid } = mapDocumentUrl(metadata.documentURI, filename);
 	const description = metadata.description || 'Document imported';
 
@@ -42,7 +43,8 @@ export const mapDocumentIn = (doc, stage = null) => {
 		fileName: originalFilename,
 		description,
 		dateCreated: (doc.dateCreated ? new Date(doc.dateCreated) : new Date()).toISOString(),
-		lastModified: (doc.lastModified ? new Date(doc.lastModified) : new Date()).toISOString()
+		// documents from submissions don't have a modified date, so used created
+		lastModified: (doc.dateCreated ? new Date(doc.dateCreated) : new Date()).toISOString()
 	};
 };
 
@@ -107,7 +109,7 @@ export const mapDocumentOut = (data) => {
  *
  * @param {string} documentURI
  * @param {string} fileName
- * @returns
+ * @returns {{originalGuid: string, originalFilename: string}}
  */
 const mapDocumentUrl = (documentURI, fileName) => {
 	const url = new URL(documentURI);
@@ -117,7 +119,9 @@ const mapDocumentUrl = (documentURI, fileName) => {
 
 	const path = url.pathname.split('/').slice(1);
 	if (path.length !== 4) {
-		return null;
+		throw new Error(
+			'Unsupported document pathname, expected four parts: /<container>/<ref>/<doc-id>/<filename>'
+		);
 	}
 	const originalGuid = path[2];
 	let originalFilename = path[3];
