@@ -35,7 +35,10 @@ export default async function (context, msg) {
 		context.log.info(`Employee created: ${id}`);
 	} catch (e) {
 		if (e instanceof HTTPError) {
-			context.log.error('Error creating employee', e.message, e.response?.body);
+			context.log.error('Error creating employee', {
+				message: e.message,
+				body: e.response?.body
+			});
 		} else {
 			context.log.error('Error creating employee', e);
 		}

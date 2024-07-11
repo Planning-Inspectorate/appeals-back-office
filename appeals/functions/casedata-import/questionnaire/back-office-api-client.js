@@ -6,17 +6,11 @@ import config from './config.js';
  * @returns {Promise<{reference: string | null}>}
  */
 async function post(submission) {
-	try {
-		const result = await got
-			.post(`https://${config.API_HOST}/appeals/lpaq-submission`, {
-				json: submission
-			})
-			.json();
-
-		return result;
-	} catch (err) {
-		throw new Error(`post questionnaire submission failed with error: ${err}`);
-	}
+	return await got
+		.post(`https://${config.API_HOST}/appeals/lpaq-submission`, {
+			json: submission
+		})
+		.json();
 }
 
 export default {
