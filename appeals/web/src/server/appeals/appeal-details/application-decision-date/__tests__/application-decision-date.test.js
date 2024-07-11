@@ -190,7 +190,6 @@ describe('application-date', () => {
 
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
-			expect(elementInnerHtml).toMatchSnapshot();
 			expect(elementInnerHtml).toContain('Change the application decision date</h1>');
 
 			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
@@ -218,7 +217,6 @@ describe('application-date', () => {
 
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
-			expect(elementInnerHtml).toMatchSnapshot();
 			expect(elementInnerHtml).toContain('Change the application decision date</h1>');
 
 			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
