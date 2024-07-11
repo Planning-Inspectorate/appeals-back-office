@@ -309,6 +309,11 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> LPA Questionnaire is incomplete</h3>
                 </div>
                 <div class="govuk-notification-banner__content">
+                    <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-bottom-4">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Due date</dt>
+                            <dd class="govuk-summary-list__value">11 October 2023</dd>
+                        </div>
+                    </dl>
                     <details class="govuk-details" data-module="govuk-details">
                         <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Policies are missing</span>
                         </summary>
@@ -2613,6 +2618,52 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 </div>"
 `;
 
+exports[`LPA Questionnaire review Notification banners should render an "LPA questionnaire incomplete" notification banner, including the LPA questionnaire due date, when the LPA questionnaire is marked as incomplete 1`] = `
+"<div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
+data-module="govuk-notification-banner">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> LPA Questionnaire is incomplete</h3>
+    </div>
+    <div class="govuk-notification-banner__content">
+        <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-bottom-4">
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Due date</dt>
+                <dd class="govuk-summary-list__value">11 October 2023</dd>
+            </div>
+        </dl>
+        <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Policies are missing</span>
+            </summary>
+            <div class="govuk-details__text">
+                <ul class="govuk-!-margin-top-0">
+                    <li>test reason 1</li>
+                </ul>
+            </div>
+        </details>
+        <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Other documents or information are missing</span>
+            </summary>
+            <div class="govuk-details__text">
+                <ul class="govuk-!-margin-top-0">
+                    <li>test reason 2</li>
+                    <li>test reason 3</li>
+                </ul>
+            </div>
+        </details>
+        <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Other</span>
+            </summary>
+            <div class="govuk-details__text">
+                <ul class="govuk-!-margin-top-0">
+                    <li>test reason 4</li>
+                    <li>test reason 5</li>
+                    <li>test reason 6</li>
+                </ul>
+            </div>
+        </details>
+    </div>
+</div>"
+`;
+
 exports[`LPA Questionnaire review POST / should render LPA Questionnaire review with error (no answer provided) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
@@ -2638,6 +2689,11 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> LPA Questionnaire is incomplete</h3>
                 </div>
                 <div class="govuk-notification-banner__content">
+                    <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-bottom-4">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Due date</dt>
+                            <dd class="govuk-summary-list__value">11 October 2023</dd>
+                        </div>
+                    </dl>
                     <details class="govuk-details" data-module="govuk-details">
                         <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Policies are missing</span>
                         </summary>

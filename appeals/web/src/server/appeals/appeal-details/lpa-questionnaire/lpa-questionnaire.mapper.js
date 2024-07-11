@@ -5,8 +5,9 @@ import { initialiseAndMapLPAQData } from '#lib/mappers/lpaQuestionnaire.mapper.j
 import {
 	dayMonthYearToApiDateString,
 	webDateToDisplayDate,
-	apiDateStringToDayMonthYear
-} from '../../../lib/dates.js';
+	apiDateStringToDayMonthYear,
+	apiDateStringToDisplayDate
+} from '#lib/dates.js';
 import {
 	mapReasonOptionsToCheckboxItemParameters,
 	mapReasonsToReasonsListHtml
@@ -163,7 +164,8 @@ export async function lpaQuestionnairePage(lpaqDetails, appealDetails, currentRo
 	const notificationBanners = mapNotificationBannerComponentParameters(
 		session,
 		lpaqDetails,
-		appealDetails.appealId
+		appealDetails.appealId,
+		appealDetails.appealTimetable?.lpaQuestionnaireDueDate || ''
 	);
 
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);
@@ -428,9 +430,10 @@ export function checkAndConfirmPage(
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
  * @param {LPAQuestionnaire} lpaqData
  * @param {number} appealId
+ * @param {string} lpaqDueDate
  * @returns {PageComponent[]}
  */
-function mapNotificationBannerComponentParameters(session, lpaqData, appealId) {
+function mapNotificationBannerComponentParameters(session, lpaqData, appealId, lpaqDueDate) {
 	const validationOutcome = lpaqData.validation?.outcome?.toLowerCase();
 
 	if (validationOutcome === 'incomplete') {
@@ -439,7 +442,9 @@ function mapNotificationBannerComponentParameters(session, lpaqData, appealId) {
 		}
 
 		const listClasses = 'govuk-!-margin-top-0';
-		const detailsPageComponents = (lpaqData.validation?.incompleteReasons || [])
+
+		/** @type {PageComponent[]} */
+		const bannerContentPageComponents = (lpaqData.validation?.incompleteReasons || [])
 			.filter((reason) => reason.name.hasText)
 			.map((reason) => ({
 				type: 'details',
@@ -454,7 +459,7 @@ function mapNotificationBannerComponentParameters(session, lpaqData, appealId) {
 		);
 
 		if (reasonsWithoutText.length > 0) {
-			detailsPageComponents.unshift({
+			bannerContentPageComponents.unshift({
 				type: 'details',
 				parameters: {
 					summaryText: 'Incorrect name and/or missing documents',
@@ -467,11 +472,30 @@ function mapNotificationBannerComponentParameters(session, lpaqData, appealId) {
 			});
 		}
 
+		if (lpaqDueDate.length) {
+			bannerContentPageComponents.unshift({
+				type: 'summary-list',
+				parameters: {
+					classes: 'govuk-summary-list--no-border govuk-!-margin-bottom-4',
+					rows: [
+						{
+							key: {
+								text: 'Due date'
+							},
+							value: {
+								text: apiDateStringToDisplayDate(lpaqDueDate)
+							}
+						}
+					]
+				}
+			});
+		}
+
 		session.notificationBanners.lpaQuestionnaireNotValid = {
 			appealId,
 			titleText: `LPA Questionnaire is ${String(validationOutcome)}`,
 			html: '',
-			pageComponents: detailsPageComponents
+			pageComponents: bannerContentPageComponents
 		};
 	}
 

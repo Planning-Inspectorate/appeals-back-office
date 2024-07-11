@@ -256,6 +256,41 @@ describe('LPA Questionnaire review', () => {
 			expect(notificationBannerElementHTML).toContain('Success');
 			expect(notificationBannerElementHTML).toContain('Neighbouring site removed');
 		});
+
+		it('should render an "LPA questionnaire incomplete" notification banner, including the LPA questionnaire due date, when the LPA questionnaire is marked as incomplete', async () => {
+			nock('http://test/')
+				.get('/appeals/1/lpa-questionnaires/2')
+				.reply(200, lpaQuestionnaireDataIncompleteOutcome);
+
+			const response = await request.get(baseUrl);
+			const notificationBannerElementHTML = parseHtml(response.text, {
+				rootElement: notificationBannerElement
+			}).innerHTML;
+
+			expect(notificationBannerElementHTML).toMatchSnapshot();
+
+			const unprettifiedNotificationBannerElementHTML = parseHtml(response.text, {
+				rootElement: notificationBannerElement,
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(unprettifiedNotificationBannerElementHTML).toContain(
+				'LPA Questionnaire is incomplete</h3>'
+			);
+			expect(unprettifiedNotificationBannerElementHTML).toContain('Due date</dt>');
+			expect(unprettifiedNotificationBannerElementHTML).toContain('11 October 2023</dd>');
+			expect(unprettifiedNotificationBannerElementHTML).toContain('Policies are missing</span>');
+			expect(unprettifiedNotificationBannerElementHTML).toContain('test reason 1</li>');
+			expect(unprettifiedNotificationBannerElementHTML).toContain(
+				'Other documents or information are missing</span>'
+			);
+			expect(unprettifiedNotificationBannerElementHTML).toContain('test reason 2</li>');
+			expect(unprettifiedNotificationBannerElementHTML).toContain('test reason 3</li>');
+			expect(unprettifiedNotificationBannerElementHTML).toContain('Other</span>');
+			expect(unprettifiedNotificationBannerElementHTML).toContain('test reason 4</li>');
+			expect(unprettifiedNotificationBannerElementHTML).toContain('test reason 5</li>');
+			expect(unprettifiedNotificationBannerElementHTML).toContain('test reason 6</li>');
+		});
 	});
 
 	describe('GET /', () => {
