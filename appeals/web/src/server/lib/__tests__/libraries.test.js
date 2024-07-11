@@ -394,6 +394,12 @@ describe('Libraries', () => {
 				expect(dateToDisplayDate(date)).toBe('1 January 2024');
 			});
 
+			it('formats a Date object correctly with default options, in BST', () => {
+				// 1st July 23:00 UTC is 2nd July 00:00 Europe/London
+				const date = new Date('2024-07-01T23:00:00Z');
+				expect(dateToDisplayDate(date)).toBe('2 July 2024');
+			});
+
 			it('formats a Date object correctly with condensed = true', () => {
 				const date = new Date('2024-01-01T12:00:00Z');
 				expect(dateToDisplayDate(date, { condensed: true })).toBe('1 Jan 2024');
@@ -424,6 +430,10 @@ describe('Libraries', () => {
 			it('formats a Date object into a HH:MM string', () => {
 				const date = new Date('2024-01-01T13:09:00Z');
 				expect(dateToDisplayTime(date)).toBe('13:09');
+			});
+			it('formats a Date object into a HH:MM string, in BST', () => {
+				const date = new Date('2024-07-01T13:09:00Z');
+				expect(dateToDisplayTime(date)).toBe('14:09');
 			});
 
 			it('pads single digit hours and minutes with zeros', () => {
