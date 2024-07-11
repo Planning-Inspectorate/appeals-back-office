@@ -1,47 +1,17 @@
+import { formatInTimeZone } from 'date-fns-tz';
+import enGB from 'date-fns/locale/en-GB/index.js';
+
+export const timeZone = 'Europe/London';
+
 /**
- * @param {Date} date date object to be formatted for getValidation controller
- * @param {boolean} shortened
- * @returns {string} merged date parts in format DD MMM YYYY
+ * @param {Date} date
+ * @param {boolean} shortened - whether to shorten the month name
+ * @returns {string} formatted date string, either 'd MMM yyyy' or 'd MMMM yyyy'
  */
 function formatDate(date, shortened = true) {
-	const shortenedMonthNames = [
-		'Jan',
-		'Feb',
-		'Mar',
-		'Apr',
-		'May',
-		'Jun',
-		'Jul',
-		'Aug',
-		'Sep',
-		'Oct',
-		'Nov',
-		'Dec'
-	];
-	const fullMonthNames = [
-		'January',
-		'February',
-		'March',
-		'April',
-		'May',
-		'June',
-		'July',
-		'August',
-		'September',
-		'October',
-		'November',
-		'December'
-	];
-
-	const day = date.getDate().toString();
-
-	const monthIndex = date.getMonth();
-	const monthNames = shortened ? shortenedMonthNames : fullMonthNames;
-	const monthName = monthNames[monthIndex];
-
-	const year = date.getFullYear();
-
-	return `${day} ${monthName} ${year}`;
+	return formatInTimeZone(date, timeZone, shortened ? 'd MMM yyyy' : 'd MMMM yyyy', {
+		locale: enGB
+	});
 }
 
 export default formatDate;
