@@ -35,7 +35,10 @@ export default async function (context, msg) {
 		context.log.info(`LPA questionnaire created for appeal: ${caseReference}`);
 	} catch (e) {
 		if (e instanceof HTTPError) {
-			context.log.error('Error creating LPA questionnaire', e.message, e.response?.body);
+			context.log.error('Error creating LPA questionnaire', {
+				message: e.message,
+				body: e.response?.body
+			});
 		} else {
 			context.log.error('Error creating LPA questionnaire', e);
 		}
