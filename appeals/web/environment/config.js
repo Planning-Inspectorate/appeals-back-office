@@ -55,7 +55,6 @@ export function loadConfig() {
 		HTTP_PORT = 8080,
 		HTTPS_ENABLED,
 		HTTPS_PORT,
-		LOG_LEVEL_FILE,
 		LOG_LEVEL_STDOUT,
 		DISABLE_REDIS,
 		REDIS_CONNECTION_STRING,
@@ -80,7 +79,6 @@ export function loadConfig() {
 		blobEmulatorSasUrl: AZURE_BLOB_EMULATOR_SAS_HOST,
 		horizonAppealBaseUrl: HORIZON_APPEAL_BASE_URL,
 		useBlobEmulator: AZURE_BLOB_USE_EMULATOR,
-		logLevelFile: LOG_LEVEL_FILE,
 		logLevelStdOut: LOG_LEVEL_STDOUT,
 		msal: {
 			clientId: AUTH_CLIENT_ID,

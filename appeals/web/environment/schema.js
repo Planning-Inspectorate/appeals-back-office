@@ -29,7 +29,6 @@ export default baseSchema
 		blobStorageDefaultContainer: joi.string(),
 		horizonAppealBaseUrl: joi.string().optional().empty(''),
 		useBlobEmulator: joi.boolean().optional(),
-		logLevelFile: joi.string().valid(...logLevel),
 		logLevelStdOut: joi.string().valid(...logLevel),
 		msal: joi
 			.object({

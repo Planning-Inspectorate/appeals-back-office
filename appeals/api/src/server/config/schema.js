@@ -19,7 +19,6 @@ export default joi
 			tenantId: joi.string().optional()
 		}),
 		log: joi.object({
-			levelFile: joi.string(),
 			levelStdOut: joi.string()
 		}),
 		cwd: joi.string(),
