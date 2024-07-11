@@ -7,33 +7,34 @@ import {
 	validateCaseDocumentId
 } from '../../appeal-documents/appeal-documents.middleware.js';
 import * as documentsValidators from '../../appeal-documents/appeal-documents.validators.js';
-import { validateAddDocumentType, validatePostDecisionConfirmation } from './costs.validators.js';
+import { validatePostDecisionConfirmation } from './costs.validators.js';
 import { assertGroupAccess } from '#app/auth/auth.guards.js';
 import { validateAppeal } from '../appeal-details.middleware.js';
+import { assertUserHasPermission } from '#app/auth/auth.guards.js';
+import { permissionNames } from '#environment/permissions.js';
 
 const router = createRouter({ mergeParams: true });
 
 router
-	.route('/:costsCategory/select-document-type/:folderId')
-	.get(asyncRoute(controller.getSelectDocumentType))
-	.post(
-		validateCaseFolderId,
-		validateAddDocumentType,
-		asyncRoute(controller.postSelectDocumentType)
-	);
-
-router
-	.route('/:costsCategory/upload-documents/:folderId')
+	.route([
+		'/:costsCategory/:costsDocumentType/upload-documents/:folderId',
+		'/:costsCategory/upload-documents/:folderId'
+	])
 	.get(validateAppeal, validateCaseFolderId, asyncRoute(controller.getDocumentUpload))
 	.post(validateAppeal, validateCaseFolderId, asyncRoute(controller.postDocumentUploadPage));
 
 router
-	.route('/:costsCategory/upload-documents/:folderId/:documentId')
+	.route([
+		'/:costsCategory/:costsDocumentType/upload-documents/:folderId/:documentId',
+		'/:costsCategory/upload-documents/:folderId/:documentId'
+	])
 	.get(validateAppeal, validateCaseFolderId, asyncRoute(controller.getDocumentVersionUpload))
 	.post(validateAppeal, validateCaseFolderId, asyncRoute(controller.postDocumentVersionUpload));
 
 router
 	.route([
+		'/:costsCategory/:costsDocumentType/add-document-details/:folderId',
+		'/:costsCategory/:costsDocumentType/add-document-details/:folderId/:documentId',
 		'/:costsCategory/add-document-details/:folderId',
 		'/:costsCategory/add-document-details/:folderId/:documentId'
 	])
@@ -51,7 +52,7 @@ router
 	);
 
 router
-	.route('/:costsCategory/check-your-answers/:folderId')
+	.route('/:costsCategory/:costsDocumentType/check-your-answers/:folderId')
 	.get(validateAppeal, validateCaseFolderId, asyncRoute(controller.getAddDocumentsCheckAndConfirm))
 	.post(
 		validateAppeal,
@@ -60,7 +61,7 @@ router
 	);
 
 router
-	.route('/:costsCategory/check-your-answers/:folderId/:documentId')
+	.route('/:costsCategory/:costsDocumentType/check-your-answers/:folderId/:documentId')
 	.get(validateAppeal, validateCaseFolderId, asyncRoute(controller.getAddDocumentsCheckAndConfirm))
 	.post(
 		validateAppeal,
@@ -69,21 +70,54 @@ router
 	);
 
 router
-	.route('/:costsCategory/manage-documents/:folderId')
+	.route([
+		'/:costsCategory/:costsDocumentType/manage-documents/:folderId',
+		'/:costsCategory/manage-documents/:folderId'
+	])
 	.get(validateCaseFolderId, asyncRoute(controller.getManageFolder));
 
 router
-	.route('/:costsCategory/manage-documents/:folderId/:documentId')
+	.route([
+		'/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId',
+		'/:costsCategory/manage-documents/:folderId/:documentId'
+	])
 	.get(validateCaseFolderId, asyncRoute(controller.getManageDocument));
 
 router
-	.route('/:costsCategory/manage-documents/:folderId/:documentId/:versionId/delete')
+	.route([
+		'/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId/:versionId/delete',
+		'/:costsCategory/manage-documents/:folderId/:documentId/:versionId/delete'
+	])
 	.get(validateCaseFolderId, validateCaseDocumentId, asyncRoute(controller.getDeleteCostsDocument))
 	.post(
 		validateCaseFolderId,
 		validateCaseDocumentId,
 		documentsValidators.validateDocumentDeleteAnswer,
 		asyncRoute(controller.postDeleteCostsDocument)
+	);
+
+router
+	.route([
+		'/:costsCategory/:costsDocumentType/change-document-details/:folderId/:documentId',
+		'/:costsCategory/change-document-details/:folderId/:documentId'
+	])
+	.get(
+		validateAppeal,
+		assertUserHasPermission(permissionNames.updateCase),
+		validateCaseFolderId,
+		asyncRoute(controller.getChangeDocumentVersionDetails)
+	)
+	.post(
+		validateAppeal,
+		assertUserHasPermission(permissionNames.updateCase),
+		validateCaseFolderId,
+		documentsValidators.validateDocumentDetailsBodyFormat,
+		documentsValidators.validateDocumentDetailsReceivedDatesFields,
+		documentsValidators.validateDocumentDetailsReceivedDateValid,
+		documentsValidators.validateDocumentDetailsReceivedDateIsNotFutureDate,
+		documentsValidators.validateDocumentDetailsRedactionStatuses,
+		assertGroupAccess(config.referenceData.appeals.caseOfficerGroupId),
+		asyncRoute(controller.postChangeDocumentVersionDetails)
 	);
 
 router
@@ -96,12 +130,8 @@ router
 	);
 
 router
-	.route('/decision/check-and-confirm/:folderId/:documentId')
+	.route('/:costsCategory/check-and-confirm/:folderId/:documentId')
 	.get(validateCaseFolderId, asyncRoute(controller.getAddDocumentsCheckAndConfirm))
-	.post(
-		validateCaseFolderId,
-		validatePostDecisionConfirmation,
-		asyncRoute(controller.postAddDocumentVersionCheckAndConfirm)
-	);
+	.post(validateCaseFolderId, asyncRoute(controller.postAddDocumentVersionCheckAndConfirm));
 
 export default router;

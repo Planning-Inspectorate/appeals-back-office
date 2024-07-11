@@ -105,12 +105,31 @@ const formatAppeal = (
 
 		const appealFolders = {
 			costs: {
-				// TODO: BOAT-1393
-				appellantFolder: formatFolder(
-					rootFolders.find((f) => f.path === `${STAGE.COSTS}/appellant`)
+				appellantApplicationFolder: formatFolder(
+					rootFolders.find((f) => f.path === `${STAGE.COSTS}/${DOCTYPE.APPELLANT_COST_APPLICATION}`)
 				),
-				lpaFolder: formatFolder(rootFolders.find((f) => f.path === `${STAGE.COSTS}/lpa`)),
-				decisionFolder: formatFolder(rootFolders.find((f) => f.path === `${STAGE.COSTS}/decision`))
+				appellantWithdrawalFolder: formatFolder(
+					rootFolders.find((f) => f.path === `${STAGE.COSTS}/${DOCTYPE.APPELLANT_COST_WITHDRAWAL}`)
+				),
+				appellantCorrespondenceFolder: formatFolder(
+					rootFolders.find(
+						(f) => f.path === `${STAGE.COSTS}/${DOCTYPE.APPELLANT_COST_CORRESPONDENCE}`
+					)
+				),
+				lpaApplicationFolder: formatFolder(
+					rootFolders.find((f) => f.path === `${STAGE.COSTS}/${DOCTYPE.LPA_COST_APPLICATION}`)
+				),
+				lpaWithdrawalFolder: formatFolder(
+					rootFolders.find((f) => f.path === `${STAGE.COSTS}/${DOCTYPE.LPA_COST_WITHDRAWAL}`)
+				),
+				lpaCorrespondenceFolder: formatFolder(
+					rootFolders.find(
+						(f) => f.path === `${STAGE.COSTS}/${DOCTYPE.APPELLANT_COST_CORRESPONDENCE}`
+					)
+				),
+				decisionFolder: formatFolder(
+					rootFolders.find((f) => f.path === `${STAGE.COSTS}/${DOCTYPE.COST_DECISION_LETTER}`)
+				)
 			},
 			internalCorrespondence: {
 				crossTeam: formatFolder(

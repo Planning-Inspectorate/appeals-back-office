@@ -1152,78 +1152,6 @@ export async function initialiseAndMapAppealData(
 		}
 	};
 
-	const appealHasAppellantCostsDocuments = appealDetails?.costs?.appellantFolder?.documents?.filter(
-		(document) => document.latestDocumentVersion?.isDeleted === false
-	).length;
-
-	/** @type {Instructions} */
-	mappedData.appeal.costsAppellant = {
-		id: 'costs-appellant',
-		display: {
-			tableItem: [
-				{
-					text: 'Costs (appellant)',
-					classes: 'appeal-costs-appellant-documentation'
-				},
-				{
-					text: appealHasAppellantCostsDocuments ? 'Received' : '',
-					classes: 'appeal-costs-appellant-status'
-				},
-				{
-					text: '',
-					classes: 'appeal-costs-appellant-due-date'
-				},
-				{
-					html: `<ul class="govuk-summary-list__actions-list">
-						${
-							appealHasAppellantCostsDocuments
-								? `<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="${currentRoute}/costs/appellant/manage-documents/${appealDetails?.costs?.appellantFolder?.folderId}">Manage</a></li>`
-								: ''
-						}<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appeallant" href="${currentRoute}/costs/appellant/select-document-type/${
-						appealDetails?.costs?.appellantFolder?.folderId
-					}" >Add</a></li></ul>`,
-					classes: 'appeal-costs-appellant-actions'
-				}
-			]
-		}
-	};
-
-	const appealHasLPACostsDocuments = appealDetails?.costs?.lpaFolder?.documents?.filter(
-		(document) => document.latestDocumentVersion?.isDeleted === false
-	).length;
-
-	/** @type {Instructions} */
-	mappedData.appeal.costsLpa = {
-		id: 'costs-lpa',
-		display: {
-			tableItem: [
-				{
-					text: 'Costs (LPA)',
-					classes: 'appeal-costs-lpa-documentation'
-				},
-				{
-					text: appealHasLPACostsDocuments ? 'Received' : '',
-					classes: 'appeal-costs-lpa-status'
-				},
-				{
-					text: '',
-					classes: 'appeal-costs-lpa-due-date'
-				},
-				{
-					html: `<ul class="govuk-summary-list__actions-list">
-						${
-							appealHasLPACostsDocuments
-								? `<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="${currentRoute}/costs/lpa/manage-documents/${appealDetails?.costs?.lpaFolder?.folderId}">Manage</a></li>`
-								: ''
-						}<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa" href="${currentRoute}/costs/lpa/select-document-type/${
-						appealDetails?.costs?.lpaFolder?.folderId
-					}" >Add</a></li></ul>`,
-					classes: 'appeal-costs-lpa-actions'
-				}
-			]
-		}
-	};
-
 	/** @type {Instructions} */
 	mappedData.appeal.appealDecision = {
 		id: 'appeal-decision',
@@ -1234,7 +1162,10 @@ export async function initialiseAndMapAppealData(
 					classes: 'appeal-decision-documentation'
 				},
 				{
-					text: appealDetails.appealStatus === 'complete' ? 'Sent' : 'Awaiting decision',
+					text:
+						appealDetails.appealStatus === APPEAL_CASE_STATUS.COMPLETE
+							? 'Sent'
+							: 'Awaiting decision',
 					classes: 'appeal-decision-status'
 				},
 				{
@@ -1246,6 +1177,204 @@ export async function initialiseAndMapAppealData(
 						appealDetails
 					)}</ul>`,
 					classes: 'appeal-decision-actions'
+				}
+			]
+		}
+	};
+
+	const appealHasAppellantApplicationCostsDocuments =
+		appealDetails?.costs?.appellantApplicationFolder?.documents?.filter(
+			(document) => document.latestDocumentVersion?.isDeleted === false
+		).length;
+
+	/** @type {Instructions} */
+	mappedData.appeal.costsAppellantApplication = {
+		id: 'costs-appellant-application',
+		display: {
+			tableItem: [
+				{
+					text: 'Appellant application',
+					classes: 'appeal-costs-appellant-application-documentation'
+				},
+				{
+					text: appealHasAppellantApplicationCostsDocuments ? 'Received' : '',
+					classes: 'appeal-costs-appellant-application-status'
+				},
+				{
+					html: `<ul class="govuk-summary-list__actions-list">
+						${
+							appealHasAppellantApplicationCostsDocuments
+								? `<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="${currentRoute}/costs/appellant/application/manage-documents/${appealDetails?.costs?.appellantApplicationFolder?.folderId}">Manage</a></li>`
+								: ''
+						}<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appeallant" href="${currentRoute}/costs/appellant/application/upload-documents/${
+						appealDetails?.costs?.appellantApplicationFolder?.folderId
+					}" >Add</a></li></ul>`,
+					classes: 'appeal-costs-appellant-application-actions'
+				}
+			]
+		}
+	};
+
+	const appealHasAppellantWithdrawalCostsDocuments =
+		appealDetails?.costs?.appellantWithdrawalFolder?.documents?.filter(
+			(document) => document.latestDocumentVersion?.isDeleted === false
+		).length;
+
+	/** @type {Instructions} */
+	mappedData.appeal.costsAppellantWithdrawal = {
+		id: 'costs-appellant-withdrawal',
+		display: {
+			tableItem: [
+				{
+					text: 'Appellant withdrawal',
+					classes: 'appeal-costs-appellant-withdrawal-documentation'
+				},
+				{
+					text: appealHasAppellantWithdrawalCostsDocuments ? 'Received' : '',
+					classes: 'appeal-costs-appellant-withdrawal-status'
+				},
+				{
+					html: `<ul class="govuk-summary-list__actions-list">
+						${
+							appealHasAppellantWithdrawalCostsDocuments
+								? `<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="${currentRoute}/costs/appellant/withdrawal/manage-documents/${appealDetails?.costs?.appellantWithdrawalFolder?.folderId}">Manage</a></li>`
+								: ''
+						}<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appeallant" href="${currentRoute}/costs/appellant/withdrawal/upload-documents/${
+						appealDetails?.costs?.appellantWithdrawalFolder?.folderId
+					}" >Add</a></li></ul>`,
+					classes: 'appeal-costs-appellant-withdrawal-actions'
+				}
+			]
+		}
+	};
+
+	const appealHasAppellantCorrespondenceCostsDocuments =
+		appealDetails?.costs?.appellantCorrespondenceFolder?.documents?.filter(
+			(document) => document.latestDocumentVersion?.isDeleted === false
+		).length;
+
+	/** @type {Instructions} */
+	mappedData.appeal.costsAppellantCorrespondence = {
+		id: 'costs-appellant-correspondence',
+		display: {
+			tableItem: [
+				{
+					text: 'Appellant correspondence',
+					classes: 'appeal-costs-appellant-correspondence-documentation'
+				},
+				{
+					text: appealHasAppellantCorrespondenceCostsDocuments ? 'Received' : '',
+					classes: 'appeal-costs-appellant-correspondence-status'
+				},
+				{
+					html: `<ul class="govuk-summary-list__actions-list">
+						${
+							appealHasAppellantCorrespondenceCostsDocuments
+								? `<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="${currentRoute}/costs/appellant/correspondence/manage-documents/${appealDetails?.costs?.appellantCorrespondenceFolder?.folderId}">Manage</a></li>`
+								: ''
+						}<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appeallant" href="${currentRoute}/costs/appellant/correspondence/upload-documents/${
+						appealDetails?.costs?.appellantCorrespondenceFolder?.folderId
+					}" >Add</a></li></ul>`,
+					classes: 'appeal-costs-appellant-correspondence-actions'
+				}
+			]
+		}
+	};
+
+	const appealHasLPAApplicationCostsDocuments =
+		appealDetails?.costs?.lpaApplicationFolder?.documents?.filter(
+			(document) => document.latestDocumentVersion?.isDeleted === false
+		).length;
+
+	/** @type {Instructions} */
+	mappedData.appeal.costsLpaApplication = {
+		id: 'costs-lpa-application',
+		display: {
+			tableItem: [
+				{
+					text: 'LPA application',
+					classes: 'appeal-costs-lpa-application-documentation'
+				},
+				{
+					text: appealHasLPAApplicationCostsDocuments ? 'Received' : '',
+					classes: 'appeal-costs-lpa-application-status'
+				},
+				{
+					html: `<ul class="govuk-summary-list__actions-list">
+						${
+							appealHasLPAApplicationCostsDocuments
+								? `<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="${currentRoute}/costs/lpa/application/manage-documents/${appealDetails?.costs?.lpaApplicationFolder?.folderId}">Manage</a></li>`
+								: ''
+						}<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa" href="${currentRoute}/costs/lpa/application/upload-documents/${
+						appealDetails?.costs?.lpaApplicationFolder?.folderId
+					}" >Add</a></li></ul>`,
+					classes: 'appeal-costs-lpa-application-actions'
+				}
+			]
+		}
+	};
+
+	const appealHasLPAWithdrawalCostsDocuments =
+		appealDetails?.costs?.lpaWithdrawalFolder?.documents?.filter(
+			(document) => document.latestDocumentVersion?.isDeleted === false
+		).length;
+
+	/** @type {Instructions} */
+	mappedData.appeal.costsLpaWithdrawal = {
+		id: 'costs-lpa-withdrawal',
+		display: {
+			tableItem: [
+				{
+					text: 'LPA withdrawal',
+					classes: 'appeal-costs-lpa-withdrawal-documentation'
+				},
+				{
+					text: appealHasLPAWithdrawalCostsDocuments ? 'Received' : '',
+					classes: 'appeal-costs-lpa-withdrawal-status'
+				},
+				{
+					html: `<ul class="govuk-summary-list__actions-list">
+						${
+							appealHasLPAWithdrawalCostsDocuments
+								? `<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="${currentRoute}/costs/lpa/withdrawal/manage-documents/${appealDetails?.costs?.lpaWithdrawalFolder?.folderId}">Manage</a></li>`
+								: ''
+						}<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa" href="${currentRoute}/costs/lpa/withdrawal/upload-documents/${
+						appealDetails?.costs?.lpaWithdrawalFolder?.folderId
+					}" >Add</a></li></ul>`,
+					classes: 'appeal-costs-lpa-withdrawal-actions'
+				}
+			]
+		}
+	};
+
+	const appealHasLPACorrespondenceCostsDocuments =
+		appealDetails?.costs?.lpaCorrespondenceFolder?.documents?.filter(
+			(document) => document.latestDocumentVersion?.isDeleted === false
+		).length;
+
+	/** @type {Instructions} */
+	mappedData.appeal.costsLpaCorrespondence = {
+		id: 'costs-lpa-correspondence',
+		display: {
+			tableItem: [
+				{
+					text: 'LPA correspondence',
+					classes: 'appeal-costs-lpa-correspondence-documentation'
+				},
+				{
+					text: appealHasLPACorrespondenceCostsDocuments ? 'Received' : '',
+					classes: 'appeal-costs-lpa-correspondence-status'
+				},
+				{
+					html: `<ul class="govuk-summary-list__actions-list">
+						${
+							appealHasLPACorrespondenceCostsDocuments
+								? `<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="${currentRoute}/costs/lpa/correspondence/manage-documents/${appealDetails?.costs?.lpaCorrespondenceFolder?.folderId}">Manage</a></li>`
+								: ''
+						}<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa" href="${currentRoute}/costs/lpa/correspondence/upload-documents/${
+						appealDetails?.costs?.lpaCorrespondenceFolder?.folderId
+					}" >Add</a></li></ul>`,
+					classes: 'appeal-costs-lpa-correspondence-actions'
 				}
 			]
 		}
@@ -1267,10 +1396,6 @@ export async function initialiseAndMapAppealData(
 				{
 					text: appealHasCostsDecisionDocuments ? 'Uploaded' : '',
 					classes: 'appeal-costs-decision-status'
-				},
-				{
-					text: '',
-					classes: 'appeal-costs-decision-due-date'
 				},
 				{
 					html: `<ul class="govuk-summary-list__actions-list">

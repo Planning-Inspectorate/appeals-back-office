@@ -280,7 +280,7 @@ exports[`issue-decision GET /issue-decision/decision-sent should render the conf
                 <p class="govuk-body">The relevant parties have been informed. The appeal will be closed.</p>
                 <p                 class="govuk-body"><a href="/appeals-service/appeal-details/1" class="govuk-link">Go back to case details</a>
                     </p>
-                    <p class="govuk-body"><a href="/appeals-service/appeal-details/1/costs/decision/upload-documents/3"
+                    <p class="govuk-body"><a href="/appeals-service/appeal-details/1/costs/decision/upload-documents/7"
                         class="govuk-link">Add costs decision</a>
                     </p>
             </div>

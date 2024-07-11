@@ -532,24 +532,64 @@ export interface SingleAppealResponse {
 		postCode?: string;
 	};
 	costs?: {
-		appellantFolder?: {
+		appellantApplicationFolder?: {
 			/** @example "118" */
 			caseId?: string;
 			/** @example [] */
 			documents?: any[];
-			/** @example 2118 */
+			/** @example 2200 */
 			folderId?: number;
-			/** @example "costs/appellant" */
+			/** @example "costs/appellantApplication" */
 			path?: string;
 		};
-		lpaFolder?: {
+		appellantWithdrawalFolder?: {
 			/** @example "118" */
 			caseId?: string;
 			/** @example [] */
 			documents?: any[];
-			/** @example 2119 */
+			/** @example 2201 */
 			folderId?: number;
-			/** @example "costs/lpa" */
+			/** @example "costs/appellantWithdrawal" */
+			path?: string;
+		};
+		appellantCorrespondenceFolder?: {
+			/** @example "118" */
+			caseId?: string;
+			/** @example [] */
+			documents?: any[];
+			/** @example 2202 */
+			folderId?: number;
+			/** @example "costs/appellantCorrespondence" */
+			path?: string;
+		};
+		lpaApplicationFolder?: {
+			/** @example "118" */
+			caseId?: string;
+			/** @example [] */
+			documents?: any[];
+			/** @example 2300 */
+			folderId?: number;
+			/** @example "costs/lpaApplication" */
+			path?: string;
+		};
+		lpaWithdrawalFolder?: {
+			/** @example "118" */
+			caseId?: string;
+			/** @example [] */
+			documents?: any[];
+			/** @example 2301 */
+			folderId?: number;
+			/** @example "costs/lpaWithdrawal" */
+			path?: string;
+		};
+		lpaCorrespondenceFolder?: {
+			/** @example "118" */
+			caseId?: string;
+			/** @example [] */
+			documents?: any[];
+			/** @example 2302 */
+			folderId?: number;
+			/** @example "costs/lpaCorrespondence" */
 			path?: string;
 		};
 		decisionFolder?: {
@@ -557,7 +597,7 @@ export interface SingleAppealResponse {
 			caseId?: string;
 			/** @example [] */
 			documents?: any[];
-			/** @example 2120 */
+			/** @example 2400 */
 			folderId?: number;
 			/** @example "costs/decision" */
 			path?: string;

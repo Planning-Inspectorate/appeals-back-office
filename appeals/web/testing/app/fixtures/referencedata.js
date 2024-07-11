@@ -104,22 +104,46 @@ export const appealData = {
 	},
 	caseOfficer: null,
 	costs: {
-		appellantFolder: {
+		appellantApplicationFolder: {
 			caseId: '1',
 			folderId: 1,
-			path: 'appeal_costs/appellant',
+			path: 'costs/appellantCostsApplication',
 			documents: []
 		},
-		lpaFolder: {
+		appellantWithdrawalFolder: {
 			caseId: '1',
 			folderId: 2,
-			path: 'appeal_costs/lpa',
+			path: 'costs/appellantCostsWithdrawal',
+			documents: []
+		},
+		appellantCorrespondenceFolder: {
+			caseId: '1',
+			folderId: 3,
+			path: 'costs/appellantCostsCorrespondence',
+			documents: []
+		},
+		lpaApplicationFolder: {
+			caseId: '1',
+			folderId: 4,
+			path: 'costs/lpaCostsApplication',
+			documents: []
+		},
+		lpaWithdrawalFolder: {
+			caseId: '1',
+			folderId: 5,
+			path: 'costs/lpaCostsWithdrawal',
+			documents: []
+		},
+		lpaCorrespondenceFolder: {
+			caseId: '1',
+			folderId: 6,
+			path: 'costs/lpaCostsCorrespondence',
 			documents: []
 		},
 		decisionFolder: {
 			caseId: '1',
-			folderId: 3,
-			path: 'appeal_costs/decision',
+			folderId: 7,
+			path: 'costs/costsDecisionLetter',
 			documents: []
 		}
 	},
@@ -2032,7 +2056,7 @@ export const linkableAppeal = {
 	source: 'back-office'
 };
 
-export const costsFolderInfoAppellant = {
+export const costsFolderInfoAppellantApplication = {
 	caseId: 1,
 	documents: [
 		{
@@ -2063,29 +2087,53 @@ export const costsFolderInfoAppellant = {
 		}
 	],
 	folderId: 1,
-	path: 'appeal_costs/appellant'
+	path: 'costs/appellantCostsApplication'
 };
 
-export const costsFolderInfoLpa = {
-	...costsFolderInfoAppellant,
+export const costsFolderInfoAppellantWithdrawal = {
+	...costsFolderInfoAppellantApplication,
 	folderId: 2,
-	path: 'appeal_costs/lpa'
+	path: 'costs/appellantCostsWithdrawal'
+};
+
+export const costsFolderInfoAppellantCorrespondence = {
+	...costsFolderInfoAppellantApplication,
+	folderId: 3,
+	path: 'costs/appellantCostsCorrespondence'
+};
+
+export const costsFolderInfoLpaApplication = {
+	...costsFolderInfoAppellantApplication,
+	folderId: 4,
+	path: 'costs/lpaCostsApplication'
+};
+
+export const costsFolderInfoLpaWithdrawal = {
+	...costsFolderInfoAppellantApplication,
+	folderId: 5,
+	path: 'costs/lpaCostsWithdrawal'
+};
+
+export const costsFolderInfoLpaCorrespondence = {
+	...costsFolderInfoAppellantApplication,
+	folderId: 6,
+	path: 'costs/lpaCostsCorrespondence'
 };
 
 export const costsFolderInfoDecision = {
-	...costsFolderInfoAppellant,
-	folderId: 3,
-	path: 'appeal_costs/decision'
+	...costsFolderInfoAppellantApplication,
+	folderId: 7,
+	path: 'costs/costsDecisionLetter'
 };
 
 export const folderInfoCrossTeamCorrespondence = {
-	...costsFolderInfoAppellant,
+	...costsFolderInfoAppellantApplication,
 	folderId: 10,
 	path: 'internal/crossTeamCorrespondence'
 };
 
 export const folderInfoInspectorCorrespondence = {
-	...costsFolderInfoAppellant,
+	...costsFolderInfoAppellantApplication,
 	folderId: 11,
 	path: 'internal/inspectorCorrespondence'
 };

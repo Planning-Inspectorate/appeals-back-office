@@ -4336,7 +4336,7 @@
 					"costs": {
 						"type": "object",
 						"properties": {
-							"appellantFolder": {
+							"appellantApplicationFolder": {
 								"type": "object",
 								"properties": {
 									"caseId": {
@@ -4350,15 +4350,15 @@
 									},
 									"folderId": {
 										"type": "number",
-										"example": 2118
+										"example": 2200
 									},
 									"path": {
 										"type": "string",
-										"example": "costs/appellant"
+										"example": "costs/appellantApplication"
 									}
 								}
 							},
-							"lpaFolder": {
+							"appellantWithdrawalFolder": {
 								"type": "object",
 								"properties": {
 									"caseId": {
@@ -4372,11 +4372,99 @@
 									},
 									"folderId": {
 										"type": "number",
-										"example": 2119
+										"example": 2201
 									},
 									"path": {
 										"type": "string",
-										"example": "costs/lpa"
+										"example": "costs/appellantWithdrawal"
+									}
+								}
+							},
+							"appellantCorrespondenceFolder": {
+								"type": "object",
+								"properties": {
+									"caseId": {
+										"type": "string",
+										"example": "118"
+									},
+									"documents": {
+										"type": "array",
+										"example": [],
+										"items": {}
+									},
+									"folderId": {
+										"type": "number",
+										"example": 2202
+									},
+									"path": {
+										"type": "string",
+										"example": "costs/appellantCorrespondence"
+									}
+								}
+							},
+							"lpaApplicationFolder": {
+								"type": "object",
+								"properties": {
+									"caseId": {
+										"type": "string",
+										"example": "118"
+									},
+									"documents": {
+										"type": "array",
+										"example": [],
+										"items": {}
+									},
+									"folderId": {
+										"type": "number",
+										"example": 2300
+									},
+									"path": {
+										"type": "string",
+										"example": "costs/lpaApplication"
+									}
+								}
+							},
+							"lpaWithdrawalFolder": {
+								"type": "object",
+								"properties": {
+									"caseId": {
+										"type": "string",
+										"example": "118"
+									},
+									"documents": {
+										"type": "array",
+										"example": [],
+										"items": {}
+									},
+									"folderId": {
+										"type": "number",
+										"example": 2301
+									},
+									"path": {
+										"type": "string",
+										"example": "costs/lpaWithdrawal"
+									}
+								}
+							},
+							"lpaCorrespondenceFolder": {
+								"type": "object",
+								"properties": {
+									"caseId": {
+										"type": "string",
+										"example": "118"
+									},
+									"documents": {
+										"type": "array",
+										"example": [],
+										"items": {}
+									},
+									"folderId": {
+										"type": "number",
+										"example": 2302
+									},
+									"path": {
+										"type": "string",
+										"example": "costs/lpaCorrespondence"
 									}
 								}
 							},
@@ -4394,7 +4482,7 @@
 									},
 									"folderId": {
 										"type": "number",
-										"example": 2120
+										"example": 2400
 									},
 									"path": {
 										"type": "string",

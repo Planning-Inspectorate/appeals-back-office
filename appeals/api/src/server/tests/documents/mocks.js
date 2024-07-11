@@ -125,7 +125,7 @@ export const blobInfo = {
 
 export const savedFolder = {
 	id: folderId,
-	path: 'costs/appellant',
+	path: 'costs/appellantApplication',
 	caseId: 1,
 	documents: [
 		{
@@ -295,5 +295,5 @@ export const folderInfoResponse = {
 	caseId: '1',
 	documents: [documentInfoResponse],
 	folderId: 23,
-	path: 'costs/appellant'
+	path: 'costs/appellantApplication'
 };
