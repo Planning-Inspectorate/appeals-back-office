@@ -28,7 +28,7 @@ router.get(
 		}
 		#swagger.responses[200] = {
 			description: 'Returns the contents of a single appeal folder, by id',
-			schema: { $ref: '#/definitions/Folder' }
+			schema: { $ref: '#/components/schemas/Folder' }
 		}
 		#swagger.responses[400] = {}
 		#swagger.responses[404] = {}
@@ -52,7 +52,7 @@ router.get(
 		}
 		#swagger.responses[200] = {
 			description: 'Returns a single document by id',
-			schema: { $ref: '#/definitions/DocumentDetails' }
+			schema: { $ref: '#/components/schemas/DocumentDetails' }
 		}
 		#swagger.responses[400] = {}
 		#swagger.responses[404] = {}
@@ -77,7 +77,7 @@ router.get(
 		}
 		#swagger.responses[200] = {
 			description: 'Returns a single document by id and its versions',
-			schema: { $ref: '#/definitions/DocumentDetails' }
+			schema: { $ref: '#/components/schemas/DocumentDetails' }
 		}
 		#swagger.responses[400] = {}
 		#swagger.responses[404] = {}
@@ -102,12 +102,12 @@ router.post(
 		#swagger.requestBody = {
 			in: 'body',
 			description: 'Appeal documents to post',
-			schema: { $ref: '#/definitions/AddDocumentsRequest' },
+			schema: { $ref: '#/components/schemas/AddDocumentsRequest' },
 			required: true
 		}
 		#swagger.responses[200] = {
 			description: 'Document metadata successfully added',
-			schema: { $ref: '#/definitions/AddDocumentsResponse' }
+			schema: { $ref: '#/components/schemas/AddDocumentsResponse' }
 		}
 		#swagger.responses[400] = {}
 		#swagger.responses[404] = {}
@@ -132,12 +132,12 @@ router.post(
 		#swagger.requestBody = {
 			in: 'body',
 			description: 'Appeal documents to post',
-			schema: { $ref: '#/definitions/AddDocumentVersionRequest' },
+			schema: { $ref: '#/components/schemas/AddDocumentVersionRequest' },
 			required: true
 		}
 		#swagger.responses[200] = {
 			description: 'Document metadata successfully added',
-			schema: { $ref: '#/definitions/AddDocumentsResponse' }
+			schema: { $ref: '#/components/schemas/AddDocumentsResponse' }
 		}
 		#swagger.responses[400] = {}
 		#swagger.responses[404] = {}
@@ -164,12 +164,12 @@ router.patch(
 		#swagger.requestBody = {
 			in: 'body',
 			description: 'Documents to update',
-			schema: { $ref: '#/definitions/UpdateDocumentsRequest' },
+			schema: { $ref: '#/components/schemas/UpdateDocumentsRequest' },
 			required: true
 		}
 		#swagger.responses[200] = {
 			description: 'Documents to update',
-			schema: { $ref: '#/definitions/UpdateDocumentsResponse' }
+			schema: { $ref: '#/components/schemas/UpdateDocumentsResponse' }
 		}
 		#swagger.responses[400] = {}
 		#swagger.responses[404] = {}
@@ -193,12 +193,12 @@ router.patch(
 		#swagger.requestBody = {
 			in: 'body',
 			description: 'Documents to update for AV report',
-			schema: { $ref: '#/definitions/UpdateDocumentsAvCheckRequest' },
+			schema: { $ref: '#/components/schemas/UpdateDocumentsAvCheckRequest' },
 			required: true
 		}
 		#swagger.responses[200] = {
 			description: 'Documents to update',
-			schema: { $ref: '#/definitions/UpdateDocumentsAvCheckResponse' }
+			schema: { $ref: '#/components/schemas/UpdateDocumentsAvCheckResponse' }
 		}
 		#swagger.responses[400] = {}
 		#swagger.responses[404] = {}
@@ -220,7 +220,7 @@ router.delete(
 		}
 		#swagger.responses[200] = {
 			description: 'Returns a single document by id',
-			schema: { $ref: '#/definitions/DocumentDetails' }
+			schema: { $ref: '#/components/schemas/DocumentDetails' }
 		}
 		#swagger.responses[400] = {}
 		#swagger.responses[404] = {}

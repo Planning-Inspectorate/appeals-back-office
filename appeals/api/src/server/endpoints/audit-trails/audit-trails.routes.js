@@ -18,7 +18,7 @@ router.get(
 		}
 		#swagger.responses[200] = {
 			description: 'Gets audit trail entries for an appeal by id',
-			schema: { $ref: '#/definitions/GetAuditTrailsResponse' }
+			schema: { $ref: '#/components/schemas/GetAuditTrailsResponse' }
 		}
 		#swagger.responses[400] = {}
 		#swagger.responses[404] = {}

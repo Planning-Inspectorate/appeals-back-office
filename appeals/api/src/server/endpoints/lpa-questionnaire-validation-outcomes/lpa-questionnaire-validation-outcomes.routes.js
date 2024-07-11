@@ -17,7 +17,7 @@ router.get(
 		}
 		#swagger.responses[200] = {
 			description: 'LPA questionnaire validation outcomes',
-			schema: { $ref: '#/definitions/AllLPAQuestionnaireValidationOutcomesResponse' },
+			schema: { $ref: '#/components/schemas/AllLPAQuestionnaireValidationOutcomesResponse' },
 		}
 		#swagger.responses[400] = {}
 	 */

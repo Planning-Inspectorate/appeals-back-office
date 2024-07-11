@@ -52,7 +52,7 @@ router.get(
 		}
 		#swagger.responses[200] = {
 			description: 'Requested appeals',
-			schema: { $ref: '#/definitions/AllAppeals' },
+			schema: { $ref: '#/components/schemas/AllAppeals' },
 		}
 		#swagger.responses[400] = {}
 	 */
@@ -90,7 +90,7 @@ router.get(
 		}
 		#swagger.responses[200] = {
 			description: 'Requested appeals',
-			schema: { $ref: '#/definitions/AllAppeals' },
+			schema: { $ref: '#/components/schemas/AllAppeals' },
 		}
 		#swagger.responses[400] = {}
 	 */
@@ -112,7 +112,7 @@ router.get(
 		}
 		#swagger.responses[200] = {
 			description: 'Gets a single appeal by id',
-			schema: { $ref: '#/definitions/SingleAppealResponse' }
+			schema: { $ref: '#/components/schemas/SingleAppealResponse' }
 		}
 		#swagger.responses[400] = {}
 		#swagger.responses[404] = {}
@@ -135,7 +135,7 @@ router.get(
 		}
 		#swagger.responses[200] = {
 			description: 'Gets a single appeal by id',
-			schema: { $ref: '#/definitions/SingleAppealResponse' }
+			schema: { $ref: '#/components/schemas/SingleAppealResponse' }
 		}
 		#swagger.responses[400] = {}
 		#swagger.responses[404] = {}
@@ -158,12 +158,12 @@ router.patch(
 		#swagger.requestBody = {
 			in: 'body',
 			description: 'Appeal details to update',
-			schema: { $ref: '#/definitions/UpdateCaseTeamRequest' },
+			schema: { $ref: '#/components/schemas/UpdateCaseTeamRequest' },
 			required: true
 		}
 		#swagger.responses[200] = {
 			description: 'Updates a single appeal by id',
-			schema: { $ref: '#/definitions/UpdateCaseTeamResponse' }
+			schema: { $ref: '#/components/schemas/UpdateCaseTeamResponse' }
 		}
 		#swagger.responses[400] = {}
 		#swagger.responses[500] = {}

@@ -16,7 +16,7 @@ router.post(
 		#swagger.requestBody = {
 			in: 'body',
 			description: 'Date to validate',
-			schema: { $ref: '#/definitions/ValidateDate' },
+			schema: { $ref: '#/components/schemas/ValidateDate' },
 			required: true
 		}
 		#swagger.responses[200] = {

@@ -29,7 +29,7 @@ router.get(
 		}
 		#swagger.responses[200] = {
 			description: 'Gets a single LPA questionnaire for an appeal by id',
-			schema: { $ref: '#/definitions/SingleLPAQuestionnaireResponse' }
+			schema: { $ref: '#/components/schemas/SingleLPAQuestionnaireResponse' }
 		}
 		#swagger.responses[400] = {}
 		#swagger.responses[404] = {}
@@ -54,12 +54,12 @@ router.patch(
 		#swagger.requestBody = {
 			in: 'body',
 			description: 'LPA questionnaire details to update',
-			schema: { $ref: '#/definitions/UpdateLPAQuestionnaireRequest' },
+			schema: { $ref: '#/components/schemas/UpdateLPAQuestionnaireRequest' },
 			required: true
 		}
 		#swagger.responses[200] = {
 			description: 'Updates a single LPA questionnaire by id',
-			schema: { $ref: '#/definitions/UpdateLPAQuestionnaireResponse' }
+			schema: { $ref: '#/components/schemas/UpdateLPAQuestionnaireResponse' }
 		}
 		#swagger.responses[400] = {}
 		#swagger.responses[404] = {}

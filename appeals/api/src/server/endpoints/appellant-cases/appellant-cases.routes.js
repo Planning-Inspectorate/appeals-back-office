@@ -26,7 +26,7 @@ router.get(
 		}
 		#swagger.responses[200] = {
 			description: 'Gets a single appellant case for an appeal by id',
-			schema: { $ref: '#/definitions/SingleAppellantCaseResponse' }
+			schema: { $ref: '#/components/schemas/SingleAppellantCaseResponse' }
 		}
 		#swagger.responses[400] = {}
 		#swagger.responses[404] = {}
@@ -51,12 +51,12 @@ router.patch(
 		#swagger.requestBody = {
 			in: 'body',
 			description: 'Appellant case details to update',
-			schema: { $ref: '#/definitions/UpdateAppellantCaseRequest' },
+			schema: { $ref: '#/components/schemas/UpdateAppellantCaseRequest' },
 			required: true
 		}
 		#swagger.responses[200] = {
 			description: 'Updates a single appeal by id',
-			schema: { $ref: '#/definitions/UpdateAppellantCaseResponse' }
+			schema: { $ref: '#/components/schemas/UpdateAppellantCaseResponse' }
 		}
 		#swagger.responses[400] = {}
 		#swagger.responses[404] = {}

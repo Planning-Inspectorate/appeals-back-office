@@ -17,7 +17,7 @@ router.get(
 		}
 		#swagger.responses[200] = {
 			description: 'LPA notification methods',
-			schema: { $ref: '#/definitions/AllLPANotificationMethodsResponse' },
+			schema: { $ref: '#/components/schemas/AllLPANotificationMethodsResponse' },
 		}
 		#swagger.responses[400] = {}
 	 */

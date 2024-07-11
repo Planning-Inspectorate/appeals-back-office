@@ -17,7 +17,7 @@ router.get(
 		}
 		#swagger.responses[200] = {
 			description: 'Site visit types',
-			schema: { $ref: '#/definitions/AllSiteVisitTypesResponse' },
+			schema: { $ref: '#/components/schemas/AllSiteVisitTypesResponse' },
 		}
 		#swagger.responses[400] = {}
 	 */

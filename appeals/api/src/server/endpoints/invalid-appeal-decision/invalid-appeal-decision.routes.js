@@ -20,12 +20,12 @@ router.post(
 		#swagger.requestBody = {
 			in: 'body',
 			description: 'Invalid decision info',
-			schema: { $ref: '#/definitions/InvalidDecisionInfo' },
+			schema: { $ref: '#/components/schemas/InvalidDecisionInfo' },
 			required: true
 		}
 		#swagger.responses[200] = {
 			description: 'Gets the Invalid decision info or null',
-			schema: { $ref: '#/definitions/InvalidDecisionInfo' }
+			schema: { $ref: '#/components/schemas/InvalidDecisionInfo' }
 		}
 		#swagger.responses[400] = {}
 		#swagger.responses[404] = {}

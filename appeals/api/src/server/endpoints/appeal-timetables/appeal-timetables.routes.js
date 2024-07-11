@@ -24,12 +24,12 @@ router.post(
 		#swagger.requestBody = {
 			in: 'body',
 			description: 'Appeal and optional start date (defaults to the current date, if omitted)',
-			schema: { $ref: '#/definitions/StartCaseRequest' },
+			schema: { $ref: '#/components/schemas/StartCaseRequest' },
 			required: true
 		}
 		#swagger.responses[200] = {
 			description: 'Creates an appeal timetable and start the appeal',
-			schema: { $ref: '#/definitions/StartCaseResponse' }
+			schema: { $ref: '#/components/schemas/StartCaseResponse' }
 		}
 		#swagger.responses[400] = {}
 		#swagger.responses[500] = {}
@@ -53,12 +53,12 @@ router.patch(
 		#swagger.requestBody = {
 			in: 'body',
 			description: 'Appeal timetable details to update',
-			schema: { $ref: '#/definitions/UpdateAppealTimetableRequest' },
+			schema: { $ref: '#/components/schemas/UpdateAppealTimetableRequest' },
 			required: true
 		}
 		#swagger.responses[200] = {
 			description: 'Updates a single appeal timetable by id',
-			schema: { $ref: '#/definitions/UpdateAppealTimetableResponse' }
+			schema: { $ref: '#/components/schemas/UpdateAppealTimetableResponse' }
 		}
 		#swagger.responses[400] = {}
 		#swagger.responses[500] = {}

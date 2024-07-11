@@ -17,7 +17,7 @@ router.get(
 		}
 		#swagger.responses[200] = {
 			description: 'Appellant case invalid reasons',
-			schema: { $ref: '#/definitions/AllAppellantCaseInvalidReasonsResponse' },
+			schema: { $ref: '#/components/schemas/AllAppellantCaseInvalidReasonsResponse' },
 		}
 		#swagger.responses[400] = {}
 	 */

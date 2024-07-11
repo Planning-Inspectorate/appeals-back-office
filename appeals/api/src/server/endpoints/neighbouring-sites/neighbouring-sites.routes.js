@@ -28,13 +28,13 @@ router.post(
 		#swagger.requestBody = {
 			in: 'body',
 			description: 'An address',
-			schema: { $ref: '#/definitions/UpdateAddressRequest' },
+			schema: { $ref: '#/components/schemas/UpdateAddressRequest' },
 			required: true
 		}
 		#swagger.responses[400] = {}
 		#swagger.responses[200] = {
 			description: 'Returns the siteId',
-			schema: { $ref: '#/definitions/NeighbouringSiteCreateResponse' }
+			schema: { $ref: '#/components/schemas/NeighbouringSiteCreateResponse' }
 		}
 		#swagger.responses[400] = {}
 		#swagger.responses[404] = {}
@@ -58,13 +58,13 @@ router.patch(
 		#swagger.requestBody = {
 			in: 'body',
 			description: 'An address',
-			schema: { $ref: '#/definitions/NeighbouringSiteUpdateRequest' },
+			schema: { $ref: '#/components/schemas/NeighbouringSiteUpdateRequest' },
 			required: true
 		}
 		#swagger.responses[400] = {}
 		#swagger.responses[200] = {
 			description: 'Returns the siteId',
-			schema: { $ref: '#/definitions/NeighbouringSiteUpdateResponse' }
+			schema: { $ref: '#/components/schemas/NeighbouringSiteUpdateResponse' }
 		}
 		#swagger.responses[400] = {}
 		#swagger.responses[404] = {}
@@ -88,13 +88,13 @@ router.delete(
 		#swagger.requestBody = {
 			in: 'body',
 			description: 'The id of the neighbouring site to delete',
-			schema: { $ref: '#/definitions/NeighbouringSiteDeleteRequest' },
+			schema: { $ref: '#/components/schemas/NeighbouringSiteDeleteRequest' },
 			required: true
 		}
 		#swagger.responses[400] = {}
 		#swagger.responses[200] = {
 			description: 'Returns the siteId',
-			schema: { $ref: '#/definitions/NeighbouringSiteUpdateResponse' }
+			schema: { $ref: '#/components/schemas/NeighbouringSiteUpdateResponse' }
 		}
 		#swagger.responses[400] = {}
 		#swagger.responses[404] = {}

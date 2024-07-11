@@ -14,12 +14,12 @@ router.post(
 		#swagger.requestBody = {
 			in: 'body',
 			description: 'Case data',
-			schema: { $ref: '#/definitions/AppellantCaseData' },
+			schema: { $ref: '#/components/schemas/AppellantCaseData' },
 			required: true
 		}
 		#swagger.responses[200] = {
 			description: 'Appeal successfully created',
-			schema: { $ref: '#/definitions/Appeal' }
+			schema: { $ref: '#/components/schemas/Appeal' }
 		}
 		#swagger.responses[400] = {}
 		#swagger.responses[404] = {}
@@ -37,12 +37,12 @@ router.post(
 		#swagger.requestBody = {
 			in: 'body',
 			description: 'Questionnaire data',
-			schema: { $ref: '#/definitions/QuestionnaireData' },
+			schema: { $ref: '#/components/schemas/QuestionnaireData' },
 			required: true
 		}
 		#swagger.responses[200] = {
 			description: 'Appeal successfully updated',
-			schema: { $ref: '#/definitions/Appeal' }
+			schema: { $ref: '#/components/schemas/Appeal' }
 		}
 		#swagger.responses[400] = {}
 		#swagger.responses[404] = {}

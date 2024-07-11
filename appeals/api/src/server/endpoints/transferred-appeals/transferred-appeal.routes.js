@@ -23,7 +23,7 @@ router.get(
         }
 		#swagger.responses[200] = {
 			description: 'Gets appeal from Horizon returns found status (true/false)',
-			schema: { $ref: '#/definitions/ExistsOnHorizonResponse' }
+			schema: { $ref: '#/components/schemas/ExistsOnHorizonResponse' }
 		}
 		#swagger.responses[400] = {}
 		#swagger.responses[404] = {}

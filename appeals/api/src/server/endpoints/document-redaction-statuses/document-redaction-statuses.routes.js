@@ -17,7 +17,7 @@ router.get(
 		}
 		#swagger.responses[200] = {
 			description: 'Document redaction statuses',
-			schema: { $ref: '#/definitions/AllDocumentRedactionStatusesResponse' },
+			schema: { $ref: '#/components/schemas/AllDocumentRedactionStatusesResponse' },
 		}
 		#swagger.responses[400] = {}
 	 */
