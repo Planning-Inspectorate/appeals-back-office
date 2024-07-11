@@ -1588,6 +1588,347 @@ describe('internal correspondence', () => {
 		}
 	});
 
+	describe('GET /internal-correspondence/:correspondenceCategory/change-document-details/:folderId/:documentId', () => {
+		const correspondenceCategories = ['cross-team', 'inspector'];
+
+		beforeEach(async () => {
+			nock('http://test/')
+				.get('/appeals/1/document-folders/10')
+				.reply(200, folderInfoCrossTeamCorrespondence)
+				.persist();
+			nock('http://test/')
+				.get('/appeals/1/document-folders/11')
+				.reply(200, folderInfoInspectorCorrespondence)
+				.persist();
+			nock('http://test/')
+				.get('/appeals/document-redaction-statuses')
+				.reply(200, documentRedactionStatuses)
+				.persist();
+			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+		});
+
+		for (const correspondenceCategory of correspondenceCategories) {
+			const folder =
+				// @ts-ignore
+				appealData.internalCorrespondence[
+					`${correspondenceCategory === 'cross-team' ? 'crossTeam' : correspondenceCategory}`
+				];
+
+			it(`should render the change document details page with one set of fields for the document being changed (${correspondenceCategory})`, async () => {
+				const response = await request.get(
+					`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/change-document-details/${folder.folderId}/1`
+				);
+
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('Change document details</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain(
+					`${
+						correspondenceCategory === 'cross-team' ? 'Cross team' : 'Inspector'
+					} correspondence documents</h1>`
+				);
+				expect(unprettifiedElement.innerHTML).toContain('ph0-documentFileInfo.jpeg</h2>');
+				expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
+				expect(unprettifiedElement.innerHTML).toContain(
+					'name="items[0][receivedDate]-[day]" type="text" value="11" inputmode="numeric">'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'name="items[0][receivedDate]-[month]" type="text" value="10" inputmode="numeric">'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'name="items[0][receivedDate]-[year]" type="text" value="2023" inputmode="numeric">'
+				);
+				expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
+				expect(unprettifiedElement.innerHTML).toContain(
+					'name="items[0][redactionStatus]" type="radio" value="redacted">'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'name="items[0][redactionStatus]" type="radio" value="unredacted">'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'name="items[0][redactionStatus]" type="radio" value="no redaction required">'
+				);
+				expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
+			});
+
+			it(`should render a back link to the manage individual document page (${correspondenceCategory})`, async () => {
+				const response = await request.get(
+					`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/change-document-details/${folder.folderId}/1`
+				);
+
+				const unprettifiedElement = parseHtml(response.text, {
+					rootElement: '.govuk-back-link',
+					skipPrettyPrint: true
+				});
+
+				expect(unprettifiedElement.innerHTML).toContain(
+					`href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/manage-documents/${folder.folderId}/1"`
+				);
+			});
+		}
+	});
+
+	describe('POST /internal-correspondence/:correspondenceCategory/change-document-details/:folderId/:documentId', () => {
+		const correspondenceCategories = ['cross-team', 'inspector'];
+
+		beforeEach(async () => {
+			nock('http://test/')
+				.get('/appeals/document-redaction-statuses')
+				.reply(200, documentRedactionStatuses)
+				.persist();
+			nock('http://test/')
+				.get('/appeals/1/document-folders/10')
+				.reply(200, folderInfoCrossTeamCorrespondence)
+				.persist();
+			nock('http://test/')
+				.get('/appeals/1/document-folders/11')
+				.reply(200, folderInfoInspectorCorrespondence)
+				.persist();
+			nock('http://test/')
+				.patch('/appeals/1/documents')
+				.reply(200, {
+					documents: [
+						{
+							id: '4541e025-00e1-4458-aac6-d1b51f6ae0a7',
+							receivedDate: '2023-02-01',
+							redactionStatus: 2
+						}
+					]
+				});
+			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo).persist();
+		});
+
+		afterEach(() => {
+			nock.cleanAll();
+		});
+
+		for (const correspondenceCategory of correspondenceCategories) {
+			const folder =
+				// @ts-ignore
+				appealData.internalCorrespondence[
+					`${correspondenceCategory === 'cross-team' ? 'crossTeam' : correspondenceCategory}`
+				];
+
+			it(`should re-render the change document details page with the expected error message if the request body is in an incorrect format (${correspondenceCategory})`, async () => {
+				const response = await request
+					.post(
+						`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/change-document-details/${folder.folderId}/1`
+					)
+					.send({});
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('Change document details</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain(
+					`${
+						correspondenceCategory === 'cross-team' ? 'Cross team' : 'Inspector'
+					} correspondence documents</h1>`
+				);
+
+				const errorSummaryElement = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary'
+				});
+
+				expect(errorSummaryElement.innerHTML).toContain('There is a problem with the service');
+			});
+
+			it(`should re-render the change document details page with the expected error message if receivedDate day is an invalid value (${correspondenceCategory})`, async () => {
+				const testCases = [
+					{ value: '', expectedError: 'Received date day cannot be empty' },
+					{ value: 'a', expectedError: 'Received date day must be a number' },
+					{ value: '0', expectedError: 'Received date day must be between 1 and 31' },
+					{ value: '32', expectedError: 'Received date day must be between 1 and 31' }
+				];
+
+				for (const testCase of testCases) {
+					const response = await request
+						.post(
+							`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/change-document-details/${folder.folderId}/1`
+						)
+						.send({
+							items: [
+								{
+									documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
+									receivedDate: {
+										day: testCase.value,
+										month: '2',
+										year: '2030'
+									},
+									redactionStatus: 2
+								}
+							]
+						});
+
+					const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+					expect(unprettifiedElement.innerHTML).toContain('Change document details</span><h1');
+					expect(unprettifiedElement.innerHTML).toContain(
+						`${
+							correspondenceCategory === 'cross-team' ? 'Cross team' : 'Inspector'
+						} correspondence documents</h1>`
+					);
+
+					const errorSummaryElement = parseHtml(response.text, {
+						rootElement: '.govuk-error-summary'
+					});
+
+					expect(errorSummaryElement.innerHTML).toContain(testCase.expectedError);
+				}
+			});
+
+			it(`should re-render the change document details page with the expected error message if receivedDate month is an invalid value (${correspondenceCategory})`, async () => {
+				const testCases = [
+					{ value: '', expectedError: 'Received date month cannot be empty' },
+					{ value: 'a', expectedError: 'Received date month must be a number' },
+					{ value: '0', expectedError: 'Received date month must be between 1 and 12' },
+					{ value: '13', expectedError: 'Received date month must be between 1 and 12' }
+				];
+
+				for (const testCase of testCases) {
+					const response = await request
+						.post(
+							`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/change-document-details/${folder.folderId}/1`
+						)
+						.send({
+							items: [
+								{
+									documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
+									receivedDate: {
+										day: '1',
+										month: testCase.value,
+										year: '2030'
+									},
+									redactionStatus: 2
+								}
+							]
+						});
+
+					const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+					expect(unprettifiedElement.innerHTML).toContain('Change document details</span><h1');
+					expect(unprettifiedElement.innerHTML).toContain(
+						`${
+							correspondenceCategory === 'cross-team' ? 'Cross team' : 'Inspector'
+						} correspondence documents</h1>`
+					);
+
+					const errorSummaryElement = parseHtml(response.text, {
+						rootElement: '.govuk-error-summary'
+					});
+
+					expect(errorSummaryElement.innerHTML).toContain(testCase.expectedError);
+				}
+			});
+
+			it(`should re-render the change document details page with the expected error message if receivedDate year is an invalid value (${correspondenceCategory})`, async () => {
+				const testCases = [
+					{ value: '', expectedError: 'Received date year cannot be empty' },
+					{ value: 'a', expectedError: 'Received date year must be a number' },
+					{ value: '202', expectedError: 'Received date year must be 4 digits' }
+				];
+
+				for (const testCase of testCases) {
+					const response = await request
+						.post(
+							`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/change-document-details/${folder.folderId}/1`
+						)
+						.send({
+							items: [
+								{
+									documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
+									receivedDate: {
+										day: '1',
+										month: '2',
+										year: testCase.value
+									},
+									redactionStatus: 2
+								}
+							]
+						});
+
+					const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+					expect(unprettifiedElement.innerHTML).toContain('Change document details</span><h1');
+					expect(unprettifiedElement.innerHTML).toContain(
+						`${
+							correspondenceCategory === 'cross-team' ? 'Cross team' : 'Inspector'
+						} correspondence documents</h1>`
+					);
+
+					const errorSummaryElement = parseHtml(response.text, {
+						rootElement: '.govuk-error-summary'
+					});
+
+					expect(errorSummaryElement.innerHTML).toContain(testCase.expectedError);
+				}
+			});
+
+			it(`should re-render the change document details page with the expected error message if receivedDate is not a valid date (${correspondenceCategory})`, async () => {
+				const response = await request
+					.post(
+						`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/change-document-details/${folder.folderId}/1`
+					)
+					.send({
+						items: [
+							{
+								documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
+								receivedDate: {
+									day: '29',
+									month: '2',
+									year: '2023'
+								},
+								redactionStatus: 2
+							}
+						]
+					});
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('Change document details</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain(
+					`${
+						correspondenceCategory === 'cross-team' ? 'Cross team' : 'Inspector'
+					} correspondence documents</h1>`
+				);
+
+				const errorSummaryElement = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary'
+				});
+
+				expect(errorSummaryElement.innerHTML).toContain('Received date must be a valid date');
+			});
+
+			it(`should send a patch request to the appeal documents endpoint and redirect to the manage individual document page, if complete and valid document details were provided (${correspondenceCategory})`, async () => {
+				const response = await request
+					.post(
+						`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/change-document-details/${folder.folderId}/1`
+					)
+					.send({
+						items: [
+							{
+								documentId: '4541e025-00e1-4458-aac6-d1b51f6ae0a7',
+								receivedDate: {
+									day: '1',
+									month: '2',
+									year: '2023'
+								},
+								redactionStatus: 'unredacted'
+							}
+						]
+					});
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toEqual(
+					`Found. Redirecting to /appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/manage-documents/${folder.folderId}/1`
+				);
+			});
+		}
+	});
+
 	describe('GET /internal-correspondence/:correspondenceCategory/manage-documents/:folderId/:documentId/:versionId/delete', () => {
 		const correspondenceCategories = ['cross-team', 'inspector'];
 

@@ -8,6 +8,8 @@ import {
 	postUploadDocumentVersionCheckAndConfirm,
 	renderManageFolder,
 	renderManageDocument,
+	renderChangeDocumentDetails,
+	postChangeDocumentDetails,
 	renderDeleteDocument,
 	postDeleteDocument
 } from '#appeals/appeal-documents/appeal-documents.controller.js';
@@ -290,6 +292,33 @@ export const getManageDocument = async (request, response) => {
 		`/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/manage-documents/${currentFolder.folderId}`,
 		`/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/upload-documents/${currentFolder?.folderId}/{{documentId}}`,
 		`/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/manage-documents/${currentFolder.folderId}/{{documentId}}/{{versionId}}/delete`
+	);
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const getChangeDocumentVersionDetails = async (request, response) => {
+	const {
+		params: { appealId, correspondenceCategory, folderId, documentId }
+	} = request;
+
+	renderChangeDocumentDetails(
+		request,
+		response,
+		`/appeals-service/appeal-details/${appealId}/internal-correspondence/${correspondenceCategory}/manage-documents/${folderId}/${documentId}`
+	);
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const postChangeDocumentVersionDetails = async (request, response) => {
+	const {
+		params: { appealId, correspondenceCategory, folderId, documentId }
+	} = request;
+
+	postChangeDocumentDetails(
+		request,
+		response,
+		`/appeals-service/appeal-details/${appealId}/internal-correspondence/${correspondenceCategory}/manage-documents/${folderId}/${documentId}`,
+		`/appeals-service/appeal-details/${appealId}/internal-correspondence/${correspondenceCategory}/manage-documents/${folderId}/${documentId}`
 	);
 };
 

@@ -52,6 +52,162 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
 </main>"
 `;
 
+exports[`internal correspondence GET /internal-correspondence/:correspondenceCategory/change-document-details/:folderId/:documentId should render the change document details page with one set of fields for the document being changed (cross-team) 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Change document details</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Cross team correspondence documents</h1>
+                </div>
+            </div>
+            <form method="post" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <h2 class="govuk-heading-m">ph0-documentFileInfo.jpeg</h2>
+                    <div class="govuk-form-group">
+                        <input class="govuk-input" id="" name="items[0][documentId]" type="hidden"
+                        value="d51f408c-7c6f-4f49-bcc0-abbb5bea3be6">
+                    </div>
+                    <div class="govuk-form-group">
+                        <fieldset class="govuk-fieldset" role="group">
+                            <legend class="govuk-fieldset__legend">Date received</legend>
+                            <div class="govuk-date-input" id="items[0]receivedDate">
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.day">Day</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                        id="items[0].receivedDate.day" name="items[0][receivedDate]-[day]" type="text"
+                                        value="11" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.month">Month</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                        id="items[0].receivedDate.month" name="items[0][receivedDate]-[month]"
+                                        type="text" value="10" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.year">Year</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                        id="items[0].receivedDate.year" name="items[0][receivedDate]-[year]" type="text"
+                                        value="2023" inputmode="numeric">
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="govuk-form-group">
+                        <fieldset class="govuk-fieldset">
+                            <legend class="govuk-fieldset__legend">Redaction status</legend>
+                            <div class="govuk-radios" data-module="govuk-radios">
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]" name="items[0][redactionStatus]"
+                                    type="radio" value="redacted">
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]">Redacted</label>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]-2" name="items[0][redactionStatus]"
+                                    type="radio" value="unredacted">
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]-2">Unredacted</label>
+                                </div>
+                                <div class="govuk-radios__divider">Or</div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]-4" name="items[0][redactionStatus]"
+                                    type="radio" value="no redaction required">
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]-4">No redaction required</label>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`internal correspondence GET /internal-correspondence/:correspondenceCategory/change-document-details/:folderId/:documentId should render the change document details page with one set of fields for the document being changed (inspector) 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Change document details</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Inspector correspondence documents</h1>
+                </div>
+            </div>
+            <form method="post" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <h2 class="govuk-heading-m">ph0-documentFileInfo.jpeg</h2>
+                    <div class="govuk-form-group">
+                        <input class="govuk-input" id="" name="items[0][documentId]" type="hidden"
+                        value="d51f408c-7c6f-4f49-bcc0-abbb5bea3be6">
+                    </div>
+                    <div class="govuk-form-group">
+                        <fieldset class="govuk-fieldset" role="group">
+                            <legend class="govuk-fieldset__legend">Date received</legend>
+                            <div class="govuk-date-input" id="items[0]receivedDate">
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.day">Day</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                        id="items[0].receivedDate.day" name="items[0][receivedDate]-[day]" type="text"
+                                        value="11" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.month">Month</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                        id="items[0].receivedDate.month" name="items[0][receivedDate]-[month]"
+                                        type="text" value="10" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.year">Year</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                        id="items[0].receivedDate.year" name="items[0][receivedDate]-[year]" type="text"
+                                        value="2023" inputmode="numeric">
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="govuk-form-group">
+                        <fieldset class="govuk-fieldset">
+                            <legend class="govuk-fieldset__legend">Redaction status</legend>
+                            <div class="govuk-radios" data-module="govuk-radios">
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]" name="items[0][redactionStatus]"
+                                    type="radio" value="redacted">
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]">Redacted</label>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]-2" name="items[0][redactionStatus]"
+                                    type="radio" value="unredacted">
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]-2">Unredacted</label>
+                                </div>
+                                <div class="govuk-radios__divider">Or</div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]-4" name="items[0][redactionStatus]"
+                                    type="radio" value="no redaction required">
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]-4">No redaction required</label>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
 exports[`internal correspondence GET /internal-correspondence/:correspondenceCategory/check-your-answers/:folderId should render a 500 error page if fileUploadInfo is not present in the session (cross-team) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">

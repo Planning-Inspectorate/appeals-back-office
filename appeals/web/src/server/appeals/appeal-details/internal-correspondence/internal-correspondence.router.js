@@ -9,6 +9,8 @@ import {
 import { validateAppeal } from '../appeal-details.middleware.js';
 import * as documentsValidators from '../../appeal-documents/appeal-documents.validators.js';
 import { assertGroupAccess } from '#app/auth/auth.guards.js';
+import { assertUserHasPermission } from '#app/auth/auth.guards.js';
+import { permissionNames } from '#environment/permissions.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -65,6 +67,27 @@ router
 router
 	.route('/:correspondenceCategory/manage-documents/:folderId/:documentId')
 	.get(validateCaseFolderId, asyncRoute(controller.getManageDocument));
+
+router
+	.route('/:correspondenceCategory/change-document-details/:folderId/:documentId')
+	.get(
+		validateAppeal,
+		assertUserHasPermission(permissionNames.updateCase),
+		validateCaseFolderId,
+		asyncRoute(controller.getChangeDocumentVersionDetails)
+	)
+	.post(
+		validateAppeal,
+		assertUserHasPermission(permissionNames.updateCase),
+		validateCaseFolderId,
+		documentsValidators.validateDocumentDetailsBodyFormat,
+		documentsValidators.validateDocumentDetailsReceivedDatesFields,
+		documentsValidators.validateDocumentDetailsReceivedDateValid,
+		documentsValidators.validateDocumentDetailsReceivedDateIsNotFutureDate,
+		documentsValidators.validateDocumentDetailsRedactionStatuses,
+		assertGroupAccess(config.referenceData.appeals.caseOfficerGroupId),
+		asyncRoute(controller.postChangeDocumentVersionDetails)
+	);
 
 router
 	.route('/:correspondenceCategory/manage-documents/:folderId/:documentId/:versionId/delete')
