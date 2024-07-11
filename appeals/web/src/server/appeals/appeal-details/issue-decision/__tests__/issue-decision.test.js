@@ -652,7 +652,7 @@ describe('issue-decision', () => {
 				'<a href="/appeals-service/appeal-details/1" class="govuk-link">Go back to case details</a>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				`<a href="/appeals-service/appeal-details/1/costs/decision/upload-documents/3" class="govuk-link">Add costs decision</a>`
+				`<a href="/appeals-service/appeal-details/1/costs/decision/upload-documents/${appealData.costs.decisionFolder?.folderId}" class="govuk-link">Add costs decision</a>`
 			);
 		});
 	});

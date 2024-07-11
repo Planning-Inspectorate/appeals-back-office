@@ -155,9 +155,24 @@ export async function appealDetailsPage(appealDetails, currentRoute, session) {
 			rows: [
 				mappedData.appeal.appellantCase.display.tableItem,
 				mappedData.appeal.lpaQuestionnaire.display.tableItem,
-				mappedData.appeal.costsAppellant.display.tableItem,
-				mappedData.appeal.costsLpa.display.tableItem,
-				mappedData.appeal.appealDecision.display.tableItem,
+				mappedData.appeal.appealDecision.display.tableItem
+			].filter(isDefined),
+			firstCellIsHeader: true
+		}
+	};
+
+	/** @type {PageComponent} */
+	const caseCosts = {
+		type: 'table',
+		parameters: {
+			head: [{ text: 'Documentation' }, { text: 'Status' }, { text: 'Action' }],
+			rows: [
+				mappedData.appeal.costsAppellantApplication.display.tableItem,
+				mappedData.appeal.costsAppellantWithdrawal.display.tableItem,
+				mappedData.appeal.costsAppellantCorrespondence.display.tableItem,
+				mappedData.appeal.costsLpaApplication.display.tableItem,
+				mappedData.appeal.costsLpaWithdrawal.display.tableItem,
+				mappedData.appeal.costsLpaCorrespondence.display.tableItem,
 				mappedData.appeal.costsDecision.display.tableItem
 			].filter(isDefined),
 			firstCellIsHeader: true
@@ -244,6 +259,10 @@ export async function appealDetailsPage(appealDetails, currentRoute, session) {
 				{
 					heading: { text: 'Documentation' },
 					content: { html: '', pageComponents: [caseDocumentation] }
+				},
+				{
+					heading: { text: 'Costs' },
+					content: { html: '', pageComponents: [caseCosts] }
 				},
 				{
 					heading: { text: 'Contacts' },

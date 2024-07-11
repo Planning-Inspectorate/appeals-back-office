@@ -45,8 +45,12 @@ interface SingleAppealDetailsResponse {
 	agent?: ServiceUserResponse | null;
 	caseOfficer?: string | null;
 	costs: {
-		appellantFolder?: FolderInfo | null;
-		lpaFolder?: FolderInfo | null;
+		appellantApplicationFolder?: FolderInfo | null;
+		appellantWithdrawalFolder?: FolderInfo | null;
+		appellantCorrespondenceFolder?: FolderInfo | null;
+		lpaApplicationFolder?: FolderInfo | null;
+		lpaWithdrawalFolder?: FolderInfo | null;
+		lpaCorrespondenceFolder?: FolderInfo | null;
 		decisionFolder?: FolderInfo | null;
 	};
 	decision: {

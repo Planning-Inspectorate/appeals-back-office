@@ -235,13 +235,15 @@ export const renderManageFolder = async (
  * @param {string} backButtonUrl
  * @param {string} uploadUpdatedDocumentUrl
  * @param {string} removeDocumentUrl
+ * @param {string} [pageTitleTextOverride]
  */
 export const renderManageDocument = async (
 	request,
 	response,
 	backButtonUrl,
 	uploadUpdatedDocumentUrl,
-	removeDocumentUrl
+	removeDocumentUrl,
+	pageTitleTextOverride
 ) => {
 	const {
 		currentFolder,
@@ -274,7 +276,8 @@ export const renderManageDocument = async (
 		redactionStatuses,
 		document,
 		currentFolder,
-		request
+		request,
+		pageTitleTextOverride
 	);
 
 	return response.status(200).render('appeals/documents/manage-document.njk', {

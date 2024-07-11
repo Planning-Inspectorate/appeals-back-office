@@ -882,15 +882,15 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 				},
 				value: displayPageFormatter.formatDocumentValues(
 					appellantCaseData.appealId,
-					isFolderInfo(appealDetails.costs.appellantFolder)
-						? appealDetails.costs.appellantFolder.documents
+					isFolderInfo(appealDetails.costs.appellantApplicationFolder)
+						? appealDetails.costs.appellantApplicationFolder.documents
 						: []
 				),
 				actions: {
 					items: [
 						...((
-							(isFolderInfo(appealDetails.costs.appellantFolder) &&
-								appealDetails.costs.appellantFolder.documents) ||
+							(isFolderInfo(appealDetails.costs.appellantApplicationFolder) &&
+								appealDetails.costs.appellantApplicationFolder.documents) ||
 							[]
 						).length
 							? [
@@ -899,8 +899,8 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 										visuallyHiddenText: 'Costs document',
 										href: mapDocumentManageUrl(
 											appellantCaseData.appealId,
-											isFolderInfo(appealDetails.costs.appellantFolder)
-												? appealDetails.costs.appellantFolder.folderId
+											isFolderInfo(appealDetails.costs.appellantApplicationFolder)
+												? appealDetails.costs.appellantApplicationFolder.folderId
 												: undefined
 										)
 									})
@@ -911,7 +911,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 							visuallyHiddenText: 'Application form',
 							href: displayPageFormatter.formatDocumentActionLink(
 								appellantCaseData.appealId,
-								appealDetails.costs.appellantFolder,
+								appealDetails.costs.appellantApplicationFolder,
 								documentUploadUrlTemplate
 							)
 						})

@@ -951,6 +951,7 @@ function mapDocumentNameHtmlProperty(document, documentVersion) {
  * @param {DocumentInfo} document
  * @param {FolderInfo} folder
  * @param {import('@pins/express/types/express.js').Request} request
+ * @param {string} [pageTitleTextOverride]
  * @returns {Promise<PageContent>}
  */
 export async function manageDocumentPage(
@@ -961,7 +962,8 @@ export async function manageDocumentPage(
 	redactionStatuses,
 	document,
 	folder,
-	request
+	request,
+	pageTitleTextOverride
 ) {
 	const changeDetailsUrl = request.originalUrl.replace(
 		'manage-documents',
@@ -1221,12 +1223,12 @@ export async function manageDocumentPage(
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: 'Manage document',
+		title: pageTitleTextOverride || 'Manage document',
 		backLinkText: 'Back',
 		backLinkUrl: backLinkUrl
 			?.replace('{{folderId}}', folder.folderId.toString())
 			.replace('{{documentId}}', document.id || ''),
-		preHeading: 'Manage document',
+		preHeading: pageTitleTextOverride || 'Manage document',
 		heading: document?.name || '',
 		pageComponents
 	};

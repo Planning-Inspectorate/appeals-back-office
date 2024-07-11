@@ -178,22 +178,46 @@ export const spec = {
 				postCode: 'DT6 5RN'
 			},
 			costs: {
-				appellantFolder: {
+				appellantApplicationFolder: {
 					caseId: '118',
 					documents: [],
-					folderId: 2118,
-					path: 'costs/appellant'
+					folderId: 2200,
+					path: 'costs/appellantApplication'
 				},
-				lpaFolder: {
+				appellantWithdrawalFolder: {
 					caseId: '118',
 					documents: [],
-					folderId: 2119,
-					path: 'costs/lpa'
+					folderId: 2201,
+					path: 'costs/appellantWithdrawal'
+				},
+				appellantCorrespondenceFolder: {
+					caseId: '118',
+					documents: [],
+					folderId: 2202,
+					path: 'costs/appellantCorrespondence'
+				},
+				lpaApplicationFolder: {
+					caseId: '118',
+					documents: [],
+					folderId: 2300,
+					path: 'costs/lpaApplication'
+				},
+				lpaWithdrawalFolder: {
+					caseId: '118',
+					documents: [],
+					folderId: 2301,
+					path: 'costs/lpaWithdrawal'
+				},
+				lpaCorrespondenceFolder: {
+					caseId: '118',
+					documents: [],
+					folderId: 2302,
+					path: 'costs/lpaCorrespondence'
 				},
 				decisionFolder: {
 					caseId: '118',
 					documents: [],
-					folderId: 2120,
+					folderId: 2400,
 					path: 'costs/decision'
 				}
 			},
