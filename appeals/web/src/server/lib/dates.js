@@ -1,7 +1,7 @@
 import { formatInTimeZone } from 'date-fns-tz';
 import enGB from 'date-fns/locale/en-GB/index.js';
 import logger from '#lib/logger.js';
-import { isValid, isBefore, isAfter, startOfDay, parseISO, format } from 'date-fns';
+import { isValid, isBefore, isAfter, startOfDay, parseISO } from 'date-fns';
 
 export const timeZone = 'Europe/London';
 
@@ -150,7 +150,7 @@ export function dateToDisplayTime(date) {
 		return '';
 	}
 
-	return format(date, 'HH:mm');
+	return formatInTimeZone(date, timeZone, 'HH:mm');
 }
 
 /**
