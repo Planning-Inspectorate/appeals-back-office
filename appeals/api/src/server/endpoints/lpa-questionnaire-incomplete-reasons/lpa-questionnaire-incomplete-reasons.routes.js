@@ -17,7 +17,7 @@ router.get(
 		}
 		#swagger.responses[200] = {
 			description: 'LPA questionnaire incomplete reasons',
-			schema: { $ref: '#/definitions/AllLPAQuestionnaireIncompleteReasonsResponse' },
+			schema: { $ref: '#/components/schemas/AllLPAQuestionnaireIncompleteReasonsResponse' },
 		}
 		#swagger.responses[400] = {}
 	 */

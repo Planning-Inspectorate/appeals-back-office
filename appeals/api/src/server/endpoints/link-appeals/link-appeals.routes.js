@@ -29,7 +29,7 @@ router.post(
 		#swagger.requestBody = {
 			in: 'body',
 			description: 'Linked Appeal Request',
-			schema: { $ref: '#/definitions/LinkedAppealRequest' },
+			schema: { $ref: '#/components/schemas/LinkedAppealRequest' },
 			required: true
 		}
 		#swagger.responses[400] = {}
@@ -53,7 +53,7 @@ router.post(
 		#swagger.requestBody = {
 			in: 'body',
 			description: 'Linked Appeal Request (legacy)',
-			schema: { $ref: '#/definitions/LinkedAppealLegacyRequest' },
+			schema: { $ref: '#/components/schemas/LinkedAppealLegacyRequest' },
 			required: true
 		}
 		#swagger.responses[400] = {}
@@ -77,7 +77,7 @@ router.post(
 		#swagger.requestBody = {
 			in: 'body',
 			description: 'Related Appeal Request',
-			schema: { $ref: '#/definitions/RelatedAppealRequest' },
+			schema: { $ref: '#/components/schemas/RelatedAppealRequest' },
 			required: true
 		}
 		#swagger.responses[400] = {}
@@ -101,7 +101,7 @@ router.post(
 		#swagger.requestBody = {
 			in: 'body',
 			description: 'Related Appeal Request (legacy)',
-			schema: { $ref: '#/definitions/RelatedAppealLegacyRequest' },
+			schema: { $ref: '#/components/schemas/RelatedAppealLegacyRequest' },
 			required: true
 		}
 		#swagger.responses[400] = {}
@@ -125,7 +125,7 @@ router.delete(
 		#swagger.requestBody = {
 			in: 'body',
 			description: 'Unlink Appeal Request',
-			schema: { $ref: '#/definitions/UnlinkAppealRequest' },
+			schema: { $ref: '#/components/schemas/UnlinkAppealRequest' },
 			required: true
 		}
 		#swagger.responses[400] = {}

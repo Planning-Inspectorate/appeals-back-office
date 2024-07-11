@@ -20,7 +20,7 @@ router.get(
 		}
 		#swagger.responses[200] = {
 			description: 'Gets a single address by id',
-			schema: { $ref: '#/definitions/SingleAddressResponse' }
+			schema: { $ref: '#/components/schemas/SingleAddressResponse' }
 		}
 		#swagger.responses[400] = {}
 		#swagger.responses[404] = {}
@@ -45,12 +45,12 @@ router.patch(
 		#swagger.requestBody = {
 			in: 'body',
 			description: 'Address details to update',
-			schema: { $ref: '#/definitions/UpdateAddressRequest' },
+			schema: { $ref: '#/components/schemas/UpdateAddressRequest' },
 			required: true
 		}
 		#swagger.responses[200] = {
 			description: 'Updates a single address by id',
-			schema: { $ref: '#/definitions/UpdateAddressResponse' }
+			schema: { $ref: '#/components/schemas/UpdateAddressResponse' }
 		}
 		#swagger.responses[400] = {}
 		#swagger.responses[404] = {}

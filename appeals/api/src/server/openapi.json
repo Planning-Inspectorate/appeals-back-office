@@ -3247,7 +3247,7 @@
 				"properties": {
 					"inputDate": {
 						"type": "string",
-						"example": "2023-08-17"
+						"example": "2024-08-17"
 					}
 				},
 				"xml": {
@@ -3625,7 +3625,7 @@
 					},
 					"documentDate": {
 						"type": "string",
-						"example": "2023-08-17"
+						"example": "2024-08-17"
 					}
 				},
 				"xml": {
@@ -3867,7 +3867,7 @@
 					},
 					"dateCreated": {
 						"type": "string",
-						"example": "2023-08-17T15:22:20.827Z"
+						"example": "2024-08-17T15:22:20.827Z"
 					},
 					"datePublished": {},
 					"isDeleted": {
@@ -3917,7 +3917,7 @@
 					},
 					"createdAt": {
 						"type": "string",
-						"example": "2023-08-17T15:22:20.827Z"
+						"example": "2024-08-17T15:22:20.827Z"
 					},
 					"isDeleted": {
 						"type": "boolean",
@@ -4061,7 +4061,7 @@
 							},
 							"loggedAt": {
 								"type": "string",
-								"example": "2023-11-10"
+								"example": "2024-11-10"
 							},
 							"details": {
 								"type": "string",
@@ -4213,7 +4213,7 @@
 								},
 								"createdAt": {
 									"type": "string",
-									"example": "2023-02-16T11:43:27.096Z"
+									"example": "2024-02-16T11:43:27.096Z"
 								},
 								"localPlanningDepartment": {
 									"type": "string",
@@ -4229,7 +4229,7 @@
 								},
 								"dueDate": {
 									"type": "string",
-									"example": "2023-06-18T00:00:00.000Z"
+									"example": "2024-06-18T00:00:00.000Z"
 								}
 							}
 						}
@@ -4960,7 +4960,7 @@
 				"properties": {
 					"startDate": {
 						"type": "string",
-						"example": "2023-05-09"
+						"example": "2024-05-09"
 					}
 				},
 				"xml": {
@@ -4972,19 +4972,19 @@
 				"properties": {
 					"finalCommentReviewDate": {
 						"type": "string",
-						"example": "2023-08-09"
+						"example": "2024-08-09"
 					},
 					"issueDeterminationDate": {
 						"type": "string",
-						"example": "2023-08-10"
+						"example": "2024-08-10"
 					},
 					"lpaQuestionnaireDueDate": {
 						"type": "string",
-						"example": "2023-08-11"
+						"example": "2024-08-11"
 					},
 					"statementReviewDate": {
 						"type": "string",
-						"example": "2023-08-12"
+						"example": "2024-08-12"
 					}
 				},
 				"xml": {
@@ -5033,7 +5033,7 @@
 					},
 					"communityInfrastructureLevyAdoptionDate": {
 						"type": "string",
-						"example": "2023-05-09T01:00:00.000Z"
+						"example": "2024-05-09T01:00:00.000Z"
 					},
 					"designatedSites": {
 						"type": "array",
@@ -5993,7 +5993,7 @@
 				"properties": {
 					"appealDueDate": {
 						"type": "string",
-						"example": "2023-12-13"
+						"example": "2024-12-13"
 					},
 					"applicantFirstName": {
 						"type": "string",
@@ -6176,7 +6176,7 @@
 					},
 					"lpaQuestionnaireDueDate": {
 						"type": "string",
-						"example": "2023-06-21"
+						"example": "2024-06-21"
 					},
 					"meetsOrExceedsThresholdOrCriteriaInColumn2": {
 						"type": "boolean",
@@ -6211,7 +6211,7 @@
 				"properties": {
 					"visitDate": {
 						"type": "string",
-						"example": "2023-07-07"
+						"example": "2024-07-07"
 					},
 					"visitEndTime": {
 						"type": "string",
@@ -6235,7 +6235,7 @@
 				"properties": {
 					"visitDate": {
 						"type": "string",
-						"example": "2023-07-07T01:00:00.000Z"
+						"example": "2024-07-07T01:00:00.000Z"
 					},
 					"visitEndTime": {
 						"type": "string",
@@ -6259,7 +6259,7 @@
 				"properties": {
 					"visitDate": {
 						"type": "string",
-						"example": "2023-07-09"
+						"example": "2024-07-09"
 					},
 					"visitEndTime": {
 						"type": "string",
@@ -6291,7 +6291,7 @@
 				"properties": {
 					"visitDate": {
 						"type": "string",
-						"example": "2023-07-09T01:00:00.000Z"
+						"example": "2024-07-09T01:00:00.000Z"
 					},
 					"visitEndTime": {
 						"type": "string",
@@ -6335,7 +6335,7 @@
 					},
 					"visitDate": {
 						"type": "string",
-						"example": "2023-07-07"
+						"example": "2024-07-07"
 					},
 					"visitEndTime": {
 						"type": "string",
@@ -6914,19 +6914,19 @@
 				"properties": {
 					"finalCommentReviewDate": {
 						"type": "string",
-						"example": "2023-08-09"
+						"example": "2024-08-09"
 					},
 					"issueDeterminationDate": {
 						"type": "string",
-						"example": "2023-08-10"
+						"example": "2024-08-10"
 					},
 					"lpaQuestionnaireDueDate": {
 						"type": "string",
-						"example": "2023-08-11"
+						"example": "2024-08-11"
 					},
 					"statementReviewDate": {
 						"type": "string",
-						"example": "2023-08-12"
+						"example": "2024-08-12"
 					}
 				},
 				"xml": {
@@ -6938,19 +6938,19 @@
 				"properties": {
 					"finalCommentReviewDate": {
 						"type": "string",
-						"example": "2023-08-09T01:00:00.000Z"
+						"example": "2024-08-09T01:00:00.000Z"
 					},
 					"issueDeterminationDate": {
 						"type": "string",
-						"example": "2023-08-10T01:00:00.000Z"
+						"example": "2024-08-10T01:00:00.000Z"
 					},
 					"lpaQuestionnaireDueDate": {
 						"type": "string",
-						"example": "2023-08-11T01:00:00.000Z"
+						"example": "2024-08-11T01:00:00.000Z"
 					},
 					"statementReviewDate": {
 						"type": "string",
-						"example": "2023-08-12T01:00:00.000Z"
+						"example": "2024-08-12T01:00:00.000Z"
 					}
 				},
 				"xml": {
@@ -6987,7 +6987,7 @@
 								},
 								"receivedDate": {
 									"type": "string",
-									"example": "2023-09-23"
+									"example": "2024-09-23"
 								},
 								"redactionStatus": {
 									"type": "number",
@@ -7015,7 +7015,7 @@
 								},
 								"receivedDate": {
 									"type": "string",
-									"example": "2023-09-23"
+									"example": "2024-09-23"
 								},
 								"redactionStatus": {
 									"type": "number",
@@ -7100,7 +7100,7 @@
 						},
 						"loggedDate": {
 							"type": "string",
-							"example": "2023-09-26T16:22:20.688Z"
+							"example": "2024-09-26T16:22:20.688Z"
 						}
 					}
 				},
@@ -7276,7 +7276,7 @@
 				"properties": {
 					"withdrawalRequestDate": {
 						"type": "string",
-						"example": "2023-10-11"
+						"example": "2024-10-11"
 					}
 				}
 			}

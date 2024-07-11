@@ -28,7 +28,7 @@ export interface UnlinkAppealRequest {
 }
 
 export interface ValidateDate {
-	/** @example "2023-08-17" */
+	/** @example "2024-08-17" */
 	inputDate?: string;
 }
 
@@ -194,7 +194,7 @@ export interface DecisionInfo {
 	outcome?: string;
 	/** @example "c957e9d0-1a02-4650-acdc-f9fdd689c210" */
 	documentGuid?: string;
-	/** @example "2023-08-17" */
+	/** @example "2024-08-17" */
 	documentDate?: string;
 }
 
@@ -310,7 +310,7 @@ export interface DocumentVersionDetails {
 	blobStorageContainer?: string;
 	/** @example "appeal/1345264/27d0fda4-8a9a-4f5a-a158-68eaea676158/v1/mydoc.pdf" */
 	blobStoragePath?: string;
-	/** @example "2023-08-17T15:22:20.827Z" */
+	/** @example "2024-08-17T15:22:20.827Z" */
 	dateCreated?: string;
 	datePublished?: any;
 	/** @example false */
@@ -337,7 +337,7 @@ export interface DocumentDetails {
 	name?: string;
 	/** @example 3779 */
 	folderId?: number;
-	/** @example "2023-08-17T15:22:20.827Z" */
+	/** @example "2024-08-17T15:22:20.827Z" */
 	createdAt?: string;
 	/** @example false */
 	isDeleted?: boolean;
@@ -404,7 +404,7 @@ export interface DocumentVersionAuditEntry {
 		appealId?: number;
 		/** @example 1 */
 		userId?: number;
-		/** @example "2023-11-10" */
+		/** @example "2024-11-10" */
 		loggedAt?: string;
 		/** @example "" */
 		details?: string;
@@ -471,7 +471,7 @@ export interface AllAppeals {
 		appealStatus?: string;
 		/** @example "household" */
 		appealType?: string;
-		/** @example "2023-02-16T11:43:27.096Z" */
+		/** @example "2024-02-16T11:43:27.096Z" */
 		createdAt?: string;
 		/** @example "Wiltshire Council" */
 		localPlanningDepartment?: string;
@@ -479,7 +479,7 @@ export interface AllAppeals {
 		appellantCaseStatus?: string;
 		/** @example "Incomplete" */
 		lpaQuestionnaireStatus?: string;
-		/** @example "2023-06-18T00:00:00.000Z" */
+		/** @example "2024-06-18T00:00:00.000Z" */
 		dueDate?: string;
 	}[];
 	/** @example 1 */
@@ -816,18 +816,18 @@ export interface UpdateCaseTeamResponse {
 }
 
 export interface StartCaseRequest {
-	/** @example "2023-05-09" */
+	/** @example "2024-05-09" */
 	startDate?: string;
 }
 
 export interface StartCaseResponse {
-	/** @example "2023-08-09" */
+	/** @example "2024-08-09" */
 	finalCommentReviewDate?: string;
-	/** @example "2023-08-10" */
+	/** @example "2024-08-10" */
 	issueDeterminationDate?: string;
-	/** @example "2023-08-11" */
+	/** @example "2024-08-11" */
 	lpaQuestionnaireDueDate?: string;
-	/** @example "2023-08-12" */
+	/** @example "2024-08-12" */
 	statementReviewDate?: string;
 }
 
@@ -848,7 +848,7 @@ export interface SingleLPAQuestionnaireResponse {
 		/** @example "RG26 4BX" */
 		postCode?: string;
 	};
-	/** @example "2023-05-09T01:00:00.000Z" */
+	/** @example "2024-05-09T01:00:00.000Z" */
 	communityInfrastructureLevyAdoptionDate?: string;
 	designatedSites?: {
 		/** @example "cSAC" */
@@ -1267,7 +1267,7 @@ export interface SingleLPAQuestionnaireResponse {
 }
 
 export interface UpdateAppellantCaseRequest {
-	/** @example "2023-12-13" */
+	/** @example "2024-12-13" */
 	appealDueDate?: string;
 	/** @example "Fiona" */
 	applicantFirstName?: string;
@@ -1344,7 +1344,7 @@ export interface UpdateLPAQuestionnaireRequest {
 	isSensitiveArea?: boolean;
 	/** @example true */
 	isTheSiteWithinAnAONB?: boolean;
-	/** @example "2023-06-21" */
+	/** @example "2024-06-21" */
 	lpaQuestionnaireDueDate?: string;
 	/** @example true */
 	meetsOrExceedsThresholdOrCriteriaInColumn2?: boolean;
@@ -1359,7 +1359,7 @@ export interface UpdateLPAQuestionnaireRequest {
 export type UpdateLPAQuestionnaireResponse = object;
 
 export interface CreateSiteVisitRequest {
-	/** @example "2023-07-07" */
+	/** @example "2024-07-07" */
 	visitDate?: string;
 	/** @example "18:00" */
 	visitEndTime?: string;
@@ -1370,7 +1370,7 @@ export interface CreateSiteVisitRequest {
 }
 
 export interface CreateSiteVisitResponse {
-	/** @example "2023-07-07T01:00:00.000Z" */
+	/** @example "2024-07-07T01:00:00.000Z" */
 	visitDate?: string;
 	/** @example "18:00" */
 	visitEndTime?: string;
@@ -1381,7 +1381,7 @@ export interface CreateSiteVisitResponse {
 }
 
 export interface UpdateSiteVisitRequest {
-	/** @example "2023-07-09" */
+	/** @example "2024-07-09" */
 	visitDate?: string;
 	/** @example "12:00" */
 	visitEndTime?: string;
@@ -1396,7 +1396,7 @@ export interface UpdateSiteVisitRequest {
 }
 
 export interface UpdateSiteVisitResponse {
-	/** @example "2023-07-09T01:00:00.000Z" */
+	/** @example "2024-07-09T01:00:00.000Z" */
 	visitDate?: string;
 	/** @example "12:00" */
 	visitEndTime?: string;
@@ -1417,7 +1417,7 @@ export interface SingleSiteVisitResponse {
 	siteVisitId?: number;
 	/** @example "Access required" */
 	visitType?: string;
-	/** @example "2023-07-07" */
+	/** @example "2024-07-07" */
 	visitDate?: string;
 	/** @example "18:00" */
 	visitEndTime?: string;
@@ -1657,24 +1657,24 @@ export interface NeighbouringSiteDeleteRequest {
 }
 
 export interface UpdateAppealTimetableRequest {
-	/** @example "2023-08-09" */
+	/** @example "2024-08-09" */
 	finalCommentReviewDate?: string;
-	/** @example "2023-08-10" */
+	/** @example "2024-08-10" */
 	issueDeterminationDate?: string;
-	/** @example "2023-08-11" */
+	/** @example "2024-08-11" */
 	lpaQuestionnaireDueDate?: string;
-	/** @example "2023-08-12" */
+	/** @example "2024-08-12" */
 	statementReviewDate?: string;
 }
 
 export interface UpdateAppealTimetableResponse {
-	/** @example "2023-08-09T01:00:00.000Z" */
+	/** @example "2024-08-09T01:00:00.000Z" */
 	finalCommentReviewDate?: string;
-	/** @example "2023-08-10T01:00:00.000Z" */
+	/** @example "2024-08-10T01:00:00.000Z" */
 	issueDeterminationDate?: string;
-	/** @example "2023-08-11T01:00:00.000Z" */
+	/** @example "2024-08-11T01:00:00.000Z" */
 	lpaQuestionnaireDueDate?: string;
-	/** @example "2023-08-12T01:00:00.000Z" */
+	/** @example "2024-08-12T01:00:00.000Z" */
 	statementReviewDate?: string;
 }
 
@@ -1689,7 +1689,7 @@ export interface UpdateDocumentsRequest {
 	documents?: {
 		/** @example "987e66e0-1db4-404b-8213-8082919159e9" */
 		id?: string;
-		/** @example "2023-09-23" */
+		/** @example "2024-09-23" */
 		receivedDate?: string;
 		/** @example 1 */
 		redactionStatus?: number;
@@ -1700,7 +1700,7 @@ export interface UpdateDocumentsResponse {
 	documents?: {
 		/** @example "987e66e0-1db4-404b-8213-8082919159e9" */
 		id?: string;
-		/** @example "2023-09-23" */
+		/** @example "2024-09-23" */
 		receivedDate?: string;
 		/** @example 1 */
 		redactionStatus?: number;
@@ -1734,7 +1734,7 @@ export type GetAuditTrailsResponse = {
 	azureAdUserId?: string;
 	/** @example "The case officer 13de469c-8de6-4908-97cd-330ea73df618 was added to the team" */
 	details?: string;
-	/** @example "2023-09-26T16:22:20.688Z" */
+	/** @example "2024-09-26T16:22:20.688Z" */
 	loggedDate?: string;
 }[];
 
@@ -1877,6 +1877,6 @@ export interface UpdateServiceUserResponse {
 }
 
 export interface WithdrawalRequestRequest {
-	/** @example "2023-10-11" */
+	/** @example "2024-10-11" */
 	withdrawalRequestDate?: string;
 }

@@ -17,7 +17,7 @@ router.get(
 		}
 		#swagger.responses[200] = {
 			description: 'Appellant case validation outcomes',
-			schema: { $ref: '#/definitions/AllAppellantCaseValidationOutcomesResponse' },
+			schema: { $ref: '#/components/schemas/AllAppellantCaseValidationOutcomesResponse' },
 		}
 		#swagger.responses[400] = {}
 	 */

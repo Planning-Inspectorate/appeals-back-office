@@ -20,12 +20,12 @@ router.patch(
 	#swagger.requestBody = {
 			in: 'body',
 			description: 'Service user to update',
-			schema: { $ref: '#/definitions/UpdateServiceUserRequest' },
+			schema: { $ref: '#/components/schemas/UpdateServiceUserRequest' },
 			required: true
 		}
 	#swagger.responses[200] = {
 		description: 'Updates a single service user by id',
-		schema: { $ref: '#/definitions/UpdateServiceUserResponse' }
+		schema: { $ref: '#/components/schemas/UpdateServiceUserResponse' }
 	}
 	#swagger.responses[400] = {}
 	#swagger.responses[404] = {}

@@ -34,7 +34,7 @@ router.get(
 		}
 		#swagger.responses[200] = {
 			description: 'List of appeal types',
-			schema: { $ref: '#/definitions/AppealTypes' },
+			schema: { $ref: '#/components/schemas/AppealTypes' },
 		}
 		#swagger.responses[400] = {}
 	 */
@@ -57,7 +57,7 @@ router.post(
 		#swagger.requestBody = {
 			in: 'body',
 			description: 'Appeal type change request',
-			schema: { $ref: '#/definitions/AppealTypeChangeRequest' },
+			schema: { $ref: '#/components/schemas/AppealTypeChangeRequest' },
 			required: true
 		}
 		#swagger.responses[400] = {}
@@ -84,7 +84,7 @@ router.post(
 		#swagger.requestBody = {
 			in: 'body',
 			description: 'Appeal type transfer request',
-			schema: { $ref: '#/definitions/AppealTypeTransferRequest' },
+			schema: { $ref: '#/components/schemas/AppealTypeTransferRequest' },
 			required: true
 		}
 		#swagger.responses[400] = {}
@@ -111,7 +111,7 @@ router.post(
 		#swagger.requestBody = {
 			in: 'body',
 			description: 'Appeal type transfer confirmation',
-			schema: { $ref: '#/definitions/AppealTypeTransferConfirmationRequest' },
+			schema: { $ref: '#/components/schemas/AppealTypeTransferConfirmationRequest' },
 			required: true
 		}
 		#swagger.responses[400] = {}

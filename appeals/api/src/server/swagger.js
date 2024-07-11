@@ -66,7 +66,7 @@ export const spec = {
 			...unlinkAppealRequest
 		},
 		ValidateDate: {
-			inputDate: '2023-08-17'
+			inputDate: '2024-08-17'
 		},
 		AppellantCaseData: {
 			...validAppellantCase
@@ -77,7 +77,7 @@ export const spec = {
 		DecisionInfo: {
 			outcome: 'allowed',
 			documentGuid: 'c957e9d0-1a02-4650-acdc-f9fdd689c210',
-			documentDate: '2023-08-17'
+			documentDate: '2024-08-17'
 		},
 
 		InvalidDecisionInfo: {
@@ -140,11 +140,11 @@ export const spec = {
 					},
 					appealStatus: 'awaiting_lpa_questionnaire',
 					appealType: 'household',
-					createdAt: '2023-02-16T11:43:27.096Z',
+					createdAt: '2024-02-16T11:43:27.096Z',
 					localPlanningDepartment: 'Wiltshire Council',
 					appellantCaseStatus: 'Incomplete',
 					lpaQuestionnaireStatus: 'Incomplete',
-					dueDate: '2023-06-18T00:00:00.000Z'
+					dueDate: '2024-06-18T00:00:00.000Z'
 				}
 			],
 			page: 1,
@@ -364,13 +364,13 @@ export const spec = {
 			inspector: 'f7ea429b-65d8-4c44-8fc2-7f1a34069855'
 		},
 		StartCaseRequest: {
-			startDate: '2023-05-09'
+			startDate: '2024-05-09'
 		},
 		StartCaseResponse: {
-			finalCommentReviewDate: '2023-08-09',
-			issueDeterminationDate: '2023-08-10',
-			lpaQuestionnaireDueDate: '2023-08-11',
-			statementReviewDate: '2023-08-12'
+			finalCommentReviewDate: '2024-08-09',
+			issueDeterminationDate: '2024-08-10',
+			lpaQuestionnaireDueDate: '2024-08-11',
+			statementReviewDate: '2024-08-12'
 		},
 		SingleLPAQuestionnaireResponse: {
 			affectsListedBuildingDetails: [
@@ -385,7 +385,7 @@ export const spec = {
 				county: 'Tadley',
 				postCode: 'RG26 4BX'
 			},
-			communityInfrastructureLevyAdoptionDate: '2023-05-09T01:00:00.000Z',
+			communityInfrastructureLevyAdoptionDate: '2024-05-09T01:00:00.000Z',
 			designatedSites: [
 				{
 					name: 'cSAC',
@@ -476,7 +476,7 @@ export const spec = {
 			}
 		},
 		UpdateAppellantCaseRequest: {
-			appealDueDate: '2023-12-13',
+			appealDueDate: '2024-12-13',
 			applicantFirstName: 'Fiona',
 			applicantSurname: 'Burgess',
 			areAllOwnersKnown: true,
@@ -524,7 +524,7 @@ export const spec = {
 			isPublicRightOfWay: true,
 			isSensitiveArea: true,
 			isTheSiteWithinAnAONB: true,
-			lpaQuestionnaireDueDate: '2023-06-21',
+			lpaQuestionnaireDueDate: '2024-06-21',
 			meetsOrExceedsThresholdOrCriteriaInColumn2: true,
 			scheduleType: 1,
 			sensitiveAreaDetails: 'The area is liable to flooding',
@@ -532,19 +532,19 @@ export const spec = {
 		},
 		UpdateLPAQuestionnaireResponse: {},
 		CreateSiteVisitRequest: {
-			visitDate: '2023-07-07',
+			visitDate: '2024-07-07',
 			visitEndTime: '18:00',
 			visitStartTime: '16:00',
 			visitType: 'access required'
 		},
 		CreateSiteVisitResponse: {
-			visitDate: '2023-07-07T01:00:00.000Z',
+			visitDate: '2024-07-07T01:00:00.000Z',
 			visitEndTime: '18:00',
 			visitStartTime: '16:00',
 			visitType: 'access required'
 		},
 		UpdateSiteVisitRequest: {
-			visitDate: '2023-07-09',
+			visitDate: '2024-07-09',
 			visitEndTime: '12:00',
 			visitStartTime: '10:00',
 			visitType: 'Accompanied',
@@ -552,7 +552,7 @@ export const spec = {
 			siteVisitChangeType: 'all'
 		},
 		UpdateSiteVisitResponse: {
-			visitDate: '2023-07-09T01:00:00.000Z',
+			visitDate: '2024-07-09T01:00:00.000Z',
 			visitEndTime: '12:00',
 			visitStartTime: '10:00',
 			visitType: 'Accompanied',
@@ -563,7 +563,7 @@ export const spec = {
 			appealId: 2,
 			siteVisitId: 1,
 			visitType: 'Access required',
-			visitDate: '2023-07-07',
+			visitDate: '2024-07-07',
 			visitEndTime: '18:00',
 			visitStartTime: '16:00'
 		},
@@ -726,16 +726,16 @@ export const spec = {
 			siteId: 1
 		},
 		UpdateAppealTimetableRequest: {
-			finalCommentReviewDate: '2023-08-09',
-			issueDeterminationDate: '2023-08-10',
-			lpaQuestionnaireDueDate: '2023-08-11',
-			statementReviewDate: '2023-08-12'
+			finalCommentReviewDate: '2024-08-09',
+			issueDeterminationDate: '2024-08-10',
+			lpaQuestionnaireDueDate: '2024-08-11',
+			statementReviewDate: '2024-08-12'
 		},
 		UpdateAppealTimetableResponse: {
-			finalCommentReviewDate: '2023-08-09T01:00:00.000Z',
-			issueDeterminationDate: '2023-08-10T01:00:00.000Z',
-			lpaQuestionnaireDueDate: '2023-08-11T01:00:00.000Z',
-			statementReviewDate: '2023-08-12T01:00:00.000Z'
+			finalCommentReviewDate: '2024-08-09T01:00:00.000Z',
+			issueDeterminationDate: '2024-08-10T01:00:00.000Z',
+			lpaQuestionnaireDueDate: '2024-08-11T01:00:00.000Z',
+			statementReviewDate: '2024-08-12T01:00:00.000Z'
 		},
 		AllDocumentRedactionStatusesResponse: {
 			id: 1,
@@ -745,7 +745,7 @@ export const spec = {
 			documents: [
 				{
 					id: '987e66e0-1db4-404b-8213-8082919159e9',
-					receivedDate: '2023-09-23',
+					receivedDate: '2024-09-23',
 					redactionStatus: 1
 				}
 			]
@@ -754,7 +754,7 @@ export const spec = {
 			documents: [
 				{
 					id: '987e66e0-1db4-404b-8213-8082919159e9',
-					receivedDate: '2023-09-23',
+					receivedDate: '2024-09-23',
 					redactionStatus: 1
 				}
 			]
@@ -781,7 +781,7 @@ export const spec = {
 			{
 				azureAdUserId: 'f7ea429b-65d8-4c44-8fc2-7f1a34069855',
 				details: 'The case officer 13de469c-8de6-4908-97cd-330ea73df618 was added to the team',
-				loggedDate: '2023-09-26T16:22:20.688Z'
+				loggedDate: '2024-09-26T16:22:20.688Z'
 			}
 		]
 	},
@@ -954,7 +954,7 @@ export const spec = {
 			properties: {
 				withdrawalRequestDate: {
 					type: 'string',
-					example: '2023-10-11'
+					example: '2024-10-11'
 				}
 			}
 		}

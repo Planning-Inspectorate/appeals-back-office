@@ -20,7 +20,7 @@ router.get(
 		}
 		#swagger.responses[200] = {
 			description: 'List of allocation specialisms',
-			schema: { $ref: '#/definitions/AllocationSpecialismsResponse' },
+			schema: { $ref: '#/components/schemas/AllocationSpecialismsResponse' },
 		}
 		#swagger.responses[400] = {}
 	 */
@@ -40,7 +40,7 @@ router.get(
 		}
 		#swagger.responses[200] = {
 			description: 'List of allocation levels',
-			schema: { $ref: '#/definitions/AllocationLevelsResponse' },
+			schema: { $ref: '#/components/schemas/AllocationLevelsResponse' },
 		}
 		#swagger.responses[400] = {}
 	 */
@@ -61,12 +61,12 @@ router.patch(
 		#swagger.requestBody = {
 			in: 'body',
 			description: 'Appeal allocation',
-			schema: { $ref: '#/definitions/AppealAllocation' },
+			schema: { $ref: '#/components/schemas/AppealAllocation' },
 			required: true
 		}
 		#swagger.responses[200] = {
 			description: 'Patch appeal allocation',
-			schema: { $ref: '#/definitions/AppealAllocation' },
+			schema: { $ref: '#/components/schemas/AppealAllocation' },
 		}
 		#swagger.responses[400] = {}
 	 */

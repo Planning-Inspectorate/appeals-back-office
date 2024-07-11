@@ -17,7 +17,7 @@ router.get(
 		}
 		#swagger.responses[200] = {
 			description: 'Procedure types',
-			schema: { $ref: '#/definitions/AllProcedureTypesResponse' },
+			schema: { $ref: '#/components/schemas/AllProcedureTypesResponse' },
 		}
 		#swagger.responses[400] = {}
 	 */

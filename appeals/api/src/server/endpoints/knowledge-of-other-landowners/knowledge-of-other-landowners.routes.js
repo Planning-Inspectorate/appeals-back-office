@@ -17,7 +17,7 @@ router.get(
 		}
 		#swagger.responses[200] = {
 			description: 'Knowledge of other landowners values',
-			schema: { $ref: '#/definitions/AllKnowledgeOfOtherLandownersResponse' },
+			schema: { $ref: '#/components/schemas/AllKnowledgeOfOtherLandownersResponse' },
 		}
 		#swagger.responses[400] = {}
 	 */
