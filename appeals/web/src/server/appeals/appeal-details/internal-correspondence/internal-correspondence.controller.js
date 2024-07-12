@@ -357,6 +357,6 @@ export const postDeleteInternalCorrespondenceDocument = async (request, response
 		response,
 		`/appeals-service/appeal-details/${currentAppeal.appealId}`,
 		`/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/manage-documents/{{folderId}}/{{documentId}}`,
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/select-document-type/{{folderId}}`
+		`/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/upload-documents/{{folderId}}`
 	);
 };
