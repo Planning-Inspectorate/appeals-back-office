@@ -9,6 +9,9 @@ export const timeZone = 'Europe/London';
  * @returns {string} formatted date string, either 'd MMM yyyy' or 'd MMMM yyyy'
  */
 function formatDate(date, shortened = true) {
+	if (!(date instanceof Date) || isNaN(date.getTime())) {
+		return '';
+	}
 	return formatInTimeZone(date, timeZone, shortened ? 'd MMM yyyy' : 'd MMMM yyyy', {
 		locale: enGB
 	});

@@ -8,7 +8,8 @@ describe('date-formatter', () => {
 			{ date: new Date('2024-11-30T15:00Z'), shortened: false, expected: '30 November 2024' },
 			{ date: new Date('2024-02-20T15:00Z'), shortened: true, expected: '20 Feb 2024' },
 			{ date: new Date('2024-12-24T20:00Z'), shortened: true, expected: '24 Dec 2024' },
-			{ date: new Date('2024-09-03T20:00Z'), shortened: true, expected: '3 Sep 2024' }
+			{ date: new Date('2024-09-03T20:00Z'), shortened: true, expected: '3 Sep 2024' },
+			{ date: new Date(''), shortened: true, expected: '' }
 		];
 
 		it.each(tests)('formats date $date in Europe/London', ({ date, shortened, expected }) => {
