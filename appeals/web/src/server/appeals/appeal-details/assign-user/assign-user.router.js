@@ -1,6 +1,6 @@
 import { Router as createRouter } from 'express';
 import config from '#environment/config.js';
-import asyncRoute from '#lib/async-route.js';
+import { asyncHandler } from '@pins/express';
 import { assertGroupAccess } from '#app/auth/auth.guards.js';
 import * as controller from './assign-user.controller.js';
 import * as validators from './assign-user.validator.js';
@@ -9,69 +9,69 @@ const assignUserRouter = createRouter({ mergeParams: true });
 
 assignUserRouter
 	.route('/case-officer')
-	.get(asyncRoute(controller.getAssignCaseOfficer))
+	.get(asyncHandler(controller.getAssignCaseOfficer))
 	.post(
 		assertGroupAccess(config.referenceData.appeals.caseOfficerGroupId),
 		validators.validateSearchTerm,
-		asyncRoute(controller.postAssignCaseOfficer)
+		asyncHandler(controller.postAssignCaseOfficer)
 	);
 
 assignUserRouter
 	.route('/inspector')
-	.get(asyncRoute(controller.getAssignInspector))
+	.get(asyncHandler(controller.getAssignInspector))
 	.post(
 		assertGroupAccess(config.referenceData.appeals.caseOfficerGroupId),
 		validators.validateSearchTerm,
-		asyncRoute(controller.postAssignInspector)
+		asyncHandler(controller.postAssignInspector)
 	);
 
 assignUserRouter
 	.route('/case-officer/:assigneeId/confirm')
-	.get(asyncRoute(controller.getAssignCaseOfficerCheckAndConfirm))
+	.get(asyncHandler(controller.getAssignCaseOfficerCheckAndConfirm))
 	.post(
 		assertGroupAccess(config.referenceData.appeals.caseOfficerGroupId),
 		validators.validatePostConfirmation(),
-		asyncRoute(controller.postAssignCaseOfficerCheckAndConfirm)
+		asyncHandler(controller.postAssignCaseOfficerCheckAndConfirm)
 	);
 
 assignUserRouter
 	.route('/inspector/:assigneeId/confirm')
-	.get(asyncRoute(controller.getAssignInspectorCheckAndConfirm))
+	.get(asyncHandler(controller.getAssignInspectorCheckAndConfirm))
 	.post(
 		assertGroupAccess(config.referenceData.appeals.caseOfficerGroupId),
 		validators.validatePostConfirmation(false, true),
-		asyncRoute(controller.postAssignInspectorCheckAndConfirm)
+		asyncHandler(controller.postAssignInspectorCheckAndConfirm)
 	);
 
 const unassignUserRouter = createRouter({ mergeParams: true });
 
 unassignUserRouter
 	.route('/inspector/:assigneeId/confirm')
-	.get(asyncRoute(controller.getUnassignInspectorCheckAndConfirm))
+	.get(asyncHandler(controller.getUnassignInspectorCheckAndConfirm))
 	.post(
 		assertGroupAccess(config.referenceData.appeals.caseOfficerGroupId),
 		validators.validatePostConfirmation(true, true),
-		asyncRoute(controller.postUnassignInspectorCheckAndConfirm)
+		asyncHandler(controller.postUnassignInspectorCheckAndConfirm)
 	);
 
 const assignNewUserRouter = createRouter({ mergeParams: true });
 
 assignNewUserRouter
 	.route('/case-officer')
-	.get(asyncRoute(controller.getAssignNewCaseOfficer))
+	.get(asyncHandler(controller.getAssignNewCaseOfficer))
 	.post(
 		assertGroupAccess(config.referenceData.appeals.caseOfficerGroupId),
 		validators.validateNewUserPostConfirmation(),
-		asyncRoute(controller.postAssignNewCaseOfficer)
+		asyncHandler(controller.postAssignNewCaseOfficer)
 	);
 
 assignNewUserRouter
 	.route('/inspector')
-	.get(asyncRoute(controller.getAssignNewInspector))
+	.get(asyncHandler(controller.getAssignNewInspector))
 	.post(
 		assertGroupAccess(config.referenceData.appeals.caseOfficerGroupId),
 		validators.validateNewUserPostConfirmation(true),
-		asyncRoute(controller.postAssignNewInspector)
+		asyncHandler(controller.postAssignNewInspector)
 	);
 
 export { assignUserRouter, unassignUserRouter, assignNewUserRouter };

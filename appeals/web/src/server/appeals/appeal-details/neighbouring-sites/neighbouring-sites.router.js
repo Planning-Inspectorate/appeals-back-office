@@ -1,51 +1,51 @@
 import { Router as createRouter } from 'express';
 import * as controller from './neighbouring-sites.controller.js';
-import asyncRoute from '#lib/async-route.js';
+import { asyncHandler } from '@pins/express';
 import * as validators from './neighbouring-sites.validators.js';
 
 const router = createRouter({ mergeParams: true });
 
 router
 	.route('/add/:source')
-	.get(asyncRoute(controller.getAddNeighbouringSite))
+	.get(asyncHandler(controller.getAddNeighbouringSite))
 	.post(
 		validators.validateAddNeighbouringSite,
 		validators.validatePostCode,
-		asyncRoute(controller.postAddNeighbouringSite)
+		asyncHandler(controller.postAddNeighbouringSite)
 	);
 
 router
 	.route('/add/:source/check-and-confirm')
-	.get(asyncRoute(controller.getAddNeighbouringSiteCheckAndConfirm))
-	.post(asyncRoute(controller.postAddNeighbouringSiteCheckAndConfirm));
+	.get(asyncHandler(controller.getAddNeighbouringSiteCheckAndConfirm))
+	.post(asyncHandler(controller.postAddNeighbouringSiteCheckAndConfirm));
 
-router.route('/manage').get(asyncRoute(controller.getManageNeighbouringSites));
+router.route('/manage').get(asyncHandler(controller.getManageNeighbouringSites));
 
 router
 	.route('/remove/site/:siteId')
-	.get(asyncRoute(controller.getRemoveNeighbouringSite))
+	.get(asyncHandler(controller.getRemoveNeighbouringSite))
 	.post(
 		validators.validateNeighbouringSiteDeleteAnswer,
-		asyncRoute(controller.postRemoveNeighbouringSite)
+		asyncHandler(controller.postRemoveNeighbouringSite)
 	);
 
 router
 	.route('/change/affected')
-	.get(asyncRoute(controller.getChangeNeighbouringSiteAffected))
-	.post(asyncRoute(controller.postChangeNeighbouringSiteAffected));
+	.get(asyncHandler(controller.getChangeNeighbouringSiteAffected))
+	.post(asyncHandler(controller.postChangeNeighbouringSiteAffected));
 
 router
 	.route('/change/site/:siteId')
-	.get(asyncRoute(controller.getChangeNeighbouringSite))
+	.get(asyncHandler(controller.getChangeNeighbouringSite))
 	.post(
 		validators.validateAddNeighbouringSite,
 		validators.validatePostCode,
-		asyncRoute(controller.postChangeNeighbouringSite)
+		asyncHandler(controller.postChangeNeighbouringSite)
 	);
 
 router
 	.route('/change/site/:siteId/check-and-confirm')
-	.get(asyncRoute(controller.getChangeNeighbouringSiteCheckAndConfirm))
-	.post(asyncRoute(controller.postChangeNeighbouringSiteCheckAndConfirm));
+	.get(asyncHandler(controller.getChangeNeighbouringSiteCheckAndConfirm))
+	.post(asyncHandler(controller.postChangeNeighbouringSiteCheckAndConfirm));
 
 export default router;

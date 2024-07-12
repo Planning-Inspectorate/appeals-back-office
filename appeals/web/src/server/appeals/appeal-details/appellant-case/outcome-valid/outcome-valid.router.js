@@ -1,7 +1,7 @@
 import { Router as createRouter } from 'express';
 import * as controller from './outcome-valid.controller.js';
 import * as validators from './outcome-valid.validators.js';
-import asyncRoute from '#lib/async-route.js';
+import { asyncHandler } from '@pins/express';
 
 const router = createRouter({ mergeParams: true });
 
@@ -12,7 +12,7 @@ router
 		validators.validateValidDateFields,
 		validators.validateValidDateValid,
 		validators.validateValidDateInPastOrToday,
-		asyncRoute(controller.postValidDate)
+		asyncHandler(controller.postValidDate)
 	);
 
 router.route('/confirmation').get(controller.getConfirmation);

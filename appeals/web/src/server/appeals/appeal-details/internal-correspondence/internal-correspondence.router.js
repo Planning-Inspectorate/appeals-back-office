@@ -1,6 +1,6 @@
 import { Router as createRouter } from 'express';
 import config from '#environment/config.js';
-import asyncRoute from '#lib/async-route.js';
+import { asyncHandler } from '@pins/express';
 import * as controller from './internal-correspondence.controller.js';
 import {
 	validateCaseFolderId,
@@ -16,20 +16,20 @@ const router = createRouter({ mergeParams: true });
 
 router
 	.route('/:correspondenceCategory/upload-documents/:folderId')
-	.get(validateAppeal, validateCaseFolderId, asyncRoute(controller.getDocumentUpload))
-	.post(validateAppeal, validateCaseFolderId, asyncRoute(controller.postDocumentUploadPage));
+	.get(validateAppeal, validateCaseFolderId, asyncHandler(controller.getDocumentUpload))
+	.post(validateAppeal, validateCaseFolderId, asyncHandler(controller.postDocumentUploadPage));
 
 router
 	.route('/:correspondenceCategory/upload-documents/:folderId/:documentId')
-	.get(validateAppeal, validateCaseFolderId, asyncRoute(controller.getDocumentVersionUpload))
-	.post(validateAppeal, validateCaseFolderId, asyncRoute(controller.postDocumentVersionUpload));
+	.get(validateAppeal, validateCaseFolderId, asyncHandler(controller.getDocumentVersionUpload))
+	.post(validateAppeal, validateCaseFolderId, asyncHandler(controller.postDocumentVersionUpload));
 
 router
 	.route([
 		'/:correspondenceCategory/add-document-details/:folderId',
 		'/:correspondenceCategory/add-document-details/:folderId/:documentId'
 	])
-	.get(validateAppeal, validateCaseFolderId, asyncRoute(controller.getAddDocumentDetails))
+	.get(validateAppeal, validateCaseFolderId, asyncHandler(controller.getAddDocumentDetails))
 	.post(
 		validateAppeal,
 		validateCaseFolderId,
@@ -39,34 +39,42 @@ router
 		documentsValidators.validateDocumentDetailsReceivedDateIsNotFutureDate,
 		documentsValidators.validateDocumentDetailsRedactionStatuses,
 		assertGroupAccess(config.referenceData.appeals.caseOfficerGroupId),
-		asyncRoute(controller.postAddDocumentDetails)
+		asyncHandler(controller.postAddDocumentDetails)
 	);
 
 router
 	.route('/:correspondenceCategory/check-your-answers/:folderId')
-	.get(validateAppeal, validateCaseFolderId, asyncRoute(controller.getAddDocumentsCheckAndConfirm))
+	.get(
+		validateAppeal,
+		validateCaseFolderId,
+		asyncHandler(controller.getAddDocumentsCheckAndConfirm)
+	)
 	.post(
 		validateAppeal,
 		validateCaseFolderId,
-		asyncRoute(controller.postAddDocumentsCheckAndConfirm)
+		asyncHandler(controller.postAddDocumentsCheckAndConfirm)
 	);
 
 router
 	.route('/:correspondenceCategory/check-your-answers/:folderId/:documentId')
-	.get(validateAppeal, validateCaseFolderId, asyncRoute(controller.getAddDocumentsCheckAndConfirm))
+	.get(
+		validateAppeal,
+		validateCaseFolderId,
+		asyncHandler(controller.getAddDocumentsCheckAndConfirm)
+	)
 	.post(
 		validateAppeal,
 		validateCaseFolderId,
-		asyncRoute(controller.postAddDocumentVersionCheckAndConfirm)
+		asyncHandler(controller.postAddDocumentVersionCheckAndConfirm)
 	);
 
 router
 	.route('/:correspondenceCategory/manage-documents/:folderId')
-	.get(validateCaseFolderId, asyncRoute(controller.getManageFolder));
+	.get(validateCaseFolderId, asyncHandler(controller.getManageFolder));
 
 router
 	.route('/:correspondenceCategory/manage-documents/:folderId/:documentId')
-	.get(validateCaseFolderId, asyncRoute(controller.getManageDocument));
+	.get(validateCaseFolderId, asyncHandler(controller.getManageDocument));
 
 router
 	.route('/:correspondenceCategory/change-document-details/:folderId/:documentId')
@@ -94,13 +102,13 @@ router
 	.get(
 		validateCaseFolderId,
 		validateCaseDocumentId,
-		asyncRoute(controller.getDeleteInternalCorrespondenceDocument)
+		asyncHandler(controller.getDeleteInternalCorrespondenceDocument)
 	)
 	.post(
 		validateCaseFolderId,
 		validateCaseDocumentId,
 		documentsValidators.validateDocumentDeleteAnswer,
-		asyncRoute(controller.postDeleteInternalCorrespondenceDocument)
+		asyncHandler(controller.postDeleteInternalCorrespondenceDocument)
 	);
 
 export default router;

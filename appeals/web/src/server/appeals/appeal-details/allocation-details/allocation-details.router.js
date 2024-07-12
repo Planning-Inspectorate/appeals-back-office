@@ -1,5 +1,5 @@
 import { Router as createRouter } from 'express';
-import asyncRoute from '#lib/async-route.js';
+import { asyncHandler } from '@pins/express';
 import * as allocationDetailsController from './allocation-details.controller.js';
 import * as validators from './allocation-details.validators.js';
 import { validateAppeal } from '../appeal-details.middleware.js';
@@ -16,13 +16,13 @@ router
 			permissionNames.viewCaseDetails,
 			permissionNames.viewAssignedCaseDetails
 		),
-		asyncRoute(allocationDetailsController.getAllocationDetailsLevels)
+		asyncHandler(allocationDetailsController.getAllocationDetailsLevels)
 	)
 	.post(
 		validateAppeal,
 		validators.validateAllocationDetailsLevels,
 		assertUserHasPermission(permissionNames.updateCase),
-		asyncRoute(allocationDetailsController.postAllocationDetailsLevels)
+		asyncHandler(allocationDetailsController.postAllocationDetailsLevels)
 	);
 
 router
@@ -33,13 +33,13 @@ router
 			permissionNames.viewCaseDetails,
 			permissionNames.viewAssignedCaseDetails
 		),
-		asyncRoute(allocationDetailsController.getAllocationDetailsSpecialism)
+		asyncHandler(allocationDetailsController.getAllocationDetailsSpecialism)
 	)
 	.post(
 		validateAppeal,
 		validators.validateAllocationDetailsSpecialisms,
 		assertUserHasPermission(permissionNames.updateCase),
-		asyncRoute(allocationDetailsController.postAllocationDetailsSpecialism)
+		asyncHandler(allocationDetailsController.postAllocationDetailsSpecialism)
 	);
 
 router
@@ -50,12 +50,12 @@ router
 			permissionNames.viewCaseDetails,
 			permissionNames.viewAssignedCaseDetails
 		),
-		asyncRoute(allocationDetailsController.getAllocationDetailsCheckAnswers)
+		asyncHandler(allocationDetailsController.getAllocationDetailsCheckAnswers)
 	)
 	.post(
 		validateAppeal,
 		assertUserHasPermission(permissionNames.updateCase),
-		asyncRoute(allocationDetailsController.postAllocationDetailsCheckAnswers)
+		asyncHandler(allocationDetailsController.postAllocationDetailsCheckAnswers)
 	);
 
 export default router;

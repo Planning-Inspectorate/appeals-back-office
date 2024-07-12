@@ -1,5 +1,5 @@
 import { Router as createRouter } from 'express';
-import asyncRoute from '#lib/async-route.js';
+import { asyncHandler } from '@pins/express';
 import * as controller from './outcome-incomplete.controller.js';
 import * as validators from './outcome-incomplete.validators.js';
 
@@ -7,24 +7,24 @@ const router = createRouter({ mergeParams: true });
 
 router
 	.route('/')
-	.get(asyncRoute(controller.getIncompleteReason))
+	.get(asyncHandler(controller.getIncompleteReason))
 	.post(
 		validators.validateIncompleteReason,
 		validators.validateIncompleteReasonTextItems,
-		asyncRoute(controller.postIncompleteReason)
+		asyncHandler(controller.postIncompleteReason)
 	);
 
 router
 	.route('/date')
-	.get(asyncRoute(controller.getUpdateDueDate))
+	.get(asyncHandler(controller.getUpdateDueDate))
 	.post(
 		validators.validateDueDateFields,
 		validators.validateDueDateValid,
 		validators.validateDueDateInFuture,
 		validators.validateDueDateIsBusinessDay,
-		asyncRoute(controller.postUpdateDueDate)
+		asyncHandler(controller.postUpdateDueDate)
 	);
 
-router.route('/confirmation').get(asyncRoute(controller.getConfirmation));
+router.route('/confirmation').get(asyncHandler(controller.getConfirmation));
 
 export default router;

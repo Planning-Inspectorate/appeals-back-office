@@ -1,6 +1,6 @@
 import { Router as createRouter } from 'express';
 import config from '#environment/config.js';
-import asyncRoute from '#lib/async-route.js';
+import { asyncHandler } from '@pins/express';
 import { assertGroupAccess } from '#app/auth/auth.guards.js';
 import * as validators from './site-visit.validators.js';
 import * as controller from './site-visit.controller.js';
@@ -9,7 +9,7 @@ const router = createRouter({ mergeParams: true });
 
 router
 	.route('/schedule-visit')
-	.get(asyncRoute(controller.getScheduleSiteVisit))
+	.get(asyncHandler(controller.getScheduleSiteVisit))
 	.post(
 		assertGroupAccess(config.referenceData.appeals.caseOfficerGroupId),
 		validators.validateSiteVisitType,
@@ -19,12 +19,12 @@ router
 		validators.validateVisitStartTime,
 		validators.validateVisitEndTime,
 		validators.validateVisitStartTimeBeforeEndTime,
-		asyncRoute(controller.postScheduleSiteVisit)
+		asyncHandler(controller.postScheduleSiteVisit)
 	);
 
 router
 	.route('/manage-visit')
-	.get(asyncRoute(controller.getManageSiteVisit))
+	.get(asyncHandler(controller.getManageSiteVisit))
 	.post(
 		assertGroupAccess(config.referenceData.appeals.caseOfficerGroupId),
 		validators.validateSiteVisitType,
@@ -34,22 +34,22 @@ router
 		validators.validateVisitStartTime,
 		validators.validateVisitEndTime,
 		validators.validateVisitStartTimeBeforeEndTime,
-		asyncRoute(controller.postManageSiteVisit)
+		asyncHandler(controller.postManageSiteVisit)
 	);
 
 router
 	.route('/visit-scheduled/:confirmationPageTypeToRender')
-	.get(asyncRoute(controller.getSiteVisitScheduled));
+	.get(asyncHandler(controller.getSiteVisitScheduled));
 
 router
 	.route('/set-visit-type')
-	.get(asyncRoute(controller.getSetVisitType))
+	.get(asyncHandler(controller.getSetVisitType))
 	.post(
 		assertGroupAccess(config.referenceData.appeals.caseOfficerGroupId),
 		validators.validateSiteVisitType,
-		asyncRoute(controller.postSetVisitType)
+		asyncHandler(controller.postSetVisitType)
 	);
 
-router.route('/visit-booked').get(asyncRoute(controller.getSiteVisitBooked));
+router.route('/visit-booked').get(asyncHandler(controller.getSiteVisitBooked));
 
 export default router;

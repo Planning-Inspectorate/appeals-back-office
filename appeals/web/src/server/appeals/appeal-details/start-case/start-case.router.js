@@ -1,21 +1,21 @@
 import { Router as createRouter } from 'express';
 import * as controller from './start-case.controller.js';
-import asyncRoute from '#lib/async-route.js';
+import { asyncHandler } from '@pins/express';
 
 const router = createRouter({ mergeParams: true });
 
 router
 	.route('/add')
-	.get(asyncRoute(controller.getStartDate))
-	.post(asyncRoute(controller.postStartDate));
+	.get(asyncHandler(controller.getStartDate))
+	.post(asyncHandler(controller.postStartDate));
 
-router.route('/add/confirmation').get(asyncRoute(controller.getAddConfirmation));
+router.route('/add/confirmation').get(asyncHandler(controller.getAddConfirmation));
 
 router
 	.route('/change')
-	.get(asyncRoute(controller.getChangeDate))
-	.post(asyncRoute(controller.postChangeDate));
+	.get(asyncHandler(controller.getChangeDate))
+	.post(asyncHandler(controller.postChangeDate));
 
-router.route('/change/confirmation').get(asyncRoute(controller.getChangeConfirmation));
+router.route('/change/confirmation').get(asyncHandler(controller.getChangeConfirmation));
 
 export default router;

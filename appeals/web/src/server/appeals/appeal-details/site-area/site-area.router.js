@@ -1,13 +1,13 @@
 import { Router as createRouter } from 'express';
 import * as controllers from './site-area.controller.js';
-import asyncRoute from '#lib/async-route.js';
+import { asyncHandler } from '@pins/express';
 import * as validators from './site-area.validators.js';
 
 const router = createRouter({ mergeParams: true });
 
 router
 	.route('/change')
-	.get(asyncRoute(controllers.getChangeSiteArea))
-	.post(validators.validateSiteArea, asyncRoute(controllers.postChangeSiteArea));
+	.get(asyncHandler(controllers.getChangeSiteArea))
+	.post(validators.validateSiteArea, asyncHandler(controllers.postChangeSiteArea));
 
 export default router;

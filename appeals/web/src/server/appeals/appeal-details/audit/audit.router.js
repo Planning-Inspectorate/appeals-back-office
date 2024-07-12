@@ -1,9 +1,9 @@
 import { Router as createRouter } from 'express';
-import asyncRoute from '#lib/async-route.js';
+import { asyncHandler } from '@pins/express';
 import { renderAudit } from './audit.controller.js';
 
 const auditRouter = createRouter({ mergeParams: true });
 
-auditRouter.route('/').get(asyncRoute(renderAudit));
+auditRouter.route('/').get(asyncHandler(renderAudit));
 
 export { auditRouter };

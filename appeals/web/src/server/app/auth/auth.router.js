@@ -1,5 +1,5 @@
 import { Router as createRouter } from 'express';
-import asyncRoute from '../../lib/async-route.js';
+import { asyncHandler } from '@pins/express';
 import {
 	completeMsalAuthentication,
 	startMsalAuthentication,
@@ -13,14 +13,16 @@ import { addApiClientToRequest } from '#lib/middleware/add-apiclient-to-request.
 
 const router = createRouter();
 
-router.route('/auth/redirect').get(assertIsUnauthenticated, asyncRoute(completeMsalAuthentication));
+router
+	.route('/auth/redirect')
+	.get(assertIsUnauthenticated, asyncHandler(completeMsalAuthentication));
 
 // If the request continues beyond the MSAL redirectUri, then set the locals
 // derived from the auth session and clear any pending auth data. The latter
 // prevents attackers from hitting /auth/redirect in any meaningful way.
 router.use(registerAuthLocals, clearAuthenticationData);
 
-router.route('/auth/signin').get(assertIsUnauthenticated, asyncRoute(startMsalAuthentication));
+router.route('/auth/signin').get(assertIsUnauthenticated, asyncHandler(startMsalAuthentication));
 
 const allowedGroups = config.referenceData.appeals;
 
@@ -29,7 +31,7 @@ router
 	.get(
 		assertGroupAccess(allowedGroups.caseOfficerGroupId),
 		addApiClientToRequest,
-		asyncRoute(getAccessToken)
+		asyncHandler(getAccessToken)
 	);
 
 export default router;

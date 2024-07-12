@@ -1,6 +1,6 @@
 import { Router as createRouter } from 'express';
 import config from '#environment/config.js';
-import asyncRoute from '#lib/async-route.js';
+import { asyncHandler } from '@pins/express';
 import * as controller from './lpa-questionnaire.controller.js';
 import * as validators from './lpa-questionnaire.validators.js';
 import * as documentsValidators from '../../appeal-documents/appeal-documents.validators.js';
@@ -68,26 +68,26 @@ router.use(
 
 router
 	.route('/:lpaQuestionnaireId')
-	.get(validateAppeal, asyncRoute(controller.getLpaQuestionnaire))
+	.get(validateAppeal, asyncHandler(controller.getLpaQuestionnaire))
 	.post(
 		validateAppeal,
 		assertUserHasPermission(permissionNames.updateCase),
 		validators.validateReviewOutcome,
 		assertGroupAccess(config.referenceData.appeals.caseOfficerGroupId),
-		asyncRoute(controller.postLpaQuestionnaire)
+		asyncHandler(controller.postLpaQuestionnaire)
 	);
 router
 	.route('/:lpaQuestionnaireId/check-your-answers')
 	.get(
 		validateAppeal,
 		assertUserHasPermission(permissionNames.updateCase),
-		asyncRoute(controller.getCheckAndConfirm)
+		asyncHandler(controller.getCheckAndConfirm)
 	)
 	.post(
 		validateAppeal,
 		assertUserHasPermission(permissionNames.updateCase),
 		assertGroupAccess(config.referenceData.appeals.caseOfficerGroupId),
-		asyncRoute(controller.postCheckAndConfirm)
+		asyncHandler(controller.postCheckAndConfirm)
 	);
 
 router
@@ -95,7 +95,7 @@ router
 	.get(
 		validateAppeal,
 		assertUserHasPermission(permissionNames.updateCase),
-		asyncRoute(controller.getConfirmation)
+		asyncHandler(controller.getConfirmation)
 	);
 
 router
@@ -105,17 +105,21 @@ router
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		validateCaseDocumentId,
-		asyncRoute(controller.getAddDocuments)
+		asyncHandler(controller.getAddDocuments)
 	)
-	.post(validateAppeal, validateCaseFolderId, asyncRoute(controller.postAddDocuments));
+	.post(validateAppeal, validateCaseFolderId, asyncHandler(controller.postAddDocuments));
 
 router
 	.route('/:lpaQuestionnaireId/add-documents/:folderId/check-your-answers')
-	.get(validateAppeal, validateCaseFolderId, asyncRoute(controller.getAddDocumentsCheckAndConfirm))
+	.get(
+		validateAppeal,
+		validateCaseFolderId,
+		asyncHandler(controller.getAddDocumentsCheckAndConfirm)
+	)
 	.post(
 		validateAppeal,
 		validateCaseFolderId,
-		asyncRoute(controller.postAddDocumentsCheckAndConfirm)
+		asyncHandler(controller.postAddDocumentsCheckAndConfirm)
 	);
 
 router
@@ -125,17 +129,21 @@ router
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		validateCaseDocumentId,
-		asyncRoute(controller.getAddDocumentVersion)
+		asyncHandler(controller.getAddDocumentVersion)
 	)
-	.post(validateAppeal, validateCaseFolderId, asyncRoute(controller.postAddDocumentVersion));
+	.post(validateAppeal, validateCaseFolderId, asyncHandler(controller.postAddDocumentVersion));
 
 router
 	.route('/:lpaQuestionnaireId/add-documents/:folderId/:documentId/check-your-answers')
-	.get(validateAppeal, validateCaseFolderId, asyncRoute(controller.getAddDocumentsCheckAndConfirm))
+	.get(
+		validateAppeal,
+		validateCaseFolderId,
+		asyncHandler(controller.getAddDocumentsCheckAndConfirm)
+	)
 	.post(
 		validateAppeal,
 		validateCaseFolderId,
-		asyncRoute(controller.postAddDocumentVersionCheckAndConfirm)
+		asyncHandler(controller.postAddDocumentVersionCheckAndConfirm)
 	);
 
 router
@@ -144,7 +152,7 @@ router
 		validateAppeal,
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
-		asyncRoute(controller.getAddDocumentDetails)
+		asyncHandler(controller.getAddDocumentDetails)
 	)
 	.post(
 		validateAppeal,
@@ -156,7 +164,7 @@ router
 		documentsValidators.validateDocumentDetailsReceivedDateIsNotFutureDate,
 		documentsValidators.validateDocumentDetailsRedactionStatuses,
 		assertGroupAccess(config.referenceData.appeals.caseOfficerGroupId),
-		asyncRoute(controller.postAddDocumentDetails)
+		asyncHandler(controller.postAddDocumentDetails)
 	);
 
 router
@@ -165,7 +173,7 @@ router
 		validateAppeal,
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
-		asyncRoute(controller.getAddDocumentVersionDetails)
+		asyncHandler(controller.getAddDocumentVersionDetails)
 	)
 	.post(
 		validateAppeal,
@@ -177,7 +185,7 @@ router
 		documentsValidators.validateDocumentDetailsReceivedDateIsNotFutureDate,
 		documentsValidators.validateDocumentDetailsRedactionStatuses,
 		assertGroupAccess(config.referenceData.appeals.caseOfficerGroupId),
-		asyncRoute(controller.postDocumentVersionDetails)
+		asyncHandler(controller.postDocumentVersionDetails)
 	);
 
 router
@@ -185,7 +193,7 @@ router
 	.get(
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
-		asyncRoute(controller.getManageFolder)
+		asyncHandler(controller.getManageFolder)
 	);
 
 router
@@ -195,14 +203,14 @@ router
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		validateCaseDocumentId,
-		asyncRoute(controller.getManageDocument)
+		asyncHandler(controller.getManageDocument)
 	)
 	.post(
 		validateAppeal,
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		validateCaseDocumentId,
-		asyncRoute(controller.postAddDocumentDetails)
+		asyncHandler(controller.postAddDocumentDetails)
 	);
 
 router
@@ -211,7 +219,7 @@ router
 		validateAppeal,
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
-		asyncRoute(controller.getChangeDocumentVersionDetails)
+		asyncHandler(controller.getChangeDocumentVersionDetails)
 	)
 	.post(
 		validateAppeal,
@@ -223,7 +231,7 @@ router
 		documentsValidators.validateDocumentDetailsReceivedDateIsNotFutureDate,
 		documentsValidators.validateDocumentDetailsRedactionStatuses,
 		assertGroupAccess(config.referenceData.appeals.caseOfficerGroupId),
-		asyncRoute(controller.postChangeDocumentVersionDetails)
+		asyncHandler(controller.postChangeDocumentVersionDetails)
 	);
 
 router
@@ -233,7 +241,7 @@ router
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		validateCaseDocumentId,
-		asyncRoute(controller.getDeleteDocument)
+		asyncHandler(controller.getDeleteDocument)
 	)
 	.post(
 		validateAppeal,
@@ -241,7 +249,7 @@ router
 		validateCaseFolderId,
 		validateCaseDocumentId,
 		documentsValidators.validateDocumentDeleteAnswer,
-		asyncRoute(controller.postDeleteDocumentPage)
+		asyncHandler(controller.postDeleteDocumentPage)
 	);
 
 export default router;

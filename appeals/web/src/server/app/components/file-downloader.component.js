@@ -18,7 +18,7 @@ const validScanResult = AVSCAN_STATUS.SCANNED;
 /**
  * Download one document or redirects to its url if preview is active
  *
- * @param {{apiClient: import('got').Got, params: {caseId: number, guid: string, preview?: string}, session: SessionWithAuth}} request
+ * @param {{apiClient: import('got').Got, params: {caseId: string, guid: string, preview?: string}, session: SessionWithAuth}} request
  * @param {Response} response
  * @returns {Promise<Response>}
  */
@@ -81,7 +81,7 @@ export const getDocumentDownload = async ({ apiClient, params, session }, respon
 /**
  * Download one document or redirects to its url if preview is active
  *
- * @param {{apiClient: import('got').Got, params: {caseId: number, guid: string, preview?: string, version: string}, session: SessionWithAuth}} request
+ * @param {{apiClient: import('got').Got, params: {caseId: string, guid: string, preview?: string, version: string}, session: SessionWithAuth}} request
  * @param {Response} response
  * @returns {Promise<Response>}
  */

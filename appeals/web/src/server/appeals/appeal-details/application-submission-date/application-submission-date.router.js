@@ -1,17 +1,17 @@
 import { Router as createRouter } from 'express';
 import * as controllers from './application-submission-date.controller.js';
-import asyncRoute from '#lib/async-route.js';
+import { asyncHandler } from '@pins/express';
 import * as validators from './application-submission-date.validators.js';
 
 const router = createRouter({ mergeParams: true });
 
 router
 	.route('/change')
-	.get(asyncRoute(controllers.getChangeApplicationSubmissionDate))
+	.get(asyncHandler(controllers.getChangeApplicationSubmissionDate))
 	.post(
 		validators.validateDueDateFields,
 		validators.validateDueDateValid,
-		asyncRoute(controllers.postChangeApplicationSubmissionDate)
+		asyncHandler(controllers.postChangeApplicationSubmissionDate)
 	);
 
 export default router;
