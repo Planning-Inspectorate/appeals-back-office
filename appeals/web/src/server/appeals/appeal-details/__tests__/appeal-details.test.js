@@ -1506,7 +1506,7 @@ describe('appeal-details', () => {
 				expect(columnHtml).toContain('Sent</td>');
 			});
 
-			it('should render a row in the case documentation accordion with no text in the Due date column', async () => {
+			it('should render a row in the case documentation accordion with "Not applicable" in the Due date column', async () => {
 				const response = await request.get(`${baseUrl}/1`);
 
 				const columnHtml = parseHtml(response.text, {
@@ -1516,7 +1516,7 @@ describe('appeal-details', () => {
 
 				expect(columnHtml).toMatchSnapshot();
 				expect(columnHtml).toContain(
-					'<td class="govuk-table__cell appeal-decision-due-date"></td>'
+					'<td class="govuk-table__cell appeal-decision-due-date">Not applicable</td>'
 				);
 			});
 
