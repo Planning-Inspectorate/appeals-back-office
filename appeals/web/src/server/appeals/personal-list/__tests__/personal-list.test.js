@@ -237,7 +237,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			'Complete',
 			'',
 			'',
-			false
+			true
 		);
 		expect(result).toEqual(
 			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/appellant-case">Review appellant case</a>`
@@ -252,14 +252,14 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			'Incomplete',
 			'',
 			'',
-			false
+			true
 		);
 		expect(result).toEqual(
 			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/appellant-case">Awaiting appellant update</a>`
 		);
 	});
 
-	it('should return "Awaiting appellant update" text for validation status with incomplete appellant case and isInspector true', () => {
+	it('should return "Awaiting appellant update" text for validation status with incomplete appellant case and isCaseOfficer false', () => {
 		const result = mapAppealStatusToActionRequiredHtml(
 			appealId,
 			'validation',
@@ -267,7 +267,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			'Incomplete',
 			'',
 			'',
-			true
+			false
 		);
 		expect(result).toEqual('Awaiting appellant update');
 	});
@@ -280,7 +280,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			'',
 			'',
 			'',
-			false
+			true
 		);
 		expect(result).toEqual('Awaiting LPA questionnaire');
 	});
@@ -293,14 +293,14 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			'',
 			'Incomplete',
 			'',
-			false
+			true
 		);
 		expect(result).toEqual(
 			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}">Awaiting LPA update</a>`
 		);
 	});
 
-	it('should return "Awaiting LPA update" text for lpa_questionnaire status with incomplete LPA questionnaire and isInspector true', () => {
+	it('should return "Awaiting LPA update" text for lpa_questionnaire status with incomplete LPA questionnaire and isCaseOfficer false', () => {
 		const result = mapAppealStatusToActionRequiredHtml(
 			appealId,
 			'lpa_questionnaire',
@@ -308,7 +308,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			'',
 			'Incomplete',
 			'',
-			true
+			false
 		);
 		expect(result).toEqual('Awaiting LPA update');
 	});
@@ -321,14 +321,14 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			'',
 			'',
 			'',
-			false
+			true
 		);
 		expect(result).toEqual(
 			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}">Review LPA questionnaire</a>`
 		);
 	});
 
-	it('should return "Review LPA questionnaire" for lpa_questionnaire status with LPA questionnaire and isInspector true', () => {
+	it('should return "Review LPA questionnaire" for lpa_questionnaire status with LPA questionnaire and isCaseOfficer false', () => {
 		const result = mapAppealStatusToActionRequiredHtml(
 			appealId,
 			'lpa_questionnaire',
@@ -336,7 +336,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			'',
 			'',
 			'',
-			true
+			false
 		);
 		expect(result).toEqual('Review LPA questionnaire');
 	});
@@ -349,7 +349,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			'',
 			'',
 			'2024-01-01',
-			false
+			true
 		);
 		expect(result).toEqual('LPA questionnaire overdue');
 	});
@@ -362,7 +362,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			'',
 			'',
 			'',
-			false
+			true
 		);
 		expect(result).toEqual(
 			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/issue-decision/decision">Issue decision</a>`
@@ -377,7 +377,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			'',
 			'',
 			'',
-			false
+			true
 		);
 		expect(result).toEqual(
 			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/change-appeal-type/add-horizon-reference">Update Horizon reference</a>`
@@ -392,7 +392,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			'',
 			'',
 			'',
-			false
+			true
 		);
 		expect(result).toEqual(
 			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}">View case</a>`
