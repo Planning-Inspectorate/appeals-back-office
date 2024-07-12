@@ -1,5 +1,5 @@
 import { Router as createRouter } from 'express';
-import asyncRoute from '#lib/async-route.js';
+import { asyncHandler } from '@pins/express';
 import startDateRouter from './start-case/start-case.router.js';
 import lpaQuestionnaireRouter from './lpa-questionnaire/lpa-questionnaire.router.js';
 import allocationDetailsRouter from './allocation-details/allocation-details.router.js';
@@ -40,7 +40,7 @@ router
 			permissionNames.viewCaseDetails,
 			permissionNames.viewAssignedCaseDetails
 		),
-		asyncRoute(controller.viewAppealDetails)
+		asyncHandler(controller.viewAppealDetails)
 	);
 
 router.use(

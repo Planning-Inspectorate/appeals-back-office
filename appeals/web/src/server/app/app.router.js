@@ -1,7 +1,7 @@
 import config from '#environment/config.js';
 import { assertGroupAccess } from './auth/auth.guards.js';
 import { Router as createRouter } from 'express';
-import asyncRoute from '#lib/async-route.js';
+import { asyncHandler } from '@pins/express';
 import authRouter from './auth/auth.router.js';
 import appealsRouter from '../appeals/appeals.router.js';
 import { installAuthMock } from '#testing/app/mocks/auth.js';
@@ -64,11 +64,11 @@ router.route('/auth/signout').get(handleSignout);
 
 router
 	.route('/documents/:caseId/download/:guid/:preview?')
-	.get(addApiClientToRequest, asyncRoute(getDocumentDownload));
+	.get(addApiClientToRequest, asyncHandler(getDocumentDownload));
 
 router
 	.route('/documents/:caseId/download/:guid/:version/:preview?')
-	.get(addApiClientToRequest, asyncRoute(getDocumentDownloadByVersion));
+	.get(addApiClientToRequest, asyncHandler(getDocumentDownloadByVersion));
 
 router.use('/appeals-service', addApiClientToRequest, appealsRouter);
 

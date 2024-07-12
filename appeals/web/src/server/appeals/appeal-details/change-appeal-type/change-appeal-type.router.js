@@ -1,5 +1,5 @@
 import { Router as createRouter } from 'express';
-import asyncRoute from '#lib/async-route.js';
+import { asyncHandler } from '@pins/express';
 import * as controller from './change-appeal-type.controller.js';
 import * as validators from './change-appeal-type.validators.js';
 
@@ -7,35 +7,35 @@ const router = createRouter({ mergeParams: true });
 
 router
 	.route('/appeal-type')
-	.get(asyncRoute(controller.getAppealType))
-	.post(validators.validateAppealType, asyncRoute(controller.postAppealType));
+	.get(asyncHandler(controller.getAppealType))
+	.post(validators.validateAppealType, asyncHandler(controller.postAppealType));
 
 router
 	.route('/resubmit')
-	.get(asyncRoute(controller.getResubmitAppeal))
-	.post(validators.validateResubmitAppeal, asyncRoute(controller.postResubmitAppeal));
+	.get(asyncHandler(controller.getResubmitAppeal))
+	.post(validators.validateResubmitAppeal, asyncHandler(controller.postResubmitAppeal));
 
 router
 	.route('/change-appeal-final-date')
-	.get(asyncRoute(controller.getChangeAppealFinalDate))
+	.get(asyncHandler(controller.getChangeAppealFinalDate))
 	.post(
 		validators.validateChangeAppealFinalDateFields,
 		validators.validateChangeAppealFinalDateValid,
 		validators.validateChangeAppealFinalDateIsBusinessDay,
 		validators.validateChangeAppealFinalDateInFuture,
-		asyncRoute(controller.postChangeAppealFinalDate)
+		asyncHandler(controller.postChangeAppealFinalDate)
 	);
 
 router
 	.route('/add-horizon-reference')
-	.get(asyncRoute(controller.getAddHorizonReference))
-	.post(validators.validateHorizonReference, asyncRoute(controller.postAddHorizonReference));
+	.get(asyncHandler(controller.getAddHorizonReference))
+	.post(validators.validateHorizonReference, asyncHandler(controller.postAddHorizonReference));
 
 router
 	.route('/check-transfer')
-	.get(asyncRoute(controller.getCheckTransfer))
-	.post(validators.validateCheckTransfer, asyncRoute(controller.postCheckTransfer));
+	.get(asyncHandler(controller.getCheckTransfer))
+	.post(validators.validateCheckTransfer, asyncHandler(controller.postCheckTransfer));
 
-router.route('/confirm-resubmit').get(asyncRoute(controller.getConfirmResubmit));
+router.route('/confirm-resubmit').get(asyncHandler(controller.getConfirmResubmit));
 
 export default router;

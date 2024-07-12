@@ -1,37 +1,37 @@
 import { Router as createRouter } from 'express';
-import asyncRoute from '#lib/async-route.js';
+import { asyncHandler } from '@pins/express';
 import * as controller from './withdrawal.controller.js';
 import * as validators from './withdrawal.validators.js';
 
 const router = createRouter({ mergeParams: true });
 
-router.route('/view').get(asyncRoute(controller.getViewWithdrawalDocumentFolder));
+router.route('/view').get(asyncHandler(controller.getViewWithdrawalDocumentFolder));
 
 router
 	.route('/start')
-	.get(asyncRoute(controller.getWithdrawalRequestUpload))
-	.post(asyncRoute(controller.postWithdrawalRequestRequestUpload));
+	.get(asyncHandler(controller.getWithdrawalRequestUpload))
+	.post(asyncHandler(controller.postWithdrawalRequestRequestUpload));
 
 router
 	.route('/withdrawal-request-date')
-	.get(asyncRoute(controller.getDateWithdrawalRequest))
+	.get(asyncHandler(controller.getDateWithdrawalRequest))
 	.post(
 		validators.validateRequestDateFields,
 		validators.validateRequestDateValid,
 		validators.validateDueDateInPastOrToday,
-		asyncRoute(controller.postDateWithdrawalRequest)
+		asyncHandler(controller.postDateWithdrawalRequest)
 	);
 
 router
 	.route('/redaction-status')
-	.get(asyncRoute(controller.getRedactionStatus))
-	.post(validators.validateRedactionStatus, asyncRoute(controller.postRedactionStatus));
+	.get(asyncHandler(controller.getRedactionStatus))
+	.post(validators.validateRedactionStatus, asyncHandler(controller.postRedactionStatus));
 
 router
 	.route('/check-your-answers')
-	.get(asyncRoute(controller.getCheckYourAnswers))
-	.post(validators.validateCheckYourAnswers, asyncRoute(controller.postCheckYourAnswers));
+	.get(asyncHandler(controller.getCheckYourAnswers))
+	.post(validators.validateCheckYourAnswers, asyncHandler(controller.postCheckYourAnswers));
 
-router.route('/confirmation').get(asyncRoute(controller.getConfirmation));
+router.route('/confirmation').get(asyncHandler(controller.getConfirmation));
 
 export default router;

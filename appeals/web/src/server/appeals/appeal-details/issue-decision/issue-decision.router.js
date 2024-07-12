@@ -1,5 +1,5 @@
 import { Router as createRouter } from 'express';
-import asyncRoute from '#lib/async-route.js';
+import { asyncHandler } from '@pins/express';
 import * as controller from './issue-decision.controller.js';
 import * as validators from './issue-decision.validators.js';
 import { createTextAreaSanitizer } from '#lib/sanitizers/textarea-sanitizer.js';
@@ -9,43 +9,47 @@ const router = createRouter({ mergeParams: true });
 
 router
 	.route('/decision')
-	.get(asyncRoute(controller.getIssueDecision))
-	.post(validators.validateDecision, asyncRoute(controller.postIssueDecision));
+	.get(asyncHandler(controller.getIssueDecision))
+	.post(validators.validateDecision, asyncHandler(controller.postIssueDecision));
 
 router
 	.route('/decision-letter-upload')
-	.get(validateAppeal, asyncRoute(controller.getDecisionLetterUpload))
-	.post(validateAppeal, asyncRoute(controller.postDecisionLetterUpload));
+	.get(validateAppeal, asyncHandler(controller.getDecisionLetterUpload))
+	.post(validateAppeal, asyncHandler(controller.postDecisionLetterUpload));
 
 router
 	.route('/decision-letter-date')
-	.get(asyncRoute(controller.getDateDecisionLetter))
+	.get(asyncHandler(controller.getDateDecisionLetter))
 	.post(
 		validators.validateVisitDateFields,
 		validators.validateVisitDateValid,
 		validators.validateDueDateInPastOrToday,
-		asyncRoute(controller.postDateDecisionLetter)
+		asyncHandler(controller.postDateDecisionLetter)
 	);
 
 router
 	.route('/invalid-reason')
-	.get(asyncRoute(controller.getInvalidReason))
+	.get(asyncHandler(controller.getInvalidReason))
 	.post(
 		createTextAreaSanitizer('decisionInvalidReason'),
 		validators.validateTextArea,
-		asyncRoute(controller.postInvalidReason)
+		asyncHandler(controller.postInvalidReason)
 	);
 
 router
 	.route('/check-your-decision')
-	.get(validateAppeal, asyncRoute(controller.getCheckDecision))
-	.post(validateAppeal, validators.validateCheckDecision, asyncRoute(controller.postCheckDecision));
+	.get(validateAppeal, asyncHandler(controller.getCheckDecision))
+	.post(
+		validateAppeal,
+		validators.validateCheckDecision,
+		asyncHandler(controller.postCheckDecision)
+	);
 
 router
 	.route('/check-invalid-decision')
-	.get(asyncRoute(controller.getCheckInvalidDecision))
-	.post(validators.validateCheckDecision, asyncRoute(controller.postCheckInvalidDecision));
+	.get(asyncHandler(controller.getCheckInvalidDecision))
+	.post(validators.validateCheckDecision, asyncHandler(controller.postCheckInvalidDecision));
 
-router.route('/decision-sent').get(asyncRoute(controller.getDecisionSent));
+router.route('/decision-sent').get(asyncHandler(controller.getDecisionSent));
 
 export default router;
