@@ -2163,7 +2163,7 @@ describe('internal correspondence', () => {
 				);
 			});
 
-			it(`should send an API request to delete the document, and redirect to the upload new document version page, if answer "yes, and upload another document" was provided, and there is only one version of the document`, async () => {
+			it(`should send an API request to delete the document, and redirect to the upload new document page, if answer "yes, and upload another document" was provided, and there is only one version of the document`, async () => {
 				nock('http://test/')
 					.get('/appeals/1/documents/1/versions')
 					.reply(200, documentFileVersionsInfo);
@@ -2178,7 +2178,7 @@ describe('internal correspondence', () => {
 
 				expect(response.statusCode).toBe(302);
 				expect(response.text).toEqual(
-					`Found. Redirecting to /appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/select-document-type/${folder.folderId}`
+					`Found. Redirecting to /appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/upload-documents/${folder.folderId}`
 				);
 			});
 		}
