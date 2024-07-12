@@ -1,5 +1,5 @@
 import { Router as createRouter } from 'express';
-import { asyncHandler } from '../../middleware/async-handler.js';
+import { asyncHandler } from '@pins/express';
 import { getLookupData } from '../../common/controllers/lookup-data.controller.js';
 import { getAllocationLevels, saveAllocation } from './appeal-allocation-controller.js';
 import { getAllocationValidator, validateSpecialism } from './appeal-allocation-validator.js';

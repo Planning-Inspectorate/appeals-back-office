@@ -2,7 +2,7 @@ import { Router as createRouter } from 'express';
 import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
 import { postInvalidDecision } from './invalid-appeal-decision.controller.js';
 import { getInvalidDecisionReasonValidator } from './invalid-appeal-decision.validator.js';
-import { asyncHandler } from '#middleware/async-handler.js';
+import { asyncHandler } from '@pins/express';
 
 const router = createRouter();
 

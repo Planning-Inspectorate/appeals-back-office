@@ -1,5 +1,5 @@
 import { Router as createRouter } from 'express';
-import { asyncHandler } from '#middleware/async-handler.js';
+import { asyncHandler } from '@pins/express';
 import { postSiteVisit, getSiteVisitById, rearrangeSiteVisit } from './site-visits.controller.js';
 import checkLookupValueIsValidAndAddToRequest from '#middleware/check-lookup-value-is-valid-and-add-to-request.js';
 import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';

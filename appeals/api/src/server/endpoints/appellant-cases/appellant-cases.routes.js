@@ -1,5 +1,5 @@
 import { Router as createRouter } from 'express';
-import { asyncHandler } from '../../middleware/async-handler.js';
+import { asyncHandler } from '@pins/express';
 import { getAppellantCaseById, updateAppellantCaseById } from './appellant-cases.controller.js';
 import checkLookupValueIsValidAndAddToRequest from '#middleware/check-lookup-value-is-valid-and-add-to-request.js';
 import checkLookupValuesAreValid from '#middleware/check-lookup-values-are-valid.js';

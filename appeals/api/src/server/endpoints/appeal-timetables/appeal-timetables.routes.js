@@ -1,5 +1,5 @@
 import { Router as createRouter } from 'express';
-import { asyncHandler } from '#middleware/async-handler.js';
+import { asyncHandler } from '@pins/express';
 import { startAppeal, updateAppealTimetableById } from './appeal-timetables.controller.js';
 import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
 import {
