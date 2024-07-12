@@ -1,5 +1,5 @@
 import { Router as createRouter } from 'express';
-import { asyncHandler } from '#middleware/async-handler.js';
+import { asyncHandler } from '@pins/express';
 import { getAppealValidator } from '#endpoints/appeals/appeals.validators.js';
 import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
 import { validateDocumentAndAddToRequest } from './documents.middleware.js';

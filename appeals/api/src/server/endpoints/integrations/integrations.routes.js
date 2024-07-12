@@ -1,5 +1,5 @@
 import { Router as createRouter } from 'express';
-import { asyncHandler } from '#middleware/async-handler.js';
+import { asyncHandler } from '@pins/express';
 import { validateAppellantCase, validateLpaQuestionnaire } from './integrations.middleware.js';
 import * as controller from './integrations.controller.js';
 

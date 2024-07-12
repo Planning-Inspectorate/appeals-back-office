@@ -7,7 +7,7 @@ import {
 	getDocumentValidator
 } from './appeal-decision.validator.js';
 import { validateDecisionDocumentAndAddToRequest } from './appeal-decision.middleware.js';
-import { asyncHandler } from '#middleware/async-handler.js';
+import { asyncHandler } from '@pins/express';
 
 const router = createRouter();
 
