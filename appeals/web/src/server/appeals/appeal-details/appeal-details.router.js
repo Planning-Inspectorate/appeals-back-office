@@ -5,7 +5,6 @@ import lpaQuestionnaireRouter from './lpa-questionnaire/lpa-questionnaire.router
 import allocationDetailsRouter from './allocation-details/allocation-details.router.js';
 import appealTimetablesRouter from './appeal-timetables/appeal-timetables.router.js';
 import appellantCaseRouter from './appellant-case/appellant-case.router.js';
-import appealDocumentsRouter from '../appeal-documents/appeal-documents.router.js';
 import siteVisitRouter from './site-visit/site-visit.router.js';
 import {
 	assignUserRouter,
@@ -50,12 +49,7 @@ router.use(
 	assertUserHasPermission(permissionNames.updateCase),
 	startDateRouter
 );
-router.use(
-	'/:appealId/documents',
-	validateAppeal,
-	assertUserHasPermission(permissionNames.updateCase),
-	appealDocumentsRouter
-);
+
 router.use('/:appealId/lpa-questionnaire', lpaQuestionnaireRouter);
 router.use('/:appealId/allocation-details', allocationDetailsRouter);
 router.use('/:appealId/appeal-timetables', appealTimetablesRouter);
