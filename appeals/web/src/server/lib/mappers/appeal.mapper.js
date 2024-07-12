@@ -1169,7 +1169,7 @@ export async function initialiseAndMapAppealData(
 					classes: 'appeal-decision-status'
 				},
 				{
-					text: '',
+					text: 'Not applicable',
 					classes: 'appeal-decision-due-date'
 				},
 				{
