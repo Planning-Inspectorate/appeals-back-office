@@ -29,7 +29,7 @@ export function personalListPage(
 ) {
 	const account = /** @type {AccountInfo} */ (authSession.getAccount(session));
 	const userGroups = account?.idTokenClaims?.groups ?? [];
-	const isInspector = userGroups.includes(config.referenceData.appeals.inspectorGroupId);
+	const isCaseOfficer = userGroups.includes(config.referenceData.appeals.caseOfficerGroupId);
 
 	const filterItemsArray = ['all', ...(appealsAssignedToCurrentUser?.statuses || [])].map(
 		(appealStatus) => ({
@@ -162,7 +162,7 @@ export function personalListPage(
 							appeal.appellantCaseStatus,
 							appeal.lpaQuestionnaireStatus,
 							appeal.dueDate,
-							isInspector
+							isCaseOfficer
 						)
 					},
 					{
@@ -233,7 +233,7 @@ export function personalListPage(
  * @param {string} appellantCaseStatus
  * @param {string} lpaQuestionnaireStatus
  * @param {string} dueDate
- * @param {boolean} [isInspector]
+ * @param {boolean} [isCaseOfficer]
  * @returns {string}
  */
 export function mapAppealStatusToActionRequiredHtml(
@@ -243,7 +243,7 @@ export function mapAppealStatusToActionRequiredHtml(
 	appellantCaseStatus,
 	lpaQuestionnaireStatus,
 	dueDate,
-	isInspector = false
+	isCaseOfficer = false
 ) {
 	const currentDate = new Date();
 	const appealDueDate = new Date(dueDate);
@@ -252,7 +252,7 @@ export function mapAppealStatusToActionRequiredHtml(
 		case APPEAL_CASE_STATUS.READY_TO_START:
 		case APPEAL_CASE_STATUS.VALIDATION:
 			if (appellantCaseStatus == 'Incomplete') {
-				if (isInspector) {
+				if (!isCaseOfficer) {
 					return 'Awaiting appellant update';
 				}
 				return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/appellant-case">Awaiting appellant update</a>`;
@@ -263,13 +263,13 @@ export function mapAppealStatusToActionRequiredHtml(
 				return 'LPA questionnaire overdue';
 			}
 			if (lpaQuestionnaireStatus == 'Incomplete') {
-				if (isInspector) {
+				if (!isCaseOfficer) {
 					return 'Awaiting LPA update';
 				}
 				return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}">Awaiting LPA update</a>`;
 			}
 			if (lpaQuestionnaireId) {
-				if (isInspector) {
+				if (!isCaseOfficer) {
 					return 'Review LPA questionnaire';
 				}
 				return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}">Review LPA questionnaire</a>`;
