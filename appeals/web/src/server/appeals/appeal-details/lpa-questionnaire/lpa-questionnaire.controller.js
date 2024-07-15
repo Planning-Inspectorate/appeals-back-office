@@ -249,7 +249,7 @@ export const getAddDocuments = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
-	renderDocumentUpload(
+	await renderDocumentUpload(
 		request,
 		response,
 		currentAppeal,
@@ -267,7 +267,7 @@ export const postAddDocuments = async (request, response) => {
 		return response.status(404).render('app/404');
 	}
 
-	postDocumentUpload(
+	await postDocumentUpload(
 		request,
 		response,
 		`/appeals-service/appeal-details/${currentAppeal.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/add-document-details/${currentFolder.folderId}`
@@ -281,7 +281,7 @@ export const getAddDocumentDetails = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
-	renderDocumentDetails(
+	await renderDocumentDetails(
 		request,
 		response,
 		`/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/add-documents/{{folderId}}`,
@@ -291,7 +291,7 @@ export const getAddDocumentDetails = async (request, response) => {
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const postAddDocumentDetails = async (request, response) => {
-	postDocumentDetails(
+	await postDocumentDetails(
 		request,
 		response,
 		`/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/add-documents/{{folderId}}`,
@@ -310,7 +310,7 @@ export const getAddDocumentsCheckAndConfirm = async (request, response) => {
 		return response.status(404).render('app/404');
 	}
 
-	renderUploadDocumentsCheckAndConfirm(
+	await renderUploadDocumentsCheckAndConfirm(
 		request,
 		response,
 		`/appeals-service/appeal-details/${request.currentAppeal.appealId}/lpa-questionnaire/${
@@ -328,7 +328,7 @@ export const postAddDocumentsCheckAndConfirm = async (request, response) => {
 	}
 
 	try {
-		postUploadDocumentsCheckAndConfirm(
+		await postUploadDocumentsCheckAndConfirm(
 			request,
 			response,
 			`/appeals-service/appeal-details/${currentAppeal.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}`
@@ -354,7 +354,7 @@ export const postAddDocumentVersionCheckAndConfirm = async (request, response) =
 	}
 
 	try {
-		postUploadDocumentVersionCheckAndConfirm(
+		await postUploadDocumentVersionCheckAndConfirm(
 			request,
 			response,
 			`/appeals-service/appeal-details/${currentAppeal.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}`
@@ -373,7 +373,7 @@ export const postAddDocumentVersionCheckAndConfirm = async (request, response) =
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const getManageFolder = async (request, response) => {
-	renderManageFolder(
+	await renderManageFolder(
 		request,
 		response,
 		`/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/`,
@@ -383,7 +383,7 @@ export const getManageFolder = async (request, response) => {
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const getManageDocument = async (request, response) => {
-	renderManageDocument(
+	await renderManageDocument(
 		request,
 		response,
 		`/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/manage-documents/{{folderId}}`,
@@ -400,7 +400,7 @@ export const getAddDocumentVersion = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
-	renderDocumentUpload(
+	await renderDocumentUpload(
 		request,
 		response,
 		appealDetails,
@@ -422,7 +422,7 @@ export const postAddDocumentVersion = async (request, response) => {
 		return response.status(404).render('app/404');
 	}
 
-	postDocumentUpload(
+	await postDocumentUpload(
 		request,
 		response,
 		`/appeals-service/appeal-details/${currentAppeal.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/add-document-details/${currentFolder.folderId}/${documentId}`
@@ -436,7 +436,7 @@ export const getAddDocumentVersionDetails = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
-	renderDocumentDetails(
+	await renderDocumentDetails(
 		request,
 		response,
 		`/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/add-documents/${request.params.folderId}/${request.params.documentId}`,
@@ -446,7 +446,7 @@ export const getAddDocumentVersionDetails = async (request, response) => {
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const getChangeDocumentVersionDetails = async (request, response) => {
-	renderChangeDocumentDetails(
+	await renderChangeDocumentDetails(
 		request,
 		response,
 		`/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/manage-documents/${request.params.folderId}/${request.params.documentId}`
@@ -455,7 +455,7 @@ export const getChangeDocumentVersionDetails = async (request, response) => {
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const postDocumentVersionDetails = async (request, response) => {
-	postDocumentDetails(
+	await postDocumentDetails(
 		request,
 		response,
 		`/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/add-documents/${request.params.folderId}/${request.params.documentId}`,
@@ -465,7 +465,7 @@ export const postDocumentVersionDetails = async (request, response) => {
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const postChangeDocumentVersionDetails = async (request, response) => {
-	postChangeDocumentDetails(
+	await postChangeDocumentDetails(
 		request,
 		response,
 		`/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/manage-documents/${request.params.folderId}/${request.params.documentId}`,
@@ -474,7 +474,7 @@ export const postChangeDocumentVersionDetails = async (request, response) => {
 };
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const getDeleteDocument = async (request, response) => {
-	renderDeleteDocument(
+	await renderDeleteDocument(
 		request,
 		response,
 		`/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/manage-documents/{{folderId}}/{{documentId}}`
@@ -482,7 +482,7 @@ export const getDeleteDocument = async (request, response) => {
 };
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const postDeleteDocumentPage = async (request, response) => {
-	postDeleteDocument(
+	await postDeleteDocument(
 		request,
 		response,
 		`/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}`,

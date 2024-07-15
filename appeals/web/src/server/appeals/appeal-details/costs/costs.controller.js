@@ -45,7 +45,7 @@ export const getDocumentUpload = async (request, response) => {
 			break;
 	}
 
-	renderDocumentUpload(
+	await renderDocumentUpload(
 		request,
 		response,
 		currentAppeal,
@@ -69,7 +69,7 @@ export const postDocumentUploadPage = async (request, response) => {
 		params: { costsCategory, costsDocumentType }
 	} = request;
 
-	postDocumentUpload(
+	await postDocumentUpload(
 		request,
 		response,
 		costsCategory === 'decision'
@@ -90,7 +90,7 @@ export const getDocumentVersionUpload = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
-	renderDocumentUpload(
+	await renderDocumentUpload(
 		request,
 		response,
 		currentAppeal,
@@ -119,7 +119,7 @@ export const postDocumentVersionUpload = async (request, response) => {
 		return response.status(404).render('app/404');
 	}
 
-	postDocumentUpload(
+	await postDocumentUpload(
 		request,
 		response,
 		costsCategory === 'decision'
@@ -153,7 +153,7 @@ export const getAddDocumentDetails = async (request, response) => {
 
 	const documentIdFragment = documentId ? `/${documentId}` : '';
 
-	renderDocumentDetails(
+	await renderDocumentDetails(
 		request,
 		response,
 		costsCategory === 'decision'
@@ -189,7 +189,7 @@ export const postAddDocumentDetails = async (request, response) => {
 
 	const documentIdFragment = documentId ? `/${documentId}` : '';
 
-	postDocumentDetails(
+	await postDocumentDetails(
 		request,
 		response,
 		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/upload-documents/${currentFolder?.folderId}`,
@@ -216,7 +216,7 @@ export const getAddDocumentsCheckAndConfirm = async (request, response) => {
 		return response.status(404).render('app/404');
 	}
 
-	renderUploadDocumentsCheckAndConfirm(
+	await renderUploadDocumentsCheckAndConfirm(
 		request,
 		response,
 		`/appeals-service/appeal-details/${
@@ -244,7 +244,7 @@ export const postAddDocumentsCheckAndConfirm = async (request, response) => {
 	}
 
 	try {
-		postUploadDocumentsCheckAndConfirm(
+		await postUploadDocumentsCheckAndConfirm(
 			request,
 			response,
 			`/appeals-service/appeal-details/${currentAppeal.appealId}`,
@@ -283,7 +283,7 @@ export const postAddDocumentVersionCheckAndConfirm = async (request, response) =
 	}
 
 	try {
-		postUploadDocumentVersionCheckAndConfirm(
+		await postUploadDocumentVersionCheckAndConfirm(
 			request,
 			response,
 			`/appeals-service/appeal-details/${currentAppeal.appealId}`
@@ -323,7 +323,7 @@ export const getManageFolder = async (request, response) => {
 			break;
 	}
 
-	renderManageFolder(
+	await renderManageFolder(
 		request,
 		response,
 		`/appeals-service/appeal-details/${request.params.appealId}`,
@@ -346,7 +346,7 @@ export const getManageDocument = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
-	renderManageDocument(
+	await renderManageDocument(
 		request,
 		response,
 		costsCategory === 'decision'
@@ -373,7 +373,7 @@ export const getDeleteCostsDocument = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
-	renderDeleteDocument(
+	await renderDeleteDocument(
 		request,
 		response,
 		costsCategory === 'decision'
@@ -394,7 +394,7 @@ export const postDeleteCostsDocument = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
-	postDeleteDocument(
+	await postDeleteDocument(
 		request,
 		response,
 		`/appeals-service/appeal-details/${request.params.appealId}`,
@@ -409,7 +409,7 @@ export const postDeleteCostsDocument = async (request, response) => {
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const getChangeDocumentVersionDetails = async (request, response) => {
-	renderChangeDocumentDetails(
+	await renderChangeDocumentDetails(
 		request,
 		response,
 		request.params.costsCategory === 'decision'
@@ -420,7 +420,7 @@ export const getChangeDocumentVersionDetails = async (request, response) => {
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const postChangeDocumentVersionDetails = async (request, response) => {
-	postChangeDocumentDetails(
+	await postChangeDocumentDetails(
 		request,
 		response,
 		request.params.costsCategory === 'decision'

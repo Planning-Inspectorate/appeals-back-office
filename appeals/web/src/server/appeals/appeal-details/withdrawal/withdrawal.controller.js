@@ -88,7 +88,7 @@ const renderWithdrawalRequestUpload = async (request, response) => {
 		path: `${STAGE.APPELLANT_CASE}/${DOCTYPE.APPELLANT_CASE_WITHDRAWAL}`
 	};
 
-	renderDocumentUpload(
+	await renderDocumentUpload(
 		request,
 		response,
 		currentAppeal,

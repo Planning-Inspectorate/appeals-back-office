@@ -310,7 +310,7 @@ export const postDocumentDetails = async (
 		} = request;
 
 		if (errors) {
-			return renderDocumentDetails(
+			return await renderDocumentDetails(
 				request,
 				response,
 				backButtonUrl,
@@ -605,7 +605,7 @@ export const postChangeDocumentDetails = async (request, response, backButtonUrl
 		} = request;
 
 		if (errors) {
-			return renderChangeDocumentDetails(request, response, backButtonUrl);
+			return await renderChangeDocumentDetails(request, response, backButtonUrl);
 		}
 
 		const redactionStatuses = await getDocumentRedactionStatuses(apiClient);
@@ -703,7 +703,7 @@ export const postDeleteDocument = async (
 	} = request;
 
 	if (errors) {
-		return renderDeleteDocument(request, response, cancelUrl);
+		return await renderDeleteDocument(request, response, cancelUrl);
 	}
 
 	if (!currentFolder) {
