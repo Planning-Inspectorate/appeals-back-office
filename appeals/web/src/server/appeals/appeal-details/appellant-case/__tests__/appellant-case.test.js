@@ -1788,45 +1788,6 @@ describe('appellant-case', () => {
 		});
 	});
 
-	describe('GET /appellant-case/valid/confirmation', () => {
-		it('should render the date valid page', async () => {
-			const appellantCasePostResponse = await request
-				.post(`${baseUrl}/1${appellantCasePagePath}`)
-				.send({
-					reviewOutcome: 'valid'
-				});
-
-			expect(appellantCasePostResponse.statusCode).toBe(302);
-
-			const response = await request.get(
-				`${baseUrl}/1${appellantCasePagePath}${validOutcomePagePath}${validDatePagePath}`
-			);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain('Enter valid date for case</h1>');
-			expect(unprettifiedElement.innerHTML).toContain(
-				'This is the date all case documentation was received and the appeal was valid.</p>'
-			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				'name="valid-date-day" type="text" inputmode="numeric">'
-			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				'name="valid-date-month" type="text" inputmode="numeric">'
-			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				'name="valid-date-year" type="text" inputmode="numeric">'
-			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				'Confirming will inform the relevant parties of the valid date</div>'
-			);
-			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
-		});
-	});
-
 	describe('GET /appellant-case/valid/date', () => {
 		it('should render the valid due date page', async () => {
 			const response = await request.get(
@@ -2133,7 +2094,7 @@ describe('appellant-case', () => {
 			);
 		});
 
-		it('should redirect to the confirm page if a valid date was provided', async () => {
+		it('should redirect to the case details page if a valid date was provided', async () => {
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}${validOutcomePagePath}${validDatePagePath}`)
 				.send({
@@ -2143,10 +2104,7 @@ describe('appellant-case', () => {
 				});
 
 			expect(response.statusCode).toBe(302);
-			expect(response.headers.location).toContain(confirmationPagePath);
-			expect(response.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/1/appellant-case/valid/confirmation'
-			);
+			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
 		});
 	});
 

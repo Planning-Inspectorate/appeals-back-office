@@ -3852,54 +3852,6 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
 </main>"
 `;
 
-exports[`appellant-case GET /appellant-case/valid/confirmation should render the date valid page 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Enter valid date for case</h1>
-                </div>
-            </div>
-            <form method="POST" novalidate="novalidate">
-                <p class="govuk-body">This is the date all case documentation was received and the appeal was
-                    valid.</p>
-                <div class="govuk-form-group">
-                    <fieldset class="govuk-fieldset" role="group" aria-describedby="valid-date-hint">
-                        <div id="valid-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                        <div class="govuk-date-input" id="valid-date">
-                            <div class="govuk-date-input__item">
-                                <div class="govuk-form-group">
-                                    <label class="govuk-label govuk-date-input__label" for="valid-date-day">Day</label>
-                                    <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                    id="valid-date-day" name="valid-date-day" type="text" inputmode="numeric">
-                                </div>
-                            </div>
-                            <div class="govuk-date-input__item">
-                                <div class="govuk-form-group">
-                                    <label class="govuk-label govuk-date-input__label" for="valid-date-month">Month</label>
-                                    <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                    id="valid-date-month" name="valid-date-month" type="text" inputmode="numeric">
-                                </div>
-                            </div>
-                            <div class="govuk-date-input__item">
-                                <div class="govuk-form-group">
-                                    <label class="govuk-label govuk-date-input__label" for="valid-date-year">Year</label>
-                                    <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
-                                    id="valid-date-year" name="valid-date-year" type="text" inputmode="numeric">
-                                </div>
-                            </div>
-                        </div>
-                    </fieldset>
-                </div>
-                <div class="govuk-inset-text">Confirming will inform the relevant parties of the valid date</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
-            </form>
-        </div>
-    </div>
-</main>"
-`;
-
 exports[`appellant-case GET /appellant-case/valid/date should render the valid due date page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
