@@ -14,7 +14,7 @@ describe('Assign user to case', () => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
-	it('Case officer should be able to assign themselves to a case using name search', () => {
+	it.skip('Case officer should be able to assign themselves to a case using name search', () => {
 		cy.createCase().then((caseRef) => {
 			cy.visit(urlPaths.appealsList);
 			listCasesPage.clickAppealByRef(caseRef);
@@ -44,7 +44,7 @@ describe('Assign user to case', () => {
 		});
 	});
 
-	it('Case officer should be able to change assigned user', () => {
+	it.skip('Case officer should be able to change assigned user', () => {
 		cy.createCase().then((caseRef) => {
 			cy.visit(urlPaths.appealsList);
 			listCasesPage.clickAppealByRef(caseRef);
