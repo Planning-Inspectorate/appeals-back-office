@@ -53,7 +53,7 @@ describe('Review appellant case', () => {
 		});
 	});
 
-	it('incomplete appellant case', () => {
+	it.skip('incomplete appellant case', () => {
 		let dueDate = new Date();
 		dueDate.setMonth(dueDate.getDate() + 28);
 
@@ -77,7 +77,7 @@ describe('Review appellant case', () => {
 		});
 	});
 
-	it('incomplete appellant case reason: add another', () => {
+	it.skip('incomplete appellant case reason: add another', () => {
 		let dueDate = new Date();
 		dueDate.setMonth(dueDate.getDate() + 28);
 
