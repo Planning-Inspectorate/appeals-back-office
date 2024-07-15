@@ -33,7 +33,7 @@ export const getDocumentUpload = async (request, response) => {
 		return response.status(500).render('app/500.njk');
 	}
 
-	renderDocumentUpload(
+	await renderDocumentUpload(
 		request,
 		response,
 		currentAppeal,
@@ -53,7 +53,7 @@ export const postDocumentUploadPage = async (request, response) => {
 		params: { correspondenceCategory }
 	} = request;
 
-	postDocumentUpload(
+	await postDocumentUpload(
 		request,
 		response,
 		`/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/add-document-details/${currentFolder.folderId}`
@@ -72,7 +72,7 @@ export const getDocumentVersionUpload = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
-	renderDocumentUpload(
+	await renderDocumentUpload(
 		request,
 		response,
 		currentAppeal,
@@ -97,7 +97,7 @@ export const postDocumentVersionUpload = async (request, response) => {
 		return response.status(404).render('app/404');
 	}
 
-	postDocumentUpload(
+	await postDocumentUpload(
 		request,
 		response,
 		`/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/add-document-details/${currentFolder.folderId}/${documentId}`
@@ -116,7 +116,7 @@ export const getAddDocumentDetails = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
-	renderDocumentDetails(
+	await renderDocumentDetails(
 		request,
 		response,
 		`/appeals-service/appeal-details/${
@@ -141,7 +141,7 @@ export const postAddDocumentDetails = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
-	postDocumentDetails(
+	await postDocumentDetails(
 		request,
 		response,
 		`/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/upload-documents/${currentFolder?.folderId}`,
@@ -170,7 +170,7 @@ export const getAddDocumentsCheckAndConfirm = async (request, response) => {
 		return response.status(404).render('app/404');
 	}
 
-	renderUploadDocumentsCheckAndConfirm(
+	await renderUploadDocumentsCheckAndConfirm(
 		request,
 		response,
 		`/appeals-service/appeal-details/${
@@ -198,7 +198,7 @@ export const postAddDocumentsCheckAndConfirm = async (request, response) => {
 	}
 
 	try {
-		postUploadDocumentsCheckAndConfirm(
+		await postUploadDocumentsCheckAndConfirm(
 			request,
 			response,
 			`/appeals-service/appeal-details/${currentAppeal.appealId}`,
@@ -236,7 +236,7 @@ export const postAddDocumentVersionCheckAndConfirm = async (request, response) =
 	}
 
 	try {
-		postUploadDocumentVersionCheckAndConfirm(
+		await postUploadDocumentVersionCheckAndConfirm(
 			request,
 			response,
 			`/appeals-service/appeal-details/${currentAppeal.appealId}`
@@ -265,7 +265,7 @@ export const getManageFolder = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
-	renderManageFolder(
+	await renderManageFolder(
 		request,
 		response,
 		`/appeals-service/appeal-details/${currentAppeal.appealId}`,
@@ -286,7 +286,7 @@ export const getManageDocument = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
-	renderManageDocument(
+	await renderManageDocument(
 		request,
 		response,
 		`/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/manage-documents/${currentFolder.folderId}`,
@@ -301,7 +301,7 @@ export const getChangeDocumentVersionDetails = async (request, response) => {
 		params: { appealId, correspondenceCategory, folderId, documentId }
 	} = request;
 
-	renderChangeDocumentDetails(
+	await renderChangeDocumentDetails(
 		request,
 		response,
 		`/appeals-service/appeal-details/${appealId}/internal-correspondence/${correspondenceCategory}/manage-documents/${folderId}/${documentId}`
@@ -314,7 +314,7 @@ export const postChangeDocumentVersionDetails = async (request, response) => {
 		params: { appealId, correspondenceCategory, folderId, documentId }
 	} = request;
 
-	postChangeDocumentDetails(
+	await postChangeDocumentDetails(
 		request,
 		response,
 		`/appeals-service/appeal-details/${appealId}/internal-correspondence/${correspondenceCategory}/manage-documents/${folderId}/${documentId}`,
@@ -333,7 +333,7 @@ export const getDeleteInternalCorrespondenceDocument = async (request, response)
 		return response.status(404).render('app/404.njk');
 	}
 
-	renderDeleteDocument(
+	await renderDeleteDocument(
 		request,
 		response,
 		`/appeals-service/appeal-details/${request.params.appealId}/internal-correspondence/${correspondenceCategory}/manage-documents/${currentFolder.folderId}/{{documentId}}`
@@ -352,7 +352,7 @@ export const postDeleteInternalCorrespondenceDocument = async (request, response
 		return response.status(404).render('app/404.njk');
 	}
 
-	postDeleteDocument(
+	await postDeleteDocument(
 		request,
 		response,
 		`/appeals-service/appeal-details/${currentAppeal.appealId}`,

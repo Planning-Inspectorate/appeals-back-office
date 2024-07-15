@@ -109,7 +109,7 @@ export const postDecisionLetterUpload = async (request, response) => {
 		path: `${STAGE.APPEAL_DECISION}/${DOCTYPE.CASE_DECISION_LETTER}`
 	};
 
-	postDocumentUpload(
+	await postDocumentUpload(
 		request,
 		response,
 		`/appeals-service/appeal-details/${currentAppeal.appealId}/issue-decision/decision-letter-date`
@@ -131,7 +131,7 @@ const renderDecisionLetterUpload = async (request, response) => {
 
 	const pageBodyComponents = decisionLetterUploadPageBodyComponents();
 
-	renderDocumentUpload(
+	await renderDocumentUpload(
 		request,
 		response,
 		currentAppeal,
