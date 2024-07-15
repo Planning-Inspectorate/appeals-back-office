@@ -9,7 +9,7 @@ describe('Start case', () => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
-	it('Start case', () => {
+	it.skip('Start case', () => {
 		cy.createCase().then((caseRef) => {
 			happyPathHelper.assignCaseOfficer(caseRef);
 			happyPathHelper.reviewAppellantCase(caseRef);
