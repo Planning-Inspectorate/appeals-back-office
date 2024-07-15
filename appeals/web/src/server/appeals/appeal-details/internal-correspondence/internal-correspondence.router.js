@@ -82,7 +82,7 @@ router
 		validateAppeal,
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
-		asyncRoute(controller.getChangeDocumentVersionDetails)
+		asyncHandler(controller.getChangeDocumentVersionDetails)
 	)
 	.post(
 		validateAppeal,
@@ -94,7 +94,7 @@ router
 		documentsValidators.validateDocumentDetailsReceivedDateIsNotFutureDate,
 		documentsValidators.validateDocumentDetailsRedactionStatuses,
 		assertGroupAccess(config.referenceData.appeals.caseOfficerGroupId),
-		asyncRoute(controller.postChangeDocumentVersionDetails)
+		asyncHandler(controller.postChangeDocumentVersionDetails)
 	);
 
 router
