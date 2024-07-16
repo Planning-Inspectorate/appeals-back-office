@@ -39,7 +39,7 @@ export const mapQuestionnaireIn = (command) => {
 						};
 					})
 			  }
-			: null;
+			: undefined;
 
 	const listedBuildingDetails = casedata.affectedListedBuildingNumbers
 		? {
