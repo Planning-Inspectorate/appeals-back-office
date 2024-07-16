@@ -1,3 +1,4 @@
+import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 import { publishWithdrawal } from './withdrawal.service.js';
 
 /** @typedef {import('express').Request} Request */
@@ -12,9 +13,16 @@ export const postWithdrawal = async (req, res) => {
 	const { appeal } = req;
 	const { withdrawalRequestDate } = req.body;
 
+	const notifyClient = req.notifyClient;
+	const siteAddress = appeal.address
+		? formatAddressSingleLine(appeal.address)
+		: 'Address not available';
+
 	const decision = await publishWithdrawal(
 		appeal,
 		withdrawalRequestDate,
+		notifyClient,
+		siteAddress,
 		req.get('azureAdUserId') || ''
 	);
 
