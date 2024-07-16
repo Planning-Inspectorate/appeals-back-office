@@ -40,6 +40,9 @@ export default joi
 						appealInvalid: joi.object({
 							id: joi.string().required()
 						}),
+						appealWithdrawn: joi.object({
+							id: joi.string().required()
+						}),
 						appealStartDateChange: joi.object({
 							appellant: joi.object({
 								id: joi.string().required()

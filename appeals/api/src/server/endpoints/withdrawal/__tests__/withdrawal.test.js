@@ -3,10 +3,11 @@ import { request } from '../../../app-test.js';
 import { jest } from '@jest/globals';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { householdAppeal } from '#tests/appeals/mocks.js';
+import formatDate from '#utils/date-formatter.js';
 import { add, sub } from 'date-fns';
 import { ERROR_MUST_BE_CORRECT_DATE_FORMAT, ERROR_MUST_BE_IN_PAST } from '#endpoints/constants.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
-
+import config from '#config/config.js';
 const { databaseConnector } = await import('#utils/database-connector.js');
 
 describe('appeal decision routes', () => {
@@ -80,6 +81,25 @@ describe('appeal decision routes', () => {
 					withdrawalRequestDate: [year, month, day].join('-')
 				})
 				.set('azureAdUserId', azureAdUserId);
+
+			// eslint-disable-next-line no-undef
+			expect(mockSendEmail).toHaveBeenCalledTimes(1);
+
+			// eslint-disable-next-line no-undef
+			expect(mockSendEmail).toHaveBeenCalledWith(
+				config.govNotify.template.appealWithdrawn.id,
+				'test@136s7.com',
+				{
+					emailReplyToId: null,
+					personalisation: {
+						appeal_reference_number: '1345264',
+						lpa_reference: '48269/APP/2021/1482',
+						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+						withdrawal_date: formatDate(today, false)
+					},
+					reference: null
+				}
+			);
 
 			expect(response.status).toEqual(200);
 		});

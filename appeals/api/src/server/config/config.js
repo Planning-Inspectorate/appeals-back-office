@@ -50,6 +50,9 @@ const { value, error } = schema.validate({
 			appealInvalid: {
 				id: environment.GOV_NOTIFY_APPEAL_INVALID_ID || 'mock-appeal-invalid-id'
 			},
+			appealWithdrawn: {
+				id: environment.GOV_NOTIFY_APPEAL_WITHDRAWN_ID || 'mock-appeal-withdrawn-id'
+			},
 			appealStartDateChange: {
 				appellant: {
 					id:
