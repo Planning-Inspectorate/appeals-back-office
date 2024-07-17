@@ -27,7 +27,6 @@ describe('Review appellant case', () => {
 			caseDetailsPage.clickButtonByText('Continue');
 			dateTimeSection.enterValidDate(dueDate);
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.clickLinkByText('Go back to case details');
 
 			const status = 'Valid';
 			const testData = { rowIndex: 0, cellIndex: 0, textToMatch: status, strict: true };
