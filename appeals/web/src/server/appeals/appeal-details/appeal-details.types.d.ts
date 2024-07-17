@@ -287,6 +287,9 @@ export interface SingleLPAQuestionnaireResponse {
 	developmentDescription?: string | null;
 	documents: {
 		whoNotified: FolderInfo | {};
+		siteNotice?: FolderInfo | null;
+		lettersToNeighbours?: FolderInfo | null;
+		pressAdvert?: FolderInfo | null;
 		conservationMap: FolderInfo | {};
 		lpaCaseCorrespondence: FolderInfo | {};
 		otherPartyRepresentations: FolderInfo | {};
