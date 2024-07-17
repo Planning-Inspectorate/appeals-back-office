@@ -6,6 +6,7 @@ import { updateLPAQuestionnaireValidationOutcome } from './lpa-questionnaires.se
 import lpaQuestionnaireRepository from '#repositories/lpa-questionnaire.repository.js';
 import logger from '#utils/logger.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -75,6 +76,8 @@ const updateLPAQuestionnaireById = async (req, res) => {
 					isConservationArea,
 					isCorrectAppealType
 			  });
+
+		await broadcasters.broadcastAppeal(appeal.id);
 	} catch (error) {
 		if (error) {
 			logger.error(error);
