@@ -6,6 +6,7 @@ import logger from '#utils/logger.js';
 import { formatAppellantCase } from './appellant-cases.formatter.js';
 import { updateAppellantCaseValidationOutcome } from './appellant-cases.service.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -92,6 +93,8 @@ const updateAppellantCaseById = async (req, res) => {
 					applicationDate,
 					applicationDecisionDate
 			  });
+
+		await broadcasters.broadcastAppeal(appeal.id);
 	} catch (error) {
 		if (error) {
 			logger.error(error);
