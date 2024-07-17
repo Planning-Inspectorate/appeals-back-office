@@ -15,7 +15,6 @@ pr:
   branches:
     include:
       - main
-      - feat/e2e-cypress-refactoring
   paths:
     include:
       - appeals/e2e/cypress/e2e/back-office-appeals
@@ -26,13 +25,6 @@ jobs:
     pool: pins-odt-agent-pool-tests
 
     steps:
-#      - task: ShellScript@2
-#        inputs:
-#          script: |
-#              . ${NVM_DIR}/nvm.sh
-#              nvm use 18
-#        displayName: 'Set Node Version'
-
       - task: ShellScript@2
         inputs:
           scriptPath: 'appeals/e2e/install-chromium.sh'
