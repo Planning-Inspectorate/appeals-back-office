@@ -24,7 +24,7 @@ import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-co
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
 import { isFolderInfo } from '#lib/ts-utilities.js';
-import { AVSCAN_STATUS } from '@pins/appeals/constants/documents.js';
+import { APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
 
 /**
  * @typedef {import('../../appeals.types.js').DayMonthYear} DayMonthYear
@@ -248,7 +248,9 @@ export async function appellantCasePage(appellantCaseData, appealDetails, curren
 		});
 	}
 
-	if (getDocumentsForVirusStatus(appellantCaseData, AVSCAN_STATUS.NOT_SCANNED).length > 0) {
+	if (
+		getDocumentsForVirusStatus(appellantCaseData, APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED).length > 0
+	) {
 		addNotificationBannerToSession(
 			session,
 			'notCheckedDocument',
@@ -260,7 +262,9 @@ export async function appellantCasePage(appellantCaseData, appealDetails, curren
 	/** @type {PageComponent[]} */
 	const errorSummaryPageComponents = [];
 
-	if (getDocumentsForVirusStatus(appellantCaseData, AVSCAN_STATUS.AFFECTED).length > 0) {
+	if (
+		getDocumentsForVirusStatus(appellantCaseData, APPEAL_VIRUS_CHECK_STATUS.AFFECTED).length > 0
+	) {
 		errorSummaryPageComponents.push({
 			type: 'error-summary',
 			parameters: {
@@ -750,7 +754,7 @@ export function mapWebReviewOutcomeToApiReviewOutcome(
 /**
  *
  * @param {SingleAppellantCaseResponse} appellantCaseData
- * @param {"not_scanned"|"scanned"|"affected"} virusStatus
+ * @param {string} virusStatus
  * @returns {DocumentInfo[]}
  */
 function getDocumentsForVirusStatus(appellantCaseData, virusStatus) {

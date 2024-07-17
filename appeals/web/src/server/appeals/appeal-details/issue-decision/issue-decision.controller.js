@@ -16,7 +16,7 @@ import {
 	postUploadDocumentsCheckAndConfirm
 } from '../../appeal-documents/appeal-documents.controller.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
-import { STAGE, DOCTYPE } from '@pins/appeals/constants/documents.js';
+import { APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -106,7 +106,7 @@ export const postDecisionLetterUpload = async (request, response) => {
 
 	request.currentFolder = {
 		folderId: currentAppeal.decision?.folderId,
-		path: `${STAGE.APPEAL_DECISION}/${DOCTYPE.CASE_DECISION_LETTER}`
+		path: `${APPEAL_CASE_STAGE.APPEAL_DECISION}/${APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER}`
 	};
 
 	await postDocumentUpload(
@@ -126,7 +126,7 @@ const renderDecisionLetterUpload = async (request, response) => {
 
 	request.currentFolder = {
 		folderId: currentAppeal.decision?.folderId,
-		path: `${STAGE.APPEAL_DECISION}/${DOCTYPE.CASE_DECISION_LETTER}`
+		path: `${APPEAL_CASE_STAGE.APPEAL_DECISION}/${APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER}`
 	};
 
 	const pageBodyComponents = decisionLetterUploadPageBodyComponents();
@@ -323,7 +323,7 @@ export const postCheckDecision = async (request, response) => {
 
 		request.currentFolder = {
 			folderId: currentAppeal.decision?.folderId,
-			path: `${STAGE.APPEAL_DECISION}/${DOCTYPE.CASE_DECISION_LETTER}`
+			path: `${APPEAL_CASE_STAGE.APPEAL_DECISION}/${APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER}`
 		};
 
 		if (errors) {

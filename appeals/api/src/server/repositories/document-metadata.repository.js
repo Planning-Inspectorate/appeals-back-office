@@ -2,8 +2,8 @@ import { databaseConnector } from '#utils/database-connector.js';
 import documentRedactionStatusRepository from '#repositories/document-redaction-status.repository.js';
 import { findPreviousVersion } from '#utils/find-previous-version.js';
 import { randomUUID } from 'node:crypto';
-import { REDACTION_STATUS } from '@pins/appeals/constants/documents.js';
-import { AVSCAN_STATUS } from '@pins/appeals/constants/documents.js';
+import { APPEAL_REDACTED_STATUS } from 'pins-data-model';
+import { APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
 
 /** @typedef {import('@pins/appeals.api').Schema.Document} Document */
 /** @typedef {import('@pins/appeals.api').Schema.DocumentVersion} DocumentVersion */
@@ -15,7 +15,7 @@ import { AVSCAN_STATUS } from '@pins/appeals/constants/documents.js';
 export const getDefaultRedactionStatus = async () => {
 	const redactionStatuses =
 		await documentRedactionStatusRepository.getAllDocumentRedactionStatuses();
-	const defaultRedactionStatus = REDACTION_STATUS.UNREDACTED;
+	const defaultRedactionStatus = APPEAL_REDACTED_STATUS.NOT_REDACTED;
 	const unredactedStatus = redactionStatuses.find(
 		(redactionStatus) => redactionStatus.key === defaultRedactionStatus
 	);
@@ -56,7 +56,9 @@ export const addDocument = async (metadata, context) => {
 		});
 		if (scanStatus) {
 			metadata.virusCheckStatus =
-				scanStatus.avScanSuccess === true ? AVSCAN_STATUS.SCANNED : AVSCAN_STATUS.AFFECTED;
+				scanStatus.avScanSuccess === true
+					? APPEAL_VIRUS_CHECK_STATUS.SCANNED
+					: APPEAL_VIRUS_CHECK_STATUS.AFFECTED;
 		}
 
 		delete metadata.GUID;
@@ -125,7 +127,9 @@ export const addDocumentVersion = async ({ documentGuid, ...metadata }) => {
 		});
 		if (scanStatus) {
 			metadata.virusCheckStatus =
-				scanStatus.avScanSuccess === true ? AVSCAN_STATUS.SCANNED : AVSCAN_STATUS.AFFECTED;
+				scanStatus.avScanSuccess === true
+					? APPEAL_VIRUS_CHECK_STATUS.SCANNED
+					: APPEAL_VIRUS_CHECK_STATUS.AFFECTED;
 		}
 
 		await tx.documentVersion.create({

@@ -3324,6 +3324,7 @@
 								"type": "string",
 								"example": "Q9999"
 							},
+							"isGreenBelt": {},
 							"nearbyCaseReferences": {
 								"type": "array",
 								"example": ["1000000"],
@@ -3453,7 +3454,9 @@
 								"serviceUserType": {
 									"type": "string",
 									"example": "Appellant"
-								}
+								},
+								"organisation": {},
+								"telephoneNumber": {}
 							}
 						}
 					}

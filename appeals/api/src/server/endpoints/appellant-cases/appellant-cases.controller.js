@@ -1,6 +1,6 @@
 import { getFoldersForAppeal } from '#endpoints/documents/documents.service.js';
 import { ERROR_FAILED_TO_SAVE_DATA } from '#endpoints/constants.js';
-import { STAGE } from '@pins/appeals/constants/documents.js';
+import { APPEAL_CASE_STAGE } from 'pins-data-model';
 import appellantCaseRepository from '#repositories/appellant-case.repository.js';
 import logger from '#utils/logger.js';
 import { formatAppellantCase } from './appellant-cases.formatter.js';
@@ -17,7 +17,7 @@ import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatte
  */
 const getAppellantCaseById = async (req, res) => {
 	const { appeal } = req;
-	const folders = await getFoldersForAppeal(appeal, STAGE.APPELLANT_CASE);
+	const folders = await getFoldersForAppeal(appeal, APPEAL_CASE_STAGE.APPELLANT_CASE);
 	const formattedAppeal = formatAppellantCase(appeal, folders);
 
 	return res.send(formattedAppeal);

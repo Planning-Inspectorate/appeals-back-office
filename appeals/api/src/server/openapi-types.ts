@@ -66,6 +66,7 @@ export interface AppellantCaseData {
 		knowsOtherOwners?: string;
 		/** @example "Q9999" */
 		lpaCode?: string;
+		isGreenBelt?: any;
 		/** @example ["1000000"] */
 		nearbyCaseReferences?: string[];
 		/** @example [] */
@@ -123,6 +124,8 @@ export interface AppellantCaseData {
 		salutation?: any;
 		/** @example "Appellant" */
 		serviceUserType?: string;
+		organisation?: any;
+		telephoneNumber?: any;
 	}[];
 }
 

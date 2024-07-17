@@ -15,8 +15,7 @@ import { surnameFirstToFullName } from '#lib/person-name-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { redactionStatusIdToName } from '#lib/redaction-statuses.js';
-import { AVSCAN_STATUS } from '@pins/appeals/constants/documents.js';
-import { REDACTION_STATUS } from '@pins/appeals/constants/documents.js';
+import { APPEAL_REDACTED_STATUS, APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
 
 /**
  * @typedef {import('../appeal-details/appeal-details.types.js').WebAppeal} Appeal
@@ -192,17 +191,17 @@ export function mapVirusCheckStatus(virusCheckStatus) {
 	};
 
 	switch (virusCheckStatus) {
-		case AVSCAN_STATUS.SCANNED:
+		case APPEAL_VIRUS_CHECK_STATUS.SCANNED:
 			result.checked = true;
 			result.safe = true;
 			result.manageFolderPageActionText = 'View and edit';
 			break;
-		case AVSCAN_STATUS.AFFECTED:
+		case APPEAL_VIRUS_CHECK_STATUS.AFFECTED:
 			result.checked = true;
 			result.statusText = 'virus_detected';
 			result.manageFolderPageActionText = 'Edit or remove';
 			break;
-		case AVSCAN_STATUS.NOT_SCANNED:
+		case APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED:
 		default:
 			result.statusText = 'virus_scanning';
 			break;
@@ -227,7 +226,7 @@ export function mapDocumentInfoVirusCheckStatus(document) {
  * @returns {DocumentVirusCheckStatus}
  */
 export function mapDocumentVersionDetailsVirusCheckStatus(document) {
-	return mapVirusCheckStatus(document?.virusCheckStatus || AVSCAN_STATUS.NOT_SCANNED);
+	return mapVirusCheckStatus(document?.virusCheckStatus || APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED);
 }
 
 /**
@@ -497,14 +496,16 @@ function mapDocumentDetailsItemToDocumentDetailsPageComponents(item, redactionSt
 						value: 'redacted',
 						checked:
 							bodyRedactionStatus ===
-							redactionStatuses.find((status) => status.key === REDACTION_STATUS.REDACTED)?.name
+							redactionStatuses.find((status) => status.key === APPEAL_REDACTED_STATUS.REDACTED)
+								?.name
 					},
 					{
 						text: 'Unredacted',
 						value: 'unredacted',
 						checked:
 							bodyRedactionStatus ===
-							redactionStatuses.find((status) => status.key === REDACTION_STATUS.UNREDACTED)?.name
+							redactionStatuses.find((status) => status.key === APPEAL_REDACTED_STATUS.NOT_REDACTED)
+								?.name
 					},
 					{
 						divider: 'Or'
@@ -515,7 +516,7 @@ function mapDocumentDetailsItemToDocumentDetailsPageComponents(item, redactionSt
 						checked:
 							bodyRedactionStatus ===
 							redactionStatuses.find(
-								(status) => status.key === REDACTION_STATUS.NO_REDACTION_REQUIRED
+								(status) => status.key === APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED
 							)?.name
 					}
 				]
@@ -677,7 +678,7 @@ export function manageFolderPage(
 	request,
 	pageHeadingTextOverride
 ) {
-	if (getDocumentsForVirusStatus(folder, AVSCAN_STATUS.NOT_SCANNED).length > 0) {
+	if (getDocumentsForVirusStatus(folder, APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED).length > 0) {
 		addNotificationBannerToSession(
 			request.session,
 			'notCheckedDocument',
@@ -694,7 +695,10 @@ export function manageFolderPage(
 
 	/** @type {PageComponent[]} */
 	const errorSummaryPageComponents = [];
-	const documentsWithFailedVirusCheck = getDocumentsForVirusStatus(folder, AVSCAN_STATUS.AFFECTED);
+	const documentsWithFailedVirusCheck = getDocumentsForVirusStatus(
+		folder,
+		APPEAL_VIRUS_CHECK_STATUS.AFFECTED
+	);
 
 	if (documentsWithFailedVirusCheck.length > 0) {
 		errorSummaryPageComponents.push({
@@ -1579,7 +1583,7 @@ export function changeDocumentDetailsPage(backLinkUrl, folder, file, redactionSt
 /**
  *
  * @param {FolderInfo} folder
- * @param {"not_scanned"|"scanned"|"affected"} virusStatus
+ * @param {string} virusStatus
  * @returns {DocumentInfo[]}
  */
 export function getDocumentsForVirusStatus(folder, virusStatus) {

@@ -15,11 +15,11 @@ export const baseExpectedLPAQuestionnaireResponse = (appeal) => ({
 		// @ts-ignore
 		whoNotified: {},
 		// @ts-ignore
-		siteNotice: {},
+		whoNotifiedSiteNotice: {},
 		// @ts-ignore
-		lettersToNeighbours: {},
+		whoNotifiedLetterToNeighbours: {},
 		// @ts-ignore
-		pressAdvert: {},
+		whoNotifiedPressAdvert: {},
 		// @ts-ignore
 		conservationMap: {},
 		// @ts-ignore
