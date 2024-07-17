@@ -3,9 +3,8 @@ import { randomUUID } from 'node:crypto';
 import { UUID_REGEX } from '#endpoints/constants.js';
 import { mapDate } from './date.mapper.js';
 import { ODW_SYSTEM_ID } from '@pins/appeals/constants/common.js';
-import { ORIGIN, STAGE } from '@pins/appeals/constants/documents.js';
+import { APPEAL_ORIGIN, APPEAL_CASE_STAGE } from 'pins-data-model';
 import { getAvScanStatus } from '#endpoints/documents/documents.service.js';
-import { DOCTYPE } from '@pins/appeals/constants/documents.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Document} Document */
 /** @typedef {import('@pins/appeals.api').Schema.DocumentVersion} DocumentVersion */
@@ -34,8 +33,7 @@ export const mapDocumentIn = (doc, stage = null) => {
 
 	metadata.blobStorageContainer = config.BO_BLOB_CONTAINER;
 	metadata.blobStoragePath = `${documentGuid}/v1/${originalFilename}`;
-	metadata.documentType = metadata.documentType ?? DOCTYPE.DROPBOX;
-	metadata.stage = metadata.stage ?? stage ?? STAGE.INTERNAL;
+	metadata.stage = metadata.stage ?? stage ?? 'internal';
 
 	return {
 		...metadata,
@@ -150,7 +148,7 @@ const mapVirusCheckStatus = (documentVersion) => {
  * @returns
  */
 const mapPublishingStatus = (documentVersion) => {
-	return documentVersion.stage !== STAGE.INTERNAL;
+	return documentVersion.stage !== 'internal';
 };
 
 /**
@@ -168,14 +166,14 @@ const mapRedactionStatus = (status) => {
  * @returns
  */
 const mapOrigin = (stage) => {
-	if (stage === STAGE.APPELLANT_CASE) {
-		return ORIGIN.CITIZEN;
+	if (stage === APPEAL_CASE_STAGE.APPELLANT_CASE) {
+		return APPEAL_ORIGIN.CITIZEN;
 	}
-	if (stage === STAGE.LPA_QUESTIONNAIRE) {
-		return ORIGIN.LPA;
+	if (stage === APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE) {
+		return APPEAL_ORIGIN.LPA;
 	}
-	if (stage === STAGE.APPEAL_DECISION || stage === STAGE.INTERNAL) {
-		return ORIGIN.PINS;
+	if (stage === APPEAL_CASE_STAGE.APPEAL_DECISION || stage === 'internal') {
+		return APPEAL_ORIGIN.PINS;
 	}
 	return null;
 };

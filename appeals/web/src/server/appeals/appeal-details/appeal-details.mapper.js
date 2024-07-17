@@ -18,7 +18,7 @@ import {
 	generateIssueDecisionUrl,
 	generateStartTimetableUrl
 } from '#appeals/appeal-details/issue-decision/issue-decision.mapper.js';
-import { AVSCAN_STATUS } from '@pins/appeals/constants/documents.js';
+import { APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 export const pageHeading = 'Case details';
@@ -300,7 +300,7 @@ export async function appealDetailsPage(appealDetails, currentRoute, session) {
 			: new Date();
 
 		const virusCheckStatus = mapVirusCheckStatus(
-			appealDetails.decision.virusCheckStatus || AVSCAN_STATUS.NOT_SCANNED
+			appealDetails.decision.virusCheckStatus || APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED
 		);
 
 		statusTagsComponentGroup.push({
@@ -334,7 +334,7 @@ export async function appealDetailsPage(appealDetails, currentRoute, session) {
 
 		const virusCheckStatus = mapVirusCheckStatus(
 			appealDetails?.withdrawal.withdrawalFolder.documents[0].latestDocumentVersion
-				.virusCheckStatus || AVSCAN_STATUS.NOT_SCANNED
+				.virusCheckStatus || APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED
 		);
 
 		const withdrawalDocumentDownloadUrl = mapDocumentDownloadUrl(

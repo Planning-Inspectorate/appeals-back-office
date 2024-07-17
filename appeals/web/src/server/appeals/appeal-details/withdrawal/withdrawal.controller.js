@@ -1,7 +1,7 @@
 import { postWithdrawalRequest } from './withdrawal.service.js';
 import logger from '#lib/logger.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
-import { STAGE, DOCTYPE } from '@pins/appeals/constants/documents.js';
+import { APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
 import {
 	postDocumentUpload,
 	postUploadDocumentsCheckAndConfirm,
@@ -61,7 +61,7 @@ export const postWithdrawalRequestRequestUpload = async (request, response) => {
 
 	request.currentFolder = {
 		folderId: currentAppeal.withdrawal?.withdrawalFolder?.folderId,
-		path: `${STAGE.APPELLANT_CASE}/${DOCTYPE.APPELLANT_CASE_WITHDRAWAL}`
+		path: `${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.APPELLANT_CASE_WITHDRAWAL_LETTER}`
 	};
 
 	await postDocumentUpload(
@@ -85,7 +85,7 @@ const renderWithdrawalRequestUpload = async (request, response) => {
 
 	request.currentFolder = {
 		folderId: currentAppeal.withdrawal?.withdrawalFolder?.folderId,
-		path: `${STAGE.APPELLANT_CASE}/${DOCTYPE.APPELLANT_CASE_WITHDRAWAL}`
+		path: `${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.APPELLANT_CASE_WITHDRAWAL_LETTER}`
 	};
 
 	await renderDocumentUpload(
@@ -302,7 +302,7 @@ export const postCheckYourAnswers = async (request, response) => {
 
 		request.currentFolder = {
 			folderId: currentAppeal.withdrawal?.withdrawalFolder?.folderId,
-			path: `${STAGE.APPELLANT_CASE}/${DOCTYPE.APPELLANT_CASE_WITHDRAWAL}`
+			path: `${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.APPELLANT_CASE_WITHDRAWAL_LETTER}`
 		};
 
 		if (errors) {

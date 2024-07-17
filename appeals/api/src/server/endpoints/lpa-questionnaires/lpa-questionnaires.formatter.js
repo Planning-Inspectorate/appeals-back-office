@@ -1,7 +1,7 @@
 import formatAddress from '#utils/format-address.js';
 import formatValidationOutcomeResponse from '#utils/format-validation-outcome-response.js';
 import { mapFoldersLayoutForAppealSection } from '../documents/documents.mapper.js';
-import { STAGE } from '@pins/appeals/constants/documents.js';
+import { APPEAL_CASE_STAGE } from 'pins-data-model';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Appeals.SingleLPAQuestionnaireResponse} SingleLPAQuestionnaireResponse */
@@ -75,7 +75,7 @@ const formatLpaQuestionnaire = (appeal, folders = null) => {
 const formatFoldersAndDocuments = (folders) => {
 	if (folders) {
 		return {
-			documents: mapFoldersLayoutForAppealSection(STAGE.LPA_QUESTIONNAIRE, folders)
+			documents: mapFoldersLayoutForAppealSection(APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE, folders)
 		};
 	}
 

@@ -6,14 +6,14 @@ import {
 	getFileInfo,
 	getFileVersionsInfo
 } from '#appeals/appeal-documents/appeal.documents.service.js';
-import { AVSCAN_STATUS } from '@pins/appeals/constants/documents.js';
+import { APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
 
 // TODO: Clean up code
 
 /** @typedef {import('../auth/auth-session.service').SessionWithAuth} SessionWithAuth */
 /** @typedef {import('express').Response} Response */
 
-const validScanResult = AVSCAN_STATUS.SCANNED;
+const validScanResult = APPEAL_VIRUS_CHECK_STATUS.SCANNED;
 
 /**
  * Download one document or redirects to its url if preview is active

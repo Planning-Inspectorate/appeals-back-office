@@ -16,6 +16,7 @@ export const validAppellantCase = {
 		knowsAllOwners: 'Some',
 		knowsOtherOwners: 'Some',
 		lpaCode: 'Q9999',
+		isGreenBelt: null,
 		nearbyCaseReferences: ['1000000'],
 		neighbouringSiteAddresses: [],
 		originalDevelopmentDescription: 'A test description',
@@ -50,7 +51,9 @@ export const validAppellantCase = {
 			firstName: 'Testy',
 			lastName: 'McTest',
 			salutation: null,
-			serviceUserType: 'Appellant'
+			serviceUserType: 'Appellant',
+			organisation: null,
+			telephoneNumber: null
 		}
 	]
 };

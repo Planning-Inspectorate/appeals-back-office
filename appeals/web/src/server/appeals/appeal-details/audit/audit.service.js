@@ -1,5 +1,5 @@
 import usersService from '#appeals/appeal-users/users-service.js';
-import { STAGE } from '@pins/appeals/constants/documents.js';
+import { APPEAL_CASE_STAGE } from 'pins-data-model';
 
 /** @typedef {import('@pins/appeals.api/src/server/endpoints/appeals').GetAuditTrailsResponse} GetAuditTrailsResponse */
 /** @typedef {import('#app/auth/auth-session.service').SessionWithAuth} SessionWithAuth */
@@ -86,11 +86,11 @@ const tryMapDocument = async (appealId, log, docInfo, lpaqId) => {
 
 	if (name && documentGuid && stage && folderId) {
 		switch (stage) {
-			case STAGE.APPELLANT_CASE: {
+			case APPEAL_CASE_STAGE.APPELLANT_CASE: {
 				const url = `/appeals-service/appeal-details/${appealId}/appellant-case/manage-documents/${folderId}/${documentGuid}`;
 				return log.replace(name, `<a class="govuk-link" href="${url}">${name}</a>`);
 			}
-			case STAGE.LPA_QUESTIONNAIRE: {
+			case APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE: {
 				if (!lpaqId) {
 					break;
 				}

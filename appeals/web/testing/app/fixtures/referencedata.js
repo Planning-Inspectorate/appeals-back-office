@@ -1,5 +1,4 @@
-import { REDACTION_STATUS } from '@pins/appeals/constants/documents.js';
-import { AVSCAN_STATUS } from '@pins/appeals/constants/documents.js';
+import { APPEAL_REDACTED_STATUS, APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
 import { sample } from 'lodash-es';
 
 export const localPlanningDepartments = [
@@ -299,7 +298,7 @@ export const appellantCaseDataNotValidated = {
 						size: '58861',
 						stage: 'appellant-case',
 						version: 1,
-						virusCheckStatus: AVSCAN_STATUS.SCANNED
+						virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.SCANNED
 					}
 				},
 				{
@@ -325,7 +324,7 @@ export const appellantCaseDataNotValidated = {
 						size: '58861',
 						stage: 'appellant-case',
 						version: 1,
-						virusCheckStatus: AVSCAN_STATUS.SCANNED
+						virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.SCANNED
 					}
 				}
 			],
@@ -656,7 +655,7 @@ export const lpaQuestionnaireData = {
 					folderId: 3420,
 					caseId: 111,
 					isLateEntry: true,
-					virusCheckStatus: AVSCAN_STATUS.SCANNED
+					virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.SCANNED
 				},
 				{
 					id: 'a78446aa-167a-4bef-89b7-18bcb0da11c1',
@@ -664,7 +663,7 @@ export const lpaQuestionnaireData = {
 					folderId: 3420,
 					caseId: 111,
 					isLateEntry: false,
-					virusCheckStatus: AVSCAN_STATUS.SCANNED
+					virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.SCANNED
 				},
 				{
 					id: 'a78446aa-167a-4bef-89b7-18bcb0da11c2',
@@ -672,7 +671,7 @@ export const lpaQuestionnaireData = {
 					folderId: 3420,
 					caseId: 111,
 					isLateEntry: false,
-					virusCheckStatus: AVSCAN_STATUS.SCANNED
+					virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.SCANNED
 				}
 			]
 		}
@@ -1072,7 +1071,7 @@ export const lpaQuestionnaireDataNotValidated = {
 					folderId: 3420,
 					caseId: 111,
 					isLateEntry: true,
-					virusCheckStatus: AVSCAN_STATUS.SCANNED
+					virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.SCANNED
 				},
 				{
 					id: 'a78446aa-167a-4bef-89b7-18bcb0da11c1',
@@ -1080,7 +1079,7 @@ export const lpaQuestionnaireDataNotValidated = {
 					folderId: 3420,
 					caseId: 111,
 					isLateEntry: false,
-					virusCheckStatus: AVSCAN_STATUS.SCANNED
+					virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.SCANNED
 				},
 				{
 					id: 'a78446aa-167a-4bef-89b7-18bcb0da11c2',
@@ -1088,7 +1087,7 @@ export const lpaQuestionnaireDataNotValidated = {
 					folderId: 3420,
 					caseId: 111,
 					isLateEntry: false,
-					virusCheckStatus: AVSCAN_STATUS.NOT_SCANNED
+					virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED
 				}
 			]
 		}
@@ -1419,7 +1418,7 @@ export const documentFileInfo = {
 		horizonDataID: null,
 		fileMD5: null,
 		path: null,
-		virusCheckStatus: AVSCAN_STATUS.SCANNED,
+		virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.SCANNED,
 		size: 58861,
 		stage: 'lpa_questionnaire',
 		blobStorageContainer: 'document-service-uploads',
@@ -1468,7 +1467,7 @@ export const documentFolderInfo = {
 				redactionStatus: 'Unredacted',
 				size: 11815175,
 				mime: 'video/mp4',
-				virusCheckStatus: AVSCAN_STATUS.NOT_SCANNED,
+				virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED,
 				isLateEntry: true
 			}
 		},
@@ -1481,7 +1480,7 @@ export const documentFolderInfo = {
 				redactionStatus: 'No redaction required',
 				size: 58861,
 				mime: 'image/jpeg',
-				virusCheckStatus: AVSCAN_STATUS.AFFECTED,
+				virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.AFFECTED,
 				isLateEntry: false
 			}
 		},
@@ -1494,7 +1493,7 @@ export const documentFolderInfo = {
 				redactionStatus: 'Unredacted',
 				size: 58987,
 				mime: 'image/jpeg',
-				virusCheckStatus: AVSCAN_STATUS.SCANNED,
+				virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.SCANNED,
 				isLateEntry: true
 			}
 		}
@@ -1527,7 +1526,7 @@ export const documentFolderInfoWithoutDraftDocuments = {
 				redactionStatus: 'Unredacted',
 				size: 11815175,
 				mime: 'video/mp4',
-				virusCheckStatus: AVSCAN_STATUS.NOT_SCANNED,
+				virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED,
 				isLateEntry: true
 			}
 		}
@@ -1553,7 +1552,7 @@ export const notCheckedDocumentFolderInfoDocuments = {
 		redactionStatus: 'Unredacted',
 		size: 11815175,
 		mime: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-		virusCheckStatus: AVSCAN_STATUS.NOT_SCANNED,
+		virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED,
 		isLateEntry: true
 	}
 };
@@ -1569,7 +1568,7 @@ export const scanFailedDocumentFolderInfoDocuments = {
 		redactionStatus: 'Unredacted',
 		size: 11815175,
 		mime: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-		virusCheckStatus: AVSCAN_STATUS.AFFECTED,
+		virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.AFFECTED,
 		isLateEntry: true
 	}
 };
@@ -1577,17 +1576,17 @@ export const scanFailedDocumentFolderInfoDocuments = {
 export const documentRedactionStatuses = [
 	{
 		id: 1,
-		key: REDACTION_STATUS.REDACTED,
+		key: APPEAL_REDACTED_STATUS.REDACTED,
 		name: 'Redacted'
 	},
 	{
 		id: 2,
-		key: REDACTION_STATUS.UNREDACTED,
+		key: APPEAL_REDACTED_STATUS.NOT_REDACTED,
 		name: 'Unredacted'
 	},
 	{
 		id: 3,
-		key: REDACTION_STATUS.NO_REDACTION_REQUIRED,
+		key: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED,
 		name: 'No redaction required'
 	}
 ];
@@ -1608,7 +1607,7 @@ export const documentFileVersionsInfo = {
 		horizonDataID: null,
 		fileMD5: null,
 		path: null,
-		virusCheckStatus: AVSCAN_STATUS.NOT_SCANNED,
+		virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED,
 		size: 129363,
 		stage: 'appellant_case',
 		blobStorageContainer: 'document-service-uploads',
@@ -1633,7 +1632,7 @@ export const documentFileVersionsInfo = {
 			horizonDataID: null,
 			fileMD5: null,
 			path: null,
-			virusCheckStatus: AVSCAN_STATUS.NOT_SCANNED,
+			virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED,
 			size: 129363,
 			stage: 'appellant_case',
 			blobStorageContainer: 'document-service-uploads',
@@ -1675,12 +1674,12 @@ export const documentFileVersionsInfoNotChecked = {
 	...documentFileVersionsInfo,
 	latestDocumentVersion: {
 		...documentFileVersionsInfo.allVersions[0],
-		virusCheckStatus: AVSCAN_STATUS.NOT_SCANNED
+		virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED
 	},
 	allVersions: [
 		{
 			...documentFileVersionsInfo.allVersions[0],
-			virusCheckStatus: AVSCAN_STATUS.NOT_SCANNED
+			virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED
 		}
 	]
 };
@@ -1689,12 +1688,12 @@ export const documentFileVersionsInfoVirusFound = {
 	...documentFileVersionsInfo,
 	latestDocumentVersion: {
 		...documentFileVersionsInfo.allVersions[0],
-		virusCheckStatus: AVSCAN_STATUS.AFFECTED
+		virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.AFFECTED
 	},
 	allVersions: [
 		{
 			...documentFileVersionsInfo.allVersions[0],
-			virusCheckStatus: AVSCAN_STATUS.AFFECTED
+			virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.AFFECTED
 		}
 	]
 };
@@ -1703,12 +1702,12 @@ export const documentFileVersionsInfoChecked = {
 	...documentFileVersionsInfo,
 	latestDocumentVersion: {
 		...documentFileVersionsInfo.allVersions[0],
-		virusCheckStatus: AVSCAN_STATUS.SCANNED
+		virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.SCANNED
 	},
 	allVersions: [
 		{
 			...documentFileVersionsInfo.allVersions[0],
-			virusCheckStatus: AVSCAN_STATUS.SCANNED
+			virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.SCANNED
 		}
 	]
 };
@@ -2068,7 +2067,7 @@ export const costsFolderInfoAppellantApplication = {
 				redactionStatus: 'Redacted',
 				size: 129363,
 				mime: 'application/pdf',
-				virusCheckStatus: AVSCAN_STATUS.SCANNED,
+				virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.SCANNED,
 				isLateEntry: false
 			}
 		},
@@ -2081,7 +2080,7 @@ export const costsFolderInfoAppellantApplication = {
 				redactionStatus: 'No redaction required',
 				size: 11815175,
 				mime: 'video/mp4',
-				virusCheckStatus: AVSCAN_STATUS.SCANNED,
+				virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.SCANNED,
 				isLateEntry: false
 			}
 		}
@@ -2166,7 +2165,7 @@ export const appealCostsDocumentItem = {
 		horizonDataID: null,
 		fileMD5: null,
 		path: null,
-		virusCheckStatus: AVSCAN_STATUS.SCANNED,
+		virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.SCANNED,
 		size: 656030,
 		stage: 'appeal_costs',
 		blobStorageContainer: 'document-service-uploads',

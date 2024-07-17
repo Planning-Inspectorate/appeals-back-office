@@ -3,9 +3,6 @@ import { formatFolder } from './documents.formatter.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Folder} Folder */
 /** @typedef {import('@pins/appeals/index.js').MappedDocument} MappedDocument */
-/** @typedef {import('@pins/appeals/index.js').DocumentMetadata} DocumentMetadata */
-/** @typedef {import('@pins/appeals/index.js').BlobInfo} BlobInfo */
-/** @typedef {import('@pins/appeals/index.js').DocumentAuditTrailInfo} DocumentAuditTrailInfo */
 /** @typedef {import('@pins/appeals.api').Schema.DocumentVersion} DocumentVersion */
 /** @typedef {import('@pins/appeals.api').Appeals.FolderInfo} FolderInfo */
 
@@ -14,7 +11,7 @@ import { formatFolder } from './documents.formatter.js';
  * @param {string} blobStorageHost,
  * @param {string} blobStorageContainer,
  * @param {MappedDocument[]} documents
- * @returns {DocumentMetadata[]}
+ * @returns
  */
 export const mapDocumentsForDatabase = (
 	caseId,
@@ -62,7 +59,7 @@ const mapHost = (original) => {
  * @param {(DocumentVersion|null)[]} documents
  * @param {string} caseReference
  * @param {number} versionId
- * @returns {(BlobInfo|null)[]}
+ * @returns
  */
 export const mapDocumentsForBlobStorage = (documents, caseReference, versionId = 1) => {
 	return documents.map((document) => {
@@ -84,7 +81,7 @@ export const mapDocumentsForBlobStorage = (documents, caseReference, versionId =
 
 /**
  * @param {(DocumentVersion|null)[]} documents
- * @returns {(DocumentAuditTrailInfo|null)[]}
+ * @returns
  */
 export const mapDocumentsForAuditTrail = (documents) => {
 	return documents.map((document) => {

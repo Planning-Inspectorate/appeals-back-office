@@ -3,10 +3,8 @@ import { databaseConnector } from '#utils/database-connector.js';
 import { mapBlobPath } from '#endpoints/documents/documents.mapper.js';
 import { getDefaultRedactionStatus } from './document-metadata.repository.js';
 import { createAppealReference } from '#utils/appeal-reference.js';
-import { STAGE, DOCTYPE } from '@pins/appeals/constants/documents.js';
-
 import config from '#config/config.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_STATUS, APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
 
 /**
  *
@@ -233,35 +231,19 @@ const getFolderIdFromDocumentType = (caseFolders, documentType, stage) => {
 		return caseFolder.id;
 	}
 
-	if (stage && stage === STAGE.APPELLANT_CASE) {
-		if (documentType.indexOf('appellantCosts') > -1) {
-			const appellantCosts = caseFolders.find(
-				(caseFolder) => caseFolder.path === `${STAGE.COSTS}/appellant`
-			);
-
-			if (appellantCosts) {
-				return appellantCosts.id;
-			}
-		}
+	if (stage && stage === APPEAL_CASE_STAGE.APPELLANT_CASE) {
 		const appellantCorrespondence = caseFolders.find(
-			(caseFolder) => caseFolder.path === `${stage}/${DOCTYPE.APPELLANT_CASE_CORRESPONDENCE}`
+			(caseFolder) =>
+				caseFolder.path === `${stage}/${APPEAL_DOCUMENT_TYPE.APPELLANT_CASE_CORRESPONDENCE}`
 		);
 		if (appellantCorrespondence) {
 			return appellantCorrespondence.id;
 		}
 	}
 
-	if (stage && stage === STAGE.LPA_QUESTIONNAIRE) {
-		if (documentType.indexOf('lpaCosts') > -1) {
-			const lpaCosts = caseFolders.find((caseFolder) => caseFolder.path === `${STAGE.COSTS}/lpa`);
-
-			if (lpaCosts) {
-				return lpaCosts.id;
-			}
-		}
-
+	if (stage && stage === APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE) {
 		const lpaCorrespondence = caseFolders.find(
-			(caseFolder) => caseFolder.path === `${stage}/${DOCTYPE.LPA_CASE_CORRESPONDENCE}`
+			(caseFolder) => caseFolder.path === `${stage}/${APPEAL_DOCUMENT_TYPE.LPA_CASE_CORRESPONDENCE}`
 		);
 
 		if (lpaCorrespondence) {
@@ -269,7 +251,5 @@ const getFolderIdFromDocumentType = (caseFolders, documentType, stage) => {
 		}
 	}
 
-	return caseFolders.find(
-		(caseFolder) => caseFolder.path === `${STAGE.INTERNAL}/${DOCTYPE.DROPBOX}`
-	)?.id;
+	return caseFolders.find((caseFolder) => caseFolder.path === `internal/dropbox`)?.id;
 };

@@ -7,9 +7,7 @@ import {
 } from '#utils/format-documentation-status.js';
 import { add } from 'date-fns';
 import { formatFolder } from '#endpoints/documents/documents.formatter.js';
-import { STAGE } from '@pins/appeals/constants/documents.js';
-import { DOCTYPE } from '@pins/appeals/constants/documents.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_STATUS, APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
 
 const approxStageCompletion = {
 	STATE_TARGET_READY_TO_START: 5,
@@ -100,53 +98,80 @@ const formatAppeal = (
 ) => {
 	if (appeal) {
 		const decisionFolder = formatFolder(
-			rootFolders.find((f) => f.path === `${STAGE.APPEAL_DECISION}/${DOCTYPE.CASE_DECISION_LETTER}`)
+			rootFolders.find(
+				(f) =>
+					f.path ===
+					`${APPEAL_CASE_STAGE.APPEAL_DECISION}/${APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER}`
+			)
 		);
 
 		const appealFolders = {
 			costs: {
 				appellantApplicationFolder: formatFolder(
-					rootFolders.find((f) => f.path === `${STAGE.COSTS}/${DOCTYPE.APPELLANT_COST_APPLICATION}`)
+					rootFolders.find(
+						(f) =>
+							f.path ===
+							`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_APPLICATION}`
+					)
 				),
 				appellantWithdrawalFolder: formatFolder(
-					rootFolders.find((f) => f.path === `${STAGE.COSTS}/${DOCTYPE.APPELLANT_COST_WITHDRAWAL}`)
+					rootFolders.find(
+						(f) =>
+							f.path ===
+							`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_WITHDRAWAL}`
+					)
 				),
 				appellantCorrespondenceFolder: formatFolder(
 					rootFolders.find(
-						(f) => f.path === `${STAGE.COSTS}/${DOCTYPE.APPELLANT_COST_CORRESPONDENCE}`
+						(f) =>
+							f.path ===
+							`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_CORRESPONDENCE}`
 					)
 				),
 				lpaApplicationFolder: formatFolder(
-					rootFolders.find((f) => f.path === `${STAGE.COSTS}/${DOCTYPE.LPA_COST_APPLICATION}`)
+					rootFolders.find(
+						(f) =>
+							f.path === `${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.LPA_COSTS_APPLICATION}`
+					)
 				),
 				lpaWithdrawalFolder: formatFolder(
-					rootFolders.find((f) => f.path === `${STAGE.COSTS}/${DOCTYPE.LPA_COST_WITHDRAWAL}`)
+					rootFolders.find(
+						(f) =>
+							f.path === `${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.LPA_COSTS_WITHDRAWAL}`
+					)
 				),
 				lpaCorrespondenceFolder: formatFolder(
 					rootFolders.find(
-						(f) => f.path === `${STAGE.COSTS}/${DOCTYPE.APPELLANT_COST_CORRESPONDENCE}`
+						(f) =>
+							f.path ===
+							`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_CORRESPONDENCE}`
 					)
 				),
 				decisionFolder: formatFolder(
-					rootFolders.find((f) => f.path === `${STAGE.COSTS}/${DOCTYPE.COST_DECISION_LETTER}`)
+					rootFolders.find(
+						(f) =>
+							f.path === `${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.COSTS_DECISION_LETTER}`
+					)
 				)
 			},
 			internalCorrespondence: {
 				crossTeam: formatFolder(
 					rootFolders.find(
-						(f) => f.path === `${STAGE.INTERNAL}/${DOCTYPE.CROSS_TEAM_CORRESPONDENCE}`
+						(f) => f.path === `internal/${APPEAL_DOCUMENT_TYPE.CROSS_TEAM_CORRESPONDENCE}`
 					)
 				),
 				inspector: formatFolder(
 					rootFolders.find(
-						(f) => f.path === `${STAGE.INTERNAL}/${DOCTYPE.INSPECTOR_CORRESPONDENCE}`
+						(f) => f.path === `internal/${APPEAL_DOCUMENT_TYPE.INSPECTOR_CORRESPONDENCE}`
 					)
 				)
 			},
 			withdrawal: {
 				withdrawalFolder: formatFolder(
 					rootFolders.find(
-						(f) => f.path === `${STAGE.APPELLANT_CASE}/${DOCTYPE.APPELLANT_CASE_WITHDRAWAL}`
+						(f) =>
+							f.path ===
+							`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.APPELLANT_CASE_WITHDRAWAL_LETTER}`
 					)
 				),
 				withdrawalRequestDate: appeal.withdrawalRequestDate
