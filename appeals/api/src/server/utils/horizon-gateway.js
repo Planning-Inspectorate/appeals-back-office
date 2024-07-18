@@ -107,19 +107,29 @@ export const getAppealFromHorizon = async (caseReference) => {
 	const appealData = await got
 		.post(url, {
 			json: requestBody,
-			parseJson: (data) => parseHorizonGetCaseResponse(data)
+			parseJson: (data) => parseHorizonGetCaseResponse(data),
+			timeout: {
+				request: 5000
+			}
 		})
 		.json()
 		.catch((error) => {
-			if (error.response.body && JSON.stringify(error.response.body).includes('faultstring')) {
+			if (error.code === 'ETIMEDOUT') {
+				logger.error('Call to Horizon timed-out');
+			} else if (
+				error.response.body &&
+				JSON.stringify(error.response.body).includes('faultstring')
+			) {
 				if (
 					JSON.stringify(error.response.body).includes('not found') ||
 					JSON.stringify(error.response.body).includes('is not published')
 				) {
+					logger.error(error.response.body);
 					throw 404;
 				}
 			}
 			logger.error(error.response.body);
+			logger.debug('Failed to get case from Horizon');
 			throw 500;
 		});
 
