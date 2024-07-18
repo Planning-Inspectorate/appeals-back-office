@@ -76,6 +76,8 @@ const patchAppellantCaseValidator = composeMiddleware(
 		'inspectorAccessDetails',
 		true
 	),
+	validateStringParameter('developmentDescription.details'),
+	validateBooleanParameter('developmentDescription.isCorrect'),
 	validationErrorHandler
 );
 

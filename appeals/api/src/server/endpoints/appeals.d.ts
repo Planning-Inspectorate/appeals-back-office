@@ -190,6 +190,8 @@ interface UpdateAppellantCaseRequest {
 	siteAreaSquareMetres?: string;
 	applicationDate?: string;
 	applicationDecisionDate?: string;
+	changedDevelopmentDescription?: boolean;
+	originalDevelopmentDescription?: string;
 }
 
 interface UpdateAppellantCaseValidationOutcome {
