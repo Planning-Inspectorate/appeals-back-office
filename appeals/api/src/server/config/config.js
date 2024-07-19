@@ -235,7 +235,8 @@ const { value, error } = schema.validate({
 	],
 	horizon: {
 		url: environment.SRV_HORIZON_URL,
-		mock: environment.MOCK_HORIZON
+		mock: environment.MOCK_HORIZON,
+		timeoutLimit: environment.TIMEOUT_LIMIT_HORIZON || 5000
 	}
 });
 

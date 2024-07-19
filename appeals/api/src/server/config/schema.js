@@ -177,7 +177,8 @@ export default joi
 		),
 		horizon: joi.object({
 			url: joi.string().optional(),
-			mock: joi.bool().optional()
+			mock: joi.bool().optional(),
+			timeoutLimit: joi.number().optional()
 		})
 	})
 	.options({ presence: 'required' }); // required by default;

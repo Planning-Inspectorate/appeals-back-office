@@ -68,7 +68,10 @@ import {
  * @param {string} caseReference
  * @returns {Promise<HorizonGetCaseSuccessResponse>}
  */
-export const getAppealFromHorizon = async (caseReference, timeoutLimit = 5000) => {
+export const getAppealFromHorizon = async (
+	caseReference,
+	timeoutLimit = config.horizon.timeoutLimit
+) => {
 	const endpoint = 'horizon';
 	const url = `${config.horizon.url}/${endpoint}`;
 
