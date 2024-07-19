@@ -1,5 +1,6 @@
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { isInternalUrl } from '#lib/url-utilities.js';
 import { changeSafetyRisksPage } from './safety-risks.mapper.js';
 import { changeAppellantSafetyRisks, changeLpaSafetyRisks } from './safety-risks.service.js';
 
@@ -65,6 +66,12 @@ export const postChangeSafetyRisks = async (request, response) => {
 	const confirmRedirectURL = request.originalUrl.split('/').slice(0, -3).join('/');
 	const appealData = request.currentAppeal;
 	const formattedSource = source === 'lpa' ? 'LPA' : source;
+
+	if (!isInternalUrl(confirmRedirectURL, request)) {
+		return response.status(400).render('errorPageTemplate', {
+			message: 'Invalid redirection attempt detected.'
+		});
+	}
 
 	try {
 		if (source === 'lpa') {

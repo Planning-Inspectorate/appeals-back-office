@@ -725,6 +725,7 @@ export const postDeleteDocument = async (
 	if (
 		!isInternalUrl(returnUrl, request) ||
 		!isInternalUrl(cancelUrl, request) ||
+		!isInternalUrl(cancelUrlProcessed, request) ||
 		!isInternalUrl(uploadNewDocumentUrl, request)
 	) {
 		return response.status(400).render('errorPageTemplate', {

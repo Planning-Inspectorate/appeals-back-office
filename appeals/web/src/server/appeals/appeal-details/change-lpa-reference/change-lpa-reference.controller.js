@@ -1,5 +1,6 @@
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { isInternalUrl } from '#lib/url-utilities.js';
 import { changeLpaReferencePage } from './change-lpa-reference.mapper.js';
 import { changeLpaReference } from './change-lpa-reference.service.js';
 
@@ -59,6 +60,12 @@ export const postChangeLpaReference = async (request, response) => {
 	const currentUrl = request.originalUrl;
 
 	const origin = currentUrl.split('/').slice(0, -2).join('/');
+
+	if (!isInternalUrl(origin, request)) {
+		return response.status(400).render('errorPageTemplate', {
+			message: 'Invalid redirection attempt detected.'
+		});
+	}
 
 	try {
 		await changeLpaReference(
