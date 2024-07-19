@@ -7,6 +7,7 @@ import {
 	changeApplicationSetDecisionDatePage
 } from './application-decision-date.mapper.js';
 import { changeApplicationDecisionDate } from './application-decision-date.service.js';
+import { isInternalUrl } from '#lib/url-utilities.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -65,11 +66,20 @@ export const postChangeApplicationHasDecisionDate = async (request, response) =>
 		const { currentAppeal, apiClient } = request;
 
 		const { appealId, appellantCaseId } = currentAppeal;
+
+		const origin = request.originalUrl;
+
+		if (!isInternalUrl(origin, request)) {
+			return response.status(400).render('errorPageTemplate', {
+				message: 'Invalid redirection attempt detected.'
+			});
+		}
+
 		if (radio === 'yes') {
 			request.session.applicationDecisionDate = {
 				radio: radio
 			};
-			return response.redirect(`${request.originalUrl}/set-date`);
+			return response.redirect(`${origin}/set-date`);
 		} else {
 			await changeApplicationDecisionDate(apiClient, appealId, appellantCaseId, null);
 

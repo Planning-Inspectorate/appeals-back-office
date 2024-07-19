@@ -1,5 +1,6 @@
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { isInternalUrl } from '#lib/url-utilities.js';
 import { changeInspectorAccessPage } from './inspector-access.mapper.js';
 import {
 	changeAppellantInspectorAccess,
@@ -73,6 +74,12 @@ export const postChangeInspectorAccess = async (request, response) => {
 	const appealDetails = request.currentAppeal;
 
 	const origin = currentUrl.split('/').slice(0, -3).join('/');
+
+	if (!isInternalUrl(origin, request)) {
+		return response.status(400).render('errorPageTemplate', {
+			message: 'Invalid redirection attempt detected.'
+		});
+	}
 
 	try {
 		if (source === 'lpa') {
