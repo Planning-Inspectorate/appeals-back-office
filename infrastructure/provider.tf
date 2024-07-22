@@ -27,8 +27,9 @@ provider "azurerm" {
 }
 
 provider "azurerm" {
-  alias           = "horizon"
-  subscription_id = var.horizon_infra_config.subscription_id
+  alias                      = "horizon"
+  subscription_id            = var.horizon_infra_config.subscription_id
+  skip_provider_registration = true
 
   features {}
 }
