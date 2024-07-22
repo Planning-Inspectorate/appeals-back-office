@@ -103,6 +103,19 @@ front_office_infra_config = {
   }
 }
 
+horizon_infra_config = {
+  deploy_connections = false
+  # this isn't needed, but providers cannot be optional
+  # we use the tooling sub ID here so that the provider doesn't error
+  # but its not used for anything
+  # see https://github.com/hashicorp/terraform/issues/31340
+  subscription_id = "edb1ff78-90da-4901-a497-7e79f966f8e2"
+  network = {
+    name = ""
+    rg   = ""
+  }
+}
+
 service_bus_config = {
   sku                           = "Standard"
   capacity                      = 0

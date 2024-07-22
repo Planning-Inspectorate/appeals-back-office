@@ -92,6 +92,18 @@ variable "front_office_infra_config" {
   })
 }
 
+variable "horizon_infra_config" {
+  description = "Config for the (legacy) Horizon infra"
+  type = object({
+    subscription_id    = string
+    deploy_connections = bool # whether to deploy connections to the front office - enable after the FO is deployed
+    network = object({
+      name = string
+      rg   = string
+    })
+  })
+}
+
 variable "service_bus_config" {
   description = "Config for Service Bus"
   type = object({

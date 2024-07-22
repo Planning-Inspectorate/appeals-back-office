@@ -33,6 +33,7 @@ resource "azurerm_subnet" "main" {
   address_prefixes     = [var.vnet_config.main_subnet_address_space]
 }
 
+## peer to tooling VNET for DevOps agents
 resource "azurerm_virtual_network_peering" "bo_to_tooling" {
   name                      = "${local.org}-peer-${local.service_name}-to-tooling-${var.environment}"
   remote_virtual_network_id = data.azurerm_virtual_network.tooling.id
@@ -49,6 +50,7 @@ resource "azurerm_virtual_network_peering" "tooling_to_bo" {
   provider = azurerm.tooling
 }
 
+## peer to front office for Service Bus connection
 resource "azurerm_virtual_network_peering" "bo_to_front_office" {
   # only deploy if configured to connect to front office
   count = var.front_office_infra_config.deploy_connections ? 1 : 0
@@ -67,6 +69,29 @@ resource "azurerm_virtual_network_peering" "front_office_to_bo" {
   remote_virtual_network_id = azurerm_virtual_network.main.id
   resource_group_name       = var.front_office_infra_config.network.rg
   virtual_network_name      = var.front_office_infra_config.network.name
+}
+
+## peer to Horizon for linked case integration
+resource "azurerm_virtual_network_peering" "bo_to_horizon" {
+  # only deploy if configured to connect to horizon
+  count = var.horizon_infra_config.deploy_connections ? 1 : 0
+
+  name                      = "${local.org}-peer-${local.service_name}-to-horizon-${var.environment}"
+  remote_virtual_network_id = data.azurerm_virtual_network.front_office_vnet[0].id
+  resource_group_name       = azurerm_virtual_network.main.resource_group_name
+  virtual_network_name      = azurerm_virtual_network.main.name
+}
+
+resource "azurerm_virtual_network_peering" "horizon_to_bo" {
+  # only deploy if configured to connect to horizon
+  count = var.horizon_infra_config.deploy_connections ? 1 : 0
+
+  name                      = "${local.org}-peer-horizon-to-${local.service_name}-${var.environment}"
+  remote_virtual_network_id = azurerm_virtual_network.main.id
+  resource_group_name       = var.horizon_infra_config.network.rg
+  virtual_network_name      = var.horizon_infra_config.network.name
+
+  provider = azurerm.horizon
 }
 
 ## DNS Zones for Azure Services
