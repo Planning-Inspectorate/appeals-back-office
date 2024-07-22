@@ -11,13 +11,17 @@ variables:
     value: 'appeals'
   - group: e2e-${{ parameters.Environment }}
 
-pr:
-  branches:
-    include:
-      - main
-  paths:
-    include:
-      - appeals/e2e/cypress/e2e/back-office-appeals
+# PR trigger disabled, until process has been agreed by team
+pr: none
+
+# pr:
+#   branches:
+#     include:
+#       - main
+#   paths:
+#     include:
+#       - appeals/e2e/cypress/e2e/back-office-appeals
+
 trigger: none
 
 jobs:
@@ -47,6 +51,8 @@ jobs:
           INSPECTOR_EMAIL: $(INSPECTOR_APPEALS_EMAIL)
           VALIDATION_OFFICER_EMAIL: $(VALIDATION_OFFICER_EMAIL)
           USER_PASSWORD: $(USER_PASSWORD)
+					HAPPY_PATH_EMAIL: $(HAPPY_PATH_EMAIL)
+
         displayName: "Run Cypress Tests"
 
       - task: PublishBuildArtifacts@1
