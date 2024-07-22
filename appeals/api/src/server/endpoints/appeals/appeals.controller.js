@@ -183,7 +183,6 @@ const getAppeal = async (req, res) => {
 const updateAppealById = async (req, res) => {
 	const {
 		appeal,
-		body,
 		body: { caseOfficer, inspector, startedAt, validAt, planningApplicationReference },
 		params
 	} = req;
@@ -243,7 +242,15 @@ const updateAppealById = async (req, res) => {
 		}
 	}
 
-	return res.send(body);
+	const response = {
+		...(caseOfficer !== undefined && { caseOfficer }),
+		...(inspector !== undefined && { inspector }),
+		...(startedAt !== undefined && { startedAt }),
+		...(validAt !== undefined && { validAt }),
+		...(planningApplicationReference !== undefined && { planningApplicationReference })
+	};
+
+	return res.status(200).send(response);
 };
 
 /**

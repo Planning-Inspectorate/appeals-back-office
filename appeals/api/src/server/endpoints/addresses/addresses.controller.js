@@ -25,20 +25,21 @@ const getAddressById = async (req, res) => {
  */
 const updateAddressById = async (req, res) => {
 	const {
-		body,
 		body: { addressLine1, addressLine2, country, county, postcode, town },
 		params: { addressId }
 	} = req;
 
+	const updateAddress = {
+		addressLine1,
+		addressLine2,
+		addressCountry: country,
+		addressCounty: county,
+		postcode,
+		addressTown: town
+	};
+
 	try {
-		await addressRepository.updateAddressById(Number(addressId), {
-			addressLine1,
-			addressLine2,
-			addressCountry: country,
-			addressCounty: county,
-			postcode,
-			addressTown: town
-		});
+		await addressRepository.updateAddressById(Number(addressId), updateAddress);
 	} catch (error) {
 		if (error) {
 			logger.error(error);
@@ -46,7 +47,7 @@ const updateAddressById = async (req, res) => {
 		}
 	}
 
-	return res.send(body);
+	return res.send(updateAddress);
 };
 
 export { getAddressById, updateAddressById };

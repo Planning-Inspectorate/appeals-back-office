@@ -1,6 +1,6 @@
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { isInternalUrl } from '#lib/url-utilities.js';
+import { getOriginPathname, isInternalUrl } from '#lib/url-utilities.js';
 import { changeLpaReferencePage } from './change-lpa-reference.mapper.js';
 import { changeLpaReference } from './change-lpa-reference.service.js';
 
@@ -57,8 +57,7 @@ export const postChangeLpaReference = async (request, response) => {
 		params: { appealId }
 	} = request;
 
-	const currentUrl = request.originalUrl;
-
+	const currentUrl = getOriginPathname(request);
 	const origin = currentUrl.split('/').slice(0, -2).join('/');
 
 	if (!isInternalUrl(origin, request)) {
