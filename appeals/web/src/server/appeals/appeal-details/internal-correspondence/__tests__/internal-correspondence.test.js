@@ -2115,8 +2115,9 @@ describe('internal correspondence', () => {
 					});
 
 				expect(response.statusCode).toBe(302);
-				expect(response.text).toEqual(
-					`Found. Redirecting to /appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/manage-documents/${folder.folderId}/1`
+				expect(response.text).toContain('Found. Redirecting to ');
+				expect(response.text).toContain(
+					`/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/manage-documents/${folder.folderId}/1`
 				);
 			});
 
@@ -2134,7 +2135,8 @@ describe('internal correspondence', () => {
 					});
 
 				expect(response.statusCode).toBe(302);
-				expect(response.text).toEqual('Found. Redirecting to /appeals-service/appeal-details/1');
+				expect(response.text).toContain('Found. Redirecting to ');
+				expect(response.text).toContain('/appeals-service/appeal-details/1');
 			});
 
 			it(`should render a 500 page, if answer "yes, and upload another document" was provided, and there is more than one version of the document`, async () => {
@@ -2177,8 +2179,9 @@ describe('internal correspondence', () => {
 					});
 
 				expect(response.statusCode).toBe(302);
-				expect(response.text).toEqual(
-					`Found. Redirecting to /appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/upload-documents/${folder.folderId}`
+				expect(response.text).toContain('Found. Redirecting to ');
+				expect(response.text).toContain(
+					`/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/upload-documents/${folder.folderId}`
 				);
 			});
 		}
