@@ -102,7 +102,7 @@ front_office_infra_config = {
 }
 
 horizon_infra_config = {
-  deploy_connections = false
+  deploy_connections = true
   subscription_id    = "cbd9712b-34c8-4c94-9633-37ffc0f54f9d"
   network = {
     name = "VNPRE-10.0.0.0-16"
