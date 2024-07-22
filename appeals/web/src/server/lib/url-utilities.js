@@ -17,3 +17,13 @@ export function isInternalUrl(url, request) {
 		return false;
 	}
 }
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @returns {string}
+ */
+export function getOriginPathname(request) {
+	const origin = new URL(request.originalUrl, `${request.protocol}://${request.headers.host}`);
+	return origin.pathname;
+}

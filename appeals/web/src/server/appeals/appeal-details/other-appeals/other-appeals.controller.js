@@ -10,7 +10,7 @@ import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { HTTPError } from 'got';
-import { isInternalUrl } from '#lib/url-utilities.js';
+import { getOriginPathname, isInternalUrl } from '#lib/url-utilities.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -52,8 +52,7 @@ export const postAddOtherAppeals = async (request, response) => {
 		});
 	}
 
-	const currentUrl = request.originalUrl;
-
+	const currentUrl = getOriginPathname(request);
 	const origin = currentUrl.split('/').slice(0, -2).join('/');
 
 	if (!isInternalUrl(origin, request)) {
@@ -122,8 +121,7 @@ export const postConfirmOtherAppeals = async (request, response) => {
 
 	const { relateAppealsAnswer } = request.body;
 
-	const currentUrl = request.originalUrl;
-
+	const currentUrl = getOriginPathname(request);
 	const origin = currentUrl.split('/').slice(0, -2).join('/');
 
 	if (!isInternalUrl(origin, request)) {
@@ -312,9 +310,7 @@ export const postRemoveOtherAppeals = async (request, response) => {
 	try {
 		const { appealId, relatedAppealShortReference, relationshipId } = request.params;
 		const { removeAppealRelationship } = request.body;
-
-		const currentUrl = request.originalUrl;
-
+		const currentUrl = getOriginPathname(request);
 		const origin = currentUrl.split('/').slice(0, -4).join('/');
 
 		if (!isInternalUrl(origin, request)) {

@@ -7,7 +7,7 @@ import {
 	changeApplicationSetDecisionDatePage
 } from './application-decision-date.mapper.js';
 import { changeApplicationDecisionDate } from './application-decision-date.service.js';
-import { isInternalUrl } from '#lib/url-utilities.js';
+import { getOriginPathname, isInternalUrl } from '#lib/url-utilities.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -67,8 +67,7 @@ export const postChangeApplicationHasDecisionDate = async (request, response) =>
 
 		const { appealId, appellantCaseId } = currentAppeal;
 
-		const origin = new URL(request.originalUrl, `${request.protocol}://${request.headers.host}`)
-			.pathname;
+		const origin = getOriginPathname(request);
 
 		if (!isInternalUrl(origin, request)) {
 			return response.status(400).render('errorPageTemplate', {
