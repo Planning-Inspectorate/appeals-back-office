@@ -67,7 +67,8 @@ export const postChangeApplicationHasDecisionDate = async (request, response) =>
 
 		const { appealId, appellantCaseId } = currentAppeal;
 
-		const origin = request.originalUrl;
+		const origin = new URL(request.originalUrl, `${request.protocol}://${request.headers.host}`)
+			.pathname;
 
 		if (!isInternalUrl(origin, request)) {
 			return response.status(400).render('errorPageTemplate', {
