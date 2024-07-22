@@ -8,6 +8,7 @@ import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatte
 /** @typedef {import('express').Response} Response */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateSiteVisitData} UpdateSiteVisitData */
 /** @typedef {import('@pins/appeals.api').Appeals.CreateSiteVisitData} CreateSiteVisitData */
+/** @typedef {import('@pins/appeals.api').Schema.SiteVisitType} SiteVisitType */
 
 /**
  * @param {Request} req
@@ -28,7 +29,6 @@ const getSiteVisitById = async (req, res) => {
  */
 const postSiteVisit = async (req, res) => {
 	const {
-		body,
 		body: { visitDate, visitEndTime, visitStartTime },
 		params,
 		visitType,
@@ -43,6 +43,7 @@ const postSiteVisit = async (req, res) => {
 
 	const appellantEmail = String(appeal.agent?.email || appeal.appellant?.email || '');
 	const lpaEmail = appeal.lpa?.email || '';
+	const visitTypeName = visitType.name;
 
 	/** @type { CreateSiteVisitData } */
 	const siteVisitData = {
@@ -61,7 +62,12 @@ const postSiteVisit = async (req, res) => {
 	try {
 		await createSiteVisit(azureAdUserId, siteVisitData, notifyClient);
 
-		return res.send(body);
+		return res.send({
+			visitDate,
+			visitEndTime,
+			visitStartTime,
+			visitType: visitTypeName
+		});
 	} catch (error) {
 		logger.error(error);
 		return res.status(500).send({ errors: { body: ERROR_FAILED_TO_SAVE_DATA } });
@@ -75,7 +81,6 @@ const postSiteVisit = async (req, res) => {
  */
 const rearrangeSiteVisit = async (req, res) => {
 	const {
-		body,
 		body: { visitDate, visitEndTime, visitStartTime, previousVisitType, siteVisitChangeType },
 		params,
 		params: { siteVisitId },
@@ -91,6 +96,7 @@ const rearrangeSiteVisit = async (req, res) => {
 
 	const appellantEmail = String(appeal.agent?.email || appeal.appellant?.email || '');
 	const lpaEmail = appeal.lpa?.email || '';
+	const visitTypeName = visitType.name;
 
 	/** @type { UpdateSiteVisitData } */
 	const updateSiteVisitData = {
@@ -113,7 +119,14 @@ const rearrangeSiteVisit = async (req, res) => {
 		// @ts-ignore
 		await updateSiteVisit(azureAdUserId, updateSiteVisitData, notifyClient);
 
-		return res.send(body);
+		return res.send({
+			visitDate,
+			visitEndTime,
+			visitStartTime,
+			visitType: visitTypeName,
+			previousVisitType,
+			siteVisitChangeType
+		});
 	} catch (error) {
 		logger.error(error);
 		return res.status(500).send({ errors: { body: ERROR_FAILED_TO_SAVE_DATA } });
