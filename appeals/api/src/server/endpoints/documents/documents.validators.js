@@ -2,7 +2,7 @@ import { composeMiddleware } from '@pins/express';
 import { body } from 'express-validator';
 import validateIdParameter from '#common/validators/id-parameter.js';
 import validateUuidParameter from '#common/validators/uuid-parameter.js';
-import validateStringParameter from '#common/validators/string-parameter.js';
+import { validateStringParameter } from '#common/validators/string-parameter.js';
 import { validationErrorHandler } from '#middleware/error-handler.js';
 import {
 	ERROR_DOCUMENT_AV_RESULT_STATUSES_MUST_BE_ONE_OF,

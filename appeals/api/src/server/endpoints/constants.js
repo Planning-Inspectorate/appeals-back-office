@@ -148,6 +148,7 @@ export const LENGTH_1 = 1;
 export const LENGTH_8 = 8;
 export const LENGTH_10 = 10;
 export const LENGTH_300 = 300;
+export const LENGTH_1000 = 1000;
 
 export const NODE_ENV_PRODUCTION = 'production';
 

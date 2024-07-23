@@ -8,7 +8,10 @@ import {
 import { isOutcomeIncomplete, isOutcomeInvalid } from '#utils/check-validation-outcome.js';
 import validateDateParameter from '#common/validators/date-parameter.js';
 import validateIdParameter from '#common/validators/id-parameter.js';
-import validateStringParameter from '#common/validators/string-parameter.js';
+import {
+	validateStringParameter,
+	validateTextAreaParameter
+} from '#common/validators/string-parameter.js';
 import validateBooleanParameter from '#common/validators/boolean-parameter.js';
 import validateBooleanWithConditionalStringParameters from '#common/validators/boolean-with-conditional-string-parameters.js';
 import validateIncompleteInvalidReasonParameter from '#common/validators/incomplete-invalid-reason-parameter.js';
@@ -76,7 +79,7 @@ const patchAppellantCaseValidator = composeMiddleware(
 		'inspectorAccessDetails',
 		true
 	),
-	validateStringParameter('developmentDescription.details'),
+	validateTextAreaParameter('developmentDescription.details'),
 	validateBooleanParameter('developmentDescription.isCorrect'),
 	validationErrorHandler
 );

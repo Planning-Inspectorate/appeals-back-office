@@ -152,10 +152,10 @@ exports[`appellant-case GET /appellant-case should render a "Inspector access (a
                         data-cy="add-application-form"> Add<span class="govuk-visually-hidden"> Application form</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Development description</dt>
-                    <dd class="govuk-summary-list__value">Not provided</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> Development description</span></a>
-                    </dd>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Original Development description</dt>
+                    <dd                     class="govuk-summary-list__value">Not provided</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/development-description/change"> Change<span class="govuk-visually-hidden"> Development description</span></a>
+                        </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA changed the development description</dt>
                     <dd                     class="govuk-summary-list__value">Yes</dd>
@@ -429,10 +429,10 @@ exports[`appellant-case GET /appellant-case should render a "LPA application ref
                         data-cy="add-application-form"> Add<span class="govuk-visually-hidden"> Application form</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Development description</dt>
-                    <dd class="govuk-summary-list__value">Not provided</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> Development description</span></a>
-                    </dd>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Original Development description</dt>
+                    <dd                     class="govuk-summary-list__value">Not provided</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/development-description/change"> Change<span class="govuk-visually-hidden"> Development description</span></a>
+                        </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA changed the development description</dt>
                     <dd                     class="govuk-summary-list__value">Yes</dd>
@@ -694,10 +694,10 @@ exports[`appellant-case GET /appellant-case should render a "Site area updated" 
                         data-cy="add-application-form"> Add<span class="govuk-visually-hidden"> Application form</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Development description</dt>
-                    <dd class="govuk-summary-list__value">Not provided</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> Development description</span></a>
-                    </dd>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Original Development description</dt>
+                    <dd                     class="govuk-summary-list__value">Not provided</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/development-description/change"> Change<span class="govuk-visually-hidden"> Development description</span></a>
+                        </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA changed the development description</dt>
                     <dd                     class="govuk-summary-list__value">Yes</dd>
@@ -971,10 +971,10 @@ exports[`appellant-case GET /appellant-case should render a "Site health and saf
                         data-cy="add-application-form"> Add<span class="govuk-visually-hidden"> Application form</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Development description</dt>
-                    <dd class="govuk-summary-list__value">Not provided</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> Development description</span></a>
-                    </dd>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Original Development description</dt>
+                    <dd                     class="govuk-summary-list__value">Not provided</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/development-description/change"> Change<span class="govuk-visually-hidden"> Development description</span></a>
+                        </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA changed the development description</dt>
                     <dd                     class="govuk-summary-list__value">Yes</dd>
@@ -1248,10 +1248,10 @@ exports[`appellant-case GET /appellant-case should render a "Site updated" notif
                         data-cy="add-application-form"> Add<span class="govuk-visually-hidden"> Application form</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Development description</dt>
-                    <dd class="govuk-summary-list__value">Not provided</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> Development description</span></a>
-                    </dd>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Original Development description</dt>
+                    <dd                     class="govuk-summary-list__value">Not provided</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/development-description/change"> Change<span class="govuk-visually-hidden"> Development description</span></a>
+                        </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA changed the development description</dt>
                     <dd                     class="govuk-summary-list__value">Yes</dd>
@@ -1525,10 +1525,10 @@ exports[`appellant-case GET /appellant-case should render a success notification
                         data-cy="add-application-form"> Add<span class="govuk-visually-hidden"> Application form</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Development description</dt>
-                    <dd class="govuk-summary-list__value">Not provided</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> Development description</span></a>
-                    </dd>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Original Development description</dt>
+                    <dd                     class="govuk-summary-list__value">Not provided</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/development-description/change"> Change<span class="govuk-visually-hidden"> Development description</span></a>
+                        </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA changed the development description</dt>
                     <dd                     class="govuk-summary-list__value">Yes</dd>
@@ -1872,10 +1872,10 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         data-cy="add-application-form"> Add<span class="govuk-visually-hidden"> Application form</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Development description</dt>
-                    <dd class="govuk-summary-list__value">Not provided</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> Development description</span></a>
-                    </dd>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Original Development description</dt>
+                    <dd                     class="govuk-summary-list__value">Not provided</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/development-description/change"> Change<span class="govuk-visually-hidden"> Development description</span></a>
+                        </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA changed the development description</dt>
                     <dd                     class="govuk-summary-list__value">Yes</dd>
@@ -4030,10 +4030,10 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                         data-cy="add-application-form"> Add<span class="govuk-visually-hidden"> Application form</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Development description</dt>
-                    <dd class="govuk-summary-list__value">Not provided</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> Development description</span></a>
-                    </dd>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Original Development description</dt>
+                    <dd                     class="govuk-summary-list__value">Not provided</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/development-description/change"> Change<span class="govuk-visually-hidden"> Development description</span></a>
+                        </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA changed the development description</dt>
                     <dd                     class="govuk-summary-list__value">Yes</dd>
