@@ -8,6 +8,7 @@ import {
 } from './lpa-questionnaire.mapper.js';
 import logger from '#lib/logger.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
+import { APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
 import {
 	renderDocumentUpload,
 	renderDocumentDetails,
@@ -253,13 +254,13 @@ export const getAddDocuments = async (request, response) => {
 	let uploadPageHeadingText = '';
 
 	switch (documentType) {
-		case 'whoNotifiedSiteNotice':
+		case `${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_SITE_NOTICE}`:
 			uploadPageHeadingText = `Upload site notice`;
 			break;
-		case 'whoNotifiedLetterToNeighbours':
+		case `${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_LETTER_TO_NEIGHBOURS}`:
 			uploadPageHeadingText = `Upload letter or email notification`;
 			break;
-		case 'whoNotifiedPressAdvert':
+		case `${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_PRESS_ADVERT}`:
 			uploadPageHeadingText = `Upload press advert notification`;
 			break;
 		default:
@@ -303,9 +304,9 @@ export const getAddDocumentDetails = async (request, response) => {
 
 	const documentType = currentFolder.path.split('/')[1];
 	const notificationDocumentTypes = [
-		'whoNotifiedSiteNotice',
-		'whoNotifiedLetterToNeighbours',
-		'whoNotifiedPressAdvert'
+		`${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_SITE_NOTICE}`,
+		`${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_LETTER_TO_NEIGHBOURS}`,
+		`${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_PRESS_ADVERT}`
 	];
 	const uploadPageHeadingText = notificationDocumentTypes.includes(documentType)
 		? 'Notification documents'
