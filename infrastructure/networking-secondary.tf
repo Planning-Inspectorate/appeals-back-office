@@ -55,7 +55,7 @@ resource "azurerm_virtual_network_peering" "secondary_bo_to_horizon" {
   count = var.horizon_infra_config.deploy_connections ? 1 : 0
 
   name                      = "${local.org}-peer-${local.service_name}-secondary-to-horizon-${var.environment}"
-  remote_virtual_network_id = data.azurerm_virtual_network.front_office_vnet[0].id
+  remote_virtual_network_id = data.azurerm_virtual_network.horizon_vnet[0].id
   resource_group_name       = azurerm_virtual_network.secondary.resource_group_name
   virtual_network_name      = azurerm_virtual_network.secondary.name
 }
