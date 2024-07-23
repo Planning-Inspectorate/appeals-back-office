@@ -6,4 +6,6 @@ data "azurerm_virtual_network" "horizon_vnet" {
 
   name                = var.horizon_infra_config.network.name
   resource_group_name = var.horizon_infra_config.network.rg
+
+  provider = azurerm.horizon
 }
