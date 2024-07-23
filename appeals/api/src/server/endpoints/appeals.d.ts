@@ -234,9 +234,9 @@ interface SingleLPAQuestionnaireResponse {
 	procedureType?: string;
 	documents: {
 		whoNotified?: FolderInfo | null;
-		siteNotice?: FolderInfo | null;
-		lettersToNeighbours?: FolderInfo | null;
-		pressAdvert?: FolderInfo | null;
+		whoNotifiedSiteNotice?: FolderInfo | null;
+		whoNotifiedLetterToNeighbours?: FolderInfo | null;
+		whoNotifiedPressAdvert?: FolderInfo | null;
 		conservationMap?: FolderInfo | null;
 		lpaCaseCorrespondence?: FolderInfo | null;
 		otherPartyRepresentations?: FolderInfo | null;

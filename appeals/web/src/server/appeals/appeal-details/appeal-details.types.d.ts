@@ -140,7 +140,7 @@ export type LpaQuestionnaireFullAppealEnvironmentalImpact = {
 	// No -> No more questions
 	// Yes or environmentalStatementComplete: Yes
 	responsesForEnvironmentalStatement?: AppealDocument;
-	siteNotice?: AppealDocument;
+	whoNotifiedSiteNotice?: AppealDocument;
 	// ScheduleType 2
 	developmentDescription?: DevelopmentDescription;
 	affectSensitiveArea?: {
@@ -153,9 +153,9 @@ export type LpaQuestionnaireFullAppealEnvironmentalImpact = {
 
 export type LpaQuestionnaireFullAppealNotifyingPeople = {
 	notificationMethod: NotificationMethodOptions;
-	siteNotice?: AppealDocument;
-	letterSentToNeighbours?: AppealDocument;
-	pressAdvert?: AppealDocument;
+	whoNotifiedSiteNotice?: AppealDocument;
+	whoNotifiedLetterToNeighbours?: AppealDocument;
+	whoNotifiedPressAdvert?: AppealDocument;
 };
 
 export type LpaQuestionnaireFullAppealConsultationResponses = {
@@ -287,9 +287,9 @@ export interface SingleLPAQuestionnaireResponse {
 	developmentDescription?: string | null;
 	documents: {
 		whoNotified: FolderInfo | {};
-		siteNotice?: FolderInfo | null;
-		lettersToNeighbours?: FolderInfo | null;
-		pressAdvert?: FolderInfo | null;
+		whoNotifiedSiteNotice?: FolderInfo | null;
+		whoNotifiedLetterToNeighbours?: FolderInfo | null;
+		whoNotifiedPressAdvert?: FolderInfo | null;
 		conservationMap: FolderInfo | {};
 		lpaCaseCorrespondence: FolderInfo | {};
 		otherPartyRepresentations: FolderInfo | {};

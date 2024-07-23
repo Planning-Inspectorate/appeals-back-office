@@ -253,13 +253,13 @@ export const getAddDocuments = async (request, response) => {
 	let uploadPageHeadingText = '';
 
 	switch (documentType) {
-		case 'siteNotice':
+		case 'whoNotifiedSiteNotice':
 			uploadPageHeadingText = `Upload site notice`;
 			break;
-		case 'lettersToNeighbours':
+		case 'whoNotifiedLetterToNeighbours':
 			uploadPageHeadingText = `Upload letter or email notification`;
 			break;
-		case 'pressAdvert':
+		case 'whoNotifiedPressAdvert':
 			uploadPageHeadingText = `Upload press advert notification`;
 			break;
 		default:
@@ -302,7 +302,11 @@ export const getAddDocumentDetails = async (request, response) => {
 	}
 
 	const documentType = currentFolder.path.split('/')[1];
-	const notificationDocumentTypes = ['siteNotice', 'lettersToNeighbours', 'pressAdvert'];
+	const notificationDocumentTypes = [
+		'whoNotifiedSiteNotice',
+		'whoNotifiedLetterToNeighbours',
+		'whoNotifiedPressAdvert'
+	];
 	const uploadPageHeadingText = notificationDocumentTypes.includes(documentType)
 		? 'Notification documents'
 		: '';
