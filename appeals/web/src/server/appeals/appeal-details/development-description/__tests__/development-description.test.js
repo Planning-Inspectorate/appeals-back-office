@@ -15,7 +15,7 @@ describe('development-description', () => {
 	beforeEach(installMockApi);
 	afterEach(teardown);
 
-	describe('/GET /change', () => {
+	describe('GET /change', () => {
 		it('should render the development description change page when accessed from the appellant case page', async () => {
 			nock('http://test/')
 				.get(`/appeals/${appealData.appealId}/appellant-cases/${appealData.appellantCaseId}`)
@@ -31,7 +31,7 @@ describe('development-description', () => {
 		});
 	});
 
-	describe('/POST /change', () => {
+	describe('POST /change', () => {
 		it('should re-direct to appellant case when the data is valid', async () => {
 			const apiCall = nock('http://test/')
 				.patch(`/appeals/${appealData.appealId}/appellant-cases/${appealData.appellantCaseId}`)
@@ -83,7 +83,7 @@ describe('development-description', () => {
 				.reply(200, { appellantCaseDataIncompleteOutcome });
 
 			const invalidData = {
-				developmentDescription: `${'a'.repeat(1001)}` // Creating a 1001 char string.
+				developmentDescription: `${'a'.repeat(1001)}`
 			};
 
 			const response = await request
