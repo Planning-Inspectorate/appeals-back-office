@@ -3,6 +3,9 @@ trigger:
     include:
       # trigger for merge queue branches
       - gh-readonly-queue/*
+  paths:
+    exclude:
+      - infrastructure
 
 pr:
   branches:
