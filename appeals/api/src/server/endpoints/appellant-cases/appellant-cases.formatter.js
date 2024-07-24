@@ -74,7 +74,8 @@ const formatAppellantCase = (appeal, folders = null) => {
 			),
 			applicationDecision: appellantCase.applicationDecision || null,
 			appellantCostsAppliedFor: appellantCase.appellantCostsAppliedFor,
-			...formatFoldersAndDocuments(folders)
+			...formatFoldersAndDocuments(folders),
+			isGreenBelt: appellantCase.isGreenBelt
 		};
 	}
 };

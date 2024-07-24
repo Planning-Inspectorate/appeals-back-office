@@ -299,6 +299,7 @@ const formatAppeal = (
 				(appeal.linkedAppeals || []).filter((link) => link.childRef === appeal.reference).length >
 				0,
 			localPlanningDepartment: appeal.lpa?.name || '',
+			isGreenBelt: appeal.isGreenBelt,
 			lpaQuestionnaireId: appeal.lpaQuestionnaire?.id || null,
 			planningApplicationReference: appeal.applicationReference || '',
 			procedureType: appeal.procedureType?.name || 'Written',

@@ -24,6 +24,18 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 </div>"
 `;
 
+exports[`appellant-case GET /appellant-case should render a "Green belt status updated" notification banner when the green belt response is changed 1`] = `
+"<div class="govuk-notification-banner govuk-notification-banner--success"
+role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
+    </div>
+    <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">Green belt status updated</p>
+    </div>
+</div>"
+`;
+
 exports[`appellant-case GET /appellant-case should render a "Inspector access (appellant) updated" success notification banner when the inspector access (appellant) is updated 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
@@ -101,9 +113,9 @@ exports[`appellant-case GET /appellant-case should render a "Inspector access (a
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> In green belt</dt>
-                    <dd class="govuk-summary-list__value">Not currently in datamodel but is in v2 of the appellant submission</dd>
-                    <dd                     class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> In green belt</span></a>
-                        </dd>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/green-belt/change/appellant"> Change<span class="govuk-visually-hidden"> In green belt</span></a>
+                    </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site ownership</dt>
                     <dd class="govuk-summary-list__value">Fully owned</dd>
@@ -378,9 +390,9 @@ exports[`appellant-case GET /appellant-case should render a "LPA application ref
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> In green belt</dt>
-                    <dd class="govuk-summary-list__value">Not currently in datamodel but is in v2 of the appellant submission</dd>
-                    <dd                     class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> In green belt</span></a>
-                        </dd>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/green-belt/change/appellant"> Change<span class="govuk-visually-hidden"> In green belt</span></a>
+                    </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site ownership</dt>
                     <dd class="govuk-summary-list__value">Fully owned</dd>
@@ -643,9 +655,9 @@ exports[`appellant-case GET /appellant-case should render a "Site area updated" 
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> In green belt</dt>
-                    <dd class="govuk-summary-list__value">Not currently in datamodel but is in v2 of the appellant submission</dd>
-                    <dd                     class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> In green belt</span></a>
-                        </dd>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/green-belt/change/appellant"> Change<span class="govuk-visually-hidden"> In green belt</span></a>
+                    </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site ownership</dt>
                     <dd class="govuk-summary-list__value">Fully owned</dd>
@@ -920,9 +932,9 @@ exports[`appellant-case GET /appellant-case should render a "Site health and saf
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> In green belt</dt>
-                    <dd class="govuk-summary-list__value">Not currently in datamodel but is in v2 of the appellant submission</dd>
-                    <dd                     class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> In green belt</span></a>
-                        </dd>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/green-belt/change/appellant"> Change<span class="govuk-visually-hidden"> In green belt</span></a>
+                    </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site ownership</dt>
                     <dd class="govuk-summary-list__value">Fully owned</dd>
@@ -1197,9 +1209,9 @@ exports[`appellant-case GET /appellant-case should render a "Site updated" notif
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> In green belt</dt>
-                    <dd class="govuk-summary-list__value">Not currently in datamodel but is in v2 of the appellant submission</dd>
-                    <dd                     class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> In green belt</span></a>
-                        </dd>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/green-belt/change/appellant"> Change<span class="govuk-visually-hidden"> In green belt</span></a>
+                    </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site ownership</dt>
                     <dd class="govuk-summary-list__value">Fully owned</dd>
@@ -1474,9 +1486,9 @@ exports[`appellant-case GET /appellant-case should render a success notification
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> In green belt</dt>
-                    <dd class="govuk-summary-list__value">Not currently in datamodel but is in v2 of the appellant submission</dd>
-                    <dd                     class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> In green belt</span></a>
-                        </dd>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/green-belt/change/appellant"> Change<span class="govuk-visually-hidden"> In green belt</span></a>
+                    </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site ownership</dt>
                     <dd class="govuk-summary-list__value">Fully owned</dd>
@@ -1821,9 +1833,9 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> In green belt</dt>
-                    <dd class="govuk-summary-list__value">Not currently in datamodel but is in v2 of the appellant submission</dd>
-                    <dd                     class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> In green belt</span></a>
-                        </dd>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/green-belt/change/appellant"> Change<span class="govuk-visually-hidden"> In green belt</span></a>
+                    </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site ownership</dt>
                     <dd class="govuk-summary-list__value">Fully owned</dd>
@@ -3979,9 +3991,9 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> In green belt</dt>
-                    <dd class="govuk-summary-list__value">Not currently in datamodel but is in v2 of the appellant submission</dd>
-                    <dd                     class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/#"> Change<span class="govuk-visually-hidden"> In green belt</span></a>
-                        </dd>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/green-belt/change/appellant"> Change<span class="govuk-visually-hidden"> In green belt</span></a>
+                    </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site ownership</dt>
                     <dd class="govuk-summary-list__value">Fully owned</dd>

@@ -25,7 +25,7 @@ const updateLPAQuestionnaireById = (id, data) => {
 				lpaStatement: data.lpaStatement,
 				siteAccessDetails: data.siteAccessDetails,
 				siteSafetyDetails: data.siteSafetyDetails,
-				siteWithinGreenBelt: data.siteWithinGreenBelt,
+				isGreenBelt: data.isGreenBelt,
 				newConditionDetails: data.extraConditions,
 				lpaCostsAppliedFor: data.lpaCostsAppliedFor,
 				inConservationArea: data.isConservationArea,

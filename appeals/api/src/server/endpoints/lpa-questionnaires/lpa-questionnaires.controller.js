@@ -37,11 +37,11 @@ const updateLPAQuestionnaireById = async (req, res) => {
 			lpaStatement,
 			siteAccessDetails,
 			siteSafetyDetails,
-			siteWithinGreenBelt,
 			extraConditions,
 			lpaCostsAppliedFor,
 			isConservationArea,
-			isCorrectAppealType
+			isCorrectAppealType,
+			isGreenBelt
 		},
 		params,
 		validationOutcome
@@ -70,7 +70,7 @@ const updateLPAQuestionnaireById = async (req, res) => {
 					lpaStatement,
 					siteAccessDetails,
 					siteSafetyDetails,
-					siteWithinGreenBelt,
+					isGreenBelt,
 					extraConditions,
 					lpaCostsAppliedFor,
 					isConservationArea,
@@ -93,7 +93,7 @@ const updateLPAQuestionnaireById = async (req, res) => {
 				lpaStatement,
 				siteAccessDetails,
 				siteSafetyDetails,
-				siteWithinGreenBelt,
+				isGreenBelt,
 				extraConditions,
 				lpaCostsAppliedFor,
 				isConservationArea,

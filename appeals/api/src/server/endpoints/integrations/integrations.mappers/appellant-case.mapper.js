@@ -50,7 +50,8 @@ export const mapAppellantCaseIn = (command) => {
 		changedDevelopmentDescription: casedata.changedDevelopmentDescription,
 		ownersInformed: casedata.ownersInformed,
 		...(knowsAllOwners && { knowsAllOwners }),
-		...(knowsOtherOwners && { knowsOtherOwners })
+		...(knowsOtherOwners && { knowsOtherOwners }),
+		isGreenBelt: casedata.inGreenBelt
 	};
 
 	return data;
@@ -87,7 +88,8 @@ export const mapAppellantCaseOut = (casedata) => {
 		knowsAllOwners: casedata.knowsAllOwners?.name || null,
 		knowsOtherOwners: casedata.knowsOtherOwners?.name || null,
 		ownersInformed: casedata.ownersInformed || null,
-		enforcementNotice: casedata.enforcementNotice || null
+		enforcementNotice: casedata.enforcementNotice || null,
+		isGreenBelt: casedata.isGreenBelt || null
 	};
 
 	return data;

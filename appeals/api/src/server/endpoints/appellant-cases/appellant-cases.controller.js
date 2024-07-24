@@ -46,11 +46,13 @@ const updateAppellantCaseById = async (req, res) => {
 			siteAreaSquareMetres,
 			applicationDate,
 			applicationDecisionDate,
-			developmentDescription
+			developmentDescription,
+			isGreenBelt
 		},
 		params,
 		validationOutcome
 	} = req;
+	console.log(isGreenBelt);
 	const appellantCaseId = Number(params.appellantCaseId);
 	const azureAdUserId = String(req.get('azureAdUserId'));
 	const { validAt, ...data } = body;
@@ -93,6 +95,7 @@ const updateAppellantCaseById = async (req, res) => {
 					siteAreaSquareMetres,
 					applicationDate,
 					applicationDecisionDate,
+					isGreenBelt,
 					changedDevelopmentDescription: !developmentDescription.isCorrect,
 					originalDevelopmentDescription: developmentDescription.details
 			  });
@@ -121,7 +124,8 @@ const updateAppellantCaseById = async (req, res) => {
 				ownsSomeLand,
 				siteAreaSquareMetres,
 				applicationDate,
-				applicationDecisionDate
+				applicationDecisionDate,
+				isGreenBelt
 		  };
 
 	return res.send(response);

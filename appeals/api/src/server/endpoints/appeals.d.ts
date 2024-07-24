@@ -174,6 +174,7 @@ interface SingleAppellantCaseResponse {
 		originalApplicationForm?: FolderInfo | null;
 	};
 	validation: ValidationOutcomeResponse | null;
+	isGreenBelt?: boolean | null;
 }
 
 interface UpdateAppellantCaseRequest {
@@ -190,6 +191,7 @@ interface UpdateAppellantCaseRequest {
 	siteAreaSquareMetres?: string;
 	applicationDate?: string;
 	applicationDecisionDate?: string;
+	isGreenBelt?: boolean;
 	changedDevelopmentDescription?: boolean;
 	originalDevelopmentDescription?: string;
 }
@@ -251,7 +253,7 @@ interface SingleLPAQuestionnaireResponse {
 	inspectorAccessDetails?: string | null;
 	doesSiteRequireInspectorAccess?: boolean | null;
 	isConservationArea?: boolean | null;
-	siteWithinGreenBelt?: boolean | null;
+	isGreenBelt?: boolean | null;
 	isCorrectAppealType?: boolean | null;
 	submittedAt?: Date | null;
 	receivedAt: Date;
@@ -267,7 +269,7 @@ interface UpdateLPAQuestionnaireRequest {
 	lpaStatement?: string;
 	siteAccessDetails?: string;
 	siteSafetyDetails?: string;
-	siteWithinGreenBelt?: boolean;
+	isGreenBelt?: boolean;
 	extraConditions?: string;
 	lpaCostsAppliedFor?: boolean;
 	isConservationArea?: boolean;
