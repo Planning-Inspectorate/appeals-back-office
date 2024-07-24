@@ -250,6 +250,7 @@ model AppellantCase {
   changedDevelopmentDescription          Boolean?
   ownersInformed                         Boolean?
   enforcementNotice                      Boolean?
+  isGreenBelt                            Boolean?
 }
 
 /// AppellantCaseValidationOutcome model
@@ -349,11 +350,11 @@ model LPAQuestionnaire {
   newConditionDetails                       String?
   siteAccessDetails                         String?
   siteSafetyDetails                         String?
-  siteWithinGreenBelt                       Boolean?
   listedBuildingDetails                     ListedBuildingSelected[]
   isCorrectAppealType                       Boolean?
   inConservationArea                        Boolean?
   lpaCostsAppliedFor                        Boolean?
+  isGreenBelt                               Boolean?
 }
 
 /// LPAQuestionnaireValidationOutcome model

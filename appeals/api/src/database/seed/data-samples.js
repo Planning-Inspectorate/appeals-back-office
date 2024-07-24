@@ -5,6 +5,11 @@
 import { APPEAL_TYPE_SHORTHAND_HAS } from '../../server/endpoints/constants.js';
 
 /**
+ * @returns {boolean}
+ */
+const randomBool = () => Math.random() < 0.5;
+
+/**
  * @typedef {import('@pins/appeals.api').Schema.LPAQuestionnaire} LPAQuestionnaire
  * @typedef {import('@pins/appeals.api').Schema.AppellantCase} AppellantCase
  * @typedef {import('@pins/appeals.api').Appeals.AppealSite} AppealSite
@@ -190,9 +195,9 @@ export const lpaQuestionnaireList = {
 		lpaStatement: null,
 		newConditionDetails: null,
 		lpaCostsAppliedFor: false,
-		siteWithinGreenBelt: null,
 		lpaqCreatedDate: new Date(2023, 4, 9),
-		lpaQuestionnaireSubmittedDate: new Date(2023, 4, 9)
+		lpaQuestionnaireSubmittedDate: new Date(2023, 4, 9),
+		isGreenBelt: randomBool()
 	}
 };
 
@@ -244,7 +249,8 @@ export const appellantCaseList = {
 		ownsSomeLand: false,
 		hasAdvertisedAppeal: false,
 		originalDevelopmentDescription: 'adipisicing aliqua',
-		changedDevelopmentDescription: false
+		changedDevelopmentDescription: false,
+		isGreenBelt: randomBool()
 	}
 };
 

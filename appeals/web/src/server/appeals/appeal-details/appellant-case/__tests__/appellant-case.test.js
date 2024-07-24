@@ -189,6 +189,31 @@ describe('appellant-case', () => {
 			expect(notificationBannerElementHTML).toContain('Application decision date updated');
 		});
 
+		it('should render a "Green belt status updated" notification banner when the green belt response is changed', async () => {
+			const appealId = appealData.appealId.toString();
+			const appellantCaseId = appealData.appellantCaseId;
+			const appellantCaseUrl = `/appeals-service/appeal-details/${appealId}/appellant-case`;
+
+			const validData = {
+				greenBeltRadio: 'yes'
+			};
+
+			nock('http://test/')
+				.patch(`/appeals/${appealId}/appellant-cases/${appellantCaseId}`)
+				.reply(200, {});
+
+			await request.post(`${appellantCaseUrl}/green-belt/change/appellant`).send(validData);
+
+			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
+			const notificationBannerElementHTML = parseHtml(response.text, {
+				rootElement: notificationBannerElement
+			}).innerHTML;
+
+			expect(notificationBannerElementHTML).toMatchSnapshot();
+			expect(notificationBannerElementHTML).toContain('Success</h3>');
+			expect(notificationBannerElementHTML).toContain('Green belt status updated');
+		});
+
 		it('should render a "Site health and safety risks updated" success notification banner when the planning application reference is updated', async () => {
 			const appealId = appealData.appealId;
 			const appellantCaseId = appealData.appellantCaseId;

@@ -43,3 +43,16 @@ export function convertFromYesNoToBoolean(string) {
 	}
 	return lowerString === 'yes' ? true : false;
 }
+
+/**
+ *
+ * @param {string | null | undefined} string
+ * @returns {Boolean | null}
+ */
+export function convertFromYesNoNullToBooleanOrNull(string) {
+	const lowerString = string?.toLowerCase();
+	if (lowerString !== 'yes' && lowerString !== 'no') {
+		return null;
+	}
+	return lowerString === 'yes' ? true : false;
+}

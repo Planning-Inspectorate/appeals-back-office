@@ -56,7 +56,7 @@ export const mapQuestionnaireIn = (command) => {
 		lpaQuestionnaireSubmittedDate: casedata.lpaQuestionnaireSubmittedDate,
 		lpaStatement: casedata.lpaStatement,
 		isCorrectAppealType: casedata.isCorrectAppealType,
-		siteWithinGreenBelt: casedata.inGreenBelt,
+		isGreenBelt: casedata.isGreenBelt,
 		inConservationArea: casedata.inConservationArea,
 		newConditionDetails: casedata.newConditionDetails,
 		lpaCostsAppliedFor: casedata.lpaCostsAppliedFor,

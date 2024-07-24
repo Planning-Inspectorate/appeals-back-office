@@ -3390,6 +3390,10 @@
 								"items": {
 									"type": "string"
 								}
+							},
+							"isGreenBelt": {
+								"type": "boolean",
+								"example": true
 							}
 						}
 					},
@@ -6046,7 +6050,7 @@
 						"type": "string",
 						"example": "The area is prone to flooding"
 					},
-					"siteWithinGreenBelt": {
+					"isGreenBelt": {
 						"type": "boolean",
 						"example": true
 					},
@@ -6107,6 +6111,10 @@
 						"example": true
 					},
 					"hasHealthAndSafetyIssues": {
+						"type": "boolean",
+						"example": true
+					},
+					"isGreenBelt": {
 						"type": "boolean",
 						"example": true
 					},

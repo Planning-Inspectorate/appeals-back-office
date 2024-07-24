@@ -126,7 +126,8 @@ const updateAppealById = (
 		caseValidDate,
 		caseOfficer,
 		inspector,
-		applicationReference
+		applicationReference,
+		isGreenBelt
 	}
 ) =>
 	databaseConnector.appeal.update({
@@ -136,6 +137,7 @@ const updateAppealById = (
 			...(caseStartedDate && { caseStartedDate }),
 			...(caseValidDate && { caseValidDate }),
 			...(applicationReference && { applicationReference }),
+			isGreenBelt,
 			...(hasValueOrIsNull(caseOfficer) && { caseOfficerUserId: caseOfficer }),
 			...(hasValueOrIsNull(inspector) && { inspectorUserId: inspector }),
 			caseUpdatedDate: new Date()

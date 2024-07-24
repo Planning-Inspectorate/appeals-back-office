@@ -61,8 +61,8 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Green belt</dt>
-                    <dd class="govuk-summary-list__value">Yes</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/change-lpa-questionnaire/site-within-green-belt"
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/green-belt/change/lpa"
                         lpaQuestionnaireData-cy="change-site-within-green-belt"> Change<span class="govuk-visually-hidden"> Green belt</span></a>
                     </dd>
                 </div>
@@ -413,8 +413,8 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Green belt</dt>
-                    <dd class="govuk-summary-list__value">Yes</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/change-lpa-questionnaire/site-within-green-belt"
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/green-belt/change/lpa"
                         lpaQuestionnaireData-cy="change-site-within-green-belt"> Change<span class="govuk-visually-hidden"> Green belt</span></a>
                     </dd>
                 </div>
@@ -724,8 +724,8 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Green belt</dt>
-                    <dd class="govuk-summary-list__value">Yes</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/change-lpa-questionnaire/site-within-green-belt"
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/green-belt/change/lpa"
                         lpaQuestionnaireData-cy="change-site-within-green-belt"> Change<span class="govuk-visually-hidden"> Green belt</span></a>
                     </dd>
                 </div>
@@ -2606,6 +2606,18 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 </div>"
 `;
 
+exports[`LPA Questionnaire review Notification banners should render a success notification banner when "green belt" is updated 1`] = `
+"<div class="govuk-notification-banner govuk-notification-banner--success"
+role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
+    </div>
+    <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">Green belt status updated</p>
+    </div>
+</div>"
+`;
+
 exports[`LPA Questionnaire review Notification banners should render a success notification banner when "is correct appeal type" is updated 1`] = `
 "<div class="govuk-notification-banner govuk-notification-banner--success"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
@@ -2799,8 +2811,8 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Green belt</dt>
-                    <dd class="govuk-summary-list__value">Yes</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/change-lpa-questionnaire/site-within-green-belt"
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/green-belt/change/lpa"
                         lpaQuestionnaireData-cy="change-site-within-green-belt"> Change<span class="govuk-visually-hidden"> Green belt</span></a>
                     </dd>
                 </div>

@@ -1298,7 +1298,7 @@ export interface SingleLPAQuestionnaireResponse {
 	/** @example "The area is prone to flooding" */
 	sensitiveAreaDetails?: string;
 	/** @example true */
-	siteWithinGreenBelt?: boolean;
+	isGreenBelt?: boolean;
 	/** @example "Some other people need to be consulted" */
 	statutoryConsulteesDetails?: string;
 	validation?: {
@@ -1348,6 +1348,8 @@ export interface UpdateAppellantCaseRequest {
 	validationOutcome?: string;
 	/** @example "The site is behind a tall hedge" */
 	visibilityRestrictions?: string;
+	/** @example true */
+	isGreenBelt?: boolean;
 }
 
 export type UpdateAppellantCaseResponse = object;

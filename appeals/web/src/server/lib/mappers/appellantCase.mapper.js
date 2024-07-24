@@ -162,21 +162,21 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 
 	/** @type {Instructions} */
 	mappedData.inGreenBelt = {
-		id: 'site-area',
+		id: 'green-belt',
 		display: {
 			summaryListItem: {
 				key: {
 					text: 'In green belt'
 				},
 				value: {
-					text: 'Not currently in datamodel but is in v2 of the appellant submission' // 'Yes' //TODO: link to DB value withinGreenBelt
+					text: convertFromBooleanToYesNo(appellantCaseData.isGreenBelt) || ''
 				},
 				actions: {
 					items: [
 						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
 							visuallyHiddenText: 'In green belt',
-							href: `${currentRoute}/#`
+							href: `${currentRoute}/green-belt/change/appellant`
 						})
 					]
 				}

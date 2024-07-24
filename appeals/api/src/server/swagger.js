@@ -324,6 +324,7 @@ export const spec = {
 				details: 'A new extension has been added at the back',
 				isCorrect: false
 			},
+			isGreenBelt: true,
 			documents: {
 				appealStatement: {
 					folderId: 4562,
@@ -492,7 +493,7 @@ export const spec = {
 			procedureType: 'Written',
 			scheduleType: 'Schedule 1',
 			sensitiveAreaDetails: 'The area is prone to flooding',
-			siteWithinGreenBelt: true,
+			isGreenBelt: true,
 			statutoryConsulteesDetails: 'Some other people need to be consulted',
 			validation: {
 				outcome: 'Incomplete',
@@ -524,7 +525,8 @@ export const spec = {
 			isSitePartiallyOwned: true,
 			isSiteVisibleFromPublicRoad: false,
 			validationOutcome: 'valid',
-			visibilityRestrictions: 'The site is behind a tall hedge'
+			visibilityRestrictions: 'The site is behind a tall hedge',
+			isGreenBelt: true
 		},
 		UpdateAppellantCaseResponse: {},
 		UpdateLPAQuestionnaireRequest: {
@@ -552,7 +554,8 @@ export const spec = {
 			meetsOrExceedsThresholdOrCriteriaInColumn2: true,
 			scheduleType: 1,
 			sensitiveAreaDetails: 'The area is liable to flooding',
-			validationOutcome: 'incomplete'
+			validationOutcome: 'incomplete',
+			isGreenBelt: true
 		},
 		UpdateLPAQuestionnaireResponse: {},
 		CreateSiteVisitRequest: {

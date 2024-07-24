@@ -145,14 +145,14 @@ export function initialiseAndMapLPAQData(
 					text: 'Green belt'
 				},
 				value: {
-					text: convertFromBooleanToYesNo(lpaQuestionnaireData.siteWithinGreenBelt) || ''
+					text: convertFromBooleanToYesNo(lpaQuestionnaireData.isGreenBelt) || ''
 				},
 				actions: {
 					items: [
 						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
 							visuallyHiddenText: 'Green belt',
-							href: `${currentRoute}/change-lpa-questionnaire/site-within-green-belt`,
+							href: `${currentRoute}/green-belt/change/lpa`,
 							attributes: { 'lpaQuestionnaireData-cy': 'change-site-within-green-belt' }
 						})
 					]

@@ -80,6 +80,30 @@ describe('LPA Questionnaire review', () => {
 			);
 		}, 10000);
 
+		it('should render a success notification banner when "green belt" is updated', async () => {
+			const appealId = appealData.appealId.toString();
+			const lpaQuestionnaireId = appealData.lpaQuestionnaireId;
+			const lpaQuestionnaireUrl = `/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}`;
+			const apiUrl = `/appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`;
+			nock('http://test/').get(apiUrl).reply(200, lpaQuestionnaireData).persist();
+			nock('http://test/').patch(apiUrl).reply(200, {});
+
+			const validData = {
+				greenBeltRadio: 'yes'
+			};
+
+			await request.post(`${lpaQuestionnaireUrl}/green-belt/change/lpa`).send(validData);
+
+			const caseDetailsResponse = await request.get(`${lpaQuestionnaireUrl}`);
+
+			const notificationBannerElementHTML = parseHtml(caseDetailsResponse.text, {
+				rootElement: notificationBannerElement
+			}).innerHTML;
+			expect(notificationBannerElementHTML).toMatchSnapshot();
+			expect(notificationBannerElementHTML).toContain('Success</h3>');
+			expect(notificationBannerElementHTML).toContain('Green belt status updated');
+		});
+
 		it('should render a success notification banner when the neighbouring site affected value is updated', async () => {
 			nock('http://test/').patch(`/appeals/1/lpa-questionnaires/1`).reply(200, {});
 			nock('http://test/')
