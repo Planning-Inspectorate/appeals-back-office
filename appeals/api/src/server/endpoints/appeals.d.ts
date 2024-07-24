@@ -192,6 +192,7 @@ interface UpdateAppellantCaseRequest {
 	applicationDecisionDate?: string;
 	changedDevelopmentDescription?: boolean;
 	originalDevelopmentDescription?: string;
+	applicationDecision?: 'granted' | 'refused' | 'not_received';
 }
 
 interface UpdateAppellantCaseValidationOutcome {

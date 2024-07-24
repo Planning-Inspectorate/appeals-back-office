@@ -46,7 +46,8 @@ const updateAppellantCaseById = async (req, res) => {
 			siteAreaSquareMetres,
 			applicationDate,
 			applicationDecisionDate,
-			developmentDescription
+			developmentDescription,
+			applicationDecision
 		},
 		params,
 		validationOutcome
@@ -94,7 +95,8 @@ const updateAppellantCaseById = async (req, res) => {
 					applicationDate,
 					applicationDecisionDate,
 					changedDevelopmentDescription: !developmentDescription.isCorrect,
-					originalDevelopmentDescription: developmentDescription.details
+					originalDevelopmentDescription: developmentDescription.details,
+					applicationDecision
 			  });
 
 		await broadcasters.broadcastAppeal(appeal.id);

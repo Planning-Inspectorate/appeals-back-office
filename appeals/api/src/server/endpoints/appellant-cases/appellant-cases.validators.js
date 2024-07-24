@@ -15,6 +15,7 @@ import {
 import validateBooleanParameter from '#common/validators/boolean-parameter.js';
 import validateBooleanWithConditionalStringParameters from '#common/validators/boolean-with-conditional-string-parameters.js';
 import validateIncompleteInvalidReasonParameter from '#common/validators/incomplete-invalid-reason-parameter.js';
+import validateRegex from '#common/validators/regex-parameter.js';
 
 /** @typedef {import('express').RequestHandler} RequestHandler */
 
@@ -81,6 +82,7 @@ const patchAppellantCaseValidator = composeMiddleware(
 	),
 	validateTextAreaParameter('developmentDescription.details'),
 	validateBooleanParameter('developmentDescription.isCorrect'),
+	validateRegex('applicationDecision', /^granted$|^refused$|^not_received$/),
 	validationErrorHandler
 );
 
