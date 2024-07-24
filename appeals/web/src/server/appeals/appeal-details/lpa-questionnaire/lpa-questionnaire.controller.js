@@ -405,11 +405,32 @@ export const postAddDocumentVersionCheckAndConfirm = async (request, response) =
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const getManageFolder = async (request, response) => {
+	const { currentFolder } = request;
+
+	const documentType = currentFolder.path.split('/')[1];
+	let managePageHeadingText = '';
+
+	switch (documentType) {
+		case `${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_SITE_NOTICE}`:
+			managePageHeadingText = `Site notice documents`;
+			break;
+		case `${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_LETTER_TO_NEIGHBOURS}`:
+			managePageHeadingText = `Letter or email notification documents`;
+			break;
+		case `${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_PRESS_ADVERT}`:
+			managePageHeadingText = `Press advert notification documents`;
+			break;
+		default:
+			managePageHeadingText = '';
+			break;
+	}
+
 	await renderManageFolder(
 		request,
 		response,
 		`/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/`,
-		`/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/manage-documents/{{folderId}}/{{documentId}}`
+		`/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/manage-documents/{{folderId}}/{{documentId}}`,
+		managePageHeadingText
 	);
 };
 
