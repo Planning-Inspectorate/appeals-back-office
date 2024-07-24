@@ -2,6 +2,7 @@ import { databaseConnector } from '../../server/utils/database-connector.js';
 import { seedStaticData } from './data-static.js';
 import { seedLPAs } from './seed-lpas.js';
 import { localPlanningDepartmentList } from './LPAs/training.js';
+import { deleteAllRecords } from './seed-clear.js';
 
 /**
  * Seed the training database with the required static data
@@ -11,6 +12,7 @@ import { localPlanningDepartmentList } from './LPAs/training.js';
  */
 const seedTraining = async () => {
 	try {
+		await deleteAllRecords(databaseConnector);
 		await seedStaticData(databaseConnector);
 		await seedLPAs(databaseConnector, localPlanningDepartmentList);
 	} catch (error) {
