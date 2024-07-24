@@ -8,6 +8,7 @@ import {
 } from './lpa-questionnaire.mapper.js';
 import logger from '#lib/logger.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
+import { APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
 import {
 	renderDocumentUpload,
 	renderDocumentDetails,
@@ -242,11 +243,29 @@ export const getConfirmation = async (request, response) => {
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const getAddDocuments = async (request, response) => {
-	const { currentAppeal } = request;
+	const { currentAppeal, currentFolder } = request;
 	const lpaQuestionnaireDetails = await getLpaQuestionnaireDetails(request);
 
-	if (!currentAppeal || !lpaQuestionnaireDetails) {
+	if (!currentAppeal || !currentFolder || !lpaQuestionnaireDetails) {
 		return response.status(404).render('app/404.njk');
+	}
+
+	const documentType = currentFolder.path.split('/')[1];
+	let uploadPageHeadingText = '';
+
+	switch (documentType) {
+		case `${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_SITE_NOTICE}`:
+			uploadPageHeadingText = `Upload site notice`;
+			break;
+		case `${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_LETTER_TO_NEIGHBOURS}`:
+			uploadPageHeadingText = `Upload letter or email notification`;
+			break;
+		case `${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_PRESS_ADVERT}`:
+			uploadPageHeadingText = `Upload press advert notification`;
+			break;
+		default:
+			uploadPageHeadingText = '';
+			break;
 	}
 
 	await renderDocumentUpload(
@@ -254,8 +273,9 @@ export const getAddDocuments = async (request, response) => {
 		response,
 		currentAppeal,
 		`/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}`,
-		`/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/add-document-details/{{folderId}}`,
-		getValidationOutcomeFromLpaQuestionnaire(lpaQuestionnaireDetails) === 'complete'
+		`/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/${request.params.documentType}/add-document-details/{{folderId}}`,
+		getValidationOutcomeFromLpaQuestionnaire(lpaQuestionnaireDetails) === 'complete',
+		uploadPageHeadingText
 	);
 };
 
@@ -276,16 +296,28 @@ export const postAddDocuments = async (request, response) => {
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const getAddDocumentDetails = async (request, response) => {
+	const { currentFolder } = request;
 	const lpaQuestionnaireDetails = await getLpaQuestionnaireDetails(request);
-	if (!lpaQuestionnaireDetails) {
+	if (!currentFolder || !lpaQuestionnaireDetails) {
 		return response.status(404).render('app/404.njk');
 	}
+
+	const documentType = currentFolder.path.split('/')[1];
+	const notificationDocumentTypes = [
+		`${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_SITE_NOTICE}`,
+		`${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_LETTER_TO_NEIGHBOURS}`,
+		`${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_PRESS_ADVERT}`
+	];
+	const uploadPageHeadingText = notificationDocumentTypes.includes(documentType)
+		? 'Notification documents'
+		: '';
 
 	await renderDocumentDetails(
 		request,
 		response,
 		`/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/add-documents/{{folderId}}`,
-		getValidationOutcomeFromLpaQuestionnaire(lpaQuestionnaireDetails) === 'complete'
+		getValidationOutcomeFromLpaQuestionnaire(lpaQuestionnaireDetails) === 'complete',
+		uploadPageHeadingText
 	);
 };
 
@@ -373,11 +405,32 @@ export const postAddDocumentVersionCheckAndConfirm = async (request, response) =
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const getManageFolder = async (request, response) => {
+	const { currentFolder } = request;
+
+	const documentType = currentFolder.path.split('/')[1];
+	let managePageHeadingText = '';
+
+	switch (documentType) {
+		case `${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_SITE_NOTICE}`:
+			managePageHeadingText = `Site notice documents`;
+			break;
+		case `${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_LETTER_TO_NEIGHBOURS}`:
+			managePageHeadingText = `Letter or email notification documents`;
+			break;
+		case `${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_PRESS_ADVERT}`:
+			managePageHeadingText = `Press advert notification documents`;
+			break;
+		default:
+			managePageHeadingText = '';
+			break;
+	}
+
 	await renderManageFolder(
 		request,
 		response,
 		`/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/`,
-		`/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/manage-documents/{{folderId}}/{{documentId}}`
+		`/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/manage-documents/{{folderId}}/{{documentId}}`,
+		managePageHeadingText
 	);
 };
 

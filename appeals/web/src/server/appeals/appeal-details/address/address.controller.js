@@ -1,5 +1,6 @@
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { getOriginPathname, isInternalUrl } from '#lib/url-utilities.js';
 import { changeSiteAddressPage } from './address.mapper.js';
 import { changeSiteAddress } from './address.service.js';
 
@@ -53,7 +54,15 @@ export const postChangeSiteAddress = async (request, response) => {
 	const {
 		params: { appealId, addressId }
 	} = request;
-	const redirectUrl = request.originalUrl.split('/').slice(0, -3).join('/');
+
+	const origin = getOriginPathname(request);
+	const redirectUrl = origin.split('/').slice(0, -3).join('/');
+
+	if (!isInternalUrl(redirectUrl, request)) {
+		return response.status(400).render('errorPageTemplate', {
+			message: 'Invalid redirection attempt detected.'
+		});
+	}
 
 	try {
 		await changeSiteAddress(request.apiClient, appealId, request.session.siteAddress, addressId);

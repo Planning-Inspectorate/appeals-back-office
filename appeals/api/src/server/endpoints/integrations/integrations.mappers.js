@@ -28,8 +28,7 @@ import {
 	mapQuestionnaireValidationOut,
 	mapAppealRelationships
 } from './integrations.mappers/casedata.mapper.js';
-import { ODW_AGENT_SVCUSR, ODW_APPELLANT_SVCUSR } from '@pins/appeals/constants/common.js';
-import { STAGE } from '@pins/appeals/constants/documents.js';
+import { APPEAL_CASE_STAGE, SERVICE_USER_TYPE } from 'pins-data-model';
 import { FOLDERS } from '@pins/appeals/constants/documents.js';
 import { mapSiteVisitOut } from './integrations.mappers/site-visit.mapper.js';
 
@@ -78,8 +77,8 @@ const mappers = {
  */
 const mapAppealSubmission = (data) => {
 	const { casedata, documents, users } = data;
-	const appellant = users?.find((user) => user.serviceUserType === ODW_APPELLANT_SVCUSR);
-	const agent = users?.find((user) => user.serviceUserType === ODW_AGENT_SVCUSR);
+	const appellant = users?.find((user) => user.serviceUserType === SERVICE_USER_TYPE.APPELLANT);
+	const agent = users?.find((user) => user.serviceUserType === SERVICE_USER_TYPE.AGENT);
 
 	const neighbouringSitesInput = {
 		create: casedata.neighbouringSiteAddresses?.map((site) => {
@@ -112,7 +111,7 @@ const mapAppealSubmission = (data) => {
 	};
 
 	const documentsInput = (documents || []).map((document) =>
-		mappers.mapDocumentIn(document, STAGE.APPELLANT_CASE)
+		mappers.mapDocumentIn(document, APPEAL_CASE_STAGE.APPELLANT_CASE)
 	);
 
 	return {
@@ -144,7 +143,7 @@ const mapQuestionnaireSubmission = (data) => {
 	};
 
 	const documentsInput = (documents || []).map((document) =>
-		mappers.mapDocumentIn(document, STAGE.LPA_QUESTIONNAIRE)
+		mappers.mapDocumentIn(document, APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE)
 	);
 
 	return {

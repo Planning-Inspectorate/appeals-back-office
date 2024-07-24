@@ -1,6 +1,7 @@
 import { composeMiddleware } from '@pins/express';
 import { validationErrorHandler } from '#middleware/error-handler.js';
-import validateStringParameter, {
+import {
+	validateStringParameter,
 	validateRequiredStringParameter,
 	validateStringParameterAllowingEmpty
 } from '#common/validators/string-parameter.js';

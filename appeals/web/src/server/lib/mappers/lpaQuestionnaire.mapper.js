@@ -213,25 +213,151 @@ export function initialiseAndMapLPAQData(
 	};
 
 	/** @type {Instructions} */
-	mappedData.lpaq.lpaNotificationMethods = {
-		id: 'notification-methods',
+	mappedData.lpaq.siteNotice = {
+		id: 'site-notice',
 		display: {
 			summaryListItem: {
 				key: {
-					text: 'Notification methods'
+					text: 'Site notice'
 				},
-				value: {
-					html: displayPageFormatter.formatListOfNotificationMethodsToHtml(
-						lpaQuestionnaireData.lpaNotificationMethods
-					)
-				},
+				value: displayPageFormatter.formatDocumentValues(
+					lpaQuestionnaireData.appealId,
+					isFolderInfo(lpaQuestionnaireData.documents.whoNotifiedSiteNotice)
+						? lpaQuestionnaireData.documents.whoNotifiedSiteNotice.documents || []
+						: []
+				),
 				actions: {
 					items: [
+						...((isFolderInfo(lpaQuestionnaireData.documents.whoNotifiedSiteNotice)
+							? lpaQuestionnaireData.documents.whoNotifiedSiteNotice.documents || []
+							: []
+						).length
+							? [
+									mapActionComponent(permissionNames.updateCase, session, {
+										text: 'Manage',
+										visuallyHiddenText: 'Site notice',
+										href: mapDocumentManageUrl(
+											lpaQuestionnaireData.appealId,
+											lpaQuestionnaireData.lpaQuestionnaireId,
+											isFolderInfo(lpaQuestionnaireData.documents.whoNotifiedSiteNotice)
+												? lpaQuestionnaireData.documents.whoNotifiedSiteNotice.folderId
+												: undefined
+										),
+										attributes: { 'lpaQuestionnaireData-cy': 'manage-site-notice' }
+									})
+							  ]
+							: []),
 						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Change',
-							visuallyHiddenText: 'Notification methods',
-							href: `${currentRoute}/change-lpa-questionnaire/notification-methods`,
-							attributes: { 'lpaQuestionnaireData-cy': 'change-notification-methods' }
+							text: 'Add',
+							visuallyHiddenText: 'Site notice',
+							href: displayPageFormatter.formatDocumentActionLink(
+								lpaQuestionnaireData.appealId,
+								lpaQuestionnaireData.documents.whoNotifiedSiteNotice,
+								buildDocumentUploadUrlTemplate(lpaQuestionnaireData.lpaQuestionnaireId)
+							),
+							attributes: { 'lpaQuestionnaireData-cy': 'add-site-notice' }
+						})
+					]
+				}
+			}
+		}
+	};
+
+	/** @type {Instructions} */
+	mappedData.lpaq.lettersToNeighbours = {
+		id: 'letters-to-neighbours',
+		display: {
+			summaryListItem: {
+				key: {
+					text: 'Letter or email notification'
+				},
+				value: displayPageFormatter.formatDocumentValues(
+					lpaQuestionnaireData.appealId,
+					isFolderInfo(lpaQuestionnaireData.documents.whoNotifiedLetterToNeighbours)
+						? lpaQuestionnaireData.documents.whoNotifiedLetterToNeighbours.documents || []
+						: []
+				),
+				actions: {
+					items: [
+						...((isFolderInfo(lpaQuestionnaireData.documents.whoNotifiedLetterToNeighbours)
+							? lpaQuestionnaireData.documents.whoNotifiedLetterToNeighbours.documents || []
+							: []
+						).length
+							? [
+									mapActionComponent(permissionNames.updateCase, session, {
+										text: 'Manage',
+										visuallyHiddenText: 'Letter or email notification',
+										href: mapDocumentManageUrl(
+											lpaQuestionnaireData.appealId,
+											lpaQuestionnaireData.lpaQuestionnaireId,
+											isFolderInfo(lpaQuestionnaireData.documents.whoNotifiedLetterToNeighbours)
+												? lpaQuestionnaireData.documents.whoNotifiedLetterToNeighbours.folderId
+												: undefined
+										),
+										attributes: { 'lpaQuestionnaireData-cy': 'manage-letter-or-email-notification' }
+									})
+							  ]
+							: []),
+						mapActionComponent(permissionNames.updateCase, session, {
+							text: 'Add',
+							visuallyHiddenText: 'Letter or email notification',
+							href: displayPageFormatter.formatDocumentActionLink(
+								lpaQuestionnaireData.appealId,
+								lpaQuestionnaireData.documents.whoNotifiedLetterToNeighbours,
+								buildDocumentUploadUrlTemplate(lpaQuestionnaireData.lpaQuestionnaireId)
+							),
+							attributes: { 'lpaQuestionnaireData-cy': 'add-letter-or-email-notification' }
+						})
+					]
+				}
+			}
+		}
+	};
+
+	/** @type {Instructions} */
+	mappedData.lpaq.pressAdvert = {
+		id: 'press-advert',
+		display: {
+			summaryListItem: {
+				key: {
+					text: 'Press advert notification'
+				},
+				value: displayPageFormatter.formatDocumentValues(
+					lpaQuestionnaireData.appealId,
+					isFolderInfo(lpaQuestionnaireData.documents.whoNotifiedPressAdvert)
+						? lpaQuestionnaireData.documents.whoNotifiedPressAdvert.documents || []
+						: []
+				),
+				actions: {
+					items: [
+						...((isFolderInfo(lpaQuestionnaireData.documents.whoNotifiedPressAdvert)
+							? lpaQuestionnaireData.documents.whoNotifiedPressAdvert.documents || []
+							: []
+						).length
+							? [
+									mapActionComponent(permissionNames.updateCase, session, {
+										text: 'Manage',
+										visuallyHiddenText: 'Press advert notification',
+										href: mapDocumentManageUrl(
+											lpaQuestionnaireData.appealId,
+											lpaQuestionnaireData.lpaQuestionnaireId,
+											isFolderInfo(lpaQuestionnaireData.documents.whoNotifiedPressAdvert)
+												? lpaQuestionnaireData.documents.whoNotifiedPressAdvert.folderId
+												: undefined
+										),
+										attributes: { 'lpaQuestionnaireData-cy': 'manage-press-advert-notification' }
+									})
+							  ]
+							: []),
+						mapActionComponent(permissionNames.updateCase, session, {
+							text: 'Add',
+							visuallyHiddenText: 'Press advert notification',
+							href: displayPageFormatter.formatDocumentActionLink(
+								lpaQuestionnaireData.appealId,
+								lpaQuestionnaireData.documents.whoNotifiedPressAdvert,
+								buildDocumentUploadUrlTemplate(lpaQuestionnaireData.lpaQuestionnaireId)
+							),
+							attributes: { 'lpaQuestionnaireData-cy': 'add-press-advert-notification' }
 						})
 					]
 				}

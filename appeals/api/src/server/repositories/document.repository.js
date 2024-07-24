@@ -1,5 +1,5 @@
 import { databaseConnector } from '#utils/database-connector.js';
-import { AVSCAN_STATUS } from '@pins/appeals/constants/documents.js';
+import { APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
 
 /**
  * @typedef {import('#db-client').Prisma.PrismaPromise<T>} PrismaPromise
@@ -154,10 +154,10 @@ export const createDocumentAvStatus = (data) =>
 				create: {
 					documentGuid: document.id,
 					version: document.version,
-					avScanSuccess: document.virusCheckStatus === AVSCAN_STATUS.SCANNED
+					avScanSuccess: document.virusCheckStatus === APPEAL_VIRUS_CHECK_STATUS.SCANNED
 				},
 				update: {
-					avScanSuccess: document.virusCheckStatus === AVSCAN_STATUS.SCANNED
+					avScanSuccess: document.virusCheckStatus === APPEAL_VIRUS_CHECK_STATUS.SCANNED
 				},
 				where: {
 					documentGuid_version: {

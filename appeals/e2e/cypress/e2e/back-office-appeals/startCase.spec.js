@@ -2,21 +2,19 @@
 /// <reference types="cypress"/>
 
 import { users } from '../../fixtures/users';
-import { AppealsListPage } from '../../page_objects/appealsListPage';
-import { UpdateDueDatePage } from '../../page_objects/updateDueDatePage';
-const appealsListPage = new AppealsListPage();
-const updateDueDatePage = new UpdateDueDatePage();
+import { happyPathHelper } from '../../support/happyPathHelper';
 
-describe.skip('Appeals feature', () => {
+describe('Start case', () => {
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
-	it('Start case', () => {
-		cy.visit('/appeals-service/all-cases');
-		appealsListPage.clickAppealFromList(12);
-		appealsListPage.clickStartCaseBanner('Start case');
-		appealsListPage.clickButtonByText('Confirm');
-		appealsListPage.clickLinkByText('Go back to case details');
+	it.skip('Start case', () => {
+		cy.createCase().then((caseRef) => {
+			happyPathHelper.assignCaseOfficer(caseRef);
+			happyPathHelper.reviewAppellantCase(caseRef);
+			happyPathHelper.startCase(caseRef);
+			// TODO Verify that the case has started
+		});
 	});
 });

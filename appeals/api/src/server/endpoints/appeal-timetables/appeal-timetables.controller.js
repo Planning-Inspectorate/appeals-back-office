@@ -54,12 +54,19 @@ const updateAppealTimetableById = async (req, res) => {
 
 	try {
 		await updateAppealTimetable(appealTimetableId, body, req.get('azureAdUserId') || '');
+
+		const updatedTimetable = {
+			finalCommentReviewDate: body.finalCommentReviewDate,
+			issueDeterminationDate: body.issueDeterminationDate,
+			lpaQuestionnaireDueDate: body.lpaQuestionnaireDueDate,
+			statementReviewDate: body.statementReviewDate
+		};
+
+		return res.send(updatedTimetable);
 	} catch (error) {
 		logger.error(error);
 		return res.status(500).send({ errors: { body: ERROR_FAILED_TO_SAVE_DATA } });
 	}
-
-	return res.send(body);
 };
 
 export { updateAppealTimetableById, startAppeal };

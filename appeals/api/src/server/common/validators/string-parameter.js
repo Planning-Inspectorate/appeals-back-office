@@ -3,7 +3,8 @@ import {
 	ERROR_CANNOT_BE_EMPTY_STRING,
 	ERROR_MAX_LENGTH_CHARACTERS,
 	ERROR_MUST_BE_STRING,
-	LENGTH_300
+	LENGTH_300,
+	LENGTH_1000
 } from '#endpoints/constants.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 
@@ -14,7 +15,22 @@ import stringTokenReplacement from '#utils/string-token-replacement.js';
  * @param {number} maxLength
  * @returns {ValidationChain}
  */
-const validateStringParameter = (parameterName, maxLength = LENGTH_300) =>
+export const validateStringParameter = (parameterName, maxLength = LENGTH_300) =>
+	body(parameterName)
+		.optional()
+		.isString()
+		.withMessage(ERROR_MUST_BE_STRING)
+		.notEmpty()
+		.withMessage(ERROR_CANNOT_BE_EMPTY_STRING)
+		.isLength({ max: maxLength })
+		.withMessage(stringTokenReplacement(ERROR_MAX_LENGTH_CHARACTERS, [maxLength]));
+
+/**
+ * @param {string} parameterName
+ * @param {number} maxLength
+ * @returns {ValidationChain}
+ */
+export const validateTextAreaParameter = (parameterName, maxLength = LENGTH_1000) =>
 	body(parameterName)
 		.optional()
 		.isString()
@@ -43,5 +59,3 @@ export const validateStringParameterAllowingEmpty = (parameterName, maxLength = 
  */
 export const validateRequiredStringParameter = (parameterName) =>
 	body(parameterName).notEmpty().withMessage(ERROR_CANNOT_BE_EMPTY_STRING);
-
-export default validateStringParameter;

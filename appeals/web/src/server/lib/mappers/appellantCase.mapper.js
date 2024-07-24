@@ -238,7 +238,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		display: {
 			summaryListItem: {
 				key: {
-					text: 'Development description'
+					text: 'Original Development description'
 				},
 				value: {
 					text: appellantCaseData.developmentDescription?.details ?? 'Not provided'
@@ -248,7 +248,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
 							visuallyHiddenText: 'Development description',
-							href: `${currentRoute}/#`
+							href: `${currentRoute}/development-description/change`
 						})
 					]
 				}

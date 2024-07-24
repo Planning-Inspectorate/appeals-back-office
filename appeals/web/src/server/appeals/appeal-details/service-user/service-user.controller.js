@@ -3,6 +3,7 @@ import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { capitalize } from 'lodash-es';
 import { changeServiceUserPage } from './service-user.mapper.js';
 import { updateServiceUser } from './service-user.service.js';
+import { getOriginPathname, isInternalUrl } from '#lib/url-utilities.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -63,7 +64,16 @@ export const postChangeServiceUser = async (request, response) => {
 	if (request.errors) {
 		return renderChangeServiceUser(request, response);
 	}
-	const backToMenuUrl = request.originalUrl.split('/').slice(0, -3).join('/');
+
+	const origin = getOriginPathname(request);
+	const backToMenuUrl = origin.split('/').slice(0, -3).join('/');
+
+	if (!isInternalUrl(backToMenuUrl, request)) {
+		return response.status(400).render('errorPageTemplate', {
+			message: 'Invalid redirection attempt detected.'
+		});
+	}
+
 	try {
 		// @ts-ignore
 		const serviceUserId = appealDetails[userType]?.serviceUserId;

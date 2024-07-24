@@ -1,11 +1,12 @@
 import { ERROR_FAILED_TO_SAVE_DATA } from '#endpoints/constants.js';
-import { STAGE } from '@pins/appeals/constants/documents.js';
+import { APPEAL_CASE_STAGE } from 'pins-data-model';
 import { getFoldersForAppeal } from '#endpoints/documents/documents.service.js';
 import { formatLpaQuestionnaire } from './lpa-questionnaires.formatter.js';
 import { updateLPAQuestionnaireValidationOutcome } from './lpa-questionnaires.service.js';
 import lpaQuestionnaireRepository from '#repositories/lpa-questionnaire.repository.js';
 import logger from '#utils/logger.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -18,7 +19,7 @@ import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatte
  */
 const getLpaQuestionnaireById = async (req, res) => {
 	const { appeal } = req;
-	const folders = await getFoldersForAppeal(appeal, STAGE.LPAQUESTIONNAIRE);
+	const folders = await getFoldersForAppeal(appeal, APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE);
 	const formattedAppeal = formatLpaQuestionnaire(appeal, folders);
 	return res.send(formattedAppeal);
 };
@@ -75,6 +76,8 @@ const updateLPAQuestionnaireById = async (req, res) => {
 					isConservationArea,
 					isCorrectAppealType
 			  });
+
+		await broadcasters.broadcastAppeal(appeal.id);
 	} catch (error) {
 		if (error) {
 			logger.error(error);

@@ -2,92 +2,107 @@
 /// <reference types="cypress"/>
 
 import { users } from '../../fixtures/users';
-import { AppealsListPage } from '../../page_objects/appealsListPage';
-import { SearchResultsPage } from '../../page_objects/searchResultsPage';
-import { projectInformation } from '../../support/utils/createProjectInformation';
+import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
+import { ListCasesPage } from '../../page_objects/listCasesPage';
+import { urlPaths } from '../../support/urlPaths';
 
-const page = new AppealsListPage();
-describe.skip('Appeals feature', () => {
+const listCasesPage = new ListCasesPage();
+const caseDetailsPage = new CaseDetailsPage();
+
+describe('Assign user to case', () => {
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
-	it('Case officer should be able to assign themselves to a case using name search', () => {
-		cy.visit('/appeals-service/appeals-list');
-		page.clickAppealFromList(18);
-		page.clickCaseOfficer(15);
-		page.nationalListSearch('case');
-		page.basePageElements.summaryListValue('caseteamofficer.test@planninginspectorate.gov.uk');
-		page.clickLinkByText('Choose');
-		page.selectRadioButtonByValue('Yes');
-		page.clickButtonByText('Continue');
-		page.validateBannerMessage('Case officer has been assigned');
-		page.checkAnswerSummaryValue('caseteamofficer.test@planninginspectorate.gov.uk');
+	it.skip('Case officer should be able to assign themselves to a case using name search', () => {
+		cy.createCase().then((caseRef) => {
+			cy.visit(urlPaths.appealsList);
+			listCasesPage.clickAppealByRef(caseRef);
+			caseDetailsPage.clickAssignCaseOfficer();
+			caseDetailsPage.searchForCaseOfficer('case');
+			caseDetailsPage.chooseSummaryListValue(users.appeals.caseAdmin.email);
+			caseDetailsPage.clickLinkByText('Choose');
+			caseDetailsPage.selectRadioButtonByValue('Yes');
+			caseDetailsPage.clickButtonByText('Continue');
+			caseDetailsPage.validateBannerMessage('Case officer has been assigned');
+			caseDetailsPage.verifyAnswerSummaryValue(users.appeals.caseAdmin.email);
+		});
 	});
 
 	it('Inspector should be able to assign themselves to a case using name search', () => {
-		cy.visit('/appeals-service/appeals-list');
-		page.clickAppealFromList(18);
-		page.clickInspector(15);
-		page.nationalListSearch('test');
-		page.basePageElements.summaryListValue('inspectorappeals.test@planninginspectorate.gov.uk');
-		page.clickLinkByText('Choose');
-		page.selectRadioButtonByValue('Yes');
-		page.clickButtonByText('Continue');
-		page.validateBannerMessage('Inspector has been assigned');
-		page.checkAnswerSummaryValue('inspectorappeals.test@planninginspectorate.gov.uk');
+		cy.createCase().then((caseRef) => {
+			cy.visit(urlPaths.appealsList);
+			listCasesPage.clickAppealByRef(caseRef);
+			caseDetailsPage.clickAssignInspector();
+			caseDetailsPage.searchForCaseOfficer('test');
+			caseDetailsPage.chooseSummaryListValue(users.appeals.inspector.email);
+			caseDetailsPage.clickLinkByText('Choose');
+			caseDetailsPage.selectRadioButtonByValue('Yes');
+			caseDetailsPage.clickButtonByText('Continue');
+			caseDetailsPage.validateBannerMessage('Success', 'Inspector has been assigned');
+			caseDetailsPage.verifyAnswerSummaryValue(users.appeals.inspector.email);
+		});
 	});
 
-	it('Case officer should be able to change assigned user', () => {
-		cy.visit('/appeals-service/appeals-list');
-		page.clickAppealFromList(18);
-		page.clickCaseOfficer(16);
-		page.nationalListSearch('Rachel');
-		page.basePageElements.summaryListValue('rachel.harvey@planninginspectorate.gov.uk');
-		page.clickLinkByText('Choose');
-		page.selectRadioButtonByValue('Yes');
-		page.clickButtonByText('Continue');
-		page.validateBannerMessage('Case officer has been assigned');
-		page.checkAnswerSummaryValue('Rachel HarveyRachel.Harvey@planninginspectorate.gov.uk');
+	it.skip('Case officer should be able to change assigned user', () => {
+		cy.createCase().then((caseRef) => {
+			cy.visit(urlPaths.appealsList);
+			listCasesPage.clickAppealByRef(caseRef);
+			caseDetailsPage.clickAssignCaseOfficer();
+			caseDetailsPage.searchForCaseOfficer('Rachel');
+			caseDetailsPage.chooseSummaryListValue(users.appeals.happyPath.email);
+			caseDetailsPage.clickChooseCaseOfficerResult(users.appeals.happyPath.email);
+			caseDetailsPage.selectRadioButtonByValue('Yes');
+			caseDetailsPage.clickButtonByText('Continue');
+			caseDetailsPage.validateBannerMessage('Success', 'Case officer has been assigned');
+			caseDetailsPage.verifyAnswerSummaryValue(users.appeals.happyPath.email);
+		});
 	});
 
 	it('Inspector should be able to change assigned user', () => {
-		cy.visit('/appeals-service/appeals-list');
-		page.clickAppealFromList(18);
-		page.clickInspector(17);
-		page.nationalListSearch('Rachel');
-		page.basePageElements.summaryListValue('rachel.harvey@planninginspectorate.gov.uk');
-		page.clickLinkByText('Choose');
-		page.selectRadioButtonByValue('Yes');
-		page.clickButtonByText('Continue');
-		page.validateBannerMessage('Inspector has been assigned');
-		page.checkAnswerSummaryValue('Rachel.Harvey@planninginspectorate.gov.uk');
-	});
-	it('Case officer should be able to remove assigned user', () => {
-		cy.visit('/appeals-service/appeals-list');
-		page.clickAppealFromList(18);
-		page.clickCaseOfficer(16);
-		page.basePageElements.summaryListValue('rachel.harvey@planninginspectorate.gov.uk');
-		page.clickLinkByText('Remove');
-		page.selectRadioButtonByValue('Yes');
-		page.clickButtonByText('Continue');
-		page.selectRadioButtonByValue('No');
-		page.clickButtonByText('Continue');
-		page.validateBannerMessage('Case officer has been removed');
-		page.checkValueIsBlank(15);
+		cy.createCase().then((caseRef) => {
+			cy.visit(urlPaths.appealsList);
+			listCasesPage.clickAppealByRef(caseRef);
+			caseDetailsPage.clickAssignInspector();
+			caseDetailsPage.searchForCaseOfficer('Rachel');
+			caseDetailsPage.chooseSummaryListValue(users.appeals.happyPath.email);
+			caseDetailsPage.clickLinkByText('Choose');
+			caseDetailsPage.selectRadioButtonByValue('Yes');
+			caseDetailsPage.clickButtonByText('Continue');
+			caseDetailsPage.validateBannerMessage('Success', 'Inspector has been assigned');
+			caseDetailsPage.verifyAnswerSummaryValue(users.appeals.happyPath.email);
+		});
 	});
 
-	it('Inspector should be able to remove assigned user', () => {
-		cy.visit('/appeals-service/appeals-list');
-		page.clickAppealFromList(18);
-		page.clickInspector(17);
-		page.basePageElements.summaryListValue('rachel.harvey@planninginspectorate.gov.uk');
-		page.clickLinkByText('Remove');
-		page.selectRadioButtonByValue('Yes');
-		page.clickButtonByText('Continue');
-		page.selectRadioButtonByValue('No');
-		page.clickButtonByText('Continue');
-		page.validateBannerMessage('Inspector has been removed');
-		page.checkValueIsBlank(16);
+	it.skip('Case officer should be able to remove assigned user', () => {
+		cy.createCase().then((caseRef) => {
+			cy.visit(urlPaths.appealsList);
+			listCasesPage.clickAppealByRef(caseRef);
+			caseDetailsPage.clickAssignCaseOfficer();
+			caseDetailsPage.chooseSummaryListValue(users.appeals.happyPath.email);
+			caseDetailsPage.clickLinkByText('Remove');
+			caseDetailsPage.selectRadioButtonByValue('Yes');
+			caseDetailsPage.clickButtonByText('Continue');
+			caseDetailsPage.selectRadioButtonByValue('No');
+			caseDetailsPage.clickButtonByText('Continue');
+			caseDetailsPage.validateBannerMessage('Case officer has been removed');
+			caseDetailsPage.verifyValueIsBlank(15);
+		});
+	});
+
+	it.skip('Inspector should be able to remove assigned user', () => {
+		cy.createCase().then((caseRef) => {
+			cy.visit(urlPaths.appealsList);
+			listCasesPage.clickAppealByRef(caseRef);
+			caseDetailsPage.clickAssignInspector();
+			caseDetailsPage.chooseSummaryListValue(users.appeals.happyPath.email);
+			caseDetailsPage.clickLinkByText('Remove');
+			caseDetailsPage.selectRadioButtonByValue('Yes');
+			caseDetailsPage.clickButtonByText('Continue');
+			caseDetailsPage.selectRadioButtonByValue('No');
+			caseDetailsPage.clickButtonByText('Continue');
+			caseDetailsPage.validateBannerMessage('Inspector has been removed');
+			caseDetailsPage.verifyValueIsBlank(16);
+		});
 	});
 });

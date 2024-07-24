@@ -21,6 +21,7 @@ apps_config = {
     horizon_api_url               = "http://10.0.7.4:8000"
     horizon_mock                  = false
     horizon_web_url               = "https://horizontest.planninginspectorate.gov.uk/otcs/llisapi.dll?func=ll&objId="
+    horizon_timeout               = 5000
     service_bus_broadcast_enabled = true
     notify_template_ids = {
       appeal_confirmed_id                                             = "783f94cc-1d6d-4153-8ad7-9070e449a57c"
@@ -97,6 +98,15 @@ front_office_infra_config = {
   network = {
     name = "pins-vnet-common-training-ukw-001"
     rg   = "pins-rg-common-training-ukw-001"
+  }
+}
+
+horizon_infra_config = {
+  deploy_connections = true
+  subscription_id    = "cbd9712b-34c8-4c94-9633-37ffc0f54f9d"
+  network = {
+    name = "VNPRE-10.0.0.0-16"
+    rg   = "PREHZN"
   }
 }
 

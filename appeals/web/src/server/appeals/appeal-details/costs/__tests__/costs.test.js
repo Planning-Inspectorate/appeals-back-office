@@ -1480,8 +1480,9 @@ describe('costs', () => {
 							});
 
 						expect(response.statusCode).toBe(302);
-						expect(response.text).toEqual(
-							`Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/manage-documents/${costsFolder.folderId}/1`
+						expect(response.text).toContain('Found. Redirecting to ');
+						expect(response.text).toContain(
+							`/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/manage-documents/${costsFolder.folderId}/1`
 						);
 					});
 
@@ -1499,9 +1500,8 @@ describe('costs', () => {
 							});
 
 						expect(response.statusCode).toBe(302);
-						expect(response.text).toEqual(
-							'Found. Redirecting to /appeals-service/appeal-details/1'
-						);
+						expect(response.text).toContain('Found. Redirecting to ');
+						expect(response.text).toContain('/appeals-service/appeal-details/1');
 					});
 
 					it(`should render a 500 page, if answer "yes, and upload another document" was provided, and there is more than one version of the document (${costsCategory} ${costsDocumentType})`, async () => {
@@ -1544,8 +1544,9 @@ describe('costs', () => {
 							});
 
 						expect(response.statusCode).toBe(302);
-						expect(response.text).toEqual(
-							`Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/select-document-type/${costsFolder.folderId}`
+						expect(response.text).toContain('Found. Redirecting to ');
+						expect(response.text).toContain(
+							`/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/select-document-type/${costsFolder.folderId}`
 						);
 					});
 				}
@@ -2727,8 +2728,9 @@ describe('costs', () => {
 					});
 
 				expect(response.statusCode).toBe(302);
-				expect(response.text).toEqual(
-					`Found. Redirecting to /appeals-service/appeal-details/1/costs/decision/manage-documents/${costsFolder?.folderId}/1`
+				expect(response.text).toContain('Found. Redirecting to ');
+				expect(response.text).toContain(
+					`/appeals-service/appeal-details/1/costs/decision/manage-documents/${costsFolder?.folderId}/1`
 				);
 			});
 
@@ -2744,7 +2746,8 @@ describe('costs', () => {
 					});
 
 				expect(response.statusCode).toBe(302);
-				expect(response.text).toEqual('Found. Redirecting to /appeals-service/appeal-details/1');
+				expect(response.text).toContain('Found. Redirecting to ');
+				expect(response.text).toContain('/appeals-service/appeal-details/1');
 			});
 
 			it(`should render a 500 page, if answer "yes, and upload another document" was provided, and there is more than one version of the document`, async () => {
@@ -2783,8 +2786,9 @@ describe('costs', () => {
 					});
 
 				expect(response.statusCode).toBe(302);
-				expect(response.text).toEqual(
-					`Found. Redirecting to /appeals-service/appeal-details/1/costs/decision/select-document-type/${costsFolder?.folderId}`
+				expect(response.text).toContain('Found. Redirecting to ');
+				expect(response.text).toContain(
+					`/appeals-service/appeal-details/1/costs/decision/select-document-type/${costsFolder?.folderId}`
 				);
 			});
 		});

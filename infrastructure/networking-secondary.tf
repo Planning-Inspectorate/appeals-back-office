@@ -49,6 +49,29 @@ resource "azurerm_virtual_network_peering" "secondary_tooling_to_bo" {
   provider = azurerm.tooling
 }
 
+## peer to Horizon for linked case integration
+resource "azurerm_virtual_network_peering" "secondary_bo_to_horizon" {
+  # only deploy if configured to connect to horizon
+  count = var.horizon_infra_config.deploy_connections ? 1 : 0
+
+  name                      = "${local.org}-peer-${local.service_name}-secondary-to-horizon-${var.environment}"
+  remote_virtual_network_id = data.azurerm_virtual_network.horizon_vnet[0].id
+  resource_group_name       = azurerm_virtual_network.secondary.resource_group_name
+  virtual_network_name      = azurerm_virtual_network.secondary.name
+}
+
+resource "azurerm_virtual_network_peering" "secondary_horizon_to_bo" {
+  # only deploy if configured to connect to horizon
+  count = var.horizon_infra_config.deploy_connections ? 1 : 0
+
+  name                      = "${local.org}-peer-horizon-to-${local.secondary_resource_suffix}"
+  remote_virtual_network_id = azurerm_virtual_network.secondary.id
+  resource_group_name       = var.horizon_infra_config.network.rg
+  virtual_network_name      = var.horizon_infra_config.network.name
+
+  provider = azurerm.horizon
+}
+
 ## DNS Zones for Azure Services
 ## the DNS Zones are global, so we link them to both VNets
 

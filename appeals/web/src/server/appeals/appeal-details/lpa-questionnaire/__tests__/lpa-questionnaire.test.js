@@ -28,7 +28,7 @@ import usersService from '#appeals/appeal-users/users-service.js';
 import { cloneDeep } from 'lodash-es';
 import { addDays } from 'date-fns';
 import { dateToDisplayDate } from '#lib/dates.js';
-import { AVSCAN_STATUS } from '@pins/appeals/constants/documents.js';
+import { APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -364,7 +364,7 @@ describe('LPA Questionnaire review', () => {
 				// @ts-ignore
 				latestDocumentVersion: {
 					...notCheckedDocumentFolderInfoDocuments.latestDocumentVersion,
-					virusCheckStatus: AVSCAN_STATUS.AFFECTED
+					virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.AFFECTED
 				}
 			});
 			nock('http://test/')

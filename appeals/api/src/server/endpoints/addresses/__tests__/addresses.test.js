@@ -142,7 +142,7 @@ describe('addresses routes', () => {
 					}
 				});
 				expect(response.status).toEqual(200);
-				expect(response.body).toEqual(patchBody);
+				expect(response.body).toEqual(dataToSave);
 			});
 
 			test('returns an error if appealId is not numeric', async () => {

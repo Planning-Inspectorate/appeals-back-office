@@ -21,6 +21,7 @@ apps_config = {
     horizon_api_url               = "http://10.0.7.4:8000" # required by config validation, even if mocked
     horizon_mock                  = true
     horizon_web_url               = ""
+    horizon_timeout               = 5000
     service_bus_broadcast_enabled = true
     notify_template_ids = {
       appeal_confirmed_id                                             = "783f94cc-1d6d-4153-8ad7-9070e449a57c"
@@ -99,6 +100,19 @@ front_office_infra_config = {
   network = {
     name = "pins-vnet-common-dev-ukw-001"
     rg   = "pins-rg-common-dev-ukw-001"
+  }
+}
+
+horizon_infra_config = {
+  deploy_connections = false
+  # this isn't needed, but providers cannot be optional
+  # we use the tooling sub ID here so that the provider doesn't error
+  # but its not used for anything
+  # see https://github.com/hashicorp/terraform/issues/31340
+  subscription_id = "edb1ff78-90da-4901-a497-7e79f966f8e2"
+  network = {
+    name = ""
+    rg   = ""
   }
 }
 

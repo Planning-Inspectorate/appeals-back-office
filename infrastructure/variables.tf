@@ -31,6 +31,7 @@ variable "apps_config" {
       horizon_api_url               = string      # The URL used to connect to the Horizon API
       horizon_mock                  = bool        # Whether to mock Horizon integration
       horizon_web_url               = string      # The URL base path to create deep links to Horizon cases
+      horizon_timeout               = number      # The timeout, in milliseconds, for Horizon API connections
       service_bus_broadcast_enabled = bool        # Whether to send service bus messages
       notify_template_ids           = map(string) # List of template IDs for notify integration
     })
@@ -83,6 +84,18 @@ variable "environment" {
 variable "front_office_infra_config" {
   description = "Config for the front office infra"
   type = object({
+    deploy_connections = bool # whether to deploy connections to the front office - enable after the FO is deployed
+    network = object({
+      name = string
+      rg   = string
+    })
+  })
+}
+
+variable "horizon_infra_config" {
+  description = "Config for the (legacy) Horizon infra"
+  type = object({
+    subscription_id    = string
     deploy_connections = bool # whether to deploy connections to the front office - enable after the FO is deployed
     network = object({
       name = string

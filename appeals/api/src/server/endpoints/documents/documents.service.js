@@ -15,12 +15,14 @@ import {
 import { formatFolder } from './documents.formatter.js';
 import documentRedactionStatusRepository from '#repositories/document-redaction-status.repository.js';
 import { ERROR_NOT_FOUND } from '#endpoints/constants.js';
-import { STAGE } from '@pins/appeals/constants/documents.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { EventType } from '@pins/event-client';
-import { AVSCAN_STATUS } from '@pins/appeals/constants/documents.js';
-import { DOCTYPE } from '@pins/appeals/constants/documents.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import {
+	APPEAL_CASE_STAGE,
+	APPEAL_VIRUS_CHECK_STATUS,
+	APPEAL_CASE_STATUS,
+	APPEAL_DOCUMENT_TYPE
+} from 'pins-data-model';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Document} Document */
@@ -31,8 +33,6 @@ import { APPEAL_CASE_STATUS } from 'pins-data-model';
 /** @typedef {import('@pins/appeals/index.js').AddDocumentsRequest} AddDocumentsRequest */
 /** @typedef {import('@pins/appeals/index.js').AddDocumentVersionRequest} AddDocumentVersionRequest */
 /** @typedef {import('@pins/appeals/index.js').AddDocumentsResponse} AddDocumentsResponse */
-/** @typedef {import('@pins/appeals/index.js').AddDocumentVersionResponse} AddDocumentVersionResponse */
-/** @typedef {import('@pins/appeals/index.js').DocumentMetadata} DocumentMetadata */
 
 /**
  * @param {Appeal} appeal
@@ -68,18 +68,18 @@ export const getFoldersForAppeal = async (appeal, stage = null) => {
  */
 export const getRootFoldersForAppeal = async (appeal) => {
 	return await getByCaseIdAndPaths(appeal.id, [
-		`${STAGE.COSTS}/${DOCTYPE.APPELLANT_COST_APPLICATION}`,
-		`${STAGE.COSTS}/${DOCTYPE.APPELLANT_COST_WITHDRAWAL}`,
-		`${STAGE.COSTS}/${DOCTYPE.APPELLANT_COST_CORRESPONDENCE}`,
-		`${STAGE.COSTS}/${DOCTYPE.LPA_COST_APPLICATION}`,
-		`${STAGE.COSTS}/${DOCTYPE.LPA_COST_WITHDRAWAL}`,
-		`${STAGE.COSTS}/${DOCTYPE.LPA_COST_CORRESPONDENCE}`,
-		`${STAGE.COSTS}/${DOCTYPE.COST_DECISION_LETTER}`,
-		`${STAGE.APPELLANT_CASE}/${DOCTYPE.APPELLANT_CASE_WITHDRAWAL}`,
-		`${STAGE.INTERNAL}/${DOCTYPE.CROSS_TEAM_CORRESPONDENCE}`,
-		`${STAGE.INTERNAL}/${DOCTYPE.INSPECTOR_CORRESPONDENCE}`,
-		`${STAGE.INTERNAL}/${DOCTYPE.DROPBOX}`,
-		`${STAGE.APPEAL_DECISION}/${DOCTYPE.CASE_DECISION_LETTER}`
+		`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_APPLICATION}`,
+		`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_WITHDRAWAL}`,
+		`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_CORRESPONDENCE}`,
+		`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.LPA_COSTS_APPLICATION}`,
+		`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.LPA_COSTS_WITHDRAWAL}`,
+		`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.LPA_COSTS_CORRESPONDENCE}`,
+		`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.COSTS_DECISION_LETTER}`,
+		`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.APPELLANT_CASE_WITHDRAWAL_LETTER}`,
+		`internal/${APPEAL_DOCUMENT_TYPE.CROSS_TEAM_CORRESPONDENCE}`,
+		`internal/${APPEAL_DOCUMENT_TYPE.INSPECTOR_CORRESPONDENCE}`,
+		`internal/dropbox`,
+		`${APPEAL_CASE_STAGE.APPEAL_DECISION}/${APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER}`
 	]);
 };
 
@@ -96,48 +96,53 @@ export const getFoldersForStage = (path) => {
 	 */
 	let folders;
 	switch (stage) {
-		case STAGE.APPELLANT_CASE:
+		case APPEAL_CASE_STAGE.APPELLANT_CASE:
 			folders = [
-				`${STAGE.APPELLANT_CASE}/${DOCTYPE.APPELLANT_STATEMENT}`,
-				`${STAGE.APPELLANT_CASE}/${DOCTYPE.ORIGINAL_APPLICATION_FORM}`,
-				`${STAGE.APPELLANT_CASE}/${DOCTYPE.APPLICATION_DECISION}`,
-				`${STAGE.APPELLANT_CASE}/${DOCTYPE.CHANGED_DESCRIPTION}`,
-				`${STAGE.APPELLANT_CASE}/${DOCTYPE.APPELLANT_CASE_WITHDRAWAL}`,
-				`${STAGE.APPELLANT_CASE}/${DOCTYPE.APPELLANT_CASE_CORRESPONDENCE}`
+				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.APPELLANT_STATEMENT}`,
+				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.ORIGINAL_APPLICATION_FORM}`,
+				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.APPLICATION_DECISION_LETTER}`,
+				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.CHANGED_DESCRIPTION}`,
+				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.APPELLANT_CASE_WITHDRAWAL_LETTER}`,
+				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.APPELLANT_CASE_CORRESPONDENCE}`
 			];
 			break;
-		case STAGE.LPA_QUESTIONNAIRE:
+		case APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE:
 			folders = [
-				`${STAGE.LPA_QUESTIONNAIRE}/${DOCTYPE.WHO_NOTIFIED}`,
-				`${STAGE.LPA_QUESTIONNAIRE}/${DOCTYPE.CONSERVATION_MAP}`,
-				`${STAGE.LPA_QUESTIONNAIRE}/${DOCTYPE.OTHER_PARTY_REPS}`,
-				`${STAGE.LPA_QUESTIONNAIRE}/${DOCTYPE.PLANNING_OFFICER_REPORT}`,
-				`${STAGE.LPA_QUESTIONNAIRE}/${DOCTYPE.LPA_CASE_CORRESPONDENCE}`
+				`${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED}`,
+				`${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_SITE_NOTICE}`,
+				`${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_LETTER_TO_NEIGHBOURS}`,
+				`${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_PRESS_ADVERT}`,
+				`${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/${APPEAL_DOCUMENT_TYPE.CONSERVATION_MAP}`,
+				`${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/${APPEAL_DOCUMENT_TYPE.OTHER_PARTY_REPRESENTATIONS}`,
+				`${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/${APPEAL_DOCUMENT_TYPE.PLANNING_OFFICER_REPORT}`,
+				`${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/${APPEAL_DOCUMENT_TYPE.LPA_CASE_CORRESPONDENCE}`
 			];
 			break;
-		case STAGE.COSTS:
+		case APPEAL_CASE_STAGE.COSTS:
 			folders = [
-				`${STAGE.COSTS}/${DOCTYPE.APPELLANT_COST_APPLICATION}`,
-				`${STAGE.COSTS}/${DOCTYPE.APPELLANT_COST_WITHDRAWAL}`,
-				`${STAGE.COSTS}/${DOCTYPE.APPELLANT_COST_CORRESPONDENCE}`,
-				`${STAGE.COSTS}/${DOCTYPE.LPA_COST_APPLICATION}`,
-				`${STAGE.COSTS}/${DOCTYPE.LPA_COST_WITHDRAWAL}`,
-				`${STAGE.COSTS}/${DOCTYPE.LPA_COST_CORRESPONDENCE}`,
-				`${STAGE.COSTS}/${DOCTYPE.COST_DECISION_LETTER}`
+				`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_APPLICATION}`,
+				`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_WITHDRAWAL}`,
+				`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_CORRESPONDENCE}`,
+				`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.LPA_COSTS_APPLICATION}`,
+				`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.LPA_COSTS_WITHDRAWAL}`,
+				`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.LPA_COSTS_CORRESPONDENCE}`,
+				`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.COSTS_DECISION_LETTER}`
 			];
 			break;
-		case STAGE.INTERNAL:
+		case 'internal':
 			folders = [
-				`${STAGE.INTERNAL}/${DOCTYPE.CROSS_TEAM_CORRESPONDENCE}`,
-				`${STAGE.INTERNAL}/${DOCTYPE.INSPECTOR_CORRESPONDENCE}`,
-				`${STAGE.INTERNAL}/${DOCTYPE.DROPBOX}`
+				`internal/${APPEAL_DOCUMENT_TYPE.CROSS_TEAM_CORRESPONDENCE}`,
+				`internal/${APPEAL_DOCUMENT_TYPE.INSPECTOR_CORRESPONDENCE}`,
+				`internal/dropbox`
 			];
 			break;
-		case STAGE.APPEAL_DECISION:
-			folders = [`${STAGE.APPEAL_DECISION}/${DOCTYPE.CASE_DECISION_LETTER}`];
+		case APPEAL_CASE_STAGE.APPEAL_DECISION:
+			folders = [
+				`${APPEAL_CASE_STAGE.APPEAL_DECISION}/${APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER}`
+			];
 			break;
 		default:
-			folders = [`${STAGE.INTERNAL}/${DOCTYPE.DROPBOX}`];
+			folders = [`internal/dropbox`];
 	}
 
 	return folders;
@@ -182,7 +187,7 @@ export const addDocumentsToAppeal = async (upload, appeal) => {
  * @param {number} caseId
  * @param {string} reference
  * @param {string} appealStatus
- * @param {DocumentMetadata[]} documents
+ * @param {*[]} documents
  * @returns {Promise<(DocumentVersion | null)[]>}
  */
 const addDocumentAndVersion = async (caseId, reference, appealStatus, documents) => {
@@ -237,7 +242,7 @@ const addDocumentAndVersion = async (caseId, reference, appealStatus, documents)
  * @param {AddDocumentVersionRequest} upload
  * @param {Appeal} appeal
  * @param {Document} document
- * @returns {Promise<AddDocumentVersionResponse>}}
+ * @returns {Promise<*>}}
  */
 export const addVersionToDocument = async (upload, appeal, document) => {
 	if (!document || document.isDeleted) {
@@ -312,7 +317,7 @@ export const getDocumentRedactionStatusIds = async () => {
  * @returns
  */
 export const getAvScanStatus = (documentVersion) => {
-	return documentVersion.virusCheckStatus || AVSCAN_STATUS.NOT_SCANNED;
+	return documentVersion.virusCheckStatus || APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED;
 };
 
 /**
@@ -343,14 +348,14 @@ export const addDocumentAudit = async (guid, version, auditTrail, action) => {
  */
 const isLateEntry = (stage, status) => {
 	switch (stage) {
-		case STAGE.APPELLANT_CASE:
+		case APPEAL_CASE_STAGE.APPELLANT_CASE:
 			return (
 				status !== APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER &&
 				status !== APPEAL_CASE_STATUS.VALIDATION &&
 				status !== APPEAL_CASE_STATUS.READY_TO_START
 			);
 
-		case STAGE.LPA_QUESTIONNAIRE:
+		case APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE:
 			return (
 				status !== APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER &&
 				status !== APPEAL_CASE_STATUS.VALIDATION &&

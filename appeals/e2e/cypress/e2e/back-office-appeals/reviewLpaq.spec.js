@@ -2,67 +2,88 @@
 /// <reference types="cypress"/>
 
 import { users } from '../../fixtures/users';
-import { AppealsListPage } from '../../page_objects/appealsListPage';
-import { UpdateDueDatePage } from '../../page_objects/updateDueDatePage';
-const appealsListPage = new AppealsListPage();
-const updateDueDatePage = new UpdateDueDatePage();
+import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
+import { ListCasesPage } from '../../page_objects/listCasesPage';
+import { DateTimeSection } from '../../page_objects/dateTimeSection';
+import { urlPaths } from '../../support/urlPaths.js';
 
-describe('Appeals feature', () => {
+const listCasesPage = new ListCasesPage();
+const dateTimeSection = new DateTimeSection();
+const caseDetailsPage = new CaseDetailsPage();
+
+describe('Review LPAQ', () => {
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
 	it('Complete LPAQ', () => {
-		cy.visit('/appeals-service/all-cases');
-		appealsListPage.clickAppealFromList(30);
-		appealsListPage.clickReviewLpaq(7);
-		appealsListPage.selectRadioButtonByValue('Complete');
-		appealsListPage.clickButtonByText('Continue');
-		appealsListPage.clickLinkByText('Go back to case details');
-		const status = 'Complete';
-		const testData = { rowIndex: 1, cellIndex: 0, textToMatch: status, strict: true };
-		appealsListPage.verifyTableCellText(testData);
+		cy.createCase().then((caseRef) => {
+			cy.addLpaqSubmissionToCase(caseRef).then(() => {
+				cy.visit(urlPaths.appealsList);
+				listCasesPage.clickAppealByRef(caseRef);
+				caseDetailsPage.clickReviewLpaq();
+				caseDetailsPage.selectRadioButtonByValue('Complete');
+				caseDetailsPage.clickButtonByText('Confirm');
+				caseDetailsPage.clickLinkByText('Go back to case details');
+
+				const status = 'Complete';
+				const testData = { rowIndex: 1, cellIndex: 0, textToMatch: status, strict: true };
+				listCasesPage.verifyTableCellText(testData);
+			});
+		});
 	});
 
 	it('incomplete LPAQ', () => {
-		cy.visit('/appeals-service/all-cases');
-		appealsListPage.clickAppealFromList(30);
-		appealsListPage.clickReviewLpaq(7);
-		appealsListPage.selectRadioButtonByValue('Incomplete');
-		appealsListPage.clickButtonByText('Continue');
-		appealsListPage.chooseCheckboxByIndex(1);
-		appealsListPage.fillInput1('Hello here is some extra info, have a nice day 7384_+!£ =');
-		appealsListPage.clickButtonByText('Continue');
-		updateDueDatePage.enterDateDay('19');
-		updateDueDatePage.enterDateMonth('12');
-		updateDueDatePage.enterDateYear('2024');
-		appealsListPage.clickButtonByText('Save and Continue');
-		appealsListPage.clickButtonByText('Confirm');
-		appealsListPage.clickLinkByText('Go back to case details');
-		const status = 'Incomplete';
-		const testData = { rowIndex: 1, cellIndex: 0, textToMatch: status, strict: true };
-		appealsListPage.verifyTableCellText(testData);
+		let futureDate = new Date();
+		futureDate.setDate(futureDate.getDate() + 28);
+
+		cy.createCase().then((caseRef) => {
+			cy.addLpaqSubmissionToCase(caseRef).then(() => {
+				cy.visit(urlPaths.appealsList);
+				listCasesPage.clickAppealByRef(caseRef);
+				caseDetailsPage.clickReviewLpaq();
+				caseDetailsPage.selectRadioButtonByValue('Incomplete');
+				caseDetailsPage.clickButtonByText('Confirm');
+				caseDetailsPage.chooseCheckboxByText('Other documents or information are missing');
+				caseDetailsPage.fillInput('Hello here is some extra info, have a nice day 7384_+!£ =', 1);
+				caseDetailsPage.clickButtonByText('Continue');
+				dateTimeSection.enterDate(futureDate);
+				caseDetailsPage.clickButtonByText('Save and Continue');
+				caseDetailsPage.clickButtonByText('Confirm');
+				caseDetailsPage.clickLinkByText('Go back to case details');
+
+				const status = 'Incomplete';
+				const testData = { rowIndex: 1, cellIndex: 0, textToMatch: status, strict: true };
+				listCasesPage.verifyTableCellText(testData);
+			});
+		});
 	});
 
 	it('incomplete LPAQ add another', () => {
-		cy.visit('/appeals-service/all-cases');
-		appealsListPage.clickAppealFromList(31);
-		appealsListPage.clickReviewLpaq(7);
-		appealsListPage.selectRadioButtonByValue('Incomplete');
-		appealsListPage.clickButtonByText('Continue');
-		appealsListPage.chooseCheckboxByIndex(1);
-		appealsListPage.fillInput1('Hello here is some extra info, have a nice day 7384_+!£ =');
-		appealsListPage.addAnotherButtonLpaq();
-		appealsListPage.fillInput2('Hello here is some extra info, have a nice day 7384_+!£ =');
-		appealsListPage.clickButtonByText('Continue');
-		updateDueDatePage.enterDateDay('19');
-		updateDueDatePage.enterDateMonth('12');
-		updateDueDatePage.enterDateYear('2024');
-		appealsListPage.clickButtonByText('Save and Continue');
-		appealsListPage.clickButtonByText('Confirm');
-		appealsListPage.clickLinkByText('Go back to case details');
-		const status = 'Incomplete';
-		const testData = { rowIndex: 1, cellIndex: 0, textToMatch: status, strict: true };
-		appealsListPage.verifyTableCellText(testData);
+		let futureDate = new Date();
+		futureDate.setDate(futureDate.getDate() + 28);
+
+		cy.createCase().then((caseRef) => {
+			cy.addLpaqSubmissionToCase(caseRef).then(() => {
+				cy.visit(urlPaths.appealsList);
+				listCasesPage.clickAppealByRef(caseRef);
+				caseDetailsPage.clickReviewLpaq();
+				caseDetailsPage.selectRadioButtonByValue('Incomplete');
+				caseDetailsPage.clickButtonByText('Confirm');
+				caseDetailsPage.chooseCheckboxByText('Other documents or information are missing');
+				caseDetailsPage.fillInput('Hello here is some extra info, have a nice day 7384_+!£ =', 1);
+				caseDetailsPage.clickAddAnother();
+				caseDetailsPage.fillInput('Hello here is some extra info, have a nice day 7384_+!£ =', 2);
+				caseDetailsPage.clickButtonByText('Continue');
+				dateTimeSection.enterDate(futureDate);
+				caseDetailsPage.clickButtonByText('Save and Continue');
+				caseDetailsPage.clickButtonByText('Confirm');
+				caseDetailsPage.clickLinkByText('Go back to case details');
+
+				const status = 'Incomplete';
+				const testData = { rowIndex: 1, cellIndex: 0, textToMatch: status, strict: true };
+				listCasesPage.verifyTableCellText(testData);
+			});
+		});
 	});
 });

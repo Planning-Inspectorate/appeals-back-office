@@ -42,7 +42,7 @@ import { paginationDefaultSettings } from '#appeals/appeal.constants.js';
 import { getPaginationParametersFromQuery } from '#lib/pagination-utilities.js';
 import { linkedAppealStatus } from '#lib/appeals-formatter.js';
 import httpMocks from 'node-mocks-http';
-import { isInternalUrl } from '#lib/url-utilities.js';
+import { getOriginPathname, isInternalUrl } from '#lib/url-utilities.js';
 import { stringIsValidPostcodeFormat } from '#lib/postcode.js';
 
 describe('Libraries', () => {
@@ -1470,5 +1470,103 @@ describe('stringIsValidPostcodeFormat', () => {
 		expect(stringIsValidPostcodeFormat('A1 111')).toBe(false);
 		expect(stringIsValidPostcodeFormat('A1 11A')).toBe(false);
 		expect(stringIsValidPostcodeFormat('A1 1A')).toBe(false);
+	});
+});
+
+describe('getOriginPathname', () => {
+	it('should return the pathname for a standard URL', () => {
+		const request = httpMocks.createRequest({
+			method: 'GET',
+			url: '/appeals-service/all-cases',
+			secure: true,
+			headers: {
+				host: 'localhost'
+			},
+			originalUrl: '/appeals-service/all-cases'
+		});
+
+		const result = getOriginPathname(request);
+
+		expect(result).toBe('/appeals-service/all-cases');
+	});
+
+	it('should return the pathname for a URL with query parameters', () => {
+		const request = httpMocks.createRequest({
+			method: 'GET',
+			url: '/appeals-service/all-cases?search=test',
+			secure: true,
+			headers: {
+				host: 'localhost'
+			},
+			originalUrl: '/appeals-service/all-cases?search=test'
+		});
+
+		const result = getOriginPathname(request);
+
+		expect(result).toBe('/appeals-service/all-cases');
+	});
+
+	it('should return the pathname for a URL with hash parameters', () => {
+		const request = httpMocks.createRequest({
+			method: 'GET',
+			url: '/appeals-service/all-cases#section1',
+			secure: true,
+			headers: {
+				host: 'localhost'
+			},
+			originalUrl: '/appeals-service/all-cases#section1'
+		});
+
+		const result = getOriginPathname(request);
+
+		expect(result).toBe('/appeals-service/all-cases');
+	});
+
+	it('should return the pathname for an HTTP URL', () => {
+		const request = httpMocks.createRequest({
+			method: 'GET',
+			url: '/appeals-service/all-cases',
+			secure: false,
+			headers: {
+				host: 'localhost'
+			},
+			originalUrl: '/appeals-service/all-cases'
+		});
+
+		const result = getOriginPathname(request);
+
+		expect(result).toBe('/appeals-service/all-cases');
+	});
+
+	it('should return the pathname for a URL with port', () => {
+		const request = httpMocks.createRequest({
+			method: 'GET',
+			url: '/appeals-service/all-cases',
+			secure: true,
+			headers: {
+				host: 'localhost:3000'
+			},
+			originalUrl: '/appeals-service/all-cases'
+		});
+
+		const result = getOriginPathname(request);
+
+		expect(result).toBe('/appeals-service/all-cases');
+	});
+
+	it('should handle empty originalUrl gracefully', () => {
+		const request = httpMocks.createRequest({
+			method: 'GET',
+			url: '/',
+			secure: true,
+			headers: {
+				host: 'localhost'
+			},
+			originalUrl: ''
+		});
+
+		const result = getOriginPathname(request);
+
+		expect(result).toBe('/');
 	});
 });

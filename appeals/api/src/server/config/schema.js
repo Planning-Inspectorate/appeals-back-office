@@ -19,7 +19,6 @@ export default joi
 			tenantId: joi.string().optional()
 		}),
 		log: joi.object({
-			levelFile: joi.string(),
 			levelStdOut: joi.string()
 		}),
 		cwd: joi.string(),
@@ -180,7 +179,8 @@ export default joi
 		),
 		horizon: joi.object({
 			url: joi.string().optional(),
-			mock: joi.bool().optional()
+			mock: joi.bool().optional(),
+			timeoutLimit: joi.number().optional()
 		})
 	})
 	.options({ presence: 'required' }); // required by default;

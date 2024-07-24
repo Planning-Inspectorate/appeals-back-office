@@ -190,6 +190,8 @@ const deleteDocumentVersion = async (req, res) => {
  */
 const updateDocuments = async (req, res) => {
 	const { body, appeal } = req;
+	const responseDocuments = [];
+
 	try {
 		const documents = body.documents;
 		for (const document of documents) {
@@ -230,6 +232,13 @@ const updateDocuments = async (req, res) => {
 					);
 				}
 			}
+
+			responseDocuments.push({
+				id: document.id,
+				latestVersion: document.latestVersion,
+				redactionStatus: document.redactionStatus,
+				receivedDate: document.receivedDate
+			});
 		}
 		await documentRepository.updateDocuments(documents);
 	} catch (error) {
@@ -239,7 +248,7 @@ const updateDocuments = async (req, res) => {
 		}
 	}
 
-	res.send(body);
+	res.send({ documents: responseDocuments });
 };
 
 /**
@@ -314,6 +323,8 @@ async function logAuditTrail(
  */
 const updateDocumentsAvCheckStatus = async (req, res) => {
 	const { body } = req;
+	const responseDocuments = [];
+
 	try {
 		const documents = body.documents;
 		await documentRepository.createDocumentAvStatus(documents);
@@ -327,6 +338,12 @@ const updateDocumentsAvCheckStatus = async (req, res) => {
 			if (versionList && versionList.indexOf(document.version) > -1) {
 				await documentRepository.updateDocumentAvStatus(document);
 			}
+
+			responseDocuments.push({
+				id: document.id,
+				version: document.version,
+				virusCheckStatus: document.virusCheckStatus
+			});
 		}
 	} catch (error) {
 		if (error) {
@@ -335,7 +352,7 @@ const updateDocumentsAvCheckStatus = async (req, res) => {
 		}
 	}
 
-	res.send(body);
+	res.send({ documents: responseDocuments });
 };
 
 export {

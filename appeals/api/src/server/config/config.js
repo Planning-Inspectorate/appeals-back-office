@@ -25,7 +25,6 @@ const { value, error } = schema.validate({
 		tenantId: environment.AUTH_TENANT_ID
 	},
 	log: {
-		levelFile: environment.LOG_LEVEL_FILE || 'silent',
 		levelStdOut: environment.LOG_LEVEL_STDOUT || 'debug'
 	},
 	cwd: url.fileURLToPath(new URL('..', import.meta.url)),
@@ -238,7 +237,8 @@ const { value, error } = schema.validate({
 	],
 	horizon: {
 		url: environment.SRV_HORIZON_URL,
-		mock: environment.MOCK_HORIZON
+		mock: environment.MOCK_HORIZON,
+		timeoutLimit: environment.TIMEOUT_LIMIT_HORIZON || 5000
 	}
 });
 

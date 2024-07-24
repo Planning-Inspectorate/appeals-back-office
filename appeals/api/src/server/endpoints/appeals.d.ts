@@ -190,6 +190,8 @@ interface UpdateAppellantCaseRequest {
 	siteAreaSquareMetres?: string;
 	applicationDate?: string;
 	applicationDecisionDate?: string;
+	changedDevelopmentDescription?: boolean;
+	originalDevelopmentDescription?: string;
 }
 
 interface UpdateAppellantCaseValidationOutcome {
@@ -232,6 +234,9 @@ interface SingleLPAQuestionnaireResponse {
 	procedureType?: string;
 	documents: {
 		whoNotified?: FolderInfo | null;
+		whoNotifiedSiteNotice?: FolderInfo | null;
+		whoNotifiedLetterToNeighbours?: FolderInfo | null;
+		whoNotifiedPressAdvert?: FolderInfo | null;
 		conservationMap?: FolderInfo | null;
 		lpaCaseCorrespondence?: FolderInfo | null;
 		otherPartyRepresentations?: FolderInfo | null;

@@ -1,6 +1,6 @@
 module "app_api" {
   #checkov:skip=CKV_TF_1: Use of commit hash are not required for our Terraform modules
-  source = "github.com/Planning-Inspectorate/infrastructure-modules.git//modules/node-app-service?ref=1.16"
+  source = "github.com/Planning-Inspectorate/infrastructure-modules.git//modules/node-app-service?ref=1.24"
 
   resource_group_name = azurerm_resource_group.primary.name
   location            = module.primary_region.location
@@ -46,12 +46,13 @@ module "app_api" {
     DATABASE_URL  = local.key_vault_refs["sql-app-connection-string"]
 
     # integrations
-    GOV_NOTIFY_API_KEY   = local.key_vault_refs["appeals-bo-gov-notify-api-key"]
-    MOCK_HORIZON         = var.apps_config.integrations.horizon_mock
-    SERVICE_BUS_ENABLED  = var.apps_config.integrations.service_bus_broadcast_enabled
-    SERVICE_BUS_HOSTNAME = local.service_bus_hostname
-    SRV_HORIZON_URL      = var.apps_config.integrations.horizon_api_url
-    TEST_MAILBOX         = local.key_vault_refs["appeals-bo-test-mailbox"]
+    GOV_NOTIFY_API_KEY    = local.key_vault_refs["appeals-bo-gov-notify-api-key"]
+    MOCK_HORIZON          = var.apps_config.integrations.horizon_mock
+    SERVICE_BUS_ENABLED   = var.apps_config.integrations.service_bus_broadcast_enabled
+    SERVICE_BUS_HOSTNAME  = local.service_bus_hostname
+    SRV_HORIZON_URL       = var.apps_config.integrations.horizon_api_url
+    TIMEOUT_LIMIT_HORIZON = var.apps_config.integrations.horizon_timeout
+    TEST_MAILBOX          = local.key_vault_refs["appeals-bo-test-mailbox"]
 
     # notify templates
     GOV_NOTIFY_APPEAL_CONFIRMED_ID                                             = var.apps_config.integrations.notify_template_ids.appeal_confirmed_id

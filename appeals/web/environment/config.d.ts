@@ -35,7 +35,6 @@ export interface EnvironmentConfig extends BaseEnvironmentConfig {
 	horizonAppealBaseUrl?: string;
 	useBlobEmulator: boolean;
 	cwd: string;
-	logLevelFile: LevelWithSilent;
 	logLevelStdOut: LevelWithSilent;
 	msal: {
 		authority: string;

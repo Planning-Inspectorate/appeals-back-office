@@ -16,8 +16,7 @@ import {
 	mapDocumentDownloadUrl,
 	mapVirusCheckStatus
 } from '#appeals/appeal-documents/appeal-documents.mapper.js';
-import { AVSCAN_STATUS } from '@pins/appeals/constants/documents.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_STATUS, APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
 
 /**
  * @param {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} appealDetails
@@ -714,14 +713,16 @@ export async function initialiseAndMapAppealData(
 			if (appealDetails.documentationSummary?.lpaQuestionnaire?.status === 'not_received') {
 				startedAtActionLink = {
 					text: 'Change',
-					href: `${currentRoute}/start-case/change`
+					href: `${currentRoute}/start-case/change`,
+					attributes: { 'data-cy': 'change-start-case-date' }
 				};
 			}
 		} else {
 			startedAtActionLink = {
 				text: 'Add',
 				href: `${currentRoute}/start-case/add`,
-				visuallyHiddenText: 'The date the case was started'
+				visuallyHiddenText: 'The date the case was started',
+				attributes: { 'data-cy': 'add-start-case-date' }
 			};
 		}
 	}
@@ -1539,7 +1540,7 @@ function generateAppealDecisionActionListItems(appealDetails) {
  */
 export function generateDecisionDocumentDownloadHtml(appealDetails, linkText = 'View') {
 	const virusCheckStatus = mapVirusCheckStatus(
-		appealDetails.decision.virusCheckStatus || AVSCAN_STATUS.NOT_SCANNED
+		appealDetails.decision.virusCheckStatus || APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED
 	);
 
 	let html = '';

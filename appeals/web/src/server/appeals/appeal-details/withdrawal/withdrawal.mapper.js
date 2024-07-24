@@ -4,7 +4,7 @@ import { dateToDisplayDate } from '#lib/dates.js';
 import { buildNotificationBanners } from '#lib/mappers/notification-banners.mapper.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { AVSCAN_STATUS } from '@pins/appeals/constants/documents.js';
+import { APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
 import {
 	folderPathToFolderNameText,
 	getDocumentsForVirusStatus,
@@ -39,7 +39,7 @@ export function manageWithdrawalRequestFolderPage(
 	request,
 	pageHeadingTextOverride
 ) {
-	if (getDocumentsForVirusStatus(folder, AVSCAN_STATUS.NOT_SCANNED).length > 0) {
+	if (getDocumentsForVirusStatus(folder, APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED).length > 0) {
 		addNotificationBannerToSession(
 			request.session,
 			'notCheckedDocument',
@@ -56,7 +56,10 @@ export function manageWithdrawalRequestFolderPage(
 
 	/** @type {PageComponent[]} */
 	const errorSummaryPageComponents = [];
-	const documentsWithFailedVirusCheck = getDocumentsForVirusStatus(folder, AVSCAN_STATUS.AFFECTED);
+	const documentsWithFailedVirusCheck = getDocumentsForVirusStatus(
+		folder,
+		APPEAL_VIRUS_CHECK_STATUS.AFFECTED
+	);
 
 	if (documentsWithFailedVirusCheck.length > 0) {
 		errorSummaryPageComponents.push({
@@ -115,7 +118,8 @@ export function manageWithdrawalRequestFolderPage(
 							html:
 								document?.id &&
 								document?.latestDocumentVersion?.virusCheckStatus &&
-								document?.latestDocumentVersion?.virusCheckStatus === AVSCAN_STATUS.SCANNED
+								document?.latestDocumentVersion?.virusCheckStatus ===
+									APPEAL_VIRUS_CHECK_STATUS.SCANNED
 									? `<a class="govuk-link" href="${mapDocumentDownloadUrl(
 											folder.caseId,
 											document.id

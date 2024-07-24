@@ -93,16 +93,20 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
                         </ul>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Notification methods</dt>
-                    <dd class="govuk-summary-list__value">
-                        <ul>
-                            <li>A site notice</li>
-                            <li>Letter/email to interested parties</li>
-                        </ul>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site notice</dt>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" lpaQuestionnaireData-cy="add-site-notice"> Add<span class="govuk-visually-hidden"> Site notice</span></a>
                     </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/change-lpa-questionnaire/notification-methods"
-                        lpaQuestionnaireData-cy="change-notification-methods"> Change<span class="govuk-visually-hidden"> Notification methods</span></a>
-                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Letter or email notification</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" lpaQuestionnaireData-cy="add-letter-or-email-notification"> Add<span class="govuk-visually-hidden"> Letter or email notification</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Press advert notification</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" lpaQuestionnaireData-cy="add-press-advert-notification"> Add<span class="govuk-visually-hidden"> Press advert notification</span></a>
+                        </dd>
                 </div>
             </dl>
         </div>
@@ -441,16 +445,20 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                         </ul>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Notification methods</dt>
-                    <dd class="govuk-summary-list__value">
-                        <ul>
-                            <li>A site notice</li>
-                            <li>Letter/email to interested parties</li>
-                        </ul>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site notice</dt>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" lpaQuestionnaireData-cy="add-site-notice"> Add<span class="govuk-visually-hidden"> Site notice</span></a>
                     </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/change-lpa-questionnaire/notification-methods"
-                        lpaQuestionnaireData-cy="change-notification-methods"> Change<span class="govuk-visually-hidden"> Notification methods</span></a>
-                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Letter or email notification</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" lpaQuestionnaireData-cy="add-letter-or-email-notification"> Add<span class="govuk-visually-hidden"> Letter or email notification</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Press advert notification</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" lpaQuestionnaireData-cy="add-press-advert-notification"> Add<span class="govuk-visually-hidden"> Press advert notification</span></a>
+                        </dd>
                 </div>
             </dl>
         </div>
@@ -748,16 +756,20 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                         </ul>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Notification methods</dt>
-                    <dd class="govuk-summary-list__value">
-                        <ul>
-                            <li>A site notice</li>
-                            <li>Letter/email to interested parties</li>
-                        </ul>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site notice</dt>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" lpaQuestionnaireData-cy="add-site-notice"> Add<span class="govuk-visually-hidden"> Site notice</span></a>
                     </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/change-lpa-questionnaire/notification-methods"
-                        lpaQuestionnaireData-cy="change-notification-methods"> Change<span class="govuk-visually-hidden"> Notification methods</span></a>
-                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Letter or email notification</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" lpaQuestionnaireData-cy="add-letter-or-email-notification"> Add<span class="govuk-visually-hidden"> Letter or email notification</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Press advert notification</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" lpaQuestionnaireData-cy="add-press-advert-notification"> Add<span class="govuk-visually-hidden"> Press advert notification</span></a>
+                        </dd>
                 </div>
             </dl>
         </div>
@@ -1313,7 +1325,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-document-details/
 exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folderId/ should render document upload page with a file upload component, and no late entry status tag and associated details component, and no additional documents warning text and confirmation checkbox, if the folder is not additional documents 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main"><span class="govuk-caption-xl">Appeal 351062</span>
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Upload documents</h1>
-    <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/lpa-questionnaire/1/add-document-details/2864"
+    <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/lpa-questionnaire/1/undefined/add-document-details/2864"
     data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="2864"
     data-document-type="changedDescription" data-document-stage="appellant-case"
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
@@ -1350,7 +1362,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
 exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folderId/ should render document upload page with additional documents warning text and confirmation checkbox, and without late entry status tag and associated details component, if the folder is additional documents, and the lpa questionnaire has a validation outcome of incomplete 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main"><span class="govuk-caption-xl">Appeal 351062</span>
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Add additional documents</h1>
-    <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/lpa-questionnaire/1/add-document-details/2865"
+    <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/lpa-questionnaire/1/undefined/add-document-details/2865"
     data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="2865"
     data-document-type="appellantCaseCorrespondence" data-document-stage="appellant-case"
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
@@ -1402,7 +1414,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
 exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folderId/ should render document upload page with additional documents warning text and confirmation checkbox, and without late entry status tag and associated details component, if the folder is additional documents, and the lpa questionnaire has no validation outcome 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main"><span class="govuk-caption-xl">Appeal 351062</span>
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Add additional documents</h1>
-    <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/lpa-questionnaire/1/add-document-details/2865"
+    <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/lpa-questionnaire/1/undefined/add-document-details/2865"
     data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="2865"
     data-document-type="appellantCaseCorrespondence" data-document-stage="appellant-case"
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
@@ -1469,7 +1481,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
             </details>
         </div>
     </div>
-    <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/lpa-questionnaire/1/add-document-details/2865"
+    <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/lpa-questionnaire/1/undefined/add-document-details/2865"
     data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="2865"
     data-document-type="appellantCaseCorrespondence" data-document-stage="appellant-case"
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
@@ -2819,16 +2831,20 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                         </ul>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Notification methods</dt>
-                    <dd class="govuk-summary-list__value">
-                        <ul>
-                            <li>A site notice</li>
-                            <li>Letter/email to interested parties</li>
-                        </ul>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site notice</dt>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" lpaQuestionnaireData-cy="add-site-notice"> Add<span class="govuk-visually-hidden"> Site notice</span></a>
                     </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/change-lpa-questionnaire/notification-methods"
-                        lpaQuestionnaireData-cy="change-notification-methods"> Change<span class="govuk-visually-hidden"> Notification methods</span></a>
-                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Letter or email notification</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" lpaQuestionnaireData-cy="add-letter-or-email-notification"> Add<span class="govuk-visually-hidden"> Letter or email notification</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Press advert notification</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" lpaQuestionnaireData-cy="add-press-advert-notification"> Add<span class="govuk-visually-hidden"> Press advert notification</span></a>
+                        </dd>
                 </div>
             </dl>
         </div>

@@ -16,6 +16,7 @@ import {
 } from './neighbouring-sites.service.js';
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { getOriginPathname, isInternalUrl } from '#lib/url-utilities.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -70,10 +71,16 @@ export const postAddNeighbouringSite = async (request, response) => {
 		postCode: request.body['postCode']
 	};
 
-	const currentUrl = request.originalUrl;
+	const currentUrl = getOriginPathname(request);
 
 	//Removes /neighbouring-sites/change/affected from the route to take us back to origin (ie LPA questionnaire page or appeals details)
 	const origin = currentUrl.split('/').slice(0, -3).join('/');
+
+	if (!isInternalUrl(origin, request)) {
+		return response.status(400).render('errorPageTemplate', {
+			message: 'Invalid redirection attempt detected.'
+		});
+	}
 
 	if (request.errors) {
 		return renderAddNeighbouringSite(request, response);
@@ -149,10 +156,16 @@ export const postAddNeighbouringSiteCheckAndConfirm = async (request, response) 
 		return renderAddNeighbouringSiteCheckAndConfirm(request, response);
 	}
 
-	const currentUrl = request.originalUrl;
+	const currentUrl = getOriginPathname(request);
 
 	//Removes /neighbouring-sites/change/affected from the route to take us back to origin (ie LPA questionnaire page or appeals details)
 	const origin = currentUrl.split('/').slice(0, -4).join('/');
+
+	if (!isInternalUrl(origin, request)) {
+		return response.status(400).render('errorPageTemplate', {
+			message: 'Invalid redirection attempt detected.'
+		});
+	}
 
 	try {
 		await addNeighbouringSite(
@@ -252,10 +265,16 @@ export const postRemoveNeighbouringSite = async (request, response) => {
 		return response.status(500).render('app/500.njk');
 	}
 
-	const currentUrl = request.originalUrl;
+	const currentUrl = getOriginPathname(request);
 
 	//Removes /neighbouring-sites/change/affected from the route to take us back to origin (ie LPA questionnaire page or appeals details)
 	const origin = currentUrl.split('/').slice(0, -4).join('/');
+
+	if (!isInternalUrl(origin, request)) {
+		return response.status(400).render('errorPageTemplate', {
+			message: 'Invalid redirection attempt detected.'
+		});
+	}
 
 	if (body['remove-neighbouring-site'] === 'no') {
 		return response.redirect(`${origin}/neighbouring-sites/manage`);
@@ -464,8 +483,14 @@ export const postChangeNeighbouringSiteAffected = async (request, response) => {
 		const lpaQuestionnaireId = appealData.lpaQuestionnaireId?.toString();
 
 		//Removes /neighbouring-sites/change/affected from the route to take us back to origin (ie LPA questionnaire page or appeals details)
-		const currentUrl = request.originalUrl;
+		const currentUrl = getOriginPathname(request);
 		const origin = currentUrl.split('/').slice(0, -3).join('/');
+
+		if (!isInternalUrl(origin, request)) {
+			return response.status(400).render('errorPageTemplate', {
+				message: 'Invalid redirection attempt detected.'
+			});
+		}
 
 		await changeNeighbouringSiteAffected(
 			request.apiClient,
