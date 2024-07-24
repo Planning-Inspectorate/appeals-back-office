@@ -254,6 +254,9 @@ export const getAddDocuments = async (request, response) => {
 	let uploadPageHeadingText = '';
 
 	switch (documentType) {
+		case `${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED}`:
+			uploadPageHeadingText = `Upload notification documents`;
+			break;
 		case `${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_SITE_NOTICE}`:
 			uploadPageHeadingText = `Upload site notice`;
 			break;
@@ -304,6 +307,7 @@ export const getAddDocumentDetails = async (request, response) => {
 
 	const documentType = currentFolder.path.split('/')[1];
 	const notificationDocumentTypes = [
+		`${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED}`,
 		`${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_SITE_NOTICE}`,
 		`${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_LETTER_TO_NEIGHBOURS}`,
 		`${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_PRESS_ADVERT}`
@@ -411,6 +415,9 @@ export const getManageFolder = async (request, response) => {
 	let managePageHeadingText = '';
 
 	switch (documentType) {
+		case `${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED}`:
+			managePageHeadingText = `Notification documents`;
+			break;
 		case `${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_SITE_NOTICE}`:
 			managePageHeadingText = `Site notice documents`;
 			break;
