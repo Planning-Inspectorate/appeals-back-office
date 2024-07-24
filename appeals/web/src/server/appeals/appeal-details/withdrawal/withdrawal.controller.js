@@ -1,3 +1,4 @@
+import { formatInTimeZone } from 'date-fns-tz';
 import { postWithdrawalRequest } from './withdrawal.service.js';
 import logger from '#lib/logger.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
@@ -17,7 +18,7 @@ import {
 	withdrawalDocumentRedactionStatusPage
 } from './withdrawal.mapper.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
-import { dateToDayMonthYear } from '#lib/dates.js';
+import { dateToDayMonthYear, timeZone } from '#lib/dates.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getViewWithdrawalDocumentFolder = async (request, response) => {
@@ -311,7 +312,7 @@ export const postCheckYourAnswers = async (request, response) => {
 
 		const { documentId, redactionStatus } = request.session.withdrawal;
 		const withdrawalRequestDate = new Date(request.session.withdrawal.withdrawalRequestDate);
-		const formattedDate = withdrawalRequestDate.toISOString().split('T')[0];
+		const formattedDate = formatInTimeZone(withdrawalRequestDate, timeZone, 'yyyy-MM-dd');
 
 		const redactionStatuses = await getDocumentRedactionStatuses(apiClient);
 
