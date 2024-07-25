@@ -33,7 +33,6 @@ export const happyPathHelper = {
 		caseDetailsPage.clickButtonByText('Continue');
 		dateTimeSection.enterValidDate(dueDate);
 		caseDetailsPage.clickButtonByText('Confirm');
-		caseDetailsPage.clickLinkByText('Go back to case details');
 	},
 	startCase(caseRef) {
 		cy.visit(urlPaths.appealsList);
