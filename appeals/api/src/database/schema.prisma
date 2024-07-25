@@ -13,6 +13,7 @@ datasource db {
 model Appeal {
   id                    Int                  @id @default(autoincrement())
   reference             String               @unique
+  submissionId          String?
   appealTimetable       AppealTimetable?
   appealStatus          AppealStatus[]
   appealType            AppealType?          @relation(fields: [appealTypeId], references: [id])

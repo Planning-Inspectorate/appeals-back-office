@@ -73,7 +73,7 @@ const mappers = {
 
 /**
  * @param {AppellantSubmissionCommand} data
- * @returns {{ appeal: *, documents: *[], relatedReferences: string[] }}
+ * @returns {{ appeal: import('#db-client').Prisma.AppealCreateInput, documents: *[], relatedReferences: string[] }}
  */
 const mapAppealSubmission = (data) => {
 	const { casedata, documents, users } = data;
@@ -93,6 +93,7 @@ const mapAppealSubmission = (data) => {
 
 	const appealInput = {
 		reference: randomUUID(),
+		submissionId: casedata.submissionId,
 		appealType: { connect: { key: mappers.mapAppealTypeIn(casedata?.caseType) } },
 		appellant: { create: mappers.mapServiceUserIn(appellant) },
 		agent: { create: mappers.mapServiceUserIn(agent) },
@@ -124,7 +125,7 @@ const mapAppealSubmission = (data) => {
 /**
  *
  * @param {LPAQuestionnaireCommand} data
- * @returns {{ questionnaire: *, documents: *[], relatedReferences: string[], caseReference: string }}
+ * @returns {{ questionnaire: import('#db-client').Prisma.LPAQuestionnaireCreateInput, documents: *[], relatedReferences: string[], caseReference: string }}
  */
 const mapQuestionnaireSubmission = (data) => {
 	const { casedata, documents } = data;
@@ -162,6 +163,7 @@ const mapQuestionnaireSubmission = (data) => {
 const mapAppeal = (appeal) => {
 	const topic = {
 		// Main info
+		submissionId: appeal.submissionId,
 		caseStatus: mappers.mapAppealStatusOut(appeal),
 		caseType: mappers.mapAppealTypeOut(appeal.appealType),
 		caseProcedure: appeal.procedureType?.key || 'written',

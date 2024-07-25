@@ -34,6 +34,8 @@ export interface ValidateDate {
 
 export interface AppellantCaseData {
 	casedata?: {
+		/** @example "39253705-0fdc-4ccd-b39e-fd24f2763781" */
+		submissionId?: string;
 		/** @example true */
 		advertisedAppeal?: boolean;
 		/** @example false */
@@ -66,7 +68,8 @@ export interface AppellantCaseData {
 		knowsOtherOwners?: string;
 		/** @example "Q9999" */
 		lpaCode?: string;
-		isGreenBelt?: any;
+		/** @example false */
+		isGreenBelt?: boolean;
 		/** @example ["1000000"] */
 		nearbyCaseReferences?: string[];
 		/** @example [] */
@@ -121,11 +124,14 @@ export interface AppellantCaseData {
 		firstName?: string;
 		/** @example "McTest" */
 		lastName?: string;
-		salutation?: any;
+		/** @example "Mr" */
+		salutation?: string;
 		/** @example "Appellant" */
 		serviceUserType?: string;
-		organisation?: any;
-		telephoneNumber?: any;
+		/** @example "A company" */
+		organisation?: string;
+		/** @example "0123456789" */
+		telephoneNumber?: string;
 	}[];
 }
 

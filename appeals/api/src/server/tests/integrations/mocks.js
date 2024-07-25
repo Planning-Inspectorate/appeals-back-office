@@ -1,5 +1,8 @@
+import { randomUUID } from 'node:crypto';
+
 export const validAppellantCase = {
 	casedata: {
+		submissionId: randomUUID(),
 		advertisedAppeal: true,
 		appellantCostsAppliedFor: false,
 		applicationDate: '2024-01-01T00:00:00.000Z',
@@ -16,7 +19,7 @@ export const validAppellantCase = {
 		knowsAllOwners: 'Some',
 		knowsOtherOwners: 'Some',
 		lpaCode: 'Q9999',
-		isGreenBelt: null,
+		isGreenBelt: false,
 		nearbyCaseReferences: ['1000000'],
 		neighbouringSiteAddresses: [],
 		originalDevelopmentDescription: 'A test description',
@@ -50,10 +53,10 @@ export const validAppellantCase = {
 			emailAddress: 'test@test.com',
 			firstName: 'Testy',
 			lastName: 'McTest',
-			salutation: null,
+			salutation: 'Mr',
 			serviceUserType: 'Appellant',
-			organisation: null,
-			telephoneNumber: null
+			organisation: 'A company',
+			telephoneNumber: '0123456789'
 		}
 	]
 };

@@ -3260,6 +3260,10 @@
 					"casedata": {
 						"type": "object",
 						"properties": {
+							"submissionId": {
+								"type": "string",
+								"example": "39253705-0fdc-4ccd-b39e-fd24f2763781"
+							},
 							"advertisedAppeal": {
 								"type": "boolean",
 								"example": true
@@ -3324,7 +3328,10 @@
 								"type": "string",
 								"example": "Q9999"
 							},
-							"isGreenBelt": {},
+							"isGreenBelt": {
+								"type": "boolean",
+								"example": false
+							},
 							"nearbyCaseReferences": {
 								"type": "array",
 								"example": ["1000000"],
@@ -3450,13 +3457,22 @@
 									"type": "string",
 									"example": "McTest"
 								},
-								"salutation": {},
+								"salutation": {
+									"type": "string",
+									"example": "Mr"
+								},
 								"serviceUserType": {
 									"type": "string",
 									"example": "Appellant"
 								},
-								"organisation": {},
-								"telephoneNumber": {}
+								"organisation": {
+									"type": "string",
+									"example": "A company"
+								},
+								"telephoneNumber": {
+									"type": "string",
+									"example": "0123456789"
+								}
 							}
 						}
 					}
