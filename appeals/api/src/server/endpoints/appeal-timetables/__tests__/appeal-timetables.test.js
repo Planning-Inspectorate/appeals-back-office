@@ -30,7 +30,7 @@ const houseAppealWithTimetable = {
 	appealTimetable: {
 		appealId: 1,
 		finalCommentReviewDate: null,
-		id: 1,
+		id: 101,
 		issueDeterminationDate: null,
 		lpaQuestionnaireDueDate: new Date('2023-05-16T01:00:00.000Z'),
 		statementReviewDate: null
@@ -45,7 +45,7 @@ const fullPlanningAppealWithTimetable = {
 	appealTimetable: {
 		appealId: 1,
 		finalCommentReviewDate: null,
-		id: 1,
+		id: 101,
 		issueDeterminationDate: null,
 		lpaQuestionnaireDueDate: new Date('2023-05-16T01:00:00.000Z'),
 		statementReviewDate: null

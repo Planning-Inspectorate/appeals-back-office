@@ -49,11 +49,12 @@ const startAppeal = async (req, res) => {
  * @returns {Promise<Response>}
  */
 const updateAppealTimetableById = async (req, res) => {
-	const { body, params } = req;
+	const { body, params, appeal } = req;
 	const appealTimetableId = Number(params.appealTimetableId);
+	const appealId = Number(appeal.id);
 
 	try {
-		await updateAppealTimetable(appealTimetableId, body, req.get('azureAdUserId') || '');
+		await updateAppealTimetable(appealId, appealTimetableId, body, req.get('azureAdUserId') || '');
 
 		const updatedTimetable = {
 			finalCommentReviewDate: body.finalCommentReviewDate,
