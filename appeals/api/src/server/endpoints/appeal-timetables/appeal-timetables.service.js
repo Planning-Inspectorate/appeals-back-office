@@ -134,17 +134,19 @@ const startCase = async (appeal, startDate, notifyClient, siteAddress, azureAdUs
 
 	return { success: false };
 };
+
 /**
+ * @param {number} appealId
  * @param {number} appealTimetableId
  * @param {object} body
  * @param {string} azureAdUserId
  * @returns {Promise<void>}
  */
-const updateAppealTimetable = async (appealTimetableId, body, azureAdUserId) => {
+const updateAppealTimetable = async (appealId, appealTimetableId, body, azureAdUserId) => {
 	await appealTimetableRepository.updateAppealTimetableById(appealTimetableId, body);
 
 	await createAuditTrail({
-		appealId: appealTimetableId,
+		appealId: appealId,
 		azureAdUserId,
 		details: AUDIT_TRAIL_CASE_TIMELINE_UPDATED
 	});
