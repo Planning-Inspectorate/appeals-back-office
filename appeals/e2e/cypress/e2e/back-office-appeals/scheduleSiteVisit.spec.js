@@ -9,7 +9,7 @@ import { happyPathHelper } from '../../support/happyPathHelper';
 const dateTimeSection = new DateTimeSection();
 const caseDetailsPage = new CaseDetailsPage();
 
-describe.skip('Schedule site visit', () => {
+describe('Schedule site visit', () => {
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
 	});
@@ -17,7 +17,7 @@ describe.skip('Schedule site visit', () => {
 	const visitTypeTestCases = ['Accompanied', 'Access required', 'Unaccompanied'];
 
 	visitTypeTestCases.forEach((visitType, index) => {
-		it.only(`Change to ${visitType} visit from Site details`, () => {
+		it(`Change to ${visitType} visit from Site details`, () => {
 			let visitDate = happyPathHelper.validVisitDate();
 
 			cy.createCase().then((caseRef) => {
@@ -40,7 +40,7 @@ describe.skip('Schedule site visit', () => {
 			});
 		});
 
-		it.only(`Change to ${visitType} site visit with time from case timetable`, () => {
+		it(`Change to ${visitType} site visit with time from case timetable`, () => {
 			let visitDate = happyPathHelper.validVisitDate();
 
 			cy.createCase().then((caseRef) => {
