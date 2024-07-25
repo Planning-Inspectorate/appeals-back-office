@@ -94,8 +94,8 @@ const updateAppellantCaseById = async (req, res) => {
 					siteAreaSquareMetres,
 					applicationDate,
 					applicationDecisionDate,
-					changedDevelopmentDescription: !developmentDescription.isCorrect,
-					originalDevelopmentDescription: developmentDescription.details,
+					changedDevelopmentDescription: !developmentDescription?.isCorrect,
+					originalDevelopmentDescription: developmentDescription?.details,
 					applicationDecision
 			  });
 
