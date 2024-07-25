@@ -51,8 +51,7 @@ jobs:
           INSPECTOR_EMAIL: $(INSPECTOR_APPEALS_EMAIL)
           VALIDATION_OFFICER_EMAIL: $(VALIDATION_OFFICER_EMAIL)
           USER_PASSWORD: $(USER_PASSWORD)
-					HAPPY_PATH_EMAIL: $(HAPPY_PATH_EMAIL)
-
+          HAPPY_PATH_EMAIL: $(HAPPY_PATH_EMAIL)
         displayName: "Run Cypress Tests"
 
       - task: PublishBuildArtifacts@1
