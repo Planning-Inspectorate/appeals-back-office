@@ -12,7 +12,7 @@ describe('All cases search', () => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
-	it('Case admin user should be able to view Search all cases page', () => {
+	it('Case admin user should be able to view Search all cases page', { tags: tag.smoke }, () => {
 		cy.visit(urlPaths.appealsList);
 		listCasesPage.verifySectionHeader('Search all cases');
 	});

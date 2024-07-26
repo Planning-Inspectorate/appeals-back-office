@@ -6,6 +6,8 @@
 	"scripts": {
 		"cy:open": "npx cypress open --browser chrome --e2e",
 		"cy:run": "npx cypress run",
+		"cy:open-smoke": "npx cypress open --browser chrome --e2e --env grepTags='smoke'",
+		"cy:run-smoke": "npx cypress run --env grepTags='smoke'",
 		"cy:ci": "npx cypress run --env isCI=true"
 	},
 	"author": "",
@@ -16,6 +18,7 @@
 	"devDependencies": {
 		"@badeball/cypress-cucumber-preprocessor": "^20.0.1",
 		"@bahmutov/cypress-esbuild-preprocessor": "^2.1.5",
+		"@cypress/grep": "^4.1.0",
 		"@cypress/webpack-preprocessor": "^5.16.1",
 		"@faker-js/faker": "^7.6.0",
 		"cypress": "^13.6.4",
