@@ -150,14 +150,17 @@ export async function initialiseAndMapAppealData(
 					html: appealDetails.agent ? formatServiceUserAsHtmlList(appealDetails.agent) : 'No agent'
 				},
 				actions: {
-					items: [
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Change',
-							href: `${currentRoute}/service-user/change/agent`,
-							visuallyHiddenText: 'Agent',
-							attributes: { 'data-cy': 'change-agent' }
-						})
-					]
+					items:
+						'agent' in appealDetails
+							? [
+									mapActionComponent(permissionNames.updateCase, session, {
+										text: 'Change',
+										href: `${currentRoute}/service-user/change/agent`,
+										visuallyHiddenText: 'Agent',
+										attributes: { 'data-cy': 'change-agent' }
+									})
+							  ]
+							: []
 				},
 				classes: 'appeal-agent'
 			}
