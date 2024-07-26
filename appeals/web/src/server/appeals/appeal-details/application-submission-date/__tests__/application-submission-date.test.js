@@ -22,7 +22,7 @@ describe('application-date', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change the application date</h1>');
+			expect(elementInnerHtml).toContain('Change date application submitted</h1>');
 		});
 	});
 
@@ -62,7 +62,7 @@ describe('application-date', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change the application date</h1>');
+			expect(elementInnerHtml).toContain('Change date application submitted</h1>');
 
 			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -88,7 +88,7 @@ describe('application-date', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change the application date</h1>');
+			expect(elementInnerHtml).toContain('Change date application submitted</h1>');
 
 			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -114,7 +114,7 @@ describe('application-date', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change the application date</h1>');
+			expect(elementInnerHtml).toContain('Change date application submitted</h1>');
 
 			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',

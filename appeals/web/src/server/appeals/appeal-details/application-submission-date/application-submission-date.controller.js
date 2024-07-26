@@ -108,7 +108,7 @@ export const postChangeApplicationSubmissionDate = async (request, response) => 
 			'changePage',
 			appealId,
 			undefined,
-			'Application date updated'
+			'Date application submitted updated'
 		);
 
 		return response.redirect(
