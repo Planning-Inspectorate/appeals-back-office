@@ -248,7 +248,7 @@ export const appellantCaseList = {
 		ownsAllLand: true,
 		ownsSomeLand: false,
 		hasAdvertisedAppeal: false,
-		originalDevelopmentDescription: 'adipisicing aliqua',
+		originalDevelopmentDescription: 'lorem ipsum',
 		changedDevelopmentDescription: false,
 		isGreenBelt: randomBool()
 	}

@@ -1,0 +1,165 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`owners-known GET /change should render the change owners known page with "No" radio option checked if knowsOtherLandowners is "No" 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change owners known</h1>
+                </div>
+            </div>
+            <form method="POST" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <div class="govuk-radios" data-module="govuk-radios">
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="ownersKnownRadio" name="ownersKnownRadio"
+                            type="radio" value="No" checked>
+                            <label class="govuk-label govuk-radios__label" for="ownersKnownRadio">No</label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="ownersKnownRadio-2" name="ownersKnownRadio"
+                            type="radio" value="Yes">
+                            <label class="govuk-label govuk-radios__label" for="ownersKnownRadio-2">Yes</label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="ownersKnownRadio-3" name="ownersKnownRadio"
+                            type="radio" value="Some">
+                            <label class="govuk-label govuk-radios__label" for="ownersKnownRadio-3">Some</label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="ownersKnownRadio-4" name="ownersKnownRadio"
+                            type="radio" value="not-applicable">
+                            <label class="govuk-label govuk-radios__label" for="ownersKnownRadio-4">Not applicable</label>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`owners-known GET /change should render the change owners known page with "Some" radio option checked if knowsOtherLandowners is "Some" 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change owners known</h1>
+                </div>
+            </div>
+            <form method="POST" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <div class="govuk-radios" data-module="govuk-radios">
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="ownersKnownRadio" name="ownersKnownRadio"
+                            type="radio" value="No">
+                            <label class="govuk-label govuk-radios__label" for="ownersKnownRadio">No</label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="ownersKnownRadio-2" name="ownersKnownRadio"
+                            type="radio" value="Yes">
+                            <label class="govuk-label govuk-radios__label" for="ownersKnownRadio-2">Yes</label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="ownersKnownRadio-3" name="ownersKnownRadio"
+                            type="radio" value="Some" checked>
+                            <label class="govuk-label govuk-radios__label" for="ownersKnownRadio-3">Some</label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="ownersKnownRadio-4" name="ownersKnownRadio"
+                            type="radio" value="not-applicable">
+                            <label class="govuk-label govuk-radios__label" for="ownersKnownRadio-4">Not applicable</label>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`owners-known GET /change should render the change owners known page with "Yes" radio option checked if knowsOtherLandowners is "Yes" 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change owners known</h1>
+                </div>
+            </div>
+            <form method="POST" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <div class="govuk-radios" data-module="govuk-radios">
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="ownersKnownRadio" name="ownersKnownRadio"
+                            type="radio" value="No">
+                            <label class="govuk-label govuk-radios__label" for="ownersKnownRadio">No</label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="ownersKnownRadio-2" name="ownersKnownRadio"
+                            type="radio" value="Yes" checked>
+                            <label class="govuk-label govuk-radios__label" for="ownersKnownRadio-2">Yes</label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="ownersKnownRadio-3" name="ownersKnownRadio"
+                            type="radio" value="Some">
+                            <label class="govuk-label govuk-radios__label" for="ownersKnownRadio-3">Some</label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="ownersKnownRadio-4" name="ownersKnownRadio"
+                            type="radio" value="not-applicable">
+                            <label class="govuk-label govuk-radios__label" for="ownersKnownRadio-4">Not applicable</label>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`owners-known GET /change should render the change owners known page with "not applicable" radio option checked if knowsOtherLandowners is null 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change owners known</h1>
+                </div>
+            </div>
+            <form method="POST" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <div class="govuk-radios" data-module="govuk-radios">
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="ownersKnownRadio" name="ownersKnownRadio"
+                            type="radio" value="No">
+                            <label class="govuk-label govuk-radios__label" for="ownersKnownRadio">No</label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="ownersKnownRadio-2" name="ownersKnownRadio"
+                            type="radio" value="Yes">
+                            <label class="govuk-label govuk-radios__label" for="ownersKnownRadio-2">Yes</label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="ownersKnownRadio-3" name="ownersKnownRadio"
+                            type="radio" value="Some">
+                            <label class="govuk-label govuk-radios__label" for="ownersKnownRadio-3">Some</label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="ownersKnownRadio-4" name="ownersKnownRadio"
+                            type="radio" value="not-applicable" checked>
+                            <label class="govuk-label govuk-radios__label" for="ownersKnownRadio-4">Not applicable</label>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;

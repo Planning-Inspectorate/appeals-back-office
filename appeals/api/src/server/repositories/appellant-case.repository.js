@@ -14,11 +14,36 @@ import commonRepository from './common.repository.js';
  * @param {UpdateAppellantCaseRequest} data
  * @returns {PrismaPromise<object>}
  */
-const updateAppellantCaseById = (id, data) =>
-	databaseConnector.appellantCase.update({
+const updateAppellantCaseById = (id, data) => {
+	const knowsOtherOwners =
+		data.knowsOtherOwners !== undefined
+			? data.knowsOtherOwners === null
+				? null
+				: {
+						connect: {
+							key: data.knowsOtherOwners.toLowerCase()
+						}
+				  }
+			: undefined;
+
+	if (knowsOtherOwners === null) {
+		return databaseConnector.appellantCase.update({
+			where: { id },
+			data: {
+				knowsOtherOwnersId: null
+			}
+		});
+	}
+
+	return databaseConnector.appellantCase.update({
 		where: { id },
-		data
+		// @ts-ignore
+		data: {
+			...data,
+			knowsOtherOwners
+		}
 	});
+};
 
 /**
  * @param {UpdateAppellantCaseValidationOutcome} param0
@@ -53,7 +78,9 @@ const updateAppellantCaseValidationOutcome = ({
 		if (appealId && appealDueDate) {
 			transaction.push(
 				// @ts-ignore
-				appealRepository.updateAppealById(appealId, { caseExtensionDate: new Date(appealDueDate).toISOString() })
+				appealRepository.updateAppealById(appealId, {
+					caseExtensionDate: new Date(appealDueDate).toISOString()
+				})
 			);
 		}
 	}
@@ -74,7 +101,9 @@ const updateAppellantCaseValidationOutcome = ({
 	if (appealId && validAt) {
 		transaction.push(
 			// @ts-ignore
-			appealRepository.updateAppealById(appealId, { caseValidDate: new Date(validAt).toISOString() })
+			appealRepository.updateAppealById(appealId, {
+				caseValidDate: new Date(validAt).toISOString()
+			})
 		);
 	}
 

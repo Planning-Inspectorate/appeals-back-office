@@ -21,6 +21,7 @@ import serviceUserRouter from '../service-user/service-user.router.js';
 import safetyRisksRouter from '../safety-risks/safety-risks.router.js';
 import siteAddressRouter from '../address/address.router.js';
 import siteOwnershipRouter from '../site-ownership/site-ownership.router.js';
+import ownersKnownRouter from '../owners-known/owners-known.router.js';
 import otherAppealsRouter from '../other-appeals/other-appeals.router.js';
 import siteAreaRouter from '../site-area/site-area.router.js';
 import applicationSubmissionDateRouter from '../application-submission-date/application-submission-date.router.js';
@@ -83,6 +84,12 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	siteOwnershipRouter
+);
+router.use(
+	'/owners-known',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	ownersKnownRouter
 );
 router.use(
 	'/other-appeals',

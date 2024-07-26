@@ -118,6 +118,7 @@ export async function appellantCasePage(appellantCaseData, appealDetails, curren
 				mappedAppellantCaseData.siteArea.display.summaryListItem,
 				mappedAppellantCaseData.inGreenBelt.display.summaryListItem,
 				mappedAppellantCaseData.siteOwnership.display.summaryListItem,
+				mappedAppellantCaseData.ownersKnown.display.summaryListItem,
 				mappedAppellantCaseData.inspectorAccess.display.summaryListItem,
 				mappedAppellantCaseData.healthAndSafetyIssues.display.summaryListItem
 			]

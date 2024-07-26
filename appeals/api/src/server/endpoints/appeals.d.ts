@@ -182,6 +182,7 @@ interface UpdateAppellantCaseRequest {
 	applicantFirstName?: string;
 	applicantSurname?: string;
 	areAllOwnersKnown?: boolean;
+	knowsOtherOwners?: string | null;
 	hasAdvertisedAppeal?: boolean;
 	siteAccessDetails?: string;
 	hasAttemptedToIdentifyOwners?: boolean;
@@ -194,6 +195,14 @@ interface UpdateAppellantCaseRequest {
 	isGreenBelt?: boolean;
 	changedDevelopmentDescription?: boolean;
 	originalDevelopmentDescription?: string;
+	doesSiteRequireInspectorAccess?: boolean;
+	inspectorAccessDetails?: string;
+	hasHealthAndSafetyIssues?: boolean;
+	healthAndSafetyIssues?: string;
+	isSiteFullyOwned?: boolean;
+	isSitePartiallyOwned?: boolean;
+	isSiteVisibleFromPublicRoad?: boolean;
+	visibilityRestrictions?: string;
 }
 
 interface UpdateAppellantCaseValidationOutcome {
@@ -488,23 +497,6 @@ interface UpdateAddressRequest {
 	addressCounty?: string;
 	postcode?: string;
 	addressTown?: string;
-}
-
-interface UpdateAppellantCaseRequest {
-	appellantCaseValidationOutcomeId?: number;
-	applicantFirstName?: string;
-	applicantSurname?: string;
-	areAllOwnersKnown?: boolean;
-	hasAdvertisedAppeal?: boolean;
-	doesSiteRequireInspectorAccess?: boolean;
-	inspectorAccessDetails?: string;
-	hasAttemptedToIdentifyOwners?: boolean;
-	hasHealthAndSafetyIssues?: boolean;
-	healthAndSafetyIssues?: string;
-	isSiteFullyOwned?: boolean;
-	isSitePartiallyOwned?: boolean;
-	isSiteVisibleFromPublicRoad?: boolean;
-	visibilityRestrictions?: string;
 }
 
 interface UpdateAppellantCaseValidationOutcome {

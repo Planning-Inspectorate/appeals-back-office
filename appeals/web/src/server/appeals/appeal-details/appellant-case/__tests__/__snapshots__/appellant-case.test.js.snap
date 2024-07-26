@@ -123,6 +123,12 @@ exports[`appellant-case GET /appellant-case should render a "Inspector access (a
                         data-cy="change-site-ownership"> Change<span class="govuk-visually-hidden"> Site ownership</span></a>
                     </dd>
                 </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Owners known</dt>
+                    <dd class="govuk-summary-list__value">Not applicable</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/owners-known/change"
+                        data-cy="change-owners-known"> Change<span class="govuk-visually-hidden"> Owners known</span></a>
+                    </dd>
+                </div>
                 <div class="govuk-summary-list__row appellantcase-inspector-access"><dt class="govuk-summary-list__key"> Inspector access required</dt>
                     <dd                     class="govuk-summary-list__value"><span>No</span>
                         </dd>
@@ -400,6 +406,12 @@ exports[`appellant-case GET /appellant-case should render a "LPA application ref
                         data-cy="change-site-ownership"> Change<span class="govuk-visually-hidden"> Site ownership</span></a>
                     </dd>
                 </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Owners known</dt>
+                    <dd class="govuk-summary-list__value">Not applicable</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/owners-known/change"
+                        data-cy="change-owners-known"> Change<span class="govuk-visually-hidden"> Owners known</span></a>
+                    </dd>
+                </div>
                 <div class="govuk-summary-list__row appellantcase-inspector-access"><dt class="govuk-summary-list__key"> Inspector access required</dt>
                     <dd                     class="govuk-summary-list__value"><span>No</span>
                         </dd>
@@ -663,6 +675,12 @@ exports[`appellant-case GET /appellant-case should render a "Site area updated" 
                     <dd class="govuk-summary-list__value">Fully owned</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-ownership/change"
                         data-cy="change-site-ownership"> Change<span class="govuk-visually-hidden"> Site ownership</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Owners known</dt>
+                    <dd class="govuk-summary-list__value">Not applicable</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/owners-known/change"
+                        data-cy="change-owners-known"> Change<span class="govuk-visually-hidden"> Owners known</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row appellantcase-inspector-access"><dt class="govuk-summary-list__key"> Inspector access required</dt>
@@ -942,6 +960,12 @@ exports[`appellant-case GET /appellant-case should render a "Site health and saf
                         data-cy="change-site-ownership"> Change<span class="govuk-visually-hidden"> Site ownership</span></a>
                     </dd>
                 </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Owners known</dt>
+                    <dd class="govuk-summary-list__value">Not applicable</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/owners-known/change"
+                        data-cy="change-owners-known"> Change<span class="govuk-visually-hidden"> Owners known</span></a>
+                    </dd>
+                </div>
                 <div class="govuk-summary-list__row appellantcase-inspector-access"><dt class="govuk-summary-list__key"> Inspector access required</dt>
                     <dd                     class="govuk-summary-list__value"><span>No</span>
                         </dd>
@@ -1219,6 +1243,12 @@ exports[`appellant-case GET /appellant-case should render a "Site updated" notif
                         data-cy="change-site-ownership"> Change<span class="govuk-visually-hidden"> Site ownership</span></a>
                     </dd>
                 </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Owners known</dt>
+                    <dd class="govuk-summary-list__value">Not applicable</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/owners-known/change"
+                        data-cy="change-owners-known"> Change<span class="govuk-visually-hidden"> Owners known</span></a>
+                    </dd>
+                </div>
                 <div class="govuk-summary-list__row appellantcase-inspector-access"><dt class="govuk-summary-list__key"> Inspector access required</dt>
                     <dd                     class="govuk-summary-list__value"><span>No</span>
                         </dd>
@@ -1494,6 +1524,12 @@ exports[`appellant-case GET /appellant-case should render a success notification
                     <dd class="govuk-summary-list__value">Fully owned</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-ownership/change"
                         data-cy="change-site-ownership"> Change<span class="govuk-visually-hidden"> Site ownership</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Owners known</dt>
+                    <dd class="govuk-summary-list__value">Not applicable</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/owners-known/change"
+                        data-cy="change-owners-known"> Change<span class="govuk-visually-hidden"> Owners known</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row appellantcase-inspector-access"><dt class="govuk-summary-list__key"> Inspector access required</dt>
@@ -1841,6 +1877,12 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                     <dd class="govuk-summary-list__value">Fully owned</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-ownership/change"
                         data-cy="change-site-ownership"> Change<span class="govuk-visually-hidden"> Site ownership</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Owners known</dt>
+                    <dd class="govuk-summary-list__value">Not applicable</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/owners-known/change"
+                        data-cy="change-owners-known"> Change<span class="govuk-visually-hidden"> Owners known</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row appellantcase-inspector-access"><dt class="govuk-summary-list__key"> Inspector access required</dt>
@@ -3999,6 +4041,12 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                     <dd class="govuk-summary-list__value">Fully owned</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-ownership/change"
                         data-cy="change-site-ownership"> Change<span class="govuk-visually-hidden"> Site ownership</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Owners known</dt>
+                    <dd class="govuk-summary-list__value">Not applicable</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/owners-known/change"
+                        data-cy="change-owners-known"> Change<span class="govuk-visually-hidden"> Owners known</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row appellantcase-inspector-access"><dt class="govuk-summary-list__key"> Inspector access required</dt>
