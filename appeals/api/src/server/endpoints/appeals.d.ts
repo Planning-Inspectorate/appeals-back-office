@@ -678,6 +678,7 @@ type GetAuditTrailsResponse = {
 	doc?:
 		| {
 				documentGuid: string;
+				documentType: string;
 				stage: string;
 				name: string;
 				folderId: number;
