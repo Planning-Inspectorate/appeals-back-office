@@ -7,7 +7,8 @@
  */
 const formatAuditTrail = (auditTrail) =>
 	auditTrail
-		? auditTrail.map(({ details, loggedAt, user, doc }) => ({
+		? // @ts-ignore
+		  auditTrail.map(({ details, loggedAt, user, doc }) => ({
 				azureAdUserId: user?.azureAdUserId || '',
 				details,
 				loggedDate: loggedAt,
@@ -16,7 +17,8 @@ const formatAuditTrail = (auditTrail) =>
 							name: doc.document?.name || '',
 							documentGuid: doc.document?.latestDocumentVersion?.documentGuid || '',
 							stage: doc.document?.latestDocumentVersion?.stage || '',
-							folderId: doc.document?.folderId
+							folderId: doc.document?.folderId,
+							documentType: doc.document?.latestDocumentVersion?.documentType
 					  }
 					: undefined
 		  }))

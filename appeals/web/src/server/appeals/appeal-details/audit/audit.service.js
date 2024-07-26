@@ -1,8 +1,9 @@
 import usersService from '#appeals/appeal-users/users-service.js';
-import { APPEAL_CASE_STAGE } from 'pins-data-model';
+import { APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
 
 /** @typedef {import('@pins/appeals.api/src/server/endpoints/appeals').GetAuditTrailsResponse} GetAuditTrailsResponse */
 /** @typedef {import('#app/auth/auth-session.service').SessionWithAuth} SessionWithAuth */
+/** @typedef {{ documentGuid: string, name: string, stage: string, folderId: number, documentType: string }} DocInfo */
 
 /**
  *
@@ -28,13 +29,15 @@ export const mapUser = async (id, session) => {
 /**
  * @param {import('../appeal-details.types.js').WebAppeal} appeal
  * @param {string} log
- * @param {{ documentGuid: string, name: string, stage: string, folderId: number } | undefined } docInfo
+ * @param {DocInfo | undefined } docInfo
  * @param {SessionWithAuth} session
  * @returns {Promise<string>}
  */
 export const mapMessageContent = async (appeal, log, docInfo, session) => {
 	let result = log;
-	result = await tryMapUsers(result, session);
+	if (result.indexOf('Document') === -1) {
+		result = await tryMapUsers(result, session);
+	}
 	result = await tryMapDocument(
 		appeal.appealId,
 		result,
@@ -73,7 +76,7 @@ const tryMapUsers = async (log, session) => {
  *
  * @param {number} appealId
  * @param {string} log
- * @param {{ documentGuid: string, name: string, stage: string, folderId: number } | undefined } docInfo
+ * @param {DocInfo | undefined } docInfo
  * @param {number | null} lpaqId
  * @returns {Promise<string>}
  */
@@ -82,9 +85,9 @@ const tryMapDocument = async (appealId, log, docInfo, lpaqId) => {
 		return log;
 	}
 
-	const { name, documentGuid, stage, folderId } = docInfo;
+	const { name, documentGuid, documentType, stage, folderId } = docInfo;
 
-	if (name && documentGuid && stage && folderId) {
+	if (name && documentGuid && documentType && stage && folderId) {
 		switch (stage) {
 			case APPEAL_CASE_STAGE.APPELLANT_CASE: {
 				const url = `/appeals-service/appeal-details/${appealId}/appellant-case/manage-documents/${folderId}/${documentGuid}`;
@@ -98,6 +101,42 @@ const tryMapDocument = async (appealId, log, docInfo, lpaqId) => {
 				const url = `/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaqId}/manage-documents/${folderId}/${documentGuid}`;
 				return log.replace(name, `<a class="govuk-link" href="${url}">${name}</a>`);
 			}
+			case APPEAL_CASE_STAGE.COSTS: {
+				const types = ['application', 'correspondence', 'withdrawal'];
+				const sources = ['appellant', 'lpa'];
+				let path = 'decision';
+
+				switch (documentType) {
+					case APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_APPLICATION: {
+						path = `${sources[0]}/${types[0]}`;
+						break;
+					}
+					case APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_CORRESPONDENCE: {
+						path = `${sources[0]}/${types[1]}`;
+						break;
+					}
+					case APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_WITHDRAWAL: {
+						path = `${sources[0]}/${types[2]}`;
+						break;
+					}
+					case APPEAL_DOCUMENT_TYPE.LPA_COSTS_APPLICATION: {
+						path = `${sources[1]}/${types[0]}`;
+						break;
+					}
+					case APPEAL_DOCUMENT_TYPE.LPA_COSTS_CORRESPONDENCE: {
+						path = `${sources[1]}/${types[1]}`;
+						break;
+					}
+					case APPEAL_DOCUMENT_TYPE.LPA_COSTS_WITHDRAWAL: {
+						path = `${sources[1]}/${types[2]}`;
+						break;
+					}
+				}
+
+				const url = `/appeals-service/appeal-details/${appealId}/costs/${path}/manage-documents/${folderId}/${documentGuid}`;
+				return log.replace(name, `<a class="govuk-link" href="${url}">${name}</a>`);
+			}
+			//TODO: internal folders, when the data model is updated
 		}
 	}
 
