@@ -7,6 +7,7 @@ import { permissionNames } from '#environment/permissions.js';
 import { formatServiceUserAsHtmlList } from '#lib/service-user-formatter.js';
 import { dateToDisplayDate } from '#lib/dates.js';
 import { capitalize } from 'lodash-es';
+import { APPEAL_KNOWS_OTHER_OWNERS } from 'pins-data-model';
 
 /**
  * @typedef {import('@pins/appeals.api').Appeals.FolderInfo} FolderInfo
@@ -423,6 +424,31 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 	};
 
 	/** @type {Instructions} */
+	mappedData.ownersKnown = {
+		id: 'owners-known',
+		display: {
+			summaryListItem: {
+				key: {
+					text: 'Owners known'
+				},
+				value: {
+					text: mapOwnersKnownLabelText(appellantCaseData.siteOwnership.knowsOtherLandowners)
+				},
+				actions: {
+					items: [
+						mapActionComponent(permissionNames.updateCase, session, {
+							text: 'Change',
+							visuallyHiddenText: 'Owners known',
+							href: `${currentRoute}/owners-known/change`,
+							attributes: { 'data-cy': 'change-owners-known' }
+						})
+					]
+				}
+			}
+		}
+	};
+
+	/** @type {Instructions} */
 	mappedData.appealType = {
 		id: 'appeal-type',
 		display: {
@@ -440,31 +466,6 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 							visuallyHiddenText: 'Appeal type',
 							href: `${currentRoute}/#`,
 							attributes: { 'data-cy': 'change-appeal-type' }
-						})
-					]
-				}
-			}
-		}
-	};
-
-	/** @type {Instructions} */
-	mappedData.allOwnersKnown = {
-		id: 'all-owners-known',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'All owners known'
-				},
-				value: {
-					text: appellantCaseData.siteOwnership.areAllOwnersKnown
-				},
-				actions: {
-					items: [
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Change',
-							visuallyHiddenText: 'All owners known',
-							href: `${currentRoute}/change-appeal-details/all-owners-known`,
-							attributes: { 'data-cy': 'change-all-owners-known' }
 						})
 					]
 				}
@@ -938,4 +939,22 @@ export const mapDocumentManageUrl = (caseId, folderId) => {
 		return '';
 	}
 	return `/appeals-service/appeal-details/${caseId}/appellant-case/manage-documents/${folderId}/`;
+};
+
+/**
+ * @param {typeof APPEAL_KNOWS_OTHER_OWNERS.YES | typeof APPEAL_KNOWS_OTHER_OWNERS.NO | typeof APPEAL_KNOWS_OTHER_OWNERS.SOME | null} knowsOtherLandowners
+ * @returns {string}
+ */
+const mapOwnersKnownLabelText = (knowsOtherLandowners) => {
+	switch (knowsOtherLandowners) {
+		case APPEAL_KNOWS_OTHER_OWNERS.YES:
+			return 'Yes';
+		case APPEAL_KNOWS_OTHER_OWNERS.NO:
+			return 'No';
+		case APPEAL_KNOWS_OTHER_OWNERS.SOME:
+			return 'Some';
+		case null:
+		default:
+			return 'Not applicable';
+	}
 };

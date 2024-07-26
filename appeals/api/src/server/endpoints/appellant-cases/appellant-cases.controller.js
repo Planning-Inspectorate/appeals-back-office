@@ -37,6 +37,7 @@ const updateAppellantCaseById = async (req, res) => {
 			applicantFirstName,
 			applicantSurname,
 			areAllOwnersKnown,
+			knowsOtherOwners,
 			hasAdvertisedAppeal,
 			hasAttemptedToIdentifyOwners,
 			siteSafetyDetails,
@@ -52,7 +53,7 @@ const updateAppellantCaseById = async (req, res) => {
 		params,
 		validationOutcome
 	} = req;
-	console.log(isGreenBelt);
+
 	const appellantCaseId = Number(params.appellantCaseId);
 	const azureAdUserId = String(req.get('azureAdUserId'));
 	const { validAt, ...data } = body;
@@ -86,6 +87,7 @@ const updateAppellantCaseById = async (req, res) => {
 					applicantFirstName,
 					applicantSurname,
 					areAllOwnersKnown,
+					knowsOtherOwners,
 					hasAdvertisedAppeal,
 					hasAttemptedToIdentifyOwners,
 					siteSafetyDetails,
@@ -96,8 +98,10 @@ const updateAppellantCaseById = async (req, res) => {
 					applicationDate,
 					applicationDecisionDate,
 					isGreenBelt,
-					changedDevelopmentDescription: !developmentDescription.isCorrect,
-					originalDevelopmentDescription: developmentDescription.details
+					changedDevelopmentDescription: developmentDescription?.isCorrect
+						? !developmentDescription?.isCorrect
+						: undefined,
+					originalDevelopmentDescription: developmentDescription?.details
 			  });
 
 		await broadcasters.broadcastAppeal(appeal.id);

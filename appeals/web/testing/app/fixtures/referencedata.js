@@ -379,6 +379,7 @@ export const appellantCaseDataNotValidated = {
 		isVisible: true
 	}
 };
+
 export const lpaQuestionnaireData = {
 	affectsListedBuildingDetails: [
 		{

@@ -53,7 +53,9 @@ const getAppealById = async (id) => {
 							appellantCaseInvalidReasonText: true
 						}
 					},
-					appellantCaseValidationOutcome: true
+					appellantCaseValidationOutcome: true,
+					knowsOtherOwners: true,
+					knowsAllOwners: true
 				}
 			},
 			appellant: true,

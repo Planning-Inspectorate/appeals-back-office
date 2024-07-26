@@ -15,6 +15,8 @@ import {
 import validateBooleanParameter from '#common/validators/boolean-parameter.js';
 import validateBooleanWithConditionalStringParameters from '#common/validators/boolean-with-conditional-string-parameters.js';
 import validateIncompleteInvalidReasonParameter from '#common/validators/incomplete-invalid-reason-parameter.js';
+import validateEnumParameter from '#common/validators/enum-parameter.js';
+import { APPEAL_KNOWS_OTHER_OWNERS } from 'pins-data-model';
 
 /** @typedef {import('express').RequestHandler} RequestHandler */
 
@@ -62,6 +64,7 @@ const patchAppellantCaseValidator = composeMiddleware(
 	validateBooleanParameter('isSiteFullyOwned'),
 	validateBooleanParameter('isSitePartiallyOwned'),
 	validateBooleanParameter('areAllOwnersKnown'),
+	validateEnumParameter('knowsOtherLandowners', Object.values(APPEAL_KNOWS_OTHER_OWNERS), true),
 	validateBooleanParameter('hasAttemptedToIdentifyOwners'),
 	validateBooleanParameter('hasAdvertisedAppeal'),
 	validateBooleanWithConditionalStringParameters(
