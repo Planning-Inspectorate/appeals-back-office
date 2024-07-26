@@ -6,7 +6,7 @@ exports[`application-date GET /change should render the applicationSubmissionDat
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change the application date</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change date application submitted</h1>
                 </div>
             </div>
             <form method="POST" novalidate="novalidate">
@@ -65,7 +65,7 @@ exports[`application-date POST /change should re-render applicationSubmissionDat
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change the application date</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change date application submitted</h1>
                 </div>
             </div>
             <form method="POST" novalidate="novalidate">
@@ -124,7 +124,7 @@ exports[`application-date POST /change should re-render applicationSubmissionDat
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change the application date</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change date application submitted</h1>
                 </div>
             </div>
             <form method="POST" novalidate="novalidate">
@@ -185,7 +185,7 @@ exports[`application-date POST /change should re-render to applicationSubmission
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change the application date</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change date application submitted</h1>
                 </div>
             </div>
             <form method="POST" novalidate="novalidate">

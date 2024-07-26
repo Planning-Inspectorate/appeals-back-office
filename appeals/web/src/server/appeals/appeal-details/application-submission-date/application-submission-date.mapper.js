@@ -23,10 +23,10 @@ export const changeApplicationSubmissionDatePage = (
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: `Change the application date`,
+		title: `Change date application submitted`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/appellant-case`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: `Change the application date`,
+		heading: `Change date application submitted`,
 		pageComponents: [
 			{
 				type: 'date-input',

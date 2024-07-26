@@ -215,7 +215,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		display: {
 			summaryListItem: {
 				key: {
-					text: 'Application date'
+					text: 'Application submitted'
 				},
 				value: {
 					text: dateToDisplayDate(appellantCaseData.applicationDate)
@@ -224,7 +224,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 					items: [
 						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
-							visuallyHiddenText: 'Application date',
+							visuallyHiddenText: 'Application submitted',
 							href: `${currentRoute}/application-date/change`
 						})
 					]
