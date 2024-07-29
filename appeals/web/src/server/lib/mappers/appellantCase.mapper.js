@@ -266,14 +266,14 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 					text: 'LPA changed the development description'
 				},
 				value: {
-					text: convertFromBooleanToYesNo(!appellantCaseData.developmentDescription?.isCorrect)
+					text: convertFromBooleanToYesNo(appellantCaseData.developmentDescription?.isCorrect)
 				},
 				actions: {
 					items: [
 						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
 							visuallyHiddenText: 'LPA changed the development description',
-							href: `${currentRoute}/#`
+							href: `${currentRoute}/lpa-changed-description/change`
 						})
 					]
 				}

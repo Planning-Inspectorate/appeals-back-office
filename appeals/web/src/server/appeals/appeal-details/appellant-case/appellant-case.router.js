@@ -28,6 +28,7 @@ import applicationSubmissionDateRouter from '../application-submission-date/appl
 import applicationDecisionDateRouter from '../application-decision-date/application-decision-date.router.js';
 import greenBeltRouter from '../green-belt/green-belt.router.js';
 import developmentDescriptionRouter from '../development-description/development-description.router.js';
+import lpaChangedDescriptionRouter from '../lpa-changed-description/lpa-changed-description.router.js';
 import applicationOutcomeRouter from '../application-outcome/application-outcome.router.js';
 import appealCostsApplicationRouter from '../appeal-costs-application/appeal-costs-application.router.js';
 
@@ -131,6 +132,12 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	developmentDescriptionRouter
+);
+router.use(
+	'/lpa-changed-description',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	lpaChangedDescriptionRouter
 );
 
 router.use(
