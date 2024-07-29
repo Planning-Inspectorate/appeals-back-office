@@ -16,5 +16,5 @@ export const validateChangeServiceUser = createValidator(
 		.bail()
 		.isString()
 		.isLength({ min: 10, max: 15 })
-		.withMessage('Enter a valid phone number or clear the email field')
+		.withMessage('Enter a valid phone number or clear the phone number field')
 );

@@ -368,6 +368,61 @@ exports[`service-user POST /change/:userType should re-render changeServiceUser 
 </main>"
 `;
 
+exports[`service-user POST /change/:userType should re-render changeServiceUser with the expected error message if phone number is provided but invalid 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#phoneNumber">Enter a valid phone number or clear the phone number field</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Update agent details</h1>
+                </div>
+            </div>
+            <form method="POST" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="first-name">Agent&#39;s first name</label>
+                    <input class="govuk-input" id="first-name"
+                    name="firstName" type="text" value="Jessica">
+                </div>
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="last-name">Agent&#39;s last name</label>
+                    <input class="govuk-input" id="last-name"
+                    name="lastName" type="text" value="Jones">
+                </div>
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="organisation-name">Agent&#39;s company or organisation name</label>
+                    <input class="govuk-input"
+                    id="organisation-name" name="organisationName" type="text">
+                </div>
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="email-address">Agent&#39;s email address</label>
+                    <input class="govuk-input" id="email-address"
+                    name="emailAddress" type="text" value="jessica.jones@email.com">
+                </div>
+                <div class="govuk-form-group govuk-form-group--error">
+                    <label class="govuk-label" for="phone-number">Agent&#39;s phone number</label>
+                    <p id="phone-number-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter a valid phone number
+                        or leave empty</p>
+                    <input class="govuk-input govuk-input--error" id="phone-number"
+                    name="phoneNumber" type="text" value="00000" aria-describedby="phone-number-error">
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
 exports[`service-user POST /change/:userType should re-render changeServiceUser with with the expected error message if firstName is undefined 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">

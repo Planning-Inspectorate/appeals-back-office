@@ -249,6 +249,36 @@ describe('service-user', () => {
 			expect(errorSummaryHtml).toContain('Enter a valid email or clear the email field</a>');
 		});
 
+		it('should re-render changeServiceUser with the expected error message if phone number is provided but invalid', async () => {
+			const appealId = appealData.appealId;
+			const invalidData = {
+				firstName: 'Jessica',
+				lastName: 'Jones',
+				emailAddress: 'jessica.jones@email.com',
+				phoneNumber: '00000'
+			};
+			const response = await request
+				.post(`${baseUrl}/${appealId}/service-user/change/agent`)
+				.send(invalidData);
+
+			expect(response.statusCode).toBe(200);
+
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Update agent details</h1>');
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain(
+				'Enter a valid phone number or clear the phone number field</a>'
+			);
+		});
+
 		it('should re-direct to appeals details if firstName, lastName, and email are valid', async () => {
 			const appealId = appealData.appealId;
 			nock('http://test/').patch(`/appeals/${appealId}/service-user`).reply(200, {
