@@ -35,7 +35,7 @@ export const mapUser = async (id, session) => {
  */
 export const mapMessageContent = async (appeal, log, docInfo, session) => {
 	let result = log;
-	if (result.indexOf('Document') === -1) {
+	if (log.toLowerCase().indexOf('document') === -1) {
 		result = await tryMapUsers(result, session);
 	}
 	result = await tryMapDocument(

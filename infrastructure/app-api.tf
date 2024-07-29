@@ -31,6 +31,7 @@ module "app_api" {
   action_group_ids           = local.action_group_ids
   log_analytics_workspace_id = azurerm_log_analytics_workspace.main.id
   monitoring_alerts_enabled  = var.alerts_enabled
+  health_check_path          = "/health"
 
   app_settings = {
     APPLICATIONINSIGHTS_CONNECTION_STRING      = local.key_vault_refs["app-insights-connection-string"]

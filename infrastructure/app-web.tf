@@ -31,6 +31,7 @@ module "app_web" {
   action_group_ids           = local.action_group_ids
   log_analytics_workspace_id = azurerm_log_analytics_workspace.main.id
   monitoring_alerts_enabled  = var.alerts_enabled
+  health_check_path          = "/health"
 
   app_settings = {
     APPLICATIONINSIGHTS_CONNECTION_STRING      = local.key_vault_refs["app-insights-connection-string"]
@@ -61,7 +62,7 @@ module "app_web" {
     LOG_LEVEL_FILE   = var.apps_config.logging.level_file
     LOG_LEVEL_STDOUT = var.apps_config.logging.level_stdout
 
-    # sessions  
+    # sessions
     REDIS_CONNECTION_STRING = local.key_vault_refs["redis-connection-string"]
     SESSION_SECRET          = local.key_vault_refs["session-secret"]
 
