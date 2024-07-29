@@ -250,6 +250,10 @@ export function mapAppealStatusToActionRequiredHtml(
 
 	switch (appealStatus) {
 		case APPEAL_CASE_STATUS.READY_TO_START:
+			if (!isCaseOfficer) {
+				return 'Start case';
+			}
+			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/start-case/add">Start case</a>`;
 		case APPEAL_CASE_STATUS.VALIDATION:
 			if (appellantCaseStatus == 'Incomplete') {
 				if (!isCaseOfficer) {

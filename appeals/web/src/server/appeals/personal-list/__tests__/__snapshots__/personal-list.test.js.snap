@@ -55,7 +55,7 @@ exports[`personal-list GET / should render a child status tag in the lead or chi
                 </td>
                 <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey single-line">Child</strong>
                 </td>
-                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/161/appellant-case">Review appellant case</a>
+                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/161/start-case/add">Start case</a>
                 </td>
                 <td class="govuk-table__cell">7 January 2024</td>
                 <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--turquoise single-line">Ready to start</strong>
@@ -65,7 +65,7 @@ exports[`personal-list GET / should render a child status tag in the lead or chi
                 <td class="govuk-table__cell"><strong><a class="govuk-link" href="/appeals-service/appeal-details/162" aria-label="Appeal 4 2 4 9 4 2">424942</a></strong>
                 </td>
                 <td class="govuk-table__cell"></td>
-                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/162/appellant-case">Review appellant case</a>
+                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/162/start-case/add">Start case</a>
                 </td>
                 <td class="govuk-table__cell">7 January 2024</td>
                 <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--turquoise single-line">Ready to start</strong>
@@ -75,7 +75,7 @@ exports[`personal-list GET / should render a child status tag in the lead or chi
                 <td class="govuk-table__cell"><strong><a class="govuk-link" href="/appeals-service/appeal-details/163" aria-label="Appeal 7 6 9 2 0 7">769207</a></strong>
                 </td>
                 <td class="govuk-table__cell"></td>
-                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/163/appellant-case">Review appellant case</a>
+                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/163/start-case/add">Start case</a>
                 </td>
                 <td class="govuk-table__cell">7 January 2024</td>
                 <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--turquoise single-line">Ready to start</strong>
@@ -85,7 +85,7 @@ exports[`personal-list GET / should render a child status tag in the lead or chi
                 <td class="govuk-table__cell"><strong><a class="govuk-link" href="/appeals-service/appeal-details/164" aria-label="Appeal 8 3 8 9 6">83896</a></strong>
                 </td>
                 <td class="govuk-table__cell"></td>
-                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/164/appellant-case">Review appellant case</a>
+                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/164/start-case/add">Start case</a>
                 </td>
                 <td class="govuk-table__cell">7 January 2024</td>
                 <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--turquoise single-line">Ready to start</strong>
@@ -164,7 +164,7 @@ exports[`personal-list GET / should render a lead status tag in the lead or chil
                 </td>
                 <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey single-line">Child</strong>
                 </td>
-                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/161/appellant-case">Review appellant case</a>
+                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/161/start-case/add">Start case</a>
                 </td>
                 <td class="govuk-table__cell">7 January 2024</td>
                 <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--turquoise single-line">Ready to start</strong>
@@ -174,7 +174,7 @@ exports[`personal-list GET / should render a lead status tag in the lead or chil
                 <td class="govuk-table__cell"><strong><a class="govuk-link" href="/appeals-service/appeal-details/162" aria-label="Appeal 4 2 4 9 4 2">424942</a></strong>
                 </td>
                 <td class="govuk-table__cell"></td>
-                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/162/appellant-case">Review appellant case</a>
+                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/162/start-case/add">Start case</a>
                 </td>
                 <td class="govuk-table__cell">7 January 2024</td>
                 <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--turquoise single-line">Ready to start</strong>
@@ -184,7 +184,7 @@ exports[`personal-list GET / should render a lead status tag in the lead or chil
                 <td class="govuk-table__cell"><strong><a class="govuk-link" href="/appeals-service/appeal-details/163" aria-label="Appeal 7 6 9 2 0 7">769207</a></strong>
                 </td>
                 <td class="govuk-table__cell"></td>
-                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/163/appellant-case">Review appellant case</a>
+                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/163/start-case/add">Start case</a>
                 </td>
                 <td class="govuk-table__cell">7 January 2024</td>
                 <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--turquoise single-line">Ready to start</strong>
@@ -194,7 +194,7 @@ exports[`personal-list GET / should render a lead status tag in the lead or chil
                 <td class="govuk-table__cell"><strong><a class="govuk-link" href="/appeals-service/appeal-details/164" aria-label="Appeal 8 3 8 9 6">83896</a></strong>
                 </td>
                 <td class="govuk-table__cell"></td>
-                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/164/appellant-case">Review appellant case</a>
+                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/164/start-case/add">Start case</a>
                 </td>
                 <td class="govuk-table__cell">7 January 2024</td>
                 <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--turquoise single-line">Ready to start</strong>
@@ -284,7 +284,7 @@ exports[`personal-list GET / should render an empty cell in the lead or child co
                 </td>
                 <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey single-line">Child</strong>
                 </td>
-                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/161/appellant-case">Review appellant case</a>
+                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/161/start-case/add">Start case</a>
                 </td>
                 <td class="govuk-table__cell">7 January 2024</td>
                 <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--turquoise single-line">Ready to start</strong>
@@ -294,7 +294,7 @@ exports[`personal-list GET / should render an empty cell in the lead or child co
                 <td class="govuk-table__cell"><strong><a class="govuk-link" href="/appeals-service/appeal-details/162" aria-label="Appeal 4 2 4 9 4 2">424942</a></strong>
                 </td>
                 <td class="govuk-table__cell"></td>
-                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/162/appellant-case">Review appellant case</a>
+                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/162/start-case/add">Start case</a>
                 </td>
                 <td class="govuk-table__cell">7 January 2024</td>
                 <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--turquoise single-line">Ready to start</strong>
@@ -304,7 +304,7 @@ exports[`personal-list GET / should render an empty cell in the lead or child co
                 <td class="govuk-table__cell"><strong><a class="govuk-link" href="/appeals-service/appeal-details/163" aria-label="Appeal 7 6 9 2 0 7">769207</a></strong>
                 </td>
                 <td class="govuk-table__cell"></td>
-                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/163/appellant-case">Review appellant case</a>
+                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/163/start-case/add">Start case</a>
                 </td>
                 <td class="govuk-table__cell">7 January 2024</td>
                 <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--turquoise single-line">Ready to start</strong>
@@ -314,7 +314,7 @@ exports[`personal-list GET / should render an empty cell in the lead or child co
                 <td class="govuk-table__cell"><strong><a class="govuk-link" href="/appeals-service/appeal-details/164" aria-label="Appeal 8 3 8 9 6">83896</a></strong>
                 </td>
                 <td class="govuk-table__cell"></td>
-                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/164/appellant-case">Review appellant case</a>
+                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/164/start-case/add">Start case</a>
                 </td>
                 <td class="govuk-table__cell">7 January 2024</td>
                 <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--turquoise single-line">Ready to start</strong>
@@ -393,7 +393,7 @@ exports[`personal-list GET / should render the first page of the personal list w
                 </td>
                 <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey single-line">Child</strong>
                 </td>
-                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/161/appellant-case">Review appellant case</a>
+                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/161/start-case/add">Start case</a>
                 </td>
                 <td class="govuk-table__cell">7 January 2024</td>
                 <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--turquoise single-line">Ready to start</strong>
@@ -403,7 +403,7 @@ exports[`personal-list GET / should render the first page of the personal list w
                 <td class="govuk-table__cell"><strong><a class="govuk-link" href="/appeals-service/appeal-details/162" aria-label="Appeal 4 2 4 9 4 2">424942</a></strong>
                 </td>
                 <td class="govuk-table__cell"></td>
-                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/162/appellant-case">Review appellant case</a>
+                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/162/start-case/add">Start case</a>
                 </td>
                 <td class="govuk-table__cell">7 January 2024</td>
                 <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--turquoise single-line">Ready to start</strong>
@@ -413,7 +413,7 @@ exports[`personal-list GET / should render the first page of the personal list w
                 <td class="govuk-table__cell"><strong><a class="govuk-link" href="/appeals-service/appeal-details/163" aria-label="Appeal 7 6 9 2 0 7">769207</a></strong>
                 </td>
                 <td class="govuk-table__cell"></td>
-                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/163/appellant-case">Review appellant case</a>
+                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/163/start-case/add">Start case</a>
                 </td>
                 <td class="govuk-table__cell">7 January 2024</td>
                 <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--turquoise single-line">Ready to start</strong>
@@ -423,7 +423,7 @@ exports[`personal-list GET / should render the first page of the personal list w
                 <td class="govuk-table__cell"><strong><a class="govuk-link" href="/appeals-service/appeal-details/164" aria-label="Appeal 8 3 8 9 6">83896</a></strong>
                 </td>
                 <td class="govuk-table__cell"></td>
-                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/164/appellant-case">Review appellant case</a>
+                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/164/start-case/add">Start case</a>
                 </td>
                 <td class="govuk-table__cell">7 January 2024</td>
                 <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--turquoise single-line">Ready to start</strong>
@@ -631,7 +631,7 @@ exports[`personal-list GET / should render the second page of the personal list 
                 <td class="govuk-table__cell"><strong><a class="govuk-link" href="/appeals-service/appeal-details/165" aria-label="Appeal 3 3 3 6 0 0">333600</a></strong>
                 </td>
                 <td class="govuk-table__cell"></td>
-                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/165/appellant-case">Review appellant case</a>
+                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/165/start-case/add">Start case</a>
                 </td>
                 <td class="govuk-table__cell">7 January 2024</td>
                 <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--turquoise single-line">Ready to start</strong>
@@ -699,7 +699,7 @@ exports[`personal-list GET / should render the second page of the personal list 
                 <td class="govuk-table__cell"><strong><a class="govuk-link" href="/appeals-service/appeal-details/165" aria-label="Appeal 3 3 3 6 0 0">333600</a></strong>
                 </td>
                 <td class="govuk-table__cell"></td>
-                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/165/appellant-case">Review appellant case</a>
+                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/165/start-case/add">Start case</a>
                 </td>
                 <td class="govuk-table__cell">7 January 2024</td>
                 <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--turquoise single-line">Ready to start</strong>
@@ -709,7 +709,7 @@ exports[`personal-list GET / should render the second page of the personal list 
                 <td class="govuk-table__cell"><strong><a class="govuk-link" href="/appeals-service/appeal-details/166" aria-label="Appeal 2 1 6 9 1 1">216911</a></strong>
                 </td>
                 <td class="govuk-table__cell"></td>
-                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/166/appellant-case">Review appellant case</a>
+                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/166/start-case/add">Start case</a>
                 </td>
                 <td class="govuk-table__cell">7 January 2024</td>
                 <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--turquoise single-line">Ready to start</strong>
@@ -719,7 +719,7 @@ exports[`personal-list GET / should render the second page of the personal list 
                 <td class="govuk-table__cell"><strong><a class="govuk-link" href="/appeals-service/appeal-details/167" aria-label="Appeal 6 0 0 7 1 5">600715</a></strong>
                 </td>
                 <td class="govuk-table__cell"></td>
-                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/167/appellant-case">Review appellant case</a>
+                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/167/start-case/add">Start case</a>
                 </td>
                 <td class="govuk-table__cell">7 January 2024</td>
                 <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--turquoise single-line">Ready to start</strong>
