@@ -101,10 +101,13 @@ const updateAppellantCaseById = async (req, res) => {
 					applicationDate,
 					applicationDecisionDate,
 					isGreenBelt,
-					changedDevelopmentDescription: developmentDescription?.isCorrect
-						? !developmentDescription?.isCorrect
-						: undefined,
-					originalDevelopmentDescription: developmentDescription?.details,
+					changedDevelopmentDescription:
+						typeof developmentDescription?.isCorrect !== typeof undefined
+							? !developmentDescription?.isCorrect
+							: undefined,
+					originalDevelopmentDescription:
+						typeof developmentDescription?.details !== typeof undefined
+							? developmentDescription?.details : undefined,
 					applicationDecision
 			  });
 
