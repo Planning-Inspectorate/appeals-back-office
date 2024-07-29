@@ -9,6 +9,9 @@ export const validateAddLinkedAppealReference = createValidator(
 		.notEmpty()
 		.withMessage('Enter an appeal reference')
 		.bail()
+		.isLength({ min: 7, max: 7 })
+		.withMessage('Appeal reference must be 7 digits')
+		.bail()
 		.custom(async (reference, { req }) => {
 			try {
 				const linkableAppealSummary = await getLinkableAppealByReference(

@@ -27,6 +27,8 @@ const appealDataWithOtherAppeals = {
 		}
 	]
 };
+const testValidLinkableAppealReference = '1234567';
+const testInvalidLinkableAppealReference = '7654321';
 
 describe('other-appeals', () => {
 	beforeEach(() => {
@@ -65,11 +67,49 @@ describe('other-appeals', () => {
 			expect(errorSummaryHtml).toContain('Enter an appeal reference</a>');
 		});
 
-		it('should re-render the "What is the appeal reference?" page with error "Enter a valid appeal reference", if the provided appeal reference was invalid', async () => {
-			nock('http://test/').get('/appeals/linkable-appeal/1').reply(404);
+		it('should re-render the "What is the appeal reference?" page with the expected error, if the provided appeal reference is less than 7 digits', async () => {
 			const response = await request
 				.post(`${baseUrl}/1/other-appeals/add`)
-				.send({ addOtherAppealsReference: '1' });
+				.send({ addOtherAppealsReference: '123456' });
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('What is the appeal reference?</h1>');
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Appeal reference must be 7 digits</a>');
+		});
+
+		it('should re-render the "What is the appeal reference?" page with the expected error, if the provided appeal reference is greater than 7 digits', async () => {
+			const response = await request
+				.post(`${baseUrl}/1/other-appeals/add`)
+				.send({ addOtherAppealsReference: '12345678' });
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('What is the appeal reference?</h1>');
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Appeal reference must be 7 digits</a>');
+		});
+
+		it('should re-render the "What is the appeal reference?" page with error "Enter a valid appeal reference", if the provided appeal reference was invalid', async () => {
+			nock('http://test/')
+				.get(`/appeals/linkable-appeal/${testInvalidLinkableAppealReference}`)
+				.reply(404);
+			const response = await request
+				.post(`${baseUrl}/1/other-appeals/add`)
+				.send({ addOtherAppealsReference: testInvalidLinkableAppealReference });
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
@@ -85,24 +125,30 @@ describe('other-appeals', () => {
 		});
 
 		it('should redirect to the "Related appeal details" page if related appeal reference is valid', async () => {
-			nock('http://test/').get('/appeals/linkable-appeal/3').reply(200, linkableAppeal);
+			nock('http://test/')
+				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}`)
+				.reply(200, linkableAppeal);
 			const response = await request
 				.post(`${baseUrl}/1/other-appeals/add`)
-				.send({ addOtherAppealsReference: '3' });
+				.send({ addOtherAppealsReference: testValidLinkableAppealReference });
 			expect(response.statusCode).toBe(302);
 		});
 	});
 
 	describe('GET /other-appeals/confirm', () => {
 		it('should render the "Related appeal details" page', async () => {
-			nock('http://test/').get('/appeals/linkable-appeal/3').reply(200, linkableAppeal);
+			nock('http://test/')
+				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}`)
+				.reply(200, linkableAppeal);
 			const addPageResponse = await request
 				.post(`${baseUrl}/1/other-appeals/add`)
-				.send({ addOtherAppealsReference: '3' });
+				.send({ addOtherAppealsReference: testValidLinkableAppealReference });
 			expect(addPageResponse.statusCode).toBe(302);
 
 			nock('http://test/').get('/appeals/1').reply(200, appealDataWithOtherAppeals);
-			nock('http://test/').get('/appeals/linkable-appeal/3').reply(200, linkableAppeal);
+			nock('http://test/')
+				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}`)
+				.reply(200, linkableAppeal);
 
 			const response = await request.get(`${baseUrl}/1/other-appeals/confirm`);
 			const element = parseHtml(response.text);
@@ -136,11 +182,14 @@ describe('other-appeals', () => {
 	describe('POST /other-appeals/confirm', () => {
 		it('should re-render the "Related appeal details" page with the error if the answer was not provided', async () => {
 			nock('http://test/').get('/appeals/1').reply(200, appealDataWithOtherAppeals).persist();
-			nock('http://test/').get('/appeals/linkable-appeal/3').reply(200, linkableAppeal).persist();
+			nock('http://test/')
+				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}`)
+				.reply(200, linkableAppeal)
+				.persist();
 
 			const addPageResponse = await request
 				.post(`${baseUrl}/1/other-appeals/add`)
-				.send({ addOtherAppealsReference: '3' });
+				.send({ addOtherAppealsReference: testValidLinkableAppealReference });
 			expect(addPageResponse.statusCode).toBe(302);
 
 			const response = await request
@@ -162,11 +211,13 @@ describe('other-appeals', () => {
 
 		it('should redirect back to appeal details page if the answer was provided (answer no)', async () => {
 			nock('http://test/').get('/appeals/1').reply(200, appealDataWithOtherAppeals).persist();
-			nock('http://test/').get('/appeals/linkable-appeal/3').reply(200, linkableAppeal);
+			nock('http://test/')
+				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}`)
+				.reply(200, linkableAppeal);
 
 			const addPageResponse = await request
 				.post(`${baseUrl}/1/other-appeals/add`)
-				.send({ addOtherAppealsReference: '3' });
+				.send({ addOtherAppealsReference: testValidLinkableAppealReference });
 			expect(addPageResponse.statusCode).toBe(302);
 
 			await request.get(`${baseUrl}/1/other-appeals/confirm`);
@@ -179,12 +230,15 @@ describe('other-appeals', () => {
 
 		it('should redirect back to appeal details page if the answer was provided (answer yes)', async () => {
 			nock('http://test/').get('/appeals/1').reply(200, appealDataWithOtherAppeals).persist();
-			nock('http://test/').get('/appeals/linkable-appeal/3').reply(200, linkableAppeal).persist();
+			nock('http://test/')
+				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}`)
+				.reply(200, linkableAppeal)
+				.persist();
 			nock('http://test/').post('/appeals/1/associate-appeal').reply(200);
 
 			const addPageResponse = await request
 				.post(`${baseUrl}/1/other-appeals/add`)
-				.send({ addOtherAppealsReference: '3' });
+				.send({ addOtherAppealsReference: testValidLinkableAppealReference });
 			expect(addPageResponse.statusCode).toBe(302);
 
 			await request.get(`${baseUrl}/1/other-appeals/confirm`);
