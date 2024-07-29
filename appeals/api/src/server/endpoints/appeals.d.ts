@@ -193,6 +193,7 @@ interface UpdateAppellantCaseRequest {
 	applicationDate?: string;
 	applicationDecisionDate?: string;
 	isGreenBelt?: boolean;
+	applicationDecision?: string;
 	changedDevelopmentDescription?: boolean;
 	originalDevelopmentDescription?: string;
 	doesSiteRequireInspectorAccess?: boolean;

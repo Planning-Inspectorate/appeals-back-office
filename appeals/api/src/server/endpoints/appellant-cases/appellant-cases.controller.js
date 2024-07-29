@@ -48,7 +48,8 @@ const updateAppellantCaseById = async (req, res) => {
 			applicationDate,
 			applicationDecisionDate,
 			developmentDescription,
-			isGreenBelt
+			isGreenBelt,
+			applicationDecision
 		},
 		params,
 		validationOutcome
@@ -101,7 +102,8 @@ const updateAppellantCaseById = async (req, res) => {
 					changedDevelopmentDescription: developmentDescription?.isCorrect
 						? !developmentDescription?.isCorrect
 						: undefined,
-					originalDevelopmentDescription: developmentDescription?.details
+					originalDevelopmentDescription: developmentDescription?.details,
+					applicationDecision
 			  });
 
 		await broadcasters.broadcastAppeal(appeal.id);
@@ -129,7 +131,8 @@ const updateAppellantCaseById = async (req, res) => {
 				siteAreaSquareMetres,
 				applicationDate,
 				applicationDecisionDate,
-				isGreenBelt
+				isGreenBelt,
+				applicationDecision
 		  };
 
 	return res.send(response);
