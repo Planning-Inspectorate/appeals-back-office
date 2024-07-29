@@ -35,23 +35,23 @@ export const changeApplicationOutcomePage = (appealData, appellantCaseData, stor
 						{
 							value: 'granted',
 							text: 'Granted',
-							checked:
-								storedSessionData === 'granted' ||
-								appellantCaseData.applicationDecision === 'granted'
+							checked: storedSessionData
+								? storedSessionData === 'granted'
+								: appellantCaseData.applicationDecision === 'granted'
 						},
 						{
 							value: 'refused',
 							text: 'Refused',
-							checked:
-								storedSessionData === 'refused' ||
-								appellantCaseData.applicationDecision === 'refused'
+							checked: storedSessionData
+								? storedSessionData === 'refused'
+								: appellantCaseData.applicationDecision === 'refused'
 						},
 						{
 							value: 'not_received',
 							text: 'Not received',
-							checked:
-								storedSessionData === 'not_received' ||
-								appellantCaseData.applicationDecision == 'not_received'
+							checked: storedSessionData
+								? storedSessionData === 'not_received'
+								: appellantCaseData.applicationDecision === 'not_received'
 						}
 					]
 				}
