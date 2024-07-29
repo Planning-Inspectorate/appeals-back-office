@@ -229,12 +229,12 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 	const appealId = 123;
 	const lpaQuestionnaireId = 456;
 
-	it('should return "Review appellant case" link for ready_to_start status with complete appellant case', () => {
+	it('should return "Review appellant case" link for validation status with unvalidated appellant case', () => {
 		const result = mapAppealStatusToActionRequiredHtml(
 			appealId,
-			'ready_to_start',
+			'validation',
 			lpaQuestionnaireId,
-			'Complete',
+			'',
 			'',
 			'',
 			true
@@ -270,6 +270,34 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			false
 		);
 		expect(result).toEqual('Awaiting appellant update');
+	});
+
+	it('should return "Start case" link for ready_to_start status', () => {
+		const result = mapAppealStatusToActionRequiredHtml(
+			appealId,
+			'ready_to_start',
+			lpaQuestionnaireId,
+			'',
+			'',
+			'',
+			true
+		);
+		expect(result).toEqual(
+			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/start-case/add">Start case</a>`
+		);
+	});
+
+	it('should return "Start case" text for ready_to_start status and isCaseOfficer false', () => {
+		const result = mapAppealStatusToActionRequiredHtml(
+			appealId,
+			'ready_to_start',
+			lpaQuestionnaireId,
+			'',
+			'',
+			'',
+			false
+		);
+		expect(result).toEqual('Start case');
 	});
 
 	it('should return "Awaiting LPA questionnaire" for lpa_questionnaire status with no LPA questionnaire ID', () => {
