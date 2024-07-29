@@ -1161,6 +1161,72 @@ exports[`linked-appeals POST /linked-appeals/add should re-render the add linked
 </main>"
 `;
 
+exports[`linked-appeals POST /linked-appeals/add should re-render the add linked appeal reference page with the expected error message if the provided appeal reference is greater than 7 digits 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#appeal-reference">Appeal reference must be 7 digits</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">What is the appeal reference?</h1>
+                </div>
+            </div>
+            <form method="POST" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <label class="govuk-label govuk-visually-hidden" for="appeal-reference">Appeal reference</label>
+                    <input class="govuk-input govuk-input govuk-input--width-10"
+                    id="appeal-reference" name="appeal-reference" type="text">
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`linked-appeals POST /linked-appeals/add should re-render the add linked appeal reference page with the expected error message if the provided appeal reference is less than 7 digits 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#appeal-reference">Appeal reference must be 7 digits</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">What is the appeal reference?</h1>
+                </div>
+            </div>
+            <form method="POST" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <label class="govuk-label govuk-visually-hidden" for="appeal-reference">Appeal reference</label>
+                    <input class="govuk-input govuk-input govuk-input--width-10"
+                    id="appeal-reference" name="appeal-reference" type="text">
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
 exports[`linked-appeals POST /linked-appeals/add should re-render the add linked appeal reference page with the expected error message if the reference was provided but no matching appeal was found 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">

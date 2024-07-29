@@ -233,7 +233,7 @@ exports[`other-appeals POST /other-appeals/add should re-render the "What is the
     <form method="POST">
         <div class="govuk-form-group">
             <input class="govuk-input govuk-input--width-10" id="addOtherAppealsReference"
-            name="addOtherAppealsReference" type="text" value="1">
+            name="addOtherAppealsReference" type="text" value="7654321">
         </div>
         <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
         id="filters-submit">Continue</button>
@@ -267,6 +267,72 @@ exports[`other-appeals POST /other-appeals/add should re-render the "What is the
         <div class="govuk-form-group">
             <input class="govuk-input govuk-input--width-10" id="addOtherAppealsReference"
             name="addOtherAppealsReference" type="text">
+        </div>
+        <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
+        id="filters-submit">Continue</button>
+    </form>
+</main>"
+`;
+
+exports[`other-appeals POST /other-appeals/add should re-render the "What is the appeal reference?" page with the expected error, if the provided appeal reference is greater than 7 digits 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#addOtherAppealsReference">Appeal reference must be 7 digits</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal APP/Q9999/D/21/351062</span>
+            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">What is the appeal reference?</h1>
+        </div>
+    </div>
+    <form method="POST">
+        <div class="govuk-form-group">
+            <input class="govuk-input govuk-input--width-10" id="addOtherAppealsReference"
+            name="addOtherAppealsReference" type="text" value="12345678">
+        </div>
+        <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
+        id="filters-submit">Continue</button>
+    </form>
+</main>"
+`;
+
+exports[`other-appeals POST /other-appeals/add should re-render the "What is the appeal reference?" page with the expected error, if the provided appeal reference is less than 7 digits 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#addOtherAppealsReference">Appeal reference must be 7 digits</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal APP/Q9999/D/21/351062</span>
+            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">What is the appeal reference?</h1>
+        </div>
+    </div>
+    <form method="POST">
+        <div class="govuk-form-group">
+            <input class="govuk-input govuk-input--width-10" id="addOtherAppealsReference"
+            name="addOtherAppealsReference" type="text" value="123456">
         </div>
         <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
         id="filters-submit">Continue</button>

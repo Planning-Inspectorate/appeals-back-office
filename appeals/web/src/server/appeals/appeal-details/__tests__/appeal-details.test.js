@@ -239,7 +239,7 @@ describe('appeal-details', () => {
 			});
 
 			it('should render a "This appeal is now the lead for appeal" success notification banner when the appeal was successfully linked as the lead of a back-office appeal', async () => {
-				const appealReference = '12345';
+				const appealReference = '1234567';
 
 				nock.cleanAll();
 				nock('http://test/')
@@ -275,7 +275,7 @@ describe('appeal-details', () => {
 			});
 
 			it('should render a success notification banner with appropriate content if the appeal was just linked as the child of a back-office appeal', async () => {
-				const appealReference = '12345';
+				const appealReference = '1234567';
 
 				nock.cleanAll();
 				nock('http://test/')
@@ -315,7 +315,7 @@ describe('appeal-details', () => {
 			});
 
 			it('should render a success notification banner with appropriate content if the appeal was just linked as the lead of a legacy (Horizon) appeal', async () => {
-				const appealReference = '12345';
+				const appealReference = '1234567';
 
 				nock.cleanAll();
 				nock('http://test/')
@@ -355,7 +355,7 @@ describe('appeal-details', () => {
 			});
 
 			it('should render a success notification banner with appropriate content if the appeal was just linked as the child of a legacy (Horizon) appeal', async () => {
-				const appealReference = '12345';
+				const appealReference = '1234567';
 
 				nock.cleanAll();
 				nock('http://test/')
