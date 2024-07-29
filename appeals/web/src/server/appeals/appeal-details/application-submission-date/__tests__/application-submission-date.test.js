@@ -46,82 +46,112 @@ describe('application-date', () => {
 			);
 		});
 
-		it('should re-render applicationSubmissionDate change page if day is not valid', async () => {
-			const invalidData = {
-				'application-submission-date-day': '32',
-				'application-submission-date-month': '06',
-				'application-submission-date-year': '2021'
-			};
-			nock('http://test/')
-				.get(`/appeals/${appealId}/appellant-cases/${appellantCaseId}`)
-				.reply(200, appellantCaseDataNotValidated);
+		it('should re-render application submission date change page if day is not valid', async () => {
+			const testCases = [
+				{ value: '', expectedError: 'Date day cannot be empty' },
+				{ value: 'a', expectedError: 'Date day must be a number' },
+				{ value: '0', expectedError: 'Date day must be between 1 and 31' },
+				{ value: '32', expectedError: 'Date day must be between 1 and 31' }
+			];
 
-			const response = await request.post(`${baseUrl}/application-date/change`).send(invalidData);
-			expect(response.statusCode).toBe(200);
+			for (const testCase of testCases) {
+				const invalidData = {
+					'application-submission-date-day': testCase.value,
+					'application-submission-date-month': '06',
+					'application-submission-date-year': '2021'
+				};
+				nock('http://test/')
+					.get(`/appeals/${appealId}/appellant-cases/${appellantCaseId}`)
+					.reply(200, appellantCaseDataNotValidated);
 
-			const elementInnerHtml = parseHtml(response.text).innerHTML;
+				const response = await request.post(`${baseUrl}/application-date/change`).send(invalidData);
+				expect(response.statusCode).toBe(200);
 
-			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change date application submitted</h1>');
+				const elementInnerHtml = parseHtml(response.text).innerHTML;
 
-			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
+				expect(elementInnerHtml).toMatchSnapshot();
+				expect(elementInnerHtml).toContain('Change date application submitted</h1>');
 
-			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+				const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+				expect(unprettifiedErrorSummaryHtml).toContain(`${testCase.expectedError}</a>`);
+			}
 		});
 
-		it('should re-render applicationSubmissionDate change page if month not valid', async () => {
-			const invalidData = {
-				'application-submission-date-day': '15',
-				'application-submission-date-month': '15',
-				'application-submission-date-year': '2021'
-			};
+		it('should re-render the Date page with an error message if the provided date month is invalid', async () => {
+			const testCases = [
+				{ value: '', expectedError: 'Date month cannot be empty' },
+				{ value: 'a', expectedError: 'Date month must be a number' },
+				{ value: '0', expectedError: 'Date month must be between 1 and 12' },
+				{ value: '13', expectedError: 'Date month must be between 1 and 12' }
+			];
 
-			nock('http://test/')
-				.get(`/appeals/${appealId}/appellant-cases/${appellantCaseId}`)
-				.reply(200, appellantCaseDataNotValidated);
+			for (const testCase of testCases) {
+				const invalidData = {
+					'application-submission-date-day': '1',
+					'application-submission-date-month': testCase.value,
+					'application-submission-date-year': '2021'
+				};
+				nock('http://test/')
+					.get(`/appeals/${appealId}/appellant-cases/${appellantCaseId}`)
+					.reply(200, appellantCaseDataNotValidated);
 
-			const response = await request.post(`${baseUrl}/application-date/change`).send(invalidData);
+				const response = await request.post(`${baseUrl}/application-date/change`).send(invalidData);
+				expect(response.statusCode).toBe(200);
 
-			const elementInnerHtml = parseHtml(response.text).innerHTML;
+				const elementInnerHtml = parseHtml(response.text).innerHTML;
 
-			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change date application submitted</h1>');
+				expect(elementInnerHtml).toMatchSnapshot();
+				expect(elementInnerHtml).toContain('Change date application submitted</h1>');
 
-			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
+				const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary',
+					skipPrettyPrint: true
+				}).innerHTML;
 
-			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+				expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+				expect(unprettifiedErrorSummaryHtml).toContain(`${testCase.expectedError}</a>`);
+			}
 		});
 
-		it('should re-render to applicationSubmissionDate change page if year not valid', async () => {
-			const invalidData = {
-				'application-submission-date-day': '15',
-				'application-submission-date-month': '15',
-				'application-submission-date-year': 'a'
-			};
+		it('should re-render the Date page with an error message if the provided date year is invalid', async () => {
+			const testCases = [
+				{ value: '', expectedError: 'Date year cannot be empty' },
+				{ value: 'a', expectedError: 'Date year must be a number' },
+				{ value: '202', expectedError: 'Date year must be 4 digits' },
+				{ value: '3000', expectedError: 'Date must be today or in the past' }
+			];
 
-			nock('http://test/')
-				.get(`/appeals/${appealId}/appellant-cases/${appellantCaseId}`)
-				.reply(200, appellantCaseDataNotValidated);
+			for (const testCase of testCases) {
+				const invalidData = {
+					'application-submission-date-day': '1',
+					'application-submission-date-month': '11',
+					'application-submission-date-year': testCase.value
+				};
+				nock('http://test/')
+					.get(`/appeals/${appealId}/appellant-cases/${appellantCaseId}`)
+					.reply(200, appellantCaseDataNotValidated);
 
-			const response = await request.post(`${baseUrl}/application-date/change`).send(invalidData);
+				const response = await request.post(`${baseUrl}/application-date/change`).send(invalidData);
+				expect(response.statusCode).toBe(200);
 
-			const elementInnerHtml = parseHtml(response.text).innerHTML;
+				const elementInnerHtml = parseHtml(response.text).innerHTML;
 
-			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change date application submitted</h1>');
+				expect(elementInnerHtml).toMatchSnapshot();
+				expect(elementInnerHtml).toContain('Change date application submitted</h1>');
 
-			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
+				const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary',
+					skipPrettyPrint: true
+				}).innerHTML;
 
-			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+				expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+				expect(unprettifiedErrorSummaryHtml).toContain(`${testCase.expectedError}</a>`);
+			}
 		});
 	});
 });
