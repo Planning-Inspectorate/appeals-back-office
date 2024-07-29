@@ -11,6 +11,7 @@ router
 	.post(
 		validators.validateDueDateFields,
 		validators.validateDueDateValid,
+		validators.validateDueDateInPastOrToday,
 		asyncHandler(controllers.postChangeApplicationSubmissionDate)
 	);
 
