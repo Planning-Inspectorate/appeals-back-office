@@ -14,7 +14,7 @@ describe('application-outcome', () => {
 	beforeEach(installMockApi), afterEach(teardown);
 
 	describe('GET /change', () => {
-		it('shouldrender the applicationOutcome change page', async () => {
+		it('should render the applicationOutcome change page', async () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}/appellant-cases/${appellantCaseId}`)
 				.reply(200, appellantCaseDataNotValidated);
