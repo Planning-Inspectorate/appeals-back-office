@@ -33,7 +33,7 @@ router.use(authRouter);
 
 router.route('/').head(handleHeadHealthCheck); // used by Front Door health check
 router.route('/unauthenticated').get(viewUnauthenticatedError);
-router.route('/health-check').get(handleHeathCheck);
+router.route('/health').get(handleHeathCheck);
 
 // Authenticated routes
 
