@@ -110,6 +110,7 @@ export const postChangeInspectorAccess = async (request, response) => {
 		return response.redirect(origin);
 	} catch (error) {
 		logger.error(error);
+		delete request.session.inspectorAccess;
 	}
 
 	return response.status(500).render('app/500.njk');
