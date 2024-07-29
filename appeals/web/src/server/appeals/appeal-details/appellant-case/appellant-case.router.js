@@ -28,6 +28,7 @@ import applicationSubmissionDateRouter from '../application-submission-date/appl
 import applicationDecisionDateRouter from '../application-decision-date/application-decision-date.router.js';
 import greenBeltRouter from '../green-belt/green-belt.router.js';
 import developmentDescriptionRouter from '../development-description/development-description.router.js';
+import applicationOutcomeRouter from '../application-outcome/application-outcome.router.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -129,6 +130,13 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	developmentDescriptionRouter
+);
+
+router.use(
+	'/application-outcome',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	applicationOutcomeRouter
 );
 
 router

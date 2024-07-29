@@ -290,14 +290,17 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 					text: 'Outcome'
 				},
 				value: {
-					text: capitalize(appellantCaseData.applicationDecision ?? '')
+					text:
+						appellantCaseData.applicationDecision === 'not_received'
+							? 'Not received'
+							: capitalize(appellantCaseData.applicationDecision ?? '')
 				},
 				actions: {
 					items: [
 						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
 							visuallyHiddenText: 'Application outcome',
-							href: `${currentRoute}/#`
+							href: `${currentRoute}/application-outcome/change`
 						})
 					]
 				}
