@@ -725,7 +725,6 @@ export const postDeleteDocument = async (
 	if (
 		!isInternalUrl(returnUrl, request) ||
 		!isInternalUrl(cancelUrl, request) ||
-		!isInternalUrl(cancelUrlProcessed, request) ||
 		!isInternalUrl(uploadNewDocumentUrl, request)
 	) {
 		return response.status(400).render('errorPageTemplate', {
@@ -734,11 +733,7 @@ export const postDeleteDocument = async (
 	}
 
 	if (body['delete-file-answer'] === 'no') {
-		const cancelUrlProcessedSafe = new URL(
-			cancelUrlProcessed,
-			`${request.protocol}://${request.headers.host}`
-		);
-		return response.redirect(cancelUrlProcessedSafe.toString());
+		return response.redirect(cancelUrlProcessed);
 	} else if (body['delete-file-answer'] === 'yes') {
 		await deleteDocument(apiClient, appealId, documentId, versionId);
 		addNotificationBannerToSession(
@@ -746,9 +741,7 @@ export const postDeleteDocument = async (
 			'documentDeleted',
 			Number.parseInt(appealId, 10)
 		);
-
-		const returnUrlSafe = new URL(returnUrl, `${request.protocol}://${request.headers.host}`);
-		return response.redirect(returnUrlSafe.toString());
+		return response.redirect(returnUrl);
 	} else if (body['delete-file-answer'] === 'yes-and-upload-another-document') {
 		const fileVersionsInfo = await getFileVersionsInfo(request.apiClient, appealId, documentId);
 
@@ -758,12 +751,7 @@ export const postDeleteDocument = async (
 
 			if (deletingOnlyVersion) {
 				await deleteDocument(apiClient, appealId, documentId, versionId);
-
-				const uploadNewDocumentUrlProcessedSafe = new URL(
-					uploadNewDocumentUrlProcessed,
-					`${request.protocol}://${request.headers.host}`
-				);
-				return response.redirect(uploadNewDocumentUrlProcessedSafe.toString());
+				return response.redirect(uploadNewDocumentUrlProcessed);
 			} else {
 				return response.status(500).render('app/500.njk');
 			}
