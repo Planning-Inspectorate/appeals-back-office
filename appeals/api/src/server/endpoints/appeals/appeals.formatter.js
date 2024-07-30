@@ -63,6 +63,7 @@ const formatMyAppeals = (appeal, linkedAppeals) => ({
 		? {
 				appealTimetableId: appeal.appealTimetable.id,
 				lpaQuestionnaireDueDate: appeal.appealTimetable.lpaQuestionnaireDueDate || null,
+				caseResubmissionDueDate: appeal.appealTimetable.caseResubmissionDueDate || null,
 				...(isFPA(appeal.appealType?.key || '') && {
 					finalCommentReviewDate: appeal.appealTimetable.finalCommentReviewDate || null,
 					statementReviewDate: appeal.appealTimetable.statementReviewDate || null,
@@ -232,6 +233,7 @@ const formatAppeal = (
 							(appeal.appealTimetable.lpaQuestionnaireDueDate &&
 								appeal.appealTimetable.lpaQuestionnaireDueDate) ||
 							null,
+						caseResubmissionDueDate: appeal.appealTimetable.caseResubmissionDueDate || null,
 						...(isFPA(appeal.appealType?.key || '') && {
 							finalCommentReviewDate:
 								(appeal.appealTimetable.finalCommentReviewDate &&

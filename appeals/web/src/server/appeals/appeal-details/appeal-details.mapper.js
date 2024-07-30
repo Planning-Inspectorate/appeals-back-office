@@ -15,6 +15,7 @@ import {
 	generateIssueDecisionUrl,
 	generateStartTimetableUrl
 } from '#appeals/appeal-details/issue-decision/issue-decision.mapper.js';
+import { getAppealTypesFromId } from '#appeals/appeal-details/change-appeal-type/change-appeal-type.service.js';
 import { APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
@@ -24,9 +25,10 @@ export const pageHeading = 'Case details';
  * @param {import('./appeal-details.types.js').WebAppeal} appealDetails
  * @param {string} currentRoute
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
+ * @param {import('@pins/express/types/express.js').Request} request
  * @returns {Promise<PageContent>}
  */
-export async function appealDetailsPage(appealDetails, currentRoute, session) {
+export async function appealDetailsPage(appealDetails, currentRoute, session, request) {
 	const mappedData = await initialiseAndMapAppealData(appealDetails, currentRoute, session);
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);
 
@@ -367,6 +369,36 @@ export async function appealDetailsPage(appealDetails, currentRoute, session) {
 					}
 				});
 			}
+		}
+	} else if (
+		appealDetails.appealStatus === APPEAL_CASE_STATUS.CLOSED &&
+		appealDetails.resubmitTypeId &&
+		appealDetails.appealTimetable?.caseResubmissionDueDate
+	) {
+		const appealTypesFromId = await getAppealTypesFromId(request.apiClient, appealDetails.appealId);
+		const appealTypeById = appealTypesFromId?.find(
+			(appealType) => appealType.id === appealDetails.resubmitTypeId
+		);
+		const appealTypeText =
+			appealTypeById?.key && appealTypeById?.type
+				? `${appealTypeById.type} (${appealTypeById.key})`
+				: '';
+		const caseResubmissionDueDate = new Date(appealDetails.appealTimetable.caseResubmissionDueDate);
+
+		if (appealTypeText) {
+			statusTagsComponentGroup.push({
+				type: 'inset-text',
+				parameters: {
+					html: `<p>This appeal needed to change to ${appealTypeText}</p><p>The appellant has until ${caseResubmissionDueDate.toLocaleDateString(
+						'en-gb',
+						{
+							day: 'numeric',
+							month: 'long',
+							year: 'numeric'
+						}
+					)} to resubmit.</p>`
+				}
+			});
 		}
 	}
 
