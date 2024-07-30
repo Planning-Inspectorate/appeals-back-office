@@ -9,10 +9,7 @@ import { isDefined } from '#lib/ts-utilities.js';
 import { removeSummaryListActions } from '#lib/mappers/mapper-utilities.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import {
-	mapVirusCheckStatus,
-	mapDocumentDownloadUrl
-} from '#appeals/appeal-documents/appeal-documents.mapper.js';
+import { mapVirusCheckStatus } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import {
 	generateIssueDecisionUrl,
@@ -337,12 +334,7 @@ export async function appealDetailsPage(appealDetails, currentRoute, session) {
 				.virusCheckStatus || APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED
 		);
 
-		const withdrawalDocumentDownloadUrl = mapDocumentDownloadUrl(
-			appealDetails.appealId,
-			appealDetails?.withdrawal.withdrawalFolder.documents[0].id
-		);
-
-		if (withdrawalRequestDate && withdrawalDocumentDownloadUrl) {
+		if (withdrawalRequestDate) {
 			if (virusCheckStatus.checked && virusCheckStatus.safe) {
 				statusTagsComponentGroup.push({
 					type: 'inset-text',
@@ -354,7 +346,9 @@ export async function appealDetailsPage(appealDetails, currentRoute, session) {
 								year: 'numeric'
 							})}
 								</p>
-								<p><a class="govuk-link" target="_blank" href="${withdrawalDocumentDownloadUrl}">View withdrawal request</a></p>`
+								<p><a class="govuk-link" href="/appeals-service/appeal-details/${
+									appealDetails.appealId
+								}/withdrawal/view">View withdrawal request</a></p>`
 					}
 				});
 			} else {
