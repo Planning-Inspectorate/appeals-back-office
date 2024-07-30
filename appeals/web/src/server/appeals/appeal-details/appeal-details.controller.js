@@ -11,7 +11,7 @@ export const viewAppealDetails = async (request, response) => {
 
 	if (appealDetails) {
 		const currentUrl = request.originalUrl;
-		const mappedPageContent = await appealDetailsPage(appealDetails, currentUrl, session);
+		const mappedPageContent = await appealDetailsPage(appealDetails, currentUrl, session, request);
 
 		response.status(200).render('patterns/display-page.pattern.njk', {
 			pageContent: mappedPageContent
