@@ -56,7 +56,7 @@ export const getDocumentUpload = async (request, response) => {
 		false,
 		uploadPageHeadingText,
 		[],
-		costsCategory === 'decision',
+		true,
 		session.costsDocumentType
 	);
 };
