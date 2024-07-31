@@ -166,6 +166,12 @@ describe('costs', () => {
 		});
 
 		describe('GET /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId/:documentId', () => {
+			beforeEach(() => {
+				nock('http://test/')
+					.get('/appeals/1/documents/1/versions')
+					.reply(200, documentFileVersionsInfo);
+			});
+
 			for (const costsCategory of costsCategoriesNotIncludingDecision) {
 				for (const costsDocumentType of costsDocumentTypes) {
 					const costsFolder =
@@ -1626,6 +1632,12 @@ describe('costs', () => {
 		});
 
 		describe('GET /costs/decision/upload-documents/:folderId/:documentId', () => {
+			beforeEach(() => {
+				nock('http://test/')
+					.get('/appeals/1/documents/1/versions')
+					.reply(200, documentFileVersionsInfo);
+			});
+
 			const costsFolder = appealData.costs.decisionFolder;
 
 			it(`should render the upload document version page`, async () => {

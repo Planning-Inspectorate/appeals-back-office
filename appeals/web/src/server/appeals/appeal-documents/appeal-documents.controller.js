@@ -71,10 +71,13 @@ export const renderDocumentUpload = async (
 	let latestVersion;
 
 	if (documentId) {
-		const fileInfo = await getFileInfo(request.apiClient, appealId, documentId);
-		documentName = fileInfo?.latestDocumentVersion?.fileName;
-		_documentType = fileInfo?.latestDocumentVersion?.documentType;
-		latestVersion = fileInfo?.latestDocumentVersion?.version;
+		const fileVersionsInfo = await getFileVersionsInfo(request.apiClient, appealId, documentId);
+
+		documentName = fileVersionsInfo?.latestDocumentVersion?.fileName;
+		_documentType = fileVersionsInfo?.latestDocumentVersion?.documentType;
+		latestVersion = fileVersionsInfo?.allVersions
+			.map((versionInfo) => versionInfo.version)
+			.sort((a, b) => b - a)[0];
 	}
 
 	const mappedPageContent = await documentUploadPage(
