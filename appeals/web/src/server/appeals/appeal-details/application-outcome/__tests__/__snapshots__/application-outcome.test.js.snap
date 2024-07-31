@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`application-outcome GET /change shouldrender the applicationOutcome change page 1`] = `
+exports[`application-outcome GET /change should render the applicationOutcome change page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
