@@ -251,5 +251,8 @@ const getFolderIdFromDocumentType = (caseFolders, documentType, stage) => {
 		}
 	}
 
-	return caseFolders.find((caseFolder) => caseFolder.path === `internal/dropbox`)?.id;
+	return caseFolders.find(
+		(caseFolder) =>
+			caseFolder.path === `${APPEAL_CASE_STAGE.INTERNAL}/${APPEAL_DOCUMENT_TYPE.UNCATEGORISED}`
+	)?.id;
 };
