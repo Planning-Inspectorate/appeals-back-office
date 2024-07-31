@@ -1434,16 +1434,14 @@ const mapDocumentVersionToAuditActivityHtml = async (
 					(user) => user?.id === matchingAuditItem.auditTrail?.user?.azureAdUserId
 				);
 
-				if (userData) {
-					const userName = surnameFirstToFullName(userData?.name);
-					const loggedAt = new Date(matchingAuditItem.auditTrail.loggedAt);
+				const userName = userData?.name ? surnameFirstToFullName(userData?.name) : '';
+				const loggedAt = new Date(matchingAuditItem.auditTrail.loggedAt);
 
-					return `<p class="govuk-body"><strong>${
-						matchingAuditItem.action
-					}</strong>: ${dateToDisplayTime(loggedAt)}, ${dateToDisplayDate(loggedAt)}${
-						userName.length > 0 ? `,<br/>by ${userName}` : ''
-					}</p>`;
-				}
+				return `<p class="govuk-body"><strong>${
+					matchingAuditItem.action
+				}</strong>: ${dateToDisplayTime(loggedAt)}, ${dateToDisplayDate(loggedAt)}${
+					userName.length > 0 ? `,<br/>by ${userName}` : ''
+				}</p>`;
 			}
 		})
 		.filter((activityHtmlEntry) => activityHtmlEntry !== undefined)
