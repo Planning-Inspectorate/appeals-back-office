@@ -145,13 +145,15 @@ export const postDocumentUpload = async (request, response, nextPageUrl) => {
  * @param {string} backButtonUrl
  * @param {boolean} [isLateEntry]
  * @param {string} [pageHeadingTextOverride]
+ * @param {string} [documentId]
  */
 export const renderDocumentDetails = async (
 	request,
 	response,
 	backButtonUrl,
 	isLateEntry = false,
-	pageHeadingTextOverride
+	pageHeadingTextOverride,
+	documentId
 ) => {
 	const { currentFolder, body, errors } = request;
 
@@ -175,10 +177,11 @@ export const renderDocumentDetails = async (
 		request.session.fileUploadInfo,
 		body?.items,
 		redactionStatuses,
-		pageHeadingTextOverride
+		pageHeadingTextOverride,
+		documentId
 	);
 
-	const isAdditionalDocument = folderIsAdditionalDocuments(currentFolder);
+	const isAdditionalDocument = folderIsAdditionalDocuments(currentFolder.path);
 
 	return response.render('appeals/documents/add-document-details.njk', {
 		pageContent: mappedPageContent,

@@ -16,6 +16,7 @@ import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-co
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { redactionStatusIdToName } from '#lib/redaction-statuses.js';
 import { APPEAL_REDACTED_STATUS, APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
+import { folderIsAdditionalDocuments } from '#lib/documents.js';
 
 /**
  * @typedef {import('../appeal-details/appeal-details.types.js').WebAppeal} Appeal
@@ -65,9 +66,9 @@ export async function documentUploadPage(
 	allowMultipleFiles,
 	documentType
 ) {
-	const isAdditionalDocument = folderPath.split('/')[1] === 'appellantCaseCorrespondence';
+	const isAdditionalDocument = folderIsAdditionalDocuments(folderPath);
 	const pageHeadingText =
-		pageHeadingTextOverride || mapAddDocumentsPageHeading(isAdditionalDocument, documentId);
+		pageHeadingTextOverride || mapAddDocumentsPageHeading(folderPath, documentId);
 	const pathComponents = folderPath.split('/');
 	const documentStage = pathComponents[0];
 	const documentTypeComputed = documentType || pathComponents[1];
@@ -230,14 +231,14 @@ export function mapDocumentVersionDetailsVirusCheckStatus(document) {
 }
 
 /**
- * @param {boolean} isAdditionalDocument
+ * @param {string} folderPath
  * @param {string} [documentId]
  * @returns {string}
  */
-export function mapAddDocumentsPageHeading(isAdditionalDocument, documentId) {
+function mapAddDocumentsPageHeading(folderPath, documentId) {
 	const isExistingDocument = !!documentId;
 
-	if (isAdditionalDocument) {
+	if (folderIsAdditionalDocuments(folderPath)) {
 		return isExistingDocument ? 'Update additional document' : 'Add additional documents';
 	} else if (isExistingDocument) {
 		return 'Upload an updated document';
@@ -247,12 +248,42 @@ export function mapAddDocumentsPageHeading(isAdditionalDocument, documentId) {
 }
 
 /**
+ * @param {string} folderPath
+ * @param {string} [documentId]
+ * @returns {string}
+ */
+function mapAddDocumentDetailsPageHeading(folderPath, documentId) {
+	const isExistingDocument = !!documentId;
+
+	if (folderIsAdditionalDocuments(folderPath)) {
+		return isExistingDocument ? 'Updated additional document' : 'Additional documents';
+	} else if (isExistingDocument) {
+		return `Updated ${folderPathToFolderNameText(folderPath, false)} document`;
+	}
+
+	return `${folderPathToFolderNameText(folderPath)} documents`;
+}
+
+/**
+ * @param {string} folderPath
+ * @returns {string}
+ */
+function mapManageFolderPageHeading(folderPath) {
+	if (folderIsAdditionalDocuments(folderPath)) {
+		return 'Additional documents';
+	}
+
+	return `${folderPathToFolderNameText(folderPath)} documents`;
+}
+
+/**
  * @param {string} backLinkUrl
  * @param {FolderInfo} folder - API type needs to be updated here (should be Folder, but there are worse problems with that type)
  * @param {FileUploadInfoItem[]} uploadInfo
  * @param {Object<string, any>} bodyItems
  * @param {RedactionStatus[]} redactionStatuses
  * @param {string} [pageHeadingTextOverride]
+ * @param {string} [documentId]
  * @returns {PageContent}
  */
 export function addDocumentDetailsPage(
@@ -261,7 +292,8 @@ export function addDocumentDetailsPage(
 	uploadInfo,
 	bodyItems,
 	redactionStatuses,
-	pageHeadingTextOverride
+	pageHeadingTextOverride,
+	documentId
 ) {
 	/** @type {PageContent} */
 	const pageContent = {
@@ -269,7 +301,7 @@ export function addDocumentDetailsPage(
 		backLinkText: 'Back',
 		backLinkUrl: backLinkUrl?.replace('{{folderId}}', folder.folderId.toString()),
 		preHeading: 'Add document details',
-		heading: pageHeadingTextOverride || `${folderPathToFolderNameText(folder.path)} documents`,
+		heading: pageHeadingTextOverride || mapAddDocumentDetailsPageHeading(folder.path, documentId),
 		pageComponents: uploadInfo.flatMap((uploadInfoItem, index) => {
 			return mapFileUploadInfoItemToDocumentDetailsPageComponents(
 				uploadInfo,
@@ -721,7 +753,7 @@ export function manageFolderPage(
 		backLinkText: 'Back',
 		backLinkUrl: backLinkUrl?.replace('{{folderId}}', folder.folderId.toString()),
 		preHeading: 'Manage folder',
-		heading: pageHeadingTextOverride || `${folderPathToFolderNameText(folder.path)} documents`,
+		heading: pageHeadingTextOverride || mapManageFolderPageHeading(folder.path),
 		pageComponents: [
 			...notificationBannerComponents,
 			...errorSummaryPageComponents,
@@ -1527,18 +1559,19 @@ export const mapRedactionStatusIdToName = (redactionStatuses, redactionStatusId)
 /**
  *
  * @param {string} folderPath
+ * @param {boolean} [capitalizeFirstLetter]
  * @returns {string}
  */
-export const folderPathToFolderNameText = (folderPath) => {
-	let nameText = capitalize(
-		(folderPath.split('/')?.[1] || '').replace(/(?<!^)([A-Z])/g, ' $1').toLowerCase()
-	);
+export const folderPathToFolderNameText = (folderPath, capitalizeFirstLetter = true) => {
+	let nameText = (folderPath.split('/')?.[1] || '').replace(/(?<!^)([A-Z])/g, ' $1').toLowerCase();
 
 	if (nameText.endsWith('documents')) {
 		nameText = nameText.slice(0, -9);
 	}
 
-	return nameText.trim();
+	nameText = nameText.trim();
+
+	return capitalizeFirstLetter ? capitalize(nameText) : nameText;
 };
 
 /**

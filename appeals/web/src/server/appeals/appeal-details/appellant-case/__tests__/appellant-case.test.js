@@ -2730,9 +2730,7 @@ describe('appellant-case', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
-			expect(unprettifiedElement.innerHTML).toContain(
-				'Appellant case correspondence documents</h1>'
-			);
+			expect(unprettifiedElement.innerHTML).toContain('Additional documents</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
@@ -2769,9 +2767,7 @@ describe('appellant-case', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
-			expect(unprettifiedElement.innerHTML).toContain(
-				'Appellant case correspondence documents</h1>'
-			);
+			expect(unprettifiedElement.innerHTML).toContain('Additional documents</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
@@ -2808,9 +2804,7 @@ describe('appellant-case', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
-			expect(unprettifiedElement.innerHTML).toContain(
-				'Appellant case correspondence documents</h1>'
-			);
+			expect(unprettifiedElement.innerHTML).toContain('Additional documents</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
@@ -2847,9 +2841,7 @@ describe('appellant-case', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
-			expect(unprettifiedElement.innerHTML).toContain(
-				'Appellant case correspondence documents</h1>'
-			);
+			expect(unprettifiedElement.innerHTML).toContain('Additional documents</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
@@ -3330,7 +3322,7 @@ describe('appellant-case', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
-			expect(unprettifiedElement.innerHTML).toContain('Changed description documents</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('Updated changed description document</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
@@ -3339,6 +3331,154 @@ describe('appellant-case', () => {
 				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
+		});
+
+		it('should render the add document details page with one item per uploaded document, and without a late entry status tag and associated details component, if the folder is additional documents, and the appellant case has no validation outcome', async () => {
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, appellantCaseDataNotValidated);
+			nock('http://test/')
+				.get('/appeals/1/document-folders/2')
+				.reply(200, additionalDocumentsFolderInfo)
+				.persist();
+
+			const addDocumentsResponse = await request
+				.post(`${baseUrl}/1${appellantCasePagePath}/add-documents/2/1`)
+				.send({
+					'upload-info': fileUploadInfo
+				});
+
+			expect(addDocumentsResponse.statusCode).toBe(302);
+
+			const response = await request.get(
+				`${baseUrl}/1${appellantCasePagePath}/add-document-details/2/1`
+			);
+
+			expect(response.statusCode).toBe(200);
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+			expect(unprettifiedElement.innerHTML).toContain('Updated additional document</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
+			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
+
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+			);
+			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
+		});
+
+		it('should render the add document details page with one item per uploaded document, and without a late entry status tag and associated details component, if the folder is additional documents, and the appellant case has a validation outcome of invalid', async () => {
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, appellantCaseDataInvalidOutcome);
+			nock('http://test/')
+				.get('/appeals/1/document-folders/2')
+				.reply(200, additionalDocumentsFolderInfo)
+				.persist();
+
+			const addDocumentsResponse = await request
+				.post(`${baseUrl}/1${appellantCasePagePath}/add-documents/2/1`)
+				.send({
+					'upload-info': fileUploadInfo
+				});
+
+			expect(addDocumentsResponse.statusCode).toBe(302);
+
+			const response = await request.get(
+				`${baseUrl}/1${appellantCasePagePath}/add-document-details/2/1`
+			);
+
+			expect(response.statusCode).toBe(200);
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+			expect(unprettifiedElement.innerHTML).toContain('Updated additional document</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
+			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
+
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+			);
+			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
+		});
+
+		it('should render the add document details page with one item per uploaded document, and without a late entry status tag and associated details component, if the folder is additional documents, and the appellant case has a validation outcome of incomplete', async () => {
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, appellantCaseDataIncompleteOutcome);
+			nock('http://test/')
+				.get('/appeals/1/document-folders/2')
+				.reply(200, additionalDocumentsFolderInfo)
+				.persist();
+
+			const addDocumentsResponse = await request
+				.post(`${baseUrl}/1${appellantCasePagePath}/add-documents/2/1`)
+				.send({
+					'upload-info': fileUploadInfo
+				});
+
+			expect(addDocumentsResponse.statusCode).toBe(302);
+
+			const response = await request.get(
+				`${baseUrl}/1${appellantCasePagePath}/add-document-details/2/1`
+			);
+
+			expect(response.statusCode).toBe(200);
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+			expect(unprettifiedElement.innerHTML).toContain('Updated additional document</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
+			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
+
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+			);
+			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
+		});
+
+		it('should render the add document details page with one item per uploaded document, and with a late entry status tag and associated details component, if the folder is additional documents, and the appellant case has a validation outcome of valid', async () => {
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, appellantCaseDataValidOutcome);
+			nock('http://test/')
+				.get('/appeals/1/document-folders/2')
+				.reply(200, additionalDocumentsFolderInfo)
+				.persist();
+
+			const addDocumentsResponse = await request
+				.post(`${baseUrl}/1${appellantCasePagePath}/add-documents/2/1`)
+				.send({
+					'upload-info': fileUploadInfo
+				});
+
+			expect(addDocumentsResponse.statusCode).toBe(302);
+
+			const response = await request.get(
+				`${baseUrl}/1${appellantCasePagePath}/add-document-details/2/1`
+			);
+
+			expect(response.statusCode).toBe(200);
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+			expect(unprettifiedElement.innerHTML).toContain('Updated additional document</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
+			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('What is late entry?</span>');
 		});
 	});
 
@@ -4046,6 +4186,24 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain('ph0-documentFolderInfo.jpeg</span>');
 			expect(unprettifiedElement.innerHTML).toContain('ph1-documentFolderInfo.jpeg</a>');
 		});
+
+		it('should render the manage documents listing page with the expected heading, if the folderId is valid, and the folder is additional documents', async () => {
+			nock('http://test/')
+				.get('/appeals/1/document-folders/2')
+				.reply(200, additionalDocumentsFolderInfo);
+
+			const response = await request.get(
+				`${baseUrl}/1${appellantCasePagePath}/manage-documents/2/`
+			);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Manage folder</span><h1');
+			expect(unprettifiedElement.innerHTML).toContain('Additional documents</h1>');
+		});
 	});
 
 	describe('GET /appellant-case/manage-documents/:folderId/:documentId', () => {
@@ -4332,4 +4490,5 @@ describe('appellant-case', () => {
 	});
 });
 
+// TODO: remove
 nock('http://test/').get(`/appeals/${appealData.appealId}`).reply(200, appealData).persist();
