@@ -158,12 +158,16 @@ const formatAppeal = (
 			internalCorrespondence: {
 				crossTeam: formatFolder(
 					rootFolders.find(
-						(f) => f.path === `internal/${APPEAL_DOCUMENT_TYPE.CROSS_TEAM_CORRESPONDENCE}`
+						(f) =>
+							f.path ===
+							`${APPEAL_CASE_STAGE.INTERNAL}/${APPEAL_DOCUMENT_TYPE.CROSS_TEAM_CORRESPONDENCE}`
 					)
 				),
 				inspector: formatFolder(
 					rootFolders.find(
-						(f) => f.path === `internal/${APPEAL_DOCUMENT_TYPE.INSPECTOR_CORRESPONDENCE}`
+						(f) =>
+							f.path ===
+							`${APPEAL_CASE_STAGE.INTERNAL}/${APPEAL_DOCUMENT_TYPE.INSPECTOR_CORRESPONDENCE}`
 					)
 				)
 			},
@@ -301,7 +305,7 @@ const formatAppeal = (
 				(appeal.linkedAppeals || []).filter((link) => link.childRef === appeal.reference).length >
 				0,
 			localPlanningDepartment: appeal.lpa?.name || '',
-			isGreenBelt: appeal.isGreenBelt,
+			isGreenBelt: appeal.appellantCase?.isGreenBelt,
 			lpaQuestionnaireId: appeal.lpaQuestionnaire?.id || null,
 			planningApplicationReference: appeal.applicationReference || '',
 			procedureType: appeal.procedureType?.name || 'Written',
