@@ -3,9 +3,9 @@ import neighbouringSitesRepository from '#repositories/neighbouring-sites.reposi
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import {
-	AUDIT_TRAIL_ADDRESS_ADDED,
-	AUDIT_TRAIL_ADDRESS_UPDATED,
-	AUDIT_TRAIL_ADDRESS_REMOVED
+	AUDIT_TRAIL_NEIGHBOURING_ADDRESS_ADDED,
+	AUDIT_TRAIL_NEIGHBOURING_ADDRESS_UPDATED,
+	AUDIT_TRAIL_NEIGHBOURING_ADDRESS_REMOVED
 } from '#endpoints/constants.js';
 import formatAddress from '#utils/format-address.js';
 
@@ -33,7 +33,7 @@ export const addNeighbouringSite = async (req, res) => {
 		await createAuditTrail({
 			appealId: appeal.id,
 			azureAdUserId: req.get('azureAdUserId'),
-			details: AUDIT_TRAIL_ADDRESS_ADDED
+			details: AUDIT_TRAIL_NEIGHBOURING_ADDRESS_ADDED
 		});
 
 		await broadcasters.broadcastAppeal(appeal.id);
@@ -71,7 +71,7 @@ export const updateNeighbouringSite = async (req, res) => {
 	await createAuditTrail({
 		appealId: appeal.id,
 		azureAdUserId: req.get('azureAdUserId'),
-		details: AUDIT_TRAIL_ADDRESS_UPDATED
+		details: AUDIT_TRAIL_NEIGHBOURING_ADDRESS_UPDATED
 	});
 
 	await broadcasters.broadcastAppeal(appeal.id);
@@ -98,7 +98,7 @@ export const removeNeighbouringSite = async (req, res) => {
 	await createAuditTrail({
 		appealId: appeal.id,
 		azureAdUserId: req.get('azureAdUserId'),
-		details: AUDIT_TRAIL_ADDRESS_REMOVED
+		details: AUDIT_TRAIL_NEIGHBOURING_ADDRESS_REMOVED
 	});
 
 	await broadcasters.broadcastAppeal(appeal.id);

@@ -45,11 +45,31 @@ export const AUDIT_TRAIL_APPEAL_LINK_ADDED = 'A linked appeal was added';
 export const AUDIT_TRAIL_APPEAL_LINK_REMOVED = 'A linked appeal was removed';
 export const AUDIT_TRAIL_APPEAL_RELATION_ADDED = 'A related appeal was added';
 export const AUDIT_TRAIL_APPEAL_RELATION_REMOVED = 'A related appeal was removed';
-export const AUDIT_TRAIL_ADDRESS_ADDED = 'A neighbouring address was added';
-export const AUDIT_TRAIL_ADDRESS_UPDATED = 'A neighbouring address was updated';
-export const AUDIT_TRAIL_ADDRESS_REMOVED = 'A neighbouring address was removed';
+export const AUDIT_TRAIL_NEIGHBOURING_ADDRESS_ADDED = 'A neighbouring address was added';
+export const AUDIT_TRAIL_NEIGHBOURING_ADDRESS_UPDATED = 'A neighbouring address was updated';
+export const AUDIT_TRAIL_NEIGHBOURING_ADDRESS_REMOVED = 'A neighbouring address was removed';
 export const AUDIT_TRAIL_SYSTEM_UUID = '00000000-0000-0000-0000-000000000000';
 export const AUDIT_TRAIL_SERVICE_USER_UPDATED = 'The {replacement0}’s details were updated';
+export const AUDIT_TRAIL_ADDRESS_UPDATED = 'Site address updated';
+export const AUDIT_TRAIL_APPELLANT_CASE_UPDATED = 'Appellant case updated';
+export const AUDIT_TRAIL_SITE_AREA_SQUARE_METRES_UPDATED = 'Site area updated';
+export const AUDIT_TRAIL_IS_GREEN_BELT_UPDATED = 'Green belt status updated';
+export const AUDIT_TRAIL_SITE_OWNERSHIP_UPDATED = 'Site ownership updated';
+export const AUDIT_TRAIL_KNOWS_OTHER_OWNERS_UPDATED = 'Owners known updated';
+export const AUDIT_TRAIL_SITE_ACCESS_DETAILS_UPDATED = 'Inspector access (appellant) updated';
+export const AUDIT_TRAIL_SITE_SAFETY_DETAILS_UPDATED =
+	'Site health and safety risks (appellant answer) updated';
+export const AUDIT_TRAIL_APPLICATION_DATE_UPDATED = 'Date application submitted updated';
+export const AUDIT_TRAIL_DEVELOPMENT_DESCRIPTION_UPDATED =
+	'Original development description has been updated';
+export const AUDIT_TRAIL_APPLICATION_DECISION_DATE_UPDATED = 'Application decision date updated';
+export const AUDIT_TRAIL_LPAQ_UPDATED = 'LPA questionnaire updated';
+export const AUDIT_TRAIL_LPAQ_IS_CORRECT_APPEAL_TYPE_UPDATED =
+	'Correct appeal type (LPA response) has been updated';
+export const AUDIT_TRAIL_LPAQ_IS_GREEN_BELT_UPDATED = 'Green belt status updated';
+export const AUDIT_TRAIL_LPAQ_SITE_ACCESS_DETAILS_UPDATED = 'Inspector access (lpa) updated';
+export const AUDIT_TRAIL_LPAQ_SITE_SAFETY_DETAILS_UPDATED =
+	'Site health and safety risks (LPA answer) updated';
 
 export const BANK_HOLIDAY_FEED_DIVISION_ENGLAND = 'england-and-wales';
 

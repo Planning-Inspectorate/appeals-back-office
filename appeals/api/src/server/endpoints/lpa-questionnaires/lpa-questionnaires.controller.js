@@ -1,4 +1,4 @@
-import { ERROR_FAILED_TO_SAVE_DATA } from '#endpoints/constants.js';
+import * as CONSTANTS from '#endpoints/constants.js';
 import { APPEAL_CASE_STAGE } from 'pins-data-model';
 import { getFoldersForAppeal } from '#endpoints/documents/documents.service.js';
 import { formatLpaQuestionnaire } from './lpa-questionnaires.formatter.js';
@@ -6,7 +6,9 @@ import { updateLPAQuestionnaireValidationOutcome } from './lpa-questionnaires.se
 import lpaQuestionnaireRepository from '#repositories/lpa-questionnaire.repository.js';
 import logger from '#utils/logger.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
+import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
+import { camelToScreamingSnake } from '#utils/string-utils.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -77,11 +79,27 @@ const updateLPAQuestionnaireById = async (req, res) => {
 					isCorrectAppealType
 			  });
 
+		const updatedProperties = Object.keys(body).filter((key) => body[key] !== undefined);
+		let auditTrailDetail = CONSTANTS.AUDIT_TRAIL_LPAQ_UPDATED;
+
+		if (updatedProperties.length === 1) {
+			const updatedProperty = updatedProperties[0];
+			const constantKey = `AUDIT_TRAIL_LPAQ_${camelToScreamingSnake(updatedProperty)}_UPDATED`;
+			// @ts-ignore
+			auditTrailDetail = CONSTANTS[constantKey] || auditTrailDetail;
+		}
+
+		await createAuditTrail({
+			appealId: appeal.id,
+			azureAdUserId: req.get('azureAdUserId'),
+			details: auditTrailDetail
+		});
+
 		await broadcasters.broadcastAppeal(appeal.id);
 	} catch (error) {
 		if (error) {
 			logger.error(error);
-			return res.status(500).send({ errors: { body: ERROR_FAILED_TO_SAVE_DATA } });
+			return res.status(500).send({ errors: { body: CONSTANTS.ERROR_FAILED_TO_SAVE_DATA } });
 		}
 	}
 
