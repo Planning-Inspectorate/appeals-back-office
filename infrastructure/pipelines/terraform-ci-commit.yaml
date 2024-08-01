@@ -32,9 +32,9 @@ extends:
         steps:
           - template: ../steps/node_script.yml
             parameters:
-              nodeVersion: 18
+              nodeVersion: 20
               script: npm ci
           - template: ../steps/node_script.yml
             parameters:
-              nodeVersion: 18
+              nodeVersion: 20
               script: npm run commitlint

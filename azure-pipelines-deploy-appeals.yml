@@ -33,7 +33,7 @@ resources:
       type: github
       endpoint: Planning-Inspectorate
       name: Planning-Inspectorate/common-pipeline-templates
-      ref: refs/tags/release/3.16.1
+      ref: refs/tags/release/3.17.0
   pipelines:
     - pipeline: build
       source: Build
@@ -85,7 +85,7 @@ extends:
                         variable: appeals-bo-sql-admin-connection-string
                 - template: ../steps/node_script.yml
                   parameters:
-                    nodeVersion: 18
+                    nodeVersion: 20
                     environmentVariables:
                       DATABASE_URL: $(appeals-bo-sql-admin-connection-string)
                     script: npm run db:migrate:prod
