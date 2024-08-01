@@ -3,8 +3,7 @@ import config from '#config/config.js';
 import logger from './logger.js';
 import {
 	ERROR_GOV_NOTIFY_CONNECTIVITY,
-	ERROR_GOV_NOTIFY_API_KEY_NOT_SET,
-	NODE_ENV_PRODUCTION
+	ERROR_GOV_NOTIFY_API_KEY_NOT_SET
 } from '#endpoints/constants.js';
 import stringTokenReplacement from './string-token-replacement.js';
 
@@ -28,20 +27,6 @@ class NotifyClient {
 	}
 
 	/**
-	 * @param {string} recipientEmail
-	 * @returns {string}
-	 */
-	setRecipientEmail(recipientEmail) {
-		const {
-			govNotify: { testMailbox },
-			NODE_ENV
-		} = config;
-
-		return (recipientEmail =
-			testMailbox || NODE_ENV !== NODE_ENV_PRODUCTION ? testMailbox : recipientEmail);
-	}
-
-	/**
 	 * @param {NotifyTemplate} template
 	 * @param {string | undefined} recipientEmail
 	 * @param {{[key: string]: string}} [personalisation]
@@ -58,7 +43,6 @@ class NotifyClient {
 		}
 
 		try {
-			recipientEmail = this.setRecipientEmail(recipientEmail);
 			await this.govNotify.sendEmail(template.id, recipientEmail, {
 				emailReplyToId: null,
 				personalisation,
@@ -77,8 +61,7 @@ class NotifyClient {
 					stringTokenReplacement(ERROR_GOV_NOTIFY_CONNECTIVITY, [
 						// @ts-ignore
 						error.response?.status,
-						template.id,
-						config.govNotify.api.key
+						template.id
 					])
 				);
 			} else {
