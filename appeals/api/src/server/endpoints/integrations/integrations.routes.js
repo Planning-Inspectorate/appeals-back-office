@@ -1,6 +1,10 @@
 import { Router as createRouter } from 'express';
 import { asyncHandler } from '@pins/express';
-import { validateAppellantCase, validateLpaQuestionnaire } from './integrations.middleware.js';
+import {
+	validateAppellantCase,
+	validateLpaQuestionnaire,
+	validateCaseType
+} from './integrations.middleware.js';
 import * as controller from './integrations.controller.js';
 
 const router = createRouter();
@@ -25,6 +29,7 @@ router.post(
 		#swagger.responses[404] = {}
 	 */
 	validateAppellantCase,
+	validateCaseType,
 	asyncHandler(controller.postAppealSubmission)
 );
 
