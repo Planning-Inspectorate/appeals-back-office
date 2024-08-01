@@ -31,15 +31,15 @@ extends:
         steps:
           - template: ../steps/node_script.yml
             parameters:
-              nodeVersion: 18
+              nodeVersion: 20
               script: npm ci
           - template: ../steps/node_script.yml
             parameters:
-              nodeVersion: 18
+              nodeVersion: 20
               script: npm run commitlint
           - template: ../steps/node_script.yml
             parameters:
-              nodeVersion: 18
+              nodeVersion: 20
               script: npm run tscheck
               environmentVariables:
                 TURBO_TEAM: $(TURBO_TEAM)
@@ -47,19 +47,19 @@ extends:
                 TURBO_TOKEN: $(TURBO_TOKEN)
           - template: ../steps/node_script.yml
             parameters:
-              nodeVersion: 18
+              nodeVersion: 20
               script: npm run lint:js
           - template: ../steps/node_script.yml
             parameters:
               script: npm run test
-              nodeVersion: 18
+              nodeVersion: 20
               environmentVariables:
                 TURBO_TEAM: $(TURBO_TEAM)
                 TURBO_API: $(TURBO_API)
                 TURBO_TOKEN: $(TURBO_TOKEN)
           - template: ../steps/node_script.yml
             parameters:
-              nodeVersion: 18
+              nodeVersion: 20
               script: npm run build:release
               environmentVariables:
                 TURBO_TEAM: $(TURBO_TEAM)
