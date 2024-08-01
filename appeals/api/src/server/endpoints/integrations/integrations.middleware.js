@@ -7,6 +7,7 @@ import {
 	ERROR_INVALID_LPAQ_DATA,
 	ERROR_INVALID_DOCUMENT_DATA
 } from '#endpoints/constants.js';
+import { APPEAL_CASE_TYPE } from 'pins-data-model';
 
 /**
  * @type {import("express").RequestHandler}
@@ -23,6 +24,29 @@ export const validateAppellantCase = async (req, res, next) => {
 		);
 
 		pino.error(`Error validating appellant case: ${errorDetails[0]}`);
+		return res.status(400).send({
+			errors: {
+				integration: ERROR_INVALID_APPELLANT_CASE_DATA,
+				details: errorDetails
+			}
+		});
+	}
+
+	next();
+};
+
+/**
+ * @type {import("express").RequestHandler}
+ * @returns {Promise<object|void>}
+ */
+export const validateCaseType = async (req, res, next) => {
+	const { body } = req;
+	const validCaseTypes = [APPEAL_CASE_TYPE.D];
+
+	const caseType = body.casedata?.caseType;
+	if (validCaseTypes.indexOf(caseType) === -1) {
+		const errorDetails = `Error validating case types: ${caseType} not currently supported`;
+		pino.error(errorDetails);
 		return res.status(400).send({
 			errors: {
 				integration: ERROR_INVALID_APPELLANT_CASE_DATA,

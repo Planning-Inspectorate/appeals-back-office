@@ -79,6 +79,7 @@ const mapAppealSubmission = (data) => {
 	const { casedata, documents, users } = data;
 	const appellant = users?.find((user) => user.serviceUserType === SERVICE_USER_TYPE.APPELLANT);
 	const agent = users?.find((user) => user.serviceUserType === SERVICE_USER_TYPE.AGENT);
+	const caseType = mappers.mapAppealTypeIn(casedata.caseType);
 
 	const neighbouringSitesInput = {
 		create: casedata.neighbouringSiteAddresses?.map((site) => {
@@ -94,7 +95,7 @@ const mapAppealSubmission = (data) => {
 	const appealInput = {
 		reference: randomUUID(),
 		submissionId: casedata.submissionId,
-		appealType: { connect: { key: mappers.mapAppealTypeIn(casedata?.caseType) } },
+		appealType: { connect: { key: caseType } },
 		appellant: { create: mappers.mapServiceUserIn(appellant) },
 		agent: { create: mappers.mapServiceUserIn(agent) },
 		lpa: {

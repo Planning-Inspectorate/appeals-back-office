@@ -12,7 +12,6 @@ import {
 } from '#endpoints/constants.js';
 import { ODW_APPELLANT_SVCUSR, ODW_AGENT_SVCUSR } from '@pins/appeals/constants/common.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
 
@@ -27,6 +26,7 @@ import stringTokenReplacement from '#utils/string-token-replacement.js';
  */
 export const postAppealSubmission = async (req, res) => {
 	const { appeal, documents, relatedReferences } = messageMappers.mapAppealSubmission(req.body);
+
 	const casedata = await integrationService.importAppellantCase(
 		appeal,
 		documents,
