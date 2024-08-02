@@ -22,6 +22,7 @@ export { toCamelCase };
 
 const camelToScreamingSnake = (str) => {
 	return str
+		.replace(/\s+/g, '') // Remove all spaces
 		.replace(/([a-z])([A-Z])/g, '$1_$2') // Lowercase to Uppercase transitions
 		.replace(/([A-Z]+)([A-Z][a-z])/g, '$1_$2') // Uppercase sequence followed by lowercase
 		.replace(/([A-Z])([A-Z][a-z])/g, '$1_$2') // Uppercase sequence followed by lowercase (catch-all)

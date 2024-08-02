@@ -50,6 +50,11 @@ describe('camelToScreamingSnake', () => {
 		expect(camelToScreamingSnake('accessrequired')).toBe('ACCESSREQUIRED');
 	});
 
+	test('removes spaces and then converts to SCREAMING_SNAKE_CASE', () => {
+		expect(camelToScreamingSnake('hello world')).toBe('HELLOWORLD');
+		expect(camelToScreamingSnake('Multiple   Spaces   Here')).toBe('MULTIPLE_SPACES_HERE');
+	});
+
 	test('handles empty strings correctly', () => {
 		expect(camelToScreamingSnake('')).toBe('');
 	});
