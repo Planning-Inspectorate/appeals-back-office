@@ -1,0 +1,88 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`extra-conditions GET /change should render the change extra conditions page 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change extra conditions</h1>
+                </div>
+            </div>
+            <form method="POST" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <div class="govuk-radios" data-module="govuk-radios">
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="extraConditionsRadio" name="extraConditionsRadio"
+                            type="radio" value="yes" checked data-aria-controls="conditional-extraConditionsRadio">
+                            <label class="govuk-label govuk-radios__label" for="extraConditionsRadio">Yes</label>
+                        </div>
+                        <div class="govuk-radios__conditional" id="conditional-extraConditionsRadio">
+                            <div class="govuk-form-group">
+                                <label class="govuk-label" for="extra-conditions-details">Extra conditions details</label>
+                                <textarea class="govuk-textarea" id="extra-conditions-details"
+                                name="extraConditionsDetails" rows="3">Some extra conditions</textarea>
+                            </div>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="extraConditionsRadio-2" name="extraConditionsRadio"
+                            type="radio" value="no">
+                            <label class="govuk-label govuk-radios__label" for="extraConditionsRadio-2">No</label>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`extra-conditions POST /change should re-render the change extra conditions page with an error when isRequired is "yes" but details is empty 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#extraConditionsDetails">Provide details of the extra conditions</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change extra conditions</h1>
+                </div>
+            </div>
+            <form method="POST" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <div class="govuk-radios" data-module="govuk-radios">
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="extraConditionsRadio" name="extraConditionsRadio"
+                            type="radio" value="yes" checked data-aria-controls="conditional-extraConditionsRadio">
+                            <label class="govuk-label govuk-radios__label" for="extraConditionsRadio">Yes</label>
+                        </div>
+                        <div class="govuk-radios__conditional" id="conditional-extraConditionsRadio">
+                            <div class="govuk-form-group">
+                                <label class="govuk-label" for="extra-conditions-details">Extra conditions details</label>
+                                <textarea class="govuk-textarea" id="extra-conditions-details"
+                                name="extraConditionsDetails" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="extraConditionsRadio-2" name="extraConditionsRadio"
+                            type="radio" value="no">
+                            <label class="govuk-label govuk-radios__label" for="extraConditionsRadio-2">No</label>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
