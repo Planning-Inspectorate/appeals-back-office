@@ -28,6 +28,7 @@ export const broadcastServiceUser = async (userId, updateType, roleName, caseRef
 		return false;
 	}
 
+	// @ts-ignore
 	const msg = messageMappers.mapServiceUser(caseReference, user, roleName);
 
 	if (msg) {
