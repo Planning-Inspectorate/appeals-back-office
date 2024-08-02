@@ -605,7 +605,7 @@ const householderLpaQuestionnairePage = (mappedLPAQData, mappedAppealDetails) =>
 			},
 			rows: [
 				mappedLPAQData.lpaq?.otherAppeals?.display.summaryListItem,
-				mappedLPAQData.lpaq?.newConditions?.display.summaryListItem
+				mappedLPAQData.lpaq?.extraConditions?.display.summaryListItem
 			].filter(isDefined)
 		}
 	});

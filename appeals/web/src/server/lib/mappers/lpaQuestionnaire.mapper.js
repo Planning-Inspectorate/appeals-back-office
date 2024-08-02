@@ -571,7 +571,7 @@ export function initialiseAndMapLPAQData(
 	};
 
 	/** @type {Instructions} */
-	mappedData.lpaq.newConditions = {
+	mappedData.lpaq.extraConditions = {
 		id: 'extra-conditions',
 		display: {
 			summaryListItem: {
@@ -589,7 +589,7 @@ export function initialiseAndMapLPAQData(
 						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
 							visuallyHiddenText: 'Extra conditions',
-							href: `${currentRoute}/change-lpa-questionnaire/extra-conditions`
+							href: `${currentRoute}/extra-conditions/change`
 						})
 					]
 				}
