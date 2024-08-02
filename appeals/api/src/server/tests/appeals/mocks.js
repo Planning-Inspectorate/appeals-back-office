@@ -131,7 +131,8 @@ export const householdAppeal = {
 		ownsAllLand: true,
 		ownsSomeLand: true,
 		siteAccessDetails: 'There is no mobile reception at the site',
-		siteSafetyDetails: 'Small dog big character'
+		siteSafetyDetails: 'Small dog big character',
+		siteAreaSquareMetres: '100'
 	},
 	caseOfficer: {
 		id: 1,

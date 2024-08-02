@@ -1,6 +1,7 @@
 import { request } from '../../../app-test.js';
 import { jest } from '@jest/globals';
 import {
+	AUDIT_TRAIL_ADDRESS_UPDATED,
 	ERROR_CANNOT_BE_EMPTY_STRING,
 	ERROR_FAILED_TO_SAVE_DATA,
 	ERROR_MAX_LENGTH_CHARACTERS,
@@ -129,6 +130,11 @@ describe('addresses routes', () => {
 			test('updates an address', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
 
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}/addresses/${householdAppeal.address.id}`)
@@ -139,6 +145,14 @@ describe('addresses routes', () => {
 					data: dataToSave,
 					where: {
 						id: householdAppeal.address.id
+					}
+				});
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+					data: {
+						appealId: householdAppeal.id,
+						details: AUDIT_TRAIL_ADDRESS_UPDATED,
+						loggedAt: expect.any(Date),
+						userId: householdAppeal.caseOfficer.id
 					}
 				});
 				expect(response.status).toEqual(200);
