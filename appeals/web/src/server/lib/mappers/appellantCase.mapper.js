@@ -868,7 +868,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
 							visuallyHiddenText: 'Applied for award of appeal costs',
-							href: `${currentRoute}/#`
+							href: `${currentRoute}/appeal-costs-application/change`
 						})
 					]
 				}

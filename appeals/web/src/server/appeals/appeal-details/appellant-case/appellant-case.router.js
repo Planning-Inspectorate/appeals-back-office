@@ -29,6 +29,7 @@ import applicationDecisionDateRouter from '../application-decision-date/applicat
 import greenBeltRouter from '../green-belt/green-belt.router.js';
 import developmentDescriptionRouter from '../development-description/development-description.router.js';
 import applicationOutcomeRouter from '../application-outcome/application-outcome.router.js';
+import appealCostsApplicationRouter from '../appeal-costs-application/appeal-costs-application.router.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -137,6 +138,12 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	applicationOutcomeRouter
+);
+router.use(
+	'/appeal-costs-application',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	appealCostsApplicationRouter
 );
 
 router
