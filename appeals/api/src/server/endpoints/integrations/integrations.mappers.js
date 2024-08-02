@@ -26,7 +26,8 @@ import {
 	mapAppealDatesOut,
 	mapAppealValidationOut,
 	mapQuestionnaireValidationOut,
-	mapAppealRelationships
+	mapAppealRelationships,
+	mapCaseOutcomeOut
 } from './integrations.mappers/casedata.mapper.js';
 import { APPEAL_CASE_STAGE, SERVICE_USER_TYPE } from 'pins-data-model';
 import { FOLDERS } from '@pins/appeals/constants/documents.js';
@@ -190,7 +191,7 @@ const mapAppeal = (appeal) => {
 		affectedListedBuildingNumbers:
 			appeal.lpaQuestionnaire?.listedBuildingDetails?.map((lb) => lb.listEntry) || null,
 		// Decision
-		caseDecisionOutcome: appeal.inspectorDecision?.outcome || null,
+		...mapCaseOutcomeOut(appeal),
 		// linked and related appeals
 		...mapAppealRelationships(appeal)
 	};
