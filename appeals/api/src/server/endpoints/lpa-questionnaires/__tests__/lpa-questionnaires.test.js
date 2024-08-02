@@ -15,7 +15,8 @@ import {
 	ERROR_ONLY_FOR_INCOMPLETE_VALIDATION_OUTCOME,
 	LENGTH_10,
 	LENGTH_8,
-	AUDIT_TRAIL_SUBMISSION_INCOMPLETE
+	AUDIT_TRAIL_SUBMISSION_INCOMPLETE,
+	AUDIT_TRAIL_LPAQ_IS_CORRECT_APPEAL_TYPE_UPDATED
 } from '../../constants.js';
 import {
 	lpaQuestionnaireIncompleteReasons,
@@ -1455,6 +1456,45 @@ describe('lpa questionnaires routes', () => {
 				});
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual(responseBody);
+			});
+
+			test('updates isCorrectAppealType when given boolean false', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
+
+				const body = {
+					isCorrectAppealType: false
+				};
+
+				const { id, lpaQuestionnaire } = householdAppeal;
+				const response = await request
+					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
+					.send(body)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.lPAQuestionnaire.update).toHaveBeenCalledWith({
+					where: { id: householdAppeal.lpaQuestionnaire.id },
+					data: {
+						isCorrectAppealType: false
+					}
+				});
+
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+					data: {
+						appealId: householdAppeal.id,
+						details: AUDIT_TRAIL_LPAQ_IS_CORRECT_APPEAL_TYPE_UPDATED,
+						loggedAt: expect.any(Date),
+						userId: householdAppeal.caseOfficer.id
+					}
+				});
+
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual(body);
 			});
 
 			test('does not return an error when given an empty body', async () => {
