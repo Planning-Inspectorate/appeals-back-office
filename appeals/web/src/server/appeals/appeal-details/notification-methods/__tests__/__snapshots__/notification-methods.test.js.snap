@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`notification-methods GET /change should render the change notification methods page with the expected content, and with the correct checkboxes checked, according to the existing notification methods in the lpa questionnaire data 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change notification methods</h1>
+                </div>
+            </div>
+            <form method="POST" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                        <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" id="notificationMethodsCheckboxes"
+                            name="notificationMethodsCheckboxes" type="checkbox" value="9029" checked>
+                            <label class="govuk-label govuk-checkboxes__label" for="notificationMethodsCheckboxes">A site notice</label>
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" id="notificationMethodsCheckboxes-2"
+                            name="notificationMethodsCheckboxes" type="checkbox" value="9030" checked>
+                            <label class="govuk-label govuk-checkboxes__label" for="notificationMethodsCheckboxes-2">Letter/email to interested parties</label>
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" id="notificationMethodsCheckboxes-3"
+                            name="notificationMethodsCheckboxes" type="checkbox" value="9031">
+                            <label class="govuk-label govuk-checkboxes__label" for="notificationMethodsCheckboxes-3">A press advert</label>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;

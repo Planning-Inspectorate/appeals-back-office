@@ -366,6 +366,33 @@ export function initialiseAndMapLPAQData(
 	};
 
 	/** @type {Instructions} */
+	mappedData.lpaq.notificationMethods = {
+		id: 'notification-methods',
+		display: {
+			summaryListItem: {
+				key: {
+					text: 'Notification methods'
+				},
+				value: {
+					html: displayPageFormatter.formatListOfNotificationMethodsToHtml(
+						lpaQuestionnaireData.lpaNotificationMethods
+					)
+				},
+				actions: {
+					items: [
+						mapActionComponent(permissionNames.updateCase, session, {
+							text: 'Change',
+							visuallyHiddenText: 'notification methods',
+							href: `${currentRoute}/notification-methods/change`,
+							attributes: { 'lpaQuestionnaireData-cy': 'change-notification-methods' }
+						})
+					]
+				}
+			}
+		}
+	};
+
+	/** @type {Instructions} */
 	mappedData.lpaq.representations = {
 		id: 'representations-from-other-parties',
 		display: {

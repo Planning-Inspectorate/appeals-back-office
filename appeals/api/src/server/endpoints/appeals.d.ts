@@ -1,4 +1,4 @@
-import { LPAQuestionnaire } from '#utils/db-client';
+import { LPANotificationMethods, LPAQuestionnaire } from '#utils/db-client';
 import { Schema } from 'index';
 
 declare global {
@@ -286,6 +286,7 @@ interface UpdateLPAQuestionnaireRequest {
 	isCorrectAppealType?: boolean;
 	incompleteReasons?: IncompleteInvalidReasons;
 	validationOutcomeId?: number;
+	lpaNotificationMethods?: LPANotificationMethodsSelectedUncheckedUpdateManyWithoutLpaQuestionnaireNestedInput;
 }
 
 interface UpdateLPAQuestionnaireValidationOutcomeParams {

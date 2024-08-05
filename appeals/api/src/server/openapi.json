@@ -3262,7 +3262,7 @@
 						"properties": {
 							"submissionId": {
 								"type": "string",
-								"example": "39253705-0fdc-4ccd-b39e-fd24f2763781"
+								"example": "c6487d9f-ebae-4d09-8aa0-a40db8819eb9"
 							},
 							"advertisedAppeal": {
 								"type": "boolean",
@@ -3397,10 +3397,6 @@
 								"items": {
 									"type": "string"
 								}
-							},
-							"isGreenBelt": {
-								"type": "boolean",
-								"example": true
 							}
 						}
 					},
@@ -4848,6 +4844,10 @@
 							}
 						}
 					},
+					"isGreenBelt": {
+						"type": "boolean",
+						"example": true
+					},
 					"documents": {
 						"type": "object",
 						"properties": {
@@ -6130,10 +6130,6 @@
 						"type": "boolean",
 						"example": true
 					},
-					"isGreenBelt": {
-						"type": "boolean",
-						"example": true
-					},
 					"healthAndSafetyIssues": {
 						"type": "string",
 						"example": "There is no mobile reception at the site"
@@ -6195,6 +6191,10 @@
 					"visibilityRestrictions": {
 						"type": "string",
 						"example": "The site is behind a tall hedge"
+					},
+					"isGreenBelt": {
+						"type": "boolean",
+						"example": true
 					}
 				},
 				"xml": {
@@ -6308,6 +6308,10 @@
 					"validationOutcome": {
 						"type": "string",
 						"example": "incomplete"
+					},
+					"isGreenBelt": {
+						"type": "boolean",
+						"example": true
 					}
 				},
 				"xml": {
@@ -6641,6 +6645,10 @@
 						"name": {
 							"type": "string",
 							"example": "A site notice"
+						},
+						"key": {
+							"type": "string",
+							"example": "notice"
 						},
 						"id": {
 							"type": "number",

@@ -22,6 +22,7 @@ import correctAppealTypeRouter from '../correct-appeal-type/correct-appeal-type.
 import otherAppealsRouter from '../other-appeals/other-appeals.router.js';
 import greenBeltRouter from '../green-belt/green-belt.router.js';
 import extraConditionsRouter from '../extra-conditions/extra-conditions.router.js';
+import notificationMethodsRouter from '../notification-methods/notification-methods.router.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -80,6 +81,13 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	extraConditionsRouter
+);
+
+router.use(
+	'/:lpaQuestionnaireId/notification-methods',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	notificationMethodsRouter
 );
 
 router

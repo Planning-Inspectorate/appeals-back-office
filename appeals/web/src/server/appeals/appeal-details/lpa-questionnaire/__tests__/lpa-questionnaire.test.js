@@ -20,7 +20,8 @@ import {
 	appealData,
 	notCheckedDocumentFolderInfoDocuments,
 	lpaQuestionnaireData,
-	fileUploadInfo
+	fileUploadInfo,
+	lpaNotificationMethodsData
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { textInputCharacterLimits } from '../../../appeal.constants.js';
@@ -314,6 +315,29 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedNotificationBannerElementHTML).toContain('test reason 4</li>');
 			expect(unprettifiedNotificationBannerElementHTML).toContain('test reason 5</li>');
 			expect(unprettifiedNotificationBannerElementHTML).toContain('test reason 6</li>');
+		});
+
+		it('should render a "Notification methods updated" success notification banner when notification methods are changed', async () => {
+			nock('http://test/').get(`/appeals/1`).reply(200, appealData).persist();
+			nock('http://test/')
+				.get(`/appeals/1/lpa-questionnaires/2`)
+				.reply(200, lpaQuestionnaireData)
+				.persist();
+			nock('http://test/')
+				.get('/appeals/lpa-notification-methods')
+				.reply(200, lpaNotificationMethodsData);
+			nock('http://test/').patch(`/appeals/1/lpa-questionnaires/1`).reply(200, {});
+
+			await request.post(`${baseUrl}/notification-methods/change`).send({});
+
+			const response = await request.get(`${baseUrl}`);
+
+			const notificationBannerElementHTML = parseHtml(response.text, {
+				rootElement: notificationBannerElement
+			}).innerHTML;
+			expect(notificationBannerElementHTML).toMatchSnapshot();
+			expect(notificationBannerElementHTML).toContain('Success');
+			expect(notificationBannerElementHTML).toContain('Notification methods updated');
 		});
 	});
 

@@ -34,7 +34,7 @@ export interface ValidateDate {
 
 export interface AppellantCaseData {
 	casedata?: {
-		/** @example "39253705-0fdc-4ccd-b39e-fd24f2763781" */
+		/** @example "c6487d9f-ebae-4d09-8aa0-a40db8819eb9" */
 		submissionId?: string;
 		/** @example true */
 		advertisedAppeal?: boolean;
@@ -768,6 +768,8 @@ export interface SingleAppellantCaseResponse {
 		/** @example false */
 		isCorrect?: boolean;
 	};
+	/** @example true */
+	isGreenBelt?: boolean;
 	documents?: {
 		appealStatement?: {
 			/** @example 4562 */
@@ -1405,6 +1407,8 @@ export interface UpdateLPAQuestionnaireRequest {
 	sensitiveAreaDetails?: string;
 	/** @example "incomplete" */
 	validationOutcome?: string;
+	/** @example true */
+	isGreenBelt?: boolean;
 }
 
 export type UpdateLPAQuestionnaireResponse = object;
@@ -1543,6 +1547,8 @@ export type AllKnowledgeOfOtherLandownersResponse = {
 export type AllLPANotificationMethodsResponse = {
 	/** @example "A site notice" */
 	name?: string;
+	/** @example "notice" */
+	key?: string;
 	/** @example 1 */
 	id?: number;
 }[];
