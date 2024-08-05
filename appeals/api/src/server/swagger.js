@@ -647,6 +647,7 @@ export const spec = {
 		AllLPANotificationMethodsResponse: [
 			{
 				name: 'A site notice',
+				key: 'notice',
 				id: 1
 			}
 		],

@@ -2229,6 +2229,24 @@ export const withdrawalRequestData = {
 	}
 };
 
+export const lpaNotificationMethodsData = [
+	{
+		id: 9029,
+		key: 'notice',
+		name: 'A site notice'
+	},
+	{
+		id: 9030,
+		key: 'letter',
+		name: 'Letter/email to interested parties'
+	},
+	{
+		id: 9031,
+		key: 'press-advert',
+		name: 'A press advert'
+	}
+];
+
 export const baseSession = {
 	id: '',
 	cookie: { originalMaxAge: 1 },

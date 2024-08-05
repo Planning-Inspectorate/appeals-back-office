@@ -15,6 +15,9 @@ import commonRepository from './common.repository.js';
  */
 const updateLPAQuestionnaireById = (id, data) => {
 	const { appealId, incompleteReasons, timetable } = data;
+	/**
+	 * @type {any[]}
+	 */
 	const transaction = [];
 
 	transaction.push(
@@ -29,7 +32,8 @@ const updateLPAQuestionnaireById = (id, data) => {
 				newConditionDetails: data.extraConditions,
 				lpaCostsAppliedFor: data.lpaCostsAppliedFor,
 				inConservationArea: data.isConservationArea,
-				isCorrectAppealType: data.isCorrectAppealType
+				isCorrectAppealType: data.isCorrectAppealType,
+				lpaNotificationMethods: processNotificationMethods(id, data, transaction)
 			}
 		})
 	);
@@ -53,5 +57,33 @@ const updateLPAQuestionnaireById = (id, data) => {
 
 	return databaseConnector.$transaction(transaction);
 };
+
+/**
+ * @param {number} id
+ * @param {UpdateLPAQuestionnaireRequest} data
+ * @param {any[]} transaction
+ * @returns {Object|undefined}
+ */
+function processNotificationMethods(id, data, transaction) {
+	if (Array.isArray(data.lpaNotificationMethods)) {
+		transaction.push(
+			databaseConnector.lPANotificationMethodsSelected.deleteMany({
+				where: { lpaQuestionnaireId: id }
+			})
+		);
+
+		if (data.lpaNotificationMethods.length) {
+			return {
+				create: data.lpaNotificationMethods.map((/** @type {{ id: string }} */ method) => {
+					return {
+						lpaNotificationMethod: {
+							connect: { id: parseInt(method.id, 10) }
+						}
+					};
+				})
+			};
+		}
+	}
+}
 
 export default { updateLPAQuestionnaireById };

@@ -546,7 +546,8 @@ const householderLpaQuestionnairePage = (mappedLPAQData, mappedAppealDetails) =>
 				mappedLPAQData.lpaq?.notifyingParties?.display.summaryListItem,
 				mappedLPAQData.lpaq?.siteNotice?.display.summaryListItem,
 				mappedLPAQData.lpaq?.lettersToNeighbours?.display.summaryListItem,
-				mappedLPAQData.lpaq?.pressAdvert?.display.summaryListItem
+				mappedLPAQData.lpaq?.pressAdvert?.display.summaryListItem,
+				mappedLPAQData.lpaq?.notificationMethods?.display.summaryListItem
 			].filter(isDefined)
 		}
 	});
