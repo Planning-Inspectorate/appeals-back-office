@@ -8,15 +8,23 @@ import { appealDetailsPage } from './appeal-details.mapper.js';
 export const viewAppealDetails = async (request, response) => {
 	const appealDetails = request.currentAppeal;
 	const session = request.session;
+	try {
+		if (appealDetails) {
+			const currentUrl = request.originalUrl;
+			const mappedPageContent = await appealDetailsPage(
+				appealDetails,
+				currentUrl,
+				session,
+				request
+			);
 
-	if (appealDetails) {
-		const currentUrl = request.originalUrl;
-		const mappedPageContent = await appealDetailsPage(appealDetails, currentUrl, session, request);
-
-		response.status(200).render('patterns/display-page.pattern.njk', {
-			pageContent: mappedPageContent
-		});
-	} else {
-		response.status(404).render('app/404.njk');
+			return response.status(200).render('patterns/display-page.pattern.njk', {
+				pageContent: mappedPageContent
+			});
+		} else {
+			return response.status(404).render('app/404.njk');
+		}
+	} catch (error) {
+		return response.status(500).render('app/500.njk');
 	}
 };

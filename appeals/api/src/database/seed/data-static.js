@@ -5,7 +5,7 @@ import {
 	APPEAL_KNOWS_OTHER_OWNERS,
 	APPEAL_EVENT_TYPE
 } from 'pins-data-model';
-
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 /**
  * Static data required by the back-office service
  */
@@ -29,27 +29,27 @@ import {
  *
  */
 export const appealTypes = [
-	{ key: APPEAL_CASE_TYPE.D, type: 'Householder', processCode: 'HAS', enabled: true },
-	{ key: APPEAL_CASE_TYPE.C, type: 'Enforcement notice appeal', enabled: false },
+	{ key: APPEAL_CASE_TYPE.D, type: APPEAL_TYPE.D, processCode: 'HAS', enabled: true },
+	{ key: APPEAL_CASE_TYPE.C, type: APPEAL_TYPE.C, enabled: false },
 	{
 		key: APPEAL_CASE_TYPE.F,
-		type: 'Enforcement listed building and conservation area appeal',
+		type: APPEAL_TYPE.F,
 		enabled: false
 	},
-	{ key: APPEAL_CASE_TYPE.G, type: 'Discontinuance notice appeal', enabled: false },
-	{ key: APPEAL_CASE_TYPE.H, type: 'Advertisement appeal', enabled: false },
-	{ key: APPEAL_CASE_TYPE.L, type: 'Community infrastructure levy', enabled: false },
-	{ key: APPEAL_CASE_TYPE.Q, type: 'Planning obligation appeal', enabled: false },
-	{ key: APPEAL_CASE_TYPE.S, type: 'Affordable housing obligation appeal', enabled: false },
-	{ key: APPEAL_CASE_TYPE.V, type: 'Call-in application', enabled: false },
-	{ key: APPEAL_CASE_TYPE.W, type: 'Planning appeal', enabled: false },
-	{ key: APPEAL_CASE_TYPE.X, type: 'Lawful development certificate appeal', enabled: false },
+	{ key: APPEAL_CASE_TYPE.G, type: APPEAL_TYPE.G, enabled: false },
+	{ key: APPEAL_CASE_TYPE.H, type: APPEAL_TYPE.H, enabled: false },
+	{ key: APPEAL_CASE_TYPE.L, type: APPEAL_TYPE.L, enabled: false },
+	{ key: APPEAL_CASE_TYPE.Q, type: APPEAL_TYPE.Q, enabled: false },
+	{ key: APPEAL_CASE_TYPE.S, type: APPEAL_TYPE.S, enabled: false },
+	{ key: APPEAL_CASE_TYPE.V, type: APPEAL_TYPE.V, enabled: false },
+	{ key: APPEAL_CASE_TYPE.W, type: APPEAL_TYPE.W, enabled: false },
+	{ key: APPEAL_CASE_TYPE.X, type: APPEAL_TYPE.X, enabled: false },
 	{
 		key: APPEAL_CASE_TYPE.Y,
-		type: 'Planned listed building and conservation area appeal',
+		type: APPEAL_TYPE.Y,
 		enabled: false
 	},
-	{ key: APPEAL_CASE_TYPE.Z, type: 'Commercial (CAS) appeal', enabled: false }
+	{ key: APPEAL_CASE_TYPE.Z, type: APPEAL_TYPE.Z, enabled: false }
 ];
 
 /**
