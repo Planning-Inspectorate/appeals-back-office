@@ -52,9 +52,9 @@ describe('Review appellant case', () => {
 		});
 	});
 
-	it.skip('incomplete appellant case', () => {
+	it('incomplete appellant case', () => {
 		let dueDate = new Date();
-		dueDate.setMonth(dueDate.getDate() + 28);
+		dueDate.setDate(dueDate.getDate() + 28);
 
 		cy.createCase().then((caseRef) => {
 			cy.visit(urlPaths.appealsList);
@@ -76,9 +76,9 @@ describe('Review appellant case', () => {
 		});
 	});
 
-	it.skip('incomplete appellant case reason: add another', () => {
+	it('incomplete appellant case reason: add another', () => {
 		let dueDate = new Date();
-		dueDate.setMonth(dueDate.getDate() + 28);
+		dueDate.setDate(dueDate.getDate() + 28);
 
 		cy.createCase().then((caseRef) => {
 			cy.visit(urlPaths.appealsList);

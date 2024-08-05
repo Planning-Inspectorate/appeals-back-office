@@ -213,9 +213,9 @@ export const postCheckAndConfirm = async (request, response) => {
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const getAddDocuments = async (request, response) => {
-	const { currentAppeal } = request;
+	const { currentAppeal, currentFolder } = request;
 
-	if (!currentAppeal) {
+	if (!currentAppeal || !currentFolder) {
 		return response.status(404).render('app/404.njk');
 	}
 
@@ -252,9 +252,9 @@ export const postAddDocuments = async (request, response) => {
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const getAddDocumentDetails = async (request, response) => {
-	const { currentAppeal } = request;
+	const { currentAppeal, currentFolder } = request;
 
-	if (!currentAppeal) {
+	if (!currentAppeal || !currentFolder) {
 		return response.status(404).render('app/404.njk');
 	}
 
@@ -378,9 +378,9 @@ export const getManageDocument = async (request, response) => {
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const getAddDocumentVersion = async (request, response) => {
-	const { currentAppeal } = request;
+	const { currentAppeal, currentFolder } = request;
 
-	if (!currentAppeal) {
+	if (!currentAppeal || !currentFolder) {
 		return response.status(404).render('app/404.njk');
 	}
 
@@ -420,9 +420,13 @@ export const postAddDocumentVersion = async (request, response) => {
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const getAddDocumentVersionDetails = async (request, response) => {
-	const { currentAppeal } = request;
+	const {
+		currentAppeal,
+		currentFolder,
+		params: { documentId }
+	} = request;
 
-	if (!currentAppeal) {
+	if (!currentAppeal || !currentFolder) {
 		return response.status(404).render('app/404.njk');
 	}
 
@@ -435,7 +439,9 @@ export const getAddDocumentVersionDetails = async (request, response) => {
 		request,
 		response,
 		`/appeals-service/appeal-details/${request.params.appealId}/appellant-case/add-documents/${request.params.folderId}/${request.params.documentId}`,
-		getValidationOutcomeFromAppellantCase(appellantCaseDetails) === 'valid'
+		getValidationOutcomeFromAppellantCase(appellantCaseDetails) === 'valid',
+		undefined,
+		documentId
 	);
 };
 

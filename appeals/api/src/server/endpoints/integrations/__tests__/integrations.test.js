@@ -5,6 +5,7 @@ import {
 	ERROR_INVALID_LPAQ_DATA
 } from '#endpoints/constants.js';
 import { validAppellantCase, validLpaQuestionnaire } from '#tests/integrations/mocks.js';
+import { APPEAL_CASE_TYPE } from 'pins-data-model';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 
@@ -56,6 +57,29 @@ describe('/appeals/case-submission', () => {
 			expect(response.body).toEqual({
 				errors: {
 					details: ["/casedata: must have required property 'caseType'"],
+					integration: ERROR_INVALID_APPELLANT_CASE_DATA
+				}
+			});
+		});
+
+		test('invalid appellant case payload: unsupported appeal type', async () => {
+			const { caseType, ...validPayload } = validAppellantCase.casedata;
+			console.log(caseType);
+			const payload = {
+				casedata: {
+					...validPayload,
+					caseType: APPEAL_CASE_TYPE.Y
+				},
+				users: validAppellantCase.users,
+				documents: []
+			};
+
+			const response = await request.post('/appeals/case-submission').send(payload);
+
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual({
+				errors: {
+					details: `Error validating case types: ${APPEAL_CASE_TYPE.Y} not currently supported`,
 					integration: ERROR_INVALID_APPELLANT_CASE_DATA
 				}
 			});

@@ -1,11 +1,13 @@
+import { APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
+
 /**
- * @param {import('@pins/appeals.api').Appeals.FolderInfo} folder
+ * @param {string} folderPath
  * @returns {boolean}
  */
-export function folderIsAdditionalDocuments(folder) {
-	const folderPathFragments = folder.path.split('/');
+export function folderIsAdditionalDocuments(folderPath) {
+	const documentType = folderPath.split('/')[1];
 	return (
-		folderPathFragments[1] === 'additionalDocuments' ||
-		folderPathFragments[1] === 'appellantCaseCorrespondence'
+		documentType === APPEAL_DOCUMENT_TYPE.APPELLANT_CASE_CORRESPONDENCE ||
+		documentType === APPEAL_DOCUMENT_TYPE.LPA_CASE_CORRESPONDENCE
 	);
 }

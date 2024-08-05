@@ -21,6 +21,7 @@ import safetyRisksRouter from '../safety-risks/safety-risks.router.js';
 import correctAppealTypeRouter from '../correct-appeal-type/correct-appeal-type.router.js';
 import otherAppealsRouter from '../other-appeals/other-appeals.router.js';
 import greenBeltRouter from '../green-belt/green-belt.router.js';
+import extraConditionsRouter from '../extra-conditions/extra-conditions.router.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -72,6 +73,13 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	greenBeltRouter
+);
+
+router.use(
+	'/:lpaQuestionnaireId/extra-conditions',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	extraConditionsRouter
 );
 
 router

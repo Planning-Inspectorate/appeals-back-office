@@ -26,7 +26,8 @@ import {
 	mapAppealDatesOut,
 	mapAppealValidationOut,
 	mapQuestionnaireValidationOut,
-	mapAppealRelationships
+	mapAppealRelationships,
+	mapCaseOutcomeOut
 } from './integrations.mappers/casedata.mapper.js';
 import { APPEAL_CASE_STAGE, SERVICE_USER_TYPE } from 'pins-data-model';
 import { FOLDERS } from '@pins/appeals/constants/documents.js';
@@ -79,6 +80,7 @@ const mapAppealSubmission = (data) => {
 	const { casedata, documents, users } = data;
 	const appellant = users?.find((user) => user.serviceUserType === SERVICE_USER_TYPE.APPELLANT);
 	const agent = users?.find((user) => user.serviceUserType === SERVICE_USER_TYPE.AGENT);
+	const caseType = mappers.mapAppealTypeIn(casedata.caseType);
 
 	const neighbouringSitesInput = {
 		create: casedata.neighbouringSiteAddresses?.map((site) => {
@@ -94,7 +96,7 @@ const mapAppealSubmission = (data) => {
 	const appealInput = {
 		reference: randomUUID(),
 		submissionId: casedata.submissionId,
-		appealType: { connect: { key: mappers.mapAppealTypeIn(casedata?.caseType) } },
+		appealType: { connect: { key: caseType } },
 		appellant: { create: mappers.mapServiceUserIn(appellant) },
 		agent: { create: mappers.mapServiceUserIn(agent) },
 		lpa: {
@@ -189,7 +191,7 @@ const mapAppeal = (appeal) => {
 		affectedListedBuildingNumbers:
 			appeal.lpaQuestionnaire?.listedBuildingDetails?.map((lb) => lb.listEntry) || null,
 		// Decision
-		caseDecisionOutcome: appeal.inspectorDecision?.outcome || null,
+		...mapCaseOutcomeOut(appeal),
 		// linked and related appeals
 		...mapAppealRelationships(appeal)
 	};

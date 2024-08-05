@@ -4,7 +4,7 @@
   "private": true,
   "description": "PINS Back Office Appeals API",
   "engines": {
-    "node": ">=18.0.0 <19.0.0"
+    "node": ">=20.0.0 <21.0.0"
   },
   "prisma": {
     "schema": "src/database/schema.prisma",
@@ -68,7 +68,7 @@
     "rhea": "3.0.1",
     "swagger-ui-express": "^5.0.1",
     "xstate": "4.32.1",
-    "pins-data-model": "github:Planning-Inspectorate/data-model#1.7.3"
+    "pins-data-model": "github:Planning-Inspectorate/data-model#1.8.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",

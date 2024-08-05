@@ -28,7 +28,7 @@ resources:
       type: github
       endpoint: Planning-Inspectorate
       name: Planning-Inspectorate/common-pipeline-templates
-      ref: refs/tags/release/3.16.1
+      ref: refs/tags/release/3.17.0
 
 extends:
   template: stages/wrapper_ci.yml@templates
@@ -41,22 +41,22 @@ extends:
         steps:
           - template: ../steps/node_script.yml
             parameters:
-              nodeVersion: 18
+              nodeVersion: 20
               script: npm ci
           - template: ../steps/node_script.yml
             parameters:
-              nodeVersion: 18
+              nodeVersion: 20
               script: npm run tscheck
               environmentVariables:
                 TURBO_TEAM: $(TURBO_TEAM)
                 TURBO_API: $(TURBO_API)
           - template: ../steps/node_script.yml
             parameters:
-              nodeVersion: 18
+              nodeVersion: 20
               script: npm run lint:js
           - template: ../steps/node_script.yml
             parameters:
-              nodeVersion: 18
+              nodeVersion: 20
               script: npm run test
               environmentVariables:
                 TURBO_TEAM: $(TURBO_TEAM)
@@ -121,7 +121,7 @@ extends:
           # install only function deps
           - template: ../steps/node_script.yml
             parameters:
-              nodeVersion: 18
+              nodeVersion: 20
               script: npm ci --only=prod --workspace=@pins/functions-bo-appeals-casedata-import --workspace=@pins/functions-bo-appeals-user-import --workspace=@pins/functions-bo-appeals-document-processing
 
           # merge node modules

@@ -5,6 +5,7 @@ import { users } from '../../fixtures/users';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
 import { urlPaths } from '../../support/urlPaths';
+import { tag } from '../../support/tag';
 
 const listCasesPage = new ListCasesPage();
 const caseDetailsPage = new CaseDetailsPage();
@@ -14,37 +15,45 @@ describe('Assign user to case', () => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
-	it.skip('Case officer should be able to assign themselves to a case using name search', () => {
-		cy.createCase().then((caseRef) => {
-			cy.visit(urlPaths.appealsList);
-			listCasesPage.clickAppealByRef(caseRef);
-			caseDetailsPage.clickAssignCaseOfficer();
-			caseDetailsPage.searchForCaseOfficer('case');
-			caseDetailsPage.chooseSummaryListValue(users.appeals.caseAdmin.email);
-			caseDetailsPage.clickLinkByText('Choose');
-			caseDetailsPage.selectRadioButtonByValue('Yes');
-			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.validateBannerMessage('Case officer has been assigned');
-			caseDetailsPage.verifyAnswerSummaryValue(users.appeals.caseAdmin.email);
-		});
-	});
+	it(
+		'Case officer should be able to assign themselves to a case using name search',
+		{ tags: tag.smoke },
+		() => {
+			cy.createCase().then((caseRef) => {
+				cy.visit(urlPaths.appealsList);
+				listCasesPage.clickAppealByRef(caseRef);
+				caseDetailsPage.clickAssignCaseOfficer();
+				caseDetailsPage.searchForCaseOfficer('case');
+				caseDetailsPage.chooseSummaryListValue(users.appeals.caseAdmin.email);
+				caseDetailsPage.clickLinkByText('Choose');
+				caseDetailsPage.selectRadioButtonByValue('Yes');
+				caseDetailsPage.clickButtonByText('Continue');
+				caseDetailsPage.validateBannerMessage('Case officer has been assigned');
+				caseDetailsPage.verifyAnswerSummaryValue(users.appeals.caseAdmin.email);
+			});
+		}
+	);
 
-	it('Inspector should be able to assign themselves to a case using name search', () => {
-		cy.createCase().then((caseRef) => {
-			cy.visit(urlPaths.appealsList);
-			listCasesPage.clickAppealByRef(caseRef);
-			caseDetailsPage.clickAssignInspector();
-			caseDetailsPage.searchForCaseOfficer('test');
-			caseDetailsPage.chooseSummaryListValue(users.appeals.inspector.email);
-			caseDetailsPage.clickLinkByText('Choose');
-			caseDetailsPage.selectRadioButtonByValue('Yes');
-			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.validateBannerMessage('Success', 'Inspector has been assigned');
-			caseDetailsPage.verifyAnswerSummaryValue(users.appeals.inspector.email);
-		});
-	});
+	it(
+		'Inspector should be able to assign themselves to a case using name search',
+		{ tags: tag.smoke },
+		() => {
+			cy.createCase().then((caseRef) => {
+				cy.visit(urlPaths.appealsList);
+				listCasesPage.clickAppealByRef(caseRef);
+				caseDetailsPage.clickAssignInspector();
+				caseDetailsPage.searchForCaseOfficer('test');
+				caseDetailsPage.chooseSummaryListValue(users.appeals.inspector.email);
+				caseDetailsPage.clickLinkByText('Choose');
+				caseDetailsPage.selectRadioButtonByValue('Yes');
+				caseDetailsPage.clickButtonByText('Continue');
+				caseDetailsPage.validateBannerMessage('Success', 'Inspector has been assigned');
+				caseDetailsPage.verifyAnswerSummaryValue(users.appeals.inspector.email);
+			});
+		}
+	);
 
-	it.skip('Case officer should be able to change assigned user', () => {
+	it('Case officer should be able to change assigned user', () => {
 		cy.createCase().then((caseRef) => {
 			cy.visit(urlPaths.appealsList);
 			listCasesPage.clickAppealByRef(caseRef);

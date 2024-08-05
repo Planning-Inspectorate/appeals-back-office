@@ -37,8 +37,7 @@ class NotifyClient {
 			NODE_ENV
 		} = config;
 
-		return (recipientEmail =
-			testMailbox || NODE_ENV !== NODE_ENV_PRODUCTION ? testMailbox : recipientEmail);
+		return NODE_ENV !== NODE_ENV_PRODUCTION ? testMailbox : recipientEmail;
 	}
 
 	/**
@@ -65,16 +64,20 @@ class NotifyClient {
 				reference: null
 			});
 		} catch (error) {
-			// @ts-ignore
 			if (
 				typeof error === 'object' &&
 				error !== null &&
 				'response' in error &&
-				error.response.status
-			) {
 				// @ts-ignore
+				error.response?.status
+			) {
 				logger.error(
-					stringTokenReplacement(ERROR_GOV_NOTIFY_CONNECTIVITY, [error.response.status])
+					error,
+					stringTokenReplacement(ERROR_GOV_NOTIFY_CONNECTIVITY, [
+						// @ts-ignore
+						error.response?.status,
+						template.id
+					])
 				);
 			} else {
 				const errorMessage = error instanceof Error ? error.message : 'Unknown error';

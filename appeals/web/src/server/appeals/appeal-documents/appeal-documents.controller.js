@@ -71,10 +71,13 @@ export const renderDocumentUpload = async (
 	let latestVersion;
 
 	if (documentId) {
-		const fileInfo = await getFileInfo(request.apiClient, appealId, documentId);
-		documentName = fileInfo?.latestDocumentVersion?.fileName;
-		_documentType = fileInfo?.latestDocumentVersion?.documentType;
-		latestVersion = fileInfo?.latestDocumentVersion?.version;
+		const fileVersionsInfo = await getFileVersionsInfo(request.apiClient, appealId, documentId);
+
+		documentName = fileVersionsInfo?.latestDocumentVersion?.fileName;
+		_documentType = fileVersionsInfo?.latestDocumentVersion?.documentType;
+		latestVersion = fileVersionsInfo?.allVersions
+			.map((versionInfo) => versionInfo.version)
+			.sort((a, b) => b - a)[0];
 	}
 
 	const mappedPageContent = await documentUploadPage(
@@ -145,13 +148,15 @@ export const postDocumentUpload = async (request, response, nextPageUrl) => {
  * @param {string} backButtonUrl
  * @param {boolean} [isLateEntry]
  * @param {string} [pageHeadingTextOverride]
+ * @param {string} [documentId]
  */
 export const renderDocumentDetails = async (
 	request,
 	response,
 	backButtonUrl,
 	isLateEntry = false,
-	pageHeadingTextOverride
+	pageHeadingTextOverride,
+	documentId
 ) => {
 	const { currentFolder, body, errors } = request;
 
@@ -175,10 +180,11 @@ export const renderDocumentDetails = async (
 		request.session.fileUploadInfo,
 		body?.items,
 		redactionStatuses,
-		pageHeadingTextOverride
+		pageHeadingTextOverride,
+		documentId
 	);
 
-	const isAdditionalDocument = folderIsAdditionalDocuments(currentFolder);
+	const isAdditionalDocument = folderIsAdditionalDocuments(currentFolder.path);
 
 	return response.render('appeals/documents/add-document-details.njk', {
 		pageContent: mappedPageContent,
@@ -725,7 +731,6 @@ export const postDeleteDocument = async (
 	if (
 		!isInternalUrl(returnUrl, request) ||
 		!isInternalUrl(cancelUrl, request) ||
-		!isInternalUrl(cancelUrlProcessed, request) ||
 		!isInternalUrl(uploadNewDocumentUrl, request)
 	) {
 		return response.status(400).render('errorPageTemplate', {
@@ -734,11 +739,7 @@ export const postDeleteDocument = async (
 	}
 
 	if (body['delete-file-answer'] === 'no') {
-		const cancelUrlProcessedSafe = new URL(
-			cancelUrlProcessed,
-			`${request.protocol}://${request.headers.host}`
-		);
-		return response.redirect(cancelUrlProcessedSafe.toString());
+		return response.redirect(cancelUrlProcessed);
 	} else if (body['delete-file-answer'] === 'yes') {
 		await deleteDocument(apiClient, appealId, documentId, versionId);
 		addNotificationBannerToSession(
@@ -746,9 +747,7 @@ export const postDeleteDocument = async (
 			'documentDeleted',
 			Number.parseInt(appealId, 10)
 		);
-
-		const returnUrlSafe = new URL(returnUrl, `${request.protocol}://${request.headers.host}`);
-		return response.redirect(returnUrlSafe.toString());
+		return response.redirect(returnUrl);
 	} else if (body['delete-file-answer'] === 'yes-and-upload-another-document') {
 		const fileVersionsInfo = await getFileVersionsInfo(request.apiClient, appealId, documentId);
 
@@ -758,12 +757,7 @@ export const postDeleteDocument = async (
 
 			if (deletingOnlyVersion) {
 				await deleteDocument(apiClient, appealId, documentId, versionId);
-
-				const uploadNewDocumentUrlProcessedSafe = new URL(
-					uploadNewDocumentUrlProcessed,
-					`${request.protocol}://${request.headers.host}`
-				);
-				return response.redirect(uploadNewDocumentUrlProcessedSafe.toString());
+				return response.redirect(uploadNewDocumentUrlProcessed);
 			} else {
 				return response.status(500).render('app/500.njk');
 			}

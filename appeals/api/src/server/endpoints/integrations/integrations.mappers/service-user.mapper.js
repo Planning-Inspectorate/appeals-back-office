@@ -39,8 +39,11 @@ export const mapServiceUserIn = (data) => {
  */
 export const mapServiceUserOut = (data, serviceUserType, caseReference) => {
 	if (data) {
+		const startRange = 200000000;
+		const userId = startRange + data.id;
+		const userSuid = startRange + data.id;
 		const user = {
-			id: data.id.toString(),
+			id: userId.toString(),
 			organisation: data.organisationName ?? null,
 			organisationType: null,
 			salutation: data.salutation ?? null,
@@ -55,7 +58,7 @@ export const mapServiceUserOut = (data, serviceUserType, caseReference) => {
 			addressCounty: data.address?.addressCounty ?? null,
 			postcode: data.address?.postcode ?? null,
 			addressCountry: data.address?.addressCountry ?? null,
-			sourceSuid: data.id.toString(),
+			sourceSuid: userSuid.toString(),
 			caseReference,
 			sourceSystem: ODW_SYSTEM_ID,
 			serviceUserType: mapServiceUserType(serviceUserType),

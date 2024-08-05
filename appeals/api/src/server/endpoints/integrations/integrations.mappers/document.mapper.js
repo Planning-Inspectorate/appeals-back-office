@@ -172,7 +172,7 @@ const mapOrigin = (stage) => {
 	if (stage === APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE) {
 		return APPEAL_ORIGIN.LPA;
 	}
-	if (stage === APPEAL_CASE_STAGE.APPEAL_DECISION || stage === 'internal') {
+	if (stage === APPEAL_CASE_STAGE.APPEAL_DECISION || stage === APPEAL_CASE_STAGE.INTERNAL) {
 		return APPEAL_ORIGIN.PINS;
 	}
 	return null;

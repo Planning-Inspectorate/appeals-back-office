@@ -5,7 +5,8 @@ import {
 	ERROR_MUST_BE_NUMBER,
 	ERROR_NOT_FOUND,
 	LENGTH_8,
-	AUDIT_TRAIL_SUBMISSION_INCOMPLETE
+	AUDIT_TRAIL_SUBMISSION_INCOMPLETE,
+	AUDIT_TRAIL_SITE_AREA_SQUARE_METRES_UPDATED
 } from '../../constants.js';
 import {
 	appellantCaseIncompleteReasons,
@@ -231,6 +232,46 @@ describe('appellant cases routes', () => {
 		});
 
 		describe('PATCH', () => {
+			test('updates appellant case site area', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
+
+				const patchBody = {
+					siteAreaSquareMetres: '30.6'
+				};
+				const dataToSave = {
+					siteAreaSquareMetres: patchBody.siteAreaSquareMetres
+				};
+
+				const { appellantCase, id } = householdAppeal;
+				const response = await request
+					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+					.send(patchBody)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith({
+					where: { id: appellantCase.id },
+					data: dataToSave
+				});
+
+				expect(databaseConnector.appealStatus.create).not.toHaveBeenCalled();
+
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+					data: {
+						appealId: householdAppeal.id,
+						details: AUDIT_TRAIL_SITE_AREA_SQUARE_METRES_UPDATED,
+						loggedAt: expect.any(Date),
+						userId: householdAppeal.caseOfficer.id
+					}
+				});
+
+				expect(response.status).toEqual(200);
+			});
 			test('updates appellant case when the validation outcome is Incomplete without reason text and with an appeal due date', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(

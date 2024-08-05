@@ -2,9 +2,15 @@
 These Cypress tests form the highest level of the automation test pryimid, running through the browser and testing entire journeys. They are designed to give the highest level of confidence that no regressions have been introduced into the system by running through a complete set of high level journeys. However this does mean that they are likely to take longer to run than lower level forms of testing (e.g. unit or integration)
 
 ## Usage
-To run the tests, you can run `npm run e2e` from the root, or `npm run e2e:open` to run in interactive mode. 
+### Run all tests
+`npm run cy:run` (Headless)\
+`npm run cy:open` (Interactive mode)
 
-You can also run `npm run cy:run` and `npm run cy:open` to run in interactive mode from the e2e-testing - `/appeals/e2e` directory.
+### Run only smoke tests (sub-set)
+`npm run cy:run-smoke` (Headless)\
+`npm run cy:open-smoke` (Interactive mode)
+
+Alternatively you can run tests from the root via  `npm run e2e`  or `npm run e2e:open` to run in interactive mode. 
 
 ## Getting Started
 ### Prerequisites
@@ -24,6 +30,23 @@ The tests rely on Entra being used so that the correct users can be obtained and
 
 ### Tips
 - Ensure that you've run `npm ci`, otherwise NPM won't have installed the packages used by Cypress and you'll get an error when trying to run
+
+## Running smoke tests only (tags)
+By default all tests are run as the full **regression test** suite. However it's also possible to run a sub-set, should as the **smoke tests** only which are designed to quickly give confidence that basic functionality is working.
+
+The [Cypress Grep package](https://github.com/cypress-io/cypress/tree/develop/npm/grep) is used to provide this functionality. Tags that feature a tag have it indicated after the test name, such as
+
+```
+it('Test name', { tags: tag.smoke }, () => {
+	/* Test goes here */	
+}
+```
+
+To only run **smoke tests** the following command would be used
+
+```
+npx cypress run --env grepTags="smoke"
+```
 
 ## Architecture
 All tests are defined within the `*.spec.js` files. These in turn should use files within the `/page_object` directory to interact with the page.

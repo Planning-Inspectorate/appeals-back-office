@@ -1,8 +1,14 @@
 // @ts-nocheck
 
 import formatValidationOutcomeResponse from '#utils/format-validation-outcome-response.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_DECISION_OUTCOME, APPEAL_CASE_STATUS } from 'pins-data-model';
 import { mapDate } from './date.mapper.js';
+import {
+	CASE_OUTCOME_ALLOWED,
+	CASE_OUTCOME_INVALID,
+	CASE_OUTCOME_DISMISSED,
+	CASE_OUTCOME_SPLIT_DECISION
+} from '#endpoints/constants.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.AppealStatus} AppealStatus */
@@ -10,6 +16,26 @@ import { mapDate } from './date.mapper.js';
 export const mapCaseDataOut = (data) => {
 	return {
 		...data
+	};
+};
+
+/**
+ *
+ * @param {Appeal} appeal
+ * @returns
+ */
+export const mapCaseOutcomeOut = (appeal) => {
+	const outcome = appeal.inspectorDecision?.outcome || null;
+	const mappedOutcome = {
+		[CASE_OUTCOME_ALLOWED]: APPEAL_CASE_DECISION_OUTCOME.ALLOWED,
+		[CASE_OUTCOME_INVALID]: APPEAL_CASE_DECISION_OUTCOME.INVALID,
+		[CASE_OUTCOME_DISMISSED]: APPEAL_CASE_DECISION_OUTCOME.DISMISSED,
+		[CASE_OUTCOME_SPLIT_DECISION]: APPEAL_CASE_DECISION_OUTCOME.SPLIT_DECISION
+	};
+	const broadcastedOutcome = outcome === null ? null : mappedOutcome[outcome];
+
+	return {
+		caseDecisionOutcome: broadcastedOutcome
 	};
 };
 

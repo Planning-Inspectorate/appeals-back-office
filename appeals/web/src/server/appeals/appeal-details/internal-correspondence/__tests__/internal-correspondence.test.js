@@ -167,6 +167,9 @@ describe('internal correspondence', () => {
 				.reply(200, folderInfoInspectorCorrespondence)
 				.persist();
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+			nock('http://test/')
+				.get('/appeals/1/documents/1/versions')
+				.reply(200, documentFileVersionsInfo);
 		});
 
 		for (const correspondenceCategory of correspondenceCategories) {

@@ -290,14 +290,17 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 					text: 'Outcome'
 				},
 				value: {
-					text: capitalize(appellantCaseData.applicationDecision ?? '')
+					text:
+						appellantCaseData.applicationDecision === 'not_received'
+							? 'Not received'
+							: capitalize(appellantCaseData.applicationDecision ?? '')
 				},
 				actions: {
 					items: [
 						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
 							visuallyHiddenText: 'Application outcome',
-							href: `${currentRoute}/#`
+							href: `${currentRoute}/application-outcome/change`
 						})
 					]
 				}
@@ -865,7 +868,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 						mapActionComponent(permissionNames.updateCase, session, {
 							text: 'Change',
 							visuallyHiddenText: 'Applied for award of appeal costs',
-							href: `${currentRoute}/#`
+							href: `${currentRoute}/appeal-costs-application/change`
 						})
 					]
 				}

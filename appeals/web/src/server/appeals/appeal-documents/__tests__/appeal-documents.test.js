@@ -2,7 +2,10 @@ import nock from 'nock';
 import supertest from 'supertest';
 import { parseHtml } from '@pins/platform';
 import { createTestEnvironment } from '#testing/index.js';
-import { appellantCaseDataNotValidated } from '#testing/app/fixtures/referencedata.js';
+import {
+	appellantCaseDataNotValidated,
+	documentFileVersionsInfo
+} from '#testing/app/fixtures/referencedata.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -12,7 +15,7 @@ const validFolderId = 1;
 const invalidFolderId = 2;
 const documentId = '0e4ce48f-2d67-4659-9082-e80a15182386';
 const validFolders = [
-	{ folderId: validFolderId, path: 'appellantCase/docs', caseId: validAppealId }
+	{ folderId: validFolderId, path: 'appellantCase/newSupportingDocuments', caseId: validAppealId }
 ];
 
 const getControllerEndpoint = (
@@ -105,6 +108,9 @@ describe('documents upload', () => {
 					version: 1
 				}
 			});
+		nock('http://test/')
+			.get(`/appeals/${validAppealId}/documents/${documentId}/versions`)
+			.reply(200, documentFileVersionsInfo);
 
 		const response = await request.get(
 			getControllerEndpoint(validAppealId, validFolderId, documentId)
@@ -150,6 +156,9 @@ describe('documents upload', () => {
 		nock('http://test/')
 			.get(`/appeals/${validAppealId}/documents/${documentId}`)
 			.reply(200, { latestDocumentVersion: {} });
+		nock('http://test/')
+			.get(`/appeals/${validAppealId}/documents/${documentId}/versions`)
+			.reply(200, documentFileVersionsInfo);
 
 		const response = await request.get(
 			getControllerEndpoint(validAppealId, validFolderId, documentId)
