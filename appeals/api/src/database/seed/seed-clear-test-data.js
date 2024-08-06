@@ -1,0 +1,377 @@
+import { localPlanningDepartmentList } from './LPAs/training.js';
+import { databaseConnector } from '../../server/utils/database-connector.js';
+
+/**
+ * @typedef {import('../../server/utils/db-client/index.js').PrismaClient} DatabaseConnector
+ */
+
+async function deleteTestRecords() {
+	const lpaCodes = localPlanningDepartmentList.map((lpa) => lpa.lpaCode);
+	const appealIDs = await getAppeals(lpaCodes);
+	const appellantCaseIDs = await getAppellantCases(appealIDs);
+	const lpaqIDs = await getLpaQuestionnaires(appealIDs);
+	const docIDs = await getDocuments(appealIDs);
+
+	try {
+		await deleteAppealData(appealIDs, appellantCaseIDs, lpaqIDs, docIDs);
+	} catch (error) {
+		console.error(error);
+		throw error;
+	} finally {
+		await databaseConnector.$disconnect();
+	}
+}
+
+/**
+ *
+ * @param {number[]} appealIDs
+ * @param {number[]} appellantCasesIDs
+ * @param {number[]} lpaqIDs
+ * @param {string[]} documentIDs
+ */
+const deleteAppealData = async (appealIDs, appellantCasesIDs, lpaqIDs, documentIDs) => {
+	const deleteAppeals = databaseConnector.appeal.deleteMany({
+		where: {
+			id: {
+				in: appealIDs
+			}
+		}
+	});
+
+	const deleteTimetables = databaseConnector.appealTimetable.deleteMany({
+		where: {
+			appealId: {
+				in: appealIDs
+			}
+		}
+	});
+
+	const deleteNeighbouringSites = databaseConnector.neighbouringSite.deleteMany({
+		where: {
+			appealId: {
+				in: appealIDs
+			}
+		}
+	});
+
+	const deleteSpecialisms = databaseConnector.appealSpecialism.deleteMany({
+		where: {
+			appealId: {
+				in: appealIDs
+			}
+		}
+	});
+
+	const deleteAllocationLevels = databaseConnector.appealAllocation.deleteMany({
+		where: {
+			appealId: {
+				in: appealIDs
+			}
+		}
+	});
+
+	const deleteAppellantCases = databaseConnector.appellantCase.deleteMany({
+		where: {
+			appealId: {
+				in: appealIDs
+			}
+		}
+	});
+
+	const deleteAppellantCasesInvalidReasons =
+		databaseConnector.appellantCaseInvalidReasonsSelected.deleteMany({
+			where: {
+				appellantCaseId: {
+					in: appellantCasesIDs
+				}
+			}
+		});
+
+	const deleteAppellantCasesInvalidCustomReasons =
+		databaseConnector.appellantCaseInvalidReasonText.deleteMany({
+			where: {
+				appellantCaseId: {
+					in: appellantCasesIDs
+				}
+			}
+		});
+
+	const deleteAppellantCasesIncompleteReasons =
+		databaseConnector.appellantCaseIncompleteReasonsSelected.deleteMany({
+			where: {
+				appellantCaseId: {
+					in: appellantCasesIDs
+				}
+			}
+		});
+
+	const deleteAppellantCasesIncompleteCustomReasons =
+		databaseConnector.appellantCaseIncompleteReasonText.deleteMany({
+			where: {
+				appellantCaseId: {
+					in: appellantCasesIDs
+				}
+			}
+		});
+
+	const deleteLpaQuestionnaires = databaseConnector.lPAQuestionnaire.deleteMany({
+		where: {
+			appealId: {
+				in: appealIDs
+			}
+		}
+	});
+
+	const deleteLpaQuestionnairesIncompleteReasons =
+		databaseConnector.lPAQuestionnaireIncompleteReasonsSelected.deleteMany({
+			where: {
+				lpaQuestionnaireId: {
+					in: lpaqIDs
+				}
+			}
+		});
+
+	const deleteLpaQuestionnairesIncompleteCustomReasons =
+		databaseConnector.lPAQuestionnaireIncompleteReasonText.deleteMany({
+			where: {
+				lpaQuestionnaireId: {
+					in: lpaqIDs
+				}
+			}
+		});
+
+	const deleteLpaQuestionnaireNotificationMethods =
+		databaseConnector.lPANotificationMethodsSelected.deleteMany({
+			where: {
+				lpaQuestionnaireId: {
+					in: lpaqIDs
+				}
+			}
+		});
+
+	const deleteLpaQuestionnaireListedBuildings = databaseConnector.listedBuildingSelected.deleteMany(
+		{
+			where: {
+				lpaQuestionnaireId: {
+					in: lpaqIDs
+				}
+			}
+		}
+	);
+
+	const deleteStatuses = databaseConnector.appealStatus.deleteMany({
+		where: {
+			appealId: {
+				in: appealIDs
+			}
+		}
+	});
+
+	const deleteFolders = databaseConnector.folder.deleteMany({
+		where: {
+			caseId: {
+				in: appealIDs
+			}
+		}
+	});
+
+	const deleteParentRelationships = databaseConnector.appealRelationship.deleteMany({
+		where: {
+			parentId: {
+				in: appealIDs
+			}
+		}
+	});
+
+	const deleteChildRelationships = databaseConnector.appealRelationship.deleteMany({
+		where: {
+			childId: {
+				in: appealIDs
+			}
+		}
+	});
+
+	const deleteDocumentVersions = databaseConnector.documentVersion.deleteMany({
+		where: {
+			documentGuid: {
+				in: documentIDs
+			}
+		}
+	});
+
+	const deleteDocAvScans = databaseConnector.documentVersionAvScan.deleteMany({
+		where: {
+			documentGuid: {
+				in: documentIDs
+			}
+		}
+	});
+
+	const deleteDocuments = databaseConnector.document.deleteMany({
+		where: {
+			guid: {
+				in: documentIDs
+			}
+		}
+	});
+
+	const deleteDocumentAudits = databaseConnector.documentVersionAudit.deleteMany({
+		where: {
+			documentGuid: {
+				in: documentIDs
+			}
+		}
+	});
+
+	const deleteAudits = databaseConnector.auditTrail.deleteMany({
+		where: {
+			appealId: {
+				in: appealIDs
+			}
+		}
+	});
+
+	const deleteDecisions = databaseConnector.inspectorDecision.deleteMany({
+		where: {
+			appealId: {
+				in: appealIDs
+			}
+		}
+	});
+
+	const updateDocumentVersions = databaseConnector.document.updateMany({
+		data: {
+			latestVersionId: null
+		},
+		where: {
+			guid: {
+				in: documentIDs
+			}
+		}
+	});
+
+	const updateAppeals = databaseConnector.appeal.updateMany({
+		data: {
+			appellantId: null,
+			agentId: null,
+			caseOfficerUserId: null,
+			inspectorUserId: null
+		},
+		where: {
+			id: {
+				in: appealIDs
+			}
+		}
+	});
+
+	await updateAppeals;
+	await updateDocumentVersions;
+	await deleteDocAvScans;
+	await deleteDecisions;
+	await deleteDocumentAudits;
+	await deleteDocumentVersions;
+	await deleteDocuments;
+
+	await databaseConnector.$transaction([
+		deleteAudits,
+		deleteSpecialisms,
+		deleteAllocationLevels,
+		deleteParentRelationships,
+		deleteChildRelationships,
+		deleteAppellantCasesIncompleteCustomReasons,
+		deleteAppellantCasesInvalidCustomReasons,
+		deleteAppellantCasesIncompleteReasons,
+		deleteAppellantCasesInvalidReasons,
+		deleteLpaQuestionnairesIncompleteCustomReasons,
+		deleteLpaQuestionnairesIncompleteReasons,
+		deleteLpaQuestionnaireNotificationMethods,
+		deleteLpaQuestionnaireListedBuildings,
+		deleteTimetables,
+		deleteNeighbouringSites,
+		deleteStatuses,
+		deleteAppellantCases,
+		deleteLpaQuestionnaires,
+		deleteDocuments,
+		deleteFolders,
+		deleteAppeals
+	]);
+};
+
+/**
+ * @param {string[]} lpaCodes
+ * @returns {Promise<number[]>}
+ */
+const getAppeals = async (lpaCodes) => {
+	const appeals = await databaseConnector.appeal.findMany({
+		where: {
+			lpa: {
+				lpaCode: {
+					in: lpaCodes
+				}
+			}
+		},
+		select: {
+			id: true
+		}
+	});
+	return appeals.map((appeal) => appeal.id);
+};
+
+/**
+ * @param {number[]} appealIDs
+ * @returns {Promise<number[]>}
+ */
+const getAppellantCases = async (appealIDs) => {
+	const appellantCases = await databaseConnector.appellantCase.findMany({
+		where: {
+			appealId: {
+				in: appealIDs
+			}
+		},
+		select: {
+			id: true
+		}
+	});
+
+	return appellantCases.map((_) => _.id);
+};
+
+/**
+ * @param {number[]} appealIDs
+ * @returns {Promise<number[]>}
+ */
+const getLpaQuestionnaires = async (appealIDs) => {
+	const lpaQuestionnaires = await databaseConnector.lPAQuestionnaire.findMany({
+		where: {
+			appealId: {
+				in: appealIDs
+			}
+		},
+		select: {
+			id: true
+		}
+	});
+
+	return lpaQuestionnaires.map((_) => _.id);
+};
+
+/**
+ * @param {number[]} appealIDs
+ * @returns {Promise<string[]>}
+ */
+const getDocuments = async (appealIDs) => {
+	const documents = await databaseConnector.document.findMany({
+		where: {
+			caseId: {
+				in: appealIDs
+			}
+		},
+		select: {
+			guid: true
+		}
+	});
+
+	return documents.map((_) => _.guid);
+};
+
+await deleteTestRecords();
