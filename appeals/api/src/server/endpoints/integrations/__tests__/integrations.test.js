@@ -63,8 +63,8 @@ describe('/appeals/case-submission', () => {
 		});
 
 		test('invalid appellant case payload: unsupported appeal type', async () => {
+			// eslint-disable-next-line no-unused-vars
 			const { caseType, ...validPayload } = validAppellantCase.casedata;
-			console.log(caseType);
 			const payload = {
 				casedata: {
 					...validPayload,

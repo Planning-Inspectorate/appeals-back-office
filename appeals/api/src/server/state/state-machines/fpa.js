@@ -59,7 +59,7 @@ const stateMachine = (currentState) =>
 			},
 			[APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE]: {
 				on: {
-					[VALIDATION_OUTCOME_COMPLETE]: { target: 'statement_review' },
+					[VALIDATION_OUTCOME_COMPLETE]: { target: APPEAL_CASE_STATUS.STATEMENTS },
 					[VALIDATION_OUTCOME_INCOMPLETE]: undefined,
 					[APPEAL_CASE_STATUS.CLOSED]: { target: APPEAL_CASE_STATUS.CLOSED },
 					[APPEAL_CASE_STATUS.AWAITING_TRANSFER]: {
@@ -70,15 +70,29 @@ const stateMachine = (currentState) =>
 					}
 				}
 			},
-			['statement_review']: {
+			[APPEAL_CASE_STATUS.STATEMENTS]: {
 				on: {
-					['final_comment_review']: { target: 'final_comment_review' }
+					[APPEAL_CASE_STATUS.FINAL_COMMENTS]: { target: APPEAL_CASE_STATUS.FINAL_COMMENTS },
+					[APPEAL_CASE_STATUS.CLOSED]: { target: APPEAL_CASE_STATUS.CLOSED },
+					[APPEAL_CASE_STATUS.AWAITING_TRANSFER]: {
+						target: APPEAL_CASE_STATUS.AWAITING_TRANSFER
+					},
+					[APPEAL_CASE_STATUS.WITHDRAWN]: {
+						target: APPEAL_CASE_STATUS.WITHDRAWN
+					}
 				}
 			},
-			['final_comment_review']: {
+			[APPEAL_CASE_STATUS.FINAL_COMMENTS]: {
 				on: {
 					[APPEAL_CASE_STATUS.ISSUE_DETERMINATION]: {
 						target: APPEAL_CASE_STATUS.ISSUE_DETERMINATION
+					},
+					[APPEAL_CASE_STATUS.CLOSED]: { target: APPEAL_CASE_STATUS.CLOSED },
+					[APPEAL_CASE_STATUS.AWAITING_TRANSFER]: {
+						target: APPEAL_CASE_STATUS.AWAITING_TRANSFER
+					},
+					[APPEAL_CASE_STATUS.WITHDRAWN]: {
+						target: APPEAL_CASE_STATUS.WITHDRAWN
 					}
 				}
 			},
