@@ -24,7 +24,7 @@
 		"prepare": "node -e \"try { require('husky').install() } catch (e) {if (e.code !== 'MODULE_NOT_FOUND') throw e}\"",
 		"tscheck": "turbo run prisma-generate --concurrency=1 && turbo run tscheck --parallel --filter=!@pins/appeals.api",
 		"dev": "turbo run dev --filter=./appeals/* --no-cache --parallel --continue",
-		"test": "dotenv turbo run test -- --concurrency=2",
+		"test": "dotenv turbo run test -- --concurrency=1",
 		"web": "npm run dev --workspace=@pins/appeals.web",
 		"api": "npm run dev --workspace=@pins/appeals.api",
 		"c4": "docker pull structurizr/lite && docker run -it --rm -p 8082:8080 -v $PWD:/usr/local/structurizr structurizr/lite"
