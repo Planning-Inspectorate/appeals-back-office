@@ -7,7 +7,7 @@ export const EVENT_TYPE = {
 };
 
 export const FEATURE_FLAG_NAMES = {
-	SECTION_78: 'featureFlagS78Features'
+	SECTION_78: 'featureFlagS78Written'
 };
 
 export const APPEAL_TYPE = {

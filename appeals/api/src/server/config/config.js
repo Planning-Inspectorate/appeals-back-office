@@ -34,7 +34,7 @@ const { value, error } = schema.validate({
 		featureFlagBoas1TestFeature: !environment.FEATURE_FLAG_BOAS_1_TEST_FEATURE
 			? false
 			: environment.FEATURE_FLAG_BOAS_1_TEST_FEATURE === 'true',
-		featureFlagS78Features: environment.FEATURE_FLAG_S78_FEATURES === 'false'
+		featureFlagS78Written: environment.FEATURE_FLAG_S78_WRITTEN === 'false'
 	},
 	serviceBusEnabled: environment.SERVICE_BUS_ENABLED && environment.SERVICE_BUS_ENABLED === 'true',
 	govNotify: {
