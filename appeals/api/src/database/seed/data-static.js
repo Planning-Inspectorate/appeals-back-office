@@ -31,11 +31,7 @@ import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 export const appealTypes = [
 	{ key: APPEAL_CASE_TYPE.D, type: APPEAL_TYPE.D, processCode: 'HAS', enabled: true },
 	{ key: APPEAL_CASE_TYPE.C, type: APPEAL_TYPE.C, enabled: false },
-	{
-		key: APPEAL_CASE_TYPE.F,
-		type: APPEAL_TYPE.F,
-		enabled: false
-	},
+	{ key: APPEAL_CASE_TYPE.F, type: APPEAL_TYPE.F, enabled: false },
 	{ key: APPEAL_CASE_TYPE.G, type: APPEAL_TYPE.G, enabled: false },
 	{ key: APPEAL_CASE_TYPE.H, type: APPEAL_TYPE.H, enabled: false },
 	{ key: APPEAL_CASE_TYPE.L, type: APPEAL_TYPE.L, enabled: false },
@@ -44,11 +40,7 @@ export const appealTypes = [
 	{ key: APPEAL_CASE_TYPE.V, type: APPEAL_TYPE.V, enabled: false },
 	{ key: APPEAL_CASE_TYPE.W, type: APPEAL_TYPE.W, enabled: false },
 	{ key: APPEAL_CASE_TYPE.X, type: APPEAL_TYPE.X, enabled: false },
-	{
-		key: APPEAL_CASE_TYPE.Y,
-		type: APPEAL_TYPE.Y,
-		enabled: false
-	},
+	{ key: APPEAL_CASE_TYPE.Y, type: APPEAL_TYPE.Y, enabled: false },
 	{ key: APPEAL_CASE_TYPE.Z, type: APPEAL_TYPE.Z, enabled: false }
 ];
 
