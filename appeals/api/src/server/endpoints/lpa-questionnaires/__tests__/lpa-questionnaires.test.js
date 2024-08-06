@@ -321,14 +321,16 @@ describe('lpa questionnaires routes', () => {
 					data: {
 						appealId: fullPlanningAppeal.id,
 						createdAt: expect.any(Date),
-						status: 'statement_review',
+						status: APPEAL_CASE_STATUS.STATEMENTS,
 						valid: true
 					}
 				});
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 					data: {
 						appealId: fullPlanningAppeal.id,
-						details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, ['statement_review']),
+						details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, [
+							APPEAL_CASE_STATUS.STATEMENTS
+						]),
 						loggedAt: expect.any(Date),
 						userId: fullPlanningAppeal.caseOfficer.id
 					}
