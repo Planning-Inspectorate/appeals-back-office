@@ -15,22 +15,22 @@ import {
 	validateCaseFolderId,
 	validateCaseDocumentId
 } from '../../appeal-documents/appeal-documents.middleware.js';
-import changeLpaReferenceRouter from '../change-lpa-reference/change-lpa-reference.router.js';
+import lpaReferenceRouter from '../lpa-reference/lpa-reference.router.js';
 import inspectorAccessRouter from '../inspector-access/inspector-access.router.js';
 import serviceUserRouter from '../service-user/service-user.router.js';
 import safetyRisksRouter from '../safety-risks/safety-risks.router.js';
-import siteAddressRouter from '../address/address.router.js';
-import siteOwnershipRouter from '../site-ownership/site-ownership.router.js';
-import ownersKnownRouter from '../owners-known/owners-known.router.js';
+import siteAddressRouter from './address/address.router.js';
+import siteOwnershipRouter from './site-ownership/site-ownership.router.js';
+import ownersKnownRouter from './owners-known/owners-known.router.js';
 import otherAppealsRouter from '../other-appeals/other-appeals.router.js';
-import siteAreaRouter from '../site-area/site-area.router.js';
-import applicationSubmissionDateRouter from '../application-submission-date/application-submission-date.router.js';
-import applicationDecisionDateRouter from '../application-decision-date/application-decision-date.router.js';
+import siteAreaRouter from './site-area/site-area.router.js';
+import applicationSubmissionDateRouter from './application-submission-date/application-submission-date.router.js';
+import applicationDecisionDateRouter from './application-decision-date/application-decision-date.router.js';
 import greenBeltRouter from '../green-belt/green-belt.router.js';
-import developmentDescriptionRouter from '../development-description/development-description.router.js';
-import lpaChangedDescriptionRouter from '../lpa-changed-description/lpa-changed-description.router.js';
-import applicationOutcomeRouter from '../application-outcome/application-outcome.router.js';
-import appealCostsApplicationRouter from '../appeal-costs-application/appeal-costs-application.router.js';
+import developmentDescriptionRouter from './development-description/development-description.router.js';
+import lpaChangedDescriptionRouter from './lpa-changed-description/lpa-changed-description.router.js';
+import applicationOutcomeRouter from './application-outcome/application-outcome.router.js';
+import appealCostsApplicationRouter from './appeal-costs-application/appeal-costs-application.router.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -56,7 +56,7 @@ router.use(
 	'/lpa-reference',
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
-	changeLpaReferenceRouter
+	lpaReferenceRouter
 );
 router.use(
 	'/inspector-access',
@@ -112,21 +112,18 @@ router.use(
 	assertUserHasPermission(permissionNames.updateCase),
 	applicationSubmissionDateRouter
 );
-
 router.use(
 	'/application-decision-date',
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	applicationDecisionDateRouter
 );
-
 router.use(
 	'/green-belt',
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	greenBeltRouter
 );
-
 router.use(
 	'/development-description',
 	validateAppeal,
@@ -139,7 +136,6 @@ router.use(
 	assertUserHasPermission(permissionNames.updateCase),
 	lpaChangedDescriptionRouter
 );
-
 router.use(
 	'/application-outcome',
 	validateAppeal,

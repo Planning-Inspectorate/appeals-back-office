@@ -15,14 +15,14 @@ import {
 	validateCaseDocumentId
 } from '../../appeal-documents/appeal-documents.middleware.js';
 import changePageRouter from '../../change-page/change-page.router.js';
-import changeInspectorAccessRouter from '../inspector-access/inspector-access.router.js';
+import inspectorAccessRouter from '../inspector-access/inspector-access.router.js';
 import neighbouringSitesRouter from '../neighbouring-sites/neighbouring-sites.router.js';
 import safetyRisksRouter from '../safety-risks/safety-risks.router.js';
-import correctAppealTypeRouter from '../correct-appeal-type/correct-appeal-type.router.js';
+import correctAppealTypeRouter from './correct-appeal-type/correct-appeal-type.router.js';
 import otherAppealsRouter from '../other-appeals/other-appeals.router.js';
 import greenBeltRouter from '../green-belt/green-belt.router.js';
-import extraConditionsRouter from '../extra-conditions/extra-conditions.router.js';
-import notificationMethodsRouter from '../notification-methods/notification-methods.router.js';
+import extraConditionsRouter from './extra-conditions/extra-conditions.router.js';
+import notificationMethodsRouter from './notification-methods/notification-methods.router.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -48,7 +48,7 @@ router.use(
 	'/:lpaQuestionnaireId/inspector-access',
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
-	changeInspectorAccessRouter
+	inspectorAccessRouter
 );
 router.use(
 	'/:lpaQuestionnaireId/safety-risks',
