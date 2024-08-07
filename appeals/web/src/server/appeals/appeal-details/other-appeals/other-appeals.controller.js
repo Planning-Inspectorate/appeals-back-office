@@ -5,7 +5,7 @@ import {
 	removeAppealRelationshipPage
 } from './other-appeals.mapper.js';
 import { postAssociateAppeal, postAssociateLegacyAppeal } from './other-appeals.service.js';
-import { postUnlinkRequest } from '../manage-linked-appeals/manage-linked-appeals.service.js';
+import { postUnlinkRequest } from '../linked-appeals/linked-appeals.service.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';

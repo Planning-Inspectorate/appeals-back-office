@@ -16,7 +16,7 @@ import * as controller from './appeal-details.controller.js';
 import changePageRouter from '../change-page/change-page.router.js';
 import issueDecisionRouter from './issue-decision/issue-decision.router.js';
 import appealTypeChangeRouter from './change-appeal-type/change-appeal-type.router.js';
-import linkedAppealsRouter from './manage-linked-appeals/manage-linked-appeals.router.js';
+import linkedAppealsRouter from './linked-appeals/linked-appeals.router.js';
 import otherAppealsRouter from './other-appeals/other-appeals.router.js';
 import neighbouringSitesRouter from './neighbouring-sites/neighbouring-sites.router.js';
 import costsRouter from './costs/costs.router.js';
@@ -24,8 +24,8 @@ import serviceUserRouter from './service-user/service-user.router.js';
 import { validateAppeal } from './appeal-details.middleware.js';
 import { assertUserHasPermission } from '#app/auth/auth.guards.js';
 import { permissionNames } from '#environment/permissions.js';
-import changeLpaReferenceRouter from './change-lpa-reference/change-lpa-reference.router.js';
-import changeInspectorAccessRouter from './inspector-access/inspector-access.router.js';
+import lpaReferenceRouter from './lpa-reference/lpa-reference.router.js';
+import inspectorAccessRouter from './inspector-access/inspector-access.router.js';
 import safetyRisksRouter from './safety-risks/safety-risks.router.js';
 import internalCorrespondenceRouter from './internal-correspondence/internal-correspondence.router.js';
 import withdrawalRouter from './withdrawal/withdrawal.router.js';
@@ -133,13 +133,13 @@ router.use(
 	'/:appealId/lpa-reference',
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
-	changeLpaReferenceRouter
+	lpaReferenceRouter
 );
 router.use(
 	'/:appealId/inspector-access',
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
-	changeInspectorAccessRouter
+	inspectorAccessRouter
 );
 router.use(
 	'/:appealId/safety-risks',
