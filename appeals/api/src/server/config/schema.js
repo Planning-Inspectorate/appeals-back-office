@@ -22,7 +22,7 @@ export default joi
 			levelStdOut: joi.string()
 		}),
 		cwd: joi.string(),
-		featureFlags: joi.object().pattern(/featureFlagBoas\d+[A-Za-z]+/, joi.boolean()),
+		featureFlags: joi.object().pattern(/featureFlag.*/, joi.boolean()),
 		serviceBusEnabled: joi.boolean().optional(),
 		govNotify: joi
 			.object({

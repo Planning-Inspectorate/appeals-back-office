@@ -25,6 +25,8 @@ import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
 import { isFolderInfo } from '#lib/ts-utilities.js';
 import { APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
+import { isFeatureActive } from '#common/feature-flags.js';
+import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 
 /**
  * @typedef {import('../../appeals.types.js').DayMonthYear} DayMonthYear
@@ -84,155 +86,11 @@ export async function appellantCasePage(appellantCaseData, appealDetails, curren
 		(/** @type {SummaryListRowProperties} */ row) => removeSummaryListActions(row)
 	);
 
-	/**
-	 * @type {PageComponent}
-	 */
-	const appellantSummary = {
-		type: 'summary-list',
-		parameters: {
-			card: {
-				title: {
-					text: '1. Appellant details'
-				}
-			},
-			rows: [
-				mappedAppellantCaseData.appellant.display.summaryListItem,
-				...(appealDetails.agent ? [mappedAppellantCaseData.agent.display.summaryListItem] : [])
-			]
-		}
-	};
-
-	/**
-	 * @type {PageComponent}
-	 */
-	const appealSiteSummary = {
-		type: 'summary-list',
-		parameters: {
-			card: {
-				title: {
-					text: '2. Site details'
-				}
-			},
-			rows: [
-				mappedAppellantCaseData.siteAddress.display.summaryListItem,
-				mappedAppellantCaseData.siteArea.display.summaryListItem,
-				mappedAppellantCaseData.inGreenBelt.display.summaryListItem,
-				mappedAppellantCaseData.siteOwnership.display.summaryListItem,
-				mappedAppellantCaseData.ownersKnown.display.summaryListItem,
-				mappedAppellantCaseData.inspectorAccess.display.summaryListItem,
-				mappedAppellantCaseData.healthAndSafetyIssues.display.summaryListItem
-			]
-		}
-	};
-
-	/**
-	 * @type {PageComponent}
-	 */
-	const applicationSummary = {
-		type: 'summary-list',
-		parameters: {
-			attributes: {
-				id: 'application-summary'
-			},
-			card: {
-				title: {
-					text: '3. Application details'
-				}
-			},
-			rows: [
-				removeSummaryListActions(
-					mappedAppellantCaseData.localPlanningAuthority.display.summaryListItem
-				),
-				removeSummaryListActions(
-					mappedAppellantCaseData.applicationReference.display.summaryListItem
-				),
-				mappedAppellantCaseData.applicationDate.display.summaryListItem,
-				mappedAppellantCaseData.applicationForm.display.summaryListItem,
-				mappedAppellantCaseData.developmentDescription.display.summaryListItem,
-				mappedAppellantCaseData.changedDevelopmentDescription.display.summaryListItem,
-				mappedAppellantCaseData.changedDevelopmentDescriptionDocument.display.summaryListItem,
-				mappedAppellantCaseData.applicationDecisionDate.display.summaryListItem,
-				mappedAppellantCaseData.decisionLetter.display.summaryListItem,
-				mappedAppellantCaseData.applicationDecision.display.summaryListItem
-			]
-		}
-	};
-
-	/**
-	 * @type {PageComponent}
-	 */
-	const appealSummary = {
-		type: 'summary-list',
-		parameters: {
-			attributes: {
-				id: 'appeal-summary'
-			},
-			card: {
-				title: {
-					text: '4. Appeal details'
-				}
-			},
-			rows: [
-				removeSummaryListActions(mappedAppellantCaseData.appealType.display.summaryListItem),
-				mappedAppellantCaseData.appealStatement.display.summaryListItem,
-				mappedAppellantCaseData.relatedAppeals.display.summaryListItem,
-				mappedAppellantCaseData.appellantCostsApplication.display.summaryListItem,
-				mappedAppellantCaseData.costsDocument.display.summaryListItem
-			]
-		}
-	};
-
-	/**
-	 * @type {PageComponent}
-	 */
-	const additionalDocumentsSummary = {
-		type: 'summary-list',
-		parameters: {
-			classes: 'pins-summary-list--fullwidth-value',
-			card: {
-				title: {
-					text: 'Additional documents'
-				},
-				actions: {
-					items:
-						isFolderInfo(appellantCaseData.documents.appellantCaseCorrespondence) &&
-						appellantCaseData.documents?.appellantCaseCorrespondence?.documents &&
-						appellantCaseData.documents?.appellantCaseCorrespondence?.documents.length > 0
-							? [
-									{
-										text: 'Manage',
-										visuallyHiddenText: 'additional documents',
-										href: mapDocumentManageUrl(
-											appellantCaseData.appealId,
-											appellantCaseData.documents.appellantCaseCorrespondence.folderId
-										)
-									},
-									{
-										text: 'Add',
-										visuallyHiddenText: 'additional documents',
-										href: displayPageFormatter.formatDocumentActionLink(
-											appellantCaseData.appealId,
-											appellantCaseData.documents.appellantCaseCorrespondence,
-											documentUploadUrlTemplate
-										)
-									}
-							  ]
-							: [
-									{
-										text: 'Add',
-										visuallyHiddenText: 'additional documents',
-										href: displayPageFormatter.formatDocumentActionLink(
-											appellantCaseData.appealId,
-											appellantCaseData.documents.appellantCaseCorrespondence,
-											documentUploadUrlTemplate
-										)
-									}
-							  ]
-				}
-			},
-			rows: mappedAppellantCaseData.additionalDocuments.display.summaryListItems
-		}
-	};
+	const appealTypeSpecificComponents = generateCaseTypeSpecificComponents(
+		appealDetails,
+		appellantCaseData,
+		mappedAppellantCaseData
+	);
 
 	const reviewOutcomeRadiosInputInstruction =
 		mappedAppellantCaseData.reviewOutcome.input?.instructions.find(
@@ -302,12 +160,7 @@ export async function appellantCasePage(appellantCaseData, appealDetails, curren
 		pageComponents: [
 			...errorSummaryPageComponents,
 			...notificationBanners,
-			appellantCaseSummary,
-			appellantSummary,
-			appealSiteSummary,
-			applicationSummary,
-			appealSummary,
-			additionalDocumentsSummary,
+			...appealTypeSpecificComponents,
 			...reviewOutcomeComponents
 		]
 	};
@@ -771,4 +624,226 @@ function getDocumentsForVirusStatus(appellantCaseData, virusStatus) {
 		}
 	}
 	return unscannedFiles;
+}
+/**
+ *
+ * @param {Appeal} appealDetails
+ * @param {SingleAppellantCaseResponse} appellantCaseData
+ * @param {MappedInstructions} mappedAppellantCaseData
+ * @returns {PageComponent[]}
+ */
+function generateCaseTypeSpecificComponents(
+	appealDetails,
+	appellantCaseData,
+	mappedAppellantCaseData
+) {
+	switch (appealDetails.appealType) {
+		case APPEAL_TYPE.D:
+			return generateHASComponents(appealDetails, appellantCaseData, mappedAppellantCaseData);
+		case APPEAL_TYPE.W:
+			if (isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78)) {
+				// TODO: Replace with S78 Appeal details components
+				return generateHASComponents(appealDetails, appellantCaseData, mappedAppellantCaseData);
+			} else {
+				throw new Error('Feature flag inactive for S78');
+			}
+		default:
+			throw new Error('Invalid appealType, unable to generate display page');
+	}
+}
+
+/**
+ *
+ * @param {Appeal} appealDetails
+ * @param {SingleAppellantCaseResponse} appellantCaseData
+ * @param {MappedInstructions} mappedAppellantCaseData
+ * @returns {PageComponent[]}
+ */
+function generateHASComponents(appealDetails, appellantCaseData, mappedAppellantCaseData) {
+	/**
+	 * @type {PageComponent}
+	 */
+	const appellantCaseSummary = {
+		type: 'summary-list',
+		parameters: {
+			classes: 'govuk-summary-list--no-border',
+			rows: [
+				...(mappedAppellantCaseData.siteAddress.display.summaryListItem
+					? [mappedAppellantCaseData.siteAddress.display.summaryListItem]
+					: []),
+				...(mappedAppellantCaseData.localPlanningAuthority.display.summaryListItem
+					? [
+							{
+								...mappedAppellantCaseData.localPlanningAuthority.display.summaryListItem,
+								key: {
+									text: 'LPA'
+								}
+							}
+					  ]
+					: [])
+			]
+		}
+	};
+
+	appellantCaseSummary.parameters.rows = appellantCaseSummary.parameters.rows.map(
+		(/** @type {SummaryListRowProperties} */ row) => removeSummaryListActions(row)
+	);
+	/**
+	 * @type {PageComponent}
+	 */
+	const appellantSummary = {
+		type: 'summary-list',
+		parameters: {
+			card: {
+				title: {
+					text: '1. Appellant details'
+				}
+			},
+			rows: [
+				mappedAppellantCaseData.appellant.display.summaryListItem,
+				...(appealDetails.agent ? [mappedAppellantCaseData.agent.display.summaryListItem] : [])
+			]
+		}
+	};
+
+	/**
+	 * @type {PageComponent}
+	 */
+	const appealSiteSummary = {
+		type: 'summary-list',
+		parameters: {
+			card: {
+				title: {
+					text: '2. Site details'
+				}
+			},
+			rows: [
+				mappedAppellantCaseData.siteAddress.display.summaryListItem,
+				mappedAppellantCaseData.siteArea.display.summaryListItem,
+				mappedAppellantCaseData.inGreenBelt.display.summaryListItem,
+				mappedAppellantCaseData.siteOwnership.display.summaryListItem,
+				mappedAppellantCaseData.ownersKnown.display.summaryListItem,
+				mappedAppellantCaseData.inspectorAccess.display.summaryListItem,
+				mappedAppellantCaseData.healthAndSafetyIssues.display.summaryListItem
+			]
+		}
+	};
+
+	/**
+	 * @type {PageComponent}
+	 */
+	const applicationSummary = {
+		type: 'summary-list',
+		parameters: {
+			attributes: {
+				id: 'application-summary'
+			},
+			card: {
+				title: {
+					text: '3. Application details'
+				}
+			},
+			rows: [
+				removeSummaryListActions(
+					mappedAppellantCaseData.localPlanningAuthority.display.summaryListItem
+				),
+				removeSummaryListActions(
+					mappedAppellantCaseData.applicationReference.display.summaryListItem
+				),
+				mappedAppellantCaseData.applicationDate.display.summaryListItem,
+				mappedAppellantCaseData.applicationForm.display.summaryListItem,
+				mappedAppellantCaseData.developmentDescription.display.summaryListItem,
+				mappedAppellantCaseData.changedDevelopmentDescription.display.summaryListItem,
+				mappedAppellantCaseData.changedDevelopmentDescriptionDocument.display.summaryListItem,
+				mappedAppellantCaseData.applicationDecisionDate.display.summaryListItem,
+				mappedAppellantCaseData.decisionLetter.display.summaryListItem,
+				mappedAppellantCaseData.applicationDecision.display.summaryListItem
+			]
+		}
+	};
+
+	/**
+	 * @type {PageComponent}
+	 */
+	const appealSummary = {
+		type: 'summary-list',
+		parameters: {
+			attributes: {
+				id: 'appeal-summary'
+			},
+			card: {
+				title: {
+					text: '4. Appeal details'
+				}
+			},
+			rows: [
+				removeSummaryListActions(mappedAppellantCaseData.appealType.display.summaryListItem),
+				mappedAppellantCaseData.appealStatement.display.summaryListItem,
+				mappedAppellantCaseData.relatedAppeals.display.summaryListItem,
+				mappedAppellantCaseData.appellantCostsApplication.display.summaryListItem,
+				mappedAppellantCaseData.costsDocument.display.summaryListItem
+			]
+		}
+	};
+
+	/**
+	 * @type {PageComponent}
+	 */
+	const additionalDocumentsSummary = {
+		type: 'summary-list',
+		parameters: {
+			classes: 'pins-summary-list--fullwidth-value',
+			card: {
+				title: {
+					text: 'Additional documents'
+				},
+				actions: {
+					items:
+						isFolderInfo(appellantCaseData.documents.appellantCaseCorrespondence) &&
+						appellantCaseData.documents?.appellantCaseCorrespondence?.documents &&
+						appellantCaseData.documents?.appellantCaseCorrespondence?.documents.length > 0
+							? [
+									{
+										text: 'Manage',
+										visuallyHiddenText: 'additional documents',
+										href: mapDocumentManageUrl(
+											appellantCaseData.appealId,
+											appellantCaseData.documents.appellantCaseCorrespondence.folderId
+										)
+									},
+									{
+										text: 'Add',
+										visuallyHiddenText: 'additional documents',
+										href: displayPageFormatter.formatDocumentActionLink(
+											appellantCaseData.appealId,
+											appellantCaseData.documents.appellantCaseCorrespondence,
+											documentUploadUrlTemplate
+										)
+									}
+							  ]
+							: [
+									{
+										text: 'Add',
+										visuallyHiddenText: 'additional documents',
+										href: displayPageFormatter.formatDocumentActionLink(
+											appellantCaseData.appealId,
+											appellantCaseData.documents.appellantCaseCorrespondence,
+											documentUploadUrlTemplate
+										)
+									}
+							  ]
+				}
+			},
+			rows: mappedAppellantCaseData.additionalDocuments.display.summaryListItems
+		}
+	};
+
+	return [
+		appellantCaseSummary,
+		appellantSummary,
+		appealSiteSummary,
+		applicationSummary,
+		appealSummary,
+		additionalDocumentsSummary
+	];
 }
