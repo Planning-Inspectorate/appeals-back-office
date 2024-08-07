@@ -39,6 +39,7 @@ export const publishInvalidDecision = async (
 
 	if (result) {
 		const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
+		const lpaEmail = appeal.lpa?.email || '';
 		const siteAddress = appeal.address
 			? formatAddressSingleLine(appeal.address)
 			: 'Address not available';
@@ -61,7 +62,7 @@ export const publishInvalidDecision = async (
 				),
 				notifyClient.sendEmail(
 					config.govNotify.template.decisionIsInvalidLPA,
-					appeal.lpa.email,
+					lpaEmail,
 					emailVariables
 				)
 			]);
