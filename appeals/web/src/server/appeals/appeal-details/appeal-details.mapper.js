@@ -18,8 +18,8 @@ import {
 import { getAppealTypesFromId } from '#appeals/appeal-details/change-appeal-type/change-appeal-type.service.js';
 import { APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
-import { isFeatureActive } from 'src/common/feature-flags.js';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { isFeatureActive } from '#common/feature-flags.js';
 
 export const pageHeading = 'Case details';
 

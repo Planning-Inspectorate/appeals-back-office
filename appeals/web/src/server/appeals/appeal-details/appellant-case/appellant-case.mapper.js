@@ -25,7 +25,7 @@ import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
 import { isFolderInfo } from '#lib/ts-utilities.js';
 import { APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
-import { isFeatureActive } from 'src/common/feature-flags.js';
+import { isFeatureActive } from '#common/feature-flags.js';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 
 /**
@@ -663,6 +663,34 @@ function generateHASComponents(appealDetails, appellantCaseData, mappedAppellant
 	/**
 	 * @type {PageComponent}
 	 */
+	const appellantCaseSummary = {
+		type: 'summary-list',
+		parameters: {
+			classes: 'govuk-summary-list--no-border',
+			rows: [
+				...(mappedAppellantCaseData.siteAddress.display.summaryListItem
+					? [mappedAppellantCaseData.siteAddress.display.summaryListItem]
+					: []),
+				...(mappedAppellantCaseData.localPlanningAuthority.display.summaryListItem
+					? [
+							{
+								...mappedAppellantCaseData.localPlanningAuthority.display.summaryListItem,
+								key: {
+									text: 'LPA'
+								}
+							}
+					  ]
+					: [])
+			]
+		}
+	};
+
+	appellantCaseSummary.parameters.rows = appellantCaseSummary.parameters.rows.map(
+		(/** @type {SummaryListRowProperties} */ row) => removeSummaryListActions(row)
+	);
+	/**
+	 * @type {PageComponent}
+	 */
 	const appellantSummary = {
 		type: 'summary-list',
 		parameters: {
@@ -811,6 +839,7 @@ function generateHASComponents(appealDetails, appellantCaseData, mappedAppellant
 	};
 
 	return [
+		appellantCaseSummary,
 		appellantSummary,
 		appealSiteSummary,
 		applicationSummary,

@@ -129,6 +129,7 @@
     "#app/*": "./src/server/app/*",
     "#appeals/*": "./src/server/appeals/*",
     "#lib/*": "./src/server/lib/*",
-    "#testing/*": "./testing/*"
+    "#testing/*": "./testing/*",
+		"#common/*": "./src/common/*"
   }
 }
