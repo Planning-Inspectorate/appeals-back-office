@@ -183,7 +183,7 @@ const getAppeal = async (req, res) => {
 const updateAppealById = async (req, res) => {
 	const {
 		appeal,
-		body: { caseOfficer, inspector, startedAt, validAt, planningApplicationReference, isGreenBelt },
+		body: { caseOfficer, inspector, startedAt, validAt, planningApplicationReference },
 		params
 	} = req;
 	const appealId = Number(params.appealId);
@@ -230,8 +230,7 @@ const updateAppealById = async (req, res) => {
 			await appealRepository.updateAppealById(appealId, {
 				caseStartedDate: startedAt,
 				caseValidDate: validAt,
-				applicationReference: planningApplicationReference,
-				isGreenBelt: isGreenBelt
+				applicationReference: planningApplicationReference
 			});
 		}
 

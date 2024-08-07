@@ -102,7 +102,6 @@ extends:
               azurecrName: $(azurecrName)
               dockerfilePath: $(Build.SourcesDirectory)/appeals/web/Dockerfile
               repository: back-office/appeals-web
-
       - name: Build All Functions
         condition: >-
           and(
