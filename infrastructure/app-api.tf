@@ -64,7 +64,8 @@ module "app_api" {
     GOV_NOTIFY_APPEAL_TYPE_CHANGED_NON_HAS_ID                                  = var.apps_config.integrations.notify_template_ids.appeal_type_changed_non_has_id
     GOV_NOTIFY_APPEAL_VALID_START_CASE_APPELLANT_ID                            = var.apps_config.integrations.notify_template_ids.appeal_valid_start_case_appellant_id
     GOV_NOTIFY_APPEAL_VALID_START_CASE_LPA_ID                                  = var.apps_config.integrations.notify_template_ids.appeal_valid_start_case_lpa_id
-    GOV_NOTIFY_APPEAL_WITHDRAWN_ID                                             = var.apps_config.integrations.notify_template_ids.appeal_withdrawn_id
+    GOV_NOTIFY_APPEAL_WITHDRAWN_APPELLANT_ID                                   = var.apps_config.integrations.notify_template_ids.appeal_withdrawn_appellant_id
+    GOV_NOTIFY_APPEAL_WITHDRAWN_LPA_ID                                         = var.apps_config.integrations.notify_template_ids.appeal_withdrawn_lpa_id
     GOV_NOTIFY_DECISION_IS_ALLOWED_SPLIT_DISMISSED_APPELLANT_ID                = var.apps_config.integrations.notify_template_ids.decision_is_allowed_split_dismissed_appellant_id
     GOV_NOTIFY_DECISION_IS_ALLOWED_SPLIT_DISMISSED_LPA_ID                      = var.apps_config.integrations.notify_template_ids.decision_is_allowed_split_dismissed_lpa_id
     GOV_NOTIFY_DECISION_IS_INVALID_APPELLANT_ID                                = var.apps_config.integrations.notify_template_ids.decision_is_invalid_appellant_id

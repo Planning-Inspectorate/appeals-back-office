@@ -30,6 +30,8 @@ export const publishWithdrawal = async (
 	);
 
 	const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
+	const lpaEmail = appeal.lpa?.email || '';
+
 	const emailVariables = {
 		appeal_reference_number: appeal.reference,
 		lpa_reference: appeal.applicationReference || '',
@@ -40,8 +42,13 @@ export const publishWithdrawal = async (
 	if (recipientEmail) {
 		try {
 			await notifyClient.sendEmail(
-				config.govNotify.template.appealWithdrawn,
+				config.govNotify.template.appealWithdrawn.appellant,
 				recipientEmail,
+				emailVariables
+			);
+			await notifyClient.sendEmail(
+				config.govNotify.template.appealWithdrawn.lpa,
+				lpaEmail,
 				emailVariables
 			);
 		} catch (error) {
