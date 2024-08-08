@@ -496,10 +496,11 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><a href="/appeals-service/appeal-details/1/internal-correspondence/cross-team/upload-documents/10/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
             role="button" draggable="false" class="govuk-button govuk-!-margin-right-2"
-            data-module="govuk-button" id="upload-updated-document"> Upload a new version</a>
+            data-module="govuk-button" id="upload-updated-document"> Upload a new version<span class="govuk-visually-hidden"> of test-pdf-documentFileVersionsInfo.pdf</span></a>
             <a             href="/appeals-service/appeal-details/1/internal-correspondence/cross-team/manage-documents/10/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete"
             role="button" draggable="false" class="govuk-button govuk-button--secondary"
-            data-module="govuk-button" id="remove-document">Remove current version</a>
+            data-module="govuk-button" id="remove-document">Remove current version<span class="govuk-visually-hidden"> of test-pdf-documentFileVersionsInfo.pdf</span>
+                </a>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -535,7 +536,7 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
                         <br>by John Smith</p>
                 </td>
                 <td class="govuk-table__cell">Redacted</td>
-                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/cross-team/manage-documents/10/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete">Remove</a>
+                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/cross-team/manage-documents/10/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete">Remove <span class="govuk-visually-hidden"> version 1 of test-pdf-documentFileVersionsInfo.pdf</span></a>
                 </td>
                 </tr>
                 </tbody>
@@ -599,10 +600,11 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><a href="/appeals-service/appeal-details/1/internal-correspondence/inspector/upload-documents/11/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
             role="button" draggable="false" class="govuk-button govuk-!-margin-right-2"
-            data-module="govuk-button" id="upload-updated-document"> Upload a new version</a>
+            data-module="govuk-button" id="upload-updated-document"> Upload a new version<span class="govuk-visually-hidden"> of test-pdf-documentFileVersionsInfo.pdf</span></a>
             <a             href="/appeals-service/appeal-details/1/internal-correspondence/inspector/manage-documents/11/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete"
             role="button" draggable="false" class="govuk-button govuk-button--secondary"
-            data-module="govuk-button" id="remove-document">Remove current version</a>
+            data-module="govuk-button" id="remove-document">Remove current version<span class="govuk-visually-hidden"> of test-pdf-documentFileVersionsInfo.pdf</span>
+                </a>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -638,7 +640,7 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
                         <br>by John Smith</p>
                 </td>
                 <td class="govuk-table__cell">Redacted</td>
-                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/inspector/manage-documents/11/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete">Remove</a>
+                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/inspector/manage-documents/11/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete">Remove <span class="govuk-visually-hidden"> version 1 of test-pdf-documentFileVersionsInfo.pdf</span></a>
                 </td>
                 </tr>
                 </tbody>
@@ -867,10 +869,11 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><a href="/appeals-service/appeal-details/1/internal-correspondence/cross-team/upload-documents/10/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
             role="button" draggable="false" class="govuk-button govuk-!-margin-right-2"
-            data-module="govuk-button" id="upload-updated-document"> Upload a new version</a>
+            data-module="govuk-button" id="upload-updated-document"> Upload a new version<span class="govuk-visually-hidden"> of test-pdf-documentFileVersionsInfo.pdf</span></a>
             <a             href="/appeals-service/appeal-details/1/internal-correspondence/cross-team/manage-documents/10/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete"
             role="button" draggable="false" class="govuk-button govuk-button--secondary"
-            data-module="govuk-button" id="remove-document">Remove current version</a>
+            data-module="govuk-button" id="remove-document">Remove current version<span class="govuk-visually-hidden"> of test-pdf-documentFileVersionsInfo.pdf</span>
+                </a>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -904,7 +907,7 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
                                         <br>by John Smith</p>
                                 </td>
                                 <td class="govuk-table__cell">Redacted</td>
-                                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/cross-team/manage-documents/10/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete">Remove</a>
+                                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/cross-team/manage-documents/10/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete">Remove <span class="govuk-visually-hidden"> version 1 of test-pdf-documentFileVersionsInfo.pdf</span></a>
                                 </td>
                             </tr>
                         </tbody>
@@ -951,10 +954,11 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><a href="/appeals-service/appeal-details/1/internal-correspondence/inspector/upload-documents/11/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
             role="button" draggable="false" class="govuk-button govuk-!-margin-right-2"
-            data-module="govuk-button" id="upload-updated-document"> Upload a new version</a>
+            data-module="govuk-button" id="upload-updated-document"> Upload a new version<span class="govuk-visually-hidden"> of test-pdf-documentFileVersionsInfo.pdf</span></a>
             <a             href="/appeals-service/appeal-details/1/internal-correspondence/inspector/manage-documents/11/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete"
             role="button" draggable="false" class="govuk-button govuk-button--secondary"
-            data-module="govuk-button" id="remove-document">Remove current version</a>
+            data-module="govuk-button" id="remove-document">Remove current version<span class="govuk-visually-hidden"> of test-pdf-documentFileVersionsInfo.pdf</span>
+                </a>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -988,7 +992,7 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
                                         <br>by John Smith</p>
                                 </td>
                                 <td class="govuk-table__cell">Redacted</td>
-                                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/inspector/manage-documents/11/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete">Remove</a>
+                                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/inspector/manage-documents/11/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete">Remove <span class="govuk-visually-hidden"> version 1 of test-pdf-documentFileVersionsInfo.pdf</span></a>
                                 </td>
                             </tr>
                         </tbody>

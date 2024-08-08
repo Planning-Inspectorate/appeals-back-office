@@ -69,7 +69,7 @@ export const buildRegularListItem = (uploadedFile) => {
 	button.id = `button-remove-${li.id}`;
 	button.type = 'button';
 	button.className = 'govuk-link pins-file-upload__remove';
-	button.setAttribute('aria-label', 'Remove added file from list');
+	button.setAttribute('aria-label', `Remove ${uploadedFileName} from list`);
 	button.textContent = 'Remove';
 
 	li.appendChild(p);

@@ -4347,8 +4347,12 @@ describe('appellant-case', () => {
 				'The selected file contains a virus. Upload a different version.</a>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Virus detected</strong>');
-			expect(unprettifiedElement.innerHTML).toContain('Upload a new version</a>');
-			expect(unprettifiedElement.innerHTML).toContain('Remove current version</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Upload a new version<span class="govuk-visually-hidden"> of test-pdf-documentFileVersionsInfo.pdf</span></a>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Remove current version<span class="govuk-visually-hidden"> of test-pdf-documentFileVersionsInfo.pdf</span></a>'
+			);
 			expect(unprettifiedElement.innerHTML).not.toContain('Virus scanning</strong>');
 			expect(unprettifiedElement.innerHTML).not.toContain(
 				'test-pdf-documentFileVersionsInfo.pdf</a>'
@@ -4372,8 +4376,12 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Manage document</span><h1');
 			expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFileVersionsInfo.pdf</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFileVersionsInfo.pdf</a>');
-			expect(unprettifiedElement.innerHTML).toContain('Upload a new version</a>');
-			expect(unprettifiedElement.innerHTML).toContain('Remove current version</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Upload a new version<span class="govuk-visually-hidden"> of test-pdf-documentFileVersionsInfo.pdf</span></a>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Remove current version<span class="govuk-visually-hidden"> of test-pdf-documentFileVersionsInfo.pdf</span></a>'
+			);
 			expect(unprettifiedElement.innerHTML).not.toContain('Virus detected</strong>');
 			expect(unprettifiedElement.innerHTML).not.toContain('Virus scanning</strong>');
 		});

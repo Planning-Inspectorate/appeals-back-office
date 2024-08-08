@@ -279,7 +279,6 @@ export const renderManageDocument = async (
 		backButtonUrl,
 		uploadUpdatedDocumentUrl,
 		removeDocumentUrl,
-		redactionStatuses,
 		document,
 		currentFolder,
 		request,
