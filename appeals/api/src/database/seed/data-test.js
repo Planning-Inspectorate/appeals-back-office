@@ -462,7 +462,7 @@ const appealsReadyToStart = [
 
 const appealsData = [...appealsReadyToStart, ...newAppeals, ...appealsLpaQuestionnaireDue];
 if (isAppealTypeEnabled(APPEAL_TYPE_SHORTHAND_FPA)) {
-	console.log('pushing s78');
+	console.log('Adding s78 cases');
 	appealsData.push(...newS78Appeals);
 }
 

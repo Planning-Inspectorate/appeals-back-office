@@ -18,8 +18,6 @@ export const checkAppealExistsByIdAndAddToRequest = async (req, res, next) => {
 	} = req;
 	const appeal = await appealRepository.getAppealById(Number(appealId));
 
-	console.log('S78 enabled', isAppealTypeEnabled(appeal?.appealType?.key || ''));
-
 	if (!appeal || !isAppealTypeEnabled(appeal.appealType?.key || '')) {
 		return res.status(404).send({ errors: { appealId: ERROR_NOT_FOUND } });
 	}
