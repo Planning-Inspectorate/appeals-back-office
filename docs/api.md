@@ -69,3 +69,24 @@ SRV_HORIZON_URL=http://localhost:4000
 TEST_MAILBOX=(received)
 GOV_NOTIFY_API_KEY=(received)
 ```
+
+## Adding a document folder to appeal, appellant case, or LPA questionnaire data
+
+1. Add property for new folder to `appeals/api/src/server/endpoints/appeals.d.ts`:
+   - `SingleAppealDetailsResponse` if folder belongs in the appeal data
+   - `SingleAppellantCaseResponse` if folder belongs in the appellant case data
+   - `SingleLPAQuestionnaireResponse` if folder belongs in the LPAQ data
+2. In `packages/appeals/constants/documents.js`, import the folder's DOCTYPE from APPEAL_DOCUMENT_TYPE in the PINS data model enums file (https://github.com/Planning-Inspectorate/data-model/blob/main/src/enums.d.ts) and add it to the `FOLDERS` object. If no APPEAL_DOCUMENT_TYPE is present, the folder should not be added, as it will cause issues with integration.
+3. In `appeals/api/src/server/endpoints/documents/documents.service.js`, add entry referencing the new constant (added in previous step) to either:
+   - `getRootFoldersForAppeal`, if folder belongs in the appeal data
+   - `getFoldersForStage`, if folder belongs in the appellant case, LPAQ, or some other place that isn't the appeal itself
+4. Create an entry for the folder in the relevant formatter:
+   - `formatAppeal` in `appeals/api/src/server/endpoints/appeals/appeals.formatter.js` if folder belongs in the appeal data
+   - `formatAppellantCase` in `appeals/api/src/server/endpoints/appellant-cases/appellant-cases.formatter.js` in folder belongs in the appellant case data
+   - `formatLpaQuestionnaire` in `appeals/api/src/server/endpoints/lpa-questionnaires/lpa-questionnaires.formatter.js` if folder belongs in the LPAQ data
+5. Add the new folder to the relevant part of the `spec` object in `appeals/api/src/server/swagger.js`:
+   - `SingleAppealResponse` if folder belongs in the appeal data
+   - `SingleAppellantCaseResponse` if folder belongs in the appellant case data
+   - `SingleLPAQuestionnaireResponse` if folder belongs in the LPAQ data
+6. Run `gen-api-spec` script, which should update `appeals/api/src/server/openapi-types.ts`
+7. Hit GET endpoint in swagger to check folder is being returned in the relevant data structure (eg. `GET appeals/{appealId}` if folder belongs in the appeal data)
