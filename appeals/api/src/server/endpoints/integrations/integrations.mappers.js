@@ -189,7 +189,7 @@ const mapAppeal = (appeal) => {
 		...mappers.mapQuestionnaireValidationOut(appeal),
 		neighbouringSiteAddresses: mappers.mapNeighbouringAddressOut(appeal.neighbouringSites || []),
 		affectedListedBuildingNumbers:
-			appeal.lpaQuestionnaire?.listedBuildingDetails?.map((lb) => lb.listEntry) || null,
+			appeal.lpaQuestionnaire?.listedBuildingDetails?.filter(listedBuilding => listedBuilding.affectsListedBuilding === true).map((lb) => lb.listEntry) || null,
 		// Decision
 		...mapCaseOutcomeOut(appeal),
 		// linked and related appeals
