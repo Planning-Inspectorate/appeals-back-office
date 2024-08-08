@@ -50,7 +50,6 @@ export function loadConfig() {
 		AZURE_BLOB_DEFAULT_CONTAINER,
 		AZURE_BLOB_EMULATOR_SAS_HOST,
 		AZURE_BLOB_USE_EMULATOR,
-		FEATURE_FLAG_BOAS_1_TEST_FEATURE,
 		FEATURE_FLAG_S78_WRITTEN,
 		HORIZON_APPEAL_BASE_URL,
 		HTTP_PORT = 8080,
@@ -113,8 +112,7 @@ export function loadConfig() {
 		// flag name convention: featureFlag[ jira number ][feature short description]
 		// set Feature Flag default val here [default: false] - will be overwritted by values coming from the .env file
 		featureFlags: {
-			featureFlagBoas1TestFeature: FEATURE_FLAG_BOAS_1_TEST_FEATURE === 'true',
-			featureFlagS78Written: FEATURE_FLAG_S78_WRITTEN === 'false'
+			featureFlagS78Written: FEATURE_FLAG_S78_WRITTEN === 'true'
 		}
 	};
 

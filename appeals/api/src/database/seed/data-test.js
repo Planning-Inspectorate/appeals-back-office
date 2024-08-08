@@ -15,6 +15,7 @@ import { localPlanningDepartmentList } from './LPAs/dev.js';
 import { calculateTimetable } from '#utils/business-days.js';
 import {
 	APPEAL_TYPE_SHORTHAND_HAS,
+	APPEAL_TYPE_SHORTHAND_FPA,
 	CASE_RELATIONSHIP_LINKED,
 	CASE_RELATIONSHIP_RELATED
 } from '#endpoints/constants.js';
@@ -23,6 +24,7 @@ import neighbouringSitesRepository from '#repositories/neighbouring-sites.reposi
 import { createAppealReference } from '#utils/appeal-reference.js';
 import { FOLDERS } from '@pins/appeals/constants/documents.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { isAppealTypeEnabled } from '#utils/feature-flags-appeal-types.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.AppealSite} AppealSite */
 
@@ -243,6 +245,27 @@ const newAppeals = [
 	})
 ];
 
+const newS78Appeals = [
+	appealFactory({ typeShorthand: APPEAL_TYPE_SHORTHAND_FPA, assignCaseOfficer: false }),
+	appealFactory({
+		typeShorthand: APPEAL_TYPE_SHORTHAND_FPA,
+		assignCaseOfficer: false,
+		agent: false
+	}),
+	appealFactory({ typeShorthand: APPEAL_TYPE_SHORTHAND_FPA, assignCaseOfficer: false }),
+	appealFactory({
+		typeShorthand: APPEAL_TYPE_SHORTHAND_FPA,
+		siteAddressList: addressListForTrainers,
+		assignCaseOfficer: false
+	}),
+	appealFactory({
+		typeShorthand: APPEAL_TYPE_SHORTHAND_FPA,
+		status: { status: APPEAL_CASE_STATUS.VALIDATION, createdAt: getDateTwoWeeksAgo() },
+		assignCaseOfficer: true,
+		agent: false
+	})
+];
+
 const appealsLpaQuestionnaireDue = [
 	appealFactory({
 		typeShorthand: APPEAL_TYPE_SHORTHAND_HAS,
@@ -373,6 +396,7 @@ const appealsLpaQuestionnaireDue = [
 		assignCaseOfficer: true
 	})
 ];
+
 const appealsReadyToStart = [
 	appealFactory({
 		typeShorthand: APPEAL_TYPE_SHORTHAND_HAS,
@@ -437,6 +461,10 @@ const appealsReadyToStart = [
 ];
 
 const appealsData = [...appealsReadyToStart, ...newAppeals, ...appealsLpaQuestionnaireDue];
+if (isAppealTypeEnabled(APPEAL_TYPE_SHORTHAND_FPA)) {
+	console.log('pushing s78');
+	appealsData.push(...newS78Appeals);
+}
 
 /**
  * @param {import('#db-client').PrismaClient} databaseConnector
