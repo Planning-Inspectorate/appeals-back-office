@@ -27,6 +27,7 @@ import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { getIdsOfReferencedAppeals, mapAppealToDueDate } from '../appeals.formatter.js';
 import { mapAppealStatuses } from '../appeals.controller.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 
@@ -167,6 +168,9 @@ describe('appeals list routes', () => {
 				expect(databaseConnector.appeal.findMany).toHaveBeenCalledWith(
 					expect.objectContaining({
 						where: {
+							appealType: {
+								key: { in: getEnabledAppealTypes() }
+							},
 							OR: [
 								{
 									reference: {
@@ -234,6 +238,9 @@ describe('appeals list routes', () => {
 				expect(databaseConnector.appeal.findMany).toHaveBeenCalledWith(
 					expect.objectContaining({
 						where: {
+							appealType: {
+								key: { in: getEnabledAppealTypes() }
+							},
 							OR: [
 								{
 									reference: {
@@ -301,6 +308,9 @@ describe('appeals list routes', () => {
 				expect(databaseConnector.appeal.findMany).toHaveBeenCalledWith(
 					expect.objectContaining({
 						where: {
+							appealType: {
+								key: { in: getEnabledAppealTypes() }
+							},
 							OR: [
 								{
 									reference: {
@@ -368,6 +378,9 @@ describe('appeals list routes', () => {
 				expect(databaseConnector.appeal.findMany).toHaveBeenCalledWith(
 					expect.objectContaining({
 						where: {
+							appealType: {
+								key: { in: getEnabledAppealTypes() }
+							},
 							appealStatus: {
 								some: {
 									status: 'assign_case_officer',
@@ -422,6 +435,9 @@ describe('appeals list routes', () => {
 				expect(databaseConnector.appeal.findMany).toHaveBeenCalledWith(
 					expect.objectContaining({
 						where: {
+							appealType: {
+								key: { in: getEnabledAppealTypes() }
+							},
 							appealStatus: {
 								some: {
 									valid: true
@@ -478,6 +494,9 @@ describe('appeals list routes', () => {
 				expect(databaseConnector.appeal.findMany).toHaveBeenCalledWith(
 					expect.objectContaining({
 						where: {
+							appealType: {
+								key: { in: getEnabledAppealTypes() }
+							},
 							appealStatus: {
 								some: {
 									valid: true

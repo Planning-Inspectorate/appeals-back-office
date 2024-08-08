@@ -7,7 +7,7 @@ import {
 	ERROR_INVALID_LPAQ_DATA,
 	ERROR_INVALID_DOCUMENT_DATA
 } from '#endpoints/constants.js';
-import { APPEAL_CASE_TYPE } from 'pins-data-model';
+import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
 
 /**
  * @type {import("express").RequestHandler}
@@ -41,7 +41,7 @@ export const validateAppellantCase = async (req, res, next) => {
  */
 export const validateCaseType = async (req, res, next) => {
 	const { body } = req;
-	const validCaseTypes = [APPEAL_CASE_TYPE.D];
+	const validCaseTypes = getEnabledAppealTypes();
 
 	const caseType = body.casedata?.caseType;
 	if (validCaseTypes.indexOf(caseType) === -1) {

@@ -1,6 +1,7 @@
 import { getSkipValue } from '#utils/database-pagination.js';
 import { databaseConnector } from '#utils/database-connector.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.InspectorDecision} InspectorDecision */
@@ -25,6 +26,9 @@ const getAllAppeals = (pageNumber, pageSize, searchTerm, status, hasInspector) =
 				valid: true,
 				...(status !== 'undefined' && { status })
 			}
+		},
+		appealType: {
+			key: { in: getEnabledAppealTypes() }
 		},
 		...(searchTerm !== 'undefined' && {
 			OR: [
@@ -91,6 +95,7 @@ const getUserAppeals = (userId, pageNumber, pageSize, status) => {
 				some: { valid: true, status }
 			}
 		}),
+		appealType: { key: { in: getEnabledAppealTypes() } },
 		OR: [
 			{ inspector: { azureAdUserId: { equals: userId } } },
 			{ caseOfficer: { azureAdUserId: { equals: userId } } }

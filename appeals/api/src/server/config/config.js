@@ -28,13 +28,8 @@ const { value, error } = schema.validate({
 		levelStdOut: environment.LOG_LEVEL_STDOUT || 'debug'
 	},
 	cwd: url.fileURLToPath(new URL('..', import.meta.url)),
-	// flag name convention: featureFlag[ jira number ][ferature shoret description]
-	// set Feature Flag default val here [default: false] - will be overwritted by values cming from the .env file
 	featureFlags: {
-		featureFlagBoas1TestFeature: !environment.FEATURE_FLAG_BOAS_1_TEST_FEATURE
-			? false
-			: environment.FEATURE_FLAG_BOAS_1_TEST_FEATURE === 'true',
-		featureFlagS78Written: environment.FEATURE_FLAG_S78_WRITTEN === 'false'
+		featureFlagS78Written: environment.FEATURE_FLAG_S78_WRITTEN === 'true'
 	},
 	serviceBusEnabled: environment.SERVICE_BUS_ENABLED && environment.SERVICE_BUS_ENABLED === 'true',
 	govNotify: {
