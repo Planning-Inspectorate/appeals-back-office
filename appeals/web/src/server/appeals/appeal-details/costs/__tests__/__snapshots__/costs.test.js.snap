@@ -916,10 +916,11 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><a href="/appeals-service/appeal-details/1/costs/appellant/application/upload-documents/1/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
             role="button" draggable="false" class="govuk-button govuk-!-margin-right-2"
-            data-module="govuk-button" id="upload-updated-document"> Upload a new version</a>
+            data-module="govuk-button" id="upload-updated-document"> Upload a new version<span class="govuk-visually-hidden"> of test-pdf-documentFileVersionsInfo.pdf</span></a>
             <a             href="/appeals-service/appeal-details/1/costs/appellant/application/manage-documents/1/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete"
             role="button" draggable="false" class="govuk-button govuk-button--secondary"
-            data-module="govuk-button" id="remove-document">Remove current version</a>
+            data-module="govuk-button" id="remove-document">Remove current version<span class="govuk-visually-hidden"> of test-pdf-documentFileVersionsInfo.pdf</span>
+                </a>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -955,7 +956,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                         <br>by John Smith</p>
                 </td>
                 <td class="govuk-table__cell">Redacted</td>
-                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/appellant/application/manage-documents/1/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete">Remove</a>
+                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/appellant/application/manage-documents/1/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete">Remove <span class="govuk-visually-hidden"> version 1 of test-pdf-documentFileVersionsInfo.pdf</span></a>
                 </td>
                 </tr>
                 </tbody>
@@ -1019,10 +1020,11 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><a href="/appeals-service/appeal-details/1/costs/appellant/correspondence/upload-documents/3/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
             role="button" draggable="false" class="govuk-button govuk-!-margin-right-2"
-            data-module="govuk-button" id="upload-updated-document"> Upload a new version</a>
+            data-module="govuk-button" id="upload-updated-document"> Upload a new version<span class="govuk-visually-hidden"> of test-pdf-documentFileVersionsInfo.pdf</span></a>
             <a             href="/appeals-service/appeal-details/1/costs/appellant/correspondence/manage-documents/3/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete"
             role="button" draggable="false" class="govuk-button govuk-button--secondary"
-            data-module="govuk-button" id="remove-document">Remove current version</a>
+            data-module="govuk-button" id="remove-document">Remove current version<span class="govuk-visually-hidden"> of test-pdf-documentFileVersionsInfo.pdf</span>
+                </a>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1058,7 +1060,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                         <br>by John Smith</p>
                 </td>
                 <td class="govuk-table__cell">Redacted</td>
-                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/appellant/correspondence/manage-documents/3/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete">Remove</a>
+                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/appellant/correspondence/manage-documents/3/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete">Remove <span class="govuk-visually-hidden"> version 1 of test-pdf-documentFileVersionsInfo.pdf</span></a>
                 </td>
                 </tr>
                 </tbody>
@@ -1122,10 +1124,11 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><a href="/appeals-service/appeal-details/1/costs/appellant/withdrawal/upload-documents/2/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
             role="button" draggable="false" class="govuk-button govuk-!-margin-right-2"
-            data-module="govuk-button" id="upload-updated-document"> Upload a new version</a>
+            data-module="govuk-button" id="upload-updated-document"> Upload a new version<span class="govuk-visually-hidden"> of test-pdf-documentFileVersionsInfo.pdf</span></a>
             <a             href="/appeals-service/appeal-details/1/costs/appellant/withdrawal/manage-documents/2/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete"
             role="button" draggable="false" class="govuk-button govuk-button--secondary"
-            data-module="govuk-button" id="remove-document">Remove current version</a>
+            data-module="govuk-button" id="remove-document">Remove current version<span class="govuk-visually-hidden"> of test-pdf-documentFileVersionsInfo.pdf</span>
+                </a>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1161,7 +1164,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                         <br>by John Smith</p>
                 </td>
                 <td class="govuk-table__cell">Redacted</td>
-                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/appellant/withdrawal/manage-documents/2/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete">Remove</a>
+                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/appellant/withdrawal/manage-documents/2/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete">Remove <span class="govuk-visually-hidden"> version 1 of test-pdf-documentFileVersionsInfo.pdf</span></a>
                 </td>
                 </tr>
                 </tbody>
@@ -1225,10 +1228,11 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><a href="/appeals-service/appeal-details/1/costs/lpa/application/upload-documents/4/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
             role="button" draggable="false" class="govuk-button govuk-!-margin-right-2"
-            data-module="govuk-button" id="upload-updated-document"> Upload a new version</a>
+            data-module="govuk-button" id="upload-updated-document"> Upload a new version<span class="govuk-visually-hidden"> of test-pdf-documentFileVersionsInfo.pdf</span></a>
             <a             href="/appeals-service/appeal-details/1/costs/lpa/application/manage-documents/4/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete"
             role="button" draggable="false" class="govuk-button govuk-button--secondary"
-            data-module="govuk-button" id="remove-document">Remove current version</a>
+            data-module="govuk-button" id="remove-document">Remove current version<span class="govuk-visually-hidden"> of test-pdf-documentFileVersionsInfo.pdf</span>
+                </a>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1264,7 +1268,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                         <br>by John Smith</p>
                 </td>
                 <td class="govuk-table__cell">Redacted</td>
-                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/lpa/application/manage-documents/4/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete">Remove</a>
+                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/lpa/application/manage-documents/4/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete">Remove <span class="govuk-visually-hidden"> version 1 of test-pdf-documentFileVersionsInfo.pdf</span></a>
                 </td>
                 </tr>
                 </tbody>
@@ -1328,10 +1332,11 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><a href="/appeals-service/appeal-details/1/costs/lpa/correspondence/upload-documents/6/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
             role="button" draggable="false" class="govuk-button govuk-!-margin-right-2"
-            data-module="govuk-button" id="upload-updated-document"> Upload a new version</a>
+            data-module="govuk-button" id="upload-updated-document"> Upload a new version<span class="govuk-visually-hidden"> of test-pdf-documentFileVersionsInfo.pdf</span></a>
             <a             href="/appeals-service/appeal-details/1/costs/lpa/correspondence/manage-documents/6/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete"
             role="button" draggable="false" class="govuk-button govuk-button--secondary"
-            data-module="govuk-button" id="remove-document">Remove current version</a>
+            data-module="govuk-button" id="remove-document">Remove current version<span class="govuk-visually-hidden"> of test-pdf-documentFileVersionsInfo.pdf</span>
+                </a>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1367,7 +1372,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                         <br>by John Smith</p>
                 </td>
                 <td class="govuk-table__cell">Redacted</td>
-                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/lpa/correspondence/manage-documents/6/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete">Remove</a>
+                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/lpa/correspondence/manage-documents/6/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete">Remove <span class="govuk-visually-hidden"> version 1 of test-pdf-documentFileVersionsInfo.pdf</span></a>
                 </td>
                 </tr>
                 </tbody>
@@ -1431,10 +1436,11 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><a href="/appeals-service/appeal-details/1/costs/lpa/withdrawal/upload-documents/5/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
             role="button" draggable="false" class="govuk-button govuk-!-margin-right-2"
-            data-module="govuk-button" id="upload-updated-document"> Upload a new version</a>
+            data-module="govuk-button" id="upload-updated-document"> Upload a new version<span class="govuk-visually-hidden"> of test-pdf-documentFileVersionsInfo.pdf</span></a>
             <a             href="/appeals-service/appeal-details/1/costs/lpa/withdrawal/manage-documents/5/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete"
             role="button" draggable="false" class="govuk-button govuk-button--secondary"
-            data-module="govuk-button" id="remove-document">Remove current version</a>
+            data-module="govuk-button" id="remove-document">Remove current version<span class="govuk-visually-hidden"> of test-pdf-documentFileVersionsInfo.pdf</span>
+                </a>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1470,7 +1476,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                         <br>by John Smith</p>
                 </td>
                 <td class="govuk-table__cell">Redacted</td>
-                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/lpa/withdrawal/manage-documents/5/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete">Remove</a>
+                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/lpa/withdrawal/manage-documents/5/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete">Remove <span class="govuk-visually-hidden"> version 1 of test-pdf-documentFileVersionsInfo.pdf</span></a>
                 </td>
                 </tr>
                 </tbody>
@@ -2063,10 +2069,11 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><a href="/appeals-service/appeal-details/1/costs/appellant/application/upload-documents/1/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
             role="button" draggable="false" class="govuk-button govuk-!-margin-right-2"
-            data-module="govuk-button" id="upload-updated-document"> Upload a new version</a>
+            data-module="govuk-button" id="upload-updated-document"> Upload a new version<span class="govuk-visually-hidden"> of test-pdf-documentFileVersionsInfo.pdf</span></a>
             <a             href="/appeals-service/appeal-details/1/costs/appellant/application/manage-documents/1/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete"
             role="button" draggable="false" class="govuk-button govuk-button--secondary"
-            data-module="govuk-button" id="remove-document">Remove current version</a>
+            data-module="govuk-button" id="remove-document">Remove current version<span class="govuk-visually-hidden"> of test-pdf-documentFileVersionsInfo.pdf</span>
+                </a>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -2100,7 +2107,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                                         <br>by John Smith</p>
                                 </td>
                                 <td class="govuk-table__cell">Redacted</td>
-                                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/appellant/application/manage-documents/1/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete">Remove</a>
+                                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/appellant/application/manage-documents/1/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete">Remove <span class="govuk-visually-hidden"> version 1 of test-pdf-documentFileVersionsInfo.pdf</span></a>
                                 </td>
                             </tr>
                         </tbody>
@@ -2147,10 +2154,11 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><a href="/appeals-service/appeal-details/1/costs/appellant/correspondence/upload-documents/3/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
             role="button" draggable="false" class="govuk-button govuk-!-margin-right-2"
-            data-module="govuk-button" id="upload-updated-document"> Upload a new version</a>
+            data-module="govuk-button" id="upload-updated-document"> Upload a new version<span class="govuk-visually-hidden"> of test-pdf-documentFileVersionsInfo.pdf</span></a>
             <a             href="/appeals-service/appeal-details/1/costs/appellant/correspondence/manage-documents/3/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete"
             role="button" draggable="false" class="govuk-button govuk-button--secondary"
-            data-module="govuk-button" id="remove-document">Remove current version</a>
+            data-module="govuk-button" id="remove-document">Remove current version<span class="govuk-visually-hidden"> of test-pdf-documentFileVersionsInfo.pdf</span>
+                </a>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -2184,7 +2192,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                                         <br>by John Smith</p>
                                 </td>
                                 <td class="govuk-table__cell">Redacted</td>
-                                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/appellant/correspondence/manage-documents/3/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete">Remove</a>
+                                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/appellant/correspondence/manage-documents/3/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete">Remove <span class="govuk-visually-hidden"> version 1 of test-pdf-documentFileVersionsInfo.pdf</span></a>
                                 </td>
                             </tr>
                         </tbody>
@@ -2231,10 +2239,11 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><a href="/appeals-service/appeal-details/1/costs/appellant/withdrawal/upload-documents/2/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
             role="button" draggable="false" class="govuk-button govuk-!-margin-right-2"
-            data-module="govuk-button" id="upload-updated-document"> Upload a new version</a>
+            data-module="govuk-button" id="upload-updated-document"> Upload a new version<span class="govuk-visually-hidden"> of test-pdf-documentFileVersionsInfo.pdf</span></a>
             <a             href="/appeals-service/appeal-details/1/costs/appellant/withdrawal/manage-documents/2/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete"
             role="button" draggable="false" class="govuk-button govuk-button--secondary"
-            data-module="govuk-button" id="remove-document">Remove current version</a>
+            data-module="govuk-button" id="remove-document">Remove current version<span class="govuk-visually-hidden"> of test-pdf-documentFileVersionsInfo.pdf</span>
+                </a>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -2268,7 +2277,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                                         <br>by John Smith</p>
                                 </td>
                                 <td class="govuk-table__cell">Redacted</td>
-                                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/appellant/withdrawal/manage-documents/2/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete">Remove</a>
+                                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/appellant/withdrawal/manage-documents/2/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete">Remove <span class="govuk-visually-hidden"> version 1 of test-pdf-documentFileVersionsInfo.pdf</span></a>
                                 </td>
                             </tr>
                         </tbody>
@@ -2315,10 +2324,11 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><a href="/appeals-service/appeal-details/1/costs/lpa/application/upload-documents/4/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
             role="button" draggable="false" class="govuk-button govuk-!-margin-right-2"
-            data-module="govuk-button" id="upload-updated-document"> Upload a new version</a>
+            data-module="govuk-button" id="upload-updated-document"> Upload a new version<span class="govuk-visually-hidden"> of test-pdf-documentFileVersionsInfo.pdf</span></a>
             <a             href="/appeals-service/appeal-details/1/costs/lpa/application/manage-documents/4/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete"
             role="button" draggable="false" class="govuk-button govuk-button--secondary"
-            data-module="govuk-button" id="remove-document">Remove current version</a>
+            data-module="govuk-button" id="remove-document">Remove current version<span class="govuk-visually-hidden"> of test-pdf-documentFileVersionsInfo.pdf</span>
+                </a>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -2352,7 +2362,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                                         <br>by John Smith</p>
                                 </td>
                                 <td class="govuk-table__cell">Redacted</td>
-                                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/lpa/application/manage-documents/4/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete">Remove</a>
+                                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/lpa/application/manage-documents/4/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete">Remove <span class="govuk-visually-hidden"> version 1 of test-pdf-documentFileVersionsInfo.pdf</span></a>
                                 </td>
                             </tr>
                         </tbody>
@@ -2399,10 +2409,11 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><a href="/appeals-service/appeal-details/1/costs/lpa/correspondence/upload-documents/6/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
             role="button" draggable="false" class="govuk-button govuk-!-margin-right-2"
-            data-module="govuk-button" id="upload-updated-document"> Upload a new version</a>
+            data-module="govuk-button" id="upload-updated-document"> Upload a new version<span class="govuk-visually-hidden"> of test-pdf-documentFileVersionsInfo.pdf</span></a>
             <a             href="/appeals-service/appeal-details/1/costs/lpa/correspondence/manage-documents/6/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete"
             role="button" draggable="false" class="govuk-button govuk-button--secondary"
-            data-module="govuk-button" id="remove-document">Remove current version</a>
+            data-module="govuk-button" id="remove-document">Remove current version<span class="govuk-visually-hidden"> of test-pdf-documentFileVersionsInfo.pdf</span>
+                </a>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -2436,7 +2447,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                                         <br>by John Smith</p>
                                 </td>
                                 <td class="govuk-table__cell">Redacted</td>
-                                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/lpa/correspondence/manage-documents/6/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete">Remove</a>
+                                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/lpa/correspondence/manage-documents/6/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete">Remove <span class="govuk-visually-hidden"> version 1 of test-pdf-documentFileVersionsInfo.pdf</span></a>
                                 </td>
                             </tr>
                         </tbody>
@@ -2483,10 +2494,11 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><a href="/appeals-service/appeal-details/1/costs/lpa/withdrawal/upload-documents/5/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
             role="button" draggable="false" class="govuk-button govuk-!-margin-right-2"
-            data-module="govuk-button" id="upload-updated-document"> Upload a new version</a>
+            data-module="govuk-button" id="upload-updated-document"> Upload a new version<span class="govuk-visually-hidden"> of test-pdf-documentFileVersionsInfo.pdf</span></a>
             <a             href="/appeals-service/appeal-details/1/costs/lpa/withdrawal/manage-documents/5/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete"
             role="button" draggable="false" class="govuk-button govuk-button--secondary"
-            data-module="govuk-button" id="remove-document">Remove current version</a>
+            data-module="govuk-button" id="remove-document">Remove current version<span class="govuk-visually-hidden"> of test-pdf-documentFileVersionsInfo.pdf</span>
+                </a>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -2520,7 +2532,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                                         <br>by John Smith</p>
                                 </td>
                                 <td class="govuk-table__cell">Redacted</td>
-                                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/lpa/withdrawal/manage-documents/5/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete">Remove</a>
+                                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/lpa/withdrawal/manage-documents/5/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete">Remove <span class="govuk-visually-hidden"> version 1 of test-pdf-documentFileVersionsInfo.pdf</span></a>
                                 </td>
                             </tr>
                         </tbody>
@@ -5131,10 +5143,11 @@ exports[`costs decision GET /costs/decision/manage-documents/:folderId/:document
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><a href="/appeals-service/appeal-details/1/costs/decision/upload-documents/7/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
             role="button" draggable="false" class="govuk-button govuk-!-margin-right-2"
-            data-module="govuk-button" id="upload-updated-document"> Upload a new version</a>
+            data-module="govuk-button" id="upload-updated-document"> Upload a new version<span class="govuk-visually-hidden"> of test-pdf-documentFileVersionsInfo.pdf</span></a>
             <a             href="/appeals-service/appeal-details/1/costs/decision/manage-documents/7/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete"
             role="button" draggable="false" class="govuk-button govuk-button--secondary"
-            data-module="govuk-button" id="remove-document">Remove current version</a>
+            data-module="govuk-button" id="remove-document">Remove current version<span class="govuk-visually-hidden"> of test-pdf-documentFileVersionsInfo.pdf</span>
+                </a>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -5170,7 +5183,7 @@ exports[`costs decision GET /costs/decision/manage-documents/:folderId/:document
                         <br>by John Smith</p>
                 </td>
                 <td class="govuk-table__cell">Redacted</td>
-                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/decision/manage-documents/7/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete">Remove</a>
+                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/decision/manage-documents/7/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete">Remove <span class="govuk-visually-hidden"> version 1 of test-pdf-documentFileVersionsInfo.pdf</span></a>
                 </td>
                 </tr>
                 </tbody>
@@ -5308,10 +5321,11 @@ exports[`costs decision GET /costs/decision/manage-documents/:folderId/:document
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><a href="/appeals-service/appeal-details/1/costs/decision/upload-documents/7/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
             role="button" draggable="false" class="govuk-button govuk-!-margin-right-2"
-            data-module="govuk-button" id="upload-updated-document"> Upload a new version</a>
+            data-module="govuk-button" id="upload-updated-document"> Upload a new version<span class="govuk-visually-hidden"> of test-pdf-documentFileVersionsInfo.pdf</span></a>
             <a             href="/appeals-service/appeal-details/1/costs/decision/manage-documents/7/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete"
             role="button" draggable="false" class="govuk-button govuk-button--secondary"
-            data-module="govuk-button" id="remove-document">Remove current version</a>
+            data-module="govuk-button" id="remove-document">Remove current version<span class="govuk-visually-hidden"> of test-pdf-documentFileVersionsInfo.pdf</span>
+                </a>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -5345,7 +5359,7 @@ exports[`costs decision GET /costs/decision/manage-documents/:folderId/:document
                                         <br>by John Smith</p>
                                 </td>
                                 <td class="govuk-table__cell">Redacted</td>
-                                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/decision/manage-documents/7/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete">Remove</a>
+                                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/decision/manage-documents/7/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete">Remove <span class="govuk-visually-hidden"> version 1 of test-pdf-documentFileVersionsInfo.pdf</span></a>
                                 </td>
                             </tr>
                         </tbody>

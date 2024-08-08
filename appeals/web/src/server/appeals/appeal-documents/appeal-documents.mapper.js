@@ -983,7 +983,6 @@ function mapDocumentNameHtmlProperty(document, documentVersion) {
  * @param {string} backLinkUrl
  * @param {string} uploadUpdatedDocumentUrl
  * @param {string} removeDocumentUrl
- * @param {RedactionStatus[]} redactionStatuses
  * @param {DocumentInfo} document
  * @param {FolderInfo} folder
  * @param {import('@pins/express/types/express.js').Request} request
@@ -995,7 +994,6 @@ export async function manageDocumentPage(
 	backLinkUrl,
 	uploadUpdatedDocumentUrl,
 	removeDocumentUrl,
-	redactionStatuses,
 	document,
 	folder,
 	request,
@@ -1151,7 +1149,7 @@ export async function manageDocumentPage(
 				id: 'upload-updated-document',
 				href: uploadNewVersionUrl,
 				classes: 'govuk-!-margin-right-2',
-				text: 'Upload a new version'
+				html: `Upload a new version<span class="govuk-visually-hidden"> of ${document.name}</span>`
 			}
 		};
 
@@ -1171,7 +1169,7 @@ export async function manageDocumentPage(
 				id: 'remove-document',
 				href: removeDocumentUrlProcessed,
 				classes: 'govuk-button--secondary',
-				text: 'Remove current version'
+				html: `Remove current version<span class="govuk-visually-hidden"> of ${document.name}</span>`
 			}
 		};
 
@@ -1216,6 +1214,7 @@ export async function manageDocumentPage(
 							(document.allVersions || []).map(async (documentVersion) => {
 								const versionVirusCheckStatus =
 									mapDocumentVersionDetailsVirusCheckStatus(documentVersion);
+								const versionNumberText = documentVersion.version?.toString() || '';
 
 								return [
 									{
@@ -1241,8 +1240,10 @@ export async function manageDocumentPage(
 														.replace('{{documentId}}', document.id || '')
 														.replace(
 															'{{versionId}}',
-															documentVersion.version?.toString() || ''
-														)}">Remove</a>`
+															versionNumberText
+														)}">Remove <span class="govuk-visually-hidden"> version ${versionNumberText} of ${
+														document.name
+												  }</span></a>`
 									}
 								];
 							})
