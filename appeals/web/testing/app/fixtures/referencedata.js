@@ -252,6 +252,11 @@ export const appealData = {
 	}
 };
 
+export const appealDataS78Planning = {
+	...appealData,
+	appealType: 'Planning appeal'
+};
+
 export const appellantCaseDataNotValidated = {
 	appealId: 1,
 	appealReference: 'TEST/919276',

@@ -20,6 +20,7 @@ import {
 	documentFileMultipleVersionsInfoWithLatestAsLateEntry,
 	activeDirectoryUsersData,
 	appealData,
+	appealDataS78Planning,
 	appellantCaseDataInvalidOutcome,
 	fileUploadInfo
 } from '#testing/app/fixtures/referencedata.js';
@@ -76,7 +77,7 @@ describe('appellant-case', () => {
 			nock.cleanAll();
 		});
 
-		it('should render the appellant case page', async () => {
+		it('should render the appellant case page with the expected content (Householder)', async () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataNotValidated);
@@ -107,6 +108,23 @@ describe('appellant-case', () => {
 				'name="reviewOutcome" type="radio" value="incomplete">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
+		});
+
+		it('should render the appellant case page with the expected content (Planning appeal / S78)', async () => {
+			nock('http://test/').get('/appeals/2').reply(200, appealDataS78Planning);
+			nock('http://test/')
+				.get('/appeals/2/appellant-cases/0')
+				.reply(200, appellantCaseDataNotValidated);
+
+			const response = await request.get(`${baseUrl}/2${appellantCasePagePath}`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Appellant case</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('Original plans or drawings</dt>');
 		});
 
 		it('should render a "LPA application reference" success notification banner when the planning application reference is updated', async () => {

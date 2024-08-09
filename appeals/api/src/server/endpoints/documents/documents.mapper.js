@@ -138,7 +138,7 @@ export const mapFoldersLayoutForAppealSection = (sectionName, folders) => {
 	/** @type {Object<string, Object>} **/ const folderLayout = {};
 
 	for (const path of FOLDERS) {
-		if (path.indexOf(sectionName) === 0) {
+		if (path.indexOf(sectionName) === 0 && folders.some((folder) => folder.path === path)) {
 			const key = path.replace(`${sectionName}/`, '');
 			folderLayout[key] = mapFoldersLayoutForAppealFolder(folders, `${sectionName}/${key}`) || {};
 		}

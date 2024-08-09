@@ -21,7 +21,8 @@ import {
 	APPEAL_CASE_STAGE,
 	APPEAL_VIRUS_CHECK_STATUS,
 	APPEAL_CASE_STATUS,
-	APPEAL_DOCUMENT_TYPE
+	APPEAL_DOCUMENT_TYPE,
+	APPEAL_CASE_TYPE
 } from 'pins-data-model';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
@@ -55,7 +56,7 @@ export const getFolderForAppeal = async (appeal, folderId) => {
  */
 export const getFoldersForAppeal = async (appeal, stage = null) => {
 	if (stage && stage != null) {
-		const paths = getFoldersForStage(stage);
+		const paths = getFoldersForStage(appeal.appealType, stage);
 		return await getByCaseIdAndPaths(appeal.id, paths);
 	}
 
@@ -84,11 +85,11 @@ export const getRootFoldersForAppeal = async (appeal) => {
 };
 
 /**
- *
+ * @param {import('@pins/appeals.api').Schema.AppealType | null | undefined} appealType
  * @param {string} path
  * @returns {string[]}
  */
-export const getFoldersForStage = (path) => {
+export const getFoldersForStage = (appealType, path) => {
 	const stage = path.indexOf('/') > -1 ? path.split('/')[0] : path;
 
 	/**
@@ -104,7 +105,9 @@ export const getFoldersForStage = (path) => {
 				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.CHANGED_DESCRIPTION}`,
 				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.APPELLANT_CASE_WITHDRAWAL_LETTER}`,
 				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.APPELLANT_CASE_CORRESPONDENCE}`,
-				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.PLANS_DRAWINGS}`
+				...(appealType?.key === APPEAL_CASE_TYPE.W
+					? [`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.PLANS_DRAWINGS}`]
+					: [])
 			];
 			break;
 		case APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE:
