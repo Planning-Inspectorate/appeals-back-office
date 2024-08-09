@@ -24,7 +24,6 @@ import neighbouringSitesRepository from '#repositories/neighbouring-sites.reposi
 import { createAppealReference } from '#utils/appeal-reference.js';
 import { FOLDERS } from '@pins/appeals/constants/documents.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
-import { isAppealTypeEnabled } from '#utils/feature-flags-appeal-types.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.AppealSite} AppealSite */
 
@@ -460,11 +459,12 @@ const appealsReadyToStart = [
 	})
 ];
 
-const appealsData = [...appealsReadyToStart, ...newAppeals, ...appealsLpaQuestionnaireDue];
-if (isAppealTypeEnabled(APPEAL_TYPE_SHORTHAND_FPA)) {
-	console.log('Adding s78 cases');
-	appealsData.push(...newS78Appeals);
-}
+const appealsData = [
+	...appealsReadyToStart,
+	...newAppeals,
+	...appealsLpaQuestionnaireDue,
+	...newS78Appeals
+];
 
 /**
  * @param {import('#db-client').PrismaClient} databaseConnector
