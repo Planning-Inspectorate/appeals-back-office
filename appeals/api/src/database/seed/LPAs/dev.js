@@ -10,6 +10,11 @@ export const localPlanningDepartmentList = [
 		email: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
 	},
 	{
+		lpaCode: 'Q9998',
+		name: 'System Test Borough Council 2',
+		email: 'example@example.com'
+	},
+	{
 		lpaCode: 'MAID',
 		name: 'Maidstone Borough Council',
 		email: 'maid@lpa-email.gov.uk'
