@@ -610,6 +610,57 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		}
 	};
 
+	// TODO: A2-169: make originalPlansOrDrawings conditional on S78 feature flag once available
+	/** @type {Instructions} */
+	mappedData.originalPlansOrDrawings = {
+		id: 'original-plans-or-drawings',
+		display: {
+			summaryListItem: {
+				key: {
+					text: 'Original plans or drawings'
+				},
+				value: displayPageFormatter.formatDocumentValues(
+					appellantCaseData.appealId,
+					isFolderInfo(appellantCaseData.documents.plansDrawings)
+						? appellantCaseData.documents.plansDrawings?.documents || []
+						: []
+				),
+				actions: {
+					items: [
+						...((
+							(isFolderInfo(appellantCaseData.documents.plansDrawings) &&
+								appellantCaseData.documents.plansDrawings.documents) ||
+							[]
+						).length
+							? [
+									mapActionComponent(permissionNames.updateCase, session, {
+										text: 'Manage',
+										visuallyHiddenText: 'Original plans or drawings',
+										href: mapDocumentManageUrl(
+											appellantCaseData.appealId,
+											isFolderInfo(appellantCaseData.documents.plansDrawings)
+												? appellantCaseData.documents.plansDrawings.folderId
+												: undefined
+										)
+									})
+							  ]
+							: []),
+						mapActionComponent(permissionNames.updateCase, session, {
+							text: 'Add',
+							visuallyHiddenText: 'Original plans or drawings',
+							href: displayPageFormatter.formatDocumentActionLink(
+								appellantCaseData.appealId,
+								appellantCaseData.documents.plansDrawings,
+								documentUploadUrlTemplate
+							),
+							attributes: { 'data-cy': 'add-original-plans-or-drawings' }
+						})
+					]
+				}
+			}
+		}
+	};
+
 	/** @type {Instructions} */
 	mappedData.decisionLetter = {
 		id: 'decision-letter',

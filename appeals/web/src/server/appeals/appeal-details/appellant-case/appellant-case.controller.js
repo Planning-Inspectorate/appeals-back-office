@@ -22,6 +22,8 @@ import {
 	renderManageDocument,
 	renderManageFolder
 } from '../../appeal-documents/appeal-documents.controller.js';
+import { APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
+import { capitalize } from 'lodash-es';
 
 /**
  *
@@ -263,11 +265,14 @@ export const getAddDocumentDetails = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
+	const headingTextOverride = getPageHeadingTextOverrideForFolder(currentFolder);
+
 	await renderDocumentDetails(
 		request,
 		response,
 		`/appeals-service/appeal-details/${request.params.appealId}/appellant-case/add-documents/{{folderId}}`,
-		getValidationOutcomeFromAppellantCase(appellantCaseDetails) === 'valid'
+		getValidationOutcomeFromAppellantCase(appellantCaseDetails) === 'valid',
+		headingTextOverride && `${capitalize(headingTextOverride)} documents`
 	);
 };
 
@@ -357,11 +362,20 @@ export const postAddDocumentVersionCheckAndConfirm = async (request, response) =
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const getManageFolder = async (request, response) => {
+	const { currentFolder } = request;
+
+	if (!currentFolder) {
+		return response.status(404).render('app/404');
+	}
+
+	const headingTextOverride = getPageHeadingTextOverrideForFolder(currentFolder);
+
 	await renderManageFolder(
 		request,
 		response,
 		`/appeals-service/appeal-details/${request.params.appealId}/appellant-case/`,
-		`/appeals-service/appeal-details/${request.params.appealId}/appellant-case/manage-documents/{{folderId}}/{{documentId}}`
+		`/appeals-service/appeal-details/${request.params.appealId}/appellant-case/manage-documents/{{folderId}}/{{documentId}}`,
+		headingTextOverride && `${capitalize(headingTextOverride)}`
 	);
 };
 
@@ -435,12 +449,14 @@ export const getAddDocumentVersionDetails = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
+	const headingTextOverride = getPageHeadingTextOverrideForFolder(currentFolder);
+
 	await renderDocumentDetails(
 		request,
 		response,
 		`/appeals-service/appeal-details/${request.params.appealId}/appellant-case/add-documents/${request.params.folderId}/${request.params.documentId}`,
 		getValidationOutcomeFromAppellantCase(appellantCaseDetails) === 'valid',
-		undefined,
+		headingTextOverride && `Updated ${headingTextOverride} document`,
 		documentId
 	);
 };
@@ -508,4 +524,17 @@ async function getAppellantCaseDetails(request, response, appealDetails) {
 			appealDetails.appellantCaseId
 		)
 		.catch((error) => logger.error(error));
+}
+
+/**
+ * @param {import('@pins/appeals.api').Appeals.FolderInfo} folder
+ * @returns {string | undefined}
+ */
+function getPageHeadingTextOverrideForFolder(folder) {
+	switch (folder.path.split('/')[1]) {
+		case APPEAL_DOCUMENT_TYPE.PLANS_DRAWINGS:
+			return 'original plans or drawings';
+		default:
+			return;
+	}
 }

@@ -54,6 +54,8 @@ describe('appellant cases routes', () => {
 					.get(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
 					.set('azureAdUserId', azureAdUserId);
 
+				console.log(response.body);
+
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual(baseExpectedAppellantCaseResponse(householdAppeal));
 			});
