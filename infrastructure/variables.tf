@@ -36,6 +36,10 @@ variable "apps_config" {
       notify_template_ids           = map(string) # List of template IDs for notify integration
     })
 
+    featureFlags = object({
+      featureFlagS78Written = bool
+    })
+
     logging = object({
       level_file   = string
       level_stdout = string

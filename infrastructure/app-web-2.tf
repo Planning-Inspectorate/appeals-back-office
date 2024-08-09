@@ -77,6 +77,9 @@ module "app_web_2" {
     # got default retry codes
     # https://github.com/sindresorhus/got/blob/main/documentation/7-retry.md
     RETRY_STATUS_CODES = "408,413,429,500,502,503,504,521,522,524"
+
+    #feature flags
+    FEATURE_FLAG_S78_WRITTEN = var.apps_config.featureFlags.featureFlagS78Written
   }
 
   providers = {

@@ -61,6 +61,10 @@ apps_config = {
     }
   }
 
+  featureFlags = {
+    featureFlagS78Written = false
+  }
+
   logging = {
     level_file   = "silent"
     level_stdout = "info"
