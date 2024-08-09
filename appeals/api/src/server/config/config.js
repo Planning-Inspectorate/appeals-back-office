@@ -29,7 +29,8 @@ const { value, error } = schema.validate({
 	},
 	cwd: url.fileURLToPath(new URL('..', import.meta.url)),
 	featureFlags: {
-		featureFlagS78Written: environment.FEATURE_FLAG_S78_WRITTEN === 'true'
+		featureFlagS78Written:
+			environment.FEATURE_FLAG_S78_WRITTEN && environment.FEATURE_FLAG_S78_WRITTEN === 'true'
 	},
 	serviceBusEnabled: environment.SERVICE_BUS_ENABLED && environment.SERVICE_BUS_ENABLED === 'true',
 	govNotify: {
