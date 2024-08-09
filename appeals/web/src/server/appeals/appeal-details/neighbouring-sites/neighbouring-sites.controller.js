@@ -206,7 +206,7 @@ export const getManageNeighbouringSites = async (request, response) => {
 const renderManageNeighbouringSites = async (request, response) => {
 	const appealData = request.currentAppeal;
 
-	const mappedPageContents = manageNeighbouringSitesPage(appealData);
+	const mappedPageContents = manageNeighbouringSitesPage(request, appealData);
 
 	return response.status(200).render('patterns/display-page.pattern.njk', {
 		pageContent: mappedPageContents
@@ -254,7 +254,8 @@ export const postRemoveNeighbouringSite = async (request, response) => {
 	const {
 		body,
 		errors,
-		params: { appealId, siteId }
+		params: { appealId, siteId },
+		currentAppeal
 	} = request;
 
 	if (errors) {
@@ -286,7 +287,11 @@ export const postRemoveNeighbouringSite = async (request, response) => {
 			appealId,
 			`<p class="govuk-notification-banner__heading">Neighbouring site removed</p>`
 		);
-		return response.redirect(origin);
+
+		const redirectUrl =
+			currentAppeal?.neighbouringSites?.length > 1 ? `${origin}/neighbouring-sites/manage` : origin;
+
+		return response.redirect(redirectUrl);
 	}
 	return response.status(500).render('app/500.njk');
 };

@@ -475,7 +475,7 @@ describe('neighbouring-sites', () => {
 			expect(response.headers.location).toBe(`${baseUrl}/${appealId}/neighbouring-sites/manage`);
 		});
 
-		it('should redirect to the details page if you select yes', async () => {
+		it('should redirect to the manage page if you select yes and there are more than 1 neighbouring sites', async () => {
 			const appealId = appealData.appealId.toString();
 
 			nock('http://test/').delete(`/appeals/${appealId}/neighbouring-sites`).reply(200, {
@@ -491,7 +491,43 @@ describe('neighbouring-sites', () => {
 
 			expect(response.statusCode).toBe(302);
 
-			expect(response.headers.location).toBe(`${baseUrl}/${appealId}`);
+			expect(response.headers.location).toBe(`${baseUrl}/${appealId}/neighbouring-sites/manage`);
+		});
+
+		it('should redirect to the details page if you select yes and there 1 or less neighbouring sites', async () => {
+			const appealDataWithOneNeighbouringSite = { ...appealData };
+
+			appealDataWithOneNeighbouringSite.appealId = 3;
+			appealDataWithOneNeighbouringSite.neighbouringSites = [
+				{
+					siteId: 1,
+					source: 'lpa',
+					address: {
+						addressLine1: '1 Grove Cottage',
+						addressLine2: 'Shotesham Road',
+						town: 'Woodton',
+						county: 'Devon',
+						postCode: 'NR35 2ND'
+					}
+				}
+			];
+
+			nock('http://test/').get(`/appeals/3`).reply(200, appealDataWithOneNeighbouringSite);
+
+			nock('http://test/').delete(`/appeals/3/neighbouring-sites`).reply(200, {
+				siteId: 1
+			});
+
+			const validData = {
+				'remove-neighbouring-site': 'yes'
+			};
+			const response = await request
+				.post(`${baseUrl}/3/neighbouring-sites/remove/site/1`)
+				.send(validData);
+
+			expect(response.statusCode).toBe(302);
+
+			expect(response.headers.location).toBe(`${baseUrl}/3`);
 		});
 	});
 

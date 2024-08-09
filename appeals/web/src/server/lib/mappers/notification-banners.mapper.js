@@ -116,7 +116,7 @@ export const notificationBannerDefinitions = {
 	},
 	neighbouringSiteRemoved: {
 		type: 'success',
-		pages: ['appealDetails', 'lpaQuestionnaire']
+		pages: ['appealDetails', 'lpaQuestionnaire', 'manageNeighbouringSites']
 	},
 	appealValidAndReadyToStart: {
 		pages: ['appealDetails']

@@ -1,5 +1,6 @@
 import { appealSiteToMultilineAddressStringHtml } from '#lib/address-formatter.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
+import { buildNotificationBanners } from '#lib/mappers/notification-banners.mapper.js';
 import {
 	errorAddressLine1,
 	errorPostcode,
@@ -162,12 +163,18 @@ export function addNeighbouringSiteCheckAndConfirmPage(
 }
 
 /**
- *
+ * @param {import('@pins/express/types/express.js').Request} request
  * @param {Appeal} appealData
  * @returns {PageContent}
  */
-export function manageNeighbouringSitesPage(appealData) {
+export function manageNeighbouringSitesPage(request, appealData) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
+
+	const notificationBanners = buildNotificationBanners(
+		request.session,
+		'manageNeighbouringSites',
+		request.currentAppeal.appealId
+	);
 
 	const lpaNeighbouringSitesInspectorRows = appealData.neighbouringSites
 		?.filter((site) => site.source === 'lpa')
@@ -185,6 +192,7 @@ export function manageNeighbouringSitesPage(appealData) {
 		heading: 'Manage neighbouring sites',
 		headingClasses: 'govuk-heading-l',
 		pageComponents: [
+			...notificationBanners,
 			{
 				type: 'table',
 				parameters: {
