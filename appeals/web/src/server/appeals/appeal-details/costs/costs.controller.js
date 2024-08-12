@@ -402,8 +402,8 @@ export const postDeleteCostsDocument = async (request, response) => {
 			? `/appeals-service/appeal-details/${request.params.appealId}/costs/decision/manage-documents/{{folderId}}/{{documentId}}`
 			: `/appeals-service/appeal-details/${request.params.appealId}/costs/${costsCategory}/${costsDocumentType}/manage-documents/{{folderId}}/{{documentId}}`,
 		costsCategory === 'decision'
-			? `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/decision/select-document-type/{{folderId}}`
-			: `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/${costsDocumentType}/select-document-type/{{folderId}}`
+			? `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/decision/upload-documents/{{folderId}}`
+			: `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/${costsDocumentType}/upload-documents/{{folderId}}`
 	);
 };
 
