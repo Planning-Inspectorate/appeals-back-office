@@ -17,7 +17,6 @@ import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { formatDocument } from './documents.formatter.js';
 
-/** @typedef {import('@pins/appeals/index.js').BlobInfo} BlobInfo */
 /** @typedef {import('@pins/appeals.api').Schema.Folder} Folder */
 /** @typedef {import('@pins/appeals.api').Schema.AuditTrail} AuditTrail */
 /** @typedef {import('express').Request} Request */
@@ -252,7 +251,7 @@ const updateDocuments = async (req, res) => {
 };
 
 /**
- * @type {(docs: (BlobInfo|null)[]) => object}
+ * @type {(docs: (*|null)[]) => object}
  */
 const getStorageInfo = (docs) => {
 	return {

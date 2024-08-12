@@ -34,7 +34,7 @@ export const mapDocumentsForDatabase = (
 			blobStorageHost: storageHost,
 			blobStorageContainer,
 			blobStoragePath: document.blobStoragePath,
-			documentURI: `${storageHost}/${document.blobStoragePath}`,
+			documentURI: `${storageHost}/${blobStorageContainer}/${document.blobStoragePath}`,
 			redactionStatusId: document.redactionStatusId,
 			dateReceived: new Date(document.receivedDate)
 		};
