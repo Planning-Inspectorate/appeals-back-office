@@ -1552,7 +1552,7 @@ describe('costs', () => {
 						expect(response.statusCode).toBe(302);
 						expect(response.text).toContain('Found. Redirecting to ');
 						expect(response.text).toContain(
-							`/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/select-document-type/${costsFolder.folderId}`
+							`/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/upload-documents/${costsFolder.folderId}`
 						);
 					});
 				}
@@ -2800,7 +2800,7 @@ describe('costs', () => {
 				expect(response.statusCode).toBe(302);
 				expect(response.text).toContain('Found. Redirecting to ');
 				expect(response.text).toContain(
-					`/appeals-service/appeal-details/1/costs/decision/select-document-type/${costsFolder?.folderId}`
+					`/appeals-service/appeal-details/1/costs/decision/upload-documents/${costsFolder?.folderId}`
 				);
 			});
 		});
