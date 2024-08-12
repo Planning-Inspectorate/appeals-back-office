@@ -16,7 +16,7 @@ export function changeLPAChangedDescription(
 	return apiClient.patch(`appeals/${appealId}/appellant-cases/${appellantCaseId}`, {
 		json: {
 			developmentDescription: {
-				isCorrect: convertFromYesNoToBoolean(updatedLPAChangedDescription.radio)
+				isChanged: convertFromYesNoToBoolean(updatedLPAChangedDescription.radio)
 			}
 		}
 	});

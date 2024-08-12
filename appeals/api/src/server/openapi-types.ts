@@ -34,7 +34,7 @@ export interface ValidateDate {
 
 export interface AppellantCaseData {
 	casedata?: {
-		/** @example "c6487d9f-ebae-4d09-8aa0-a40db8819eb9" */
+		/** @example "e4d42124-364c-4bda-af1f-3c40e4b09ff3" */
 		submissionId?: string;
 		/** @example true */
 		advertisedAppeal?: boolean;
@@ -766,7 +766,7 @@ export interface SingleAppellantCaseResponse {
 		/** @example "A new extension has been added at the back" */
 		details?: string;
 		/** @example false */
-		isCorrect?: boolean;
+		isChanged?: boolean;
 	};
 	/** @example true */
 	isGreenBelt?: boolean;

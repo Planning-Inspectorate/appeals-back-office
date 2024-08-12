@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`lpa-changed-description GET /change should render developmentDescription.isCorrect page from appeals details 1`] = `
+exports[`lpa-changed-description GET /change should render developmentDescription.isChanged page from appeals details 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">

@@ -65,7 +65,7 @@ const formatAppellantCase = (appeal, folders = null) => {
 			siteAreaSquareMetres: appellantCase.siteAreaSquareMetres || null,
 			developmentDescription: {
 				details: appellantCase.originalDevelopmentDescription || null,
-				isCorrect: appellantCase.changedDevelopmentDescription !== true
+				isChanged: appellantCase.changedDevelopmentDescription === true
 			},
 			validation: formatValidationOutcomeResponse(
 				appellantCase.appellantCaseValidationOutcome?.name || '',

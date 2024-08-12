@@ -158,7 +158,7 @@ interface SingleAppellantCaseResponse {
 	siteAreaSquareMetres: decimal | null;
 	developmentDescription?: {
 		details: string | null;
-		isCorrect: boolean | null;
+		isChanged: boolean | null;
 	};
 	applicationDecisionDate: string | null;
 	applicationDate: string | null;

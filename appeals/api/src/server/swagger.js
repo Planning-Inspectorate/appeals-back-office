@@ -322,7 +322,7 @@ export const spec = {
 			},
 			developmentDescription: {
 				details: 'A new extension has been added at the back',
-				isCorrect: false
+				isChanged: false
 			},
 			isGreenBelt: true,
 			documents: {

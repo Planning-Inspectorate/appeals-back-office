@@ -83,7 +83,7 @@ const patchAppellantCaseValidator = composeMiddleware(
 		true
 	),
 	validateTextAreaParameter('developmentDescription.details'),
-	validateBooleanParameter('developmentDescription.isCorrect'),
+	validateBooleanParameter('developmentDescription.isChanged'),
 	validationErrorHandler
 );
 
