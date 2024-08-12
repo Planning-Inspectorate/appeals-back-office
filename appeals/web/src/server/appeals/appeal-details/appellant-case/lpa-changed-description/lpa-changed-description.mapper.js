@@ -13,7 +13,7 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 export const changeLPAChangedDescriptionMapper = (appealData, storedSessionData, backLinkUrl) => {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 	const currentRadioValue =
-		storedSessionData?.radio ?? appealData.developmentDescription?.isCorrect ?? '';
+		storedSessionData?.radio ?? appealData.developmentDescription?.isChanged ?? '';
 
 	/** @type {PageContent} */
 	const pageContent = {

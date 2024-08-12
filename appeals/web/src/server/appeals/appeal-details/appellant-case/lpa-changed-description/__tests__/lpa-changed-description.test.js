@@ -16,7 +16,7 @@ describe('lpa-changed-description', () => {
 	afterEach(teardown);
 
 	describe('GET /change', () => {
-		it('should render developmentDescription.isCorrect page from appeals details', async () => {
+		it('should render developmentDescription.isChanged page from appeals details', async () => {
 			const appealId = appealData.appealId;
 			nock('http://test/')
 				.get(`/appeals/${appealData.appealId}/appellant-cases/${appealData.appellantCaseId}`)

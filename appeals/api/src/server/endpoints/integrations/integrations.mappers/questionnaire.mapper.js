@@ -26,14 +26,8 @@ export const mapQuestionnaireIn = (command) => {
 					create: casedata.notificationMethod.map((method) => {
 						return {
 							lpaNotificationMethod: {
-								connectOrCreate: {
-									create: {
-										key: method,
-										name: method
-									},
-									where: {
-										key: method
-									}
+								connect: {
+									key: method
 								}
 							}
 						};

@@ -96,7 +96,7 @@ export const lpaNotificationMethods = [
 		name: 'Letter/email to interested parties'
 	},
 	{
-		key: 'press-advert',
+		key: 'advert',
 		name: 'A press advert'
 	}
 ];

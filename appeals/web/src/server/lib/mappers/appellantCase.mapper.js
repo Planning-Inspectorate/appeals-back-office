@@ -266,7 +266,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 					text: 'LPA changed the development description'
 				},
 				value: {
-					text: convertFromBooleanToYesNo(appellantCaseData.developmentDescription?.isCorrect)
+					text: convertFromBooleanToYesNo(appellantCaseData.developmentDescription?.isChanged)
 				},
 				actions: {
 					items: [

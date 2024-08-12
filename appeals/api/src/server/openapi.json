@@ -3262,7 +3262,7 @@
 						"properties": {
 							"submissionId": {
 								"type": "string",
-								"example": "c6487d9f-ebae-4d09-8aa0-a40db8819eb9"
+								"example": "e4d42124-364c-4bda-af1f-3c40e4b09ff3"
 							},
 							"advertisedAppeal": {
 								"type": "boolean",
@@ -4838,7 +4838,7 @@
 								"type": "string",
 								"example": "A new extension has been added at the back"
 							},
-							"isCorrect": {
+							"isChanged": {
 								"type": "boolean",
 								"example": false
 							}
