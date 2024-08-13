@@ -341,6 +341,10 @@ export const spec = {
 				newSupportingDocuments: {
 					folderId: 4569,
 					documents: []
+				},
+				plansDrawings: {
+					folderId: 4570,
+					documents: []
 				}
 			},
 			hasAdvertisedAppeal: true,
