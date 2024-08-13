@@ -252,6 +252,27 @@ model AppellantCase {
   ownersInformed                         Boolean?
   enforcementNotice                      Boolean?
   isGreenBelt                            Boolean?
+
+  // S78 fields
+  agriculturalHolding                  Boolean?
+  tenantAgriculturalHolding            Boolean?
+  otherTenantsAgriculturalHolding      Boolean?
+  informedTenantsAgriculturalHolding   Boolean?
+  appellantProcedurePreference         String?
+  inquiryHowManyWitnesses              Int?
+  updateDevelopmentDescriptionUploaded Boolean?
+  ownershipCertificateSubmitted        Boolean?
+  designAccessStatementProvided        Boolean?
+  newPlansDrawingsProvided             Boolean?
+  planningObligation                   Boolean?
+  statusPlanningObligation             String?
+  siteViewableFromRoad                 Boolean?
+  caseworkReason                       String?
+  developmentType                      String?
+  jurisdiction                         String?
+  numberOfResidences                   Int?
+  siteGridReferenceEasting             String?
+  siteGridReferenceNorthing            String?
 }
 
 /// AppellantCaseValidationOutcome model
@@ -356,6 +377,45 @@ model LPAQuestionnaire {
   inConservationArea                        Boolean?
   lpaCostsAppliedFor                        Boolean?
   isGreenBelt                               Boolean?
+
+  // S78 fields 
+  affectsScheduledMonument            Boolean?
+  hasProtectedSpecies                 Boolean?
+  designatedSitesNames                String?
+  hasTreePreservationOrder            Boolean?
+  isGypsyOrTravellerSite              Boolean?
+  isPublicRightOfWay                  Boolean?
+  eiaEnvironmentalImpactSchedule      String?
+  eiaDevelopmentDescription           String?
+  eiaSensitiveAreaDetails             String?
+  eiaColumnTwoThreshold               Boolean?
+  eiaScreeningOpinion                 Boolean?
+  eiaRequiresEnvironmentalStatement   Boolean?
+  eiaCompletedEnvironmentalStatement  Boolean?
+  eiaConsultedBodiesDetails           String?
+  hasStatutoryConsultees              Boolean?
+  hasConsultationResponses            Boolean?
+  hasEmergingPlan                     Boolean?
+  hasSupplementaryPlanningDocs        Boolean?
+  hasInfrastructureLevy               Boolean?
+  isInfrastructureLevyFormallyAdopted Boolean?
+  infrastructureLevyAdoptedDate       DateTime?
+  infrastructureLevyExpectedDate      DateTime?
+  lpaProcedurePreference              String?
+  lpaProcedurePreferenceDetails       String?
+  lpaProcedurePreferenceDuration      Int?
+  lpaFinalCommentDetails              String?
+  lpaAddedWitnesses                   Boolean?
+  siteWithinSSSI                      Boolean?
+  inspectorNeedToEnterSite            Boolean?
+  importantInformation                String?
+  redeterminedIndicator               String?
+  dateCostsReportDespatched           DateTime?
+  dateNotRecoveredOrDerecovered       DateTime?
+  dateRecovered                       DateTime?
+  originalCaseDecisionDate            DateTime?
+  targetDate                          DateTime?
+  siteNoticesSent                     String?
 }
 
 /// LPAQuestionnaireValidationOutcome model
