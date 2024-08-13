@@ -4906,6 +4906,20 @@
 										"items": {}
 									}
 								}
+							},
+							"plansDrawings": {
+								"type": "object",
+								"properties": {
+									"folderId": {
+										"type": "number",
+										"example": 4570
+									},
+									"documents": {
+										"type": "array",
+										"example": [],
+										"items": {}
+									}
+								}
 							}
 						}
 					},

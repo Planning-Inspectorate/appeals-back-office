@@ -795,6 +795,12 @@ export interface SingleAppellantCaseResponse {
 			/** @example [] */
 			documents?: any[];
 		};
+		plansDrawings?: {
+			/** @example 4570 */
+			folderId?: number;
+			/** @example [] */
+			documents?: any[];
+		};
 	};
 	/** @example true */
 	hasAdvertisedAppeal?: boolean;

@@ -4,7 +4,8 @@ import {
 	appellantCasePage,
 	mapWebReviewOutcomeToApiReviewOutcome,
 	checkAndConfirmPage,
-	getValidationOutcomeFromAppellantCase
+	getValidationOutcomeFromAppellantCase,
+	getPageHeadingTextOverrideForFolder
 } from './appellant-case.mapper.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import {
@@ -22,6 +23,7 @@ import {
 	renderManageDocument,
 	renderManageFolder
 } from '../../appeal-documents/appeal-documents.controller.js';
+import { capitalize } from 'lodash-es';
 
 /**
  *
@@ -263,11 +265,14 @@ export const getAddDocumentDetails = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
+	const headingTextOverride = getPageHeadingTextOverrideForFolder(currentFolder);
+
 	await renderDocumentDetails(
 		request,
 		response,
 		`/appeals-service/appeal-details/${request.params.appealId}/appellant-case/add-documents/{{folderId}}`,
-		getValidationOutcomeFromAppellantCase(appellantCaseDetails) === 'valid'
+		getValidationOutcomeFromAppellantCase(appellantCaseDetails) === 'valid',
+		headingTextOverride && capitalize(headingTextOverride)
 	);
 };
 
@@ -357,11 +362,20 @@ export const postAddDocumentVersionCheckAndConfirm = async (request, response) =
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const getManageFolder = async (request, response) => {
+	const { currentFolder } = request;
+
+	if (!currentFolder) {
+		return response.status(404).render('app/404');
+	}
+
+	const headingTextOverride = getPageHeadingTextOverrideForFolder(currentFolder);
+
 	await renderManageFolder(
 		request,
 		response,
 		`/appeals-service/appeal-details/${request.params.appealId}/appellant-case/`,
-		`/appeals-service/appeal-details/${request.params.appealId}/appellant-case/manage-documents/{{folderId}}/{{documentId}}`
+		`/appeals-service/appeal-details/${request.params.appealId}/appellant-case/manage-documents/{{folderId}}/{{documentId}}`,
+		headingTextOverride && `${capitalize(headingTextOverride)}`
 	);
 };
 
@@ -435,12 +449,14 @@ export const getAddDocumentVersionDetails = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
+	const headingTextOverride = getPageHeadingTextOverrideForFolder(currentFolder);
+
 	await renderDocumentDetails(
 		request,
 		response,
 		`/appeals-service/appeal-details/${request.params.appealId}/appellant-case/add-documents/${request.params.folderId}/${request.params.documentId}`,
 		getValidationOutcomeFromAppellantCase(appellantCaseDetails) === 'valid',
-		undefined,
+		headingTextOverride && `Updated ${headingTextOverride} document`,
 		documentId
 	);
 };

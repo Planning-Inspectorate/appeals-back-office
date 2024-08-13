@@ -339,7 +339,6 @@ function generateAccordionItems(appealDetails, mappedData, session) {
 			return generateHASAccordion(appealDetails, mappedData, session);
 		case APPEAL_TYPE.W:
 			if (isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78)) {
-				// TODO: Replace with S78 Appeal details components
 				return generateHASAccordion(appealDetails, mappedData, session);
 			} else {
 				throw new Error('Feature flag inactive for S78');

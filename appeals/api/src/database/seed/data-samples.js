@@ -2,7 +2,10 @@
  * Sample data used for development and testing
  */
 
-import { APPEAL_TYPE_SHORTHAND_HAS } from '../../server/endpoints/constants.js';
+import {
+	APPEAL_TYPE_SHORTHAND_FPA,
+	APPEAL_TYPE_SHORTHAND_HAS
+} from '../../server/endpoints/constants.js';
 
 /**
  * @returns {boolean}
@@ -184,10 +187,22 @@ export const addressListForTrainers = addressesList.map((address) => ({
 
 /**
  * An array of objects representing LPA questionnaire lists.
- * @type {Object<string, import('#db-client').Prisma.LPAQuestionnaireCreateWithoutAppealInput}
+ * @type {Object<string, import('#db-client').Prisma.LPAQuestionnaireCreateWithoutAppealInput>}
  */
 export const lpaQuestionnaireList = {
 	[APPEAL_TYPE_SHORTHAND_HAS]: {
+		siteSafetyDetails: 'There may be no mobile reception at the site',
+		siteAccessDetails: 'There is a tall hedge around the site which obstructs the view of the site',
+		inConservationArea: true,
+		isCorrectAppealType: true,
+		lpaStatement: null,
+		newConditionDetails: null,
+		lpaCostsAppliedFor: false,
+		lpaqCreatedDate: new Date(2023, 4, 9),
+		lpaQuestionnaireSubmittedDate: new Date(2023, 4, 9),
+		isGreenBelt: randomBool()
+	},
+	[APPEAL_TYPE_SHORTHAND_FPA]: {
 		siteSafetyDetails: 'There may be no mobile reception at the site',
 		siteAccessDetails: 'There is a tall hedge around the site which obstructs the view of the site',
 		inConservationArea: true,
@@ -243,6 +258,16 @@ export const incompleteReviewQuestionnaireSample = {
  */
 export const appellantCaseList = {
 	[APPEAL_TYPE_SHORTHAND_HAS]: {
+		siteAreaSquareMetres: 30.9,
+		floorSpaceSquareMetres: 9.7,
+		ownsAllLand: true,
+		ownsSomeLand: false,
+		hasAdvertisedAppeal: false,
+		originalDevelopmentDescription: 'lorem ipsum',
+		changedDevelopmentDescription: false,
+		isGreenBelt: randomBool()
+	},
+	[APPEAL_TYPE_SHORTHAND_FPA]: {
 		siteAreaSquareMetres: 30.9,
 		floorSpaceSquareMetres: 9.7,
 		ownsAllLand: true,

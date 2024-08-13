@@ -611,6 +611,56 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 	};
 
 	/** @type {Instructions} */
+	mappedData.supportingDocuments = {
+		id: 'supporting-documents',
+		display: {
+			summaryListItem: {
+				key: {
+					text: 'Supporting documents submitted with statement'
+				},
+				value: displayPageFormatter.formatDocumentValues(
+					appellantCaseData.appealId,
+					isFolderInfo(appellantCaseData.documents.plansDrawings)
+						? appellantCaseData.documents.plansDrawings?.documents || []
+						: []
+				),
+				actions: {
+					items: [
+						...((
+							(isFolderInfo(appellantCaseData.documents.plansDrawings) &&
+								appellantCaseData.documents.plansDrawings.documents) ||
+							[]
+						).length
+							? [
+									mapActionComponent(permissionNames.updateCase, session, {
+										text: 'Manage',
+										visuallyHiddenText: 'Supporting documents submitted with statement',
+										href: mapDocumentManageUrl(
+											appellantCaseData.appealId,
+											isFolderInfo(appellantCaseData.documents.plansDrawings)
+												? appellantCaseData.documents.plansDrawings.folderId
+												: undefined
+										)
+									})
+							  ]
+							: []),
+						mapActionComponent(permissionNames.updateCase, session, {
+							text: 'Add',
+							visuallyHiddenText: 'Supporting documents submitted with statement',
+							href: displayPageFormatter.formatDocumentActionLink(
+								appellantCaseData.appealId,
+								appellantCaseData.documents.plansDrawings,
+								documentUploadUrlTemplate
+							),
+							attributes: { 'data-cy': 'add-supporting-documents' }
+						})
+					]
+				}
+			}
+		}
+	};
+
+	/** @type {Instructions} */
 	mappedData.decisionLetter = {
 		id: 'decision-letter',
 		display: {

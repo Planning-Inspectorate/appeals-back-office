@@ -9,8 +9,9 @@ import { formatLpaQuestionnaire } from '#endpoints/lpa-questionnaires/lpa-questi
  * @param {Appeal} appeal
  * @returns {SingleLPAQuestionnaireResponse}
  */
+// @ts-ignore
 export const baseExpectedLPAQuestionnaireResponse = (appeal) => ({
-	...formatLpaQuestionnaire(appeal),
+	...formatLpaQuestionnaire(appeal), // TODO (A2-770): refactor to avoid using formatter function)
 	documents: {
 		// @ts-ignore
 		whoNotified: {},
@@ -38,14 +39,15 @@ export const baseExpectedLPAQuestionnaireResponse = (appeal) => ({
  */
 export const baseExpectedAppellantCaseResponse = (appeal) => {
 	return {
-		...formatAppellantCase(appeal),
+		...formatAppellantCase(appeal), // TODO (A2-770): refactor to avoid using formatter function)
 		documents: {
 			appellantCaseCorrespondence: {},
 			appellantCaseWithdrawalLetter: {},
 			appellantStatement: {},
 			applicationDecisionLetter: {},
 			changedDescription: {},
-			originalApplicationForm: {}
+			originalApplicationForm: {},
+			plansDrawings: {}
 		}
 	};
 };
