@@ -738,7 +738,11 @@ export const postDeleteDocument = async (
 	}
 
 	if (body['delete-file-answer'] === 'no') {
-		return response.redirect(cancelUrlProcessed);
+		const cancelUrlProcessedSafe = new URL(
+			cancelUrlProcessed,
+			`${request.protocol}://${request.headers.host}`
+		);
+		return response.redirect(cancelUrlProcessedSafe.toString());
 	} else if (body['delete-file-answer'] === 'yes') {
 		await deleteDocument(apiClient, appealId, documentId, versionId);
 		addNotificationBannerToSession(

@@ -1,6 +1,7 @@
 import { convertFromYesNoNullToBooleanOrNull } from '#lib/boolean-formatter.js';
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { getOriginPathname, isInternalUrl } from '#lib/url-utilities.js';
 import { getAppellantCaseFromAppealId } from '../appellant-case/appellant-case.service.js';
 import { getLpaQuestionnaireFromId } from '../lpa-questionnaire/lpa-questionnaire.service.js';
 import { changeGreenBeltPage } from './green-belt.mapper.js';
@@ -70,14 +71,20 @@ export const postGreenBelt = async (request, response) => {
 
 	try {
 		const {
-			originalUrl,
 			apiClient,
 			params: { appealId, source },
 			currentAppeal,
 			session
 		} = request;
 
-		const origin = originalUrl.split('/').slice(0, -3).join('/');
+		const currentUrl = getOriginPathname(request);
+		const origin = currentUrl.split('/').slice(0, -3).join('/');
+
+		if (!isInternalUrl(origin, request)) {
+			return response.status(400).render('errorPageTemplate', {
+				message: 'Invalid redirection attempt detected.'
+			});
+		}
 
 		if (source === 'lpa') {
 			await changeGreenBeltLPA(
