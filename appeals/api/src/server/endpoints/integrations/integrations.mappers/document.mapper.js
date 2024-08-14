@@ -20,9 +20,9 @@ import { getAvScanStatus } from '#endpoints/documents/documents.service.js';
  * @returns
  */
 export const mapDocumentIn = (doc, stage = null) => {
-	const { filename, documentId, ...metadata } = doc;
+	const { filename, originalFilename, documentId, ...metadata } = doc;
 
-	const { originalFilename, originalGuid } = mapDocumentUrl(metadata.documentURI, filename);
+	const { originalGuid } = mapDocumentUrl(metadata.documentURI);
 	const description = metadata.description || 'Document imported';
 
 	let documentGuid = originalGuid;
@@ -31,18 +31,17 @@ export const mapDocumentIn = (doc, stage = null) => {
 		documentGuid = randomUUID();
 	}
 
+	metadata.fileName = originalFilename;
 	metadata.blobStorageContainer = config.BO_BLOB_CONTAINER;
-	metadata.blobStoragePath = `${documentGuid}/v1/${originalFilename}`;
+	metadata.blobStoragePath = `${documentGuid}/v1/${filename}`;
 	metadata.stage = metadata.stage ?? stage ?? 'internal';
 
 	return {
 		...metadata,
 		documentGuid,
-		fileName: originalFilename,
 		description,
 		dateCreated: (doc.dateCreated ? new Date(doc.dateCreated) : new Date()).toISOString(),
-		// documents from submissions don't have a modified date, so used created
-		lastModified: (doc.dateCreated ? new Date(doc.dateCreated) : new Date()).toISOString()
+		lastModified: new Date().toISOString()
 	};
 };
 
@@ -106,10 +105,9 @@ export const mapDocumentOut = (data) => {
 /**
  *
  * @param {string} documentURI
- * @param {string} fileName
- * @returns {{originalGuid: string, originalFilename: string}}
+ * @returns {{originalGuid: string}}
  */
-const mapDocumentUrl = (documentURI, fileName) => {
+const mapDocumentUrl = (documentURI) => {
 	const url = new URL(documentURI);
 	if (!url) {
 		throw new Error('Invalid document URI');
@@ -122,14 +120,8 @@ const mapDocumentUrl = (documentURI, fileName) => {
 		);
 	}
 	const originalGuid = path[2];
-	let originalFilename = path[3];
-	if (fileName !== originalFilename) {
-		originalFilename = fileName;
-	}
-
 	return {
-		originalGuid,
-		originalFilename
+		originalGuid
 	};
 };
 
