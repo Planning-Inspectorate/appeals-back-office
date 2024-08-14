@@ -63,5 +63,39 @@ export function generateFPAComponents(appealDetails, appellantCaseData, mappedAp
 		pageComponents[applicationSummaryComponentIndex] = applicationSummary;
 	}
 
+	const appealSummaryComponentIndex = pageComponents.findIndex(
+		(component) =>
+			component.type === 'summary-list' && component.parameters.attributes?.id === 'appeal-summary'
+	);
+
+	if (appealSummaryComponentIndex !== -1) {
+		/**
+		 * @type {PageComponent}
+		 */
+		const appealSummary = {
+			type: 'summary-list',
+			parameters: {
+				attributes: {
+					id: 'appeal-summary'
+				},
+				card: {
+					title: {
+						text: '4. Appeal details'
+					}
+				},
+				rows: [
+					removeSummaryListActions(mappedAppellantCaseData.appealType.display.summaryListItem),
+					mappedAppellantCaseData.appealStatement.display.summaryListItem,
+					mappedAppellantCaseData.relatedAppeals.display.summaryListItem,
+					mappedAppellantCaseData.appellantCostsApplication.display.summaryListItem,
+					mappedAppellantCaseData.costsDocument.display.summaryListItem,
+					mappedAppellantCaseData.planningObligation.display.summaryListItem
+				]
+			}
+		};
+
+		pageComponents[appealSummaryComponentIndex] = appealSummary;
+	}
+
 	return pageComponents;
 }

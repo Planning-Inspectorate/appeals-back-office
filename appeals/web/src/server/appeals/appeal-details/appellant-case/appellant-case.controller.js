@@ -375,7 +375,7 @@ export const getManageFolder = async (request, response) => {
 		response,
 		`/appeals-service/appeal-details/${request.params.appealId}/appellant-case/`,
 		`/appeals-service/appeal-details/${request.params.appealId}/appellant-case/manage-documents/{{folderId}}/{{documentId}}`,
-		headingTextOverride && `${capitalize(headingTextOverride)}`
+		headingTextOverride && capitalize(headingTextOverride)
 	);
 };
 

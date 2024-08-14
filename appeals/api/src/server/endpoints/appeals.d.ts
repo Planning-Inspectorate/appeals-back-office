@@ -173,6 +173,7 @@ interface SingleAppellantCaseResponse {
 		changedDescription?: FolderInfo | null;
 		originalApplicationForm?: FolderInfo | null;
 		plansDrawings?: FolderInfo | null;
+		planningObligation?: FolderInfo | null;
 	};
 	validation: ValidationOutcomeResponse | null;
 	isGreenBelt?: boolean | null;

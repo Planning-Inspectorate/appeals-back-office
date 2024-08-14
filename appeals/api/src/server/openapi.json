@@ -3262,7 +3262,7 @@
 						"properties": {
 							"submissionId": {
 								"type": "string",
-								"example": "e4d42124-364c-4bda-af1f-3c40e4b09ff3"
+								"example": "ea8cdd8c-20a6-466c-b925-9a8040f7b5df"
 							},
 							"advertisedAppeal": {
 								"type": "boolean",
@@ -4913,6 +4913,20 @@
 									"folderId": {
 										"type": "number",
 										"example": 4570
+									},
+									"documents": {
+										"type": "array",
+										"example": [],
+										"items": {}
+									}
+								}
+							},
+							"planningObligation": {
+								"type": "object",
+								"properties": {
+									"folderId": {
+										"type": "number",
+										"example": 4571
 									},
 									"documents": {
 										"type": "array",

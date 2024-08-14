@@ -661,6 +661,56 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 	};
 
 	/** @type {Instructions} */
+	mappedData.planningObligation = {
+		id: 'planning-obligation',
+		display: {
+			summaryListItem: {
+				key: {
+					text: 'Planning obligation'
+				},
+				value: displayPageFormatter.formatDocumentValues(
+					appellantCaseData.appealId,
+					isFolderInfo(appellantCaseData.documents.planningObligation)
+						? appellantCaseData.documents.planningObligation?.documents || []
+						: []
+				),
+				actions: {
+					items: [
+						...((
+							(isFolderInfo(appellantCaseData.documents.planningObligation) &&
+								appellantCaseData.documents.planningObligation.documents) ||
+							[]
+						).length
+							? [
+									mapActionComponent(permissionNames.updateCase, session, {
+										text: 'Manage',
+										visuallyHiddenText: 'Planning obligation',
+										href: mapDocumentManageUrl(
+											appellantCaseData.appealId,
+											isFolderInfo(appellantCaseData.documents.planningObligation)
+												? appellantCaseData.documents.planningObligation.folderId
+												: undefined
+										)
+									})
+							  ]
+							: []),
+						mapActionComponent(permissionNames.updateCase, session, {
+							text: 'Add',
+							visuallyHiddenText: 'Planning obligation',
+							href: displayPageFormatter.formatDocumentActionLink(
+								appellantCaseData.appealId,
+								appellantCaseData.documents.planningObligation,
+								documentUploadUrlTemplate
+							),
+							attributes: { 'data-cy': 'add-planning-obligation' }
+						})
+					]
+				}
+			}
+		}
+	};
+
+	/** @type {Instructions} */
 	mappedData.decisionLetter = {
 		id: 'decision-letter',
 		display: {
