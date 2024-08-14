@@ -345,6 +345,10 @@ export const spec = {
 				plansDrawings: {
 					folderId: 4570,
 					documents: []
+				},
+				planningObligation: {
+					folderId: 4571,
+					documents: []
 				}
 			},
 			hasAdvertisedAppeal: true,

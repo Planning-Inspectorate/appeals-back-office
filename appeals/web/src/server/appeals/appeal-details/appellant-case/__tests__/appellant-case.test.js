@@ -127,6 +127,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'Supporting documents submitted with statement</dt>'
 			);
+			expect(unprettifiedElement.innerHTML).toContain('Planning obligation</dt>');
 		});
 
 		it('should render a "LPA application reference" success notification banner when the planning application reference is updated', async () => {
