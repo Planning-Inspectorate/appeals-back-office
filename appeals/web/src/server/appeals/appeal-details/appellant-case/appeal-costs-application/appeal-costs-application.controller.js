@@ -4,6 +4,7 @@ import { HTTPError } from 'got';
 import { getAppellantCaseFromAppealId } from '../appellant-case.service.js';
 import { changeAppealCostsApplicationPage } from './appeal-costs-application.mapper.js';
 import { changeAppealCostsApplication } from './appeal-costs-application.service.js';
+import { getOriginPathname, isInternalUrl } from '#lib/url-utilities.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -61,14 +62,20 @@ export const postChangeAppealCostsApplication = async (request, response) => {
 
 	try {
 		const {
-			originalUrl,
 			apiClient,
 			params: { appealId },
 			currentAppeal,
 			session
 		} = request;
 
-		const origin = originalUrl.split('/').slice(0, -3).join('/');
+		const currentUrl = getOriginPathname(request);
+		const origin = currentUrl.split('/').slice(0, -3).join('/');
+
+		if (!isInternalUrl(origin, request)) {
+			return response.status(400).render('errorPageTemplate', {
+				message: 'Invalid redirection attempt detected.'
+			});
+		}
 
 		await changeAppealCostsApplication(
 			apiClient,
