@@ -56,6 +56,7 @@ model Appeal {
   auditTrail            AuditTrail[]
   parentAppeals         AppealRelationship[] @relation("childAppeal")
   childAppeals          AppealRelationship[] @relation("parentAppeal")
+  representations       Representation[]
 }
 
 /// AppealRelationship model
@@ -158,29 +159,32 @@ model ProcedureType {
 /// LPA model
 /// Contains information about the Local Planning Authority in the appeal site.
 model LPA {
-  id      Int      @id @default(autoincrement())
-  name    String
-  lpaCode String   @unique
-  email   String?
-  appeals Appeal[]
+  id              Int              @id @default(autoincrement())
+  name            String
+  lpaCode         String           @unique
+  email           String?
+  appeals         Appeal[]
+  representations Representation[] @relation("lpaRepresentation")
 }
 
 /// ServiceUser model
 /// Contains data of people who submitted appeals (agents and appellants).
 model ServiceUser {
-  id               Int      @id @default(autoincrement())
-  organisationName String?
-  salutation       String?
-  firstName        String?
-  middleName       String?
-  lastName         String?
-  email            String?
-  website          String?
-  phoneNumber      String?
-  address          Address? @relation(fields: [addressId], references: [id])
-  addressId        Int?
-  appeals          Appeal[] @relation("appellant")
-  appealsOnBehalf  Appeal[] @relation("agent")
+  id                      Int              @id @default(autoincrement())
+  organisationName        String?
+  salutation              String?
+  firstName               String?
+  middleName              String?
+  lastName                String?
+  email                   String?
+  website                 String?
+  phoneNumber             String?
+  address                 Address?         @relation(fields: [addressId], references: [id])
+  addressId               Int?
+  appeals                 Appeal[]         @relation("appellant")
+  appealsOnBehalf         Appeal[]         @relation("agent")
+  representations         Representation[] @relation("represented")
+  representationsOnBehalf Representation[] @relation("representative")
 }
 
 /// User model
@@ -378,7 +382,7 @@ model LPAQuestionnaire {
   lpaCostsAppliedFor                        Boolean?
   isGreenBelt                               Boolean?
 
-  // S78 fields 
+  // S78 fields
   affectsScheduledMonument            Boolean?
   hasProtectedSpecies                 Boolean?
   designatedSitesNames                String?
@@ -568,10 +572,10 @@ model DocumentVersion {
   version              Int
   lastModified         DateTime?
   documentType         String?
-  published            Boolean                  @default(false)
-  draft                Boolean                  @default(true)
-  sourceSystem         String                   @default("back-office-appeals")
-  virusCheckStatus     String                   @default("not_scanned")
+  published            Boolean                   @default(false)
+  draft                Boolean                   @default(true)
+  sourceSystem         String                    @default("back-office-appeals")
+  virusCheckStatus     String                    @default("not_scanned")
   origin               String?
   originalFilename     String?
   fileName             String?
@@ -586,15 +590,16 @@ model DocumentVersion {
   blobStorageContainer String?
   blobStoragePath      String?
   documentURI          String?
-  dateCreated          DateTime?                @default(now())
+  dateCreated          DateTime?                 @default(now())
   datePublished        DateTime?
   dateReceived         DateTime?
-  isDeleted            Boolean                  @default(false)
+  isDeleted            Boolean                   @default(false)
   isLateEntry          Boolean?
-  redactionStatus      DocumentRedactionStatus? @relation(fields: [redactionStatusId], references: [id])
+  redactionStatus      DocumentRedactionStatus?  @relation(fields: [redactionStatusId], references: [id])
   redactionStatusId    Int?
-  document             Document?                @relation("versionHistory", fields: [documentGuid], references: [guid])
-  latestVersion        Document?                @relation("latestVersion")
+  document             Document?                 @relation("versionHistory", fields: [documentGuid], references: [guid])
+  latestVersion        Document?                 @relation("latestVersion")
+  representation       RepresentationAttachment? @relation()
 
   @@id([documentGuid, version])
   @@index([documentGuid], map: "documentGuid")
@@ -646,4 +651,39 @@ model AuditTrail {
   appeal   Appeal                @relation(fields: [appealId], references: [id])
   user     User                  @relation(fields: [userId], references: [id])
   doc      DocumentVersionAudit? @relation("auditTrails")
+}
+
+/// Representation model
+/// Stores exchange of comments and statements
+model Representation {
+  id                     Int                        @id @default(autoincrement())
+  appeal                 Appeal                     @relation(fields: [appealId], references: [id])
+  appealId               Int
+  representationType     String
+  dateCreated            DateTime                   @default(now())
+  dateLastUpdated        DateTime                   @default(now())
+  originalRepresentation String
+  redactedRepresentation String?
+  represented            ServiceUser?               @relation("represented", fields: [representedId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  representedId          Int?
+  representative         ServiceUser?               @relation("representative", fields: [representativeId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  representativeId       Int?
+  lpa                    LPA?                       @relation("lpaRepresentation", fields: [lpaCode], references: [lpaCode], onDelete: NoAction, onUpdate: NoAction)
+  lpaCode                String?
+  status                 String                     @default("awaiting_review")
+  reviewer               String?
+  notes                  String?
+  attachments            RepresentationAttachment[]
+}
+
+/// Representation model
+/// Stores exchange of comments and statements
+model RepresentationAttachment {
+  documentVersion  DocumentVersion @relation(fields: [documentGuid, version], references: [documentGuid, version])
+  documentGuid     String
+  version          Int
+  representation   Representation  @relation(fields: [representationId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  representationId Int
+
+  @@id([documentGuid, version])
 }

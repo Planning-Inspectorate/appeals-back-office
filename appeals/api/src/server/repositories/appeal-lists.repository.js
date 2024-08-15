@@ -17,7 +17,7 @@ import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
  * @param {string} searchTerm
  * @param {string} status
  * @param {string} hasInspector
- * @returns {Promise<[number, Appeal[], *[]]>}
+ * @returns {Promise<[number, Omit<Appeal, 'parentAppeals' | 'childAppeals'>[], *[]]>}
  */
 const getAllAppeals = (pageNumber, pageSize, searchTerm, status, hasInspector) => {
 	const where = {
@@ -56,7 +56,6 @@ const getAllAppeals = (pageNumber, pageSize, searchTerm, status, hasInspector) =
 		})
 	};
 
-	// @ts-ignore
 	return databaseConnector.$transaction([
 		databaseConnector.appeal.count({
 			where
@@ -86,7 +85,7 @@ const getAllAppeals = (pageNumber, pageSize, searchTerm, status, hasInspector) =
  * @param {number} pageNumber
  * @param {number} pageSize
  * @param {string} status
- * @returns {Promise<[number, Appeal[], *[]]>}
+ * @returns {Promise<[number, Omit<Appeal, 'parentAppeals' | 'childAppeals'>[], *[]]>}
  */
 const getUserAppeals = (userId, pageNumber, pageSize, status) => {
 	const where = {
@@ -118,7 +117,6 @@ const getUserAppeals = (userId, pageNumber, pageSize, status) => {
 		}
 	};
 
-	// @ts-ignore
 	return databaseConnector.$transaction([
 		databaseConnector.appeal.count({
 			where

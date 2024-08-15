@@ -19,12 +19,9 @@ router.post(
 			schema: { $ref: '#/components/schemas/ValidateDate' },
 			required: true
 		}
-		#swagger.responses[200] = {
-			description: 'The input date is a business day
-			schema: { type: boolean }
+		#swagger.responses[400] = {
+			error: 'Must be a business day'
 		}
-		#swagger.responses[400] = {}
-		#swagger.responses[404] = {}
 	 */
 	composeMiddleware(
 		validateDateParameter({

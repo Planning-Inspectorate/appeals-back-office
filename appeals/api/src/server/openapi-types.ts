@@ -27,6 +27,39 @@ export interface UnlinkAppealRequest {
 	relationshipId?: number;
 }
 
+export interface RepRedactionRequest {
+	/** @example "Some redacted text" */
+	redactedRepresentation?: string;
+}
+
+export interface RepStatusUpdateRequest {
+	/** @example "valid" */
+	status?: string;
+	/** @example "Some notes" */
+	notes?: string;
+}
+
+export interface RepResponse {
+	/** @example 261 */
+	id?: number;
+	/** @example "citizen" */
+	origin?: string;
+	/** @example "Kevin Fowler" */
+	author?: string;
+	/** @example "awaiting_review" */
+	status?: string;
+	/** @example "Some autogen text 9" */
+	originalRepresentation?: string;
+	/** @example "" */
+	redactedRepresentation?: string;
+	/** @example "2024-08-15T13:30:44.434Z" */
+	created?: string;
+	/** @example "" */
+	notes?: string;
+	/** @example [] */
+	attachments?: any[];
+}
+
 export interface ValidateDate {
 	/** @example "2024-08-17" */
 	inputDate?: string;
@@ -34,7 +67,7 @@ export interface ValidateDate {
 
 export interface AppellantCaseData {
 	casedata?: {
-		/** @example "ea8cdd8c-20a6-466c-b925-9a8040f7b5df" */
+		/** @example "2e63642e-2e00-4a8c-a554-de2b378862bb" */
 		submissionId?: string;
 		/** @example true */
 		advertisedAppeal?: boolean;

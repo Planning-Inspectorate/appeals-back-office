@@ -447,7 +447,12 @@
 				"tags": ["Utilities"],
 				"description": "Validates a date to ensure is a business day",
 				"parameters": [],
-				"responses": {},
+				"responses": {
+					"400": {
+						"error": "Must be a business day",
+						"description": "Bad Request"
+					}
+				},
 				"requestBody": {
 					"in": "body",
 					"description": "Date to validate",
@@ -3170,6 +3175,395 @@
 					}
 				}
 			}
+		},
+		"/appeals/{appealId}/reps/statements": {
+			"get": {
+				"tags": ["Representations"],
+				"description": "Get all statements",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "status",
+						"in": "query",
+						"required": false,
+						"example": "awaiting_review",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Get statements for an appeal",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RepResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/RepResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
+		"/appeals/{appealId}/reps/final-comments": {
+			"get": {
+				"tags": ["Representations"],
+				"description": "Get final comments",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "status",
+						"in": "query",
+						"required": false,
+						"example": "awaiting_review",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Get final comments for an appeal",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RepResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/RepResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
+		"/appeals/{appealId}/reps/comments": {
+			"get": {
+				"tags": ["Representations"],
+				"description": "Get comments",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "status",
+						"in": "query",
+						"required": false,
+						"example": "awaiting_review",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "pageNumber",
+						"in": "query",
+						"required": false,
+						"example": "1",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "pageSize",
+						"in": "query",
+						"required": false,
+						"example": "30",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Get comments for an appeal",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RepResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/RepResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
+		"/appeals/{appealId}/reps/{repId}": {
+			"get": {
+				"tags": ["Representations"],
+				"description": "Get a single representation",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "repId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Get a single representation for an appeal",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RepResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/RepResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
+		"/appeals/{appealId}/reps/{repId}/status": {
+			"patch": {
+				"tags": ["Representations"],
+				"description": "Get a single representation",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "repId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Get a single representation for an appeal",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RepResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/RepResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/RepStatusUpdateRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/RepStatusUpdateRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/appeals/{appealId}/reps/{repId}/redaction": {
+			"patch": {
+				"tags": ["Representations"],
+				"description": "Get a single representation",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "repId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Get a single representation for an appeal",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RepResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/RepResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/RepRedactionRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/RepRedactionRequest"
+							}
+						}
+					}
+				}
+			}
 		}
 	},
 	"components": {
@@ -3242,6 +3636,79 @@
 					"name": "UnlinkAppealRequest"
 				}
 			},
+			"RepRedactionRequest": {
+				"type": "object",
+				"properties": {
+					"redactedRepresentation": {
+						"type": "string",
+						"example": "Some redacted text"
+					}
+				},
+				"xml": {
+					"name": "RepRedactionRequest"
+				}
+			},
+			"RepStatusUpdateRequest": {
+				"type": "object",
+				"properties": {
+					"status": {
+						"type": "string",
+						"example": "valid"
+					},
+					"notes": {
+						"type": "string",
+						"example": "Some notes"
+					}
+				},
+				"xml": {
+					"name": "RepStatusUpdateRequest"
+				}
+			},
+			"RepResponse": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "number",
+						"example": 261
+					},
+					"origin": {
+						"type": "string",
+						"example": "citizen"
+					},
+					"author": {
+						"type": "string",
+						"example": "Kevin Fowler"
+					},
+					"status": {
+						"type": "string",
+						"example": "awaiting_review"
+					},
+					"originalRepresentation": {
+						"type": "string",
+						"example": "Some autogen text 9"
+					},
+					"redactedRepresentation": {
+						"type": "string",
+						"example": ""
+					},
+					"created": {
+						"type": "string",
+						"example": "2024-08-15T13:30:44.434Z"
+					},
+					"notes": {
+						"type": "string",
+						"example": ""
+					},
+					"attachments": {
+						"type": "array",
+						"example": [],
+						"items": {}
+					}
+				},
+				"xml": {
+					"name": "RepResponse"
+				}
+			},
 			"ValidateDate": {
 				"type": "object",
 				"properties": {
@@ -3262,7 +3729,7 @@
 						"properties": {
 							"submissionId": {
 								"type": "string",
-								"example": "ea8cdd8c-20a6-466c-b925-9a8040f7b5df"
+								"example": "2e63642e-2e00-4a8c-a554-de2b378862bb"
 							},
 							"advertisedAppeal": {
 								"type": "boolean",

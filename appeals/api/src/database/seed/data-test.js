@@ -24,6 +24,7 @@ import neighbouringSitesRepository from '#repositories/neighbouring-sites.reposi
 import { createAppealReference } from '#utils/appeal-reference.js';
 import { FOLDERS } from '@pins/appeals/constants/documents.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.AppealSite} AppealSite */
 
@@ -472,7 +473,7 @@ const appealsData = [
 export async function seedTestData(databaseConnector) {
 	const appeals = [];
 
-	for (const appealData of appealsData.reverse()) {
+	for (const appealData of appealsData) {
 		const appeal = await databaseConnector.appeal.create({ data: appealData });
 		const defaultFolders = FOLDERS.map((/** @type {string} */ path) => {
 			return {
@@ -492,8 +493,6 @@ export async function seedTestData(databaseConnector) {
 		});
 		appeals.push(appealWithReference);
 	}
-
-	appeals.reverse();
 
 	const lpaQuestionnaires = await databaseConnector.lPAQuestionnaire.findMany();
 	const lpaNotificationMethods = await databaseConnector.lPANotificationMethods.findMany();
@@ -595,16 +594,119 @@ export async function seedTestData(databaseConnector) {
 	const appealStatus = await databaseConnector.appealStatus.findMany();
 	const siteVisitType = await databaseConnector.siteVisitType.findMany();
 
-	for (const { appealTypeId, id, caseStartedDate } of appeals) {
+	for (const { appealTypeId, id, caseStartedDate, lpaId, appellantId } of appeals) {
+		const appealType =
+			appealTypes.filter(({ id }) => id === appealTypeId)[0].key || APPEAL_TYPE_SHORTHAND_HAS;
+
 		if (caseStartedDate) {
-			const appealType =
-				appealTypes.filter(({ id }) => id === appealTypeId)[0].key || APPEAL_TYPE_SHORTHAND_HAS;
 			const appealTimetable = await calculateTimetable(appealType, caseStartedDate);
 
 			await databaseConnector.appealTimetable.create({
 				data: {
 					appealId: id,
 					...appealTimetable
+				}
+			});
+		}
+
+		//REPS
+		if (appealType === APPEAL_TYPE_SHORTHAND_FPA) {
+			for (let counter = 0; counter < 10; counter++) {
+				await databaseConnector.representation.create({
+					data: {
+						appeal: {
+							connect: {
+								id
+							}
+						},
+						representationType: APPEAL_REPRESENTATION_TYPE.COMMENT,
+						originalRepresentation: `Some autogen text ${counter}`,
+						represented: {
+							create: appellantsList[pickRandom(appellantsList)]
+						}
+					},
+					include: {
+						represented: true
+					}
+				});
+			}
+
+			await databaseConnector.representation.create({
+				data: {
+					appeal: {
+						connect: {
+							id
+						}
+					},
+					representationType: APPEAL_REPRESENTATION_TYPE.STATEMENT,
+					originalRepresentation: `Statement from appellant`,
+					represented: {
+						create: appellantsList[pickRandom(appellantsList)]
+					}
+				},
+				include: {
+					represented: true
+				}
+			});
+
+			await databaseConnector.representation.create({
+				data: {
+					appeal: {
+						connect: {
+							id
+						}
+					},
+					representationType: APPEAL_REPRESENTATION_TYPE.STATEMENT,
+					originalRepresentation: `Statement from LPA`,
+					lpa: {
+						connect: {
+							id: lpaId
+						}
+					}
+				},
+				include: {
+					represented: true
+				}
+			});
+
+			await databaseConnector.representation.create({
+				data: {
+					appeal: {
+						connect: {
+							id
+						}
+					},
+					representationType: APPEAL_REPRESENTATION_TYPE.FINAL_COMMENT,
+					originalRepresentation: `Final comment from appellant`,
+					represented: {
+						connect: {
+							// @ts-ignore
+							id: appellantId
+						}
+					}
+				},
+				include: {
+					represented: true
+				}
+			});
+
+			await databaseConnector.representation.create({
+				data: {
+					appeal: {
+						connect: {
+							id
+						}
+					},
+					representationType: APPEAL_REPRESENTATION_TYPE.FINAL_COMMENT,
+					originalRepresentation: `Final comment from LPA`,
+					lpa: {
+						connect: {
+							id: lpaId
+						}
+					}
+				},
+				include: {
+					represented: true
 				}
 			});
 		}
@@ -630,18 +732,22 @@ export async function seedTestData(databaseConnector) {
 	}
 
 	const appellantCases = await databaseConnector.appellantCase.findMany();
+
 	const knowledgeOfOtherLandowners = await databaseConnector.knowledgeOfOtherLandowners.findMany({
 		where: {
 			name: 'Some'
 		}
 	});
+
 	const validationOutcomes = await databaseConnector.appellantCaseValidationOutcome.findMany({
 		orderBy: {
 			name: 'asc'
 		}
 	});
+
 	const appellantCaseIncompleteReasons =
 		await databaseConnector.appellantCaseIncompleteReason.findMany();
+
 	const appellantCaseInvalidReasons = await databaseConnector.appellantCaseInvalidReason.findMany();
 
 	const appellantCaseValidationOutcomes = [

@@ -3,8 +3,8 @@ import * as schema from '#utils/db-client';
 import { CaseOfficer, Inspector } from '@pins/appeals';
 
 export interface Appeal extends schema.Appeal {
-	parentAppeals: AppealRelationship[];
-	childAppeals: AppealRelationship[];
+	parentAppeals?: AppealRelationship[];
+	childAppeals?: AppealRelationship[];
 	appealStatus: AppealStatus[];
 	appealType?: AppealType | null;
 	lpa?: LPA | null;
@@ -39,7 +39,7 @@ export interface Specialism extends schema.Specialism {}
 export interface ProcedureType extends schema.ProcedureType {}
 export interface LPA extends schema.LPA {}
 export interface ServiceUser extends schema.ServiceUser {
-	address: Address;
+	address?: Address;
 }
 export interface User extends schema.User {}
 export interface Address extends schema.Address {}
@@ -93,7 +93,7 @@ export interface LPANotificationMethodsSelected extends schema.LPANotificationMe
 }
 export interface SiteVisit extends schema.SiteVisit {
 	siteVisitType: SiteVisitType;
-	appeal: Appeal;
+	appeal?: Appeal;
 }
 export interface SiteVisitType extends schema.SiteVisitType {}
 export interface InspectorDecision extends schema.InspectorDecision {}
@@ -122,4 +122,15 @@ export interface DocumentRedactionStatus extends schema.DocumentRedactionStatus 
 }
 export interface AuditTrail extends schema.AuditTrail {
 	user?: User | null;
+}
+
+export interface Representation extends schema.Representation {
+	attachments?: RepresentationAttachment[];
+	represented?: ServiceUser | null;
+	representative?: ServiceUser | null;
+	lpa?: LPA | null;
+}
+
+export interface RepresentationAttachment extends schema.RepresentationAttachment {
+	documentVersion: DocumentVersion;
 }

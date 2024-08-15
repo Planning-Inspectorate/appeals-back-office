@@ -1,5 +1,10 @@
 import { validAppellantCase, validLpaQuestionnaire } from '#tests/integrations/mocks.js';
 import {
+	repRedactionRequest,
+	repStatusUpdateRequest,
+	repResponse
+} from '#tests/representations/mocks.js';
+import {
 	folder,
 	addDocumentsRequest,
 	addDocumentVersionRequest,
@@ -64,6 +69,15 @@ export const spec = {
 		},
 		UnlinkAppealRequest: {
 			...unlinkAppealRequest
+		},
+		RepRedactionRequest: {
+			...repRedactionRequest
+		},
+		RepStatusUpdateRequest: {
+			...repStatusUpdateRequest
+		},
+		RepResponse: {
+			...repResponse
 		},
 		ValidateDate: {
 			inputDate: '2024-08-17'

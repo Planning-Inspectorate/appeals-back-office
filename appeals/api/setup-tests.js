@@ -3,6 +3,8 @@ import { jest } from '@jest/globals';
 import config from '#config/config.js';
 import { NODE_ENV_PRODUCTION } from '#endpoints/constants.js';
 
+const mockRepGetById = jest.fn().mockResolvedValue({});
+const mockRepUpdateById = jest.fn().mockResolvedValue({});
 const mockAppealRelationshipAdd = jest.fn().mockResolvedValue({});
 const mockAppealRelationshipRemove = jest.fn().mockResolvedValue({});
 const mockAppealRelationshipFindMany = jest.fn().mockResolvedValue({});
@@ -86,6 +88,13 @@ const mockServiceUserUpdate = jest.fn().mockResolvedValue({});
 const mockServiceUserFindUnique = jest.fn().mockResolvedValue({});
 
 class MockPrismaClient {
+	get representation() {
+		return {
+			update: mockRepUpdateById,
+			findUnique: mockRepGetById
+		};
+	}
+
 	get address() {
 		return {
 			delete: mockAddressDelete,
