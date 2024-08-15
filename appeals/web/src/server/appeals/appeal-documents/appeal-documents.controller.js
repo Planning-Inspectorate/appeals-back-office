@@ -738,10 +738,14 @@ export const postDeleteDocument = async (
 	}
 
 	if (body['delete-file-answer'] === 'no') {
-		const cancelUrlProcessedSafe = new URL(
-			cancelUrlProcessed,
-			`${request.protocol}://${request.headers.host}`
-		);
+		const baseUrl = process.env.BASE_URL || `${request.protocol}://${request.headers.host}`;
+
+		const pathToRedirect = cancelUrlProcessed.startsWith('/')
+			? cancelUrlProcessed
+			: `/${cancelUrlProcessed}`;
+
+		const cancelUrlProcessedSafe = new URL(pathToRedirect, baseUrl);
+
 		return response.redirect(cancelUrlProcessedSafe.toString());
 	} else if (body['delete-file-answer'] === 'yes') {
 		await deleteDocument(apiClient, appealId, documentId, versionId);
