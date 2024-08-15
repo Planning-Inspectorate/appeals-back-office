@@ -25,3 +25,20 @@ export const APPEAL_TYPE = {
 	Y: 'Planned listed building and conservation area appeal',
 	Z: 'Commercial (CAS) appeal'
 };
+
+//TODO: remove when available in appeal-representation.schema
+export const APPEAL_REPRESENTATION_TYPE = {
+	STATEMENT: 'statement',
+	COMMENT: 'comment',
+	FINAL_COMMENT: 'final_comment'
+};
+
+//TODO: remove when available in appeal-representation.schema - here just for reference
+// eslint-disable-next-line no-unused-vars
+export const APPEAL_REPRESENTATION_STATUS = {
+	AWAITING_REVIEW: 'awaiting_review',
+	VALID: 'valid',
+	INVALID: 'invalid',
+	PUBLISHED: 'published',
+	WITHDRAWN: 'withdrawn'
+};

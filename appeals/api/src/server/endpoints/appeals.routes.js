@@ -31,6 +31,7 @@ import { transferredAppealsRoutes } from './transferred-appeals/transferred-appe
 import { neighbouringSitesRoutes } from './neighbouring-sites/neighbouring-sites.routes.js';
 import { serviceUserRoutes } from './service-user/service-user.routes.js';
 import { withdrawalRoutes } from './withdrawal/withdrawal.routes.js';
+import { representationRoutes } from './representations/representations.routes.js';
 
 const router = createRouter();
 router.use(integrationsRoutes);
@@ -67,5 +68,6 @@ router.use(transferredAppealsRoutes);
 router.use(neighbouringSitesRoutes);
 router.use(serviceUserRoutes);
 router.use(withdrawalRoutes);
+router.use(representationRoutes);
 
 export { router as appealsRoutes };

@@ -2,6 +2,8 @@
  * @param {import('../../server/utils/db-client/index.js').PrismaClient} databaseConnector
  */
 export async function deleteAllRecords(databaseConnector) {
+	const deleteRepsAttachments = databaseConnector.representationAttachment.deleteMany();
+	const deleteReps = databaseConnector.representation.deleteMany();
 	const deleteDecisions = databaseConnector.inspectorDecision.deleteMany();
 	const deleteDocAudits = databaseConnector.documentVersionAudit.deleteMany();
 	const deleteDocAvScans = databaseConnector.documentVersionAvScan.deleteMany();
@@ -35,8 +37,7 @@ export async function deleteAllRecords(databaseConnector) {
 		databaseConnector.appellantCaseInvalidReasonText.deleteMany();
 	const deleteLPAQuestionnaireIncompleteReasonText =
 		databaseConnector.lPAQuestionnaireIncompleteReasonText.deleteMany();
-		const deleteListedBuildingDetails = databaseConnector.listedBuildingSelected.deleteMany();
-
+	const deleteListedBuildingDetails = databaseConnector.listedBuildingSelected.deleteMany();
 
 	// and reference data tables
 	const deleteAppealTypes = databaseConnector.appealType.deleteMany();
@@ -62,17 +63,20 @@ export async function deleteAllRecords(databaseConnector) {
 	await databaseConnector.$queryRawUnsafe(`UPDATE Document SET latestVersionId = NULL;`);
 	// delete references to external users on appeals
 	await databaseConnector.$queryRawUnsafe(
-		`UPDATE Appeal SET inspectorUserId = NULL, caseOfficerUserId = NULL;`
+		`UPDATE Appeal SET inspectorUserId = NULL, caseOfficerUserId = NULL;
+		UPDATE Representation SET lpaCode = NULL, representedId = NULL, representativeId = NULL;`
 	);
 	// delete references to internal users on appeals
 	await databaseConnector.$queryRawUnsafe(`UPDATE Appeal SET appellantId = NULL, agentId = NULL;`);
-  await deleteDocAvScans;
+	await deleteDocAvScans;
 	await deleteDecisions;
 	await deleteDocAudits;
 	await deleteDocumentsVersions;
 	await deleteDocuments;
 
 	await databaseConnector.$transaction([
+		deleteRepsAttachments,
+		deleteReps,
 		deleteAudits,
 		deleteUsers,
 		deleteAppealAllocationLevels,
