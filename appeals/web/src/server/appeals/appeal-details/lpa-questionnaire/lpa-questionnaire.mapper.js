@@ -21,6 +21,7 @@ import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-co
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { isFeatureActive } from '#common/feature-flags.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 /**
  * @typedef {import('@pins/appeals.api').Appeals.SingleLPAQuestionnaireResponse} LPAQuestionnaire
@@ -112,20 +113,22 @@ export async function lpaQuestionnairePage(lpaqDetails, appealDetails, currentRo
 		);
 
 	/** @type {PageComponent[]} */
-	const reviewOutcomeComponents = [
-		{
+	const reviewOutcomeComponents = [];
+	if (
+		reviewOutcomeRadiosInputInstruction &&
+		appealDetails.appealStatus === APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE
+	) {
+		reviewOutcomeComponents.push({
 			type: 'html',
 			parameters: {
 				html: '<h2>What is the outcome of your review?</h2>'
 			}
-		}
-	];
-
-	if (reviewOutcomeRadiosInputInstruction) {
+		});
 		reviewOutcomeComponents.push({
 			type: 'radios',
 			parameters: reviewOutcomeRadiosInputInstruction.properties
 		});
+		reviewOutcomeComponents.push(insetTextComponent);
 	}
 
 	if (getDocumentsForVirusStatus(lpaqDetails, 'not_scanned').length > 0) {
@@ -176,8 +179,7 @@ export async function lpaQuestionnairePage(lpaqDetails, appealDetails, currentRo
 			caseSummary,
 			...appealTypeSpecificPageComponents,
 			additionalDocumentsSummary,
-			...reviewOutcomeComponents,
-			insetTextComponent
+			...reviewOutcomeComponents
 		],
 		submitButtonText: 'Confirm'
 	};
