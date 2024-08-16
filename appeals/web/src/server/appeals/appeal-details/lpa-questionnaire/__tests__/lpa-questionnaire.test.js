@@ -395,24 +395,24 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 		}, 10000);
 
-		it('should not render review outcome form fields or controls when the appeal is not in "LPA Questionnaire" status', async () => {
-			const appealStatusesWithoutLPAQuestionnaire = Object.values(APPEAL_CASE_STATUS).filter(
-				(status) => status !== APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE
-			);
+		const appealStatusesWithoutLPAQuestionnaire = Object.values(APPEAL_CASE_STATUS).filter(
+			(status) => status !== APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE
+		);
 
-			for (const appealStatus of appealStatusesWithoutLPAQuestionnaire) {
+		for (const appealStatus of appealStatusesWithoutLPAQuestionnaire) {
+			it(`should not render review outcome form fields or controls when the appeal is not in "LPA Questionnaire" status (${appealStatus})`, async () => {
 				nock('http://test/')
-					.get(`/appeals/2`)
+					.get(`/appeals/3`)
 					.reply(200, {
 						...appealData,
-						appealId: 2,
+						appealId: 3,
 						appealStatus
 					});
 				nock('http://test/')
-					.get('/appeals/2/lpa-questionnaires/2')
+					.get('/appeals/3/lpa-questionnaires/3')
 					.reply(200, lpaQuestionnaireDataNotValidated);
 
-				const response = await request.get('/appeals-service/appeal-details/2/lpa-questionnaire/2');
+				const response = await request.get('/appeals-service/appeal-details/3/lpa-questionnaire/3');
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 				expect(unprettifiedElement.innerHTML).not.toContain(
@@ -428,8 +428,8 @@ describe('LPA Questionnaire review', () => {
 					'name="reviewOutcome" type="radio" value="incomplete">'
 				);
 				expect(unprettifiedElement.innerHTML).not.toContain('Continue</button>');
-			}
-		}, 10000);
+			}, 10000);
+		}
 	});
 
 	describe('GET / with unchecked documents', () => {

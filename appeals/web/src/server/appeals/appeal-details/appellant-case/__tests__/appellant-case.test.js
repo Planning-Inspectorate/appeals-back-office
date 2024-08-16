@@ -157,12 +157,12 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
 
-		it('should not render review outcome form fields or controls when the appeal is not in "validation" status', async () => {
-			const appealStatusesWithoutValidation = Object.values(APPEAL_CASE_STATUS).filter(
-				(status) => status !== APPEAL_CASE_STATUS.VALIDATION
-			);
+		const appealStatusesWithoutValidation = Object.values(APPEAL_CASE_STATUS).filter(
+			(status) => status !== APPEAL_CASE_STATUS.VALIDATION
+		);
 
-			for (const appealStatus of appealStatusesWithoutValidation) {
+		for (const appealStatus of appealStatusesWithoutValidation) {
+			it(`should not render review outcome form fields or controls when the appeal is not in "validation" status (${appealStatus})`, async () => {
 				nock('http://test/')
 					.get(`/appeals/2`)
 					.reply(200, {
@@ -190,8 +190,8 @@ describe('appellant-case', () => {
 					'name="reviewOutcome" type="radio" value="incomplete">'
 				);
 				expect(unprettifiedElement.innerHTML).not.toContain('Continue</button>');
-			}
-		});
+			});
+		}
 
 		it('should render a "LPA application reference" success notification banner when the planning application reference is updated', async () => {
 			const appealId = appealData.appealId.toString();
