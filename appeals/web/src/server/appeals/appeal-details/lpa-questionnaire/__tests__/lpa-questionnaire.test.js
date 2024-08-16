@@ -29,7 +29,7 @@ import usersService from '#appeals/appeal-users/users-service.js';
 import { cloneDeep } from 'lodash-es';
 import { addDays } from 'date-fns';
 import { dateToDisplayDate } from '#lib/dates.js';
-import { APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
+import { APPEAL_VIRUS_CHECK_STATUS, APPEAL_CASE_STATUS } from 'pins-data-model';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -361,17 +361,74 @@ describe('LPA Questionnaire review', () => {
 			expect(element.innerHTML).toContain('5. Site access</h2>');
 			expect(element.innerHTML).toContain('6. Appeal process</h2>');
 			expect(element.innerHTML).toContain('Additional documents</h2>');
-			expect(element.innerHTML).toContain('What is the outcome of your review?</h2>');
-			expect(element.innerHTML).toContain('Confirm</button>');
+		}, 10000);
+
+		it('should render review outcome form fields and controls when the appeal is in "LPA Questionnaire" status', async () => {
+			nock('http://test/')
+				.get(`/appeals/2`)
+				.reply(200, {
+					...appealData,
+					appealId: 2,
+					appealStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE
+				});
+			nock('http://test/')
+				.get('/appeals/2/lpa-questionnaires/2')
+				.reply(200, lpaQuestionnaireDataNotValidated);
+
+			const response = await request.get('/appeals-service/appeal-details/2/lpa-questionnaire/2');
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
+			expect(unprettifiedElement.innerHTML).toContain('What is the outcome of your review?</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="review-outcome" type="radio" value="complete">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="review-outcome" type="radio" value="incomplete">'
 			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Confirming this review will inform the relevant parties of the outcome</div>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
+		}, 10000);
+
+		it('should not render review outcome form fields or controls when the appeal is not in "LPA Questionnaire" status', async () => {
+			const appealStatusesWithoutLPAQuestionnaire = Object.values(APPEAL_CASE_STATUS).filter(
+				(status) => status !== APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE
+			);
+
+			for (const appealStatus of appealStatusesWithoutLPAQuestionnaire) {
+				nock('http://test/')
+					.get(`/appeals/2`)
+					.reply(200, {
+						...appealData,
+						appealId: 2,
+						appealStatus
+					});
+				nock('http://test/')
+					.get('/appeals/2/lpa-questionnaires/2')
+					.reply(200, lpaQuestionnaireDataNotValidated);
+
+				const response = await request.get('/appeals-service/appeal-details/2/lpa-questionnaire/2');
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).not.toContain(
+					'What is the outcome of your review?</h2>'
+				);
+				expect(unprettifiedElement.innerHTML).not.toContain(
+					'name="reviewOutcome" type="radio" value="valid">'
+				);
+				expect(unprettifiedElement.innerHTML).not.toContain(
+					'name="reviewOutcome" type="radio" value="invalid">'
+				);
+				expect(unprettifiedElement.innerHTML).not.toContain(
+					'name="reviewOutcome" type="radio" value="incomplete">'
+				);
+				expect(unprettifiedElement.innerHTML).not.toContain('Continue</button>');
+			}
 		}, 10000);
 	});
 

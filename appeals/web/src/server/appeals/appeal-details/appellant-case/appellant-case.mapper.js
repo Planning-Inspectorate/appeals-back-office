@@ -18,7 +18,11 @@ import { removeSummaryListActions } from '#lib/mappers/mapper-utilities.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { APPEAL_VIRUS_CHECK_STATUS, APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
+import {
+	APPEAL_CASE_STATUS,
+	APPEAL_VIRUS_CHECK_STATUS,
+	APPEAL_DOCUMENT_TYPE
+} from 'pins-data-model';
 import { isFeatureActive } from '#common/feature-flags.js';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { generateHASComponents } from '#lib/mappers/appellant-case/appeal-type-has.mapper.js';
@@ -96,7 +100,10 @@ export async function appellantCasePage(appellantCaseData, appealDetails, curren
 	/** @type {PageComponent[]} */
 	const reviewOutcomeComponents = [];
 
-	if (reviewOutcomeRadiosInputInstruction) {
+	if (
+		reviewOutcomeRadiosInputInstruction &&
+		appealDetails.appealStatus === APPEAL_CASE_STATUS.VALIDATION
+	) {
 		reviewOutcomeComponents.push({
 			type: 'radios',
 			parameters: reviewOutcomeRadiosInputInstruction.properties

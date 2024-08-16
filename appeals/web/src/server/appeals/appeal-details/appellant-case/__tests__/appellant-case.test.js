@@ -28,6 +28,7 @@ import { cloneDeep } from 'lodash-es';
 import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
 import usersService from '#appeals/appeal-users/users-service.js';
 import { dateToDisplayDate } from '#lib/dates.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -95,23 +96,15 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain('3. Application details</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('4. Appeal details</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('Additional documents</h2>');
-			expect(unprettifiedElement.innerHTML).toContain(
-				'What is the outcome of your review?</legend>'
-			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				'name="reviewOutcome" type="radio" value="valid">'
-			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				'name="reviewOutcome" type="radio" value="invalid">'
-			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				'name="reviewOutcome" type="radio" value="incomplete">'
-			);
-			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
 
 		it('should render the appellant case page with the expected content (Full planning appeal / S78)', async () => {
-			nock('http://test/').get('/appeals/2').reply(200, appealDataFullPlanning);
+			nock('http://test/')
+				.get('/appeals/2')
+				.reply(200, {
+					...appealDataFullPlanning,
+					appealId: 2
+				});
 			nock('http://test/')
 				.get('/appeals/2/appellant-cases/0')
 				.reply(200, appellantCaseDataNotValidated);
@@ -128,6 +121,76 @@ describe('appellant-case', () => {
 				'Supporting documents submitted with statement</dt>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Planning obligation</dt>');
+		});
+
+		it('should render review outcome form fields and controls when the appeal is in "validation" status', async () => {
+			nock('http://test/')
+				.get(`/appeals/2`)
+				.reply(200, {
+					...appealData,
+					appealId: 2,
+					appealStatus: APPEAL_CASE_STATUS.VALIDATION
+				});
+			nock('http://test/')
+				.get('/appeals/2/appellant-cases/0')
+				.reply(200, appellantCaseDataNotValidated);
+
+			const response = await request.get(`${baseUrl}/2${appellantCasePagePath}`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'What is the outcome of your review?</legend>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="reviewOutcome" type="radio" value="valid">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="reviewOutcome" type="radio" value="invalid">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="reviewOutcome" type="radio" value="incomplete">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
+		});
+
+		it('should not render review outcome form fields or controls when the appeal is not in "validation" status', async () => {
+			const appealStatusesWithoutValidation = Object.values(APPEAL_CASE_STATUS).filter(
+				(status) => status !== APPEAL_CASE_STATUS.VALIDATION
+			);
+
+			for (const appealStatus of appealStatusesWithoutValidation) {
+				nock('http://test/')
+					.get(`/appeals/2`)
+					.reply(200, {
+						...appealData,
+						appealId: 2,
+						appealStatus
+					});
+				nock('http://test/')
+					.get('/appeals/2/appellant-cases/0')
+					.reply(200, appellantCaseDataNotValidated);
+
+				const response = await request.get(`${baseUrl}/2${appellantCasePagePath}`);
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).not.toContain(
+					'What is the outcome of your review?</legend>'
+				);
+				expect(unprettifiedElement.innerHTML).not.toContain(
+					'name="reviewOutcome" type="radio" value="valid">'
+				);
+				expect(unprettifiedElement.innerHTML).not.toContain(
+					'name="reviewOutcome" type="radio" value="invalid">'
+				);
+				expect(unprettifiedElement.innerHTML).not.toContain(
+					'name="reviewOutcome" type="radio" value="incomplete">'
+				);
+				expect(unprettifiedElement.innerHTML).not.toContain('Continue</button>');
+			}
 		});
 
 		it('should render a "LPA application reference" success notification banner when the planning application reference is updated', async () => {
