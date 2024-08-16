@@ -1,3 +1,5 @@
+import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
+
 export const VALIDATION_OUTCOME_COMPLETE = 'Complete';
 export const VALIDATION_OUTCOME_INCOMPLETE = 'Incomplete';
 export const VALIDATION_OUTCOME_INVALID = 'Invalid';
@@ -156,7 +158,7 @@ export const ERROR_INVALID_LPAQ_DATA = 'The integration payload LPA_QUESTIONNAIR
 export const ERROR_INVALID_DOCUMENT_DATA = 'The integration payload DOCUMENT is invalid.';
 export const ERROR_INVALID_APPEAL_STATE = 'The action is invalid on the current appeal state.';
 export const ERROR_CASE_OUTCOME_MUST_BE_ONE_OF = `The case outcome must be one of ${CASE_OUTCOME_ALLOWED}, ${CASE_OUTCOME_DISMISSED}, ${CASE_OUTCOME_SPLIT_DECISION}`;
-export const ERROR_REP_OUTCOME_MUST_BE_ONE_OF = `The representation status must be valid`;
+export const ERROR_REP_OUTCOME_MUST_BE_ONE_OF = `The representation status must be one of ${APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW}, ${APPEAL_REPRESENTATION_STATUS.INVALID}, ${APPEAL_REPRESENTATION_STATUS.VALID}`;
 export const ERROR_LINKING_APPEALS =
 	'The appeals cannot be linked as the lead or child are already linked to other appeals.';
 export const ERROR_INVALID_EMAIL = 'must be a valid email';
