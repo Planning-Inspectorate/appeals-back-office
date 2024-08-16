@@ -149,9 +149,8 @@ router.patch(
 	#swagger.responses[400] = {}
 	#swagger.responses[404] = {}
  */
-	getRepresentationRouteValidator,
-	checkAppealExistsByIdAndAddToRequest,
 	getRepresentationUpdateValidator,
+	checkAppealExistsByIdAndAddToRequest,
 	asyncHandler(controller.changeRepresentationStatus)
 );
 
@@ -178,9 +177,8 @@ router.patch(
 	#swagger.responses[400] = {}
 	#swagger.responses[404] = {}
  */
-	getRepresentationRouteValidator,
-	checkAppealExistsByIdAndAddToRequest,
 	getRepresentationUpdateValidator,
+	checkAppealExistsByIdAndAddToRequest,
 	asyncHandler(controller.addRedactedRepresentation)
 );
 

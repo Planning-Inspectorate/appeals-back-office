@@ -83,7 +83,7 @@ describe('/appeals/:id/representations', () => {
 			expect(response.status).toEqual(400);
 			expect(response.body).toEqual({
 				errors: {
-					status: 'The representation status must be valid'
+					status: 'The representation status must be one of awaiting_review, invalid, valid'
 				}
 			});
 		});
