@@ -88,6 +88,8 @@ export function generateFPAComponents(appealDetails, appellantCaseData, mappedAp
 					removeSummaryListActions(mappedAppellantCaseData.appealType.display.summaryListItem),
 					mappedAppellantCaseData.appealStatement.display.summaryListItem,
 					mappedAppellantCaseData.relatedAppeals.display.summaryListItem,
+					mappedAppellantCaseData.planningObligationInSupport.display.summaryListItem,
+					mappedAppellantCaseData.statusPlanningObligation.display.summaryListItem,
 					mappedAppellantCaseData.appellantCostsApplication.display.summaryListItem,
 					mappedAppellantCaseData.costsDocument.display.summaryListItem,
 					mappedAppellantCaseData.planningObligation.display.summaryListItem

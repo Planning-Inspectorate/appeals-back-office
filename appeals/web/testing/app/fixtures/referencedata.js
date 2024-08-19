@@ -382,6 +382,10 @@ export const appellantCaseDataNotValidated = {
 	visibility: {
 		details: null,
 		isVisible: true
+	},
+	planningObligation: {
+		hasObligation: true,
+		status: 'finalised'
 	}
 };
 

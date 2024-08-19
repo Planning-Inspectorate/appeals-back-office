@@ -51,7 +51,9 @@ const updateAppellantCaseById = async (req, res) => {
 			applicationDecisionDate,
 			developmentDescription,
 			isGreenBelt,
-			applicationDecision
+			applicationDecision,
+			planningObligation,
+			statusPlanningObligation
 		},
 		params,
 		validationOutcome
@@ -109,7 +111,9 @@ const updateAppellantCaseById = async (req, res) => {
 						typeof developmentDescription?.details !== typeof undefined
 							? developmentDescription?.details
 							: undefined,
-					applicationDecision
+					applicationDecision,
+					planningObligation,
+					statusPlanningObligation
 			  });
 
 		const updatedProperties = Object.keys(body).filter((key) => body[key] !== undefined);

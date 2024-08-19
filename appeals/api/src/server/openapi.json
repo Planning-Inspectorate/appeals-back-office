@@ -5315,6 +5315,23 @@
 						"type": "boolean",
 						"example": true
 					},
+					"planningObligation": {
+						"type": "object",
+						"properties": {
+							"hasObligation": {
+								"type": "boolean",
+								"example": true
+							},
+							"status": {
+								"type": "string",
+								"example": "Finalised"
+							}
+						}
+					},
+					"statusPlanningObligation": {
+						"type": "string",
+						"example": "finalised"
+					},
 					"documents": {
 						"type": "object",
 						"properties": {
@@ -5458,19 +5475,6 @@
 					"localPlanningDepartment": {
 						"type": "string",
 						"example": "Wiltshire Council"
-					},
-					"planningObligation": {
-						"type": "object",
-						"properties": {
-							"hasObligation": {
-								"type": "boolean",
-								"example": true
-							},
-							"status": {
-								"type": "string",
-								"example": "Finalised"
-							}
-						}
 					},
 					"procedureType": {
 						"type": "string",
