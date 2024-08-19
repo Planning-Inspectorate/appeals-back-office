@@ -172,6 +172,7 @@ interface SingleAppellantCaseResponse {
 		applicationDecisionLetter?: FolderInfo | null;
 		changedDescription?: FolderInfo | null;
 		originalApplicationForm?: FolderInfo | null;
+		designAccessStatement?: FolderInfo | null;
 		plansDrawings?: FolderInfo | null;
 		planningObligation?: FolderInfo | null;
 	};

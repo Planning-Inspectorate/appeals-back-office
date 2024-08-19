@@ -611,6 +611,56 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 	};
 
 	/** @type {Instructions} */
+	mappedData.designAccessStatement = {
+		id: 'design-access-statement',
+		display: {
+			summaryListItem: {
+				key: {
+					text: 'Design and access statement'
+				},
+				value: displayPageFormatter.formatDocumentValues(
+					appellantCaseData.appealId,
+					isFolderInfo(appellantCaseData.documents.designAccessStatement)
+						? appellantCaseData.documents.designAccessStatement?.documents || []
+						: []
+				),
+				actions: {
+					items: [
+						...((
+							(isFolderInfo(appellantCaseData.documents.designAccessStatement) &&
+								appellantCaseData.documents.designAccessStatement.documents) ||
+							[]
+						).length
+							? [
+									mapActionComponent(permissionNames.updateCase, session, {
+										text: 'Manage',
+										visuallyHiddenText: 'Design and access statement',
+										href: mapDocumentManageUrl(
+											appellantCaseData.appealId,
+											isFolderInfo(appellantCaseData.documents.designAccessStatement)
+												? appellantCaseData.documents.designAccessStatement.folderId
+												: undefined
+										)
+									})
+							  ]
+							: []),
+						mapActionComponent(permissionNames.updateCase, session, {
+							text: 'Add',
+							visuallyHiddenText: 'Design and access statement',
+							href: displayPageFormatter.formatDocumentActionLink(
+								appellantCaseData.appealId,
+								appellantCaseData.documents.designAccessStatement,
+								documentUploadUrlTemplate
+							),
+							attributes: { 'data-cy': 'add-design-access-statement' }
+						})
+					]
+				}
+			}
+		}
+	};
+
+	/** @type {Instructions} */
 	mappedData.supportingDocuments = {
 		id: 'supporting-documents',
 		display: {

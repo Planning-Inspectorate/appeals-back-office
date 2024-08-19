@@ -46,6 +46,7 @@ export const baseExpectedAppellantCaseResponse = (appeal) => {
 			appellantStatement: {},
 			applicationDecisionLetter: {},
 			changedDescription: {},
+			designAccessStatement: {},
 			originalApplicationForm: {},
 			plansDrawings: {},
 			planningObligation: {}

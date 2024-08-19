@@ -2019,6 +2019,11 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70459"> Add<span class="govuk-visually-hidden"> Agreement to change description evidence</span></a>
                         </dd>
                 </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Design and access statement</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-design-access-statement"> Add<span class="govuk-visually-hidden"> Design and access statement</span></a>
+                        </dd>
+                </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents submitted with statement</dt>
                     <dd                     class="govuk-summary-list__value"></dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-supporting-documents"> Add<span class="govuk-visually-hidden"> Supporting documents submitted with statement</span></a>
