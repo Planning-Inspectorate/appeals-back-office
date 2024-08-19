@@ -52,6 +52,7 @@ export function generateFPAComponents(appealDetails, appellantCaseData, mappedAp
 					mappedAppellantCaseData.developmentDescription.display.summaryListItem,
 					mappedAppellantCaseData.changedDevelopmentDescription.display.summaryListItem,
 					mappedAppellantCaseData.changedDevelopmentDescriptionDocument.display.summaryListItem,
+					mappedAppellantCaseData.designAccessStatement.display.summaryListItem,
 					mappedAppellantCaseData.supportingDocuments.display.summaryListItem,
 					mappedAppellantCaseData.applicationDecisionDate.display.summaryListItem,
 					mappedAppellantCaseData.decisionLetter.display.summaryListItem,

@@ -363,6 +363,10 @@ export const spec = {
 				planningObligation: {
 					folderId: 4571,
 					documents: []
+				},
+				designAccessStatement: {
+					folderId: 4572,
+					documents: []
 				}
 			},
 			hasAdvertisedAppeal: true,
