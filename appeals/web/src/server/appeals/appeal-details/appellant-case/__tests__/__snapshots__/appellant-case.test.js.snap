@@ -530,6 +530,30 @@ exports[`appellant-case GET /appellant-case should render a "LPA application ref
 </main>"
 `;
 
+exports[`appellant-case GET /appellant-case should render a "Planning obligation in support updated" notification banner when the planning obligation response is changed 1`] = `
+"<div class="govuk-notification-banner govuk-notification-banner--success"
+role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
+    </div>
+    <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">Planning obligation in support updated</p>
+    </div>
+</div>"
+`;
+
+exports[`appellant-case GET /appellant-case should render a "Planning obligation status updated" notification banner when the planning obligation status is changed 1`] = `
+"<div class="govuk-notification-banner govuk-notification-banner--success"
+role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
+    </div>
+    <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">Planning obligation status updated</p>
+    </div>
+</div>"
+`;
+
 exports[`appellant-case GET /appellant-case should render a "Site area updated" success notification banner when the site area is updated 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
@@ -2069,6 +2093,16 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/other-appeals/add"
                         data-cy="add-related-appeals"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                     </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning obligation in support</dt>
+                    <dd                     class="govuk-summary-list__value">Yes</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/planning-obligation/change"> Change<span class="govuk-visually-hidden"> Planning obligation in support</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning obligation status</dt>
+                    <dd                     class="govuk-summary-list__value">Finalised</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/planning-obligation/status/change"> Change<span class="govuk-visually-hidden"> Planning obligation status</span></a>
+                        </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Applied for award of appeal costs</dt>
                     <dd                     class="govuk-summary-list__value"></dd>

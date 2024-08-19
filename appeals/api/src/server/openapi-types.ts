@@ -803,6 +803,14 @@ export interface SingleAppellantCaseResponse {
 	};
 	/** @example true */
 	isGreenBelt?: boolean;
+	planningObligation?: {
+		/** @example true */
+		hasObligation?: boolean;
+		/** @example "Finalised" */
+		status?: string;
+	};
+	/** @example "finalised" */
+	statusPlanningObligation?: string;
 	documents?: {
 		appealStatement?: {
 			/** @example 4562 */
@@ -867,12 +875,6 @@ export interface SingleAppellantCaseResponse {
 	isAppellantNamedOnApplication?: boolean;
 	/** @example "Wiltshire Council" */
 	localPlanningDepartment?: string;
-	planningObligation?: {
-		/** @example true */
-		hasObligation?: boolean;
-		/** @example "Finalised" */
-		status?: string;
-	};
 	/** @example "written" */
 	procedureType?: string;
 	siteOwnership?: {

@@ -22,6 +22,7 @@ import safetyRisksRouter from '../safety-risks/safety-risks.router.js';
 import siteAddressRouter from './address/address.router.js';
 import siteOwnershipRouter from './site-ownership/site-ownership.router.js';
 import ownersKnownRouter from './owners-known/owners-known.router.js';
+import planningObligationRouter from './planning-obligation/planning-obligation.router.js';
 import otherAppealsRouter from '../other-appeals/other-appeals.router.js';
 import siteAreaRouter from './site-area/site-area.router.js';
 import applicationSubmissionDateRouter from './application-submission-date/application-submission-date.router.js';
@@ -93,6 +94,12 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	ownersKnownRouter
+);
+router.use(
+	'/planning-obligation',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	planningObligationRouter
 );
 router.use(
 	'/other-appeals',

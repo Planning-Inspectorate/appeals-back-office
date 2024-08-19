@@ -1003,6 +1003,56 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		}
 	};
 
+	/** @type {Instructions} */
+	mappedData.planningObligationInSupport = {
+		id: 'planning-obligation-in-support',
+		display: {
+			summaryListItem: {
+				key: {
+					text: 'Planning obligation in support'
+				},
+				value: {
+					text: convertFromBooleanToYesNo(appellantCaseData.planningObligation?.hasObligation) || ''
+				},
+				actions: {
+					items: [
+						mapActionComponent(permissionNames.updateCase, session, {
+							text: 'Change',
+							visuallyHiddenText: 'Planning obligation in support',
+							href: `${currentRoute}/planning-obligation/change`
+						})
+					]
+				}
+			}
+		}
+	};
+
+	/** @type {Instructions} */
+	mappedData.statusPlanningObligation = {
+		id: 'planning-obligation-status',
+		display: {
+			summaryListItem: {
+				key: {
+					text: 'Planning obligation status'
+				},
+				value: {
+					text: displayPageFormatter.formatPlanningObligationStatus(
+						appellantCaseData.planningObligation?.status
+					)
+				},
+				actions: {
+					items: [
+						mapActionComponent(permissionNames.updateCase, session, {
+							text: 'Change',
+							visuallyHiddenText: 'Planning obligation status',
+							href: `${currentRoute}/planning-obligation/status/change`
+						})
+					]
+				}
+			}
+		}
+	};
+
 	mappedData.appellantCostsApplication = {
 		id: 'appellant-costs-application',
 		display: {

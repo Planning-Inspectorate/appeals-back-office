@@ -24,6 +24,7 @@ import neighbouringSitesRepository from '#repositories/neighbouring-sites.reposi
 import { createAppealReference } from '#utils/appeal-reference.js';
 import { FOLDERS } from '@pins/appeals/constants/documents.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { randomBool } from './data-samples.js';
 import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.AppealSite} AppealSite */
@@ -772,6 +773,13 @@ export async function seedTestData(databaseConnector) {
 				? appellantCaseValidationOutcomes[2]
 				: null;
 
+		const planningObligation = randomBool();
+		const statusPlanningObligation = planningObligation
+			? randomBool()
+				? 'finalised'
+				: 'not_started' // TODO (A2-173): replace with data model constants once those are available
+			: null;
+
 		await databaseConnector.appellantCase.update({
 			where: { id: appellantCase.id },
 			data: {
@@ -779,7 +787,9 @@ export async function seedTestData(databaseConnector) {
 				knowsOtherOwnersId: knowledgeOfOtherLandowners[0].id,
 				...(validationOutcome && {
 					appellantCaseValidationOutcomeId: validationOutcome.validationOutcomeId
-				})
+				}),
+				planningObligation,
+				statusPlanningObligation
 			}
 		});
 

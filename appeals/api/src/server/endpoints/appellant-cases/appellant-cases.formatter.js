@@ -75,7 +75,11 @@ const formatAppellantCase = (appeal, folders = null) => {
 			applicationDecision: appellantCase.applicationDecision || null,
 			appellantCostsAppliedFor: appellantCase.appellantCostsAppliedFor,
 			...formatFoldersAndDocuments(folders),
-			isGreenBelt: appellantCase.isGreenBelt
+			isGreenBelt: appellantCase.isGreenBelt,
+			planningObligation: {
+				hasObligation: appellantCase.planningObligation,
+				status: appellantCase.statusPlanningObligation
+			}
 		};
 	}
 };

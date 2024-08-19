@@ -178,6 +178,10 @@ interface SingleAppellantCaseResponse {
 	};
 	validation: ValidationOutcomeResponse | null;
 	isGreenBelt?: boolean | null;
+	planningObligation?: {
+		hasObligation: boolean | null;
+		status: string | null;
+	};
 }
 
 interface UpdateAppellantCaseRequest {
@@ -207,6 +211,8 @@ interface UpdateAppellantCaseRequest {
 	isSitePartiallyOwned?: boolean;
 	isSiteVisibleFromPublicRoad?: boolean;
 	visibilityRestrictions?: string;
+	planningObligation?: boolean | null;
+	statusPlanningObligation?: string | null;
 }
 
 interface UpdateAppellantCaseValidationOutcome {

@@ -10,7 +10,7 @@ import {
 /**
  * @returns {boolean}
  */
-const randomBool = () => Math.random() < 0.5;
+export const randomBool = () => Math.random() < 0.5;
 
 /**
  * @typedef {import('@pins/appeals.api').Schema.LPAQuestionnaire} LPAQuestionnaire
@@ -275,7 +275,9 @@ export const appellantCaseList = {
 		hasAdvertisedAppeal: false,
 		originalDevelopmentDescription: 'lorem ipsum',
 		changedDevelopmentDescription: false,
-		isGreenBelt: randomBool()
+		isGreenBelt: randomBool(),
+		planningObligation: true,
+		statusPlanningObligation: null
 	}
 };
 
