@@ -433,8 +433,7 @@ export async function initialiseAndMapAppealData(
 				},
 				value: {
 					html: displayPageFormatter.formatAnswerAndDetails(
-						convertFromBooleanToYesNo(appealDetails.inspectorAccess.lpaQuestionnaire.isRequired) ??
-							'No answer provided',
+						convertFromBooleanToYesNo(appealDetails.inspectorAccess.lpaQuestionnaire?.isRequired),
 						appealDetails.inspectorAccess.lpaQuestionnaire.details
 					)
 				},
@@ -602,9 +601,8 @@ export async function initialiseAndMapAppealData(
 				},
 				value: {
 					html: displayPageFormatter.formatAnswerAndDetails(
-						convertFromBooleanToYesNo(appealDetails.healthAndSafety.lpaQuestionnaire.hasIssues) ||
-							'No answer provided',
-						appealDetails.healthAndSafety.lpaQuestionnaire.details
+						convertFromBooleanToYesNo(appealDetails.healthAndSafety.lpaQuestionnaire?.hasIssues),
+						appealDetails.healthAndSafety.lpaQuestionnaire?.details
 					)
 				},
 				actions: {

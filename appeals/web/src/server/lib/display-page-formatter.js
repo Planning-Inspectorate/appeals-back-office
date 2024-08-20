@@ -50,13 +50,16 @@ export const formatListOfNotificationMethodsToHtml = (notificationMethods) => {
 };
 
 /**
- * @param {string} answer
+ * @param {string|null|undefined} answer
  * @param {string|null|undefined} details
  * @returns {string}
  */
 export const formatAnswerAndDetails = (answer, details) => {
 	if (!details) {
 		details = '';
+	}
+	if (!answer) {
+		answer = '';
 	}
 	return answer === 'Yes'
 		? `${buildHtmSpan(answer)}<br>${buildHtmSpan(details)}`
@@ -121,12 +124,10 @@ export const formatListOfRelatedAppeals = (listOfAppeals) => {
 };
 
 /**
- * @param {string | any[]} listOfListedBuildingNumbers
+ * @param {import('@pins/appeals.api/src/server/endpoints/appeals.js').ListedBuildingDetailsResponse[]} listOfListedBuildingNumbers
  * @returns {string}
  */
-export const formatListOfListedBuildingNumbers = (
-	/** @type {import('@pins/appeals.api/src/server/endpoints/appeals.js').ListedBuildingDetailsResponse | string | any[]} */ listOfListedBuildingNumbers
-) => {
+export const formatListOfListedBuildingNumbers = (listOfListedBuildingNumbers) => {
 	if (listOfListedBuildingNumbers.length > 0) {
 		let formattedLinks = ``;
 		for (let i = 0; i < listOfListedBuildingNumbers.length; i++) {

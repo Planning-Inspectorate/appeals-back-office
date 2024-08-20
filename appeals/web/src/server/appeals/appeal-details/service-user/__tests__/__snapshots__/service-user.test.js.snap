@@ -48,7 +48,8 @@ exports[`service-user GET /change/:userType should render the change service use
                     <input class="govuk-input" id="phone-number"
                     name="phoneNumber" type="text">
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -90,7 +91,8 @@ exports[`service-user GET /change/:userType should render the change service use
                     <input class="govuk-input" id="phone-number"
                     name="phoneNumber" type="text">
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -145,7 +147,8 @@ exports[`service-user POST /change/:userType should re-render changeServiceUser 
                     <input class="govuk-input" id="phone-number"
                     name="phoneNumber" type="text">
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -199,7 +202,8 @@ exports[`service-user POST /change/:userType should re-render changeServiceUser 
                     <input class="govuk-input" id="phone-number"
                     name="phoneNumber" type="text">
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -253,7 +257,8 @@ exports[`service-user POST /change/:userType should re-render changeServiceUser 
                     <input class="govuk-input" id="phone-number"
                     name="phoneNumber" type="text">
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -307,7 +312,8 @@ exports[`service-user POST /change/:userType should re-render changeServiceUser 
                     <input class="govuk-input" id="phone-number"
                     name="phoneNumber" type="text">
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -361,7 +367,8 @@ exports[`service-user POST /change/:userType should re-render changeServiceUser 
                     <input class="govuk-input" id="phone-number"
                     name="phoneNumber" type="text">
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -416,7 +423,8 @@ exports[`service-user POST /change/:userType should re-render changeServiceUser 
                     <input class="govuk-input govuk-input--error" id="phone-number"
                     name="phoneNumber" type="text" value="00000" aria-describedby="phone-number-error">
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -470,7 +478,8 @@ exports[`service-user POST /change/:userType should re-render changeServiceUser 
                     <input class="govuk-input" id="phone-number"
                     name="phoneNumber" type="text">
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -524,7 +533,8 @@ exports[`service-user POST /change/:userType should re-render changeServiceUser 
                     <input class="govuk-input" id="phone-number"
                     name="phoneNumber" type="text">
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>

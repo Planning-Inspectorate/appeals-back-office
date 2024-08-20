@@ -3564,6 +3564,207 @@
 					}
 				}
 			}
+		},
+		"/appeals/{appealId}/listed-buildings": {
+			"post": {
+				"tags": ["Listed buildings"],
+				"description": "Adds a listed building list entry to an existing appeal",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Returns the listedBuildingId",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ListedBuildingCreateResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/ListedBuildingCreateResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "A list entry, an LPA Questionnaire ID , and if it affects a listed building",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ListedBuildingCreateRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/ListedBuildingCreateRequest"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"tags": ["Listed buildings"],
+				"description": "Delete a listed building list entry to an existing appeal",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Returns the listedBuildingId",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ListedBuildingDeleteResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/ListedBuildingDeleteResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "The id of the listed building to delete",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ListedBuildingDeleteRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/ListedBuildingDeleteRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/appeals/{appealId}/listed-buildings/{listedBuildingId}": {
+			"patch": {
+				"tags": ["Listed buildings"],
+				"description": "Updates a listed building list entry to an existing appeal",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "listedBuildingId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Returns the listedBuildingId",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ListedBuildingUpdateResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/ListedBuildingUpdateResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "A list entry and if it affects a listed building",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ListedBuildingUpdateRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/ListedBuildingUpdateRequest"
+							}
+						}
+					}
+				}
+			}
 		}
 	},
 	"components": {
@@ -3729,7 +3930,7 @@
 						"properties": {
 							"submissionId": {
 								"type": "string",
-								"example": "ad73b511-815b-4811-83d3-7b0480fe86e9"
+								"example": "ee57ef52-baa5-4748-b4f7-95313c75378d"
 							},
 							"advertisedAppeal": {
 								"type": "boolean",

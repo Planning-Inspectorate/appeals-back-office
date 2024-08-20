@@ -18,7 +18,8 @@ exports[`change-site-area GET /change should render changeSiteArea page when loa
                         <div class="govuk-input__suffix" aria-hidden="true">m²</div>
                     </div>
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -54,7 +55,8 @@ exports[`change-site-area POST /change should re-render changeSiteArea page with
                         <div class="govuk-input__suffix" aria-hidden="true">m²</div>
                     </div>
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -90,7 +92,8 @@ exports[`change-site-area POST /change should re-render changeSiteArea page with
                         <div class="govuk-input__suffix" aria-hidden="true">m²</div>
                     </div>
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>

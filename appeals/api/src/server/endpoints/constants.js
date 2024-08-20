@@ -72,6 +72,9 @@ export const AUDIT_TRAIL_LPAQ_IS_GREEN_BELT_UPDATED = 'Green belt status updated
 export const AUDIT_TRAIL_LPAQ_SITE_ACCESS_DETAILS_UPDATED = 'Inspector access (lpa) updated';
 export const AUDIT_TRAIL_LPAQ_SITE_SAFETY_DETAILS_UPDATED =
 	'Site health and safety risks (LPA answer) updated';
+export const AUDIT_TRAIL_LISTED_BUILDING_ADDED = 'A listed building was added';
+export const AUDIT_TRAIL_LISTED_BUILDING_UPDATED = 'A listed building was updated';
+export const AUDIT_TRAIL_LISTED_BUILDING_REMOVED = 'A listed building was removed';
 
 export const BANK_HOLIDAY_FEED_DIVISION_ENGLAND = 'england-and-wales';
 

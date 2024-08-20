@@ -4992,7 +4992,8 @@ exports[`costs decision GET /costs/decision/check-and-confirm/:folderId should r
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -5669,7 +5670,8 @@ exports[`costs decision POST /costs/decision/check-and-confirm/:folderId should 
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>

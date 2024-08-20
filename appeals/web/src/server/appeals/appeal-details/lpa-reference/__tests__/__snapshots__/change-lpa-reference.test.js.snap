@@ -15,7 +15,8 @@ exports[`change-lpa-reference GET /change should render changeLpaReference page 
                     <input class="govuk-input" id="planning-application-reference"
                     name="planningApplicationReference" type="text" value="48269/APP/2021/1482">
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -37,7 +38,8 @@ exports[`change-lpa-reference GET /change should render changeLpaReference page 
                     <input class="govuk-input" id="planning-application-reference"
                     name="planningApplicationReference" type="text" value="48269/APP/2021/1482">
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -73,7 +75,8 @@ exports[`change-lpa-reference POST /change should re-render changeLpaReference p
                     <input class="govuk-input govuk-input--error" id="planning-application-reference"
                     name="planningApplicationReference" type="text" aria-describedby="planning-application-reference-error">
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
