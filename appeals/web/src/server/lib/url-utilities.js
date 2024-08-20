@@ -27,3 +27,18 @@ export function getOriginPathname(request) {
 	const origin = new URL(request.originalUrl, `${request.protocol}://${request.headers.host}`);
 	return origin.pathname;
 }
+
+/**
+ * Safely redirects to a given URL, ensuring it's internal
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('express').Response} response
+ * @param {string} url
+ * @returns {void}
+ */
+export function safeRedirect(request, response, url) {
+	if (isInternalUrl(url, request)) {
+		return response.redirect(url);
+	} else {
+		return response.redirect(getOriginPathname(request));
+	}
+}
