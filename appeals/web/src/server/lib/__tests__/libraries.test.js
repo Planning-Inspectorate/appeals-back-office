@@ -42,7 +42,7 @@ import { paginationDefaultSettings } from '#appeals/appeal.constants.js';
 import { getPaginationParametersFromQuery } from '#lib/pagination-utilities.js';
 import { linkedAppealStatus } from '#lib/appeals-formatter.js';
 import httpMocks from 'node-mocks-http';
-import { getOriginPathname, isInternalUrl } from '#lib/url-utilities.js';
+import { getOriginPathname, isInternalUrl, safeRedirect } from '#lib/url-utilities.js';
 import { stringIsValidPostcodeFormat } from '#lib/postcode.js';
 
 describe('Libraries', () => {
@@ -1568,5 +1568,102 @@ describe('getOriginPathname', () => {
 		const result = getOriginPathname(request);
 
 		expect(result).toBe('/');
+	});
+});
+
+describe('safeRedirect', () => {
+	it('should redirect to the provided internal URL', () => {
+		const request = httpMocks.createRequest({
+			method: 'GET',
+			url: '/appeals-service/all-cases',
+			secure: true,
+			headers: {
+				host: 'localhost'
+			},
+			protocol: 'https',
+			originalUrl: '/appeals-service/all-cases'
+		});
+		const response = httpMocks.createResponse();
+		const url = '/appeals-service/new-case';
+
+		safeRedirect(request, response, url);
+
+		expect(response._getRedirectUrl()).toBe('/appeals-service/new-case');
+	});
+
+	it('should redirect to the original pathname if the URL is external', () => {
+		const request = httpMocks.createRequest({
+			method: 'GET',
+			url: '/appeals-service/all-cases',
+			secure: true,
+			headers: {
+				host: 'localhost'
+			},
+			protocol: 'https',
+			originalUrl: '/appeals-service/all-cases'
+		});
+		const response = httpMocks.createResponse();
+		const url = 'https://external-phishing-url.com';
+
+		safeRedirect(request, response, url);
+
+		expect(response._getRedirectUrl()).toBe('/appeals-service/all-cases');
+	});
+
+	it('should handle URLs without protocols and redirect correctly', () => {
+		const request = httpMocks.createRequest({
+			method: 'GET',
+			url: '/appeals-service/all-cases',
+			secure: true,
+			headers: {
+				host: 'localhost'
+			},
+			protocol: 'https',
+			originalUrl: '/appeals-service/all-cases'
+		});
+		const response = httpMocks.createResponse();
+		const url = '//localhost/appeals-service/new-case';
+
+		safeRedirect(request, response, url);
+
+		expect(response._getRedirectUrl()).toBe('//localhost/appeals-service/new-case');
+	});
+
+	it('should handle invalid URLs by redirecting to the original pathname', () => {
+		const request = httpMocks.createRequest({
+			method: 'GET',
+			url: '/appeals-service/all-cases',
+			secure: true,
+			headers: {
+				host: 'localhost'
+			},
+			protocol: 'https',
+			originalUrl: '/appeals-service/all-cases'
+		});
+		const response = httpMocks.createResponse();
+		const url = '://bad.url';
+
+		safeRedirect(request, response, url);
+
+		expect(response._getRedirectUrl()).toBe('/appeals-service/all-cases');
+	});
+
+	it('should redirect to the original pathname if the provided URL is null or undefined', () => {
+		const request = httpMocks.createRequest({
+			method: 'GET',
+			url: '/appeals-service/all-cases',
+			secure: true,
+			headers: {
+				host: 'localhost'
+			},
+			protocol: 'https',
+			originalUrl: '/appeals-service/all-cases'
+		});
+		const response = httpMocks.createResponse();
+		const url = '';
+
+		safeRedirect(request, response, url);
+
+		expect(response._getRedirectUrl()).toBe('/appeals-service/all-cases');
 	});
 });

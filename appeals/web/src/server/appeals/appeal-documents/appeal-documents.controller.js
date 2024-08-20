@@ -18,7 +18,7 @@ import {
 	documentUploadPage
 } from './appeal-documents.mapper.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { isInternalUrl } from '#lib/url-utilities.js';
+import { isInternalUrl, safeRedirect } from '#lib/url-utilities.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import {
 	createNewDocument,
@@ -746,7 +746,9 @@ export const postDeleteDocument = async (
 
 		const cancelUrlProcessedSafe = new URL(pathToRedirect, baseUrl);
 
-		return response.redirect(cancelUrlProcessedSafe.toString());
+		// return response.redirect(cancelUrlProcessedSafe.toString());
+
+		return safeRedirect(request, response, cancelUrlProcessedSafe.toString());
 	} else if (body['delete-file-answer'] === 'yes') {
 		await deleteDocument(apiClient, appealId, documentId, versionId);
 		addNotificationBannerToSession(
