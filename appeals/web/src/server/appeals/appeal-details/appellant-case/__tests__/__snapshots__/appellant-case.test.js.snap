@@ -3060,7 +3060,8 @@ exports[`appellant-case GET /appellant-case/check-your-answers should render the
             </dl>
             <div class="govuk-inset-text">Confirming this review will inform the relevant parties of the outcome</div>
             <form             method="post" novalidate="novalidate">
-                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Confirm</button>
                 </form>
         </div>
     </div>
@@ -3106,7 +3107,8 @@ exports[`appellant-case GET /appellant-case/check-your-answers should render the
             </dl>
             <div class="govuk-inset-text">Confirming this review will inform the relevant parties of the outcome</div>
             <form             method="post" novalidate="novalidate">
-                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Confirm</button>
                 </form>
         </div>
     </div>
@@ -4450,7 +4452,7 @@ exports[`appellant-case GET /appellant-case/valid/date should render the valid d
                     </fieldset>
                 </div>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the valid date</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -7376,7 +7378,7 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the upd
                     </fieldset>
                 </div>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the valid date</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -7437,7 +7439,7 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the upd
                     </fieldset>
                 </div>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the valid date</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -7498,7 +7500,7 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the upd
                     </fieldset>
                 </div>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the valid date</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -7557,7 +7559,7 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
                     </fieldset>
                 </div>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the valid date</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -7618,7 +7620,7 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
                     </fieldset>
                 </div>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the valid date</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -7679,7 +7681,7 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
                     </fieldset>
                 </div>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the valid date</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -7740,7 +7742,7 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
                     </fieldset>
                 </div>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the valid date</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -7801,7 +7803,7 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
                     </fieldset>
                 </div>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the valid date</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -7862,7 +7864,7 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
                     </fieldset>
                 </div>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the valid date</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -7921,7 +7923,7 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
                     </fieldset>
                 </div>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the valid date</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -7986,7 +7988,7 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
                     </fieldset>
                 </div>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the valid date</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -8045,7 +8047,7 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
                     </fieldset>
                 </div>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the valid date</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>

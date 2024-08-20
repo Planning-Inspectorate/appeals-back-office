@@ -29,7 +29,8 @@ exports[`withdrawal GET /redaction-status should render the redaction status pag
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -163,7 +164,8 @@ exports[`withdrawal GET /withdrawal/check-your-answers should render the check y
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -233,7 +235,8 @@ exports[`withdrawal GET /withdrawal-request-date should render the withdrawal re
                         </div>
                     </fieldset>
         </div>
-        <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+        data-module="govuk-button">Continue</button>
         </form>
     </div>
     </div>
@@ -280,7 +283,8 @@ exports[`withdrawal POST /redaction-status should re-render the redaction status
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -353,7 +357,8 @@ exports[`withdrawal POST /withdrawal/check-your-answers should render the check 
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>

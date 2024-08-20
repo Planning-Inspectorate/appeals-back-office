@@ -274,22 +274,34 @@ const formatAppeal = (
 			healthAndSafety: {
 				appellantCase: {
 					details: appeal.appellantCase?.siteSafetyDetails,
-					hasIssues: appeal.appellantCase?.siteSafetyDetails !== null
+					hasIssues:
+						appeal.appellantCase?.siteSafetyDetails !== undefined
+							? !!appeal.appellantCase?.siteSafetyDetails
+							: undefined
 				},
 				lpaQuestionnaire: {
 					details: appeal.lpaQuestionnaire?.siteSafetyDetails,
-					hasIssues: appeal.lpaQuestionnaire?.siteSafetyDetails !== null
+					hasIssues:
+						appeal.lpaQuestionnaire?.siteSafetyDetails !== undefined
+							? !!appeal.lpaQuestionnaire?.siteSafetyDetails
+							: undefined
 				}
 			},
 			inspector: appeal.inspector?.azureAdUserId || null,
 			inspectorAccess: {
 				appellantCase: {
 					details: appeal.appellantCase?.siteAccessDetails,
-					isRequired: appeal.appellantCase?.siteAccessDetails !== null
+					isRequired:
+						appeal.appellantCase?.siteAccessDetails !== undefined
+							? !!appeal.appellantCase?.siteAccessDetails
+							: undefined
 				},
 				lpaQuestionnaire: {
 					details: appeal.lpaQuestionnaire?.siteAccessDetails,
-					isRequired: appeal.lpaQuestionnaire?.siteAccessDetails !== null
+					isRequired:
+						appeal.lpaQuestionnaire?.siteAccessDetails !== undefined
+							? !!appeal.lpaQuestionnaire?.siteAccessDetails
+							: undefined
 				}
 			},
 			otherAppeals: formatRelatedAppeals(appeal.relatedAppeals || [], appeal.id, referencedAppeals),

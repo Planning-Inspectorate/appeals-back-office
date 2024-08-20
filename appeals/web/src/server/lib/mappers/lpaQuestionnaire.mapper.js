@@ -41,18 +41,33 @@ export function initialiseAndMapLPAQData(
 				key: {
 					text: 'Listed buildings'
 				},
-				value: {
-					html: displayPageFormatter.formatListOfListedBuildingNumbers(
-						lpaQuestionnaireData.listedBuildingDetails || []
-					)
-				},
+				value: lpaQuestionnaireData.listedBuildingDetails?.length
+					? {
+							html: displayPageFormatter.formatListOfListedBuildingNumbers(
+								lpaQuestionnaireData.listedBuildingDetails || []
+							)
+					  }
+					: {
+							text: 'No affected listed buildings'
+					  },
 				actions: {
 					items: [
+						...(lpaQuestionnaireData.listedBuildingDetails &&
+						lpaQuestionnaireData.listedBuildingDetails.length > 0
+							? [
+									mapActionComponent(permissionNames.updateCase, session, {
+										text: 'Manage',
+										href: `${currentRoute}/affected-listed-buildings/manage`,
+										visuallyHiddenText: 'Affected listed building',
+										attributes: { 'lpaQuestionnaireData-cy': 'manage-affected-listed-building' }
+									})
+							  ]
+							: []),
 						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Change',
-							visuallyHiddenText: 'Affects listed building details',
-							href: `${currentRoute}/change-lpa-questionnaire/affects-listed-building-details`,
-							attributes: { 'lpaQuestionnaireData-cy': 'change-affects-listed-building-details' }
+							text: 'Add',
+							visuallyHiddenText: 'Affected listed building',
+							href: `${currentRoute}/affected-listed-buildings/add`,
+							attributes: { 'lpaQuestionnaireData-cy': 'add-affected-listed-building' }
 						})
 					]
 				}

@@ -23,6 +23,7 @@ import otherAppealsRouter from '../other-appeals/other-appeals.router.js';
 import greenBeltRouter from '../green-belt/green-belt.router.js';
 import extraConditionsRouter from './extra-conditions/extra-conditions.router.js';
 import notificationMethodsRouter from './notification-methods/notification-methods.router.js';
+import affectedListedBuildingsRouter from './affected-listed-buildings/affected-listed-buildings.router.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -88,6 +89,13 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	notificationMethodsRouter
+);
+
+router.use(
+	'/:lpaQuestionnaireId/affected-listed-buildings',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	affectedListedBuildingsRouter
 );
 
 router

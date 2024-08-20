@@ -1,5 +1,5 @@
 import { body } from 'express-validator';
-import validateBooleanParameter from './boolean-parameter.js';
+import { validateBooleanParameter } from './boolean-parameter.js';
 import { validateStringParameter } from './string-parameter.js';
 import { ERROR_MUST_HAVE_DETAILS, ERROR_MUST_NOT_HAVE_DETAILS } from '#endpoints/constants.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';

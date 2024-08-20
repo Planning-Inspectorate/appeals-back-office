@@ -169,10 +169,12 @@ export const householdAppeal = {
 		siteWithinGreenBelt: null,
 		listedBuildingDetails: [
 			{
+				id: 1,
 				listEntry: '1',
 				affectsListedBuilding: false
 			},
 			{
+				id: 2,
 				listEntry: '2',
 				affectsListedBuilding: true
 			}

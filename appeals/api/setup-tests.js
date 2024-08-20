@@ -84,6 +84,7 @@ const mockAuditTrailCreate = jest.fn().mockResolvedValue({});
 const mockDocumentVersionAuditCreate = jest.fn().mockResolvedValue({});
 const mockAppealTypes = jest.fn().mockResolvedValue({});
 const mockNeighbouringSites = jest.fn().mockResolvedValue({});
+const mockListedBuildingSelected = jest.fn().mockResolvedValue({});
 const mockServiceUserUpdate = jest.fn().mockResolvedValue({});
 const mockServiceUserFindUnique = jest.fn().mockResolvedValue({});
 
@@ -362,6 +363,14 @@ class MockPrismaClient {
 			create: mockNeighbouringSites,
 			update: mockNeighbouringSites,
 			findUnique: mockNeighbouringSites
+		};
+	}
+
+	get listedBuildingSelected() {
+		return {
+			create: mockListedBuildingSelected,
+			update: mockListedBuildingSelected,
+			delete: mockListedBuildingSelected
 		};
 	}
 

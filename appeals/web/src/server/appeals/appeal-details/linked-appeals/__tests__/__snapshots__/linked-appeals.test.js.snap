@@ -189,7 +189,8 @@ exports[`linked-appeals GET /linked-appeals/add should render the add linked app
                                 <input class="govuk-input govuk-input govuk-input--width-10"
                                 id="appeal-reference" name="appeal-reference" type="text">
                             </div>
-                            <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                            <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                            data-module="govuk-button">Continue</button>
                         </form>
                     </div>
                 </div>
@@ -1154,7 +1155,8 @@ exports[`linked-appeals POST /linked-appeals/add should re-render the add linked
                     <input class="govuk-input govuk-input govuk-input--width-10"
                     id="appeal-reference" name="appeal-reference" type="text">
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -1187,7 +1189,8 @@ exports[`linked-appeals POST /linked-appeals/add should re-render the add linked
                     <input class="govuk-input govuk-input govuk-input--width-10"
                     id="appeal-reference" name="appeal-reference" type="text">
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -1220,7 +1223,8 @@ exports[`linked-appeals POST /linked-appeals/add should re-render the add linked
                     <input class="govuk-input govuk-input govuk-input--width-10"
                     id="appeal-reference" name="appeal-reference" type="text">
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -1253,7 +1257,8 @@ exports[`linked-appeals POST /linked-appeals/add should re-render the add linked
                     <input class="govuk-input govuk-input govuk-input--width-10"
                     id="appeal-reference" name="appeal-reference" type="text">
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>

@@ -725,9 +725,11 @@ export const lpaQuestionnaireData = {
 	isTheSiteWithinAnAONB: true,
 	listedBuildingDetails: [
 		{
+			id: 1,
 			listEntry: '123456'
 		},
 		{
+			id: 2,
 			listEntry: '123457'
 		}
 	],

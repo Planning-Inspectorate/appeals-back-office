@@ -113,7 +113,7 @@ exports[`site-visit GET /site-visit/manage-visit should render the manage visit 
                     name="visit-end-time-minute" type="number" value="44">
                 </fieldset>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -233,7 +233,7 @@ exports[`site-visit GET /site-visit/schedule-visit should render the schedule vi
                     name="visit-end-time-minute" type="number" value="44">
                 </fieldset>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -479,7 +479,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                     name="visit-end-time-minute" type="number" value="30">
                 </fieldset>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -610,7 +610,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                     name="visit-end-time-minute" type="number" value="30">
                 </fieldset>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -743,7 +743,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                     name="visit-end-time-minute" type="number" value="30">
                 </fieldset>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -876,7 +876,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                     name="visit-end-time-minute" type="number" value="30">
                 </fieldset>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -1009,7 +1009,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                     name="visit-end-time-minute" type="number" value="30">
                 </fieldset>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -1142,7 +1142,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                     name="visit-end-time-minute" type="number" value="30">
                 </fieldset>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -1275,7 +1275,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                     name="visit-end-time-minute" type="number" value="30">
                 </fieldset>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -1406,7 +1406,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                     name="visit-end-time-minute" type="number" value="30">
                 </fieldset>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -1537,7 +1537,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                     name="visit-end-time-minute" type="number" value="30">
                 </fieldset>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -1668,7 +1668,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                     name="visit-end-time-minute" type="number" value="60">
                 </fieldset>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -1801,7 +1801,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                     name="visit-end-time-minute" type="number" value="30">
                 </fieldset>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -1932,7 +1932,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                     name="visit-end-time-minute" type="number" value="00">
                 </fieldset>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -2063,7 +2063,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                     name="visit-end-time-minute" type="number" value="30">
                 </fieldset>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -2206,7 +2206,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                     name="visit-end-time-minute" type="number" value="">
                 </fieldset>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -2337,7 +2337,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     name="visit-end-time-minute" type="number" value="30">
                 </fieldset>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -2468,7 +2468,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     name="visit-end-time-minute" type="number" value="30">
                 </fieldset>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -2601,7 +2601,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     name="visit-end-time-minute" type="number" value="30">
                 </fieldset>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -2734,7 +2734,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     name="visit-end-time-minute" type="number" value="30">
                 </fieldset>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -2867,7 +2867,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     name="visit-end-time-minute" type="number" value="30">
                 </fieldset>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -3000,7 +3000,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     name="visit-end-time-minute" type="number" value="30">
                 </fieldset>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -3133,7 +3133,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     name="visit-end-time-minute" type="number" value="30">
                 </fieldset>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -3264,7 +3264,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     name="visit-end-time-minute" type="number" value="30">
                 </fieldset>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -3395,7 +3395,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     name="visit-end-time-minute" type="number" value="30">
                 </fieldset>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -3526,7 +3526,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     name="visit-end-time-minute" type="number" value="60">
                 </fieldset>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -3659,7 +3659,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     name="visit-end-time-minute" type="number" value="30">
                 </fieldset>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -3790,7 +3790,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     name="visit-end-time-minute" type="number" value="00">
                 </fieldset>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -3921,7 +3921,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     name="visit-end-time-minute" type="number" value="30">
                 </fieldset>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -4056,7 +4056,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     name="visit-end-time-minute" type="number" value="">
                 </fieldset>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -4189,7 +4189,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     name="visit-end-time-minute" type="number" value="30">
                 </fieldset>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -4322,7 +4322,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     name="visit-end-time-minute" type="number" value="">
                 </fieldset>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
@@ -4465,7 +4465,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     name="visit-end-time-minute" type="number" value="">
                 </fieldset>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
     </div>
