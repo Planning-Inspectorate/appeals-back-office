@@ -67,7 +67,7 @@ export interface ValidateDate {
 
 export interface AppellantCaseData {
 	casedata?: {
-		/** @example "3f51090d-2f45-49e7-ae09-27b71b01565e" */
+		/** @example "ad73b511-815b-4811-83d3-7b0480fe86e9" */
 		submissionId?: string;
 		/** @example true */
 		advertisedAppeal?: boolean;
@@ -757,11 +757,9 @@ export interface SingleAppealResponse {
 export interface SingleAppellantCaseResponse {
 	agriculturalHolding?: {
 		/** @example true */
-		isAgriculturalHolding?: boolean;
+		isPartOfAgriculturalHolding?: boolean;
 		/** @example true */
 		isTenant?: boolean;
-		/** @example false */
-		hasToldTenants?: boolean;
 		/** @example true */
 		hasOtherTenants?: boolean;
 	};
@@ -803,14 +801,6 @@ export interface SingleAppellantCaseResponse {
 	};
 	/** @example true */
 	isGreenBelt?: boolean;
-	planningObligation?: {
-		/** @example true */
-		hasObligation?: boolean;
-		/** @example "Finalised" */
-		status?: string;
-	};
-	/** @example "finalised" */
-	statusPlanningObligation?: string;
 	documents?: {
 		appealStatement?: {
 			/** @example 4562 */
@@ -875,6 +865,12 @@ export interface SingleAppellantCaseResponse {
 	isAppellantNamedOnApplication?: boolean;
 	/** @example "Wiltshire Council" */
 	localPlanningDepartment?: string;
+	planningObligation?: {
+		/** @example true */
+		hasObligation?: boolean;
+		/** @example "Finalised" */
+		status?: string;
+	};
 	/** @example "written" */
 	procedureType?: string;
 	siteOwnership?: {

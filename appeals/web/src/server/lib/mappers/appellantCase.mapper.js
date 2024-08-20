@@ -1053,6 +1053,83 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		}
 	};
 
+	/** @type {Instructions} */
+	mappedData.partOfAgriculturalHolding = {
+		id: 'part-of-agricultural-holding',
+		display: {
+			summaryListItem: {
+				key: {
+					text: 'Part of agricultural holding'
+				},
+				value: {
+					text:
+						convertFromBooleanToYesNo(
+							appellantCaseData.agriculturalHolding.isPartOfAgriculturalHolding
+						) || ''
+				},
+				actions: {
+					items: [
+						mapActionComponent(permissionNames.updateCase, session, {
+							text: 'Change',
+							visuallyHiddenText: 'Part of agricultural holding',
+							href: `${currentRoute}/agricultural-holding/change`
+						})
+					]
+				}
+			}
+		}
+	};
+
+	/** @type {Instructions} */
+	mappedData.tenantOfAgriculturalHolding = {
+		id: 'tenant-of-agricultural-holding',
+		display: {
+			summaryListItem: {
+				key: {
+					text: 'Tenant of agricultural holding'
+				},
+				value: {
+					text: convertFromBooleanToYesNo(appellantCaseData.agriculturalHolding.isTenant) || ''
+				},
+				actions: {
+					items: [
+						mapActionComponent(permissionNames.updateCase, session, {
+							text: 'Change',
+							visuallyHiddenText: 'Tenant of agricultural holding',
+							href: `${currentRoute}/agricultural-holding/tenant/change`
+						})
+					]
+				}
+			}
+		}
+	};
+
+	/** @type {Instructions} */
+	mappedData.otherTenantsOfAgriculturalHolding = {
+		id: 'other-tenants-of-agricultural-holding',
+		display: {
+			summaryListItem: {
+				key: {
+					text: 'Other tenants'
+				},
+				value: {
+					text:
+						convertFromBooleanToYesNo(appellantCaseData.agriculturalHolding.hasOtherTenants) || ''
+				},
+				actions: {
+					items: [
+						mapActionComponent(permissionNames.updateCase, session, {
+							text: 'Change',
+							visuallyHiddenText: 'Other tenants',
+							href: `${currentRoute}/agricultural-holding/other-tenants/change`
+						})
+					]
+				}
+			}
+		}
+	};
+
+	/** @type {Instructions} */
 	mappedData.appellantCostsApplication = {
 		id: 'appellant-costs-application',
 		display: {

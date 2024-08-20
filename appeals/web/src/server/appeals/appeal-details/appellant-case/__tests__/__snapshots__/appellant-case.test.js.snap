@@ -100,7 +100,7 @@ exports[`appellant-case GET /appellant-case should render a "Inspector access (a
             <h2 class="govuk-summary-card__title">2. Site details</h2>
         </div>
         <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list">
+            <dl class="govuk-summary-list" id="site-details">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
@@ -353,7 +353,7 @@ exports[`appellant-case GET /appellant-case should render a "LPA application ref
             <h2 class="govuk-summary-card__title">2. Site details</h2>
         </div>
         <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list">
+            <dl class="govuk-summary-list" id="site-details">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
@@ -530,6 +530,18 @@ exports[`appellant-case GET /appellant-case should render a "LPA application ref
 </main>"
 `;
 
+exports[`appellant-case GET /appellant-case should render a "Part of agricultural holding updated" notification banner when the part of agricultural holding response is changed 1`] = `
+"<div class="govuk-notification-banner govuk-notification-banner--success"
+role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
+    </div>
+    <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">Part of agricultural holding updated</p>
+    </div>
+</div>"
+`;
+
 exports[`appellant-case GET /appellant-case should render a "Planning obligation in support updated" notification banner when the planning obligation response is changed 1`] = `
 "<div class="govuk-notification-banner govuk-notification-banner--success"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
@@ -618,7 +630,7 @@ exports[`appellant-case GET /appellant-case should render a "Site area updated" 
             <h2 class="govuk-summary-card__title">2. Site details</h2>
         </div>
         <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list">
+            <dl class="govuk-summary-list" id="site-details">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
@@ -871,7 +883,7 @@ exports[`appellant-case GET /appellant-case should render a "Site health and saf
             <h2 class="govuk-summary-card__title">2. Site details</h2>
         </div>
         <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list">
+            <dl class="govuk-summary-list" id="site-details">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
@@ -1124,7 +1136,7 @@ exports[`appellant-case GET /appellant-case should render a "Site updated" notif
             <h2 class="govuk-summary-card__title">2. Site details</h2>
         </div>
         <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list">
+            <dl class="govuk-summary-list" id="site-details">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
@@ -1313,6 +1325,18 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 </div>"
 `;
 
+exports[`appellant-case GET /appellant-case should render a "Tenant of agricultural holding updated" notification banner when the tenant of agricultural holding response is changed 1`] = `
+"<div class="govuk-notification-banner govuk-notification-banner--success"
+role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
+    </div>
+    <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">Tenant of agricultural holding updated</p>
+    </div>
+</div>"
+`;
+
 exports[`appellant-case GET /appellant-case should render a success notification banner when a service user was updated 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
@@ -1377,7 +1401,7 @@ exports[`appellant-case GET /appellant-case should render a success notification
             <h2 class="govuk-summary-card__title">2. Site details</h2>
         </div>
         <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list">
+            <dl class="govuk-summary-list" id="site-details">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
@@ -1649,6 +1673,18 @@ data-module="govuk-notification-banner">
 </div>"
 `;
 
+exports[`appellant-case GET /appellant-case should render an "Other tenants of agricultural holding updated" notification banner when the other tenants of agricultural holding response is changed 1`] = `
+"<div class="govuk-notification-banner govuk-notification-banner--success"
+role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
+    </div>
+    <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">Other tenants of agricultural holding updated</p>
+    </div>
+</div>"
+`;
+
 exports[`appellant-case GET /appellant-case should render review outcome form fields and controls when the appeal is in "validation" status 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
@@ -1700,7 +1736,7 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
             <h2 class="govuk-summary-card__title">2. Site details</h2>
         </div>
         <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list">
+            <dl class="govuk-summary-list" id="site-details">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/site-address/change/1"
@@ -1958,7 +1994,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
             <h2 class="govuk-summary-card__title">2. Site details</h2>
         </div>
         <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list">
+            <dl class="govuk-summary-list" id="site-details">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/site-address/change/1"
@@ -1985,6 +2021,21 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                     <dd class="govuk-summary-list__value">Not applicable</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/owners-known/change"
                         data-cy="change-owners-known"> Change<span class="govuk-visually-hidden"> Owners known</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Part of agricultural holding</dt>
+                    <dd                     class="govuk-summary-list__value">Yes</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/agricultural-holding/change"> Change<span class="govuk-visually-hidden"> Part of agricultural holding</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Tenant of agricultural holding</dt>
+                    <dd                     class="govuk-summary-list__value">Yes</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/agricultural-holding/tenant/change"> Change<span class="govuk-visually-hidden"> Tenant of agricultural holding</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Other tenants</dt>
+                    <dd class="govuk-summary-list__value">No</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/agricultural-holding/other-tenants/change"> Change<span class="govuk-visually-hidden"> Other tenants</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row appellantcase-inspector-access"><dt class="govuk-summary-list__key"> Inspector access required</dt>
@@ -2211,7 +2262,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
             <h2 class="govuk-summary-card__title">2. Site details</h2>
         </div>
         <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list">
+            <dl class="govuk-summary-list" id="site-details">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
@@ -4472,7 +4523,7 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
             <h2 class="govuk-summary-card__title">2. Site details</h2>
         </div>
         <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list">
+            <dl class="govuk-summary-list" id="site-details">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"

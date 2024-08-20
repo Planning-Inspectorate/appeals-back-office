@@ -6,7 +6,7 @@ import { AUDIT_TRAIL_SYSTEM_UUID } from '#endpoints/constants.js';
 import {
 	addressesList,
 	addressListForTrainers,
-	appellantCaseList,
+	getRandomisedAppellantCaseCreateInput,
 	appellantsList,
 	agentsList,
 	lpaQuestionnaireList
@@ -100,7 +100,7 @@ const appealFactory = ({
 		caseValidDate: validAt,
 		reference: randomUUID(),
 		appealStatus: { create: status },
-		appellantCase: { create: appellantCaseList[typeShorthand] },
+		appellantCase: { create: getRandomisedAppellantCaseCreateInput(typeShorthand) },
 		appellant: {
 			create: appellantInput
 		},
