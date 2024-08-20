@@ -39,14 +39,14 @@ export const changePlanningObligationPage = (appealData, appellantCaseData, stor
 					},
 					items: [
 						{
-							value: 'no',
-							text: 'No',
-							checked: !planningObligation
-						},
-						{
 							value: 'yes',
 							text: 'Yes',
 							checked: !!planningObligation
+						},
+						{
+							value: 'no',
+							text: 'No',
+							checked: !planningObligation
 						}
 					]
 				}

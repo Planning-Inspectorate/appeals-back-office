@@ -19,6 +19,45 @@ export function generateFPAComponents(appealDetails, appellantCaseData, mappedAp
 		appellantCaseData,
 		mappedAppellantCaseData
 	);
+
+	const siteDetailsComponentIndex = pageComponents.findIndex(
+		(component) =>
+			component.type === 'summary-list' && component.parameters.attributes?.id === 'site-details'
+	);
+
+	if (siteDetailsComponentIndex !== -1) {
+		/**
+		 * @type {PageComponent}
+		 */
+		const appealSiteSummary = {
+			type: 'summary-list',
+			parameters: {
+				attributes: {
+					id: 'site-details'
+				},
+				card: {
+					title: {
+						text: '2. Site details'
+					}
+				},
+				rows: [
+					mappedAppellantCaseData.siteAddress.display.summaryListItem,
+					mappedAppellantCaseData.siteArea.display.summaryListItem,
+					mappedAppellantCaseData.inGreenBelt.display.summaryListItem,
+					mappedAppellantCaseData.siteOwnership.display.summaryListItem,
+					mappedAppellantCaseData.ownersKnown.display.summaryListItem,
+					mappedAppellantCaseData.partOfAgriculturalHolding.display.summaryListItem,
+					mappedAppellantCaseData.tenantOfAgriculturalHolding.display.summaryListItem,
+					mappedAppellantCaseData.otherTenantsOfAgriculturalHolding.display.summaryListItem,
+					mappedAppellantCaseData.inspectorAccess.display.summaryListItem,
+					mappedAppellantCaseData.healthAndSafetyIssues.display.summaryListItem
+				]
+			}
+		};
+
+		pageComponents[siteDetailsComponentIndex] = appealSiteSummary;
+	}
+
 	const applicationSummaryComponentIndex = pageComponents.findIndex(
 		(component) =>
 			component.type === 'summary-list' &&
