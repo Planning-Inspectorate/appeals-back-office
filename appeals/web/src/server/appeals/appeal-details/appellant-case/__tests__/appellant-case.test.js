@@ -124,6 +124,9 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Planning obligation in support</dt>');
 			expect(unprettifiedElement.innerHTML).toContain('Planning obligation status</dt>');
 			expect(unprettifiedElement.innerHTML).toContain('Planning obligation</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('Part of agricultural holding</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('Tenant of agricultural holding</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('Other tenants</dt>');
 		});
 
 		it('should render review outcome form fields and controls when the appeal is in "validation" status', async () => {
@@ -577,6 +580,74 @@ describe('appellant-case', () => {
 			expect(notificationBannerElementHTML).toMatchSnapshot();
 			expect(notificationBannerElementHTML).toContain('Success</h3>');
 			expect(notificationBannerElementHTML).toContain('Planning obligation status updated');
+		});
+
+		it('should render a "Part of agricultural holding updated" notification banner when the part of agricultural holding response is changed', async () => {
+			const appealId = appealData.appealId.toString();
+			const appellantCaseUrl = `/appeals-service/appeal-details/${appealId}/appellant-case`;
+
+			nock('http://test/')
+				.patch(`/appeals/${appealId}/appellant-cases/${appealData.appellantCaseId}`)
+				.reply(200, {});
+
+			await request.post(`${appellantCaseUrl}/agricultural-holding/change`).send({
+				partOfAgriculturalHoldingRadio: 'yes'
+			});
+
+			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
+			const notificationBannerElementHTML = parseHtml(response.text, {
+				rootElement: notificationBannerElement
+			}).innerHTML;
+
+			expect(notificationBannerElementHTML).toMatchSnapshot();
+			expect(notificationBannerElementHTML).toContain('Success</h3>');
+			expect(notificationBannerElementHTML).toContain('Part of agricultural holding updated');
+		});
+
+		it('should render a "Tenant of agricultural holding updated" notification banner when the tenant of agricultural holding response is changed', async () => {
+			const appealId = appealData.appealId.toString();
+			const appellantCaseUrl = `/appeals-service/appeal-details/${appealId}/appellant-case`;
+
+			nock('http://test/')
+				.patch(`/appeals/${appealId}/appellant-cases/${appealData.appellantCaseId}`)
+				.reply(200, {});
+
+			await request.post(`${appellantCaseUrl}/agricultural-holding/tenant/change`).send({
+				tenantOfAgriculturalHoldingRadio: 'yes'
+			});
+
+			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
+			const notificationBannerElementHTML = parseHtml(response.text, {
+				rootElement: notificationBannerElement
+			}).innerHTML;
+
+			expect(notificationBannerElementHTML).toMatchSnapshot();
+			expect(notificationBannerElementHTML).toContain('Success</h3>');
+			expect(notificationBannerElementHTML).toContain('Tenant of agricultural holding updated');
+		});
+
+		it('should render an "Other tenants of agricultural holding updated" notification banner when the other tenants of agricultural holding response is changed', async () => {
+			const appealId = appealData.appealId.toString();
+			const appellantCaseUrl = `/appeals-service/appeal-details/${appealId}/appellant-case`;
+
+			nock('http://test/')
+				.patch(`/appeals/${appealId}/appellant-cases/${appealData.appellantCaseId}`)
+				.reply(200, {});
+
+			await request.post(`${appellantCaseUrl}/agricultural-holding/other-tenants/change`).send({
+				otherTenantsOfAgriculturalHoldingRadio: 'yes'
+			});
+
+			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
+			const notificationBannerElementHTML = parseHtml(response.text, {
+				rootElement: notificationBannerElement
+			}).innerHTML;
+
+			expect(notificationBannerElementHTML).toMatchSnapshot();
+			expect(notificationBannerElementHTML).toContain('Success</h3>');
+			expect(notificationBannerElementHTML).toContain(
+				'Other tenants of agricultural holding updated'
+			);
 		});
 	});
 

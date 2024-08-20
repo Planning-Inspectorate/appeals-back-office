@@ -71,6 +71,9 @@ export function generateHASComponents(appealDetails, appellantCaseData, mappedAp
 	const appealSiteSummary = {
 		type: 'summary-list',
 		parameters: {
+			attributes: {
+				id: 'site-details'
+			},
 			card: {
 				title: {
 					text: '2. Site details'

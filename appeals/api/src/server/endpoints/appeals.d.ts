@@ -182,6 +182,11 @@ interface SingleAppellantCaseResponse {
 		hasObligation: boolean | null;
 		status: string | null;
 	};
+	agriculturalHolding: {
+		isPartOfAgriculturalHolding: boolean | null;
+		isTenant: boolean | null;
+		hasOtherTenants: boolean | null;
+	};
 }
 
 interface UpdateAppellantCaseRequest {
@@ -213,6 +218,9 @@ interface UpdateAppellantCaseRequest {
 	visibilityRestrictions?: string;
 	planningObligation?: boolean | null;
 	statusPlanningObligation?: string | null;
+	agriculturalHolding?: boolean | null;
+	tenantAgriculturalHolding?: boolean | null;
+	otherTenantsAgriculturalHolding?: boolean | null;
 }
 
 interface UpdateAppellantCaseValidationOutcome {

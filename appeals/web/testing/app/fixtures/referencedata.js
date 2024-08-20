@@ -386,6 +386,11 @@ export const appellantCaseDataNotValidated = {
 	planningObligation: {
 		hasObligation: true,
 		status: 'finalised'
+	},
+	agriculturalHolding: {
+		isPartOfAgriculturalHolding: true,
+		isTenant: true,
+		hasOtherTenants: false
 	}
 };
 

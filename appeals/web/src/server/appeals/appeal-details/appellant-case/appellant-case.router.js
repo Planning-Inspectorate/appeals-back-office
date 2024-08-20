@@ -23,6 +23,7 @@ import siteAddressRouter from './address/address.router.js';
 import siteOwnershipRouter from './site-ownership/site-ownership.router.js';
 import ownersKnownRouter from './owners-known/owners-known.router.js';
 import planningObligationRouter from './planning-obligation/planning-obligation.router.js';
+import agriculturalHoldingRouter from './agricultural-holding/agricultural-holding.router.js';
 import otherAppealsRouter from '../other-appeals/other-appeals.router.js';
 import siteAreaRouter from './site-area/site-area.router.js';
 import applicationSubmissionDateRouter from './application-submission-date/application-submission-date.router.js';
@@ -100,6 +101,12 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	planningObligationRouter
+);
+router.use(
+	'/agricultural-holding',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	agriculturalHoldingRouter
 );
 router.use(
 	'/other-appeals',

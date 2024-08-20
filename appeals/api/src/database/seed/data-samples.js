@@ -277,8 +277,37 @@ export const appellantCaseList = {
 		changedDevelopmentDescription: false,
 		isGreenBelt: randomBool(),
 		planningObligation: true,
-		statusPlanningObligation: null
+		statusPlanningObligation: null,
+		agriculturalHolding: randomBool(),
+		tenantAgriculturalHolding: false,
+		otherTenantsAgriculturalHolding: false,
+		informedTenantsAgriculturalHolding: false
 	}
+};
+
+/**
+ * @param {string} appealTypeShorthand
+ * @returns {import('#db-client').Prisma.AppellantCaseCreateWithoutAppealInput}
+ */
+export const getRandomisedAppellantCaseCreateInput = (appealTypeShorthand) => {
+	const appellantCaseCreateInput = {
+		...appellantCaseList[appealTypeShorthand]
+	};
+
+	switch (appealTypeShorthand) {
+		case APPEAL_TYPE_SHORTHAND_FPA:
+			appellantCaseCreateInput.agriculturalHolding = randomBool();
+			appellantCaseCreateInput.tenantAgriculturalHolding =
+				appellantCaseCreateInput.agriculturalHolding && randomBool();
+			appellantCaseCreateInput.otherTenantsAgriculturalHolding =
+				appellantCaseCreateInput.agriculturalHolding && randomBool();
+			appellantCaseCreateInput.informedTenantsAgriculturalHolding = true;
+			break;
+		default:
+			break;
+	}
+
+	return appellantCaseCreateInput;
 };
 
 /**

@@ -311,9 +311,8 @@ export const spec = {
 		},
 		SingleAppellantCaseResponse: {
 			agriculturalHolding: {
-				isAgriculturalHolding: true,
+				isPartOfAgriculturalHolding: true,
 				isTenant: true,
-				hasToldTenants: false,
 				hasOtherTenants: true
 			},
 			appealId: 1,

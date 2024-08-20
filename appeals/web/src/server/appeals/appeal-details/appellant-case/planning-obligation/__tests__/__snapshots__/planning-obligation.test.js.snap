@@ -14,13 +14,13 @@ exports[`planning-obligation GET /change should render the change planning oblig
                     <div class="govuk-radios" data-module="govuk-radios">
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="planningObligationRadio" name="planningObligationRadio"
-                            type="radio" value="no" checked>
-                            <label class="govuk-label govuk-radios__label" for="planningObligationRadio">No</label>
+                            type="radio" value="yes">
+                            <label class="govuk-label govuk-radios__label" for="planningObligationRadio">Yes</label>
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="planningObligationRadio-2" name="planningObligationRadio"
-                            type="radio" value="yes">
-                            <label class="govuk-label govuk-radios__label" for="planningObligationRadio-2">Yes</label>
+                            type="radio" value="no" checked>
+                            <label class="govuk-label govuk-radios__label" for="planningObligationRadio-2">No</label>
                         </div>
                     </div>
                 </div>
@@ -45,13 +45,13 @@ exports[`planning-obligation GET /change should render the change planning oblig
                     <div class="govuk-radios" data-module="govuk-radios">
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="planningObligationRadio" name="planningObligationRadio"
-                            type="radio" value="no">
-                            <label class="govuk-label govuk-radios__label" for="planningObligationRadio">No</label>
+                            type="radio" value="yes" checked>
+                            <label class="govuk-label govuk-radios__label" for="planningObligationRadio">Yes</label>
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="planningObligationRadio-2" name="planningObligationRadio"
-                            type="radio" value="yes" checked>
-                            <label class="govuk-label govuk-radios__label" for="planningObligationRadio-2">Yes</label>
+                            type="radio" value="no">
+                            <label class="govuk-label govuk-radios__label" for="planningObligationRadio-2">No</label>
                         </div>
                     </div>
                 </div>
