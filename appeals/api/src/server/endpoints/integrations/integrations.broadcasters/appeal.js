@@ -39,6 +39,11 @@ export const broadcastAppeal = async (appealId, updateType = EventType.Update) =
 					specialism: true
 				}
 			},
+			neighbouringSites: {
+				include: {
+					address: true
+				}
+			},
 			parentAppeals: true,
 			childAppeals: true,
 			appellantCase: {
@@ -62,6 +67,12 @@ export const broadcastAppeal = async (appealId, updateType = EventType.Update) =
 			},
 			lpaQuestionnaire: {
 				include: {
+					lpaNotificationMethods: {
+						include: {
+							lpaNotificationMethod: true
+						}
+					},
+					listedBuildingDetails: true,
 					lpaQuestionnaireValidationOutcome: true,
 					lpaQuestionnaireIncompleteReasonsSelected: {
 						include: {
