@@ -1,18 +1,17 @@
 /**
- *
+ * Checks if a URL is internal (relative) and safe for redirection.
  * @param {string} url
  * @param {import('@pins/express/types/express.js').Request} request
  * @returns {boolean}
  */
 export function isInternalUrl(url, request) {
 	try {
-		if (url.startsWith('/')) {
-			const protocol = request.secure ? 'https' : 'http';
-			url = `${protocol}://${request.headers.host}${url}`;
-		}
-		const targetUrl = new URL(url);
-		const requestUrl = new URL(`${request.protocol}://${request.headers.host}`);
-		return targetUrl.host === requestUrl.host;
+		const baseHost = request.headers.host;
+		const baseProtocol = request.secure ? 'https' : 'http';
+
+		const internalUrlRegex = new RegExp(`^/[^/]|^//${baseHost}/|^${baseProtocol}://${baseHost}/`);
+
+		return internalUrlRegex.test(url);
 	} catch (error) {
 		return false;
 	}
@@ -39,6 +38,6 @@ export function safeRedirect(request, response, url) {
 	if (isInternalUrl(url, request)) {
 		return response.redirect(url);
 	} else {
-		return response.redirect(getOriginPathname(request));
+		return response.redirect('/');
 	}
 }
