@@ -366,6 +366,10 @@ export const spec = {
 				designAccessStatement: {
 					folderId: 4572,
 					documents: []
+				},
+				ownershipCertificate: {
+					folderId: 4573,
+					documents: []
 				}
 			},
 			hasAdvertisedAppeal: true,

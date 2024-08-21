@@ -5612,6 +5612,20 @@
 										"items": {}
 									}
 								}
+							},
+							"ownershipCertificate": {
+								"type": "object",
+								"properties": {
+									"folderId": {
+										"type": "number",
+										"example": 4573
+									},
+									"documents": {
+										"type": "array",
+										"example": [],
+										"items": {}
+									}
+								}
 							}
 						}
 					},

@@ -281,7 +281,8 @@ export const appellantCaseList = {
 		agriculturalHolding: randomBool(),
 		tenantAgriculturalHolding: false,
 		otherTenantsAgriculturalHolding: false,
-		informedTenantsAgriculturalHolding: false
+		informedTenantsAgriculturalHolding: false,
+		ownershipCertificateSubmitted: false
 	}
 };
 
@@ -302,6 +303,7 @@ export const getRandomisedAppellantCaseCreateInput = (appealTypeShorthand) => {
 			appellantCaseCreateInput.otherTenantsAgriculturalHolding =
 				appellantCaseCreateInput.agriculturalHolding && randomBool();
 			appellantCaseCreateInput.informedTenantsAgriculturalHolding = true;
+			appellantCaseCreateInput.ownershipCertificateSubmitted = randomBool();
 			break;
 		default:
 			break;

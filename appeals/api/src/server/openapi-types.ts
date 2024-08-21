@@ -844,6 +844,12 @@ export interface SingleAppellantCaseResponse {
 			/** @example [] */
 			documents?: any[];
 		};
+		ownershipCertificate?: {
+			/** @example 4573 */
+			folderId?: number;
+			/** @example [] */
+			documents?: any[];
+		};
 	};
 	/** @example true */
 	hasAdvertisedAppeal?: boolean;

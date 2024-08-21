@@ -56,7 +56,8 @@ const updateAppellantCaseById = async (req, res) => {
 			statusPlanningObligation,
 			agriculturalHolding,
 			tenantAgriculturalHolding,
-			otherTenantsAgriculturalHolding
+			otherTenantsAgriculturalHolding,
+			ownershipCertificateSubmitted
 		},
 		params,
 		validationOutcome
@@ -119,7 +120,8 @@ const updateAppellantCaseById = async (req, res) => {
 					statusPlanningObligation,
 					agriculturalHolding,
 					tenantAgriculturalHolding,
-					otherTenantsAgriculturalHolding
+					otherTenantsAgriculturalHolding,
+					ownershipCertificateSubmitted
 			  });
 
 		const updatedProperties = Object.keys(body).filter((key) => body[key] !== undefined);

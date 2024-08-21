@@ -49,7 +49,8 @@ export const baseExpectedAppellantCaseResponse = (appeal) => {
 			designAccessStatement: {},
 			originalApplicationForm: {},
 			plansDrawings: {},
-			planningObligation: {}
+			planningObligation: {},
+			ownershipCertificate: {}
 		}
 	};
 };
