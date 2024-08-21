@@ -38,8 +38,15 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
                             </li>
                         </ul>
                     </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/2/change-lpa-questionnaire/affects-listed-building-details"
-                        lpaQuestionnaireData-cy="change-affects-listed-building-details"> Change<span class="govuk-visually-hidden"> Affects listed building details</span></a>
+                    <dd class="govuk-summary-list__actions">
+                        <ul class="govuk-summary-list__actions-list">
+                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/2/affected-listed-buildings/manage"
+                                lpaQuestionnaireData-cy="manage-affected-listed-building"> Manage<span class="govuk-visually-hidden"> Affected listed building</span></a>
+                            </li>
+                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/2/affected-listed-buildings/add"
+                                lpaQuestionnaireData-cy="add-affected-listed-building"> Add<span class="govuk-visually-hidden"> Affected listed building</span></a>
+                            </li>
+                        </ul>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Conservation area map and guidance</dt>
