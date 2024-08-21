@@ -664,6 +664,8 @@ export function getPageHeadingTextOverrideForFolder(folder) {
 			return 'supporting documents submitted with statement';
 		case APPEAL_DOCUMENT_TYPE.DESIGN_ACCESS_STATEMENT:
 			return 'design and access statement';
+		case APPEAL_DOCUMENT_TYPE.OWNERSHIP_CERTIFICATE:
+			return 'ownership certificate or land declaration';
 		default:
 			return;
 	}

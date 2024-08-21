@@ -33,6 +33,7 @@ import developmentDescriptionRouter from './development-description/development-
 import lpaChangedDescriptionRouter from './lpa-changed-description/lpa-changed-description.router.js';
 import applicationOutcomeRouter from './application-outcome/application-outcome.router.js';
 import appealCostsApplicationRouter from './appeal-costs-application/appeal-costs-application.router.js';
+import ownershipCertificateRouter from './ownership-certificate/ownership-certificate.router.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -161,6 +162,12 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	appealCostsApplicationRouter
+);
+router.use(
+	'/ownership-certificate',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	ownershipCertificateRouter
 );
 
 router

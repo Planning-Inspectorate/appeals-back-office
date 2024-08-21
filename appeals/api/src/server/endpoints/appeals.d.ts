@@ -175,6 +175,7 @@ interface SingleAppellantCaseResponse {
 		designAccessStatement?: FolderInfo | null;
 		plansDrawings?: FolderInfo | null;
 		planningObligation?: FolderInfo | null;
+		ownershipCertificate?: FolderInfo | null;
 	};
 	validation: ValidationOutcomeResponse | null;
 	isGreenBelt?: boolean | null;
@@ -187,6 +188,7 @@ interface SingleAppellantCaseResponse {
 		isTenant: boolean | null;
 		hasOtherTenants: boolean | null;
 	};
+	ownershipCertificateSubmitted?: boolean | null;
 }
 
 interface UpdateAppellantCaseRequest {
@@ -221,6 +223,7 @@ interface UpdateAppellantCaseRequest {
 	agriculturalHolding?: boolean | null;
 	tenantAgriculturalHolding?: boolean | null;
 	otherTenantsAgriculturalHolding?: boolean | null;
+	ownershipCertificateSubmitted?: boolean | null;
 }
 
 interface UpdateAppellantCaseValidationOutcome {

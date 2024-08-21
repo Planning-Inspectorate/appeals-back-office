@@ -210,7 +210,8 @@ export const fullPlanningAppeal = {
 		isAgriculturalHolding: true,
 		isAgriculturalHoldingTenant: true,
 		isDevelopmentDescriptionStillCorrect: false,
-		newDevelopmentDescription: 'A new extension has been added at the back'
+		newDevelopmentDescription: 'A new extension has been added at the back',
+		ownershipCertificateSubmitted: false
 	}
 };
 

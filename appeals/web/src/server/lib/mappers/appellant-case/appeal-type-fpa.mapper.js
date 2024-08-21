@@ -131,7 +131,9 @@ export function generateFPAComponents(appealDetails, appellantCaseData, mappedAp
 					mappedAppellantCaseData.statusPlanningObligation.display.summaryListItem,
 					mappedAppellantCaseData.appellantCostsApplication.display.summaryListItem,
 					mappedAppellantCaseData.costsDocument.display.summaryListItem,
-					mappedAppellantCaseData.planningObligation.display.summaryListItem
+					mappedAppellantCaseData.planningObligation.display.summaryListItem,
+					mappedAppellantCaseData.ownershipCertificateSubmitted.display.summaryListItem,
+					mappedAppellantCaseData.ownershipCertificate.display.summaryListItem
 				]
 			}
 		};

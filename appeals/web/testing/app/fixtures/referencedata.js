@@ -391,7 +391,8 @@ export const appellantCaseDataNotValidated = {
 		isPartOfAgriculturalHolding: true,
 		isTenant: true,
 		hasOtherTenants: false
-	}
+	},
+	ownershipCertificateSubmitted: false
 };
 
 export const lpaQuestionnaireData = {

@@ -84,6 +84,7 @@ const formatAppellantCase = (appeal, folders = null) => {
 				isTenant: appellantCase.tenantAgriculturalHolding,
 				hasOtherTenants: appellantCase.otherTenantsAgriculturalHolding
 			},
+			ownershipCertificateSubmitted: appellantCase.ownershipCertificateSubmitted,
 			...formatFoldersAndDocuments(folders)
 		};
 	}

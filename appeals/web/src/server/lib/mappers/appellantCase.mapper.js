@@ -761,6 +761,81 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 	};
 
 	/** @type {Instructions} */
+	mappedData.ownershipCertificateSubmitted = {
+		id: 'ownership-certificate-submitted',
+		display: {
+			summaryListItem: {
+				key: {
+					text: 'Ownership certificate or land declaration submitted'
+				},
+				value: {
+					text: convertFromBooleanToYesNo(appellantCaseData.ownershipCertificateSubmitted) || ''
+				},
+				actions: {
+					items: [
+						mapActionComponent(permissionNames.updateCase, session, {
+							text: 'Change',
+							visuallyHiddenText: 'Ownership certificate or land declaration submitted',
+							href: `${currentRoute}/ownership-certificate/change`,
+							attributes: { 'data-cy': 'change-ownership-certificate-submitted' }
+						})
+					]
+				}
+			}
+		}
+	};
+
+	/** @type {Instructions} */
+	mappedData.ownershipCertificate = {
+		id: 'ownership-certificate',
+		display: {
+			summaryListItem: {
+				key: {
+					text: 'Ownership certificate or land declaration'
+				},
+				value: displayPageFormatter.formatDocumentValues(
+					appellantCaseData.appealId,
+					isFolderInfo(appellantCaseData.documents.ownershipCertificate)
+						? appellantCaseData.documents.ownershipCertificate?.documents || []
+						: []
+				),
+				actions: {
+					items: [
+						...((
+							(isFolderInfo(appellantCaseData.documents.ownershipCertificate) &&
+								appellantCaseData.documents.ownershipCertificate.documents) ||
+							[]
+						).length
+							? [
+									mapActionComponent(permissionNames.updateCase, session, {
+										text: 'Manage',
+										visuallyHiddenText: 'Ownership certificate or land declaration',
+										href: mapDocumentManageUrl(
+											appellantCaseData.appealId,
+											isFolderInfo(appellantCaseData.documents.ownershipCertificate)
+												? appellantCaseData.documents.ownershipCertificate.folderId
+												: undefined
+										)
+									})
+							  ]
+							: []),
+						mapActionComponent(permissionNames.updateCase, session, {
+							text: 'Add',
+							visuallyHiddenText: 'Ownership certificate or land declaration',
+							href: displayPageFormatter.formatDocumentActionLink(
+								appellantCaseData.appealId,
+								appellantCaseData.documents.ownershipCertificate,
+								documentUploadUrlTemplate
+							),
+							attributes: { 'data-cy': 'add-ownership-certificate' }
+						})
+					]
+				}
+			}
+		}
+	};
+
+	/** @type {Instructions} */
 	mappedData.decisionLetter = {
 		id: 'decision-letter',
 		display: {

@@ -530,6 +530,18 @@ exports[`appellant-case GET /appellant-case should render a "LPA application ref
 </main>"
 `;
 
+exports[`appellant-case GET /appellant-case should render a "Ownership certificate or land declaration submitted updated" notification banner when the separate ownership certificate or agricultural land declaration submitted response is changed 1`] = `
+"<div class="govuk-notification-banner govuk-notification-banner--success"
+role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
+    </div>
+    <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">Ownership certificate or land declaration submitted updated</p>
+    </div>
+</div>"
+`;
+
 exports[`appellant-case GET /appellant-case should render a "Part of agricultural holding updated" notification banner when the part of agricultural holding response is changed 1`] = `
 "<div class="govuk-notification-banner govuk-notification-banner--success"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
@@ -2169,6 +2181,17 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                     <dd class="govuk-summary-list__value"></dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-planning-obligation"> Add<span class="govuk-visually-hidden"> Planning obligation</span></a>
                     </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Ownership certificate or land declaration submitted</dt>
+                    <dd                     class="govuk-summary-list__value">No</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/ownership-certificate/change"
+                            data-cy="change-ownership-certificate-submitted"> Change<span class="govuk-visually-hidden"> Ownership certificate or land declaration submitted</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Ownership certificate or land declaration</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-ownership-certificate"> Add<span class="govuk-visually-hidden"> Ownership certificate or land declaration</span></a>
+                        </dd>
                 </div>
             </dl>
         </div>
