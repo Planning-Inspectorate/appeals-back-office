@@ -6,6 +6,8 @@ import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
 import { urlPaths } from '../../support/urlPaths.js';
+import { tag } from '../../support/tag';
+import { happyPathHelper } from '../../support/happyPathHelper.js';
 
 const listCasesPage = new ListCasesPage();
 const dateTimeSection = new DateTimeSection();
@@ -16,12 +18,11 @@ describe('Review appellant case', () => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
-	it('Validate appellant case', () => {
+	it('Validate appellant case', { tags: tag.smoke }, () => {
 		let dueDate = new Date();
 
 		cy.createCase().then((caseRef) => {
-			cy.visit(urlPaths.appealsList);
-			listCasesPage.clickAppealByRef(caseRef);
+			happyPathHelper.assignCaseOfficer(caseRef);
 			caseDetailsPage.clickReviewAppellantCase();
 			caseDetailsPage.selectRadioButtonByValue('Valid');
 			caseDetailsPage.clickButtonByText('Continue');
@@ -34,10 +35,9 @@ describe('Review appellant case', () => {
 		});
 	});
 
-	it('Invalidate appellant case', () => {
+	it('Invalidate appellant case', { tags: tag.smoke }, () => {
 		cy.createCase().then((caseRef) => {
-			cy.visit(urlPaths.appealsList);
-			listCasesPage.clickAppealByRef(caseRef);
+			happyPathHelper.assignCaseOfficer(caseRef);
 			caseDetailsPage.clickReviewAppellantCase();
 			caseDetailsPage.selectRadioButtonByValue('Invalid');
 			caseDetailsPage.clickButtonByText('Continue');
@@ -52,13 +52,12 @@ describe('Review appellant case', () => {
 		});
 	});
 
-	it('incomplete appellant case', () => {
+	it('incomplete appellant case', { tags: tag.smoke }, () => {
 		let dueDate = new Date();
 		dueDate.setDate(dueDate.getDate() + 28);
 
 		cy.createCase().then((caseRef) => {
-			cy.visit(urlPaths.appealsList);
-			listCasesPage.clickAppealByRef(caseRef);
+			happyPathHelper.assignCaseOfficer(caseRef);
 			caseDetailsPage.clickReviewAppellantCase();
 			caseDetailsPage.selectRadioButtonByValue('Incomplete');
 			caseDetailsPage.clickButtonByText('Continue');
@@ -81,8 +80,7 @@ describe('Review appellant case', () => {
 		dueDate.setDate(dueDate.getDate() + 28);
 
 		cy.createCase().then((caseRef) => {
-			cy.visit(urlPaths.appealsList);
-			listCasesPage.clickAppealByRef(caseRef);
+			happyPathHelper.assignCaseOfficer(caseRef);
 			caseDetailsPage.clickReviewAppellantCase();
 			caseDetailsPage.selectRadioButtonByValue('Incomplete');
 			caseDetailsPage.clickButtonByText('Continue');

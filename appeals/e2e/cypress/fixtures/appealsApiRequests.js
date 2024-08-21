@@ -1,6 +1,7 @@
 const appealsApiRequests = {
 	caseSubmission: {
 		casedata: {
+			submissionId: 'e4d42124-364c-4bda-af1f-3c40e4b09ff3',
 			advertisedAppeal: true,
 			appellantCostsAppliedFor: false,
 			applicationDate: '2024-01-01T00:00:00.000Z',
