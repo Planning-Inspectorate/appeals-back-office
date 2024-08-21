@@ -24,7 +24,8 @@ exports[`application-date GET /change should render the applicationDecisionHasDa
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -83,7 +84,8 @@ exports[`application-date POST /change/set-date should re-render applicationdeci
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -142,7 +144,8 @@ exports[`application-date POST /change/set-date should re-render applicationdeci
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -201,7 +204,8 @@ exports[`application-date POST /change/set-date should re-render to applicationd
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>

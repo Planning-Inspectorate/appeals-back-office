@@ -5,18 +5,17 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"type": "pwa-node",
+			"type": "node",
 			"request": "launch",
 			"name": "Web APP: Dev",
 			"runtimeExecutable": "npm",
 			"runtimeArgs": ["run", "dev", "--inspect-brk"],
 			"skipFiles": ["<node_internals>/**"],
 			"cwd": "${workspaceFolder}/appeals/web",
-			"console": "integratedTerminal",
-			"internalConsoleOptions": "neverOpen"
+			"console": "integratedTerminal"
 		},
 		{
-			"type": "pwa-node",
+			"type": "node",
 			"request": "launch",
 			"name": "API APP: Dev",
 			"runtimeExecutable": "npm",
@@ -27,7 +26,7 @@
 			"internalConsoleOptions": "neverOpen"
 		},
 		{
-			"type": "pwa-node",
+			"type": "node",
 			"request": "launch",
 			"name": "Appeals Back-Office",
 			"runtimeExecutable": "npm",

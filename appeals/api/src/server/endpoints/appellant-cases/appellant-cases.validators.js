@@ -12,7 +12,7 @@ import {
 	validateStringParameter,
 	validateTextAreaParameter
 } from '#common/validators/string-parameter.js';
-import validateBooleanParameter from '#common/validators/boolean-parameter.js';
+import { validateBooleanParameter } from '#common/validators/boolean-parameter.js';
 import validateBooleanWithConditionalStringParameters from '#common/validators/boolean-with-conditional-string-parameters.js';
 import validateIncompleteInvalidReasonParameter from '#common/validators/incomplete-invalid-reason-parameter.js';
 import validateEnumParameter from '#common/validators/enum-parameter.js';

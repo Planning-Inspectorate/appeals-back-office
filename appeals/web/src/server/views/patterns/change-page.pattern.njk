@@ -25,7 +25,8 @@
 		{%- endfor -%}
 		{{ govukButton({
 			text: pageContent.submitButtonText if pageContent.submitButtonText else "Continue",
-			type: "submit"
+			type: "submit",
+			preventDoubleClick: true
 		}) }}
 	</form>
 {%- endblock -%}

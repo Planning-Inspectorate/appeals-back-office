@@ -24,7 +24,8 @@ exports[`planning-obligation GET /change should render the change planning oblig
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -55,7 +56,8 @@ exports[`planning-obligation GET /change should render the change planning oblig
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -91,7 +93,8 @@ exports[`planning-obligation GET /status/change should render the change plannin
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -128,7 +131,8 @@ exports[`planning-obligation GET /status/change should render the change plannin
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -164,7 +168,8 @@ exports[`planning-obligation GET /status/change should render the change plannin
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>

@@ -19,7 +19,8 @@ exports[`development-description GET /change should render the development descr
                     </div>
                     <div id="development-description-info" class="govuk-hint govuk-character-count__message">You can enter up to 1000 characters</div>
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>

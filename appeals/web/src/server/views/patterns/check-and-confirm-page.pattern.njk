@@ -30,7 +30,8 @@
 		{%- endfor -%}
 		{%- set defaultButtonProperties = {
 			text:"Confirm",
-			type: "submit"
+			type: "submit",
+			preventDoubleClick: true
 		} -%}
 		{{ govukButton(pageContent.submitButtonProperties if pageContent.submitButtonProperties else defaultButtonProperties) }}
 	</form>

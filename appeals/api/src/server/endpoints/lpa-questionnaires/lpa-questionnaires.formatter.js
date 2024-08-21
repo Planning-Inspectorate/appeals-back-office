@@ -17,7 +17,7 @@ const formatListedBuildingDetails = (affectsListedBuilding, values) =>
 	(values &&
 		values
 			.filter((value) => value.affectsListedBuilding === affectsListedBuilding)
-			.map(({ listEntry }) => ({ listEntry }))) ||
+			.map(({ listEntry, id }) => ({ id, listEntry }))) ||
 	null;
 
 /**

@@ -39,7 +39,8 @@ exports[`application-date GET /change should render the applicationSubmissionDat
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -98,7 +99,8 @@ exports[`application-date POST /change should re-render application submission d
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -157,7 +159,8 @@ exports[`application-date POST /change should re-render application submission d
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -216,7 +219,8 @@ exports[`application-date POST /change should re-render application submission d
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -275,7 +279,8 @@ exports[`application-date POST /change should re-render application submission d
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -334,7 +339,8 @@ exports[`application-date POST /change should re-render the Date page with an er
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -393,7 +399,8 @@ exports[`application-date POST /change should re-render the Date page with an er
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -452,7 +459,8 @@ exports[`application-date POST /change should re-render the Date page with an er
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -511,7 +519,8 @@ exports[`application-date POST /change should re-render the Date page with an er
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -570,7 +579,8 @@ exports[`application-date POST /change should re-render the Date page with an er
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -629,7 +639,8 @@ exports[`application-date POST /change should re-render the Date page with an er
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -686,7 +697,8 @@ exports[`application-date POST /change should re-render the Date page with an er
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -743,7 +755,8 @@ exports[`application-date POST /change should re-render the Date page with an er
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>

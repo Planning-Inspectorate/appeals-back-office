@@ -273,8 +273,7 @@ interface SingleLPAQuestionnaireResponse {
 	};
 	validation: ValidationOutcomeResponse | null;
 	lpaNotificationMethods?: LPANotificationMethodDetails[] | null;
-	affectsListedBuildingDetails?: ListedBuildingDetailsResponse | null;
-	listedBuildingDetails?: ListedBuildingDetailsResponse | null;
+	listedBuildingDetails?: ListedBuildingDetailsResponse[] | null;
 	healthAndSafetyDetails?: string | null;
 	doesSiteHaveHealthAndSafetyIssues?: boolean | null;
 	inspectorAccessDetails?: string | null;
@@ -720,7 +719,10 @@ type UpdateDocumentAvCheckRequest = {
 	version: number;
 };
 
-type ListedBuildingDetailsResponse = Pick<ListedBuildingDetails, 'listEntry'>[];
+type ListedBuildingDetailsResponse = {
+	id: number;
+	listEntry: string;
+};
 
 type LookupTables = AppellantCaseIncompleteReason | AppellantCaseInvalidReason | ValidationOutcome;
 

@@ -29,7 +29,8 @@ exports[`application-outcome GET /change should render the applicationOutcome ch
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -76,7 +77,8 @@ exports[`application-outcome POST /change should re-render applicationOutcome ch
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
