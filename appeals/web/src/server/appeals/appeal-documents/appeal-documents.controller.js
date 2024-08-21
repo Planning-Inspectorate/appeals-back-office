@@ -729,8 +729,8 @@ export const postDeleteDocument = async (
 
 	if (
 		!isInternalUrl(returnUrl, request) ||
-		!isInternalUrl(cancelUrl, request) ||
-		!isInternalUrl(uploadNewDocumentUrl, request)
+		!isInternalUrl(cancelUrlProcessed, request) ||
+		!isInternalUrl(uploadNewDocumentUrlProcessed, request)
 	) {
 		return response.status(400).render('errorPageTemplate', {
 			message: 'Invalid redirection attempt detected.'
@@ -738,28 +738,7 @@ export const postDeleteDocument = async (
 	}
 
 	if (body['delete-file-answer'] === 'no') {
-		// Log the incoming request details
-		logger.info(
-			'debugDeleteFileAnswerRedirect Request Protocol:' + JSON.stringify(request.protocol)
-		);
-		logger.info(
-			'debugDeleteFileAnswerRedirect Request Headers Host:' + JSON.stringify(request.headers.host)
-		);
-
-		const baseUrl = process.env.BASE_URL || `${request.protocol}://${request.headers.host}`;
-		logger.info('debugDeleteFileAnswerRedirect Base URL:' + baseUrl);
-
-		const pathToRedirect = cancelUrlProcessed.startsWith('/')
-			? cancelUrlProcessed
-			: `/${cancelUrlProcessed}`;
-		logger.info('debugDeleteFileAnswerRedirect Path to Redirect:' + pathToRedirect);
-
-		const cancelUrlProcessedSafe = new URL(pathToRedirect, baseUrl);
-		logger.info(
-			'debugDeleteFileAnswerRedirect Processed Safe Cancel URL:' + cancelUrlProcessedSafe.toString()
-		);
-
-		return safeRedirect(request, response, cancelUrlProcessedSafe.toString());
+		return safeRedirect(request, response, cancelUrlProcessed);
 	} else if (body['delete-file-answer'] === 'yes') {
 		await deleteDocument(apiClient, appealId, documentId, versionId);
 		addNotificationBannerToSession(
