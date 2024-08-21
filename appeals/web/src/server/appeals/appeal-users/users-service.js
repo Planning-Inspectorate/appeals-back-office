@@ -100,7 +100,7 @@ const fetchRolesAndUsersFromGraph = async (roleName, session) => {
 		'User.ReadBasic.All'
 	]);
 	if (token?.token) {
-		const maximumNumberOfPages = 16;
+		const maximumNumberOfPages = 1000;
 		const data = [];
 		let gotAllPages = false;
 		let numberOfPagesReturned = 0;
