@@ -5,6 +5,7 @@ import { users } from '../../fixtures/users';
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
 import { happyPathHelper } from '../../support/happyPathHelper';
+import { tag } from '../../support/tag';
 
 const dateTimeSection = new DateTimeSection();
 const caseDetailsPage = new CaseDetailsPage();
@@ -17,7 +18,7 @@ describe('Schedule site visit', () => {
 	const visitTypeTestCases = ['Accompanied', 'Access required', 'Unaccompanied'];
 
 	visitTypeTestCases.forEach((visitType, index) => {
-		it(`Change to ${visitType} visit from Site details`, () => {
+		it(`Change to ${visitType} visit from Site details`, { tags: tag.smoke }, () => {
 			let visitDate = happyPathHelper.validVisitDate();
 
 			cy.createCase().then((caseRef) => {

@@ -5,6 +5,7 @@ import { users } from '../../fixtures/users';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
 import { urlPaths } from '../../support/urlPaths';
 import { appealsApiRequests } from '../../fixtures/appealsApiRequests';
+import { tag } from '../../support/tag';
 
 const listCasesPage = new ListCasesPage();
 describe('All cases search', () => {
@@ -17,7 +18,7 @@ describe('All cases search', () => {
 		listCasesPage.verifySectionHeader('Search all cases');
 	});
 
-	it('Case admin user should be able to use search using appeal id', () => {
+	it('Case admin user should be able to use search using appeal id', { tags: tag.smoke }, () => {
 		cy.createCase().then((caseRef) => {
 			const testData = { rowIndex: 0, cellIndex: 0, textToMatch: caseRef, strict: true };
 			cy.visit(urlPaths.appealsList);
@@ -27,19 +28,23 @@ describe('All cases search', () => {
 		});
 	});
 
-	it('Case admin user should be able to use search using postcode with spaces', () => {
-		const postcode = 'XX12 3XX';
-		let requestBody = appealsApiRequests.caseSubmission;
-		requestBody.casedata.siteAddressPostcode = postcode;
+	it(
+		'Case admin user should be able to use search using postcode with spaces',
+		{ tags: tag.smoke },
+		() => {
+			const postcode = 'XX12 3XX';
+			let requestBody = appealsApiRequests.caseSubmission;
+			requestBody.casedata.siteAddressPostcode = postcode;
 
-		cy.createCase(requestBody).then((caseRef) => {
-			const testData = { rowIndex: 0, cellIndex: 1, textToMatch: postcode, strict: false };
-			cy.visit(urlPaths.appealsList);
-			listCasesPage.nationalListSearch(postcode);
-			listCasesPage.verifyTableCellText(testData);
-			listCasesPage.clearSearchResults();
-		});
-	});
+			cy.createCase(requestBody).then((caseRef) => {
+				const testData = { rowIndex: 0, cellIndex: 1, textToMatch: postcode, strict: false };
+				cy.visit(urlPaths.appealsList);
+				listCasesPage.nationalListSearch(postcode);
+				listCasesPage.verifyTableCellText(testData);
+				listCasesPage.clearSearchResults();
+			});
+		}
+	);
 
 	it('Case admin user should see error validation if not enough characters are entered', () => {
 		cy.visit(urlPaths.appealsList);
