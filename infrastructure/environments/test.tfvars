@@ -62,7 +62,7 @@ apps_config = {
   }
 
   featureFlags = {
-    featureFlagS78Written = false
+    featureFlagS78Written = true
   }
 
   logging = {
