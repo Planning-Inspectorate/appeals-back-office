@@ -31,6 +31,7 @@
 {%- from "govuk/components/textarea/macro.njk" import govukTextarea -%}
 {%- from "govuk/components/warning-text/macro.njk" import govukWarningText -%}
 {%- from "./status-tag.njk" import statusTag -%}
+{%- from "./show-more.njk" import showMore -%}
 {%- from "../../app/components/time-input.njk" import govukTimeInput -%}
 
 {%- if component.wrapperHtml -%}{{ component.wrapperHtml.opening | safe }}{%- endif -%}
@@ -90,6 +91,8 @@
 {{ govukSkipLink(component.parameters) }}
 {%- elif component.type === 'status-tag' -%}
 {{ statusTag(component.parameters.status, component.parameters.classes) }}
+{%- elif component.type === 'show-more' -%}
+{{ showMore(component.parameters) }}
 {%- elif component.type === 'summary-list' -%}
 {{ govukSummaryList(component.parameters) }}
 {%- elif component.type === 'table' -%}

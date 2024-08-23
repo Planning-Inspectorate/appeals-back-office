@@ -171,12 +171,12 @@ exports[`appellant-case GET /appellant-case should render a "Inspector access (a
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Original Development description</dt>
-                    <dd                     class="govuk-summary-list__value">Not provided</dd>
+                    <dd                     class="govuk-summary-list__value">Test development description details</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/development-description/change"> Change<span class="govuk-visually-hidden"> Development description</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA changed the development description</dt>
-                    <dd                     class="govuk-summary-list__value"></dd>
+                    <dd                     class="govuk-summary-list__value">No</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/lpa-changed-description/change"> Change<span class="govuk-visually-hidden"> LPA changed the development description</span></a>
                         </dd>
                 </div>
@@ -424,12 +424,12 @@ exports[`appellant-case GET /appellant-case should render a "LPA application ref
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Original Development description</dt>
-                    <dd                     class="govuk-summary-list__value">Not provided</dd>
+                    <dd                     class="govuk-summary-list__value">Test development description details</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/development-description/change"> Change<span class="govuk-visually-hidden"> Development description</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA changed the development description</dt>
-                    <dd                     class="govuk-summary-list__value"></dd>
+                    <dd                     class="govuk-summary-list__value">No</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/lpa-changed-description/change"> Change<span class="govuk-visually-hidden"> LPA changed the development description</span></a>
                         </dd>
                 </div>
@@ -713,12 +713,12 @@ exports[`appellant-case GET /appellant-case should render a "Site area updated" 
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Original Development description</dt>
-                    <dd                     class="govuk-summary-list__value">Not provided</dd>
+                    <dd                     class="govuk-summary-list__value">Test development description details</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/development-description/change"> Change<span class="govuk-visually-hidden"> Development description</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA changed the development description</dt>
-                    <dd                     class="govuk-summary-list__value"></dd>
+                    <dd                     class="govuk-summary-list__value">No</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/lpa-changed-description/change"> Change<span class="govuk-visually-hidden"> LPA changed the development description</span></a>
                         </dd>
                 </div>
@@ -966,12 +966,12 @@ exports[`appellant-case GET /appellant-case should render a "Site health and saf
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Original Development description</dt>
-                    <dd                     class="govuk-summary-list__value">Not provided</dd>
+                    <dd                     class="govuk-summary-list__value">Test development description details</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/development-description/change"> Change<span class="govuk-visually-hidden"> Development description</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA changed the development description</dt>
-                    <dd                     class="govuk-summary-list__value"></dd>
+                    <dd                     class="govuk-summary-list__value">No</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/lpa-changed-description/change"> Change<span class="govuk-visually-hidden"> LPA changed the development description</span></a>
                         </dd>
                 </div>
@@ -1219,12 +1219,12 @@ exports[`appellant-case GET /appellant-case should render a "Site updated" notif
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Original Development description</dt>
-                    <dd                     class="govuk-summary-list__value">Not provided</dd>
+                    <dd                     class="govuk-summary-list__value">Test development description details</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/development-description/change"> Change<span class="govuk-visually-hidden"> Development description</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA changed the development description</dt>
-                    <dd                     class="govuk-summary-list__value"></dd>
+                    <dd                     class="govuk-summary-list__value">No</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/lpa-changed-description/change"> Change<span class="govuk-visually-hidden"> LPA changed the development description</span></a>
                         </dd>
                 </div>
@@ -1484,12 +1484,12 @@ exports[`appellant-case GET /appellant-case should render a success notification
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Original Development description</dt>
-                    <dd                     class="govuk-summary-list__value">Not provided</dd>
+                    <dd                     class="govuk-summary-list__value">Test development description details</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/development-description/change"> Change<span class="govuk-visually-hidden"> Development description</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA changed the development description</dt>
-                    <dd                     class="govuk-summary-list__value"></dd>
+                    <dd                     class="govuk-summary-list__value">No</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/lpa-changed-description/change"> Change<span class="govuk-visually-hidden"> LPA changed the development description</span></a>
                         </dd>
                 </div>
@@ -1819,12 +1819,12 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Original Development description</dt>
-                    <dd                     class="govuk-summary-list__value">Not provided</dd>
+                    <dd                     class="govuk-summary-list__value">Test development description details</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/development-description/change"> Change<span class="govuk-visually-hidden"> Development description</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA changed the development description</dt>
-                    <dd                     class="govuk-summary-list__value"></dd>
+                    <dd                     class="govuk-summary-list__value">No</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/lpa-changed-description/change"> Change<span class="govuk-visually-hidden"> LPA changed the development description</span></a>
                         </dd>
                 </div>
@@ -2092,12 +2092,12 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Original Development description</dt>
-                    <dd                     class="govuk-summary-list__value">Not provided</dd>
+                    <dd                     class="govuk-summary-list__value">Test development description details</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/development-description/change"> Change<span class="govuk-visually-hidden"> Development description</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA changed the development description</dt>
-                    <dd                     class="govuk-summary-list__value"></dd>
+                    <dd                     class="govuk-summary-list__value">No</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/lpa-changed-description/change"> Change<span class="govuk-visually-hidden"> LPA changed the development description</span></a>
                         </dd>
                 </div>
@@ -2356,12 +2356,12 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Original Development description</dt>
-                    <dd                     class="govuk-summary-list__value">Not provided</dd>
+                    <dd                     class="govuk-summary-list__value">Test development description details</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/development-description/change"> Change<span class="govuk-visually-hidden"> Development description</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA changed the development description</dt>
-                    <dd                     class="govuk-summary-list__value"></dd>
+                    <dd                     class="govuk-summary-list__value">No</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/lpa-changed-description/change"> Change<span class="govuk-visually-hidden"> LPA changed the development description</span></a>
                         </dd>
                 </div>
@@ -4619,12 +4619,12 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Original Development description</dt>
-                    <dd                     class="govuk-summary-list__value">Not provided</dd>
+                    <dd                     class="govuk-summary-list__value">Test development description details</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/development-description/change"> Change<span class="govuk-visually-hidden"> Development description</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA changed the development description</dt>
-                    <dd                     class="govuk-summary-list__value"></dd>
+                    <dd                     class="govuk-summary-list__value">No</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/lpa-changed-description/change"> Change<span class="govuk-visually-hidden"> LPA changed the development description</span></a>
                         </dd>
                 </div>

@@ -283,7 +283,20 @@
  */
 
 /**
- * @typedef {SharedPageComponentProperties & (AccordionPageComponent | BackLinkPageComponent | BreadcrumbsPageComponent | ButtonPageComponent | CharacterCountPageComponent | CheckboxesPageComponent | CookieBannerPageComponent | DateInputPageComponent | DetailsPageComponent | ErrorMessagePageComponent | ErrorSummaryPageComponent | ExitThisPagePageComponent | FieldsetPageComponent | FileUploadPageComponent | HintPageComponent | InputPageComponent | InsetTextPageComponent | LabelPageComponent | NotificationBannerPageComponent | PaginationPageComponent | PanelPageComponent | PhaseBannerPageComponent | RadiosPageComponent | SelectPageComponent | SkipLinkPageComponent | SummaryListPageComponent | TablePageComponent | TabsPageComponent | TagPageComponent | TextareaPageComponent | WarningTextPageComponent | StatusTagPageComponent | TimeInputPageComponent | HtmlPageComponent)} PageComponent
+ * @typedef ShowMoreProperties
+ * @type {Object<string, any>}
+ * @property {string} labelText
+ * @property {string} text
+ */
+
+/**
+ * @typedef {Object} ShowMorePageComponent
+ * @property {'show-more'} type
+ * @property {ShowMoreProperties} parameters
+ */
+
+/**
+ * @typedef {SharedPageComponentProperties & (AccordionPageComponent | BackLinkPageComponent | BreadcrumbsPageComponent | ButtonPageComponent | CharacterCountPageComponent | CheckboxesPageComponent | CookieBannerPageComponent | DateInputPageComponent | DetailsPageComponent | ErrorMessagePageComponent | ErrorSummaryPageComponent | ExitThisPagePageComponent | FieldsetPageComponent | FileUploadPageComponent | HintPageComponent | InputPageComponent | InsetTextPageComponent | LabelPageComponent | NotificationBannerPageComponent | PaginationPageComponent | PanelPageComponent | PhaseBannerPageComponent | RadiosPageComponent | SelectPageComponent | SkipLinkPageComponent | SummaryListPageComponent | TablePageComponent | TabsPageComponent | TagPageComponent | TextareaPageComponent | WarningTextPageComponent | StatusTagPageComponent | TimeInputPageComponent | HtmlPageComponent | ShowMorePageComponent)} PageComponent
  */
 
 /**
