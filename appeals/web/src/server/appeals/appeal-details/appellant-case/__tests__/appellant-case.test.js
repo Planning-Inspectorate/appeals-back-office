@@ -4250,9 +4250,17 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Name</th>');
 			expect(unprettifiedElement.innerHTML).toContain('Received</th>');
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</th>');
-			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</td>');
-			expect(unprettifiedElement.innerHTML).toContain(`${dateToDisplayDate(new Date())}</td>`);
-			expect(unprettifiedElement.innerHTML).toContain('Unredacted</td>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				`<a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/${documentFolderInfo.folderId}">test-document.txt</a></td>`
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				`<a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-document-details/${
+					documentFolderInfo.folderId
+				}">${dateToDisplayDate(new Date())}</a></td>`
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				`<a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-document-details/${documentFolderInfo.folderId}">Unredacted</a></td>`
+			);
 			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 		});
 	});
@@ -4336,7 +4344,7 @@ describe('appellant-case', () => {
 
 		it('should render a 500 error page if fileUploadInfo is not present in the session', async () => {
 			const response = await request.get(
-				`${baseUrl}/1${appellantCasePagePath}/add-documents/1/check-your-answers`
+				`${baseUrl}/1${appellantCasePagePath}/add-documents/1/1/check-your-answers`
 			);
 
 			expect(response.statusCode).toBe(500);
@@ -4360,7 +4368,7 @@ describe('appellant-case', () => {
 			expect(addDocumentsResponse.statusCode).toBe(302);
 
 			const response = await request.get(
-				`${baseUrl}/1${appellantCasePagePath}/add-documents/1/check-your-answers`
+				`${baseUrl}/1${appellantCasePagePath}/add-documents/1/1/check-your-answers`
 			);
 
 			expect(response.statusCode).toBe(200);
@@ -4371,9 +4379,17 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Name</th>');
 			expect(unprettifiedElement.innerHTML).toContain('Received</th>');
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</th>');
-			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</td>');
-			expect(unprettifiedElement.innerHTML).toContain(`${dateToDisplayDate(new Date())}</td>`);
-			expect(unprettifiedElement.innerHTML).toContain('Unredacted</td>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				`<a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/${documentFolderInfo.folderId}/1">test-document.txt</a></td>`
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				`<a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-document-details/${
+					documentFolderInfo.folderId
+				}/1">${dateToDisplayDate(new Date())}</a></td>`
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				`<a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-document-details/${documentFolderInfo.folderId}/1">Unredacted</a></td>`
+			);
 			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 		});
 	});

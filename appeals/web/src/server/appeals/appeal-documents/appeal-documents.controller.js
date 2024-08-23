@@ -362,8 +362,18 @@ export const postDocumentDetails = async (
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  * @param {string} backLinkUrl
+ * @param {string} changeFileLinkUrl
+ * @param {string} changeDateLinkUrl
+ * @param {string} changeRedactionStatusLinkUrl
  */
-export const renderUploadDocumentsCheckAndConfirm = async (request, response, backLinkUrl) => {
+export const renderUploadDocumentsCheckAndConfirm = async (
+	request,
+	response,
+	backLinkUrl,
+	changeFileLinkUrl,
+	changeDateLinkUrl,
+	changeRedactionStatusLinkUrl
+) => {
 	const { currentAppeal, currentFolder } = request;
 
 	if (!currentAppeal || !currentFolder) {
@@ -382,6 +392,9 @@ export const renderUploadDocumentsCheckAndConfirm = async (request, response, ba
 
 	const mappedPageContent = addDocumentsCheckAndConfirmPage(
 		backLinkUrl,
+		changeFileLinkUrl,
+		changeDateLinkUrl,
+		changeRedactionStatusLinkUrl,
 		currentAppeal.appealReference,
 		request.session.fileUploadInfo,
 		redactionStatuses

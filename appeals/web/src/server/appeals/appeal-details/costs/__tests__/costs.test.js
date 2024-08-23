@@ -942,7 +942,7 @@ describe('costs', () => {
 						);
 					});
 
-					it(`should render the add documents check and confirm page with summary list row displaying info on the uploaded document (${costsCategory} ${costsDocumentType})`, async () => {
+					it(`should render the add documents check and confirm page with table displaying info on the uploaded document and relevant change links (${costsCategory} ${costsDocumentType})`, async () => {
 						const addDocumentsResponse = await request
 							.post(
 								`${baseUrl}/1/costs/${costsCategory}/${costsDocumentType}/upload-documents/${costsFolder.folderId}`
@@ -965,11 +965,17 @@ describe('costs', () => {
 						expect(unprettifiedElement.innerHTML).toContain('Name</th>');
 						expect(unprettifiedElement.innerHTML).toContain('Received</th>');
 						expect(unprettifiedElement.innerHTML).toContain('Redaction status</th>');
-						expect(unprettifiedElement.innerHTML).toContain('test-document.txt</td>');
 						expect(unprettifiedElement.innerHTML).toContain(
-							`${dateToDisplayDate(new Date())}</td>`
+							`<a class="govuk-link" href="/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/upload-documents/${costsFolder.folderId}">test-document.txt</a></td>`
 						);
-						expect(unprettifiedElement.innerHTML).toContain('Unredacted</td>');
+						expect(unprettifiedElement.innerHTML).toContain(
+							`<a class="govuk-link" href="/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/add-document-details/${
+								costsFolder.folderId
+							}">${dateToDisplayDate(new Date())}</a></td>`
+						);
+						expect(unprettifiedElement.innerHTML).toContain(
+							`<a class="govuk-link" href="/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/add-document-details/${costsFolder.folderId}">Unredacted</a></td>`
+						);
 						expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 					});
 				}
@@ -1073,11 +1079,17 @@ describe('costs', () => {
 						expect(unprettifiedElement.innerHTML).toContain('Name</th>');
 						expect(unprettifiedElement.innerHTML).toContain('Received</th>');
 						expect(unprettifiedElement.innerHTML).toContain('Redaction status</th>');
-						expect(unprettifiedElement.innerHTML).toContain('test-document.txt</td>');
 						expect(unprettifiedElement.innerHTML).toContain(
-							`${dateToDisplayDate(new Date())}</td>`
+							`<a class="govuk-link" href="/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/upload-documents/${costsFolder.folderId}/1">test-document.txt</a></td>`
 						);
-						expect(unprettifiedElement.innerHTML).toContain('Unredacted</td>');
+						expect(unprettifiedElement.innerHTML).toContain(
+							`<a class="govuk-link" href="/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/add-document-details/${
+								costsFolder.folderId
+							}/1">${dateToDisplayDate(new Date())}</a></td>`
+						);
+						expect(unprettifiedElement.innerHTML).toContain(
+							`<a class="govuk-link" href="/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/add-document-details/${costsFolder.folderId}/1">Unredacted</a></td>`
+						);
 						expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 					});
 				}

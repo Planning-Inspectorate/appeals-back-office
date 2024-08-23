@@ -170,14 +170,23 @@ export const getAddDocumentsCheckAndConfirm = async (request, response) => {
 		return response.status(404).render('app/404');
 	}
 
+	const addDocumentDetailsPageUrl = `/appeals-service/appeal-details/${
+		currentAppeal.appealId
+	}/internal-correspondence/${correspondenceCategory}/add-document-details/${
+		currentFolder.folderId
+	}${documentId ? `/${documentId}` : ''}`;
+
 	await renderUploadDocumentsCheckAndConfirm(
 		request,
 		response,
+		addDocumentDetailsPageUrl,
 		`/appeals-service/appeal-details/${
 			currentAppeal.appealId
-		}/internal-correspondence/${correspondenceCategory}/add-document-details/${
-			currentFolder.folderId
-		}${documentId ? `/${documentId}` : ''}`
+		}/internal-correspondence/${correspondenceCategory}/upload-documents/${currentFolder.folderId}${
+			documentId ? `/${documentId}` : ''
+		}`,
+		addDocumentDetailsPageUrl,
+		addDocumentDetailsPageUrl
 	);
 };
 

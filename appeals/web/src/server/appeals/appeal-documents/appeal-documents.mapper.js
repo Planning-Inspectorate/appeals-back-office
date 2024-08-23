@@ -561,6 +561,9 @@ function mapDocumentDetailsItemToDocumentDetailsPageComponents(item, redactionSt
 
 /**
  * @param {string} backLinkUrl
+ * @param {string} changeFileLinkUrl
+ * @param {string} changeDateLinkUrl
+ * @param {string} changeRedactionStatusLinkUrl
  * @param {string} appealReference
  * @param {FileUploadInfoItem[]} fileUploadInfo
  * @param {RedactionStatus[]} redactionStatuses
@@ -568,6 +571,9 @@ function mapDocumentDetailsItemToDocumentDetailsPageComponents(item, redactionSt
  */
 export function addDocumentsCheckAndConfirmPage(
 	backLinkUrl,
+	changeFileLinkUrl,
+	changeDateLinkUrl,
+	changeRedactionStatusLinkUrl,
 	appealReference,
 	fileUploadInfo,
 	redactionStatuses
@@ -585,13 +591,17 @@ export function addDocumentsCheckAndConfirmPage(
 					head: [{ text: 'Name' }, { text: 'Received' }, { text: 'Redaction status' }],
 					rows: fileUploadInfo.map((/** @type {FileUploadInfoItem} */ infoItem) => [
 						{
-							text: infoItem.name
+							html: `<a class="govuk-link" href="${changeFileLinkUrl}">${infoItem.name}</a>`
 						},
 						{
-							text: apiDateStringToDisplayDate(infoItem.receivedDate)
+							html: `<a class="govuk-link" href="${changeDateLinkUrl}">${apiDateStringToDisplayDate(
+								infoItem.receivedDate
+							)}</a>`
 						},
 						{
-							text: capitalize(redactionStatusIdToName(redactionStatuses, infoItem.redactionStatus))
+							html: `<a class="govuk-link" href="${changeRedactionStatusLinkUrl}">${capitalize(
+								redactionStatusIdToName(redactionStatuses, infoItem.redactionStatus)
+							)}</a>`
 						}
 					]),
 					firstCellIsHeader: false
