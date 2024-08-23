@@ -2512,9 +2512,17 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Name</th>');
 			expect(unprettifiedElement.innerHTML).toContain('Received</th>');
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</th>');
-			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</td>');
-			expect(unprettifiedElement.innerHTML).toContain(`${dateToDisplayDate(new Date())}</td>`);
-			expect(unprettifiedElement.innerHTML).toContain('Unredacted</td>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				`<a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/${documentFolderInfo.folderId}">test-document.txt</a></td>`
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				`<a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-document-details/${
+					documentFolderInfo.folderId
+				}">${dateToDisplayDate(new Date())}</a></td>`
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				`<a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-document-details/${documentFolderInfo.folderId}">Unredacted</a></td>`
+			);
 			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 		});
 	});
@@ -2619,9 +2627,17 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Name</th>');
 			expect(unprettifiedElement.innerHTML).toContain('Received</th>');
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</th>');
-			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</td>');
-			expect(unprettifiedElement.innerHTML).toContain(`${dateToDisplayDate(new Date())}</td>`);
-			expect(unprettifiedElement.innerHTML).toContain('Unredacted</td>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				`<a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/${documentFolderInfo.folderId}">test-document.txt</a></td>`
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				`<a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-document-details/${
+					documentFolderInfo.folderId
+				}">${dateToDisplayDate(new Date())}</a></td>`
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				`<a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-document-details/${documentFolderInfo.folderId}">Unredacted</a></td>`
+			);
 			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 		});
 	});

@@ -1123,9 +1123,17 @@ describe('internal correspondence', () => {
 				expect(unprettifiedElement.innerHTML).toContain('Name</th>');
 				expect(unprettifiedElement.innerHTML).toContain('Received</th>');
 				expect(unprettifiedElement.innerHTML).toContain('Redaction status</th>');
-				expect(unprettifiedElement.innerHTML).toContain('test-document.txt</td>');
-				expect(unprettifiedElement.innerHTML).toContain(`${dateToDisplayDate(new Date())}</td>`);
-				expect(unprettifiedElement.innerHTML).toContain('Unredacted</td>');
+				expect(unprettifiedElement.innerHTML).toContain(
+					`<a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/upload-documents/${folder.folderId}">test-document.txt</a></td>`
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					`<a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/add-document-details/${
+						folder.folderId
+					}">${dateToDisplayDate(new Date())}</a></td>`
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					`<a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/add-document-details/${folder.folderId}">Unredacted</a></td>`
+				);
 				expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 			});
 		}
@@ -1271,9 +1279,17 @@ describe('internal correspondence', () => {
 				expect(unprettifiedElement.innerHTML).toContain('Name</th>');
 				expect(unprettifiedElement.innerHTML).toContain('Received</th>');
 				expect(unprettifiedElement.innerHTML).toContain('Redaction status</th>');
-				expect(unprettifiedElement.innerHTML).toContain('test-document.txt</td>');
-				expect(unprettifiedElement.innerHTML).toContain(`${dateToDisplayDate(new Date())}</td>`);
-				expect(unprettifiedElement.innerHTML).toContain('Unredacted</td>');
+				expect(unprettifiedElement.innerHTML).toContain(
+					`<a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/upload-documents/${folder.folderId}/1">test-document.txt</a></td>`
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					`<a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/add-document-details/${
+						folder.folderId
+					}/1">${dateToDisplayDate(new Date())}</a></td>`
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					`<a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/add-document-details/${folder.folderId}/1">Unredacted</a></td>`
+				);
 				expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 			});
 		}

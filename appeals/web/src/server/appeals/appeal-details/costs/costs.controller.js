@@ -216,14 +216,23 @@ export const getAddDocumentsCheckAndConfirm = async (request, response) => {
 		return response.status(404).render('app/404');
 	}
 
+	const addDocumentDetailsPageUrl = `/appeals-service/appeal-details/${
+		currentAppeal.appealId
+	}/costs/${costsCategory}/${costsDocumentType}/add-document-details/${currentFolder.folderId}${
+		documentId ? `/${documentId}` : ''
+	}`;
+
 	await renderUploadDocumentsCheckAndConfirm(
 		request,
 		response,
+		addDocumentDetailsPageUrl,
 		`/appeals-service/appeal-details/${
-			currentAppeal.appealId
-		}/costs/${costsCategory}/${costsDocumentType}/add-document-details/${currentFolder.folderId}${
+			request.currentAppeal.appealId
+		}/costs/${costsCategory}/${costsDocumentType}/upload-documents/${currentFolder.folderId}${
 			documentId ? `/${documentId}` : ''
-		}`
+		}`,
+		addDocumentDetailsPageUrl,
+		addDocumentDetailsPageUrl
 	);
 };
 
