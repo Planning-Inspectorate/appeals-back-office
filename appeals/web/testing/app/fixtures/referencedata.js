@@ -378,6 +378,10 @@ export const appellantCaseDataNotValidated = {
 		knowsOtherLandowners: null
 	},
 	siteAreaSquareMetres: '30.1',
+	developmentDescription: {
+		details: 'Test development description details',
+		isChanged: false
+	},
 	validation: null,
 	visibility: {
 		details: null,

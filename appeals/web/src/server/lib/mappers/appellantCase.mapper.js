@@ -8,6 +8,7 @@ import { formatServiceUserAsHtmlList } from '#lib/service-user-formatter.js';
 import { dateToDisplayDate } from '#lib/dates.js';
 import { capitalize } from 'lodash-es';
 import { APPEAL_KNOWS_OTHER_OWNERS } from 'pins-data-model';
+import { SHOW_MORE_MAXIMUM_CHARACTERS_BEFORE_HIDING } from '#lib/constants.js';
 
 /**
  * @typedef {import('@pins/appeals.api').Appeals.FolderInfo} FolderInfo
@@ -242,7 +243,24 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 					text: 'Original Development description'
 				},
 				value: {
-					text: appellantCaseData.developmentDescription?.details ?? 'Not provided'
+					...(appellantCaseData.developmentDescription?.details?.length &&
+					appellantCaseData.developmentDescription?.details.length >
+						SHOW_MORE_MAXIMUM_CHARACTERS_BEFORE_HIDING
+						? {
+								html: '',
+								pageComponents: [
+									{
+										type: 'show-more',
+										parameters: {
+											text: appellantCaseData.developmentDescription?.details ?? 'Not provided',
+											labelText: 'Original development description'
+										}
+									}
+								]
+						  }
+						: {
+								text: appellantCaseData.developmentDescription?.details ?? 'Not provided'
+						  })
 				},
 				actions: {
 					items: [

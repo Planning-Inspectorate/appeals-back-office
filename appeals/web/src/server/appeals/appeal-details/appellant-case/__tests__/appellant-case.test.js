@@ -135,6 +135,69 @@ describe('appellant-case', () => {
 			);
 		});
 
+		const text300Characters =
+			'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cill';
+
+		it('should render a "show more" component with the expected HTML on a text row with a value over 300 characters in length', async () => {
+			const text301Characters = text300Characters + 'u';
+
+			nock('http://test/')
+				.get('/appeals/2')
+				.reply(200, {
+					...appealData,
+					appealId: 2
+				});
+			nock('http://test/')
+				.get('/appeals/2/appellant-cases/0')
+				.reply(200, {
+					...appellantCaseDataNotValidated,
+					developmentDescription: {
+						...appellantCaseDataNotValidated.developmentDescription,
+						details: text301Characters
+					}
+				});
+
+			const response = await request.get(`${baseUrl}/2${appellantCasePagePath}`);
+
+			const unprettifiedElement = parseHtml(response.text, {
+				rootElement: '#application-summary',
+				skipPrettyPrint: true
+			});
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<div class="pins-show-more" data-label="Original development description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillu</div>'
+			);
+		});
+
+		it('should not render a "show more" component on a text row with a value less than or equal to 300 characters in length', async () => {
+			nock('http://test/')
+				.get('/appeals/2')
+				.reply(200, {
+					...appealData,
+					appealId: 2
+				});
+			nock('http://test/')
+				.get('/appeals/2/appellant-cases/0')
+				.reply(200, {
+					...appellantCaseDataNotValidated,
+					developmentDescription: {
+						...appellantCaseDataNotValidated.developmentDescription,
+						details: text300Characters
+					}
+				});
+
+			const response = await request.get(`${baseUrl}/2${appellantCasePagePath}`);
+			const unprettifiedElement = parseHtml(response.text, {
+				rootElement: '#application-summary',
+				skipPrettyPrint: true
+			});
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				`<dd class="govuk-summary-list__value"> ${text300Characters}</dd>`
+			);
+			expect(unprettifiedElement.innerHTML).not.toContain('class="pins-show-more"');
+		});
+
 		it('should render review outcome form fields and controls when the appeal is in "validation" status', async () => {
 			nock('http://test/')
 				.get(`/appeals/2`)
