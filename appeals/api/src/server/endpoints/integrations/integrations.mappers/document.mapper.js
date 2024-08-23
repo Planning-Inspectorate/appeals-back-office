@@ -1,6 +1,5 @@
 import config from '#config/config.js';
 import { randomUUID } from 'node:crypto';
-import { UUID_REGEX } from '#endpoints/constants.js';
 import { mapDate } from './date.mapper.js';
 import { ODW_SYSTEM_ID } from '@pins/appeals/constants/common.js';
 import { APPEAL_ORIGIN, APPEAL_CASE_STAGE } from 'pins-data-model';
@@ -22,14 +21,8 @@ import { getAvScanStatus } from '#endpoints/documents/documents.service.js';
 export const mapDocumentIn = (doc, stage = null) => {
 	const { filename, documentId, ...metadata } = doc;
 
-	const { originalGuid } = mapDocumentUrl(metadata.documentURI);
-	const description = metadata.description || 'Document imported';
-
-	let documentGuid = originalGuid;
-	const uuid = UUID_REGEX.exec(documentId) || UUID_REGEX.exec(documentGuid);
-	if (!uuid) {
-		documentGuid = randomUUID();
-	}
+	const description = metadata.description || `Document ${documentId} imported`;
+	const documentGuid = randomUUID();
 
 	metadata.fileName = filename;
 	metadata.blobStorageContainer = config.BO_BLOB_CONTAINER;
@@ -100,29 +93,6 @@ export const mapDocumentOut = (data) => {
 	};
 
 	return doc;
-};
-
-/**
- *
- * @param {string} documentURI
- * @returns {{originalGuid: string}}
- */
-const mapDocumentUrl = (documentURI) => {
-	const url = new URL(documentURI);
-	if (!url) {
-		throw new Error('Invalid document URI');
-	}
-
-	const path = url.pathname.split('/').slice(1);
-	if (path.length !== 4) {
-		throw new Error(
-			'Unsupported document pathname, expected four parts: /<container>/<ref>/<doc-id>/<filename>'
-		);
-	}
-	const originalGuid = path[2];
-	return {
-		originalGuid
-	};
 };
 
 /**
