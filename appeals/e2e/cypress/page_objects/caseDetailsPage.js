@@ -45,7 +45,6 @@ export class CaseDetailsPage extends Page {
 	}
 
 	clickReviewLpaq() {
-		//this.clickAccordionByButton('Documentation');
 		this.elements.reviewLpaQuestionnaire().click();
 	}
 
