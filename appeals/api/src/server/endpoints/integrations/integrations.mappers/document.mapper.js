@@ -20,7 +20,7 @@ import { getAvScanStatus } from '#endpoints/documents/documents.service.js';
  * @returns
  */
 export const mapDocumentIn = (doc, stage = null) => {
-	const { filename, originalFilename, documentId, ...metadata } = doc;
+	const { filename, documentId, ...metadata } = doc;
 
 	const { originalGuid } = mapDocumentUrl(metadata.documentURI);
 	const description = metadata.description || 'Document imported';
@@ -31,7 +31,7 @@ export const mapDocumentIn = (doc, stage = null) => {
 		documentGuid = randomUUID();
 	}
 
-	metadata.fileName = originalFilename;
+	metadata.fileName = filename;
 	metadata.blobStorageContainer = config.BO_BLOB_CONTAINER;
 	metadata.blobStoragePath = `${documentGuid}/v1/${filename}`;
 	metadata.stage = metadata.stage ?? stage ?? 'internal';
