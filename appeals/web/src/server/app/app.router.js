@@ -18,6 +18,8 @@ import {
 	getDocumentDownloadByVersion
 } from './components/file-downloader.component.js';
 import { addApiClientToRequest } from '../lib/middleware/add-apiclient-to-request.js';
+import { APPEAL_START_RANGE } from '@pins/appeals/constants/common.js';
+import logger from '#lib/logger.js';
 
 const router = createRouter();
 
@@ -71,5 +73,23 @@ router
 	.get(addApiClientToRequest, asyncHandler(getDocumentDownloadByVersion));
 
 router.use('/appeals-service', addApiClientToRequest, appealsRouter);
+
+router.route('/case/:caseReference').get((req, res) => {
+	const {
+		params: { caseReference }
+	} = req;
+
+	try {
+		const reference = Number(caseReference);
+		const id = reference - APPEAL_START_RANGE;
+		if (id > 0) {
+			return res.redirect(`/appeals-service/appeal-details/${id}`);
+		}
+	} catch (error) {
+		logger.debug(`Trying to redirect to case reference ${caseReference}, which was not found`);
+	}
+
+	return res.status(404);
+});
 
 export default router;
