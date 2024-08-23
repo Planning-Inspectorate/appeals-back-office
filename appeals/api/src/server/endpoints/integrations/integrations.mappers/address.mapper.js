@@ -73,11 +73,13 @@ export const mapNeighbouringAddressOut = (sites) => {
 
 	return sites.map((site) => {
 		return {
-			addressLine1: site.address?.addressLine1,
-			addressLine2: site.address?.addressLine2,
-			addressCounty: site.address?.addressCounty,
-			postcode: site.address?.postcode,
-			addressTown: site.address?.addressTown
+			neighbouringSiteAddressLine1: site.address?.addressLine1,
+			neighbouringSiteAddressLine2: site.address?.addressLine2 || '',
+			neighbouringSiteAddressCounty: site.address?.addressCounty || '',
+			neighbouringSiteAddressPostcode: site.address?.postcode,
+			neighbouringSiteAddressTown: site.address?.addressTown || '',
+			neighbouringSiteAccessDetails: null,
+			neighbouringSiteSafetyDetails: null
 		};
 	});
 };
