@@ -47,10 +47,11 @@ export const baseExpectedAppellantCaseResponse = (appeal) => {
 			applicationDecisionLetter: {},
 			changedDescription: {},
 			designAccessStatement: {},
+			newPlansDrawings: {},
 			originalApplicationForm: {},
-			plansDrawings: {},
+			ownershipCertificate: {},
 			planningObligation: {},
-			ownershipCertificate: {}
+			plansDrawings: {}
 		}
 	};
 };

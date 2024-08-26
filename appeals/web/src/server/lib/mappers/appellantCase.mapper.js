@@ -679,6 +679,56 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 	};
 
 	/** @type {Instructions} */
+	mappedData.newPlansDrawings = {
+		id: 'new-plans-drawings',
+		display: {
+			summaryListItem: {
+				key: {
+					text: 'New plans or drawings'
+				},
+				value: displayPageFormatter.formatDocumentValues(
+					appellantCaseData.appealId,
+					isFolderInfo(appellantCaseData.documents.newPlansDrawings)
+						? appellantCaseData.documents.newPlansDrawings?.documents || []
+						: []
+				),
+				actions: {
+					items: [
+						...((
+							(isFolderInfo(appellantCaseData.documents.newPlansDrawings) &&
+								appellantCaseData.documents.newPlansDrawings.documents) ||
+							[]
+						).length
+							? [
+									mapActionComponent(permissionNames.updateCase, session, {
+										text: 'Manage',
+										visuallyHiddenText: 'New plans or drawings',
+										href: mapDocumentManageUrl(
+											appellantCaseData.appealId,
+											isFolderInfo(appellantCaseData.documents.newPlansDrawings)
+												? appellantCaseData.documents.newPlansDrawings.folderId
+												: undefined
+										)
+									})
+							  ]
+							: []),
+						mapActionComponent(permissionNames.updateCase, session, {
+							text: 'Add',
+							visuallyHiddenText: 'New plans or drawings',
+							href: displayPageFormatter.formatDocumentActionLink(
+								appellantCaseData.appealId,
+								appellantCaseData.documents.newPlansDrawings,
+								documentUploadUrlTemplate
+							),
+							attributes: { 'data-cy': 'add-new-plans-drawings' }
+						})
+					]
+				}
+			}
+		}
+	};
+
+	/** @type {Instructions} */
 	mappedData.supportingDocuments = {
 		id: 'supporting-documents',
 		display: {

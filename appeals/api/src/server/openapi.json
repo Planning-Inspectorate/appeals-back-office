@@ -3930,7 +3930,7 @@
 						"properties": {
 							"submissionId": {
 								"type": "string",
-								"example": "ee57ef52-baa5-4748-b4f7-95313c75378d"
+								"example": "c128b5f8-d7a8-469d-9dd0-dcb4b79ad01d"
 							},
 							"advertisedAppeal": {
 								"type": "boolean",
@@ -5619,6 +5619,20 @@
 									"folderId": {
 										"type": "number",
 										"example": 4573
+									},
+									"documents": {
+										"type": "array",
+										"example": [],
+										"items": {}
+									}
+								}
+							},
+							"newPlansDrawings": {
+								"type": "object",
+								"properties": {
+									"folderId": {
+										"type": "number",
+										"example": 4574
 									},
 									"documents": {
 										"type": "array",

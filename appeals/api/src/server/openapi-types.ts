@@ -67,7 +67,7 @@ export interface ValidateDate {
 
 export interface AppellantCaseData {
 	casedata?: {
-		/** @example "ee57ef52-baa5-4748-b4f7-95313c75378d" */
+		/** @example "c128b5f8-d7a8-469d-9dd0-dcb4b79ad01d" */
 		submissionId?: string;
 		/** @example true */
 		advertisedAppeal?: boolean;
@@ -846,6 +846,12 @@ export interface SingleAppellantCaseResponse {
 		};
 		ownershipCertificate?: {
 			/** @example 4573 */
+			folderId?: number;
+			/** @example [] */
+			documents?: any[];
+		};
+		newPlansDrawings?: {
+			/** @example 4574 */
 			folderId?: number;
 			/** @example [] */
 			documents?: any[];

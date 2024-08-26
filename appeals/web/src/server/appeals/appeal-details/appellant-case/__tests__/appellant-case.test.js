@@ -118,6 +118,7 @@ describe('appellant-case', () => {
 
 			expect(unprettifiedElement.innerHTML).toContain('Appellant case</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('Design and access statement</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('New plans or drawings</dt>');
 			expect(unprettifiedElement.innerHTML).toContain(
 				'Supporting documents submitted with statement</dt>'
 			);

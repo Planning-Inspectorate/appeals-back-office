@@ -370,6 +370,10 @@ export const spec = {
 				ownershipCertificate: {
 					folderId: 4573,
 					documents: []
+				},
+				newPlansDrawings: {
+					folderId: 4574,
+					documents: []
 				}
 			},
 			hasAdvertisedAppeal: true,
