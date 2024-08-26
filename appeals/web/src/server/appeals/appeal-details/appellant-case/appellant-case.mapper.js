@@ -662,6 +662,8 @@ export function getPageHeadingTextOverrideForFolder(folder) {
 	switch (folder.path.split('/')[1]) {
 		case APPEAL_DOCUMENT_TYPE.PLANS_DRAWINGS:
 			return 'supporting documents submitted with statement';
+		case APPEAL_DOCUMENT_TYPE.NEW_PLANS_DRAWINGS:
+			return 'new plans or drawings';
 		case APPEAL_DOCUMENT_TYPE.DESIGN_ACCESS_STATEMENT:
 			return 'design and access statement';
 		case APPEAL_DOCUMENT_TYPE.OWNERSHIP_CERTIFICATE:

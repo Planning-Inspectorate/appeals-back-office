@@ -174,6 +174,7 @@ interface SingleAppellantCaseResponse {
 		originalApplicationForm?: FolderInfo | null;
 		designAccessStatement?: FolderInfo | null;
 		plansDrawings?: FolderInfo | null;
+		newPlansDrawings?: FolderInfo | null;
 		planningObligation?: FolderInfo | null;
 		ownershipCertificate?: FolderInfo | null;
 	};
