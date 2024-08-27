@@ -35,13 +35,13 @@ const toggleExpanded = (componentInstance) => {
 	toggleButton.setAttribute('aria-expanded', `${componentInstance.state.expanded}`);
 
 	if (componentInstance.state.expanded) {
-		textContainer.innerText = componentInstance.elements.root.getAttribute(ATTRIBUTES.fullText);
-		toggleButtonTextContainer.innerText = DEFAULT_OPTIONS.toggleButtonTextExpanded;
+		textContainer.textContent = componentInstance.elements.root.getAttribute(ATTRIBUTES.fullText);
+		toggleButtonTextContainer.textContent = DEFAULT_OPTIONS.toggleButtonTextExpanded;
 	} else {
-		textContainer.innerText = getPreviewFromFullText(
+		textContainer.textContent = getPreviewFromFullText(
 			componentInstance.elements.root.getAttribute(ATTRIBUTES.fullText)
 		);
-		toggleButtonTextContainer.innerText = DEFAULT_OPTIONS.toggleButtonTextCollapsed;
+		toggleButtonTextContainer.textContent = DEFAULT_OPTIONS.toggleButtonTextCollapsed;
 	}
 
 	componentInstance.elements.root.querySelector(`.${CLASSES.ellipsis}`).style.display =
@@ -72,16 +72,34 @@ const initComponentInstance = (componentInstance) => {
 	const previewText = getPreviewFromFullText(componentInstance.elements.root.innerText);
 	const labelText = componentInstance.elements.root.getAttribute(ATTRIBUTES.label);
 
-	const html = `
-		<span class="${CLASSES.text}">${previewText}</span>
-		<span class="${CLASSES.ellipsis}" aria-hidden="true">&hellip;</span>
-		<button class="${CLASSES.toggleButton}" aria-expanded="false">
-		<span class="${CLASSES.toggleButtonLabel}">${DEFAULT_OPTIONS.toggleButtonTextCollapsed}</span>
-		<span class="govuk-visually-hidden">, ${labelText}</span>
-		</button>
-	`;
+	const textSpan = document.createElement('span');
+	textSpan.className = CLASSES.text;
+	textSpan.textContent = previewText;
 
-	componentInstance.elements.root.innerHTML = html;
+	const ellipsisSpan = document.createElement('span');
+	ellipsisSpan.className = CLASSES.ellipsis;
+	ellipsisSpan.setAttribute('aria-hidden', 'true');
+	ellipsisSpan.textContent = '…';
+
+	const button = document.createElement('button');
+	button.className = CLASSES.toggleButton;
+	button.setAttribute('aria-expanded', 'false');
+
+	const buttonLabel = document.createElement('span');
+	buttonLabel.className = CLASSES.toggleButtonLabel;
+	buttonLabel.textContent = DEFAULT_OPTIONS.toggleButtonTextCollapsed;
+
+	const visuallyHiddenText = document.createElement('span');
+	visuallyHiddenText.className = 'govuk-visually-hidden';
+	visuallyHiddenText.textContent = `, ${labelText}`;
+
+	button.appendChild(buttonLabel);
+	button.appendChild(visuallyHiddenText);
+
+	componentInstance.elements.root.innerHTML = '';
+	componentInstance.elements.root.appendChild(textSpan);
+	componentInstance.elements.root.appendChild(ellipsisSpan);
+	componentInstance.elements.root.appendChild(button);
 
 	bindEvents(componentInstance);
 };
