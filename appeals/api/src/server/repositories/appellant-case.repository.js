@@ -2,8 +2,8 @@ import { databaseConnector } from '#utils/database-connector.js';
 import appealRepository from './appeal.repository.js';
 import commonRepository from './common.repository.js';
 
-/** @typedef {import('@pins/appeals.api').Appeals.UpdateAppellantCaseRequest} UpdateAppellantCaseRequest */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAppellantCaseValidationOutcome} UpdateAppellantCaseValidationOutcome */
+/** @typedef {import('#db-client').Prisma.AppellantCaseUpdateInput} AppellantCaseUpdateInput */
 /**
  * @typedef {import('#db-client').Prisma.PrismaPromise<T>} PrismaPromise
  * @template T
@@ -11,7 +11,7 @@ import commonRepository from './common.repository.js';
 
 /**
  * @param {number} id
- * @param {UpdateAppellantCaseRequest} data
+ * @param {AppellantCaseUpdateInput} data
  * @returns {PrismaPromise<object>}
  */
 const updateAppellantCaseById = (id, data) => {
