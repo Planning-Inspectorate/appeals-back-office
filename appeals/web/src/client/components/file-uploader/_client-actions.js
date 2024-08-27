@@ -250,7 +250,7 @@ const clientActions = (container) => {
 				break;
 			}
 
-			const fileRowId = `file_row_${selectedFile.lastModified}_${selectedFile.size}`;
+			const fileRowId = window.btoa(selectedFile.name);
 			const fileCannotBeAdded = checkSelectedFile(selectedFile);
 
 			if (fileCannotBeAdded) {
