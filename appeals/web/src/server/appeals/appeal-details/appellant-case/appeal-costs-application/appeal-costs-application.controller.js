@@ -27,10 +27,13 @@ const renderChangeAppealCostsApplication = async (request, response) => {
 			currentAppeal.appellantCaseId
 		);
 
+		const currentUrl = request.originalUrl;
+		const origin = currentUrl.split('/').slice(0, -2).join('/');
+
 		const mappedPageContents = changeAppealCostsApplicationPage(
 			currentAppeal,
 			appellantCaseData,
-			request.session.applicationDecisionDate
+			origin
 		);
 
 		delete request.session.applicationDecisionDate;
@@ -69,7 +72,7 @@ export const postChangeAppealCostsApplication = async (request, response) => {
 		} = request;
 
 		const currentUrl = getOriginPathname(request);
-		const origin = currentUrl.split('/').slice(0, -3).join('/');
+		const origin = currentUrl.split('/').slice(0, -2).join('/');
 
 		if (!isInternalUrl(origin, request)) {
 			return response.status(400).render('errorPageTemplate', {

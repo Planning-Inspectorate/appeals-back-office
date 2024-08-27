@@ -51,7 +51,9 @@ describe('appeal-costs-application', () => {
 				.send(validData);
 
 			expect(response.statusCode).toBe(302);
-			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/appellant-case'
+			);
 		});
 
 		it('should re-direct to appeals-details page if no', async () => {
@@ -68,7 +70,9 @@ describe('appeal-costs-application', () => {
 				.send(validData);
 
 			expect(response.statusCode).toBe(302);
-			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/appellant-case'
+			);
 		});
 	});
 });
