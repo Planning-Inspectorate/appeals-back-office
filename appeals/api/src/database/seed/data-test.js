@@ -482,7 +482,6 @@ export async function seedTestData(databaseConnector) {
 				path
 			};
 		});
-		console.log('🚀 ~ defaultFolders ~ defaultFolders:', defaultFolders);
 
 		await databaseConnector.folder.createMany({ data: defaultFolders });
 		const appealWithReference = await databaseConnector.appeal.update({
