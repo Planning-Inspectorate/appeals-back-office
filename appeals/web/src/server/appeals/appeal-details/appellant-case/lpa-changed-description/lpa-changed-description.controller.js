@@ -20,7 +20,7 @@ const renderLPAChangedDescription = async (request, response) => {
 	try {
 		const { errors, currentAppeal } = request;
 		const currentUrl = request.originalUrl;
-		const backLinkUrl = currentUrl.split('/').slice(0, -3).join('/');
+		const backLinkUrl = currentUrl.split('/').slice(0, -2).join('/');
 
 		if (currentAppeal?.appellantCaseId !== null && currentAppeal?.appellantCaseId !== undefined) {
 			const appellantCaseResponse = await getAppellantCaseFromAppealId(

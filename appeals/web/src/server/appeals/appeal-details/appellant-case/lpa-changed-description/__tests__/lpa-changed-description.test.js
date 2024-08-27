@@ -32,6 +32,14 @@ describe('lpa-changed-description', () => {
 			expect(elementInnerHtml).toContain(
 				'Did the LPA change the description of the development?</h1>'
 			);
+
+			const rootElement = parseHtml(response.text, {
+				rootElement: '.govuk-back-link',
+				skipPrettyPrint: true
+			});
+			expect(rootElement.innerHTML).toContain(
+				`href="/appeals-service/appeal-details/1/appellant-case`
+			);
 		});
 	});
 
