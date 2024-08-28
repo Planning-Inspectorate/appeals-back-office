@@ -336,15 +336,17 @@ export async function initialiseAndMapAppealData(
 					text: appealDetails.decision?.outcome || 'Not yet issued'
 				},
 				actions: {
-					items: appealDetails.decision?.outcome
-						? []
-						: [
-								{
-									text: 'Issue',
-									href: generateIssueDecisionUrl(appealDetails.appealId),
-									visuallyHiddenText: 'site address'
-								}
-						  ]
+					items:
+						appealDetails.decision?.outcome ||
+						appealDetails.appealStatus !== APPEAL_CASE_STATUS.ISSUE_DETERMINATION
+							? []
+							: [
+									{
+										text: 'Issue',
+										href: generateIssueDecisionUrl(appealDetails.appealId),
+										visuallyHiddenText: 'decision'
+									}
+							  ]
 				},
 				classes: 'appeal-decision'
 			}
