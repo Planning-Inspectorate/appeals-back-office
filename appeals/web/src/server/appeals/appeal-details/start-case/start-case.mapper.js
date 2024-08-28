@@ -16,6 +16,10 @@ export function startCasePage(appealId, appealReference, today) {
 		pageComponents: [
 			{
 				type: 'warning-text',
+				wrapperHtml: {
+					opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-two-thirds">',
+					closing: '</div></div>'
+				},
 				parameters: {
 					text: `Confirming will activate the timetable on ${today}. Start letters will be sent to the relevant parties.`
 				}
