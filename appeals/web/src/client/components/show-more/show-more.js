@@ -35,7 +35,8 @@ const toggleExpanded = (componentInstance) => {
 	toggleButton.setAttribute('aria-expanded', `${componentInstance.state.expanded}`);
 
 	if (componentInstance.state.expanded) {
-		textContainer.textContent = componentInstance.elements.root.getAttribute(ATTRIBUTES.fullText);
+		const fullText = componentInstance.elements.root.getAttribute(ATTRIBUTES.fullText);
+		textContainer.textContent = `${fullText} `;
 		toggleButtonTextContainer.textContent = DEFAULT_OPTIONS.toggleButtonTextExpanded;
 	} else {
 		textContainer.textContent = getPreviewFromFullText(
