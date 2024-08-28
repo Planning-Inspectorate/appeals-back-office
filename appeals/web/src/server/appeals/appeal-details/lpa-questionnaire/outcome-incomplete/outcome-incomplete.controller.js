@@ -81,20 +81,26 @@ const renderUpdateDueDate = async (request, response) => {
 		params: { lpaQuestionnaireId }
 	} = request;
 
-	let postedDueDateDay, postedDueDateMonth, postedDueDateYear;
+	let dueDateDay, dueDateMonth, dueDateYear;
+
+	if (request.session.webLPAQuestionnaireReviewOutcome?.updatedDueDate) {
+		dueDateDay = request.session.webLPAQuestionnaireReviewOutcome?.updatedDueDate.day;
+		dueDateMonth = request.session.webLPAQuestionnaireReviewOutcome?.updatedDueDate.month;
+		dueDateYear = request.session.webLPAQuestionnaireReviewOutcome?.updatedDueDate.year;
+	}
 
 	if (objectContainsAllKeys(body, ['due-date-day', 'due-date-month', 'due-date-year'])) {
-		postedDueDateDay = parseInt(body['due-date-day'], 10);
-		postedDueDateMonth = parseInt(body['due-date-month'], 10);
-		postedDueDateYear = parseInt(body['due-date-year'], 10);
+		dueDateDay = parseInt(body['due-date-day'], 10);
+		dueDateMonth = parseInt(body['due-date-month'], 10);
+		dueDateYear = parseInt(body['due-date-year'], 10);
 	}
 
 	const mappedPageContent = updateDueDatePage(
 		currentAppeal,
 		lpaQuestionnaireId,
-		postedDueDateDay,
-		postedDueDateMonth,
-		postedDueDateYear
+		dueDateDay,
+		dueDateMonth,
+		dueDateYear
 	);
 
 	return response.status(200).render('appeals/appeal/update-date.njk', {
