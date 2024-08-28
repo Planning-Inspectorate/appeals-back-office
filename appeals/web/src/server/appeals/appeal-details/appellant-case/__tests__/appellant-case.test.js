@@ -4431,7 +4431,7 @@ describe('appellant-case', () => {
 			);
 		});
 
-		it('should send an API request to update the document and redirect to the appellant case page', async () => {
+		it('should send an API request to update the document, redirect to the appellant case page, and display a "Document updated" notification banner', async () => {
 			const mockDocumentsEndpoint = nock('http://test/').post('/appeals/1/documents/1').reply(200);
 
 			const addDocumentsResponse = await request
@@ -4442,15 +4442,26 @@ describe('appellant-case', () => {
 
 			expect(addDocumentsResponse.statusCode).toBe(302);
 
-			const response = await request
+			const checkYourAnswersResponse = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}/add-documents/1/1/check-your-answers`)
 				.send({});
 
-			expect(response.statusCode).toBe(302);
-			expect(response.text).toBe(
+			expect(checkYourAnswersResponse.statusCode).toBe(302);
+			expect(checkYourAnswersResponse.text).toBe(
 				'Found. Redirecting to /appeals-service/appeal-details/1/appellant-case'
 			);
 			expect(mockDocumentsEndpoint.isDone()).toBe(true);
+
+			const appellantCaseResponse = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
+
+			expect(appellantCaseResponse.statusCode).toBe(200);
+
+			const notificationBannerElementHTML = parseHtml(appellantCaseResponse.text, {
+				rootElement: notificationBannerElement
+			}).innerHTML;
+
+			expect(notificationBannerElementHTML).toContain('Success</h3>');
+			expect(notificationBannerElementHTML).toContain('Document updated</p>');
 		});
 	});
 

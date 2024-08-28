@@ -2676,7 +2676,11 @@ describe('LPA Questionnaire review', () => {
 			);
 		});
 
-		it('should send an API request to update the document and redirect to the appellant case page', async () => {
+		it('should send an API request to update the document, redirect to the appellant case page, and display a "Document updated" notification banner', async () => {
+			nock('http://test/')
+				.get('/appeals/1/lpa-questionnaires/2')
+				.reply(200, lpaQuestionnaireDataIncompleteOutcome);
+
 			const mockDocumentsEndpoint = nock('http://test/').post('/appeals/1/documents/1').reply(200);
 
 			const addDocumentsResponse = await request.post(`${baseUrl}/add-documents/1/1`).send({
@@ -2685,15 +2689,26 @@ describe('LPA Questionnaire review', () => {
 
 			expect(addDocumentsResponse.statusCode).toBe(302);
 
-			const response = await request
+			const checkYourAnswersResponse = await request
 				.post(`${baseUrl}/add-documents/1/1/check-your-answers`)
 				.send({});
 
-			expect(response.statusCode).toBe(302);
-			expect(response.text).toBe(
+			expect(checkYourAnswersResponse.statusCode).toBe(302);
+			expect(checkYourAnswersResponse.text).toBe(
 				'Found. Redirecting to /appeals-service/appeal-details/1/lpa-questionnaire/2'
 			);
 			expect(mockDocumentsEndpoint.isDone()).toBe(true);
+
+			const lpaqResponse = await request.get(`${baseUrl}`);
+
+			expect(lpaqResponse.statusCode).toBe(200);
+
+			const notificationBannerElementHTML = parseHtml(lpaqResponse.text, {
+				rootElement: notificationBannerElement
+			}).innerHTML;
+
+			expect(notificationBannerElementHTML).toContain('Success</h3>');
+			expect(notificationBannerElementHTML).toContain('Document updated</p>');
 		});
 	});
 

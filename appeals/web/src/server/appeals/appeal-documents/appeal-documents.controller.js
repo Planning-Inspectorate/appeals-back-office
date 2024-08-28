@@ -542,6 +542,12 @@ export const postUploadDocumentVersionCheckAndConfirm = async (request, response
 
 		delete request.session.fileUploadInfo;
 
+		addNotificationBannerToSession(
+			request.session,
+			'documentVersionAdded',
+			Number.parseInt(currentAppeal.appealId, 10)
+		);
+
 		return response.redirect(nextPageUrl);
 	} catch (error) {
 		logger.error(

@@ -510,6 +510,62 @@ describe('appeal-details', () => {
 				);
 			});
 
+			it('should render a success notification banner when a new version of an appellant costs document was uploaded', async () => {
+				nock('http://test/')
+					.get('/appeals/1/document-folders/1')
+					.reply(200, costsFolderInfoAppellantApplication)
+					.persist();
+				nock('http://test/')
+					.get('/appeals/document-redaction-statuses')
+					.reply(200, documentRedactionStatuses)
+					.persist();
+				nock('http://test/').post('/appeals/1/documents').reply(200);
+				nock('http://test/').post('/appeals/1/documents/1').reply(200);
+
+				const addDocumentsResponse = await request
+					.post(`${baseUrl}/1/costs/appellant/application/upload-documents/1`)
+					.send({
+						'upload-info': fileUploadInfo
+					});
+
+				expect(addDocumentsResponse.statusCode).toBe(302);
+
+				const postCheckAndConfirmResponse = await request
+					.post(`${baseUrl}/1/costs/appellant/application/check-your-answers/1`)
+					.send({});
+
+				expect(postCheckAndConfirmResponse.statusCode).toBe(302);
+
+				await request.get(`${baseUrl}/1`);
+
+				const addDocumentVersionResponse = await request
+					.post(`${baseUrl}/1/costs/appellant/application/upload-documents/1/1`)
+					.send({
+						'upload-info': fileUploadInfo
+					});
+
+				expect(addDocumentVersionResponse.statusCode).toBe(302);
+
+				const postVersionCheckAndConfirmResponse = await request
+					.post(`${baseUrl}/1/costs/appellant/application/check-your-answers/1/1`)
+					.send({});
+
+				expect(postVersionCheckAndConfirmResponse.statusCode).toBe(302);
+				expect(postVersionCheckAndConfirmResponse.text).toBe(
+					'Found. Redirecting to /appeals-service/appeal-details/1'
+				);
+
+				const caseDetailsResponse2 = await request.get(`${baseUrl}/1`);
+
+				const notificationBanner2ElementHTML = parseHtml(caseDetailsResponse2.text, {
+					rootElement: notificationBannerElement
+				}).innerHTML;
+
+				expect(notificationBanner2ElementHTML).toMatchSnapshot();
+				expect(notificationBanner2ElementHTML).toContain('Success</h3>');
+				expect(notificationBanner2ElementHTML).toContain('Document updated</p>');
+			});
+
 			it('should render a success notification banner when an LPA costs document was uploaded', async () => {
 				nock('http://test/')
 					.get('/appeals/1/document-folders/2')
@@ -550,6 +606,62 @@ describe('appeal-details', () => {
 				);
 			});
 
+			it('should render a success notification banner when a new version of an LPA costs document was uploaded', async () => {
+				nock('http://test/')
+					.get('/appeals/1/document-folders/2')
+					.reply(200, costsFolderInfoLpaApplication)
+					.persist();
+				nock('http://test/')
+					.get('/appeals/document-redaction-statuses')
+					.reply(200, documentRedactionStatuses)
+					.persist();
+				nock('http://test/').post('/appeals/1/documents').reply(200);
+				nock('http://test/').post('/appeals/1/documents/1').reply(200);
+
+				const addDocumentsResponse = await request
+					.post(`${baseUrl}/1/costs/lpa/application/upload-documents/2`)
+					.send({
+						'upload-info': fileUploadInfo
+					});
+
+				expect(addDocumentsResponse.statusCode).toBe(302);
+
+				const postCheckAndConfirmResponse = await request
+					.post(`${baseUrl}/1/costs/lpa/application/check-your-answers/2`)
+					.send({});
+
+				expect(postCheckAndConfirmResponse.statusCode).toBe(302);
+
+				await request.get(`${baseUrl}/1`);
+
+				const addDocumentVersionResponse = await request
+					.post(`${baseUrl}/1/costs/lpa/application/upload-documents/2/1`)
+					.send({
+						'upload-info': fileUploadInfo
+					});
+
+				expect(addDocumentVersionResponse.statusCode).toBe(302);
+
+				const postVersionCheckAndConfirmResponse = await request
+					.post(`${baseUrl}/1/costs/lpa/application/check-your-answers/2/1`)
+					.send({});
+
+				expect(postVersionCheckAndConfirmResponse.statusCode).toBe(302);
+				expect(postVersionCheckAndConfirmResponse.text).toBe(
+					'Found. Redirecting to /appeals-service/appeal-details/1'
+				);
+
+				const caseDetailsResponse2 = await request.get(`${baseUrl}/1`);
+
+				const notificationBanner2ElementHTML = parseHtml(caseDetailsResponse2.text, {
+					rootElement: notificationBannerElement
+				}).innerHTML;
+
+				expect(notificationBanner2ElementHTML).toMatchSnapshot();
+				expect(notificationBanner2ElementHTML).toContain('Success</h3>');
+				expect(notificationBanner2ElementHTML).toContain('Document updated</p>');
+			});
+
 			it('should render a success notification banner when a costs decision document was uploaded', async () => {
 				nock('http://test/')
 					.get('/appeals/1/document-folders/3')
@@ -588,6 +700,66 @@ describe('appeal-details', () => {
 				expect(notificationBannerElementHTML).toMatchSnapshot();
 				expect(notificationBannerElementHTML).toContain('Success</h3>');
 				expect(notificationBannerElementHTML).toContain('Costs decision uploaded</p>');
+			});
+
+			it('should render a success notification banner when a new version of a costs decision document was uploaded', async () => {
+				nock('http://test/')
+					.get('/appeals/1/document-folders/3')
+					.reply(200, costsFolderInfoDecision)
+					.persist();
+				nock('http://test/')
+					.get('/appeals/document-redaction-statuses')
+					.reply(200, documentRedactionStatuses)
+					.persist();
+				nock('http://test/').post('/appeals/1/documents').reply(200);
+				nock('http://test/').post('/appeals/1/documents/1').reply(200);
+
+				const addDocumentsResponse = await request
+					.post(`${baseUrl}/1/costs/decision/upload-documents/3`)
+					.send({
+						'upload-info': fileUploadInfo
+					});
+
+				expect(addDocumentsResponse.statusCode).toBe(302);
+
+				const checkAndConfirmResponse = await request
+					.post(`${baseUrl}/1/costs/decision/check-and-confirm/3`)
+					.send({
+						confirm: 'yes'
+					});
+
+				expect(checkAndConfirmResponse.statusCode).toBe(302);
+
+				await request.get(`${baseUrl}/1`);
+
+				const addDocumentVersionResponse = await request
+					.post(`${baseUrl}/1/costs/decision/upload-documents/3/1`)
+					.send({
+						'upload-info': fileUploadInfo
+					});
+
+				expect(addDocumentVersionResponse.statusCode).toBe(302);
+
+				const postVersionCheckAndConfirmResponse = await request
+					.post(`${baseUrl}/1/costs/decision/check-and-confirm/3/1`)
+					.send({
+						confirm: 'yes'
+					});
+
+				expect(postVersionCheckAndConfirmResponse.statusCode).toBe(302);
+				expect(postVersionCheckAndConfirmResponse.text).toBe(
+					'Found. Redirecting to /appeals-service/appeal-details/1'
+				);
+
+				const caseDetailsResponse2 = await request.get(`${baseUrl}/1`);
+
+				const notificationBanner2ElementHTML = parseHtml(caseDetailsResponse2.text, {
+					rootElement: notificationBannerElement
+				}).innerHTML;
+
+				expect(notificationBanner2ElementHTML).toMatchSnapshot();
+				expect(notificationBanner2ElementHTML).toContain('Success</h3>');
+				expect(notificationBanner2ElementHTML).toContain('Document updated</p>');
 			});
 
 			it('should render a success notification banner when a service user was updated', async () => {
