@@ -1625,6 +1625,83 @@ describe('appeal-details', () => {
 		});
 
 		describe('Appeal decision', () => {
+			it('should render a row in the case overview accordion with with "Issue" action link to the issue decision start page, if the appeal status is "issue_determination"', async () => {
+				const appealId = 2;
+
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealData,
+						appealId,
+						appealStatus: 'issue_determination',
+						decision: {
+							...appealData.decision,
+							outcome: null
+						}
+					});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				const rowHtml = parseHtml(response.text, {
+					rootElement: '.govuk-summary-list__row.appeal-decision',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(rowHtml).toMatchSnapshot();
+				expect(rowHtml).toContain('Decision</dt>');
+				expect(rowHtml).toContain(
+					'<a class="govuk-link" href="/appeals-service/appeal-details/2/issue-decision/decision"> Issue<span class="govuk-visually-hidden"> decision</span></a>'
+				);
+			});
+
+			const appealStatusesWithoutIssueDetermination = [
+				'assign_case_officer',
+				'awaiting_transfer',
+				'closed',
+				'complete',
+				'evidence',
+				'final_comments',
+				'invalid',
+				'lpa_questionnaire',
+				'ready_to_start',
+				'statements',
+				'transferred',
+				'validation',
+				'withdrawn',
+				'witnesses'
+			];
+
+			for (const appealStatus of appealStatusesWithoutIssueDetermination) {
+				it(`should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (${appealStatus})`, async () => {
+					const appealId = 2;
+
+					nock('http://test/')
+						.get(`/appeals/${appealId}`)
+						.reply(200, {
+							...appealData,
+							appealId,
+							appealStatus,
+							decision: {
+								...appealData.decision,
+								outcome: null
+							}
+						});
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					const rowHtml = parseHtml(response.text, {
+						rootElement: '.govuk-summary-list__row.appeal-decision',
+						skipPrettyPrint: true
+					}).innerHTML;
+
+					expect(rowHtml).toMatchSnapshot();
+					expect(rowHtml).toContain('Decision</dt>');
+					expect(rowHtml).not.toContain(
+						'href="/appeals-service/appeal-details/2/issue-decision/decision"'
+					);
+				});
+			}
+
 			it('should render a row in the case documentation accordion with "Appeal decision" in the Documentation (label) column', async () => {
 				const response = await request.get(`${baseUrl}/1`);
 
