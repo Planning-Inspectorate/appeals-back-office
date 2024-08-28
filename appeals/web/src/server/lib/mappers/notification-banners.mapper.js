@@ -51,6 +51,11 @@ export const notificationBannerDefinitions = {
 		type: 'success',
 		text: 'Document added'
 	},
+	documentVersionAdded: {
+		pages: ['appealDetails', 'appellantCase', 'lpaQuestionnaire', 'manageDocuments'],
+		type: 'success',
+		text: 'Document updated'
+	},
 	documentDetailsUpdated: {
 		pages: ['appellantCase', 'lpaQuestionnaire', 'manageDocuments'],
 		type: 'success',
