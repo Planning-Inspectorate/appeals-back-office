@@ -81,20 +81,21 @@ const renderIncompleteReason = async (request, response) => {
 const renderUpdateDueDate = async (request, response) => {
 	const { body, currentAppeal, errors } = request;
 
-	let postedDueDateDay, postedDueDateMonth, postedDueDateYear;
+	let dueDateDay, dueDateMonth, dueDateYear;
 
-	if (objectContainsAllKeys(body, ['due-date-day', 'due-date-month', 'due-date-year'])) {
-		postedDueDateDay = parseInt(body['due-date-day'], 10);
-		postedDueDateMonth = parseInt(body['due-date-month'], 10);
-		postedDueDateYear = parseInt(body['due-date-year'], 10);
+	if (request.session.webAppellantCaseReviewOutcome?.updatedDueDate) {
+		dueDateDay = request.session.webAppellantCaseReviewOutcome.updatedDueDate.day;
+		dueDateMonth = request.session.webAppellantCaseReviewOutcome.updatedDueDate.month;
+		dueDateYear = request.session.webAppellantCaseReviewOutcome.updatedDueDate.year;
 	}
 
-	const mappedPageContent = updateDueDatePage(
-		currentAppeal,
-		postedDueDateDay,
-		postedDueDateMonth,
-		postedDueDateYear
-	);
+	if (objectContainsAllKeys(body, ['due-date-day', 'due-date-month', 'due-date-year'])) {
+		dueDateDay = parseInt(body['due-date-day'], 10);
+		dueDateMonth = parseInt(body['due-date-month'], 10);
+		dueDateYear = parseInt(body['due-date-year'], 10);
+	}
+
+	const mappedPageContent = updateDueDatePage(currentAppeal, dueDateDay, dueDateMonth, dueDateYear);
 
 	return response.status(200).render('appeals/appeal/update-date.njk', {
 		pageContent: mappedPageContent,
