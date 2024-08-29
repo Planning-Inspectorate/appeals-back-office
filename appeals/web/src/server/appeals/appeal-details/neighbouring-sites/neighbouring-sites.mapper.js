@@ -199,7 +199,10 @@ export function manageNeighbouringSitesPage(request, appealData) {
 					caption: 'Neighbouring sites (LPAQ)',
 					captionClasses: 'govuk-table__caption--m',
 					firstCellIsHeader: false,
-					head: [{ text: 'Address' }, { text: 'Action', classes: 'govuk-!-width-one-quarter' }],
+					head: [
+						{ text: 'Address' },
+						{ text: 'Action', classes: 'govuk-!-width-one-quarter govuk-!-text-align-right' }
+					],
 					rows: lpaNeighbouringSitesInspectorRows
 				}
 			},
@@ -209,7 +212,10 @@ export function manageNeighbouringSitesPage(request, appealData) {
 					caption: 'Neighbouring sites (inspector and/or third party request)',
 					captionClasses: 'govuk-table__caption--m',
 					firstCellIsHeader: false,
-					head: [{ text: 'Address' }, { text: 'Action', classes: 'govuk-!-width-one-quarter' }],
+					head: [
+						{ text: 'Address' },
+						{ text: 'Action', classes: 'govuk-!-width-one-quarter govuk-!-text-align-right' }
+					],
 					rows: backOfficeNeighbouringSitesInspectorRows
 				}
 			}
@@ -227,7 +233,8 @@ function neighbouringSiteTableRowFormatter(site) {
 			html: `${appealSiteToMultilineAddressStringHtml(site.address)}`
 		},
 		{
-			html: `<a href="change/site/${site.siteId}" class="govuk-link" >Change</a> | <a href="remove/site/${site.siteId}" class="govuk-link">Remove</a>`
+			html: `<a href="change/site/${site.siteId}" class="govuk-link" >Change</a> | <a href="remove/site/${site.siteId}" class="govuk-link">Remove</a>`,
+			classes: 'govuk-!-text-align-right'
 		}
 	];
 }
