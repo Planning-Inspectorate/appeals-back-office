@@ -75,7 +75,7 @@ export const postChangeSiteArea = async (request, response) => {
 			request.session,
 			'changePage',
 			appealId,
-			undefined,
+			'',
 			'Site area updated'
 		);
 

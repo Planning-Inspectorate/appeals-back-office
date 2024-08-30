@@ -107,7 +107,7 @@ export const postChangeApplicationSubmissionDate = async (request, response) => 
 			request.session,
 			'changePage',
 			appealId,
-			undefined,
+			'',
 			'Date application submitted updated'
 		);
 

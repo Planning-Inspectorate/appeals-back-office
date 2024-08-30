@@ -127,7 +127,7 @@ export const postAddAffectedListedBuildingCheckAndConfirm = async (request, resp
 			request.session,
 			'changePage',
 			appealId,
-			undefined,
+			'',
 			'Listed building added'
 		);
 
@@ -237,7 +237,7 @@ export const postRemoveAffectedListedBuilding = async (request, response) => {
 			request.session,
 			'changePage',
 			appealId,
-			undefined,
+			'',
 			'Listed building removed'
 		);
 
@@ -367,7 +367,7 @@ export const postChangeAffectedListedBuildingCheckAndConfirm = async (request, r
 			request.session,
 			'changePage',
 			appealId,
-			undefined,
+			'',
 			'Listed building updated'
 		);
 

@@ -83,7 +83,7 @@ export const postChangeOwnersKnown = async (request, response) => {
 			request.session,
 			'changePage',
 			appealId,
-			undefined,
+			'',
 			'Owners known updated'
 		);
 

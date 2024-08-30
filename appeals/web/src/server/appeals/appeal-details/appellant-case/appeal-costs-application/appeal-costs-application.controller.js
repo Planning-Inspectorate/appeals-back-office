@@ -91,7 +91,7 @@ export const postChangeAppealCostsApplication = async (request, response) => {
 			session,
 			'changePage',
 			appealId,
-			undefined,
+			'',
 			'Appeal costs applied for updated'
 		);
 

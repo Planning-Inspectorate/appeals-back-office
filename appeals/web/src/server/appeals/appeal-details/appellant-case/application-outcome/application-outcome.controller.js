@@ -69,7 +69,7 @@ export const postChangeApplicationOutcome = async (request, response) => {
 			request.session,
 			'changePage',
 			appealId,
-			undefined,
+			'',
 			'Application outcome has been updated'
 		);
 

@@ -106,7 +106,7 @@ export const postGreenBelt = async (request, response) => {
 			session,
 			'changePage',
 			appealId,
-			undefined,
+			'',
 			'Green belt status updated'
 		);
 
