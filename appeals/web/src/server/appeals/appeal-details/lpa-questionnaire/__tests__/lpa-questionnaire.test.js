@@ -2740,7 +2740,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Page not found</h1>');
 		});
 
-		it('should render the manage documents listing page with one document item for each document present in the folder, with late entry status tags in the date received column for documents marked as late entry, if the folderId is valid', async () => {
+		it('should render the manage documents listing page with one document item for each document present in the folder, if the folderId is valid', async () => {
 			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
 
 			const response = await request.get(`${baseUrl}/manage-documents/1/`);
