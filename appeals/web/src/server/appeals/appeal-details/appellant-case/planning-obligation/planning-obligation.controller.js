@@ -86,7 +86,7 @@ export const postChangePlanningObligation = async (request, response) => {
 			request.session,
 			'changePage',
 			appealId,
-			undefined,
+			'',
 			'Planning obligation in support updated'
 		);
 
@@ -180,7 +180,7 @@ export const postChangePlanningObligationStatus = async (request, response) => {
 			request.session,
 			'changePage',
 			appealId,
-			undefined,
+			'',
 			'Planning obligation status updated'
 		);
 

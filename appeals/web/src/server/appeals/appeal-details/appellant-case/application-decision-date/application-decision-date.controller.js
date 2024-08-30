@@ -87,7 +87,7 @@ export const postChangeApplicationHasDecisionDate = async (request, response) =>
 				request.session,
 				'changePage',
 				appealId,
-				undefined,
+				'',
 				'Application decision date removed'
 			);
 
@@ -196,7 +196,7 @@ export const postChangeApplicationSetDecisionDate = async (request, response) =>
 			request.session,
 			'changePage',
 			appealId,
-			undefined,
+			'',
 			'Application decision date updated'
 		);
 

@@ -88,7 +88,7 @@ export const postChangePartOfAgriculturalHolding = async (request, response) => 
 			request.session,
 			'changePage',
 			appealId,
-			undefined,
+			'',
 			'Part of agricultural holding updated'
 		);
 
@@ -179,7 +179,7 @@ export const postChangeTenantOfAgriculturalHolding = async (request, response) =
 			request.session,
 			'changePage',
 			appealId,
-			undefined,
+			'',
 			'Tenant of agricultural holding updated'
 		);
 
@@ -270,7 +270,7 @@ export const postChangeOtherTenantsOfAgriculturalHolding = async (request, respo
 			request.session,
 			'changePage',
 			appealId,
-			undefined,
+			'',
 			'Other tenants of agricultural holding updated'
 		);
 

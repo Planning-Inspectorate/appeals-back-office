@@ -82,7 +82,7 @@ export const postChangeSiteOwnership = async (request, response) => {
 			request.session,
 			'changePage',
 			appealId,
-			undefined,
+			'',
 			'Site ownership updated'
 		);
 

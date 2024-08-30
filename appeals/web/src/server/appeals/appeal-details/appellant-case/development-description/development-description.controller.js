@@ -60,7 +60,7 @@ export const postChangeDevelopmentDescription = async (request, response) => {
 			request.session,
 			'changePage',
 			appealId,
-			undefined,
+			'',
 			'Original development description has been updated'
 		);
 		delete request.session.developmentDescription;
