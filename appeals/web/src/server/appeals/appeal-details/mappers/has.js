@@ -9,7 +9,7 @@ import { mapStatusDependentNotifications, removeAccordionComponentsActions } fro
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
  * @returns
  */
-export const generateHasAccordion = (appealDetails, mappedData, session) => {
+export const generateAccordion = (appealDetails, mappedData, session) => {
 	/** @type {PageComponent} */
 	const caseOverview = {
 		type: 'summary-list',
@@ -53,11 +53,6 @@ export const generateHasAccordion = (appealDetails, mappedData, session) => {
 							mappedData.appeal.validAt.display.summaryListItem,
 							mappedData.appeal.startedAt.display.summaryListItem,
 							mappedData.appeal.lpaQuestionnaireDueDate.display.summaryListItem,
-							mappedData.appeal.lpaStatementsDue.display.summaryListItem, // TODO
-							mappedData.appeal.ipCommentsDue.display.summaryListItem, // TODO
-							mappedData.appeal.appellantFinalCommentsDue.display.summaryListItem, // TODO
-							mappedData.appeal.lpaFinalCommentsDue.display.summaryListItem, // TODO
-							mappedData.appeal.s106ObligationDue.display.summaryListItem, // TODO
 							mappedData.appeal.siteVisitDate.display.summaryListItem
 						].filter(isDefined)
 					}

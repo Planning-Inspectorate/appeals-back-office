@@ -15,7 +15,8 @@ import { APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { isFeatureActive } from '#common/feature-flags.js';
-import { generateHasAccordion } from './has.js';
+import { generateAccordion as generateHasAccordion } from './has.js';
+import { generateAccordion as generateS78Accordion } from './s78.js';
 
 export const pageHeading = 'Case details';
 
@@ -248,7 +249,7 @@ function generateAccordion(appealDetails, mappedData, session) {
 			return generateHasAccordion(appealDetails, mappedData, session);
 		case APPEAL_TYPE.W:
 			if (isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78)) {
-				return generateAccordion(appealDetails, mappedData, session);
+				return generateS78Accordion(appealDetails, mappedData, session);
 			} else {
 				throw new Error('Feature flag inactive for S78');
 			}
