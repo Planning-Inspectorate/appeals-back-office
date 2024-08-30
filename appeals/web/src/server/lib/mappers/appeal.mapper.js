@@ -8,7 +8,7 @@ import { surnameFirstToFullName } from '#lib/person-name-formatter.js';
 import { dateAndTimeFormatter } from './global-mapper-formatter.js';
 import { convert24hTo12hTimeStringFormat } from '#lib/times.js';
 import { linkedAppealStatus } from '#lib/appeals-formatter.js';
-import { generateIssueDecisionUrl } from '#appeals/appeal-details/issue-decision/issue-decision.mapper.js';
+import { generateIssueDecisionUrl } from '#appeals/appeal-details/sections/issue-decision/issue-decision.mapper.js';
 import { mapActionComponent } from './component-permissions.mapper.js';
 import { permissionNames } from '#environment/permissions.js';
 import { formatServiceUserAsHtmlList } from '#lib/service-user-formatter.js';

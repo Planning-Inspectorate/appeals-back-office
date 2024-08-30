@@ -1,5 +1,5 @@
-import { getAppealDetailsFromId } from '#appeals/appeal-details/appeal-details.service.js';
-import { getLpaQuestionnaireFromId } from '#appeals/appeal-details/lpa-questionnaire/lpa-questionnaire.service.js';
+import { getAppealDetailsFromId } from '#appeals/appeal-details/service.js';
+import { getLpaQuestionnaireFromId } from '#appeals/appeal-details/sections/lpa-questionnaire/lpa-questionnaire.service.js';
 import logger from '#lib/logger.js';
 import { lpaQuestionnaireChangePage } from './change-page.mapper.js';
 
