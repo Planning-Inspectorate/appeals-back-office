@@ -59,10 +59,10 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
                         <dd class="govuk-summary-list__actions">
                             <ul class="govuk-summary-list__actions-list">
                                 <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/1/"
-                                    lpaQuestionnaireData-cy="manage-conservation-area-map"> Manage<span class="govuk-visually-hidden"> Conservation area map and guidance</span></a>
+                                    data-cy="manage-conservation-area-map-and-guidance"> Manage<span class="govuk-visually-hidden"> Conservation area map and guidance</span></a>
                                 </li>
                                 <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/1"
-                                    lpaQuestionnaireData-cy="add-conservation-area-map"> Add<span class="govuk-visually-hidden"> Conservation area map and guidance</span></a>
+                                    data-cy="add-conservation-area-map-and-guidance"> Add<span class="govuk-visually-hidden"> Conservation area map and guidance</span></a>
                                 </li>
                             </ul>
                         </dd>
@@ -92,27 +92,27 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
                     <dd class="govuk-summary-list__actions">
                         <ul class="govuk-summary-list__actions-list">
                             <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2/"
-                                lpaQuestionnaireData-cy="manage-notifying-parties"> Manage<span class="govuk-visually-hidden"> Who was notified</span></a>
+                                data-cy="manage-notifying-parties"> Manage<span class="govuk-visually-hidden"> Who was notified</span></a>
                             </li>
                             <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2"
-                                lpaQuestionnaireData-cy="add-notifying-parties"> Add<span class="govuk-visually-hidden"> Who was notified</span></a>
+                                data-cy="add-notifying-parties"> Add<span class="govuk-visually-hidden"> Who was notified</span></a>
                             </li>
                         </ul>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site notice</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" lpaQuestionnaireData-cy="add-site-notice"> Add<span class="govuk-visually-hidden"> Site notice</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-site-notice"> Add<span class="govuk-visually-hidden"> Site notice</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Letter or email notification</dt>
                     <dd                     class="govuk-summary-list__value"></dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" lpaQuestionnaireData-cy="add-letter-or-email-notification"> Add<span class="govuk-visually-hidden"> Letter or email notification</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-letter-or-email-notification"> Add<span class="govuk-visually-hidden"> Letter or email notification</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Press advert notification</dt>
                     <dd                     class="govuk-summary-list__value"></dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" lpaQuestionnaireData-cy="add-press-advert-notification"> Add<span class="govuk-visually-hidden"> Press advert notification</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-press-advert-notification"> Add<span class="govuk-visually-hidden"> Press advert notification</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Notification methods</dt>
@@ -145,10 +145,10 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
                         <dd class="govuk-summary-list__actions">
                             <ul class="govuk-summary-list__actions-list">
                                 <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/6/"
-                                    lpaQuestionnaireData-cy="manage-representations-from-other-parties"> Manage<span class="govuk-visually-hidden"> Representations from other parties documents</span></a>
+                                    data-cy="manage-representations-from-other-parties"> Manage<span class="govuk-visually-hidden"> Representations from other parties documents</span></a>
                                 </li>
                                 <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/6"
-                                    lpaQuestionnaireData-cy="add-representations-from-other-parties"> Add<span class="govuk-visually-hidden"> Representations from other parties documents</span></a>
+                                    data-cy="add-representations-from-other-parties"> Add<span class="govuk-visually-hidden"> Representations from other parties documents</span></a>
                                 </li>
                             </ul>
                         </dd>
@@ -172,10 +172,10 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
                         <dd class="govuk-summary-list__actions">
                             <ul class="govuk-summary-list__actions-list">
                                 <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/7/"
-                                    lpaQuestionnaireData-cy="manage-officers-report"> Manage<span class="govuk-visually-hidden"> Planning officer&#39;s report</span></a>
+                                    data-cy="manage-officers-report"> Manage<span class="govuk-visually-hidden"> Planning officer&#39;s report</span></a>
                                 </li>
                                 <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/7"
-                                    lpaQuestionnaireData-cy="add-officers-report"> Add<span class="govuk-visually-hidden"> Planning officer&#39;s report</span></a>
+                                    data-cy="add-officers-report"> Add<span class="govuk-visually-hidden"> Planning officer&#39;s report</span></a>
                                 </li>
                             </ul>
                         </dd>
@@ -371,10 +371,10 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
                         <dd class="govuk-summary-list__actions">
                             <ul class="govuk-summary-list__actions-list">
                                 <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/1/"
-                                    lpaQuestionnaireData-cy="manage-conservation-area-map"> Manage<span class="govuk-visually-hidden"> Conservation area map and guidance</span></a>
+                                    data-cy="manage-conservation-area-map-and-guidance"> Manage<span class="govuk-visually-hidden"> Conservation area map and guidance</span></a>
                                 </li>
                                 <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/1"
-                                    lpaQuestionnaireData-cy="add-conservation-area-map"> Add<span class="govuk-visually-hidden"> Conservation area map and guidance</span></a>
+                                    data-cy="add-conservation-area-map-and-guidance"> Add<span class="govuk-visually-hidden"> Conservation area map and guidance</span></a>
                                 </li>
                             </ul>
                         </dd>
@@ -404,27 +404,27 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
                     <dd class="govuk-summary-list__actions">
                         <ul class="govuk-summary-list__actions-list">
                             <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2/"
-                                lpaQuestionnaireData-cy="manage-notifying-parties"> Manage<span class="govuk-visually-hidden"> Who was notified</span></a>
+                                data-cy="manage-notifying-parties"> Manage<span class="govuk-visually-hidden"> Who was notified</span></a>
                             </li>
                             <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2"
-                                lpaQuestionnaireData-cy="add-notifying-parties"> Add<span class="govuk-visually-hidden"> Who was notified</span></a>
+                                data-cy="add-notifying-parties"> Add<span class="govuk-visually-hidden"> Who was notified</span></a>
                             </li>
                         </ul>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site notice</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" lpaQuestionnaireData-cy="add-site-notice"> Add<span class="govuk-visually-hidden"> Site notice</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-site-notice"> Add<span class="govuk-visually-hidden"> Site notice</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Letter or email notification</dt>
                     <dd                     class="govuk-summary-list__value"></dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" lpaQuestionnaireData-cy="add-letter-or-email-notification"> Add<span class="govuk-visually-hidden"> Letter or email notification</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-letter-or-email-notification"> Add<span class="govuk-visually-hidden"> Letter or email notification</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Press advert notification</dt>
                     <dd                     class="govuk-summary-list__value"></dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" lpaQuestionnaireData-cy="add-press-advert-notification"> Add<span class="govuk-visually-hidden"> Press advert notification</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-press-advert-notification"> Add<span class="govuk-visually-hidden"> Press advert notification</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Notification methods</dt>
@@ -457,10 +457,10 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
                         <dd class="govuk-summary-list__actions">
                             <ul class="govuk-summary-list__actions-list">
                                 <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/6/"
-                                    lpaQuestionnaireData-cy="manage-representations-from-other-parties"> Manage<span class="govuk-visually-hidden"> Representations from other parties documents</span></a>
+                                    data-cy="manage-representations-from-other-parties"> Manage<span class="govuk-visually-hidden"> Representations from other parties documents</span></a>
                                 </li>
                                 <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/6"
-                                    lpaQuestionnaireData-cy="add-representations-from-other-parties"> Add<span class="govuk-visually-hidden"> Representations from other parties documents</span></a>
+                                    data-cy="add-representations-from-other-parties"> Add<span class="govuk-visually-hidden"> Representations from other parties documents</span></a>
                                 </li>
                             </ul>
                         </dd>
@@ -484,10 +484,10 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
                         <dd class="govuk-summary-list__actions">
                             <ul class="govuk-summary-list__actions-list">
                                 <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/7/"
-                                    lpaQuestionnaireData-cy="manage-officers-report"> Manage<span class="govuk-visually-hidden"> Planning officer&#39;s report</span></a>
+                                    data-cy="manage-officers-report"> Manage<span class="govuk-visually-hidden"> Planning officer&#39;s report</span></a>
                                 </li>
                                 <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/7"
-                                    lpaQuestionnaireData-cy="add-officers-report"> Add<span class="govuk-visually-hidden"> Planning officer&#39;s report</span></a>
+                                    data-cy="add-officers-report"> Add<span class="govuk-visually-hidden"> Planning officer&#39;s report</span></a>
                                 </li>
                             </ul>
                         </dd>
@@ -718,10 +718,10 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                         <dd class="govuk-summary-list__actions">
                             <ul class="govuk-summary-list__actions-list">
                                 <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/1/"
-                                    lpaQuestionnaireData-cy="manage-conservation-area-map"> Manage<span class="govuk-visually-hidden"> Conservation area map and guidance</span></a>
+                                    data-cy="manage-conservation-area-map-and-guidance"> Manage<span class="govuk-visually-hidden"> Conservation area map and guidance</span></a>
                                 </li>
                                 <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/1"
-                                    lpaQuestionnaireData-cy="add-conservation-area-map"> Add<span class="govuk-visually-hidden"> Conservation area map and guidance</span></a>
+                                    data-cy="add-conservation-area-map-and-guidance"> Add<span class="govuk-visually-hidden"> Conservation area map and guidance</span></a>
                                 </li>
                             </ul>
                         </dd>
@@ -751,27 +751,27 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                     <dd class="govuk-summary-list__actions">
                         <ul class="govuk-summary-list__actions-list">
                             <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2/"
-                                lpaQuestionnaireData-cy="manage-notifying-parties"> Manage<span class="govuk-visually-hidden"> Who was notified</span></a>
+                                data-cy="manage-notifying-parties"> Manage<span class="govuk-visually-hidden"> Who was notified</span></a>
                             </li>
                             <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2"
-                                lpaQuestionnaireData-cy="add-notifying-parties"> Add<span class="govuk-visually-hidden"> Who was notified</span></a>
+                                data-cy="add-notifying-parties"> Add<span class="govuk-visually-hidden"> Who was notified</span></a>
                             </li>
                         </ul>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site notice</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" lpaQuestionnaireData-cy="add-site-notice"> Add<span class="govuk-visually-hidden"> Site notice</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-site-notice"> Add<span class="govuk-visually-hidden"> Site notice</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Letter or email notification</dt>
                     <dd                     class="govuk-summary-list__value"></dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" lpaQuestionnaireData-cy="add-letter-or-email-notification"> Add<span class="govuk-visually-hidden"> Letter or email notification</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-letter-or-email-notification"> Add<span class="govuk-visually-hidden"> Letter or email notification</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Press advert notification</dt>
                     <dd                     class="govuk-summary-list__value"></dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" lpaQuestionnaireData-cy="add-press-advert-notification"> Add<span class="govuk-visually-hidden"> Press advert notification</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-press-advert-notification"> Add<span class="govuk-visually-hidden"> Press advert notification</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Notification methods</dt>
@@ -804,10 +804,10 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                         <dd class="govuk-summary-list__actions">
                             <ul class="govuk-summary-list__actions-list">
                                 <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/6/"
-                                    lpaQuestionnaireData-cy="manage-representations-from-other-parties"> Manage<span class="govuk-visually-hidden"> Representations from other parties documents</span></a>
+                                    data-cy="manage-representations-from-other-parties"> Manage<span class="govuk-visually-hidden"> Representations from other parties documents</span></a>
                                 </li>
                                 <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/6"
-                                    lpaQuestionnaireData-cy="add-representations-from-other-parties"> Add<span class="govuk-visually-hidden"> Representations from other parties documents</span></a>
+                                    data-cy="add-representations-from-other-parties"> Add<span class="govuk-visually-hidden"> Representations from other parties documents</span></a>
                                 </li>
                             </ul>
                         </dd>
@@ -831,10 +831,10 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                         <dd class="govuk-summary-list__actions">
                             <ul class="govuk-summary-list__actions-list">
                                 <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/7/"
-                                    lpaQuestionnaireData-cy="manage-officers-report"> Manage<span class="govuk-visually-hidden"> Planning officer&#39;s report</span></a>
+                                    data-cy="manage-officers-report"> Manage<span class="govuk-visually-hidden"> Planning officer&#39;s report</span></a>
                                 </li>
                                 <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/7"
-                                    lpaQuestionnaireData-cy="add-officers-report"> Add<span class="govuk-visually-hidden"> Planning officer&#39;s report</span></a>
+                                    data-cy="add-officers-report"> Add<span class="govuk-visually-hidden"> Planning officer&#39;s report</span></a>
                                 </li>
                             </ul>
                         </dd>
@@ -1024,10 +1024,10 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                         <dd class="govuk-summary-list__actions">
                             <ul class="govuk-summary-list__actions-list">
                                 <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/1/"
-                                    lpaQuestionnaireData-cy="manage-conservation-area-map"> Manage<span class="govuk-visually-hidden"> Conservation area map and guidance</span></a>
+                                    data-cy="manage-conservation-area-map-and-guidance"> Manage<span class="govuk-visually-hidden"> Conservation area map and guidance</span></a>
                                 </li>
                                 <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/1"
-                                    lpaQuestionnaireData-cy="add-conservation-area-map"> Add<span class="govuk-visually-hidden"> Conservation area map and guidance</span></a>
+                                    data-cy="add-conservation-area-map-and-guidance"> Add<span class="govuk-visually-hidden"> Conservation area map and guidance</span></a>
                                 </li>
                             </ul>
                         </dd>
@@ -1057,27 +1057,27 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                     <dd class="govuk-summary-list__actions">
                         <ul class="govuk-summary-list__actions-list">
                             <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2/"
-                                lpaQuestionnaireData-cy="manage-notifying-parties"> Manage<span class="govuk-visually-hidden"> Who was notified</span></a>
+                                data-cy="manage-notifying-parties"> Manage<span class="govuk-visually-hidden"> Who was notified</span></a>
                             </li>
                             <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2"
-                                lpaQuestionnaireData-cy="add-notifying-parties"> Add<span class="govuk-visually-hidden"> Who was notified</span></a>
+                                data-cy="add-notifying-parties"> Add<span class="govuk-visually-hidden"> Who was notified</span></a>
                             </li>
                         </ul>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site notice</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" lpaQuestionnaireData-cy="add-site-notice"> Add<span class="govuk-visually-hidden"> Site notice</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-site-notice"> Add<span class="govuk-visually-hidden"> Site notice</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Letter or email notification</dt>
                     <dd                     class="govuk-summary-list__value"></dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" lpaQuestionnaireData-cy="add-letter-or-email-notification"> Add<span class="govuk-visually-hidden"> Letter or email notification</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-letter-or-email-notification"> Add<span class="govuk-visually-hidden"> Letter or email notification</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Press advert notification</dt>
                     <dd                     class="govuk-summary-list__value"></dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" lpaQuestionnaireData-cy="add-press-advert-notification"> Add<span class="govuk-visually-hidden"> Press advert notification</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-press-advert-notification"> Add<span class="govuk-visually-hidden"> Press advert notification</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Notification methods</dt>
@@ -1110,10 +1110,10 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                         <dd class="govuk-summary-list__actions">
                             <ul class="govuk-summary-list__actions-list">
                                 <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/6/"
-                                    lpaQuestionnaireData-cy="manage-representations-from-other-parties"> Manage<span class="govuk-visually-hidden"> Representations from other parties documents</span></a>
+                                    data-cy="manage-representations-from-other-parties"> Manage<span class="govuk-visually-hidden"> Representations from other parties documents</span></a>
                                 </li>
                                 <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/6"
-                                    lpaQuestionnaireData-cy="add-representations-from-other-parties"> Add<span class="govuk-visually-hidden"> Representations from other parties documents</span></a>
+                                    data-cy="add-representations-from-other-parties"> Add<span class="govuk-visually-hidden"> Representations from other parties documents</span></a>
                                 </li>
                             </ul>
                         </dd>
@@ -1137,10 +1137,10 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                         <dd class="govuk-summary-list__actions">
                             <ul class="govuk-summary-list__actions-list">
                                 <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/7/"
-                                    lpaQuestionnaireData-cy="manage-officers-report"> Manage<span class="govuk-visually-hidden"> Planning officer&#39;s report</span></a>
+                                    data-cy="manage-officers-report"> Manage<span class="govuk-visually-hidden"> Planning officer&#39;s report</span></a>
                                 </li>
                                 <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/7"
-                                    lpaQuestionnaireData-cy="add-officers-report"> Add<span class="govuk-visually-hidden"> Planning officer&#39;s report</span></a>
+                                    data-cy="add-officers-report"> Add<span class="govuk-visually-hidden"> Planning officer&#39;s report</span></a>
                                 </li>
                             </ul>
                         </dd>
@@ -3258,10 +3258,10 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                         <dd class="govuk-summary-list__actions">
                             <ul class="govuk-summary-list__actions-list">
                                 <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/1/"
-                                    lpaQuestionnaireData-cy="manage-conservation-area-map"> Manage<span class="govuk-visually-hidden"> Conservation area map and guidance</span></a>
+                                    data-cy="manage-conservation-area-map-and-guidance"> Manage<span class="govuk-visually-hidden"> Conservation area map and guidance</span></a>
                                 </li>
                                 <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/1"
-                                    lpaQuestionnaireData-cy="add-conservation-area-map"> Add<span class="govuk-visually-hidden"> Conservation area map and guidance</span></a>
+                                    data-cy="add-conservation-area-map-and-guidance"> Add<span class="govuk-visually-hidden"> Conservation area map and guidance</span></a>
                                 </li>
                             </ul>
                         </dd>
@@ -3291,27 +3291,27 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                     <dd class="govuk-summary-list__actions">
                         <ul class="govuk-summary-list__actions-list">
                             <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2/"
-                                lpaQuestionnaireData-cy="manage-notifying-parties"> Manage<span class="govuk-visually-hidden"> Who was notified</span></a>
+                                data-cy="manage-notifying-parties"> Manage<span class="govuk-visually-hidden"> Who was notified</span></a>
                             </li>
                             <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2"
-                                lpaQuestionnaireData-cy="add-notifying-parties"> Add<span class="govuk-visually-hidden"> Who was notified</span></a>
+                                data-cy="add-notifying-parties"> Add<span class="govuk-visually-hidden"> Who was notified</span></a>
                             </li>
                         </ul>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site notice</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" lpaQuestionnaireData-cy="add-site-notice"> Add<span class="govuk-visually-hidden"> Site notice</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-site-notice"> Add<span class="govuk-visually-hidden"> Site notice</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Letter or email notification</dt>
                     <dd                     class="govuk-summary-list__value"></dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" lpaQuestionnaireData-cy="add-letter-or-email-notification"> Add<span class="govuk-visually-hidden"> Letter or email notification</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-letter-or-email-notification"> Add<span class="govuk-visually-hidden"> Letter or email notification</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Press advert notification</dt>
                     <dd                     class="govuk-summary-list__value"></dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" lpaQuestionnaireData-cy="add-press-advert-notification"> Add<span class="govuk-visually-hidden"> Press advert notification</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-press-advert-notification"> Add<span class="govuk-visually-hidden"> Press advert notification</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Notification methods</dt>
@@ -3344,10 +3344,10 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                         <dd class="govuk-summary-list__actions">
                             <ul class="govuk-summary-list__actions-list">
                                 <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/6/"
-                                    lpaQuestionnaireData-cy="manage-representations-from-other-parties"> Manage<span class="govuk-visually-hidden"> Representations from other parties documents</span></a>
+                                    data-cy="manage-representations-from-other-parties"> Manage<span class="govuk-visually-hidden"> Representations from other parties documents</span></a>
                                 </li>
                                 <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/6"
-                                    lpaQuestionnaireData-cy="add-representations-from-other-parties"> Add<span class="govuk-visually-hidden"> Representations from other parties documents</span></a>
+                                    data-cy="add-representations-from-other-parties"> Add<span class="govuk-visually-hidden"> Representations from other parties documents</span></a>
                                 </li>
                             </ul>
                         </dd>
@@ -3371,10 +3371,10 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                         <dd class="govuk-summary-list__actions">
                             <ul class="govuk-summary-list__actions-list">
                                 <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/7/"
-                                    lpaQuestionnaireData-cy="manage-officers-report"> Manage<span class="govuk-visually-hidden"> Planning officer&#39;s report</span></a>
+                                    data-cy="manage-officers-report"> Manage<span class="govuk-visually-hidden"> Planning officer&#39;s report</span></a>
                                 </li>
                                 <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/7"
-                                    lpaQuestionnaireData-cy="add-officers-report"> Add<span class="govuk-visually-hidden"> Planning officer&#39;s report</span></a>
+                                    data-cy="add-officers-report"> Add<span class="govuk-visually-hidden"> Planning officer&#39;s report</span></a>
                                 </li>
                             </ul>
                         </dd>

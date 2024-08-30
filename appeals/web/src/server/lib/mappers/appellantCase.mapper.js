@@ -331,48 +331,19 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 	mappedData.changedDevelopmentDescriptionDocument = {
 		id: 'changed-development-description.document',
 		display: {
-			summaryListItem: {
-				key: {
-					text: 'Agreement to change description evidence'
-				},
-				value: displayPageFormatter.formatDocumentValues(
+			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
+				'Agreement to change description evidence',
+				appellantCaseData.appealId,
+				appellantCaseData.documents.changedDescription,
+				permissionNames.updateCase,
+				session,
+				mapDocumentManageUrl(
 					appellantCaseData.appealId,
-					isFolderInfo(appellantCaseData.documents.changedDescription)
-						? appellantCaseData.documents.changedDescription.documents
-						: []
+					appellantCaseData.documents.changedDescription?.folderId
 				),
-				actions: {
-					items: [
-						...((
-							(isFolderInfo(appellantCaseData.documents.changedDescription) &&
-								appellantCaseData.documents.changedDescription.documents) ||
-							[]
-						).length
-							? [
-									mapActionComponent(permissionNames.updateCase, session, {
-										text: 'Manage',
-										visuallyHiddenText: 'Agreement to change description evidence',
-										href: mapDocumentManageUrl(
-											appellantCaseData.appealId,
-											isFolderInfo(appellantCaseData.documents.changedDescription)
-												? appellantCaseData.documents.changedDescription.folderId
-												: undefined
-										)
-									})
-							  ]
-							: []),
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Add',
-							visuallyHiddenText: 'Agreement to change description evidence',
-							href: displayPageFormatter.formatDocumentActionLink(
-								appellantCaseData.appealId,
-								appellantCaseData.documents.changedDescription,
-								documentUploadUrlTemplate
-							)
-						})
-					]
-				}
-			}
+				documentUploadUrlTemplate,
+				'agreement-to-change-description-evidence'
+			)
 		}
 	};
 
@@ -582,49 +553,19 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 	mappedData.applicationForm = {
 		id: 'application-form',
 		display: {
-			summaryListItem: {
-				key: {
-					text: 'Application form'
-				},
-				value: displayPageFormatter.formatDocumentValues(
+			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
+				'Application form',
+				appellantCaseData.appealId,
+				appellantCaseData.documents.originalApplicationForm,
+				permissionNames.updateCase,
+				session,
+				mapDocumentManageUrl(
 					appellantCaseData.appealId,
-					isFolderInfo(appellantCaseData.documents.originalApplicationForm)
-						? appellantCaseData.documents.originalApplicationForm?.documents || []
-						: []
+					appellantCaseData.documents.originalApplicationForm?.folderId
 				),
-				actions: {
-					items: [
-						...((
-							(isFolderInfo(appellantCaseData.documents.originalApplicationForm) &&
-								appellantCaseData.documents.originalApplicationForm.documents) ||
-							[]
-						).length
-							? [
-									mapActionComponent(permissionNames.updateCase, session, {
-										text: 'Manage',
-										visuallyHiddenText: 'Application form',
-										href: mapDocumentManageUrl(
-											appellantCaseData.appealId,
-											isFolderInfo(appellantCaseData.documents.originalApplicationForm)
-												? appellantCaseData.documents.originalApplicationForm.folderId
-												: undefined
-										)
-									})
-							  ]
-							: []),
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Add',
-							visuallyHiddenText: 'Application form',
-							href: displayPageFormatter.formatDocumentActionLink(
-								appellantCaseData.appealId,
-								appellantCaseData.documents.originalApplicationForm,
-								documentUploadUrlTemplate
-							),
-							attributes: { 'data-cy': 'add-application-form' }
-						})
-					]
-				}
-			}
+				documentUploadUrlTemplate,
+				'application-form'
+			)
 		}
 	};
 
@@ -632,49 +573,19 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 	mappedData.designAccessStatement = {
 		id: 'design-access-statement',
 		display: {
-			summaryListItem: {
-				key: {
-					text: 'Design and access statement'
-				},
-				value: displayPageFormatter.formatDocumentValues(
+			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
+				'Design and access statement',
+				appellantCaseData.appealId,
+				appellantCaseData.documents.designAccessStatement,
+				permissionNames.updateCase,
+				session,
+				mapDocumentManageUrl(
 					appellantCaseData.appealId,
-					isFolderInfo(appellantCaseData.documents.designAccessStatement)
-						? appellantCaseData.documents.designAccessStatement?.documents || []
-						: []
+					appellantCaseData.documents.designAccessStatement?.folderId
 				),
-				actions: {
-					items: [
-						...((
-							(isFolderInfo(appellantCaseData.documents.designAccessStatement) &&
-								appellantCaseData.documents.designAccessStatement.documents) ||
-							[]
-						).length
-							? [
-									mapActionComponent(permissionNames.updateCase, session, {
-										text: 'Manage',
-										visuallyHiddenText: 'Design and access statement',
-										href: mapDocumentManageUrl(
-											appellantCaseData.appealId,
-											isFolderInfo(appellantCaseData.documents.designAccessStatement)
-												? appellantCaseData.documents.designAccessStatement.folderId
-												: undefined
-										)
-									})
-							  ]
-							: []),
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Add',
-							visuallyHiddenText: 'Design and access statement',
-							href: displayPageFormatter.formatDocumentActionLink(
-								appellantCaseData.appealId,
-								appellantCaseData.documents.designAccessStatement,
-								documentUploadUrlTemplate
-							),
-							attributes: { 'data-cy': 'add-design-access-statement' }
-						})
-					]
-				}
-			}
+				documentUploadUrlTemplate,
+				'design-access-statement'
+			)
 		}
 	};
 
@@ -682,49 +593,19 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 	mappedData.newPlansDrawings = {
 		id: 'new-plans-drawings',
 		display: {
-			summaryListItem: {
-				key: {
-					text: 'New plans or drawings'
-				},
-				value: displayPageFormatter.formatDocumentValues(
+			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
+				'New plans or drawings',
+				appellantCaseData.appealId,
+				appellantCaseData.documents.newPlansDrawings,
+				permissionNames.updateCase,
+				session,
+				mapDocumentManageUrl(
 					appellantCaseData.appealId,
-					isFolderInfo(appellantCaseData.documents.newPlansDrawings)
-						? appellantCaseData.documents.newPlansDrawings?.documents || []
-						: []
+					appellantCaseData.documents.newPlansDrawings?.folderId
 				),
-				actions: {
-					items: [
-						...((
-							(isFolderInfo(appellantCaseData.documents.newPlansDrawings) &&
-								appellantCaseData.documents.newPlansDrawings.documents) ||
-							[]
-						).length
-							? [
-									mapActionComponent(permissionNames.updateCase, session, {
-										text: 'Manage',
-										visuallyHiddenText: 'New plans or drawings',
-										href: mapDocumentManageUrl(
-											appellantCaseData.appealId,
-											isFolderInfo(appellantCaseData.documents.newPlansDrawings)
-												? appellantCaseData.documents.newPlansDrawings.folderId
-												: undefined
-										)
-									})
-							  ]
-							: []),
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Add',
-							visuallyHiddenText: 'New plans or drawings',
-							href: displayPageFormatter.formatDocumentActionLink(
-								appellantCaseData.appealId,
-								appellantCaseData.documents.newPlansDrawings,
-								documentUploadUrlTemplate
-							),
-							attributes: { 'data-cy': 'add-new-plans-drawings' }
-						})
-					]
-				}
-			}
+				documentUploadUrlTemplate,
+				'new-plans-drawings'
+			)
 		}
 	};
 
@@ -732,49 +613,19 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 	mappedData.supportingDocuments = {
 		id: 'supporting-documents',
 		display: {
-			summaryListItem: {
-				key: {
-					text: 'Supporting documents submitted with statement'
-				},
-				value: displayPageFormatter.formatDocumentValues(
+			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
+				'Supporting documents submitted with statement',
+				appellantCaseData.appealId,
+				appellantCaseData.documents.plansDrawings,
+				permissionNames.updateCase,
+				session,
+				mapDocumentManageUrl(
 					appellantCaseData.appealId,
-					isFolderInfo(appellantCaseData.documents.plansDrawings)
-						? appellantCaseData.documents.plansDrawings?.documents || []
-						: []
+					appellantCaseData.documents.plansDrawings?.folderId
 				),
-				actions: {
-					items: [
-						...((
-							(isFolderInfo(appellantCaseData.documents.plansDrawings) &&
-								appellantCaseData.documents.plansDrawings.documents) ||
-							[]
-						).length
-							? [
-									mapActionComponent(permissionNames.updateCase, session, {
-										text: 'Manage',
-										visuallyHiddenText: 'Supporting documents submitted with statement',
-										href: mapDocumentManageUrl(
-											appellantCaseData.appealId,
-											isFolderInfo(appellantCaseData.documents.plansDrawings)
-												? appellantCaseData.documents.plansDrawings.folderId
-												: undefined
-										)
-									})
-							  ]
-							: []),
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Add',
-							visuallyHiddenText: 'Supporting documents submitted with statement',
-							href: displayPageFormatter.formatDocumentActionLink(
-								appellantCaseData.appealId,
-								appellantCaseData.documents.plansDrawings,
-								documentUploadUrlTemplate
-							),
-							attributes: { 'data-cy': 'add-supporting-documents' }
-						})
-					]
-				}
-			}
+				documentUploadUrlTemplate,
+				'supporting-documents'
+			)
 		}
 	};
 
@@ -782,49 +633,19 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 	mappedData.planningObligation = {
 		id: 'planning-obligation',
 		display: {
-			summaryListItem: {
-				key: {
-					text: 'Planning obligation'
-				},
-				value: displayPageFormatter.formatDocumentValues(
+			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
+				'Planning obligation',
+				appellantCaseData.appealId,
+				appellantCaseData.documents.planningObligation,
+				permissionNames.updateCase,
+				session,
+				mapDocumentManageUrl(
 					appellantCaseData.appealId,
-					isFolderInfo(appellantCaseData.documents.planningObligation)
-						? appellantCaseData.documents.planningObligation?.documents || []
-						: []
+					appellantCaseData.documents.planningObligation?.folderId
 				),
-				actions: {
-					items: [
-						...((
-							(isFolderInfo(appellantCaseData.documents.planningObligation) &&
-								appellantCaseData.documents.planningObligation.documents) ||
-							[]
-						).length
-							? [
-									mapActionComponent(permissionNames.updateCase, session, {
-										text: 'Manage',
-										visuallyHiddenText: 'Planning obligation',
-										href: mapDocumentManageUrl(
-											appellantCaseData.appealId,
-											isFolderInfo(appellantCaseData.documents.planningObligation)
-												? appellantCaseData.documents.planningObligation.folderId
-												: undefined
-										)
-									})
-							  ]
-							: []),
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Add',
-							visuallyHiddenText: 'Planning obligation',
-							href: displayPageFormatter.formatDocumentActionLink(
-								appellantCaseData.appealId,
-								appellantCaseData.documents.planningObligation,
-								documentUploadUrlTemplate
-							),
-							attributes: { 'data-cy': 'add-planning-obligation' }
-						})
-					]
-				}
-			}
+				documentUploadUrlTemplate,
+				'planning-obligation'
+			)
 		}
 	};
 
@@ -857,49 +678,19 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 	mappedData.ownershipCertificate = {
 		id: 'ownership-certificate',
 		display: {
-			summaryListItem: {
-				key: {
-					text: 'Ownership certificate or land declaration'
-				},
-				value: displayPageFormatter.formatDocumentValues(
+			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
+				'Ownership certificate or land declaration',
+				appellantCaseData.appealId,
+				appellantCaseData.documents.ownershipCertificate,
+				permissionNames.updateCase,
+				session,
+				mapDocumentManageUrl(
 					appellantCaseData.appealId,
-					isFolderInfo(appellantCaseData.documents.ownershipCertificate)
-						? appellantCaseData.documents.ownershipCertificate?.documents || []
-						: []
+					appellantCaseData.documents.ownershipCertificate?.folderId
 				),
-				actions: {
-					items: [
-						...((
-							(isFolderInfo(appellantCaseData.documents.ownershipCertificate) &&
-								appellantCaseData.documents.ownershipCertificate.documents) ||
-							[]
-						).length
-							? [
-									mapActionComponent(permissionNames.updateCase, session, {
-										text: 'Manage',
-										visuallyHiddenText: 'Ownership certificate or land declaration',
-										href: mapDocumentManageUrl(
-											appellantCaseData.appealId,
-											isFolderInfo(appellantCaseData.documents.ownershipCertificate)
-												? appellantCaseData.documents.ownershipCertificate.folderId
-												: undefined
-										)
-									})
-							  ]
-							: []),
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Add',
-							visuallyHiddenText: 'Ownership certificate or land declaration',
-							href: displayPageFormatter.formatDocumentActionLink(
-								appellantCaseData.appealId,
-								appellantCaseData.documents.ownershipCertificate,
-								documentUploadUrlTemplate
-							),
-							attributes: { 'data-cy': 'add-ownership-certificate' }
-						})
-					]
-				}
-			}
+				documentUploadUrlTemplate,
+				'ownership-certificate'
+			)
 		}
 	};
 
@@ -907,49 +698,19 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 	mappedData.decisionLetter = {
 		id: 'decision-letter',
 		display: {
-			summaryListItem: {
-				key: {
-					text: 'Decision letter'
-				},
-				value: displayPageFormatter.formatDocumentValues(
+			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
+				'Decision letter',
+				appellantCaseData.appealId,
+				appellantCaseData.documents.applicationDecisionLetter,
+				permissionNames.updateCase,
+				session,
+				mapDocumentManageUrl(
 					appellantCaseData.appealId,
-					isFolderInfo(appellantCaseData.documents.applicationDecisionLetter)
-						? appellantCaseData.documents.applicationDecisionLetter.documents || []
-						: []
+					appellantCaseData.documents.applicationDecisionLetter?.folderId
 				),
-				actions: {
-					items: [
-						...((isFolderInfo(appellantCaseData.documents.applicationDecisionLetter)
-							? appellantCaseData.documents.applicationDecisionLetter.documents || []
-							: []
-						).length
-							? [
-									mapActionComponent(permissionNames.updateCase, session, {
-										text: 'Manage',
-										visuallyHiddenText: 'Decision letter',
-										href: mapDocumentManageUrl(
-											appellantCaseData.appealId,
-											isFolderInfo(appellantCaseData.documents.applicationDecisionLetter)
-												? appellantCaseData.documents.applicationDecisionLetter.folderId
-												: undefined
-										),
-										attributes: { 'data-cy': 'manage-decision-letter' }
-									})
-							  ]
-							: []),
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Add',
-							visuallyHiddenText: 'Decision letter',
-							href: displayPageFormatter.formatDocumentActionLink(
-								appellantCaseData.appealId,
-								appellantCaseData.documents.applicationDecisionLetter,
-								documentUploadUrlTemplate
-							),
-							attributes: { 'data-cy': 'add-decision-letter' }
-						})
-					]
-				}
-			}
+				documentUploadUrlTemplate,
+				'decision-letter'
+			)
 		}
 	};
 
@@ -957,49 +718,19 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 	mappedData.appealStatement = {
 		id: 'appeal-statement',
 		display: {
-			summaryListItem: {
-				key: {
-					text: 'Appeal statement'
-				},
-				value: displayPageFormatter.formatDocumentValues(
+			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
+				'Appeal statement',
+				appellantCaseData.appealId,
+				appellantCaseData.documents.appellantStatement,
+				permissionNames.updateCase,
+				session,
+				mapDocumentManageUrl(
 					appellantCaseData.appealId,
-					isFolderInfo(appellantCaseData.documents.appellantStatement)
-						? appellantCaseData.documents.appellantStatement.documents || []
-						: []
+					appellantCaseData.documents.appellantStatement?.folderId
 				),
-				actions: {
-					items: [
-						...((isFolderInfo(appellantCaseData.documents.appellantStatement)
-							? appellantCaseData.documents.appellantStatement.documents || []
-							: []
-						).length
-							? [
-									mapActionComponent(permissionNames.updateCase, session, {
-										text: 'Manage',
-										visuallyHiddenText: 'Appeal statement',
-										href: mapDocumentManageUrl(
-											appellantCaseData.appealId,
-											isFolderInfo(appellantCaseData.documents.appellantStatement)
-												? appellantCaseData.documents.appellantStatement.folderId
-												: undefined
-										),
-										attributes: { 'data-cy': 'manage-appeal-statement' }
-									})
-							  ]
-							: []),
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Add',
-							visuallyHiddenText: 'Appeal statement',
-							href: displayPageFormatter.formatDocumentActionLink(
-								appellantCaseData.appealId,
-								appellantCaseData.documents.appellantStatement,
-								documentUploadUrlTemplate
-							),
-							attributes: { 'data-cy': 'add-appeal-statement' }
-						})
-					]
-				}
-			}
+				documentUploadUrlTemplate,
+				'appeal-statement'
+			)
 		}
 	};
 
@@ -1300,48 +1031,19 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 	mappedData.costsDocument = {
 		id: 'costs-appellant',
 		display: {
-			summaryListItem: {
-				key: {
-					text: 'Costs document'
-				},
-				value: displayPageFormatter.formatDocumentValues(
+			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
+				'Costs document',
+				appellantCaseData.appealId,
+				appealDetails.costs.appellantApplicationFolder,
+				permissionNames.updateCase,
+				session,
+				mapDocumentManageUrl(
 					appellantCaseData.appealId,
-					isFolderInfo(appealDetails.costs.appellantApplicationFolder)
-						? appealDetails.costs.appellantApplicationFolder.documents
-						: []
+					appealDetails.costs.appellantApplicationFolder?.folderId
 				),
-				actions: {
-					items: [
-						...((
-							(isFolderInfo(appealDetails.costs.appellantApplicationFolder) &&
-								appealDetails.costs.appellantApplicationFolder.documents) ||
-							[]
-						).length
-							? [
-									mapActionComponent(permissionNames.updateCase, session, {
-										text: 'Manage',
-										visuallyHiddenText: 'Costs document',
-										href: mapDocumentManageUrl(
-											appellantCaseData.appealId,
-											isFolderInfo(appealDetails.costs.appellantApplicationFolder)
-												? appealDetails.costs.appellantApplicationFolder.folderId
-												: undefined
-										)
-									})
-							  ]
-							: []),
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Add',
-							visuallyHiddenText: 'Application form',
-							href: displayPageFormatter.formatDocumentActionLink(
-								appellantCaseData.appealId,
-								appealDetails.costs.appellantApplicationFolder,
-								documentUploadUrlTemplate
-							)
-						})
-					]
-				}
-			}
+				documentUploadUrlTemplate,
+				'costs-document'
+			)
 		}
 	};
 
