@@ -789,7 +789,7 @@ export function manageFolderPage(
 					},
 					rows: (folder?.documents || []).map((document) => [
 						mapFolderDocumentInformationHtmlProperty(folder, document),
-						document?.latestDocumentVersion?.isLateEntry
+						folderIsAdditionalDocuments(folder.path) && document?.latestDocumentVersion?.isLateEntry
 							? {
 									html: '',
 									pageComponents: [
@@ -1079,43 +1079,44 @@ export async function manageDocumentPage(
 				},
 				{
 					key: { text: 'Date received' },
-					value: latestVersion?.isLateEntry
-						? {
-								html: '',
-								pageComponents: [
-									{
-										type: 'html',
-										parameters: {
-											html: '',
-											pageComponents: [
-												{
-													wrapperHtml: {
-														opening: '<div class="govuk-!-margin-bottom-2">',
-														closing: '</div>'
+					value:
+						folderIsAdditionalDocuments(folder.path) && latestVersion?.isLateEntry
+							? {
+									html: '',
+									pageComponents: [
+										{
+											type: 'html',
+											parameters: {
+												html: '',
+												pageComponents: [
+													{
+														wrapperHtml: {
+															opening: '<div class="govuk-!-margin-bottom-2">',
+															closing: '</div>'
+														},
+														type: 'html',
+														parameters: {
+															html: dateToDisplayDate(latestVersion?.dateReceived)
+														}
 													},
-													type: 'html',
-													parameters: {
-														html: dateToDisplayDate(latestVersion?.dateReceived)
+													{
+														wrapperHtml: {
+															opening: '<div class="govuk-!-margin-bottom-1">',
+															closing: '</div>'
+														},
+														type: 'status-tag',
+														parameters: {
+															status: 'late_entry'
+														}
 													}
-												},
-												{
-													wrapperHtml: {
-														opening: '<div class="govuk-!-margin-bottom-1">',
-														closing: '</div>'
-													},
-													type: 'status-tag',
-													parameters: {
-														status: 'late_entry'
-													}
-												}
-											]
+												]
+											}
 										}
-									}
-								]
-						  }
-						: {
-								text: dateToDisplayDate(latestVersion?.dateReceived)
-						  },
+									]
+							  }
+							: {
+									text: dateToDisplayDate(latestVersion?.dateReceived)
+							  },
 					actions: {
 						items: [
 							{
