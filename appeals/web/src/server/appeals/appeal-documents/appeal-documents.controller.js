@@ -766,20 +766,6 @@ export const postDeleteDocument = async (
 			Number.parseInt(appealId, 10)
 		);
 		return response.redirect(returnUrl);
-	} else if (body['delete-file-answer'] === 'yes-and-upload-another-document') {
-		const fileVersionsInfo = await getFileVersionsInfo(request.apiClient, appealId, documentId);
-
-		if (fileVersionsInfo?.allVersions) {
-			const deletingOnlyVersion =
-				fileVersionsInfo?.allVersions?.filter((version) => version.isDeleted === false).length < 2;
-
-			if (deletingOnlyVersion) {
-				await deleteDocument(apiClient, appealId, documentId, versionId);
-				return response.redirect(uploadNewDocumentUrlProcessed);
-			} else {
-				return response.status(500).render('app/500.njk');
-			}
-		}
 	}
 
 	return response.status(500).render('app/500.njk');

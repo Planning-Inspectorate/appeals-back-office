@@ -3009,9 +3009,6 @@ describe('LPA Questionnaire review', () => {
 				'name="delete-file-answer" type="radio" value="yes">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'name="delete-file-answer" type="radio" value="yes-and-upload-another-document">'
-			);
-			expect(unprettifiedElement.innerHTML).toContain(
 				'name="delete-file-answer" type="radio" value="no">'
 			);
 		});
@@ -3040,9 +3037,6 @@ describe('LPA Questionnaire review', () => {
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="delete-file-answer" type="radio" value="no">'
-			);
-			expect(unprettifiedElement.innerHTML).not.toContain(
-				'name="delete-file-answer" type="radio" value="yes-and-upload-another-document">'
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain(
 				'<strong class="govuk-warning-text__text"><span class="govuk-warning-text__assistive">Warning</span> Removing the only version of a document will delete the document from the case</strong>'

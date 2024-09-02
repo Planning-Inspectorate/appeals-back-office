@@ -2957,13 +2957,8 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="delete-file-answer-2" name="delete-file-answer"
-                            type="radio" value="yes-and-upload-another-document">
-                            <label class="govuk-label govuk-radios__label" for="delete-file-answer-2">Yes, and upload another document</label>
-                        </div>
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="delete-file-answer-3" name="delete-file-answer"
                             type="radio" value="no">
-                            <label class="govuk-label govuk-radios__label" for="delete-file-answer-3">No</label>
+                            <label class="govuk-label govuk-radios__label" for="delete-file-answer-2">No</label>
                         </div>
                     </div>
                 </div>
