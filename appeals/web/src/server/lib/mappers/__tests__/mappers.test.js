@@ -4,7 +4,7 @@ import {
 	lpaQuestionnaireDataIncompleteOutcome
 } from '#testing/app/fixtures/referencedata.js';
 import { createAccountInfo } from '#testing/app/app.js';
-import { initialiseAndMapAppealData } from '../appeal.mapper.js';
+import { initialiseAndMapAppealData } from '../appeal/appeal.mapper.js';
 import { initialiseAndMapLPAQData } from '../lpaQuestionnaire.mapper.js';
 import { areIdsDefinedAndUnique } from '#testing/lib/testMappers.js';
 import {

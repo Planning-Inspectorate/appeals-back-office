@@ -1,4 +1,4 @@
-import { initialiseAndMapAppealData } from '#lib/mappers/appeal.mapper.js';
+import { initialiseAndMapAppealData } from '#lib/mappers/appeal/appeal.mapper.js';
 import { removeSummaryListActions } from '#lib/mappers/mapper-utilities.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
