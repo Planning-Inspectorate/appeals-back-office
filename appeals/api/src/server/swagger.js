@@ -374,6 +374,10 @@ export const spec = {
 				newPlansDrawings: {
 					folderId: 4574,
 					documents: []
+				},
+				otherNewDocuments: {
+					folderId: 4575,
+					documents: []
 				}
 			},
 			hasAdvertisedAppeal: true,

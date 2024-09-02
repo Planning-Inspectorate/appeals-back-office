@@ -134,6 +134,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'Ownership certificate or land declaration</dt>'
 			);
+			expect(unprettifiedElement.innerHTML).toContain('New supporting documents</dt>');
 		});
 
 		const text300Characters =

@@ -51,7 +51,8 @@ export const baseExpectedAppellantCaseResponse = (appeal) => {
 			originalApplicationForm: {},
 			ownershipCertificate: {},
 			planningObligation: {},
-			plansDrawings: {}
+			plansDrawings: {},
+			otherNewDocuments: {}
 		}
 	};
 };

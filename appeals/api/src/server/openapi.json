@@ -3930,7 +3930,7 @@
 						"properties": {
 							"submissionId": {
 								"type": "string",
-								"example": "c128b5f8-d7a8-469d-9dd0-dcb4b79ad01d"
+								"example": "8f26730b-e86f-4a39-a069-a85491311b34"
 							},
 							"advertisedAppeal": {
 								"type": "boolean",
@@ -5633,6 +5633,20 @@
 									"folderId": {
 										"type": "number",
 										"example": 4574
+									},
+									"documents": {
+										"type": "array",
+										"example": [],
+										"items": {}
+									}
+								}
+							},
+							"otherNewDocuments": {
+								"type": "object",
+								"properties": {
+									"folderId": {
+										"type": "number",
+										"example": 4575
 									},
 									"documents": {
 										"type": "array",

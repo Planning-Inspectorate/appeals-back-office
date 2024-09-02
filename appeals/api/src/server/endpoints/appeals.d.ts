@@ -177,6 +177,7 @@ interface SingleAppellantCaseResponse {
 		newPlansDrawings?: FolderInfo | null;
 		planningObligation?: FolderInfo | null;
 		ownershipCertificate?: FolderInfo | null;
+		otherNewDocuments?: FolderInfo | null;
 	};
 	validation: ValidationOutcomeResponse | null;
 	isGreenBelt?: boolean | null;
