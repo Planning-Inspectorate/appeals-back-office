@@ -1313,13 +1313,6 @@ export async function deleteDocumentPage(
 		}
 	];
 
-	if (totalDocumentVersions === 1) {
-		radioEntries.push({
-			text: 'Yes, and upload another document',
-			value: 'yes-and-upload-another-document'
-		});
-	}
-
 	radioEntries.push({
 		text: 'No',
 		value: 'no'

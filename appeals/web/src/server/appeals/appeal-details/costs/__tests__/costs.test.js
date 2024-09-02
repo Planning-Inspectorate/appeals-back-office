@@ -1389,9 +1389,6 @@ describe('costs', () => {
 							'name="delete-file-answer" type="radio" value="yes"'
 						);
 						expect(radiosElement.innerHTML).toContain(
-							'name="delete-file-answer" type="radio" value="yes-and-upload-another-document"'
-						);
-						expect(radiosElement.innerHTML).toContain(
 							'name="delete-file-answer" type="radio" value="no"'
 						);
 					});
@@ -1428,9 +1425,6 @@ describe('costs', () => {
 						);
 						expect(radiosElement.innerHTML).toContain(
 							'name="delete-file-answer" type="radio" value="no"'
-						);
-						expect(radiosElement.innerHTML).not.toContain(
-							'name="delete-file-answer" type="radio" value="yes-and-upload-another-document"'
 						);
 					});
 				}
@@ -1520,52 +1514,6 @@ describe('costs', () => {
 						expect(response.statusCode).toBe(302);
 						expect(response.text).toContain('Found. Redirecting to ');
 						expect(response.text).toContain('/appeals-service/appeal-details/1');
-					});
-
-					it(`should render a 500 page, if answer "yes, and upload another document" was provided, and there is more than one version of the document (${costsCategory} ${costsDocumentType})`, async () => {
-						const multipleVersionsDocument = cloneDeep(documentFileVersionsInfo);
-						multipleVersionsDocument.allVersions.push({
-							...multipleVersionsDocument.allVersions[0],
-							version: 2
-						});
-
-						nock('http://test/')
-							.get('/appeals/1/documents/1/versions')
-							.reply(200, multipleVersionsDocument);
-
-						const response = await request
-							.post(
-								`${baseUrl}/1/costs/${costsCategory}/${costsDocumentType}/manage-documents/${costsFolder.folderId}/1/1/delete`
-							)
-							.send({
-								'delete-file-answer': 'yes-and-upload-another-document'
-							});
-
-						const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-						expect(unprettifiedElement.innerHTML).toContain(
-							'Sorry, there is a problem with the service</h1>'
-						);
-					});
-
-					it(`should send an API request to delete the document, and redirect to the upload new document version page, if answer "yes, and upload another document" was provided, and there is only one version of the document (${costsCategory} ${costsDocumentType})`, async () => {
-						nock('http://test/')
-							.get('/appeals/1/documents/1/versions')
-							.reply(200, documentFileVersionsInfo);
-
-						const response = await request
-							.post(
-								`${baseUrl}/1/costs/${costsCategory}/${costsDocumentType}/manage-documents/${costsFolder.folderId}/1/1/delete`
-							)
-							.send({
-								'delete-file-answer': 'yes-and-upload-another-document'
-							});
-
-						expect(response.statusCode).toBe(302);
-						expect(response.text).toContain('Found. Redirecting to ');
-						expect(response.text).toContain(
-							`/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/upload-documents/${costsFolder.folderId}`
-						);
 					});
 				}
 			}
@@ -2652,9 +2600,6 @@ describe('costs', () => {
 					'name="delete-file-answer" type="radio" value="yes"'
 				);
 				expect(radiosElement.innerHTML).toContain(
-					'name="delete-file-answer" type="radio" value="yes-and-upload-another-document"'
-				);
-				expect(radiosElement.innerHTML).toContain(
 					'name="delete-file-answer" type="radio" value="no"'
 				);
 			});
@@ -2691,9 +2636,6 @@ describe('costs', () => {
 				);
 				expect(radiosElement.innerHTML).toContain(
 					'name="delete-file-answer" type="radio" value="no"'
-				);
-				expect(radiosElement.innerHTML).not.toContain(
-					'name="delete-file-answer" type="radio" value="yes-and-upload-another-document"'
 				);
 			});
 		});
@@ -2772,48 +2714,6 @@ describe('costs', () => {
 				expect(response.statusCode).toBe(302);
 				expect(response.text).toContain('Found. Redirecting to ');
 				expect(response.text).toContain('/appeals-service/appeal-details/1');
-			});
-
-			it(`should render a 500 page, if answer "yes, and upload another document" was provided, and there is more than one version of the document`, async () => {
-				const multipleVersionsDocument = cloneDeep(documentFileVersionsInfo);
-				multipleVersionsDocument.allVersions.push({
-					...multipleVersionsDocument.allVersions[0],
-					version: 2
-				});
-
-				nock('http://test/')
-					.get('/appeals/1/documents/1/versions')
-					.reply(200, multipleVersionsDocument);
-
-				const response = await request
-					.post(`${baseUrl}/1/costs/decision/manage-documents/${costsFolder?.folderId}/1/1/delete`)
-					.send({
-						'delete-file-answer': 'yes-and-upload-another-document'
-					});
-
-				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-				expect(unprettifiedElement.innerHTML).toContain(
-					'Sorry, there is a problem with the service</h1>'
-				);
-			});
-
-			it(`should send an API request to delete the document, and redirect to the upload new document version page, if answer "yes, and upload another document" was provided, and there is only one version of the document`, async () => {
-				nock('http://test/')
-					.get('/appeals/1/documents/1/versions')
-					.reply(200, documentFileVersionsInfo);
-
-				const response = await request
-					.post(`${baseUrl}/1/costs/decision/manage-documents/${costsFolder?.folderId}/1/1/delete`)
-					.send({
-						'delete-file-answer': 'yes-and-upload-another-document'
-					});
-
-				expect(response.statusCode).toBe(302);
-				expect(response.text).toContain('Found. Redirecting to ');
-				expect(response.text).toContain(
-					`/appeals-service/appeal-details/1/costs/decision/upload-documents/${costsFolder?.folderId}`
-				);
 			});
 		});
 	});

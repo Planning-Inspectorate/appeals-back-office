@@ -3361,13 +3361,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="delete-file-answer-2" name="delete-file-answer"
-                            type="radio" value="yes-and-upload-another-document">
-                            <label class="govuk-label govuk-radios__label" for="delete-file-answer-2">Yes, and upload another document</label>
-                        </div>
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="delete-file-answer-3" name="delete-file-answer"
                             type="radio" value="no">
-                            <label class="govuk-label govuk-radios__label" for="delete-file-answer-3">No</label>
+                            <label class="govuk-label govuk-radios__label" for="delete-file-answer-2">No</label>
                         </div>
                     </div>
                 </div>
@@ -3410,13 +3405,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="delete-file-answer-2" name="delete-file-answer"
-                            type="radio" value="yes-and-upload-another-document">
-                            <label class="govuk-label govuk-radios__label" for="delete-file-answer-2">Yes, and upload another document</label>
-                        </div>
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="delete-file-answer-3" name="delete-file-answer"
                             type="radio" value="no">
-                            <label class="govuk-label govuk-radios__label" for="delete-file-answer-3">No</label>
+                            <label class="govuk-label govuk-radios__label" for="delete-file-answer-2">No</label>
                         </div>
                     </div>
                 </div>
@@ -3459,13 +3449,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="delete-file-answer-2" name="delete-file-answer"
-                            type="radio" value="yes-and-upload-another-document">
-                            <label class="govuk-label govuk-radios__label" for="delete-file-answer-2">Yes, and upload another document</label>
-                        </div>
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="delete-file-answer-3" name="delete-file-answer"
                             type="radio" value="no">
-                            <label class="govuk-label govuk-radios__label" for="delete-file-answer-3">No</label>
+                            <label class="govuk-label govuk-radios__label" for="delete-file-answer-2">No</label>
                         </div>
                     </div>
                 </div>
@@ -3508,13 +3493,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="delete-file-answer-2" name="delete-file-answer"
-                            type="radio" value="yes-and-upload-another-document">
-                            <label class="govuk-label govuk-radios__label" for="delete-file-answer-2">Yes, and upload another document</label>
-                        </div>
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="delete-file-answer-3" name="delete-file-answer"
                             type="radio" value="no">
-                            <label class="govuk-label govuk-radios__label" for="delete-file-answer-3">No</label>
+                            <label class="govuk-label govuk-radios__label" for="delete-file-answer-2">No</label>
                         </div>
                     </div>
                 </div>
@@ -3557,13 +3537,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="delete-file-answer-2" name="delete-file-answer"
-                            type="radio" value="yes-and-upload-another-document">
-                            <label class="govuk-label govuk-radios__label" for="delete-file-answer-2">Yes, and upload another document</label>
-                        </div>
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="delete-file-answer-3" name="delete-file-answer"
                             type="radio" value="no">
-                            <label class="govuk-label govuk-radios__label" for="delete-file-answer-3">No</label>
+                            <label class="govuk-label govuk-radios__label" for="delete-file-answer-2">No</label>
                         </div>
                     </div>
                 </div>
@@ -3606,13 +3581,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="delete-file-answer-2" name="delete-file-answer"
-                            type="radio" value="yes-and-upload-another-document">
-                            <label class="govuk-label govuk-radios__label" for="delete-file-answer-2">Yes, and upload another document</label>
-                        </div>
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="delete-file-answer-3" name="delete-file-answer"
                             type="radio" value="no">
-                            <label class="govuk-label govuk-radios__label" for="delete-file-answer-3">No</label>
+                            <label class="govuk-label govuk-radios__label" for="delete-file-answer-2">No</label>
                         </div>
                     </div>
                 </div>
@@ -4268,13 +4238,8 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="delete-file-answer-2" name="delete-file-answer"
-                            type="radio" value="yes-and-upload-another-document">
-                            <label class="govuk-label govuk-radios__label" for="delete-file-answer-2">Yes, and upload another document</label>
-                        </div>
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="delete-file-answer-3" name="delete-file-answer"
                             type="radio" value="no">
-                            <label class="govuk-label govuk-radios__label" for="delete-file-answer-3">No</label>
+                            <label class="govuk-label govuk-radios__label" for="delete-file-answer-2">No</label>
                         </div>
                     </div>
                 </div>
@@ -4332,13 +4297,8 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="delete-file-answer-2" name="delete-file-answer"
-                            type="radio" value="yes-and-upload-another-document">
-                            <label class="govuk-label govuk-radios__label" for="delete-file-answer-2">Yes, and upload another document</label>
-                        </div>
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="delete-file-answer-3" name="delete-file-answer"
                             type="radio" value="no">
-                            <label class="govuk-label govuk-radios__label" for="delete-file-answer-3">No</label>
+                            <label class="govuk-label govuk-radios__label" for="delete-file-answer-2">No</label>
                         </div>
                     </div>
                 </div>
@@ -4396,13 +4356,8 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="delete-file-answer-2" name="delete-file-answer"
-                            type="radio" value="yes-and-upload-another-document">
-                            <label class="govuk-label govuk-radios__label" for="delete-file-answer-2">Yes, and upload another document</label>
-                        </div>
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="delete-file-answer-3" name="delete-file-answer"
                             type="radio" value="no">
-                            <label class="govuk-label govuk-radios__label" for="delete-file-answer-3">No</label>
+                            <label class="govuk-label govuk-radios__label" for="delete-file-answer-2">No</label>
                         </div>
                     </div>
                 </div>
@@ -4460,13 +4415,8 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="delete-file-answer-2" name="delete-file-answer"
-                            type="radio" value="yes-and-upload-another-document">
-                            <label class="govuk-label govuk-radios__label" for="delete-file-answer-2">Yes, and upload another document</label>
-                        </div>
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="delete-file-answer-3" name="delete-file-answer"
                             type="radio" value="no">
-                            <label class="govuk-label govuk-radios__label" for="delete-file-answer-3">No</label>
+                            <label class="govuk-label govuk-radios__label" for="delete-file-answer-2">No</label>
                         </div>
                     </div>
                 </div>
@@ -4524,13 +4474,8 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="delete-file-answer-2" name="delete-file-answer"
-                            type="radio" value="yes-and-upload-another-document">
-                            <label class="govuk-label govuk-radios__label" for="delete-file-answer-2">Yes, and upload another document</label>
-                        </div>
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="delete-file-answer-3" name="delete-file-answer"
                             type="radio" value="no">
-                            <label class="govuk-label govuk-radios__label" for="delete-file-answer-3">No</label>
+                            <label class="govuk-label govuk-radios__label" for="delete-file-answer-2">No</label>
                         </div>
                     </div>
                 </div>
@@ -4588,13 +4533,8 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="delete-file-answer-2" name="delete-file-answer"
-                            type="radio" value="yes-and-upload-another-document">
-                            <label class="govuk-label govuk-radios__label" for="delete-file-answer-2">Yes, and upload another document</label>
-                        </div>
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="delete-file-answer-3" name="delete-file-answer"
                             type="radio" value="no">
-                            <label class="govuk-label govuk-radios__label" for="delete-file-answer-3">No</label>
+                            <label class="govuk-label govuk-radios__label" for="delete-file-answer-2">No</label>
                         </div>
                     </div>
                 </div>
@@ -5534,13 +5474,8 @@ exports[`costs decision GET /costs/decision/manage-documents/:folderId/:document
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="delete-file-answer-2" name="delete-file-answer"
-                            type="radio" value="yes-and-upload-another-document">
-                            <label class="govuk-label govuk-radios__label" for="delete-file-answer-2">Yes, and upload another document</label>
-                        </div>
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="delete-file-answer-3" name="delete-file-answer"
                             type="radio" value="no">
-                            <label class="govuk-label govuk-radios__label" for="delete-file-answer-3">No</label>
+                            <label class="govuk-label govuk-radios__label" for="delete-file-answer-2">No</label>
                         </div>
                     </div>
                 </div>
@@ -5738,13 +5673,8 @@ exports[`costs decision POST /costs/decision/manage-documents/:folderId/:documen
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="delete-file-answer-2" name="delete-file-answer"
-                            type="radio" value="yes-and-upload-another-document">
-                            <label class="govuk-label govuk-radios__label" for="delete-file-answer-2">Yes, and upload another document</label>
-                        </div>
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="delete-file-answer-3" name="delete-file-answer"
                             type="radio" value="no">
-                            <label class="govuk-label govuk-radios__label" for="delete-file-answer-3">No</label>
+                            <label class="govuk-label govuk-radios__label" for="delete-file-answer-2">No</label>
                         </div>
                     </div>
                 </div>
