@@ -735,6 +735,26 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 	};
 
 	/** @type {Instructions} */
+	mappedData.otherNewDocuments = {
+		id: 'new-supporting-documents',
+		display: {
+			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
+				'New supporting documents',
+				appellantCaseData.appealId,
+				appellantCaseData.documents.otherNewDocuments,
+				permissionNames.updateCase,
+				session,
+				mapDocumentManageUrl(
+					appellantCaseData.appealId,
+					appellantCaseData.documents.otherNewDocuments?.folderId
+				),
+				documentUploadUrlTemplate,
+				'new-supporting-documents'
+			)
+		}
+	};
+
+	/** @type {Instructions} */
 	mappedData.additionalDocuments = {
 		id: 'additional-documents',
 		display: {
