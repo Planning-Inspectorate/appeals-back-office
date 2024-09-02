@@ -1,0 +1,41 @@
+import * as displayPageFormatter from '#lib/display-page-formatter.js';
+
+/** @type {import('../appeal.mapper.js').SubMapper} */
+export const mapLpaNeighbouringSites = ({ appealDetails, currentRoute }) => ({
+	id: 'neighbouring-sites-lpa',
+	display: {
+		summaryListItem: {
+			key: {
+				text: 'Neighbouring sites (LPA)'
+			},
+			value: {
+				html:
+					appealDetails.neighbouringSites && appealDetails.neighbouringSites.length > 0
+						? displayPageFormatter.formatListOfAddresses(
+								appealDetails.neighbouringSites.filter((site) => site.source === 'lpa')
+						  )
+						: 'None'
+			},
+			actions: {
+				items: [
+					...(appealDetails.neighbouringSites && appealDetails.neighbouringSites.length > 0
+						? [
+								{
+									text: 'Manage',
+									href: `${currentRoute}/neighbouring-sites/manage`,
+									visuallyHiddenText: 'Neighbouring sites (L P A)'
+								}
+						  ]
+						: []),
+					{
+						text: 'Add',
+						href: `${currentRoute}/neighbouring-sites/add/lpa`,
+						visuallyHiddenText: 'Neighbouring sites (LPA)',
+						attributes: { 'data-cy': 'add-neighbouring-site-lpa' }
+					}
+				]
+			},
+			classes: 'appeal-neighbouring-sites-inspector'
+		}
+	}
+});
