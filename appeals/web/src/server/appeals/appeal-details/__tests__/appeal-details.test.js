@@ -989,13 +989,13 @@ describe('appeal-details', () => {
 			);
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				`href="/appeals-service/appeal-details/3/inspector-access/change/lpa"`
+				`href="/appeals-service/appeal-details/${appealId}/inspector-access/change/lpa"`
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				`href="/appeals-service/appeal-details/3/neighbouring-sites/change/affected"`
+				`href="/appeals-service/appeal-details/${appealId}/neighbouring-sites/change/affected"`
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				`href="/appeals-service/appeal-details/3/safety-risks/change/lpa"`
+				`href="/appeals-service/appeal-details/${appealId}/safety-risks/change/lpa"`
 			);
 		});
 
