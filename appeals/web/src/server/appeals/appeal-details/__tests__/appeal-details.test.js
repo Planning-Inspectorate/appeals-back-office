@@ -987,6 +987,16 @@ describe('appeal-details', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'Related appeals</dt><dd class="govuk-summary-list__value"><span>No appeals</span>'
 			);
+
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				`href="/appeals-service/appeal-details/3/inspector-access/change/lpa"`
+			);
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				`href="/appeals-service/appeal-details/3/neighbouring-sites/change/affected"`
+			);
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				`href="/appeals-service/appeal-details/3/safety-risks/change/lpa"`
+			);
 		});
 
 		it('should render the header with navigation containing links to the personal list, national list, and sign out route, without any active modifier classes', async () => {
@@ -1948,5 +1958,41 @@ describe('appeal-details', () => {
 		expect(backButton).toBeNull();
 
 		expect(element.innerHTML).toMatchSnapshot();
+	});
+
+	it('should render "change" action links for appeal with LPAQ status "received"', async () => {
+		const appealId = '3';
+
+		nock('http://test/')
+			.get(`/appeals/${appealId}`)
+			.reply(200, {
+				...appealData,
+				appealId,
+				documentationSummary: {
+					appellantCase: {
+						status: 'received',
+						dueDate: '2024-10-02T10:27:06.626Z',
+						receivedAt: '2024-08-02T10:27:06.626Z'
+					},
+					lpaQuestionnaire: {
+						status: 'received',
+						dueDate: '2024-10-11T10:27:06.626Z',
+						receivedAt: '2024-08-02T10:27:06.626Z'
+					}
+				}
+			});
+
+		const response = await request.get(`${baseUrl}/${appealId}`);
+
+		const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+		expect(unprettifiedElement.innerHTML).toContain(
+			`href="/appeals-service/appeal-details/3/inspector-access/change/lpa"`
+		);
+		expect(unprettifiedElement.innerHTML).toContain(
+			`href="/appeals-service/appeal-details/3/neighbouring-sites/change/affected"`
+		);
+		expect(unprettifiedElement.innerHTML).toContain(
+			`href="/appeals-service/appeal-details/3/safety-risks/change/lpa"`
+		);
 	});
 });
