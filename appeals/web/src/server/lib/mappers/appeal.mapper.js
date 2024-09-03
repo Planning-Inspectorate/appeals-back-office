@@ -425,6 +425,19 @@ export async function initialiseAndMapAppealData(
 		}
 	};
 
+	const lpaInspectorAccessActionItems = shouldDisplayChangeLinksForLPAQStatus(
+		appealDetails.documentationSummary?.lpaQuestionnaire?.status
+	)
+		? [
+				{
+					text: 'Change',
+					href: `${currentRoute}/inspector-access/change/lpa`,
+					visuallyHiddenText: 'inspection access (L P A answer)',
+					attributes: { 'data-cy': 'change-inspection-access-lpa' }
+				}
+		  ]
+		: [];
+
 	/** @type {Instructions} */
 	mappedData.appeal.lpaInspectorAccess = {
 		id: 'lpa-inspector-access',
@@ -440,14 +453,7 @@ export async function initialiseAndMapAppealData(
 					)
 				},
 				actions: {
-					items: [
-						{
-							text: 'Change',
-							href: `${currentRoute}/inspector-access/change/lpa`,
-							visuallyHiddenText: 'inspection access (L P A answer)',
-							attributes: { 'data-cy': 'change-inspection-access-lpa' }
-						}
-					]
+					items: lpaInspectorAccessActionItems
 				},
 				classes: 'appeal-lpa-inspector-access'
 			}
@@ -484,6 +490,19 @@ export async function initialiseAndMapAppealData(
 		}
 	};
 
+	const neighbouringSiteIsAffectedActionItems = shouldDisplayChangeLinksForLPAQStatus(
+		appealDetails.documentationSummary?.lpaQuestionnaire?.status
+	)
+		? [
+				{
+					text: 'Change',
+					href: `${currentRoute}/neighbouring-sites/change/affected`,
+					visuallyHiddenText: 'could a neighbouring site be affected',
+					attributes: { 'data-cy': 'change-neighbouuring-site-is-affected' }
+				}
+		  ]
+		: [];
+
 	/** @type {Instructions} */
 	mappedData.appeal.neighbouringSiteIsAffected = {
 		id: 'neighbouring-site-is-affected',
@@ -498,14 +517,7 @@ export async function initialiseAndMapAppealData(
 						'No answer provided'
 				},
 				actions: {
-					items: [
-						{
-							text: 'Change',
-							href: `${currentRoute}/neighbouring-sites/change/affected`,
-							visuallyHiddenText: 'could a neighbouring site be affected',
-							attributes: { 'data-cy': 'change-neighbouuring-site-is-affected' }
-						}
-					]
+					items: neighbouringSiteIsAffectedActionItems
 				},
 				classes: 'appeal-neighbouring-site-is-affected'
 			}
@@ -593,6 +605,19 @@ export async function initialiseAndMapAppealData(
 		}
 	};
 
+	const lpaHealthAndSafetyActionItems = shouldDisplayChangeLinksForLPAQStatus(
+		appealDetails.documentationSummary?.lpaQuestionnaire?.status
+	)
+		? [
+				{
+					text: 'Change',
+					href: `${currentRoute}/safety-risks/change/lpa`,
+					visuallyHiddenText: 'potential safety risks (L P A answer)',
+					attributes: { 'data-cy': 'change-lpa-health-and-safety' }
+				}
+		  ]
+		: [];
+
 	/** @type {Instructions} */
 	mappedData.appeal.lpaHealthAndSafety = {
 		id: 'lpa-health-and-safety',
@@ -608,14 +633,7 @@ export async function initialiseAndMapAppealData(
 					)
 				},
 				actions: {
-					items: [
-						{
-							text: 'Change',
-							href: `${currentRoute}/safety-risks/change/lpa`,
-							visuallyHiddenText: 'potential safety risks (L P A answer)',
-							attributes: { 'data-cy': 'change-lpa-health-and-safety' }
-						}
-					]
+					items: lpaHealthAndSafetyActionItems
 				},
 				classes: 'appeal-lpa-health-and-safety'
 			}
@@ -1563,4 +1581,12 @@ export function generateDecisionDocumentDownloadHtml(appealDetails, linkText = '
 	}
 
 	return html;
+}
+
+/**
+ * @param {string | undefined} lpaQStatus
+ * @returns {boolean}
+ */
+function shouldDisplayChangeLinksForLPAQStatus(lpaQStatus) {
+	return !lpaQStatus || lpaQStatus !== 'not_received';
 }
