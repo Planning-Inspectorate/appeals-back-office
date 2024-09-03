@@ -22,7 +22,7 @@ apps_config = {
     horizon_mock                  = false
     horizon_web_url               = "https://horizonweb.planninginspectorate.gov.uk/otcs/llisapi.dll?func=ll&objId="
     horizon_timeout               = 5000
-    service_bus_broadcast_enabled = false
+    service_bus_broadcast_enabled = true
     notify_template_ids = {
       appeal_confirmed_id                                             = "1776217e-b40d-4d78-82d1-8d881dcec897"
       appeal_incomplete_id                                            = "4001ac42-0d2f-4520-b1c0-cae481dd18ba"
