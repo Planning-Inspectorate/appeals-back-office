@@ -1,0 +1,44 @@
+/**
+ * @typedef {import('@pins/appeals.api').Appeals.NotValidReasonOption} NotValidReasonOption
+ * @typedef {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} SingleAppellantCaseResponse
+ */
+
+import { paginationDefaultSettings } from '#appeals/appeal.constants.js';
+
+/**
+ * @param {import('got').Got} apiClient
+ * @param {number} appealId
+ * @param {number} appellantCaseId
+ */
+export function getAppellantCaseFromAppealId(apiClient, appealId, appellantCaseId) {
+	return apiClient.get(`appeals/${appealId}/appellant-cases/${appellantCaseId}`).json();
+}
+
+/** @typedef {import('#appeals/appeal-details/interested-party-comments/interested-party-comments.types').Representation} IPComments */
+/** @typedef {import('#appeals/appeal-details/interested-party-comments/interested-party-comments.types').RepresentationList} IPCommentsList */
+
+/**
+ * Fetch paginated appeal comments based on appeal ID and status.
+ *
+ * @param {import('got').Got} apiClient
+ * @param {string} appealId
+ * @param {string|undefined} statusFilter
+ * @param {number} pageNumber
+ * @param {number} pageSize
+ * @returns {Promise<IPCommentsList>}
+ */
+export const getInterestedPartyComments = (
+	apiClient,
+	appealId,
+	statusFilter = 'all',
+	pageNumber = paginationDefaultSettings.firstPageNumber,
+	pageSize = paginationDefaultSettings.pageSize
+) => {
+	let url = `appeals/${appealId}/reps/comments?pageNumber=${pageNumber}&pageSize=${pageSize}`;
+
+	if (statusFilter && statusFilter !== 'all') {
+		url += `&status=${encodeURIComponent(statusFilter)}`;
+	}
+
+	return apiClient.get(url).json();
+};

@@ -61,25 +61,33 @@ export const getFinalCommentsByAppealId = (appealId) => {
 };
 
 /**
- *
  * @param {number} appealId
  * @param {number} pageNumber
  * @param {number} pageSize
  * @param {string|undefined} status
- * @returns {Promise<import('@pins/appeals.api').Schema.Representation[]>}
+ * @returns {Promise<{ itemCount: number, comments: import('@pins/appeals.api').Schema.Representation[] }>}
  */
-export const getThirdPartyCommentsByAppealId = (
+export const getThirdPartyCommentsByAppealId = async (
 	appealId,
 	pageNumber = 0,
 	pageSize = 30,
 	status
 ) => {
-	return databaseConnector.representation.findMany({
-		where: {
-			appealId,
-			representationType: APPEAL_REPRESENTATION_TYPE.COMMENT,
-			...(status && { status })
-		},
+	// Define the where clause for filtering
+	const whereClause = {
+		appealId,
+		representationType: APPEAL_REPRESENTATION_TYPE.COMMENT,
+		...(status && { status })
+	};
+
+	// Fetch the total count of matching representations
+	const itemCount = await databaseConnector.representation.count({
+		where: whereClause
+	});
+
+	// Fetch the paginated list of representations
+	const comments = await databaseConnector.representation.findMany({
+		where: whereClause,
 		include: {
 			representative: true,
 			represented: true,
@@ -89,6 +97,9 @@ export const getThirdPartyCommentsByAppealId = (
 		skip: pageNumber * pageSize,
 		take: pageSize
 	});
+
+	// Return both itemCount and comments
+	return { itemCount, comments };
 };
 
 /**
