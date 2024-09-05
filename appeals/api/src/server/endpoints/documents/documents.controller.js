@@ -16,6 +16,8 @@ import * as documentRepository from '#repositories/document.repository.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { formatDocument } from './documents.formatter.js';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
+import { EventType } from '@pins/event-client';
 
 /** @typedef {import('@pins/appeals.api').Schema.Folder} Folder */
 /** @typedef {import('@pins/appeals.api').Schema.AuditTrail} AuditTrail */
@@ -240,6 +242,10 @@ const updateDocuments = async (req, res) => {
 			});
 		}
 		await documentRepository.updateDocuments(documents);
+
+		for (const document of documents) {
+			await broadcasters.broadcastDocument(document.guid, document.latestVersion, EventType.Update);
+		}
 	} catch (error) {
 		if (error) {
 			logger.error(error);
