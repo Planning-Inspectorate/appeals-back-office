@@ -60,12 +60,12 @@ export const postAppealSubmission = async (req, res) => {
 	await integrationService.importDocuments(documents, documentVersions);
 
 	for (const document of documentVersions) {
-		await broadcasters.broadcastDocument(document.guid, 1, EventType.Create);
+		await broadcasters.broadcastDocument(document.documentGuid, 1, EventType.Create);
 
 		const auditTrail = await createAuditTrail({
 			appealId: id,
 			azureAdUserId: AUDIT_TRAIL_SYSTEM_UUID,
-			details: stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_IMPORTED, [document.fileName])
+			details: stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_IMPORTED, [document.fileName || ''])
 		});
 
 		if (auditTrail) {
@@ -106,12 +106,12 @@ export const postLpaqSubmission = async (req, res) => {
 	await integrationService.importDocuments(documents, documentVersions);
 
 	for (const document of documentVersions) {
-		await broadcasters.broadcastDocument(document.guid, 1, EventType.Create);
+		await broadcasters.broadcastDocument(document.documentGuid, 1, EventType.Create);
 
 		const auditTrail = await createAuditTrail({
 			appealId: id,
 			azureAdUserId: AUDIT_TRAIL_SYSTEM_UUID,
-			details: stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_IMPORTED, [document.fileName])
+			details: stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_IMPORTED, [document.fileName || ''])
 		});
 
 		if (auditTrail) {
