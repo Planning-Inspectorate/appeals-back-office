@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { databaseConnector } from '#utils/database-connector.js';
 import { mapBlobPath } from '#endpoints/documents/documents.mapper.js';
 import { getDefaultRedactionStatus } from './document-metadata.repository.js';
@@ -9,9 +8,9 @@ import { APPEAL_CASE_STATUS, APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from 'pin
 /**
  *
  * @param {*} data
- * @param {*} documents
+ * @param {import('pins-data-model').Schemas.AppealDocument[]} documents
  * @param {string[]} relatedReferences
- * @returns
+ * @returns {Promise<{appeal: import('#db-client').Appeal, documentVersions: import('#db-client').DocumentVersion[]}>}
  */
 export const createAppeal = async (data, documents, relatedReferences) => {
 	const transaction = await databaseConnector.$transaction(async (tx) => {
@@ -34,12 +33,12 @@ export const createAppeal = async (data, documents, relatedReferences) => {
 		const documentVersions = await setDocumentVersions(tx, appeal.id, appeal.reference, documents);
 		await setAppealRelationships(tx, appeal.id, appeal.reference, relatedReferences);
 
-		appeal = await tx.appeal.findUnique({
+		const appealDetails = await tx.appeal.findUnique({
 			where: { id: appeal.id }
 		});
 
 		return {
-			appeal,
+			appeal: appealDetails,
 			documentVersions
 		};
 	});
@@ -150,24 +149,31 @@ const setAppealRelationships = async (tx, appealId, caseReference, relatedRefere
 
 /**
  *
- * @param {*} tx
+ * @param {import('#db-client').Prisma.TransactionClient} tx
  * @param {number} appealId
  * @param {string} caseReference
- * @param {*} documents
- * @returns
+ * @param {*[]} documents
+ * @returns {Promise<import('#db-client').DocumentVersion[]>}
  */
 const setDocumentVersions = async (tx, appealId, caseReference, documents) => {
 	const unredactedStatus = await getDefaultRedactionStatus();
-	let documentVersions = [];
 	if (documents) {
 		const caseFolders = await tx.folder.findMany({ where: { caseId: appealId } });
 
 		await tx.document.createMany({
 			data: documents.map((document) => {
+				const folderId = getFolderIdFromDocumentType(
+					caseFolders,
+					document.documentType,
+					document.stage
+				);
+				if (!folderId) {
+					throw new Error(`folder not found for document type: ${document.documentType}`);
+				}
 				return {
 					guid: document.documentGuid,
 					caseId: appealId,
-					folderId: getFolderIdFromDocumentType(caseFolders, document.documentType, document.stage),
+					folderId,
 					name: document.fileName
 				};
 			})
@@ -203,16 +209,15 @@ const setDocumentVersions = async (tx, appealId, caseReference, documents) => {
 			});
 		}
 
-		documentVersions = await tx.documentVersion.findMany({
+		return await tx.documentVersion.findMany({
 			where: {
 				documentGuid: {
 					in: documents.map((d) => d.documentGuid)
 				}
 			}
 		});
-
-		return documentVersions;
 	}
+	return [];
 };
 
 /**

@@ -22,7 +22,7 @@ export const broadcastDocument = async (documentId, version, updateType) => {
 	if (!config.serviceBusEnabled) {
 		return false;
 	}
-	const document = await databaseConnector.document.findFirst({
+	const document = await databaseConnector.document.findUnique({
 		where: { guid: documentId },
 		include: {
 			case: {
