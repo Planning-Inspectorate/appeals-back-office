@@ -128,34 +128,37 @@ extends:
                   azurecrName: $(azurecrName)
                   repository: back-office/appeals-web
           - name: Deploy Function - Appeals Casedata Import
-            artifact:
-              name: function-appeals-casedata-import
-              sourcePipeline: Build
             condition: eq(${{ parameters.deployFunctionAppealsCasedataImport }}, 'true')
             steps:
+              - download: build
+                artifact: function-appeals-casedata-import
+                displayName: Download function-appeals-casedata-import
               - template: ../steps/function_app_deploy.yml
                 parameters:
                   appName: pins-func-appeals-bo-casedata-import-$(ENVIRONMENT)
                   resourceGroup: $(resourceGroup)
+                  workingDirectory: $(Pipeline.Workspace)/build/function-appeals-casedata-import
           - name: Deploy Function - Appeals User Import
-            artifact:
-              name: function-appeals-user-import
-              sourcePipeline: Build
             condition: eq(${{ parameters.deployFunctionAppealsUserImport }}, 'true')
             steps:
+              - download: build
+                artifact: function-appeals-user-import
+                displayName: Download function-appeals-user-import
               - template: ../steps/function_app_deploy.yml
                 parameters:
                   appName: pins-func-appeals-bo-user-import-$(ENVIRONMENT)
                   resourceGroup: $(resourceGroup)
+                  workingDirectory: $(Pipeline.Workspace)/build/function-appeals-user-import
           - name: Deploy Function - Appeals Document Processing
-            artifact:
-              name: function-appeals-document-processing
-              sourcePipeline: Build
             condition: eq(${{ parameters.deployFunctionAppealsDocProcessing }}, 'true')
             steps:
+              - download: build
+                artifact: function-appeals-document-processing
+                displayName: Download function-appeals-document-processing
               - template: ../steps/function_app_deploy.yml
                 parameters:
                   appName: pins-func-appeals-bo-doc-processing-$(ENVIRONMENT)
                   resourceGroup: $(resourceGroup)
+                  workingDirectory: $(Pipeline.Workspace)/build/function-appeals-document-processing
     globalVariables:
       - template: azure-pipelines-variables.yml@self
