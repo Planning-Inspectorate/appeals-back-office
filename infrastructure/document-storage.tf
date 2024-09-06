@@ -135,17 +135,23 @@ resource "azurerm_resource_group_template_deployment" "document_storage_malware_
 }
 
 ## RBAC for Entra Groups
+# role definitions
+data "azurerm_role_definition" "custom_blob_role" {
+  name     = "Storage Blob Data - Read Write Delete (custom)"
+  provider = azurerm.tooling
+}
+
 # read/write access
 resource "azurerm_role_assignment" "case_officer_documents_access" {
-  scope                = azurerm_storage_container.appeal_documents.resource_manager_id
-  role_definition_name = "Storage Blob Data Contributor"
-  principal_id         = var.apps_config.auth.group_ids.case_officer
+  scope              = azurerm_storage_container.appeal_documents.resource_manager_id
+  role_definition_id = data.azurerm_role_definition.custom_blob_role.role_definition_id
+  principal_id       = var.apps_config.auth.group_ids.case_officer
 }
 
 resource "azurerm_role_assignment" "inspector_documents_access" {
-  scope                = azurerm_storage_container.appeal_documents.resource_manager_id
-  role_definition_name = "Storage Blob Data Contributor"
-  principal_id         = var.apps_config.auth.group_ids.inspector
+  scope              = azurerm_storage_container.appeal_documents.resource_manager_id
+  role_definition_id = data.azurerm_role_definition.custom_blob_role.role_definition_id
+  principal_id       = var.apps_config.auth.group_ids.inspector
 }
 
 # read only access
