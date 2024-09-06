@@ -1120,20 +1120,18 @@ describe('internal correspondence', () => {
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 				expect(unprettifiedElement.innerHTML).toContain('Check your answers</h1>');
-				expect(unprettifiedElement.innerHTML).toContain('Name</th>');
-				expect(unprettifiedElement.innerHTML).toContain('Received</th>');
-				expect(unprettifiedElement.innerHTML).toContain('Redaction status</th>');
+				expect(unprettifiedElement.innerHTML).toContain('Name</dt>');
+				expect(unprettifiedElement.innerHTML).toContain('test-document.txt</dd>');
 				expect(unprettifiedElement.innerHTML).toContain(
-					`<a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/upload-documents/${folder.folderId}">test-document.txt</a></td>`
+					`href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/upload-documents/${folder.folderId}"> Change</a></dd>`
 				);
+				expect(unprettifiedElement.innerHTML).toContain('Date received</dt>');
+				expect(unprettifiedElement.innerHTML).toContain(`${dateToDisplayDate(new Date())}</dd>`);
 				expect(unprettifiedElement.innerHTML).toContain(
-					`<a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/add-document-details/${
-						folder.folderId
-					}">${dateToDisplayDate(new Date())}</a></td>`
+					`href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/add-document-details/${folder.folderId}"> Change</a></dd>`
 				);
-				expect(unprettifiedElement.innerHTML).toContain(
-					`<a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/add-document-details/${folder.folderId}">Unredacted</a></td>`
-				);
+				expect(unprettifiedElement.innerHTML).toContain('Redaction status</dt>');
+				expect(unprettifiedElement.innerHTML).toContain('Unredacted</dd>');
 				expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 			});
 		}
@@ -1276,20 +1274,18 @@ describe('internal correspondence', () => {
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 				expect(unprettifiedElement.innerHTML).toContain('Check your answers</h1>');
-				expect(unprettifiedElement.innerHTML).toContain('Name</th>');
-				expect(unprettifiedElement.innerHTML).toContain('Received</th>');
-				expect(unprettifiedElement.innerHTML).toContain('Redaction status</th>');
+				expect(unprettifiedElement.innerHTML).toContain('Name</dt>');
+				expect(unprettifiedElement.innerHTML).toContain('test-document.txt</dd>');
 				expect(unprettifiedElement.innerHTML).toContain(
-					`<a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/upload-documents/${folder.folderId}/1">test-document.txt</a></td>`
+					`href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/upload-documents/${folder.folderId}/1"> Change</a></dd>`
 				);
+				expect(unprettifiedElement.innerHTML).toContain('Date received</dt>');
+				expect(unprettifiedElement.innerHTML).toContain(`${dateToDisplayDate(new Date())}</dd>`);
 				expect(unprettifiedElement.innerHTML).toContain(
-					`<a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/add-document-details/${
-						folder.folderId
-					}/1">${dateToDisplayDate(new Date())}</a></td>`
+					`href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/add-document-details/${folder.folderId}/1"> Change</a></dd>`
 				);
-				expect(unprettifiedElement.innerHTML).toContain(
-					`<a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/add-document-details/${folder.folderId}/1">Unredacted</a></td>`
-				);
+				expect(unprettifiedElement.innerHTML).toContain('Redaction status</dt>');
+				expect(unprettifiedElement.innerHTML).toContain('Unredacted</dd>');
 				expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 			});
 		}

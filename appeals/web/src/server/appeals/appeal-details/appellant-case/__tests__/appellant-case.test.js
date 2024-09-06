@@ -4230,7 +4230,7 @@ describe('appellant-case', () => {
 			);
 		});
 
-		it('should render the add documents check and confirm page with summary list row displaying info on the uploaded document', async () => {
+		it('should render the add documents check and confirm page with summary list displaying info on the uploaded document', async () => {
 			const addDocumentsResponse = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}/add-documents/1`)
 				.send({
@@ -4248,20 +4248,18 @@ describe('appellant-case', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain('Check your answers</h1>');
-			expect(unprettifiedElement.innerHTML).toContain('Name</th>');
-			expect(unprettifiedElement.innerHTML).toContain('Received</th>');
-			expect(unprettifiedElement.innerHTML).toContain('Redaction status</th>');
+			expect(unprettifiedElement.innerHTML).toContain('Name</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</dd>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				`<a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/${documentFolderInfo.folderId}">test-document.txt</a></td>`
+				`href="/appeals-service/appeal-details/1/appellant-case/add-documents/${documentFolderInfo.folderId}"> Change</a>`
 			);
+			expect(unprettifiedElement.innerHTML).toContain('Date received</dt>');
+			expect(unprettifiedElement.innerHTML).toContain(`${dateToDisplayDate(new Date())}</dd>`);
 			expect(unprettifiedElement.innerHTML).toContain(
-				`<a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-document-details/${
-					documentFolderInfo.folderId
-				}">${dateToDisplayDate(new Date())}</a></td>`
+				`href="/appeals-service/appeal-details/1/appellant-case/add-document-details/${documentFolderInfo.folderId}"> Change</a>`
 			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				`<a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-document-details/${documentFolderInfo.folderId}">Unredacted</a></td>`
-			);
+			expect(unprettifiedElement.innerHTML).toContain('Redaction status</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('Unredacted</dd>');
 			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 		});
 	});
@@ -4377,20 +4375,18 @@ describe('appellant-case', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain('Check your answers</h1>');
-			expect(unprettifiedElement.innerHTML).toContain('Name</th>');
-			expect(unprettifiedElement.innerHTML).toContain('Received</th>');
-			expect(unprettifiedElement.innerHTML).toContain('Redaction status</th>');
+			expect(unprettifiedElement.innerHTML).toContain('Name</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</dd>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				`<a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/${documentFolderInfo.folderId}/1">test-document.txt</a></td>`
+				`href="/appeals-service/appeal-details/1/appellant-case/add-documents/${documentFolderInfo.folderId}/1"> Change</a></dd>`
 			);
+			expect(unprettifiedElement.innerHTML).toContain('Date received</dt>');
+			expect(unprettifiedElement.innerHTML).toContain(`${dateToDisplayDate(new Date())}</dd>`);
 			expect(unprettifiedElement.innerHTML).toContain(
-				`<a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-document-details/${
-					documentFolderInfo.folderId
-				}/1">${dateToDisplayDate(new Date())}</a></td>`
+				`href="/appeals-service/appeal-details/1/appellant-case/add-document-details/${documentFolderInfo.folderId}/1"> Change</a></dd>`
 			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				`<a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-document-details/${documentFolderInfo.folderId}/1">Unredacted</a></td>`
-			);
+			expect(unprettifiedElement.innerHTML).toContain('Redaction status</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('Unredacted</dd>');
 			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 		});
 	});

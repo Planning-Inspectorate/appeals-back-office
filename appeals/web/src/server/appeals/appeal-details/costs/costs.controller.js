@@ -14,6 +14,7 @@ import {
 	renderChangeDocumentDetails,
 	postChangeDocumentDetails
 } from '#appeals/appeal-documents/appeal-documents.controller.js';
+import { getDocumentRedactionStatuses } from '#appeals/appeal-documents/appeal.documents.service.js';
 import { capitalize } from 'lodash-es';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import logger from '#lib/logger.js';
@@ -55,8 +56,8 @@ export const getDocumentUpload = async (request, response) => {
 			: `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/${costsDocumentType}/add-document-details/${currentFolder.folderId}`,
 		false,
 		uploadPageHeadingText,
-		[],
-		true,
+		undefined,
+		false,
 		session.costsDocumentType
 	);
 };
@@ -459,10 +460,17 @@ export const renderDecisionCheckAndConfirm = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
+	const redactionStatuses = await getDocumentRedactionStatuses(request.apiClient);
+
+	if (!redactionStatuses) {
+		return response.status(500).render('app/500.njk');
+	}
+
 	const mappedPageContent = decisionCheckAndConfirmPage(
 		currentAppeal,
 		currentFolder,
 		session,
+		redactionStatuses,
 		documentId
 	);
 

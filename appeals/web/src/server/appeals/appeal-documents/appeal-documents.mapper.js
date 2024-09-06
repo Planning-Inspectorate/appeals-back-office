@@ -567,6 +567,8 @@ function mapDocumentDetailsItemToDocumentDetailsPageComponents(item, redactionSt
  * @param {string} appealReference
  * @param {FileUploadInfoItem[]} fileUploadInfo
  * @param {RedactionStatus[]} redactionStatuses
+ * @param {string} [titleTextOverride]
+ * @param {string} [summaryListNameLabelOverride]
  * @returns {PageContent}
  */
 export function addDocumentsCheckAndConfirmPage(
@@ -576,35 +578,72 @@ export function addDocumentsCheckAndConfirmPage(
 	changeRedactionStatusLinkUrl,
 	appealReference,
 	fileUploadInfo,
-	redactionStatuses
+	redactionStatuses,
+	titleTextOverride,
+	summaryListNameLabelOverride
 ) {
 	/** @type {PageContent} */
 	const pageContent = {
-		title: 'Check your answers',
+		title: titleTextOverride || 'Check your answers',
 		backLinkUrl,
 		preHeading: `Appeal ${appealShortReference(appealReference)}`,
 		heading: 'Check your answers',
 		pageComponents: [
 			{
-				type: 'table',
+				type: 'summary-list',
 				parameters: {
-					head: [{ text: 'Name' }, { text: 'Received' }, { text: 'Redaction status' }],
-					rows: fileUploadInfo.map((/** @type {FileUploadInfoItem} */ infoItem) => [
+					rows: [
 						{
-							html: `<a class="govuk-link" href="${changeFileLinkUrl}">${infoItem.name}</a>`
+							key: {
+								text: summaryListNameLabelOverride || 'Name'
+							},
+							value: {
+								text: fileUploadInfo[0].name
+							},
+							actions: {
+								items: [
+									{
+										text: 'Change',
+										href: changeFileLinkUrl
+									}
+								]
+							}
 						},
 						{
-							html: `<a class="govuk-link" href="${changeDateLinkUrl}">${apiDateStringToDisplayDate(
-								infoItem.receivedDate
-							)}</a>`
+							key: {
+								text: 'Date received'
+							},
+							value: {
+								text: apiDateStringToDisplayDate(fileUploadInfo[0].receivedDate)
+							},
+							actions: {
+								items: [
+									{
+										text: 'Change',
+										href: changeDateLinkUrl
+									}
+								]
+							}
 						},
 						{
-							html: `<a class="govuk-link" href="${changeRedactionStatusLinkUrl}">${capitalize(
-								redactionStatusIdToName(redactionStatuses, infoItem.redactionStatus)
-							)}</a>`
+							key: {
+								text: 'Redaction status'
+							},
+							value: {
+								text: capitalize(
+									redactionStatusIdToName(redactionStatuses, fileUploadInfo[0].redactionStatus)
+								)
+							},
+							actions: {
+								items: [
+									{
+										text: 'Change',
+										href: changeRedactionStatusLinkUrl
+									}
+								]
+							}
 						}
-					]),
-					firstCellIsHeader: false
+					]
 				}
 			}
 		]
