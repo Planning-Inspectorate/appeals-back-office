@@ -132,7 +132,11 @@ export const householdAppeal = {
 		ownsSomeLand: true,
 		siteAccessDetails: 'There is no mobile reception at the site',
 		siteSafetyDetails: 'Small dog big character',
-		siteAreaSquareMetres: '100'
+		siteAreaSquareMetres: '100',
+		appellantProcedurePreference: 'Hearing',
+		appellantProcedurePreferenceDetails: 'Reason for preference',
+		appellantProcedurePreferenceDuration: 5,
+		inquiryHowManyWitnesses: 1
 	},
 	caseOfficer: {
 		id: 1,

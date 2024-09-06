@@ -67,7 +67,7 @@ export interface ValidateDate {
 
 export interface AppellantCaseData {
 	casedata?: {
-		/** @example "8f26730b-e86f-4a39-a069-a85491311b34" */
+		/** @example "314bd533-33a2-46d6-ad03-b71e95bd20e2" */
 		submissionId?: string;
 		/** @example true */
 		advertisedAppeal?: boolean;
@@ -863,6 +863,14 @@ export interface SingleAppellantCaseResponse {
 			documents?: any[];
 		};
 	};
+	/** @example "Hearing" */
+	appellantProcedurePreference?: string;
+	/** @example "" */
+	appellantProcedurePreferenceDetails?: string;
+	/** @example 0 */
+	appellantProcedurePreferenceDuration?: number;
+	/** @example 0 */
+	inquiryHowManyWitnesses?: number;
 	/** @example true */
 	hasAdvertisedAppeal?: boolean;
 	/** @example true */
@@ -1425,6 +1433,14 @@ export interface UpdateAppellantCaseRequest {
 	visibilityRestrictions?: string;
 	/** @example true */
 	isGreenBelt?: boolean;
+	/** @example "Hearing" */
+	appellantProcedurePreference?: string;
+	/** @example "Need for a detailed examination" */
+	appellantProcedurePreferenceDetails?: string;
+	/** @example 3 */
+	appellantProcedurePreferenceDuration?: number;
+	/** @example 2 */
+	inquiryHowManyWitnesses?: number;
 }
 
 export type UpdateAppellantCaseResponse = object;

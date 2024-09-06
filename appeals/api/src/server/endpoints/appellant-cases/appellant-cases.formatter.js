@@ -74,6 +74,10 @@ const formatAppellantCase = (appeal, folders = null) => {
 			),
 			applicationDecision: appellantCase.applicationDecision || null,
 			appellantCostsAppliedFor: appellantCase.appellantCostsAppliedFor,
+			appellantProcedurePreference: appellantCase.appellantProcedurePreference,
+			appellantProcedurePreferenceDetails: appellantCase.appellantProcedurePreferenceDetails,
+			appellantProcedurePreferenceDuration: appellantCase.appellantProcedurePreferenceDuration,
+			inquiryHowManyWitnesses: appellantCase.inquiryHowManyWitnesses,
 			isGreenBelt: appellantCase.isGreenBelt,
 			planningObligation: {
 				hasObligation: appellantCase.planningObligation,

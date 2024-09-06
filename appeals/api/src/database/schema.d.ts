@@ -26,6 +26,9 @@ export interface Appeal extends schema.Appeal {
 	inspectorDecision?: InspectorDecision | null;
 	neighbouringSites?: NeighbouringSite[] | null;
 	folders?: Folder[] | null;
+	appellantProcedurePreference?: string | null;
+	appellantProcedurePreferenceDetails?: string | null;
+	appellantProcedurePreferenceDuration?: number | null;
 }
 export interface AppealRelationship extends schema.AppealRelationship {}
 export interface AppealType extends schema.AppealType {}
