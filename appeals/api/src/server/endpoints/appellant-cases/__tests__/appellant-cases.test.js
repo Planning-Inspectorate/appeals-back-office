@@ -974,6 +974,165 @@ describe('appellant cases routes', () => {
 
 				expect(response.status).toEqual(200);
 			});
+			test('updates appellant case site area and procedure preferences', async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
+
+				const patchBody = {
+					appellantProcedurePreference: 'inquiry',
+					appellantProcedurePreferenceDetails: 'Need for a detailed examination.',
+					appellantProcedurePreferenceDuration: 2,
+					inquiryHowManyWitnesses: 1
+				};
+
+				const dataToSave = {
+					appellantProcedurePreference: patchBody.appellantProcedurePreference,
+					appellantProcedurePreferenceDetails: patchBody.appellantProcedurePreferenceDetails,
+					appellantProcedurePreferenceDuration: patchBody.appellantProcedurePreferenceDuration,
+					inquiryHowManyWitnesses: patchBody.inquiryHowManyWitnesses
+				};
+
+				const { appellantCase, id } = householdAppeal;
+				const response = await request
+					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+					.send(patchBody)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith({
+					where: { id: appellantCase.id },
+					data: dataToSave
+				});
+
+				expect(response.status).toEqual(200);
+				expect(response.body.appellantProcedurePreference).toEqual('inquiry');
+				expect(response.body.appellantProcedurePreferenceDetails).toEqual(
+					'Need for a detailed examination.'
+				);
+				expect(response.body.appellantProcedurePreferenceDuration).toEqual(2);
+				expect(response.body.inquiryHowManyWitnesses).toEqual(1);
+			});
+			test('returns an error if appellantProcedurePreferenceDuration is not a number', async () => {
+				const { id, appellantCase } = householdAppeal;
+				const patchBody = {
+					appellantProcedurePreference: 'inquiry',
+					appellantProcedurePreferenceDetails: 'Need for a detailed examination.',
+					appellantProcedurePreferenceDuration: 'not-a-number',
+					inquiryHowManyWitnesses: 1
+				};
+
+				const response = await request
+					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+					.send(patchBody)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body.errors).toHaveProperty(
+					'appellantProcedurePreferenceDuration',
+					'must be a number'
+				);
+			});
+			test('returns an error if appellantProcedurePreference is outside the allowed range', async () => {
+				const { id, appellantCase } = householdAppeal;
+				const patchBody = {
+					appellantProcedurePreference: 'not-valid',
+					appellantProcedurePreferenceDetails: 'Need for a detailed examination.',
+					appellantProcedurePreferenceDuration: 1,
+					inquiryHowManyWitnesses: 1
+				};
+
+				const response = await request
+					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+					.send(patchBody)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body.errors).toHaveProperty(
+					'appellantProcedurePreference',
+					'Must be null or one of the following values: hearing, inquiry, written'
+				);
+			});
+			test('returns an error if appellantProcedurePreferenceDuration is outside the allowed range', async () => {
+				const { id, appellantCase } = householdAppeal;
+				const patchBody = {
+					appellantProcedurePreference: 'inquiry',
+					appellantProcedurePreferenceDetails: 'Need for a detailed examination.',
+					appellantProcedurePreferenceDuration: 11,
+					inquiryHowManyWitnesses: 1
+				};
+
+				const response = await request
+					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+					.send(patchBody)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body.errors).toHaveProperty(
+					'appellantProcedurePreferenceDuration',
+					'must be a number between 0 and 9'
+				);
+			});
+			test('returns an error if inquiryHowManyWitnesses is not a number', async () => {
+				const { id, appellantCase } = householdAppeal;
+				const patchBody = {
+					appellantProcedurePreference: 'inquiry',
+					appellantProcedurePreferenceDetails: 'Need for a detailed examination.',
+					appellantProcedurePreferenceDuration: 1,
+					inquiryHowManyWitnesses: 'not-a-number'
+				};
+
+				const response = await request
+					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+					.send(patchBody)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body.errors).toHaveProperty('inquiryHowManyWitnesses', 'must be a number');
+			});
+
+			test('returns an error if inquiryHowManyWitnesses is outside the allowed range', async () => {
+				const { id, appellantCase } = householdAppeal;
+				const patchBody = {
+					appellantProcedurePreference: 'inquiry',
+					appellantProcedurePreferenceDetails: 'Need for a detailed examination.',
+					appellantProcedurePreferenceDuration: 2,
+					inquiryHowManyWitnesses: 11
+				};
+
+				const response = await request
+					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+					.send(patchBody)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body.errors).toHaveProperty(
+					'inquiryHowManyWitnesses',
+					'must be a number between 0 and 9'
+				);
+			});
+
+			test('returns an error if appellantProcedurePreferenceDetails is too long', async () => {
+				const { id, appellantCase } = householdAppeal;
+				const patchBody = {
+					appellantProcedurePreference: 'inquiry',
+					appellantProcedurePreferenceDetails: 'x'.repeat(1001),
+					appellantProcedurePreferenceDuration: 2,
+					inquiryHowManyWitnesses: 1
+				};
+
+				const response = await request
+					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+					.send(patchBody)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body.errors).toHaveProperty(
+					'appellantProcedurePreferenceDetails',
+					'must be 1000 characters or less'
+				);
+			});
 		});
 	});
 });

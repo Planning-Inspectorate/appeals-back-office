@@ -263,6 +263,8 @@ model AppellantCase {
   otherTenantsAgriculturalHolding      Boolean?
   informedTenantsAgriculturalHolding   Boolean?
   appellantProcedurePreference         String?
+  appellantProcedurePreferenceDetails  String?
+  appellantProcedurePreferenceDuration Int?
   inquiryHowManyWitnesses              Int?
   updateDevelopmentDescriptionUploaded Boolean?
   ownershipCertificateSubmitted        Boolean?

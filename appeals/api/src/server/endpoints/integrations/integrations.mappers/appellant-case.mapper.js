@@ -51,7 +51,11 @@ export const mapAppellantCaseIn = (command) => {
 		ownersInformed: casedata.ownersInformed,
 		...(knowsAllOwners && { knowsAllOwners }),
 		...(knowsOtherOwners && { knowsOtherOwners }),
-		isGreenBelt: casedata.isGreenBelt
+		isGreenBelt: casedata.isGreenBelt,
+		appellantProcedurePreference: casedata.appellantProcedurePreference,
+		appellantProcedurePreferenceDetails: casedata.appellantProcedurePreferenceDetails,
+		appellantProcedurePreferenceDuration: casedata.appellantProcedurePreferenceDuration,
+		inquiryHowManyWitnesses: casedata.inquiryHowManyWitnesses
 	};
 
 	return data;

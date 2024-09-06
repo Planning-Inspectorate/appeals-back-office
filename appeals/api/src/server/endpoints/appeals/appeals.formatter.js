@@ -330,6 +330,12 @@ const formatAppeal = (
 					visitType: appeal.siteVisit.siteVisitType.name
 				}
 			}),
+			appellantProcedurePreference: appeal.appellantCase?.appellantProcedurePreference,
+			appellantProcedurePreferenceDetails:
+				appeal.appellantCase?.appellantProcedurePreferenceDetails,
+			appellantProcedurePreferenceDuration:
+				appeal.appellantCase?.appellantProcedurePreferenceDuration,
+			inquiryHowManyWitnesses: appeal.appellantCase?.inquiryHowManyWitnesses,
 			createdAt: appeal.caseCreatedDate.toISOString(),
 			startedAt: appeal.caseStartedDate && appeal.caseStartedDate?.toISOString(),
 			validAt: appeal.caseValidDate && appeal.caseValidDate?.toISOString(),

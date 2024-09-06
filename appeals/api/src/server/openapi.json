@@ -3930,7 +3930,7 @@
 						"properties": {
 							"submissionId": {
 								"type": "string",
-								"example": "8f26730b-e86f-4a39-a069-a85491311b34"
+								"example": "314bd533-33a2-46d6-ad03-b71e95bd20e2"
 							},
 							"advertisedAppeal": {
 								"type": "boolean",
@@ -5657,6 +5657,22 @@
 							}
 						}
 					},
+					"appellantProcedurePreference": {
+						"type": "string",
+						"example": "Hearing"
+					},
+					"appellantProcedurePreferenceDetails": {
+						"type": "string",
+						"example": "Need for a detailed examination"
+					},
+					"appellantProcedurePreferenceDuration": {
+						"type": "number",
+						"example": 0
+					},
+					"inquiryHowManyWitnesses": {
+						"type": "number",
+						"example": 0
+					},
 					"hasAdvertisedAppeal": {
 						"type": "boolean",
 						"example": true
@@ -6943,6 +6959,22 @@
 					"isGreenBelt": {
 						"type": "boolean",
 						"example": true
+					},
+					"appellantProcedurePreference": {
+						"type": "string",
+						"example": "Hearing"
+					},
+					"appellantProcedurePreferenceDetails": {
+						"type": "string",
+						"example": "Need for a detailed examination"
+					},
+					"appellantProcedurePreferenceDuration": {
+						"type": "number",
+						"example": 3
+					},
+					"inquiryHowManyWitnesses": {
+						"type": "number",
+						"example": 2
 					}
 				},
 				"xml": {
