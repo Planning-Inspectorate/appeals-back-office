@@ -2509,19 +2509,17 @@ describe('LPA Questionnaire review', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain('Check your answers</h1>');
-			expect(unprettifiedElement.innerHTML).toContain('Name</th>');
-			expect(unprettifiedElement.innerHTML).toContain('Received</th>');
-			expect(unprettifiedElement.innerHTML).toContain('Redaction status</th>');
+			expect(unprettifiedElement.innerHTML).toContain('Name</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</dd>');
+			expect(unprettifiedElement.innerHTML).toContain('Date received</dt>');
+			expect(unprettifiedElement.innerHTML).toContain(`${dateToDisplayDate(new Date())}</dd>`);
+			expect(unprettifiedElement.innerHTML).toContain('Redaction status</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('Unredacted</dd>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				`<a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/${documentFolderInfo.folderId}">test-document.txt</a></td>`
+				`<a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/${documentFolderInfo.folderId}"> Change</a></dd>`
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				`<a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-document-details/${
-					documentFolderInfo.folderId
-				}">${dateToDisplayDate(new Date())}</a></td>`
-			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				`<a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-document-details/${documentFolderInfo.folderId}">Unredacted</a></td>`
+				`<a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-document-details/${documentFolderInfo.folderId}"> Change</a></dd>`
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 		});
@@ -2617,26 +2615,24 @@ describe('LPA Questionnaire review', () => {
 
 			expect(addDocumentsResponse.statusCode).toBe(302);
 
-			const response = await request.get(`${baseUrl}/add-documents/1/check-your-answers`);
+			const response = await request.get(`${baseUrl}/add-documents/1/1/check-your-answers`);
 
 			expect(response.statusCode).toBe(200);
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain('Check your answers</h1>');
-			expect(unprettifiedElement.innerHTML).toContain('Name</th>');
-			expect(unprettifiedElement.innerHTML).toContain('Received</th>');
-			expect(unprettifiedElement.innerHTML).toContain('Redaction status</th>');
+			expect(unprettifiedElement.innerHTML).toContain('Name</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</dd>');
+			expect(unprettifiedElement.innerHTML).toContain('Date received</dt>');
+			expect(unprettifiedElement.innerHTML).toContain(`${dateToDisplayDate(new Date())}</dd>`);
+			expect(unprettifiedElement.innerHTML).toContain('Redaction status</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('Unredacted</dd>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				`<a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/${documentFolderInfo.folderId}">test-document.txt</a></td>`
+				`<a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/${documentFolderInfo.folderId}/1"> Change</a></dd>`
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				`<a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-document-details/${
-					documentFolderInfo.folderId
-				}">${dateToDisplayDate(new Date())}</a></td>`
-			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				`<a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-document-details/${documentFolderInfo.folderId}">Unredacted</a></td>`
+				`<a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-document-details/${documentFolderInfo.folderId}/1"> Change</a></dd>`
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 		});

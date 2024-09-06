@@ -3606,13 +3606,12 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds">
             <div class="pins-file-upload__container">
                 <div class="govuk-body colour--secondary pins-file-upload__instructions">
-                    <label for="upload-file-1">Choose a single or multiple files to upload.</label><span>Files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total of your uploaded files must be smaller than 1 GB.</span>
+                    <label for="upload-file-1">Choose a single file to upload.</label><span>Files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total of your uploaded files must be smaller than 1 GB.</span>
                     <div                     class="middle-errors-hook"></div>
             </div>
             <div class="pins-file-upload__upload display--flex">
                 <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
-                type="file" name="files" value="Choose file" aria-controls="file-list-1"
-                multiple>
+                type="file" name="files" value="Choose file" aria-controls="file-list-1">
                 <button type='button' class="pins-file-upload__button govuk-button">Choose file</button><span role="status" aria-live="assertive" class='govuk-body pins-file-upload__counter'> No file chosen</span>
             </div>
             <div id="file-list-1">
@@ -3643,13 +3642,12 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds">
             <div class="pins-file-upload__container">
                 <div class="govuk-body colour--secondary pins-file-upload__instructions">
-                    <label for="upload-file-1">Choose a single or multiple files to upload.</label><span>Files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total of your uploaded files must be smaller than 1 GB.</span>
+                    <label for="upload-file-1">Choose a single file to upload.</label><span>Files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total of your uploaded files must be smaller than 1 GB.</span>
                     <div                     class="middle-errors-hook"></div>
             </div>
             <div class="pins-file-upload__upload display--flex">
                 <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
-                type="file" name="files" value="Choose file" aria-controls="file-list-1"
-                multiple>
+                type="file" name="files" value="Choose file" aria-controls="file-list-1">
                 <button type='button' class="pins-file-upload__button govuk-button">Choose file</button><span role="status" aria-live="assertive" class='govuk-body pins-file-upload__counter'> No file chosen</span>
             </div>
             <div id="file-list-1">
@@ -3680,13 +3678,12 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds">
             <div class="pins-file-upload__container">
                 <div class="govuk-body colour--secondary pins-file-upload__instructions">
-                    <label for="upload-file-1">Choose a single or multiple files to upload.</label><span>Files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total of your uploaded files must be smaller than 1 GB.</span>
+                    <label for="upload-file-1">Choose a single file to upload.</label><span>Files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total of your uploaded files must be smaller than 1 GB.</span>
                     <div                     class="middle-errors-hook"></div>
             </div>
             <div class="pins-file-upload__upload display--flex">
                 <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
-                type="file" name="files" value="Choose file" aria-controls="file-list-1"
-                multiple>
+                type="file" name="files" value="Choose file" aria-controls="file-list-1">
                 <button type='button' class="pins-file-upload__button govuk-button">Choose file</button><span role="status" aria-live="assertive" class='govuk-body pins-file-upload__counter'> No file chosen</span>
             </div>
             <div id="file-list-1">
@@ -3716,13 +3713,12 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds">
             <div class="pins-file-upload__container">
                 <div class="govuk-body colour--secondary pins-file-upload__instructions">
-                    <label for="upload-file-1">Choose a single or multiple files to upload.</label><span>Files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total of your uploaded files must be smaller than 1 GB.</span>
+                    <label for="upload-file-1">Choose a single file to upload.</label><span>Files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total of your uploaded files must be smaller than 1 GB.</span>
                     <div                     class="middle-errors-hook"></div>
             </div>
             <div class="pins-file-upload__upload display--flex">
                 <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
-                type="file" name="files" value="Choose file" aria-controls="file-list-1"
-                multiple>
+                type="file" name="files" value="Choose file" aria-controls="file-list-1">
                 <button type='button' class="pins-file-upload__button govuk-button">Choose file</button><span role="status" aria-live="assertive" class='govuk-body pins-file-upload__counter'> No file chosen</span>
             </div>
             <div id="file-list-1">
@@ -3753,13 +3749,12 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds">
             <div class="pins-file-upload__container">
                 <div class="govuk-body colour--secondary pins-file-upload__instructions">
-                    <label for="upload-file-1">Choose a single or multiple files to upload.</label><span>Files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total of your uploaded files must be smaller than 1 GB.</span>
+                    <label for="upload-file-1">Choose a single file to upload.</label><span>Files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total of your uploaded files must be smaller than 1 GB.</span>
                     <div                     class="middle-errors-hook"></div>
             </div>
             <div class="pins-file-upload__upload display--flex">
                 <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
-                type="file" name="files" value="Choose file" aria-controls="file-list-1"
-                multiple>
+                type="file" name="files" value="Choose file" aria-controls="file-list-1">
                 <button type='button' class="pins-file-upload__button govuk-button">Choose file</button><span role="status" aria-live="assertive" class='govuk-body pins-file-upload__counter'> No file chosen</span>
             </div>
             <div id="file-list-1">
@@ -3789,13 +3784,12 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds">
             <div class="pins-file-upload__container">
                 <div class="govuk-body colour--secondary pins-file-upload__instructions">
-                    <label for="upload-file-1">Choose a single or multiple files to upload.</label><span>Files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total of your uploaded files must be smaller than 1 GB.</span>
+                    <label for="upload-file-1">Choose a single file to upload.</label><span>Files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total of your uploaded files must be smaller than 1 GB.</span>
                     <div                     class="middle-errors-hook"></div>
             </div>
             <div class="pins-file-upload__upload display--flex">
                 <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
-                type="file" name="files" value="Choose file" aria-controls="file-list-1"
-                multiple>
+                type="file" name="files" value="Choose file" aria-controls="file-list-1">
                 <button type='button' class="pins-file-upload__button govuk-button">Choose file</button><span role="status" aria-live="assertive" class='govuk-body pins-file-upload__counter'> No file chosen</span>
             </div>
             <div id="file-list-1">
@@ -4898,48 +4892,6 @@ exports[`costs decision GET /costs/decision/check-and-confirm/:folderId should r
 </main>"
 `;
 
-exports[`costs decision GET /costs/decision/check-and-confirm/:folderId should render the check and confirm costs decision page if the folderId is valid 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Check your answers</h1>
-                </div>
-            </div>
-            <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Costs decision</dt>
-                    <dd class="govuk-summary-list__value">
-                        <ul class="govuk-list">
-                            <li>test-document.txt</li>
-                        </ul>
-                    </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/decision/upload-documents/7"> Change</a>
-                    </dd>
-                </div>
-            </dl>
-            <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-                <strong                 class="govuk-warning-text__text"><span class="govuk-warning-text__assistive">Warning</span> You must email
-                    the relevant parties to inform them of the decision.</strong>
-            </div>
-            <form method="post" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <div class="govuk-checkboxes" data-module="govuk-checkboxes">
-                        <div class="govuk-checkboxes__item">
-                            <input class="govuk-checkboxes__input" id="confirm" name="confirm" type="checkbox"
-                            value="yes">
-                            <label class="govuk-label govuk-checkboxes__label" for="confirm">I will email the relevant parties</label>
-                        </div>
-                    </div>
-                </div>
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Confirm</button>
-            </form>
-        </div>
-    </div>
-</main>"
-`;
-
 exports[`costs decision GET /costs/decision/manage-documents/:folderId should render a 404 error page if the folderId is not valid 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
@@ -5498,13 +5450,12 @@ exports[`costs decision GET /costs/decision/upload-documents/:folderId should re
         <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds">
             <div class="pins-file-upload__container">
                 <div class="govuk-body colour--secondary pins-file-upload__instructions">
-                    <label for="upload-file-1">Choose a single or multiple files to upload.</label><span>Files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total of your uploaded files must be smaller than 1 GB.</span>
+                    <label for="upload-file-1">Choose a single file to upload.</label><span>Files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total of your uploaded files must be smaller than 1 GB.</span>
                     <div                     class="middle-errors-hook"></div>
             </div>
             <div class="pins-file-upload__upload display--flex">
                 <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
-                type="file" name="files" value="Choose file" aria-controls="file-list-1"
-                multiple>
+                type="file" name="files" value="Choose file" aria-controls="file-list-1">
                 <button type='button' class="pins-file-upload__button govuk-button">Choose file</button><span role="status" aria-live="assertive" class='govuk-body pins-file-upload__counter'> No file chosen</span>
             </div>
             <div id="file-list-1">
@@ -5556,59 +5507,6 @@ exports[`costs decision GET /costs/decision/upload-documents/:folderId/:document
         <div class="progress-hook"></div>
     </div>
     </form>
-    </div>
-</main>"
-`;
-
-exports[`costs decision POST /costs/decision/check-and-confirm/:folderId should re-render the check and confirm costs decision page with the expected error message if confirmation was not provided 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-error-summary" data-module="govuk-error-summary">
-                <div role="alert">
-                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
-                    <div class="govuk-error-summary__body">
-                        <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#confirm">Select that you will email the relevant parties</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Check your answers</h1>
-                </div>
-            </div>
-            <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Costs decision</dt>
-                    <dd class="govuk-summary-list__value">
-                        <ul class="govuk-list">
-                            <li>test-document.txt</li>
-                        </ul>
-                    </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/decision/upload-documents/7"> Change</a>
-                    </dd>
-                </div>
-            </dl>
-            <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-                <strong                 class="govuk-warning-text__text"><span class="govuk-warning-text__assistive">Warning</span> You must email
-                    the relevant parties to inform them of the decision.</strong>
-            </div>
-            <form method="post" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <div class="govuk-checkboxes" data-module="govuk-checkboxes">
-                        <div class="govuk-checkboxes__item">
-                            <input class="govuk-checkboxes__input" id="confirm" name="confirm" type="checkbox"
-                            value="yes">
-                            <label class="govuk-label govuk-checkboxes__label" for="confirm">I will email the relevant parties</label>
-                        </div>
-                    </div>
-                </div>
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Confirm</button>
-            </form>
-        </div>
     </div>
 </main>"
 `;

@@ -144,8 +144,6 @@ describe('documents upload', () => {
 		expect(dataAttributes['data-folder-id']).toEqual(validFolderId.toString());
 		// @ts-ignore
 		expect(dataAttributes['data-document-id']).toBeUndefined();
-		// @ts-ignore
-		expect(html.querySelector('#upload-file-1')?.attributes['multiple']).not.toBeUndefined();
 	});
 
 	it('should render all necessary metadata attributes', async () => {
