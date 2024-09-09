@@ -3930,7 +3930,7 @@
 						"properties": {
 							"submissionId": {
 								"type": "string",
-								"example": "314bd533-33a2-46d6-ad03-b71e95bd20e2"
+								"example": "42f6920f-8581-48e8-92ed-155e9bd52a8f"
 							},
 							"advertisedAppeal": {
 								"type": "boolean",
@@ -5663,7 +5663,7 @@
 					},
 					"appellantProcedurePreferenceDetails": {
 						"type": "string",
-						"example": "Need for a detailed examination"
+						"example": "Reason for preference"
 					},
 					"appellantProcedurePreferenceDuration": {
 						"type": "number",
@@ -6966,7 +6966,7 @@
 					},
 					"appellantProcedurePreferenceDetails": {
 						"type": "string",
-						"example": "Need for a detailed examination"
+						"example": "Reason for preference"
 					},
 					"appellantProcedurePreferenceDuration": {
 						"type": "number",

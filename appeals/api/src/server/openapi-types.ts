@@ -67,7 +67,7 @@ export interface ValidateDate {
 
 export interface AppellantCaseData {
 	casedata?: {
-		/** @example "314bd533-33a2-46d6-ad03-b71e95bd20e2" */
+		/** @example "42f6920f-8581-48e8-92ed-155e9bd52a8f" */
 		submissionId?: string;
 		/** @example true */
 		advertisedAppeal?: boolean;
@@ -865,7 +865,7 @@ export interface SingleAppellantCaseResponse {
 	};
 	/** @example "Hearing" */
 	appellantProcedurePreference?: string;
-	/** @example "" */
+	/** @example "Reason for preference" */
 	appellantProcedurePreferenceDetails?: string;
 	/** @example 0 */
 	appellantProcedurePreferenceDuration?: number;
@@ -1435,7 +1435,7 @@ export interface UpdateAppellantCaseRequest {
 	isGreenBelt?: boolean;
 	/** @example "Hearing" */
 	appellantProcedurePreference?: string;
-	/** @example "Need for a detailed examination" */
+	/** @example "Reason for preference" */
 	appellantProcedurePreferenceDetails?: string;
 	/** @example 3 */
 	appellantProcedurePreferenceDuration?: number;

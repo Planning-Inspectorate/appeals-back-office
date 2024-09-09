@@ -125,12 +125,12 @@ exports[`neighbouring-sites GET /change/affected should render the change neighb
                     <div class="govuk-radios" data-module="govuk-radios">
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="neighbouringSiteAffected" name="neighbouringSiteAffected"
-                            type="radio" value="yes" checked>
+                            type="radio" value="yes">
                             <label class="govuk-label govuk-radios__label" for="neighbouringSiteAffected">Yes</label>
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="neighbouringSiteAffected-2" name="neighbouringSiteAffected"
-                            type="radio" value="no">
+                            type="radio" value="no" checked>
                             <label class="govuk-label govuk-radios__label" for="neighbouringSiteAffected-2">No</label>
                         </div>
                     </div>
@@ -157,12 +157,12 @@ exports[`neighbouring-sites GET /change/affected should render the change neighb
                     <div class="govuk-radios" data-module="govuk-radios">
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="neighbouringSiteAffected" name="neighbouringSiteAffected"
-                            type="radio" value="yes" checked>
+                            type="radio" value="yes">
                             <label class="govuk-label govuk-radios__label" for="neighbouringSiteAffected">Yes</label>
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="neighbouringSiteAffected-2" name="neighbouringSiteAffected"
-                            type="radio" value="no">
+                            type="radio" value="no" checked>
                             <label class="govuk-label govuk-radios__label" for="neighbouringSiteAffected-2">No</label>
                         </div>
                     </div>

@@ -113,6 +113,7 @@ interface SingleAppealDetailsResponse {
 		withdrawalFolder?: FolderInfo | null;
 		withdrawalRequestDate: Date | null;
 	};
+	isAffectingNeighbouringSites?: boolean | null;
 }
 
 interface UpdateAppealRequest {
@@ -308,6 +309,7 @@ interface UpdateLPAQuestionnaireRequest {
 	incompleteReasons?: IncompleteInvalidReasons;
 	validationOutcomeId?: number;
 	lpaNotificationMethods?: LPANotificationMethodsSelectedUncheckedUpdateManyWithoutLpaQuestionnaireNestedInput;
+	isAffectingNeighbouringSites?: boolean;
 }
 
 interface UpdateLPAQuestionnaireValidationOutcomeParams {

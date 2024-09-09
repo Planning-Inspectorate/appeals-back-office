@@ -318,6 +318,7 @@ const formatAppeal = (
 				0,
 			localPlanningDepartment: appeal.lpa?.name || '',
 			isGreenBelt: appeal.appellantCase?.isGreenBelt,
+			isAffectingNeighbouringSites: appeal.lpaQuestionnaire?.isAffectingNeighbouringSites,
 			lpaQuestionnaireId: appeal.lpaQuestionnaire?.id || null,
 			planningApplicationReference: appeal.applicationReference || '',
 			procedureType: appeal.procedureType?.name || 'Written',
