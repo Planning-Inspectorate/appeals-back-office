@@ -3,7 +3,9 @@ import { removeSummaryListActions } from '#lib/mappers/mapper-utilities.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { capitalize } from 'lodash-es';
-import { hourMinuteToApiDateString, dayMonthYearToApiDateString } from '#lib/dates.js';
+import { hourMinuteToApiDateString } from '#lib/dates.js';
+import { formatInTimeZone, zonedTimeToUtc } from 'date-fns-tz';
+import { pad } from '#lib/string-utilities.js';
 
 /**
  * @typedef {'unaccompanied'|'accompanied'|'accessRequired'} WebSiteVisitType
@@ -75,27 +77,33 @@ export async function scheduleOrManageSiteVisitPage(
 	const titlePrefix = capitalize(pageType);
 
 	visitType ??= mapGetApiVisitTypeToWebVisitType(appealDetails.siteVisit?.visitType);
-	visitDateDay ??= appealDetails.siteVisit?.visitDate
-		? new Date(appealDetails.siteVisit?.visitDate).getDate().toString()
-		: undefined;
-	visitDateMonth ??= appealDetails.siteVisit?.visitDate
-		? (new Date(appealDetails.siteVisit?.visitDate).getMonth() + 1).toString()
-		: undefined;
-	visitDateYear ??= appealDetails.siteVisit?.visitDate
-		? new Date(appealDetails.siteVisit?.visitDate).getFullYear().toString()
-		: undefined;
-	visitStartTimeHour ??= appealDetails.siteVisit?.visitStartTime
-		? appealDetails.siteVisit?.visitStartTime.split(':')[0]?.toString()
-		: undefined;
-	visitStartTimeMinute ??= appealDetails.siteVisit?.visitStartTime
-		? appealDetails.siteVisit?.visitStartTime.split(':')[1]?.toString()
-		: undefined;
-	visitEndTimeHour ??= appealDetails.siteVisit?.visitEndTime
-		? appealDetails.siteVisit?.visitEndTime.split(':')[0]?.toString()
-		: undefined;
-	visitEndTimeMinute ??= appealDetails.siteVisit?.visitEndTime
-		? appealDetails.siteVisit?.visitEndTime.split(':')[1]?.toString()
-		: undefined;
+
+	// populate all form-fields with values from the API, unless specified in the request body
+	if (appealDetails.siteVisit) {
+		// from the API in UTC
+		const { visitDate, visitEndTime, visitStartTime } = appealDetails.siteVisit;
+		if (visitDate) {
+			const dateOnly = visitDate.split('T')[0];
+			const visitDateObj = new Date(visitDate);
+
+			visitDateDay ??= formatInTimeZone(visitDateObj, 'Europe/London', 'dd');
+			visitDateMonth ??= formatInTimeZone(visitDateObj, 'Europe/London', 'MM');
+			visitDateYear ??= formatInTimeZone(visitDateObj, 'Europe/London', 'yyyy');
+
+			if (visitStartTime) {
+				const visitStart = new Date(`${dateOnly}T${visitStartTime}Z`);
+
+				visitStartTimeHour ??= formatInTimeZone(visitStart, 'Europe/London', 'HH');
+				visitStartTimeMinute ??= formatInTimeZone(visitStart, 'Europe/London', 'mm');
+			}
+			if (visitEndTime) {
+				const visitEnd = new Date(`${dateOnly}T${visitEndTime}Z`);
+
+				visitEndTimeHour ??= formatInTimeZone(visitEnd, 'Europe/London', 'HH');
+				visitEndTimeMinute ??= formatInTimeZone(visitEnd, 'Europe/London', 'mm');
+			}
+		}
+	}
 
 	/**
 	 * @type {(SummaryListRowProperties)[]}
@@ -518,15 +526,21 @@ export function mapPostScheduleOrManageSiteVisitCommonParameters(
 	visitEndTimeMinute,
 	visitType
 ) {
+	const dmy = `${visitDateYear}-${pad(visitDateMonth)}-${pad(visitDateDay)}`;
+	const startTime = hourMinuteToApiDateString(visitStartTimeHour, visitStartTimeMinute);
+	const endTime = hourMinuteToApiDateString(visitEndTimeHour, visitEndTimeMinute);
+
+	// interpret date times from the user in Europe/London
+	const date = zonedTimeToUtc(`${dmy} 00:00`, 'Europe/London');
+	const start = zonedTimeToUtc(`${dmy} ${startTime}`, 'Europe/London');
+	const end = endTime ? zonedTimeToUtc(`${dmy} ${endTime}`, 'Europe/London') : null;
+
+	// parse date times to the API in UTC
 	return {
 		appealIdNumber: parseInt(appealId, 10),
-		visitDate: dayMonthYearToApiDateString({
-			day: parseInt(visitDateDay, 10),
-			month: parseInt(visitDateMonth, 10),
-			year: parseInt(visitDateYear, 10)
-		}),
-		visitStartTime: hourMinuteToApiDateString(visitStartTimeHour, visitStartTimeMinute),
-		visitEndTime: hourMinuteToApiDateString(visitEndTimeHour, visitEndTimeMinute),
+		visitDate: date.toISOString(),
+		visitStartTime: formatInTimeZone(start, 'UTC', 'HH:mm'),
+		visitEndTime: (end && formatInTimeZone(end, 'UTC', 'HH:mm')) || '',
 		apiVisitType: mapWebVisitTypeToApiVisitType(visitType),
 		previousVisitType: ''
 	};

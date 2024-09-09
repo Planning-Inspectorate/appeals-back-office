@@ -3,7 +3,10 @@ import nock from 'nock';
 import supertest from 'supertest';
 import { createTestEnvironment } from '#testing/index.js';
 import { siteVisitData, appealData } from '#testing/app/fixtures/referencedata.js';
-import { getSiteVisitChangeType } from '../site-visit.mapper.js';
+import {
+	getSiteVisitChangeType,
+	mapPostScheduleOrManageSiteVisitCommonParameters
+} from '../site-visit.mapper.js';
 
 /**
  * @typedef {import('../site-visit.mapper.js').ScheduleOrManageSiteVisitConfirmationPageType} ScheduleOrManageSiteVisitConfirmationPageType
@@ -1299,5 +1302,87 @@ describe('site-visit', () => {
 			expect(result).toBe('unchanged');
 			expect(updateOrCreateSiteVisitParameters.previousVisitType).toBe('');
 		});
+	});
+
+	describe('mapPostScheduleOrManageSiteVisitCommonParameters', () => {
+		const tests = [
+			{
+				name: 'UTC',
+				params: {
+					appealId: '101',
+					visitDateDay: '24',
+					visitDateMonth: '01',
+					visitDateYear: '2024',
+					visitStartTimeHour: '11',
+					visitStartTimeMinute: '30',
+					visitEndTimeHour: '12',
+					visitEndTimeMinute: '00',
+					visitType: 'unaccompanied'
+				},
+				want: {
+					appealIdNumber: 101,
+					visitDate: '2024-01-24T00:00:00.000Z',
+					visitStartTime: '11:30',
+					visitEndTime: '12:00',
+					apiVisitType: 'unaccompanied',
+					previousVisitType: ''
+				}
+			},
+			{
+				name: 'BST',
+				params: {
+					appealId: '101',
+					visitDateDay: '10',
+					visitDateMonth: '09',
+					visitDateYear: '2024',
+					visitStartTimeHour: '14',
+					visitStartTimeMinute: '30',
+					visitEndTimeHour: '15',
+					visitEndTimeMinute: '00',
+					visitType: 'unaccompanied'
+				},
+				want: {
+					appealIdNumber: 101,
+					visitDate: '2024-09-09T23:00:00.000Z',
+					visitStartTime: '13:30',
+					visitEndTime: '14:00',
+					apiVisitType: 'unaccompanied',
+					previousVisitType: ''
+				}
+			}
+		];
+
+		for (const {
+			name,
+			params: {
+				appealId,
+				visitDateDay,
+				visitDateMonth,
+				visitDateYear,
+				visitStartTimeHour,
+				visitStartTimeMinute,
+				visitEndTimeHour,
+				visitEndTimeMinute,
+				visitType
+			},
+			want
+		} of tests) {
+			it(`${name}`, () => {
+				expect(
+					mapPostScheduleOrManageSiteVisitCommonParameters(
+						appealId,
+						visitDateDay,
+						visitDateMonth,
+						visitDateYear,
+						visitStartTimeHour,
+						visitStartTimeMinute,
+						visitEndTimeHour,
+						visitEndTimeMinute,
+						// @ts-ignore
+						visitType
+					)
+				).toEqual(want);
+			});
+		}
 	});
 });

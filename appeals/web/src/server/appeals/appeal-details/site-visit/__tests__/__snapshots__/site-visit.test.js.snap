@@ -75,7 +75,7 @@ exports[`site-visit GET /site-visit/manage-visit should render the manage visit 
                                 <div class="govuk-form-group">
                                     <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
                                     <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                    id="visit-date-day" name="visit-date-day" type="text" value="9" inputmode="numeric">
+                                    id="visit-date-day" name="visit-date-day" type="text" value="09" inputmode="numeric">
                                 </div>
                             </div>
                             <div class="govuk-date-input__item">
@@ -101,14 +101,14 @@ exports[`site-visit GET /site-visit/manage-visit should render the manage visit 
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                    name="visit-start-time-hour" type="number" value="09">&nbsp;:&nbsp;
+                    name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                     name="visit-start-time-minute" type="number" value="38">
                 </fieldset>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                    name="visit-end-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                    name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                     name="visit-end-time-minute" type="number" value="44">
                 </fieldset>
@@ -195,7 +195,7 @@ exports[`site-visit GET /site-visit/schedule-visit should render the schedule vi
                                 <div class="govuk-form-group">
                                     <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
                                     <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                    id="visit-date-day" name="visit-date-day" type="text" value="9" inputmode="numeric">
+                                    id="visit-date-day" name="visit-date-day" type="text" value="09" inputmode="numeric">
                                 </div>
                             </div>
                             <div class="govuk-date-input__item">
@@ -221,14 +221,14 @@ exports[`site-visit GET /site-visit/schedule-visit should render the schedule vi
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                    name="visit-start-time-hour" type="number" value="09">&nbsp;:&nbsp;
+                    name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                     name="visit-start-time-minute" type="number" value="38">
                 </fieldset>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                    name="visit-end-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                    name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                     name="visit-end-time-minute" type="number" value="44">
                 </fieldset>
