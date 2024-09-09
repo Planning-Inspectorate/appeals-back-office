@@ -495,12 +495,12 @@ export function changeNeighbouringSiteAffectedPage(appealData, origin) {
 						{
 							text: 'Yes',
 							value: 'yes',
-							checked: appealData.neighbouringSites?.length > 0
+							checked: appealData.isAffectingNeighbouringSites
 						},
 						{
 							text: 'No',
 							value: 'no',
-							checked: !appealData.neighbouringSites || appealData.neighbouringSites.length == 0
+							checked: !appealData.isAffectingNeighbouringSites
 						}
 					]
 				}

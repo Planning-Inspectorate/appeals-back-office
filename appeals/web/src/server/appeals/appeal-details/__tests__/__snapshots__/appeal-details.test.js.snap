@@ -501,7 +501,7 @@ exports[`appeal-details GET /:appealId should not render action links to the man
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
-                            <dd                             class="govuk-summary-list__value">Yes</dd>
+                            <dd                             class="govuk-summary-list__value">No answer provided</dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                             <dd                             class="govuk-summary-list__value">
@@ -925,7 +925,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
-                            <dd                             class="govuk-summary-list__value">Yes</dd>
+                            <dd                             class="govuk-summary-list__value">No answer provided</dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                             <dd                             class="govuk-summary-list__value">
@@ -1344,7 +1344,7 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
-                            <dd                             class="govuk-summary-list__value">Yes</dd>
+                            <dd                             class="govuk-summary-list__value">No answer provided</dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                             <dd                             class="govuk-summary-list__value">
@@ -1763,7 +1763,7 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
-                            <dd                             class="govuk-summary-list__value">Yes</dd>
+                            <dd                             class="govuk-summary-list__value">No answer provided</dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                             <dd                             class="govuk-summary-list__value">
@@ -2198,7 +2198,7 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
-                            <dd                             class="govuk-summary-list__value">Yes</dd>
+                            <dd                             class="govuk-summary-list__value">No answer provided</dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                             <dd                             class="govuk-summary-list__value">
@@ -2618,7 +2618,7 @@ exports[`appeal-details GET /:appealId should render an Issue a decision notific
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
-                            <dd                             class="govuk-summary-list__value">Yes</dd>
+                            <dd                             class="govuk-summary-list__value">No answer provided</dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                             <dd                             class="govuk-summary-list__value">
@@ -3025,7 +3025,7 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
-                            <dd                             class="govuk-summary-list__value">Yes</dd>
+                            <dd                             class="govuk-summary-list__value">No answer provided</dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                             <dd                             class="govuk-summary-list__value">
@@ -3432,7 +3432,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
-                            <dd                             class="govuk-summary-list__value">Yes</dd>
+                            <dd                             class="govuk-summary-list__value">No answer provided</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/change/affected"
                                     data-cy="change-neighbouuring-site-is-affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
                                 </dd>
@@ -3844,7 +3844,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
-                            <dd                             class="govuk-summary-list__value">Yes</dd>
+                            <dd                             class="govuk-summary-list__value">No answer provided</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/change/affected"
                                     data-cy="change-neighbouuring-site-is-affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
                                 </dd>
@@ -4256,7 +4256,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
-                            <dd                             class="govuk-summary-list__value">Yes</dd>
+                            <dd                             class="govuk-summary-list__value">No answer provided</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/change/affected"
                                     data-cy="change-neighbouuring-site-is-affected"> Change<span class="govuk-visually-hidden"> could a neighbouring site be affected</span></a>
                                 </dd>
@@ -4682,7 +4682,7 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
-                            <dd                             class="govuk-summary-list__value">Yes</dd>
+                            <dd                             class="govuk-summary-list__value">No answer provided</dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                             <dd                             class="govuk-summary-list__value">
@@ -5243,7 +5243,7 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
-                            <dd                             class="govuk-summary-list__value">Yes</dd>
+                            <dd                             class="govuk-summary-list__value">No answer provided</dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                             <dd                             class="govuk-summary-list__value">
@@ -5676,7 +5676,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
-                            <dd                             class="govuk-summary-list__value">Yes</dd>
+                            <dd                             class="govuk-summary-list__value">No answer provided</dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                             <dd                             class="govuk-summary-list__value">
@@ -6080,7 +6080,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
-                            <dd                             class="govuk-summary-list__value">Yes</dd>
+                            <dd                             class="govuk-summary-list__value">No answer provided</dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                             <dd                             class="govuk-summary-list__value">
@@ -6508,7 +6508,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
-                            <dd                             class="govuk-summary-list__value">Yes</dd>
+                            <dd                             class="govuk-summary-list__value">No answer provided</dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                             <dd                             class="govuk-summary-list__value">
@@ -6912,7 +6912,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
-                            <dd                             class="govuk-summary-list__value">Yes</dd>
+                            <dd                             class="govuk-summary-list__value">No answer provided</dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                             <dd                             class="govuk-summary-list__value">
@@ -7440,7 +7440,7 @@ exports[`appeal-details should not render a back button 1`] = `
                                             </dd>
                                     </div>
                                     <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
-                                        <dd                                         class="govuk-summary-list__value">Yes</dd>
+                                        <dd                                         class="govuk-summary-list__value">No answer provided</dd>
                                     </div>
                                     <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                                         <dd                                         class="govuk-summary-list__value">
