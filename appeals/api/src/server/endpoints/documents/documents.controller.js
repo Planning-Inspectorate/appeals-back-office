@@ -242,9 +242,8 @@ const updateDocuments = async (req, res) => {
 			});
 		}
 		await documentRepository.updateDocuments(documents);
-
 		for (const document of documents) {
-			await broadcasters.broadcastDocument(document.guid, document.latestVersion, EventType.Update);
+			await broadcasters.broadcastDocument(document.id, document.latestVersion, EventType.Update);
 		}
 	} catch (error) {
 		if (error) {
