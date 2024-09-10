@@ -19,9 +19,7 @@ export const errorMessage = (type, replaceValue) => {
 		GENERIC_SINGLE_FILE: `{REPLACE_VALUE} could not be added, try again`,
 		NAME_SINGLE_FILE: `{REPLACE_VALUE} could not be added because the file name is too long or contains special characters. Rename the file and try and upload again.`,
 		TYPE_SINGLE_FILE: `{REPLACE_VALUE} could not be added because it is not an allowed file type`,
-		DUPLICATE_NAME_SINGLE_FILE: `${
-			replaceValue || 'One or more documents'
-		} could not be uploaded because a file with the same name already exists`
+		DUPLICATE_NAME_SINGLE_FILE: `"{REPLACE_VALUE}" could not be added because a file with this name already exists. Files cannot have duplicate names.`
 	};
 
 	return index[type] ? index[type].replace('{REPLACE_VALUE}', replaceValue || '') : index.GENERIC;

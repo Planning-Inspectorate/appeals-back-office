@@ -66,6 +66,17 @@ export const renderDocumentUpload = async (
 		return response.status(404).render('app/404.njk');
 	}
 
+	const filenamesInFolder = currentFolder.documents
+		? Buffer.from(
+				JSON.stringify(
+					currentFolder.documents.map(
+						(/** @type {import('@pins/appeals.api').Appeals.DocumentInfo} */ documentInfo) =>
+							documentInfo.name
+					)
+				)
+		  ).toString('base64')
+		: '';
+
 	let documentName;
 	let _documentType = documentType;
 	let latestVersion;
@@ -97,7 +108,8 @@ export const renderDocumentUpload = async (
 		pageHeadingTextOverride,
 		pageBodyComponents,
 		allowMultipleFiles,
-		_documentType
+		_documentType,
+		filenamesInFolder
 	);
 
 	return response.status(200).render('appeals/documents/document-upload.njk', mappedPageContent);
