@@ -2,9 +2,6 @@
 import { Page } from './basePage';
 
 export class DateTimeSection extends Page {
-	_selectors = {
-		uniqueSelector: 'selector-name'
-	};
 
 	// S E L E C T O R S
 
@@ -28,7 +25,7 @@ export class DateTimeSection extends Page {
 
 	// E L E M E N T S
 
-	updateDueDateElements = {
+	elements = {
 		clickSkipButton: () => cy.contains(this.selectors.skipButton, 'Skip'),
 		enterVisitStartHour: () => cy.get(this.selectors.visitStartHour),
 		enterVisitStartMinute: () => cy.get(this.selectors.visitStartMinute),
@@ -75,32 +72,17 @@ export class DateTimeSection extends Page {
 	}
 
 	clickSkipButton(text) {
-		this.updateDueDateElements.clickSkipButton(text).click();
+		this.elements.clickSkipButton(text).click();
 	}
 
 	enterVisitStartTime(hour, minute) {
-		this.enterVisitStartTimeHour(hour);
-		this.enterVisitStartTimeMinute(minute);
-	}
-
-	enterVisitStartTimeHour(text, index = 0) {
-		this.updateDueDateElements.enterVisitStartHour().eq(index).clear().type(text);
-	}
-
-	enterVisitStartTimeMinute(text, index = 0) {
-		this.updateDueDateElements.enterVisitStartMinute().eq(index).clear().type(text);
+		this.#set(this.elements.enterVisitStartHour(), hour );
+		this.#set(this.elements.enterVisitStartMinute(), minute );
 	}
 
 	enterVisitEndTime(hour, minute) {
-		this.enterVisitEndTimeHour(hour);
-		this.enterVisitEndTimeMinute(minute);
-	}
-
-	enterVisitEndTimeHour(text, index = 0) {
-		this.updateDueDateElements.enterVisitEndHour().eq(index).clear().type(text);
-	}
-	enterVisitEndTimeMinute(text, index = 0) {
-		this.updateDueDateElements.enterVisitEndMinute().eq(index).clear().type(text);
+		this.#set(this.elements.enterVisitEndHour(), hour );
+		this.#set(this.elements.enterVisitEndMinute(), minute );
 	}
 
 	formatDate(date) {
@@ -112,18 +94,18 @@ export class DateTimeSection extends Page {
 	}
 
 	removeVisitStartTimeHour(index = 0) {
-		this.updateDueDateElements.enterVisitStartHour().eq(index).clear();
+		this.elements.enterVisitStartHour().eq(index).clear();
 	}
 
 	removeVisitStartTimeMinute(index = 0) {
-		this.updateDueDateElements.enterVisitStartMinute().eq(index).clear();
+		this.elements.enterVisitStartMinute().eq(index).clear();
 	}
 
 	removeVisitEndTimeHour(index = 0) {
-		this.updateDueDateElements.enterVisitEndHour().eq(index).clear();
+		this.elements.enterVisitEndHour().eq(index).clear();
 	}
 	removeVisitEndTimeMinute(index = 0) {
-		this.updateDueDateElements.enterVisitEndMinute().eq(index).clear();
+		this.elements.enterVisitEndMinute().eq(index).clear();
 	}
 
 	// Private helper methods
