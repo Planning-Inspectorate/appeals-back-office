@@ -49,6 +49,7 @@ export class Page {
 		tab: '.govuk-tabs__tab',
 		tag: '.govuk-tag',
 		textArea: '.govuk-textarea',
+		status: '.govuk-tag',
 		successBanner: '.govuk-notification-banner--success',
 		summaryListActions: '.govuk-summary-list__actions',
 		summaryListKey: '.govuk-summary-list__key',
@@ -96,6 +97,7 @@ export class Page {
 		selectElem: () => cy.get(this.selectors.select),
 		saveAndContinue: () => this.clickButtonByText('Save and Continue'),
 		successBanner: () => cy.get(this.selectors.successBanner),
+		status: () => cy.get(this.selectors.status),
 		summaryListActions: () => cy.get(this.selectors.summaryListActions),
 		summaryListValue: () => cy.get(this.selectors.summaryListValue),
 		signOutLink: () =>
@@ -179,6 +181,10 @@ export class Page {
 
 	chooseRadioBtnByIndex(indexNumber) {
 		this.basePageElements.radioButton().find('input').eq(indexNumber).check();
+	}
+
+	checkStatusOfCase(text, index = 0) {
+		this.basePageElements.status().eq(index).contains(text);
 	}
 
 	chooseSelectItemByIndex(optionNumber) {
