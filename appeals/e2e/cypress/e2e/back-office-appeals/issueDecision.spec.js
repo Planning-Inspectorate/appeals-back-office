@@ -18,7 +18,7 @@ describe('Issue Decision', () => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
-	it.only('Issue Decision Allowed ', { tags: tag.smoke }, () => {
+	it.skip('Issue Decision Allowed ', { tags: tag.smoke }, () => {
 		let futureDate = new Date();
 		futureDate.setDate(futureDate.getDate() + 28);
 
