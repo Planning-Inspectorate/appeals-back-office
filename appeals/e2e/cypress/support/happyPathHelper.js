@@ -34,6 +34,17 @@ export const happyPathHelper = {
 		dateTimeSection.enterValidDate(dueDate);
 		caseDetailsPage.clickButtonByText('Confirm');
 	},
+	reviewLpaq(caseRef) {
+		let dueDate = new Date();
+
+		cy.visit(urlPaths.appealsList);
+		listCasesPage.clickAppealByRef(caseRef);
+		caseDetailsPage.clickReviewLpaq();
+		caseDetailsPage.selectRadioButtonByValue('Complete');
+		caseDetailsPage.clickButtonByText('Confirm');
+		caseDetailsPage.clickLinkByText('Go back to case details');
+	},
+
 	startCase(caseRef) {
 		cy.visit(urlPaths.appealsList);
 		listCasesPage.clickAppealByRef(caseRef);
