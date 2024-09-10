@@ -147,6 +147,10 @@ export class Page {
 			.each(($checkbox) => cy.wrap($checkbox).uncheck({ force: true }));
 	}
 
+	selectCheckbox() {
+		this.basePageElements.checkbox().check({ force: true });
+	}
+
 	clickAccordionByText(text) {
 		this.basePageElements.accordion(text).click();
 	}

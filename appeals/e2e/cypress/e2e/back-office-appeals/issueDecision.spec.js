@@ -18,9 +18,9 @@ describe('Issue Decision', () => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
-	it.skip('Issue Decision Allowed ', { tags: tag.smoke }, () => {
+	it('Issue Decision Allowed ', { tags: tag.smoke }, () => {
 		let futureDate = new Date();
-		futureDate.setDate(futureDate.getDate() + 28);
+		futureDate.setDate(futureDate.getDate());
 
 		cy.createCase().then((caseRef) => {
 			cy.addLpaqSubmissionToCase(caseRef);
@@ -35,7 +35,53 @@ describe('Issue Decision', () => {
 			caseDetailsPage.clickButtonByText('Continue');
 			dateTimeSection.enterDecisionLetterDate(futureDate);
 			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.fillInput();
+			caseDetailsPage.selectCheckbox();
+			caseDetailsPage.clickButtonByText('Send Decision');
+			caseDetailsPage.clickLinkByText('Go back to case details');
+		});
+	});
+
+	it('Issue Decision Dismissed ', { tags: tag.smoke }, () => {
+		let futureDate = new Date();
+		futureDate.setDate(futureDate.getDate());
+
+		cy.createCase().then((caseRef) => {
+			cy.addLpaqSubmissionToCase(caseRef);
+			happyPathHelper.assignCaseOfficer(caseRef);
+			happyPathHelper.reviewAppellantCase(caseRef);
+			happyPathHelper.startCase(caseRef);
+			happyPathHelper.reviewLpaq(caseRef);
+			caseDetailsPage.clickIssueDecision(caseRef);
+			caseDetailsPage.selectRadioButtonByValue('Dismissed');
+			caseDetailsPage.clickButtonByText('Continue');
+			caseDetailsPage.uploadOneDocument();
+			caseDetailsPage.clickButtonByText('Continue');
+			dateTimeSection.enterDecisionLetterDate(futureDate);
+			caseDetailsPage.clickButtonByText('Continue');
+			caseDetailsPage.selectCheckbox();
+			caseDetailsPage.clickButtonByText('Send Decision');
+			caseDetailsPage.clickLinkByText('Go back to case details');
+		});
+	});
+
+	it('Issue Decision Split Decision ', { tags: tag.smoke }, () => {
+		let futureDate = new Date();
+		futureDate.setDate(futureDate.getDate());
+
+		cy.createCase().then((caseRef) => {
+			cy.addLpaqSubmissionToCase(caseRef);
+			happyPathHelper.assignCaseOfficer(caseRef);
+			happyPathHelper.reviewAppellantCase(caseRef);
+			happyPathHelper.startCase(caseRef);
+			happyPathHelper.reviewLpaq(caseRef);
+			caseDetailsPage.clickIssueDecision(caseRef);
+			caseDetailsPage.selectRadioButtonByValue('Split Decision');
+			caseDetailsPage.clickButtonByText('Continue');
+			caseDetailsPage.uploadOneDocument();
+			caseDetailsPage.clickButtonByText('Continue');
+			dateTimeSection.enterDecisionLetterDate(futureDate);
+			caseDetailsPage.clickButtonByText('Continue');
+			caseDetailsPage.selectCheckbox();
 			caseDetailsPage.clickButtonByText('Send Decision');
 			caseDetailsPage.clickLinkByText('Go back to case details');
 		});
