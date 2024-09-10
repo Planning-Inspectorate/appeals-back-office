@@ -3603,7 +3603,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
     data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
         <div class="top-errors-hook"></div>
-        <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds">
+        <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
+        data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0Il0=">
             <div class="pins-file-upload__container">
                 <div class="govuk-body colour--secondary pins-file-upload__instructions">
                     <label for="upload-file-1">Choose a single file to upload.</label><span>Files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total of your uploaded files must be smaller than 1 GB.</span>
@@ -3639,7 +3640,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
     data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
         <div class="top-errors-hook"></div>
-        <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds">
+        <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
+        data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0Il0=">
             <div class="pins-file-upload__container">
                 <div class="govuk-body colour--secondary pins-file-upload__instructions">
                     <label for="upload-file-1">Choose a single file to upload.</label><span>Files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total of your uploaded files must be smaller than 1 GB.</span>
@@ -3675,7 +3677,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
     data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
         <div class="top-errors-hook"></div>
-        <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds">
+        <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
+        data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0Il0=">
             <div class="pins-file-upload__container">
                 <div class="govuk-body colour--secondary pins-file-upload__instructions">
                     <label for="upload-file-1">Choose a single file to upload.</label><span>Files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total of your uploaded files must be smaller than 1 GB.</span>
@@ -3710,7 +3713,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     data-document-type="lpaCostsApplication" data-document-stage="costs" data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1"
     data-blob-storage-container="document-service-uploads" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
         <div class="top-errors-hook"></div>
-        <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds">
+        <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
+        data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0Il0=">
             <div class="pins-file-upload__container">
                 <div class="govuk-body colour--secondary pins-file-upload__instructions">
                     <label for="upload-file-1">Choose a single file to upload.</label><span>Files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total of your uploaded files must be smaller than 1 GB.</span>
@@ -3746,7 +3750,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
     data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
         <div class="top-errors-hook"></div>
-        <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds">
+        <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
+        data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0Il0=">
             <div class="pins-file-upload__container">
                 <div class="govuk-body colour--secondary pins-file-upload__instructions">
                     <label for="upload-file-1">Choose a single file to upload.</label><span>Files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total of your uploaded files must be smaller than 1 GB.</span>
@@ -3781,7 +3786,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     data-document-type="lpaCostsWithdrawal" data-document-stage="costs" data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1"
     data-blob-storage-container="document-service-uploads" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
         <div class="top-errors-hook"></div>
-        <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds">
+        <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
+        data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0Il0=">
             <div class="pins-file-upload__container">
                 <div class="govuk-body colour--secondary pins-file-upload__instructions">
                     <label for="upload-file-1">Choose a single file to upload.</label><span>Files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total of your uploaded files must be smaller than 1 GB.</span>
@@ -3818,7 +3824,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     data-document-id="1" data-document-original-file-name="test-pdf-documentFileVersionsInfo.pdf"
     data-document-version="1" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
         <div class="top-errors-hook"></div>
-        <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds">
+        <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
+        data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0Il0=">
             <div class="pins-file-upload__container">
                 <div class="govuk-body colour--secondary pins-file-upload__instructions">
                     <label for="upload-file-1">Choose a single file to upload.</label><span>Files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total of your uploaded files must be smaller than 1 GB.</span>
@@ -3855,7 +3862,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     data-document-id="1" data-document-original-file-name="test-pdf-documentFileVersionsInfo.pdf"
     data-document-version="1" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
         <div class="top-errors-hook"></div>
-        <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds">
+        <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
+        data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0Il0=">
             <div class="pins-file-upload__container">
                 <div class="govuk-body colour--secondary pins-file-upload__instructions">
                     <label for="upload-file-1">Choose a single file to upload.</label><span>Files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total of your uploaded files must be smaller than 1 GB.</span>
@@ -3892,7 +3900,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     data-document-id="1" data-document-original-file-name="test-pdf-documentFileVersionsInfo.pdf"
     data-document-version="1" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
         <div class="top-errors-hook"></div>
-        <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds">
+        <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
+        data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0Il0=">
             <div class="pins-file-upload__container">
                 <div class="govuk-body colour--secondary pins-file-upload__instructions">
                     <label for="upload-file-1">Choose a single file to upload.</label><span>Files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total of your uploaded files must be smaller than 1 GB.</span>
@@ -3929,7 +3938,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     data-document-id="1" data-document-original-file-name="test-pdf-documentFileVersionsInfo.pdf"
     data-document-version="1" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
         <div class="top-errors-hook"></div>
-        <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds">
+        <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
+        data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0Il0=">
             <div class="pins-file-upload__container">
                 <div class="govuk-body colour--secondary pins-file-upload__instructions">
                     <label for="upload-file-1">Choose a single file to upload.</label><span>Files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total of your uploaded files must be smaller than 1 GB.</span>
@@ -3966,7 +3976,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     data-document-id="1" data-document-original-file-name="test-pdf-documentFileVersionsInfo.pdf"
     data-document-version="1" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
         <div class="top-errors-hook"></div>
-        <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds">
+        <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
+        data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0Il0=">
             <div class="pins-file-upload__container">
                 <div class="govuk-body colour--secondary pins-file-upload__instructions">
                     <label for="upload-file-1">Choose a single file to upload.</label><span>Files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total of your uploaded files must be smaller than 1 GB.</span>
@@ -4003,7 +4014,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     data-document-id="1" data-document-original-file-name="test-pdf-documentFileVersionsInfo.pdf"
     data-document-version="1" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
         <div class="top-errors-hook"></div>
-        <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds">
+        <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
+        data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0Il0=">
             <div class="pins-file-upload__container">
                 <div class="govuk-body colour--secondary pins-file-upload__instructions">
                     <label for="upload-file-1">Choose a single file to upload.</label><span>Files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total of your uploaded files must be smaller than 1 GB.</span>
@@ -5447,7 +5459,8 @@ exports[`costs decision GET /costs/decision/upload-documents/:folderId should re
     data-document-type="costsDecisionLetter" data-document-stage="costs" data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1"
     data-blob-storage-container="document-service-uploads" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
         <div class="top-errors-hook"></div>
-        <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds">
+        <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
+        data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0Il0=">
             <div class="pins-file-upload__container">
                 <div class="govuk-body colour--secondary pins-file-upload__instructions">
                     <label for="upload-file-1">Choose a single file to upload.</label><span>Files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total of your uploaded files must be smaller than 1 GB.</span>
@@ -5484,7 +5497,8 @@ exports[`costs decision GET /costs/decision/upload-documents/:folderId/:document
     data-document-id="1" data-document-original-file-name="test-pdf-documentFileVersionsInfo.pdf"
     data-document-version="1" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
         <div class="top-errors-hook"></div>
-        <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds">
+        <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
+        data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0Il0=">
             <div class="pins-file-upload__container">
                 <div class="govuk-body colour--secondary pins-file-upload__instructions">
                     <label for="upload-file-1">Choose a single file to upload.</label><span>Files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total of your uploaded files must be smaller than 1 GB.</span>

@@ -224,6 +224,14 @@ const clientActions = (container) => {
 	const checkSelectedFile = (selectedFile) => {
 		const allowedMimeTypes = (container.dataset.allowedTypes || '').split(',');
 
+		const filenamesInFolderBase64String = form.dataset.filenamesInFolder || '';
+		const filenamesInFolderString = window.atob(filenamesInFolderBase64String);
+		const filenamesInFolderArray = JSON.parse(filenamesInFolderString);
+		const filenamesInFolder = Array.isArray(filenamesInFolderArray) ? filenamesInFolderArray : [];
+
+		if (filenamesInFolder.includes(selectedFile.name)) {
+			return { message: 'DUPLICATE_NAME_SINGLE_FILE' };
+		}
 		if (selectedFile.name.length > 255) {
 			return { message: 'NAME_SINGLE_FILE' };
 		}

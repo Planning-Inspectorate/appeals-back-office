@@ -46,6 +46,7 @@ import { folderIsAdditionalDocuments } from '#lib/documents.js';
  * @param {PageComponent[]} [pageBodyComponents]
  * @param {boolean} [allowMultipleFiles]
  * @param {string} [documentType]
+ * @param {string} [filenamesInFolder]
  * @returns {Promise<import('#appeals/appeal-documents/appeal-documents.types.js').DocumentUploadPageParameters>}
  */
 export async function documentUploadPage(
@@ -64,7 +65,8 @@ export async function documentUploadPage(
 	pageHeadingTextOverride,
 	pageBodyComponents = [],
 	allowMultipleFiles,
-	documentType
+	documentType,
+	filenamesInFolder
 ) {
 	const isAdditionalDocument = folderIsAdditionalDocuments(folderPath);
 	const pageHeadingText =
@@ -83,6 +85,7 @@ export async function documentUploadPage(
 		documentOriginalFileName: documentName,
 		documentVersion: latestVersion,
 		useBlobEmulator: config.useBlobEmulator,
+		filenamesInFolder,
 		...(fileUploadInfo && {
 			uncommittedFiles: JSON.stringify({
 				files: fileUploadInfo.map(

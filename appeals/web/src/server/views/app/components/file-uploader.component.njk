@@ -28,7 +28,7 @@
 		{% if params.formTitle %}
 			<h1 class="govuk-heading-m govuk-grid-column-full">{{ params.formTitle }}</h1>
 		{% endif %}
-		<form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds">
+		<form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds" data-filenames-in-folder="{{ params.filenamesInFolder }}">
 			<div class="pins-file-upload__container">
 				<div class="govuk-body colour--secondary pins-file-upload__instructions">
 					{% if params.multiple %}
