@@ -18,7 +18,7 @@ describe('Issue Decision', () => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
-	it.skip('Issue Decision Allowed ', { tags: tag.smoke }, () => {
+	it.only('Issue Decision Allowed ', { tags: tag.smoke }, () => {
 		let futureDate = new Date();
 		futureDate.setDate(futureDate.getDate() + 28);
 
@@ -33,7 +33,7 @@ describe('Issue Decision', () => {
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.uploadOneDocument();
 			caseDetailsPage.clickButtonByText('Continue');
-			dateTimeSection.enterDate(futureDate);
+			dateTimeSection.enterDecisionLetterDate(futureDate);
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.fillInput();
 			caseDetailsPage.clickButtonByText('Send Decision');

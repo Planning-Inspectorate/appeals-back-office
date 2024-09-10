@@ -9,35 +9,25 @@ export class DateTimeSection extends Page {
 	// S E L E C T O R S
 
 	selectors = {
-		dateInputDay: '#due-date-day',
-		dateInputMonth: '#due-date-month',
-		dateInputYear: '#due-date-year',
-		validDateDay: '#valid-date-day',
-		validDateMonth: '#valid-date-month',
-		validDateYear: '#valid-date-year',
 		skipButton: '.govuk-button',
-		visitDateDay: '#visit-date-day',
-		visitDateMonth: '#visit-date-month',
-		visitDateYear: '#visit-date-year',
 		visitStartHour: '#visit-start-time-hour',
 		visitStartMinute: '#visit-start-time-minute',
 		visitEndHour: '#visit-end-time-hour',
 		visitEndMinute: '#visit-end-time-minute'
 	};
 
+	// Prefix of date selector which is expected to end in 'day', 'month' and 'year' for each dropdown in the HTML
+	selectorPrefix = {
+		dueDate: '#due-date-',
+		validDate: '#valid-date-',
+		visitDate: '#visit-date-',
+		decisionLetterDate: '#decision-letter-date-'
+	}
+
 	// E L E M E N T S
 
 	updateDueDateElements = {
-		enterDateDay: () => cy.get(this.selectors.dateInputDay),
-		enterDateMonth: () => cy.get(this.selectors.dateInputMonth),
-		enterDateYear: () => cy.get(this.selectors.dateInputYear),
-		validDateDay: () => cy.get(this.selectors.validDateDay),
-		validDateMonth: () => cy.get(this.selectors.validDateMonth),
-		validDateYear: () => cy.get(this.selectors.validDateYear),
 		clickSkipButton: () => cy.contains(this.selectors.skipButton, 'Skip'),
-		enterVisitDay: () => cy.get(this.selectors.visitDateDay),
-		enterVisitMonth: () => cy.get(this.selectors.visitDateMonth),
-		enterVisitYear: () => cy.get(this.selectors.visitDateYear),
 		enterVisitStartHour: () => cy.get(this.selectors.visitStartHour),
 		enterVisitStartMinute: () => cy.get(this.selectors.visitStartMinute),
 		enterVisitEndHour: () => cy.get(this.selectors.visitEndHour),
@@ -47,60 +37,23 @@ export class DateTimeSection extends Page {
 	// A C T I O N S
 
 	enterDate(date) {
-		this.enterDateDay(date.getDate());
-		this.enterDateMonth(date.getMonth() + 1);
-		this.enterDateYear(date.getFullYear());
-	}
-
-	enterDateDay(text, index = 0) {
-		this.updateDueDateElements.enterDateDay().eq(index).clear().type(text);
-	}
-
-	enterDateMonth(text, index = 0) {
-		this.updateDueDateElements.enterDateMonth().eq(index).clear().type(text);
-	}
-
-	enterDateYear(text, index = 0) {
-		this.updateDueDateElements.enterDateYear().eq(index).clear().type(text);
+		this.#setAllDateFields( this.selectorPrefix.dueDate, date);
 	}
 
 	enterValidDate(date) {
-		this.validDateDay(date.getDate());
-		this.validDateMonth(date.getMonth() + 1);
-		this.validDateYear(date.getFullYear());
+		this.#setAllDateFields( this.selectorPrefix.validDate, date);
 	}
 
-	validDateDay(text, index = 0) {
-		this.updateDueDateElements.validDateDay().eq(index).clear().type(text);
+	enterVisitDate(date) {
+		this.#setAllDateFields( this.selectorPrefix.visitDate, date);
 	}
 
-	validDateMonth(text, index = 0) {
-		this.updateDueDateElements.validDateMonth().eq(index).clear().type(text);
-	}
-
-	validDateYear(text, index = 0) {
-		this.updateDueDateElements.validDateYear().eq(index).clear().type(text);
+	enterDecisionLetterDate(date){
+		this.#setAllDateFields( this.selectorPrefix.decisionLetterDate, date);
 	}
 
 	clickSkipButton(text) {
 		this.updateDueDateElements.clickSkipButton(text).click();
-	}
-
-	enterVisitDate(date) {
-		this.enterVisitDay(date.getDate());
-		this.enterVisitMonth(date.getMonth() + 1);
-		this.enterVisitYear(date.getFullYear());
-	}
-
-	enterVisitDay(text, index = 0) {
-		this.updateDueDateElements.enterVisitDay().eq(index).clear().type(text);
-	}
-
-	enterVisitMonth(text, index = 0) {
-		this.updateDueDateElements.enterVisitMonth().eq(index).clear().type(text);
-	}
-	enterVisitYear(text, index = 0) {
-		this.updateDueDateElements.enterVisitYear().eq(index).clear().type(text);
 	}
 
 	enterVisitStartTime(hour, minute) {
@@ -141,5 +94,20 @@ export class DateTimeSection extends Page {
 	}
 	removeVisitEndTimeMinute(index = 0) {
 		this.updateDueDateElements.enterVisitEndMinute().eq(index).clear();
+	}
+
+	// Private helper methods
+	#setAllDateFields( dateSelectorPrefix, date ){
+		this.#set(this.#getElement(dateSelectorPrefix, 'day'), date.getDate());
+		this.#set(this.#getElement(dateSelectorPrefix, 'month'), date.getMonth() + 1);
+		this.#set(this.#getElement(dateSelectorPrefix, 'year'), date.getFullYear());
+	}
+
+	#set( element, value, index = 0){
+		element.eq(index).clear().type(value);
+	}
+
+	#getElement(dateSelectorPrefix, dateType){
+		return cy.get(dateSelectorPrefix + dateType);
 	}
 }
