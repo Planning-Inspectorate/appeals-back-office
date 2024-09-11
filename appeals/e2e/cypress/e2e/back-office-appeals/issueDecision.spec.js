@@ -19,8 +19,7 @@ describe('Issue Decision', () => {
 	});
 
 	it('Issue Decision Allowed ', { tags: tag.smoke }, () => {
-		let futureDate = new Date();
-		futureDate.setDate(futureDate.getDate());
+		let date = new Date();
 
 		cy.createCase().then((caseRef) => {
 			cy.addLpaqSubmissionToCase(caseRef);
@@ -33,7 +32,7 @@ describe('Issue Decision', () => {
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.uploadOneDocument();
 			caseDetailsPage.clickButtonByText('Continue');
-			dateTimeSection.enterDecisionLetterDate(futureDate);
+			dateTimeSection.enterDecisionLetterDate(date);
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.selectCheckbox();
 			caseDetailsPage.clickButtonByText('Send Decision');
@@ -42,8 +41,7 @@ describe('Issue Decision', () => {
 	});
 
 	it('Issue Decision Dismissed ', { tags: tag.smoke }, () => {
-		let futureDate = new Date();
-		futureDate.setDate(futureDate.getDate());
+		let date = new Date();
 
 		cy.createCase().then((caseRef) => {
 			cy.addLpaqSubmissionToCase(caseRef);
@@ -56,7 +54,7 @@ describe('Issue Decision', () => {
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.uploadOneDocument();
 			caseDetailsPage.clickButtonByText('Continue');
-			dateTimeSection.enterDecisionLetterDate(futureDate);
+			dateTimeSection.enterDecisionLetterDate(date);
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.selectCheckbox();
 			caseDetailsPage.clickButtonByText('Send Decision');
@@ -65,8 +63,7 @@ describe('Issue Decision', () => {
 	});
 
 	it('Issue Decision Split Decision ', { tags: tag.smoke }, () => {
-		let futureDate = new Date();
-		futureDate.setDate(futureDate.getDate());
+		let date = new Date();
 
 		cy.createCase().then((caseRef) => {
 			cy.addLpaqSubmissionToCase(caseRef);
@@ -79,7 +76,7 @@ describe('Issue Decision', () => {
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.uploadOneDocument();
 			caseDetailsPage.clickButtonByText('Continue');
-			dateTimeSection.enterDecisionLetterDate(futureDate);
+			dateTimeSection.enterDecisionLetterDate(date);
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.selectCheckbox();
 			caseDetailsPage.clickButtonByText('Send Decision');
