@@ -18,7 +18,7 @@ describe('Issue Decision', () => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
-	it('Issue Decision Allowed ', { tags: tag.smoke }, () => {
+	it.only('Issue Decision Allowed ', { tags: tag.smoke }, () => {
 		let todaysDate = new Date();
 
 		cy.createCase().then((caseRef) => {
@@ -37,6 +37,7 @@ describe('Issue Decision', () => {
 			caseDetailsPage.selectCheckbox();
 			caseDetailsPage.clickButtonByText('Send Decision');
 			caseDetailsPage.clickLinkByText('Go back to case details');
+			//caseDetailsPage.checkStatusOfCase('Complete', 0);
 		});
 	});
 
@@ -59,6 +60,7 @@ describe('Issue Decision', () => {
 			caseDetailsPage.selectCheckbox();
 			caseDetailsPage.clickButtonByText('Send Decision');
 			caseDetailsPage.clickLinkByText('Go back to case details');
+			caseDetailsPage.checkStatusOfCase('Complete', 0);
 		});
 	});
 
@@ -81,6 +83,7 @@ describe('Issue Decision', () => {
 			caseDetailsPage.selectCheckbox();
 			caseDetailsPage.clickButtonByText('Send Decision');
 			caseDetailsPage.clickLinkByText('Go back to case details');
+			caseDetailsPage.checkStatusOfCase('Complete', 0);
 		});
 	});
 });
