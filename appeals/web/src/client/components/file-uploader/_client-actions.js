@@ -223,10 +223,10 @@ const clientActions = (container) => {
 	 */
 	const checkSelectedFile = (selectedFile) => {
 		const allowedMimeTypes = (container.dataset.allowedTypes || '').split(',');
-
 		const filenamesInFolderBase64String = form.dataset.filenamesInFolder || '';
 		const filenamesInFolderString = window.atob(filenamesInFolderBase64String);
-		const filenamesInFolderArray = JSON.parse(filenamesInFolderString);
+		const filenamesInFolderArray =
+			(filenamesInFolderString && JSON.parse(filenamesInFolderString)) || null;
 		const filenamesInFolder = Array.isArray(filenamesInFolderArray) ? filenamesInFolderArray : [];
 
 		if (filenamesInFolder.includes(selectedFile.name)) {
