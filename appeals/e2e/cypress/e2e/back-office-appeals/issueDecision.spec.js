@@ -18,72 +18,29 @@ describe('Issue Decision', () => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
-	it('Issue Decision Allowed ', { tags: tag.smoke }, () => {
-		let todaysDate = new Date();
+	const issueDecisionCompleteStatus = ['Allowed', 'Dismissed', 'Split Decision'];
 
-		cy.createCase().then((caseRef) => {
-			cy.addLpaqSubmissionToCase(caseRef);
-			happyPathHelper.assignCaseOfficer(caseRef);
-			happyPathHelper.reviewAppellantCase(caseRef);
-			happyPathHelper.startCase(caseRef);
-			happyPathHelper.reviewLpaq(caseRef);
-			caseDetailsPage.clickIssueDecision(caseRef);
-			caseDetailsPage.selectRadioButtonByValue('Allowed');
-			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.uploadOneDocument();
-			caseDetailsPage.clickButtonByText('Continue');
-			dateTimeSection.enterDecisionLetterDate(todaysDate);
-			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.selectCheckbox();
-			caseDetailsPage.clickButtonByText('Send Decision');
-			caseDetailsPage.clickLinkByText('Go back to case details');
-			caseDetailsPage.checkStatusOfCase('Complete', 0);
-		});
-	});
+	issueDecisionCompleteStatus.forEach((issueDecision, index) => {
+		it(`Change to ${issueDecision} type`, { tags: tag.smoke }, () => {
+			let todaysDate = new Date();
 
-	it('Issue Decision Dismissed ', { tags: tag.smoke }, () => {
-		let todaysDate = new Date();
-
-		cy.createCase().then((caseRef) => {
-			cy.addLpaqSubmissionToCase(caseRef);
-			happyPathHelper.assignCaseOfficer(caseRef);
-			happyPathHelper.reviewAppellantCase(caseRef);
-			happyPathHelper.startCase(caseRef);
-			happyPathHelper.reviewLpaq(caseRef);
-			caseDetailsPage.clickIssueDecision(caseRef);
-			caseDetailsPage.selectRadioButtonByValue('Dismissed');
-			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.uploadOneDocument();
-			caseDetailsPage.clickButtonByText('Continue');
-			dateTimeSection.enterDecisionLetterDate(todaysDate);
-			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.selectCheckbox();
-			caseDetailsPage.clickButtonByText('Send Decision');
-			caseDetailsPage.clickLinkByText('Go back to case details');
-			caseDetailsPage.checkStatusOfCase('Complete', 0);
-		});
-	});
-
-	it('Issue Decision Split Decision ', { tags: tag.smoke }, () => {
-		let todaysDate = new Date();
-
-		cy.createCase().then((caseRef) => {
-			cy.addLpaqSubmissionToCase(caseRef);
-			happyPathHelper.assignCaseOfficer(caseRef);
-			happyPathHelper.reviewAppellantCase(caseRef);
-			happyPathHelper.startCase(caseRef);
-			happyPathHelper.reviewLpaq(caseRef);
-			caseDetailsPage.clickIssueDecision(caseRef);
-			caseDetailsPage.selectRadioButtonByValue('Split Decision');
-			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.uploadOneDocument();
-			caseDetailsPage.clickButtonByText('Continue');
-			dateTimeSection.enterDecisionLetterDate(todaysDate);
-			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.selectCheckbox();
-			caseDetailsPage.clickButtonByText('Send Decision');
-			caseDetailsPage.clickLinkByText('Go back to case details');
-			caseDetailsPage.checkStatusOfCase('Complete', 0);
+			cy.createCase().then((caseRef) => {
+				cy.addLpaqSubmissionToCase(caseRef);
+				happyPathHelper.assignCaseOfficer(caseRef);
+				happyPathHelper.reviewAppellantCase(caseRef);
+				happyPathHelper.startCase(caseRef);
+				happyPathHelper.reviewLpaq(caseRef);
+				caseDetailsPage.clickIssueDecision(caseRef);
+				caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch(issueDecision));
+				caseDetailsPage.clickButtonByText('Continue');
+				caseDetailsPage.uploadOneDocument();
+				caseDetailsPage.clickButtonByText('Continue');
+				dateTimeSection.enterDecisionLetterDate(todaysDate);
+				caseDetailsPage.clickButtonByText('Continue');
+				caseDetailsPage.selectCheckbox();
+				caseDetailsPage.clickButtonByText('Send Decision');
+				caseDetailsPage.clickLinkByText('Go back to case details');
+			});
 		});
 	});
 });
