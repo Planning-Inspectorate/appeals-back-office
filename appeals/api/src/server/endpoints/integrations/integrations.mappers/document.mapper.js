@@ -2,7 +2,12 @@ import config from '#config/config.js';
 import { randomUUID } from 'node:crypto';
 import { mapDate } from './date.mapper.js';
 import { ODW_SYSTEM_ID } from '@pins/appeals/constants/common.js';
-import { APPEAL_ORIGIN, APPEAL_CASE_STAGE } from 'pins-data-model';
+import {
+	APPEAL_ORIGIN,
+	APPEAL_CASE_STAGE,
+	APPEAL_DOCUMENT_TYPE,
+	APPEAL_REDACTED_STATUS
+} from 'pins-data-model';
 import { getAvScanStatus } from '#endpoints/documents/documents.service.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Document} Document */
@@ -57,7 +62,8 @@ export const mapDocumentOut = (data) => {
 	const isPublished = mapPublishingStatus(documentInput.latestDocumentVersion);
 	const virusCheckStatus = mapVirusCheckStatus(documentInput.latestDocumentVersion);
 	const redactedStatus = mapRedactionStatus(
-		documentInput.latestDocumentVersion.redactionStatus || null
+		documentInput.latestDocumentVersion.redactionStatus || null,
+		documentInput.latestDocumentVersion.documentType || null
 	);
 
 	const doc = {
@@ -116,10 +122,15 @@ const mapPublishingStatus = (documentVersion) => {
 /**
  *
  * @param {DocumentRedactionStatus | null} status
+ * @param {string | null} documentType
  * @returns
  */
-const mapRedactionStatus = (status) => {
-	return status?.key || null;
+const mapRedactionStatus = (status, documentType) => {
+	if (documentType === APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER) {
+		return APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED;
+	}
+
+	return status?.key || APPEAL_REDACTED_STATUS.NOT_REDACTED;
 };
 
 /**
