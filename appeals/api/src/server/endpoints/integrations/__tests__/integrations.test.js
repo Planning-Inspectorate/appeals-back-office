@@ -32,7 +32,7 @@ describe('/appeals/case-submission', () => {
 			});
 		});
 
-		test('invalid appellant case payload: no LPA', async () => {
+		test('POST invalid appellant case payload: no LPA', async () => {
 			const { lpaCode, ...invalidPayload } = validAppellantCase.casedata;
 			const payload = { casedata: { ...invalidPayload }, users: [], documents: [] };
 			const response = await request.post('/appeals/case-submission').send(payload);
@@ -47,7 +47,7 @@ describe('/appeals/case-submission', () => {
 			});
 		});
 
-		test('invalid appellant case payload: no appeal type', async () => {
+		test('POST invalid appellant case payload: no appeal type', async () => {
 			const { caseType, ...invalidPayload } = validAppellantCase.casedata;
 			const payload = { casedata: { ...invalidPayload }, users: [], documents: [] };
 			const response = await request.post('/appeals/case-submission').send(payload);
@@ -62,7 +62,7 @@ describe('/appeals/case-submission', () => {
 			});
 		});
 
-		test('invalid appellant case payload: unsupported appeal type', async () => {
+		test('POST invalid appellant case payload: unsupported appeal type', async () => {
 			// eslint-disable-next-line no-unused-vars
 			const { caseType, ...validPayload } = validAppellantCase.casedata;
 			const payload = {
@@ -85,7 +85,7 @@ describe('/appeals/case-submission', () => {
 			});
 		});
 
-		test('invalid appellant case payload: no application reference', async () => {
+		test('POST invalid appellant case payload: no application reference', async () => {
 			const { applicationReference, ...invalidPayload } = validAppellantCase.casedata;
 			const payload = { casedata: { ...invalidPayload }, users: [], documents: [] };
 			const response = await request.post('/appeals/case-submission').send(payload);
@@ -98,6 +98,194 @@ describe('/appeals/case-submission', () => {
 					integration: ERROR_INVALID_APPELLANT_CASE_DATA
 				}
 			});
+		});
+
+		test('POST valid appellant case payload and create appeal', async () => {
+			// @ts-ignore
+			databaseConnector.appeal.create.mockResolvedValue({});
+
+			const payload = validAppellantCase;
+			await request.post('/appeals/case-submission').send(payload);
+
+			expect(databaseConnector.appeal.create).toHaveBeenCalledWith({
+				data: {
+					reference: expect.any(String),
+					submissionId: expect.any(String),
+					appealType: {
+						connect: {
+							key: 'D'
+						}
+					},
+					appellant: {
+						create: {
+							organisationName: 'A company',
+							salutation: 'Mr',
+							firstName: 'Testy',
+							lastName: 'McTest',
+							email: 'test@test.com',
+							webAddress: undefined,
+							phoneNumber: '0123456789',
+							otherPhoneNumber: undefined,
+							faxNumber: undefined
+						}
+					},
+					agent: {
+						create: undefined
+					},
+					lpa: {
+						connect: {
+							lpaCode: 'Q9999'
+						}
+					},
+					applicationReference: '123',
+					address: {
+						create: {
+							addressLine1: 'Somewhere',
+							addressLine2: 'Somewhere St',
+							addressCounty: 'Somewhere',
+							postcode: 'SOM3 W3R',
+							addressTown: 'Somewhereville'
+						}
+					},
+					appellantCase: {
+						create: {
+							applicationDate: '2024-01-01T00:00:00.000Z',
+							applicationDecision: 'refused',
+							applicationDecisionDate: '2024-01-01T00:00:00.000Z',
+							caseSubmittedDate: '2024-03-25T23:59:59.999Z',
+							caseSubmissionDueDate: '2024-03-25T23:59:59.999Z',
+							siteAccessDetails: 'Come and see',
+							siteSafetyDetails: "It's dangerous",
+							siteAreaSquareMetres: 22,
+							floorSpaceSquareMetres: 22,
+							ownsAllLand: true,
+							ownsSomeLand: true,
+							hasAdvertisedAppeal: true,
+							appellantCostsAppliedFor: false,
+							originalDevelopmentDescription: 'A test description',
+							changedDevelopmentDescription: false,
+							ownersInformed: true,
+							knowsAllOwners: {
+								connect: {
+									key: 'Some'
+								}
+							},
+							knowsOtherOwners: {
+								connect: {
+									key: 'Some'
+								}
+							},
+							isGreenBelt: false,
+							appellantProcedurePreference: undefined,
+							appellantProcedurePreferenceDetails: undefined,
+							appellantProcedurePreferenceDuration: undefined,
+							inquiryHowManyWitnesses: undefined
+						}
+					},
+					neighbouringSites: {
+						create: []
+					},
+					folders: {
+						create: [
+							{
+								path: 'appellant-case/appellantStatement'
+							},
+							{
+								path: 'appellant-case/originalApplicationForm'
+							},
+							{
+								path: 'appellant-case/applicationDecisionLetter'
+							},
+							{
+								path: 'appellant-case/changedDescription'
+							},
+							{
+								path: 'appellant-case/appellantCaseWithdrawalLetter'
+							},
+							{
+								path: 'appellant-case/appellantCaseCorrespondence'
+							},
+							{
+								path: 'appellant-case/designAccessStatement'
+							},
+							{
+								path: 'appellant-case/plansDrawings'
+							},
+							{
+								path: 'appellant-case/newPlansDrawings'
+							},
+							{
+								path: 'appellant-case/planningObligation'
+							},
+							{
+								path: 'appellant-case/ownershipCertificate'
+							},
+							{
+								path: 'appellant-case/otherNewDocuments'
+							},
+							{
+								path: 'lpa-questionnaire/whoNotified'
+							},
+							{
+								path: 'lpa-questionnaire/whoNotifiedSiteNotice'
+							},
+							{
+								path: 'lpa-questionnaire/whoNotifiedLetterToNeighbours'
+							},
+							{
+								path: 'lpa-questionnaire/whoNotifiedPressAdvert'
+							},
+							{
+								path: 'lpa-questionnaire/conservationMap'
+							},
+							{
+								path: 'lpa-questionnaire/otherPartyRepresentations'
+							},
+							{
+								path: 'lpa-questionnaire/planningOfficerReport'
+							},
+							{
+								path: 'lpa-questionnaire/lpaCaseCorrespondence'
+							},
+							{
+								path: 'costs/appellantCostsApplication'
+							},
+							{
+								path: 'costs/appellantCostsWithdrawal'
+							},
+							{
+								path: 'costs/appellantCostsCorrespondence'
+							},
+							{
+								path: 'costs/lpaCostsApplication'
+							},
+							{
+								path: 'costs/lpaCostsWithdrawal'
+							},
+							{
+								path: 'costs/lpaCostsCorrespondence'
+							},
+							{
+								path: 'costs/costsDecisionLetter'
+							},
+							{
+								path: 'internal/crossTeamCorrespondence'
+							},
+							{
+								path: 'internal/inspectorCorrespondence'
+							},
+							{
+								path: 'internal/uncategorised'
+							},
+							{
+								path: 'appeal-decision/caseDecisionLetter'
+							}
+						]
+					}
+				}
+			});
+			expect(databaseConnector.appeal.update).toHaveBeenCalled();
+			expect(databaseConnector.documentRedactionStatus.findMany).toHaveBeenCalled();
 		});
 	});
 });

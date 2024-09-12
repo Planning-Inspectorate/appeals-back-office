@@ -10,6 +10,7 @@ const mockAppealRelationshipRemove = jest.fn().mockResolvedValue({});
 const mockAppealRelationshipFindMany = jest.fn().mockResolvedValue({});
 const mockAppealDecision = jest.fn().mockResolvedValue({});
 const mockAppealFindUnique = jest.fn().mockResolvedValue({});
+const mockAppealCreate = jest.fn().mockResolvedValue({});
 const mocklPAQuestionnaireCreate = jest.fn().mockResolvedValue({});
 const mocklPAQuestionnaireUpdate = jest.fn().mockResolvedValue({});
 const mockAppealStatusUpdateMany = jest.fn().mockResolvedValue({});
@@ -32,6 +33,7 @@ const mockDocumentFindMany = jest.fn().mockResolvedValue({});
 const mockDocumentCount = jest.fn().mockResolvedValue({});
 const mockDocumentFindFirst = jest.fn().mockResolvedValue({});
 const mockDocumentDelete = jest.fn().mockResolvedValue({});
+const mockDocumentCreateMany = jest.fn().mockResolvedValue({});
 const mockDocumentVersionCreate = jest.fn().mockResolvedValue({});
 const mockDocumentMetdataFindFirst = jest.fn().mockResolvedValue({});
 const mockDocumentMetdataFindUnique = jest.fn().mockResolvedValue({});
@@ -108,7 +110,8 @@ class MockPrismaClient {
 			findUnique: mockAppealFindUnique,
 			update: mockAppealUpdate,
 			findMany: mockAppealFindMany,
-			count: mockAppealCount
+			count: mockAppealCount,
+			create: mockAppealCreate
 		};
 	}
 
@@ -156,7 +159,8 @@ class MockPrismaClient {
 			findUnique: mockDocumentFindUnique,
 			findMany: mockDocumentFindMany,
 			update: mockDocumentUpdate,
-			upsert: mockDocumentUpsert
+			upsert: mockDocumentUpsert,
+			createMany: mockDocumentCreateMany
 		};
 	}
 
