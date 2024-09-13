@@ -16,7 +16,8 @@ export class CaseDetailsPage extends Page {
 		changeSetVisitType: 'change-set-visit-type',
 		arrangeScheduleVisit: 'arrange-schedule-visit',
 		readyToStart: 'ready-to-start',
-		issueDetermination: 'issue-determination'
+		issueDetermination: 'issue-determination',
+		addLinkedAppeal: 'add-linked-appeal'
 	};
 
 	elements = {
@@ -31,7 +32,8 @@ export class CaseDetailsPage extends Page {
 		changeSetVisitType: () => cy.getByData(this._cyDataSelectors.changeSetVisitType),
 		arrangeScheduleVisit: () => cy.getByData(this._cyDataSelectors.arrangeScheduleVisit),
 		readyToStart: () => cy.getByData(this._cyDataSelectors.readyToStart),
-		issueDecision: () => cy.getByData(this._cyDataSelectors.issueDetermination)
+		issueDecision: () => cy.getByData(this._cyDataSelectors.issueDetermination),
+		addLinkedAppeal: () => cy.getByData(this._cyDataSelectors.addLinkedAppeal)
 	};
 	/********************************************************
 	 ************************ Actions ************************
@@ -91,6 +93,10 @@ export class CaseDetailsPage extends Page {
 
 	clickIssueDecision() {
 		this.elements.issueDecision().click();
+	}
+
+	clickAddLinkedAppeal() {
+		this.elements.addLinkedAppeal().click();
 	}
 
 	uploadOneDocument() {
