@@ -31,6 +31,7 @@ const clientActions = (container) => {
 
 	const { uploadFiles, deleteFiles } = serverActions(container);
 
+	// eslint-disable-next-line no-unused-vars
 	function setupDropzone() {
 		dropZone = document.createElement('div');
 		dropZone.className = 'pins-file-upload__dropzone';
@@ -84,7 +85,6 @@ const clientActions = (container) => {
 		updateUploadButton();
 	}
 
-	setupDropzone();
 	cleanUpUncommittedFiles();
 
 	if (!form || !uploadButton || !uploadInput || !filesRows || !uploadCounter || !submitButton) {

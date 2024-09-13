@@ -29,6 +29,8 @@ export function decisionCheckAndConfirmPage(
 		appealDetails.appealReference,
 		session.fileUploadInfo,
 		redactionStatuses,
+		undefined,
+		undefined,
 		`Check your answers - ${shortAppealReference}`,
 		documentId ? 'Updated costs decision' : 'Costs decision'
 	);

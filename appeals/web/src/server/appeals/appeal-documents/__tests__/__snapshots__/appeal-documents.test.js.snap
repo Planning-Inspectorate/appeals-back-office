@@ -13,7 +13,7 @@ exports[`documents upload should render upload form if appeal ID and folder ID a
         data-filenames-in-folder="">
             <div class="pins-file-upload__container">
                 <div class="govuk-body colour--secondary pins-file-upload__instructions">
-                    <label for="upload-file-1">Choose a single file to upload.</label><span>Files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total of your uploaded files must be smaller than 1 GB.</span>
+                    <label for="upload-file-1">Choose a single file to upload.</label><span>The file must be smaller than 1 GB.</span><span>The file must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span>
                     <div                     class="middle-errors-hook"></div>
             </div>
             <div class="pins-file-upload__upload display--flex">
@@ -51,7 +51,7 @@ exports[`documents upload should render upload form if appeal ID, folder ID and 
         data-filenames-in-folder="">
             <div class="pins-file-upload__container">
                 <div class="govuk-body colour--secondary pins-file-upload__instructions">
-                    <label for="upload-file-1">Choose a single file to upload.</label><span>Files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total of your uploaded files must be smaller than 1 GB.</span>
+                    <label for="upload-file-1">Choose a single file to upload.</label><span>The file must be smaller than 1 GB.</span><span>The file must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span>
                     <div                     class="middle-errors-hook"></div>
             </div>
             <div class="pins-file-upload__upload display--flex">

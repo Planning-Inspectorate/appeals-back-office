@@ -126,6 +126,18 @@ export const mapDocumentDownloadUrl = (appealId, documentId, documentVersion) =>
 };
 
 /**
+ * @param {string|number} appealId
+ * @param {string} documentId
+ * @param {string} filename
+ * @param {string|number} [documentVersion]
+ */
+export const mapStagedDocumentDownloadUrl = (appealId, documentId, filename, documentVersion) => {
+	return `/documents/${appealId}/download-staged/${documentId}/${filename}${
+		documentVersion ? `/${documentVersion}` : ''
+	}`;
+};
+
+/**
  * @param {string|null|undefined} fileName
  * @returns {string}
  */
@@ -570,6 +582,8 @@ function mapDocumentDetailsItemToDocumentDetailsPageComponents(item, redactionSt
  * @param {string} appealReference
  * @param {FileUploadInfoItem[]} fileUploadInfo
  * @param {RedactionStatus[]} redactionStatuses
+ * @param {number} [documentVersion] current version being uploaded (if uploading a new version of an existing document)
+ * @param {string} [documentFileName] filename of existing document, not new version being uploaded (if uploading a new version of an existing document)
  * @param {string} [titleTextOverride]
  * @param {string} [summaryListNameLabelOverride]
  * @returns {PageContent}
@@ -582,6 +596,8 @@ export function addDocumentsCheckAndConfirmPage(
 	appealReference,
 	fileUploadInfo,
 	redactionStatuses,
+	documentVersion,
+	documentFileName,
 	titleTextOverride,
 	summaryListNameLabelOverride
 ) {
@@ -601,7 +617,12 @@ export function addDocumentsCheckAndConfirmPage(
 								text: summaryListNameLabelOverride || 'Name'
 							},
 							value: {
-								text: fileUploadInfo[0].name
+								html: `<a class="govuk-link" href="${mapStagedDocumentDownloadUrl(
+									appealReference,
+									fileUploadInfo[0].GUID,
+									documentFileName || fileUploadInfo[0].name,
+									documentVersion
+								)}" target="_blank">${fileUploadInfo[0].name}</a>`
 							},
 							actions: {
 								items: [
