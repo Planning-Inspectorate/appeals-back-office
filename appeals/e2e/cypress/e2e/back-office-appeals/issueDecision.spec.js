@@ -40,6 +40,7 @@ describe('Issue Decision', () => {
 				caseDetailsPage.selectCheckbox();
 				caseDetailsPage.clickButtonByText('Send Decision');
 				caseDetailsPage.clickLinkByText('Go back to case details');
+				caseDetailsPage.checkStatusOfCase('Complete', 0);
 			});
 		});
 	});
