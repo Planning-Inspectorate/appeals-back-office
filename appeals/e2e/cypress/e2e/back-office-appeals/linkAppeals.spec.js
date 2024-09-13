@@ -18,15 +18,17 @@ describe('link appeals', () => {
 
 	it('Link an unlinked appeal to an unlinked appeal', { tags: tag.smoke }, () => {
 		cy.createCase().then((caseRef) => {
-			happyPathHelper.assignCaseOfficer(caseRef);
-			caseDetailsPage.clickAccordionByButton('Overview');
-			caseDetailsPage.clickAddLinkedAppeal();
-			caseDetailsPage.fillInput(caseRef - 1);
-			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.selectRadioButtonByValue('Yes, make this the lead appeal for ');
-			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.validateBannerMessage('This appeal is now a child appeal of');
-			caseDetailsPage.checkStatusOfCase('Child', 1);
+			cy.createCase().then((caseRefToLink) => {
+				happyPathHelper.assignCaseOfficer(caseRef);
+				caseDetailsPage.clickAccordionByButton('Overview');
+				caseDetailsPage.clickAddLinkedAppeal();
+				caseDetailsPage.fillInput(caseRefToLink);
+				caseDetailsPage.clickButtonByText('Continue');
+				caseDetailsPage.selectRadioButtonByValue('Yes, make this the lead appeal for ');
+				caseDetailsPage.clickButtonByText('Continue');
+				caseDetailsPage.validateBannerMessage('This appeal is now a child appeal of');
+				caseDetailsPage.checkStatusOfCase('Child', 1);
+			});
 		});
 	});
 });
