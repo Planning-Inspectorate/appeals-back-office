@@ -386,7 +386,11 @@ export const renderUploadDocumentsCheckAndConfirm = async (
 	changeDateLinkUrl,
 	changeRedactionStatusLinkUrl
 ) => {
-	const { currentAppeal, currentFolder } = request;
+	const {
+		currentAppeal,
+		currentFolder,
+		params: { documentId }
+	} = request;
 
 	if (!currentAppeal || !currentFolder) {
 		return response.status(404).render('app/404');
@@ -402,6 +406,24 @@ export const renderUploadDocumentsCheckAndConfirm = async (
 		return response.status(500).render('app/500.njk');
 	}
 
+	let documentVersion;
+	let documentFileName;
+
+	if (documentId) {
+		const fileInfo = await getFileInfo(request.apiClient, currentAppeal.appealId, documentId);
+
+		if (!fileInfo) {
+			return response.status(404).render('app/404');
+		}
+
+		if (!('latestDocumentVersion' in fileInfo) || !('name' in fileInfo)) {
+			return response.status(500).render('app/500.njk');
+		}
+
+		documentVersion = fileInfo.latestDocumentVersion.version + 1;
+		documentFileName = fileInfo.name;
+	}
+
 	const mappedPageContent = addDocumentsCheckAndConfirmPage(
 		backLinkUrl,
 		changeFileLinkUrl,
@@ -409,7 +431,9 @@ export const renderUploadDocumentsCheckAndConfirm = async (
 		changeRedactionStatusLinkUrl,
 		currentAppeal.appealReference,
 		request.session.fileUploadInfo,
-		redactionStatuses
+		redactionStatuses,
+		documentVersion,
+		documentFileName
 	);
 
 	return response.render('patterns/check-and-confirm-page.pattern.njk', {
