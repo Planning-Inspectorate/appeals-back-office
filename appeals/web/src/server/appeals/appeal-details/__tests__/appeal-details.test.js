@@ -5,6 +5,7 @@ import nock from 'nock';
 import supertest from 'supertest';
 import {
 	appealData,
+	appealDataFullPlanning,
 	linkedAppeals,
 	linkableAppealSummaryBackOffice,
 	linkableAppealSummaryHorizon,
@@ -17,7 +18,8 @@ import {
 	documentRedactionStatuses,
 	appealCostsDocumentItem,
 	linkedAppealsWithExternalLead,
-	fileUploadInfo
+	fileUploadInfo,
+	interestedPartyCommentsAwaitingReview
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { capitalize } from 'lodash-es';
@@ -964,6 +966,40 @@ describe('appeal-details', () => {
 				expect(notificationBannerElementHTML).toContain('Success</h3>');
 				expect(notificationBannerElementHTML).toContain(
 					'Inspector correspondence documents uploaded</p>'
+				);
+			});
+
+			it('should render an important notification banner when the appeal has unreviewed IP comments', async () => {
+				nock('http://test/')
+					.get('/appeals/2')
+					.reply(200, {
+						...appealDataFullPlanning,
+						appealId: 2,
+						appealStatus: 'statements'
+					});
+				nock('http://test/')
+					.get('/appeals/2/reps/comments?pageNumber=1&pageSize=30&status=awaiting_review')
+					.reply(200, interestedPartyCommentsAwaitingReview);
+
+				const caseDetailsResponse = await request.get(`${baseUrl}/2`);
+
+				const notificationBannerElementHTML = parseHtml(caseDetailsResponse.text, {
+					rootElement: notificationBannerElement
+				}).innerHTML;
+
+				expect(notificationBannerElementHTML).toMatchSnapshot();
+
+				const unprettifiedElementHtml = parseHtml(caseDetailsResponse.text, {
+					rootElement: notificationBannerElement,
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(unprettifiedElementHtml).toContain('Important</h3>');
+				expect(unprettifiedElementHtml).toContain(
+					'<p class="govuk-notification-banner__heading">Review comments</p>'
+				);
+				expect(unprettifiedElementHtml).toContain(
+					'<p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/2/interested-party-comments" data-cy="banner-review-ip-comments">Review</a></p>'
 				);
 			});
 		});
