@@ -69,7 +69,6 @@ export function isFileUploadInfoItem(value) {
 		typeof value === 'object' &&
 		'name' in value &&
 		'GUID' in value &&
-		'fileRowId' in value &&
 		'blobStoreUrl' in value &&
 		'mimeType' in value &&
 		'documentType' in value &&

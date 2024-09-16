@@ -81,11 +81,11 @@ const clientActions = (container) => {
 			uploadInput.files = event.dataTransfer?.files;
 		}
 
-		updateFilesRows(uploadInput);
-		createUploadInfoForAddedDocuments();
+		addSelectedFiles(uploadInput?.files);
 		updateUploadButton();
 	}
 
+	setupDropzone();
 
 	if (!form || !uploadButton || !stagedFilesList || !uploadInput || !fileInputContainer || !submitButton) {
 		return;
@@ -106,6 +106,20 @@ const clientActions = (container) => {
 	};
 
 	/**
+	 * @typedef {Object} UploadInfo
+	 * @property {any[]} documents
+	 * @property {import('./_server-actions.js').AccessToken} [accessToken]
+	 */
+
+	/** @type {UploadInfo} */
+	const uploadInfo = {
+		documents: [],
+		...(container.dataset?.accessToken && {
+			accessToken: JSON.parse(container.dataset?.accessToken || '')
+		})
+	};
+
+	/**
 	 *
 	 * @param {import('@pins/appeals/index.js').FileUploadParameters[]} uploadedFilesUploadParameters
 	 */
@@ -122,6 +136,36 @@ const clientActions = (container) => {
 			});
 		}
 	};
+
+	function createUploadInfoForAddedDocuments() {
+		uploadInfo.documents.length = 0;
+
+		// uploading new version of an existing document
+		if (stagedFiles.files.length === 1 && container.dataset?.documentId) {
+			addUploadInfoForStagedFile(stagedFiles.files[0]);
+		}
+		// uploading new document(s)
+		else {
+			stagedFiles.files.forEach(addUploadInfoForStagedFile);
+		}
+
+		updateUploadInfoHiddenField(JSON.stringify(uploadInfo.documents));
+	}
+
+	/**
+	 * @param {import('@pins/appeals/index.js').StagedFile} stagedFile
+	 */
+	function addUploadInfoForStagedFile (stagedFile) {
+		uploadInfo.documents.push({
+			name: stagedFile.name || '',
+			GUID: stagedFile.guid,
+			blobStoreUrl: stagedFile.blobStorageUrl,
+			mimeType: stagedFile.mimeType,
+			documentType: stagedFile.documentType,
+			size: stagedFile.size,
+			stage: stagedFile.stage
+		});
+	}
 
 	/**
 	 * @param {any} value
@@ -146,9 +190,20 @@ const clientActions = (container) => {
 	const onFileSelect = async (selectEvent) => {
 		const { target } = selectEvent;
 
-		const selectedFiles = Array.from(target.files);
+		await addSelectedFiles(target.files);
+	};
 
-		for (const file of selectedFiles) {
+	/**
+	 * @param {FileList|null|undefined} fileList
+	 */
+	async function addSelectedFiles (fileList) {
+		if (!fileList) {
+			return;
+		}
+
+		const files = Array.from(fileList);
+
+		for (const file of files) {
 			const validationError = validateSelectedFile(file);
 
 			if (validationError) {
@@ -164,7 +219,7 @@ const clientActions = (container) => {
 		}
 
 		// upload added files to blob storage
-		const fileUploadParameters = await uploadAddedFiles(selectEvent.target.files);
+		const fileUploadParameters = await uploadAddedFiles(fileList);
 
 		// TODO: handle any errors returned from upload function
 
@@ -175,7 +230,7 @@ const clientActions = (container) => {
 		updateStagedFilesUI(stagedFiles.files);
 
 		// update upload button
-	};
+	}
 
 	/**
 	 * @param {FileList} fileList
@@ -185,12 +240,16 @@ const clientActions = (container) => {
 
 		// upload the files to blob storage
 		const fileUploadParameters = Array.from(fileList).map(file => {
-			const guid = window.crypto.randomUUID();
+			const newVersionOfExistingFile = stagedFiles.files.length === 1 && container.dataset?.documentId && container.dataset?.documentVersion;
+
+			const guid = newVersionOfExistingFile
+				? container.dataset?.documentId || ''
+				: window.crypto.randomUUID();
 
 			return {
 				file,
 				guid,
-				blobStorageUrl: createBlobStorageUrl(container.dataset?.caseReference, guid, file.name)
+				blobStorageUrl: createBlobStorageUrl(container.dataset?.caseReference, guid, file.name, newVersionOfExistingFile ? container.dataset?.documentVersion : undefined)
 			};
 		});
 
@@ -302,12 +361,13 @@ const clientActions = (container) => {
 	/**
 	 *	@param {Event} clickEvent
 	 */
-	 const onSubmit = async (clickEvent) => {
+	const onSubmit = async (clickEvent) => {
 		clickEvent.preventDefault();
 
-		// TODO: A2-918
-	};
+		createUploadInfoForAddedDocuments();
 
+		form.submit();
+	};
 
 	const bindEvents = () => {
 		uploadButton.addEventListener('click', (clickEvent) => {
