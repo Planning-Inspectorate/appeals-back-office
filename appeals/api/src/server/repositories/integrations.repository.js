@@ -5,12 +5,15 @@ import { createAppealReference } from '#utils/appeal-reference.js';
 import config from '#config/config.js';
 import { APPEAL_CASE_STATUS, APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
 
+/** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
+/** @typedef {import('@pins/appeals.api').Schema.DocumentVersion} DocumentVersion */
+
 /**
  *
- * @param {*} data
- * @param {import('pins-data-model').Schemas.AppealDocument[]} documents
+ * @param {import('#db-client').Prisma.AppealCreateInput} data
+ * @param {import('#db-client').Prisma.DocumentVersionCreateInput[]} documents
  * @param {string[]} relatedReferences
- * @returns {Promise<{appeal: import('#db-client').Appeal, documentVersions: import('#db-client').DocumentVersion[]}>}
+ * @returns {Promise<{appeal: Appeal, documentVersions: DocumentVersion[]}>}
  */
 export const createAppeal = async (data, documents, relatedReferences) => {
 	const transaction = await databaseConnector.$transaction(async (tx) => {
@@ -43,14 +46,15 @@ export const createAppeal = async (data, documents, relatedReferences) => {
 		};
 	});
 
+	// @ts-ignore
 	return transaction;
 };
 
 /**
  *
  * @param {string} caseReference
- * @param {*} data
- * @param {*} documents
+ * @param {import('#db-client').Prisma.LPAQuestionnaireCreateInput} data
+ * @param {import('#db-client').Prisma.DocumentVersionCreateInput[]} documents
  * @param {string[]} relatedReferences
  * @returns
  */
@@ -69,6 +73,7 @@ export const createOrUpdateLpaQuestionnaire = async (
 			return null;
 		}
 
+		// @ts-ignore
 		const { neighbouringSites, ...metadata } = data;
 		appeal = await tx.appeal.update({
 			where: { id: appeal.id },
@@ -101,7 +106,7 @@ export const createOrUpdateLpaQuestionnaire = async (
 
 /**
  *
- * @param {*} tx
+ * @param {import('#db-client').Prisma.TransactionClient} tx
  * @param {number} appealId
  * @param {string} caseReference
  * @param {string[]} relatedReferences
@@ -122,8 +127,14 @@ const setAppealRelationships = async (tx, appealId, caseReference, relatedRefere
 
 		const appealRelationships = relatedReferences
 			.map((ref) => {
-				if (!existingRelationships.find((a) => a.childRef === ref)) {
-					const foundAppeal = relatedAppeals.find((a) => a.reference === ref);
+				if (
+					!existingRelationships.find(
+						(/** @type {{ childRef: string; }} */ a) => a.childRef === ref
+					)
+				) {
+					const foundAppeal = relatedAppeals.find(
+						(/** @type {{ reference: string; }} */ a) => a.reference === ref
+					);
 					const item = {
 						type: 'related',
 						parentRef: caseReference,
@@ -141,6 +152,7 @@ const setAppealRelationships = async (tx, appealId, caseReference, relatedRefere
 
 		if (appealRelationships.length > 0) {
 			await tx.appealRelationship.createMany({
+				// @ts-ignore
 				data: appealRelationships
 			});
 		}
@@ -152,7 +164,7 @@ const setAppealRelationships = async (tx, appealId, caseReference, relatedRefere
  * @param {import('#db-client').Prisma.TransactionClient} tx
  * @param {number} appealId
  * @param {string} caseReference
- * @param {*[]} documents
+ * @param {import('#db-client').Prisma.DocumentVersionCreateInput[]} documents
  * @returns {Promise<import('#db-client').DocumentVersion[]>}
  */
 const setDocumentVersions = async (tx, appealId, caseReference, documents) => {
@@ -161,37 +173,40 @@ const setDocumentVersions = async (tx, appealId, caseReference, documents) => {
 		const caseFolders = await tx.folder.findMany({ where: { caseId: appealId } });
 
 		await tx.document.createMany({
+			// @ts-ignore
 			data: documents.map((document) => {
+				// @ts-ignore
+				const { documentGuid, documentType, stage, fileName } = document;
+
 				const folderId = getFolderIdFromDocumentType(
 					caseFolders,
-					document.documentType,
-					document.stage
+					documentType || APPEAL_DOCUMENT_TYPE.UNCATEGORISED,
+					stage || null
 				);
 				if (!folderId) {
-					throw new Error(`folder not found for document type: ${document.documentType}`);
+					throw new Error(`folder not found for document type: ${documentType}`);
 				}
 				return {
-					guid: document.documentGuid,
 					caseId: appealId,
 					folderId,
-					name: document.fileName
+					name: fileName,
+					guid: documentGuid
 				};
 			})
 		});
 
 		await tx.documentVersion.createMany({
+			// @ts-ignore
 			data: documents.map((document) => {
-				const blobStoragePath = mapBlobPath(
-					document.documentGuid,
-					caseReference,
-					document.fileName
-				);
+				// @ts-ignore
+				const { documentGuid, fileName } = document;
+				// @ts-ignore
+				const blobStoragePath = mapBlobPath(documentGuid, caseReference, fileName);
 				const documentURI = `${config.BO_BLOB_STORAGE_ACCOUNT.replace(/\/$/, '')}/${
 					config.BO_BLOB_CONTAINER
 				}/${blobStoragePath}`;
 
 				return {
-					version: 1,
 					...document,
 					documentURI,
 					blobStoragePath,
@@ -205,6 +220,7 @@ const setDocumentVersions = async (tx, appealId, caseReference, documents) => {
 		for (const doc of documents) {
 			await tx.document.update({
 				data: { latestVersionId: 1 },
+				// @ts-ignore
 				where: { guid: doc.documentGuid }
 			});
 		}
@@ -212,6 +228,7 @@ const setDocumentVersions = async (tx, appealId, caseReference, documents) => {
 		return await tx.documentVersion.findMany({
 			where: {
 				documentGuid: {
+					// @ts-ignore
 					in: documents.map((d) => d.documentGuid)
 				}
 			}
@@ -224,8 +241,8 @@ const setDocumentVersions = async (tx, appealId, caseReference, documents) => {
  *
  * @param {{ path: string, id: number }[]} caseFolders
  * @param {string} documentType
- * @param {string} stage
- * @returns
+ * @param {string|null} stage
+ * @returns {number}
  */
 const getFolderIdFromDocumentType = (caseFolders, documentType, stage) => {
 	const caseFolder = caseFolders.find(
@@ -256,6 +273,7 @@ const getFolderIdFromDocumentType = (caseFolders, documentType, stage) => {
 		}
 	}
 
+	// @ts-ignore
 	return caseFolders.find(
 		(caseFolder) =>
 			caseFolder.path === `${APPEAL_CASE_STAGE.INTERNAL}/${APPEAL_DOCUMENT_TYPE.UNCATEGORISED}`

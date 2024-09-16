@@ -4,8 +4,13 @@ import {
 	ERROR_INVALID_APPELLANT_CASE_DATA,
 	ERROR_INVALID_LPAQ_DATA
 } from '#endpoints/constants.js';
-import { validAppellantCase, validLpaQuestionnaire } from '#tests/integrations/mocks.js';
-import { APPEAL_CASE_TYPE } from 'pins-data-model';
+import {
+	validAppellantCase,
+	validLpaQuestionnaire,
+	appealIngestionInput,
+	docIngestionInput
+} from '#tests/integrations/mocks.js';
+import { APPEAL_CASE_STATUS, APPEAL_CASE_TYPE, APPEAL_REDACTED_STATUS } from 'pins-data-model';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 
@@ -99,193 +104,42 @@ describe('/appeals/case-submission', () => {
 				}
 			});
 		});
+	});
 
+	describe('POST successful appeal gets ingested', () => {
 		test('POST valid appellant case payload and create appeal', async () => {
-			// @ts-ignore
-			databaseConnector.appeal.create.mockResolvedValue({});
-
+			const result = createIntegrationMocks(appealIngestionInput);
 			const payload = validAppellantCase;
-			await request.post('/appeals/case-submission').send(payload);
+			const response = await request.post('/appeals/case-submission').send(payload);
 
 			expect(databaseConnector.appeal.create).toHaveBeenCalledWith({
 				data: {
 					reference: expect.any(String),
 					submissionId: expect.any(String),
-					appealType: {
-						connect: {
-							key: 'D'
-						}
-					},
-					appellant: {
+					...appealIngestionInput
+				}
+			});
+			expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
+				where: { id: 100 },
+				data: {
+					reference: expect.any(String),
+					appealStatus: {
 						create: {
-							organisationName: 'A company',
-							salutation: 'Mr',
-							firstName: 'Testy',
-							lastName: 'McTest',
-							email: 'test@test.com',
-							webAddress: undefined,
-							phoneNumber: '0123456789',
-							otherPhoneNumber: undefined,
-							faxNumber: undefined
+							status: APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
+							createdAt: expect.any(String)
 						}
-					},
-					agent: {
-						create: undefined
-					},
-					lpa: {
-						connect: {
-							lpaCode: 'Q9999'
-						}
-					},
-					applicationReference: '123',
-					address: {
-						create: {
-							addressLine1: 'Somewhere',
-							addressLine2: 'Somewhere St',
-							addressCounty: 'Somewhere',
-							postcode: 'SOM3 W3R',
-							addressTown: 'Somewhereville'
-						}
-					},
-					appellantCase: {
-						create: {
-							applicationDate: '2024-01-01T00:00:00.000Z',
-							applicationDecision: 'refused',
-							applicationDecisionDate: '2024-01-01T00:00:00.000Z',
-							caseSubmittedDate: '2024-03-25T23:59:59.999Z',
-							caseSubmissionDueDate: '2024-03-25T23:59:59.999Z',
-							siteAccessDetails: 'Come and see',
-							siteSafetyDetails: "It's dangerous",
-							siteAreaSquareMetres: 22,
-							floorSpaceSquareMetres: 22,
-							ownsAllLand: true,
-							ownsSomeLand: true,
-							hasAdvertisedAppeal: true,
-							appellantCostsAppliedFor: false,
-							originalDevelopmentDescription: 'A test description',
-							changedDevelopmentDescription: false,
-							ownersInformed: true,
-							knowsAllOwners: {
-								connect: {
-									key: 'Some'
-								}
-							},
-							knowsOtherOwners: {
-								connect: {
-									key: 'Some'
-								}
-							},
-							isGreenBelt: false,
-							appellantProcedurePreference: undefined,
-							appellantProcedurePreferenceDetails: undefined,
-							appellantProcedurePreferenceDuration: undefined,
-							inquiryHowManyWitnesses: undefined
-						}
-					},
-					neighbouringSites: {
-						create: []
-					},
-					folders: {
-						create: [
-							{
-								path: 'appellant-case/appellantStatement'
-							},
-							{
-								path: 'appellant-case/originalApplicationForm'
-							},
-							{
-								path: 'appellant-case/applicationDecisionLetter'
-							},
-							{
-								path: 'appellant-case/changedDescription'
-							},
-							{
-								path: 'appellant-case/appellantCaseWithdrawalLetter'
-							},
-							{
-								path: 'appellant-case/appellantCaseCorrespondence'
-							},
-							{
-								path: 'appellant-case/designAccessStatement'
-							},
-							{
-								path: 'appellant-case/plansDrawings'
-							},
-							{
-								path: 'appellant-case/newPlansDrawings'
-							},
-							{
-								path: 'appellant-case/planningObligation'
-							},
-							{
-								path: 'appellant-case/ownershipCertificate'
-							},
-							{
-								path: 'appellant-case/otherNewDocuments'
-							},
-							{
-								path: 'lpa-questionnaire/whoNotified'
-							},
-							{
-								path: 'lpa-questionnaire/whoNotifiedSiteNotice'
-							},
-							{
-								path: 'lpa-questionnaire/whoNotifiedLetterToNeighbours'
-							},
-							{
-								path: 'lpa-questionnaire/whoNotifiedPressAdvert'
-							},
-							{
-								path: 'lpa-questionnaire/conservationMap'
-							},
-							{
-								path: 'lpa-questionnaire/otherPartyRepresentations'
-							},
-							{
-								path: 'lpa-questionnaire/planningOfficerReport'
-							},
-							{
-								path: 'lpa-questionnaire/lpaCaseCorrespondence'
-							},
-							{
-								path: 'costs/appellantCostsApplication'
-							},
-							{
-								path: 'costs/appellantCostsWithdrawal'
-							},
-							{
-								path: 'costs/appellantCostsCorrespondence'
-							},
-							{
-								path: 'costs/lpaCostsApplication'
-							},
-							{
-								path: 'costs/lpaCostsWithdrawal'
-							},
-							{
-								path: 'costs/lpaCostsCorrespondence'
-							},
-							{
-								path: 'costs/costsDecisionLetter'
-							},
-							{
-								path: 'internal/crossTeamCorrespondence'
-							},
-							{
-								path: 'internal/inspectorCorrespondence'
-							},
-							{
-								path: 'internal/uncategorised'
-							},
-							{
-								path: 'appeal-decision/caseDecisionLetter'
-							}
-						]
 					}
 				}
 			});
-			expect(databaseConnector.appeal.update).toHaveBeenCalled();
+
 			expect(databaseConnector.documentRedactionStatus.findMany).toHaveBeenCalled();
+			expect(databaseConnector.document.createMany).toHaveBeenCalled();
+			expect(databaseConnector.documentVersion.createMany).toHaveBeenCalled();
+			expect(databaseConnector.documentVersion.findMany).toHaveBeenCalled();
+
+			expect(databaseConnector.appeal.findUnique).toHaveBeenCalled();
+			expect(response.status).toEqual(200);
+			expect(response.body).toEqual(result);
 		});
 	});
 });
@@ -359,3 +213,51 @@ describe('/appeals/lpaq-submission', () => {
 		});
 	});
 });
+
+// @ts-ignore
+const createIntegrationMocks = (appealIngestionInput) => {
+	const appealCreatedResult = { id: 100, reference: '6000100' };
+	// @ts-ignore
+	databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
+	// @ts-ignore
+	databaseConnector.appealRelationship.createMany.mockResolvedValue([]);
+	// @ts-ignore
+	databaseConnector.serviceUser.findUnique.mockResolvedValue(null);
+	// @ts-ignore
+	databaseConnector.appeal.findMany.mockResolvedValue([]);
+	// @ts-ignore
+	databaseConnector.appeal.create.mockResolvedValue({ id: appealCreatedResult.id });
+	// @ts-ignore
+	databaseConnector.appeal.update.mockResolvedValue(appealCreatedResult);
+	// @ts-ignore
+	databaseConnector.appeal.findUnique.mockResolvedValue(appealCreatedResult);
+	// @ts-ignore
+	databaseConnector.document.createMany.mockResolvedValue([docIngestionInput]);
+	// @ts-ignore
+	databaseConnector.documentVersion.findMany.mockResolvedValue([
+		{
+			version: 1,
+			...docIngestionInput,
+			documentURI: expect.any(String),
+			blobStoragePath: expect.any(String),
+			dateReceived: expect.any(String),
+			draft: false,
+			redactionStatusId: expect.any(Number)
+		}
+	]);
+	// @ts-ignore
+	databaseConnector.auditTrail.create.mockResolvedValue({});
+	// @ts-ignore
+	databaseConnector.folder.findMany.mockResolvedValue(
+		appealIngestionInput.folders.create.map((/** @type {any} */ o, /** @type {number} */ ix) => {
+			return { ...o, id: ix + 1 };
+		})
+	);
+
+	// @ts-ignore
+	databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+		{ key: APPEAL_REDACTED_STATUS.NOT_REDACTED }
+	]);
+
+	return appealCreatedResult;
+};

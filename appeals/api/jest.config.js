@@ -8,13 +8,6 @@ export default {
 			functions: 65,
 			lines: 70,
 			statements: 70
-		},
-		// to improve and increase the coverage thresholds
-		'./src/server/endpoints/integrations': {
-			branches: 5.85,
-			functions: 10.86,
-			lines: 26.05,
-			statements: 25.51
 		}
 	}
 };
