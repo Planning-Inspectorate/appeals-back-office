@@ -17,7 +17,8 @@ export class CaseDetailsPage extends Page {
 		arrangeScheduleVisit: 'arrange-schedule-visit',
 		readyToStart: 'ready-to-start',
 		issueDetermination: 'issue-determination',
-		addLinkedAppeal: 'add-linked-appeal'
+		addLinkedAppeal: 'add-linked-appeal',
+		uploadFile: '#upload-file-1'
 	};
 
 	elements = {
@@ -33,7 +34,8 @@ export class CaseDetailsPage extends Page {
 		arrangeScheduleVisit: () => cy.getByData(this._cyDataSelectors.arrangeScheduleVisit),
 		readyToStart: () => cy.getByData(this._cyDataSelectors.readyToStart),
 		issueDecision: () => cy.getByData(this._cyDataSelectors.issueDetermination),
-		addLinkedAppeal: () => cy.getByData(this._cyDataSelectors.addLinkedAppeal)
+		addLinkedAppeal: () => cy.getByData(this._cyDataSelectors.addLinkedAppeal),
+		uploadFile: () => cy.get(this.selectors.uploadFile)
 	};
 	/********************************************************
 	 ************************ Actions ************************
@@ -99,7 +101,7 @@ export class CaseDetailsPage extends Page {
 		this.elements.addLinkedAppeal().click();
 	}
 
-	uploadOneDocument() {
+	uploadSamplePdf() {
 		cy.get('#upload-file-1').selectFile('cypress/fixtures/sample-doc.pdf', { force: true });
 	}
 	// TODO Get this to use the vanilla 'clickButtonByText()' function
