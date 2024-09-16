@@ -319,7 +319,7 @@ export const getDocumentRedactionStatusIds = async () => {
 /**
  *
  * @param {DocumentVersion} documentVersion
- * @returns
+ * @returns {string}
  */
 export const getAvScanStatus = (documentVersion) => {
 	return documentVersion.virusCheckStatus || APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED;

@@ -8,6 +8,7 @@ const mockRepUpdateById = jest.fn().mockResolvedValue({});
 const mockAppealRelationshipAdd = jest.fn().mockResolvedValue({});
 const mockAppealRelationshipRemove = jest.fn().mockResolvedValue({});
 const mockAppealRelationshipFindMany = jest.fn().mockResolvedValue({});
+const mockAppealRelationshipCreateMany = jest.fn().mockResolvedValue({});
 const mockAppealDecision = jest.fn().mockResolvedValue({});
 const mockAppealFindUnique = jest.fn().mockResolvedValue({});
 const mockAppealCreate = jest.fn().mockResolvedValue({});
@@ -35,6 +36,8 @@ const mockDocumentFindFirst = jest.fn().mockResolvedValue({});
 const mockDocumentDelete = jest.fn().mockResolvedValue({});
 const mockDocumentCreateMany = jest.fn().mockResolvedValue({});
 const mockDocumentVersionCreate = jest.fn().mockResolvedValue({});
+const mockDocumentVersionCreateMany = jest.fn().mockResolvedValue({});
+const mockDocumentVersionFindMany = jest.fn().mockResolvedValue({});
 const mockDocumentMetdataFindFirst = jest.fn().mockResolvedValue({});
 const mockDocumentMetdataFindUnique = jest.fn().mockResolvedValue({});
 const mockDocumentMetdataUpsert = jest.fn().mockResolvedValue({});
@@ -119,7 +122,8 @@ class MockPrismaClient {
 		return {
 			findMany: mockAppealRelationshipFindMany,
 			delete: mockAppealRelationshipRemove,
-			create: mockAppealRelationshipAdd
+			create: mockAppealRelationshipAdd,
+			createMany: mockAppealRelationshipCreateMany
 		};
 	}
 
@@ -167,6 +171,8 @@ class MockPrismaClient {
 	get documentVersion() {
 		return {
 			create: mockDocumentVersionCreate,
+			createMany: mockDocumentVersionCreateMany,
+			findMany: mockDocumentVersionFindMany,
 			findFirst: mockDocumentMetdataFindFirst,
 			findUnique: mockDocumentMetdataFindUnique,
 			upsert: mockDocumentMetdataUpsert,

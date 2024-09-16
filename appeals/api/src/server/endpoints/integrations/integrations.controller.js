@@ -91,8 +91,11 @@ export const postLpaqSubmission = async (req, res) => {
 		relatedReferences
 	);
 
+	if (!casedata.appeal) {
+		return res.status(404);
+	}
+
 	const { documentVersions } = casedata;
-	// @ts-ignore
 	const { id, reference } = casedata.appeal;
 
 	await createAuditTrail({
