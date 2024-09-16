@@ -100,9 +100,7 @@ export class CaseDetailsPage extends Page {
 	}
 
 	uploadOneDocument() {
-		cy.get('.pins-file-upload__dropzone').selectFile('cypress/fixtures/sample-doc.pdf', {
-			action: 'drag-drop'
-		});
+		cy.get('#upload-file-1').selectFile('cypress/fixtures/sample-doc.pdf', { force: true });
 	}
 	// TODO Get this to use the vanilla 'clickButtonByText()' function
 	// This currently doesn't work, as there are multiple matches and some of not invisible
