@@ -33,9 +33,30 @@ export interface AddDocumentsResponse {
 }
 
 export interface UploadRequest {
+	file: File;
 	accessToken: AccessToken;
 	blobStorageContainer: string;
 	blobStorageHost: string;
 	blobStoreUrl: string;
 	documents: BlobInfo[];
+}
+
+export interface FileUploadParameters {
+	file: File;
+	guid: string;
+	blobStorageUrl: string;
+}
+
+export interface StagedFile {
+	name: string;
+	guid: string;
+	blobStorageUrl: string;
+	mimeType: string;
+	documentType: string;
+	size: number;
+	stage: string;
+}
+
+export interface StagedFiles {
+	files: StagedFile[];
 }

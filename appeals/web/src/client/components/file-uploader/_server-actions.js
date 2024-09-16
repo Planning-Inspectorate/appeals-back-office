@@ -31,36 +31,30 @@ const serverActions = (uploadForm) => {
 	};
 
 	/**
-	 *
-	 * @param {FileWithRowId[]} fileList
-	 * @param {UploadRequest} uploadInfo
+	 * @param {import('@pins/appeals/index.js').FileUploadParameters[]} documents
 	 * @returns {Promise<AnError[]>}>}
 	 */
-	const uploadFiles = async (fileList, uploadInfo) => {
-		const { documents } = uploadInfo;
-
+	async function uploadFiles (documents) {
 		const accessToken = await getAccessToken();
 
-		const { blobStorageHost, blobStorageContainer, useBlobEmulator } =
-			/** type: UploadForm **/ uploadForm.dataset;
+		const { blobStorageHost, blobStorageContainer, useBlobEmulator } = uploadForm.dataset;
+
 		if (blobStorageHost == undefined || blobStorageContainer == undefined) {
-			throw new Error('blobStorageHost or blobStorageContainer are undefined.');
+			throw new Error('blobStorageHost or blobStorageContainer are undefined');
 		}
+
 		const blobStorageClient =
 			useBlobEmulator && !accessToken
 				? new BlobStorageClient(new BlobServiceClient(blobStorageHost))
 				: BlobStorageClient.fromUrlAndToken(blobStorageHost, accessToken);
 
-		for (const documentUploadInfo of documents) {
-			const fileToUpload = [...fileList].find(
-				(file) => file.fileRowId === documentUploadInfo.fileRowId
-			);
-			const { blobStoreUrl } = documentUploadInfo;
+		for (const document of documents) {
+			const { file, blobStorageUrl } = document;
 
-			if (fileToUpload && blobStoreUrl) {
+			if (file && blobStorageUrl) {
 				const errorOutcome = await uploadOnBlobStorage(
-					fileToUpload,
-					blobStoreUrl,
+					file,
+					blobStorageUrl,
 					blobStorageClient,
 					blobStorageContainer
 				);

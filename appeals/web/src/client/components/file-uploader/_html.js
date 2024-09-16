@@ -42,7 +42,7 @@ const renderSizeInMainUnit = (sizesInBytes) => {
  * @returns {HTMLElement}
  */
 export const buildRegularListItem = (uploadedFile) => {
-	const uploadedFileFileRowId = uploadedFile.fileRowId;
+	const uploadedFileFileRowId = uploadedFile.guid;
 	const uploadedFileName = uploadedFile.name || '';
 	const uploadedFileSize = uploadedFile.size;
 
@@ -111,4 +111,41 @@ export const buildProgressMessage = ({ show }, uploadForm) => {
 			? '<p class="govuk-body pins-file-upload__progress" role="alert">Uploading files</p>'
 			: '';
 	}
+};
+
+/**
+ * @param {import('@pins/appeals/index.js').StagedFile} stagedFile
+ * @returns {HTMLElement}
+ */
+export const buildStagedFileListItem = (stagedFile) => {
+	const stagedFileFileRowId = stagedFile.guid;
+
+	const li = document.createElement('li');
+	li.className = 'pins-file-upload__file-row';
+	li.id = stagedFileFileRowId || '';
+
+	const p = document.createElement('p');
+	p.className = 'govuk-heading-s';
+
+	const span = document.createElement('span');
+	span.className = 'govuk-visually-hidden';
+	span.textContent = 'File name: ';
+	p.appendChild(span);
+
+	const fileNameText = document.createTextNode(
+		`${stagedFile.name} (${renderSizeInMainUnit(stagedFile.size)})`
+	);
+	p.appendChild(fileNameText);
+
+	const button = document.createElement('button');
+	button.id = `button-remove-${li.id}`;
+	button.type = 'button';
+	button.className = 'govuk-link pins-file-upload__remove';
+	button.setAttribute('aria-label', `Remove ${stagedFile.name} from list`);
+	button.textContent = 'Remove';
+
+	li.appendChild(p);
+	li.appendChild(button);
+
+	return li;
 };

@@ -1,9 +1,6 @@
 import { hideErrors, showErrors } from './_errors.js';
+import { buildStagedFileListItem } from './_html.js';
 import serverActions from './_server-actions.js';
-import { buildErrorListItem, buildProgressMessage, buildRegularListItem } from './_html.js';
-
-/** @typedef {import('./_html.js').AnError} AnError */
-/** @typedef {import('./_html.js').FileWithRowId} FileWithRowId */
 
 /**
  * Actions on the client for the file upload process
@@ -12,20 +9,24 @@ import { buildErrorListItem, buildProgressMessage, buildRegularListItem } from '
  * @returns {*}
  */
 const clientActions = (container) => {
+	const maximumAllowedFileNameLength = 255;
+
 	/** @type {HTMLFormElement | null} */
 	const form = container.querySelector('.pins-file-upload form');
 	/** @type {HTMLElement | null} */
 	const uploadButton = container.querySelector('.pins-file-upload__button');
 	/** @type {HTMLElement | null} */
-	const uploadCounter = container.querySelector('.pins-file-upload__counter');
-	/** @type {HTMLElement | null} */
-	const filesRows = container.querySelector('.pins-file-upload__files-rows');
+	const stagedFilesList = container.querySelector('.pins-file-upload__files-rows');
 	/** @type {HTMLInputElement | null} */
 	const uploadInput = container.querySelector('input[name="files"]');
 	/** @type {HTMLElement | null} */
-	const submitButton = container.querySelector('.pins-file-upload__submit');
+	const fileInputContainer = container.querySelector('.pins-file-upload__upload');
 	/** @type {HTMLElement | null} */
-	const uploadRow = container.querySelector('.pins-file-upload__upload');
+	const submitButton = container.querySelector('.pins-file-upload__submit');
+
+	/** @type {string[]} */
+	const allowedMimeTypes = (container.dataset.allowedTypes || '').split(',');
+
 	/** @type {HTMLElement | null} */
 	let dropZone;
 
@@ -35,10 +36,10 @@ const clientActions = (container) => {
 	function setupDropzone() {
 		dropZone = document.createElement('div');
 		dropZone.className = 'pins-file-upload__dropzone';
-		uploadRow?.parentNode?.insertBefore(dropZone, uploadRow);
+		fileInputContainer?.parentNode?.insertBefore(dropZone, fileInputContainer);
 
-		if (uploadRow) {
-			dropZone.appendChild(uploadRow);
+		if (fileInputContainer) {
+			dropZone.appendChild(fileInputContainer);
 		}
 
 		dropZone.addEventListener('dragover', onDropZoneDragOver);
@@ -85,82 +86,42 @@ const clientActions = (container) => {
 		updateUploadButton();
 	}
 
-	cleanUpUncommittedFiles();
 
-	if (!form || !uploadButton || !uploadInput || !filesRows || !uploadCounter || !submitButton) {
+	if (!form || !uploadButton || !stagedFilesList || !uploadInput || !fileInputContainer || !submitButton) {
 		return;
 	}
 
 	let globalDataTransfer = new DataTransfer();
 
-	function cleanUpUncommittedFiles() {
-		if (container.dataset?.uncommittedFiles) {
-			const uncommittedFiles = JSON.parse(container.dataset?.uncommittedFiles);
-
-			deleteFiles(uncommittedFiles.files);
-		}
-	}
-
 	/**
-	 * @typedef {Object} UploadInfo
-	 * @property {any[]} documents
-	 * @property {import('./_server-actions.js').AccessToken} [accessToken]
+	 * State object representing all files which are "staged" in the component
+	 * Staged files include all files which have not yet been committed by submitting the check your answers page:
+	 * - files the user has added manually (via file select, drag and drop, or any other manual action by the user)
+	 * - uncommitted files (automatically populated in component from session data)
+	 *
+	 * @type {import('@pins/appeals/index.js').StagedFiles}
 	 */
-
-	/** @type {UploadInfo} */
-	const uploadInfo = {
-		documents: [],
-		...(container.dataset?.accessToken && {
-			accessToken: JSON.parse(container.dataset?.accessToken || '')
-		})
+	const stagedFiles = {
+		files: []
 	};
 
-	function createUploadInfoForAddedDocuments() {
-		uploadInfo.documents.length = 0;
-
-		// uploading new version of an existing document
-		if (globalDataTransfer.files.length === 1 && container.dataset?.documentId) {
-			/** @type {FileWithRowId|null} */
-			const file = globalDataTransfer.files.item(0);
-
-			uploadInfo.documents.push({
-				name: globalDataTransfer.files.item(0)?.name || '',
-				GUID: container.dataset?.documentId,
-				fileRowId: file?.fileRowId,
-				blobStoreUrl: createBlobStorageUrl(
-					container.dataset?.caseReference,
-					container.dataset?.documentId,
-					container.dataset?.documentOriginalFileName || '',
-					container.dataset?.documentVersion
-				),
-				mimeType: file?.type,
-				documentType: container.dataset?.documentType,
-				size: file?.size,
-				stage: container.dataset?.documentStage
+	/**
+	 *
+	 * @param {import('@pins/appeals/index.js').FileUploadParameters[]} uploadedFilesUploadParameters
+	 */
+	function updateStagedFilesState (uploadedFilesUploadParameters) {
+		for (const uploadedFile of uploadedFilesUploadParameters) {
+			stagedFiles.files.push({
+				name: uploadedFile.file.name,
+				guid: uploadedFile.guid,
+				blobStorageUrl: uploadedFile.blobStorageUrl,
+				mimeType: uploadedFile.file.type,
+				documentType: container.dataset?.documentType || '',
+				size: uploadedFile.file.size,
+				stage: container.dataset?.documentStage || ''
 			});
 		}
-		// uploading new document(s)
-		else {
-			for (const file of globalDataTransfer.files) {
-				/** @type {FileWithRowId} */
-				const fileWithRowId = file;
-				const guid = window.crypto.randomUUID();
-
-				uploadInfo.documents.push({
-					name: file.name,
-					GUID: guid,
-					fileRowId: fileWithRowId.fileRowId,
-					blobStoreUrl: createBlobStorageUrl(container.dataset?.caseReference, guid, file.name),
-					mimeType: file.type,
-					documentType: container.dataset?.documentType,
-					size: file.size,
-					stage: container.dataset?.documentStage
-				});
-			}
-		}
-
-		updateUploadInfoHiddenField(JSON.stringify(uploadInfo.documents));
-	}
+	};
 
 	/**
 	 * @param {any} value
@@ -179,16 +140,67 @@ const clientActions = (container) => {
 	}
 
 	/**
-	 * Execute actions after selecting the files to upload
-	 *
+	 * Execute actions on selecting the file(s) to upload
 	 * @param {*} selectEvent
 	 */
-	const onFileSelect = (selectEvent) => {
+	const onFileSelect = async (selectEvent) => {
 		const { target } = selectEvent;
 
-		updateFilesRows(target);
-		createUploadInfoForAddedDocuments();
-		updateUploadButton();
+		const selectedFiles = Array.from(target.files);
+
+		for (const file of selectedFiles) {
+			const validationError = validateSelectedFile(file);
+
+			if (validationError) {
+				const error = {
+					message: validationError.message || '',
+					name: file.name
+				};
+
+				// TODO: handle validation errors
+
+				return;
+			}
+		}
+
+		// upload added files to blob storage
+		const fileUploadParameters = await uploadAddedFiles(selectEvent.target.files);
+
+		// TODO: handle any errors returned from upload function
+
+		// save added files to state
+		updateStagedFilesState(fileUploadParameters);
+
+		// update staged files UI
+		updateStagedFilesUI(stagedFiles.files);
+
+		// update upload button
+	};
+
+	/**
+	 * @param {FileList} fileList
+	 */
+	const uploadAddedFiles = async (fileList) => {
+		// TODO: filter the list to only files which have not yet been uploaded (not clear how to check this until upload implementation is done)
+
+		// upload the files to blob storage
+		const fileUploadParameters = Array.from(fileList).map(file => {
+			const guid = window.crypto.randomUUID();
+
+			return {
+				file,
+				guid,
+				blobStorageUrl: createBlobStorageUrl(container.dataset?.caseReference, guid, file.name)
+			};
+		});
+
+		const failedUploads = await uploadFiles(fileUploadParameters);
+
+		if (failedUploads.length) {
+			console.log('failed uploads!');
+		}
+
+		return fileUploadParameters;
 	};
 
 	const allowSingleFileOnly = () => {
@@ -212,16 +224,15 @@ const clientActions = (container) => {
 
 		uploadButton.innerHTML = filesRowsNumber > 0 ? 'Add more files' : 'Choose file';
 		uploadButton.blur();
-		uploadCounter.textContent = filesRowsNumber > 0 ? `${filesRowsNumber} files` : 'No file chosen';
 
 		updateUploadControlsVisibility();
 	};
 
 	/**
-	 * @param {FileWithRowId} selectedFile
+	 * @param {File} selectedFile
 	 * @returns {{message: string} | null}
 	 */
-	const checkSelectedFile = (selectedFile) => {
+	const validateSelectedFile = (selectedFile) => {
 		const allowedMimeTypes = (container.dataset.allowedTypes || '').split(',');
 		const filenamesInFolderBase64String = form.dataset.filenamesInFolder || '';
 		const filenamesInFolderString = window.atob(filenamesInFolderBase64String);
@@ -232,179 +243,73 @@ const clientActions = (container) => {
 		if (filenamesInFolder.includes(selectedFile.name)) {
 			return { message: 'DUPLICATE_NAME_SINGLE_FILE' };
 		}
-		if (selectedFile.name.length > 255) {
+		if (selectedFile.name.length > maximumAllowedFileNameLength) {
 			return { message: 'NAME_SINGLE_FILE' };
 		}
 		if (!allowedMimeTypes.includes(selectedFile.type)) {
 			return { message: 'TYPE_SINGLE_FILE' };
 		}
+
 		return null;
 	};
 
 	/**
-	 *	Add rows in the files list
-	 *
-	 * @param {*} target
+	 * @param {import('@pins/appeals/index.js').StagedFile[]} stagedFiles
 	 */
-	const updateFilesRows = (target) => {
-		const { files: newFiles } = target;
+	function updateStagedFilesUI (stagedFiles) {
+		if (!stagedFilesList) {
+			return;
+		}
 
-		hideErrors(container);
+		stagedFilesList.replaceChildren(...stagedFiles.map(stagedFile => buildStagedFileListItem(stagedFile)));
 
-		const wrongFiles = [];
+		bindRemoveButtonEvents();
+	}
 
-		for (const selectedFile of newFiles) {
-			if (allowSingleFileOnly() && globalDataTransfer.items.length > 0) {
-				break;
-			}
+	function bindRemoveButtonEvents () {
+		const removeButtons = container.querySelectorAll('.pins-file-upload__remove');
 
-			const fileRowId = window.btoa(selectedFile.name);
-			const fileCannotBeAdded = checkSelectedFile(selectedFile);
+		removeButtons.forEach(element => {
+			element.addEventListener('click', (clickEvent) => {
+				if (clickEvent.target instanceof HTMLElement) {
+					const guid = clickEvent.target?.getAttribute('id')?.split('button-remove-')[1];
 
-			if (fileCannotBeAdded) {
-				const error = {
-					message: fileCannotBeAdded.message || '',
-					name: selectedFile.name,
-					fileRowId
-				};
-
-				const errorElement = buildErrorListItem(error);
-				filesRows.appendChild(errorElement);
-				wrongFiles.push(error);
-			} else {
-				// Process file if no error
-				const existingFileRow = container.querySelector(`#${CSS.escape(fileRowId)}`);
-				if (!existingFileRow) {
-					selectedFile.fileRowId = fileRowId;
-					globalDataTransfer.items.add(selectedFile);
-
-					const regularListItem = buildRegularListItem(selectedFile);
-					filesRows.appendChild(regularListItem);
-
-					const removeButton = regularListItem.querySelector(`.pins-file-upload__remove`);
-					if (removeButton) {
-						removeButton.addEventListener('click', removeFileRow);
-					}
+					removeFileByGUID(guid);
 				}
-			}
-		}
-		if (wrongFiles.length > 0) {
-			showErrors({ message: 'FILE_SPECIFIC_ERRORS', details: wrongFiles }, container);
-		}
-		// reset the INPUT value to be able to re-upload deleted files
-		target.value = '';
-	};
-
-	/**
-	 * Remove one specific row from the files list
-	 *
-	 * @param {*} clickEvent
-	 */
-	const removeFileRow = (clickEvent) => {
-		/** @type {FileWithRowId[]} */
-		const filesWithIds = [...globalDataTransfer.files];
-		const rowToRemove = clickEvent.target?.parentElement;
-		const fileToRemove = filesWithIds.find((file) => file.fileRowId === rowToRemove?.id);
-
-		if (rowToRemove && fileToRemove) {
-			const rowToRemoveIndex = filesWithIds.indexOf(fileToRemove);
-
-			globalDataTransfer.items.remove(rowToRemoveIndex);
-			rowToRemove.remove();
-			updateUploadButton();
-		}
-	};
-
-	const onSubmitValidation = async () => {
-		/** @type {HTMLInputElement|null} */
-		const additionalDocumentsConfirmation = document.querySelector(
-			'#additionalDocumentsConfirmation'
-		);
-
-		if (additionalDocumentsConfirmation && !additionalDocumentsConfirmation?.checked) {
-			// eslint-disable-next-line no-throw-literal
-			throw { message: 'ADDITIONAL_DOCUMENTS_CONFIRMATION_REQUIRED' };
-		}
-
-		if (allowSingleFileOnly() && globalDataTransfer.files.length > 1) {
-			const newDataTransfer = new DataTransfer();
-
-			newDataTransfer.items.add(globalDataTransfer.files[0]);
-
-			globalDataTransfer = newDataTransfer;
-		}
-
-		const filesToUpload = globalDataTransfer.files;
-
-		return new Promise((resolve, reject) => {
-			const filesSize = [...filesToUpload].reduce((total, file) => total + file.size, 0);
-			const filesNumber = filesToUpload.length;
-
-			if (filesNumber === 0) {
-				reject(new Error('NO_FILE'));
-			}
-
-			// i.e. 1GB in bytes
-			if (filesSize > 1_073_741_824) {
-				const sizeInGb = `${Math.round(filesSize * 1e-8) / 10} GB`;
-
-				// eslint-disable-next-line no-throw-literal
-				throw { message: 'SIZE_EXCEEDED', details: [{ message: sizeInGb }] };
-			}
-			resolve(filesToUpload);
+			});
 		});
-	};
+	}
 
 	/**
-	 *
-	 * @param {AnError[]} errors
+	 * @param {string|undefined} guid
 	 */
-	const finalizeUpload = (errors) => {
-		if (errors.length > 0) {
-			globalDataTransfer = new DataTransfer();
-			updateUploadButton();
-
-			const failedRowIds = new Set(errors.map((error) => error.fileRowId));
-			const allRowsId = [...filesRows.children].map((row) => row.id);
-
-			for (const rowId of allRowsId) {
-				const fileRow = container.querySelector(`#${rowId}`);
-
-				if (!failedRowIds.has(rowId) && fileRow) {
-					fileRow.remove();
-				}
-			}
-
-			// eslint-disable-next-line no-throw-literal
-			throw { message: 'FILE_SPECIFIC_ERRORS', details: errors };
-		} else {
-			disableLeavePageWarning();
-			form.submit();
+	function removeFileByGUID (guid) {
+		if (!guid) {
+			return;
 		}
-	};
+
+		const stagedFile = stagedFiles.files.find(file => file.guid === guid);
+
+		if (stagedFile) {
+			deleteFiles([stagedFile.blobStorageUrl]);
+		}
+
+		stagedFiles.files = stagedFiles.files.filter(file => file.guid !== guid);
+
+		updateStagedFilesUI(stagedFiles.files);
+	}
 
 	/**
 	 *	@param {Event} clickEvent
 	 */
-	const onSubmit = async (clickEvent) => {
+	 const onSubmit = async (clickEvent) => {
 		clickEvent.preventDefault();
 
-		enableLeavePageWarning();
-
-		try {
-			const fileList = await onSubmitValidation();
-
-			buildProgressMessage({ show: true }, container);
-
-			let errors = await uploadFiles(fileList, uploadInfo);
-
-			finalizeUpload(errors);
-		} catch (/** @type {*} */ error) {
-			showErrors(error, container);
-		}
+		// TODO: A2-918
 	};
 
-	const registerEvents = () => {
+
+	const bindEvents = () => {
 		uploadButton.addEventListener('click', (clickEvent) => {
 			clickEvent.preventDefault();
 			uploadInput.click();
@@ -442,7 +347,7 @@ const clientActions = (container) => {
 		return `appeal/${caseReference}/${fileGUID}/v${version}/${fileName}`;
 	};
 
-	return { onFileSelect, onSubmitValidation, registerEvents };
+	return { bindEvents };
 };
 
 export default clientActions;
