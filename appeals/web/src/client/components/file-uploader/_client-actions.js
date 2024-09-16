@@ -196,11 +196,15 @@ const clientActions = (container) => {
 	};
 
 	const updateUploadControlsVisibility = () => {
-		if (!dropZone) {
-			return;
+		const displayStyle = allowSingleFileOnly() && globalDataTransfer.files.length > 0 ? 'none' : '';
+
+		if (uploadRow) {
+			uploadRow.style.display = displayStyle;
 		}
 
-		dropZone.hidden = allowSingleFileOnly() && globalDataTransfer.files.length > 0;
+		if (dropZone) {
+			dropZone.style.display = displayStyle;
+		}
 	};
 
 	/**
