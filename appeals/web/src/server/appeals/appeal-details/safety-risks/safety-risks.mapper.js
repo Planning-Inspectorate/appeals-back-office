@@ -31,7 +31,6 @@ export const changeSafetyRisksPage = (appealData, storedSessionData, backLinkUrl
 		pageComponents: [
 			yesNoInput({
 				name: 'safetyRisksRadio',
-				id: 'safety-risk-radio',
 				legendText: `Were health and safety risks identified by the ${formattedSource}?`,
 				value: currentRadioValue,
 				yesConditional: {

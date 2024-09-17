@@ -1,4 +1,5 @@
 import { conditionalFormatter } from '#lib/mappers/global-mapper-formatter.js';
+import { kebabCase } from 'lodash-es';
 
 /**
  *
@@ -32,7 +33,7 @@ export function yesNoInput({ name, id, value, legendText, yesConditional }) {
 		type: 'radios',
 		parameters: {
 			name,
-			id: id || name,
+			id: id || kebabCase(name),
 			items: [
 				yes,
 				{

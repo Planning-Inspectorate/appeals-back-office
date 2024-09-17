@@ -321,7 +321,6 @@ export function changeNeighbouringSiteAffectedPage(appealData, origin) {
 		pageComponents: [
 			yesNoInput({
 				name: 'neighbouringSiteAffected',
-				id: 'neighbouring-site-affected',
 				value: appealData.isAffectingNeighbouringSites
 			})
 		]

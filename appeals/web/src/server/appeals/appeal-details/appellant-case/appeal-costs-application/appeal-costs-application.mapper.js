@@ -22,7 +22,6 @@ export const changeAppealCostsApplicationPage = (appealData, data, origin) => {
 		pageComponents: [
 			yesNoInput({
 				name: 'appealCostsApplicationRadio',
-				id: 'appeal-costs-application-radio',
 				legendText: 'Was an award of costs applied for?',
 				value: data
 			})

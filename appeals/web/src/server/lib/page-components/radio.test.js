@@ -3,9 +3,9 @@ import { yesNoInput } from '#lib/page-components/radio.js';
 describe('radio', () => {
 	describe('yesNoInput', () => {
 		it('supports simple yes/no case', () => {
-			const component = yesNoInput({ name: 'test' });
+			const component = yesNoInput({ name: 'testNameHere' });
 			expect(component.type).toBe('radios');
-			expect(component.parameters.id).toBe('test');
+			expect(component.parameters.id).toBe('test-name-here');
 			expect(component.parameters.items.length).toBe(2);
 			expect(component.parameters.items[0].checked).toBe(false);
 			expect(component.parameters.items[1].checked).toBe(false);

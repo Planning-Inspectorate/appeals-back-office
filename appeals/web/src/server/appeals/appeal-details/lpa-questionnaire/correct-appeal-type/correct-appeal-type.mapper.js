@@ -29,7 +29,6 @@ export const changeCorrectAppealTypePage = (
 		pageComponents: [
 			yesNoInput({
 				name: 'correctAppealTypeRadio',
-				id: 'correct-appeal-type-radio',
 				legendText: 'Is the appeal type correct (LPA response)?',
 				value: currentRadioValue
 			})
