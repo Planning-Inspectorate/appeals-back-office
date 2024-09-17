@@ -32,7 +32,6 @@ const clientActions = (container) => {
 
 	const { uploadFiles, deleteFiles } = serverActions(container);
 
-	// eslint-disable-next-line no-unused-vars
 	function setupDropzone() {
 		dropZone = document.createElement('div');
 		dropZone.className = 'pins-file-upload__dropzone';
@@ -137,7 +136,7 @@ const clientActions = (container) => {
 		}
 	};
 
-	function createUploadInfoForAddedDocuments() {
+	function createUploadInfoForStagedDocuments() {
 		uploadInfo.documents.length = 0;
 
 		// uploading new version of an existing document
@@ -157,7 +156,7 @@ const clientActions = (container) => {
 	 */
 	function addUploadInfoForStagedFile (stagedFile) {
 		uploadInfo.documents.push({
-			name: stagedFile.name || '',
+			name: stagedFile.name,
 			GUID: stagedFile.guid,
 			blobStoreUrl: stagedFile.blobStorageUrl,
 			mimeType: stagedFile.mimeType,
@@ -184,10 +183,9 @@ const clientActions = (container) => {
 	}
 
 	/**
-	 * Execute actions on selecting the file(s) to upload
 	 * @param {*} selectEvent
 	 */
-	const onFileSelect = async (selectEvent) => {
+	async function onFileSelect (selectEvent) {
 		const { target } = selectEvent;
 
 		await addSelectedFiles(target.files);
@@ -213,6 +211,7 @@ const clientActions = (container) => {
 				};
 
 				// TODO: handle validation errors
+				console.error(error);
 
 				return;
 			}
@@ -235,13 +234,12 @@ const clientActions = (container) => {
 	/**
 	 * @param {FileList} fileList
 	 */
-	const uploadAddedFiles = async (fileList) => {
+	async function uploadAddedFiles (fileList) {
 		// TODO: filter the list to only files which have not yet been uploaded (not clear how to check this until upload implementation is done)
 
 		// upload the files to blob storage
 		const fileUploadParameters = Array.from(fileList).map(file => {
-			const newVersionOfExistingFile = stagedFiles.files.length === 1 && container.dataset?.documentId && container.dataset?.documentVersion;
-
+			const newVersionOfExistingFile = !!(container.dataset?.documentId) && !!(container.dataset?.documentVersion);
 			const guid = newVersionOfExistingFile
 				? container.dataset?.documentId || ''
 				: window.crypto.randomUUID();
@@ -249,7 +247,12 @@ const clientActions = (container) => {
 			return {
 				file,
 				guid,
-				blobStorageUrl: createBlobStorageUrl(container.dataset?.caseReference, guid, file.name, newVersionOfExistingFile ? container.dataset?.documentVersion : undefined)
+				blobStorageUrl: createBlobStorageUrl(
+					container.dataset?.caseReference,
+					guid,
+					newVersionOfExistingFile ? (container.dataset?.documentOriginalFileName || '') : file.name,
+					newVersionOfExistingFile ? container.dataset?.documentVersion : undefined
+				)
 			};
 		});
 
@@ -262,11 +265,11 @@ const clientActions = (container) => {
 		return fileUploadParameters;
 	};
 
-	const allowSingleFileOnly = () => {
-		return !uploadInput.getAttributeNames().includes('multiple');
+	function allowSingleFileOnly () {
+		return !uploadInput?.getAttributeNames().includes('multiple');
 	};
 
-	const updateUploadControlsVisibility = () => {
+	function updateUploadControlsVisibility () {
 		if (!dropZone) {
 			return;
 		}
@@ -278,11 +281,13 @@ const clientActions = (container) => {
 	 * Update button text and files counter
 	 *
 	 */
-	const updateUploadButton = () => {
+	function updateUploadButton () {
 		const filesRowsNumber = globalDataTransfer.files.length;
 
-		uploadButton.innerHTML = filesRowsNumber > 0 ? 'Add more files' : 'Choose file';
-		uploadButton.blur();
+		if (uploadButton) {
+			uploadButton.innerHTML = filesRowsNumber > 0 ? 'Add more files' : 'Choose file';
+			uploadButton.blur();
+		}
 
 		updateUploadControlsVisibility();
 	};
@@ -291,9 +296,9 @@ const clientActions = (container) => {
 	 * @param {File} selectedFile
 	 * @returns {{message: string} | null}
 	 */
-	const validateSelectedFile = (selectedFile) => {
+	function validateSelectedFile (selectedFile) {
 		const allowedMimeTypes = (container.dataset.allowedTypes || '').split(',');
-		const filenamesInFolderBase64String = form.dataset.filenamesInFolder || '';
+		const filenamesInFolderBase64String = form?.dataset.filenamesInFolder || '';
 		const filenamesInFolderString = window.atob(filenamesInFolderBase64String);
 		const filenamesInFolderArray =
 			(filenamesInFolderString && JSON.parse(filenamesInFolderString)) || null;
@@ -361,33 +366,32 @@ const clientActions = (container) => {
 	/**
 	 *	@param {Event} clickEvent
 	 */
-	const onSubmit = async (clickEvent) => {
+	async function onSubmit (clickEvent) {
 		clickEvent.preventDefault();
 
-		createUploadInfoForAddedDocuments();
+		createUploadInfoForStagedDocuments();
 
-		form.submit();
+		form?.submit();
 	};
 
-	const bindEvents = () => {
-		uploadButton.addEventListener('click', (clickEvent) => {
+	function bindEvents () {
+		uploadButton?.addEventListener('click', (clickEvent) => {
 			clickEvent.preventDefault();
-			uploadInput.click();
+			uploadInput?.click();
 		});
-		uploadInput.addEventListener('change', onFileSelect, false);
-
-		submitButton.addEventListener('click', onSubmit);
+		uploadInput?.addEventListener('change', onFileSelect, false);
+		submitButton?.addEventListener('click', onSubmit);
 	};
 
-	const leavePageWarningEventHandler = (/** @type {{ preventDefault: () => any; }} */ event) => {
+	function leavePageWarningEventHandler (/** @type {{ preventDefault: () => any; }} */ event) {
 		event.preventDefault();
 	};
 
-	const enableLeavePageWarning = () => {
+	function enableLeavePageWarning () {
 		window.addEventListener('beforeunload', leavePageWarningEventHandler);
 	};
 
-	const disableLeavePageWarning = () => {
+	function disableLeavePageWarning () {
 		window.removeEventListener('beforeunload', leavePageWarningEventHandler);
 	};
 
@@ -398,7 +402,7 @@ const clientActions = (container) => {
 	 * @param {string} [latestVersion]
 	 * @returns {string}
 	 */
-	const createBlobStorageUrl = (caseReference, fileGUID, fileName, latestVersion) => {
+	function createBlobStorageUrl (caseReference, fileGUID, fileName, latestVersion) {
 		if (!caseReference) return '';
 
 		const latestVersionNumber = latestVersion && parseInt(latestVersion, 10);
