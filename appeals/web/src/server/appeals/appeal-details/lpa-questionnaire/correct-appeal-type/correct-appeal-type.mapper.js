@@ -1,4 +1,5 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
+import { yesNoInput } from '#lib/page-components/radio.js';
 
 /**
  * @typedef {import('../../appeal-details.types.js').WebAppeal} Appeal
@@ -26,32 +27,12 @@ export const changeCorrectAppealTypePage = (
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: `Is the appeal type correct (LPA response)?`,
 		pageComponents: [
-			{
-				type: 'radios',
-				parameters: {
-					name: 'correctAppealTypeRadio',
-					id: 'correct-appeal-type-radio',
-					fieldSet: {
-						legend: {
-							text: `Is the appeal type correct (LPA response)?`,
-							isPageHeading: false,
-							classes: 'govuk-fieldset__legend--l'
-						}
-					},
-					items: [
-						{
-							value: 'yes',
-							text: 'Yes',
-							checked: currentRadioValue
-						},
-						{
-							value: 'no',
-							text: 'No',
-							checked: !currentRadioValue
-						}
-					]
-				}
-			}
+			yesNoInput({
+				name: 'correctAppealTypeRadio',
+				id: 'correct-appeal-type-radio',
+				legendText: 'Is the appeal type correct (LPA response)?',
+				value: currentRadioValue
+			})
 		]
 	};
 
