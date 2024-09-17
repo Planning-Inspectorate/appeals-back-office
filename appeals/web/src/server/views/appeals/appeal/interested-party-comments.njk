@@ -61,17 +61,17 @@
                     }
                 },
                 {
-                    label: "Accepted",
-                    id: "accepted",
+                    label: "Valid",
+                    id: "valid",
                     panel: {
-                        html: (govukTable(pageContent.acceptedTable) + govukPagination(pageContent.paginationAccepted)) | safe
+                        html: (govukTable(pageContent.validTable) + govukPagination(pageContent.paginationValid)) | safe
                     }
                 },
                 {
-                    label: "Rejected",
-                    id: "rejected",
+                    label: "Invalid",
+                    id: "invalid",
                     panel: {
-                        html: (govukTable(pageContent.rejectedTable) + govukPagination(pageContent.paginationRejected)) | safe
+                        html: (govukTable(pageContent.invalidTable) + govukPagination(pageContent.paginationInvalid)) | safe
                     }
                 }
             ]

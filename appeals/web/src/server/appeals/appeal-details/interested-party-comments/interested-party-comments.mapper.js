@@ -16,8 +16,8 @@ import { mapPagination } from '#lib/mappers/pagination.mapper.js';
  * @param {import("#lib/pagination-utilities.js").PaginationParameters} paginationParameters
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
  * @param {IPCommentsList} awaitingReview
- * @param {IPCommentsList} accepted
- * @param {IPCommentsList} rejected
+ * @param {IPCommentsList} valid
+ * @param {IPCommentsList} invalid
  * @returns {Promise<PageContent>}
  */
 export async function interestedPartyCommentsPage(
@@ -27,8 +27,8 @@ export async function interestedPartyCommentsPage(
 	paginationParameters,
 	session,
 	awaitingReview,
-	accepted,
-	rejected
+	valid,
+	invalid
 ) {
 	const awaitingReviewTable = {
 		head: [{ text: 'Interested party' }, { text: 'Submitted' }, { text: 'Action' }],
@@ -36,15 +36,15 @@ export async function interestedPartyCommentsPage(
 		firstCellIsHeader: true
 	};
 
-	const acceptedTable = {
+	const validTable = {
 		head: [{ text: 'Interested party' }, { text: 'Submitted' }, { text: 'Action' }],
-		rows: generateTableRows(accepted),
+		rows: generateTableRows(valid),
 		firstCellIsHeader: true
 	};
 
-	const rejectedTable = {
+	const invalidTable = {
 		head: [{ text: 'Interested party' }, { text: 'Submitted' }, { text: 'Action' }],
-		rows: generateTableRows(rejected),
+		rows: generateTableRows(invalid),
 		firstCellIsHeader: true
 	};
 
@@ -55,16 +55,16 @@ export async function interestedPartyCommentsPage(
 		10
 	);
 
-	const paginationAccepted = generatePagination(
+	const paginationValid = generatePagination(
 		paginationParameters.pageNumber,
-		`/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments?tab=accepted`,
+		`/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments?tab=valid`,
 		5,
 		10
 	);
 
-	const paginationRejected = generatePagination(
+	const paginationInvalid = generatePagination(
 		paginationParameters.pageNumber,
-		`/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments?tab=rejected`,
+		`/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments?tab=invalid`,
 		5,
 		10
 	);
@@ -76,11 +76,11 @@ export async function interestedPartyCommentsPage(
 		heading: 'Interested Party Comments',
 		pageComponents: [],
 		awaitingReviewTable,
-		acceptedTable,
-		rejectedTable,
+		validTable,
+		invalidTable,
 		paginationAwaiting,
-		paginationAccepted,
-		paginationRejected
+		paginationValid,
+		paginationInvalid
 	};
 
 	return pageContent;

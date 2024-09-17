@@ -1206,7 +1206,7 @@ export async function initialiseAndMapAppealData(
 
 	/** @type {Instructions} */
 	mappedData.appeal.interestedPartyComments = {
-		id: 'appeal-decision',
+		id: 'interested-party-comments',
 		display: {
 			tableItem: [
 				{
@@ -1222,7 +1222,7 @@ export async function initialiseAndMapAppealData(
 					classes: 'interested-party-comments-received-date'
 				},
 				{
-					html: `<a href="${currentRoute}/interested-party-comments" data-cy="review-interested-party-comments class="govuk-link">Review <span class="govuk-visually-hidden">Interested party comments</span></a>`,
+					html: `<a href="${currentRoute}/interested-party-comments" data-cy="review-interested-party-comments" class="govuk-link">Review <span class="govuk-visually-hidden">interested party comments</span></a>`,
 					classes: 'interested-party-comments-actions'
 				}
 			]
