@@ -2,6 +2,7 @@
  * @typedef {import('../../appeal-details.types.js').WebAppeal} Appeal
  */
 import { appealShortReference } from '#lib/appeals-formatter.js';
+import { yesNoInput } from '#lib/page-components/radio.js';
 
 /**
  * @param {Appeal} appealData
@@ -29,32 +30,13 @@ export const changeOwnershipCertificatePage = (
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: `Change ownership certificate or land declaration submitted`,
 		pageComponents: [
-			{
-				type: 'radios',
-				parameters: {
-					name: 'ownershipCertificateRadio',
-					id: 'owners-known-radio',
-					fieldSet: {
-						legend: {
-							text: `Was a separate ownership certificate or agricultural land declaration submitted?`,
-							isPageHeading: false,
-							classes: 'govuk-fieldset__legend--l'
-						}
-					},
-					items: [
-						{
-							value: 'yes',
-							text: 'Yes',
-							checked: !!ownershipCertificateSubmitted
-						},
-						{
-							value: 'no',
-							text: 'No',
-							checked: !ownershipCertificateSubmitted
-						}
-					]
-				}
-			}
+			yesNoInput({
+				name: 'ownershipCertificateRadio',
+				id: 'owners-known-radio',
+				legendText:
+					'Was a separate ownership certificate or agricultural land declaration submitted?',
+				value: ownershipCertificateSubmitted
+			})
 		]
 	};
 

@@ -2,6 +2,7 @@ import { appealSiteToMultilineAddressStringHtml } from '#lib/address-formatter.j
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { buildNotificationBanners } from '#lib/mappers/notification-banners.mapper.js';
 import { addressInputs } from '#lib/page-components/address.js';
+import { yesNoInput } from '#lib/page-components/radio.js';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
@@ -207,29 +208,10 @@ export function removeNeighbouringSitePage(appealData, origin, siteId) {
 					]
 				}
 			},
-			{
-				type: 'radios',
-				parameters: {
-					name: 'remove-neighbouring-site',
-					fieldset: {
-						legend: {
-							text: 'Do you want to remove this site?',
-							isPageHeading: false,
-							classes: 'govuk-fieldset__legend--m'
-						}
-					},
-					items: [
-						{
-							value: 'yes',
-							text: 'Yes'
-						},
-						{
-							value: 'no',
-							text: 'No'
-						}
-					]
-				}
-			}
+			yesNoInput({
+				name: 'remove-neighbouring-site',
+				legendText: 'Do you want to remove this site?'
+			})
 		]
 	};
 
@@ -337,25 +319,11 @@ export function changeNeighbouringSiteAffectedPage(appealData, origin) {
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'Could a neighbouring site be affected?',
 		pageComponents: [
-			{
-				type: 'radios',
-				parameters: {
-					name: 'neighbouringSiteAffected',
-					id: 'neighbouring-site-affected',
-					items: [
-						{
-							text: 'Yes',
-							value: 'yes',
-							checked: appealData.isAffectingNeighbouringSites
-						},
-						{
-							text: 'No',
-							value: 'no',
-							checked: !appealData.isAffectingNeighbouringSites
-						}
-					]
-				}
-			}
+			yesNoInput({
+				name: 'neighbouringSiteAffected',
+				id: 'neighbouring-site-affected',
+				value: appealData.isAffectingNeighbouringSites
+			})
 		]
 	};
 
