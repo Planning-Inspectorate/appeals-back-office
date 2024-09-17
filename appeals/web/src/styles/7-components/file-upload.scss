@@ -78,5 +78,9 @@
 
   &__upload {
 	display: flex;
+
+	&.dropzone-disabled {
+		padding: 30px 0 20px;
+	}
   }
 }

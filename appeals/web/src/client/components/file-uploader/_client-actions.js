@@ -2,6 +2,10 @@ import { hideErrors, showErrors } from './_errors.js';
 import { buildStagedFileListItem } from './_html.js';
 import serverActions from './_server-actions.js';
 
+const CLASSES = {
+	dropZoneDisabled: 'dropzone-disabled'
+};
+
 /**
  * Actions on the client for the file upload process
  *
@@ -33,6 +37,11 @@ const clientActions = (container) => {
 	const { uploadFiles, deleteFiles } = serverActions(container);
 
 	function setupDropzone() {
+		if (allowSingleFileOnly() || isNewVersionOfExistingFile()) {
+			fileInputContainer?.classList.add(CLASSES.dropZoneDisabled);
+			return;
+		}
+
 		dropZone = document.createElement('div');
 		dropZone.className = 'pins-file-upload__dropzone';
 		fileInputContainer?.parentNode?.insertBefore(dropZone, fileInputContainer);
@@ -139,14 +148,7 @@ const clientActions = (container) => {
 	function createUploadInfoForStagedDocuments() {
 		uploadInfo.documents.length = 0;
 
-		// uploading new version of an existing document
-		if (stagedFiles.files.length === 1 && container.dataset?.documentId) {
-			addUploadInfoForStagedFile(stagedFiles.files[0]);
-		}
-		// uploading new document(s)
-		else {
-			stagedFiles.files.forEach(addUploadInfoForStagedFile);
-		}
+		stagedFiles.files.forEach(addUploadInfoForStagedFile);
 
 		updateUploadInfoHiddenField(JSON.stringify(uploadInfo.documents));
 	}
@@ -239,7 +241,7 @@ const clientActions = (container) => {
 
 		// upload the files to blob storage
 		const fileUploadParameters = Array.from(fileList).map(file => {
-			const newVersionOfExistingFile = !!(container.dataset?.documentId) && !!(container.dataset?.documentVersion);
+			const newVersionOfExistingFile = isNewVersionOfExistingFile();
 			const guid = newVersionOfExistingFile
 				? container.dataset?.documentId || ''
 				: window.crypto.randomUUID();
@@ -268,6 +270,10 @@ const clientActions = (container) => {
 	function allowSingleFileOnly () {
 		return !uploadInput?.getAttributeNames().includes('multiple');
 	};
+
+	function isNewVersionOfExistingFile () {
+		return !!(container.dataset?.documentId) && !!(container.dataset?.documentVersion);
+	}
 
 	function updateUploadControlsVisibility () {
 		if (!dropZone) {

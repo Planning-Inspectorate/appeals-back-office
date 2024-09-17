@@ -607,71 +607,85 @@ export function addDocumentsCheckAndConfirmPage(
 		backLinkUrl,
 		preHeading: `Appeal ${appealShortReference(appealReference)}`,
 		heading: 'Check your answers',
-		pageComponents: [
-			{
-				type: 'summary-list',
-				parameters: {
-					rows: [
-						{
-							key: {
-								text: summaryListNameLabelOverride || 'Name'
-							},
-							value: {
-								html: `<a class="govuk-link" href="${mapStagedDocumentDownloadUrl(
-									appealReference,
-									fileUploadInfo[0].GUID,
-									documentFileName || fileUploadInfo[0].name,
-									documentVersion
-								)}" target="_blank">${fileUploadInfo[0].name}</a>`
-							},
-							actions: {
-								items: [
-									{
-										text: 'Change',
-										href: changeFileLinkUrl
-									}
-								]
-							}
-						},
-						{
-							key: {
-								text: 'Date received'
-							},
-							value: {
-								text: apiDateStringToDisplayDate(fileUploadInfo[0].receivedDate)
-							},
-							actions: {
-								items: [
-									{
-										text: 'Change',
-										href: changeDateLinkUrl
-									}
-								]
-							}
-						},
-						{
-							key: {
-								text: 'Redaction status'
-							},
-							value: {
-								text: capitalize(
-									redactionStatusIdToName(redactionStatuses, fileUploadInfo[0].redactionStatus)
-								)
-							},
-							actions: {
-								items: [
-									{
-										text: 'Change',
-										href: changeRedactionStatusLinkUrl
-									}
-								]
-							}
-						}
-					]
-				}
-			}
-		]
+		pageComponents: []
 	};
+
+	fileUploadInfo.forEach((fileUploadInfoItem, index) => {
+		/** @type {HtmlPageComponent} */
+		const htmlComponent = {
+			type: 'html',
+			parameters: {
+				html: `<h2 class="govuk-heading-l govuk-!-margin-top-${index === 0 ? '5' : '8'} govuk-!-margin-bottom-4">Uploaded file${fileUploadInfo.length > 1 ? ` ${index + 1}` : ''}</h2>`
+			}
+		};
+
+		/** @type {SummaryListPageComponent} */
+		const summaryListComponent = {
+			type: 'summary-list',
+			parameters: {
+				rows: [
+					{
+						key: {
+							text: summaryListNameLabelOverride || 'Name'
+						},
+						value: {
+							html: `<a class="govuk-link" href="${mapStagedDocumentDownloadUrl(
+								appealReference,
+								fileUploadInfoItem.GUID,
+								documentFileName || fileUploadInfoItem.name,
+								documentVersion
+							)}" target="_blank">${fileUploadInfoItem.name}</a>`
+						},
+						actions: {
+							items: [
+								{
+									text: 'Change',
+									href: changeFileLinkUrl
+								}
+							]
+						}
+					},
+					{
+						key: {
+							text: 'Date received'
+						},
+						value: {
+							text: apiDateStringToDisplayDate(fileUploadInfoItem.receivedDate)
+						},
+						actions: {
+							items: [
+								{
+									text: 'Change',
+									href: changeDateLinkUrl
+								}
+							]
+						}
+					},
+					{
+						key: {
+							text: 'Redaction status'
+						},
+						value: {
+							text: capitalize(
+								redactionStatusIdToName(redactionStatuses, fileUploadInfoItem.redactionStatus)
+							)
+						},
+						actions: {
+							items: [
+								{
+									text: 'Change',
+									href: changeRedactionStatusLinkUrl
+								}
+							]
+						}
+					}
+				]
+			}
+		}
+
+		pageContent.pageComponents?.push(htmlComponent);
+		pageContent.pageComponents?.push(summaryListComponent);
+	});
 
 	return pageContent;
 }

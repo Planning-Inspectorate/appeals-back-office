@@ -41,7 +41,7 @@
 					{{ extensionsHtml(params) }}
 					<div class="middle-errors-hook"></div>
 				</div>
-				<div class="pins-file-upload__upload display--flex">
+				<div class="pins-file-upload__upload">
 					<input class="display--none"
 						   id="upload-file-{{ params.formId }}"
 						   accept="{% for value in params.allowedTypes %}{{ value|MIME }}{% endfor %}"
