@@ -3,8 +3,8 @@
  */
 
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { conditionalFormatter } from '#lib/mappers/global-mapper-formatter.js';
 import { convertFromYesNoToBoolean } from '#lib/boolean-formatter.js';
+import { yesNoInput } from '#lib/page-components/radio.js';
 
 /**
  * @param {Appeal} appealData
@@ -27,38 +27,18 @@ export const changeExtraConditionsPage = (appealData, lpaqData, storedSessionDat
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: `Change extra conditions`,
 		pageComponents: [
-			{
-				type: 'radios',
-				parameters: {
-					name: 'extraConditionsRadio',
-					id: 'extra-conditions-radio',
-					fieldSet: {
-						legend: {
-							text: `Are there extra conditions?`,
-							isPageHeading: false,
-							classes: 'govuk-fieldset__legend--l'
-						}
-					},
-					items: [
-						{
-							value: 'yes',
-							text: 'Yes',
-							conditional: conditionalFormatter(
-								'extra-conditions-details',
-								'extraConditionsDetails',
-								`Extra conditions details`,
-								currentDetailsValue
-							),
-							checked: currentRadioValue
-						},
-						{
-							value: 'no',
-							text: 'No',
-							checked: !currentRadioValue
-						}
-					]
+			yesNoInput({
+				name: 'extraConditionsRadio',
+				id: 'extra-conditions-radio',
+				legendText: `Are there extra conditions?`,
+				value: currentRadioValue,
+				yesConditional: {
+					id: 'extra-conditions-details',
+					name: 'extraConditionsDetails',
+					hint: 'Extra conditions details',
+					details: currentDetailsValue
 				}
-			}
+			})
 		]
 	};
 

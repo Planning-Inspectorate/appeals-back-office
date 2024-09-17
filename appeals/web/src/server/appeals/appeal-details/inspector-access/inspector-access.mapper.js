@@ -3,7 +3,7 @@
  */
 
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { conditionalFormatter } from '#lib/mappers/global-mapper-formatter.js';
+import { yesNoInput } from '#lib/page-components/radio.js';
 
 /**
  * @param {Appeal} appealData
@@ -30,38 +30,18 @@ export const changeInspectorAccessPage = (appealData, storedSessionData, origin,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: `Change the inspector access (${formattedSource} answer)`,
 		pageComponents: [
-			{
-				type: 'radios',
-				parameters: {
-					name: 'inspectorAccessRadio',
-					id: 'inspector-access-radio',
-					fieldSet: {
-						legend: {
-							text: `Was inspector access identified as required by the ${formattedSource}?`,
-							isPageHeading: false,
-							classes: 'govuk-fieldset__legend--l'
-						}
-					},
-					items: [
-						{
-							value: 'yes',
-							text: 'Yes',
-							conditional: conditionalFormatter(
-								'inspector-access-details',
-								'inspectorAccessDetails',
-								`Inspector access (${formattedSource} details)`,
-								currentDetailsValue
-							),
-							checked: currentRadioValue
-						},
-						{
-							value: 'no',
-							text: 'No',
-							checked: !currentRadioValue
-						}
-					]
+			yesNoInput({
+				name: 'inspectorAccessRadio',
+				id: 'inspector-access-radio',
+				legendText: `Was inspector access identified as required by the ${formattedSource}?`,
+				value: currentRadioValue,
+				yesConditional: {
+					id: 'inspector-access-details',
+					name: 'inspectorAccessDetails',
+					hint: `Inspector access (${formattedSource} details)`,
+					details: currentDetailsValue
 				}
-			}
+			})
 		]
 	};
 	return pageContent;

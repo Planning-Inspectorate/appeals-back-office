@@ -1,3 +1,5 @@
+import { conditionalFormatter } from '#lib/mappers/global-mapper-formatter.js';
+
 /**
  *
  * @param {Object} params
@@ -5,9 +7,26 @@
  * @param {string} [params.id]
  * @param {string|boolean|null} [params.value]
  * @param {string} [params.legendText]
+ * @param {import('../mappers/global-mapper-formatter.js').ConditionalParams} [params.yesConditional]
  * @returns {PageComponent}
  */
-export function yesNoInput({ name, id, value, legendText }) {
+export function yesNoInput({ name, id, value, legendText, yesConditional }) {
+	/** @type {RadioItem} */
+	const yes = {
+		value: 'yes',
+		text: 'Yes',
+		checked: Boolean(value)
+	};
+	if (yesConditional) {
+		yes.conditional = conditionalFormatter(
+			yesConditional.id,
+			yesConditional.name,
+			yesConditional.hint,
+			yesConditional.details,
+			yesConditional.type
+		);
+	}
+
 	/** @type {PageComponent} */
 	const component = {
 		type: 'radios',
@@ -15,11 +34,7 @@ export function yesNoInput({ name, id, value, legendText }) {
 			name,
 			id: id || name,
 			items: [
-				{
-					value: 'yes',
-					text: 'Yes',
-					checked: Boolean(value)
-				},
+				yes,
 				{
 					value: 'no',
 					text: 'No',
