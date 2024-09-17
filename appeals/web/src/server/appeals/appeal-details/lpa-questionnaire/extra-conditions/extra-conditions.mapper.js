@@ -29,7 +29,6 @@ export const changeExtraConditionsPage = (appealData, lpaqData, storedSessionDat
 		pageComponents: [
 			yesNoInput({
 				name: 'extraConditionsRadio',
-				id: 'extra-conditions-radio',
 				legendText: `Are there extra conditions?`,
 				value: currentRadioValue,
 				yesConditional: {

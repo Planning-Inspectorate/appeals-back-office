@@ -28,7 +28,6 @@ export const changePlanningObligationPage = (appealData, appellantCaseData, stor
 		pageComponents: [
 			yesNoInput({
 				name: 'planningObligationRadio',
-				id: 'planning-obligation-radio',
 				legendText: 'Is there a planning obligation to support the appeal?',
 				value: planningObligation
 			})

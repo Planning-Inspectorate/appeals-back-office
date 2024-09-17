@@ -32,7 +32,6 @@ export const changeInspectorAccessPage = (appealData, storedSessionData, origin,
 		pageComponents: [
 			yesNoInput({
 				name: 'inspectorAccessRadio',
-				id: 'inspector-access-radio',
 				legendText: `Was inspector access identified as required by the ${formattedSource}?`,
 				value: currentRadioValue,
 				yesConditional: {
