@@ -60,3 +60,15 @@ export interface StagedFile {
 export interface StagedFiles {
 	files: StagedFile[];
 }
+
+export interface UncommittedFile {
+	name: string;
+	GUID: string;
+	blobStoreUrl: string;
+	mimeType: string;
+	documentType: string;
+	size: number;
+	stage: string;
+	redactionStatus?: number;
+	receivedDate?: string;
+}

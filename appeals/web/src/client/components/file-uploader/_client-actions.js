@@ -93,13 +93,9 @@ const clientActions = (container) => {
 		updateUploadButton();
 	}
 
-	setupDropzone();
-
 	if (!form || !uploadButton || !stagedFilesList || !uploadInput || !fileInputContainer || !submitButton) {
 		return;
 	}
-
-	let globalDataTransfer = new DataTransfer();
 
 	/**
 	 * State object representing all files which are "staged" in the component
@@ -127,6 +123,11 @@ const clientActions = (container) => {
 		})
 	};
 
+	let globalDataTransfer = new DataTransfer();
+
+	setupDropzone();
+	populateUncommittedFiles();
+
 	/**
 	 *
 	 * @param {import('@pins/appeals/index.js').FileUploadParameters[]} uploadedFilesUploadParameters
@@ -144,6 +145,26 @@ const clientActions = (container) => {
 			});
 		}
 	};
+
+	function populateUncommittedFiles () {
+		if (!container.dataset.uncommittedFiles) {
+			return;
+		}
+
+		const uncommittedFilesData = JSON.parse(container.dataset.uncommittedFiles);
+
+		uncommittedFilesData?.files.forEach((/** @type {import('@pins/appeals/index.js').UncommittedFile} */ uncommittedFile) => stagedFiles.files.push({
+			name: uncommittedFile.name,
+			guid: uncommittedFile.GUID,
+			blobStorageUrl: uncommittedFile.blobStoreUrl,
+			mimeType: uncommittedFile.mimeType,
+			documentType: uncommittedFile.documentType,
+			size: uncommittedFile.size,
+			stage: uncommittedFile.stage
+		}));
+
+		updateStagedFilesUI(stagedFiles.files);
+	}
 
 	function createUploadInfoForStagedDocuments() {
 		uploadInfo.documents.length = 0;
@@ -224,10 +245,7 @@ const clientActions = (container) => {
 
 		// TODO: handle any errors returned from upload function
 
-		// save added files to state
 		updateStagedFilesState(fileUploadParameters);
-
-		// update staged files UI
 		updateStagedFilesUI(stagedFiles.files);
 
 		// update upload button

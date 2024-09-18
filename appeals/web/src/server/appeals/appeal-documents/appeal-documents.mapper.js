@@ -88,9 +88,7 @@ export async function documentUploadPage(
 		filenamesInFolder,
 		...(fileUploadInfo && {
 			uncommittedFiles: JSON.stringify({
-				files: fileUploadInfo.map(
-					(/** @type {FileUploadInfoItem} */ infoItem) => infoItem.blobStoreUrl
-				)
+				files: fileUploadInfo
 			})
 		}),
 		blobStorageHost:
