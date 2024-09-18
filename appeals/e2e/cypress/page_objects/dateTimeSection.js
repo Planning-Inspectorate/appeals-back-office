@@ -21,8 +21,9 @@ export class DateTimeSection extends Page {
 		dueDate: '#due-date-',
 		validDate: '#valid-date-',
 		visitDate: '#visit-date-',
-		decisionLetterDate: '#decision-letter-date-'
-	}
+		decisionLetterDate: '#decision-letter-date-',
+		changeAppealDate: '#change-appeal-final-date-'
+	};
 
 	// E L E M E N T S
 
@@ -37,19 +38,23 @@ export class DateTimeSection extends Page {
 	// A C T I O N S
 
 	enterDate(date) {
-		this.#setAllDateFields( this.selectorPrefix.dueDate, date);
+		this.#setAllDateFields(this.selectorPrefix.dueDate, date);
 	}
 
 	enterValidDate(date) {
-		this.#setAllDateFields( this.selectorPrefix.validDate, date);
+		this.#setAllDateFields(this.selectorPrefix.validDate, date);
 	}
 
 	enterVisitDate(date) {
-		this.#setAllDateFields( this.selectorPrefix.visitDate, date);
+		this.#setAllDateFields(this.selectorPrefix.visitDate, date);
 	}
 
-	enterDecisionLetterDate(date){
-		this.#setAllDateFields( this.selectorPrefix.decisionLetterDate, date);
+	enterDecisionLetterDate(date) {
+		this.#setAllDateFields(this.selectorPrefix.decisionLetterDate, date);
+	}
+
+	enterChangeAppealTypeResubmissionDate(date) {
+		this.#setAllDateFields(this.selectorPrefix.changeAppealDate, date);
 	}
 
 	clickSkipButton(text) {
@@ -97,17 +102,17 @@ export class DateTimeSection extends Page {
 	}
 
 	// Private helper methods
-	#setAllDateFields( dateSelectorPrefix, date ){
+	#setAllDateFields(dateSelectorPrefix, date) {
 		this.#set(this.#getElement(dateSelectorPrefix, 'day'), date.getDate());
 		this.#set(this.#getElement(dateSelectorPrefix, 'month'), date.getMonth() + 1);
 		this.#set(this.#getElement(dateSelectorPrefix, 'year'), date.getFullYear());
 	}
 
-	#set( element, value, index = 0){
+	#set(element, value, index = 0) {
 		element.eq(index).clear().type(value);
 	}
 
-	#getElement(dateSelectorPrefix, dateType){
+	#getElement(dateSelectorPrefix, dateType) {
 		return cy.get(dateSelectorPrefix + dateType);
 	}
 }

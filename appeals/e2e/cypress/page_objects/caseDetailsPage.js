@@ -18,7 +18,8 @@ export class CaseDetailsPage extends Page {
 		readyToStart: 'ready-to-start',
 		issueDetermination: 'issue-determination',
 		addLinkedAppeal: 'add-linked-appeal',
-		uploadFile: '#upload-file-1'
+		uploadFile: '#upload-file-1',
+		changeAppealType: 'change-appeal-type'
 	};
 
 	elements = {
@@ -35,7 +36,8 @@ export class CaseDetailsPage extends Page {
 		readyToStart: () => cy.getByData(this._cyDataSelectors.readyToStart),
 		issueDecision: () => cy.getByData(this._cyDataSelectors.issueDetermination),
 		addLinkedAppeal: () => cy.getByData(this._cyDataSelectors.addLinkedAppeal),
-		uploadFile: () => cy.get(this.selectors.uploadFile)
+		uploadFile: () => cy.get(this.selectors.uploadFile),
+		changeAppealType: () => cy.getByData(this._cyDataSelectors.changeAppealType)
 	};
 	/********************************************************
 	 ************************ Actions ************************
@@ -99,6 +101,10 @@ export class CaseDetailsPage extends Page {
 
 	clickAddLinkedAppeal() {
 		this.elements.addLinkedAppeal().click();
+	}
+
+	clickChangeAppealType() {
+		this.elements.changeAppealType().click();
 	}
 
 	uploadSamplePdf() {
