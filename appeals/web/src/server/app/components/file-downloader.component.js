@@ -51,12 +51,11 @@ export const getDocumentDownload = async ({ apiClient, params, session }, respon
 
 	// Document URIs are persisted with a prepended slash, but this slash is treated as part of the key by blob storage so we need to remove it
 	const documentKey = blobStoragePath.startsWith('/') ? blobStoragePath.slice(1) : blobStoragePath;
-	const decodedKey = decodeURIComponent(documentKey);
 	const fileName = `${documentKey}`.split(/\/+/).pop();
 
 	const blobProperties = await blobStorageClient.getBlobProperties(
 		blobStorageContainer,
-		decodedKey
+		documentKey
 	);
 	if (!blobProperties) {
 		return response.status(404);
@@ -68,7 +67,7 @@ export const getDocumentDownload = async ({ apiClient, params, session }, respon
 		response.setHeader('content-disposition', `attachment; filename=${fileName}`);
 	}
 
-	const blobStream = await blobStorageClient.downloadStream(blobStorageContainer, decodedKey);
+	const blobStream = await blobStorageClient.downloadStream(blobStorageContainer, documentKey);
 
 	if (!blobStream?.readableStreamBody) {
 		throw new Error(`Document ${documentKey} missing stream body`);
@@ -173,12 +172,11 @@ export const getDocumentDownloadByVersion = async ({ apiClient, params, session 
 
 	// Document URIs are persisted with a prepended slash, but this slash is treated as part of the key by blob storage so we need to remove it
 	const documentKey = blobStoragePath.startsWith('/') ? blobStoragePath.slice(1) : blobStoragePath;
-	const decodedKey = decodeURIComponent(documentKey);
 	const fileName = `${documentKey}`.split(/\/+/).pop();
 
 	const blobProperties = await blobStorageClient.getBlobProperties(
 		blobStorageContainer,
-		decodedKey
+		documentKey
 	);
 	if (!blobProperties) {
 		return response.status(404);
@@ -190,7 +188,7 @@ export const getDocumentDownloadByVersion = async ({ apiClient, params, session 
 		response.setHeader('content-disposition', `attachment; filename=${fileName}`);
 	}
 
-	const blobStream = await blobStorageClient.downloadStream(blobStorageContainer, decodedKey);
+	const blobStream = await blobStorageClient.downloadStream(blobStorageContainer, documentKey);
 
 	if (!blobStream?.readableStreamBody) {
 		throw new Error(`Document ${documentKey} missing stream body`);
