@@ -11,71 +11,75 @@
 {%- set pageTitle = pageContent.title if pageContent.title else '' -%}
 
 {%- block pageHeading -%}
-    {%- set errorSummaries = [] -%}
-    {%- set notificationBanners = [] -%}
-    {%- for component in pageContent.pageComponents -%}
-        {%- if component.type === 'error-summary' -%}
-            {%- set _ = errorSummaries.push(component) -%}
-        {%- endif -%}
-        {%- if component.type === 'notification-banner' -%}
-            {%- set _ = notificationBanners.push(component) -%}
-        {%- endif -%}
-    {%- endfor -%}
-    {%- if errorSummaries | length -%}
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            {%- for component in errorSummaries -%}
-                {{ govukErrorSummary(component.parameters) }}
-            {%- endfor -%}
-        </div>
-    </div>
+  {%- set errorSummaries = [] -%}
+  {%- set notificationBanners = [] -%}
+  {%- for component in pageContent.pageComponents -%}
+    {%- if component.type === 'error-summary' -%}
+      {%- set _ = errorSummaries.push(component) -%}
     {%- endif -%}
-    {%- if notificationBanners | length -%}
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            {%- for component in notificationBanners -%}
-                {{ govukNotificationBanner(component.parameters) }}
-            {%- endfor -%}
-        </div>
-    </div>
+    {%- if component.type === 'notification-banner' -%}
+      {%- set _ = notificationBanners.push(component) -%}
     {%- endif -%}
+  {%- endfor -%}
+  {%- if errorSummaries | length -%}
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            {%- if pageContent.preHeading -%}<span class="govuk-caption-l govuk-!-margin-bottom-3">{{ pageContent.preHeading }}</span>{%- endif -%}
-            {%- if pageContent.heading -%}<h1 class="{{ pageContent.headingClasses if pageContent.headingClasses else "govuk-heading-xl govuk-!-margin-bottom-3" }}">{{ pageContent.heading }}</h1>{%- endif -%}
-        </div>
+      <div class="govuk-grid-column-two-thirds">
+        {%- for component in errorSummaries -%}
+          {{ govukErrorSummary(component.parameters) }}
+        {%- endfor -%}
+      </div>
     </div>
+  {%- endif -%}
+  {%- if notificationBanners | length -%}
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        {%- for component in notificationBanners -%}
+          {{ govukNotificationBanner(component.parameters) }}
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      {%- if pageContent.preHeading -%}
+        <span class="govuk-caption-l govuk-!-margin-bottom-3">{{ pageContent.preHeading }}</span>
+      {%- endif -%}
+      {%- if pageContent.heading -%}
+        <h1 class="{{ pageContent.headingClasses if pageContent.headingClasses else "govuk-heading-xl govuk-!-margin-bottom-3" }}">{{ pageContent.heading }}</h1>
+      {%- endif -%}
+    </div>
+  </div>
 {%- endblock -%}
 
 {%- block pageContent -%}
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-        {{ govukTabs({
-            id: "interested-party-comments-tabs",
-            items: [
-                {
-                    label: "Awaiting review",
-                    id: "awaiting-review",
-                    panel: {
-                        html: (govukTable(pageContent.awaitingReviewTable) + govukPagination(pageContent.paginationAwaiting)) | safe
-                    }
-                },
-                {
-                    label: "Valid",
-                    id: "valid",
-                    panel: {
-                        html: (govukTable(pageContent.validTable) + govukPagination(pageContent.paginationValid)) | safe
-                    }
-                },
-                {
-                    label: "Invalid",
-                    id: "invalid",
-                    panel: {
-                        html: (govukTable(pageContent.invalidTable) + govukPagination(pageContent.paginationInvalid)) | safe
-                    }
-                }
-            ]
-        }) }}
-        </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {{ govukTabs({
+        id: "interested-party-comments-tabs",
+        items: [
+          {
+            label: "Awaiting review",
+            id: "awaiting-review",
+            panel: {
+              html: (govukTable(pageContent.awaitingReviewTable) + govukPagination(pageContent.paginationAwaiting)) | safe
+            }
+          },
+          {
+            label: "Valid",
+            id: "valid",
+            panel: {
+              html: (govukTable(pageContent.validTable) + govukPagination(pageContent.paginationValid)) | safe
+            }
+          },
+          {
+            label: "Invalid",
+            id: "invalid",
+            panel: {
+              html: (govukTable(pageContent.invalidTable) + govukPagination(pageContent.paginationInvalid)) | safe
+            }
+          }
+        ]
+      }) }}
     </div>
+  </div>
 {%- endblock -%}
