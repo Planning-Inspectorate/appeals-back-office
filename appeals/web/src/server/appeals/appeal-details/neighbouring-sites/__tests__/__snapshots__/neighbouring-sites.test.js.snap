@@ -130,7 +130,7 @@ exports[`neighbouring-sites GET /change/affected should render the change neighb
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="neighbouringSiteAffected-2" name="neighbouringSiteAffected"
-                            type="radio" value="no" checked>
+                            type="radio" value="no">
                             <label class="govuk-label govuk-radios__label" for="neighbouringSiteAffected-2">No</label>
                         </div>
                     </div>
@@ -162,7 +162,7 @@ exports[`neighbouring-sites GET /change/affected should render the change neighb
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="neighbouringSiteAffected-2" name="neighbouringSiteAffected"
-                            type="radio" value="no" checked>
+                            type="radio" value="no">
                             <label class="govuk-label govuk-radios__label" for="neighbouringSiteAffected-2">No</label>
                         </div>
                     </div>
@@ -304,7 +304,7 @@ exports[`neighbouring-sites GET /remove/site/:siteId should render the remove ne
                 </dl>
                 <div class="govuk-form-group">
                     <fieldset class="govuk-fieldset">
-                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Do you want to remove this site?</legend>
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Do you want to remove this site?</legend>
                         <div class="govuk-radios" data-module="govuk-radios">
                             <div class="govuk-radios__item">
                                 <input class="govuk-radios__input" id="remove-neighbouring-site" name="remove-neighbouring-site"
@@ -1129,7 +1129,7 @@ exports[`neighbouring-sites POST /remove/site/:siteId should re-render remove ne
                 </dl>
                 <div class="govuk-form-group">
                     <fieldset class="govuk-fieldset">
-                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Do you want to remove this site?</legend>
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Do you want to remove this site?</legend>
                         <div class="govuk-radios" data-module="govuk-radios">
                             <div class="govuk-radios__item">
                                 <input class="govuk-radios__input" id="remove-neighbouring-site" name="remove-neighbouring-site"

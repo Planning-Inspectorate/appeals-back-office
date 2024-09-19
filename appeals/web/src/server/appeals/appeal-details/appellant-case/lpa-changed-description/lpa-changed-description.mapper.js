@@ -25,7 +25,6 @@ export const changeLPAChangedDescriptionMapper = (appealData, storedSessionData,
 		pageComponents: [
 			yesNoInput({
 				name: 'lpaChangedDescriptionRadio',
-				legendText: 'Did the LPA change the description of the development?',
 				value: currentRadioValue
 			})
 		]
