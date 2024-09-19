@@ -64,21 +64,21 @@
             label: "Awaiting review",
             id: "awaiting-review",
             panel: {
-              html: (govukTable(pageContent.awaitingReviewTable) + govukPagination(pageContent.paginationAwaiting)) | safe
+              html: (govukTable(pageContent.awaitingReviewTable) + (govukPagination(pageContent.paginationAwaiting) | safe if pageContent.paginationAwaiting else '')) | safe if pageContent.awaitingReviewTable | length else '<p class="govuk-body">Awaiting comments</p>'
             }
           },
           {
             label: "Valid",
             id: "valid",
             panel: {
-              html: (govukTable(pageContent.validTable) + govukPagination(pageContent.paginationValid)) | safe
+              html: (govukTable(pageContent.validTable) + (govukPagination(pageContent.paginationValid) | safe if pageContent.paginationValid else '')) | safe if pageContent.validTable | length else '<p class="govuk-body">No valid comments</p>'
             }
           },
           {
             label: "Invalid",
             id: "invalid",
             panel: {
-              html: (govukTable(pageContent.invalidTable) + govukPagination(pageContent.paginationInvalid)) | safe
+              html: (govukTable(pageContent.invalidTable) + (govukPagination(pageContent.paginationInvalid) | safe if pageContent.paginationInvalid else '')) | safe if pageContent.invalidTable | length else '<p class="govuk-body">No invalid comments</p>'
             }
           }
         ]

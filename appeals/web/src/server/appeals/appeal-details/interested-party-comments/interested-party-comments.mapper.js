@@ -39,26 +39,14 @@ export async function interestedPartyCommentsPage(
 			  }
 			: {};
 
-	const paginationAwaiting = generatePagination(
-		paginationParameters.pageNumber,
-		`/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments?tab=awaiting-review`,
-		5,
-		10
-	);
-
-	const paginationValid = generatePagination(
-		paginationParameters.pageNumber,
-		`/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments?tab=valid`,
-		5,
-		10
-	);
-
-	const paginationInvalid = generatePagination(
-		paginationParameters.pageNumber,
-		`/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments?tab=invalid`,
-		5,
-		10
-	);
+	const createPagination = (tab, items) =>
+		items.length >= 26
+			? generatePagination(
+					paginationParameters.pageNumber,
+					`/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments?tab=${tab}`,
+					Math.ceil(items.length / 25)
+			  )
+			: null;
 
 	const pageContent = {
 		title: `Interested Party Comments`,
@@ -69,9 +57,9 @@ export async function interestedPartyCommentsPage(
 		awaitingReviewTable: createTable(awaitingReview.items),
 		validTable: createTable(valid.items),
 		invalidTable: createTable(invalid.items),
-		paginationAwaiting,
-		paginationValid,
-		paginationInvalid
+		paginationAwaiting: createPagination('awaiting-review', awaitingReview.items),
+		paginationValid: createPagination('valid', valid.items),
+		paginationInvalid: createPagination('invalid', invalid.items)
 	};
 
 	return pageContent;
@@ -102,9 +90,9 @@ function generateTableRows(items) {
  * @param {number} pageNumber - The current page number
  * @param {string} baseUrl - The base URL for pagination links
  * @param {number} [pageCount=1] - Total number of pages (default is 1)
- * @param {number} [itemsPerPage=10] - Number of items per page (default is 10)
+ * @param {number} [itemsPerPage=25] - Number of items per page (default is 25)
  * @returns {Pagination} - The generated pagination object
  */
-const generatePagination = (pageNumber, baseUrl, pageCount = 1, itemsPerPage = 10) => {
+const generatePagination = (pageNumber, baseUrl, pageCount = 1, itemsPerPage = 25) => {
 	return mapPagination(pageNumber, pageCount, itemsPerPage, baseUrl, {});
 };
