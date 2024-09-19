@@ -33,8 +33,6 @@ export const changeOwnershipCertificatePage = (
 			yesNoInput({
 				name: 'ownershipCertificateRadio',
 				id: 'owners-known-radio',
-				legendText:
-					'Was a separate ownership certificate or agricultural land declaration submitted?',
 				value: ownershipCertificateSubmitted
 			})
 		]

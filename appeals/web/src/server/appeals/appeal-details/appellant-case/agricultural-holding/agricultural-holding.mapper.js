@@ -32,7 +32,6 @@ export const changePartOfAgriculturalHoldingPage = (
 		pageComponents: [
 			yesNoInput({
 				name: 'partOfAgriculturalHoldingRadio',
-				legendText: 'Is the appeal site part of an agricultural holding?',
 				value: partOfAgriculturalHolding
 			})
 		]
@@ -69,7 +68,6 @@ export const changeTenantOfAgriculturalHoldingPage = (
 		pageComponents: [
 			yesNoInput({
 				name: 'tenantOfAgriculturalHoldingRadio',
-				legendText: 'Is the appellant a tenant of the agricultural holding?',
 				value: tenantOfAgriculturalHolding
 			})
 		]
@@ -106,7 +104,6 @@ export const changeOtherTenantsOfAgriculturalHoldingPage = (
 		pageComponents: [
 			yesNoInput({
 				name: 'otherTenantsOfAgriculturalHoldingRadio',
-				legendText: 'Are there any other tenants of the agricultural holding?',
 				value: otherTenantsOfAgriculturalHolding
 			})
 		]

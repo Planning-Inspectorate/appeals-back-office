@@ -26,7 +26,6 @@ export const changeApplicationHasDecisionDatePage = (
 		pageComponents: [
 			yesNoInput({
 				name: 'application-decision-radio',
-				legendText: 'Was an application decision made?',
 				value:
 					storedSessionData?.radio === 'yes' || Boolean(appellantCaseData.applicationDecisionDate)
 			})
