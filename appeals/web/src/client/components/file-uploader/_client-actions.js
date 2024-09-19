@@ -1,5 +1,5 @@
-import { hideErrors, showErrors } from './_errors.js';
-import { buildStagedFileListItem } from './_html.js';
+//import { hideErrors, showErrors } from './_errors.js';
+import { buildStagedFileListItem, buildErrorListItem } from './_html.js';
 import serverActions from './_server-actions.js';
 
 const CLASSES = {
@@ -27,9 +27,6 @@ const clientActions = (container) => {
 	const fileInputContainer = container.querySelector('.pins-file-upload__upload');
 	/** @type {HTMLElement | null} */
 	const submitButton = container.querySelector('.pins-file-upload__submit');
-
-	/** @type {string[]} */
-	const allowedMimeTypes = (container.dataset.allowedTypes || '').split(',');
 
 	/** @type {HTMLElement | null} */
 	let dropZone;
@@ -93,7 +90,14 @@ const clientActions = (container) => {
 		updateUploadButton();
 	}
 
-	if (!form || !uploadButton || !stagedFilesList || !uploadInput || !fileInputContainer || !submitButton) {
+	if (
+		!form ||
+		!uploadButton ||
+		!stagedFilesList ||
+		!uploadInput ||
+		!fileInputContainer ||
+		!submitButton
+	) {
 		return;
 	}
 
@@ -106,8 +110,19 @@ const clientActions = (container) => {
 	 * @type {import('@pins/appeals/index.js').StagedFiles}
 	 */
 	const stagedFiles = {
+		files: [],
+		errors: []
+	};
+
+	/**
+	 * @type {import('@pins/appeals/index.js').UncommittedFiles}
+	 */
+	const uncommittedFiles = {
 		files: []
 	};
+
+	/** @type {import('@pins/appeals/index.js').RemovedUncommittedFile[]} */
+	const removedUncommittedFiles = [];
 
 	/**
 	 * @typedef {Object} UploadInfo
@@ -132,7 +147,7 @@ const clientActions = (container) => {
 	 *
 	 * @param {import('@pins/appeals/index.js').FileUploadParameters[]} uploadedFilesUploadParameters
 	 */
-	function updateStagedFilesState (uploadedFilesUploadParameters) {
+	function updateStagedFilesState(uploadedFilesUploadParameters) {
 		for (const uploadedFile of uploadedFilesUploadParameters) {
 			stagedFiles.files.push({
 				name: uploadedFile.file.name,
@@ -144,26 +159,30 @@ const clientActions = (container) => {
 				stage: container.dataset?.documentStage || ''
 			});
 		}
-	};
+	}
 
-	function populateUncommittedFiles () {
+	function populateUncommittedFiles() {
 		if (!container.dataset.uncommittedFiles) {
 			return;
 		}
 
 		const uncommittedFilesData = JSON.parse(container.dataset.uncommittedFiles);
 
-		uncommittedFilesData?.files.forEach((/** @type {import('@pins/appeals/index.js').UncommittedFile} */ uncommittedFile) => stagedFiles.files.push({
-			name: uncommittedFile.name,
-			guid: uncommittedFile.GUID,
-			blobStorageUrl: uncommittedFile.blobStoreUrl,
-			mimeType: uncommittedFile.mimeType,
-			documentType: uncommittedFile.documentType,
-			size: uncommittedFile.size,
-			stage: uncommittedFile.stage
-		}));
+		uncommittedFiles.files = uncommittedFilesData.files;
+		uncommittedFiles?.files.forEach(
+			(/** @type {import('@pins/appeals/index.js').UncommittedFile} */ uncommittedFile) =>
+				stagedFiles.files.push({
+					name: uncommittedFile.name,
+					guid: uncommittedFile.GUID,
+					blobStorageUrl: uncommittedFile.blobStoreUrl,
+					mimeType: uncommittedFile.mimeType,
+					documentType: uncommittedFile.documentType,
+					size: uncommittedFile.size,
+					stage: uncommittedFile.stage
+				})
+		);
 
-		updateStagedFilesUI(stagedFiles.files);
+		updateStagedFilesUI(stagedFiles);
 	}
 
 	function createUploadInfoForStagedDocuments() {
@@ -177,7 +196,7 @@ const clientActions = (container) => {
 	/**
 	 * @param {import('@pins/appeals/index.js').StagedFile} stagedFile
 	 */
-	function addUploadInfoForStagedFile (stagedFile) {
+	function addUploadInfoForStagedFile(stagedFile) {
 		uploadInfo.documents.push({
 			name: stagedFile.name,
 			GUID: stagedFile.guid,
@@ -208,16 +227,16 @@ const clientActions = (container) => {
 	/**
 	 * @param {*} selectEvent
 	 */
-	async function onFileSelect (selectEvent) {
+	async function onFileSelect(selectEvent) {
 		const { target } = selectEvent;
 
 		await addSelectedFiles(target.files);
-	};
+	}
 
 	/**
 	 * @param {FileList|null|undefined} fileList
 	 */
-	async function addSelectedFiles (fileList) {
+	async function addSelectedFiles(fileList) {
 		if (!fileList) {
 			return;
 		}
@@ -228,53 +247,49 @@ const clientActions = (container) => {
 			const validationError = validateSelectedFile(file);
 
 			if (validationError) {
-				const error = {
+				stagedFiles.errors.push({
 					message: validationError.message || '',
 					name: file.name
-				};
-
-				// TODO: handle validation errors
-				console.error(error);
-
-				return;
+				});
 			}
 		}
 
-		// upload added files to blob storage
 		const fileUploadParameters = await uploadAddedFiles(fileList);
 
 		// TODO: handle any errors returned from upload function
 
 		updateStagedFilesState(fileUploadParameters);
-		updateStagedFilesUI(stagedFiles.files);
-
-		// update upload button
+		updateStagedFilesUI(stagedFiles);
 	}
 
 	/**
 	 * @param {FileList} fileList
+	 * @returns {Promise<import('@pins/appeals/index.js').FileUploadParameters[]>}
 	 */
-	async function uploadAddedFiles (fileList) {
+	async function uploadAddedFiles(fileList) {
 		// TODO: filter the list to only files which have not yet been uploaded (not clear how to check this until upload implementation is done)
 
-		// upload the files to blob storage
-		const fileUploadParameters = Array.from(fileList).map(file => {
-			const newVersionOfExistingFile = isNewVersionOfExistingFile();
-			const guid = newVersionOfExistingFile
-				? container.dataset?.documentId || ''
-				: window.crypto.randomUUID();
+		const fileUploadParameters = Array.from(fileList)
+			.filter((file) => !stagedFiles.errors.find((errorItem) => errorItem.name === file.name))
+			.map((file) => {
+				const newVersionOfExistingFile = isNewVersionOfExistingFile();
+				const guid = newVersionOfExistingFile
+					? container.dataset?.documentId || ''
+					: window.crypto.randomUUID();
 
-			return {
-				file,
-				guid,
-				blobStorageUrl: createBlobStorageUrl(
-					container.dataset?.caseReference,
+				return {
+					file,
 					guid,
-					newVersionOfExistingFile ? (container.dataset?.documentOriginalFileName || '') : file.name,
-					newVersionOfExistingFile ? container.dataset?.documentVersion : undefined
-				)
-			};
-		});
+					blobStorageUrl: createBlobStorageUrl(
+						container.dataset?.caseReference,
+						guid,
+						newVersionOfExistingFile
+							? container.dataset?.documentOriginalFileName || ''
+							: file.name,
+						newVersionOfExistingFile ? container.dataset?.documentVersion : undefined
+					)
+				};
+			});
 
 		const failedUploads = await uploadFiles(fileUploadParameters);
 
@@ -283,29 +298,29 @@ const clientActions = (container) => {
 		}
 
 		return fileUploadParameters;
-	};
-
-	function allowSingleFileOnly () {
-		return !uploadInput?.getAttributeNames().includes('multiple');
-	};
-
-	function isNewVersionOfExistingFile () {
-		return !!(container.dataset?.documentId) && !!(container.dataset?.documentVersion);
 	}
 
-	function updateUploadControlsVisibility () {
+	function allowSingleFileOnly() {
+		return !uploadInput?.getAttributeNames().includes('multiple');
+	}
+
+	function isNewVersionOfExistingFile() {
+		return !!container.dataset?.documentId && !!container.dataset?.documentVersion;
+	}
+
+	function updateUploadControlsVisibility() {
 		if (!dropZone) {
 			return;
 		}
 
 		dropZone.hidden = allowSingleFileOnly() && globalDataTransfer.files.length > 0;
-	};
+	}
 
 	/**
 	 * Update button text and files counter
 	 *
 	 */
-	function updateUploadButton () {
+	function updateUploadButton() {
 		const filesRowsNumber = globalDataTransfer.files.length;
 
 		if (uploadButton) {
@@ -314,13 +329,13 @@ const clientActions = (container) => {
 		}
 
 		updateUploadControlsVisibility();
-	};
+	}
 
 	/**
 	 * @param {File} selectedFile
 	 * @returns {{message: string} | null}
 	 */
-	function validateSelectedFile (selectedFile) {
+	function validateSelectedFile(selectedFile) {
 		const allowedMimeTypes = (container.dataset.allowedTypes || '').split(',');
 		const filenamesInFolderBase64String = form?.dataset.filenamesInFolder || '';
 		const filenamesInFolderString = window.atob(filenamesInFolderBase64String);
@@ -339,30 +354,33 @@ const clientActions = (container) => {
 		}
 
 		return null;
-	};
+	}
 
 	/**
-	 * @param {import('@pins/appeals/index.js').StagedFile[]} stagedFiles
+	 * @param {import('@pins/appeals/index.js').StagedFiles} stagedFiles
 	 */
-	function updateStagedFilesUI (stagedFiles) {
+	function updateStagedFilesUI(stagedFiles) {
 		if (!stagedFilesList) {
 			return;
 		}
 
-		stagedFilesList.replaceChildren(...stagedFiles.map(stagedFile => buildStagedFileListItem(stagedFile)));
+		stagedFilesList.replaceChildren(
+			...stagedFiles.errors.map((stagedFileError) => buildErrorListItem(stagedFileError)),
+			...stagedFiles.files.map((stagedFile) => buildStagedFileListItem(stagedFile))
+		);
 
 		bindRemoveButtonEvents();
 	}
 
-	function bindRemoveButtonEvents () {
+	function bindRemoveButtonEvents() {
 		const removeButtons = container.querySelectorAll('.pins-file-upload__remove');
 
-		removeButtons.forEach(element => {
-			element.addEventListener('click', (clickEvent) => {
+		removeButtons.forEach((element) => {
+			element.addEventListener('click', async (clickEvent) => {
 				if (clickEvent.target instanceof HTMLElement) {
 					const guid = clickEvent.target?.getAttribute('id')?.split('button-remove-')[1];
 
-					removeFileByGUID(guid);
+					await removeFileByGUID(guid);
 				}
 			});
 		});
@@ -371,53 +389,59 @@ const clientActions = (container) => {
 	/**
 	 * @param {string|undefined} guid
 	 */
-	function removeFileByGUID (guid) {
+	async function removeFileByGUID(guid) {
 		if (!guid) {
 			return;
 		}
 
-		const stagedFile = stagedFiles.files.find(file => file.guid === guid);
+		const stagedFile = stagedFiles.files.find((file) => file.guid === guid);
 
 		if (stagedFile) {
-			deleteFiles([stagedFile.blobStorageUrl]);
+			const matchingUncommittedFile = uncommittedFiles.files.find(
+				(uncommittedFile) => uncommittedFile.GUID === guid
+			);
+
+			if (matchingUncommittedFile) {
+				removedUncommittedFiles.push({
+					guid: matchingUncommittedFile.GUID,
+					blobStorageUrl: matchingUncommittedFile.blobStoreUrl
+				});
+			} else {
+				await deleteFiles([stagedFile.blobStorageUrl]);
+			}
 		}
 
-		stagedFiles.files = stagedFiles.files.filter(file => file.guid !== guid);
+		stagedFiles.files = stagedFiles.files.filter((file) => file.guid !== guid);
 
-		updateStagedFilesUI(stagedFiles.files);
+		updateStagedFilesUI(stagedFiles);
+	}
+
+	async function deleteRemovedUncommittedFiles() {
+		await deleteFiles(
+			removedUncommittedFiles.map((removedUncommittedFile) => removedUncommittedFile.blobStorageUrl)
+		);
 	}
 
 	/**
 	 *	@param {Event} clickEvent
 	 */
-	async function onSubmit (clickEvent) {
+	async function onSubmit(clickEvent) {
 		clickEvent.preventDefault();
 
+		await deleteRemovedUncommittedFiles();
 		createUploadInfoForStagedDocuments();
 
 		form?.submit();
-	};
+	}
 
-	function bindEvents () {
+	function bindEvents() {
 		uploadButton?.addEventListener('click', (clickEvent) => {
 			clickEvent.preventDefault();
 			uploadInput?.click();
 		});
 		uploadInput?.addEventListener('change', onFileSelect, false);
 		submitButton?.addEventListener('click', onSubmit);
-	};
-
-	function leavePageWarningEventHandler (/** @type {{ preventDefault: () => any; }} */ event) {
-		event.preventDefault();
-	};
-
-	function enableLeavePageWarning () {
-		window.addEventListener('beforeunload', leavePageWarningEventHandler);
-	};
-
-	function disableLeavePageWarning () {
-		window.removeEventListener('beforeunload', leavePageWarningEventHandler);
-	};
+	}
 
 	/**
 	 * @param {string|undefined} caseReference
@@ -426,14 +450,14 @@ const clientActions = (container) => {
 	 * @param {string} [latestVersion]
 	 * @returns {string}
 	 */
-	function createBlobStorageUrl (caseReference, fileGUID, fileName, latestVersion) {
+	function createBlobStorageUrl(caseReference, fileGUID, fileName, latestVersion) {
 		if (!caseReference) return '';
 
 		const latestVersionNumber = latestVersion && parseInt(latestVersion, 10);
 		const version = latestVersionNumber ? latestVersionNumber + 1 : 1;
 
 		return `appeal/${caseReference}/${fileGUID}/v${version}/${fileName}`;
-	};
+	}
 
 	return { bindEvents };
 };

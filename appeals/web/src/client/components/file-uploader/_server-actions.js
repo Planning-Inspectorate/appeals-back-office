@@ -34,7 +34,7 @@ const serverActions = (uploadForm) => {
 	 * @param {import('@pins/appeals/index.js').FileUploadParameters[]} documents
 	 * @returns {Promise<AnError[]>}>}
 	 */
-	async function uploadFiles (documents) {
+	async function uploadFiles(documents) {
 		const accessToken = await getAccessToken();
 
 		const { blobStorageHost, blobStorageContainer, useBlobEmulator } = uploadForm.dataset;
@@ -70,7 +70,7 @@ const serverActions = (uploadForm) => {
 		}
 
 		return failedUploads;
-	};
+	}
 
 	/**
 	 *
@@ -98,7 +98,7 @@ const serverActions = (uploadForm) => {
 		} catch {
 			response = {
 				message: 'GENERIC_SINGLE_FILE',
-				fileRowId: fileToUpload.fileRowId || '',
+				fileRowId: fileToUpload.guid || '',
 				name: fileToUpload.name
 			};
 		}

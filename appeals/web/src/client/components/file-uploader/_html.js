@@ -1,5 +1,5 @@
 /** @typedef {{message: string, fileRowId: string, name: string}} AnError */
-/** @typedef {File & {fileRowId?: string}} FileWithRowId */
+/** @typedef {File & {guid?: string}} FileWithRowId */
 
 /**
  * @param {string} type
@@ -78,13 +78,12 @@ export const buildRegularListItem = (uploadedFile) => {
 
 /**
  * Creates an HTML element for displaying an error message related to file upload.
- * @param {{message: string, fileRowId: string, name: string}} error
+ * @param {import('@pins/appeals/index.js').StagedFileError} error
  * @returns {HTMLElement}
  */
 export const buildErrorListItem = (error) => {
 	const li = document.createElement('li');
 	li.className = 'pins-file-upload__file-row error-row';
-	li.id = error.fileRowId;
 
 	const p = document.createElement('p');
 	p.className = 'govuk-heading-s colour--red';

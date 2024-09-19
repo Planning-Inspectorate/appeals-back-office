@@ -144,11 +144,14 @@ export const postDocumentUpload = async (request, response, nextPageUrl) => {
 		return response.status(500).render('app/500.njk');
 	}
 
-	request.session.fileUploadInfo = uploadInfo.map((infoItem) => ({
+	/** @type {import('@pins/appeals/index.js').UncommittedFile[]} */
+	const fileUploadInfo = uploadInfo.map((infoItem) => ({
 		...infoItem,
 		redactionStatus: redactionStatusNameToId(redactionStatuses, 'unredacted'),
 		receivedDate: dayMonthYearToApiDateString(dateToDayMonthYear(new Date()))
 	}));
+
+	request.session.fileUploadInfo = fileUploadInfo;
 
 	response.redirect(nextPageUrl);
 };

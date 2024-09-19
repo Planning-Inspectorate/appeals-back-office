@@ -57,8 +57,14 @@ export interface StagedFile {
 	stage: string;
 }
 
+export interface StagedFileError {
+	name: string;
+	message: string;
+}
+
 export interface StagedFiles {
 	files: StagedFile[];
+	errors: StagedFileError[];
 }
 
 export interface UncommittedFile {
@@ -71,4 +77,13 @@ export interface UncommittedFile {
 	stage: string;
 	redactionStatus?: number;
 	receivedDate?: string;
+}
+
+export interface UncommittedFiles {
+	files: UncommittedFile[];
+}
+
+export interface RemovedUncommittedFile {
+	guid: string;
+	blobStorageUrl: string;
 }
