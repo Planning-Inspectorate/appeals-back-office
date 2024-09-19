@@ -3,10 +3,10 @@ import { buildProgressMessage, errorMessage } from './_html.js';
 /** @typedef {import('./_html.js').AnError} AnError */
 
 /**
- * @param {string[]} messages
+ * @param {{message: string; guid: string;}[]} errors
  * @returns {HTMLElement}
  */
-const buildTopErrorsMarkup = (messages) => {
+const buildTopErrorsMarkup = (errors) => {
 	const div = document.createElement('div');
 	div.className = 'govuk-error-summary pins-file-upload__errors-top';
 	div.setAttribute('aria-labelledby', 'error-summary-title-{{ params.formId }}');
@@ -21,11 +21,11 @@ const buildTopErrorsMarkup = (messages) => {
 	const ul = document.createElement('ul');
 	ul.className = 'govuk-list govuk-error-summary__list';
 
-	messages.forEach((message) => {
+	errors.forEach((errorItem) => {
 		const li = document.createElement('li');
 		const a = document.createElement('a');
-		a.href = '#';
-		a.textContent = message;
+		a.href = `#${errorItem.guid}`;
+		a.textContent = errorItem.message;
 		li.appendChild(a);
 		ul.appendChild(li);
 	});
@@ -36,17 +36,6 @@ const buildTopErrorsMarkup = (messages) => {
 };
 
 /**
- * @param {string} message
- * @returns {HTMLElement}
- */
-const buildMiddleErrorsMarkup = (message) => {
-	const p = document.createElement('p');
-	p.className = 'font-weight--700 colour--red';
-	p.textContent = message;
-	return p;
-};
-
-/**
  *
  * @param {{details: AnError[], message: string}} error
  * @param {Element} uploadForm
@@ -54,42 +43,46 @@ const buildMiddleErrorsMarkup = (message) => {
 export const showErrors = (error, uploadForm) => {
 	const formContainer = uploadForm.querySelector('.pins-file-upload__container');
 	const topHook = uploadForm.querySelector('.top-errors-hook');
-	const middleHook = uploadForm.querySelector('.middle-errors-hook');
 
-	if (!formContainer || !topHook || !middleHook) return;
+	if (!formContainer || !topHook) return;
 
 	buildProgressMessage({ show: false }, uploadForm);
 	formContainer.classList.remove('error');
 
 	topHook.textContent = '';
-	middleHook.textContent = '';
 
 	if (error.message === 'FILE_SPECIFIC_ERRORS' && error.details) {
-		const messages = error.details.map((wrongFile) =>
-			errorMessage(wrongFile.message || '', wrongFile.name)
-		);
+		const errors = error.details.map((errorDetails) => ({
+			message: errorMessage(errorDetails.message || '', errorDetails.name),
+			guid: errorDetails.guid
+		}));
 
-		for (const wrongFile of error.details) {
-			const fileRow = uploadForm.querySelector(`#${CSS.escape(wrongFile.fileRowId)}`);
+		for (const errorDetails of error.details) {
+			const fileRow = uploadForm.querySelector(`#${CSS.escape(errorDetails.guid)}`);
 
 			if (fileRow && fileRow.children.length > 1) {
 				fileRow.children[0].classList.add('colour--red');
-				fileRow.children[0].textContent = errorMessage(wrongFile.message || '', wrongFile.name);
+				fileRow.children[0].textContent = errorMessage(
+					errorDetails.message || '',
+					errorDetails.name
+				);
 				if (fileRow.children[1]) fileRow.children[1].remove();
 			}
 		}
-		const topErrorsElement = buildTopErrorsMarkup(messages);
+		const topErrorsElement = buildTopErrorsMarkup(errors);
 		topHook.appendChild(topErrorsElement);
 	} else {
 		formContainer.classList.add('error');
 
 		const replaceValue = error.details ? error.details[0].message : null;
 
-		const topErrorsElement = buildTopErrorsMarkup([errorMessage(error.message, replaceValue)]);
+		const topErrorsElement = buildTopErrorsMarkup([
+			{
+				message: errorMessage(error.message, replaceValue),
+				guid: '#'
+			}
+		]);
 		topHook.appendChild(topErrorsElement);
-
-		const middleErrorsElement = buildMiddleErrorsMarkup(errorMessage(error.message, replaceValue));
-		middleHook.appendChild(middleErrorsElement);
 	}
 };
 
@@ -99,16 +92,14 @@ export const showErrors = (error, uploadForm) => {
 export const hideErrors = (uploadForm) => {
 	const formContainer = uploadForm.querySelector('.pins-file-upload__container');
 	const topHook = uploadForm.querySelector('.top-errors-hook');
-	const middleHook = uploadForm.querySelector('.middle-errors-hook');
 	const filesRows = uploadForm.querySelector('.pins-file-upload__files-rows');
 
-	if (!formContainer || !topHook || !middleHook || !filesRows) return;
+	if (!formContainer || !topHook || !filesRows) return;
 
 	const errorRows = filesRows.querySelectorAll('.error-row');
 	for (const errorRow of errorRows) {
 		errorRow.remove();
 	}
 	topHook.textContent = '';
-	middleHook.textContent = '';
 	formContainer.classList.remove('error');
 };

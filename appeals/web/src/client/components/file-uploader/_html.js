@@ -1,4 +1,4 @@
-/** @typedef {{message: string, fileRowId: string, name: string}} AnError */
+/** @typedef {{message: string, guid: string, name: string}} AnError */
 /** @typedef {File & {guid?: string}} FileWithRowId */
 
 /**
@@ -84,6 +84,7 @@ export const buildRegularListItem = (uploadedFile) => {
 export const buildErrorListItem = (error) => {
 	const li = document.createElement('li');
 	li.className = 'pins-file-upload__file-row error-row';
+	li.id = error.guid;
 
 	const p = document.createElement('p');
 	p.className = 'govuk-heading-s colour--red';

@@ -60,6 +60,7 @@ export interface StagedFile {
 export interface StagedFileError {
 	name: string;
 	message: string;
+	guid: string;
 }
 
 export interface StagedFiles {

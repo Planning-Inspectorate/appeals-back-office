@@ -98,7 +98,7 @@ const serverActions = (uploadForm) => {
 		} catch {
 			response = {
 				message: 'GENERIC_SINGLE_FILE',
-				fileRowId: fileToUpload.guid || '',
+				guid: fileToUpload.guid || '',
 				name: fileToUpload.name
 			};
 		}

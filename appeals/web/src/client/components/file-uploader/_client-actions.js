@@ -1,4 +1,4 @@
-//import { hideErrors, showErrors } from './_errors.js';
+import { showErrors } from './_errors.js';
 import { buildStagedFileListItem, buildErrorListItem } from './_html.js';
 import serverActions from './_server-actions.js';
 
@@ -241,51 +241,56 @@ const clientActions = (container) => {
 			return;
 		}
 
-		const files = Array.from(fileList);
+		const addedFiles = Array.from(fileList).map((file) => ({
+			file,
+			guid: isNewVersionOfExistingFile()
+				? container.dataset?.documentId || ''
+				: window.crypto.randomUUID()
+		}));
 
-		for (const file of files) {
-			const validationError = validateSelectedFile(file);
+		for (const addedFile of addedFiles) {
+			const validationError = validateSelectedFile(addedFile.file);
 
 			if (validationError) {
 				stagedFiles.errors.push({
 					message: validationError.message || '',
-					name: file.name
+					name: addedFile.file.name,
+					guid: addedFile.guid
 				});
 			}
 		}
 
-		const fileUploadParameters = await uploadAddedFiles(fileList);
+		const fileUploadParameters = await uploadAddedFiles(addedFiles);
 
 		// TODO: handle any errors returned from upload function
 
 		updateStagedFilesState(fileUploadParameters);
 		updateStagedFilesUI(stagedFiles);
+		updateErrorsUI(stagedFiles);
 	}
 
 	/**
-	 * @param {FileList} fileList
+	 * @param {{file: File, guid: string}[]} addedFiles
 	 * @returns {Promise<import('@pins/appeals/index.js').FileUploadParameters[]>}
 	 */
-	async function uploadAddedFiles(fileList) {
-		// TODO: filter the list to only files which have not yet been uploaded (not clear how to check this until upload implementation is done)
-
-		const fileUploadParameters = Array.from(fileList)
-			.filter((file) => !stagedFiles.errors.find((errorItem) => errorItem.name === file.name))
-			.map((file) => {
+	async function uploadAddedFiles(addedFiles) {
+		const fileUploadParameters = addedFiles
+			.filter(
+				(addedFile) =>
+					!stagedFiles.errors.find((errorItem) => errorItem.name === addedFile.file.name)
+			)
+			.map((addedFile) => {
 				const newVersionOfExistingFile = isNewVersionOfExistingFile();
-				const guid = newVersionOfExistingFile
-					? container.dataset?.documentId || ''
-					: window.crypto.randomUUID();
 
 				return {
-					file,
-					guid,
+					file: addedFile.file,
+					guid: addedFile.guid,
 					blobStorageUrl: createBlobStorageUrl(
 						container.dataset?.caseReference,
-						guid,
+						addedFile.guid,
 						newVersionOfExistingFile
 							? container.dataset?.documentOriginalFileName || ''
-							: file.name,
+							: addedFile.file.name,
 						newVersionOfExistingFile ? container.dataset?.documentVersion : undefined
 					)
 				};
@@ -294,7 +299,7 @@ const clientActions = (container) => {
 		const failedUploads = await uploadFiles(fileUploadParameters);
 
 		if (failedUploads.length) {
-			console.log('failed uploads!');
+			console.log('failed uploads!'); // TODO: handle error
 		}
 
 		return fileUploadParameters;
@@ -370,6 +375,27 @@ const clientActions = (container) => {
 		);
 
 		bindRemoveButtonEvents();
+	}
+
+	/**
+	 * @param {import('@pins/appeals/index.js').StagedFiles} stagedFiles
+	 */
+	function updateErrorsUI(stagedFiles) {
+		if (stagedFiles.errors.length === 0) {
+			return;
+		}
+
+		showErrors(
+			{
+				message: 'FILE_SPECIFIC_ERRORS',
+				details: stagedFiles.errors.map((errorItem) => ({
+					message: errorItem.message,
+					name: errorItem.name,
+					guid: errorItem.guid
+				}))
+			},
+			container
+		);
 	}
 
 	function bindRemoveButtonEvents() {
