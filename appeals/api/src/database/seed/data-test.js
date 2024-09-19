@@ -612,7 +612,20 @@ export async function seedTestData(databaseConnector) {
 
 		//REPS
 		if (appealType === APPEAL_TYPE_SHORTHAND_FPA) {
-			for (let counter = 0; counter < 10; counter++) {
+			for (let counter = 0; counter < 65; counter++) {
+				let originalRepresentation;
+				let status;
+
+				if (counter < 50) {
+					originalRepresentation = `Some autogen text ${counter}`;
+				} else if (counter < 60) {
+					originalRepresentation = `Valid comment ${counter - 50}`;
+					status = 'valid';
+				} else {
+					originalRepresentation = `Invalid comment ${counter - 60}`;
+					status = 'invalid';
+				}
+
 				await databaseConnector.representation.create({
 					data: {
 						appeal: {
@@ -621,7 +634,8 @@ export async function seedTestData(databaseConnector) {
 							}
 						},
 						representationType: APPEAL_REPRESENTATION_TYPE.COMMENT,
-						originalRepresentation: `Some autogen text ${counter}`,
+						originalRepresentation,
+						...(status && { status }),
 						represented: {
 							create: appellantsList[pickRandom(appellantsList)]
 						}
