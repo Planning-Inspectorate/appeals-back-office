@@ -30,23 +30,14 @@ export async function interestedPartyCommentsPage(
 	valid,
 	invalid
 ) {
-	const awaitingReviewTable = {
-		head: [{ text: 'Interested party' }, { text: 'Submitted' }, { text: 'Action' }],
-		rows: generateTableRows(awaitingReview),
-		firstCellIsHeader: true
-	};
-
-	const validTable = {
-		head: [{ text: 'Interested party' }, { text: 'Submitted' }, { text: 'Action' }],
-		rows: generateTableRows(valid),
-		firstCellIsHeader: true
-	};
-
-	const invalidTable = {
-		head: [{ text: 'Interested party' }, { text: 'Submitted' }, { text: 'Action' }],
-		rows: generateTableRows(invalid),
-		firstCellIsHeader: true
-	};
+	const createTable = (items) =>
+		items.length > 0
+			? {
+					head: [{ text: 'Interested party' }, { text: 'Submitted' }, { text: 'Action' }],
+					rows: generateTableRows(items),
+					firstCellIsHeader: true
+			  }
+			: {};
 
 	const paginationAwaiting = generatePagination(
 		paginationParameters.pageNumber,
@@ -75,9 +66,9 @@ export async function interestedPartyCommentsPage(
 		preHeading: `Appeal ${appealDetails.appealReference}`,
 		heading: 'Interested Party Comments',
 		pageComponents: [],
-		awaitingReviewTable,
-		validTable,
-		invalidTable,
+		awaitingReviewTable: createTable(awaitingReview.items),
+		validTable: createTable(valid.items),
+		invalidTable: createTable(invalid.items),
 		paginationAwaiting,
 		paginationValid,
 		paginationInvalid
@@ -91,8 +82,8 @@ export async function interestedPartyCommentsPage(
  * @param {IPCommentsList} commentsList - List of comments to generate rows for.
  * @returns {Array} - The formatted table rows.
  */
-function generateTableRows(commentsList) {
-	return commentsList.items.map((comment) => [
+function generateTableRows(items) {
+	return items.map((comment) => [
 		{ text: comment.author },
 		{
 			text: new Date(comment.created).toLocaleDateString('en-GB', {

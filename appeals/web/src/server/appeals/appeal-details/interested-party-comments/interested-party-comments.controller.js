@@ -50,8 +50,8 @@ const renderInterestedPartyComments = async (request, response) => {
 				paginationParameters,
 				request.session,
 				awaitingReviewComments,
-				invalidComments,
-				validComments
+				validComments,
+				invalidComments
 			);
 
 			return response.status(200).render('appeals/appeal/interested-party-comments.njk', {
