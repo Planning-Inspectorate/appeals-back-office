@@ -10,6 +10,12 @@ import * as interestedPartyCommentsService from './interested-party-comments.ser
  */
 const renderInterestedPartyComments = async (request, response) => {
 	const { errors, currentAppeal, query } = request;
+	const paginationParameters = getPaginationParametersFromQuery(query);
+	const selectedTab = query.tab || 'awaiting-review';
+
+	if (Object.keys(query).length === 0) {
+		paginationParameters.pageSize = 25;
+	}
 
 	if (
 		currentAppeal &&
@@ -21,17 +27,23 @@ const renderInterestedPartyComments = async (request, response) => {
 				interestedPartyCommentsService.getInterestedPartyComments(
 					request.apiClient,
 					currentAppeal.appealId,
-					'awaiting_review'
+					'awaiting_review',
+					selectedTab === 'awaiting-review' ? paginationParameters.pageNumber : 1,
+					paginationParameters.pageSize
 				),
 				interestedPartyCommentsService.getInterestedPartyComments(
 					request.apiClient,
 					currentAppeal.appealId,
-					'invalid'
+					'invalid',
+					selectedTab === 'invalid' ? paginationParameters.pageNumber : 1,
+					paginationParameters.pageSize
 				),
 				interestedPartyCommentsService.getInterestedPartyComments(
 					request.apiClient,
 					currentAppeal.appealId,
-					'valid'
+					'valid',
+					selectedTab === 'valid' ? paginationParameters.pageNumber : 1,
+					paginationParameters.pageSize
 				)
 			]);
 
@@ -42,7 +54,6 @@ const renderInterestedPartyComments = async (request, response) => {
 					currentAppeal.appellantCaseId
 				);
 
-			const paginationParameters = getPaginationParametersFromQuery(query);
 			const mappedPageContent = await interestedPartyCommentsPage(
 				appellantCaseResponse,
 				currentAppeal,

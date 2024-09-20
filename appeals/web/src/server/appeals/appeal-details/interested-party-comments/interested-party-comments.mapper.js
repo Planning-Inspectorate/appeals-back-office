@@ -1,5 +1,5 @@
-// @ts-nocheck
 import { mapPagination } from '#lib/mappers/pagination.mapper.js';
+import { appealShortReference } from '#lib/appeals-formatter.js';
 
 /**
  * @typedef {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} SingleAppellantCaseResponse */
@@ -30,45 +30,74 @@ export async function interestedPartyCommentsPage(
 	valid,
 	invalid
 ) {
-	const createTable = (items) =>
-		items.length > 0
-			? {
-					head: [{ text: 'Interested party' }, { text: 'Submitted' }, { text: 'Action' }],
-					rows: generateTableRows(items),
-					firstCellIsHeader: true
-			  }
-			: {};
-
-	const createPagination = (tab, items) =>
-		items.length >= 26
-			? generatePagination(
-					paginationParameters.pageNumber,
-					`/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments?tab=${tab}`,
-					Math.ceil(items.length / 25)
-			  )
-			: null;
-
+	const shortReference = appealShortReference(appealDetails.appealReference);
 	const pageContent = {
 		title: `Interested Party Comments`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
-		preHeading: `Appeal ${appealDetails.appealReference}`,
+		preHeading: `Appeal ${shortReference}`,
 		heading: 'Interested Party Comments',
+		headingClasses: 'govuk-heading-l',
 		pageComponents: [],
-		awaitingReviewTable: createTable(awaitingReview.items),
-		validTable: createTable(valid.items),
-		invalidTable: createTable(invalid.items),
-		paginationAwaiting: createPagination('awaiting-review', awaitingReview.items),
-		paginationValid: createPagination('valid', valid.items),
-		paginationInvalid: createPagination('invalid', invalid.items)
+		awaitingReviewTable: createTable(awaitingReview),
+		validTable: createTable(valid),
+		invalidTable: createTable(invalid),
+		paginationAwaiting: createPagination(
+			'awaiting-review',
+			awaitingReview,
+			appealDetails.appealId,
+			paginationParameters
+		),
+		paginationValid: createPagination('valid', valid, appealDetails.appealId, paginationParameters),
+		paginationInvalid: createPagination(
+			'invalid',
+			invalid,
+			appealDetails.appealId,
+			paginationParameters
+		)
 	};
 
 	return pageContent;
 }
 
 /**
- *
- * @param {IPCommentsList} commentsList - List of comments to generate rows for.
- * @returns {Array} - The formatted table rows.
+ * Creates a table object for the interested party comments.
+ * @param {IPCommentsList} commentsData - The comments data including items and metadata.
+ * @returns {Object} The table object or an empty object if there are no items.
+ */
+function createTable(commentsData) {
+	return commentsData.itemCount > 0
+		? {
+				head: [{ text: 'Interested party' }, { text: 'Submitted' }, { text: 'Action' }],
+				rows: generateTableRows(commentsData.items),
+				firstCellIsHeader: true
+		  }
+		: {};
+}
+
+/**
+ * Creates a pagination object for the comments list if necessary.
+ * @param {string} tab - The current tab (awaiting-review, valid, or invalid).
+ * @param {IPCommentsList} commentsData - The comments data including items and metadata.
+ * @param {number} appealId - The ID of the appeal.
+ * @param {import("#lib/pagination-utilities.js").PaginationParameters} paginationParameters - The pagination parameters.
+ * @returns {Pagination|null} The pagination object or null if pagination is not needed.
+ */
+function createPagination(tab, commentsData, appealId, paginationParameters) {
+	return commentsData.itemCount > paginationParameters.pageSize
+		? generatePagination(
+				paginationParameters.pageNumber,
+				`/appeals-service/appeal-details/${appealId}/interested-party-comments`,
+				tab,
+				commentsData.pageCount,
+				paginationParameters.pageSize
+		  )
+		: null;
+}
+
+/**
+ * Generates table rows for the interested party comments.
+ * @param {Array<IPComments>} items - List of comments to generate rows for.
+ * @returns {Array<Array<{text?: string, html?: string}>>} The formatted table rows.
  */
 function generateTableRows(items) {
 	return items.map((comment) => [
@@ -89,10 +118,11 @@ function generateTableRows(items) {
  *
  * @param {number} pageNumber - The current page number
  * @param {string} baseUrl - The base URL for pagination links
- * @param {number} [pageCount=1] - Total number of pages (default is 1)
- * @param {number} [itemsPerPage=25] - Number of items per page (default is 25)
+ * @param {string} tab - The current tab (awaiting-review, valid, or invalid)
+ * @param {number} pageCount - Total number of pages
+ * @param {number} pageSize - Number of items per page
  * @returns {Pagination} - The generated pagination object
  */
-const generatePagination = (pageNumber, baseUrl, pageCount = 1, itemsPerPage = 25) => {
-	return mapPagination(pageNumber, pageCount, itemsPerPage, baseUrl, {});
-};
+function generatePagination(pageNumber, baseUrl, tab, pageCount, pageSize) {
+	return mapPagination(pageNumber, pageCount, pageSize, baseUrl, { tab });
+}
