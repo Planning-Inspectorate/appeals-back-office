@@ -33,7 +33,7 @@ describe('Issue Decision', () => {
 				caseDetailsPage.clickIssueDecision(caseRef);
 				caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch(issueDecision));
 				caseDetailsPage.clickButtonByText('Continue');
-				caseDetailsPage.uploadOneDocument();
+				caseDetailsPage.uploadSamplePdf();
 				caseDetailsPage.clickButtonByText('Continue');
 				dateTimeSection.enterDecisionLetterDate(todaysDate);
 				caseDetailsPage.clickButtonByText('Continue');

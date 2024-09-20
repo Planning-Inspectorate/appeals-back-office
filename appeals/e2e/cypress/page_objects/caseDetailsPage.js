@@ -19,7 +19,8 @@ export class CaseDetailsPage extends Page {
 		issueDetermination: 'issue-determination',
 		addLinkedAppeal: 'add-linked-appeal',
 		uploadFile: '#upload-file-1',
-		changeAppealType: 'change-appeal-type'
+		changeAppealType: 'change-appeal-type',
+		addAgreementToChangeDescriptionEvidence: 'add-agreement-to-change-description-evidence'
 	};
 
 	elements = {
@@ -37,7 +38,9 @@ export class CaseDetailsPage extends Page {
 		issueDecision: () => cy.getByData(this._cyDataSelectors.issueDetermination),
 		addLinkedAppeal: () => cy.getByData(this._cyDataSelectors.addLinkedAppeal),
 		uploadFile: () => cy.get(this.selectors.uploadFile),
-		changeAppealType: () => cy.getByData(this._cyDataSelectors.changeAppealType)
+		changeAppealType: () => cy.getByData(this._cyDataSelectors.changeAppealType),
+		addAgreementToChangeDescriptionEvidence: () =>
+			cy.getByData(this._cyDataSelectors.addAgreementToChangeDescriptionEvidence)
 	};
 	/********************************************************
 	 ************************ Actions ************************
@@ -114,6 +117,10 @@ export class CaseDetailsPage extends Page {
 	// This currently doesn't work, as there are multiple matches and some of not invisible
 	clickAddAnother() {
 		cy.get(this.selectors.button).filter(':visible').contains('Add another').click();
+	}
+
+	clickAddAgreementToChangeDescriptionEvidence() {
+		this.elements.addAgreementToChangeDescriptionEvidence().click();
 	}
 
 	/***************************************************************
