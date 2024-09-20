@@ -88,3 +88,14 @@ export interface RemovedUncommittedFile {
 	guid: string;
 	blobStorageUrl: string;
 }
+
+export interface FileUploadError {
+	message: string;
+	guid: string;
+	name: string;
+}
+
+export interface UploadFilesResult {
+	fileUploadParameters: FileUploadParameters[];
+	failedUploads: FileUploadError[];
+}

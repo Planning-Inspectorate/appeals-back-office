@@ -1,4 +1,4 @@
-/** @typedef {import('./_html.js').AnError} AnError */
+/** @typedef {import('@pins/appeals/index.js').FileUploadError} FileUploadError */
 /** @typedef {import('./_html.js').FileWithRowId} FileWithRowId */
 /** @typedef {import('@azure/core-auth').AccessToken} AccessToken */
 /** @typedef {import('@pins/appeals/index.js').UploadRequest} UploadRequest */
@@ -13,7 +13,7 @@ import { BlobStorageClient } from '@pins/blob-storage-client';
  * @returns {*}
  */
 const serverActions = (uploadForm) => {
-	/** @type {AnError[]} */
+	/** @type {FileUploadError[]} */
 	const failedUploads = [];
 
 	const getAccessToken = async () => {
@@ -32,7 +32,7 @@ const serverActions = (uploadForm) => {
 
 	/**
 	 * @param {import('@pins/appeals/index.js').FileUploadParameters[]} documents
-	 * @returns {Promise<AnError[]>}>}
+	 * @returns {Promise<FileUploadError[]>}>}
 	 */
 	async function uploadFiles(documents) {
 		const accessToken = await getAccessToken();
@@ -54,6 +54,7 @@ const serverActions = (uploadForm) => {
 			if (file && blobStorageUrl) {
 				const errorOutcome = await uploadOnBlobStorage(
 					file,
+					document.guid,
 					blobStorageUrl,
 					blobStorageClient,
 					blobStorageContainer
@@ -75,13 +76,15 @@ const serverActions = (uploadForm) => {
 	/**
 	 *
 	 * @param {FileWithRowId} fileToUpload
+	 * @param {string} fileGuid
 	 * @param {string} blobStoreUrl
 	 * @param {import('@pins/blob-storage-client').BlobStorageClient} blobStorageClient
 	 * @param {string} blobStorageContainer
-	 * @returns {Promise<AnError | undefined>}
+	 * @returns {Promise<FileUploadError | undefined>}
 	 */
 	const uploadOnBlobStorage = async (
 		fileToUpload,
+		fileGuid,
 		blobStoreUrl,
 		blobStorageClient,
 		blobStorageContainer
@@ -98,7 +101,7 @@ const serverActions = (uploadForm) => {
 		} catch {
 			response = {
 				message: 'GENERIC_SINGLE_FILE',
-				guid: fileToUpload.guid || '',
+				guid: fileGuid,
 				name: fileToUpload.name
 			};
 		}

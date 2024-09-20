@@ -1,5 +1,10 @@
-import { showErrors } from './_errors.js';
-import { buildStagedFileListItem, buildErrorListItem } from './_html.js';
+import { showErrors, hideErrors } from './_errors.js';
+import {
+	buildStagedFileListItem,
+	buildErrorListItem,
+	showProgressMessage,
+	hideProgressMessage
+} from './_html.js';
 import serverActions from './_server-actions.js';
 
 const CLASSES = {
@@ -241,12 +246,16 @@ const clientActions = (container) => {
 			return;
 		}
 
+		showProgressMessage(container);
+
 		const addedFiles = Array.from(fileList).map((file) => ({
 			file,
 			guid: isNewVersionOfExistingFile()
 				? container.dataset?.documentId || ''
 				: window.crypto.randomUUID()
 		}));
+
+		stagedFiles.errors.length = 0;
 
 		for (const addedFile of addedFiles) {
 			const validationError = validateSelectedFile(addedFile.file);
@@ -260,18 +269,17 @@ const clientActions = (container) => {
 			}
 		}
 
-		const fileUploadParameters = await uploadAddedFiles(addedFiles);
+		const uploadResult = await uploadAddedFiles(addedFiles);
 
-		// TODO: handle any errors returned from upload function
-
-		updateStagedFilesState(fileUploadParameters);
+		updateStagedFilesState(uploadResult.fileUploadParameters);
 		updateStagedFilesUI(stagedFiles);
-		updateErrorsUI(stagedFiles);
+		updateErrorsUI(stagedFiles, uploadResult.failedUploads);
+		hideProgressMessage(container);
 	}
 
 	/**
 	 * @param {{file: File, guid: string}[]} addedFiles
-	 * @returns {Promise<import('@pins/appeals/index.js').FileUploadParameters[]>}
+	 * @returns {Promise<import('@pins/appeals/index.js').UploadFilesResult>}
 	 */
 	async function uploadAddedFiles(addedFiles) {
 		const fileUploadParameters = addedFiles
@@ -296,13 +304,13 @@ const clientActions = (container) => {
 				};
 			});
 
+		/** @type {import('@pins/appeals/index.js').FileUploadError[]} */
 		const failedUploads = await uploadFiles(fileUploadParameters);
 
-		if (failedUploads.length) {
-			console.log('failed uploads!'); // TODO: handle error
-		}
-
-		return fileUploadParameters;
+		return {
+			fileUploadParameters,
+			failedUploads
+		};
 	}
 
 	function allowSingleFileOnly() {
@@ -347,7 +355,11 @@ const clientActions = (container) => {
 		const filenamesInFolderArray =
 			(filenamesInFolderString && JSON.parse(filenamesInFolderString)) || null;
 		const filenamesInFolder = Array.isArray(filenamesInFolderArray) ? filenamesInFolderArray : [];
+		const filenamesInStagedFiles = stagedFiles.files.map((stagedFile) => stagedFile.name);
 
+		if (filenamesInStagedFiles.includes(selectedFile.name)) {
+			return { message: 'DUPLICATE_NAME_SINGLE_FILE' };
+		}
 		if (filenamesInFolder.includes(selectedFile.name)) {
 			return { message: 'DUPLICATE_NAME_SINGLE_FILE' };
 		}
@@ -379,20 +391,26 @@ const clientActions = (container) => {
 
 	/**
 	 * @param {import('@pins/appeals/index.js').StagedFiles} stagedFiles
+	 * @param {import('@pins/appeals/index.js').FileUploadError[]} failedUploads
 	 */
-	function updateErrorsUI(stagedFiles) {
-		if (stagedFiles.errors.length === 0) {
+	function updateErrorsUI(stagedFiles, failedUploads) {
+		hideErrors(container);
+
+		if (stagedFiles.errors.length === 0 && failedUploads.length === 0) {
 			return;
 		}
 
 		showErrors(
 			{
 				message: 'FILE_SPECIFIC_ERRORS',
-				details: stagedFiles.errors.map((errorItem) => ({
-					message: errorItem.message,
-					name: errorItem.name,
-					guid: errorItem.guid
-				}))
+				details: [
+					...stagedFiles.errors.map((errorItem) => ({
+						message: errorItem.message,
+						name: errorItem.name,
+						guid: errorItem.guid
+					})),
+					...failedUploads
+				].flat()
 			},
 			container
 		);

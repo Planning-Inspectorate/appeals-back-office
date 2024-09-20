@@ -1,6 +1,4 @@
-import { buildProgressMessage, errorMessage } from './_html.js';
-
-/** @typedef {import('./_html.js').AnError} AnError */
+import { errorMessage } from './_html.js';
 
 /**
  * @param {{message: string; guid: string;}[]} errors
@@ -37,7 +35,7 @@ const buildTopErrorsMarkup = (errors) => {
 
 /**
  *
- * @param {{details: AnError[], message: string}} error
+ * @param {{details: import('@pins/appeals/index.js').FileUploadError[], message: string}} error
  * @param {Element} uploadForm
  */
 export const showErrors = (error, uploadForm) => {
@@ -46,7 +44,6 @@ export const showErrors = (error, uploadForm) => {
 
 	if (!formContainer || !topHook) return;
 
-	buildProgressMessage({ show: false }, uploadForm);
 	formContainer.classList.remove('error');
 
 	topHook.textContent = '';

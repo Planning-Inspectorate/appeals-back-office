@@ -1,4 +1,3 @@
-/** @typedef {{message: string, guid: string, name: string}} AnError */
 /** @typedef {File & {guid?: string}} FileWithRowId */
 
 /**
@@ -14,10 +13,10 @@ export const errorMessage = (type, replaceValue) => {
 			'The total of your uploaded files is {REPLACE_VALUE}, it must be smaller than 1 GB',
 		ADDITIONAL_DOCUMENTS_CONFIRMATION_REQUIRED:
 			'Please confirm that the document does not belong anywhere else',
-		TIMEOUT: 'There was a timeout and your files could not be uploaded, try again',
+		TIMEOUT: 'There was a timeout and your files could not be uploaded',
 		NO_FILE: 'Select a file',
-		GENERIC_SINGLE_FILE: `{REPLACE_VALUE} could not be added, try again`,
-		NAME_SINGLE_FILE: `{REPLACE_VALUE} could not be added because the file name is too long or contains special characters. Rename the file and try and upload again.`,
+		GENERIC_SINGLE_FILE: `{REPLACE_VALUE} could not be added`,
+		NAME_SINGLE_FILE: `{REPLACE_VALUE} could not be added because the file name is too long or contains special characters. Rename the file and try again.`,
 		TYPE_SINGLE_FILE: `{REPLACE_VALUE} could not be added because it is not an allowed file type`,
 		DUPLICATE_NAME_SINGLE_FILE: `"{REPLACE_VALUE}" could not be added because a file with this name already exists. Files cannot have duplicate names.`
 	};
@@ -96,20 +95,48 @@ export const buildErrorListItem = (error) => {
 };
 
 /**
- *
- * @param {{show: boolean}} options
  * @param {Element} uploadForm
  */
-export const buildProgressMessage = ({ show }, uploadForm) => {
+export function showProgressMessage(uploadForm) {
+	showOrHideProgressMessage(true, uploadForm);
+}
+
+/**
+ * @param {Element} uploadForm
+ */
+export function hideProgressMessage(uploadForm) {
+	showOrHideProgressMessage(false, uploadForm);
+}
+
+/**
+ * @param {boolean} show
+ * @param {Element} uploadForm
+ */
+const showOrHideProgressMessage = (show, uploadForm) => {
 	const progressHook = uploadForm.querySelector('.progress-hook');
+
+	/** @type {HTMLButtonElement | null} */
+	const uploadButton = uploadForm.querySelector('.pins-file-upload__button');
+
+	/** @type {HTMLElement | null} */
+	const dropZone = uploadForm.querySelector('.pins-file-upload__dropzone');
+
 	/** @type {HTMLButtonElement | null} */
 	const submitButton = uploadForm.querySelector('.pins-file-upload__submit');
 
-	if (progressHook && submitButton) {
-		submitButton.disabled = show;
+	if (progressHook) {
 		progressHook.innerHTML = show
-			? '<p class="govuk-body pins-file-upload__progress" role="alert">Uploading files</p>'
+			? '<p class="govuk-body pins-file-upload__progress" role="alert">Adding files</p>'
 			: '';
+	}
+	if (uploadButton) {
+		uploadButton.disabled = show;
+	}
+	if (dropZone) {
+		dropZone.style.pointerEvents = show ? 'none' : '';
+	}
+	if (submitButton) {
+		submitButton.disabled = show;
 	}
 };
 
