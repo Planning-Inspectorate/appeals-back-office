@@ -8,7 +8,19 @@ import {
 import serverActions from './_server-actions.js';
 
 const CLASSES = {
-	dropZoneDisabled: 'dropzone-disabled'
+	dropZone: 'pins-file-upload__dropzone',
+	dropZoneDragOver: 'pins-file-upload__dropzone--dragover',
+	dropZoneDisabled: 'dropzone-disabled',
+	uploadInfoHiddenField: 'upload-info-hidden-field'
+};
+const SELECTORS = {
+	form: '.pins-file-upload form',
+	uploadButton: '.pins-file-upload__button',
+	stagedFilesList: '.pins-file-upload__files-rows',
+	uploadInput: 'input[name="files"]',
+	fileInputContainer: '.pins-file-upload__upload',
+	submitButton: '.pins-file-upload__submit',
+	removeButton: '.pins-file-upload__remove'
 };
 
 /**
@@ -21,17 +33,17 @@ const clientActions = (container) => {
 	const maximumAllowedFileNameLength = 255;
 
 	/** @type {HTMLFormElement | null} */
-	const form = container.querySelector('.pins-file-upload form');
+	const form = container.querySelector(SELECTORS.form);
 	/** @type {HTMLElement | null} */
-	const uploadButton = container.querySelector('.pins-file-upload__button');
+	const uploadButton = container.querySelector(SELECTORS.uploadButton);
 	/** @type {HTMLElement | null} */
-	const stagedFilesList = container.querySelector('.pins-file-upload__files-rows');
+	const stagedFilesList = container.querySelector(SELECTORS.stagedFilesList);
 	/** @type {HTMLInputElement | null} */
-	const uploadInput = container.querySelector('input[name="files"]');
+	const uploadInput = container.querySelector(SELECTORS.uploadInput);
 	/** @type {HTMLElement | null} */
-	const fileInputContainer = container.querySelector('.pins-file-upload__upload');
+	const fileInputContainer = container.querySelector(SELECTORS.fileInputContainer);
 	/** @type {HTMLElement | null} */
-	const submitButton = container.querySelector('.pins-file-upload__submit');
+	const submitButton = container.querySelector(SELECTORS.submitButton);
 
 	/** @type {HTMLElement | null} */
 	let dropZone;
@@ -45,7 +57,7 @@ const clientActions = (container) => {
 		}
 
 		dropZone = document.createElement('div');
-		dropZone.className = 'pins-file-upload__dropzone';
+		dropZone.className = CLASSES.dropZone;
 		fileInputContainer?.parentNode?.insertBefore(dropZone, fileInputContainer);
 
 		if (fileInputContainer) {
@@ -62,9 +74,7 @@ const clientActions = (container) => {
 	 */
 	function onDropZoneDragOver(event) {
 		event.preventDefault();
-		container
-			.querySelector('.pins-file-upload__dropzone')
-			?.classList.add('pins-file-upload__dropzone--dragover');
+		container.querySelector(`.${CLASSES.dropZone}`)?.classList.add(`${CLASSES.dropZoneDragOver}`);
 	}
 
 	/**
@@ -73,8 +83,8 @@ const clientActions = (container) => {
 	function onDropZoneDragLeave(event) {
 		event.preventDefault();
 		container
-			.querySelector('.pins-file-upload__dropzone')
-			?.classList.remove('pins-file-upload__dropzone--dragover');
+			.querySelector(`.${CLASSES.dropZone}`)
+			?.classList.remove(`${CLASSES.dropZoneDragOver}`);
 	}
 
 	/**
@@ -83,8 +93,8 @@ const clientActions = (container) => {
 	function onDropZoneDrop(event) {
 		event.preventDefault();
 		container
-			.querySelector('.pins-file-upload__dropzone')
-			?.classList.remove('pins-file-upload__dropzone--dragover');
+			.querySelector(`.${CLASSES.dropZone}`)
+			?.classList.remove(`${CLASSES.dropZoneDragOver}`);
 
 		/** @type {HTMLInputElement | null} */
 		if (uploadInput) {
@@ -107,11 +117,6 @@ const clientActions = (container) => {
 	}
 
 	/**
-	 * State object representing all files which are "staged" in the component
-	 * Staged files include all files which have not yet been committed by submitting the check your answers page:
-	 * - files the user has added manually (via file select, drag and drop, or any other manual action by the user)
-	 * - uncommitted files (automatically populated in component from session data)
-	 *
 	 * @type {import('#appeals/appeal-documents/appeal-documents.types').StagedFiles}
 	 */
 	const stagedFiles = {
@@ -219,11 +224,13 @@ const clientActions = (container) => {
 	 * @param {any} value
 	 * */
 	function updateUploadInfoHiddenField(value) {
-		document.querySelectorAll('.upload-info-hidden-field').forEach((element) => element.remove());
+		document
+			.querySelectorAll(`.${CLASSES.uploadInfoHiddenField}`)
+			.forEach((element) => element.remove());
 
 		const hiddenField = document.createElement('input');
 
-		hiddenField.className = 'upload-info-hidden-field';
+		hiddenField.className = CLASSES.uploadInfoHiddenField;
 		hiddenField.type = 'hidden';
 		hiddenField.name = 'upload-info';
 		hiddenField.value = value;
@@ -419,7 +426,7 @@ const clientActions = (container) => {
 	}
 
 	function bindRemoveButtonEvents() {
-		const removeButtons = container.querySelectorAll('.pins-file-upload__remove');
+		const removeButtons = container.querySelectorAll(SELECTORS.removeButton);
 
 		removeButtons.forEach((element) => {
 			element.addEventListener('click', async (clickEvent) => {

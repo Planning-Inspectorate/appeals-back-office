@@ -1,5 +1,12 @@
 /** @typedef {File & {guid?: string}} FileWithRowId */
 
+const CLASSES = {
+	fileRow: 'pins-file-upload__file-row',
+	headingSmall: 'govuk-heading-s',
+	visuallyHidden: 'govuk-visually-hidden',
+	removeButton: 'govuk-link pins-file-upload__remove'
+};
+
 /**
  * @param {string} type
  * @param {string?} replaceValue
@@ -46,14 +53,14 @@ export const buildRegularListItem = (uploadedFile) => {
 	const uploadedFileSize = uploadedFile.size;
 
 	const li = document.createElement('li');
-	li.className = 'pins-file-upload__file-row';
+	li.className = CLASSES.fileRow;
 	li.id = uploadedFileFileRowId || '';
 
 	const p = document.createElement('p');
-	p.className = 'govuk-heading-s';
+	p.className = CLASSES.headingSmall;
 
 	const span = document.createElement('span');
-	span.className = 'govuk-visually-hidden';
+	span.className = CLASSES.visuallyHidden;
 	span.textContent = 'File name: ';
 	p.appendChild(span);
 
@@ -148,14 +155,14 @@ export const buildStagedFileListItem = (stagedFile) => {
 	const stagedFileFileRowId = stagedFile.guid;
 
 	const li = document.createElement('li');
-	li.className = 'pins-file-upload__file-row';
+	li.className = CLASSES.fileRow;
 	li.id = stagedFileFileRowId || '';
 
 	const p = document.createElement('p');
-	p.className = 'govuk-heading-s';
+	p.className = CLASSES.headingSmall;
 
 	const span = document.createElement('span');
-	span.className = 'govuk-visually-hidden';
+	span.className = CLASSES.visuallyHidden;
 	span.textContent = 'File name: ';
 	p.appendChild(span);
 
@@ -167,7 +174,7 @@ export const buildStagedFileListItem = (stagedFile) => {
 	const button = document.createElement('button');
 	button.id = `button-remove-${li.id}`;
 	button.type = 'button';
-	button.className = 'govuk-link pins-file-upload__remove';
+	button.className = CLASSES.removeButton;
 	button.setAttribute('aria-label', `Remove ${stagedFile.name} from list`);
 	button.textContent = 'Remove';
 
