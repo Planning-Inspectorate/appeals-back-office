@@ -99,3 +99,22 @@ export interface UploadFilesResult {
 	fileUploadParameters: FileUploadParameters[];
 	failedUploads: FileUploadError[];
 }
+
+export interface FileUploadInfoItem {
+	name: string;
+	GUID: string;
+	fileRowId: string;
+	blobStoreUrl: string;
+	mimeType: string;
+	documentType: string;
+	size: number;
+	stage: string;
+	receivedDate: string;
+	redactionStatus: number;
+}
+
+export interface FileUploadInfo {
+	appealId: string;
+	folderId: string;
+	files: FileUploadInfoItem[];
+}

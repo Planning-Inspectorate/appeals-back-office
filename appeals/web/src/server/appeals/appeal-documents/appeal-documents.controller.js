@@ -26,7 +26,7 @@ import {
 } from '#app/components/file-uploader.component.js';
 import config from '@pins/appeals.web/environment/config.js';
 import { redactionStatusNameToId } from '#lib/redaction-statuses.js';
-import { isFileUploadInfo } from '#lib/ts-utilities.js';
+import { isFileUploadInfoItemArray } from '#lib/ts-utilities.js';
 import { dateToDayMonthYear, dayMonthYearToApiDateString } from '#lib/dates.js';
 import { folderIsAdditionalDocuments } from '#lib/documents.js';
 
@@ -66,6 +66,14 @@ export const renderDocumentUpload = async (
 		return response.status(404).render('app/404.njk');
 	}
 
+	if (
+		'fileUploadInfo' in request.session &&
+		request.session.fileUploadInfo.appealId !== `${currentFolder.appealId}` &&
+		request.session.fileUploadInfo.folderId !== `${currentFolder.folderId}`
+	) {
+		delete request.session.fileUploadInfo;
+	}
+
 	const filenamesInFolder = currentFolder.documents
 		? Buffer.from(
 				JSON.stringify(
@@ -103,7 +111,7 @@ export const renderDocumentUpload = async (
 		backButtonUrl,
 		nextPageUrl,
 		isLateEntry,
-		session,
+		session.fileUploadInfo,
 		errors,
 		pageHeadingTextOverride,
 		pageBodyComponents,
@@ -134,7 +142,7 @@ export const postDocumentUpload = async (request, response, nextPageUrl) => {
 	/** @type {import('#lib/ts-utilities.js').FileUploadInfoItem[]} */
 	const uploadInfo = JSON.parse(body['upload-info']);
 
-	if (!isFileUploadInfo(uploadInfo)) {
+	if (!isFileUploadInfoItemArray(uploadInfo)) {
 		return response.status(500).render('app/500');
 	}
 
@@ -145,13 +153,18 @@ export const postDocumentUpload = async (request, response, nextPageUrl) => {
 	}
 
 	/** @type {import('@pins/appeals/index.js').UncommittedFile[]} */
-	const fileUploadInfo = uploadInfo.map((infoItem) => ({
+	const uncommittedFiles = uploadInfo.map((infoItem) => ({
 		...infoItem,
 		redactionStatus: redactionStatusNameToId(redactionStatuses, 'unredacted'),
 		receivedDate: dayMonthYearToApiDateString(dateToDayMonthYear(new Date()))
 	}));
 
-	request.session.fileUploadInfo = fileUploadInfo;
+	/** @type {import('@pins/appeals/index.js').FileUploadInfo} */
+	request.session.fileUploadInfo = {
+		appealId: `${currentAppeal.appealId}`,
+		folderId: `${currentFolder.folderId}`,
+		files: uncommittedFiles
+	};
 
 	response.redirect(nextPageUrl);
 };
@@ -192,7 +205,7 @@ export const renderDocumentDetails = async (
 	const mappedPageContent = addDocumentDetailsPage(
 		backButtonUrl,
 		currentFolder,
-		request.session.fileUploadInfo,
+		request.session.fileUploadInfo.files,
 		body?.items,
 		redactionStatuses,
 		pageHeadingTextOverride,
@@ -352,7 +365,7 @@ export const postDocumentDetails = async (
 		if (redactionStatuses) {
 			addDocumentDetailsFormDataToFileUploadInfo(
 				body,
-				request.session.fileUploadInfo,
+				request.session.fileUploadInfo.files,
 				redactionStatuses
 			);
 
@@ -433,7 +446,7 @@ export const renderUploadDocumentsCheckAndConfirm = async (
 		changeDateLinkUrl,
 		changeRedactionStatusLinkUrl,
 		currentAppeal.appealReference,
-		request.session.fileUploadInfo,
+		request.session.fileUploadInfo.files,
 		redactionStatuses,
 		documentVersion,
 		documentFileName
@@ -477,7 +490,7 @@ export const postUploadDocumentsCheckAndConfirm = async (
 			blobStorageHost:
 				config.useBlobEmulator === true ? config.blobEmulatorSasUrl : config.blobStorageUrl,
 			blobStorageContainer: config.blobStorageDefaultContainer,
-			documents: fileUploadInfo.map(
+			documents: fileUploadInfo.files.map(
 				(/** @type {import('#lib/ts-utilities.js').FileUploadInfoItem} */ document) => {
 					/** @type {import('@pins/appeals/index.js').MappedDocument} */
 					const mappedDocument = {
@@ -543,7 +556,7 @@ export const postUploadDocumentVersionCheckAndConfirm = async (request, response
 			session: { fileUploadInfo },
 			params: { documentId }
 		} = request;
-		const uploadInfo = fileUploadInfo[0];
+		const uploadInfo = fileUploadInfo.files[0];
 
 		/** @type {import('@pins/appeals/index.js').AddDocumentVersionRequest} */
 		const addDocumentVersionRequestPayload = {

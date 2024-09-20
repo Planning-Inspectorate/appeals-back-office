@@ -266,7 +266,7 @@ export function withdrawalDocumentRedactionStatusPage(
  * @returns {PageContent}
  */
 export function checkAndConfirmPage(request, appealData, session) {
-	const withdrawalRequest = session.fileUploadInfo?.[0]?.name;
+	const withdrawalRequest = session.fileUploadInfo?.files[0]?.name;
 	const withdrawalRequestDate = new Date(session.withdrawal?.withdrawalRequestDate);
 
 	/** @type {PageComponent} */

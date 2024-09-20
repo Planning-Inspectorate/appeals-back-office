@@ -9,6 +9,7 @@ export interface DocumentUploadPageParameters {
 	documentOriginalFileName?: string;
 	documentVersion?: number;
 	useBlobEmulator: boolean;
+	filenamesInFolder?: string;
 	blobStorageHost: string;
 	blobStorageContainer: string;
 	multiple: boolean;
@@ -23,6 +24,6 @@ export interface DocumentUploadPageParameters {
 	nextPageUrl: string;
 	displayLateEntryContent?: boolean;
 	displayCorrectFolderConfirmationContent?: boolean;
-	uncommittedFiles?: string[];
+	uncommittedFiles?: string;
 	errors: ValidationErrors | undefined;
 }
