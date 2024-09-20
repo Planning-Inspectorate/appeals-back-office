@@ -26,7 +26,7 @@ import { folderIsAdditionalDocuments } from '#lib/documents.js';
  * @typedef {import('#lib/nunjucks-template-builders/tag-builders.js').HtmlLink} HtmlLink
  * @typedef {import('@pins/appeals.api').Schema.DocumentRedactionStatus} RedactionStatus
  * @typedef {import('@pins/appeals.api').Api.DocumentVersionAuditEntry} DocumentVersionAuditEntry
- * @typedef {import('@pins/appeals/index.js').FileUploadInfoItem} FileUploadInfoItem
+ * @typedef {import('#appeals/appeal-documents/appeal-documents.types').FileUploadInfoItem} FileUploadInfoItem
  */
 
 /**
@@ -40,7 +40,7 @@ import { folderIsAdditionalDocuments } from '#lib/documents.js';
  * @param {string} backButtonUrl
  * @param {string|undefined} nextPageUrl
  * @param {boolean} isLateEntry
- * @param {import('@pins/appeals/index.js').FileUploadInfo} fileUploadInfo
+ * @param {import('#appeals/appeal-documents/appeal-documents.types').FileUploadInfo} fileUploadInfo
  * @param {import('@pins/express').ValidationErrors|undefined} errors
  * @param {string} [pageHeadingTextOverride]
  * @param {PageComponent[]} [pageBodyComponents]

@@ -35,7 +35,7 @@ const buildTopErrorsMarkup = (errors) => {
 
 /**
  *
- * @param {{details: import('@pins/appeals/index.js').FileUploadError[], message: string}} error
+ * @param {{details: import('#appeals/appeal-documents/appeal-documents.types').FileUploadError[], message: string}} error
  * @param {Element} uploadForm
  */
 export const showErrors = (error, uploadForm) => {

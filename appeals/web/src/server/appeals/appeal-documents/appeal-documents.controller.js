@@ -139,7 +139,7 @@ export const postDocumentUpload = async (request, response, nextPageUrl) => {
 		return response.status(500).render('app/500');
 	}
 
-	/** @type {import('#lib/ts-utilities.js').FileUploadInfoItem[]} */
+	/** @type {import('#appeals/appeal-documents/appeal-documents.types').FileUploadInfoItem[]} */
 	const uploadInfo = JSON.parse(body['upload-info']);
 
 	if (!isFileUploadInfoItemArray(uploadInfo)) {
@@ -152,14 +152,14 @@ export const postDocumentUpload = async (request, response, nextPageUrl) => {
 		return response.status(500).render('app/500.njk');
 	}
 
-	/** @type {import('@pins/appeals/index.js').UncommittedFile[]} */
+	/** @type {import('#appeals/appeal-documents/appeal-documents.types').UncommittedFile[]} */
 	const uncommittedFiles = uploadInfo.map((infoItem) => ({
 		...infoItem,
 		redactionStatus: redactionStatusNameToId(redactionStatuses, 'unredacted'),
 		receivedDate: dayMonthYearToApiDateString(dateToDayMonthYear(new Date()))
 	}));
 
-	/** @type {import('@pins/appeals/index.js').FileUploadInfo} */
+	/** @type {import('#appeals/appeal-documents/appeal-documents.types').FileUploadInfo} */
 	request.session.fileUploadInfo = {
 		appealId: `${currentAppeal.appealId}`,
 		folderId: `${currentFolder.folderId}`,

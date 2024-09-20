@@ -5,7 +5,7 @@ import { addDocumentsCheckAndConfirmPage } from '#appeals/appeal-documents/appea
  *
  * @param {import('../appeal-details.types.js').WebAppeal} appealDetails
  * @param {import('@pins/appeals.api').Appeals.FolderInfo} decisionDocumentFolder
- * @param {import('#lib/ts-utilities.js').FileUploadInfoItem[]} uncommittedFiles
+ * @param {import('#appeals/appeal-documents/appeal-documents.types').FileUploadInfoItem[]} uncommittedFiles
  * @param {import('@pins/appeals.api').Schema.DocumentRedactionStatus[]} redactionStatuses
  * @param {string} [documentId]
  * @returns {PageContent}

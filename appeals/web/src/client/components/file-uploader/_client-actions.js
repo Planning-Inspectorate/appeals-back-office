@@ -112,7 +112,7 @@ const clientActions = (container) => {
 	 * - files the user has added manually (via file select, drag and drop, or any other manual action by the user)
 	 * - uncommitted files (automatically populated in component from session data)
 	 *
-	 * @type {import('@pins/appeals/index.js').StagedFiles}
+	 * @type {import('#appeals/appeal-documents/appeal-documents.types').StagedFiles}
 	 */
 	const stagedFiles = {
 		files: [],
@@ -120,13 +120,13 @@ const clientActions = (container) => {
 	};
 
 	/**
-	 * @type {import('@pins/appeals/index.js').UncommittedFiles}
+	 * @type {import('#appeals/appeal-documents/appeal-documents.types').UncommittedFiles}
 	 */
 	const uncommittedFiles = {
 		files: []
 	};
 
-	/** @type {import('@pins/appeals/index.js').RemovedUncommittedFile[]} */
+	/** @type {import('#appeals/appeal-documents/appeal-documents.types').RemovedUncommittedFile[]} */
 	const removedUncommittedFiles = [];
 
 	/**
@@ -150,7 +150,7 @@ const clientActions = (container) => {
 
 	/**
 	 *
-	 * @param {import('@pins/appeals/index.js').FileUploadParameters[]} uploadedFilesUploadParameters
+	 * @param {import('#appeals/appeal-documents/appeal-documents.types').FileUploadParameters[]} uploadedFilesUploadParameters
 	 */
 	function updateStagedFilesState(uploadedFilesUploadParameters) {
 		for (const uploadedFile of uploadedFilesUploadParameters) {
@@ -175,7 +175,9 @@ const clientActions = (container) => {
 
 		uncommittedFiles.files = uncommittedFilesData.files;
 		uncommittedFiles?.files.forEach(
-			(/** @type {import('@pins/appeals/index.js').UncommittedFile} */ uncommittedFile) =>
+			(
+				/** @type {import('#appeals/appeal-documents/appeal-documents.types').UncommittedFile} */ uncommittedFile
+			) =>
 				stagedFiles.files.push({
 					name: uncommittedFile.name,
 					guid: uncommittedFile.GUID,
@@ -199,7 +201,7 @@ const clientActions = (container) => {
 	}
 
 	/**
-	 * @param {import('@pins/appeals/index.js').StagedFile} stagedFile
+	 * @param {import('#appeals/appeal-documents/appeal-documents.types').StagedFile} stagedFile
 	 */
 	function addUploadInfoForStagedFile(stagedFile) {
 		uploadInfo.documents.push({
@@ -279,7 +281,7 @@ const clientActions = (container) => {
 
 	/**
 	 * @param {{file: File, guid: string}[]} addedFiles
-	 * @returns {Promise<import('@pins/appeals/index.js').UploadFilesResult>}
+	 * @returns {Promise<import('#appeals/appeal-documents/appeal-documents.types').UploadFilesResult>}
 	 */
 	async function uploadAddedFiles(addedFiles) {
 		const fileUploadParameters = addedFiles
@@ -304,7 +306,7 @@ const clientActions = (container) => {
 				};
 			});
 
-		/** @type {import('@pins/appeals/index.js').FileUploadError[]} */
+		/** @type {import('#appeals/appeal-documents/appeal-documents.types').FileUploadError[]} */
 		const failedUploads = await uploadFiles(fileUploadParameters);
 
 		return {
@@ -374,7 +376,7 @@ const clientActions = (container) => {
 	}
 
 	/**
-	 * @param {import('@pins/appeals/index.js').StagedFiles} stagedFiles
+	 * @param {import('#appeals/appeal-documents/appeal-documents.types').StagedFiles} stagedFiles
 	 */
 	function updateStagedFilesUI(stagedFiles) {
 		if (!stagedFilesList) {
@@ -390,8 +392,8 @@ const clientActions = (container) => {
 	}
 
 	/**
-	 * @param {import('@pins/appeals/index.js').StagedFiles} stagedFiles
-	 * @param {import('@pins/appeals/index.js').FileUploadError[]} failedUploads
+	 * @param {import('#appeals/appeal-documents/appeal-documents.types').StagedFiles} stagedFiles
+	 * @param {import('#appeals/appeal-documents/appeal-documents.types').FileUploadError[]} failedUploads
 	 */
 	function updateErrorsUI(stagedFiles, failedUploads) {
 		hideErrors(container);

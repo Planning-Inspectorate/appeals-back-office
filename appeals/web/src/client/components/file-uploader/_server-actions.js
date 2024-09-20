@@ -1,7 +1,7 @@
-/** @typedef {import('@pins/appeals/index.js').FileUploadError} FileUploadError */
+/** @typedef {import('#appeals/appeal-documents/appeal-documents.types').FileUploadError} FileUploadError */
 /** @typedef {import('./_html.js').FileWithRowId} FileWithRowId */
 /** @typedef {import('@azure/core-auth').AccessToken} AccessToken */
-/** @typedef {import('@pins/appeals/index.js').UploadRequest} UploadRequest */
+/** @typedef {import('#appeals/appeal-documents/appeal-documents.types').UploadRequest} UploadRequest */
 /** @typedef {{folderId: string, documentId: string, caseId: string, blobStorageHost: string, blobStorageContainer: string, useBlobEmulator: string}} UploadForm */
 
 import { BlobServiceClient } from '@azure/storage-blob';
@@ -31,7 +31,7 @@ const serverActions = (uploadForm) => {
 	};
 
 	/**
-	 * @param {import('@pins/appeals/index.js').FileUploadParameters[]} documents
+	 * @param {import('#appeals/appeal-documents/appeal-documents.types').FileUploadParameters[]} documents
 	 * @returns {Promise<FileUploadError[]>}>}
 	 */
 	async function uploadFiles(documents) {

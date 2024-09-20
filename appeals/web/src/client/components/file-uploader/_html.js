@@ -77,7 +77,7 @@ export const buildRegularListItem = (uploadedFile) => {
 
 /**
  * Creates an HTML element for displaying an error message related to file upload.
- * @param {import('@pins/appeals/index.js').StagedFileError} error
+ * @param {import('#appeals/appeal-documents/appeal-documents.types').StagedFileError} error
  * @returns {HTMLElement}
  */
 export const buildErrorListItem = (error) => {
@@ -141,7 +141,7 @@ const showOrHideProgressMessage = (show, uploadForm) => {
 };
 
 /**
- * @param {import('@pins/appeals/index.js').StagedFile} stagedFile
+ * @param {import('#appeals/appeal-documents/appeal-documents.types').StagedFile} stagedFile
  * @returns {HTMLElement}
  */
 export const buildStagedFileListItem = (stagedFile) => {

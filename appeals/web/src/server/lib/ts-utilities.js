@@ -8,7 +8,7 @@ export function isDefined(value) {
 }
 
 /** @typedef {import('@pins/appeals.api').Appeals.FolderInfo} FolderInfo */
-/** @typedef {import('@pins/appeals/index.js').FileUploadInfoItem} FileUploadInfoItem */
+/** @typedef {import('#appeals/appeal-documents/appeal-documents.types').FileUploadInfoItem} FileUploadInfoItem */
 
 /**
  * @param {FolderInfo|any|null|undefined} value
