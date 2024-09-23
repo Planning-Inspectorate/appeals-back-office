@@ -137,8 +137,8 @@ resource "azurerm_resource_group_template_deployment" "document_storage_malware_
 ## RBAC for Entra Groups
 # role definitions
 data "azurerm_role_definition" "custom_blob_role" {
-  name     = "Storage Blob Data - Read Write Delete (custom)"
-  provider = azurerm.tooling
+  name  = "Storage Blob Data - Read Write Delete (custom)"
+  scope = data.azurerm_subscription.current.id
 }
 
 # read/write access
