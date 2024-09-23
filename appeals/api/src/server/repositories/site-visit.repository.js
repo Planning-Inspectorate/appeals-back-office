@@ -9,7 +9,7 @@ import { databaseConnector } from '#utils/database-connector.js';
 /**
  * @param {{
  *  appealId: number;
- * 	visitDate?: Date;
+ * 	visitDate?: string;
  * 	visitEndTime?: string;
  * 	visitStartTime?: string;
  * 	siteVisitTypeId?: number;
@@ -24,7 +24,7 @@ const createSiteVisitById = (data) =>
 /**
  * @param {number} id
  * @param {{
- * 	visitDate?: Date;
+ * 	visitDate?: string;
  * 	visitEndTime?: string;
  * 	visitStartTime?: string;
  * 	siteVisitTypeId?: number;

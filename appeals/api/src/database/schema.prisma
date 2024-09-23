@@ -502,8 +502,8 @@ model SiteVisit {
   appealId        Int            @unique
   siteVisitTypeId Int?
   visitDate       DateTime?
-  visitStartTime  String?
-  visitEndTime    String?
+  visitStartTime  DateTime?
+  visitEndTime    DateTime?
   appeal          Appeal         @relation(fields: [appealId], references: [id])
   siteVisitType   SiteVisitType? @relation(fields: [siteVisitTypeId], references: [id])
 }

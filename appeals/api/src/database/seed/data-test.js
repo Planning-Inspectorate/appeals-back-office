@@ -719,13 +719,15 @@ export async function seedTestData(databaseConnector) {
 				[APPEAL_CASE_STATUS.ISSUE_DETERMINATION, APPEAL_CASE_STATUS.COMPLETE].includes(status)
 		);
 
+		const today = new Date();
+
 		if (statusWithSiteVisitSet) {
 			await databaseConnector.siteVisit.create({
 				data: {
 					appealId: id,
-					visitDate: new Date(),
-					visitEndTime: '16:00',
-					visitStartTime: '14:00',
+					visitDate: today,
+					visitEndTime: `${today.toISOString().split('T')[0]}T16:00:00.000Z`,
+					visitStartTime: `${today.toISOString().split('T')[0]}T14:00:00.000Z`,
 					siteVisitTypeId: siteVisitType[pickRandom(siteVisitType)].id
 				}
 			});
