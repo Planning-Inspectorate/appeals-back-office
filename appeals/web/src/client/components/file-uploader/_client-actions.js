@@ -31,6 +31,7 @@ const clientActions = (container) => {
 
 	const { uploadFiles, deleteFiles } = serverActions(container);
 
+	// eslint-disable-next-line no-unused-vars
 	function setupDropzone() {
 		dropZone = document.createElement('div');
 		dropZone.className = 'pins-file-upload__dropzone';
@@ -84,7 +85,6 @@ const clientActions = (container) => {
 		updateUploadButton();
 	}
 
-	setupDropzone();
 	cleanUpUncommittedFiles();
 
 	if (!form || !uploadButton || !uploadInput || !filesRows || !uploadCounter || !submitButton) {
@@ -196,11 +196,15 @@ const clientActions = (container) => {
 	};
 
 	const updateUploadControlsVisibility = () => {
-		if (!dropZone) {
-			return;
+		const displayStyle = allowSingleFileOnly() && globalDataTransfer.files.length > 0 ? 'none' : '';
+
+		if (uploadRow) {
+			uploadRow.style.display = displayStyle;
 		}
 
-		dropZone.hidden = allowSingleFileOnly() && globalDataTransfer.files.length > 0;
+		if (dropZone) {
+			dropZone.style.display = displayStyle;
+		}
 	};
 
 	/**
@@ -223,10 +227,10 @@ const clientActions = (container) => {
 	 */
 	const checkSelectedFile = (selectedFile) => {
 		const allowedMimeTypes = (container.dataset.allowedTypes || '').split(',');
-
 		const filenamesInFolderBase64String = form.dataset.filenamesInFolder || '';
 		const filenamesInFolderString = window.atob(filenamesInFolderBase64String);
-		const filenamesInFolderArray = JSON.parse(filenamesInFolderString);
+		const filenamesInFolderArray =
+			(filenamesInFolderString && JSON.parse(filenamesInFolderString)) || null;
 		const filenamesInFolder = Array.isArray(filenamesInFolderArray) ? filenamesInFolderArray : [];
 
 		if (filenamesInFolder.includes(selectedFile.name)) {

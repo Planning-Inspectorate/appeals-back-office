@@ -2,6 +2,7 @@
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
  */
 import { appealShortReference } from '#lib/appeals-formatter.js';
+import { yesNoInput } from '#lib/page-components/radio.js';
 
 /**
  * @param {Appeal} appealData
@@ -18,27 +19,7 @@ export const changeGreenBeltPage = (appealData, data, origin) => {
 		backLinkUrl: origin,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: `Is the site in a green belt?`,
-		pageComponents: [
-			{
-				type: 'radios',
-				parameters: {
-					name: 'greenBeltRadio',
-					id: 'green-belt-radio',
-					items: [
-						{
-							value: 'yes',
-							text: 'Yes',
-							checked: data
-						},
-						{
-							value: 'no',
-							text: 'No',
-							checked: !data
-						}
-					]
-				}
-			}
-		]
+		pageComponents: [yesNoInput({ name: 'greenBeltRadio', value: data })]
 	};
 	return pageContent;
 };

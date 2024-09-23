@@ -963,7 +963,9 @@ describe('costs', () => {
 
 						expect(unprettifiedElement.innerHTML).toContain('Check your answers</h1>');
 						expect(unprettifiedElement.innerHTML).toContain('Name</dt>');
-						expect(unprettifiedElement.innerHTML).toContain('test-document.txt</dd>');
+						expect(unprettifiedElement.innerHTML).toContain(
+							'<a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-staged/1/test-document.txt" target="_blank">test-document.txt</a></dd>'
+						);
 						expect(unprettifiedElement.innerHTML).toContain('Date received</dt>');
 						expect(unprettifiedElement.innerHTML).toContain(
 							`${dateToDisplayDate(new Date())}</dd>`
@@ -1077,7 +1079,9 @@ describe('costs', () => {
 
 						expect(unprettifiedElement.innerHTML).toContain('Check your answers</h1>');
 						expect(unprettifiedElement.innerHTML).toContain('Name</dt>');
-						expect(unprettifiedElement.innerHTML).toContain('test-document.txt</dd>');
+						expect(unprettifiedElement.innerHTML).toContain(
+							'<a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-staged/1/ph0-documentFileInfo.jpeg/2" target="_blank">test-document.txt</a></dd>'
+						);
 						expect(unprettifiedElement.innerHTML).toContain('Date received</dt>');
 						expect(unprettifiedElement.innerHTML).toContain(
 							`${dateToDisplayDate(new Date())}</dd>`

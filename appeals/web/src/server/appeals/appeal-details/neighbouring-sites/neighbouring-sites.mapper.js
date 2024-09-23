@@ -1,11 +1,8 @@
 import { appealSiteToMultilineAddressStringHtml } from '#lib/address-formatter.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { buildNotificationBanners } from '#lib/mappers/notification-banners.mapper.js';
-import {
-	errorAddressLine1,
-	errorPostcode,
-	errorTown
-} from '#lib/error-handlers/change-screen-error-handlers.js';
+import { addressInputs } from '#lib/page-components/address.js';
+import { yesNoInput } from '#lib/page-components/radio.js';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
@@ -30,79 +27,7 @@ export function addNeighbouringSitePage(appealData, source, origin, currentAddre
 		backLinkUrl: origin,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: `Add neighbouring site ${getFormattedSource(source)}`,
-		pageComponents: [
-			{
-				type: 'input',
-				parameters: {
-					id: 'address-line-1',
-					name: 'addressLine1',
-					type: 'text',
-					label: {
-						isPageHeading: false,
-						text: 'Address line 1'
-					},
-					value: currentAddress?.addressLine1 ?? '',
-					errorMessage: errorAddressLine1(errors)
-				}
-			},
-			{
-				type: 'input',
-				parameters: {
-					id: 'address-line-2',
-					name: 'addressLine2',
-					type: 'text',
-					label: {
-						isPageHeading: false,
-						text: 'Address line 2 (optional)'
-					},
-					value: currentAddress?.addressLine2 ?? ''
-				}
-			},
-			{
-				type: 'input',
-				parameters: {
-					id: 'address-town',
-					name: 'town',
-					type: 'text',
-					classes: 'govuk-input govuk-input--width-20',
-					label: {
-						isPageHeading: false,
-						text: 'Town or city'
-					},
-					value: currentAddress?.town ?? '',
-					errorMessage: errorTown(errors)
-				}
-			},
-			{
-				type: 'input',
-				parameters: {
-					id: 'address-county',
-					name: 'county',
-					type: 'text',
-					classes: 'govuk-input govuk-input--width-20',
-					label: {
-						isPageHeading: false,
-						text: 'County (optional)'
-					},
-					value: currentAddress?.county ?? ''
-				}
-			},
-			{
-				type: 'input',
-				parameters: {
-					id: 'address-postcode',
-					name: 'postCode',
-					type: 'text',
-					classes: 'govuk-input govuk-input--width-10',
-					label: {
-						isPageHeading: false,
-						text: 'Postcode'
-					},
-					value: currentAddress?.postCode ?? '',
-					errorMessage: errorPostcode(errors)
-				}
-			}
-		]
+		pageComponents: addressInputs({ address: currentAddress, errors })
 	};
 
 	return pageContent;
@@ -283,29 +208,10 @@ export function removeNeighbouringSitePage(appealData, origin, siteId) {
 					]
 				}
 			},
-			{
-				type: 'radios',
-				parameters: {
-					name: 'remove-neighbouring-site',
-					fieldset: {
-						legend: {
-							text: 'Do you want to remove this site?',
-							isPageHeading: false,
-							classes: 'govuk-fieldset__legend--m'
-						}
-					},
-					items: [
-						{
-							value: 'yes',
-							text: 'Yes'
-						},
-						{
-							value: 'no',
-							text: 'No'
-						}
-					]
-				}
-			}
+			yesNoInput({
+				name: 'remove-neighbouring-site',
+				legendText: 'Do you want to remove this site?'
+			})
 		]
 	};
 
@@ -322,16 +228,15 @@ export function removeNeighbouringSitePage(appealData, origin, siteId) {
 export function changeNeighbouringSitePage(appealData, neighbouringSiteData, siteId, errors) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
-	let siteAddress;
+	let address;
 	if (appealData.neighbouringSites) {
-		siteAddress =
-			appealData.neighbouringSites[
-				appealData.neighbouringSites.findIndex((site) => site.siteId.toString() === siteId)
-			].address;
+		address = appealData.neighbouringSites.find(
+			(site) => site.siteId.toString() === siteId
+		)?.address;
 	}
 
 	if (neighbouringSiteData) {
-		siteAddress = neighbouringSiteData;
+		address = neighbouringSiteData;
 	}
 
 	/** @type {PageContent} */
@@ -341,79 +246,7 @@ export function changeNeighbouringSitePage(appealData, neighbouringSiteData, sit
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'Change neighbouring site address',
 		headingClasses: 'govuk-heading-l',
-		pageComponents: [
-			{
-				type: 'input',
-				parameters: {
-					id: 'address-line-1',
-					name: 'addressLine1',
-					type: 'text',
-					label: {
-						isPageHeading: false,
-						text: 'Address line 1'
-					},
-					value: siteAddress?.addressLine1 ?? '',
-					errorMessage: errorAddressLine1(errors)
-				}
-			},
-			{
-				type: 'input',
-				parameters: {
-					id: 'address-line-2',
-					name: 'addressLine2',
-					type: 'text',
-					label: {
-						isPageHeading: false,
-						text: 'Address line 2 (optional)'
-					},
-					value: siteAddress?.addressLine2 ?? ''
-				}
-			},
-			{
-				type: 'input',
-				parameters: {
-					id: 'address-town',
-					name: 'town',
-					type: 'text',
-					classes: 'govuk-input govuk-input--width-20',
-					label: {
-						isPageHeading: false,
-						text: 'Town or city'
-					},
-					value: siteAddress?.town ?? '',
-					errorMessage: errorTown(errors)
-				}
-			},
-			{
-				type: 'input',
-				parameters: {
-					id: 'address-county',
-					name: 'county',
-					type: 'text',
-					classes: 'govuk-input govuk-input--width-20',
-					label: {
-						isPageHeading: false,
-						text: 'County (optional)'
-					},
-					value: siteAddress?.county ?? ''
-				}
-			},
-			{
-				type: 'input',
-				parameters: {
-					id: 'address-postcode',
-					name: 'postCode',
-					type: 'text',
-					classes: 'govuk-input govuk-input--width-10',
-					label: {
-						isPageHeading: false,
-						text: 'Postcode'
-					},
-					value: siteAddress?.postCode ?? '',
-					errorMessage: errorPostcode(errors)
-				}
-			}
-		]
+		pageComponents: addressInputs({ address, errors })
 	};
 
 	return pageContent;
@@ -486,25 +319,10 @@ export function changeNeighbouringSiteAffectedPage(appealData, origin) {
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'Could a neighbouring site be affected?',
 		pageComponents: [
-			{
-				type: 'radios',
-				parameters: {
-					name: 'neighbouringSiteAffected',
-					id: 'neighbouring-site-affected',
-					items: [
-						{
-							text: 'Yes',
-							value: 'yes',
-							checked: appealData.isAffectingNeighbouringSites
-						},
-						{
-							text: 'No',
-							value: 'no',
-							checked: !appealData.isAffectingNeighbouringSites
-						}
-					]
-				}
-			}
+			yesNoInput({
+				name: 'neighbouringSiteAffected',
+				value: appealData.isAffectingNeighbouringSites
+			})
 		]
 	};
 

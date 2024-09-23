@@ -4,6 +4,7 @@
  */
 
 import { appealShortReference } from '#lib/appeals-formatter.js';
+import { yesNoInput } from '#lib/page-components/radio.js';
 
 /**
  * @param {Appeal} appealData
@@ -174,30 +175,11 @@ export function removeAffectedListedBuildingPage(
 					]
 				}
 			},
-			{
-				type: 'radios',
-				parameters: {
-					name: 'removeAffectedListedBuilding',
-					id: 'removeAffectedListedBuilding',
-					fieldset: {
-						legend: {
-							text: 'Do you want to remove this listed building?',
-							isPageHeading: false,
-							classes: 'govuk-fieldset__legend--m'
-						}
-					},
-					items: [
-						{
-							value: 'yes',
-							text: 'Yes'
-						},
-						{
-							value: 'no',
-							text: 'No'
-						}
-					]
-				}
-			}
+			yesNoInput({
+				name: 'removeAffectedListedBuilding',
+				id: 'removeAffectedListedBuilding',
+				legendText: 'Do you want to remove this listed building?'
+			})
 		]
 	};
 

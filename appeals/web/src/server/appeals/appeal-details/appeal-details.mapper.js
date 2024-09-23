@@ -28,9 +28,16 @@ export const pageHeading = 'Case details';
  * @param {string} currentRoute
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
  * @param {import('@pins/express/types/express.js').Request} request
+ * @param {boolean} [ipCommentsAwaitingReview]
  * @returns {Promise<PageContent>}
  */
-export async function appealDetailsPage(appealDetails, currentRoute, session, request) {
+export async function appealDetailsPage(
+	appealDetails,
+	currentRoute,
+	session,
+	request,
+	ipCommentsAwaitingReview
+) {
 	const mappedData = await initialiseAndMapAppealData(appealDetails, currentRoute, session);
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);
 
@@ -79,7 +86,12 @@ export async function appealDetailsPage(appealDetails, currentRoute, session, re
 	};
 
 	/** @type {PageComponent} */
-	let appealDetailsAccordion = generateAccordionItems(appealDetails, mappedData, session);
+	let appealDetailsAccordion = generateAccordionItems(
+		appealDetails,
+		mappedData,
+		session,
+		ipCommentsAwaitingReview
+	);
 
 	const notificationBanners = buildNotificationBanners(
 		session,
@@ -243,9 +255,15 @@ export async function appealDetailsPage(appealDetails, currentRoute, session, re
  * @param {import('./appeal-details.types.js').WebAppeal} appealDetails
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
  * @param {PageComponent[]} accordionComponents
+ * @param {boolean} [ipCommentsAwaitingReview]
  * @returns {void}
  */
-function mapStatusDependentNotifications(appealDetails, session, accordionComponents) {
+function mapStatusDependentNotifications(
+	appealDetails,
+	session,
+	accordionComponents,
+	ipCommentsAwaitingReview = false
+) {
 	switch (appealDetails.appealStatus) {
 		case 'assign_case_officer':
 			addNotificationBannerToSession(
@@ -283,6 +301,16 @@ function mapStatusDependentNotifications(appealDetails, session, accordionCompon
 				`<p class="govuk-notification-banner__heading">This appeal is awaiting transfer</p><p class="govuk-body">The appeal must be transferred to Horizon. When this is done, <a class="govuk-link" data-cy="awaiting-transfer" href="/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-type/add-horizon-reference">update the appeal with the new horizon reference</a>.</p>`
 			);
 			removeAccordionComponentsActions(accordionComponents);
+			break;
+		case APPEAL_CASE_STATUS.STATEMENTS:
+			if (ipCommentsAwaitingReview) {
+				addNotificationBannerToSession(
+					session,
+					'interestedPartyCommentsAwaitingReview',
+					appealDetails.appealId,
+					`<p class="govuk-notification-banner__heading">Review comments</p><p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments" data-cy="banner-review-ip-comments">Review</a></p>`
+				);
+			}
 			break;
 		default:
 			break;
@@ -331,15 +359,16 @@ function removeAccordionComponentsActions(accordionComponents) {
  * @param {import('./appeal-details.types.js').WebAppeal} appealDetails
  * @param {{appeal: MappedInstructions}} mappedData
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
+ * @param {boolean} [ipCommentsAwaitingReview]
  * @returns {PageComponent}
  */
-function generateAccordionItems(appealDetails, mappedData, session) {
+function generateAccordionItems(appealDetails, mappedData, session, ipCommentsAwaitingReview) {
 	switch (appealDetails.appealType) {
 		case APPEAL_TYPE.D:
 			return generateHASAccordion(appealDetails, mappedData, session);
 		case APPEAL_TYPE.W:
 			if (isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78)) {
-				return generateHASAccordion(appealDetails, mappedData, session);
+				return generateHASAccordion(appealDetails, mappedData, session, ipCommentsAwaitingReview);
 			} else {
 				throw new Error('Feature flag inactive for S78');
 			}
@@ -353,9 +382,10 @@ function generateAccordionItems(appealDetails, mappedData, session) {
  * @param {import('./appeal-details.types.js').WebAppeal} appealDetails
  * @param {{appeal: MappedInstructions}} mappedData
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
+ * @param {boolean} [ipCommentsAwaitingReview]
  * @returns
  */
-function generateHASAccordion(appealDetails, mappedData, session) {
+function generateHASAccordion(appealDetails, mappedData, session, ipCommentsAwaitingReview) {
 	/** @type {PageComponent} */
 	const caseOverview = {
 		type: 'summary-list',
@@ -502,7 +532,12 @@ function generateHASAccordion(appealDetails, mappedData, session) {
 		caseTeam
 	];
 
-	mapStatusDependentNotifications(appealDetails, session, accordionComponents);
+	mapStatusDependentNotifications(
+		appealDetails,
+		session,
+		accordionComponents,
+		ipCommentsAwaitingReview
+	);
 
 	if (
 		!session.account.idTokenClaims.groups.includes(config.referenceData.appeals.caseOfficerGroupId)
