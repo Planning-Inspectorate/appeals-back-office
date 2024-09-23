@@ -136,7 +136,7 @@ const clientActions = (container) => {
 
 	/**
 	 * @typedef {Object} UploadInfo
-	 * @property {any[]} documents
+	 * @property {import('#appeals/appeal-documents/appeal-documents.types').FileUploadInfoItem[]} documents
 	 * @property {import('./_server-actions.js').AccessToken} [accessToken]
 	 */
 
@@ -216,12 +216,14 @@ const clientActions = (container) => {
 			mimeType: stagedFile.mimeType,
 			documentType: stagedFile.documentType,
 			size: stagedFile.size,
-			stage: stagedFile.stage
+			stage: stagedFile.stage,
+			receivedDate: '',
+			redactionStatus: 0
 		});
 	}
 
 	/**
-	 * @param {any} value
+	 * @param {string} value
 	 * */
 	function updateUploadInfoHiddenField(value) {
 		document
@@ -338,10 +340,6 @@ const clientActions = (container) => {
 		dropZone.hidden = allowSingleFileOnly() && globalDataTransfer.files.length > 0;
 	}
 
-	/**
-	 * Update button text and files counter
-	 *
-	 */
 	function updateUploadButton() {
 		const filesRowsNumber = globalDataTransfer.files.length;
 

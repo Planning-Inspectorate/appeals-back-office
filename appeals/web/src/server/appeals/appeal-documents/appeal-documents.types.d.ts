@@ -31,7 +31,6 @@ export interface DocumentUploadPageParameters {
 export interface FileUploadInfoItem {
 	name: string;
 	GUID: string;
-	fileRowId: string;
 	blobStoreUrl: string;
 	mimeType: string;
 	documentType: string;

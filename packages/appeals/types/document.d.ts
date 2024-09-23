@@ -21,7 +21,6 @@ export interface MappedDocument {
 	mimeType: string;
 	documentSize: number;
 	stage: string;
-	fileRowId: string;
 	folderId: number;
 	GUID: string;
 	receivedDate: string;

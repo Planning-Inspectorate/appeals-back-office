@@ -2,9 +2,19 @@
 
 const CLASSES = {
 	fileRow: 'pins-file-upload__file-row',
+	errorRow: 'error-row',
 	headingSmall: 'govuk-heading-s',
 	visuallyHidden: 'govuk-visually-hidden',
-	removeButton: 'govuk-link pins-file-upload__remove'
+	removeButton: 'govuk-link pins-file-upload__remove',
+	errorMessage: 'govuk-heading-s colour--red',
+	progressMessage: 'govuk-body pins-file-upload__progress'
+};
+
+const SELECTORS = {
+	progressHook: '.progress-hook',
+	uploadButton: '.pins-file-upload__button',
+	dropZone: '.pins-file-upload__dropzone',
+	submitButton: '.pins-file-upload__submit'
 };
 
 /**
@@ -72,7 +82,7 @@ export const buildRegularListItem = (uploadedFile) => {
 	const button = document.createElement('button');
 	button.id = `button-remove-${li.id}`;
 	button.type = 'button';
-	button.className = 'govuk-link pins-file-upload__remove';
+	button.className = CLASSES.removeButton;
 	button.setAttribute('aria-label', `Remove ${uploadedFileName} from list`);
 	button.textContent = 'Remove';
 
@@ -89,11 +99,11 @@ export const buildRegularListItem = (uploadedFile) => {
  */
 export const buildErrorListItem = (error) => {
 	const li = document.createElement('li');
-	li.className = 'pins-file-upload__file-row error-row';
+	li.className = `${CLASSES.fileRow} ${CLASSES.errorRow}`;
 	li.id = error.guid;
 
 	const p = document.createElement('p');
-	p.className = 'govuk-heading-s colour--red';
+	p.className = CLASSES.errorMessage;
 	p.textContent = errorMessage(error.message, error.name);
 
 	li.appendChild(p);
@@ -120,20 +130,20 @@ export function hideProgressMessage(uploadForm) {
  * @param {Element} uploadForm
  */
 const showOrHideProgressMessage = (show, uploadForm) => {
-	const progressHook = uploadForm.querySelector('.progress-hook');
+	const progressHook = uploadForm.querySelector(SELECTORS.progressHook);
 
 	/** @type {HTMLButtonElement | null} */
-	const uploadButton = uploadForm.querySelector('.pins-file-upload__button');
+	const uploadButton = uploadForm.querySelector(SELECTORS.uploadButton);
 
 	/** @type {HTMLElement | null} */
-	const dropZone = uploadForm.querySelector('.pins-file-upload__dropzone');
+	const dropZone = uploadForm.querySelector(SELECTORS.dropZone);
 
 	/** @type {HTMLButtonElement | null} */
-	const submitButton = uploadForm.querySelector('.pins-file-upload__submit');
+	const submitButton = uploadForm.querySelector(SELECTORS.submitButton);
 
 	if (progressHook) {
 		progressHook.innerHTML = show
-			? '<p class="govuk-body pins-file-upload__progress" role="alert">Adding files</p>'
+			? `<p class="${CLASSES.progressMessage}" role="alert">Adding files</p>`
 			: '';
 	}
 	if (uploadButton) {
