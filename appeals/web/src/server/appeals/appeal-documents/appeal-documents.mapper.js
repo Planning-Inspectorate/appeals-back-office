@@ -2,11 +2,10 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 import config from '@pins/appeals.web/environment/config.js';
 import { capitalize } from 'lodash-es';
 import {
-	dayMonthYearToApiDateString,
-	dateToDisplayDate,
-	dateToDisplayTime,
-	apiDateStringToDayMonthYear,
-	apiDateStringToDisplayDate
+	dateISOStringToDayMonthYearHourMinute,
+	dateISOStringToDisplayDate,
+	dateISOStringToDisplayTime24hr,
+	dayMonthYearHourMinuteToISOString
 } from '#lib/dates.js';
 import { kilobyte, megabyte, gigabyte } from '#appeals/appeal.constants.js';
 import { buildNotificationBanners } from '#lib/mappers/notification-banners.mapper.js';
@@ -346,7 +345,7 @@ function mapFileUploadInfoItemToDocumentDetailsPageComponents(
 	index,
 	redactionStatuses
 ) {
-	const receivedDateDayMonthYear = apiDateStringToDayMonthYear(uploadInfoItem.receivedDate);
+	const receivedDateDayMonthYear = dateISOStringToDayMonthYearHourMinute(uploadInfoItem.receivedDate);
 	const bodyItem = bodyItems?.find(
 		(/** @type {{ documentId: string; }} */ item) => item.documentId === uploadInfoItem.GUID
 	);
@@ -469,7 +468,7 @@ function mapFileUploadInfoItemToDocumentDetailsPageComponents(
  * @returns {PageComponent[]}
  */
 function mapDocumentDetailsItemToDocumentDetailsPageComponents(item, redactionStatuses) {
-	const dateReceived = apiDateStringToDayMonthYear(item.dateReceived);
+	const dateReceived = dateISOStringToDayMonthYearHourMinute(item.dateReceived);
 	const bodyRecievedDateDay = dateReceived?.day;
 	const bodyRecievedDateMonth = dateReceived?.month;
 	const bodyRecievedDateYear = dateReceived?.year;
@@ -638,7 +637,7 @@ export function addDocumentsCheckAndConfirmPage(
 								text: 'Date received'
 							},
 							value: {
-								text: apiDateStringToDisplayDate(fileUploadInfo[0].receivedDate)
+								text: dateISOStringToDisplayDate(fileUploadInfo[0].receivedDate)
 							},
 							actions: {
 								items: [
@@ -863,7 +862,7 @@ export function manageFolderPage(
 											},
 											type: 'html',
 											parameters: {
-												html: dateToDisplayDate(document?.latestDocumentVersion?.dateReceived)
+												html: dateISOStringToDisplayDate(document?.latestDocumentVersion?.dateReceived)
 											}
 										},
 										{
@@ -879,7 +878,7 @@ export function manageFolderPage(
 									]
 							  }
 							: {
-									text: dateToDisplayDate(document?.latestDocumentVersion?.dateReceived)
+									text: dateISOStringToDisplayDate(document?.latestDocumentVersion?.dateReceived)
 							  },
 						{
 							text: document?.latestDocumentVersion?.redactionStatus
@@ -1159,7 +1158,7 @@ export async function manageDocumentPage(
 														},
 														type: 'html',
 														parameters: {
-															html: dateToDisplayDate(latestVersion?.dateReceived)
+															html: dateISOStringToDisplayDate(latestVersion?.dateReceived)
 														}
 													},
 													{
@@ -1178,7 +1177,7 @@ export async function manageDocumentPage(
 									]
 							  }
 							: {
-									text: dateToDisplayDate(latestVersion?.dateReceived)
+									text: dateISOStringToDisplayDate(latestVersion?.dateReceived)
 							  },
 					actions: {
 						items: [
@@ -1507,7 +1506,7 @@ const mapDocumentVersionToAuditActivityHtml = async (
 
 				return `<p class="govuk-body"><strong>${
 					matchingAuditItem.action
-				}</strong>: ${dateToDisplayTime(loggedAt)}, ${dateToDisplayDate(loggedAt)}${
+				}</strong>: ${dateISOStringToDisplayTime24hr(loggedAt)}, ${dateISOStringToDisplayDate(loggedAt)}${
 					userName.length > 0 ? `,<br/>by ${userName}` : ''
 				}</p>`;
 			}
@@ -1542,7 +1541,7 @@ export const mapDocumentDetailsFormDataToAPIRequest = (formData, redactionStatus
 	return {
 		documents: formData.items.map((item) => ({
 			id: item.documentId,
-			receivedDate: dayMonthYearToApiDateString({
+			receivedDate: dayMonthYearHourMinuteToISOString({
 				day: parseInt(item.receivedDate.day, 10),
 				month: parseInt(item.receivedDate.month, 10),
 				year: parseInt(item.receivedDate.year, 10)
@@ -1573,7 +1572,7 @@ export const addDocumentDetailsFormDataToFileUploadInfo = (
 				item.receivedDate.month &&
 				item.receivedDate.year
 			) {
-				matchingInfoItem.receivedDate = dayMonthYearToApiDateString({
+				matchingInfoItem.receivedDate = dayMonthYearHourMinuteToISOString({
 					day: parseInt(item.receivedDate.day, 10),
 					month: parseInt(item.receivedDate.month, 10),
 					year: parseInt(item.receivedDate.year, 10)

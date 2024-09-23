@@ -3,10 +3,10 @@ import { inputInstructionIsRadiosInputInstruction } from '#lib/mappers/global-ma
 import { initialiseAndMapAppealData } from '#lib/mappers/appeal.mapper.js';
 import { initialiseAndMapLPAQData } from '#lib/mappers/lpaQuestionnaire.mapper.js';
 import {
-	dayMonthYearToApiDateString,
-	webDateToDisplayDate,
-	apiDateStringToDayMonthYear,
-	apiDateStringToDisplayDate
+	dayMonthYearHourMinuteToISOString,
+	dayMonthYearHourMinuteToDisplayDate,
+	dateISOStringToDayMonthYearHourMinute,
+	dateISOStringToDisplayDate
 } from '#lib/dates.js';
 import {
 	mapReasonOptionsToCheckboxItemParameters,
@@ -26,7 +26,7 @@ import { APPEAL_CASE_STATUS } from 'pins-data-model';
 /**
  * @typedef {import('@pins/appeals.api').Appeals.SingleLPAQuestionnaireResponse} LPAQuestionnaire
  * @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} Appeal
- * @typedef {import('../../appeals.types.js').DayMonthYear} DayMonthYear
+ * @typedef {import('../../appeals.types.js').DayMonthYearHourMinute} DayMonthYearHourMinute
  * @typedef {import('./lpa-questionnaire.types.js').LPAQuestionnaireValidationOutcome} LPAQuestionnaireValidationOutcome
  * @typedef {import('@pins/appeals.api').Appeals.IncompleteInvalidReasonsResponse} IncompleteInvalidReasonResponse
  * @typedef {import('@pins/appeals.api').Appeals.NotValidReasonOption} NotValidReasonOption
@@ -226,11 +226,11 @@ export function updateDueDatePage(
 		dueDateYear === undefined &&
 		appealData.documentationSummary.lpaQuestionnaire?.dueDate
 	) {
-		existingDueDateDayMonthYear = apiDateStringToDayMonthYear(
+		existingDueDateDayMonthYear = dateISOStringToDayMonthYearHourMinute(
 			appealData.documentationSummary.lpaQuestionnaire?.dueDate
 		);
 	} else {
-		/** @type {DayMonthYear} */
+		/** @type {DayMonthYearHourMinute} */
 		existingDueDateDayMonthYear = {
 			day: dueDateDay,
 			month: dueDateMonth,
@@ -285,7 +285,7 @@ export function updateDueDatePage(
 		pageContent.pageComponents?.push({
 			type: 'inset-text',
 			parameters: {
-				text: `The current due date for the LPA questionnaire is ${webDateToDisplayDate({
+				text: `The current due date for the LPA questionnaire is ${dayMonthYearHourMinuteToDisplayDate({
 					day: existingDueDateDayMonthYear.day || 0,
 					month: existingDueDateDayMonthYear.month || 0,
 					year: existingDueDateDayMonthYear.year || 0
@@ -307,7 +307,7 @@ export function updateDueDatePage(
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
  * @param {string|string[]} [incompleteReasons]
  * @param {Object<string, string[]>} [incompleteReasonsText]
- * @param {DayMonthYear} [updatedDueDate]
+ * @param {DayMonthYearHourMinute} [updatedDueDate]
  * @returns {PageContent}
  */
 export function checkAndConfirmPage(
@@ -376,7 +376,7 @@ export function checkAndConfirmPage(
 				text: 'Updated due date'
 			},
 			value: {
-				text: webDateToDisplayDate(updatedDueDate)
+				text: dayMonthYearHourMinuteToDisplayDate(updatedDueDate)
 			},
 			actions: {
 				items: [
@@ -479,7 +479,7 @@ function mapNotificationBannerComponentParameters(session, lpaqData, appealId, l
 								text: 'Due date'
 							},
 							value: {
-								text: apiDateStringToDisplayDate(lpaqDueDate)
+								text: dateISOStringToDisplayDate(lpaqDueDate)
 							}
 						}
 					]
@@ -551,7 +551,7 @@ export function mapIncompleteReasonOptionsToCheckboxItemParameters(
  * @param {LPAQuestionnaireValidationOutcome} validationOutcome
  * @param {string|string[]} [incompleteReasons]
  * @param {Object<string, string[]>} [incompleteReasonsText]
- * @param {DayMonthYear} [updatedDueDate]
+ * @param {DayMonthYearHourMinute} [updatedDueDate]
  * @returns {import('./lpa-questionnaire.types.js').LPAQuestionnaireValidationOutcomeRequest}
  */
 export function mapWebValidationOutcomeToApiValidationOutcome(
@@ -586,7 +586,7 @@ export function mapWebValidationOutcomeToApiValidationOutcome(
 				}))
 			}),
 		...(updatedDueDate && {
-			lpaQuestionnaireDueDate: dayMonthYearToApiDateString(updatedDueDate)
+			lpaQuestionnaireDueDate: dayMonthYearHourMinuteToISOString(updatedDueDate)
 		})
 	};
 }

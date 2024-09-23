@@ -1,4 +1,4 @@
-import { dayMonthYearToApiDateString } from '#lib/dates.js';
+import { dayMonthYearHourMinuteToISOString } from '#lib/dates.js';
 import logger from '#lib/logger.js';
 import { updateValidDatePage } from './outcome-valid.mapper.js';
 import * as outcomeValidService from './outcome-valid.service.js';
@@ -51,7 +51,7 @@ export const postValidDate = async (request, response) => {
 			request.apiClient,
 			appealId,
 			appellantCaseId,
-			dayMonthYearToApiDateString({
+			dayMonthYearHourMinuteToISOString({
 				day: updatedValidDateDay,
 				month: updatedValidDateMonth,
 				year: updatedValidDateYear

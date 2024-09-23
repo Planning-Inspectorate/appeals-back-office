@@ -1,4 +1,4 @@
-import { dateToDisplayDate, dayMonthYearToApiDateString, dateToDayMonthYear } from '#lib/dates.js';
+import { dateISOStringToDisplayDate, dayMonthYearHourMinuteToISOString } from '#lib/dates.js';
 import logger from '#lib/logger.js';
 import {
 	startCasePage,
@@ -7,6 +7,7 @@ import {
 	changeDateConfirmationPage
 } from './start-case.mapper.js';
 import * as startCaseService from './start-case.service.js';
+import { getTodaysISOString } from '#lib/dates.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getStartDate = async (request, response) => {
@@ -26,7 +27,7 @@ const renderStartDatePage = async (request, response) => {
 	}
 
 	const now = new Date();
-	const today = dateToDisplayDate(now);
+	const today = dateISOStringToDisplayDate(now);
 
 	const mappedPageContent = startCasePage(appealId, appealReference, today);
 
@@ -47,7 +48,7 @@ export const postStartDate = async (request, response) => {
 			year: today.getFullYear()
 		};
 
-		const todayApiDateString = dayMonthYearToApiDateString(todayDayMonthYear);
+		const todayApiDateString = dayMonthYearHourMinuteToISOString(todayDayMonthYear);
 
 		await startCaseService.setStartDate(request.apiClient, appealId, todayApiDateString);
 
@@ -94,7 +95,7 @@ const renderChangeDatePage = async (request, response) => {
 	}
 
 	const now = new Date();
-	const today = dateToDisplayDate(now);
+	const today = dateISOStringToDisplayDate(now);
 
 	const mappedPageContent = changeDatePage(appealId, appealReference, today);
 
@@ -112,12 +113,7 @@ export const postChangeDate = async (request, response) => {
 			return response.render('app/500.njk');
 		}
 
-		const today = new Date();
-		const todayDayMonthYear = dateToDayMonthYear(today);
-
-		const todayApiDateString = dayMonthYearToApiDateString(todayDayMonthYear);
-
-		await startCaseService.setStartDate(request.apiClient, appealId, todayApiDateString);
+		await startCaseService.setStartDate(request.apiClient, appealId, getTodaysISOString());
 
 		return response.redirect(
 			`/appeals-service/appeal-details/${appealId}/start-case/change/confirmation`

@@ -28,7 +28,7 @@ import { textInputCharacterLimits } from '../../../appeal.constants.js';
 import usersService from '#appeals/appeal-users/users-service.js';
 import { cloneDeep } from 'lodash-es';
 import { addDays } from 'date-fns';
-import { dateToDisplayDate } from '#lib/dates.js';
+import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { APPEAL_VIRUS_CHECK_STATUS, APPEAL_CASE_STATUS } from 'pins-data-model';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
@@ -2514,7 +2514,7 @@ describe('LPA Questionnaire review', () => {
 				'<a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-staged/1/test-document.txt" target="_blank">test-document.txt</a></dd>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Date received</dt>');
-			expect(unprettifiedElement.innerHTML).toContain(`${dateToDisplayDate(new Date())}</dd>`);
+			expect(unprettifiedElement.innerHTML).toContain(`${dateISOStringToDisplayDate(new Date())}</dd>`);
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</dt>');
 			expect(unprettifiedElement.innerHTML).toContain('Unredacted</dd>');
 			expect(unprettifiedElement.innerHTML).toContain(
@@ -2629,7 +2629,7 @@ describe('LPA Questionnaire review', () => {
 				'<a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-staged/1/ph0-documentFileInfo.jpeg/2" target="_blank">test-document.txt</a></dd>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Date received</dt>');
-			expect(unprettifiedElement.innerHTML).toContain(`${dateToDisplayDate(new Date())}</dd>`);
+			expect(unprettifiedElement.innerHTML).toContain(`${dateISOStringToDisplayDate(new Date())}</dd>`);
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</dt>');
 			expect(unprettifiedElement.innerHTML).toContain('Unredacted</dd>');
 			expect(unprettifiedElement.innerHTML).toContain(

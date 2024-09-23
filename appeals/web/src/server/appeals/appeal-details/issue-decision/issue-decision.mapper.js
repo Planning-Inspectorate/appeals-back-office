@@ -1,7 +1,7 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
-import { dateToDisplayDate } from '#lib/dates.js';
+import { dateISOStringToDisplayDate } from '#lib/dates.js';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
@@ -203,7 +203,7 @@ export function checkAndConfirmPage(request, appealData, session) {
 						text: 'Decision date'
 					},
 					value: {
-						text: dateToDisplayDate(letterDate)
+						text: dateISOStringToDisplayDate(letterDate)
 					},
 					actions: {
 						items: [

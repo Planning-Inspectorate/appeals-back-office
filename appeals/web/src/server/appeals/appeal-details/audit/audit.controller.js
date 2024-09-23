@@ -1,5 +1,5 @@
 import { getAppealAudit, mapUser, mapMessageContent } from './audit.service.js';
-import { dateToDisplayDate, dateToDisplayTime } from '#lib/dates.js';
+import { dateISOStringToDisplayDate, dateISOStringToDisplayTime24hr } from '#lib/dates.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 /**
  *
@@ -17,8 +17,8 @@ export const renderAudit = async (request, response) => {
 				const details = await mapMessageContent(appeal, audit.details, audit.doc, request.session);
 				const loggedDate = new Date(audit.loggedDate);
 				return {
-					date: dateToDisplayDate(loggedDate),
-					time: dateToDisplayTime(loggedDate),
+					date: dateISOStringToDisplayDate(loggedDate),
+					time: dateISOStringToDisplayTime24hr(loggedDate),
 					details,
 					user: await mapUser(audit.azureAdUserId, request.session)
 				};

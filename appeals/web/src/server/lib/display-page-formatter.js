@@ -4,7 +4,7 @@ import { buildHtmSpan } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { appealShortReference } from './nunjucks-filters/appeals.js';
 import { mapDocumentInfoVirusCheckStatus } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
-import { apiDateStringToDayMonthYear, dateIsInThePast } from '#lib/dates.js';
+import { dateISOStringToDayMonthYearHourMinute, dateIsInThePast } from '#lib/dates.js';
 import { appealSiteToMultilineAddressStringHtml } from './address-formatter.js';
 import { isFolderInfo } from '#lib/ts-utilities.js';
 import { mapActionComponent } from '#lib/mappers/component-permissions.mapper.js';
@@ -303,13 +303,13 @@ export function mapDocumentStatus(status, dueDate) {
 			return 'Invalid';
 		case 'incomplete':
 			if (dueDate) {
-				const parsedDueDate = apiDateStringToDayMonthYear(dueDate);
+				const parsedDueDate = dateISOStringToDayMonthYearHourMinute(dueDate);
 				if (
 					parsedDueDate &&
 					parsedDueDate.year &&
 					parsedDueDate.month &&
 					parsedDueDate.day &&
-					dateIsInThePast(parsedDueDate.year, parsedDueDate.month, parsedDueDate.day)
+					dateIsInThePast({year: parsedDueDate.year, month: parsedDueDate.month, day: parsedDueDate.day})
 				) {
 					return 'Overdue';
 				}

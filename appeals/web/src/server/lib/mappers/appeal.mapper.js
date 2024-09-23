@@ -1,12 +1,12 @@
 import { convertFromBooleanToYesNo } from '../boolean-formatter.js';
 import { appealSiteToAddressString } from '#lib/address-formatter.js';
-import { dateToDisplayDate } from '#lib/dates.js';
+import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
 import usersService from '../../appeals/appeal-users/users-service.js';
 import config from '#environment/config.js';
 import { surnameFirstToFullName } from '#lib/person-name-formatter.js';
 import { dateAndTimeFormatter } from './global-mapper-formatter.js';
-import { convert24hTo12hTimeStringFormat } from '#lib/times.js';
+import { dateISOStringToDisplayTime12hr } from '#lib/dates.js';
 import { linkedAppealStatus } from '#lib/appeals-formatter.js';
 import { generateIssueDecisionUrl } from '#appeals/appeal-details/issue-decision/issue-decision.mapper.js';
 import { mapActionComponent } from './component-permissions.mapper.js';
@@ -707,7 +707,7 @@ export async function initialiseAndMapAppealData(
 					text: 'Valid date'
 				},
 				value: {
-					html: dateToDisplayDate(appealDetails.validAt) || ''
+					html: dateISOStringToDisplayDate(appealDetails.validAt) || ''
 				},
 				actions: {
 					items: [
@@ -759,7 +759,7 @@ export async function initialiseAndMapAppealData(
 				value: {
 					html: appealDetails.validAt
 						? appealDetails.startedAt
-							? dateToDisplayDate(appealDetails.startedAt) || ''
+							? dateISOStringToDisplayDate(appealDetails.startedAt) || ''
 							: 'Not added'
 						: ''
 				},
@@ -781,7 +781,7 @@ export async function initialiseAndMapAppealData(
 				},
 				value: {
 					html:
-						dateToDisplayDate(appealDetails.appealTimetable?.lpaQuestionnaireDueDate) ||
+						dateISOStringToDisplayDate(appealDetails.appealTimetable?.lpaQuestionnaireDueDate) ||
 						'Due date not yet set'
 				},
 				actions: {
@@ -809,7 +809,7 @@ export async function initialiseAndMapAppealData(
 				},
 				value: {
 					html:
-						dateToDisplayDate(appealDetails.appealTimetable?.statementReviewDate) ||
+						dateISOStringToDisplayDate(appealDetails.appealTimetable?.statementReviewDate) ||
 						'Due date not yet set'
 				},
 				actions: {
@@ -837,7 +837,7 @@ export async function initialiseAndMapAppealData(
 				},
 				value: {
 					html:
-						dateToDisplayDate(appealDetails.appealTimetable?.finalCommentReviewDate) ||
+						dateISOStringToDisplayDate(appealDetails.appealTimetable?.finalCommentReviewDate) ||
 						'Due date not yet set'
 				},
 				actions: {
@@ -866,9 +866,9 @@ export async function initialiseAndMapAppealData(
 				value: {
 					html:
 						dateAndTimeFormatter(
-							dateToDisplayDate(appealDetails.siteVisit?.visitDate),
-							convert24hTo12hTimeStringFormat(appealDetails.siteVisit?.visitStartTime),
-							convert24hTo12hTimeStringFormat(appealDetails.siteVisit?.visitEndTime)
+							dateISOStringToDisplayDate(appealDetails.siteVisit?.visitDate),
+							dateISOStringToDisplayTime12hr(appealDetails.siteVisit?.visitStartTime),
+							dateISOStringToDisplayTime12hr(appealDetails.siteVisit?.visitEndTime)
 						) || 'Visit date not yet set'
 				},
 				actions: {
@@ -1136,7 +1136,7 @@ export async function initialiseAndMapAppealData(
 					)
 				},
 				{
-					text: dateToDisplayDate(appealDetails?.documentationSummary?.appellantCase?.receivedAt)
+					text: dateISOStringToDisplayDate(appealDetails?.documentationSummary?.appellantCase?.receivedAt)
 				},
 				{
 					html:
@@ -1162,7 +1162,7 @@ export async function initialiseAndMapAppealData(
 					)
 				},
 				{
-					text: dateToDisplayDate(appealDetails?.documentationSummary?.lpaQuestionnaire?.receivedAt)
+					text: dateISOStringToDisplayDate(appealDetails?.documentationSummary?.lpaQuestionnaire?.receivedAt)
 				},
 				{
 					html:
@@ -1444,7 +1444,7 @@ export async function initialiseAndMapAppealData(
 				},
 				value: {
 					html:
-						dateToDisplayDate(appealDetails.appealTimetable?.issueDeterminationDate) ||
+						dateISOStringToDisplayDate(appealDetails.appealTimetable?.issueDeterminationDate) ||
 						'Due date not yet set'
 				},
 				actions: {
@@ -1475,7 +1475,7 @@ export async function initialiseAndMapAppealData(
 				},
 				value: {
 					html:
-						dateToDisplayDate(appealDetails.appealTimetable?.completeDate) || 'Due date not yet set'
+						dateISOStringToDisplayDate(appealDetails.appealTimetable?.completeDate) || 'Due date not yet set'
 				},
 				actions: {
 					items: [

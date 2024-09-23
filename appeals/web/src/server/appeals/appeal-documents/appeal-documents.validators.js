@@ -49,7 +49,7 @@ export const validateDocumentDetailsReceivedDateValid = createValidator(
 				const monthNumber = Number.parseInt(month, 10);
 				const yearNumber = Number.parseInt(year, 10);
 
-				if (!dateIsValid(yearNumber, monthNumber, dayNumber)) {
+				if (!dateIsValid({day: dayNumber, month: monthNumber, year: yearNumber})) {
 					return false;
 				}
 			}

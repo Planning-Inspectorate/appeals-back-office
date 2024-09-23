@@ -2,7 +2,7 @@ import config from '#environment/config.js';
 import { removeSummaryListActions } from '#lib/mappers/mapper-utilities.js';
 import { appealShortReference, linkedAppealStatus } from '#lib/appeals-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
-import { dateToDisplayDate } from '#lib/dates.js';
+import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
 import * as authSession from '../../app/auth/auth-session.service.js';
 import { appealStatusToStatusTag } from '#lib/nunjucks-filters/status-tag.js';
@@ -166,7 +166,7 @@ export function personalListPage(
 						)
 					},
 					{
-						text: dateToDisplayDate(appeal.dueDate) || ''
+						text: dateISOStringToDisplayDate(appeal.dueDate) || ''
 					},
 					{
 						html: '',

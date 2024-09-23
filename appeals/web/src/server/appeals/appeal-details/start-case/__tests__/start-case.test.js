@@ -3,7 +3,7 @@ import nock from 'nock';
 import supertest from 'supertest';
 import { createTestEnvironment } from '#testing/index.js';
 import { appealData } from '#testing/appeals/appeals.js';
-import { dateToDisplayDate } from '#lib/dates.js';
+import { dateISOStringToDisplayDate } from '#lib/dates.js';
 
 const { app, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -28,7 +28,7 @@ describe('start-case', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain(
-				`Warning</span> Confirming will activate the timetable on ${dateToDisplayDate(
+				`Warning</span> Confirming will activate the timetable on ${dateISOStringToDisplayDate(
 					Date.now()
 				)}. Start letters will be sent to the relevant parties.`
 			);
@@ -80,7 +80,7 @@ describe('start-case', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain(
-				`Warning</span> Confirming will change the start day to ${dateToDisplayDate(
+				`Warning</span> Confirming will change the start day to ${dateISOStringToDisplayDate(
 					Date.now()
 				)} and update the case timetable. New start letters will be sent to relevant parties.</strong>`
 			);

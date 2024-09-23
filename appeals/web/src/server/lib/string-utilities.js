@@ -23,3 +23,12 @@ export const capitalizeFirstLetter = (str) => {
 		return '';
 	}
 };
+
+/**
+ * Pad a number with leading zeros
+ *
+ * @param {number | string} num
+ * @params {number} [length]
+ * @returns {string}
+ */
+export const padNumberWithZero = (num, length = 2) => num.toString().padStart(length, '0');

@@ -1,4 +1,3 @@
-import { formatInTimeZone } from 'date-fns-tz';
 import { postWithdrawalRequest } from './withdrawal.service.js';
 import logger from '#lib/logger.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
@@ -18,7 +17,7 @@ import {
 	withdrawalDocumentRedactionStatusPage
 } from './withdrawal.mapper.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
-import { dateToDayMonthYear, timeZone } from '#lib/dates.js';
+import { dayMonthYearHourMinuteToISOString, dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getViewWithdrawalDocumentFolder = async (request, response) => {
@@ -133,7 +132,7 @@ export const postDateWithdrawalRequest = async (request, response) => {
 			return renderDateWithdrawalRequest(request, response);
 		}
 
-		const withdrawalRequestDate = new Date(year, month - 1, day);
+		const withdrawalRequestDate = dayMonthYearHourMinuteToISOString({day, month, year});
 
 		/** @type {import('./withdrawal.types.js').WithdrawalRequest} */
 		request.session.withdrawal = {
@@ -178,8 +177,7 @@ const renderDateWithdrawalRequest = async (request, response) => {
 
 	if (!withdrawalRequestDay || !withdrawalRequestMonth || !withdrawalRequestYear) {
 		if (request.session.withdrawal?.withdrawalRequestDate) {
-			const withdrawalRequestDate = new Date(request.session.withdrawal.withdrawalRequestDate);
-			const { day, month, year } = dateToDayMonthYear(withdrawalRequestDate);
+			const { day, month, year } = dateISOStringToDayMonthYearHourMinute(request.session.withdrawal.withdrawalRequestDate);
 
 			withdrawalRequestDay = day;
 			withdrawalRequestMonth = month;
@@ -311,8 +309,6 @@ export const postCheckYourAnswers = async (request, response) => {
 		}
 
 		const { documentId, redactionStatus } = request.session.withdrawal;
-		const withdrawalRequestDate = new Date(request.session.withdrawal.withdrawalRequestDate);
-		const formattedDate = formatInTimeZone(withdrawalRequestDate, timeZone, 'yyyy-MM-dd');
 
 		const redactionStatuses = await getDocumentRedactionStatuses(apiClient);
 
@@ -324,7 +320,7 @@ export const postCheckYourAnswers = async (request, response) => {
 
 		await postUploadDocumentsCheckAndConfirm(request, response);
 
-		await postWithdrawalRequest(request.apiClient, appealId, formattedDate);
+		await postWithdrawalRequest(request.apiClient, appealId, request.session.withdrawal.withdrawalRequestDate);
 
 		return response.redirect(`/appeals-service/appeal-details/${appealId}/withdrawal/confirmation`);
 	} catch (error) {
@@ -343,12 +339,12 @@ export const renderCheckYourAnswers = async (request, response) => {
 	if (!currentAppeal || currentAppeal.appealStatus === APPEAL_CASE_STATUS.WITHDRAWN) {
 		return response.status(404).render('app/404');
 	}
-
+	console.log(session.fileUploadInfo);
 	if (!objectContainsAllKeys(session, ['fileUploadInfo', 'withdrawal'])) {
 		return response.status(500).render('app/500.njk');
 	}
 
-	const mappedPageContent = checkAndConfirmPage(request, currentAppeal, request.session);
+	const mappedPageContent = checkAndConfirmPage(currentAppeal, request.session);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,

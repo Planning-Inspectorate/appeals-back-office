@@ -6,16 +6,16 @@ import {
 	dateIsTodayOrInThePast,
 	dateIsValid,
 	isDateInstance,
-	dayMonthYearToApiDateString,
-	webDateToDisplayDate,
-	apiDateStringToDayMonthYear,
+	dayMonthYearHourMinuteToISOString,
+	dayMonthYearHourMinuteToDisplayDate,
+	dateISOStringToDayMonthYearHourMinute,
 	dateToUTCDateWithoutTime,
-	dateToDisplayDate,
+	dateISOStringToDisplayDate,
 	hourMinuteToApiDateString,
-	dateToDisplayTime
+	dateISOStringToDisplayTime24hr,
+	dateISOStringToDisplayTime12hr
 } from '../dates.js';
 import { appealShortReference } from '../nunjucks-filters/appeals.js';
-import { datestamp, displayDate } from '../nunjucks-filters/date.js';
 import { nameToString } from '../person-name-formatter.js';
 import { objectContainsAllKeys } from '../object-utilities.js';
 import { getIdByNameFromIdNamePairs } from '../id-name-pairs.js';
@@ -32,7 +32,6 @@ import {
 } from '../mappers/validation-outcome-reasons.mapper.js';
 import {
 	timeIsBeforeTime,
-	convert24hTo12hTimeStringFormat,
 	is24HourTimeValid
 } from '#lib/times.js';
 import { appellantCaseInvalidReasons, baseSession } from '#testing/app/fixtures/referencedata.js';
@@ -260,9 +259,9 @@ describe('Libraries', () => {
 			});
 		});
 
-		describe('dayMonthYearToApiDateString', () => {
-			it('should return the correct date as a string in the format YYYY-MM-DD when provided a DayMonthYear with single-digit day and month values', () => {
-				const convertedDate = dayMonthYearToApiDateString({
+		describe('dayMonthYearHourMinuteToISOString', () => {
+			it('should return the correct date as a string in the format YYYY-MM-DD when provided a DayMonthYearHourMinute with single-digit day and month values', () => {
+				const convertedDate = dayMonthYearHourMinuteToISOString({
 					day: 1,
 					month: 2,
 					year: 2023
@@ -271,8 +270,8 @@ describe('Libraries', () => {
 				expect(convertedDate).toBe('2023-02-01');
 			});
 
-			it('should return the correct date as a string in the format YYYY-MM-DD when provided a DayMonthYear with double-digit day and month values', () => {
-				const convertedDate = dayMonthYearToApiDateString({
+			it('should return the correct date as a string in the format YYYY-MM-DD when provided a DayMonthYearHourMinute with double-digit day and month values', () => {
+				const convertedDate = dayMonthYearHourMinuteToISOString({
 					day: 10,
 					month: 10,
 					year: 2023
@@ -282,9 +281,9 @@ describe('Libraries', () => {
 			});
 		});
 
-		describe('webDateToDisplayDate', () => {
-			it('should return the correct date as a string in the format of "1 January 2024" when provided a DayMonthYear with single-digit day and month values', () => {
-				const convertedDate = webDateToDisplayDate({
+		describe('dayMonthYearHourMinuteToDisplayDate', () => {
+			it('should return the correct date as a string in the format of "1 January 2024" when provided a DayMonthYearHourMinute with single-digit day and month values', () => {
+				const convertedDate = dayMonthYearHourMinuteToDisplayDate({
 					day: 1,
 					month: 1,
 					year: 2024
@@ -292,8 +291,8 @@ describe('Libraries', () => {
 
 				expect(convertedDate).toBe('1 January 2024');
 			});
-			it('should return the correct date as a string in the format of "1 January 2024" when provided a DayMonthYear with single-digit day and month values and condensed is true', () => {
-				const convertedDate = webDateToDisplayDate({
+			it('should return the correct date as a string in the format of "1 January 2024" when provided a DayMonthYearHourMinute with single-digit day and month values and condensed is true', () => {
+				const convertedDate = dayMonthYearHourMinuteToDisplayDate({
 					day: 1,
 					month: 1,
 					year: 2024
@@ -303,27 +302,27 @@ describe('Libraries', () => {
 			});
 		});
 
-		describe('apiDateStringToDayMonthYear', () => {
+		describe('dateISOStringToDayMonthYearHourMinute', () => {
 			it('should return undefined when the provided date string is null', () => {
-				const convertedDate = apiDateStringToDayMonthYear(null);
+				const convertedDate = dateISOStringToDayMonthYearHourMinute(null);
 
 				expect(convertedDate).toBeUndefined();
 			});
 
 			it('should return undefined when the provided date string is undefined', () => {
-				const convertedDate = apiDateStringToDayMonthYear(undefined);
+				const convertedDate = dateISOStringToDayMonthYearHourMinute(undefined);
 
 				expect(convertedDate).toBeUndefined();
 			});
 
 			it('should return undefined when provided an invalid date string', () => {
-				const convertedDate = apiDateStringToDayMonthYear('abc123');
+				const convertedDate = dateISOStringToDayMonthYearHourMinute('abc123');
 
 				expect(convertedDate).toBeUndefined();
 			});
 
-			it('should return the correct date as a DayMonthYear object when provided a valid date string', () => {
-				const convertedDate = apiDateStringToDayMonthYear('2024-02-02T13:24:10.359Z');
+			it('should return the correct date as a DayMonthYearHourMinute object when provided a valid date string', () => {
+				const convertedDate = dateISOStringToDayMonthYearHourMinute('2024-02-02T13:24:10.359Z');
 
 				expect(convertedDate).toEqual({
 					day: 2,
@@ -333,7 +332,7 @@ describe('Libraries', () => {
 			});
 
 			it('should handle invalid dates gracefully', () => {
-				expect(apiDateStringToDayMonthYear('invalid-date')).toBeUndefined();
+				expect(dateISOStringToDayMonthYearHourMinute('invalid-date')).toBeUndefined();
 			});
 		});
 
@@ -357,112 +356,63 @@ describe('Libraries', () => {
 			});
 		});
 
-		describe('dateToDisplayDate', () => {
+		describe('dateISOStringToDisplayDate', () => {
 			it('returns an empty string for null input', () => {
-				expect(dateToDisplayDate(null)).toBe('');
+				expect(dateISOStringToDisplayDate(null)).toBe('');
 			});
 
 			it('returns an empty string for undefined input', () => {
-				expect(dateToDisplayDate(undefined)).toBe('');
+				expect(dateISOStringToDisplayDate(undefined)).toBe('');
 			});
 
 			it('formats a Date object correctly with default options', () => {
 				const date = new Date('2024-01-01T12:00:00Z');
-				expect(dateToDisplayDate(date)).toBe('1 January 2024');
+				expect(dateISOStringToDisplayDate(date)).toBe('1 January 2024');
 			});
 
 			it('formats a Date object correctly with default options, in BST', () => {
 				// 1st July 23:00 UTC is 2nd July 00:00 Europe/London
 				const date = new Date('2024-07-01T23:00:00Z');
-				expect(dateToDisplayDate(date)).toBe('2 July 2024');
+				expect(dateISOStringToDisplayDate(date)).toBe('2 July 2024');
 			});
 
 			it('formats a Date object correctly with condensed = true', () => {
 				const date = new Date('2024-01-01T12:00:00Z');
-				expect(dateToDisplayDate(date, { condensed: true })).toBe('1 Jan 2024');
-			});
-
-			it('formats a string date correctly with default options', () => {
-				const dateString = '2024-01-01T12:00:00Z';
-				expect(dateToDisplayDate(dateString)).toBe('1 January 2024');
-			});
-
-			it('formats a string date correctly with condensed = true', () => {
-				const dateString = '2024-01-01T12:00:00Z';
-				expect(dateToDisplayDate(dateString, { condensed: true })).toBe('1 Jan 2024');
+				expect(dateISOStringToDisplayDate(date, { condensed: true })).toBe('1 Jan 2024');
 			});
 
 			it('formats a timestamp correctly with default options', () => {
 				const timestamp = new Date('2024-01-01T12:00:00Z').getTime();
-				expect(dateToDisplayDate(timestamp)).toBe('1 January 2024');
+				expect(dateISOStringToDisplayDate(timestamp)).toBe('1 January 2024');
 			});
 
 			it('formats a timestamp correctly with condensed = true', () => {
 				const timestamp = new Date('2024-01-01T12:00:00Z').getTime();
-				expect(dateToDisplayDate(timestamp, { condensed: true })).toBe('1 Jan 2024');
+				expect(dateISOStringToDisplayDate(timestamp, { condensed: true })).toBe('1 Jan 2024');
 			});
 		});
 
-		describe('dateToDisplayTime', () => {
+		describe('dateISOStringToDisplayTime24hr', () => {
 			it('formats a Date object into a HH:MM string', () => {
 				const date = new Date('2024-01-01T13:09:00Z');
-				expect(dateToDisplayTime(date)).toBe('13:09');
+				expect(dateISOStringToDisplayTime24hr(date)).toBe('13:09');
 			});
 			it('formats a Date object into a HH:MM string, in BST', () => {
 				const date = new Date('2024-07-01T13:09:00Z');
-				expect(dateToDisplayTime(date)).toBe('14:09');
+				expect(dateISOStringToDisplayTime24hr(date)).toBe('14:09');
 			});
 
 			it('pads single digit hours and minutes with zeros', () => {
 				const earlyMorning = new Date('2024-01-01T01:05:00Z');
-				expect(dateToDisplayTime(earlyMorning)).toBe('01:05');
+				expect(dateISOStringToDisplayTime24hr(earlyMorning)).toBe('01:05');
 			});
 
 			it('returns an empty string for undefined or null dates', () => {
-				expect(dateToDisplayTime(undefined)).toBe('');
-				expect(dateToDisplayTime(null)).toBe('');
+				expect(dateISOStringToDisplayTime24hr(undefined)).toBe('');
+				expect(dateISOStringToDisplayTime24hr(null)).toBe('');
 			});
 		});
 
-		describe('datestamp', () => {
-			it('should return BST date if date between March-October', () => {
-				// 05/02/2023 @ 8:54am
-				const unixTimestamp = '1683017640';
-				const options = { format: 'yyyy-MM-dd HH:mm:ss zzz' };
-
-				const gmtDate = datestamp(unixTimestamp, options);
-
-				expect(gmtDate).toEqual('2023-05-02 09:54:00 BST');
-			});
-
-			it('should return GMT date if date between November-February', () => {
-				// 12/02/2023 @ 8:54am
-				const unixTimestamp = '1701507240';
-				const options = { format: 'yyyy-MM-dd HH:mm:ss zzz' };
-
-				const gmtDate = datestamp(unixTimestamp, options);
-
-				expect(gmtDate).toEqual('2023-12-02 08:54:00 GMT');
-			});
-		});
-
-		describe('displayDate', () => {
-			it('should return BST date if between last Sunday in March and last Sunday of October', () => {
-				const date = '2023-03-26T23:00:00+00:00';
-
-				const gmtDate = displayDate(date);
-
-				expect(gmtDate).toEqual('27 March 2023');
-			});
-
-			it('should return GMT date if not if between last Sunday in March and last Sunday of October', () => {
-				const date = '2023-10-29T23:00:00+00:00';
-
-				const gmtDate = displayDate(date);
-
-				expect(gmtDate).toEqual('29 October 2023');
-			});
-		});
 		describe('convert24hTo12hTimeFormat', () => {
 			it('should take a valid 24h timestring and convert it to a 12h timestring', () => {
 				const validTimes = [
@@ -496,18 +446,18 @@ describe('Libraries', () => {
 					}
 				];
 				for (const set of validTimes) {
-					expect(convert24hTo12hTimeStringFormat(set.input)).toBe(set.expectedOutput);
+					expect(dateISOStringToDisplayTime12hr(set.input)).toBe(set.expectedOutput);
 				}
 			});
 			it('should return an undefined value if the input is undefined or null', () => {
-				expect(convert24hTo12hTimeStringFormat(undefined)).toBe(undefined);
-				expect(convert24hTo12hTimeStringFormat(null)).toBe(undefined);
+				expect(dateISOStringToDisplayTime12hr(undefined)).toBe(undefined);
+				expect(dateISOStringToDisplayTime12hr(null)).toBe(undefined);
 			});
 			it('should return undefined for invalid 24h time', () => {
-				expect(convert24hTo12hTimeStringFormat('25:00')).toBe(undefined);
-				expect(convert24hTo12hTimeStringFormat('21:00:00')).toBe(undefined);
-				expect(convert24hTo12hTimeStringFormat('12:60')).toBe(undefined);
-				expect(convert24hTo12hTimeStringFormat('1200')).toBe(undefined);
+				expect(dateISOStringToDisplayTime12hr('25:00')).toBe(undefined);
+				expect(dateISOStringToDisplayTime12hr('21:00:00')).toBe(undefined);
+				expect(dateISOStringToDisplayTime12hr('12:60')).toBe(undefined);
+				expect(dateISOStringToDisplayTime12hr('1200')).toBe(undefined);
 			});
 		});
 		describe('is24HoursTimeValid', () => {

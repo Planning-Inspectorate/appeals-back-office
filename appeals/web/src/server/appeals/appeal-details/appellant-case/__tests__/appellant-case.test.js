@@ -27,7 +27,7 @@ import {
 import { cloneDeep } from 'lodash-es';
 import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
 import usersService from '#appeals/appeal-users/users-service.js';
-import { dateToDisplayDate } from '#lib/dates.js';
+import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
@@ -4256,7 +4256,7 @@ describe('appellant-case', () => {
 				`href="/appeals-service/appeal-details/1/appellant-case/add-documents/${documentFolderInfo.folderId}"> Change</a>`
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Date received</dt>');
-			expect(unprettifiedElement.innerHTML).toContain(`${dateToDisplayDate(new Date())}</dd>`);
+			expect(unprettifiedElement.innerHTML).toContain(`${dateISOStringToDisplayDate(new Date())}</dd>`);
 			expect(unprettifiedElement.innerHTML).toContain(
 				`href="/appeals-service/appeal-details/1/appellant-case/add-document-details/${documentFolderInfo.folderId}"> Change</a>`
 			);
@@ -4385,7 +4385,7 @@ describe('appellant-case', () => {
 				`href="/appeals-service/appeal-details/1/appellant-case/add-documents/${documentFolderInfo.folderId}/1"> Change</a></dd>`
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Date received</dt>');
-			expect(unprettifiedElement.innerHTML).toContain(`${dateToDisplayDate(new Date())}</dd>`);
+			expect(unprettifiedElement.innerHTML).toContain(`${dateISOStringToDisplayDate(new Date())}</dd>`);
 			expect(unprettifiedElement.innerHTML).toContain(
 				`href="/appeals-service/appeal-details/1/appellant-case/add-document-details/${documentFolderInfo.folderId}/1"> Change</a></dd>`
 			);

@@ -1,18 +1,23 @@
-import { formatInTimeZone } from 'date-fns-tz';
+import { formatInTimeZone, zonedTimeToUtc } from 'date-fns-tz';
 import enGB from 'date-fns/locale/en-GB/index.js';
 import logger from '#lib/logger.js';
 import { isValid, isBefore, isAfter, startOfDay, parseISO } from 'date-fns';
+import { padNumberWithZero } from '#lib/string-utilities.js';
 
 export const timeZone = 'Europe/London';
 
 /**
- * @param {number} year
- * @param {number} month
- * @param {number} day
+ * @typedef {import('../appeals/appeals.types.js').DayMonthYearHourMinute} DayMonthYearHourMinute
+ */
+
+/**
+ * @param {DayMonthYearHourMinute} dayMonthYearHourMinute
  * @returns {boolean}
  */
-export const dateIsValid = (year, month, day) => {
-	const date = new Date(year, month - 1, day);
+export const dateIsValid = (dayMonthYearHourMinute) => {
+	const {year, month, day} = dayMonthYearHourMinute;
+	const date = new Date(dayMonthYearHourMinuteToISOString(dayMonthYearHourMinute));
+
 	const cleanMonth = `${month}`[0] === '0' ? `${month}`.slice(1) : `${month}`;
 	const cleanDay = `${day}`[0] === '0' ? `${day}`.slice(1) : `${day}`;
 
@@ -25,172 +30,149 @@ export const dateIsValid = (year, month, day) => {
 };
 
 /**
- * @param {number} year
- * @param {number} month
- * @param {number} day
+ * @param {DayMonthYearHourMinute} dayMonthYearHourMinute
  * @returns {boolean}
  */
-export const dateIsInTheFuture = (year, month, day) => {
-	const date = new Date(year, month - 1, day);
-	return isAfter(date, startOfDay(new Date()));
+export const dateIsInTheFuture = (dayMonthYearHourMinute) => {
+	const date = new Date(dayMonthYearHourMinuteToISOString(dayMonthYearHourMinute));
+
+	return isAfter(date, startOfDay(new Date(getTodaysISOString())));
 };
 
 /**
- * @param {number} year
- * @param {number} month
- * @param {number} day
+ * @param {DayMonthYearHourMinute} dayMonthYearHourMinute
  * @returns {boolean}
  */
-export const dateIsInThePast = (year, month, day) => {
-	const date = new Date(year, month - 1, day);
-	return isBefore(date, startOfDay(new Date()));
+export const dateIsInThePast = (dayMonthYearHourMinute) => {
+	const dateISOString = dayMonthYearHourMinuteToISOString(dayMonthYearHourMinute);
+	const todaysISOString = getTodaysISOString();
+
+	const date = new Date(dateISOString);
+	return isBefore(date, startOfDay(new Date(todaysISOString)));
 };
 
 /**
- * @param {number} year
- * @param {number} month
- * @param {number} day
+ * @param {DayMonthYearHourMinute} dayMonthYearHourMinute
  * @returns {boolean}
  */
-export const dateIsTodayOrInThePast = (year, month, day) => {
-	const date = new Date(year, month - 1, day);
-	return !isAfter(date, startOfDay(new Date()));
-};
+export const dateIsTodayOrInThePast = (dayMonthYearHourMinute) => {
+	const dateISOString = dayMonthYearHourMinuteToISOString(dayMonthYearHourMinute);
+	const todaysISOString = getTodaysISOString();
 
-/**
- * Converts the supplied date to a UTC date without any time component (useful for comparisons which should not factor in time)
- * More information here: https://stackoverflow.com/a/38050824
- * @param {Date} date
- * @returns {Date}
- */
-export const dateToUTCDateWithoutTime = (date) => {
-	return new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
-};
-
-/**
- * @param {Date} date
- * @returns {boolean}
- */
-export const isDateInstance = (date) => {
-	return (
-		date instanceof Date &&
-		!Number.isNaN(date) &&
-		!Number.isNaN(date.getDate()) &&
-		!Number.isNaN(date.getMonth()) &&
-		!Number.isNaN(date.getFullYear())
-	);
-};
-
-/**
- * @param {import('../appeals/appeals.types.js').DayMonthYear} dayMonthYear
- * @returns {string} - date in format YYYY-MM-DD
- */
-export const dayMonthYearToApiDateString = (dayMonthYear) => {
-	const dayString = dayMonthYear.day < 10 ? `0${dayMonthYear.day}` : dayMonthYear.day;
-	const monthString = dayMonthYear.month < 10 ? `0${dayMonthYear.month}` : dayMonthYear.month;
-
-	return `${dayMonthYear.year}-${monthString}-${dayString}`;
-};
-
-/**
- * @param {string|null|undefined} apiDateString - date in format YYYY-MM-DD
- * @returns {import('../appeals/appeals.types.js').DayMonthYear|undefined}
- */
-export const apiDateStringToDayMonthYear = (apiDateString) => {
-	if (apiDateString === null || apiDateString === undefined) {
-		return;
-	}
-	const date = parseISO(apiDateString);
-
-	if (!isValid(date)) {
-		logger.error('The date string provided parsed to an invalid date');
-		return;
+	if (dateISOString === todaysISOString) {
+		return true;
 	}
 
-	return dateToDayMonthYear(date);
+	const date = new Date(dateISOString);
+	return isBefore(date, startOfDay(new Date(todaysISOString)));
 };
 
 /**
- * @param {string | undefined} hour
- * @param {string | undefined} minute
- * @returns {string} - time in format HH:MM
- */
-export const hourMinuteToApiDateString = (hour, minute = '0') => {
-	if (!hour) {
-		return '';
-	}
-
-	const hourString = hour.padStart(2, '0');
-	const minuteString = minute.padStart(2, '0');
-
-	return `${hourString}:${minuteString}`;
-};
-
-/**
- * @param {Date | number | string | null | undefined} date
- * @param {{ condensed?: boolean }} options
  * @returns {string}
  */
-export function dateToDisplayDate(date, { condensed = false } = {}) {
-	if (typeof date === 'undefined' || date === null) {
+export function getTodaysISOString() {
+	const nowISOString = new Date().toISOString();
+
+	const {year, month, day} = dateISOStringToDayMonthYearHourMinute(nowISOString);
+
+	return dayMonthYearHourMinuteToISOString({
+		day,
+		month,
+		year,
+		hour: 0,
+		minute: 0
+	});
+}
+
+/**
+ * @param {string | null | undefined} dateISOString
+ * @returns {string}
+ */
+export function dateISOStringToDisplayDate(dateISOString) {
+	if (typeof dateISOString === 'undefined' || dateISOString === null) {
 		return '';
 	}
 
-	return formatInTimeZone(date, timeZone, condensed ? 'd MMM yyyy' : 'd MMMM yyyy', {
+	return formatInTimeZone(dateISOString, timeZone, 'd MMMM yyyy', {
 		locale: enGB
 	});
 }
 
 /**
- * @param {Date | null | undefined} date
+ * @param {string | null | undefined} dateISOString
  * @returns {string}
  */
-export function dateToDisplayTime(date) {
-	if (typeof date === 'undefined' || date === null) {
+export function dateISOStringToDisplayTime24hr(dateISOString) {
+	if (typeof dateISOString === 'undefined' || dateISOString === null) {
 		return '';
 	}
 
-	return formatInTimeZone(date, timeZone, 'HH:mm');
+	return formatInTimeZone(dateISOString, timeZone, 'HH:mm');
 }
 
 /**
- * @param {import('../appeals/appeals.types.js').DayMonthYear} dayMonthYear
+ * @param {string | null | undefined} dateISOString
  * @returns {string}
  */
-export function webDateToDisplayDate(dayMonthYear, { condensed = false } = {}) {
-	if (typeof dayMonthYear === 'undefined' || dayMonthYear === null) {
+export function dateISOStringToDisplayTime12hr(dateISOString) {
+	if (typeof dateISOString === 'undefined' || dateISOString === null) {
 		return '';
 	}
 
-	const { day, month, year } = dayMonthYear;
-	const date = new Date(Date.UTC(year, month - 1, day));
-	const formatString = condensed ? 'd MMM yyyy' : 'd MMMM yyyy';
-
-	return formatInTimeZone(date, timeZone, formatString, { locale: enGB });
+	return formatInTimeZone(dateISOString, timeZone, `hh:mmaaaaa'm'`);
 }
 
-/**
- * @param {Date} date
- * @returns {import('../appeals/appeals.types.js').DayMonthYear}
- */
-export function dateToDayMonthYear(date) {
-	return {
-		day: date.getDate(),
-		month: date.getMonth() + 1,
-		year: date.getFullYear()
-	};
-}
 
 /**
- * @param {string|null|undefined} apiDateString - date in format YYYY-MM-DD
- * @returns {string}
+ * @param {string | null | undefined} dateISOString
+ * @returns {DayMonthYearHourMinute}
  */
-export function apiDateStringToDisplayDate(apiDateString) {
-	const dayMonthYear = apiDateStringToDayMonthYear(apiDateString);
-
-	if (dayMonthYear) {
-		return webDateToDisplayDate(dayMonthYear);
+export function dateISOStringToDayMonthYearHourMinute(dateISOString) {
+	if (typeof dateISOString === 'undefined' || dateISOString === null) {
+		return {};
 	}
 
-	return '';
+	const day = parseInt(formatInTimeZone(dateISOString, timeZone, 'dd'), 10);
+	const month = parseInt(formatInTimeZone(dateISOString, timeZone, 'MM'), 10);
+	const year = parseInt(formatInTimeZone(dateISOString, timeZone, 'yyyy'), 10);
+	const hour = parseInt(formatInTimeZone(dateISOString, timeZone, 'HH'), 10);
+	const minute = parseInt(formatInTimeZone(dateISOString, timeZone, 'mm'), 10);
+
+	return { day, month, year, hour, minute };
+}
+
+
+/**
+ * Parse the date and time parameters in Europe/London
+ * @param {DayMonthYearHourMinute} dayMonthYearHourMinute
+ * @returns {string}
+ */
+export const dayMonthYearHourMinuteToISOString = (dayMonthYearHourMinute) => {
+	if (typeof dayMonthYearHourMinute === 'undefined' || dayMonthYearHourMinute === null) {
+		return '';
+	}
+
+	const {year, month, day, hour = 0, minute = 0} = dayMonthYearHourMinute;
+
+	if (typeof year === 'undefined' || year === null || typeof month === 'undefined' || month === null || typeof day === 'undefined' || day === null) {
+		return '';
+	}
+
+    const dateStr = `${year}-${padNumberWithZero(month)}-${padNumberWithZero(day)}`;
+    const timeStr = `${padNumberWithZero(hour)}:${padNumberWithZero(minute)}`;
+    return zonedTimeToUtc(`${dateStr} ${timeStr}`, timeZone).toISOString();
+}
+
+/**
+ * @param {DayMonthYearHourMinute} dayMonthYearHourMinute
+ * @returns {string}
+ */
+export function dayMonthYearHourMinuteToDisplayDate(dayMonthYearHourMinute) {
+	if (typeof dayMonthYearHourMinute === 'undefined' || dayMonthYearHourMinute === null) {
+		return '';
+	}
+
+	return dateISOStringToDisplayDate(
+		dayMonthYearHourMinuteToISOString(dayMonthYearHourMinute)
+	);
 }

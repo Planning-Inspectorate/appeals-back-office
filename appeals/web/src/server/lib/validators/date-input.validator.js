@@ -149,7 +149,7 @@ export const createDateInputDateValidityValidator = (
 				const monthNumber = Number.parseInt(month, 10);
 				const yearNumber = Number.parseInt(year, 10);
 
-				return dateIsValid(yearNumber, monthNumber, dayNumber);
+				return dateIsValid({day: dayNumber, month: monthNumber, year: yearNumber});
 			})
 			.withMessage(
 				capitalize(
@@ -237,7 +237,7 @@ export const createDateInputDateInFutureValidator = (
 				const monthNumber = Number.parseInt(month, 10);
 				const yearNumber = Number.parseInt(year, 10);
 
-				return dateIsInTheFuture(yearNumber, monthNumber, dayNumber);
+				return dateIsInTheFuture({day: dayNumber, month: monthNumber, year: yearNumber});
 			})
 			.withMessage(
 				capitalize(
@@ -268,7 +268,7 @@ export const createDateInputDateInPastOrTodayValidator = (
 				const monthNumber = Number.parseInt(month, 10);
 				const yearNumber = Number.parseInt(year, 10);
 
-				return dateIsTodayOrInThePast(yearNumber, monthNumber, dayNumber);
+				return dateIsTodayOrInThePast({day: dayNumber, month: monthNumber, year: yearNumber});
 			})
 			.withMessage(
 				capitalize(
@@ -301,7 +301,7 @@ export const createDateInputDateInPastValidator = (
 				const monthNumber = Number.parseInt(month, 10);
 				const yearNumber = Number.parseInt(year, 10);
 
-				return dateIsInThePast(yearNumber, monthNumber, dayNumber);
+				return dateIsInThePast({day: dayNumber, month: monthNumber, year: yearNumber});
 			})
 			.withMessage(
 				capitalize(

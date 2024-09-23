@@ -5,7 +5,7 @@ import { isFolderInfo } from '#lib/ts-utilities.js';
 import { mapActionComponent } from './component-permissions.mapper.js';
 import { permissionNames } from '#environment/permissions.js';
 import { formatServiceUserAsHtmlList } from '#lib/service-user-formatter.js';
-import { dateToDisplayDate } from '#lib/dates.js';
+import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { capitalize } from 'lodash-es';
 import { APPEAL_KNOWS_OTHER_OWNERS } from 'pins-data-model';
 import { SHOW_MORE_MAXIMUM_CHARACTERS_BEFORE_HIDING } from '#lib/constants.js';
@@ -195,7 +195,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 					text: 'Decision date'
 				},
 				value: {
-					text: dateToDisplayDate(appellantCaseData.applicationDecisionDate)
+					text: dateISOStringToDisplayDate(appellantCaseData.applicationDecisionDate)
 				},
 				actions: {
 					items: [
@@ -219,7 +219,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 					text: 'Application submitted'
 				},
 				value: {
-					text: dateToDisplayDate(appellantCaseData.applicationDate)
+					text: dateISOStringToDisplayDate(appellantCaseData.applicationDate)
 				},
 				actions: {
 					items: [
