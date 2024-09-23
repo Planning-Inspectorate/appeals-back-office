@@ -8,19 +8,7 @@ export function isDefined(value) {
 }
 
 /** @typedef {import('@pins/appeals.api').Appeals.FolderInfo} FolderInfo */
-/**
- * @typedef {Object} FileUploadInfoItem
- * @property {string} name
- * @property {string} GUID
- * @property {string} fileRowId
- * @property {string} blobStoreUrl
- * @property {string} mimeType
- * @property {string} documentType
- * @property {number} size
- * @property {string} stage
- * @property {string} receivedDate
- * @property {number} redactionStatus
- */
+/** @typedef {import('#appeals/appeal-documents/appeal-documents.types').FileUploadInfoItem} FileUploadInfoItem */
 
 /**
  * @param {FolderInfo|any|null|undefined} value
@@ -44,7 +32,7 @@ export function isFolderInfo(value) {
  * @param {FileUploadInfoItem[]|any} value
  * @return {value is FileUploadInfoItem[]}
  */
-export function isFileUploadInfo(value) {
+export function isFileUploadInfoItemArray(value) {
 	if (!Array.isArray(value)) {
 		return false;
 	}
@@ -69,7 +57,6 @@ export function isFileUploadInfoItem(value) {
 		typeof value === 'object' &&
 		'name' in value &&
 		'GUID' in value &&
-		'fileRowId' in value &&
 		'blobStoreUrl' in value &&
 		'mimeType' in value &&
 		'documentType' in value &&

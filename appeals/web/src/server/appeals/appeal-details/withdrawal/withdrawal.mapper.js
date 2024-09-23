@@ -21,7 +21,7 @@ import {
  * @typedef {import('@pins/appeals.api').Appeals.FolderInfo} FolderInfo
  * @typedef {import('@pins/appeals.api').Schema.DocumentRedactionStatus} RedactionStatus
  * @typedef {import('#lib/nunjucks-template-builders/tag-builders.js').HtmlLink} HtmlLink
- * @typedef {import('#lib/ts-utilities.js').FileUploadInfoItem} FileUploadInfoItem
+ * @typedef {import('#appeals/appeal-documents/appeal-documents.types').FileUploadInfoItem} FileUploadInfoItem
  */
 
 /**
@@ -266,7 +266,7 @@ export function withdrawalDocumentRedactionStatusPage(
  * @returns {PageContent}
  */
 export function checkAndConfirmPage(request, appealData, session) {
-	const withdrawalRequest = session.fileUploadInfo?.[0]?.name;
+	const withdrawalRequest = session.fileUploadInfo?.files[0]?.name;
 	const withdrawalRequestDate = new Date(session.withdrawal?.withdrawalRequestDate);
 
 	/** @type {PageComponent} */

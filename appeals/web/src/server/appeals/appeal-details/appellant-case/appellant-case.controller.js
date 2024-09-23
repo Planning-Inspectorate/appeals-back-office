@@ -233,10 +233,7 @@ export const getAddDocuments = async (request, response) => {
 		currentAppeal,
 		`/appeals-service/appeal-details/${request.params.appealId}/appellant-case/`,
 		`/appeals-service/appeal-details/${request.params.appealId}/appellant-case/add-document-details/{{folderId}}`,
-		getValidationOutcomeFromAppellantCase(appellantCaseDetails) === 'valid',
-		'',
-		undefined,
-		false
+		getValidationOutcomeFromAppellantCase(appellantCaseDetails) === 'valid'
 	);
 };
 

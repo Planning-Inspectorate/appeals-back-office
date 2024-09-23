@@ -5,7 +5,7 @@ import { addDocumentsCheckAndConfirmPage } from '#appeals/appeal-documents/appea
  *
  * @param {import('../appeal-details.types.js').WebAppeal} appealDetails
  * @param {import('@pins/appeals.api').Appeals.FolderInfo} decisionDocumentFolder
- * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
+ * @param {import('#appeals/appeal-documents/appeal-documents.types').FileUploadInfoItem[]} uncommittedFiles
  * @param {import('@pins/appeals.api').Schema.DocumentRedactionStatus[]} redactionStatuses
  * @param {string} [documentId]
  * @returns {PageContent}
@@ -13,7 +13,7 @@ import { addDocumentsCheckAndConfirmPage } from '#appeals/appeal-documents/appea
 export function decisionCheckAndConfirmPage(
 	appealDetails,
 	decisionDocumentFolder,
-	session,
+	uncommittedFiles,
 	redactionStatuses,
 	documentId
 ) {
@@ -27,7 +27,7 @@ export function decisionCheckAndConfirmPage(
 		addDocumentDetailsPageUrl,
 		addDocumentDetailsPageUrl,
 		appealDetails.appealReference,
-		session.fileUploadInfo,
+		uncommittedFiles,
 		redactionStatuses,
 		undefined,
 		undefined,
