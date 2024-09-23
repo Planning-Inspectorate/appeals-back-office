@@ -123,6 +123,14 @@ function generateTableRows(items) {
  * @param {number} pageSize - Number of items per page
  * @returns {Pagination} - The generated pagination object
  */
-function generatePagination(pageNumber, baseUrl, tab, pageCount, pageSize) {
-	return mapPagination(pageNumber, pageCount, pageSize, baseUrl, { tab });
+function generatePagination(
+	pageNumber,
+	baseUrl,
+	tab,
+	pageCount,
+	pageSize,
+	classes = 'pins-pagination'
+) {
+	const urlWithHash = `${baseUrl}#${tab}`;
+	return mapPagination(pageNumber, pageCount, pageSize, urlWithHash, { tab }, classes);
 }

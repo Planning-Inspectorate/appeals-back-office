@@ -9,9 +9,14 @@ import { paginationDefaultSettings } from '#appeals/appeal.constants.js';
  * @param {number} itemsPerPage
  * @param {string} baseUrl
  * @param {object} query
+ * @param {string} [classes] - Optional classes to add to the pagination object
  * @returns {Pagination}
  */
-export function mapPagination(currentPage, pageCount, itemsPerPage, baseUrl, query) {
+export function mapPagination(currentPage, pageCount, itemsPerPage, baseUrl, query, classes = '') {
+	// Extract hash from baseUrl if present
+	const [baseUrlWithoutHash, hash] = baseUrl.split('#');
+	const hashFragment = hash ? `#${hash}` : '';
+
 	// filter out pagination related query params
 	const paginationlessQueryParams = Object.entries(query).filter(
 		([prop]) => prop !== 'pageNumber' && prop !== 'pageSize'
@@ -28,7 +33,8 @@ export function mapPagination(currentPage, pageCount, itemsPerPage, baseUrl, que
 	const pagination = {
 		previous: {},
 		next: {},
-		items: []
+		items: [],
+		classes // Add the classes property to the pagination object
 	};
 
 	if (pageCount > 1) {
@@ -37,26 +43,26 @@ export function mapPagination(currentPage, pageCount, itemsPerPage, baseUrl, que
 
 		if (currentPage > 1) {
 			pagination.previous = {
-				href: `${baseUrl}?pageSize=${itemsPerPage}&pageNumber=${previousPage}${
+				href: `${baseUrlWithoutHash}?pageSize=${itemsPerPage}&pageNumber=${previousPage}${
 					additionalQueryString || ''
-				}`
+				}${hashFragment}`
 			};
 		}
 
 		if (currentPage < pageCount) {
 			pagination.next = {
-				href: `${baseUrl}?pageSize=${itemsPerPage}&pageNumber=${nextPage}${
+				href: `${baseUrlWithoutHash}?pageSize=${itemsPerPage}&pageNumber=${nextPage}${
 					additionalQueryString || ''
-				}`
+				}${hashFragment}`
 			};
 		}
 
 		// first index
 		pagination.items.push({
 			number: 1,
-			href: `${baseUrl}?pageSize=${itemsPerPage}&pageNumber=${
+			href: `${baseUrlWithoutHash}?pageSize=${itemsPerPage}&pageNumber=${
 				paginationDefaultSettings.firstPageNumber
-			}${additionalQueryString || ''}`,
+			}${additionalQueryString || ''}${hashFragment}`,
 			current: currentPage === 1
 		});
 
@@ -65,9 +71,9 @@ export function mapPagination(currentPage, pageCount, itemsPerPage, baseUrl, que
 			for (let pageIndex = 2; pageIndex <= pageCount; pageIndex += 1) {
 				pagination.items.push({
 					number: pageIndex,
-					href: `${baseUrl}?pageSize=${itemsPerPage}&pageNumber=${pageIndex}${
+					href: `${baseUrlWithoutHash}?pageSize=${itemsPerPage}&pageNumber=${pageIndex}${
 						additionalQueryString || ''
-					}`,
+					}${hashFragment}`,
 					current: currentPage === pageIndex
 				});
 			}
@@ -81,9 +87,9 @@ export function mapPagination(currentPage, pageCount, itemsPerPage, baseUrl, que
 			if (previousPage > 1) {
 				pagination.items.push({
 					number: previousPage,
-					href: `${baseUrl}?pageSize=${itemsPerPage}&pageNumber=${previousPage}${
+					href: `${baseUrlWithoutHash}?pageSize=${itemsPerPage}&pageNumber=${previousPage}${
 						additionalQueryString || ''
-					}`,
+					}${hashFragment}`,
 					current: false
 				});
 			}
@@ -91,9 +97,9 @@ export function mapPagination(currentPage, pageCount, itemsPerPage, baseUrl, que
 			if (currentPage > 1) {
 				pagination.items.push({
 					number: currentPage,
-					href: `${baseUrl}?pageSize=${itemsPerPage}&pageNumber=${currentPage}${
+					href: `${baseUrlWithoutHash}?pageSize=${itemsPerPage}&pageNumber=${currentPage}${
 						additionalQueryString || ''
-					}`,
+					}${hashFragment}`,
 					current: true
 				});
 			}
@@ -101,9 +107,9 @@ export function mapPagination(currentPage, pageCount, itemsPerPage, baseUrl, que
 			if (nextPage > 1 && nextPage < pageCount) {
 				pagination.items.push({
 					number: nextPage,
-					href: `${baseUrl}?pageSize=${itemsPerPage}&pageNumber=${nextPage}${
+					href: `${baseUrlWithoutHash}?pageSize=${itemsPerPage}&pageNumber=${nextPage}${
 						additionalQueryString || ''
-					}`,
+					}${hashFragment}`,
 					current: false
 				});
 			}
@@ -117,9 +123,9 @@ export function mapPagination(currentPage, pageCount, itemsPerPage, baseUrl, que
 			if (currentPage < pageCount) {
 				pagination.items.push({
 					number: pageCount,
-					href: `${baseUrl}?pageSize=${itemsPerPage}&pageNumber=${pageCount}${
+					href: `${baseUrlWithoutHash}?pageSize=${itemsPerPage}&pageNumber=${pageCount}${
 						additionalQueryString || ''
-					}`,
+					}${hashFragment}`,
 					current: currentPage === pageCount
 				});
 			}

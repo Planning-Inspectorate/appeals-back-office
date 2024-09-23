@@ -44,4 +44,5 @@ export interface Pagination {
 	items: PaginationItem[];
 	previous: PaginationItem;
 	next: PaginationItem;
+	classes?: string;
 }

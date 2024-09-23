@@ -9,6 +9,7 @@ import initSelectAllCheckbox from './components/select-all-checkbox/select-all-c
 import initFileUploaderModule from './components/file-uploader/file-uploader.module.js';
 import initAddAnother from './components/add-another/add-another.js';
 import initShowMore from './components/show-more/show-more.js';
+import initTabsWithPagination from './components/tabs-with-pagination/tabs-with-pagination.js';
 
 const initAll = () => {
 	initGovUKScripts();
@@ -18,6 +19,7 @@ const initAll = () => {
 	initFileUploaderModule();
 	initAddAnother();
 	initShowMore();
+	initTabsWithPagination();
 };
 
 initAll();
