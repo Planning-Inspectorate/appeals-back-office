@@ -78,15 +78,15 @@ export async function scheduleOrManageSiteVisitPage(
 
 	const { day, month, year } = dateISOStringToDayMonthYearHourMinute(appealDetails.siteVisit?.visitDate);
 	const { hour: startTimeHour, minute: startTimeMinute } = dateISOStringToDayMonthYearHourMinute(appealDetails.siteVisit?.visitStartTime);
-	const { hour: endTimeHour, minute: endTimeMinute } = dateISOStringToDayMonthYearHourMinute(appealDetails.siteVisit?.visitStartTime);
+	const { hour: endTimeHour, minute: endTimeMinute } = dateISOStringToDayMonthYearHourMinute(appealDetails.siteVisit?.visitEndTime);
 
 	visitDateDay ??= appealDetails.siteVisit?.visitDate ? day : undefined;
 	visitDateMonth ??= appealDetails.siteVisit?.visitDate ? month : undefined;
 	visitDateYear ??= appealDetails.siteVisit?.visitDate ? year : undefined;
-	visitStartTimeHour ??= appealDetails.siteVisit?.visitDate ? startTimeHour : undefined;
-	visitStartTimeMinute ??= appealDetails.siteVisit?.visitDate ? startTimeMinute : undefined;
-	visitEndTimeHour ??= appealDetails.siteVisit?.visitDate ? endTimeHour : undefined;
-	visitEndTimeMinute ??= appealDetails.siteVisit?.visitDate ? endTimeMinute : undefined;
+	visitStartTimeHour ??= appealDetails.siteVisit?.visitStartTime ? startTimeHour : undefined;
+	visitStartTimeMinute ??= appealDetails.siteVisit?.visitStartTime ? startTimeMinute : undefined;
+	visitEndTimeHour ??= appealDetails.siteVisit?.visitEndTime ? endTimeHour : undefined;
+	visitEndTimeMinute ??= appealDetails.siteVisit?.visitEndTime ? endTimeMinute : undefined;
 
 	/**
 	 * @type {(SummaryListRowProperties)[]}
