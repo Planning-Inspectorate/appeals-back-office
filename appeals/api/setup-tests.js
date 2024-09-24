@@ -453,7 +453,7 @@ jest.unstable_mockModule('notifications-node-client', () => ({
 	}
 }));
 
-jest.unstable_mockModule('./src/server/utils/blobValidation', () => {
+jest.unstable_mockModule('./src/server/utils/blob-validation', () => {
 	return {
 		validateBlobContents: mockValidateBlob
 	};

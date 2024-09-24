@@ -65,8 +65,6 @@ const validateMimeType = (uint8Array, mime) => {
  *
  * @param {string} appealReference
  * @param {string} path
- * @param {Number|undefined} version
  * @returns {boolean}
  */
-const validateBlobPath = (appealReference, path, version = 1) =>
-	path.startsWith(`appeal/${appealReference}`) && path.indexOf(`/v${version}/`) > 0;
+const validateBlobPath = (appealReference, path) => path.startsWith(`appeal/${appealReference}/`);

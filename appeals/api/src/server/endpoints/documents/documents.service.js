@@ -24,7 +24,7 @@ import {
 	APPEAL_CASE_STATUS,
 	APPEAL_DOCUMENT_TYPE
 } from 'pins-data-model';
-import { validateBlobContents } from '#utils/blobValidation.js';
+import { validateBlobContents } from '#utils/blob-validation.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Document} Document */
