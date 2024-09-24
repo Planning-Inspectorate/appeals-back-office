@@ -3,6 +3,7 @@ import { jest } from '@jest/globals';
 import config from '#config/config.js';
 import { NODE_ENV_PRODUCTION } from '#endpoints/constants.js';
 
+const mockValidateBlob = jest.fn().mockResolvedValue(true);
 const mockRepGetById = jest.fn().mockResolvedValue({});
 const mockRepUpdateById = jest.fn().mockResolvedValue({});
 const mockAppealRelationshipAdd = jest.fn().mockResolvedValue({});
@@ -451,6 +452,12 @@ jest.unstable_mockModule('notifications-node-client', () => ({
 		sendEmail = mockSendEmail;
 	}
 }));
+
+jest.unstable_mockModule('./src/server/utils/blobValidation', () => {
+	return {
+		validateBlobContents: mockValidateBlob
+	};
+});
 
 jest.unstable_mockModule('./src/server/config/config.js', () => ({
 	default: {

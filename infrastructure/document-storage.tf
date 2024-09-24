@@ -166,3 +166,9 @@ resource "azurerm_role_assignment" "legal_documents_access" {
   role_definition_name = "Storage Blob Data Reader"
   principal_id         = var.apps_config.auth.group_ids.legal
 }
+
+resource "azurerm_role_assignment" "api_document_validation" {
+  scope                = azurerm_storage_container.appeal_documents.resource_manager_id
+  role_definition_name = "Storage Blob Data Reader"
+  principal_id         = module.app_api.principal_id
+}

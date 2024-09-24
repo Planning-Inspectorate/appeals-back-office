@@ -1,5 +1,6 @@
 import { PromisePool } from '@supercharge/promise-pool/dist/promise-pool.js';
 import logger from '#utils/logger.js';
+import config from '#config/config.js';
 import {
 	mapDocumentsForDatabase,
 	mapDocumentsForBlobStorage,
@@ -23,6 +24,7 @@ import {
 	APPEAL_CASE_STATUS,
 	APPEAL_DOCUMENT_TYPE
 } from 'pins-data-model';
+import { validateBlobContents } from '#utils/blobValidation.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Document} Document */
@@ -162,10 +164,20 @@ export const addDocumentsToAppeal = async (upload, appeal) => {
 	const { blobStorageHost, blobStorageContainer, documents } = upload;
 	const documentsToSendToDatabase = mapDocumentsForDatabase(
 		appeal.id,
-		blobStorageHost,
-		blobStorageContainer,
+		blobStorageHost ?? config.BO_BLOB_STORAGE_ACCOUNT,
+		blobStorageContainer ?? config.BO_BLOB_CONTAINER,
 		documents
 	);
+
+	const blobValidation = await validateBlobContents(
+		appeal.reference,
+		documentsToSendToDatabase.map((doc) => doc.blobStoragePath ?? '')
+	);
+
+	if (!blobValidation) {
+		throw new Error(`Invalid blobs submitted`);
+	}
+
 	const documentsCreated = await addDocumentAndVersion(
 		appeal.id,
 		appeal.reference,
@@ -261,6 +273,14 @@ export const addVersionToDocument = async (upload, appeal, document) => {
 		blobStorageContainer,
 		[uploadedDocument]
 	)[0];
+
+	const blobValidation = await validateBlobContents(appeal.reference, [
+		documentToSendToDatabase.blobStoragePath ?? ''
+	]);
+
+	if (!blobValidation) {
+		throw new Error(`Invalid blobs submitted`);
+	}
 
 	const documentVersionCreated = await addDocumentVersion({
 		documentGuid: document.guid,
