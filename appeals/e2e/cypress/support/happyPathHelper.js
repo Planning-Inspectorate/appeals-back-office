@@ -60,7 +60,7 @@ export const happyPathHelper = {
 
 	uploadDocAppellantCase(caseRef) {
 		cy.visit(urlPaths.appealsList);
-		//listCasesPage.clickAppealByRef(caseRef);
+		listCasesPage.clickAppealByRef(caseRef);
 		happyPathHelper.assignCaseOfficer(caseRef);
 		caseDetailsPage.clickReviewAppellantCase();
 		caseDetailsPage.clickAddAgreementToChangeDescriptionEvidence();

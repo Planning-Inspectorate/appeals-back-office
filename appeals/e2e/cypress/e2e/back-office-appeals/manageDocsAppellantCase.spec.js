@@ -24,8 +24,6 @@ describe('manage docs on appellant case', () => {
 			cy.reload();
 			caseDetailsPage.clickManageAgreementToChangeDescriptionEvidence();
 			caseDetailsPage.clickLinkByText('View and edit');
-			//caseDetailsPage.clickEditOrViewAndEditDocuments();
-			//caseDetailsPage.clickRefreshVirusScanningBannerDocumentFile();
 			caseDetailsPage.clickButtonByText('upload a new version');
 			caseDetailsPage.uploadTestPdf();
 			caseDetailsPage.clickButtonByText('Continue');
