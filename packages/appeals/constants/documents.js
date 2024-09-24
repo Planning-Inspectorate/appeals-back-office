@@ -35,9 +35,28 @@ export const FOLDERS = [
 	`${APPEAL_CASE_STAGE.APPEAL_DECISION}/${APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER}`
 ];
 
-/** @type {Object<string, string>} */
-export const PROCEDURE_TYPE_MAP = {
-	written: 'a written procedure',
-	hearing: 'a hearing',
-	inquiry: 'an inquiry'
-};
+export const VALID_MIME_TYPES = Object.freeze({
+	'application/pdf': { hexSignature: '255044462D', extensions: ['pdf'] },
+	'application/msword': { hexSignature: 'D0CF11E0', extensions: ['doc'] },
+	'application/vnd.openxmlformats-officedocument.wordprocessingml.document': {
+		hexSignature: '504B03041400',
+		extensions: ['docx']
+	},
+	'application/vnd.ms-powerpoint': { hexSignature: 'D0CF11E0', extensions: ['ppt'] },
+	'application/vnd.openxmlformats-officedocument.presentationml.presentation': {
+		hexSignature: 'D0CF11E0',
+		extensions: ['pptx']
+	},
+	'application/vnd.ms-excel': { hexSignature: 'D0CF11E0', extensions: ['xls'] },
+	'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': {
+		hexSignature: '504B03041400',
+		extensions: ['xlsx']
+	},
+	'image/jpeg': { hexSignature: 'FFD8FFE0', extensions: ['jpg', 'jpeg'] },
+	'video/mpeg': { hexSignature: '000001B3, 000001BA', extensions: ['mpeg'] },
+	'audio/mpeg': { hexSignature: 'FFFB, 494433', extensions: ['mp3'] },
+	'video/mp4': { hexSignature: '66747970', offset: 8, extensions: ['mp4'] },
+	'video/quicktime': { hexSignature: '0000001466747970', extensions: ['mov'] },
+	'image/png': { hexSignature: '89504E47', extensions: ['png'] },
+	'image/tiff': { hexSignature: '4D4D002A, 49492A00', extensions: ['tif', 'tiff'] }
+});

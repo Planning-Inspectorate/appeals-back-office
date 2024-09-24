@@ -3,15 +3,15 @@ export const ODW_APPELLANT_SVCUSR = 'Appellant';
 export const ODW_AGENT_SVCUSR = 'Agent';
 export const APPEAL_START_RANGE = 6000000;
 
-export const EVENT_TYPE = {
+export const EVENT_TYPE = Object.freeze({
 	SITE_VISIT: 'siteVisit'
-};
+});
 
-export const FEATURE_FLAG_NAMES = {
+export const FEATURE_FLAG_NAMES = Object.freeze({
 	SECTION_78: 'featureFlagS78Written'
-};
+});
 
-export const APPEAL_TYPE = {
+export const APPEAL_TYPE = Object.freeze({
 	D: 'Householder',
 	W: 'Planning appeal',
 	C: 'Enforcement notice appeal',
@@ -25,21 +25,28 @@ export const APPEAL_TYPE = {
 	X: 'Lawful development certificate appeal',
 	Y: 'Planned listed building and conservation area appeal',
 	Z: 'Commercial (CAS) appeal'
-};
+});
+
+/** @type {Object<string, string>} */
+export const PROCEDURE_TYPE_MAP = Object.freeze({
+	written: 'a written procedure',
+	hearing: 'a hearing',
+	inquiry: 'an inquiry'
+});
 
 //TODO: remove when available in appeal-representation.schema
-export const APPEAL_REPRESENTATION_TYPE = {
+export const APPEAL_REPRESENTATION_TYPE = Object.freeze({
 	STATEMENT: 'statement',
 	COMMENT: 'comment',
 	FINAL_COMMENT: 'final_comment'
-};
+});
 
 //TODO: remove when available in appeal-representation.schema - here just for reference
 // eslint-disable-next-line no-unused-vars
-export const APPEAL_REPRESENTATION_STATUS = {
+export const APPEAL_REPRESENTATION_STATUS = Object.freeze({
 	AWAITING_REVIEW: 'awaiting_review',
 	VALID: 'valid',
 	INVALID: 'invalid',
 	PUBLISHED: 'published',
 	WITHDRAWN: 'withdrawn'
-};
+});
