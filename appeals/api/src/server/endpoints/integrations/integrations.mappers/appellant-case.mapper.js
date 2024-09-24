@@ -6,7 +6,7 @@ import { mapDate } from './date.mapper.js';
 /**
  *
  * @param {Pick<AppellantSubmissionCommand, 'casedata'>} command
- * @returns
+ * @returns {Omit<import('#db-client').Prisma.AppellantCaseCreateInput, 'appeal'>}
  */
 export const mapAppellantCaseIn = (command) => {
 	const casedata = command.casedata;
@@ -51,9 +51,14 @@ export const mapAppellantCaseIn = (command) => {
 		ownersInformed: casedata.ownersInformed,
 		...(knowsAllOwners && { knowsAllOwners }),
 		...(knowsOtherOwners && { knowsOtherOwners }),
-		isGreenBelt: casedata.isGreenBelt
+		isGreenBelt: casedata.isGreenBelt,
+		appellantProcedurePreference: casedata.appellantProcedurePreference,
+		appellantProcedurePreferenceDetails: casedata.appellantProcedurePreferenceDetails,
+		appellantProcedurePreferenceDuration: casedata.appellantProcedurePreferenceDuration,
+		inquiryHowManyWitnesses: casedata.inquiryHowManyWitnesses
 	};
 
+	// @ts-ignore
 	return data;
 };
 

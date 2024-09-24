@@ -2,6 +2,7 @@
  * @typedef {import('../../appeal-details.types.js').WebAppeal} Appeal
  */
 import { appealShortReference } from '#lib/appeals-formatter.js';
+import { yesNoInput } from '#lib/page-components/radio.js';
 
 /**
  * @param {Appeal} appealData
@@ -25,32 +26,10 @@ export const changePlanningObligationPage = (appealData, appellantCaseData, stor
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'Change planning obligation in support',
 		pageComponents: [
-			{
-				type: 'radios',
-				parameters: {
-					name: 'planningObligationRadio',
-					id: 'planning-obligation-radio',
-					fieldSet: {
-						legend: {
-							text: 'Is there a planning obligation to support the appeal?',
-							isPageHeading: false,
-							classes: 'govuk-fieldset__legend--l'
-						}
-					},
-					items: [
-						{
-							value: 'yes',
-							text: 'Yes',
-							checked: !!planningObligation
-						},
-						{
-							value: 'no',
-							text: 'No',
-							checked: !planningObligation
-						}
-					]
-				}
-			}
+			yesNoInput({
+				name: 'planningObligationRadio',
+				value: planningObligation
+			})
 		]
 	};
 

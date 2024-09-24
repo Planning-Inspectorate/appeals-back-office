@@ -41,7 +41,8 @@ export const getDocumentUpload = async (request, response) => {
 		`/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/add-document-details/${currentFolder.folderId}`,
 		false,
 		`Upload ${correspondenceCategory} correspondence`,
-		[]
+		undefined,
+		false
 	);
 };
 

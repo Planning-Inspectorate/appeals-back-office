@@ -33,7 +33,8 @@ const updateLPAQuestionnaireById = (id, data) => {
 				lpaCostsAppliedFor: data.lpaCostsAppliedFor,
 				inConservationArea: data.isConservationArea,
 				isCorrectAppealType: data.isCorrectAppealType,
-				lpaNotificationMethods: processNotificationMethods(id, data, transaction)
+				lpaNotificationMethods: processNotificationMethods(id, data, transaction),
+				isAffectingNeighbouringSites: data.isAffectingNeighbouringSites
 			}
 		})
 	);

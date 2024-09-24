@@ -282,7 +282,11 @@ export const appellantCaseList = {
 		tenantAgriculturalHolding: false,
 		otherTenantsAgriculturalHolding: false,
 		informedTenantsAgriculturalHolding: false,
-		ownershipCertificateSubmitted: false
+		ownershipCertificateSubmitted: false,
+		appellantProcedurePreference: 'Hearing',
+		appellantProcedurePreferenceDetails: 'Need for a detailed examination',
+		appellantProcedurePreferenceDuration: 5,
+		inquiryHowManyWitnesses: 1
 	}
 };
 

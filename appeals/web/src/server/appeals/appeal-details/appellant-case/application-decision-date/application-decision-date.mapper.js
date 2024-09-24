@@ -2,6 +2,7 @@
  * @typedef {import('../../appeal-details.types.js').WebAppeal} Appeal
  */
 import { appealShortReference } from '#lib/appeals-formatter.js';
+import { yesNoInput } from '#lib/page-components/radio.js';
 
 /**
  * @param {Appeal} appealData
@@ -23,34 +24,11 @@ export const changeApplicationHasDecisionDatePage = (
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: `Was an application decision made?`,
 		pageComponents: [
-			{
-				type: 'radios',
-				parameters: {
-					name: 'application-decision-radio',
-					id: 'application-decision-radio',
-					fieldSet: {
-						legend: {
-							text: `Was an application decision made?`,
-							isPageHeading: false,
-							classes: 'govuk-fieldset__legend--l'
-						}
-					},
-					items: [
-						{
-							value: 'yes',
-							text: 'Yes',
-							checked:
-								storedSessionData?.radio === 'yes' || appellantCaseData.applicationDecisionDate
-						},
-						{
-							value: 'no',
-							text: 'No',
-							checked:
-								storedSessionData?.radio === 'no' || !appellantCaseData.applicationDecisionDate
-						}
-					]
-				}
-			}
+			yesNoInput({
+				name: 'application-decision-radio',
+				value:
+					storedSessionData?.radio === 'yes' || Boolean(appellantCaseData.applicationDecisionDate)
+			})
 		]
 	};
 

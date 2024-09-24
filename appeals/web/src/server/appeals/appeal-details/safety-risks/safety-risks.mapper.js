@@ -3,7 +3,7 @@
  */
 
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { conditionalFormatter } from '#lib/mappers/global-mapper-formatter.js';
+import { yesNoInput } from '#lib/page-components/radio.js';
 
 /**
  * @param {Appeal} appealData
@@ -29,38 +29,16 @@ export const changeSafetyRisksPage = (appealData, storedSessionData, backLinkUrl
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: `Change the site health and safety risks (${formattedSource} answer)`,
 		pageComponents: [
-			{
-				type: 'radios',
-				parameters: {
-					name: 'safetyRisksRadio',
-					id: 'safety-risk-radio',
-					fieldSet: {
-						legend: {
-							text: `Were health and safety risks identified by the ${formattedSource}?`,
-							isPageHeading: false,
-							classes: 'govuk-fieldset__legend--l'
-						}
-					},
-					items: [
-						{
-							value: 'yes',
-							text: 'Yes',
-							conditional: conditionalFormatter(
-								'safety-risk-details',
-								'safetyRisksDetails',
-								`Health and safety risks (${formattedSource} details)`,
-								currentDetailsValue
-							),
-							checked: currentRadioValue
-						},
-						{
-							value: 'no',
-							text: 'No',
-							checked: !currentRadioValue
-						}
-					]
+			yesNoInput({
+				name: 'safetyRisksRadio',
+				value: currentRadioValue,
+				yesConditional: {
+					id: 'safety-risk-details',
+					name: 'safetyRisksDetails',
+					hint: `Health and safety risks (${formattedSource} details)`,
+					details: currentDetailsValue
 				}
-			}
+			})
 		]
 	};
 

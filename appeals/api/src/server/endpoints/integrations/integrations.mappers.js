@@ -33,12 +33,12 @@ import { APPEAL_CASE_STAGE, SERVICE_USER_TYPE } from 'pins-data-model';
 import { FOLDERS } from '@pins/appeals/constants/documents.js';
 import { mapSiteVisitOut } from './integrations.mappers/site-visit.mapper.js';
 
-/** @typedef {import('pins-data-model').Schemas.AppellantSubmissionCommand} AppellantSubmissionCommand */
-/** @typedef {import('pins-data-model').Schemas.LPAQuestionnaireCommand} LPAQuestionnaireCommand */
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.ServiceUser} ServiceUser */
 /** @typedef {import('@pins/appeals.api').Schema.Document} Document */
 /** @typedef {import('@pins/appeals.api').Schema.SiteVisit} SiteVisit */
+/** @typedef {import('pins-data-model').Schemas.AppellantSubmissionCommand} AppellantSubmissionCommand */
+/** @typedef {import('pins-data-model').Schemas.LPAQuestionnaireCommand} LPAQuestionnaireCommand */
 /** @typedef {import('pins-data-model').Schemas.AppealHASCase} AppealHASCase */
 /** @typedef {import('pins-data-model').Schemas.ServiceUser} AppealServiceUser */
 /** @typedef {import('pins-data-model').Schemas.AppealDocument} AppealDocument */
@@ -74,7 +74,7 @@ const mappers = {
 
 /**
  * @param {AppellantSubmissionCommand} data
- * @returns {{ appeal: import('#db-client').Prisma.AppealCreateInput, documents: *[], relatedReferences: string[] }}
+ * @returns {{ appeal: import('#db-client').Prisma.AppealCreateInput, documents: import('#db-client').Prisma.DocumentVersionCreateInput[], relatedReferences: string[] }}
  */
 const mapAppealSubmission = (data) => {
 	const { casedata, documents, users } = data;
@@ -127,7 +127,7 @@ const mapAppealSubmission = (data) => {
 /**
  *
  * @param {LPAQuestionnaireCommand} data
- * @returns {{ questionnaire: import('#db-client').Prisma.LPAQuestionnaireCreateInput, documents: *[], relatedReferences: string[], caseReference: string }}
+ * @returns {{ questionnaire: import('#db-client').Prisma.LPAQuestionnaireCreateInput, documents: import('#db-client').Prisma.DocumentVersionCreateInput[], relatedReferences: string[], caseReference: string }}
  */
 const mapQuestionnaireSubmission = (data) => {
 	const { casedata, documents } = data;
@@ -205,7 +205,7 @@ const mapAppeal = (appeal) => {
 /**
  *
  * @param {Document} doc
- * @returns
+ * @returns {AppealDocument | null}
  */
 const mapDocument = (doc) => {
 	return mappers.mapDocumentOut(doc);

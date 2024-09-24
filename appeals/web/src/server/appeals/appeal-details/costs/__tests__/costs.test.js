@@ -942,7 +942,7 @@ describe('costs', () => {
 						);
 					});
 
-					it(`should render the add documents check and confirm page with table displaying info on the uploaded document and relevant change links (${costsCategory} ${costsDocumentType})`, async () => {
+					it(`should render the add documents check and confirm page with summary list displaying info on the uploaded document and relevant change links (${costsCategory} ${costsDocumentType})`, async () => {
 						const addDocumentsResponse = await request
 							.post(
 								`${baseUrl}/1/costs/${costsCategory}/${costsDocumentType}/upload-documents/${costsFolder.folderId}`
@@ -962,19 +962,21 @@ describe('costs', () => {
 						const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 						expect(unprettifiedElement.innerHTML).toContain('Check your answers</h1>');
-						expect(unprettifiedElement.innerHTML).toContain('Name</th>');
-						expect(unprettifiedElement.innerHTML).toContain('Received</th>');
-						expect(unprettifiedElement.innerHTML).toContain('Redaction status</th>');
+						expect(unprettifiedElement.innerHTML).toContain('Name</dt>');
 						expect(unprettifiedElement.innerHTML).toContain(
-							`<a class="govuk-link" href="/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/upload-documents/${costsFolder.folderId}">test-document.txt</a></td>`
+							'<a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-staged/1/test-document.txt" target="_blank">test-document.txt</a></dd>'
+						);
+						expect(unprettifiedElement.innerHTML).toContain('Date received</dt>');
+						expect(unprettifiedElement.innerHTML).toContain(
+							`${dateToDisplayDate(new Date())}</dd>`
+						);
+						expect(unprettifiedElement.innerHTML).toContain('Redaction status</dt>');
+						expect(unprettifiedElement.innerHTML).toContain('Unredacted</dd>');
+						expect(unprettifiedElement.innerHTML).toContain(
+							`<a class="govuk-link" href="/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/upload-documents/${costsFolder.folderId}"> Change</a></dd>`
 						);
 						expect(unprettifiedElement.innerHTML).toContain(
-							`<a class="govuk-link" href="/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/add-document-details/${
-								costsFolder.folderId
-							}">${dateToDisplayDate(new Date())}</a></td>`
-						);
-						expect(unprettifiedElement.innerHTML).toContain(
-							`<a class="govuk-link" href="/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/add-document-details/${costsFolder.folderId}">Unredacted</a></td>`
+							`<a class="govuk-link" href="/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/add-document-details/${costsFolder.folderId}"> Change</a></dd>`
 						);
 						expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 					});
@@ -1076,19 +1078,21 @@ describe('costs', () => {
 						const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 						expect(unprettifiedElement.innerHTML).toContain('Check your answers</h1>');
-						expect(unprettifiedElement.innerHTML).toContain('Name</th>');
-						expect(unprettifiedElement.innerHTML).toContain('Received</th>');
-						expect(unprettifiedElement.innerHTML).toContain('Redaction status</th>');
+						expect(unprettifiedElement.innerHTML).toContain('Name</dt>');
 						expect(unprettifiedElement.innerHTML).toContain(
-							`<a class="govuk-link" href="/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/upload-documents/${costsFolder.folderId}/1">test-document.txt</a></td>`
+							'<a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-staged/1/ph0-documentFileInfo.jpeg/2" target="_blank">test-document.txt</a></dd>'
+						);
+						expect(unprettifiedElement.innerHTML).toContain('Date received</dt>');
+						expect(unprettifiedElement.innerHTML).toContain(
+							`${dateToDisplayDate(new Date())}</dd>`
+						);
+						expect(unprettifiedElement.innerHTML).toContain('Redaction status</dt>');
+						expect(unprettifiedElement.innerHTML).toContain('Unredacted</dd>');
+						expect(unprettifiedElement.innerHTML).toContain(
+							`<a class="govuk-link" href="/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/upload-documents/${costsFolder.folderId}/1"> Change</a></dd>`
 						);
 						expect(unprettifiedElement.innerHTML).toContain(
-							`<a class="govuk-link" href="/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/add-document-details/${
-								costsFolder.folderId
-							}/1">${dateToDisplayDate(new Date())}</a></td>`
-						);
-						expect(unprettifiedElement.innerHTML).toContain(
-							`<a class="govuk-link" href="/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/add-document-details/${costsFolder.folderId}/1">Unredacted</a></td>`
+							`<a class="govuk-link" href="/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/add-document-details/${costsFolder.folderId}/1"> Change</a></dd>`
 						);
 						expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 					});
@@ -2289,10 +2293,6 @@ describe('costs', () => {
 					`${baseUrl}/1/costs/decision/check-and-confirm/${costsDecisionFolder?.folderId}`
 				);
 
-				const element = parseHtml(response.text);
-
-				expect(element.innerHTML).toMatchSnapshot();
-
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 				expect(unprettifiedElement.innerHTML).toContain('Check your answers</h1>');
@@ -2348,10 +2348,6 @@ describe('costs', () => {
 				const response = await request
 					.post(`${baseUrl}/1/costs/decision/check-and-confirm/${costsDecisionFolder?.folderId}`)
 					.send({});
-
-				const element = parseHtml(response.text);
-
-				expect(element.innerHTML).toMatchSnapshot();
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 

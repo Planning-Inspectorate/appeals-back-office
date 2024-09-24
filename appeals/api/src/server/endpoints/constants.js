@@ -127,6 +127,7 @@ export const ERROR_MUST_NOT_BE_IN_FUTURE = 'must not be in the future';
 export const ERROR_MUST_BE_INCOMPLETE_INVALID_REASON =
 	'must be an array of objects containing a required id number parameter and an optional text string array parameter containing 10 or less items';
 export const ERROR_MUST_BE_NUMBER = 'must be a number';
+export const ERROR_NUMBER_RANGE = 'must be a number between {replacement0} and {replacement1}';
 export const ERROR_MUST_BE_SET_AS_HEADER = 'must be set as a header';
 export const ERROR_MUST_BE_STRING = 'must be a string';
 export const ERROR_MUST_BE_UUID = 'must be a uuid';

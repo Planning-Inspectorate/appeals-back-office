@@ -19,7 +19,7 @@ exports[`green-belt GET /change should render the greenBelt change page when acc
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="greenBeltRadio-2" name="greenBeltRadio"
-                            type="radio" value="no" checked>
+                            type="radio" value="no">
                             <label class="govuk-label govuk-radios__label" for="greenBeltRadio-2">No</label>
                         </div>
                     </div>
@@ -51,7 +51,7 @@ exports[`green-belt GET /change should render the greenBelt change page when acc
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="greenBeltRadio-2" name="greenBeltRadio"
-                            type="radio" value="no" checked>
+                            type="radio" value="no">
                             <label class="govuk-label govuk-radios__label" for="greenBeltRadio-2">No</label>
                         </div>
                     </div>

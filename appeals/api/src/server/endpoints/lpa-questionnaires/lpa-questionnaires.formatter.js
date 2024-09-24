@@ -53,6 +53,7 @@ const formatLpaQuestionnaire = (appeal, folders = null) => {
 			doesSiteRequireInspectorAccess: lpaQuestionnaire.siteAccessDetails !== null,
 			isConservationArea: lpaQuestionnaire.inConservationArea,
 			isGreenBelt: lpaQuestionnaire.isGreenBelt,
+			isAffectingNeighbouringSites: lpaQuestionnaire.isAffectingNeighbouringSites,
 			isCorrectAppealType: lpaQuestionnaire.isCorrectAppealType,
 			submittedAt:
 				lpaQuestionnaire.lpaQuestionnaireSubmittedDate &&

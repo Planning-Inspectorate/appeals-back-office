@@ -15,7 +15,8 @@ import { handleSignout } from './auth/auth.controller.js';
 import { assertIsAuthenticated } from './auth/auth.guards.js';
 import {
 	getDocumentDownload,
-	getDocumentDownloadByVersion
+	getDocumentDownloadByVersion,
+	getStagedDocumentDownload
 } from './components/file-downloader.component.js';
 import { addApiClientToRequest } from '../lib/middleware/add-apiclient-to-request.js';
 import { APPEAL_START_RANGE } from '@pins/appeals/constants/common.js';
@@ -71,6 +72,10 @@ router
 router
 	.route('/documents/:caseId/download/:guid/:version/:preview?')
 	.get(addApiClientToRequest, asyncHandler(getDocumentDownloadByVersion));
+
+router
+	.route('/documents/:caseReference/download-staged/:guid/:filename/:version?')
+	.get(asyncHandler(getStagedDocumentDownload));
 
 router.use('/appeals-service', addApiClientToRequest, appealsRouter);
 

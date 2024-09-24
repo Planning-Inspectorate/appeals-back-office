@@ -513,7 +513,7 @@ export async function initialiseAndMapAppealData(
 				},
 				value: {
 					html:
-						convertFromBooleanToYesNo(appealDetails.neighbouringSites?.length > 0) ||
+						convertFromBooleanToYesNo(appealDetails.isAffectingNeighbouringSites) ||
 						'No answer provided'
 				},
 				actions: {

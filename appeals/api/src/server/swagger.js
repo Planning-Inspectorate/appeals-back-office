@@ -380,6 +380,10 @@ export const spec = {
 					documents: []
 				}
 			},
+			appellantProcedurePreference: 'Hearing',
+			appellantProcedurePreferenceDetails: 'Reason for preference',
+			appellantProcedurePreferenceDuration: 0,
+			inquiryHowManyWitnesses: 0,
 			hasAdvertisedAppeal: true,
 			hasDesignAndAccessStatement: true,
 			hasNewPlansOrDrawings: true,
@@ -563,7 +567,11 @@ export const spec = {
 			isSiteVisibleFromPublicRoad: false,
 			validationOutcome: 'valid',
 			visibilityRestrictions: 'The site is behind a tall hedge',
-			isGreenBelt: true
+			isGreenBelt: true,
+			appellantProcedurePreference: 'Hearing',
+			appellantProcedurePreferenceDetails: 'Reason for preference',
+			appellantProcedurePreferenceDuration: 3,
+			inquiryHowManyWitnesses: 2
 		},
 		UpdateAppellantCaseResponse: {},
 		UpdateLPAQuestionnaireRequest: {

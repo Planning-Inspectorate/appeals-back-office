@@ -12,11 +12,13 @@ import {
 	validateStringParameter,
 	validateTextAreaParameter
 } from '#common/validators/string-parameter.js';
+import validateNumberParameter from '#common/validators/number-parameter.js';
 import { validateBooleanParameter } from '#common/validators/boolean-parameter.js';
 import validateBooleanWithConditionalStringParameters from '#common/validators/boolean-with-conditional-string-parameters.js';
 import validateIncompleteInvalidReasonParameter from '#common/validators/incomplete-invalid-reason-parameter.js';
 import validateEnumParameter from '#common/validators/enum-parameter.js';
-import { APPEAL_KNOWS_OTHER_OWNERS } from 'pins-data-model';
+import { APPEAL_KNOWS_OTHER_OWNERS, APPEAL_CASE_PROCEDURE } from 'pins-data-model';
+import validateNumberRangeParameter from '#common/validators/number-range-parameter.js';
 
 /** @typedef {import('express').RequestHandler} RequestHandler */
 
@@ -85,6 +87,12 @@ const patchAppellantCaseValidator = composeMiddleware(
 	validateTextAreaParameter('developmentDescription.details'),
 	validateBooleanParameter('developmentDescription.isChanged'),
 	validateBooleanParameter('appellantCostsAppliedFor'),
+	validateEnumParameter('appellantProcedurePreference', Object.values(APPEAL_CASE_PROCEDURE), true),
+	validateTextAreaParameter('appellantProcedurePreferenceDetails').optional(),
+	validateNumberParameter('appellantProcedurePreferenceDuration').optional(),
+	validateNumberRangeParameter('appellantProcedurePreferenceDuration', 0, 9).optional(),
+	validateNumberParameter('inquiryHowManyWitnesses').optional(),
+	validateNumberRangeParameter('inquiryHowManyWitnesses', 0, 9).optional(),
 	validationErrorHandler
 );
 

@@ -277,7 +277,9 @@ export const getAddDocuments = async (request, response) => {
 		`/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}`,
 		`/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/${request.params.documentType}/add-document-details/{{folderId}}`,
 		getValidationOutcomeFromLpaQuestionnaire(lpaQuestionnaireDetails) === 'complete',
-		pageHeadingTextOverride
+		pageHeadingTextOverride,
+		undefined,
+		false
 	);
 };
 

@@ -58,7 +58,11 @@ const updateAppellantCaseById = async (req, res) => {
 			tenantAgriculturalHolding,
 			otherTenantsAgriculturalHolding,
 			ownershipCertificateSubmitted,
-			appellantCostsAppliedFor
+			appellantCostsAppliedFor,
+			appellantProcedurePreference,
+			appellantProcedurePreferenceDetails,
+			appellantProcedurePreferenceDuration,
+			inquiryHowManyWitnesses
 		},
 		params,
 		validationOutcome
@@ -123,7 +127,11 @@ const updateAppellantCaseById = async (req, res) => {
 					tenantAgriculturalHolding,
 					otherTenantsAgriculturalHolding,
 					ownershipCertificateSubmitted,
-					appellantCostsAppliedFor
+					appellantCostsAppliedFor,
+					appellantProcedurePreference,
+					appellantProcedurePreferenceDetails,
+					appellantProcedurePreferenceDuration,
+					inquiryHowManyWitnesses
 			  });
 
 		const updatedProperties = Object.keys(body).filter((key) => body[key] !== undefined);
@@ -172,7 +180,11 @@ const updateAppellantCaseById = async (req, res) => {
 				applicationDate,
 				applicationDecisionDate,
 				isGreenBelt,
-				applicationDecision
+				applicationDecision,
+				appellantProcedurePreference,
+				appellantProcedurePreferenceDetails,
+				appellantProcedurePreferenceDuration,
+				inquiryHowManyWitnesses
 		  };
 
 	return res.send(response);

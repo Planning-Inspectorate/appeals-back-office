@@ -107,13 +107,22 @@ export function mapAddressInput(appealSite) {
  */
 
 /**
+ * @typedef {Object} ConditionalParams
+ * @property {string} id
+ * @property {string} name
+ * @property {string} hint
+ * @property {string} [details]
+ * @property {ConditionalTypes} [type]
+ */
+
+/**
  *
  * @param {string} id
  * @param {string} name
  * @param {string} hint
  * @param {string|undefined} details
  * @param {ConditionalTypes} [type]
- * @returns
+ * @returns {{html: string}}
  */
 export function conditionalFormatter(id, name, hint, details, type = 'textarea') {
 	let conditionalInputHtml = {

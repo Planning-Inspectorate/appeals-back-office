@@ -8,11 +8,10 @@ import { EventType } from '@pins/event-client';
 import BackOfficeAppError from '#utils/app-error.js';
 
 /**
- *
- * @param {*} data
- * @param {*} documents
+ * @param {import('#db-client').Prisma.AppealCreateInput} data
+ * @param {import('#db-client').Prisma.DocumentVersionCreateInput[]} documents
  * @param {string[] | null} relatedReferences
- * @returns
+ * @returns { }
  */
 const importAppellantCase = async (data, documents, relatedReferences) => {
 	const result = await createAppeal(data, documents, relatedReferences || []);
@@ -27,8 +26,8 @@ const importAppellantCase = async (data, documents, relatedReferences) => {
 /**
  *
  * @param {string} caseReference
- * @param {*} data
- * @param {*} documents
+ * @param {import('#db-client').Prisma.LPAQuestionnaireCreateInput} data
+ * @param {import('#db-client').Prisma.DocumentVersionCreateInput[]} documents
  * @param {string[] | null} relatedReferences
  * @returns
  */
@@ -49,27 +48,36 @@ const importLPAQuestionnaire = async (caseReference, data, documents, relatedRef
 	}
 };
 
-const importDocuments = async (
-	/** @type {any[]} */ documents,
-	/** @type {any[]} */ documentVersions
-) => {
+/**
+ *
+ * @param {import('#db-client').Prisma.DocumentVersionCreateInput[]} documents
+ * @param {import('@pins/appeals.api').Schema.DocumentVersion[]} documentVersions
+ * @returns {Promise<boolean>}
+ */
+const importDocuments = async (documents, documentVersions) => {
 	if (documents.length > 0) {
-		// @ts-ignore
-		const messages = documents.map((d) => {
-			return {
-				originalURI: d.documentURI,
+		const messages = documents
+			.map((d) => {
 				// @ts-ignore
-				importedURI: documentVersions.find((dv) => dv.documentGuid === d.documentGuid).documentURI
-			};
-		});
-		const topic = producers.boBlobMove;
-		const res = await eventClient.sendEvents(topic, messages, EventType.Create);
-		if (res) {
-			return true;
-		}
+				const matchingGuid = documentVersions.find((dv) => dv.documentGuid === d.documentGuid);
+				if (matchingGuid) {
+					return {
+						originalURI: d.documentURI,
+						importedURI: matchingGuid.documentURI
+					};
+				}
+			})
+			.filter((m) => m !== undefined);
 
-		return false;
+		if (messages.length > 0) {
+			const topic = producers.boBlobMove;
+			const res = await eventClient.sendEvents(topic, messages, EventType.Create);
+			if (res) {
+				return true;
+			}
+		}
 	}
+	return false;
 };
 
 export const integrationService = {

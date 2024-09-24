@@ -2268,6 +2268,42 @@ export const lpaNotificationMethodsData = [
 	}
 ];
 
+export const interestedPartyCommentsAwaitingReview = [
+	{
+		id: 6383,
+		origin: 'citizen',
+		author: 'Roger Simmons',
+		status: 'awaiting_review',
+		originalRepresentation: 'Some autogen text 9',
+		redactedRepresentation: '',
+		created: '2024-09-13T12:04:55.565Z',
+		notes: '',
+		attachments: []
+	},
+	{
+		id: 6382,
+		origin: 'citizen',
+		author: 'Fiona Burgess',
+		status: 'awaiting_review',
+		originalRepresentation: 'Some autogen text 8',
+		redactedRepresentation: '',
+		created: '2024-09-13T12:04:55.555Z',
+		notes: '',
+		attachments: []
+	},
+	{
+		id: 6381,
+		origin: 'citizen',
+		author: 'Elaine Madsen',
+		status: 'awaiting_review',
+		originalRepresentation: 'Some autogen text 7',
+		redactedRepresentation: '',
+		created: '2024-09-13T12:04:55.545Z',
+		notes: '',
+		attachments: []
+	}
+];
+
 export const baseSession = {
 	id: '',
 	cookie: { originalMaxAge: 1 },

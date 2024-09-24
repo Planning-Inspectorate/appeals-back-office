@@ -318,6 +318,7 @@ const formatAppeal = (
 				0,
 			localPlanningDepartment: appeal.lpa?.name || '',
 			isGreenBelt: appeal.appellantCase?.isGreenBelt,
+			isAffectingNeighbouringSites: appeal.lpaQuestionnaire?.isAffectingNeighbouringSites,
 			lpaQuestionnaireId: appeal.lpaQuestionnaire?.id || null,
 			planningApplicationReference: appeal.applicationReference || '',
 			procedureType: appeal.procedureType?.name || 'Written',
@@ -330,6 +331,12 @@ const formatAppeal = (
 					visitType: appeal.siteVisit.siteVisitType.name
 				}
 			}),
+			appellantProcedurePreference: appeal.appellantCase?.appellantProcedurePreference,
+			appellantProcedurePreferenceDetails:
+				appeal.appellantCase?.appellantProcedurePreferenceDetails,
+			appellantProcedurePreferenceDuration:
+				appeal.appellantCase?.appellantProcedurePreferenceDuration,
+			inquiryHowManyWitnesses: appeal.appellantCase?.inquiryHowManyWitnesses,
 			createdAt: appeal.caseCreatedDate.toISOString(),
 			startedAt: appeal.caseStartedDate && appeal.caseStartedDate?.toISOString(),
 			validAt: appeal.caseValidDate && appeal.caseValidDate?.toISOString(),

@@ -8,12 +8,13 @@ import { databaseConnector } from '../../server/utils/database-connector.js';
 async function deleteTestRecords() {
 	const lpaCodes = localPlanningDepartmentList.map((lpa) => lpa.lpaCode);
 	const appealIDs = await getAppeals(lpaCodes);
+	const representationIDs = await getReps(appealIDs);
 	const appellantCaseIDs = await getAppellantCases(appealIDs);
 	const lpaqIDs = await getLpaQuestionnaires(appealIDs);
 	const docIDs = await getDocuments(appealIDs);
 
 	try {
-		await deleteAppealData(appealIDs, appellantCaseIDs, lpaqIDs, docIDs);
+		await deleteAppealData(appealIDs, appellantCaseIDs, lpaqIDs, docIDs, representationIDs);
 	} catch (error) {
 		console.error(error);
 		throw error;
@@ -28,11 +29,26 @@ async function deleteTestRecords() {
  * @param {number[]} appellantCasesIDs
  * @param {number[]} lpaqIDs
  * @param {string[]} documentIDs
+ * @param {number[]} representationIDs
  */
-const deleteAppealData = async (appealIDs, appellantCasesIDs, lpaqIDs, documentIDs) => {
+const deleteAppealData = async (
+	appealIDs,
+	appellantCasesIDs,
+	lpaqIDs,
+	documentIDs,
+	representationIDs
+) => {
 	const deleteAppeals = databaseConnector.appeal.deleteMany({
 		where: {
 			id: {
+				in: appealIDs
+			}
+		}
+	});
+
+	const deleteSiteVisits = databaseConnector.siteVisit.deleteMany({
+		where: {
+			appealId: {
 				in: appealIDs
 			}
 		}
@@ -231,6 +247,22 @@ const deleteAppealData = async (appealIDs, appellantCasesIDs, lpaqIDs, documentI
 		}
 	});
 
+	const deleteReps = databaseConnector.representation.deleteMany({
+		where: {
+			appealId: {
+				in: appealIDs
+			}
+		}
+	});
+
+	const deleteRepsAttachments = databaseConnector.representationAttachment.deleteMany({
+		where: {
+			representationId: {
+				in: representationIDs
+			}
+		}
+	});
+
 	const deleteDecisions = databaseConnector.inspectorDecision.deleteMany({
 		where: {
 			appealId: {
@@ -269,6 +301,8 @@ const deleteAppealData = async (appealIDs, appellantCasesIDs, lpaqIDs, documentI
 	await deleteDocAvScans;
 	await deleteDecisions;
 	await deleteDocumentAudits;
+	await deleteRepsAttachments;
+	await deleteReps;
 	await deleteDocumentVersions;
 	await deleteDocuments;
 
@@ -291,7 +325,9 @@ const deleteAppealData = async (appealIDs, appellantCasesIDs, lpaqIDs, documentI
 		deleteStatuses,
 		deleteAppellantCases,
 		deleteLpaQuestionnaires,
-		deleteDocuments,
+		deleteSiteVisits,
+		deleteReps,
+		deleteRepsAttachments,
 		deleteFolders,
 		deleteAppeals
 	]);
@@ -315,6 +351,24 @@ const getAppeals = async (lpaCodes) => {
 		}
 	});
 	return appeals.map((appeal) => appeal.id);
+};
+
+/**
+ * @param {number[]} appealIDs
+ * @returns {Promise<number[]>}
+ */
+const getReps = async (appealIDs) => {
+	const reps = await databaseConnector.representation.findMany({
+		where: {
+			appealId: {
+				in: appealIDs
+			}
+		},
+		select: {
+			id: true
+		}
+	});
+	return reps.map((rep) => rep.id);
 };
 
 /**

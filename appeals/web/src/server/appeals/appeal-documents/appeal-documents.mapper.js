@@ -46,6 +46,7 @@ import { folderIsAdditionalDocuments } from '#lib/documents.js';
  * @param {PageComponent[]} [pageBodyComponents]
  * @param {boolean} [allowMultipleFiles]
  * @param {string} [documentType]
+ * @param {string} [filenamesInFolder]
  * @returns {Promise<import('#appeals/appeal-documents/appeal-documents.types.js').DocumentUploadPageParameters>}
  */
 export async function documentUploadPage(
@@ -64,7 +65,8 @@ export async function documentUploadPage(
 	pageHeadingTextOverride,
 	pageBodyComponents = [],
 	allowMultipleFiles,
-	documentType
+	documentType,
+	filenamesInFolder
 ) {
 	const isAdditionalDocument = folderIsAdditionalDocuments(folderPath);
 	const pageHeadingText =
@@ -83,6 +85,7 @@ export async function documentUploadPage(
 		documentOriginalFileName: documentName,
 		documentVersion: latestVersion,
 		useBlobEmulator: config.useBlobEmulator,
+		filenamesInFolder,
 		...(fileUploadInfo && {
 			uncommittedFiles: JSON.stringify({
 				files: fileUploadInfo.map(
@@ -120,6 +123,18 @@ export const mapDocumentDownloadUrl = (appealId, documentId, documentVersion) =>
 		return `/documents/${appealId}/download/${documentId}/${documentVersion}/preview/`;
 	}
 	return `/documents/${appealId}/download/${documentId}/preview/`;
+};
+
+/**
+ * @param {string|number} appealId
+ * @param {string} documentId
+ * @param {string} filename
+ * @param {string|number} [documentVersion]
+ */
+export const mapStagedDocumentDownloadUrl = (appealId, documentId, filename, documentVersion) => {
+	return `/documents/${appealId}/download-staged/${documentId}/${filename}${
+		documentVersion ? `/${documentVersion}` : ''
+	}`;
 };
 
 /**
@@ -567,6 +582,10 @@ function mapDocumentDetailsItemToDocumentDetailsPageComponents(item, redactionSt
  * @param {string} appealReference
  * @param {FileUploadInfoItem[]} fileUploadInfo
  * @param {RedactionStatus[]} redactionStatuses
+ * @param {number} [documentVersion] current version being uploaded (if uploading a new version of an existing document)
+ * @param {string} [documentFileName] filename of existing document, not new version being uploaded (if uploading a new version of an existing document)
+ * @param {string} [titleTextOverride]
+ * @param {string} [summaryListNameLabelOverride]
  * @returns {PageContent}
  */
 export function addDocumentsCheckAndConfirmPage(
@@ -576,35 +595,79 @@ export function addDocumentsCheckAndConfirmPage(
 	changeRedactionStatusLinkUrl,
 	appealReference,
 	fileUploadInfo,
-	redactionStatuses
+	redactionStatuses,
+	documentVersion,
+	documentFileName,
+	titleTextOverride,
+	summaryListNameLabelOverride
 ) {
 	/** @type {PageContent} */
 	const pageContent = {
-		title: 'Check your answers',
+		title: titleTextOverride || 'Check your answers',
 		backLinkUrl,
 		preHeading: `Appeal ${appealShortReference(appealReference)}`,
 		heading: 'Check your answers',
 		pageComponents: [
 			{
-				type: 'table',
+				type: 'summary-list',
 				parameters: {
-					head: [{ text: 'Name' }, { text: 'Received' }, { text: 'Redaction status' }],
-					rows: fileUploadInfo.map((/** @type {FileUploadInfoItem} */ infoItem) => [
+					rows: [
 						{
-							html: `<a class="govuk-link" href="${changeFileLinkUrl}">${infoItem.name}</a>`
+							key: {
+								text: summaryListNameLabelOverride || 'Name'
+							},
+							value: {
+								html: `<a class="govuk-link" href="${mapStagedDocumentDownloadUrl(
+									appealReference,
+									fileUploadInfo[0].GUID,
+									documentFileName || fileUploadInfo[0].name,
+									documentVersion
+								)}" target="_blank">${fileUploadInfo[0].name}</a>`
+							},
+							actions: {
+								items: [
+									{
+										text: 'Change',
+										href: changeFileLinkUrl
+									}
+								]
+							}
 						},
 						{
-							html: `<a class="govuk-link" href="${changeDateLinkUrl}">${apiDateStringToDisplayDate(
-								infoItem.receivedDate
-							)}</a>`
+							key: {
+								text: 'Date received'
+							},
+							value: {
+								text: apiDateStringToDisplayDate(fileUploadInfo[0].receivedDate)
+							},
+							actions: {
+								items: [
+									{
+										text: 'Change',
+										href: changeDateLinkUrl
+									}
+								]
+							}
 						},
 						{
-							html: `<a class="govuk-link" href="${changeRedactionStatusLinkUrl}">${capitalize(
-								redactionStatusIdToName(redactionStatuses, infoItem.redactionStatus)
-							)}</a>`
+							key: {
+								text: 'Redaction status'
+							},
+							value: {
+								text: capitalize(
+									redactionStatusIdToName(redactionStatuses, fileUploadInfo[0].redactionStatus)
+								)
+							},
+							actions: {
+								items: [
+									{
+										text: 'Change',
+										href: changeRedactionStatusLinkUrl
+									}
+								]
+							}
 						}
-					]),
-					firstCellIsHeader: false
+					]
 				}
 			}
 		]
