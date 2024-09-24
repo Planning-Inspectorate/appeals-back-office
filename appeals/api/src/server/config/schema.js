@@ -9,6 +9,8 @@ export default joi
 		DATABASE_URL: joi.string(),
 		BO_BLOB_STORAGE_ACCOUNT: joi.string(),
 		BO_BLOB_CONTAINER: joi.string(),
+		blobEmulatorSasUrl: joi.string().optional(),
+		useBlobEmulator: joi.boolean(),
 		defaultApiVersion: joi.string(),
 		serviceBusOptions: joi.object({
 			hostname: joi.string().optional()
