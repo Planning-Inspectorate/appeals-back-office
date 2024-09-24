@@ -814,3 +814,25 @@ export const postDeleteDocument = async (
 
 	return response.status(500).render('app/500.njk');
 };
+
+/** @type {import('express').RequestHandler} */
+export const deleteUncommittedDocumentFromSession = async (request, response) => {
+	const {
+		params: { guid },
+		session
+	} = request;
+
+	const index = session.fileUploadInfo?.files.findIndex(
+		(
+			/** @type {import('#appeals/appeal-documents/appeal-documents.types').FileUploadInfoItem} */ fileInfoItem
+		) => fileInfoItem.GUID === guid
+	);
+
+	if (index >= 0) {
+		session.fileUploadInfo?.files.splice(index, 1);
+		response.status(200).send('OK');
+		return;
+	}
+
+	response.status(500).send('ERROR');
+};

@@ -73,11 +73,6 @@ export interface UncommittedFiles {
 	files: UncommittedFile[];
 }
 
-export interface RemovedUncommittedFile {
-	guid: string;
-	blobStorageUrl: string;
-}
-
 export interface StagedFile {
 	name: string;
 	guid: string;

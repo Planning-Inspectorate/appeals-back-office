@@ -48,7 +48,7 @@ const clientActions = (container) => {
 	/** @type {HTMLElement | null} */
 	let dropZone;
 
-	const { uploadFiles, deleteFiles } = serverActions(container);
+	const { uploadFiles, deleteFiles, deleteUncommittedFileFromSession } = serverActions(container);
 
 	function setupDropzone() {
 		if (allowSingleFileOnly() || isNewVersionOfExistingFile()) {
@@ -130,9 +130,6 @@ const clientActions = (container) => {
 	const uncommittedFiles = {
 		files: []
 	};
-
-	/** @type {import('#appeals/appeal-documents/appeal-documents.types').RemovedUncommittedFile[]} */
-	const removedUncommittedFiles = [];
 
 	/**
 	 * @typedef {Object} UploadInfo
@@ -457,10 +454,9 @@ const clientActions = (container) => {
 			);
 
 			if (matchingUncommittedFile) {
-				removedUncommittedFiles.push({
-					guid: matchingUncommittedFile.GUID,
-					blobStorageUrl: matchingUncommittedFile.blobStoreUrl
-				});
+				deleteUncommittedFileFromSession(matchingUncommittedFile.GUID);
+
+				await deleteFiles([matchingUncommittedFile.blobStoreUrl]);
 			} else {
 				await deleteFiles([stagedFile.blobStorageUrl]);
 			}
@@ -471,19 +467,12 @@ const clientActions = (container) => {
 		updateStagedFilesUI(stagedFiles);
 	}
 
-	async function deleteRemovedUncommittedFiles() {
-		await deleteFiles(
-			removedUncommittedFiles.map((removedUncommittedFile) => removedUncommittedFile.blobStorageUrl)
-		);
-	}
-
 	/**
 	 *	@param {Event} clickEvent
 	 */
 	async function onSubmit(clickEvent) {
 		clickEvent.preventDefault();
 
-		await deleteRemovedUncommittedFiles();
 		createUploadInfoForStagedDocuments();
 
 		form?.submit();

@@ -130,8 +130,13 @@ export const mapDocumentDownloadUrl = (appealId, documentId, documentVersion) =>
  * @param {string} filename
  * @param {string|number} [documentVersion]
  */
-export const mapStagedDocumentDownloadUrl = (appealId, documentId, filename, documentVersion) => {
-	return `/documents/${appealId}/download-staged/${documentId}/${filename}${
+export const mapUncommittedDocumentDownloadUrl = (
+	appealId,
+	documentId,
+	filename,
+	documentVersion
+) => {
+	return `/documents/${appealId}/download-uncommitted/${documentId}/${filename}${
 		documentVersion ? `/${documentVersion}` : ''
 	}`;
 };
@@ -632,7 +637,7 @@ export function addDocumentsCheckAndConfirmPage(
 							text: summaryListNameLabelOverride || 'Name'
 						},
 						value: {
-							html: `<a class="govuk-link" href="${mapStagedDocumentDownloadUrl(
+							html: `<a class="govuk-link" href="${mapUncommittedDocumentDownloadUrl(
 								appealReference,
 								uncommittedFile.GUID,
 								documentFileName || uncommittedFile.name,

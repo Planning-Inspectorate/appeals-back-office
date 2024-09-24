@@ -110,6 +110,7 @@ const serverActions = (uploadForm) => {
 	};
 
 	/**
+	 * Delete one or more files from blob storage
 	 * @param {string[]} blobStorageUrls
 	 */
 	const deleteFiles = async (blobStorageUrls) => {
@@ -134,9 +135,29 @@ const serverActions = (uploadForm) => {
 		}
 	};
 
+	/**
+	 * Deletes session upload info for a single uncommitted file (does not remove file from blob storage, only deletes metadata from session)
+	 * @param {string} guid
+	 */
+	const deleteUncommittedFileFromSession = async (guid) => {
+		const result = await fetch(`/documents/delete-uncommitted/${guid}`, {
+			method: 'DELETE'
+		}).then((response) => {
+			if (!response.ok) {
+				throw new Error(
+					`An error occurred when requesting deletion of session data for the uncommitted file ${guid}`
+				);
+			}
+			return response;
+		});
+
+		return result;
+	};
+
 	return {
 		uploadFiles,
-		deleteFiles
+		deleteFiles,
+		deleteUncommittedFileFromSession
 	};
 };
 

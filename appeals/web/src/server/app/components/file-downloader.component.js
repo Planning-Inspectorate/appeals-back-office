@@ -79,13 +79,13 @@ export const getDocumentDownload = async ({ apiClient, params, session }, respon
 };
 
 /**
- * Download one staged/uncommitted document
+ * Download one uncommitted document
  *
  * @param {{ params: { caseReference: string, guid: string, filename: string, version: string | undefined }, session: SessionWithAuth }} request
  * @param {Response} response
  * @returns {Promise<Response>}
  */
-export const getStagedDocumentDownload = async (
+export const getUncommittedDocumentDownload = async (
 	{ params: { caseReference, guid, filename, version }, session },
 	response
 ) => {
