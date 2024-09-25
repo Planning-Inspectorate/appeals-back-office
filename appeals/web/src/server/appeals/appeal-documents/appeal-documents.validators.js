@@ -1,7 +1,7 @@
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
 import { createDateInputFieldsValidator } from '#lib/validators/date-input.validator.js';
-import { dateIsValid } from '#lib/dates.js';
+import { dateIsValid, dateIsTodayOrInThePast } from '#lib/dates.js';
 
 export const validateDocumentDetailsBodyFormat = createValidator(
 	body()
@@ -71,23 +71,7 @@ export const validateDocumentDetailsReceivedDateIsNotFutureDate = createValidato
 					return false;
 				}
 
-				const dayNumber = Number.parseInt(day, 10);
-				const monthNumber = Number.parseInt(month, 10);
-				const yearNumber = Number.parseInt(year, 10);
-
-				const inputDate = new Date(yearNumber, monthNumber - 1, dayNumber);
-				const todayDate = new Date();
-
-				const deserializedInputDate = new Date(
-					Date.UTC(inputDate.getFullYear(), inputDate.getMonth(), inputDate.getDate())
-				);
-				const deserializedTodayDate = new Date(
-					Date.UTC(todayDate.getFullYear(), todayDate.getMonth(), todayDate.getDate())
-				);
-
-				if (deserializedInputDate > deserializedTodayDate) {
-					return false;
-				}
+				return dateIsTodayOrInThePast({day, month, year});
 			}
 
 			return true;

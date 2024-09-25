@@ -159,7 +159,7 @@ export function dateDecisionLetterPage(
 export function checkAndConfirmPage(request, appealData, session) {
 	const decisionOutcome = mapDecisionOutcome(session.inspectorDecision?.outcome);
 	const decisionLetter = session.fileUploadInfo?.[0]?.name;
-	const letterDate = new Date(session.inspectorDecision?.letterDate);
+	const letterDate = session.inspectorDecision?.letterDate;
 
 	/** @type {PageComponent} */
 	const summaryListComponent = {

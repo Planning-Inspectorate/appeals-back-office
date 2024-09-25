@@ -1502,7 +1502,7 @@ const mapDocumentVersionToAuditActivityHtml = async (
 				);
 
 				const userName = userData?.name ? surnameFirstToFullName(userData?.name) : '';
-				const loggedAt = new Date(matchingAuditItem.auditTrail.loggedAt);
+				const loggedAt = matchingAuditItem.auditTrail.loggedAt;
 
 				return `<p class="govuk-body"><strong>${
 					matchingAuditItem.action

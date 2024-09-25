@@ -26,10 +26,7 @@ const renderStartDatePage = async (request, response) => {
 		return response.status(500).render('app/500.njk');
 	}
 
-	const now = new Date();
-	const today = dateISOStringToDisplayDate(now);
-
-	const mappedPageContent = startCasePage(appealId, appealReference, today);
+	const mappedPageContent = startCasePage(appealId, appealReference, dateISOStringToDisplayDate(getTodaysISOString()));
 
 	return response.status(200).render('patterns/display-page.pattern.njk', {
 		pageContent: mappedPageContent
@@ -41,16 +38,7 @@ export const postStartDate = async (request, response) => {
 	try {
 		const { appealId } = request.currentAppeal;
 
-		const today = new Date();
-		const todayDayMonthYear = {
-			day: today.getDate(),
-			month: today.getMonth() + 1,
-			year: today.getFullYear()
-		};
-
-		const todayApiDateString = dayMonthYearHourMinuteToISOString(todayDayMonthYear);
-
-		await startCaseService.setStartDate(request.apiClient, appealId, todayApiDateString);
+		await startCaseService.setStartDate(request.apiClient, appealId, getTodaysISOString());
 
 		return response.redirect(
 			`/appeals-service/appeal-details/${appealId}/start-case/add/confirmation`
@@ -94,10 +82,7 @@ const renderChangeDatePage = async (request, response) => {
 		return response.render('app/500.njk');
 	}
 
-	const now = new Date();
-	const today = dateISOStringToDisplayDate(now);
-
-	const mappedPageContent = changeDatePage(appealId, appealReference, today);
+	const mappedPageContent = changeDatePage(appealId, appealReference, dateISOStringToDisplayDate(getTodaysISOString()));
 
 	return response.render('patterns/display-page.pattern.njk', {
 		pageContent: mappedPageContent

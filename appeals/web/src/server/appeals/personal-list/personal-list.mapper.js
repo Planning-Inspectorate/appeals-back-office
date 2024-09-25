@@ -2,7 +2,7 @@ import config from '#environment/config.js';
 import { removeSummaryListActions } from '#lib/mappers/mapper-utilities.js';
 import { appealShortReference, linkedAppealStatus } from '#lib/appeals-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
-import { dateISOStringToDisplayDate } from '#lib/dates.js';
+import { dateISOStringToDisplayDate, dateIsInThePast, dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
 import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
 import * as authSession from '../../app/auth/auth-session.service.js';
 import { appealStatusToStatusTag } from '#lib/nunjucks-filters/status-tag.js';
@@ -232,7 +232,7 @@ export function personalListPage(
  * @param {number|null|undefined} lpaQuestionnaireId
  * @param {string} appellantCaseStatus
  * @param {string} lpaQuestionnaireStatus
- * @param {string} dueDate
+ * @param {string} appealDueDate
  * @param {boolean} [isCaseOfficer]
  * @returns {string}
  */
@@ -242,12 +242,9 @@ export function mapAppealStatusToActionRequiredHtml(
 	lpaQuestionnaireId,
 	appellantCaseStatus,
 	lpaQuestionnaireStatus,
-	dueDate,
+	appealDueDate,
 	isCaseOfficer = false
 ) {
-	const currentDate = new Date();
-	const appealDueDate = new Date(dueDate);
-
 	switch (appealStatus) {
 		case APPEAL_CASE_STATUS.READY_TO_START:
 			if (!isCaseOfficer) {
@@ -263,7 +260,7 @@ export function mapAppealStatusToActionRequiredHtml(
 			}
 			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/appellant-case">Review appellant case</a>`;
 		case APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE:
-			if (currentDate > appealDueDate) {
+			if (dateIsInThePast(dateISOStringToDayMonthYearHourMinute(appealDueDate))) {
 				return 'LPA questionnaire overdue';
 			}
 			if (lpaQuestionnaireStatus == 'Incomplete') {
