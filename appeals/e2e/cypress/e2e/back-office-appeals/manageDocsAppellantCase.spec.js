@@ -21,7 +21,7 @@ describe('manage docs on appellant case', () => {
 	it('upload new version of document on appellant case', { tags: tag.smoke }, () => {
 		cy.createCase().then((caseRef) => {
 			happyPathHelper.uploadDocAppellantCase(caseRef);
-			cy.reload();
+			cy.reload(); //this is to refresh the page to remove virus scanning tag//
 			caseDetailsPage.clickManageAgreementToChangeDescriptionEvidence();
 			caseDetailsPage.clickLinkByText('View and edit');
 			caseDetailsPage.clickButtonByText('upload a new version');
