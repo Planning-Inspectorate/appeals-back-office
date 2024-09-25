@@ -265,7 +265,7 @@ function mapStatusDependentNotifications(
 	ipCommentsAwaitingReview = false
 ) {
 	switch (appealDetails.appealStatus) {
-		case 'assign_case_officer':
+		case APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER:
 			addNotificationBannerToSession(
 				session,
 				'assignCaseOfficer',
@@ -273,7 +273,7 @@ function mapStatusDependentNotifications(
 				`<p class="govuk-notification-banner__heading">Appeal ready to be assigned to case officer</p><p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/${appealDetails.appealId}/assign-user/case-officer" data-cy="banner-assign-case-officer">Assign case officer</a></p>`
 			);
 			break;
-		case 'issue_determination':
+		case APPEAL_CASE_STATUS.ISSUE_DETERMINATION:
 			addNotificationBannerToSession(
 				session,
 				'readyForDecision',
@@ -283,7 +283,7 @@ function mapStatusDependentNotifications(
 				)}">Issue decision</a></p>`
 			);
 			break;
-		case 'ready_to_start':
+		case APPEAL_CASE_STATUS.READY_TO_START:
 			addNotificationBannerToSession(
 				session,
 				'appealValidAndReadyToStart',
@@ -293,7 +293,7 @@ function mapStatusDependentNotifications(
 				)}">Start case</a></p>`
 			);
 			break;
-		case 'awaiting_transfer':
+		case APPEAL_CASE_STATUS.AWAITING_TRANSFER:
 			addNotificationBannerToSession(
 				session,
 				'appealAwaitingTransfer',
@@ -308,7 +308,7 @@ function mapStatusDependentNotifications(
 					session,
 					'interestedPartyCommentsAwaitingReview',
 					appealDetails.appealId,
-					`<p class="govuk-notification-banner__heading">Review comments</p><p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments" data-cy="banner-review-ip-comments">Review</a></p>`
+					`<p class="govuk-notification-banner__heading">Review comments</p><p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments" data-cy="banner-review-ip-comments">Review <span class="govuk-visually-hidden">interested party comments</span></a></p>`
 				);
 			}
 			break;
