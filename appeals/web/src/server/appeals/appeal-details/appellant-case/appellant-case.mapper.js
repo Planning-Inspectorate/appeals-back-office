@@ -570,8 +570,6 @@ export function mapWebReviewOutcomeToApiReviewOutcome(
 ) {
 	let parsedReasons;
 
-	console.log("mapWebReviewOutcomeToApiReviewOutcome", updatedDueDate, dayMonthYearHourMinuteToISOString(updatedDueDate));
-
 	if (invalidOrIncompleteReasons) {
 		if (!Array.isArray(invalidOrIncompleteReasons)) {
 			invalidOrIncompleteReasons = [invalidOrIncompleteReasons];

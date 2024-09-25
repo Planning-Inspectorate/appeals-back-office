@@ -1,7 +1,9 @@
+import { isValid, isBefore, isAfter, startOfDay, parseISO } from 'date-fns';
 import { dayMonthYearHourMinuteToISOString } from '#lib/dates.js';
 import logger from '#lib/logger.js';
 import { updateValidDatePage } from './outcome-valid.mapper.js';
 import * as outcomeValidService from './outcome-valid.service.js';
+
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getValidDate = async (request, response) => {
@@ -32,14 +34,13 @@ export const postValidDate = async (request, response) => {
 		}
 
 		const { appealId, appellantCaseId, createdAt } = currentAppeal;
-		const validDate = new Date(
-			updatedValidDateYear,
-			updatedValidDateMonth - 1,
-			updatedValidDateDay
-		);
-		const receivedDate = new Date(createdAt).setHours(0, 0, 0, 0);
+		const validDateISOString = dayMonthYearHourMinuteToISOString({
+			year: updatedValidDateYear,
+			month: updatedValidDateMonth,
+			day: updatedValidDateDay
+		});
 
-		if (validDate < new Date(receivedDate)) {
+		if (isBefore(new Date(validDateISOString), new Date(createdAt))) {
 			let errorMessage = [
 				{ msg: 'The valid date must be on or after the date the case was received.' }
 			];

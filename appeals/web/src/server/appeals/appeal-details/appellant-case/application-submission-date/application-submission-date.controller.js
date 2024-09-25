@@ -5,6 +5,7 @@ import { HTTPError } from 'got';
 import { getAppellantCaseFromAppealId } from '../appellant-case.service.js';
 import { changeApplicationSubmissionDatePage } from './application-submission-date.mapper.js';
 import { changeApplicationSubmissionDate } from './application-submission-date.service.js';
+import { dayMonthYearHourMinuteToISOString } from '#lib/dates.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -87,11 +88,6 @@ export const postChangeApplicationSubmissionDate = async (request, response) => 
 			return response.status(500).render('app/500.njk');
 		}
 
-		const updatedApplicationDateDayString = updatedApplicationDateDay.toString().padStart(2, '0');
-		const updatedApplicationDateMonthString = updatedApplicationDateMonth
-			.toString()
-			.padStart(2, '0');
-
 		const { currentAppeal, apiClient } = request;
 
 		const { appealId, appellantCaseId } = currentAppeal;
@@ -100,7 +96,7 @@ export const postChangeApplicationSubmissionDate = async (request, response) => 
 			apiClient,
 			appealId,
 			appellantCaseId,
-			`${updatedApplicationDateYear}-${updatedApplicationDateMonthString}-${updatedApplicationDateDayString}`
+			dayMonthYearHourMinuteToISOString({day: updatedApplicationDateDay, month: updatedApplicationDateMonth, year: updatedApplicationDateYear})
 		);
 
 		addNotificationBannerToSession(

@@ -36,7 +36,7 @@ export const dateIsValid = (dayMonthYearHourMinute) => {
 export const dateIsInTheFuture = (dayMonthYearHourMinute) => {
 	const date = new Date(dayMonthYearHourMinuteToISOString(dayMonthYearHourMinute));
 
-	return isAfter(date, startOfDay(new Date(getTodaysISOString())));
+	return isAfter(date, new Date(getTodaysISOString()));
 };
 
 /**
@@ -48,7 +48,7 @@ export const dateIsInThePast = (dayMonthYearHourMinute) => {
 	const todaysISOString = getTodaysISOString();
 
 	const date = new Date(dateISOString);
-	return isBefore(date, startOfDay(new Date(todaysISOString)));
+	return isBefore(date, new Date(todaysISOString));
 };
 
 /**
@@ -64,7 +64,7 @@ export const dateIsTodayOrInThePast = (dayMonthYearHourMinute) => {
 	}
 
 	const date = new Date(dateISOString);
-	return isBefore(date, startOfDay(new Date(todaysISOString)));
+	return isBefore(date, new Date(todaysISOString));
 };
 
 /**

@@ -15,7 +15,7 @@ export const renderAudit = async (request, response) => {
 		const auditTrails = await Promise.all(
 			auditInfo.map(async (audit) => {
 				const details = await mapMessageContent(appeal, audit.details, audit.doc, request.session);
-				const loggedDate = new Date(audit.loggedDate);
+				const loggedDate = audit.loggedDate;
 				return {
 					date: dateISOStringToDisplayDate(loggedDate),
 					time: dateISOStringToDisplayTime24hr(loggedDate),

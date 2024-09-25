@@ -339,7 +339,6 @@ export const renderCheckYourAnswers = async (request, response) => {
 	if (!currentAppeal || currentAppeal.appealStatus === APPEAL_CASE_STATUS.WITHDRAWN) {
 		return response.status(404).render('app/404');
 	}
-	console.log(session.fileUploadInfo);
 	if (!objectContainsAllKeys(session, ['fileUploadInfo', 'withdrawal'])) {
 		return response.status(500).render('app/500.njk');
 	}

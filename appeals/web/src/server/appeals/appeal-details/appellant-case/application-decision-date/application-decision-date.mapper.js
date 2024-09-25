@@ -3,6 +3,11 @@
  */
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { yesNoInput } from '#lib/page-components/radio.js';
+import { dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
+
+/**
+ * @typedef {import('../../../../appeals/appeals.types.js').DayMonthYearHourMinute} DayMonthYearHourMinute
+ */
 
 /**
  * @param {Appeal} appealData
@@ -38,7 +43,7 @@ export const changeApplicationHasDecisionDatePage = (
 /**
  * @param {Appeal} appealData
  * @param {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} appellantCaseData
- * @param {{day: string, month: string, year: string}} storedSessionData
+ * @param {DayMonthYearHourMinute} storedSessionData
  * @returns {PageContent}
  */
 export const changeApplicationSetDecisionDatePage = (
@@ -48,16 +53,20 @@ export const changeApplicationSetDecisionDatePage = (
 ) => {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
-	let day = storedSessionData?.day ?? '';
-	let month = storedSessionData?.month ?? '';
-	let year = storedSessionData?.year ?? '';
+	let day = ''
+	let month = '';
+	let year = '';
 
-	if (appellantCaseData.applicationDecisionDate && !storedSessionData) {
-		const formattedApplicationDecisionDate = new Date(appellantCaseData.applicationDecisionDate);
+	if (storedSessionData) {
+		day = String(storedSessionData.day);
+		month = String(storedSessionData.month);
+		year = String(storedSessionData.year);
+	} else if (!storedSessionData && appellantCaseData.applicationDecisionDate) {
+		const formattedApplicationDecisionDate = dateISOStringToDayMonthYearHourMinute(appellantCaseData.applicationDecisionDate);
 
-		day = formattedApplicationDecisionDate.getDate().toString();
-		month = (formattedApplicationDecisionDate.getMonth() + 1).toString();
-		year = formattedApplicationDecisionDate.getFullYear().toString();
+		day = String(formattedApplicationDecisionDate.day);
+		month = String(formattedApplicationDecisionDate.month);
+		year = String(formattedApplicationDecisionDate.year);
 	}
 
 	/** @type {PageContent} */
