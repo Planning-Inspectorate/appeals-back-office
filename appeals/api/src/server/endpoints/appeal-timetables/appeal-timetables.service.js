@@ -16,7 +16,7 @@ import transitionState from '#state/transition-state.js';
 import formatDate from '#utils/date-formatter.js';
 import config from '#config/config.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
-import { PROCEDURE_TYPE_MAP } from '@pins/appeals/constants/documents.js';
+import { PROCEDURE_TYPE_MAP } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */

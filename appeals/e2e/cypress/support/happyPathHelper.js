@@ -56,5 +56,18 @@ export const happyPathHelper = {
 		let visitDate = new Date();
 		visitDate.setMonth(visitDate.getMonth() + 10); // TODO What is a suitable dynamic date to use here?
 		return visitDate;
+	},
+
+	uploadDocAppellantCase(caseRef) {
+		cy.visit(urlPaths.appealsList);
+		listCasesPage.clickAppealByRef(caseRef);
+		happyPathHelper.assignCaseOfficer(caseRef);
+		caseDetailsPage.clickReviewAppellantCase();
+		caseDetailsPage.clickAddAgreementToChangeDescriptionEvidence();
+		caseDetailsPage.uploadSamplePdf();
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Confirm');
+		caseDetailsPage.clickButtonByText('Confirm');
+		caseDetailsPage.verifyAnswerSummaryValue('sample-doc.pdf');
 	}
 };
