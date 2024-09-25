@@ -1,4 +1,5 @@
 // @ts-nocheck
+import { Then } from '@badeball/cypress-cucumber-preprocessor';
 import { Page } from './basePage';
 
 export class CaseDetailsPage extends Page {
@@ -20,7 +21,8 @@ export class CaseDetailsPage extends Page {
 		addLinkedAppeal: 'add-linked-appeal',
 		uploadFile: '#upload-file-1',
 		changeAppealType: 'change-appeal-type',
-		addAgreementToChangeDescriptionEvidence: 'add-agreement-to-change-description-evidence'
+		addAgreementToChangeDescriptionEvidence: 'add-agreement-to-change-description-evidence',
+		manageAgreementToChangeDescriptionEvidence: 'manage-agreement-to-change-description-evidence'
 	};
 
 	elements = {
@@ -40,7 +42,9 @@ export class CaseDetailsPage extends Page {
 		uploadFile: () => cy.get(this.selectors.uploadFile),
 		changeAppealType: () => cy.getByData(this._cyDataSelectors.changeAppealType),
 		addAgreementToChangeDescriptionEvidence: () =>
-			cy.getByData(this._cyDataSelectors.addAgreementToChangeDescriptionEvidence)
+			cy.getByData(this._cyDataSelectors.addAgreementToChangeDescriptionEvidence),
+		manageAgreementToChangeDescriptionEvidence: () =>
+			cy.getByData(this._cyDataSelectors.manageAgreementToChangeDescriptionEvidence)
 	};
 	/********************************************************
 	 ************************ Actions ************************
@@ -113,6 +117,9 @@ export class CaseDetailsPage extends Page {
 	uploadSamplePdf() {
 		cy.get('#upload-file-1').selectFile('cypress/fixtures/sample-doc.pdf', { force: true });
 	}
+	uploadTestPdf() {
+		cy.get('#upload-file-1').selectFile('cypress/fixtures/test.pdf', { force: true });
+	}
 	// TODO Get this to use the vanilla 'clickButtonByText()' function
 	// This currently doesn't work, as there are multiple matches and some of not invisible
 	clickAddAnother() {
@@ -121,6 +128,10 @@ export class CaseDetailsPage extends Page {
 
 	clickAddAgreementToChangeDescriptionEvidence() {
 		this.elements.addAgreementToChangeDescriptionEvidence().click();
+	}
+
+	clickManageAgreementToChangeDescriptionEvidence() {
+		this.elements.manageAgreementToChangeDescriptionEvidence().click();
 	}
 
 	/***************************************************************
