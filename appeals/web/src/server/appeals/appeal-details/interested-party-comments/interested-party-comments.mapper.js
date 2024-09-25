@@ -10,22 +10,16 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 
 /**
  *
- * @param {SingleAppellantCaseResponse} appellantCaseData
  * @param {Appeal} appealDetails
- * @param {string} currentRoute
  * @param {import("#lib/pagination-utilities.js").PaginationParameters} paginationParameters
- * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
  * @param {IPCommentsList} awaitingReview
  * @param {IPCommentsList} valid
  * @param {IPCommentsList} invalid
  * @returns {Promise<PageContent>}
  */
 export async function interestedPartyCommentsPage(
-	appellantCaseData,
 	appealDetails,
-	currentRoute,
 	paginationParameters,
-	session,
 	awaitingReview,
 	valid,
 	invalid

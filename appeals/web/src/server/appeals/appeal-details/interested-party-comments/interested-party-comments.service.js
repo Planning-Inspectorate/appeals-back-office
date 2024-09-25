@@ -1,18 +1,4 @@
-/**
- * @typedef {import('@pins/appeals.api').Appeals.NotValidReasonOption} NotValidReasonOption
- * @typedef {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} SingleAppellantCaseResponse
- */
-
 import { paginationDefaultSettings } from '#appeals/appeal.constants.js';
-
-/**
- * @param {import('got').Got} apiClient
- * @param {number} appealId
- * @param {number} appellantCaseId
- */
-export function getAppellantCaseFromAppealId(apiClient, appealId, appellantCaseId) {
-	return apiClient.get(`appeals/${appealId}/appellant-cases/${appellantCaseId}`).json();
-}
 
 /** @typedef {import('#appeals/appeal-details/interested-party-comments/interested-party-comments.types').Representation} IPComments */
 /** @typedef {import('#appeals/appeal-details/interested-party-comments/interested-party-comments.types').RepresentationList} IPCommentsList */

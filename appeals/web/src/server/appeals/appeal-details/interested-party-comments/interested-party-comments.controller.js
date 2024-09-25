@@ -47,19 +47,9 @@ const renderInterestedPartyComments = async (request, response) => {
 				)
 			]);
 
-			const appellantCaseResponse =
-				await interestedPartyCommentsService.getAppellantCaseFromAppealId(
-					request.apiClient,
-					currentAppeal.appealId,
-					currentAppeal.appellantCaseId
-				);
-
 			const mappedPageContent = await interestedPartyCommentsPage(
-				appellantCaseResponse,
 				currentAppeal,
-				request.originalUrl,
 				paginationParameters,
-				request.session,
 				awaitingReviewComments,
 				validComments,
 				invalidComments
