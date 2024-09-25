@@ -125,18 +125,18 @@ export const mapDocumentDownloadUrl = (appealId, documentId, documentVersion) =>
 };
 
 /**
- * @param {string|number} appealId
+ * @param {string|number} appealReference
  * @param {string} documentId
  * @param {string} filename
  * @param {string|number} [documentVersion]
  */
 export const mapUncommittedDocumentDownloadUrl = (
-	appealId,
+	appealReference,
 	documentId,
 	filename,
 	documentVersion
 ) => {
-	return `/documents/${appealId}/download-uncommitted/${documentId}/${filename}${
+	return `/documents/${appealReference}/download-uncommitted/${documentId}/${filename}${
 		documentVersion ? `/${documentVersion}` : ''
 	}`;
 };
