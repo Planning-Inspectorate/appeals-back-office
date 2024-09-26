@@ -667,6 +667,28 @@ interface CreateAuditTrailRequest {
 	userId: number;
 }
 
+export interface CreateCasenote {
+	caseId: number;
+	comment: string;
+	userId: number;
+	createdAt: Date;
+	archived?: boolean;
+}
+
+type GetCasenotesResponse = {
+	id: number;
+	comment: string;
+	createdAt: string;
+	azureAdUserId: string;
+}[]
+
+type GetCasenoteResponse = {
+	id: number;
+	comment: string;
+	createdAt: string;
+	azureAdUserId: string;
+}
+
 export interface CreateSiteVisitData {
 	appealId: number;
 	visitDate?: string;
@@ -802,5 +824,7 @@ export {
 	SetAppealDecisionRequest,
 	SetInvalidAppealDecisionRequest,
 	AppealRelationshipRequest,
-	ServiceUserResponse
+	ServiceUserResponse,
+	GetCasenotesResponse,
+	GetCasenoteResponse
 };

@@ -1,4 +1,5 @@
 import { appealDetailsPage } from './appeal-details.mapper.js';
+import { getAppealCasenotes } from './casenotes/casenotes.service.js';
 import { getInterestedPartyComments } from './interested-party-comments/interested-party-comments.service.js';
 import { APPEAL_REPRESENTATION_STATUS, APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 
@@ -21,10 +22,12 @@ export const viewAppealDetails = async (request, response) => {
 					APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
 				);
 			}
+			const appealCaseNotes = await getAppealCasenotes(request.apiClient, appealDetails.appealId);
 
 			const currentUrl = request.originalUrl;
 			const mappedPageContent = await appealDetailsPage(
 				appealDetails,
+				appealCaseNotes,
 				currentUrl,
 				session,
 				request,

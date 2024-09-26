@@ -717,3 +717,19 @@
  * @property {{value: number}} hour
  * @property {{value: number}} minute
  */
+
+/**
+ * @typedef CaseNotesProperties
+ * @type {Object<string, any>}
+ * @property {CaseNote[]} casenotes
+ */
+
+/**
+ * @typedef CaseNote
+ * @type {Object<string, any>}
+ * @property {string} date
+ * @property {string} days
+ * @property {string} time
+ * @property {string} comment
+ * @property {string} user
+ */

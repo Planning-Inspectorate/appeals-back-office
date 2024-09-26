@@ -1088,6 +1088,27 @@ export async function initialiseAndMapAppealData(
 		}
 	};
 
+	/** @type {Instructions} */
+	mappedData.appeal.caseNotes = {
+		id: 'case-notes',
+		display: {
+			summaryListItem: {
+				key: {
+					text: 'Case notes'
+				},
+				actions: {
+					items: [
+						{
+							text: 'View',
+							href: `${currentRoute}/casenotes`,
+							visuallyHiddenText: 'View case notes'
+						}
+					]
+				}
+			}
+		}
+	};
+
 	const appealHasWithdrawalDocuments =
 		appealDetails?.withdrawal?.withdrawalFolder?.documents?.filter(
 			(document) => document.latestDocumentVersion?.isDeleted === false

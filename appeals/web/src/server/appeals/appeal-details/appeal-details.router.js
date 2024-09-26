@@ -29,6 +29,7 @@ import inspectorAccessRouter from './inspector-access/inspector-access.router.js
 import safetyRisksRouter from './safety-risks/safety-risks.router.js';
 import internalCorrespondenceRouter from './internal-correspondence/internal-correspondence.router.js';
 import withdrawalRouter from './withdrawal/withdrawal.router.js';
+// import { casenotesRouter } from './casenotes/casenotes.router.js';
 
 const router = createRouter();
 
@@ -109,7 +110,7 @@ router.use(
 	otherAppealsRouter
 );
 router.use('/:appealId/audit', validateAppeal, auditRouter);
-
+// router.use('/:appealId/casenotes', validateAppeal, casenotesRouter);
 router.use(
 	'/:appealId/neighbouring-sites',
 	validateAppeal,

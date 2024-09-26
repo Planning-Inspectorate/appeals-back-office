@@ -20,11 +20,17 @@ import { APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { isFeatureActive } from '#common/feature-flags.js';
+import { dateToDisplayDate, dateToDisplayTime } from '#lib/dates.js';
+import { convert24hTo12hTimeStringFormat } from '#lib/times.js';
+import { mapUser } from './audit/audit.service.js';
 
 export const pageHeading = 'Case details';
 
+/** @typedef {import('@pins/appeals.api/src/server/endpoints/appeals').GetCasenotesResponse} GetCasenotesResponse */
+
 /**
  * @param {import('./appeal-details.types.js').WebAppeal} appealDetails
+ * @param {GetCasenotesResponse} appealCaseNotes
  * @param {string} currentRoute
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
  * @param {import('@pins/express/types/express.js').Request} request
@@ -33,6 +39,7 @@ export const pageHeading = 'Case details';
  */
 export async function appealDetailsPage(
 	appealDetails,
+	appealCaseNotes,
 	currentRoute,
 	session,
 	request,
@@ -84,6 +91,38 @@ export async function appealDetailsPage(
 			classes: 'govuk-summary-list--no-border'
 		}
 	};
+
+	const caseNotes = await Promise.all(
+		appealCaseNotes.map(async (casenote) => {
+			const createdAt = new Date(casenote.createdAt);
+			return {
+				date: dateToDisplayDate(createdAt),
+				day: new Intl.DateTimeFormat("en-GB", {weekday: "long"}).format(createdAt),
+				time: convert24hTo12hTimeStringFormat(dateToDisplayTime(createdAt)),
+				comment: casenote.comment,
+				user: (await mapUser(casenote.azureAdUserId, request.session)).split('@')[0]
+			};
+		})
+	);
+
+	/** @type {PageComponent} */
+	const caseNotesComponent = {
+		type: 'details',
+		parameters: {
+			summaryText: 'Casenotes',
+			html: '',
+			pageComponents: [
+				{
+					type: 'casenotes',
+					parameters: {
+						casenotes: caseNotes
+					}
+				}
+			]
+		}
+	}
+	preRenderPageComponents([caseNotesComponent])
+	console.log(caseNotesComponent);
 
 	/** @type {PageComponent} */
 	let appealDetailsAccordion = generateAccordionItems(
@@ -241,6 +280,7 @@ export async function appealDetailsPage(
 		...notificationBanners,
 		...statusTagsComponentGroup,
 		caseSummary,
+		caseNotesComponent,
 		appealDetailsAccordion
 	];
 
@@ -518,6 +558,7 @@ function generateHASAccordion(appealDetails, mappedData, session, ipCommentsAwai
 				mappedData.appeal.crossTeamCorrespondence.display.summaryListItem,
 				mappedData.appeal.inspectorCorrespondence.display.summaryListItem,
 				mappedData.appeal.caseHistory.display.summaryListItem,
+				mappedData.appeal.caseNotes.display.summaryListItem,
 				mappedData.appeal.appealWithdrawal.display.summaryListItem
 			]
 		}

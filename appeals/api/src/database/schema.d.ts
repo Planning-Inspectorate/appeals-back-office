@@ -30,6 +30,7 @@ export interface Appeal extends schema.Appeal {
 	appellantProcedurePreferenceDetails?: string | null;
 	appellantProcedurePreferenceDuration?: number | null;
 }
+export interface Casenote extends schema.Casenote {}
 export interface AppealRelationship extends schema.AppealRelationship {}
 export interface AppealType extends schema.AppealType {}
 export interface AppealTimetable extends schema.AppealTimetable {}
