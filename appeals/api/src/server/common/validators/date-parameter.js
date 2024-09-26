@@ -1,5 +1,4 @@
-import { isEqual, parseISO } from 'date-fns';
-import joinDateAndTime from '#utils/join-date-and-time.js';
+import { isEqual } from 'date-fns';
 import {
 	ERROR_MUST_BE_BUSINESS_DAY,
 	ERROR_MUST_BE_CORRECT_DATE_FORMAT,
@@ -36,20 +35,19 @@ const validateDateParameter = ({
 	!isRequired && validator.optional();
 
 	return validator
-		.isDate()
+		.isISO8601().toDate()
 		.withMessage(ERROR_MUST_BE_CORRECT_DATE_FORMAT)
-		.custom((value) => (mustBeFutureDate ? dateIsAfterDate(new Date(value), new Date()) : true))
+		.custom((value) => (mustBeFutureDate ? dateIsAfterDate(value, new Date()) : true))
 		.withMessage(ERROR_MUST_BE_IN_FUTURE)
 		.custom((value) =>
-			mustBeNotBeFutureDate ? dateIsPastOrToday(new Date(value), new Date()) : true
+			mustBeNotBeFutureDate ? dateIsPastOrToday(value, new Date()) : true
 		)
 		.withMessage(ERROR_MUST_NOT_BE_IN_FUTURE)
 		.custom(async (value) => {
 			if (mustBeBusinessDay) {
-				const originalDate = joinDateAndTime(value);
-				const recalculatedDate = await recalculateDateIfNotBusinessDay(originalDate);
+				const recalculatedDate = await recalculateDateIfNotBusinessDay(value.toISOString());
 
-				if (!isEqual(parseISO(originalDate), recalculatedDate)) {
+				if (!isEqual(value, recalculatedDate)) {
 					throw new Error(ERROR_MUST_BE_BUSINESS_DAY);
 				}
 			}
@@ -57,7 +55,7 @@ const validateDateParameter = ({
 			return true;
 		})
 		.custom(customFn)
-		.customSanitizer(joinDateAndTime);
+		.customSanitizer((value) => value);
 };
 
 export default validateDateParameter;

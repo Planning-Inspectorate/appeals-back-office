@@ -1,4 +1,4 @@
-import { isValid, isBefore, isAfter, startOfDay, parseISO } from 'date-fns';
+import { isBefore} from 'date-fns';
 import { dayMonthYearHourMinuteToISOString } from '#lib/dates.js';
 import logger from '#lib/logger.js';
 import { updateValidDatePage } from './outcome-valid.mapper.js';
@@ -40,7 +40,7 @@ export const postValidDate = async (request, response) => {
 			day: updatedValidDateDay
 		});
 
-		if (isBefore(new Date(validDateISOString), new Date(createdAt))) {
+		if (isBefore(new Date(validDateISOString), new Date(createdAt.year, createdAt.month, createdAt.day))) {
 			let errorMessage = [
 				{ msg: 'The valid date must be on or after the date the case was received.' }
 			];

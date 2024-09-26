@@ -978,7 +978,7 @@ describe('appeal timetables routes', () => {
 				expect(databaseConnector.appealTimetable.upsert).toHaveBeenCalledWith(
 					expect.objectContaining({
 						update: {
-							lpaQuestionnaireDueDate: new Date(`2023-06-12T${DEFAULT_TIMESTAMP_TIME}Z`)
+							lpaQuestionnaireDueDate: new Date(`2023-06-12T00:00:000Z`)
 						}
 					})
 				);

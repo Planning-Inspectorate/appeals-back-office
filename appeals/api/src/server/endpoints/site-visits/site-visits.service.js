@@ -42,7 +42,6 @@ export const createSiteVisit = async (azureAdUserId, siteVisitData, notifyClient
 
 		const siteVisit = await siteVisitRepository.createSiteVisitById({
 			appealId,
-			// @ts-ignore
 			visitDate,
 			visitEndTime,
 			visitStartTime,
@@ -55,7 +54,7 @@ export const createSiteVisit = async (azureAdUserId, siteVisitData, notifyClient
 				appealId,
 				azureAdUserId,
 				details: stringTokenReplacement(AUDIT_TRAIL_SITE_VISIT_ARRANGED, [
-					format(parseISO(visitDate), DEFAULT_DATE_FORMAT_AUDIT_TRAIL)
+					format(parseISO(visitDate.toISOString()), DEFAULT_DATE_FORMAT_AUDIT_TRAIL)
 				])
 			});
 		}
@@ -130,8 +129,8 @@ const updateSiteVisit = async (azureAdUserId, updateSiteVisitData, notifyClient)
 
 		const updateData = {
 			...(visitDate && { visitDate }),
-			...(visitEndTime !== undefined && { visitEndTime }),
-			...(visitStartTime !== undefined && { visitStartTime }),
+			visitEndTime: visitEndTime || null,
+			visitStartTime: visitStartTime || null,
 			...(siteVisitTypeId && { siteVisitTypeId })
 		};
 

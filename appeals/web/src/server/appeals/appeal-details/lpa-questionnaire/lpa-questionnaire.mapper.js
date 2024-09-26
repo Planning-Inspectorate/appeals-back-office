@@ -20,8 +20,10 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 import { isFeatureActive } from '#common/feature-flags.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
+
 
 /**
  * @typedef {import('@pins/appeals.api').Appeals.SingleLPAQuestionnaireResponse} LPAQuestionnaire
@@ -586,7 +588,11 @@ export function mapWebValidationOutcomeToApiValidationOutcome(
 				}))
 			}),
 		...(updatedDueDate && {
-			lpaQuestionnaireDueDate: dayMonthYearHourMinuteToISOString(updatedDueDate)
+			lpaQuestionnaireDueDate: dayMonthYearHourMinuteToISOString({
+				...updatedDueDate,
+				hour: DEADLINE_HOUR,
+				minute: DEADLINE_MINUTE
+			})
 		})
 	};
 }

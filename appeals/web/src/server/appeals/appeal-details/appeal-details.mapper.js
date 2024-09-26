@@ -110,7 +110,7 @@ export async function appealDetailsPage(
 	const isAppealWithdrawn = appealDetails.appealStatus === APPEAL_CASE_STATUS.WITHDRAWN;
 	if (isAppealComplete && statusTag && appealDetails.decision.documentId) {
 		const letterDate = appealDetails.decision?.letterDate
-			? dateISOStringToDisplayDate(appealDetails.decision.letterDate)
+			? dateISOStringToDisplayDate(new Date(appealDetails.decision.letterDate).toISOString())
 			: dateISOStringToDisplayDate(getTodaysISOString());
 
 		const virusCheckStatus = mapVirusCheckStatus(
@@ -180,7 +180,7 @@ export async function appealDetailsPage(
 			appealTypeById?.key && appealTypeById?.type
 				? `${appealTypeById.type} (${appealTypeById.key})`
 				: '';
-		const caseResubmissionDueDate = dateISOStringToDisplayDate(appealDetails.appealTimetable.caseResubmissionDueDate);
+		const caseResubmissionDueDate = dateISOStringToDisplayDate(appealDetails.appealTimetable.caseResubmissionDueDate.toISOString());
 
 		if (appealTypeText) {
 			statusTagsComponentGroup.push({

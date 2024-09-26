@@ -1,8 +1,6 @@
 import {
-	DEFAULT_TIME_FORMAT,
-	ERROR_START_TIME_MUST_BE_EARLIER_THAN_END_TIME
-} from '#endpoints/constants.js';
-import { compareDesc, parse } from 'date-fns';
+	ERROR_START_TIME_MUST_BE_EARLIER_THAN_END_TIME } from '#endpoints/constants.js';
+import { parseISO, compareDesc } from 'date-fns';
 import { body } from 'express-validator';
 
 /** @typedef {import('express-validator').ValidationChain} ValidationChain */
@@ -20,10 +18,7 @@ const validateTimeRangeParameters = (startParameter, endParameter) =>
 			const endValue = req.body[endParameter];
 
 			if (startValue && endValue) {
-				const startDate = parse(startValue, DEFAULT_TIME_FORMAT, new Date());
-				const endDate = parse(endValue, DEFAULT_TIME_FORMAT, new Date());
-
-				if (compareDesc(startDate, endDate) < 1) {
+				if (compareDesc(parseISO(startValue), parseISO(endValue)) < 1) {
 					throw new Error(ERROR_START_TIME_MUST_BE_EARLIER_THAN_END_TIME);
 				}
 			}

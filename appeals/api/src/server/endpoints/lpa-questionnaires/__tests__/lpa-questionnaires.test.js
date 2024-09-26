@@ -1172,7 +1172,7 @@ describe('lpa questionnaires routes', () => {
 					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
 					.send({
 						incompleteReasons: [{ id: 1 }],
-						lpaQuestionnaireDueDate: '2099-02-30',
+						lpaQuestionnaireDueDate: '2099-02-30X765273865',
 						validationOutcome: 'Incomplete'
 					})
 					.set('azureAdUserId', azureAdUserId);

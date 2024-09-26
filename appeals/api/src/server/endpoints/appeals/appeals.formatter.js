@@ -265,7 +265,7 @@ const formatAppeal = (
 							outcome: appeal.inspectorDecision.outcome,
 							documentId: appeal.inspectorDecision?.decisionLetterGuid,
 							letterDate:
-								(decisionInfo.letterDate && decisionInfo.letterDate?.toISOString()) || null,
+								(decisionInfo.letterDate && decisionInfo.letterDate) || null,
 							virusCheckStatus: decisionInfo.virusCheckStatus
 					  }
 					: {

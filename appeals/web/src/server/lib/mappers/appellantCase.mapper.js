@@ -195,7 +195,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 					text: 'Decision date'
 				},
 				value: {
-					text: dateISOStringToDisplayDate(appellantCaseData.applicationDecisionDate)
+					text: dateISOStringToDisplayDate(appellantCaseData.applicationDecisionDate?.toISOString())
 				},
 				actions: {
 					items: [
@@ -219,7 +219,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 					text: 'Application submitted'
 				},
 				value: {
-					text: dateISOStringToDisplayDate(appellantCaseData.applicationDate)
+					text: dateISOStringToDisplayDate(appellantCaseData.applicationDate.toISOString())
 				},
 				actions: {
 					items: [

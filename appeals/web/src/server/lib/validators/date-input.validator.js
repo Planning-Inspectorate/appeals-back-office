@@ -7,6 +7,7 @@ import {
 	dateIsInThePast
 } from '../dates.js';
 import { capitalize } from 'lodash-es';
+import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 
 export const createDateInputFieldsValidator = (
 	fieldNamePrefix = 'date',
@@ -198,9 +199,8 @@ export const createDateInputDateBusinessDayValidator = async (
 				const monthNumber = Number.parseInt(month, 10);
 				const yearNumber = Number.parseInt(year, 10);
 
-				const dateToValidate = new Date(yearNumber, monthNumber - 1, dayNumber)
-					.toISOString()
-					.split('T')[0];
+				const dateToValidate = new Date(yearNumber, monthNumber - 1, dayNumber, DEADLINE_HOUR, DEADLINE_MINUTE)
+					.toISOString();
 
 				const result = await dateIsABusinessDay(req.apiClient, dateToValidate);
 				if (result === false) {

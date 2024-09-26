@@ -522,14 +522,14 @@ export function mapPostScheduleOrManageSiteVisitCommonParameters(
 			year: visitDateYear,
 			hour: visitStartTimeHour,
 			minute: visitStartTimeMinute
-		}) : '',
+		}) : undefined,
 		visitEndTime: visitEndTimeHour && visitEndTimeMinute ? dayMonthYearHourMinuteToISOString({
 			day: visitDateDay,
 			month: visitDateMonth,
 			year: visitDateYear,
 			hour: visitEndTimeHour,
 			minute: visitEndTimeMinute
-		}) : '',
+		}) : undefined,
 		apiVisitType: mapWebVisitTypeToApiVisitType(visitType),
 		previousVisitType: ''
 	};

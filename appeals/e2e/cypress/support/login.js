@@ -13,6 +13,7 @@ const locators = {
 const timeout = async (ms) => await new Promise((resolve) => setTimeout(resolve, ms));
 
 azureSignIn = async (config) => {
+	console.log(config)
 	const browser = await puppeteer.launch({
 		headless: 'new',
 		ignoreHTTPSErrors: true,

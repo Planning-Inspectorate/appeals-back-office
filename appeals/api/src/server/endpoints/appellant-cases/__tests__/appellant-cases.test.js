@@ -25,7 +25,6 @@ import {
 } from '#tests/appeals/mocks.js';
 import { baseExpectedAppellantCaseResponse } from '#tests/appeals/expectation.js';
 
-import joinDateAndTime from '#utils/join-date-and-time.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 
 const { databaseConnector } = await import('../../../utils/database-connector.js');
@@ -296,7 +295,7 @@ describe('appellant cases routes', () => {
 				databaseConnector.appellantCaseIncompleteReasonsSelected.createMany.mockResolvedValue(true);
 
 				const body = {
-					appealDueDate: '2099-07-14',
+					appealDueDate: '2099-07-14T00:00.000Z',
 					incompleteReasons: [{ id: 1 }, { id: 2 }],
 					validationOutcome: 'Incomplete'
 				};
@@ -314,11 +313,10 @@ describe('appellant cases routes', () => {
 					}
 				});
 
-				const formattedAppealDueDate = joinDateAndTime(body.appealDueDate);
 				expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
 					where: { id },
 					data: {
-						caseExtensionDate: formattedAppealDueDate,
+						caseExtensionDate: body.appealDueDate,
 						caseUpdatedDate: expect.any(Date)
 					}
 				});

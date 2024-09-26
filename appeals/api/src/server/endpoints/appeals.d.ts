@@ -323,7 +323,7 @@ interface UpdateLPAQuestionnaireValidationOutcomeParams {
 	};
 	azureAdUserId: string;
 	data: {
-		lpaQuestionnaireDueDate: string;
+		lpaQuestionnaireDueDate: Date;
 		incompleteReasons: IncompleteInvalidReasons;
 	};
 	lpaQuestionnaireId: number;
@@ -491,8 +491,8 @@ interface SingleSiteVisitDetailsResponse {
 	appealId: number;
 	visitDate: Date | null;
 	siteVisitId: number;
-	visitEndTime: string | null;
-	visitStartTime: string | null;
+	visitEndTime: Date | null;
+	visitStartTime: Date | null;
 	visitType: string;
 }
 
@@ -669,9 +669,9 @@ interface CreateAuditTrailRequest {
 
 export interface CreateSiteVisitData {
 	appealId: number;
-	visitDate?: string;
-	visitEndTime?: string;
-	visitStartTime?: string;
+	visitDate?: Date;
+	visitEndTime?: Date;
+	visitStartTime?: Date;
 	visitType?: any;
 	appellantEmail: string;
 	lpaEmail: string;

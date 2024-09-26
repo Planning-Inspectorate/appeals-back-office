@@ -23,7 +23,7 @@ const getOutcomeValidator = composeMiddleware(
 );
 
 const getDateValidator = composeMiddleware(
-	body('documentDate').isDate().withMessage(ERROR_MUST_BE_CORRECT_DATE_FORMAT),
+	body('documentDate').isISO8601().toDate().withMessage(ERROR_MUST_BE_CORRECT_DATE_FORMAT),
 	body('documentDate')
 		.custom((value) => dateIsAfterDate(new Date(), new Date(value)))
 		.withMessage(ERROR_MUST_BE_IN_PAST),

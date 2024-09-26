@@ -23,6 +23,7 @@ import {
 	APPEAL_VIRUS_CHECK_STATUS,
 	APPEAL_DOCUMENT_TYPE
 } from 'pins-data-model';
+import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 import { isFeatureActive } from '#common/feature-flags.js';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { generateHASComponents } from '#lib/mappers/appellant-case/appeal-type-has.mapper.js';
@@ -603,7 +604,11 @@ export function mapWebReviewOutcomeToApiReviewOutcome(
 				}))
 			}),
 		...(updatedDueDate && {
-			appealDueDate: dayMonthYearHourMinuteToISOString(updatedDueDate)
+			appealDueDate: dayMonthYearHourMinuteToISOString({
+				...updatedDueDate,
+				hour: DEADLINE_HOUR,
+				minute: DEADLINE_MINUTE
+			})
 		})
 	};
 }

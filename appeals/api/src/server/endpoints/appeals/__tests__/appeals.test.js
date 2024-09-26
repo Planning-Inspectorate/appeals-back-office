@@ -948,15 +948,15 @@ describe('appeals routes', () => {
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}`)
 					.send({
-						startedAt: '2023-05-05',
-						validAt: '2023-05-25'
+						startedAt: '2023-05-05T00:00:00:000Z',
+						validAt: '2023-05-25T00:00:00:000Z'
 					})
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
 					data: {
-						caseStartedDate: '2023-05-05T01:00:00.000Z',
-						caseValidDate: '2023-05-25T01:00:00.000Z',
+						caseStartedDate: '2023-05-05T00:00:00:000Z',
+						caseValidDate: '2023-05-25T00:00:00:000Z',
 						caseUpdatedDate: expect.any(Date)
 					},
 					where: {
@@ -965,8 +965,8 @@ describe('appeals routes', () => {
 				});
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
-					startedAt: '2023-05-05T01:00:00.000Z',
-					validAt: '2023-05-25T01:00:00.000Z'
+					startedAt: '2023-05-05T00:00:00:000Z',
+					validAt: '2023-05-25T01:00:00:000Z'
 				});
 			});
 

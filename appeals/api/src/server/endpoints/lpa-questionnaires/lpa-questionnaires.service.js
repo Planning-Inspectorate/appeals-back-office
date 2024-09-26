@@ -52,7 +52,7 @@ const updateLPAQuestionnaireValidationOutcome = async (
 
 	if (lpaQuestionnaireDueDate) {
 		timetable = {
-			lpaQuestionnaireDueDate: await recalculateDateIfNotBusinessDay(lpaQuestionnaireDueDate)
+			lpaQuestionnaireDueDate: await recalculateDateIfNotBusinessDay(new Date(lpaQuestionnaireDueDate).toISOString())
 		};
 	}
 

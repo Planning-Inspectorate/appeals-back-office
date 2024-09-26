@@ -1,7 +1,6 @@
 import { formatInTimeZone, zonedTimeToUtc } from 'date-fns-tz';
 import enGB from 'date-fns/locale/en-GB/index.js';
-import logger from '#lib/logger.js';
-import { isValid, isBefore, isAfter, startOfDay, parseISO } from 'date-fns';
+import { isValid, isBefore, isAfter} from 'date-fns';
 import { padNumberWithZero } from '#lib/string-utilities.js';
 
 export const timeZone = 'Europe/London';
@@ -15,17 +14,9 @@ export const timeZone = 'Europe/London';
  * @returns {boolean}
  */
 export const dateIsValid = (dayMonthYearHourMinute) => {
-	const {year, month, day} = dayMonthYearHourMinute;
 	const date = new Date(dayMonthYearHourMinuteToISOString(dayMonthYearHourMinute));
-
-	const cleanMonth = `${month}`[0] === '0' ? `${month}`.slice(1) : `${month}`;
-	const cleanDay = `${day}`[0] === '0' ? `${day}`.slice(1) : `${day}`;
-
 	return (
-		isValid(date) &&
-		`${date.getFullYear()}` === `${year}` &&
-		`${date.getMonth() + 1}` === cleanMonth.trim() &&
-		`${date.getDate()}` === cleanDay.trim()
+		isValid(date)
 	);
 };
 
