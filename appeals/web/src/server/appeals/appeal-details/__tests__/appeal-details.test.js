@@ -999,7 +999,7 @@ describe('appeal-details', () => {
 					'<p class="govuk-notification-banner__heading">Review comments</p>'
 				);
 				expect(unprettifiedElementHtml).toContain(
-					'<p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/2/interested-party-comments" data-cy="banner-review-ip-comments">Review</a></p>'
+					'<p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/2/interested-party-comments" data-cy="banner-review-ip-comments">Review <span class="govuk-visually-hidden">interested party comments</span></a></p>'
 				);
 			});
 		});
