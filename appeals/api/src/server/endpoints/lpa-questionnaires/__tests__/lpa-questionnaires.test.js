@@ -7,7 +7,7 @@ import {
 	ERROR_INVALID_LPA_QUESTIONNAIRE_VALIDATION_OUTCOME,
 	ERROR_LPA_QUESTIONNAIRE_VALID_VALIDATION_OUTCOME_REASONS_REQUIRED,
 	ERROR_MUST_BE_BOOLEAN,
-	ERROR_MUST_BE_CORRECT_DATE_FORMAT,
+	ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT,
 	ERROR_MUST_BE_INCOMPLETE_INVALID_REASON,
 	ERROR_MUST_BE_IN_FUTURE,
 	ERROR_MUST_BE_NUMBER,
@@ -1121,7 +1121,7 @@ describe('lpa questionnaires routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						lpaQuestionnaireDueDate: ERROR_MUST_BE_CORRECT_DATE_FORMAT
+						lpaQuestionnaireDueDate: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 					}
 				});
 			});
@@ -1140,7 +1140,7 @@ describe('lpa questionnaires routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						lpaQuestionnaireDueDate: ERROR_MUST_BE_CORRECT_DATE_FORMAT
+						lpaQuestionnaireDueDate: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 					}
 				});
 			});
@@ -1180,7 +1180,7 @@ describe('lpa questionnaires routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						lpaQuestionnaireDueDate: ERROR_MUST_BE_CORRECT_DATE_FORMAT
+						lpaQuestionnaireDueDate: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 					}
 				});
 			});

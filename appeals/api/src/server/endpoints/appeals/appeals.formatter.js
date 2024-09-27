@@ -327,7 +327,7 @@ const formatAppeal = (
 					siteVisitId: appeal.siteVisit.id,
 					visitDate: appeal.siteVisit.visitDate?.toISOString() || null,
 					visitStartTime: appeal.siteVisit.visitStartTime,
-					visitEndTime: appeal.siteVisit?.visitEndTime || null,
+					visitEndTime: appeal.siteVisit.visitEndTime || null,
 					visitType: appeal.siteVisit.siteVisitType.name
 				}
 			}),
@@ -437,6 +437,7 @@ const getIdsOfReferencedAppeals = (otherAppeals, currentAppealRef) => {
 	otherAppeals.map((relation) => {
 		if (
 			relation.childRef === currentAppealRef &&
+			relation.parentId &&
 			relation.parentId !== null &&
 			relevantIds.indexOf(relation.parentId) === -1
 		) {
@@ -444,6 +445,7 @@ const getIdsOfReferencedAppeals = (otherAppeals, currentAppealRef) => {
 		}
 		if (
 			relation.parentRef === currentAppealRef &&
+			relation.childId &&
 			relation.childId !== null &&
 			relevantIds.indexOf(relation.childId) === -1
 		) {

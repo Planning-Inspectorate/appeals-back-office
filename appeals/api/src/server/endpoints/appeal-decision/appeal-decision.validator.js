@@ -6,7 +6,7 @@ import {
 	CASE_OUTCOME_DISMISSED,
 	CASE_OUTCOME_SPLIT_DECISION,
 	ERROR_MUST_BE_STRING,
-	ERROR_MUST_BE_CORRECT_DATE_FORMAT,
+	ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT,
 	ERROR_MUST_BE_IN_PAST,
 	ERROR_CASE_OUTCOME_MUST_BE_ONE_OF,
 	ERROR_MUST_BE_UUID
@@ -23,7 +23,7 @@ const getOutcomeValidator = composeMiddleware(
 );
 
 const getDateValidator = composeMiddleware(
-	body('documentDate').isISO8601().toDate().withMessage(ERROR_MUST_BE_CORRECT_DATE_FORMAT),
+	body('documentDate').isISO8601().toDate().withMessage(ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT),
 	body('documentDate')
 		.custom((value) => dateIsAfterDate(new Date(), new Date(value)))
 		.withMessage(ERROR_MUST_BE_IN_PAST),

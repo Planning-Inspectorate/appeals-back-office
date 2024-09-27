@@ -2,6 +2,7 @@ import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.
 import appealRepository from '#repositories/appeal.repository.js';
 import appealTimetableRepository from '#repositories/appeal-timetable.repository.js';
 import { calculateTimetable, recalculateDateIfNotBusinessDay } from '#utils/business-days.js';
+import {zonedTimeToUtc, formatInTimeZone} from 'date-fns-tz';
 import logger from '#utils/logger.js';
 import {
 	AUDIT_TRAIL_CASE_TIMELINE_CREATED,
@@ -59,17 +60,9 @@ const startCase = async (appeal, startDate, notifyClient, siteAddress, azureAdUs
 			throw new Error('Appeal type is required to start a case.');
 		}
 		const startedAt = await recalculateDateIfNotBusinessDay(startDate);
-
-		const mlsOf23hr59min = 86340000;
-		const startDeadline = new Date(startedAt.getTime() + mlsOf23hr59min);
-
-		// const startDeadline = new Date(
-		// 	startedAt.getUTCFullYear(),
-		// 	startedAt.getUTCMonth(),
-		// 	startedAt.getUTCDate(),
-		// 	DEADLINE_HOUR,
-		// 	DEADLINE_MINUTE
-		// );
+		const tz = 'Europe/London';
+		const ymd = formatInTimeZone(startedAt, tz, 'yyyy-MM-dd');
+		const startDeadline = zonedTimeToUtc(`${ymd} 23:59`, tz);
 
 		const timetable = await calculateTimetable(appealType.key, startDeadline);
 

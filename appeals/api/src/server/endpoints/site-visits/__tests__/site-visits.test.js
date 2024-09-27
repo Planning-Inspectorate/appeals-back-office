@@ -6,8 +6,7 @@ import {
 	AUDIT_TRAIL_SITE_VISIT_TYPE_SELECTED,
 	DEFAULT_DATE_FORMAT_AUDIT_TRAIL,
 	ERROR_INVALID_SITE_VISIT_TYPE,
-	ERROR_MUST_BE_CORRECT_DATE_FORMAT,
-	ERROR_MUST_BE_CORRECT_TIME_FORMAT,
+	ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT,
 	ERROR_MUST_BE_NUMBER,
 	ERROR_NOT_FOUND,
 	ERROR_SITE_VISIT_REQUIRED_FIELDS_ACCESS_REQUIRED,
@@ -616,7 +615,7 @@ describe('site visit routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						visitDate: ERROR_MUST_BE_CORRECT_DATE_FORMAT
+						visitDate: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 					}
 				});
 			});
@@ -638,7 +637,7 @@ describe('site visit routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						visitDate: ERROR_MUST_BE_CORRECT_DATE_FORMAT
+						visitDate: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 					}
 				});
 			});
@@ -650,9 +649,9 @@ describe('site visit routes', () => {
 				const response = await request
 					.post(`/appeals/${householdAppeal.id}/site-visits`)
 					.send({
-						visitDate: '2023-07-12',
-						visitEndTime: '56:00',
-						visitStartTime: '16:00',
+						visitDate: '2023-07-12T00:00:00.000Z',
+						visitEndTime: '2023-07-12T56:00:00.000Z',
+						visitStartTime: '2023-07-12T16:00:00.000Z',
 						visitType: householdAppeal.siteVisit.siteVisitType.name
 					})
 					.set('azureAdUserId', azureAdUserId);
@@ -660,7 +659,7 @@ describe('site visit routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						visitEndTime: ERROR_MUST_BE_CORRECT_TIME_FORMAT
+						visitEndTime: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 					}
 				});
 			});
@@ -672,9 +671,9 @@ describe('site visit routes', () => {
 				const response = await request
 					.post(`/appeals/${householdAppeal.id}/site-visits`)
 					.send({
-						visitDate: '2023-07-12',
-						visitEndTime: '18:00',
-						visitStartTime: '56:00',
+						visitDate: '2023-07-12T00:00:00.000Z',
+						visitEndTime: '2023-07-12T18:00:00.000Z',
+						visitStartTime: '2023-07-12T56:00:00.000Z',
 						visitType: householdAppeal.siteVisit.siteVisitType.name
 					})
 					.set('azureAdUserId', azureAdUserId);
@@ -682,7 +681,7 @@ describe('site visit routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						visitStartTime: ERROR_MUST_BE_CORRECT_TIME_FORMAT
+						visitStartTime: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 					}
 				});
 			});
@@ -694,9 +693,9 @@ describe('site visit routes', () => {
 				const response = await request
 					.post(`/appeals/${householdAppeal.id}/site-visits`)
 					.send({
-						visitDate: '2023-07-12',
-						visitEndTime: '16:00',
-						visitStartTime: '18:00',
+						visitDate: '2023-07-12T00:00:00.000Z',
+						visitEndTime: '2023-07-12T18:00:00.000Z',
+						visitStartTime: '2023-07-12T16:00:00.000Z',
 						visitType: householdAppeal.siteVisit.siteVisitType.name
 					})
 					.set('azureAdUserId', azureAdUserId);
@@ -1998,8 +1997,8 @@ describe('site visit routes', () => {
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}/site-visits/${householdAppeal.siteVisit.id}`)
 					.send({
-						visitEndTime: '18:00',
-						visitStartTime: '16:00',
+						visitEndTime: '2023-12-07T18:00:00Z',
+						visitStartTime: '2023-12-07T16:00:00Z',
 						visitType: householdAppeal.siteVisit.siteVisitType.name
 					})
 					.set('azureAdUserId', azureAdUserId);
@@ -2022,8 +2021,8 @@ describe('site visit routes', () => {
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}/site-visits/${householdAppeal.siteVisit.id}`)
 					.send({
-						visitDate: '2023-12-07',
-						visitStartTime: '16:00',
+						visitDate: '2023-12-07T00:00:00Z',
+						visitEndTime: '2023-12-07T16:00:00Z',
 						visitType: householdAppeal.siteVisit.siteVisitType.name
 					})
 					.set('azureAdUserId', azureAdUserId);
@@ -2046,8 +2045,8 @@ describe('site visit routes', () => {
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}/site-visits/${householdAppeal.siteVisit.id}`)
 					.send({
-						visitDate: '2023-12-07',
-						visitEndTime: '16:00',
+						visitDate: '2023-12-07T00:00:00Z',
+						visitEndTime: '2023-12-07T16:00:00Z',
 						visitType: householdAppeal.siteVisit.siteVisitType.name
 					})
 					.set('azureAdUserId', azureAdUserId);
@@ -2120,8 +2119,8 @@ describe('site visit routes', () => {
 					.patch(`/appeals/${householdAppeal.id}/site-visits/${householdAppeal.siteVisit.id}`)
 					.send({
 						visitDate: '07/12/2023',
-						visitEndTime: '18:00',
-						visitStartTime: '16:00',
+						visitEndTime: '2023-12-07T18:00:00Z',
+						visitStartTime: '2023-12-07T16:00:00Z',
 						visitType: householdAppeal.siteVisit.siteVisitType.name
 					})
 					.set('azureAdUserId', azureAdUserId);
@@ -2129,7 +2128,7 @@ describe('site visit routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						visitDate: ERROR_MUST_BE_CORRECT_DATE_FORMAT
+						visitDate: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 					}
 				});
 
@@ -2145,8 +2144,8 @@ describe('site visit routes', () => {
 					.patch(`/appeals/${householdAppeal.id}/site-visits/${householdAppeal.siteVisit.id}`)
 					.send({
 						visitDate: '56/12/2023',
-						visitEndTime: '18:00',
-						visitStartTime: '16:00',
+						visitEndTime: '2023-12-07T18:00:00Z',
+						visitStartTime: '2023-12-07T16:00:00Z',
 						visitType: householdAppeal.siteVisit.siteVisitType.name
 					})
 					.set('azureAdUserId', azureAdUserId);
@@ -2154,7 +2153,7 @@ describe('site visit routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						visitDate: ERROR_MUST_BE_CORRECT_DATE_FORMAT
+						visitDate: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 					}
 				});
 
@@ -2170,8 +2169,8 @@ describe('site visit routes', () => {
 					.patch(`/appeals/${householdAppeal.id}/site-visits/${householdAppeal.siteVisit.id}`)
 					.send({
 						visitDate: '2023-07-12',
-						visitEndTime: '56:00',
-						visitStartTime: '16:00',
+						visitEndTime: '2023-12-07T56:00:00Z',
+						visitStartTime: '2023-12-07T16:00:00Z',
 						visitType: householdAppeal.siteVisit.siteVisitType.name
 					})
 					.set('azureAdUserId', azureAdUserId);
@@ -2179,7 +2178,7 @@ describe('site visit routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						visitEndTime: ERROR_MUST_BE_CORRECT_TIME_FORMAT
+						visitEndTime: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 					}
 				});
 
@@ -2195,8 +2194,8 @@ describe('site visit routes', () => {
 					.patch(`/appeals/${householdAppeal.id}/site-visits/${householdAppeal.siteVisit.id}`)
 					.send({
 						visitDate: '2023-07-12',
-						visitEndTime: '18:00',
-						visitStartTime: '56:00',
+						visitEndTime: '2023-12-07T18:00:00Z',
+						visitStartTime: '2023-12-07T56:00:00Z',
 						visitType: householdAppeal.siteVisit.siteVisitType.name
 					})
 					.set('azureAdUserId', azureAdUserId);
@@ -2204,7 +2203,7 @@ describe('site visit routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						visitStartTime: ERROR_MUST_BE_CORRECT_TIME_FORMAT
+						visitStartTime: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 					}
 				});
 
@@ -2219,9 +2218,9 @@ describe('site visit routes', () => {
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}/site-visits/${householdAppeal.siteVisit.id}`)
 					.send({
-						visitDate: '2023-07-12',
-						visitEndTime: '16:00',
-						visitStartTime: '18:00',
+						visitDate: '2023-07-12T00:00:00.000Z',
+						visitEndTime: '2023-07-12T18:00:00.000Z',
+						visitStartTime: '2023-07-12T16:00:00.000Z',
 						visitType: householdAppeal.siteVisit.siteVisitType.name
 					})
 					.set('azureAdUserId', azureAdUserId);

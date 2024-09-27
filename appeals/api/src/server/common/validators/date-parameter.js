@@ -1,7 +1,7 @@
 import { isEqual } from 'date-fns';
 import {
 	ERROR_MUST_BE_BUSINESS_DAY,
-	ERROR_MUST_BE_CORRECT_DATE_FORMAT,
+	ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT,
 	ERROR_MUST_BE_IN_FUTURE,
 	ERROR_MUST_NOT_BE_IN_FUTURE
 } from '#endpoints/constants.js';
@@ -36,7 +36,7 @@ const validateDateParameter = ({
 
 	return validator
 		.isISO8601().toDate()
-		.withMessage(ERROR_MUST_BE_CORRECT_DATE_FORMAT)
+		.withMessage(ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT)
 		.custom((value) => (mustBeFutureDate ? dateIsAfterDate(value, new Date()) : true))
 		.withMessage(ERROR_MUST_BE_IN_FUTURE)
 		.custom((value) =>

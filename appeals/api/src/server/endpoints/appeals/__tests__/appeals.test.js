@@ -9,7 +9,7 @@ import {
 	ERROR_FAILED_TO_SAVE_DATA,
 	ERROR_LENGTH_BETWEEN_2_AND_8_CHARACTERS,
 	ERROR_MUST_BE_BOOLEAN,
-	ERROR_MUST_BE_CORRECT_DATE_FORMAT,
+	ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT,
 	ERROR_MUST_BE_GREATER_THAN_ZERO,
 	ERROR_MUST_BE_NUMBER,
 	ERROR_MUST_BE_SET_AS_HEADER,
@@ -1188,7 +1188,7 @@ describe('appeals routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						startedAt: ERROR_MUST_BE_CORRECT_DATE_FORMAT
+						startedAt: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 					}
 				});
 			});
@@ -1204,7 +1204,7 @@ describe('appeals routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						startedAt: ERROR_MUST_BE_CORRECT_DATE_FORMAT
+						startedAt: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 					}
 				});
 			});
@@ -1220,7 +1220,7 @@ describe('appeals routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						startedAt: ERROR_MUST_BE_CORRECT_DATE_FORMAT
+						startedAt: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 					}
 				});
 			});
@@ -1236,7 +1236,7 @@ describe('appeals routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						validAt: ERROR_MUST_BE_CORRECT_DATE_FORMAT
+						validAt: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 					}
 				});
 			});
@@ -1252,7 +1252,7 @@ describe('appeals routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						validAt: ERROR_MUST_BE_CORRECT_DATE_FORMAT
+						validAt: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 					}
 				});
 			});
@@ -1268,7 +1268,7 @@ describe('appeals routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						validAt: ERROR_MUST_BE_CORRECT_DATE_FORMAT
+						validAt: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 					}
 				});
 			});
