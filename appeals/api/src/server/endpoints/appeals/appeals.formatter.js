@@ -235,9 +235,9 @@ const formatAppeal = (
 						appealTimetableId: appeal.appealTimetable.id,
 						lpaQuestionnaireDueDate:
 							(appeal.appealTimetable.lpaQuestionnaireDueDate &&
-								appeal.appealTimetable.lpaQuestionnaireDueDate) ||
+								appeal.appealTimetable.lpaQuestionnaireDueDate.toISOString()) ||
 							null,
-						caseResubmissionDueDate: appeal.appealTimetable.caseResubmissionDueDate || null,
+						caseResubmissionDueDate: appeal.appealTimetable.caseResubmissionDueDate ? appeal.appealTimetable.caseResubmissionDueDate.toISOString() : null,
 						...(isFPA(appeal.appealType?.key || '') && {
 							finalCommentReviewDate:
 								(appeal.appealTimetable.finalCommentReviewDate &&
@@ -326,8 +326,8 @@ const formatAppeal = (
 				siteVisit: {
 					siteVisitId: appeal.siteVisit.id,
 					visitDate: appeal.siteVisit.visitDate?.toISOString() || null,
-					visitStartTime: appeal.siteVisit.visitStartTime,
-					visitEndTime: appeal.siteVisit.visitEndTime || null,
+					visitStartTime: appeal.siteVisit.visitStartTime?.toISOString() || null,
+					visitEndTime: appeal.siteVisit.visitEndTime?.toISOString() || null,
 					visitType: appeal.siteVisit.siteVisitType.name
 				}
 			}),

@@ -57,7 +57,7 @@ interface SingleAppealDetailsResponse {
 		folderId: number;
 		outcome?: string | null;
 		documentId?: string | null;
-		letterDate?: Date | null;
+		letterDate?: string | null;
 		virusCheckStatus?: string | null;
 	};
 	internalCorrespondence: {
@@ -97,14 +97,14 @@ interface SingleAppealDetailsResponse {
 	procedureType?: string | null;
 	siteVisit?: {
 		siteVisitId: number;
-		visitDate: Date;
+		visitDate: string;
 		visitStartTime: string;
 		visitEndTime?: string | null;
 		visitType: string;
 	} | null;
-	createdAt: Date;
-	startedAt?: Date | null;
-	validAt?: Date | null;
+	createdAt: string;
+	startedAt?: string | null;
+	validAt?: string | null;
 	internalCorrespondence: {
 		crossTeam?: FolderInfo | null;
 		inspector?: FolderInfo | null;
@@ -134,10 +134,10 @@ interface SingleAppellantCaseResponse {
 		firstName: string | null;
 		surname: string | null;
 	};
-	applicationDate: Date;
-	applicationDecisionDate: Date | null;
-	caseSubmissionDueDate: Date | null;
-	caseSubmittedDate: Date | null;
+	applicationDate: string;
+	applicationDecisionDate: string | null;
+	caseSubmissionDueDate: string | null;
+	caseSubmittedDate: string | null;
 	isAppellantNamedOnApplication: boolean | null;
 	planningApplicationReference: string;
 	hasAdvertisedAppeal: boolean | null;
@@ -148,6 +148,10 @@ interface SingleAppellantCaseResponse {
 	localPlanningDepartment: string;
 	procedureType?: string;
 	enforcementNotice?: boolean | null;
+	siteAccessRequired?: {
+		details: string | null;
+		hasIssues: boolean | null;
+	},
 	siteOwnership: {
 		areAllOwnersKnown: string | null;
 		knowsOtherLandowners: string | null;
@@ -192,6 +196,10 @@ interface SingleAppellantCaseResponse {
 		hasOtherTenants: boolean | null;
 	};
 	ownershipCertificateSubmitted?: boolean | null;
+	appellantProcedurePreference?: string | null;
+	appellantProcedurePreferenceDetails?: string | null;
+	appellantProcedurePreferenceDuration?: number | null;
+	inquiryHowManyWitnesses?: number | null;
 }
 
 interface UpdateAppellantCaseRequest {

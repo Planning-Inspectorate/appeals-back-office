@@ -7,7 +7,7 @@ import { documentCreated } from '#tests/documents/mocks.js';
 import formatDate from '#utils/date-formatter.js';
 import { add, sub } from 'date-fns';
 import {
-	ERROR_MUST_BE_CORRECT_DATE_FORMAT,
+	ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT,
 	ERROR_MUST_BE_IN_PAST,
 	ERROR_CASE_OUTCOME_MUST_BE_ONE_OF,
 	ERROR_INVALID_APPEAL_STATE,
@@ -89,7 +89,7 @@ describe('appeal decision routes', () => {
 			expect(response.status).toEqual(400);
 			expect(response.body).toEqual({
 				errors: {
-					documentDate: ERROR_MUST_BE_CORRECT_DATE_FORMAT
+					documentDate: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 				}
 			});
 		});
