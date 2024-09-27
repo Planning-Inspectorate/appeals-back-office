@@ -4,7 +4,8 @@ import {
 	dateIsValid,
 	dateIsInTheFuture,
 	dateIsTodayOrInThePast,
-	dateIsInThePast
+	dateIsInThePast,
+	dayMonthYearHourMinuteToISOString
 } from '../dates.js';
 import { capitalize } from 'lodash-es';
 import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
@@ -195,12 +196,7 @@ export const createDateInputDateBusinessDayValidator = async (
 					return false;
 				}
 
-				const dayNumber = Number.parseInt(day, 10);
-				const monthNumber = Number.parseInt(month, 10);
-				const yearNumber = Number.parseInt(year, 10);
-
-				const dateToValidate = new Date(yearNumber, monthNumber - 1, dayNumber, DEADLINE_HOUR, DEADLINE_MINUTE)
-					.toISOString();
+				const dateToValidate = dayMonthYearHourMinuteToISOString({day, month, year, hour: DEADLINE_HOUR, minute: DEADLINE_MINUTE});
 
 				const result = await dateIsABusinessDay(req.apiClient, dateToValidate);
 				if (result === false) {
