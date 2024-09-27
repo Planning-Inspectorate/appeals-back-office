@@ -22,7 +22,8 @@ export class CaseDetailsPage extends Page {
 		uploadFile: '#upload-file-1',
 		changeAppealType: 'change-appeal-type',
 		addAgreementToChangeDescriptionEvidence: 'add-agreement-to-change-description-evidence',
-		manageAgreementToChangeDescriptionEvidence: 'manage-agreement-to-change-description-evidence'
+		manageAgreementToChangeDescriptionEvidence: 'manage-agreement-to-change-description-evidence',
+		addCostsDecision: 'add-costs-decision'
 	};
 
 	elements = {
@@ -44,7 +45,9 @@ export class CaseDetailsPage extends Page {
 		addAgreementToChangeDescriptionEvidence: () =>
 			cy.getByData(this._cyDataSelectors.addAgreementToChangeDescriptionEvidence),
 		manageAgreementToChangeDescriptionEvidence: () =>
-			cy.getByData(this._cyDataSelectors.manageAgreementToChangeDescriptionEvidence)
+			cy.getByData(this._cyDataSelectors.manageAgreementToChangeDescriptionEvidence),
+		addCostsDecision: () => cy.getByData(this._cyDataSelectors.addCostsDecision),
+		costDecisionStatus: () => cy.get('.govuk-table__cell appeal-costs-decision-status')
 	};
 	/********************************************************
 	 ************************ Actions ************************
@@ -114,6 +117,10 @@ export class CaseDetailsPage extends Page {
 		this.elements.changeAppealType().click();
 	}
 
+	clickAddCostsDecision() {
+		this.elements.addCostsDecision().click();
+	}
+
 	uploadSamplePdf() {
 		cy.get('#upload-file-1').selectFile('cypress/fixtures/sample-doc.pdf', { force: true });
 	}
@@ -132,6 +139,10 @@ export class CaseDetailsPage extends Page {
 
 	clickManageAgreementToChangeDescriptionEvidence() {
 		this.elements.manageAgreementToChangeDescriptionEvidence().click();
+	}
+
+	confirmCostDecisionStatus(text) {
+		this.elements.costDecisionStatus().contains(text);
 	}
 
 	/***************************************************************
