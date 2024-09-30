@@ -3,6 +3,7 @@ import * as displayPageFormatter from '#lib/display-page-formatter.js';
 import { isFolderInfo } from '#lib/ts-utilities.js';
 import { mapActionComponent } from './component-permissions.mapper.js';
 import { permissionNames } from '#environment/permissions.js';
+import { booleanDisplayField } from '#lib/page-components/boolean.js';
 
 /**
  * @typedef StatusTag
@@ -75,30 +76,15 @@ export function initialiseAndMapLPAQData(
 		}
 	};
 
-	/** @type {Instructions} */
-	mappedData.lpaq.isCorrectAppealType = {
+	mappedData.lpaq.isCorrectAppealType = booleanDisplayField({
 		id: 'is-correct-appeal-type',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Correct appeal type'
-				},
-				value: {
-					html: convertFromBooleanToYesNo(lpaQuestionnaireData.isCorrectAppealType, '')
-				},
-				actions: {
-					items: [
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Change',
-							visuallyHiddenText: 'Correct appeal type',
-							href: `${currentRoute}/is-correct-appeal-type/change`,
-							attributes: { 'lpaQuestionnaireData-cy': 'change-is-correct-appeal-type' }
-						})
-					]
-				}
-			}
-		}
-	};
+		text: 'Correct appeal type',
+		value: lpaQuestionnaireData.isCorrectAppealType,
+		defaultText: '',
+		addCyAttribute: true,
+		link: `${currentRoute}/is-correct-appeal-type/change`,
+		session
+	});
 
 	/** @type {Instructions} */
 	mappedData.lpaq.conservationAreaMap = {
@@ -123,30 +109,15 @@ export function initialiseAndMapLPAQData(
 		}
 	};
 
-	/** @type {Instructions} */
-	mappedData.lpaq.siteWithinGreenBelt = {
+	mappedData.lpaq.siteWithinGreenBelt = booleanDisplayField({
 		id: 'site-within-green-belt',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Green belt'
-				},
-				value: {
-					text: convertFromBooleanToYesNo(lpaQuestionnaireData.isGreenBelt, '')
-				},
-				actions: {
-					items: [
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Change',
-							visuallyHiddenText: 'Green belt',
-							href: `${currentRoute}/green-belt/change/lpa`,
-							attributes: { 'lpaQuestionnaireData-cy': 'change-site-within-green-belt' }
-						})
-					]
-				}
-			}
-		}
-	};
+		text: 'Green belt',
+		value: lpaQuestionnaireData.isGreenBelt,
+		defaultText: '',
+		addCyAttribute: true,
+		link: `${currentRoute}/green-belt/change/lpa`,
+		session
+	});
 
 	/** @type {Instructions} */
 	mappedData.lpaq.notifyingParties = {
