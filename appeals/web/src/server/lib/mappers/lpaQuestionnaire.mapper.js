@@ -84,7 +84,7 @@ export function initialiseAndMapLPAQData(
 					text: 'Correct appeal type'
 				},
 				value: {
-					html: convertFromBooleanToYesNo(lpaQuestionnaireData.isCorrectAppealType) || ''
+					html: convertFromBooleanToYesNo(lpaQuestionnaireData.isCorrectAppealType, '')
 				},
 				actions: {
 					items: [
@@ -132,7 +132,7 @@ export function initialiseAndMapLPAQData(
 					text: 'Green belt'
 				},
 				value: {
-					text: convertFromBooleanToYesNo(lpaQuestionnaireData.isGreenBelt) || ''
+					text: convertFromBooleanToYesNo(lpaQuestionnaireData.isGreenBelt, '')
 				},
 				actions: {
 					items: [
@@ -323,8 +323,10 @@ export function initialiseAndMapLPAQData(
 				},
 				value: {
 					html: displayPageFormatter.formatAnswerAndDetails(
-						convertFromBooleanToYesNo(lpaQuestionnaireData.doesSiteRequireInspectorAccess) ??
-							'No answer provided',
+						convertFromBooleanToYesNo(
+							lpaQuestionnaireData.doesSiteRequireInspectorAccess,
+							'No answer provided'
+						),
 						lpaQuestionnaireData.inspectorAccessDetails
 					)
 				},
@@ -352,8 +354,10 @@ export function initialiseAndMapLPAQData(
 				},
 				value: {
 					html: displayPageFormatter.formatAnswerAndDetails(
-						convertFromBooleanToYesNo(lpaQuestionnaireData.doesSiteHaveHealthAndSafetyIssues) ||
-							'No answer provided',
+						convertFromBooleanToYesNo(
+							lpaQuestionnaireData.doesSiteHaveHealthAndSafetyIssues,
+							'No answer provided'
+						),
 						lpaQuestionnaireData.healthAndSafetyDetails
 					)
 				},
@@ -424,7 +428,7 @@ export function initialiseAndMapLPAQData(
 				},
 				value: {
 					html: displayPageFormatter.formatAnswerAndDetails(
-						convertFromBooleanToYesNo(lpaQuestionnaireData.hasExtraConditions) || '',
+						convertFromBooleanToYesNo(lpaQuestionnaireData.hasExtraConditions, ''),
 						lpaQuestionnaireData.extraConditions
 					)
 				},
