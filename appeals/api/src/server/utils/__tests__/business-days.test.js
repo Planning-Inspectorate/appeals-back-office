@@ -18,7 +18,7 @@ describe('business-days', () => {
 				}
 			},
 			{
-				name: 'work across across BST -> GMT boundary',
+				name: 'works across BST -> GMT boundary',
 				appealType: 'D',
 				startedAt: new Date('2024-10-30T22:59:00Z'),
 				timetable: {
@@ -26,7 +26,7 @@ describe('business-days', () => {
 				}
 			},
 			{
-				name: 'work across across GMT -> BST boundary',
+				name: 'works across GMT -> BST boundary',
 				appealType: 'D',
 				startedAt: new Date('2025-03-28T23:59:00Z'),
 				timetable: {
