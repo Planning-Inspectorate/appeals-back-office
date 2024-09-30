@@ -1,5 +1,3 @@
-import logger from './logger.js';
-
 /**
  *
  * @param {number} timeHour

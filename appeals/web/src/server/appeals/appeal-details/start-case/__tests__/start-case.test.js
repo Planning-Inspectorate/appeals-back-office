@@ -29,7 +29,7 @@ describe('start-case', () => {
 
 			expect(unprettifiedElement.innerHTML).toContain(
 				`Warning</span> Confirming will activate the timetable on ${dateISOStringToDisplayDate(
-					Date.now()
+					new Date().toISOString()
 				)}. Start letters will be sent to the relevant parties.`
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
@@ -81,7 +81,7 @@ describe('start-case', () => {
 
 			expect(unprettifiedElement.innerHTML).toContain(
 				`Warning</span> Confirming will change the start day to ${dateISOStringToDisplayDate(
-					Date.now()
+					new Date().toISOString()
 				)} and update the case timetable. New start letters will be sent to relevant parties.</strong>`
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');

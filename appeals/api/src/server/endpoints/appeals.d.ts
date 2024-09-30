@@ -151,7 +151,7 @@ interface SingleAppellantCaseResponse {
 	siteAccessRequired?: {
 		details: string | null;
 		hasIssues: boolean | null;
-	},
+	};
 	siteOwnership: {
 		areAllOwnersKnown: string | null;
 		knowsOtherLandowners: string | null;
@@ -707,7 +707,7 @@ export interface UpdateSiteVisitData {
 type GetAuditTrailsResponse = {
 	azureAdUserId: string;
 	details: string;
-	loggedDate: Date;
+	loggedDate: string;
 	doc?:
 		| {
 				documentGuid: string;

@@ -9,8 +9,7 @@ import {
 	dayMonthYearHourMinuteToDisplayDate,
 	dateISOStringToDayMonthYearHourMinute,
 	dateISOStringToDisplayDate,
-	dateISOStringToDisplayTime24hr,
-	dateISOStringToDisplayTime12hr
+	dateISOStringToDisplayTime24hr
 } from '../dates.js';
 import { appealShortReference } from '../nunjucks-filters/appeals.js';
 import { nameToString } from '../person-name-formatter.js';
@@ -27,10 +26,7 @@ import {
 	mapReasonsToReasonsListHtml,
 	getNotValidReasonsTextFromRequestBody
 } from '../mappers/validation-outcome-reasons.mapper.js';
-import {
-	timeIsBeforeTime,
-	is24HourTimeValid
-} from '#lib/times.js';
+import { timeIsBeforeTime, is24HourTimeValid } from '#lib/times.js';
 import { appellantCaseInvalidReasons, baseSession } from '#testing/app/fixtures/referencedata.js';
 import { stringContainsDigitsOnly } from '#lib/string-utilities.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
@@ -154,53 +150,53 @@ describe('Libraries', () => {
 	describe('dates', () => {
 		describe('dateIsValid', () => {
 			it('should return true if day, month and year params form a date that is semantically valid and real', () => {
-				expect(dateIsValid({year: 2024, month: 2, day: 29})).toBe(true);
+				expect(dateIsValid({ year: 2024, month: 2, day: 29 })).toBe(true);
 			});
 			it('should return false if day, month and year params form a date that is semantically valid but not real', () => {
-				expect(dateIsValid({year: 2023, month: 2, day: 29})).toBe(false);
+				expect(dateIsValid({ year: 2023, month: 2, day: 29 })).toBe(false);
 			});
 			it('should return true if day, month and year params form a valid real date', () => {
-				expect(dateIsValid({year: 2021, month: 2, day: 1})).toBe(true);
+				expect(dateIsValid({ year: 2021, month: 2, day: 1 })).toBe(true);
 			});
 			it('should return false if day parameter is outside the valid range', () => {
-				expect(dateIsValid({year: 2023, month: 2, day: 0})).toBe(false);
-				expect(dateIsValid({year: 2024, month: 1, day: 32})).toBe(false);
+				expect(dateIsValid({ year: 2023, month: 2, day: 0 })).toBe(false);
+				expect(dateIsValid({ year: 2024, month: 1, day: 32 })).toBe(false);
 			});
 			it('should return false if month parameter is outside the valid range', () => {
-				expect(dateIsValid({year: 2023, month: 0, day: 1})).toBe(false);
-				expect(dateIsValid({year: 2023, month: 13, day: 1})).toBe(false);
+				expect(dateIsValid({ year: 2023, month: 0, day: 1 })).toBe(false);
+				expect(dateIsValid({ year: 2023, month: 13, day: 1 })).toBe(false);
 				// @ts-ignore
-				expect(dateIsValid({year: 'abc', month: 2, day: 29})).toBe(false);
-				expect(dateIsValid({year: NaN, month: 2, day: 29})).toBe(false);
+				expect(dateIsValid({ year: 'abc', month: 2, day: 29 })).toBe(false);
+				expect(dateIsValid({ year: NaN, month: 2, day: 29 })).toBe(false);
 				// @ts-ignore
-				expect(dateIsValid({year: null, month: 2, day: 29})).toBe(false);
+				expect(dateIsValid({ year: null, month: 2, day: 29 })).toBe(false);
 			});
 		});
 
 		describe('dateIsInTheFuture', () => {
 			it('should return true if day, month and year params form a date that is in the future', () => {
-				expect(dateIsInTheFuture({year: 3000, month: 1, day: 1})).toBe(true);
+				expect(dateIsInTheFuture({ year: 3000, month: 1, day: 1 })).toBe(true);
 			});
 			it('should return false if day, month and year params form a date that is in the past', () => {
-				expect(dateIsInTheFuture({year: 2000, month: 1, day: 1})).toBe(false);
+				expect(dateIsInTheFuture({ year: 2000, month: 1, day: 1 })).toBe(false);
 			});
 		});
 
 		describe('dateIsInThePast', () => {
 			it('should return true if day, month and year params form a date that is in the past', () => {
-				expect(dateIsInThePast({year: 2000, month: 1, day: 1})).toBe(true);
+				expect(dateIsInThePast({ year: 2000, month: 1, day: 1 })).toBe(true);
 			});
 			it('should return false if day, month and year params form a date that is in the future', () => {
-				expect(dateIsInThePast({year: 3000, month: 1, day: 1})).toBe(false);
+				expect(dateIsInThePast({ year: 3000, month: 1, day: 1 })).toBe(false);
 			});
 		});
 
 		describe('dateIsTodayOrInThePast', () => {
 			it('should return true if day, month and year params form a date that is in the past', () => {
-				expect(dateIsTodayOrInThePast({year: 2000, month: 1, day: 1})).toBe(true);
+				expect(dateIsTodayOrInThePast({ year: 2000, month: 1, day: 1 })).toBe(true);
 			});
 			it('should return false if day, month and year params form a date that is in the future', () => {
-				expect(dateIsTodayOrInThePast({year: 3000, month: 1, day: 1})).toBe(false);
+				expect(dateIsTodayOrInThePast({ year: 3000, month: 1, day: 1 })).toBe(false);
 			});
 		});
 
@@ -274,7 +270,7 @@ describe('Libraries', () => {
 					month: 2,
 					year: 2024,
 					hour: 13,
-    				minute: 24
+					minute: 24
 				});
 			});
 
@@ -286,7 +282,7 @@ describe('Libraries', () => {
 					month: 6,
 					year: 2024,
 					hour: 14,
-    				minute: 24
+					minute: 24
 				});
 			});
 
