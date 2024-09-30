@@ -34,13 +34,18 @@ export const postValidDate = async (request, response) => {
 		}
 
 		const { appealId, appellantCaseId, createdAt } = currentAppeal;
+		const dateCreated = new Date(createdAt);
 		const validDateISOString = dayMonthYearHourMinuteToISOString({
 			year: updatedValidDateYear,
 			month: updatedValidDateMonth,
 			day: updatedValidDateDay
 		});
 
-		if (isBefore(new Date(validDateISOString), new Date(createdAt))) {
+		if (isBefore(new Date(validDateISOString), new Date(dayMonthYearHourMinuteToISOString({
+			year: dateCreated.getFullYear(),
+			month: dateCreated.getMonth(),
+			day: dateCreated.getDate()
+		})))) {
 			let errorMessage = [
 				{ msg: 'The valid date must be on or after the date the case was received.' }
 			];

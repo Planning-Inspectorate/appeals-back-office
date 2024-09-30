@@ -62,12 +62,12 @@ const formatMyAppeals = (appeal, linkedAppeals) => ({
 	appealTimetable: appeal.appealTimetable
 		? {
 				appealTimetableId: appeal.appealTimetable.id,
-				lpaQuestionnaireDueDate: appeal.appealTimetable.lpaQuestionnaireDueDate || null,
-				caseResubmissionDueDate: appeal.appealTimetable.caseResubmissionDueDate || null,
+				lpaQuestionnaireDueDate: appeal.appealTimetable.lpaQuestionnaireDueDate?.toISOString() || null,
+				caseResubmissionDueDate: appeal.appealTimetable.caseResubmissionDueDate?.toISOString() || null,
 				...(isFPA(appeal.appealType?.key || '') && {
-					finalCommentReviewDate: appeal.appealTimetable.finalCommentReviewDate || null,
-					statementReviewDate: appeal.appealTimetable.statementReviewDate || null,
-					issueDeterminationDate: appeal.appealTimetable.issueDeterminationDate || null
+					finalCommentReviewDate: appeal.appealTimetable.finalCommentReviewDate?.toISOString() || null,
+					statementReviewDate: appeal.appealTimetable.statementReviewDate?.toISOString() || null,
+					issueDeterminationDate: appeal.appealTimetable.issueDeterminationDate?.toISOString() || null
 				})
 		  }
 		: undefined,
@@ -241,11 +241,11 @@ const formatAppeal = (
 						...(isFPA(appeal.appealType?.key || '') && {
 							finalCommentReviewDate:
 								(appeal.appealTimetable.finalCommentReviewDate &&
-									appeal.appealTimetable.finalCommentReviewDate) ||
+									appeal.appealTimetable.finalCommentReviewDate.toISOString()) ||
 								null,
 							statementReviewDate:
 								(appeal.appealTimetable.statementReviewDate &&
-									appeal.appealTimetable.statementReviewDate) ||
+									appeal.appealTimetable.statementReviewDate.toISOString()) ||
 								null
 						})
 				  }

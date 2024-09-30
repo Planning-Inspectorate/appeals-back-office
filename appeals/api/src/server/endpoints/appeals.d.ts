@@ -401,12 +401,12 @@ interface NeighbouringSite {
 
 interface AppealTimetable {
 	appealTimetableId: number;
-	finalCommentReviewDate?: Date | null;
-	lpaQuestionnaireDueDate: Date | null;
-	statementReviewDate?: Date | null;
-	issueDeterminationDate?: Date | null;
-	completeDate?: Date | null;
-	caseResubmissionDueDate?: Date | null;
+	finalCommentReviewDate?: string | null;
+	lpaQuestionnaireDueDate: string | null;
+	statementReviewDate?: string | null;
+	issueDeterminationDate?: string | null;
+	completeDate?: string | null;
+	caseResubmissionDueDate?: string | null;
 }
 
 interface UpdateTimetableRequest {

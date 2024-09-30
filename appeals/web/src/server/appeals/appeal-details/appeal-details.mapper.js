@@ -180,7 +180,7 @@ export async function appealDetailsPage(
 			appealTypeById?.key && appealTypeById?.type
 				? `${appealTypeById.type} (${appealTypeById.key})`
 				: '';
-		const caseResubmissionDueDate = dateISOStringToDisplayDate(appealDetails.appealTimetable.caseResubmissionDueDate.toISOString());
+		const caseResubmissionDueDate = dateISOStringToDisplayDate(appealDetails.appealTimetable.caseResubmissionDueDate);
 
 		if (appealTypeText) {
 			statusTagsComponentGroup.push({
