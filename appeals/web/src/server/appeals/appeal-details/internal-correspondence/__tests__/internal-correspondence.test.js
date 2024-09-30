@@ -1128,7 +1128,7 @@ describe('internal correspondence', () => {
 					`href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/upload-documents/${folder.folderId}"> Change</a></dd>`
 				);
 				expect(unprettifiedElement.innerHTML).toContain('Date received</dt>');
-				expect(unprettifiedElement.innerHTML).toContain(`${dateISOStringToDisplayDate(new Date())}</dd>`);
+				expect(unprettifiedElement.innerHTML).toContain(`${dateISOStringToDisplayDate((new Date()).toISOString())}</dd>`);
 				expect(unprettifiedElement.innerHTML).toContain(
 					`href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/add-document-details/${folder.folderId}"> Change</a></dd>`
 				);
@@ -1285,7 +1285,7 @@ describe('internal correspondence', () => {
 					`href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/upload-documents/${folder.folderId}/1"> Change</a></dd>`
 				);
 				expect(unprettifiedElement.innerHTML).toContain('Date received</dt>');
-				expect(unprettifiedElement.innerHTML).toContain(`${dateISOStringToDisplayDate(new Date())}</dd>`);
+				expect(unprettifiedElement.innerHTML).toContain(`${dateISOStringToDisplayDate((new Date()).toISOString())}</dd>`);
 				expect(unprettifiedElement.innerHTML).toContain(
 					`href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/add-document-details/${folder.folderId}/1"> Change</a></dd>`
 				);

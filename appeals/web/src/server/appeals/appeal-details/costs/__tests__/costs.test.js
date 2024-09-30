@@ -968,7 +968,7 @@ describe('costs', () => {
 						);
 						expect(unprettifiedElement.innerHTML).toContain('Date received</dt>');
 						expect(unprettifiedElement.innerHTML).toContain(
-							`${dateISOStringToDisplayDate(new Date())}</dd>`
+							`${dateISOStringToDisplayDate((new Date()).toISOString())}</dd>`
 						);
 						expect(unprettifiedElement.innerHTML).toContain('Redaction status</dt>');
 						expect(unprettifiedElement.innerHTML).toContain('Unredacted</dd>');
@@ -1084,7 +1084,7 @@ describe('costs', () => {
 						);
 						expect(unprettifiedElement.innerHTML).toContain('Date received</dt>');
 						expect(unprettifiedElement.innerHTML).toContain(
-							`${dateISOStringToDisplayDate(new Date())}</dd>`
+							`${dateISOStringToDisplayDate((new Date()).toISOString())}</dd>`
 						);
 						expect(unprettifiedElement.innerHTML).toContain('Redaction status</dt>');
 						expect(unprettifiedElement.innerHTML).toContain('Unredacted</dd>');

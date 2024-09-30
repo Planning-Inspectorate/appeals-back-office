@@ -4256,7 +4256,7 @@ describe('appellant-case', () => {
 				`href="/appeals-service/appeal-details/1/appellant-case/add-documents/${documentFolderInfo.folderId}"> Change</a>`
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Date received</dt>');
-			expect(unprettifiedElement.innerHTML).toContain(`${dateISOStringToDisplayDate(new Date())}</dd>`);
+			expect(unprettifiedElement.innerHTML).toContain(`${dateISOStringToDisplayDate((new Date()).toISOString())}</dd>`);
 			expect(unprettifiedElement.innerHTML).toContain(
 				`href="/appeals-service/appeal-details/1/appellant-case/add-document-details/${documentFolderInfo.folderId}"> Change</a>`
 			);
@@ -4385,7 +4385,7 @@ describe('appellant-case', () => {
 				`href="/appeals-service/appeal-details/1/appellant-case/add-documents/${documentFolderInfo.folderId}/1"> Change</a></dd>`
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Date received</dt>');
-			expect(unprettifiedElement.innerHTML).toContain(`${dateISOStringToDisplayDate(new Date())}</dd>`);
+			expect(unprettifiedElement.innerHTML).toContain(`${dateISOStringToDisplayDate((new Date()).toISOString())}</dd>`);
 			expect(unprettifiedElement.innerHTML).toContain(
 				`href="/appeals-service/appeal-details/1/appellant-case/add-document-details/${documentFolderInfo.folderId}/1"> Change</a></dd>`
 			);

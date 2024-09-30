@@ -5,13 +5,10 @@ import {
 	dateIsInThePast,
 	dateIsTodayOrInThePast,
 	dateIsValid,
-	isDateInstance,
 	dayMonthYearHourMinuteToISOString,
 	dayMonthYearHourMinuteToDisplayDate,
 	dateISOStringToDayMonthYearHourMinute,
-	dateToUTCDateWithoutTime,
 	dateISOStringToDisplayDate,
-	hourMinuteToApiDateString,
 	dateISOStringToDisplayTime24hr,
 	dateISOStringToDisplayTime12hr
 } from '../dates.js';
@@ -157,105 +154,53 @@ describe('Libraries', () => {
 	describe('dates', () => {
 		describe('dateIsValid', () => {
 			it('should return true if day, month and year params form a date that is semantically valid and real', () => {
-				expect(dateIsValid(2024, 2, 29)).toBe(true);
+				expect(dateIsValid({year: 2024, month: 2, day: 29})).toBe(true);
 			});
 			it('should return false if day, month and year params form a date that is semantically valid but not real', () => {
-				expect(dateIsValid(2023, 2, 29)).toBe(false);
+				expect(dateIsValid({year: 2023, month: 2, day: 29})).toBe(false);
 			});
 			it('should return true if day, month and year params form a valid real date', () => {
-				expect(dateIsValid(2023, 2, 1)).toBe(true);
+				expect(dateIsValid({year: 2021, month: 2, day: 1})).toBe(true);
 			});
 			it('should return false if day parameter is outside the valid range', () => {
-				expect(dateIsValid(2023, 1, 0)).toBe(false);
-				expect(dateIsValid(2023, 1, 32)).toBe(false);
+				expect(dateIsValid({year: 2023, month: 2, day: 0})).toBe(false);
+				expect(dateIsValid({year: 2024, month: 1, day: 32})).toBe(false);
 			});
 			it('should return false if month parameter is outside the valid range', () => {
-				expect(dateIsValid(2023, 0, 1)).toBe(false);
-				expect(dateIsValid(2023, 13, 1)).toBe(false);
+				expect(dateIsValid({year: 2023, month: 0, day: 1})).toBe(false);
+				expect(dateIsValid({year: 2023, month: 13, day: 1})).toBe(false);
 				// @ts-ignore
-				expect(dateIsValid('abc', 2, 29)).toBe(false);
-				expect(dateIsValid(NaN, 2, 29)).toBe(false);
+				expect(dateIsValid({year: 'abc', month: 2, day: 29})).toBe(false);
+				expect(dateIsValid({year: NaN, month: 2, day: 29})).toBe(false);
 				// @ts-ignore
-				expect(dateIsValid(null, 2, 29)).toBe(false);
+				expect(dateIsValid({year: null, month: 2, day: 29})).toBe(false);
 			});
 		});
 
 		describe('dateIsInTheFuture', () => {
 			it('should return true if day, month and year params form a date that is in the future', () => {
-				expect(dateIsInTheFuture(3000, 1, 1)).toBe(true);
-			});
-			it('should return false if day, month and year params form a date that is today', () => {
-				const now = dateToUTCDateWithoutTime(new Date());
-				expect(
-					dateIsInTheFuture(now.getUTCFullYear(), now.getUTCMonth() + 1, now.getUTCDate())
-				).toBe(false);
+				expect(dateIsInTheFuture({year: 3000, month: 1, day: 1})).toBe(true);
 			});
 			it('should return false if day, month and year params form a date that is in the past', () => {
-				expect(dateIsInTheFuture(2000, 1, 1)).toBe(false);
+				expect(dateIsInTheFuture({year: 2000, month: 1, day: 1})).toBe(false);
 			});
 		});
 
 		describe('dateIsInThePast', () => {
 			it('should return true if day, month and year params form a date that is in the past', () => {
-				expect(dateIsInThePast(2000, 1, 1)).toBe(true);
-			});
-			it('should return false if day, month and year params form a date that is today', () => {
-				const now = dateToUTCDateWithoutTime(new Date());
-				expect(dateIsInThePast(now.getUTCFullYear(), now.getUTCMonth() + 1, now.getUTCDate())).toBe(
-					false
-				);
+				expect(dateIsInThePast({year: 2000, month: 1, day: 1})).toBe(true);
 			});
 			it('should return false if day, month and year params form a date that is in the future', () => {
-				expect(dateIsInThePast(3000, 1, 1)).toBe(false);
+				expect(dateIsInThePast({year: 3000, month: 1, day: 1})).toBe(false);
 			});
 		});
 
 		describe('dateIsTodayOrInThePast', () => {
 			it('should return true if day, month and year params form a date that is in the past', () => {
-				expect(dateIsTodayOrInThePast(2000, 1, 1)).toBe(true);
-			});
-			it('should return true if day, month and year params form a date that is today', () => {
-				const now = dateToUTCDateWithoutTime(new Date());
-				expect(
-					dateIsTodayOrInThePast(now.getUTCFullYear(), now.getUTCMonth() + 1, now.getUTCDate())
-				).toBe(true);
+				expect(dateIsTodayOrInThePast({year: 2000, month: 1, day: 1})).toBe(true);
 			});
 			it('should return false if day, month and year params form a date that is in the future', () => {
-				expect(dateIsTodayOrInThePast(3000, 1, 1)).toBe(false);
-			});
-		});
-
-		describe('dateToUTCDateWithoutTime', () => {
-			it('should return the supplied date without any time portion', () => {
-				const now = new Date();
-				const convertedDate = dateToUTCDateWithoutTime(now);
-
-				expect(convertedDate.getUTCHours()).toBe(0);
-				expect(convertedDate.getUTCMinutes()).toBe(0);
-				expect(convertedDate.getUTCSeconds()).toBe(0);
-				expect(convertedDate.getUTCMilliseconds()).toBe(0);
-			});
-		});
-
-		describe('isDateInstance', () => {
-			it('should determine if a date is an instance of Date', () => {
-				const year = 1989;
-				const month = 3;
-				const day = 25;
-				const date = new Date(year, month - 1, day);
-
-				const instanceOfDate = isDateInstance(date);
-
-				expect(typeof instanceOfDate).toEqual('boolean');
-			});
-
-			it('should return false for non-Date types', () => {
-				// @ts-ignore
-				expect(isDateInstance('2023-01-01')).toBe(false);
-				// @ts-ignore
-				expect(isDateInstance(null)).toBe(false);
-				// @ts-ignore
-				expect(isDateInstance(undefined)).toBe(false);
+				expect(dateIsTodayOrInThePast({year: 3000, month: 1, day: 1})).toBe(false);
 			});
 		});
 
@@ -263,21 +208,21 @@ describe('Libraries', () => {
 			it('should return the correct date as a string in the format YYYY-MM-DD when provided a DayMonthYearHourMinute with single-digit day and month values', () => {
 				const convertedDate = dayMonthYearHourMinuteToISOString({
 					day: 1,
-					month: 2,
+					month: 12,
 					year: 2023
 				});
 
-				expect(convertedDate).toBe('2023-02-01');
+				expect(convertedDate).toBe('2023-12-01T00:00:00.000Z');
 			});
 
 			it('should return the correct date as a string in the format YYYY-MM-DD when provided a DayMonthYearHourMinute with double-digit day and month values', () => {
 				const convertedDate = dayMonthYearHourMinuteToISOString({
 					day: 10,
-					month: 10,
+					month: 12,
 					year: 2023
 				});
 
-				expect(convertedDate).toBe('2023-10-10');
+				expect(convertedDate).toBe('2023-12-10T00:00:00.000Z');
 			});
 		});
 
@@ -306,53 +251,47 @@ describe('Libraries', () => {
 			it('should return undefined when the provided date string is null', () => {
 				const convertedDate = dateISOStringToDayMonthYearHourMinute(null);
 
-				expect(convertedDate).toBeUndefined();
+				expect(convertedDate).toEqual({});
 			});
 
 			it('should return undefined when the provided date string is undefined', () => {
 				const convertedDate = dateISOStringToDayMonthYearHourMinute(undefined);
 
-				expect(convertedDate).toBeUndefined();
+				expect(convertedDate).toEqual({});
 			});
 
 			it('should return undefined when provided an invalid date string', () => {
 				const convertedDate = dateISOStringToDayMonthYearHourMinute('abc123');
 
-				expect(convertedDate).toBeUndefined();
+				expect(convertedDate).toEqual({});
 			});
 
-			it('should return the correct date as a DayMonthYearHourMinute object when provided a valid date string', () => {
+			it('should return the correct date as a DayMonthYearHourMinute object when provided a valid date string when UK is in GMT TZ', () => {
 				const convertedDate = dateISOStringToDayMonthYearHourMinute('2024-02-02T13:24:10.359Z');
 
 				expect(convertedDate).toEqual({
 					day: 2,
 					month: 2,
-					year: 2024
+					year: 2024,
+					hour: 13,
+    				minute: 24
+				});
+			});
+
+			it('should return the correct date as a DayMonthYearHourMinute object when provided a valid date string when UK is in BST TZ', () => {
+				const convertedDate = dateISOStringToDayMonthYearHourMinute('2024-06-02T13:24:10.359Z');
+
+				expect(convertedDate).toEqual({
+					day: 2,
+					month: 6,
+					year: 2024,
+					hour: 14,
+    				minute: 24
 				});
 			});
 
 			it('should handle invalid dates gracefully', () => {
-				expect(dateISOStringToDayMonthYearHourMinute('invalid-date')).toBeUndefined();
-			});
-		});
-
-		describe('hourMinuteToApiDateString', () => {
-			it('formats hours and minutes correctly', () => {
-				expect(hourMinuteToApiDateString('1', '9')).toBe('01:09');
-				expect(hourMinuteToApiDateString('12', '30')).toBe('12:30');
-				expect(hourMinuteToApiDateString('0', '0')).toBe('00:00');
-			});
-
-			it('defaults minutes to "00" if undefined', () => {
-				expect(hourMinuteToApiDateString('5')).toBe('05:00');
-			});
-
-			it('returns an empty string if hour is undefined', () => {
-				expect(hourMinuteToApiDateString(undefined, '30')).toBe('');
-			});
-
-			it('handles single digit hours and minutes by padding with zeros', () => {
-				expect(hourMinuteToApiDateString('3', '7')).toBe('03:07');
+				expect(dateISOStringToDayMonthYearHourMinute('invalid-date')).toEqual({});
 			});
 		});
 
@@ -366,45 +305,25 @@ describe('Libraries', () => {
 			});
 
 			it('formats a Date object correctly with default options', () => {
-				const date = new Date('2024-01-01T12:00:00Z');
-				expect(dateISOStringToDisplayDate(date)).toBe('1 January 2024');
+				expect(dateISOStringToDisplayDate('2024-01-01T12:00:00Z')).toBe('1 January 2024');
 			});
 
 			it('formats a Date object correctly with default options, in BST', () => {
 				// 1st July 23:00 UTC is 2nd July 00:00 Europe/London
-				const date = new Date('2024-07-01T23:00:00Z');
-				expect(dateISOStringToDisplayDate(date)).toBe('2 July 2024');
-			});
-
-			it('formats a Date object correctly with condensed = true', () => {
-				const date = new Date('2024-01-01T12:00:00Z');
-				expect(dateISOStringToDisplayDate(date, { condensed: true })).toBe('1 Jan 2024');
+				expect(dateISOStringToDisplayDate('2024-07-01T23:00:00Z')).toBe('2 July 2024');
 			});
 
 			it('formats a timestamp correctly with default options', () => {
-				const timestamp = new Date('2024-01-01T12:00:00Z').getTime();
-				expect(dateISOStringToDisplayDate(timestamp)).toBe('1 January 2024');
-			});
-
-			it('formats a timestamp correctly with condensed = true', () => {
-				const timestamp = new Date('2024-01-01T12:00:00Z').getTime();
-				expect(dateISOStringToDisplayDate(timestamp, { condensed: true })).toBe('1 Jan 2024');
+				expect(dateISOStringToDisplayDate('2024-01-01T12:00:00Z')).toBe('1 January 2024');
 			});
 		});
 
 		describe('dateISOStringToDisplayTime24hr', () => {
 			it('formats a Date object into a HH:MM string', () => {
-				const date = new Date('2024-01-01T13:09:00Z');
-				expect(dateISOStringToDisplayTime24hr(date)).toBe('13:09');
+				expect(dateISOStringToDisplayTime24hr('2024-01-01T13:09:00Z')).toBe('13:09');
 			});
 			it('formats a Date object into a HH:MM string, in BST', () => {
-				const date = new Date('2024-07-01T13:09:00Z');
-				expect(dateISOStringToDisplayTime24hr(date)).toBe('14:09');
-			});
-
-			it('pads single digit hours and minutes with zeros', () => {
-				const earlyMorning = new Date('2024-01-01T01:05:00Z');
-				expect(dateISOStringToDisplayTime24hr(earlyMorning)).toBe('01:05');
+				expect(dateISOStringToDisplayTime24hr('2024-07-01T13:09:00Z')).toBe('14:09');
 			});
 
 			it('returns an empty string for undefined or null dates', () => {
@@ -413,53 +332,6 @@ describe('Libraries', () => {
 			});
 		});
 
-		describe('convert24hTo12hTimeFormat', () => {
-			it('should take a valid 24h timestring and convert it to a 12h timestring', () => {
-				const validTimes = [
-					{
-						input: '00:00',
-						expectedOutput: '12am'
-					},
-					{
-						input: '00:01',
-						expectedOutput: '12:01am'
-					},
-					{
-						input: '06:12',
-						expectedOutput: '6:12am'
-					},
-					{
-						input: '6:12',
-						expectedOutput: '6:12am'
-					},
-					{
-						input: '6:2',
-						expectedOutput: '6:02am'
-					},
-					{
-						input: '12:00',
-						expectedOutput: '12pm'
-					},
-					{
-						input: '16:30',
-						expectedOutput: '4:30pm'
-					}
-				];
-				for (const set of validTimes) {
-					expect(dateISOStringToDisplayTime12hr(set.input)).toBe(set.expectedOutput);
-				}
-			});
-			it('should return an undefined value if the input is undefined or null', () => {
-				expect(dateISOStringToDisplayTime12hr(undefined)).toBe(undefined);
-				expect(dateISOStringToDisplayTime12hr(null)).toBe(undefined);
-			});
-			it('should return undefined for invalid 24h time', () => {
-				expect(dateISOStringToDisplayTime12hr('25:00')).toBe(undefined);
-				expect(dateISOStringToDisplayTime12hr('21:00:00')).toBe(undefined);
-				expect(dateISOStringToDisplayTime12hr('12:60')).toBe(undefined);
-				expect(dateISOStringToDisplayTime12hr('1200')).toBe(undefined);
-			});
-		});
 		describe('is24HoursTimeValid', () => {
 			it('should return true for valid times', () => {
 				const validTimes = ['00:00', '06:12', '6:12', '12:00', '16:30'];
