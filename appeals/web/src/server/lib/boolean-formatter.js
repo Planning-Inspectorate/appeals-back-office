@@ -3,11 +3,15 @@ import logger from './logger.js';
 /**
  *
  * @param {boolean | null | undefined} boolean
+ * @param {string} [defaultText]
  * @returns
  */
-export function convertFromBooleanToYesNo(boolean) {
+export function convertFromBooleanToYesNo(boolean, defaultText) {
 	if (boolean !== undefined && boolean !== null) {
 		return boolean ? 'Yes' : 'No';
+	}
+	if (defaultText) {
+		return defaultText;
 	}
 	return null;
 }

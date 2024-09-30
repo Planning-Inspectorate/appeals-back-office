@@ -171,7 +171,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 					text: 'In green belt'
 				},
 				value: {
-					text: convertFromBooleanToYesNo(appellantCaseData.isGreenBelt) || ''
+					text: convertFromBooleanToYesNo(appellantCaseData.isGreenBelt, '')
 				},
 				actions: {
 					items: [
@@ -474,7 +474,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 					text: 'Advertised appeal'
 				},
 				value: {
-					text: convertFromBooleanToYesNo(appellantCaseData.hasAdvertisedAppeal) || ''
+					text: convertFromBooleanToYesNo(appellantCaseData.hasAdvertisedAppeal, '')
 				},
 				actions: {
 					items: [
@@ -500,8 +500,10 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 				},
 				value: {
 					html: displayPageFormatter.formatAnswerAndDetails(
-						convertFromBooleanToYesNo(appealDetails.inspectorAccess.appellantCase.isRequired) ??
-							'No answer provided',
+						convertFromBooleanToYesNo(
+							appealDetails.inspectorAccess.appellantCase.isRequired,
+							'No answer provided'
+						),
 						appealDetails.inspectorAccess.appellantCase.details
 					)
 				},
@@ -530,8 +532,10 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 				},
 				value: {
 					html: displayPageFormatter.formatAnswerAndDetails(
-						convertFromBooleanToYesNo(appealDetails.healthAndSafety.appellantCase.hasIssues) ||
-							'No answer provided',
+						convertFromBooleanToYesNo(
+							appealDetails.healthAndSafety.appellantCase.hasIssues,
+							'No answer provided'
+						),
 						appealDetails.healthAndSafety.appellantCase.details
 					)
 				},
@@ -658,7 +662,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 					text: 'Ownership certificate or land declaration submitted'
 				},
 				value: {
-					text: convertFromBooleanToYesNo(appellantCaseData.ownershipCertificateSubmitted) || ''
+					text: convertFromBooleanToYesNo(appellantCaseData.ownershipCertificateSubmitted, '')
 				},
 				actions: {
 					items: [
@@ -906,7 +910,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 					text: 'Planning obligation in support'
 				},
 				value: {
-					text: convertFromBooleanToYesNo(appellantCaseData.planningObligation?.hasObligation) || ''
+					text: convertFromBooleanToYesNo(appellantCaseData.planningObligation?.hasObligation, '')
 				},
 				actions: {
 					items: [
@@ -956,10 +960,10 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 					text: 'Part of agricultural holding'
 				},
 				value: {
-					text:
-						convertFromBooleanToYesNo(
-							appellantCaseData.agriculturalHolding.isPartOfAgriculturalHolding
-						) || ''
+					text: convertFromBooleanToYesNo(
+						appellantCaseData.agriculturalHolding.isPartOfAgriculturalHolding,
+						''
+					)
 				},
 				actions: {
 					items: [
@@ -983,7 +987,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 					text: 'Tenant of agricultural holding'
 				},
 				value: {
-					text: convertFromBooleanToYesNo(appellantCaseData.agriculturalHolding.isTenant) || ''
+					text: convertFromBooleanToYesNo(appellantCaseData.agriculturalHolding.isTenant, '')
 				},
 				actions: {
 					items: [
@@ -1007,8 +1011,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 					text: 'Other tenants'
 				},
 				value: {
-					text:
-						convertFromBooleanToYesNo(appellantCaseData.agriculturalHolding.hasOtherTenants) || ''
+					text: convertFromBooleanToYesNo(appellantCaseData.agriculturalHolding.hasOtherTenants, '')
 				},
 				actions: {
 					items: [

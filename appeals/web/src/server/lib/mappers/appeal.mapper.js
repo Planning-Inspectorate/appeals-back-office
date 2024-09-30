@@ -470,8 +470,10 @@ export async function initialiseAndMapAppealData(
 				},
 				value: {
 					html: displayPageFormatter.formatAnswerAndDetails(
-						convertFromBooleanToYesNo(appealDetails.inspectorAccess.appellantCase.isRequired) ??
-							'No answer provided',
+						convertFromBooleanToYesNo(
+							appealDetails.inspectorAccess.appellantCase.isRequired,
+							'No answer provided'
+						),
 						appealDetails.inspectorAccess.appellantCase.details
 					)
 				},
@@ -512,9 +514,10 @@ export async function initialiseAndMapAppealData(
 					text: 'Could a neighbouring site be affected?'
 				},
 				value: {
-					html:
-						convertFromBooleanToYesNo(appealDetails.isAffectingNeighbouringSites) ||
+					html: convertFromBooleanToYesNo(
+						appealDetails.isAffectingNeighbouringSites,
 						'No answer provided'
+					)
 				},
 				actions: {
 					items: neighbouringSiteIsAffectedActionItems
@@ -650,8 +653,10 @@ export async function initialiseAndMapAppealData(
 				},
 				value: {
 					html: displayPageFormatter.formatAnswerAndDetails(
-						convertFromBooleanToYesNo(appealDetails.healthAndSafety.appellantCase.hasIssues) ||
-							'No answer provided',
+						convertFromBooleanToYesNo(
+							appealDetails.healthAndSafety.appellantCase.hasIssues,
+							'No answer provided'
+						),
 						appealDetails.healthAndSafety.appellantCase.details
 					)
 				},
