@@ -182,8 +182,6 @@ const formatAppeal = (
 				withdrawalRequestDate: appeal.withdrawalRequestDate
 			}
 		};
-try{
-
 
 		const formattedAppeal = {
 			...(appeal.agent && {
@@ -362,9 +360,6 @@ try{
 
 		// @ts-ignore
 		return formattedAppeal;
-	} catch (error) {
-		const e = error;
-	}
 	}
 };
 
