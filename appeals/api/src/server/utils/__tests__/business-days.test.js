@@ -20,17 +20,18 @@ describe('business-days', () => {
 			{
 				name: 'works across BST -> GMT boundary',
 				appealType: 'D',
-				startedAt: new Date('2024-10-24T22:59:00Z'), //input is 25/10/2024
+				startedAt: new Date('2024-10-24T22:59:00Z'), //input is 24/10/2024 (BST)
 				timetable: {
-					lpaQuestionnaireDueDate: new Date('2024-10-31T23:59:00Z')
+					lpaQuestionnaireDueDate: new Date('2024-10-31T23:59:00Z') //GMT
 				}
 			},
 			{
 				name: 'works across GMT -> BST boundary',
 				appealType: 'D',
-				startedAt: new Date('2025-03-28T23:59:00Z'), //
+				startedAt: new Date('2024-03-28T23:59:00Z'), //input is 28/3/2025 (GMT)
 				timetable: {
-					lpaQuestionnaireDueDate: new Date('2025-04-04T22:59:00Z')
+					// Bank holidays on Good Friday (29/3) and Easter Monday (1/4), 5 days calc correct to the following Monday
+					lpaQuestionnaireDueDate: new Date('2024-04-08T22:59:00Z') //BST
 				}
 			},
 			{

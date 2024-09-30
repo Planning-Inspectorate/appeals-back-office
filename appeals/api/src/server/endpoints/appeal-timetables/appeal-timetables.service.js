@@ -17,6 +17,7 @@ import formatDate from '#utils/date-formatter.js';
 import config from '#config/config.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { PROCEDURE_TYPE_MAP } from '@pins/appeals/constants/common.js';
+import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
@@ -62,7 +63,7 @@ const startCase = async (appeal, startDate, notifyClient, siteAddress, azureAdUs
 		const startedAt = await recalculateDateIfNotBusinessDay(startDate);
 		const tz = 'Europe/London';
 		const ymd = formatInTimeZone(startedAt, tz, 'yyyy-MM-dd');
-		const startDeadline = zonedTimeToUtc(`${ymd} 23:59`, tz);
+		const startDeadline = zonedTimeToUtc(`${ymd} ${DEADLINE_HOUR}:${DEADLINE_MINUTE}`, tz);
 
 		const timetable = await calculateTimetable(appealType.key, startDeadline);
 
