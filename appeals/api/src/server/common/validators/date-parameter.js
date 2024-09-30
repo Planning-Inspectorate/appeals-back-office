@@ -33,9 +33,11 @@ const validateDateParameter = ({
 	const validator = body(parameterName);
 
 	!isRequired && validator.optional();
+	const isoUtcRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/;
 
 	return validator
-		.isISO8601().toDate()
+		.matches(isoUtcRegex)
+		.toDate()
 		.withMessage(ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT)
 		.custom((value) => (mustBeFutureDate ? dateIsAfterDate(value, new Date()) : true))
 		.withMessage(ERROR_MUST_BE_IN_FUTURE)

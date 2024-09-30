@@ -182,6 +182,8 @@ const formatAppeal = (
 				withdrawalRequestDate: appeal.withdrawalRequestDate
 			}
 		};
+try{
+
 
 		const formattedAppeal = {
 			...(appeal.agent && {
@@ -326,8 +328,8 @@ const formatAppeal = (
 				siteVisit: {
 					siteVisitId: appeal.siteVisit.id,
 					visitDate: appeal.siteVisit.visitDate?.toISOString() || null,
-					visitStartTime: appeal.siteVisit.visitStartTime?.toISOString() || null,
-					visitEndTime: appeal.siteVisit.visitEndTime?.toISOString() || null,
+					visitStartTime: appeal.siteVisit.visitStartTime ? appeal.siteVisit.visitStartTime : null,
+					visitEndTime: appeal.siteVisit.visitEndTime ? appeal.siteVisit.visitEndTime : null,
 					visitType: appeal.siteVisit.siteVisitType.name
 				}
 			}),
@@ -360,6 +362,9 @@ const formatAppeal = (
 
 		// @ts-ignore
 		return formattedAppeal;
+	} catch (error) {
+		const e = error;
+	}
 	}
 };
 

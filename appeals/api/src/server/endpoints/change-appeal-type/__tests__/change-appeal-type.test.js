@@ -128,7 +128,7 @@ describe('appeal change type resubmit routes', () => {
 				.post(`/appeals/${householdAppeal.id}/appeal-change-request`)
 				.send({
 					newAppealTypeId: 1,
-					newAppealTypeFinalDate: '3000-02-05'
+					newAppealTypeFinalDate: '3000-02-05T00:00:00.000Z'
 				})
 				.set('azureAdUserId', azureAdUserId);
 

@@ -295,7 +295,7 @@ describe('appellant cases routes', () => {
 				databaseConnector.appellantCaseIncompleteReasonsSelected.createMany.mockResolvedValue(true);
 
 				const body = {
-					appealDueDate: '2099-07-14T00:00.000Z',
+					appealDueDate: '2099-07-14T00:00:00.000Z',
 					incompleteReasons: [{ id: 1 }, { id: 2 }],
 					validationOutcome: 'Incomplete'
 				};
@@ -361,7 +361,7 @@ describe('appellant cases routes', () => {
 				databaseConnector.appellantCaseIncompleteReasonsSelected.createMany.mockResolvedValue(true);
 
 				const body = {
-					appealDueDate: '2099-07-14',
+					appealDueDate: '2099-07-14T00:00:00.000Z',
 					incompleteReasons: [
 						{
 							id: 1,
@@ -445,7 +445,7 @@ describe('appellant cases routes', () => {
 				});
 
 				const body = {
-					appealDueDate: '2099-07-14',
+					appealDueDate: '2099-07-14T00:00:00.000Z',
 					incompleteReasons: [
 						{
 							id: 1,
@@ -538,7 +538,7 @@ describe('appellant cases routes', () => {
 
 				const eightItemArray = new Array(LENGTH_8).fill('A');
 				const body = {
-					appealDueDate: '2099-07-14',
+					appealDueDate: '2099-07-14T00:00:00.000Z',
 					incompleteReasons: [
 						{
 							id: 1,
@@ -604,7 +604,7 @@ describe('appellant cases routes', () => {
 				);
 
 				const body = {
-					appealDueDate: '2099-07-14',
+					appealDueDate: '2099-07-14T00:00:00.000Z',
 					incompleteReasons: [{ id: 1 }, { id: 2 }],
 					validationOutcome: 'Incomplete'
 				};

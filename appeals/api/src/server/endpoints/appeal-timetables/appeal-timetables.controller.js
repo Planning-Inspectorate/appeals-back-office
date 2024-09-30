@@ -1,8 +1,8 @@
 import logger from '#utils/logger.js';
-import { format } from 'date-fns';
-import { DEFAULT_DATE_FORMAT_DATABASE, ERROR_FAILED_TO_SAVE_DATA } from '../constants.js';
+import { ERROR_FAILED_TO_SAVE_DATA } from '../constants.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 import { startCase, updateAppealTimetable } from './appeal-timetables.service.js';
+import { formatInTimeZone, zonedTimeToUtc } from 'date-fns-tz';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -18,7 +18,9 @@ const startAppeal = async (req, res) => {
 		let startDate = body.startDate;
 
 		if (!startDate) {
-			startDate = format(new Date(), DEFAULT_DATE_FORMAT_DATABASE);
+			const tz = 'Europe/London';
+			const ymd = formatInTimeZone(new Date(), tz, 'yyyy-MM-dd');
+			startDate = zonedTimeToUtc(`${ymd}`, tz).toISOString();
 		}
 
 		const notifyClient = req.notifyClient;
