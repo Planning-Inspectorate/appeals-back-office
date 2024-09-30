@@ -124,7 +124,7 @@ const recalculateDateIfNotBusinessDay = async (date) => {
  * 3. If the new deadline day (and any consecutive days) are bank holidays, these are added to the deadline day
  *
  * @param {string} appealType
- * @param {Date} startedAt
+ * @param {Date|null} startedAt
  * @returns {Promise<TimetableDeadlineDate | undefined>}
  */
 const calculateTimetable = async (appealType, startedAt) => {
