@@ -7,6 +7,8 @@ import {
 	apiErrorMapper
 } from './appeal-timetables.mapper.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
+import { dayMonthYearHourMinuteToISOString } from '#lib/dates.js';
 
 /**
  *
@@ -85,7 +87,8 @@ const processUpdateDueDate = async (request, response) => {
 			appealId,
 			appealTimetableId,
 			{
-				[timetableProperty]: `${updatedDueDateYear}-${updatedDueDateMonthString}-${updatedDueDateDayString}`
+				[timetableProperty]: dayMonthYearHourMinuteToISOString({year: updatedDueDateYear, month: updatedDueDateMonthString, day: updatedDueDateDayString, hour: DEADLINE_HOUR, minute: DEADLINE_MINUTE})
+
 			}
 		);
 

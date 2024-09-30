@@ -216,27 +216,23 @@ export function getValidationOutcomeFromAppellantCase(appellantCaseData) {
  * @param {number} [dueDateDay]
  * @param {number} [dueDateMonth]
  * @param {number} [dueDateYear]
+ * @param {boolean} [errorsOnPage]
  * @returns {PageContent}
  */
-export function updateDueDatePage(appealData, dueDateDay, dueDateMonth, dueDateYear) {
+export function updateDueDatePage(appealData, dueDateDay, dueDateMonth, dueDateYear, errorsOnPage) {
 	let existingDueDateDayMonthYear;
 
-	if (
-		dueDateDay === undefined &&
-		dueDateMonth === undefined &&
-		dueDateYear === undefined &&
-		appealData.documentationSummary.appellantCase?.dueDate
-	) {
-		existingDueDateDayMonthYear = dateISOStringToDayMonthYearHourMinute(
-			appealData.documentationSummary.appellantCase?.dueDate
-		);
-	} else {
+	if (errorsOnPage) {
 		/** @type {DayMonthYearHourMinute} */
 		existingDueDateDayMonthYear = {
 			day: dueDateDay,
 			month: dueDateMonth,
 			year: dueDateYear
 		};
+	} else if (appealData.documentationSummary.appellantCase?.dueDate) {
+		existingDueDateDayMonthYear = dateISOStringToDayMonthYearHourMinute(
+			appealData.documentationSummary.appellantCase?.dueDate
+		);
 	}
 
 	/** @type {PageContent} */

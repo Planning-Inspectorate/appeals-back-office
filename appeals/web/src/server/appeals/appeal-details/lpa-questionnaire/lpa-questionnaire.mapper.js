@@ -211,6 +211,7 @@ export async function lpaQuestionnairePage(lpaqDetails, appealDetails, currentRo
  * @param {number} [dueDateDay]
  * @param {number} [dueDateMonth]
  * @param {number} [dueDateYear]
+ * @param {boolean} [errorsOnPage]
  * @returns {PageContent}
  */
 export function updateDueDatePage(
@@ -218,26 +219,22 @@ export function updateDueDatePage(
 	lpaQuestionnaireId,
 	dueDateDay,
 	dueDateMonth,
-	dueDateYear
+	dueDateYear,
+	errorsOnPage
 ) {
 	let existingDueDateDayMonthYear;
 
-	if (
-		dueDateDay === undefined &&
-		dueDateMonth === undefined &&
-		dueDateYear === undefined &&
-		appealData.documentationSummary.lpaQuestionnaire?.dueDate
-	) {
-		existingDueDateDayMonthYear = dateISOStringToDayMonthYearHourMinute(
-			appealData.documentationSummary.lpaQuestionnaire?.dueDate
-		);
-	} else {
+	if (errorsOnPage) {
 		/** @type {DayMonthYearHourMinute} */
 		existingDueDateDayMonthYear = {
 			day: dueDateDay,
 			month: dueDateMonth,
 			year: dueDateYear
 		};
+	} else if (appealData.documentationSummary.lpaQuestionnaire?.dueDate) {
+		existingDueDateDayMonthYear = dateISOStringToDayMonthYearHourMinute(
+			appealData.documentationSummary.lpaQuestionnaire?.dueDate
+		);
 	}
 
 	/** @type {PageContent} */
@@ -283,15 +280,11 @@ export function updateDueDatePage(
 		]
 	};
 
-	if (existingDueDateDayMonthYear) {
+	if (appealData.documentationSummary.lpaQuestionnaire?.dueDate) {
 		pageContent.pageComponents?.push({
 			type: 'inset-text',
 			parameters: {
-				text: `The current due date for the LPA questionnaire is ${dayMonthYearHourMinuteToDisplayDate({
-					day: existingDueDateDayMonthYear.day || 0,
-					month: existingDueDateDayMonthYear.month || 0,
-					year: existingDueDateDayMonthYear.year || 0
-				})}`,
+				text: `The current due date for the LPA questionnaire is ${dateISOStringToDisplayDate(appealData.documentationSummary.lpaQuestionnaire?.dueDate)}`,
 				classes: 'govuk-!-margin-bottom-7'
 			}
 		});

@@ -40,7 +40,7 @@ export const postValidDate = async (request, response) => {
 			day: updatedValidDateDay
 		});
 
-		if (isBefore(new Date(validDateISOString), new Date(createdAt.year, createdAt.month, createdAt.day))) {
+		if (isBefore(new Date(validDateISOString), new Date(createdAt))) {
 			let errorMessage = [
 				{ msg: 'The valid date must be on or after the date the case was received.' }
 			];

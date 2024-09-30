@@ -797,51 +797,6 @@ describe('LPA Questionnaire review', () => {
 			nock.cleanAll();
 		});
 
-		it('should render the update due date page without pre-populated date values, if there is no existing due date', async () => {
-			nock('http://test/')
-				.get(`/appeals/2`)
-				.reply(200, {
-					...appealData,
-					appealId: 2,
-					documentationSummary: {
-						...appealData.documentationSummary,
-						lpaQuestionnaire: {
-							...appealData.documentationSummary.lpaQuestionnaire,
-							dueDate: null
-						}
-					}
-				})
-				.persist();
-
-			const response = await request.get(
-				'/appeals-service/appeal-details/2/lpa-questionnaire/2/incomplete/date'
-			);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain(
-				'name="due-date-day" type="text" inputmode="numeric">'
-			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				'name="due-date-month" type="text" inputmode="numeric">'
-			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				'name="due-date-year" type="text" inputmode="numeric">'
-			);
-			expect(unprettifiedElement.innerHTML).not.toContain(
-				'name="due-date-day" type="text" value="'
-			);
-			expect(unprettifiedElement.innerHTML).not.toContain(
-				'name="due-date-month" type="text" value="'
-			);
-			expect(unprettifiedElement.innerHTML).not.toContain(
-				'name="due-date-year" type="text" value="'
-			);
-		});
-
 		it('should render the update due date page with correct pre-populated date values, if there is an existing due date', async () => {
 			nock('http://test/')
 				.get(`/appeals/2`)

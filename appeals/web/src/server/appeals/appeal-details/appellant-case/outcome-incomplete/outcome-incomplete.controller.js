@@ -95,7 +95,7 @@ const renderUpdateDueDate = async (request, response) => {
 		dueDateYear = parseInt(body['due-date-year'], 10);
 	}
 
-	const mappedPageContent = updateDueDatePage(currentAppeal, dueDateDay, dueDateMonth, dueDateYear);
+	const mappedPageContent = updateDueDatePage(currentAppeal, dueDateDay, dueDateMonth, dueDateYear, !!errors);
 
 	return response.status(200).render('appeals/appeal/update-date.njk', {
 		pageContent: mappedPageContent,

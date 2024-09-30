@@ -9,7 +9,6 @@ import { APPEAL_REPRESENTATION_STATUS, APPEAL_TYPE } from '@pins/appeals/constan
  */
 export const viewAppealDetails = async (request, response) => {
 	const appealDetails = request.currentAppeal;
-	console.log(new Date())
 	const session = request.session;
 	try {
 		if (appealDetails) {
