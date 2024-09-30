@@ -67,7 +67,7 @@ export interface ValidateDate {
 
 export interface AppellantCaseData {
 	casedata?: {
-		/** @example "42f6920f-8581-48e8-92ed-155e9bd52a8f" */
+		/** @example "956fc5e4-bcf1-4e0e-8714-69afbe35010b" */
 		submissionId?: string;
 		/** @example true */
 		advertisedAppeal?: boolean;
@@ -1496,73 +1496,6 @@ export interface UpdateLPAQuestionnaireRequest {
 
 export type UpdateLPAQuestionnaireResponse = object;
 
-export interface CreateSiteVisitRequest {
-	/** @example "2024-07-07" */
-	visitDate?: string;
-	/** @example "18:00" */
-	visitEndTime?: string;
-	/** @example "16:00" */
-	visitStartTime?: string;
-	/** @example "access required" */
-	visitType?: string;
-}
-
-export interface CreateSiteVisitResponse {
-	/** @example "2024-07-07T01:00:00.000Z" */
-	visitDate?: string;
-	/** @example "18:00" */
-	visitEndTime?: string;
-	/** @example "16:00" */
-	visitStartTime?: string;
-	/** @example "access required" */
-	visitType?: string;
-}
-
-export interface UpdateSiteVisitRequest {
-	/** @example "2024-07-09" */
-	visitDate?: string;
-	/** @example "12:00" */
-	visitEndTime?: string;
-	/** @example "10:00" */
-	visitStartTime?: string;
-	/** @example "Accompanied" */
-	visitType?: string;
-	/** @example "Unaccompanied" */
-	previousVisitType?: string;
-	/** @example "all" */
-	siteVisitChangeType?: string;
-}
-
-export interface UpdateSiteVisitResponse {
-	/** @example "2024-07-09T01:00:00.000Z" */
-	visitDate?: string;
-	/** @example "12:00" */
-	visitEndTime?: string;
-	/** @example "10:00" */
-	visitStartTime?: string;
-	/** @example "Accompanied" */
-	visitType?: string;
-	/** @example "Unaccompanied" */
-	previousVisitType?: string;
-	/** @example "all" */
-	siteVisitChangeType?: string;
-}
-
-export interface SingleSiteVisitResponse {
-	/** @example 2 */
-	appealId?: number;
-	/** @example 1 */
-	siteVisitId?: number;
-	/** @example "Access required" */
-	visitType?: string;
-	/** @example "2024-07-07" */
-	visitDate?: string;
-	/** @example "18:00" */
-	visitEndTime?: string;
-	/** @example "16:00" */
-	visitStartTime?: string;
-}
-
 export type AllAppellantCaseIncompleteReasonsResponse = {
 	/** @example 1 */
 	id?: number;
@@ -1960,6 +1893,35 @@ export interface ExistsOnHorizonResponse {
 	 */
 	caseFound?: boolean;
 }
+
+export interface SiteVisitCreateRequest {
+	/**
+	 * @format date-time
+	 * @example "2024-08-24T00:00:00Z"
+	 */
+	visitDate: string;
+	/**
+	 * @format date-time
+	 * @example "2024-08-24T10:30:00Z"
+	 */
+	visitStartTime?: string;
+	/**
+	 * @format date-time
+	 * @example "2024-08-24T11:30:00Z"
+	 */
+	visitEndTime?: string;
+	visitType: 'Unaccompanied' | 'Access required' | 'Accompanied';
+}
+
+export type SiteVisitUpdateRequest = SiteVisitCreateRequest & {
+	previousVisitType?: 'Unaccompanied' | 'Access required' | 'Accompanied';
+	siteVisitChangeType?: 'unchanged' | 'date-time' | 'visit-type' | 'all';
+};
+
+export type SiteVisitSingleResponse = SiteVisitCreateRequest & {
+	appealId: number;
+	siteVisitId: number;
+};
 
 export interface UpdateServiceUserRequest {
 	serviceUser?: {

@@ -3930,7 +3930,7 @@
 						"properties": {
 							"submissionId": {
 								"type": "string",
-								"example": "42f6920f-8581-48e8-92ed-155e9bd52a8f"
+								"example": "956fc5e4-bcf1-4e0e-8714-69afbe35010b"
 							},
 							"advertisedAppeal": {
 								"type": "boolean",
@@ -7105,150 +7105,6 @@
 					"name": "UpdateLPAQuestionnaireResponse"
 				}
 			},
-			"CreateSiteVisitRequest": {
-				"type": "object",
-				"properties": {
-					"visitDate": {
-						"type": "string",
-						"example": "2024-07-07"
-					},
-					"visitEndTime": {
-						"type": "string",
-						"example": "18:00"
-					},
-					"visitStartTime": {
-						"type": "string",
-						"example": "16:00"
-					},
-					"visitType": {
-						"type": "string",
-						"example": "access required"
-					}
-				},
-				"xml": {
-					"name": "CreateSiteVisitRequest"
-				}
-			},
-			"CreateSiteVisitResponse": {
-				"type": "object",
-				"properties": {
-					"visitDate": {
-						"type": "string",
-						"example": "2024-07-07T01:00:00.000Z"
-					},
-					"visitEndTime": {
-						"type": "string",
-						"example": "18:00"
-					},
-					"visitStartTime": {
-						"type": "string",
-						"example": "16:00"
-					},
-					"visitType": {
-						"type": "string",
-						"example": "access required"
-					}
-				},
-				"xml": {
-					"name": "CreateSiteVisitResponse"
-				}
-			},
-			"UpdateSiteVisitRequest": {
-				"type": "object",
-				"properties": {
-					"visitDate": {
-						"type": "string",
-						"example": "2024-07-09"
-					},
-					"visitEndTime": {
-						"type": "string",
-						"example": "12:00"
-					},
-					"visitStartTime": {
-						"type": "string",
-						"example": "10:00"
-					},
-					"visitType": {
-						"type": "string",
-						"example": "Accompanied"
-					},
-					"previousVisitType": {
-						"type": "string",
-						"example": "Unaccompanied"
-					},
-					"siteVisitChangeType": {
-						"type": "string",
-						"example": "all"
-					}
-				},
-				"xml": {
-					"name": "UpdateSiteVisitRequest"
-				}
-			},
-			"UpdateSiteVisitResponse": {
-				"type": "object",
-				"properties": {
-					"visitDate": {
-						"type": "string",
-						"example": "2024-07-09T01:00:00.000Z"
-					},
-					"visitEndTime": {
-						"type": "string",
-						"example": "12:00"
-					},
-					"visitStartTime": {
-						"type": "string",
-						"example": "10:00"
-					},
-					"visitType": {
-						"type": "string",
-						"example": "Accompanied"
-					},
-					"previousVisitType": {
-						"type": "string",
-						"example": "Unaccompanied"
-					},
-					"siteVisitChangeType": {
-						"type": "string",
-						"example": "all"
-					}
-				},
-				"xml": {
-					"name": "UpdateSiteVisitResponse"
-				}
-			},
-			"SingleSiteVisitResponse": {
-				"type": "object",
-				"properties": {
-					"appealId": {
-						"type": "number",
-						"example": 2
-					},
-					"siteVisitId": {
-						"type": "number",
-						"example": 1
-					},
-					"visitType": {
-						"type": "string",
-						"example": "Access required"
-					},
-					"visitDate": {
-						"type": "string",
-						"example": "2024-07-07"
-					},
-					"visitEndTime": {
-						"type": "string",
-						"example": "18:00"
-					},
-					"visitStartTime": {
-						"type": "string",
-						"example": "16:00"
-					}
-				},
-				"xml": {
-					"name": "SingleSiteVisitResponse"
-				}
-			},
 			"AllAppellantCaseIncompleteReasonsResponse": {
 				"type": "array",
 				"items": {
@@ -8100,6 +7956,70 @@
 						"example": true
 					}
 				}
+			},
+			"SiteVisitCreateRequest": {
+				"type": "object",
+				"required": ["visitType", "visitDate"],
+				"properties": {
+					"visitDate": {
+						"type": "string",
+						"format": "date-time",
+						"example": "2024-08-24T00:00:00Z"
+					},
+					"visitStartTime": {
+						"type": "string",
+						"format": "date-time",
+						"example": "2024-08-24T10:30:00Z"
+					},
+					"visitEndTime": {
+						"type": "string",
+						"format": "date-time",
+						"example": "2024-08-24T11:30:00Z"
+					},
+					"visitType": {
+						"type": "string",
+						"enum": ["Unaccompanied", "Access required", "Accompanied"]
+					}
+				}
+			},
+			"SiteVisitUpdateRequest": {
+				"allOf": [
+					{
+						"$ref": "#/components/schemas/SiteVisitCreateRequest"
+					},
+					{
+						"type": "object",
+						"properties": {
+							"previousVisitType": {
+								"type": "string",
+								"enum": ["Unaccompanied", "Access required", "Accompanied"]
+							},
+							"siteVisitChangeType": {
+								"type": "string",
+								"enum": ["unchanged", "date-time", "visit-type", "all"]
+							}
+						}
+					}
+				]
+			},
+			"SiteVisitSingleResponse": {
+				"allOf": [
+					{
+						"$ref": "#/components/schemas/SiteVisitCreateRequest"
+					},
+					{
+						"type": "object",
+						"required": ["appealId", "siteVisitId"],
+						"properties": {
+							"appealId": {
+								"type": "number"
+							},
+							"siteVisitId": {
+								"type": "number"
+							}
+						}
+					}
+				]
 			},
 			"UpdateServiceUserRequest": {
 				"type": "object",
