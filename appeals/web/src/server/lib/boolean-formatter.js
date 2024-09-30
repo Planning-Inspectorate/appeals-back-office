@@ -18,24 +18,6 @@ export function convertFromBooleanToYesNo(boolean, defaultText) {
 
 /**
  *
- * @param {boolean | null | undefined} boolean
- * @param {string} [optionalDetailsIfYes]
- * @returns {string | string[]}
- */
-export function convertFromBooleanToYesNoWithOptionalDetails(boolean, optionalDetailsIfYes = '') {
-	const yesOrNo = convertFromBooleanToYesNo(boolean);
-
-	if (yesOrNo === 'Yes') {
-		return optionalDetailsIfYes.length > 0 ? [yesOrNo, optionalDetailsIfYes] : yesOrNo;
-	} else if (yesOrNo === 'No') {
-		return yesOrNo;
-	}
-
-	return '';
-}
-
-/**
- *
  * @param {string | null | undefined} string
  * @returns {Boolean}
  */
