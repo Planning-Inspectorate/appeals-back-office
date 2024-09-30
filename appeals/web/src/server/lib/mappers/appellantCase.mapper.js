@@ -10,6 +10,7 @@ import { capitalize } from 'lodash-es';
 import { APPEAL_KNOWS_OTHER_OWNERS } from 'pins-data-model';
 import { SHOW_MORE_MAXIMUM_CHARACTERS_BEFORE_HIDING } from '#lib/constants.js';
 import { booleanDisplayField } from '#lib/page-components/boolean.js';
+import { documentTypeDisplayField } from '#lib/page-components/document.js';
 
 /**
  * @typedef {import('@pins/appeals.api').Appeals.FolderInfo} FolderInfo
@@ -29,6 +30,30 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 
 	currentRoute =
 		currentRoute[currentRoute.length - 1] === '/' ? currentRoute.slice(0, -1) : currentRoute;
+
+	/**
+	 * Generates a document field with defaults
+	 *
+	 * @param {Object} options
+	 * @param {string} options.id
+	 * @param {string} options.text
+	 * @param {FolderInfo|null|undefined} options.folderInfo
+	 * @param {string} [options.cypressDataName]
+	 * @returns {Instructions}
+	 */
+	const documentInstruction = ({ id, text, folderInfo, cypressDataName }) => {
+		return documentTypeDisplayField({
+			id,
+			text,
+			appealId: appellantCaseData.appealId,
+			folderInfo,
+			requiredPermissionName: permissionNames.updateCase,
+			uploadUrlTemplate: documentUploadUrlTemplate,
+			manageUrl: mapDocumentManageUrl(appellantCaseData.appealId, folderInfo?.folderId),
+			session,
+			cypressDataName
+		});
+	};
 
 	/** @type {MappedInstructions} */
 	const mappedData = {};
@@ -297,25 +322,12 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 	};
 
 	//TODO: update with new document type
-	/** @type {Instructions} */
-	mappedData.changedDevelopmentDescriptionDocument = {
+	mappedData.changedDevelopmentDescriptionDocument = documentInstruction({
 		id: 'changed-development-description.document',
-		display: {
-			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
-				'Agreement to change description evidence',
-				appellantCaseData.appealId,
-				appellantCaseData.documents.changedDescription,
-				permissionNames.updateCase,
-				session,
-				mapDocumentManageUrl(
-					appellantCaseData.appealId,
-					appellantCaseData.documents.changedDescription?.folderId
-				),
-				documentUploadUrlTemplate,
-				'agreement-to-change-description-evidence'
-			)
-		}
-	};
+		text: 'Agreement to change description evidence',
+		folderInfo: appellantCaseData.documents.changedDescription,
+		cypressDataName: 'agreement-to-change-description-evidence'
+	});
 
 	/** @type {Instructions} */
 	mappedData.localPlanningAuthority = {
@@ -508,105 +520,35 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		}
 	};
 
-	/** @type {Instructions} */
-	mappedData.applicationForm = {
+	mappedData.applicationForm = documentInstruction({
 		id: 'application-form',
-		display: {
-			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
-				'Application form',
-				appellantCaseData.appealId,
-				appellantCaseData.documents.originalApplicationForm,
-				permissionNames.updateCase,
-				session,
-				mapDocumentManageUrl(
-					appellantCaseData.appealId,
-					appellantCaseData.documents.originalApplicationForm?.folderId
-				),
-				documentUploadUrlTemplate,
-				'application-form'
-			)
-		}
-	};
+		text: 'Application form',
+		folderInfo: appellantCaseData.documents.originalApplicationForm
+	});
 
-	/** @type {Instructions} */
-	mappedData.designAccessStatement = {
+	mappedData.designAccessStatement = documentInstruction({
 		id: 'design-access-statement',
-		display: {
-			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
-				'Design and access statement',
-				appellantCaseData.appealId,
-				appellantCaseData.documents.designAccessStatement,
-				permissionNames.updateCase,
-				session,
-				mapDocumentManageUrl(
-					appellantCaseData.appealId,
-					appellantCaseData.documents.designAccessStatement?.folderId
-				),
-				documentUploadUrlTemplate,
-				'design-access-statement'
-			)
-		}
-	};
+		text: 'Design and access statement',
+		folderInfo: appellantCaseData.documents.designAccessStatement
+	});
 
-	/** @type {Instructions} */
-	mappedData.newPlansDrawings = {
+	mappedData.newPlansDrawings = documentInstruction({
 		id: 'new-plans-drawings',
-		display: {
-			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
-				'New plans or drawings',
-				appellantCaseData.appealId,
-				appellantCaseData.documents.newPlansDrawings,
-				permissionNames.updateCase,
-				session,
-				mapDocumentManageUrl(
-					appellantCaseData.appealId,
-					appellantCaseData.documents.newPlansDrawings?.folderId
-				),
-				documentUploadUrlTemplate,
-				'new-plans-drawings'
-			)
-		}
-	};
+		text: 'New plans or drawings',
+		folderInfo: appellantCaseData.documents.newPlansDrawings
+	});
 
-	/** @type {Instructions} */
-	mappedData.supportingDocuments = {
+	mappedData.supportingDocuments = documentInstruction({
 		id: 'supporting-documents',
-		display: {
-			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
-				'Supporting documents submitted with statement',
-				appellantCaseData.appealId,
-				appellantCaseData.documents.plansDrawings,
-				permissionNames.updateCase,
-				session,
-				mapDocumentManageUrl(
-					appellantCaseData.appealId,
-					appellantCaseData.documents.plansDrawings?.folderId
-				),
-				documentUploadUrlTemplate,
-				'supporting-documents'
-			)
-		}
-	};
+		text: 'Supporting documents submitted with statement',
+		folderInfo: appellantCaseData.documents.plansDrawings
+	});
 
-	/** @type {Instructions} */
-	mappedData.planningObligation = {
+	mappedData.planningObligation = documentInstruction({
 		id: 'planning-obligation',
-		display: {
-			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
-				'Planning obligation',
-				appellantCaseData.appealId,
-				appellantCaseData.documents.planningObligation,
-				permissionNames.updateCase,
-				session,
-				mapDocumentManageUrl(
-					appellantCaseData.appealId,
-					appellantCaseData.documents.planningObligation?.folderId
-				),
-				documentUploadUrlTemplate,
-				'planning-obligation'
-			)
-		}
-	};
+		text: 'Planning obligation',
+		folderInfo: appellantCaseData.documents.planningObligation
+	});
 
 	mappedData.ownershipCertificateSubmitted = booleanDisplayField({
 		id: 'ownership-certificate-submitted',
@@ -618,85 +560,29 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		session
 	});
 
-	/** @type {Instructions} */
-	mappedData.ownershipCertificate = {
+	mappedData.ownershipCertificate = documentInstruction({
 		id: 'ownership-certificate',
-		display: {
-			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
-				'Ownership certificate or land declaration',
-				appellantCaseData.appealId,
-				appellantCaseData.documents.ownershipCertificate,
-				permissionNames.updateCase,
-				session,
-				mapDocumentManageUrl(
-					appellantCaseData.appealId,
-					appellantCaseData.documents.ownershipCertificate?.folderId
-				),
-				documentUploadUrlTemplate,
-				'ownership-certificate'
-			)
-		}
-	};
+		text: 'Ownership certificate or land declaration',
+		folderInfo: appellantCaseData.documents.ownershipCertificate
+	});
 
-	/** @type {Instructions} */
-	mappedData.decisionLetter = {
+	mappedData.decisionLetter = documentInstruction({
 		id: 'decision-letter',
-		display: {
-			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
-				'Decision letter',
-				appellantCaseData.appealId,
-				appellantCaseData.documents.applicationDecisionLetter,
-				permissionNames.updateCase,
-				session,
-				mapDocumentManageUrl(
-					appellantCaseData.appealId,
-					appellantCaseData.documents.applicationDecisionLetter?.folderId
-				),
-				documentUploadUrlTemplate,
-				'decision-letter'
-			)
-		}
-	};
+		text: 'Decision letter',
+		folderInfo: appellantCaseData.documents.applicationDecisionLetter
+	});
 
-	/** @type {Instructions} */
-	mappedData.appealStatement = {
+	mappedData.appealStatement = documentInstruction({
 		id: 'appeal-statement',
-		display: {
-			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
-				'Appeal statement',
-				appellantCaseData.appealId,
-				appellantCaseData.documents.appellantStatement,
-				permissionNames.updateCase,
-				session,
-				mapDocumentManageUrl(
-					appellantCaseData.appealId,
-					appellantCaseData.documents.appellantStatement?.folderId
-				),
-				documentUploadUrlTemplate,
-				'appeal-statement'
-			)
-		}
-	};
+		text: 'Appeal statement',
+		folderInfo: appellantCaseData.documents.appellantStatement
+	});
 
-	/** @type {Instructions} */
-	mappedData.otherNewDocuments = {
+	mappedData.otherNewDocuments = documentInstruction({
 		id: 'new-supporting-documents',
-		display: {
-			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
-				'New supporting documents',
-				appellantCaseData.appealId,
-				appellantCaseData.documents.otherNewDocuments,
-				permissionNames.updateCase,
-				session,
-				mapDocumentManageUrl(
-					appellantCaseData.appealId,
-					appellantCaseData.documents.otherNewDocuments?.folderId
-				),
-				documentUploadUrlTemplate,
-				'new-supporting-documents'
-			)
-		}
-	};
+		text: 'New supporting documents',
+		folderInfo: appellantCaseData.documents.otherNewDocuments
+	});
 
 	/** @type {Instructions} */
 	mappedData.additionalDocuments = {
@@ -912,25 +798,11 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		session
 	});
 
-	/** @type {Instructions} */
-	mappedData.costsDocument = {
+	mappedData.costsDocument = documentInstruction({
 		id: 'costs-appellant',
-		display: {
-			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
-				'Costs document',
-				appellantCaseData.appealId,
-				appealDetails.costs.appellantApplicationFolder,
-				permissionNames.updateCase,
-				session,
-				mapDocumentManageUrl(
-					appellantCaseData.appealId,
-					appealDetails.costs.appellantApplicationFolder?.folderId
-				),
-				documentUploadUrlTemplate,
-				'costs-document'
-			)
-		}
-	};
+		text: 'Costs document',
+		folderInfo: appealDetails.costs.appellantApplicationFolder
+	});
 
 	return mappedData;
 }
