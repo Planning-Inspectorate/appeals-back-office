@@ -4,6 +4,7 @@ import { isFolderInfo } from '#lib/ts-utilities.js';
 import { mapActionComponent } from './component-permissions.mapper.js';
 import { permissionNames } from '#environment/permissions.js';
 import { booleanDisplayField } from '#lib/page-components/boolean.js';
+import { documentTypeDisplayField } from '#lib/page-components/document.js';
 
 /**
  * @typedef StatusTag
@@ -30,6 +31,34 @@ export function initialiseAndMapLPAQData(
 	session,
 	currentRoute
 ) {
+	/**
+	 * Generates a document field with defaults
+	 *
+	 * @param {Object} options
+	 * @param {string} options.id
+	 * @param {string} options.text
+	 * @param {FolderInfo|null|undefined} options.folderInfo
+	 * @param {string} [options.cypressDataName]
+	 * @returns {Instructions}
+	 */
+	const documentInstruction = ({ id, text, folderInfo, cypressDataName }) => {
+		return documentTypeDisplayField({
+			id,
+			text,
+			appealId: lpaQuestionnaireData.appealId,
+			folderInfo,
+			requiredPermissionName: permissionNames.updateCase,
+			uploadUrlTemplate: buildDocumentUploadUrlTemplate(lpaQuestionnaireData.lpaQuestionnaireId),
+			manageUrl: mapDocumentManageUrl(
+				lpaQuestionnaireData.appealId,
+				lpaQuestionnaireData.lpaQuestionnaireId,
+				folderInfo?.folderId
+			),
+			session,
+			cypressDataName
+		});
+	};
+
 	/** @type {{lpaq: MappedInstructions}} */
 	const mappedData = {};
 	mappedData.lpaq = {};
@@ -86,28 +115,12 @@ export function initialiseAndMapLPAQData(
 		session
 	});
 
-	/** @type {Instructions} */
-	mappedData.lpaq.conservationAreaMap = {
+	mappedData.lpaq.conservationAreaMap = documentInstruction({
 		id: 'conservation-area-map',
-		display: {
-			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
-				'Conservation area map and guidance',
-				lpaQuestionnaireData.appealId,
-				lpaQuestionnaireData.documents.conservationMap,
-				permissionNames.updateCase,
-				session,
-				mapDocumentManageUrl(
-					lpaQuestionnaireData.appealId,
-					lpaQuestionnaireData.lpaQuestionnaireId,
-					isFolderInfo(lpaQuestionnaireData.documents.conservationMap)
-						? lpaQuestionnaireData.documents.conservationMap.folderId
-						: undefined
-				),
-				buildDocumentUploadUrlTemplate(lpaQuestionnaireData.lpaQuestionnaireId),
-				'conservation-area-map-and-guidance'
-			)
-		}
-	};
+		text: 'Conservation area map and guidance',
+		folderInfo: lpaQuestionnaireData.documents.conservationMap,
+		cypressDataName: 'conservation-area-map-and-guidance'
+	});
 
 	mappedData.lpaq.siteWithinGreenBelt = booleanDisplayField({
 		id: 'site-within-green-belt',
@@ -119,97 +132,31 @@ export function initialiseAndMapLPAQData(
 		session
 	});
 
-	/** @type {Instructions} */
-	mappedData.lpaq.notifyingParties = {
+	mappedData.lpaq.notifyingParties = documentInstruction({
 		id: 'notifying-parties',
-		display: {
-			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
-				'Who was notified',
-				lpaQuestionnaireData.appealId,
-				lpaQuestionnaireData.documents.whoNotified,
-				permissionNames.updateCase,
-				session,
-				mapDocumentManageUrl(
-					lpaQuestionnaireData.appealId,
-					lpaQuestionnaireData.lpaQuestionnaireId,
-					isFolderInfo(lpaQuestionnaireData.documents.whoNotified)
-						? lpaQuestionnaireData.documents.whoNotified.folderId
-						: undefined
-				),
-				buildDocumentUploadUrlTemplate(lpaQuestionnaireData.lpaQuestionnaireId),
-				'notifying-parties'
-			)
-		}
-	};
+		text: 'Who was notified',
+		folderInfo: lpaQuestionnaireData.documents.whoNotified
+	});
 
-	/** @type {Instructions} */
-	mappedData.lpaq.siteNotice = {
+	mappedData.lpaq.siteNotice = documentInstruction({
 		id: 'site-notice',
-		display: {
-			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
-				'Site notice',
-				lpaQuestionnaireData.appealId,
-				lpaQuestionnaireData.documents.whoNotifiedSiteNotice,
-				permissionNames.updateCase,
-				session,
-				mapDocumentManageUrl(
-					lpaQuestionnaireData.appealId,
-					lpaQuestionnaireData.lpaQuestionnaireId,
-					isFolderInfo(lpaQuestionnaireData.documents.whoNotifiedSiteNotice)
-						? lpaQuestionnaireData.documents.whoNotifiedSiteNotice.folderId
-						: undefined
-				),
-				buildDocumentUploadUrlTemplate(lpaQuestionnaireData.lpaQuestionnaireId),
-				'site-notice'
-			)
-		}
-	};
+		text: 'Site notice',
+		folderInfo: lpaQuestionnaireData.documents.whoNotifiedSiteNotice
+	});
 
-	/** @type {Instructions} */
-	mappedData.lpaq.lettersToNeighbours = {
+	mappedData.lpaq.lettersToNeighbours = documentInstruction({
 		id: 'letters-to-neighbours',
-		display: {
-			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
-				'Letter or email notification',
-				lpaQuestionnaireData.appealId,
-				lpaQuestionnaireData.documents.whoNotifiedLetterToNeighbours,
-				permissionNames.updateCase,
-				session,
-				mapDocumentManageUrl(
-					lpaQuestionnaireData.appealId,
-					lpaQuestionnaireData.lpaQuestionnaireId,
-					isFolderInfo(lpaQuestionnaireData.documents.whoNotifiedLetterToNeighbours)
-						? lpaQuestionnaireData.documents.whoNotifiedLetterToNeighbours.folderId
-						: undefined
-				),
-				buildDocumentUploadUrlTemplate(lpaQuestionnaireData.lpaQuestionnaireId),
-				'letter-or-email-notification'
-			)
-		}
-	};
+		text: 'Letter or email notification',
+		folderInfo: lpaQuestionnaireData.documents.whoNotifiedLetterToNeighbours,
+		cypressDataName: 'letter-or-email-notification'
+	});
 
-	/** @type {Instructions} */
-	mappedData.lpaq.pressAdvert = {
+	mappedData.lpaq.pressAdvert = documentInstruction({
 		id: 'press-advert',
-		display: {
-			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
-				'Press advert notification',
-				lpaQuestionnaireData.appealId,
-				lpaQuestionnaireData.documents.whoNotifiedPressAdvert,
-				permissionNames.updateCase,
-				session,
-				mapDocumentManageUrl(
-					lpaQuestionnaireData.appealId,
-					lpaQuestionnaireData.lpaQuestionnaireId,
-					isFolderInfo(lpaQuestionnaireData.documents.whoNotifiedPressAdvert)
-						? lpaQuestionnaireData.documents.whoNotifiedPressAdvert.folderId
-						: undefined
-				),
-				buildDocumentUploadUrlTemplate(lpaQuestionnaireData.lpaQuestionnaireId),
-				'press-advert-notification'
-			)
-		}
-	};
+		text: 'Press advert notification',
+		folderInfo: lpaQuestionnaireData.documents.whoNotifiedPressAdvert,
+		cypressDataName: 'press-advert-notification'
+	});
 
 	/** @type {Instructions} */
 	mappedData.lpaq.notificationMethods = {
@@ -238,51 +185,17 @@ export function initialiseAndMapLPAQData(
 		}
 	};
 
-	/** @type {Instructions} */
-	mappedData.lpaq.representations = {
+	mappedData.lpaq.representations = documentInstruction({
 		id: 'representations-from-other-parties',
-		display: {
-			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
-				'Representations from other parties documents',
-				lpaQuestionnaireData.appealId,
-				lpaQuestionnaireData.documents.otherPartyRepresentations,
-				permissionNames.updateCase,
-				session,
-				mapDocumentManageUrl(
-					lpaQuestionnaireData.appealId,
-					lpaQuestionnaireData.lpaQuestionnaireId,
-					isFolderInfo(lpaQuestionnaireData.documents.otherPartyRepresentations)
-						? lpaQuestionnaireData.documents.otherPartyRepresentations.folderId
-						: undefined
-				),
-				buildDocumentUploadUrlTemplate(lpaQuestionnaireData.lpaQuestionnaireId),
-				'representations-from-other-parties'
-			)
-		}
-	};
+		text: 'Representations from other parties documents',
+		folderInfo: lpaQuestionnaireData.documents.otherPartyRepresentations
+	});
 
-	/** @type {Instructions} */
-	mappedData.lpaq.officersReport = {
+	mappedData.lpaq.officersReport = documentInstruction({
 		id: 'officers-report',
-		display: {
-			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
-				"Planning officer's report",
-				lpaQuestionnaireData.appealId,
-				lpaQuestionnaireData.documents.planningOfficerReport,
-				permissionNames.updateCase,
-				session,
-				mapDocumentManageUrl(
-					lpaQuestionnaireData.appealId,
-					lpaQuestionnaireData.lpaQuestionnaireId,
-					isFolderInfo(lpaQuestionnaireData.documents.planningOfficerReport)
-						? lpaQuestionnaireData.documents.planningOfficerReport.folderId
-						: undefined
-				),
-				buildDocumentUploadUrlTemplate(lpaQuestionnaireData.lpaQuestionnaireId),
-				'officers-report'
-			)
-		}
-	};
+		text: `Planning officer's report`,
+		folderInfo: lpaQuestionnaireData.documents.planningOfficerReport
+	});
 
 	/** @type {Instructions} */
 	mappedData.lpaq.siteAccess = {
