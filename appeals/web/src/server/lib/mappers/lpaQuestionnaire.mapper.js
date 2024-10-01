@@ -5,6 +5,7 @@ import { mapActionComponent } from './component-permissions.mapper.js';
 import { permissionNames } from '#environment/permissions.js';
 import { booleanDisplayField } from '#lib/page-components/boolean.js';
 import { documentTypeDisplayField } from '#lib/page-components/document.js';
+import { textDisplayField } from '#lib/page-components/text.js';
 
 /**
  * @typedef StatusTag
@@ -158,32 +159,17 @@ export function initialiseAndMapLPAQData(
 		cypressDataName: 'press-advert-notification'
 	});
 
-	/** @type {Instructions} */
-	mappedData.lpaq.notificationMethods = {
+	mappedData.lpaq.notificationMethods = textDisplayField({
 		id: 'notification-methods',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Notification methods'
-				},
-				value: {
-					html: displayPageFormatter.formatListOfNotificationMethodsToHtml(
-						lpaQuestionnaireData.lpaNotificationMethods
-					)
-				},
-				actions: {
-					items: [
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Change',
-							visuallyHiddenText: 'notification methods',
-							href: `${currentRoute}/notification-methods/change`,
-							attributes: { 'lpaQuestionnaireData-cy': 'change-notification-methods' }
-						})
-					]
-				}
-			}
-		}
-	};
+		text: 'Notification methods',
+		value: {
+			html: displayPageFormatter.formatListOfNotificationMethodsToHtml(
+				lpaQuestionnaireData.lpaNotificationMethods
+			)
+		},
+		link: `${currentRoute}/notification-methods/change`,
+		session
+	});
 
 	mappedData.lpaq.representations = documentInstruction({
 		id: 'representations-from-other-parties',
