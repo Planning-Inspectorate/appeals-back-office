@@ -691,9 +691,9 @@ export interface CreateSiteVisitData {
 export interface UpdateSiteVisitData {
 	siteVisitId: number;
 	appealId: number;
-	visitDate?: string;
-	visitEndTime?: string;
-	visitStartTime?: string;
+	visitDate?: Date;
+	visitEndTime?: Date;
+	visitStartTime?: Date;
 	visitType?: any;
 	previousVisitType: string;
 	appellantEmail: string;

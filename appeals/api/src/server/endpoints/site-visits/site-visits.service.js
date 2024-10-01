@@ -18,6 +18,7 @@ import { toCamelCase } from '#utils/string-utils.js';
 // eslint-disable-next-line no-unused-vars
 import NotifyClient from '#utils/notify-client.js';
 import { EventType } from '@pins/event-client';
+import formatTime from '#utils/time-formatter.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateSiteVisitData} UpdateSiteVisitData */
 /** @typedef {import('@pins/appeals.api').Appeals.CreateSiteVisitData} CreateSiteVisitData */
@@ -33,7 +34,7 @@ import { EventType } from '@pins/event-client';
  * @returns {Promise<void>}
  */
 export const createSiteVisit = async (azureAdUserId, siteVisitData, notifyClient) => {
-	try {
+	// try {
 		const appealId = siteVisitData.appealId;
 		const visitDate = siteVisitData.visitDate;
 		const visitEndTime = siteVisitData.visitEndTime;
@@ -54,7 +55,7 @@ export const createSiteVisit = async (azureAdUserId, siteVisitData, notifyClient
 				appealId,
 				azureAdUserId,
 				details: stringTokenReplacement(AUDIT_TRAIL_SITE_VISIT_ARRANGED, [
-					format(visitDate, DEFAULT_DATE_FORMAT_AUDIT_TRAIL)
+					format(new Date(visitDate), DEFAULT_DATE_FORMAT_AUDIT_TRAIL)
 				])
 			});
 		}
@@ -66,8 +67,8 @@ export const createSiteVisit = async (azureAdUserId, siteVisitData, notifyClient
 			appeal_reference_number: siteVisitData.appealReferenceNumber,
 			lpa_reference: siteVisitData.lpaReference,
 			site_address: siteVisitData.siteAddress,
-			start_time: siteVisitData.visitStartTime || '',
-			end_time: siteVisitData.visitEndTime || '',
+			start_time: formatTime(siteVisitData.visitStartTime),
+			end_time: formatTime(siteVisitData.visitEndTime),
 			visit_date: formatDate(new Date(siteVisitData.visitDate || ''), false)
 		};
 
@@ -90,9 +91,9 @@ export const createSiteVisit = async (azureAdUserId, siteVisitData, notifyClient
 				throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
 			}
 		}
-	} catch (error) {
-		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
-	}
+	// } catch (error) {
+	// 	throw new Error(ERROR_FAILED_TO_SAVE_DATA);
+	// }
 };
 
 /**
@@ -167,8 +168,8 @@ const updateSiteVisit = async (azureAdUserId, updateSiteVisitData, notifyClient)
 			appeal_reference_number: updateSiteVisitData.appealReferenceNumber,
 			lpa_reference: updateSiteVisitData.lpaReference,
 			site_address: updateSiteVisitData.siteAddress,
-			start_time: updateSiteVisitData.visitStartTime || '',
-			end_time: updateSiteVisitData.visitEndTime || '',
+			start_time: formatTime(updateSiteVisitData.visitStartTime),
+			end_time: formatTime(updateSiteVisitData.visitEndTime),
 			visit_date: formatDate(new Date(updateSiteVisitData.visitDate || ''), false)
 		};
 

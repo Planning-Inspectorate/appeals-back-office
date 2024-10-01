@@ -92,7 +92,7 @@ describe('site visit routes', () => {
 				const response = await request
 					.post(`/appeals/${householdAppeal.id}/site-visits`)
 					.send({
-						visitDate: siteVisit.visitDate.split('T')[0],
+						visitDate: siteVisit.visitDate,
 						visitEndTime: siteVisit.visitEndTime,
 						visitStartTime: siteVisit.visitStartTime,
 						visitType: siteVisit.siteVisitType.name
@@ -138,13 +138,18 @@ describe('site visit routes', () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				// @ts-ignore
 				databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
 
 				const response = await request
 					.post(`/appeals/${householdAppeal.id}/site-visits`)
 					.send({
-						visitDate: siteVisit.visitDate.split('T')[0],
-						visitEndTime: '9:00',
-						visitStartTime: '7:00',
+						visitDate: siteVisit.visitDate,
+						visitEndTime: siteVisit.visitEndTime,
+						visitStartTime: siteVisit.visitStartTime,
 						visitType: siteVisit.siteVisitType.name
 					})
 					.set('azureAdUserId', azureAdUserId);
@@ -154,8 +159,8 @@ describe('site visit routes', () => {
 					data: {
 						appealId: householdAppeal.id,
 						visitDate: siteVisit.visitDate,
-						visitEndTime: '9:00',
-						visitStartTime: '7:00',
+						visitEndTime: siteVisit.visitEndTime,
+						visitStartTime: siteVisit.visitStartTime,
 						siteVisitTypeId: siteVisit.siteVisitType.id
 					}
 				});
@@ -173,8 +178,8 @@ describe('site visit routes', () => {
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
 					visitDate: siteVisit.visitDate,
-					visitEndTime: '9:00',
-					visitStartTime: '7:00',
+					visitEndTime: siteVisit.visitEndTime,
+					visitStartTime: siteVisit.visitStartTime,
 					visitType: siteVisit.siteVisitType.name
 				});
 			});
@@ -186,13 +191,18 @@ describe('site visit routes', () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				// @ts-ignore
 				databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
 
 				const response = await request
 					.post(`/appeals/${householdAppeal.id}/site-visits`)
 					.send({
-						visitDate: siteVisit.visitDate.split('T')[0],
-						visitEndTime: '18:00',
-						visitStartTime: '16:00',
+						visitDate: siteVisit.visitDate,
+						visitEndTime: siteVisit.visitEndTime,
+						visitStartTime: siteVisit.visitStartTime,
 						visitType: siteVisit.siteVisitType.name
 					})
 					.set('azureAdUserId', azureAdUserId);
@@ -201,8 +211,8 @@ describe('site visit routes', () => {
 					data: {
 						appealId: householdAppeal.id,
 						visitDate: siteVisit.visitDate,
-						visitEndTime: '18:00',
-						visitStartTime: '16:00',
+						visitEndTime: siteVisit.visitEndTime,
+						visitStartTime: siteVisit.visitStartTime,
 						siteVisitTypeId: siteVisit.siteVisitType.id
 					}
 				});
@@ -219,8 +229,8 @@ describe('site visit routes', () => {
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
 					visitDate: siteVisit.visitDate,
-					visitEndTime: '18:00',
-					visitStartTime: '16:00',
+					visitEndTime: siteVisit.visitEndTime,
+					visitStartTime: siteVisit.visitStartTime,
 					visitType: siteVisit.siteVisitType.name
 				});
 			});
@@ -234,15 +244,21 @@ describe('site visit routes', () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				// @ts-ignore
 				databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
 
 				const response = await request
 					.post(`/appeals/${householdAppeal.id}/site-visits`)
 					.send({
-						visitDate: siteVisit.visitDate.split('T')[0],
+						visitDate: siteVisit.visitDate,
 						visitType: siteVisit.siteVisitType.name
 					})
 					.set('azureAdUserId', azureAdUserId);
 
+				expect(databaseConnector.siteVisit.create).toHaveBeenCalledTimes(1);
 				expect(databaseConnector.siteVisit.create).toHaveBeenCalledWith({
 					data: {
 						appealId: householdAppeal.id,
@@ -274,26 +290,25 @@ describe('site visit routes', () => {
 
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-				// @ts-ignore
+				// @ts-ignore`
 				databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
 
-				const visitData = {
-					visitEndTime: '12:00',
-					visitStartTime: '11:00',
-					visitType: siteVisit.siteVisitType.name
-				};
-
+				// Send request using siteVisitData fields
 				const response = await request
 					.post(`/appeals/${householdAppeal.id}/site-visits`)
 					.send({
-						visitDate: siteVisit.visitDate.split('T')[0],
-						...visitData
+						visitDate: siteVisit.visitDate,
+						visitEndTime: siteVisit.visitEndTime,
+						visitStartTime: siteVisit.visitStartTime,
+						visitType: siteVisit.siteVisitType.name
 					})
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.body).toEqual({
 					visitDate: siteVisit.visitDate,
-					...visitData
+					visitEndTime: siteVisit.visitEndTime,
+					visitStartTime: siteVisit.visitStartTime,
+					visitType: siteVisit.siteVisitType.name
 				});
 
 				// eslint-disable-next-line no-undef
@@ -306,10 +321,10 @@ describe('site visit routes', () => {
 						emailReplyToId: null,
 						personalisation: {
 							appeal_reference_number: '1345264',
-							end_time: '12:00',
+							end_time: '03:00',
 							lpa_reference: '48269/APP/2021/1482',
 							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-							start_time: '11:00',
+							start_time: '01:00',
 							visit_date: '31 March 2022'
 						},
 						reference: null
@@ -330,15 +345,15 @@ describe('site visit routes', () => {
 				databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
 
 				const visitData = {
-					visitEndTime: '12:00',
-					visitStartTime: '11:00',
+					visitEndTime: '2022-03-31T12:00:00.000Z',
+					visitStartTime: '2022-03-31T11:00:00.000Z',
 					visitType: siteVisit.siteVisitType.name
 				};
 
 				const response = await request
 					.post(`/appeals/${householdAppeal.id}/site-visits`)
 					.send({
-						visitDate: siteVisit.visitDate.split('T')[0],
+						visitDate: siteVisit.visitDate,
 						...visitData
 					})
 					.set('azureAdUserId', azureAdUserId);
@@ -399,15 +414,15 @@ describe('site visit routes', () => {
 				databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
 
 				const visitData = {
-					visitEndTime: '12:00',
-					visitStartTime: '11:00',
+					visitEndTime: '2022-03-31T12:00:00.000Z',
+					visitStartTime: '2022-03-31T11:00:00.000Z',
 					visitType: siteVisit.siteVisitType.name
 				};
 
 				const response = await request
 					.post(`/appeals/${householdAppeal.id}/site-visits`)
 					.send({
-						visitDate: siteVisit.visitDate.split('T')[0],
+						visitDate: siteVisit.visitDate,
 						...visitData
 					})
 					.set('azureAdUserId', azureAdUserId);
@@ -522,8 +537,8 @@ describe('site visit routes', () => {
 				const response = await request
 					.post(`/appeals/${householdAppeal.id}/site-visits`)
 					.send({
-						visitEndTime: '18:00',
-						visitStartTime: '16:00',
+						visitEndTime: '2022-03-31T18:00:00.000Z',
+						visitStartTime: '2022-03-31T16:00:00.000Z',
 						visitType: householdAppeal.siteVisit.siteVisitType.name
 					})
 					.set('azureAdUserId', azureAdUserId);
@@ -543,8 +558,8 @@ describe('site visit routes', () => {
 				const response = await request
 					.post(`/appeals/${householdAppeal.id}/site-visits`)
 					.send({
-						visitDate: '2023-12-07',
-						visitStartTime: '16:00',
+						visitDate: '2023-12-07T00:00:00.000Z',
+						visitStartTime: '2023-12-07T16:00:00.000Z',
 						visitType: householdAppeal.siteVisit.siteVisitType.name
 					})
 					.set('azureAdUserId', azureAdUserId);
@@ -564,8 +579,8 @@ describe('site visit routes', () => {
 				const response = await request
 					.post(`/appeals/${householdAppeal.id}/site-visits`)
 					.send({
-						visitDate: '2023-12-07',
-						visitEndTime: '16:00',
+						visitDate: '2023-12-07T00:00:00.000Z',
+						visitEndTime: '2023-12-07T16:00:00.000Z',
 						visitType: householdAppeal.siteVisit.siteVisitType.name
 					})
 					.set('azureAdUserId', azureAdUserId);
@@ -585,7 +600,7 @@ describe('site visit routes', () => {
 				const response = await request
 					.post(`/appeals/${householdAppeal.id}/site-visits`)
 					.send({
-						visitDate: '2023-12-07',
+						visitDate: '2023-12-07T00:00:00.000Z',
 						visitType: 'Accompanied'
 					})
 					.set('azureAdUserId', azureAdUserId);
@@ -606,8 +621,8 @@ describe('site visit routes', () => {
 					.post(`/appeals/${householdAppeal.id}/site-visits`)
 					.send({
 						visitDate: '07/12/2023',
-						visitEndTime: '18:00',
-						visitStartTime: '16:00',
+						visitEndTime: '2023-12-07T18:00:00.000Z',
+						visitStartTime: '2023-12-07T16:00:00.000Z',
 						visitType: householdAppeal.siteVisit.siteVisitType.name
 					})
 					.set('azureAdUserId', azureAdUserId);
@@ -620,6 +635,50 @@ describe('site visit routes', () => {
 				});
 			});
 
+			test('returns an error if visitStartTime is in an invalid format', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+
+				const response = await request
+					.post(`/appeals/${householdAppeal.id}/site-visits`)
+					.send({
+						visitDate: '2023-12-07T00:00:00.000Z',
+						visitEndTime: '18:00',
+						visitStartTime: '2023-12-07T16:00:00.000Z',
+						visitType: householdAppeal.siteVisit.siteVisitType.name
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						visitEndTime: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
+					}
+				});
+			});
+
+			test('returns an error if visitEndTime is in an invalid format', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+
+				const response = await request
+					.post(`/appeals/${householdAppeal.id}/site-visits`)
+					.send({
+						visitDate: '2023-12-07T00:00:00.000Z',
+						visitEndTime: '2023-12-07T18:00:00.000Z',
+						visitStartTime: '16:00',
+						visitType: householdAppeal.siteVisit.siteVisitType.name
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						visitStartTime: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
+					}
+				});
+			});
+
 			test('returns an error if visitDate is not a valid date', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
@@ -627,9 +686,9 @@ describe('site visit routes', () => {
 				const response = await request
 					.post(`/appeals/${householdAppeal.id}/site-visits`)
 					.send({
-						visitDate: '56/12/2023',
-						visitEndTime: '18:00',
-						visitStartTime: '16:00',
+						visitDate: '2023-12-56T16:00:00.000Z',
+						visitEndTime: '2023-12-07T18:00:00.000Z',
+						visitStartTime: '2023-12-07T16:00:00.000Z',
 						visitType: householdAppeal.siteVisit.siteVisitType.name
 					})
 					.set('azureAdUserId', azureAdUserId);
@@ -687,16 +746,18 @@ describe('site visit routes', () => {
 			});
 
 			test('returns an error if visitStartTime is not before visitEndTime', async () => {
+				const { siteVisit } = householdAppeal;
+
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 
 				const response = await request
 					.post(`/appeals/${householdAppeal.id}/site-visits`)
 					.send({
-						visitDate: '2023-07-12T00:00:00.000Z',
-						visitEndTime: '2023-07-12T18:00:00.000Z',
-						visitStartTime: '2023-07-12T16:00:00.000Z',
-						visitType: householdAppeal.siteVisit.siteVisitType.name
+						visitDate: siteVisit.visitDate,
+						visitEndTime: siteVisit.visitStartTime,
+						visitStartTime: siteVisit.visitEndTime,
+						visitType: 'accompanied'
 					})
 					.set('azureAdUserId', azureAdUserId);
 
@@ -798,6 +859,11 @@ describe('site visit routes', () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				// @ts-ignore
 				databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
 
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}/site-visits/${siteVisit.id}`)
@@ -806,10 +872,13 @@ describe('site visit routes', () => {
 					})
 					.set('azureAdUserId', azureAdUserId);
 
+					expect(databaseConnector.siteVisit.update).toHaveBeenCalledTimes(1);
 				expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
 					where: { id: siteVisit.id },
 					data: {
-						siteVisitTypeId: siteVisit.siteVisitType.id
+						siteVisitTypeId: siteVisit.siteVisitType.id,
+						visitEndTime: null,
+						visitStartTime: null
 					}
 				});
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
@@ -839,11 +908,16 @@ describe('site visit routes', () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				// @ts-ignore
 				databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
 
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}/site-visits/${siteVisit.id}`)
 					.send({
-						visitDate: siteVisit.visitDate.split('T')[0],
+						visitDate: siteVisit.visitDate,
 						visitEndTime: siteVisit.visitEndTime,
 						visitStartTime: siteVisit.visitStartTime,
 						visitType: siteVisit.siteVisitType.name,
@@ -889,24 +963,30 @@ describe('site visit routes', () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				// @ts-ignore
 				databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
 
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}/site-visits/${siteVisit.id}`)
 					.send({
-						visitDate: siteVisit.visitDate.split('T')[0],
-						visitEndTime: '3:00',
-						visitStartTime: '1:00',
+						visitDate: siteVisit.visitDate,
+						visitEndTime: siteVisit.visitEndTime,
+						visitStartTime: siteVisit.visitStartTime,
 						visitType: siteVisit.siteVisitType.name,
 						previousVisitType: 'Accompanied'
 					})
 					.set('azureAdUserId', azureAdUserId);
 
+				expect(databaseConnector.siteVisit.update).toHaveBeenCalledTimes(1);
 				expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
 					where: { id: siteVisit.id },
 					data: {
 						visitDate: siteVisit.visitDate,
-						visitEndTime: '3:00',
-						visitStartTime: '1:00',
+						visitEndTime: siteVisit.visitEndTime,
+						visitStartTime: siteVisit.visitStartTime,
 						siteVisitTypeId: siteVisit.siteVisitType.id
 					}
 				});
@@ -940,8 +1020,8 @@ describe('site visit routes', () => {
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
 					visitDate: siteVisit.visitDate,
-					visitEndTime: '3:00',
-					visitStartTime: '1:00',
+					visitEndTime: '2022-03-31T03:00:00.000Z',
+					visitStartTime: '2022-03-31T01:00:00.000Z',
 					visitType: siteVisit.siteVisitType.name,
 					previousVisitType: 'Accompanied'
 				});
@@ -954,13 +1034,18 @@ describe('site visit routes', () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				// @ts-ignore
 				databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
 
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}/site-visits/${siteVisit.id}`)
 					.send({
-						visitDate: siteVisit.visitDate.split('T')[0],
-						visitEndTime: '18:00',
-						visitStartTime: '16:00',
+						visitDate: siteVisit.visitDate,
+						visitEndTime: siteVisit.visitEndTime,
+						visitStartTime: siteVisit.visitStartTime,
 						visitType: siteVisit.siteVisitType.name,
 						previousVisitType: 'Accompanied'
 					})
@@ -970,11 +1055,12 @@ describe('site visit routes', () => {
 					where: { id: siteVisit.id },
 					data: {
 						visitDate: siteVisit.visitDate,
-						visitEndTime: '18:00',
-						visitStartTime: '16:00',
+						visitEndTime: siteVisit.visitEndTime,
+						visitStartTime: siteVisit.visitStartTime,
 						siteVisitTypeId: siteVisit.siteVisitType.id
 					}
 				});
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(1);
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 					data: {
 						appealId: householdAppeal.id,
@@ -986,8 +1072,8 @@ describe('site visit routes', () => {
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
 					visitDate: siteVisit.visitDate,
-					visitEndTime: '18:00',
-					visitStartTime: '16:00',
+					visitEndTime: siteVisit.visitEndTime,
+					visitStartTime: siteVisit.visitStartTime,
 					visitType: siteVisit.siteVisitType.name,
 					previousVisitType: 'Accompanied'
 				});
@@ -1002,11 +1088,16 @@ describe('site visit routes', () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				// @ts-ignore
 				databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
 
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}/site-visits/${siteVisit.id}`)
 					.send({
-						visitDate: siteVisit.visitDate.split('T')[0],
+						visitDate: siteVisit.visitDate,
 						visitType: siteVisit.siteVisitType.name,
 						previousVisitType: 'Accompanied'
 					})
@@ -1016,7 +1107,9 @@ describe('site visit routes', () => {
 					where: { id: siteVisit.id },
 					data: {
 						visitDate: siteVisit.visitDate,
-						siteVisitTypeId: siteVisit.siteVisitType.id
+						siteVisitTypeId: siteVisit.siteVisitType.id,
+						visitEndTime: null,
+						visitStartTime: null
 					}
 				});
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
@@ -1047,11 +1140,16 @@ describe('site visit routes', () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				// @ts-ignore
 				databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
 
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}/site-visits/${siteVisit.id}`)
 					.send({
-						visitDate: siteVisit.visitDate.split('T')[0],
+						visitDate: siteVisit.visitDate,
 						visitEndTime: '',
 						visitStartTime: '',
 						visitType: siteVisit.siteVisitType.name,
@@ -1063,8 +1161,8 @@ describe('site visit routes', () => {
 					where: { id: siteVisit.id },
 					data: {
 						visitDate: siteVisit.visitDate,
-						visitEndTime: '',
-						visitStartTime: '',
+						visitEndTime: null,
+						visitStartTime: null,
 						siteVisitTypeId: siteVisit.siteVisitType.id
 					}
 				});
@@ -1098,11 +1196,16 @@ describe('site visit routes', () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				// @ts-ignore
 				databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
 
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}/site-visits/${siteVisit.id}`)
 					.send({
-						visitDate: siteVisit.visitDate.split('T')[0],
+						visitDate: siteVisit.visitDate,
 						visitEndTime: siteVisit.visitEndTime,
 						visitStartTime: siteVisit.visitStartTime,
 						visitType: siteVisit.siteVisitType.name,
@@ -1168,13 +1271,18 @@ describe('site visit routes', () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				// @ts-ignore
 				databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
 
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}/site-visits/${siteVisit.id}`)
 					.send({
-						visitDate: siteVisit.visitDate.split('T')[0],
-						visitEndTime: '18:00',
-						visitStartTime: '16:00',
+						visitDate: siteVisit.visitDate,
+						visitEndTime: siteVisit.visitEndTime,
+						visitStartTime: siteVisit.visitStartTime,
 						visitType: siteVisit.siteVisitType.name,
 						previousVisitType: SITE_VISIT_TYPE_ACCOMPANIED,
 						siteVisitChangeType: 'all'
@@ -1185,8 +1293,8 @@ describe('site visit routes', () => {
 					where: { id: siteVisit.id },
 					data: {
 						visitDate: siteVisit.visitDate,
-						visitEndTime: '18:00',
-						visitStartTime: '16:00',
+						visitEndTime: siteVisit.visitEndTime,
+						visitStartTime: siteVisit.visitStartTime,
 						siteVisitTypeId: siteVisit.siteVisitType.id
 					}
 				});
@@ -1201,8 +1309,8 @@ describe('site visit routes', () => {
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
 					visitDate: siteVisit.visitDate,
-					visitEndTime: '18:00',
-					visitStartTime: '16:00',
+					visitEndTime: siteVisit.visitEndTime,
+					visitStartTime: siteVisit.visitStartTime,
 					visitType: siteVisit.siteVisitType.name,
 					previousVisitType: 'Accompanied',
 					siteVisitChangeType: 'all'
@@ -1220,13 +1328,18 @@ describe('site visit routes', () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				// @ts-ignore
 				databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
 
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}/site-visits/${siteVisit.id}`)
 					.send({
-						visitDate: siteVisit.visitDate.split('T')[0],
-						visitEndTime: '18:00',
-						visitStartTime: '16:00',
+						visitDate: siteVisit.visitDate,
+						visitEndTime: siteVisit.visitEndTime,
+						visitStartTime: siteVisit.visitStartTime,
 						visitType: siteVisit.siteVisitType.name,
 						previousVisitType: 'Access required',
 						siteVisitChangeType: 'date-time'
@@ -1237,8 +1350,8 @@ describe('site visit routes', () => {
 					where: { id: siteVisit.id },
 					data: {
 						visitDate: siteVisit.visitDate,
-						visitEndTime: '18:00',
-						visitStartTime: '16:00',
+						visitEndTime: siteVisit.visitEndTime,
+						visitStartTime: siteVisit.visitStartTime,
 						siteVisitTypeId: siteVisit.siteVisitType.id
 					}
 				});
@@ -1253,8 +1366,8 @@ describe('site visit routes', () => {
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
 					visitDate: siteVisit.visitDate,
-					visitEndTime: '18:00',
-					visitStartTime: '16:00',
+					visitEndTime: siteVisit.visitEndTime,
+					visitStartTime: siteVisit.visitStartTime,
 					visitType: siteVisit.siteVisitType.name,
 					previousVisitType: 'Access required',
 					siteVisitChangeType: 'date-time'
@@ -1272,8 +1385,8 @@ describe('site visit routes', () => {
 						personalisation: {
 							appeal_reference_number: '1345264',
 							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-							start_time: '16:00',
-							end_time: '18:00',
+							start_time: '01:00',
+							end_time: '03:00',
 							lpa_reference: '48269/APP/2021/1482',
 							visit_date: '31 March 2022'
 						},
@@ -1290,13 +1403,18 @@ describe('site visit routes', () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				// @ts-ignore
 				databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
 
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}/site-visits/${siteVisit.id}`)
 					.send({
-						visitDate: siteVisit.visitDate.split('T')[0],
-						visitEndTime: '18:00',
-						visitStartTime: '16:00',
+						visitDate: siteVisit.visitDate,
+						visitEndTime: siteVisit.visitEndTime,
+						visitStartTime: siteVisit.visitStartTime,
 						visitType: siteVisit.siteVisitType.name,
 						previousVisitType: SITE_VISIT_TYPE_ACCOMPANIED,
 						siteVisitChangeType: 'date-time'
@@ -1307,8 +1425,8 @@ describe('site visit routes', () => {
 					where: { id: siteVisit.id },
 					data: {
 						visitDate: siteVisit.visitDate,
-						visitEndTime: '18:00',
-						visitStartTime: '16:00',
+						visitEndTime: siteVisit.visitEndTime,
+						visitStartTime: siteVisit.visitStartTime,
 						siteVisitTypeId: siteVisit.siteVisitType.id
 					}
 				});
@@ -1323,8 +1441,8 @@ describe('site visit routes', () => {
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
 					visitDate: siteVisit.visitDate,
-					visitEndTime: '18:00',
-					visitStartTime: '16:00',
+					visitEndTime: siteVisit.visitEndTime,
+					visitStartTime: siteVisit.visitStartTime,
 					visitType: siteVisit.siteVisitType.name,
 					previousVisitType: SITE_VISIT_TYPE_ACCOMPANIED,
 					siteVisitChangeType: 'date-time'
@@ -1342,8 +1460,8 @@ describe('site visit routes', () => {
 						personalisation: {
 							appeal_reference_number: '1345264',
 							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-							start_time: '16:00',
-							end_time: '18:00',
+							start_time: '01:00',
+							end_time: '03:00',
 							lpa_reference: '48269/APP/2021/1482',
 							visit_date: '31 March 2022'
 						},
@@ -1360,8 +1478,8 @@ describe('site visit routes', () => {
 						personalisation: {
 							appeal_reference_number: '1345264',
 							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-							start_time: '16:00',
-							end_time: '18:00',
+							start_time: '01:00',
+							end_time: '03:00',
 							lpa_reference: '48269/APP/2021/1482',
 							visit_date: '31 March 2022'
 						},
@@ -1378,13 +1496,18 @@ describe('site visit routes', () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				// @ts-ignore
 				databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
 
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}/site-visits/${siteVisit.id}`)
 					.send({
-						visitDate: siteVisit.visitDate.split('T')[0],
-						visitEndTime: '18:00',
-						visitStartTime: '16:00',
+						visitDate: siteVisit.visitDate,
+						visitEndTime: siteVisit.visitEndTime,
+						visitStartTime: siteVisit.visitStartTime,
 						visitType: siteVisit.siteVisitType.name,
 						previousVisitType: 'Accompanied',
 						siteVisitChangeType: 'visit-type'
@@ -1395,8 +1518,8 @@ describe('site visit routes', () => {
 					where: { id: siteVisit.id },
 					data: {
 						visitDate: siteVisit.visitDate,
-						visitEndTime: '18:00',
-						visitStartTime: '16:00',
+						visitEndTime: siteVisit.visitEndTime,
+						visitStartTime: siteVisit.visitStartTime,
 						siteVisitTypeId: siteVisit.siteVisitType.id
 					}
 				});
@@ -1411,8 +1534,8 @@ describe('site visit routes', () => {
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
 					visitDate: siteVisit.visitDate,
-					visitEndTime: '18:00',
-					visitStartTime: '16:00',
+					visitEndTime: siteVisit.visitEndTime,
+					visitStartTime: siteVisit.visitStartTime,
 					visitType: siteVisit.siteVisitType.name,
 					previousVisitType: 'Accompanied',
 					siteVisitChangeType: 'visit-type'
@@ -1430,8 +1553,8 @@ describe('site visit routes', () => {
 						personalisation: {
 							appeal_reference_number: '1345264',
 							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-							start_time: '16:00',
-							end_time: '18:00',
+							start_time: '01:00',
+							end_time: '03:00',
 							lpa_reference: '48269/APP/2021/1482',
 							visit_date: '31 March 2022'
 						},
@@ -1448,8 +1571,8 @@ describe('site visit routes', () => {
 						personalisation: {
 							appeal_reference_number: '1345264',
 							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-							start_time: '16:00',
-							end_time: '18:00',
+							start_time: '01:00',
+							end_time: '03:00',
 							lpa_reference: '48269/APP/2021/1482',
 							visit_date: '31 March 2022'
 						},
@@ -1466,13 +1589,18 @@ describe('site visit routes', () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				// @ts-ignore
 				databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
 
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}/site-visits/${siteVisit.id}`)
 					.send({
-						visitDate: siteVisit.visitDate.split('T')[0],
-						visitEndTime: '18:00',
-						visitStartTime: '16:00',
+						visitDate: siteVisit.visitDate,
+						visitEndTime: siteVisit.visitEndTime,
+						visitStartTime: siteVisit.visitStartTime,
 						visitType: siteVisit.siteVisitType.name,
 						previousVisitType: SITE_VISIT_TYPE_UNACCOMPANIED,
 						siteVisitChangeType: 'visit-type'
@@ -1483,8 +1611,8 @@ describe('site visit routes', () => {
 					where: { id: siteVisit.id },
 					data: {
 						visitDate: siteVisit.visitDate,
-						visitEndTime: '18:00',
-						visitStartTime: '16:00',
+						visitEndTime: siteVisit.visitEndTime,
+						visitStartTime: siteVisit.visitStartTime,
 						siteVisitTypeId: siteVisit.siteVisitType.id
 					}
 				});
@@ -1499,8 +1627,8 @@ describe('site visit routes', () => {
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
 					visitDate: siteVisit.visitDate,
-					visitEndTime: '18:00',
-					visitStartTime: '16:00',
+					visitEndTime: siteVisit.visitEndTime,
+					visitStartTime: siteVisit.visitStartTime,
 					visitType: siteVisit.siteVisitType.name,
 					previousVisitType: SITE_VISIT_TYPE_UNACCOMPANIED,
 					siteVisitChangeType: 'visit-type'
@@ -1518,8 +1646,8 @@ describe('site visit routes', () => {
 						personalisation: {
 							appeal_reference_number: '1345264',
 							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-							start_time: '16:00',
-							end_time: '18:00',
+							start_time: '01:00',
+							end_time: '03:00',
 							lpa_reference: '48269/APP/2021/1482',
 							visit_date: '31 March 2022'
 						},
@@ -1536,8 +1664,8 @@ describe('site visit routes', () => {
 						personalisation: {
 							appeal_reference_number: '1345264',
 							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-							start_time: '16:00',
-							end_time: '18:00',
+							start_time: '01:00',
+							end_time: '03:00',
 							lpa_reference: '48269/APP/2021/1482',
 							visit_date: '31 March 2022'
 						},
@@ -1554,13 +1682,18 @@ describe('site visit routes', () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				// @ts-ignore
 				databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
 
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}/site-visits/${siteVisit.id}`)
 					.send({
-						visitDate: siteVisit.visitDate.split('T')[0],
-						visitEndTime: '18:00',
-						visitStartTime: '16:00',
+						visitDate: siteVisit.visitDate,
+						visitEndTime: siteVisit.visitEndTime,
+						visitStartTime: siteVisit.visitStartTime,
 						visitType: siteVisit.siteVisitType.name,
 						previousVisitType: SITE_VISIT_TYPE_ACCESS_REQUIRED,
 						siteVisitChangeType: 'visit-type'
@@ -1571,8 +1704,8 @@ describe('site visit routes', () => {
 					where: { id: siteVisit.id },
 					data: {
 						visitDate: siteVisit.visitDate,
-						visitEndTime: '18:00',
-						visitStartTime: '16:00',
+						visitEndTime: siteVisit.visitEndTime,
+						visitStartTime: siteVisit.visitStartTime,
 						siteVisitTypeId: siteVisit.siteVisitType.id
 					}
 				});
@@ -1587,8 +1720,8 @@ describe('site visit routes', () => {
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
 					visitDate: siteVisit.visitDate,
-					visitEndTime: '18:00',
-					visitStartTime: '16:00',
+					visitEndTime: siteVisit.visitEndTime,
+					visitStartTime: siteVisit.visitStartTime,
 					visitType: siteVisit.siteVisitType.name,
 					previousVisitType: SITE_VISIT_TYPE_ACCESS_REQUIRED,
 					siteVisitChangeType: 'visit-type'
@@ -1606,8 +1739,8 @@ describe('site visit routes', () => {
 						personalisation: {
 							appeal_reference_number: '1345264',
 							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-							start_time: '16:00',
-							end_time: '18:00',
+							start_time: '01:00',
+							end_time: '03:00',
 							lpa_reference: '48269/APP/2021/1482',
 							visit_date: '31 March 2022'
 						},
@@ -1624,8 +1757,8 @@ describe('site visit routes', () => {
 						personalisation: {
 							appeal_reference_number: '1345264',
 							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-							start_time: '16:00',
-							end_time: '18:00',
+							start_time: '01:00',
+							end_time: '03:00',
 							lpa_reference: '48269/APP/2021/1482',
 							visit_date: '31 March 2022'
 						},
@@ -1642,13 +1775,18 @@ describe('site visit routes', () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				// @ts-ignore
 				databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
 
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}/site-visits/${siteVisit.id}`)
 					.send({
-						visitDate: siteVisit.visitDate.split('T')[0],
-						visitEndTime: '18:00',
-						visitStartTime: '16:00',
+						visitDate: siteVisit.visitDate,
+						visitEndTime: siteVisit.visitEndTime,
+						visitStartTime: siteVisit.visitStartTime,
 						visitType: siteVisit.siteVisitType.name,
 						previousVisitType: SITE_VISIT_TYPE_ACCOMPANIED,
 						siteVisitChangeType: 'visit-type'
@@ -1659,8 +1797,8 @@ describe('site visit routes', () => {
 					where: { id: siteVisit.id },
 					data: {
 						visitDate: siteVisit.visitDate,
-						visitEndTime: '18:00',
-						visitStartTime: '16:00',
+						visitEndTime: siteVisit.visitEndTime,
+						visitStartTime: siteVisit.visitStartTime,
 						siteVisitTypeId: siteVisit.siteVisitType.id
 					}
 				});
@@ -1675,8 +1813,8 @@ describe('site visit routes', () => {
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
 					visitDate: siteVisit.visitDate,
-					visitEndTime: '18:00',
-					visitStartTime: '16:00',
+					visitEndTime: siteVisit.visitEndTime,
+					visitStartTime: siteVisit.visitStartTime,
 					visitType: siteVisit.siteVisitType.name,
 					previousVisitType: SITE_VISIT_TYPE_ACCOMPANIED,
 					siteVisitChangeType: 'visit-type'
@@ -1694,8 +1832,8 @@ describe('site visit routes', () => {
 						personalisation: {
 							appeal_reference_number: '1345264',
 							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-							start_time: '16:00',
-							end_time: '18:00',
+							start_time: '01:00',
+							end_time: '03:00',
 							lpa_reference: '48269/APP/2021/1482',
 							visit_date: '31 March 2022'
 						},
@@ -1712,8 +1850,8 @@ describe('site visit routes', () => {
 						personalisation: {
 							appeal_reference_number: '1345264',
 							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-							start_time: '16:00',
-							end_time: '18:00',
+							start_time: '01:00',
+							end_time: '03:00',
 							lpa_reference: '48269/APP/2021/1482',
 							visit_date: '31 March 2022'
 						},
@@ -1730,11 +1868,16 @@ describe('site visit routes', () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				// @ts-ignore
 				databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
 
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}/site-visits/${siteVisit.id}`)
 					.send({
-						visitDate: siteVisit.visitDate.split('T')[0],
+						visitDate: siteVisit.visitDate,
 						visitEndTime: siteVisit.visitEndTime,
 						visitStartTime: siteVisit.visitStartTime,
 						visitType: siteVisit.siteVisitType.name,
@@ -1782,8 +1925,8 @@ describe('site visit routes', () => {
 						personalisation: {
 							appeal_reference_number: '1345264',
 							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-							start_time: siteVisit.visitStartTime,
-							end_time: siteVisit.visitEndTime,
+							start_time: '01:00',
+							end_time: '03:00',
 							lpa_reference: '48269/APP/2021/1482',
 							visit_date: '31 March 2022'
 						},
@@ -1800,11 +1943,16 @@ describe('site visit routes', () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				// @ts-ignore
 				databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
 
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}/site-visits/${siteVisit.id}`)
 					.send({
-						visitDate: siteVisit.visitDate.split('T')[0],
+						visitDate: siteVisit.visitDate,
 						visitEndTime: siteVisit.visitEndTime,
 						visitStartTime: siteVisit.visitStartTime,
 						visitType: siteVisit.siteVisitType.name,
@@ -1813,6 +1961,7 @@ describe('site visit routes', () => {
 					})
 					.set('azureAdUserId', azureAdUserId);
 
+				expect(databaseConnector.siteVisit.update).toHaveBeenCalledTimes(1);
 				expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
 					where: { id: siteVisit.id },
 					data: {
@@ -1852,8 +2001,8 @@ describe('site visit routes', () => {
 						personalisation: {
 							appeal_reference_number: '1345264',
 							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-							start_time: siteVisit.visitStartTime,
-							end_time: siteVisit.visitEndTime,
+							start_time: '01:00',
+							end_time: '03:00',
 							lpa_reference: '48269/APP/2021/1482',
 							visit_date: '31 March 2022'
 						},
@@ -1991,14 +2140,16 @@ describe('site visit routes', () => {
 			});
 
 			test('returns an error if visitType is not Unaccompanied and visitDate is not given when visitEndTime and visitStartTime are given', async () => {
+				const { siteVisit } = householdAppeal;
+
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}/site-visits/${householdAppeal.siteVisit.id}`)
 					.send({
-						visitEndTime: '2023-12-07T18:00:00Z',
-						visitStartTime: '2023-12-07T16:00:00Z',
+						visitStartTime: siteVisit.visitStartTime,
+						visitEndTime: siteVisit.visitEndTime,
 						visitType: householdAppeal.siteVisit.siteVisitType.name
 					})
 					.set('azureAdUserId', azureAdUserId);
@@ -2015,14 +2166,16 @@ describe('site visit routes', () => {
 			});
 
 			test('returns an error if visitType is not Unaccompanied and visitEndTime is not given when visitDate and visitStartTime are given', async () => {
+				const { siteVisit } = householdAppeal;
+
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}/site-visits/${householdAppeal.siteVisit.id}`)
 					.send({
-						visitDate: '2023-12-07T00:00:00Z',
-						visitEndTime: '2023-12-07T16:00:00Z',
+						visitDate: siteVisit.visitDate,
+						visitStartTime: siteVisit.visitStartTime,
 						visitType: householdAppeal.siteVisit.siteVisitType.name
 					})
 					.set('azureAdUserId', azureAdUserId);
@@ -2039,14 +2192,16 @@ describe('site visit routes', () => {
 			});
 
 			test('returns an error if visitType is not Unaccompanied and visitStartTime is not given when visitDate and visitEndTime are given', async () => {
+				const { siteVisit } = householdAppeal;
+
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}/site-visits/${householdAppeal.siteVisit.id}`)
 					.send({
-						visitDate: '2023-12-07T00:00:00Z',
-						visitEndTime: '2023-12-07T16:00:00Z',
+						visitDate: siteVisit.visitDate,
+						visitEndTime: siteVisit.visitEndTime,
 						visitType: householdAppeal.siteVisit.siteVisitType.name
 					})
 					.set('azureAdUserId', azureAdUserId);
@@ -2069,11 +2224,16 @@ describe('site visit routes', () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				// @ts-ignore
 				databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
 
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}/site-visits/${siteVisit.id}`)
 					.send({
-						visitDate: siteVisit.visitDate.split('T')[0],
+						visitDate: siteVisit.visitDate,
 						visitEndTime: siteVisit.visitEndTime,
 						visitStartTime: siteVisit.visitStartTime,
 						visitType: siteVisit.siteVisitType.name,
@@ -2090,6 +2250,7 @@ describe('site visit routes', () => {
 						siteVisitTypeId: siteVisit.siteVisitType.id
 					}
 				});
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(1);
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 					data: {
 						appealId: householdAppeal.id,
@@ -2112,6 +2273,8 @@ describe('site visit routes', () => {
 			});
 
 			test('returns an error if visitDate is in an invalid format', async () => {
+				const { siteVisit } = householdAppeal;
+
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 
@@ -2119,8 +2282,8 @@ describe('site visit routes', () => {
 					.patch(`/appeals/${householdAppeal.id}/site-visits/${householdAppeal.siteVisit.id}`)
 					.send({
 						visitDate: '07/12/2023',
-						visitEndTime: '2023-12-07T18:00:00Z',
-						visitStartTime: '2023-12-07T16:00:00Z',
+						visitEndTime: siteVisit.visitEndTime,
+						visitStartTime: siteVisit.visitStartTime,
 						visitType: householdAppeal.siteVisit.siteVisitType.name
 					})
 					.set('azureAdUserId', azureAdUserId);
@@ -2137,6 +2300,8 @@ describe('site visit routes', () => {
 			});
 
 			test('returns an error if visitDate is not a valid date', async () => {
+				const { siteVisit } = householdAppeal;
+
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 
@@ -2144,8 +2309,8 @@ describe('site visit routes', () => {
 					.patch(`/appeals/${householdAppeal.id}/site-visits/${householdAppeal.siteVisit.id}`)
 					.send({
 						visitDate: '56/12/2023',
-						visitEndTime: '2023-12-07T18:00:00Z',
-						visitStartTime: '2023-12-07T16:00:00Z',
+						visitEndTime: siteVisit.visitEndTime,
+						visitStartTime: siteVisit.visitStartTime,
 						visitType: householdAppeal.siteVisit.siteVisitType.name
 					})
 					.set('azureAdUserId', azureAdUserId);
@@ -2168,9 +2333,9 @@ describe('site visit routes', () => {
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}/site-visits/${householdAppeal.siteVisit.id}`)
 					.send({
-						visitDate: '2023-07-12',
-						visitEndTime: '2023-12-07T56:00:00Z',
-						visitStartTime: '2023-12-07T16:00:00Z',
+						visitDate: '2023-07-12T00:00:00.000Z',
+						visitEndTime: '2023-07-12T56:00:00.000Z',
+						visitStartTime: '2023-07-12T12:00:00.000Z',
 						visitType: householdAppeal.siteVisit.siteVisitType.name
 					})
 					.set('azureAdUserId', azureAdUserId);
@@ -2193,9 +2358,9 @@ describe('site visit routes', () => {
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}/site-visits/${householdAppeal.siteVisit.id}`)
 					.send({
-						visitDate: '2023-07-12',
-						visitEndTime: '2023-12-07T18:00:00Z',
-						visitStartTime: '2023-12-07T56:00:00Z',
+						visitDate: '2023-07-12T00:00:00.000Z',
+						visitEndTime: '2023-07-12T18:00:00.000Z',
+						visitStartTime: '2023-07-12T56:00:00.000Z',
 						visitType: householdAppeal.siteVisit.siteVisitType.name
 					})
 					.set('azureAdUserId', azureAdUserId);
@@ -2212,15 +2377,17 @@ describe('site visit routes', () => {
 			});
 
 			test('returns an error if visitStartTime is not before visitEndTime', async () => {
+				const { siteVisit } = householdAppeal;
+
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}/site-visits/${householdAppeal.siteVisit.id}`)
 					.send({
-						visitDate: '2023-07-12T00:00:00.000Z',
-						visitEndTime: '2023-07-12T18:00:00.000Z',
-						visitStartTime: '2023-07-12T16:00:00.000Z',
+						visitDate: siteVisit.visitDate,
+						visitEndTime: siteVisit.visitStartTime,
+						visitStartTime: siteVisit.visitEndTime,
 						visitType: householdAppeal.siteVisit.siteVisitType.name
 					})
 					.set('azureAdUserId', azureAdUserId);
