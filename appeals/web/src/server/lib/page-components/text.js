@@ -11,6 +11,7 @@ import { SHOW_MORE_MAXIMUM_CHARACTERS_BEFORE_HIDING } from '#lib/constants.js';
  * @param {boolean} options.userHasEditPermission
  * @param {boolean} [options.withShowMore]
  * @param {string} [options.classes]
+ * @param {string} [options.cypressDataName]
  * @returns {Instructions}
  */
 export function textDisplayField({
@@ -20,7 +21,8 @@ export function textDisplayField({
 	link,
 	userHasEditPermission,
 	withShowMore,
-	classes
+	classes,
+	cypressDataName = 'change-' + id
 }) {
 	/** @type {TextProperty & ClassesProperty | HtmlProperty & ClassesProperty} */
 	let displayValue = { text: value };
@@ -54,7 +56,7 @@ export function textDisplayField({
 			text: 'Change',
 			visuallyHiddenText: text,
 			href: link,
-			attributes: { 'data-cy': 'change-' + id }
+			attributes: { 'data-cy': cypressDataName }
 		});
 	}
 	return {
