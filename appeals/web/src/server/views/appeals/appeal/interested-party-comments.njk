@@ -1,0 +1,92 @@
+{%- extends "app/layouts/app.layout.njk" -%}
+{%- from "govuk/components/tabs/macro.njk" import govukTabs -%}
+{%- from "govuk/components/table/macro.njk" import govukTable -%}
+{%- from "govuk/components/pagination/macro.njk" import govukPagination -%}
+{%- from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner -%}
+{%- from "govuk/components/error-summary/macro.njk" import govukErrorSummary -%}
+{%- from "govuk/components/button/macro.njk" import govukButton -%}
+
+{%- set backLinkUrl = pageContent.backLinkUrl -%}
+{%- set backLinkText = pageContent.backLinkText -%}
+{%- set pageTitle = pageContent.title if pageContent.title else '' -%}
+
+{%- block pageHeading -%}
+  {%- set errorSummaries = [] -%}
+  {%- set notificationBanners = [] -%}
+  {%- for component in pageContent.pageComponents -%}
+    {%- if component.type === 'error-summary' -%}
+      {%- set _ = errorSummaries.push(component) -%}
+    {%- endif -%}
+    {%- if component.type === 'notification-banner' -%}
+      {%- set _ = notificationBanners.push(component) -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- if errorSummaries | length -%}
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        {%- for component in errorSummaries -%}
+          {{ govukErrorSummary(component.parameters) }}
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+  {%- if notificationBanners | length -%}
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        {%- for component in notificationBanners -%}
+          {{ govukNotificationBanner(component.parameters) }}
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      {%- if pageContent.preHeading -%}
+        <span class="govuk-caption-l govuk-!-margin-bottom-3">{{ pageContent.preHeading }}</span>
+      {%- endif -%}
+      {%- if pageContent.heading -%}
+        <h1 class="{{ pageContent.headingClasses if pageContent.headingClasses else "govuk-heading-xl govuk-!-margin-bottom-3" }}">{{ pageContent.heading }}</h1>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endblock -%}
+
+{%- block pageContent -%}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <p class="govuk-body govuk-!-margin-bottom-6">
+        <a href="#" class="govuk-link">Add IP comment</a>
+      </p>
+      {{ govukTabs({
+        id: "interested-party-comments-tabs",
+				classes: "pins-tabs",
+        items: [
+          {
+            label: "Awaiting review",
+            id: "awaiting-review",
+            panel: {
+              html: govukTable(pageContent.awaitingReviewTable) | safe if pageContent.awaitingReviewTable | length else '<p class="govuk-body">Awaiting comments</p>'
+            }
+          },
+          {
+            label: "Valid",
+            id: "valid",
+            panel: {
+              html: govukTable(pageContent.validTable) | safe if pageContent.validTable | length else '<p class="govuk-body">No valid comments</p>'
+            }
+          },
+          {
+            label: "Invalid",
+            id: "invalid",
+            panel: {
+              html: govukTable(pageContent.invalidTable) | safe if pageContent.invalidTable | length else '<p class="govuk-body">No invalid comments</p>'
+            }
+          }
+        ]
+      }) }}
+      <p class="govuk-body">
+        <a href="#" class="govuk-link">Withdrawn IP comments</a>
+      </p>
+    </div>
+  </div>
+{%- endblock -%}
