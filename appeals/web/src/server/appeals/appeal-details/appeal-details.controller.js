@@ -28,7 +28,7 @@ export const viewAppealDetails = async (request, response) => {
 				currentUrl,
 				session,
 				request,
-				unreviewedIPComments && unreviewedIPComments.length > 0
+				unreviewedIPComments && unreviewedIPComments.itemCount > 0
 			);
 
 			return response.status(200).render('patterns/display-page.pattern.njk', {

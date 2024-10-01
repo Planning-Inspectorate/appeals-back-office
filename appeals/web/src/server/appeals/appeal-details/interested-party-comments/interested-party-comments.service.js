@@ -1,5 +1,8 @@
 import { paginationDefaultSettings } from '#appeals/appeal.constants.js';
 
+/** @typedef {import('#appeals/appeal-details/interested-party-comments/interested-party-comments.types').Representation} IPComments */
+/** @typedef {import('#appeals/appeal-details/interested-party-comments/interested-party-comments.types').RepresentationList} IPCommentsList */
+
 /**
  * Fetch paginated appeal comments based on appeal ID and status.
  *
@@ -8,7 +11,7 @@ import { paginationDefaultSettings } from '#appeals/appeal.constants.js';
  * @param {string|undefined} statusFilter
  * @param {number} pageNumber
  * @param {number} pageSize
- * @returns {Promise<any>}
+ * @returns {Promise<IPCommentsList>}
  */
 export const getInterestedPartyComments = (
 	apiClient,
