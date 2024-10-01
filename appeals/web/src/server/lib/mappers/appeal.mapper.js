@@ -1204,6 +1204,31 @@ export async function initialiseAndMapAppealData(
 		}
 	};
 
+	/** @type {Instructions} */
+	mappedData.appeal.interestedPartyComments = {
+		id: 'interested-party-comments',
+		display: {
+			tableItem: [
+				{
+					text: 'Interested party comments',
+					classes: 'interested-party-comments-documentation'
+				},
+				{
+					text: appealDetails.appealStatus === APPEAL_CASE_STATUS.COMPLETE ? 'Sent' : 'Received',
+					classes: 'interested-party-comments'
+				},
+				{
+					text: 'Not applicable',
+					classes: 'interested-party-comments-received-date'
+				},
+				{
+					html: `<a href="${currentRoute}/interested-party-comments" data-cy="review-interested-party-comments" class="govuk-link">Review <span class="govuk-visually-hidden">interested party comments</span></a>`,
+					classes: 'interested-party-comments-actions'
+				}
+			]
+		}
+	};
+
 	const appealHasAppellantApplicationCostsDocuments =
 		appealDetails?.costs?.appellantApplicationFolder?.documents?.filter(
 			(document) => document.latestDocumentVersion?.isDeleted === false

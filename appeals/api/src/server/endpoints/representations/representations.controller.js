@@ -1,6 +1,7 @@
 import * as representationService from './representations.service.js';
 import { formatRepresentation } from './representations.formatter.js';
 import { DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE, ERROR_NOT_FOUND } from '#endpoints/constants.js';
+import { getPageCount } from '#utils/database-pagination.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -39,14 +40,25 @@ export const getComments = async (req, res) => {
 	const pageNumber = Number(query.pageNumber) || DEFAULT_PAGE_NUMBER;
 	const pageSize = Number(query.pageSize) || DEFAULT_PAGE_SIZE;
 	const status = query.status ? String(query.status) : undefined;
-	const data = await representationService.getThirdPartComments(
+
+	const { itemCount, comments } = await representationService.getThirdPartComments(
 		appeal.id,
 		pageNumber,
 		pageSize,
 		status
 	);
 
-	return res.send(data.map((rep) => formatRepresentation(rep)));
+	const formattedItems = comments.map((rep) => formatRepresentation(rep));
+
+	const responsePayload = {
+		itemCount: itemCount,
+		items: formattedItems,
+		page: pageNumber,
+		pageCount: getPageCount(itemCount, pageSize),
+		pageSize: pageSize
+	};
+
+	return res.send(responsePayload);
 };
 
 /**

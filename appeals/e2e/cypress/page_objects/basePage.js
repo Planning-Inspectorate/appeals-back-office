@@ -137,6 +137,10 @@ export class Page {
 			});
 	}
 
+	checkEmailRelevantParties(index) {
+		this.basePageElements.checkbox(index).check();
+	}
+
 	clickChangeLink(question) {
 		this.basePageElements.changeLink(question).click();
 	}
