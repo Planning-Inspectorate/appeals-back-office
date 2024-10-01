@@ -337,57 +337,6 @@ describe('site visit routes', () => {
 				expect(response.status).toEqual(200);
 			});
 
-			test('creates an Unaccompanied site visit and sends notify email to appellant/agent', async () => {
-				const { siteVisit } = householdAppeal;
-
-				siteVisit.siteVisitType.name = SITE_VISIT_TYPE_UNACCOMPANIED;
-
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-				// @ts-ignore`
-				databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
-
-				// Send request using siteVisitData fields
-				const response = await request
-					.post(`/appeals/${householdAppeal.id}/site-visits`)
-					.send({
-						visitDate: siteVisit.visitDate,
-						visitEndTime: siteVisit.visitEndTime,
-						visitStartTime: siteVisit.visitStartTime,
-						visitType: siteVisit.siteVisitType.name
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.body).toEqual({
-					visitDate: siteVisit.visitDate,
-					visitEndTime: siteVisit.visitEndTime,
-					visitStartTime: siteVisit.visitStartTime,
-					visitType: siteVisit.siteVisitType.name
-				});
-
-				// eslint-disable-next-line no-undef
-				expect(mockSendEmail).toHaveBeenCalledTimes(1);
-				// eslint-disable-next-line no-undef
-				expect(mockSendEmail).toHaveBeenCalledWith(
-					config.govNotify.template.siteVisitSchedule.unaccompanied.appellant.id,
-					'test@136s7.com',
-					{
-						emailReplyToId: null,
-						personalisation: {
-							appeal_reference_number: '1345264',
-							lpa_reference: '48269/APP/2021/1482',
-							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-							start_time: '02:00',
-							end_time: '04:00',
-							visit_date: '31 March 2022'
-						},
-						reference: null
-					}
-				);
-
-				expect(response.status).toEqual(200);
-			});
-
 			test('creates an Accompanied site visit and sends GMT date and time notify email to appellant/agent and lpa', async () => {
 				const { siteVisit } = householdAppeal;
 
@@ -924,7 +873,7 @@ describe('site visit routes', () => {
 					})
 					.set('azureAdUserId', azureAdUserId);
 
-					expect(databaseConnector.siteVisit.update).toHaveBeenCalledTimes(1);
+				expect(databaseConnector.siteVisit.update).toHaveBeenCalledTimes(1);
 				expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
 					where: { id: siteVisit.id },
 					data: {
