@@ -32,6 +32,7 @@ declare global {
 		interface Request {
 			currentFolder: Schema.Folder;
 			currentAppeal: Appeal;
+			currentComment: Representation;
 			apiClient: import('got').Got;
 			permissions: CurrentPermissionSet;
 		}

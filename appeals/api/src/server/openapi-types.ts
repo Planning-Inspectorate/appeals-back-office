@@ -58,6 +58,32 @@ export interface RepResponse {
 	notes?: string;
 	/** @example [] */
 	attachments?: any[];
+	/** @example "comment" */
+	representationType?: string;
+	represented?: {
+		/** @example 1 */
+		id?: number;
+		/** @example "Joe Bloggs" */
+		name?: string;
+		/** @example "joe.bloggs@email.com" */
+		email?: string;
+		address?: {
+			/** @example 1 */
+			id?: number;
+			/** @example "96 The Avenue" */
+			addressLine1?: string;
+			/** @example "Leftfield" */
+			addressLine2?: string;
+			/** @example "United Kingdom" */
+			addressCountry?: string;
+			/** @example "Kent" */
+			addressCounty?: string;
+			/** @example "MD21 5XY" */
+			postcode?: string;
+			/** @example "Maidstone" */
+			addressTown?: string;
+		};
+	};
 }
 
 export interface ValidateDate {
@@ -67,7 +93,7 @@ export interface ValidateDate {
 
 export interface AppellantCaseData {
 	casedata?: {
-		/** @example "956fc5e4-bcf1-4e0e-8714-69afbe35010b" */
+		/** @example "b535a2fc-b6b6-4a15-a05f-ac93a89ab950" */
 		submissionId?: string;
 		/** @example true */
 		advertisedAppeal?: boolean;

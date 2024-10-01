@@ -11,11 +11,19 @@ export const getById = (id) => {
 		where: { id },
 		include: {
 			representative: true,
-			represented: true,
+			represented: {
+				include: {
+					address: true
+				}
+			},
 			lpa: true,
 			attachments: {
 				include: {
-					documentVersion: true
+					documentVersion: {
+						include: {
+							document: true
+						}
+					}
 				}
 			}
 		}
