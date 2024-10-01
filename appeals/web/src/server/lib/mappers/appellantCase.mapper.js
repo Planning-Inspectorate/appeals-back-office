@@ -8,7 +8,7 @@ import { formatServiceUserAsHtmlList } from '#lib/service-user-formatter.js';
 import { dateToDisplayDate } from '#lib/dates.js';
 import { capitalize } from 'lodash-es';
 import { APPEAL_APPLICATION_DECISION, APPEAL_KNOWS_OTHER_OWNERS } from 'pins-data-model';
-import { booleanDisplayField } from '#lib/page-components/boolean.js';
+import { booleanDisplayInstruction } from '#lib/page-components/boolean.js';
 import { documentTypeDisplayInstruction } from '#lib/page-components/document.js';
 import { textDisplayField } from '#lib/page-components/text.js';
 
@@ -109,7 +109,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		userHasEditPermission: userHasUpdateCase
 	});
 
-	mappedData.inGreenBelt = booleanDisplayField({
+	mappedData.inGreenBelt = booleanDisplayInstruction({
 		id: 'green-belt',
 		text: 'In green belt',
 		value: appellantCaseData.isGreenBelt,
@@ -143,7 +143,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		withShowMore: true
 	});
 
-	mappedData.changedDevelopmentDescription = booleanDisplayField({
+	mappedData.changedDevelopmentDescription = booleanDisplayInstruction({
 		id: 'changed-development-description',
 		text: 'LPA changed the development description',
 		value: appellantCaseData.developmentDescription?.isChanged,
@@ -220,7 +220,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		userHasEditPermission: userHasUpdateCase
 	});
 
-	mappedData.advertisedAppeal = booleanDisplayField({
+	mappedData.advertisedAppeal = booleanDisplayInstruction({
 		id: 'advertised-appeal',
 		text: 'Advertised appeal',
 		value: appellantCaseData.hasAdvertisedAppeal,
@@ -323,7 +323,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		folderInfo: appellantCaseData.documents.planningObligation
 	});
 
-	mappedData.ownershipCertificateSubmitted = booleanDisplayField({
+	mappedData.ownershipCertificateSubmitted = booleanDisplayInstruction({
 		id: 'ownership-certificate-submitted',
 		text: 'Ownership certificate or land declaration submitted',
 		value: appellantCaseData.ownershipCertificateSubmitted,
@@ -500,7 +500,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		}
 	};
 
-	mappedData.planningObligationInSupport = booleanDisplayField({
+	mappedData.planningObligationInSupport = booleanDisplayInstruction({
 		id: 'planning-obligation-in-support',
 		text: 'Planning obligation in support',
 		value: appellantCaseData.planningObligation?.hasObligation,
@@ -519,7 +519,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		userHasEditPermission: userHasUpdateCase
 	});
 
-	mappedData.partOfAgriculturalHolding = booleanDisplayField({
+	mappedData.partOfAgriculturalHolding = booleanDisplayInstruction({
 		id: 'part-of-agricultural-holding',
 		text: 'Part of agricultural holding',
 		value: appellantCaseData.agriculturalHolding.isPartOfAgriculturalHolding,
@@ -528,7 +528,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		userHasEditPermission: userHasUpdateCase
 	});
 
-	mappedData.tenantOfAgriculturalHolding = booleanDisplayField({
+	mappedData.tenantOfAgriculturalHolding = booleanDisplayInstruction({
 		id: 'tenant-of-agricultural-holding',
 		text: 'Tenant of agricultural holding',
 		value: appellantCaseData.agriculturalHolding.isTenant,
@@ -537,7 +537,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		userHasEditPermission: userHasUpdateCase
 	});
 
-	mappedData.otherTenantsOfAgriculturalHolding = booleanDisplayField({
+	mappedData.otherTenantsOfAgriculturalHolding = booleanDisplayInstruction({
 		id: 'other-tenants-of-agricultural-holding',
 		text: 'Other tenants',
 		value: appellantCaseData.agriculturalHolding.hasOtherTenants,
@@ -546,7 +546,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		userHasEditPermission: userHasUpdateCase
 	});
 
-	mappedData.appellantCostsApplication = booleanDisplayField({
+	mappedData.appellantCostsApplication = booleanDisplayInstruction({
 		id: 'appellant-costs-application',
 		text: 'Applied for award of appeal costs',
 		value: appellantCaseData.appellantCostsAppliedFor,
