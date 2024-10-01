@@ -264,6 +264,30 @@ const newS78Appeals = [
 		status: { status: APPEAL_CASE_STATUS.VALIDATION, createdAt: getDateTwoWeeksAgo() },
 		assignCaseOfficer: true,
 		agent: false
+	}),
+	appealFactory({
+		typeShorthand: APPEAL_TYPE_SHORTHAND_FPA,
+		status: { status: APPEAL_CASE_STATUS.VALIDATION, createdAt: getDateTwoWeeksAgo() },
+		assignCaseOfficer: true,
+		agent: false
+	}),
+	appealFactory({
+		typeShorthand: APPEAL_TYPE_SHORTHAND_FPA,
+		status: { status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE, createdAt: getDateTwoWeeksAgo() },
+		lpaQuestionnaire: true,
+		startedAt: new Date(),
+		validAt: getDateTwoWeeksAgo(),
+		assignCaseOfficer: true,
+		agent: false
+	}),
+	appealFactory({
+		typeShorthand: APPEAL_TYPE_SHORTHAND_FPA,
+		status: { status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE, createdAt: getDateTwoWeeksAgo() },
+		lpaQuestionnaire: true,
+		startedAt: new Date(),
+		validAt: getDateTwoWeeksAgo(),
+		assignCaseOfficer: true,
+		agent: false
 	})
 ];
 
