@@ -1,0 +1,39 @@
+// @ts-nocheck
+/// <reference types="cypress"/>
+
+import { users } from '../../fixtures/users';
+import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
+import { ListCasesPage } from '../../page_objects/listCasesPage';
+import { DateTimeSection } from '../../page_objects/dateTimeSection';
+import { urlPaths } from '../../support/urlPaths.js';
+import { tag } from '../../support/tag';
+import { happyPathHelper } from '../../support/happyPathHelper.js';
+
+const listCasesPage = new ListCasesPage();
+const dateTimeSection = new DateTimeSection();
+const caseDetailsPage = new CaseDetailsPage();
+
+describe('Case History - Assign and validate', () => {
+	beforeEach(() => {
+		cy.login(users.appeals.caseAdmin);
+	});
+
+	it(
+		'view case history after assigning a case officer and validating a case',
+		{ tags: tag.smoke },
+		() => {
+			let dueDate = new Date();
+
+			cy.createCase().then((caseRef) => {
+				happyPathHelper.assignCaseOfficer(caseRef);
+				happyPathHelper.reviewAppellantCase(caseRef);
+				caseDetailsPage.clickAccordionByButton('Case management');
+				caseDetailsPage.clickLinkByText('View');
+				caseDetailsPage.verifyTableCellTextCaseHistory(
+					users.appeals.caseAdmin.email + ' was added to the team'
+				);
+				caseDetailsPage.verifyTableCellTextCaseHistory('The case has progressed to validation');
+			});
+		}
+	);
+});
