@@ -1,5 +1,3 @@
-import { mapActionComponent } from '#lib/mappers/component-permissions.mapper.js';
-import { permissionNames } from '#environment/permissions.js';
 import { SHOW_MORE_MAXIMUM_CHARACTERS_BEFORE_HIDING } from '#lib/constants.js';
 
 /**
@@ -10,12 +8,20 @@ import { SHOW_MORE_MAXIMUM_CHARACTERS_BEFORE_HIDING } from '#lib/constants.js';
  * @param {string} options.text
  * @param {string|{html: string}|null} [options.value]
  * @param {string} options.link
- * @param {import("express-session").Session & Partial<import("express-session").SessionData>} options.session
+ * @param {boolean} options.userHasEditPermission
  * @param {boolean} [options.withShowMore]
  * @param {string} [options.classes]
  * @returns {Instructions}
  */
-export function textDisplayField({ id, text, value, link, session, withShowMore, classes }) {
+export function textDisplayField({
+	id,
+	text,
+	value,
+	link,
+	userHasEditPermission,
+	withShowMore,
+	classes
+}) {
 	/** @type {TextProperty & ClassesProperty | HtmlProperty & ClassesProperty} */
 	let displayValue = { text: value };
 	// support passing HTML in
@@ -41,24 +47,23 @@ export function textDisplayField({ id, text, value, link, session, withShowMore,
 			]
 		};
 	}
+	/** @type {ActionItemProperties[]} */
+	const actions = [];
+	if (userHasEditPermission) {
+		actions.push({
+			text: 'Change',
+			visuallyHiddenText: text,
+			href: link,
+			attributes: { 'data-cy': 'change-' + id }
+		});
+	}
 	return {
 		id,
 		display: {
 			summaryListItem: {
-				key: {
-					text
-				},
+				key: { text },
 				value: displayValue,
-				actions: {
-					items: [
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Change',
-							visuallyHiddenText: text,
-							href: link,
-							attributes: { 'data-cy': 'change-' + id }
-						})
-					]
-				},
+				actions: { items: actions },
 				classes
 			}
 		}
