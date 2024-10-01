@@ -32,6 +32,7 @@ describe('site visit routes', () => {
 
 	beforeEach(() => {
 		householdAppeal = JSON.parse(JSON.stringify(householdAppealData));
+
 		// @ts-ignore
 		databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
 		// @ts-ignore
@@ -42,6 +43,7 @@ describe('site visit routes', () => {
 	});
 	afterEach(() => {
 		jest.clearAllMocks();
+		jest.useRealTimers();
 	});
 
 	describe('/:appealId/site-visits', () => {
@@ -321,10 +323,10 @@ describe('site visit routes', () => {
 						emailReplyToId: null,
 						personalisation: {
 							appeal_reference_number: '1345264',
-							end_time: '03:00',
 							lpa_reference: '48269/APP/2021/1482',
 							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-							start_time: '01:00',
+							start_time: '02:00',
+							end_time: '04:00',
 							visit_date: '31 March 2022'
 						},
 						reference: null
@@ -334,7 +336,58 @@ describe('site visit routes', () => {
 				expect(response.status).toEqual(200);
 			});
 
-			test('creates an Accompanied site visit and sends notify email to appellant/agent and lpa', async () => {
+			test('creates an Unaccompanied site visit and sends notify email to appellant/agent', async () => {
+				const { siteVisit } = householdAppeal;
+
+				siteVisit.siteVisitType.name = SITE_VISIT_TYPE_UNACCOMPANIED;
+
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+				// @ts-ignore`
+				databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+
+				// Send request using siteVisitData fields
+				const response = await request
+					.post(`/appeals/${householdAppeal.id}/site-visits`)
+					.send({
+						visitDate: siteVisit.visitDate,
+						visitEndTime: siteVisit.visitEndTime,
+						visitStartTime: siteVisit.visitStartTime,
+						visitType: siteVisit.siteVisitType.name
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.body).toEqual({
+					visitDate: siteVisit.visitDate,
+					visitEndTime: siteVisit.visitEndTime,
+					visitStartTime: siteVisit.visitStartTime,
+					visitType: siteVisit.siteVisitType.name
+				});
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).toHaveBeenCalledTimes(1);
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).toHaveBeenCalledWith(
+					config.govNotify.template.siteVisitSchedule.unaccompanied.appellant.id,
+					'test@136s7.com',
+					{
+						emailReplyToId: null,
+						personalisation: {
+							appeal_reference_number: '1345264',
+							lpa_reference: '48269/APP/2021/1482',
+							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+							start_time: '02:00',
+							end_time: '04:00',
+							visit_date: '31 March 2022'
+						},
+						reference: null
+					}
+				);
+
+				expect(response.status).toEqual(200);
+			});
+
+			test('creates an Accompanied site visit and sends GMT date and time notify email to appellant/agent and lpa', async () => {
 				const { siteVisit } = householdAppeal;
 
 				siteVisit.siteVisitType.name = SITE_VISIT_TYPE_ACCOMPANIED;
@@ -344,23 +397,21 @@ describe('site visit routes', () => {
 				// @ts-ignore
 				databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
 
-				const visitData = {
-					visitEndTime: '2022-03-31T12:00:00.000Z',
-					visitStartTime: '2022-03-31T11:00:00.000Z',
-					visitType: siteVisit.siteVisitType.name
-				};
-
 				const response = await request
 					.post(`/appeals/${householdAppeal.id}/site-visits`)
 					.send({
-						visitDate: siteVisit.visitDate,
-						...visitData
+						visitDate: '2022-03-01T00:00:00.000Z',
+						visitEndTime: '2022-03-01T12:00:00.000Z',
+						visitStartTime: '2022-01-31T11:00:00.000Z',
+						visitType: siteVisit.siteVisitType.name
 					})
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.body).toEqual({
-					visitDate: siteVisit.visitDate,
-					...visitData
+					visitDate: '2022-03-01T00:00:00.000Z',
+					visitEndTime: '2022-03-01T12:00:00.000Z',
+					visitStartTime: '2022-01-31T11:00:00.000Z',
+					visitType: siteVisit.siteVisitType.name
 				});
 
 				// eslint-disable-next-line no-undef
@@ -377,7 +428,7 @@ describe('site visit routes', () => {
 							lpa_reference: '48269/APP/2021/1482',
 							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 							start_time: '11:00',
-							visit_date: '31 March 2022'
+							visit_date: '1 March 2022'
 						},
 						reference: null
 					}
@@ -394,7 +445,7 @@ describe('site visit routes', () => {
 							lpa_reference: '48269/APP/2021/1482',
 							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 							start_time: '11:00',
-							visit_date: '31 March 2022'
+							visit_date: '1 March 2022'
 						},
 						reference: null
 					}
@@ -442,10 +493,10 @@ describe('site visit routes', () => {
 						emailReplyToId: null,
 						personalisation: {
 							appeal_reference_number: '1345264',
-							end_time: '12:00',
+							end_time: '13:00',
 							lpa_reference: '48269/APP/2021/1482',
 							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-							start_time: '11:00',
+							start_time: '12:00',
 							visit_date: '31 March 2022'
 						},
 						reference: null
@@ -1253,8 +1304,8 @@ describe('site visit routes', () => {
 						personalisation: {
 							appeal_reference_number: '1345264',
 							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-							start_time: '01:00',
-							end_time: '03:00',
+							start_time: '02:00',
+							end_time: '04:00',
 							lpa_reference: '48269/APP/2021/1482',
 							visit_date: '31 March 2022'
 						},
@@ -1385,8 +1436,8 @@ describe('site visit routes', () => {
 						personalisation: {
 							appeal_reference_number: '1345264',
 							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-							start_time: '01:00',
-							end_time: '03:00',
+							start_time: '02:00',
+							end_time: '04:00',
 							lpa_reference: '48269/APP/2021/1482',
 							visit_date: '31 March 2022'
 						},
@@ -1460,8 +1511,8 @@ describe('site visit routes', () => {
 						personalisation: {
 							appeal_reference_number: '1345264',
 							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-							start_time: '01:00',
-							end_time: '03:00',
+							start_time: '02:00',
+							end_time: '04:00',
 							lpa_reference: '48269/APP/2021/1482',
 							visit_date: '31 March 2022'
 						},
@@ -1478,8 +1529,8 @@ describe('site visit routes', () => {
 						personalisation: {
 							appeal_reference_number: '1345264',
 							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-							start_time: '01:00',
-							end_time: '03:00',
+							start_time: '02:00',
+							end_time: '04:00',
 							lpa_reference: '48269/APP/2021/1482',
 							visit_date: '31 March 2022'
 						},
@@ -1553,8 +1604,8 @@ describe('site visit routes', () => {
 						personalisation: {
 							appeal_reference_number: '1345264',
 							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-							start_time: '01:00',
-							end_time: '03:00',
+							start_time: '02:00',
+							end_time: '04:00',
 							lpa_reference: '48269/APP/2021/1482',
 							visit_date: '31 March 2022'
 						},
@@ -1571,8 +1622,8 @@ describe('site visit routes', () => {
 						personalisation: {
 							appeal_reference_number: '1345264',
 							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-							start_time: '01:00',
-							end_time: '03:00',
+							start_time: '02:00',
+							end_time: '04:00',
 							lpa_reference: '48269/APP/2021/1482',
 							visit_date: '31 March 2022'
 						},
@@ -1646,8 +1697,8 @@ describe('site visit routes', () => {
 						personalisation: {
 							appeal_reference_number: '1345264',
 							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-							start_time: '01:00',
-							end_time: '03:00',
+							start_time: '02:00',
+							end_time: '04:00',
 							lpa_reference: '48269/APP/2021/1482',
 							visit_date: '31 March 2022'
 						},
@@ -1664,8 +1715,8 @@ describe('site visit routes', () => {
 						personalisation: {
 							appeal_reference_number: '1345264',
 							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-							start_time: '01:00',
-							end_time: '03:00',
+							start_time: '02:00',
+							end_time: '04:00',
 							lpa_reference: '48269/APP/2021/1482',
 							visit_date: '31 March 2022'
 						},
@@ -1739,8 +1790,8 @@ describe('site visit routes', () => {
 						personalisation: {
 							appeal_reference_number: '1345264',
 							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-							start_time: '01:00',
-							end_time: '03:00',
+							start_time: '02:00',
+							end_time: '04:00',
 							lpa_reference: '48269/APP/2021/1482',
 							visit_date: '31 March 2022'
 						},
@@ -1757,8 +1808,8 @@ describe('site visit routes', () => {
 						personalisation: {
 							appeal_reference_number: '1345264',
 							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-							start_time: '01:00',
-							end_time: '03:00',
+							start_time: '02:00',
+							end_time: '04:00',
 							lpa_reference: '48269/APP/2021/1482',
 							visit_date: '31 March 2022'
 						},
@@ -1832,8 +1883,8 @@ describe('site visit routes', () => {
 						personalisation: {
 							appeal_reference_number: '1345264',
 							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-							start_time: '01:00',
-							end_time: '03:00',
+							start_time: '02:00',
+							end_time: '04:00',
 							lpa_reference: '48269/APP/2021/1482',
 							visit_date: '31 March 2022'
 						},
@@ -1850,8 +1901,8 @@ describe('site visit routes', () => {
 						personalisation: {
 							appeal_reference_number: '1345264',
 							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-							start_time: '01:00',
-							end_time: '03:00',
+							start_time: '02:00',
+							end_time: '04:00',
 							lpa_reference: '48269/APP/2021/1482',
 							visit_date: '31 March 2022'
 						},
@@ -1925,8 +1976,8 @@ describe('site visit routes', () => {
 						personalisation: {
 							appeal_reference_number: '1345264',
 							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-							start_time: '01:00',
-							end_time: '03:00',
+							start_time: '02:00',
+							end_time: '04:00',
 							lpa_reference: '48269/APP/2021/1482',
 							visit_date: '31 March 2022'
 						},
@@ -2001,8 +2052,8 @@ describe('site visit routes', () => {
 						personalisation: {
 							appeal_reference_number: '1345264',
 							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-							start_time: '01:00',
-							end_time: '03:00',
+							start_time: '02:00',
+							end_time: '04:00',
 							lpa_reference: '48269/APP/2021/1482',
 							visit_date: '31 March 2022'
 						},

@@ -33,66 +33,66 @@ import { EventType } from '@pins/event-client';
  * @returns {Promise<void>}
  */
 export const createSiteVisit = async (azureAdUserId, siteVisitData, notifyClient) => {
-	// try {
-	const appealId = siteVisitData.appealId;
-	const visitDate = siteVisitData.visitDate;
-	const visitEndTime = siteVisitData.visitEndTime;
-	const visitStartTime = siteVisitData.visitStartTime;
-	const visitTypeId = siteVisitData.visitType.id;
+	try {
+		const appealId = siteVisitData.appealId;
+		const visitDate = siteVisitData.visitDate;
+		const visitEndTime = siteVisitData.visitEndTime;
+		const visitStartTime = siteVisitData.visitStartTime;
+		const visitTypeId = siteVisitData.visitType.id;
 
-	const siteVisit = await siteVisitRepository.createSiteVisitById({
-		appealId,
-		visitDate,
-		visitEndTime,
-		visitStartTime,
-		siteVisitTypeId: visitTypeId
-	});
-
-	if (visitDate) {
-		await broadcastEvent(siteVisit.id, EVENT_TYPE.SITE_VISIT, EventType.Create);
-		await createAuditTrail({
+		const siteVisit = await siteVisitRepository.createSiteVisitById({
 			appealId,
-			azureAdUserId,
-			details: stringTokenReplacement(AUDIT_TRAIL_SITE_VISIT_ARRANGED, [
-				format(new Date(visitDate), DEFAULT_DATE_FORMAT_AUDIT_TRAIL)
-			])
+			visitDate,
+			visitEndTime,
+			visitStartTime,
+			siteVisitTypeId: visitTypeId
 		});
-	}
 
-	const visitTypeKey = toCamelCase(`${siteVisitData.visitType.name}`);
-	const notifyTemplateIds = config.govNotify.template.siteVisitSchedule[visitTypeKey] || {};
-
-	const emailVariables = {
-		appeal_reference_number: siteVisitData.appealReferenceNumber,
-		lpa_reference: siteVisitData.lpaReference,
-		site_address: siteVisitData.siteAddress,
-		start_time: formatTime(siteVisitData.visitStartTime),
-		end_time: formatTime(siteVisitData.visitEndTime),
-		visit_date: formatDate(new Date(siteVisitData.visitDate || ''), false)
-	};
-
-	if (notifyTemplateIds.appellant && siteVisitData.appellantEmail) {
-		try {
-			await notifyClient.sendEmail(
-				notifyTemplateIds.appellant,
-				siteVisitData.appellantEmail,
-				emailVariables
-			);
-		} catch (error) {
-			throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
+		if (visitDate) {
+			await broadcastEvent(siteVisit.id, EVENT_TYPE.SITE_VISIT, EventType.Create);
+			await createAuditTrail({
+				appealId,
+				azureAdUserId,
+				details: stringTokenReplacement(AUDIT_TRAIL_SITE_VISIT_ARRANGED, [
+					format(new Date(visitDate), DEFAULT_DATE_FORMAT_AUDIT_TRAIL)
+				])
+			});
 		}
-	}
 
-	if (notifyTemplateIds.lpa && siteVisitData.lpaEmail) {
-		try {
-			await notifyClient.sendEmail(notifyTemplateIds.lpa, siteVisitData.lpaEmail, emailVariables);
-		} catch (error) {
-			throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
+		const visitTypeKey = toCamelCase(`${siteVisitData.visitType.name}`);
+		const notifyTemplateIds = config.govNotify.template.siteVisitSchedule[visitTypeKey] || {};
+
+		const emailVariables = {
+			appeal_reference_number: siteVisitData.appealReferenceNumber,
+			lpa_reference: siteVisitData.lpaReference,
+			site_address: siteVisitData.siteAddress,
+			start_time: formatTime(siteVisitData.visitStartTime),
+			end_time: formatTime(siteVisitData.visitEndTime),
+			visit_date: formatDate(new Date(siteVisitData.visitDate || ''), false)
+		};
+
+		if (notifyTemplateIds.appellant && siteVisitData.appellantEmail) {
+			try {
+				await notifyClient.sendEmail(
+					notifyTemplateIds.appellant,
+					siteVisitData.appellantEmail,
+					emailVariables
+				);
+			} catch (error) {
+				throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
+			}
 		}
+
+		if (notifyTemplateIds.lpa && siteVisitData.lpaEmail) {
+			try {
+				await notifyClient.sendEmail(notifyTemplateIds.lpa, siteVisitData.lpaEmail, emailVariables);
+			} catch (error) {
+				throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
+			}
+		}
+	} catch (error) {
+		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
 	}
-	// } catch (error) {
-	// 	throw new Error(ERROR_FAILED_TO_SAVE_DATA);
-	// }
 };
 
 /**
