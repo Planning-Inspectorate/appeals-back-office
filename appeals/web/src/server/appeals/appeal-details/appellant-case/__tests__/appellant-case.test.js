@@ -2399,8 +2399,8 @@ describe('appellant-case', () => {
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}${validOutcomePagePath}${validDatePagePath}`)
 				.send({
-					'valid-date-day': '20',
-					'valid-date-month': '5',
+					'valid-date-day': '1',
+					'valid-date-month': '1',
 					'valid-date-year': '2023'
 				});
 
