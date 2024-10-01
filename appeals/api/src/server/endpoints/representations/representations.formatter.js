@@ -1,4 +1,6 @@
 import { APPEAL_ORIGIN } from 'pins-data-model';
+import formatAddress from '#utils/format-address.js';
+import { formatName } from '#utils/format-name.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */
 /** @typedef {import('@pins/appeals.api').Api.RepResponse} FormattedRep */
@@ -9,7 +11,8 @@ import { APPEAL_ORIGIN } from 'pins-data-model';
  * @returns {FormattedRep}
  */
 export const formatRepresentation = (rep) => {
-	return {
+	/** @type {FormattedRep} */
+	const formatted = {
 		id: rep.id,
 		origin: rep.lpa ? APPEAL_ORIGIN.LPA : APPEAL_ORIGIN.CITIZEN,
 		author: formatRepresentationSource(rep),
@@ -18,8 +21,20 @@ export const formatRepresentation = (rep) => {
 		redactedRepresentation: rep.redactedRepresentation || '',
 		created: rep.dateCreated.toISOString(),
 		notes: rep.notes || '',
-		attachments: rep.attachments || []
+		attachments: rep.attachments || [],
+		representationType: rep.representationType
 	};
+
+	if (rep.represented) {
+		formatted.represented = {
+			id: rep.represented.id,
+			name: formatName(rep.represented),
+			email: rep.represented.email ?? undefined,
+			address: formatAddress(rep.represented.address)
+		};
+	}
+
+	return formatted;
 };
 
 /**

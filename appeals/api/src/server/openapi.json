@@ -3904,6 +3904,60 @@
 						"type": "array",
 						"example": [],
 						"items": {}
+					},
+					"representationType": {
+						"type": "string",
+						"example": "comment"
+					},
+					"represented": {
+						"type": "object",
+						"properties": {
+							"id": {
+								"type": "number",
+								"example": 1
+							},
+							"name": {
+								"type": "string",
+								"example": "Joe Bloggs"
+							},
+							"email": {
+								"type": "string",
+								"example": "joe.bloggs@email.com"
+							},
+							"address": {
+								"type": "object",
+								"properties": {
+									"id": {
+										"type": "number",
+										"example": 1
+									},
+									"addressLine1": {
+										"type": "string",
+										"example": "96 The Avenue"
+									},
+									"addressLine2": {
+										"type": "string",
+										"example": "Leftfield"
+									},
+									"addressCountry": {
+										"type": "string",
+										"example": "United Kingdom"
+									},
+									"addressCounty": {
+										"type": "string",
+										"example": "Kent"
+									},
+									"postcode": {
+										"type": "string",
+										"example": "MD21 5XY"
+									},
+									"addressTown": {
+										"type": "string",
+										"example": "Maidstone"
+									}
+								}
+							}
+						}
 					}
 				},
 				"xml": {
@@ -3930,7 +3984,7 @@
 						"properties": {
 							"submissionId": {
 								"type": "string",
-								"example": "956fc5e4-bcf1-4e0e-8714-69afbe35010b"
+								"example": "b535a2fc-b6b6-4a15-a05f-ac93a89ab950"
 							},
 							"advertisedAppeal": {
 								"type": "boolean",

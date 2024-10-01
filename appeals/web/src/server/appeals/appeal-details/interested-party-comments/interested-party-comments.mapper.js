@@ -1,3 +1,4 @@
+import { addressToMultilineStringHtml } from '#lib/address-formatter.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 
@@ -6,6 +7,7 @@ import { dateISOStringToDisplayDate } from '#lib/dates.js';
 /** @typedef {import('#appeals/appeal-details/interested-party-comments/interested-party-comments.types').Representation} IPComments */
 /** @typedef {import('#appeals/appeal-details/interested-party-comments/interested-party-comments.types').RepresentationList} IPCommentsList */
 /** @typedef {import("../appeal-details.types.js").WebAppeal} Appeal */
+/** @typedef {import("./interested-party-comments.types.js").Representation} Representation */
 
 /**
  *
@@ -58,11 +60,141 @@ function generateTableRows(items, isReview = false) {
 		{ text: comment.author },
 		{ text: dateISOStringToDisplayDate(comment.created) },
 		{
-			html: `<a href="/comments/${comment.id}/${isReview ? 'review' : 'view'}">${
+			html: `<a href="./interested-party-comments/${comment.id}/${isReview ? 'review' : 'view'}">${
 				isReview ? 'Review' : 'View'
 			}<span class="govuk-visually-hidden"> interested party comments from ${
 				comment.author
 			}</span></a>`
 		}
 	]);
+}
+
+/**
+ * @param {Appeal} appealDetails
+ * @param {Representation} comment
+ * @returns {PageContent}
+ * */
+export function viewInterestedPartyCommentPage(appealDetails, comment) {
+	const shortReference = appealShortReference(appealDetails.appealReference);
+
+	const attachmentsList = (() => {
+		if (comment.attachments.length === 0) {
+			return null;
+		}
+
+		const items = comment.attachments.map((a) => `<li>${a.documentVersion.document.name}</li>`);
+		return `<ul class="govuk-list govuk-list--bullet">${items.join('')}</ul>`;
+	})();
+
+	const hasAddress =
+		comment.represented.address &&
+		comment.represented.address.addressLine1 &&
+		comment.represented.address.postCode;
+
+	/** @type {PageComponent} */
+	const commentSummaryList = {
+		type: 'summary-list',
+		parameters: {
+			rows: [
+				{
+					key: { text: 'Interested party' },
+					value: { text: comment.represented.name }
+				},
+				{
+					key: { text: 'Email' },
+					value: { text: comment.represented.email }
+				},
+				{
+					key: { text: 'Address' },
+					value: hasAddress
+						? { html: addressToMultilineStringHtml(comment.represented.address) }
+						: { text: 'Not provided' },
+					actions: {
+						items: [
+							hasAddress
+								? {
+										text: 'Change',
+										href: '#',
+										visuallyHiddenText: 'address'
+								  }
+								: {
+										text: 'Add',
+										href: '#',
+										visuallyHiddenText: 'address'
+								  }
+						]
+					}
+				},
+				{
+					key: { text: 'Site visit requested' },
+					value: { text: '' }
+				},
+				{
+					key: { text: 'Submitted date' },
+					value: { html: dateISOStringToDisplayDate(comment.created) }
+				},
+				{
+					key: { text: comment.redactedRepresentation ? 'Original comment' : 'Comment' },
+					value: { text: comment.originalRepresentation },
+					actions: {
+						items: [
+							{
+								text: 'Redact',
+								href: '#'
+							}
+						]
+					}
+				},
+				...(comment.redactedRepresentation
+					? [
+							{
+								key: { text: 'Redacted comment' },
+								value: { text: comment.redactedRepresentation }
+							}
+					  ]
+					: []),
+				{
+					key: { text: 'Supporting documents' },
+					value: attachmentsList ? { html: attachmentsList } : { text: 'Not provided' },
+					actions: {
+						items: [
+							...(comment.attachments
+								? [
+										{
+											text: 'Manage',
+											href: '#',
+											visuallyHiddenText: 'supporting documents'
+										}
+								  ]
+								: []),
+							{
+								text: 'Add',
+								href: '#',
+								visuallyHiddenText: 'supporting documents'
+							}
+						]
+					}
+				}
+			]
+		}
+	};
+
+	/** @type {PageComponent} */
+	const withdrawLink = {
+		type: 'html',
+		parameters: {
+			html: '<a class="govuk-link" href="#">Withdraw comment</a>'
+		}
+	};
+
+	const pageContent = {
+		title: 'View comment',
+		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments`,
+		preHeading: `Appeal ${shortReference}`,
+		heading: 'View comment',
+		headingClasses: 'govuk-heading-l',
+		pageComponents: [commentSummaryList, withdrawLink]
+	};
+
+	return pageContent;
 }

@@ -1,5 +1,8 @@
 import logger from '#lib/logger.js';
-import { interestedPartyCommentsPage } from './interested-party-comments.mapper.js';
+import {
+	interestedPartyCommentsPage,
+	viewInterestedPartyCommentPage
+} from './interested-party-comments.mapper.js';
 import * as interestedPartyCommentsService from './interested-party-comments.service.js';
 
 /**
@@ -7,7 +10,7 @@ import * as interestedPartyCommentsService from './interested-party-comments.ser
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-const renderInterestedPartyComments = async (request, response) => {
+export const renderInterestedPartyComments = async (request, response) => {
 	const { errors, currentAppeal } = request;
 	const paginationParameters = {
 		pageNumber: 1,
@@ -60,7 +63,22 @@ const renderInterestedPartyComments = async (request, response) => {
 	}
 };
 
-/** @type {import('@pins/express').RequestHandler<Response>}  */
-export const getInterestedPartyComments = async (request, response) => {
-	renderInterestedPartyComments(request, response);
-};
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export async function renderViewInterestedPartyComment(request, response) {
+	const { errors, currentComment } = request;
+
+	if (!currentComment) {
+		return response.status(404).render('app/404.njk');
+	}
+
+	const pageContent = viewInterestedPartyCommentPage(request.currentAppeal, request.currentComment);
+
+	return response.status(200).render('patterns/display-page.pattern.njk', {
+		errors,
+		pageContent
+	});
+}
