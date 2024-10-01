@@ -9,7 +9,7 @@ import { dateAndTimeFormatter } from './global-mapper-formatter.js';
 import { convert24hTo12hTimeStringFormat } from '#lib/times.js';
 import { linkedAppealStatus } from '#lib/appeals-formatter.js';
 import { generateIssueDecisionUrl } from '#appeals/appeal-details/issue-decision/issue-decision.mapper.js';
-import { mapActionComponent } from './component-permissions.mapper.js';
+import { mapActionComponent, userHasPermission } from './permissions.mapper.js';
 import { permissionNames } from '#environment/permissions.js';
 import { formatServiceUserAsHtmlList } from '#lib/service-user-formatter.js';
 import {
@@ -39,6 +39,8 @@ export async function initialiseAndMapAppealData(
 	currentRoute =
 		currentRoute[currentRoute.length - 1] === '/' ? currentRoute.slice(0, -1) : currentRoute;
 
+	const userHasUpdateCase = userHasPermission(permissionNames.updateCase, session);
+
 	/** @type {{appeal: MappedInstructions}} */
 	let mappedData = {};
 	mappedData.appeal = {};
@@ -64,7 +66,7 @@ export async function initialiseAndMapAppealData(
 		text: 'Appeal type',
 		value: appealDetails.appealType || 'No appeal type',
 		link: `${currentRoute}/change-appeal-type/appeal-type`,
-		session,
+		userHasEditPermission: userHasUpdateCase,
 		classes: 'appeal-appeal-type'
 	});
 
@@ -73,7 +75,7 @@ export async function initialiseAndMapAppealData(
 		text: 'Case procedure',
 		value: appealDetails.procedureType || `No case procedure`,
 		link: `${currentRoute}/change-appeal-details/case-procedure`,
-		session,
+		userHasEditPermission: userHasUpdateCase,
 		classes: 'appeal-case-procedure'
 	});
 
@@ -86,7 +88,7 @@ export async function initialiseAndMapAppealData(
 				: 'No appellant'
 		},
 		link: `${currentRoute}/service-user/change/appellant`,
-		session,
+		userHasEditPermission: userHasUpdateCase,
 		classes: 'appeal-appellant'
 	});
 

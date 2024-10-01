@@ -2,7 +2,7 @@ import { convertFromBooleanToYesNo } from '../boolean-formatter.js';
 import { appealSiteToAddressString } from '#lib/address-formatter.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
 import { isFolderInfo } from '#lib/ts-utilities.js';
-import { mapActionComponent } from './component-permissions.mapper.js';
+import { mapActionComponent, userHasPermission } from './permissions.mapper.js';
 import { permissionNames } from '#environment/permissions.js';
 import { formatServiceUserAsHtmlList } from '#lib/service-user-formatter.js';
 import { dateToDisplayDate } from '#lib/dates.js';
@@ -47,13 +47,13 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 			text,
 			appealId: appellantCaseData.appealId,
 			folderInfo,
-			requiredPermissionName: permissionNames.updateCase,
+			userHasEditPermission: userHasPermission(permissionNames.updateCase, session),
 			uploadUrlTemplate: documentUploadUrlTemplate,
 			manageUrl: mapDocumentManageUrl(appellantCaseData.appealId, folderInfo?.folderId),
-			session,
 			cypressDataName
 		});
 	};
+	const userHasUpdateCase = userHasPermission(permissionNames.updateCase, session);
 
 	/** @type {MappedInstructions} */
 	const mappedData = {};
@@ -67,7 +67,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 				: 'No appellant'
 		},
 		link: `${currentRoute}/service-user/change/appellant`,
-		session,
+		userHasEditPermission: userHasUpdateCase,
 		classes: 'appeal-appellant'
 	});
 
@@ -78,7 +78,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 			html: appealDetails.agent ? formatServiceUserAsHtmlList(appealDetails.agent) : 'No agent'
 		},
 		link: `${currentRoute}/service-user/change/agent`,
-		session,
+		userHasEditPermission: userHasUpdateCase,
 		classes: 'appeal-agent'
 	});
 
@@ -87,7 +87,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		text: 'LPA application reference',
 		value: appellantCaseData.planningApplicationReference,
 		link: `${currentRoute}/lpa-reference/change`,
-		session
+		userHasEditPermission: userHasUpdateCase
 	});
 
 	mappedData.siteAddress = textDisplayField({
@@ -95,7 +95,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		text: 'Site address',
 		value: appealSiteToAddressString(appellantCaseData.appealSite),
 		link: `${currentRoute}/site-address/change/${appealDetails.appealSite.addressId}`,
-		session
+		userHasEditPermission: userHasUpdateCase
 	});
 
 	mappedData.siteArea = textDisplayField({
@@ -105,7 +105,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 			? `${appellantCaseData.siteAreaSquareMetres} m²`
 			: '',
 		link: `${currentRoute}/site-area/change`,
-		session
+		userHasEditPermission: userHasUpdateCase
 	});
 
 	mappedData.inGreenBelt = booleanDisplayField({
@@ -114,7 +114,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		value: appellantCaseData.isGreenBelt,
 		defaultText: '',
 		link: `${currentRoute}/green-belt/change/appellant`,
-		session
+		userHasEditPermission: userHasUpdateCase
 	});
 
 	mappedData.applicationDecisionDate = textDisplayField({
@@ -122,7 +122,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		text: 'Decision date',
 		value: dateToDisplayDate(appellantCaseData.applicationDecisionDate),
 		link: `${currentRoute}/application-decision-date/change`,
-		session
+		userHasEditPermission: userHasUpdateCase
 	});
 
 	mappedData.applicationDate = textDisplayField({
@@ -130,7 +130,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		text: 'Application submitted',
 		value: dateToDisplayDate(appellantCaseData.applicationDate),
 		link: `${currentRoute}/application-date/change`,
-		session
+		userHasEditPermission: userHasUpdateCase
 	});
 
 	mappedData.developmentDescription = textDisplayField({
@@ -138,7 +138,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		text: 'Original Development description',
 		value: appellantCaseData.developmentDescription?.details || 'Not provided',
 		link: `${currentRoute}/development-description/change`,
-		session,
+		userHasEditPermission: userHasUpdateCase,
 		withShowMore: true
 	});
 
@@ -147,7 +147,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		text: 'LPA changed the development description',
 		value: appellantCaseData.developmentDescription?.isChanged,
 		link: `${currentRoute}/lpa-changed-description/change`,
-		session
+		userHasEditPermission: userHasUpdateCase
 	});
 
 	mappedData.applicationDecision = textDisplayField({
@@ -158,7 +158,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 				? 'Not received'
 				: capitalize(appellantCaseData.applicationDecision ?? ''),
 		link: `${currentRoute}/application-outcome/change`,
-		session
+		userHasEditPermission: userHasUpdateCase
 	});
 
 	//TODO: update with new document type
@@ -174,7 +174,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		text: 'Local planning authority (LPA)',
 		value: appellantCaseData.localPlanningDepartment,
 		link: `${currentRoute}/change-appeal-details/local-planning-authority`,
-		session
+		userHasEditPermission: userHasUpdateCase
 	});
 
 	/**
@@ -200,7 +200,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 			appellantCaseData.siteOwnership.ownsSomeLand
 		),
 		link: `${currentRoute}/site-ownership/change`,
-		session
+		userHasEditPermission: userHasUpdateCase
 	});
 
 	mappedData.ownersKnown = textDisplayField({
@@ -208,7 +208,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		text: 'Owners known',
 		value: mapOwnersKnownLabelText(appellantCaseData.siteOwnership.knowsOtherLandowners),
 		link: `${currentRoute}/owners-known/change`,
-		session
+		userHasEditPermission: userHasUpdateCase
 	});
 
 	mappedData.appealType = textDisplayField({
@@ -216,7 +216,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		text: 'Appeal type',
 		value: appealDetails.appealType,
 		link: `${currentRoute}/#`,
-		session
+		userHasEditPermission: userHasUpdateCase
 	});
 
 	mappedData.advertisedAppeal = booleanDisplayField({
@@ -226,7 +226,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		defaultText: '',
 		link: `${currentRoute}/change-appeal-details/advertised-appeal`,
 		addCyAttribute: true,
-		session
+		userHasEditPermission: userHasUpdateCase
 	});
 
 	/** @type {Instructions} */
@@ -329,7 +329,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		defaultText: '',
 		link: `${currentRoute}/ownership-certificate/change`,
 		addCyAttribute: true,
-		session
+		userHasEditPermission: userHasUpdateCase
 	});
 
 	mappedData.ownershipCertificate = documentInstruction({
@@ -505,7 +505,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		value: appellantCaseData.planningObligation?.hasObligation,
 		defaultText: '',
 		link: `${currentRoute}/planning-obligation/change`,
-		session
+		userHasEditPermission: userHasUpdateCase
 	});
 
 	mappedData.statusPlanningObligation = textDisplayField({
@@ -515,7 +515,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 			appellantCaseData.planningObligation?.status
 		),
 		link: `${currentRoute}/planning-obligation/status/change`,
-		session
+		userHasEditPermission: userHasUpdateCase
 	});
 
 	mappedData.partOfAgriculturalHolding = booleanDisplayField({
@@ -524,7 +524,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		value: appellantCaseData.agriculturalHolding.isPartOfAgriculturalHolding,
 		defaultText: '',
 		link: `${currentRoute}/agricultural-holding/change`,
-		session
+		userHasEditPermission: userHasUpdateCase
 	});
 
 	mappedData.tenantOfAgriculturalHolding = booleanDisplayField({
@@ -533,7 +533,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		value: appellantCaseData.agriculturalHolding.isTenant,
 		defaultText: '',
 		link: `${currentRoute}/agricultural-holding/tenant/change`,
-		session
+		userHasEditPermission: userHasUpdateCase
 	});
 
 	mappedData.otherTenantsOfAgriculturalHolding = booleanDisplayField({
@@ -542,7 +542,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		value: appellantCaseData.agriculturalHolding.hasOtherTenants,
 		defaultText: '',
 		link: `${currentRoute}/agricultural-holding/other-tenants/change`,
-		session
+		userHasEditPermission: userHasUpdateCase
 	});
 
 	mappedData.appellantCostsApplication = booleanDisplayField({
@@ -550,7 +550,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		text: 'Applied for award of appeal costs',
 		value: appellantCaseData.appellantCostsAppliedFor,
 		link: `${currentRoute}/appeal-costs-application/change`,
-		session
+		userHasEditPermission: userHasUpdateCase
 	});
 
 	mappedData.costsDocument = documentInstruction({

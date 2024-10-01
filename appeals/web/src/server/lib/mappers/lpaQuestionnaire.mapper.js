@@ -1,7 +1,7 @@
 import { convertFromBooleanToYesNo } from '../boolean-formatter.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
 import { isFolderInfo } from '#lib/ts-utilities.js';
-import { mapActionComponent } from './component-permissions.mapper.js';
+import { mapActionComponent, userHasPermission } from './permissions.mapper.js';
 import { permissionNames } from '#environment/permissions.js';
 import { booleanDisplayField } from '#lib/page-components/boolean.js';
 import { documentTypeDisplayField } from '#lib/page-components/document.js';
@@ -48,17 +48,17 @@ export function initialiseAndMapLPAQData(
 			text,
 			appealId: lpaQuestionnaireData.appealId,
 			folderInfo,
-			requiredPermissionName: permissionNames.updateCase,
+			userHasEditPermission: userHasPermission(permissionNames.updateCase, session),
 			uploadUrlTemplate: buildDocumentUploadUrlTemplate(lpaQuestionnaireData.lpaQuestionnaireId),
 			manageUrl: mapDocumentManageUrl(
 				lpaQuestionnaireData.appealId,
 				lpaQuestionnaireData.lpaQuestionnaireId,
 				folderInfo?.folderId
 			),
-			session,
 			cypressDataName
 		});
 	};
+	const userHasUpdateCase = userHasPermission(permissionNames.updateCase, session);
 
 	/** @type {{lpaq: MappedInstructions}} */
 	const mappedData = {};
@@ -113,7 +113,7 @@ export function initialiseAndMapLPAQData(
 		defaultText: '',
 		addCyAttribute: true,
 		link: `${currentRoute}/is-correct-appeal-type/change`,
-		session
+		userHasEditPermission: userHasUpdateCase
 	});
 
 	mappedData.lpaq.conservationAreaMap = documentInstruction({
@@ -130,7 +130,7 @@ export function initialiseAndMapLPAQData(
 		defaultText: '',
 		addCyAttribute: true,
 		link: `${currentRoute}/green-belt/change/lpa`,
-		session
+		userHasEditPermission: userHasUpdateCase
 	});
 
 	mappedData.lpaq.notifyingParties = documentInstruction({
@@ -168,7 +168,7 @@ export function initialiseAndMapLPAQData(
 			)
 		},
 		link: `${currentRoute}/notification-methods/change`,
-		session
+		userHasEditPermission: userHasUpdateCase
 	});
 
 	mappedData.lpaq.representations = documentInstruction({

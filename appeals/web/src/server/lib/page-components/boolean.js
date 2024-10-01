@@ -1,6 +1,4 @@
 import { convertFromBooleanToYesNo } from '#lib/boolean-formatter.js';
-import { mapActionComponent } from '#lib/mappers/component-permissions.mapper.js';
-import { permissionNames } from '#environment/permissions.js';
 
 /**
  *
@@ -11,7 +9,7 @@ import { permissionNames } from '#environment/permissions.js';
  * @param {string} [options.defaultText]
  * @param {string} options.link
  * @param {boolean} [options.addCyAttribute]
- * @param {import("express-session").Session & Partial<import("express-session").SessionData>} options.session
+ * @param {boolean} options.userHasEditPermission
  * @returns {Instructions}
  */
 export function booleanDisplayField({
@@ -21,28 +19,27 @@ export function booleanDisplayField({
 	defaultText,
 	link,
 	addCyAttribute,
-	session
+	userHasEditPermission
 }) {
+	/** @type {ActionItemProperties[]} */
+	const actions = [];
+	if (userHasEditPermission) {
+		actions.push({
+			text: 'Change',
+			visuallyHiddenText: text,
+			href: link,
+			attributes: addCyAttribute && { 'data-cy': 'change-' + id }
+		});
+	}
 	return {
 		id,
 		display: {
 			summaryListItem: {
-				key: {
-					text
-				},
+				key: { text },
 				value: {
 					text: convertFromBooleanToYesNo(value, defaultText)
 				},
-				actions: {
-					items: [
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Change',
-							visuallyHiddenText: text,
-							href: link,
-							attributes: addCyAttribute && { 'data-cy': 'change-' + id }
-						})
-					]
-				}
+				actions: { items: actions }
 			}
 		}
 	};

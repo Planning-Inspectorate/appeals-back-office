@@ -1,5 +1,4 @@
 import { isFolderInfo } from '#lib/ts-utilities.js';
-import { mapActionComponent } from '#lib/mappers/component-permissions.mapper.js';
 import { formatDocumentActionLink, formatDocumentValues } from '#lib/display-page-formatter.js';
 
 /**
@@ -10,8 +9,7 @@ import { formatDocumentActionLink, formatDocumentValues } from '#lib/display-pag
  * @param {string} options.text
  * @param {number} options.appealId
  * @param {import('@pins/appeals.api').Appeals.FolderInfo|null|undefined} options.folderInfo
- * @param {string} options.requiredPermissionName
- * @param {import('../../app/auth/auth-session.service.js').SessionWithAuth} options.session
+ * @param {boolean} options.userHasEditPermission
  * @param {string} options.manageUrl
  * @param {string} options.uploadUrlTemplate
  * @param {string} [options.cypressDataName]
@@ -22,8 +20,7 @@ export function documentTypeDisplayField({
 	text,
 	appealId,
 	folderInfo,
-	requiredPermissionName,
-	session,
+	userHasEditPermission,
 	manageUrl,
 	uploadUrlTemplate,
 	cypressDataName = id
@@ -31,33 +28,29 @@ export function documentTypeDisplayField({
 	const documents = (isFolderInfo(folderInfo) && folderInfo.documents) || [];
 	/** @type {ActionItemProperties[]} */
 	const actions = [];
-	if (documents.length) {
-		const manage = mapActionComponent(requiredPermissionName, session, {
-			text: 'Manage',
+	if (userHasEditPermission) {
+		if (documents.length) {
+			actions.push({
+				text: 'Manage',
+				visuallyHiddenText: text,
+				href: manageUrl,
+				attributes: { 'data-cy': `manage-${cypressDataName}` }
+			});
+		}
+		actions.push({
+			text: 'Add',
 			visuallyHiddenText: text,
-			href: manageUrl,
-			attributes: { 'data-cy': `manage-${cypressDataName}` }
+			href: formatDocumentActionLink(appealId, folderInfo, uploadUrlTemplate),
+			attributes: { 'data-cy': `add-${cypressDataName}` }
 		});
-		manage && actions.push(manage);
 	}
-	const add = mapActionComponent(requiredPermissionName, session, {
-		text: 'Add',
-		visuallyHiddenText: text,
-		href: formatDocumentActionLink(appealId, folderInfo, uploadUrlTemplate),
-		attributes: { 'data-cy': `add-${cypressDataName}` }
-	});
-	add && actions.push(add);
 	return {
 		id,
 		display: {
 			summaryListItem: {
-				key: {
-					text
-				},
+				key: { text },
 				value: formatDocumentValues(appealId, documents),
-				actions: {
-					items: actions
-				}
+				actions: { items: actions }
 			}
 		}
 	};
