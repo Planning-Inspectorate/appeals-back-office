@@ -6,7 +6,7 @@ import { SHOW_MORE_MAXIMUM_CHARACTERS_BEFORE_HIDING } from '#lib/constants.js';
  * @param {Object} options
  * @param {string} options.id
  * @param {string} options.text
- * @param {string|{html: string}|null} [options.value]
+ * @param {string|HtmlProperty|null} [options.value]
  * @param {string} options.link
  * @param {boolean} options.userHasEditPermission
  * @param {boolean} [options.withShowMore]
