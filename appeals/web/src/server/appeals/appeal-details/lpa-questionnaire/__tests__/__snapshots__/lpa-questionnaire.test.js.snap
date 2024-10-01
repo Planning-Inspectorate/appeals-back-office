@@ -24,7 +24,7 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Correct appeal type</dt>
                     <dd class="govuk-summary-list__value">Yes</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/2/is-correct-appeal-type/change"
-                        lpaQuestionnaireData-cy="change-is-correct-appeal-type"> Change<span class="govuk-visually-hidden"> Correct appeal type</span></a>
+                        data-cy="change-is-correct-appeal-type"> Change<span class="govuk-visually-hidden"> Correct appeal type</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Listed buildings</dt>
@@ -70,7 +70,7 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Green belt</dt>
                     <dd class="govuk-summary-list__value"></dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/2/green-belt/change/lpa"
-                        lpaQuestionnaireData-cy="change-site-within-green-belt"> Change<span class="govuk-visually-hidden"> Green belt</span></a>
+                        data-cy="change-site-within-green-belt"> Change<span class="govuk-visually-hidden"> Green belt</span></a>
                     </dd>
                 </div>
             </dl>
@@ -123,7 +123,7 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
                         </ul>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/2/notification-methods/change"
-                        lpaQuestionnaireData-cy="change-notification-methods"> Change<span class="govuk-visually-hidden"> notification methods</span></a>
+                        data-cy="change-notification-methods"> Change<span class="govuk-visually-hidden"> Notification methods</span></a>
                     </dd>
                 </div>
             </dl>
@@ -336,7 +336,7 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Correct appeal type</dt>
                     <dd class="govuk-summary-list__value">Yes</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/is-correct-appeal-type/change"
-                        lpaQuestionnaireData-cy="change-is-correct-appeal-type"> Change<span class="govuk-visually-hidden"> Correct appeal type</span></a>
+                        data-cy="change-is-correct-appeal-type"> Change<span class="govuk-visually-hidden"> Correct appeal type</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Listed buildings</dt>
@@ -382,7 +382,7 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Green belt</dt>
                     <dd class="govuk-summary-list__value"></dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/green-belt/change/lpa"
-                        lpaQuestionnaireData-cy="change-site-within-green-belt"> Change<span class="govuk-visually-hidden"> Green belt</span></a>
+                        data-cy="change-site-within-green-belt"> Change<span class="govuk-visually-hidden"> Green belt</span></a>
                     </dd>
                 </div>
             </dl>
@@ -435,7 +435,7 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
                         </ul>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/notification-methods/change"
-                        lpaQuestionnaireData-cy="change-notification-methods"> Change<span class="govuk-visually-hidden"> notification methods</span></a>
+                        data-cy="change-notification-methods"> Change<span class="govuk-visually-hidden"> Notification methods</span></a>
                     </dd>
                 </div>
             </dl>
@@ -681,7 +681,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Correct appeal type</dt>
                     <dd class="govuk-summary-list__value">Yes</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/is-correct-appeal-type/change"
-                        lpaQuestionnaireData-cy="change-is-correct-appeal-type"> Change<span class="govuk-visually-hidden"> Correct appeal type</span></a>
+                        data-cy="change-is-correct-appeal-type"> Change<span class="govuk-visually-hidden"> Correct appeal type</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Listed buildings</dt>
@@ -729,7 +729,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Green belt</dt>
                     <dd class="govuk-summary-list__value"></dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/green-belt/change/lpa"
-                        lpaQuestionnaireData-cy="change-site-within-green-belt"> Change<span class="govuk-visually-hidden"> Green belt</span></a>
+                        data-cy="change-site-within-green-belt"> Change<span class="govuk-visually-hidden"> Green belt</span></a>
                     </dd>
                 </div>
             </dl>
@@ -782,7 +782,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                         </ul>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/notification-methods/change"
-                        lpaQuestionnaireData-cy="change-notification-methods"> Change<span class="govuk-visually-hidden"> notification methods</span></a>
+                        data-cy="change-notification-methods"> Change<span class="govuk-visually-hidden"> Notification methods</span></a>
                     </dd>
                 </div>
             </dl>
@@ -987,7 +987,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Correct appeal type</dt>
                     <dd class="govuk-summary-list__value">Yes</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/is-correct-appeal-type/change"
-                        lpaQuestionnaireData-cy="change-is-correct-appeal-type"> Change<span class="govuk-visually-hidden"> Correct appeal type</span></a>
+                        data-cy="change-is-correct-appeal-type"> Change<span class="govuk-visually-hidden"> Correct appeal type</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Listed buildings</dt>
@@ -1035,7 +1035,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Green belt</dt>
                     <dd class="govuk-summary-list__value"></dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/green-belt/change/lpa"
-                        lpaQuestionnaireData-cy="change-site-within-green-belt"> Change<span class="govuk-visually-hidden"> Green belt</span></a>
+                        data-cy="change-site-within-green-belt"> Change<span class="govuk-visually-hidden"> Green belt</span></a>
                     </dd>
                 </div>
             </dl>
@@ -1088,7 +1088,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                         </ul>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/notification-methods/change"
-                        lpaQuestionnaireData-cy="change-notification-methods"> Change<span class="govuk-visually-hidden"> notification methods</span></a>
+                        data-cy="change-notification-methods"> Change<span class="govuk-visually-hidden"> Notification methods</span></a>
                     </dd>
                 </div>
             </dl>
@@ -3214,7 +3214,7 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Correct appeal type</dt>
                     <dd class="govuk-summary-list__value">Yes</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/is-correct-appeal-type/change"
-                        lpaQuestionnaireData-cy="change-is-correct-appeal-type"> Change<span class="govuk-visually-hidden"> Correct appeal type</span></a>
+                        data-cy="change-is-correct-appeal-type"> Change<span class="govuk-visually-hidden"> Correct appeal type</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Listed buildings</dt>
@@ -3260,7 +3260,7 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Green belt</dt>
                     <dd class="govuk-summary-list__value"></dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/green-belt/change/lpa"
-                        lpaQuestionnaireData-cy="change-site-within-green-belt"> Change<span class="govuk-visually-hidden"> Green belt</span></a>
+                        data-cy="change-site-within-green-belt"> Change<span class="govuk-visually-hidden"> Green belt</span></a>
                     </dd>
                 </div>
             </dl>
@@ -3313,7 +3313,7 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                         </ul>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/notification-methods/change"
-                        lpaQuestionnaireData-cy="change-notification-methods"> Change<span class="govuk-visually-hidden"> notification methods</span></a>
+                        data-cy="change-notification-methods"> Change<span class="govuk-visually-hidden"> Notification methods</span></a>
                     </dd>
                 </div>
             </dl>
