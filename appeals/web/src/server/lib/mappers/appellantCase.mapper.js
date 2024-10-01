@@ -68,7 +68,8 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		},
 		link: `${currentRoute}/service-user/change/appellant`,
 		userHasEditPermission: userHasUpdateCase,
-		classes: 'appeal-appellant'
+		classes: 'appeal-appellant',
+		cypressDataName: 'appellant'
 	});
 
 	mappedData.agent = textDisplayField({
@@ -556,7 +557,8 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 	mappedData.costsDocument = documentInstruction({
 		id: 'costs-appellant',
 		text: 'Costs document',
-		folderInfo: appealDetails.costs.appellantApplicationFolder
+		folderInfo: appealDetails.costs.appellantApplicationFolder,
+		cypressDataName: 'costs-document'
 	});
 
 	return mappedData;
