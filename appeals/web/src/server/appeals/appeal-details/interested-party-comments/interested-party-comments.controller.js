@@ -14,54 +14,50 @@ const renderInterestedPartyComments = async (request, response) => {
 		pageSize: 1000
 	};
 
-	if (
-		currentAppeal &&
-		currentAppeal.appellantCaseId !== null &&
-		currentAppeal.appellantCaseId !== undefined
-	) {
-		try {
-			const [awaitingReviewComments, invalidComments, validComments] = await Promise.all([
-				interestedPartyCommentsService.getInterestedPartyComments(
-					request.apiClient,
-					currentAppeal.appealId,
-					'awaiting_review',
-					paginationParameters.pageNumber,
-					paginationParameters.pageSize
-				),
-				interestedPartyCommentsService.getInterestedPartyComments(
-					request.apiClient,
-					currentAppeal.appealId,
-					'invalid',
-					paginationParameters.pageNumber,
-					paginationParameters.pageSize
-				),
-				interestedPartyCommentsService.getInterestedPartyComments(
-					request.apiClient,
-					currentAppeal.appealId,
-					'valid',
-					paginationParameters.pageNumber,
-					paginationParameters.pageSize
-				)
-			]);
-
-			const mappedPageContent = await interestedPartyCommentsPage(
-				currentAppeal,
-				awaitingReviewComments,
-				validComments,
-				invalidComments
-			);
-
-			return response.status(200).render('appeals/appeal/interested-party-comments.njk', {
-				pageContent: mappedPageContent,
-				errors
-			});
-		} catch (error) {
-			logger.error(error);
-			return response.status(500).render('app/500.njk');
-		}
+	if (currentAppeal?.appellantCaseId == null) {
+		return response.status(404).render('app/404.njk');
 	}
 
-	return response.status(404).render('app/404.njk');
+	try {
+		const [awaitingReviewComments, invalidComments, validComments] = await Promise.all([
+			interestedPartyCommentsService.getInterestedPartyComments(
+				request.apiClient,
+				currentAppeal.appealId,
+				'awaiting_review',
+				paginationParameters.pageNumber,
+				paginationParameters.pageSize
+			),
+			interestedPartyCommentsService.getInterestedPartyComments(
+				request.apiClient,
+				currentAppeal.appealId,
+				'invalid',
+				paginationParameters.pageNumber,
+				paginationParameters.pageSize
+			),
+			interestedPartyCommentsService.getInterestedPartyComments(
+				request.apiClient,
+				currentAppeal.appealId,
+				'valid',
+				paginationParameters.pageNumber,
+				paginationParameters.pageSize
+			)
+		]);
+
+		const mappedPageContent = await interestedPartyCommentsPage(
+			currentAppeal,
+			awaitingReviewComments,
+			validComments,
+			invalidComments
+		);
+
+		return response.status(200).render('appeals/appeal/interested-party-comments.njk', {
+			pageContent: mappedPageContent,
+			errors
+		});
+	} catch (error) {
+		logger.error(error);
+		return response.status(500).render('app/500.njk');
+	}
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
