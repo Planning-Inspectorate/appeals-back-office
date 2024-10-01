@@ -5,6 +5,9 @@ import {
 	CONFIG_APPEAL_TIMETABLE,
 	BANK_HOLIDAY_FEED_DIVISION_ENGLAND
 } from '#endpoints/constants.js';
+import { formatInTimeZone, zonedTimeToUtc } from 'date-fns-tz';
+import { DEADLINE_HOUR } from '@pins/appeals/constants/dates.js';
+import { DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.BankHolidayFeedEvents} BankHolidayFeedEvents */
 /** @typedef {import('@pins/appeals.api').Appeals.BankHolidayFeedDivisions} BankHolidayFeedDivisions */
@@ -58,11 +61,11 @@ const recalculateDateForBankHolidays = (dateFrom, dateTo, bankHolidays) => {
 	if (bankHolidayCount) {
 		return {
 			bankHolidayCount,
-			calculatedDate: addBusinessDays(new Date(dateTo), bankHolidayCount)
+			calculatedDate: addBusinessDays(dateTo, bankHolidayCount)
 		};
 	}
 
-	return { bankHolidayCount, calculatedDate: new Date(dateTo) };
+	return { bankHolidayCount, calculatedDate: dateTo };
 };
 
 /**
@@ -128,7 +131,12 @@ const recalculateDateIfNotBusinessDay = async (date) => {
  * @returns {Promise<TimetableDeadlineDate | undefined>}
  */
 const calculateTimetable = async (appealType, startedAt) => {
+	const tz = 'Europe/London';
+
 	if (startedAt) {
+		const ymd = formatInTimeZone(startedAt, tz, 'yyyy-MM-dd');
+		const startDate = zonedTimeToUtc(`${ymd} 10:00`, tz);
+
 		// @ts-ignore
 		const appealTimetableConfig = CONFIG_APPEAL_TIMETABLE[appealType];
 
@@ -137,10 +145,13 @@ const calculateTimetable = async (appealType, startedAt) => {
 
 			return Object.fromEntries(
 				Object.entries(appealTimetableConfig).map(([fieldName, { daysFromStartDate }]) => {
-					let calculatedDate = addBusinessDays(new Date(startedAt), daysFromStartDate);
-					calculatedDate = addBankHolidayDays(startedAt, calculatedDate, bankHolidays);
+					let calculatedDate = addBusinessDays(startDate, daysFromStartDate);
+					calculatedDate = addBankHolidayDays(startDate, calculatedDate, bankHolidays);
 
-					return [fieldName, calculatedDate];
+					const ymd = formatInTimeZone(calculatedDate, tz, 'yyyy-MM-dd');
+					const deadline = zonedTimeToUtc(`${ymd} ${DEADLINE_HOUR}:${DEADLINE_MINUTE}`, tz);
+
+					return [fieldName, deadline];
 				})
 			);
 		}

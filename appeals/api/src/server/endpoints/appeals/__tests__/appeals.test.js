@@ -801,8 +801,8 @@ describe('appeals routes', () => {
 					siteVisit: {
 						siteVisitId: householdAppeal.siteVisit.id,
 						visitDate: householdAppeal.siteVisit.visitDate.toISOString(),
-						visitStartTime: householdAppeal.siteVisit.visitStartTime,
-						visitEndTime: householdAppeal.siteVisit.visitEndTime,
+						visitStartTime: householdAppeal.siteVisit.visitStartTime.toISOString(),
+						visitEndTime: householdAppeal.siteVisit.visitEndTime.toISOString(),
 						visitType: householdAppeal.siteVisit.siteVisitType.name
 					},
 					createdAt: householdAppeal.caseCreatedDate.toISOString()
@@ -905,8 +905,8 @@ describe('appeals routes', () => {
 					siteVisit: {
 						siteVisitId: fullPlanningAppeal.siteVisit.id,
 						visitDate: fullPlanningAppeal.siteVisit.visitDate.toISOString(),
-						visitStartTime: fullPlanningAppeal.siteVisit.visitStartTime,
-						visitEndTime: fullPlanningAppeal.siteVisit.visitEndTime,
+						visitStartTime: fullPlanningAppeal.siteVisit.visitStartTime.toISOString(),
+						visitEndTime: fullPlanningAppeal.siteVisit.visitEndTime.toISOString(),
 						visitType: fullPlanningAppeal.siteVisit.siteVisitType.name
 					},
 					createdAt: householdAppeal.caseCreatedDate.toISOString(),
@@ -1517,8 +1517,8 @@ describe('appeals/case-reference/:caseReference', () => {
 				siteVisit: {
 					siteVisitId: householdAppeal.siteVisit.id,
 					visitDate: householdAppeal.siteVisit.visitDate.toISOString(),
-					visitStartTime: householdAppeal.siteVisit.visitStartTime,
-					visitEndTime: householdAppeal.siteVisit.visitEndTime,
+					visitStartTime: householdAppeal.siteVisit.visitStartTime.toISOString(),
+					visitEndTime: householdAppeal.siteVisit.visitEndTime.toISOString(),
 					visitType: householdAppeal.siteVisit.siteVisitType.name
 				},
 				createdAt: householdAppeal.caseCreatedDate.toISOString(),
@@ -1622,8 +1622,8 @@ describe('appeals/case-reference/:caseReference', () => {
 				siteVisit: {
 					siteVisitId: fullPlanningAppeal.siteVisit.id,
 					visitDate: fullPlanningAppeal.siteVisit.visitDate.toISOString(),
-					visitStartTime: fullPlanningAppeal.siteVisit.visitStartTime,
-					visitEndTime: fullPlanningAppeal.siteVisit.visitEndTime,
+					visitStartTime: fullPlanningAppeal.siteVisit.visitStartTime.toISOString(),
+					visitEndTime: fullPlanningAppeal.siteVisit.visitEndTime.toISOString(),
 					visitType: fullPlanningAppeal.siteVisit.siteVisitType.name
 				},
 				createdAt: fullPlanningAppeal.caseCreatedDate.toISOString(),
