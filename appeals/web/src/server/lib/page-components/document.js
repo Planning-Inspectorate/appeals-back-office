@@ -15,7 +15,7 @@ import { formatDocumentActionLink, formatDocumentValues } from '#lib/display-pag
  * @param {string} [options.cypressDataName]
  * @returns {Instructions}
  */
-export function documentTypeDisplayField({
+export function documentTypeDisplayInstruction({
 	id,
 	text,
 	appealId,
