@@ -48,9 +48,9 @@ const postSiteVisit = async (req, res) => {
 	/** @type { CreateSiteVisitData } */
 	const siteVisitData = {
 		appealId: Number(appealId),
-		visitDate: visitDate,
-		visitEndTime,
-		visitStartTime,
+		visitDate: isNaN(new Date(visitDate).getTime()) ? undefined : new Date(visitDate),
+		visitEndTime: isNaN(new Date(visitEndTime).getTime()) ? undefined : new Date(visitEndTime),
+		visitStartTime: isNaN(new Date(visitStartTime).getTime()) ? undefined : new Date(visitStartTime),
 		visitType: visitType,
 		appellantEmail,
 		lpaEmail,
@@ -102,9 +102,9 @@ const rearrangeSiteVisit = async (req, res) => {
 	const updateSiteVisitData = {
 		siteVisitId: Number(siteVisitId),
 		appealId: Number(appealId),
-		visitDate: visitDate,
-		visitEndTime,
-		visitStartTime,
+		visitDate: isNaN(new Date(visitDate).getTime()) ? undefined : new Date(visitDate),
+		visitEndTime: isNaN(new Date(visitEndTime).getTime()) ? undefined : new Date(visitEndTime),
+		visitStartTime: isNaN(new Date(visitStartTime).getTime()) ? undefined : new Date(visitStartTime),
 		visitType,
 		previousVisitType,
 		siteVisitChangeType,

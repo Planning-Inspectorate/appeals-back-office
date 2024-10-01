@@ -105,9 +105,9 @@ describe('site visit routes', () => {
 				expect(databaseConnector.siteVisit.create).toHaveBeenCalledWith({
 					data: {
 						appealId: householdAppeal.id,
-						visitDate: siteVisit.visitDate,
-						visitEndTime: siteVisit.visitEndTime,
-						visitStartTime: siteVisit.visitStartTime,
+						visitDate: new Date(siteVisit.visitDate),
+						visitEndTime: new Date(siteVisit.visitEndTime),
+						visitStartTime: new Date(siteVisit.visitStartTime),
 						siteVisitTypeId: siteVisit.siteVisitType.id
 					}
 				});
@@ -160,9 +160,10 @@ describe('site visit routes', () => {
 				expect(databaseConnector.siteVisit.create).toHaveBeenCalledWith({
 					data: {
 						appealId: householdAppeal.id,
-						visitDate: siteVisit.visitDate,
-						visitEndTime: siteVisit.visitEndTime,
-						visitStartTime: siteVisit.visitStartTime,
+						visitDate: new Date(siteVisit.visitDate),
+						visitEndTime: new Date(siteVisit.visitEndTime),
+						visitStartTime: new Date(siteVisit.visitStartTime),
+
 						siteVisitTypeId: siteVisit.siteVisitType.id
 					}
 				});
@@ -212,9 +213,9 @@ describe('site visit routes', () => {
 				expect(databaseConnector.siteVisit.create).toHaveBeenCalledWith({
 					data: {
 						appealId: householdAppeal.id,
-						visitDate: siteVisit.visitDate,
-						visitEndTime: siteVisit.visitEndTime,
-						visitStartTime: siteVisit.visitStartTime,
+						visitDate: new Date(siteVisit.visitDate),
+						visitEndTime: new Date(siteVisit.visitEndTime),
+						visitStartTime: new Date(siteVisit.visitStartTime),
 						siteVisitTypeId: siteVisit.siteVisitType.id
 					}
 				});
@@ -264,7 +265,7 @@ describe('site visit routes', () => {
 				expect(databaseConnector.siteVisit.create).toHaveBeenCalledWith({
 					data: {
 						appealId: householdAppeal.id,
-						visitDate: siteVisit.visitDate,
+						visitDate: new Date(siteVisit.visitDate),
 						siteVisitTypeId: siteVisit.siteVisitType.id
 					}
 				});
@@ -980,9 +981,9 @@ describe('site visit routes', () => {
 				expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
 					where: { id: siteVisit.id },
 					data: {
-						visitDate: siteVisit.visitDate,
-						visitEndTime: siteVisit.visitEndTime,
-						visitStartTime: siteVisit.visitStartTime,
+						visitDate: new Date(siteVisit.visitDate),
+						visitEndTime: new Date(siteVisit.visitEndTime),
+						visitStartTime: new Date(siteVisit.visitStartTime),
 						siteVisitTypeId: siteVisit.siteVisitType.id
 					}
 				});
@@ -1035,9 +1036,9 @@ describe('site visit routes', () => {
 				expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
 					where: { id: siteVisit.id },
 					data: {
-						visitDate: siteVisit.visitDate,
-						visitEndTime: siteVisit.visitEndTime,
-						visitStartTime: siteVisit.visitStartTime,
+						visitDate: new Date(siteVisit.visitDate),
+						visitEndTime: new Date(siteVisit.visitEndTime),
+						visitStartTime: new Date(siteVisit.visitStartTime),
 						siteVisitTypeId: siteVisit.siteVisitType.id
 					}
 				});
@@ -1105,9 +1106,9 @@ describe('site visit routes', () => {
 				expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
 					where: { id: siteVisit.id },
 					data: {
-						visitDate: siteVisit.visitDate,
-						visitEndTime: siteVisit.visitEndTime,
-						visitStartTime: siteVisit.visitStartTime,
+						visitDate: new Date(siteVisit.visitDate),
+						visitEndTime: new Date(siteVisit.visitEndTime),
+						visitStartTime: new Date(siteVisit.visitStartTime),
 						siteVisitTypeId: siteVisit.siteVisitType.id
 					}
 				});
@@ -1157,7 +1158,7 @@ describe('site visit routes', () => {
 				expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
 					where: { id: siteVisit.id },
 					data: {
-						visitDate: siteVisit.visitDate,
+						visitDate: new Date(siteVisit.visitDate),
 						siteVisitTypeId: siteVisit.siteVisitType.id,
 						visitEndTime: null,
 						visitStartTime: null
@@ -1211,7 +1212,7 @@ describe('site visit routes', () => {
 				expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
 					where: { id: siteVisit.id },
 					data: {
-						visitDate: siteVisit.visitDate,
+						visitDate: new Date(siteVisit.visitDate),
 						visitEndTime: null,
 						visitStartTime: null,
 						siteVisitTypeId: siteVisit.siteVisitType.id
@@ -1268,9 +1269,9 @@ describe('site visit routes', () => {
 				expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
 					where: { id: siteVisit.id },
 					data: {
-						visitDate: siteVisit.visitDate,
-						visitEndTime: siteVisit.visitEndTime,
-						visitStartTime: siteVisit.visitStartTime,
+						visitDate: new Date(siteVisit.visitDate),
+						visitEndTime: new Date(siteVisit.visitEndTime),
+						visitStartTime: new Date(siteVisit.visitStartTime),
 						siteVisitTypeId: siteVisit.siteVisitType.id
 					}
 				});
@@ -1343,9 +1344,9 @@ describe('site visit routes', () => {
 				expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
 					where: { id: siteVisit.id },
 					data: {
-						visitDate: siteVisit.visitDate,
-						visitEndTime: siteVisit.visitEndTime,
-						visitStartTime: siteVisit.visitStartTime,
+						visitDate: new Date(siteVisit.visitDate),
+						visitEndTime: new Date(siteVisit.visitEndTime),
+						visitStartTime: new Date(siteVisit.visitStartTime),
 						siteVisitTypeId: siteVisit.siteVisitType.id
 					}
 				});
@@ -1400,9 +1401,9 @@ describe('site visit routes', () => {
 				expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
 					where: { id: siteVisit.id },
 					data: {
-						visitDate: siteVisit.visitDate,
-						visitEndTime: siteVisit.visitEndTime,
-						visitStartTime: siteVisit.visitStartTime,
+						visitDate: new Date(siteVisit.visitDate),
+						visitEndTime: new Date(siteVisit.visitEndTime),
+						visitStartTime: new Date(siteVisit.visitStartTime),
 						siteVisitTypeId: siteVisit.siteVisitType.id
 					}
 				});
@@ -1475,9 +1476,9 @@ describe('site visit routes', () => {
 				expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
 					where: { id: siteVisit.id },
 					data: {
-						visitDate: siteVisit.visitDate,
-						visitEndTime: siteVisit.visitEndTime,
-						visitStartTime: siteVisit.visitStartTime,
+						visitDate: new Date(siteVisit.visitDate),
+						visitEndTime: new Date(siteVisit.visitEndTime),
+						visitStartTime: new Date(siteVisit.visitStartTime),
 						siteVisitTypeId: siteVisit.siteVisitType.id
 					}
 				});
@@ -1568,9 +1569,9 @@ describe('site visit routes', () => {
 				expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
 					where: { id: siteVisit.id },
 					data: {
-						visitDate: siteVisit.visitDate,
-						visitEndTime: siteVisit.visitEndTime,
-						visitStartTime: siteVisit.visitStartTime,
+						visitDate: new Date(siteVisit.visitDate),
+						visitEndTime: new Date(siteVisit.visitEndTime),
+						visitStartTime: new Date(siteVisit.visitStartTime),
 						siteVisitTypeId: siteVisit.siteVisitType.id
 					}
 				});
@@ -1661,9 +1662,9 @@ describe('site visit routes', () => {
 				expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
 					where: { id: siteVisit.id },
 					data: {
-						visitDate: siteVisit.visitDate,
-						visitEndTime: siteVisit.visitEndTime,
-						visitStartTime: siteVisit.visitStartTime,
+						visitDate: new Date(siteVisit.visitDate),
+						visitEndTime: new Date(siteVisit.visitEndTime),
+						visitStartTime: new Date(siteVisit.visitStartTime),
 						siteVisitTypeId: siteVisit.siteVisitType.id
 					}
 				});
@@ -1754,9 +1755,9 @@ describe('site visit routes', () => {
 				expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
 					where: { id: siteVisit.id },
 					data: {
-						visitDate: siteVisit.visitDate,
-						visitEndTime: siteVisit.visitEndTime,
-						visitStartTime: siteVisit.visitStartTime,
+						visitDate: new Date(siteVisit.visitDate),
+						visitEndTime: new Date(siteVisit.visitEndTime),
+						visitStartTime: new Date(siteVisit.visitStartTime),
 						siteVisitTypeId: siteVisit.siteVisitType.id
 					}
 				});
@@ -1847,9 +1848,9 @@ describe('site visit routes', () => {
 				expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
 					where: { id: siteVisit.id },
 					data: {
-						visitDate: siteVisit.visitDate,
-						visitEndTime: siteVisit.visitEndTime,
-						visitStartTime: siteVisit.visitStartTime,
+						visitDate: new Date(siteVisit.visitDate),
+						visitEndTime: new Date(siteVisit.visitEndTime),
+						visitStartTime: new Date(siteVisit.visitStartTime),
 						siteVisitTypeId: siteVisit.siteVisitType.id
 					}
 				});
@@ -1940,9 +1941,9 @@ describe('site visit routes', () => {
 				expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
 					where: { id: siteVisit.id },
 					data: {
-						visitDate: siteVisit.visitDate,
-						visitEndTime: siteVisit.visitEndTime,
-						visitStartTime: siteVisit.visitStartTime,
+						visitDate: new Date(siteVisit.visitDate),
+						visitEndTime: new Date(siteVisit.visitEndTime),
+						visitStartTime: new Date(siteVisit.visitStartTime),
 						siteVisitTypeId: siteVisit.siteVisitType.id
 					}
 				});
@@ -2016,9 +2017,9 @@ describe('site visit routes', () => {
 				expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
 					where: { id: siteVisit.id },
 					data: {
-						visitDate: siteVisit.visitDate,
-						visitEndTime: siteVisit.visitEndTime,
-						visitStartTime: siteVisit.visitStartTime,
+						visitDate: new Date(siteVisit.visitDate),
+						visitEndTime: new Date(siteVisit.visitEndTime),
+						visitStartTime: new Date(siteVisit.visitStartTime),
 						siteVisitTypeId: siteVisit.siteVisitType.id
 					}
 				});
@@ -2295,9 +2296,9 @@ describe('site visit routes', () => {
 				expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
 					where: { id: siteVisit.id },
 					data: {
-						visitDate: siteVisit.visitDate,
-						visitEndTime: siteVisit.visitEndTime,
-						visitStartTime: siteVisit.visitStartTime,
+						visitDate: new Date(siteVisit.visitDate),
+						visitEndTime: new Date(siteVisit.visitEndTime),
+						visitStartTime: new Date(siteVisit.visitStartTime),
 						siteVisitTypeId: siteVisit.siteVisitType.id
 					}
 				});
@@ -2385,8 +2386,8 @@ describe('site visit routes', () => {
 					.patch(`/appeals/${householdAppeal.id}/site-visits/${householdAppeal.siteVisit.id}`)
 					.send({
 						visitDate: '2023-07-12T00:00:00.000Z',
+						visitStartTime: '2023-07-12T18:00:00.000Z',
 						visitEndTime: '2023-07-12T56:00:00.000Z',
-						visitStartTime: '2023-07-12T12:00:00.000Z',
 						visitType: householdAppeal.siteVisit.siteVisitType.name
 					})
 					.set('azureAdUserId', azureAdUserId);

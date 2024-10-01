@@ -36,18 +36,16 @@ const validateDateParameter = ({
 	const isoUtcRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/;
 
 	return validator
-		.custom((value) => {
-			if (!isoUtcRegex.test(value)) {
-				throw new Error(ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT);
-			}
+	.custom((value) => {
+		const parsedDate = new Date(value);
+		if (isNaN(parsedDate.getTime())) {
+			throw new Error(ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT);
+		}
 
-			const parsedDate = new Date(value);
-			if (isNaN(parsedDate.getTime())) {
-				throw new Error(ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT);
-			}
-
-			return parsedDate;
-		})
+		return parsedDate;
+	})
+		.matches(isoUtcRegex)
+		.toDate()
 		.withMessage(ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT)
 		.custom((value) => (mustBeFutureDate ? dateIsAfterDate(value, new Date()) : true))
 		.withMessage(ERROR_MUST_BE_IN_FUTURE)
