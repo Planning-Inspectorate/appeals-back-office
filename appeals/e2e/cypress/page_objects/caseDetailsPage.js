@@ -143,11 +143,13 @@ export class CaseDetailsPage extends Page {
 
 	confirmCostDecisionStatus(text) {
 		this.elements.costDecisionStatus().contains(text);
+
 	}
 
 	/***************************************************************
 	 ************************ Verfifications ************************
 	 ****************************************************************/
+
 
 	verifyAnswerSummaryValue(answer) {
 		this.elements.answerCellAppeals(answer).then(($elem) => {
@@ -158,4 +160,16 @@ export class CaseDetailsPage extends Page {
 				);
 		});
 	}
+
+
+	verifyTableCellTextCaseHistory(answer) {
+		this.basePageElements.tableCell(answer).then(($elem) => {
+			cy.wrap($elem)
+				.invoke('text')
+				.then((text) =>
+					expect(text.trim().toLocaleLowerCase()).to.include(answer.toLocaleLowerCase())
+				);
+		});
+	}
+
 }
