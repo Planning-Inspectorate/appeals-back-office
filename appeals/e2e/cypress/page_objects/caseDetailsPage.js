@@ -161,7 +161,6 @@ export class CaseDetailsPage extends Page {
 		});
 	}
 
-
 	verifyTableCellTextCaseHistory(answer) {
 		this.basePageElements.tableCell(answer).then(($elem) => {
 			cy.wrap($elem)
@@ -171,5 +170,4 @@ export class CaseDetailsPage extends Page {
 				);
 		});
 	}
-
 }
