@@ -1,5 +1,5 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { dateToDisplayDate } from '#lib/dates.js';
+import { dateISOStringToDisplayDate } from '#lib/dates.js';
 
 /**
  * @typedef {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} SingleAppellantCaseResponse */
@@ -56,8 +56,7 @@ function createTable(commentsData, isReview = false) {
 function generateTableRows(items, isReview = false) {
 	return items.map((comment) => [
 		{ text: comment.author },
-		// TODO: Use updated date function when ready - dateISOStringToDisplayDate
-		{ text: dateToDisplayDate(new Date(comment.created)) },
+		{ text: dateISOStringToDisplayDate(comment.created) },
 		{
 			html: `<a href="/comments/${comment.id}/${isReview ? 'review' : 'view'}">${
 				isReview ? 'Review' : 'View'

@@ -5,7 +5,7 @@ import { isFolderInfo } from '#lib/ts-utilities.js';
 import { mapActionComponent, userHasPermission } from './permissions.mapper.js';
 import { permissionNames } from '#environment/permissions.js';
 import { formatServiceUserAsHtmlList } from '#lib/service-user-formatter.js';
-import { dateToDisplayDate } from '#lib/dates.js';
+import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { capitalize } from 'lodash-es';
 import { APPEAL_APPLICATION_DECISION, APPEAL_KNOWS_OTHER_OWNERS } from 'pins-data-model';
 import { booleanDisplayInstruction } from '#lib/page-components/boolean.js';
@@ -121,7 +121,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 	mappedData.applicationDecisionDate = textDisplayField({
 		id: 'application-decision-date',
 		text: 'Decision date',
-		value: dateToDisplayDate(appellantCaseData.applicationDecisionDate),
+		value: dateISOStringToDisplayDate(appellantCaseData.applicationDecisionDate),
 		link: `${currentRoute}/application-decision-date/change`,
 		userHasEditPermission: userHasUpdateCase
 	});
@@ -129,7 +129,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 	mappedData.applicationDate = textDisplayField({
 		id: 'application-date',
 		text: 'Application submitted',
-		value: dateToDisplayDate(appellantCaseData.applicationDate),
+		value: dateISOStringToDisplayDate(appellantCaseData.applicationDate),
 		link: `${currentRoute}/application-date/change`,
 		userHasEditPermission: userHasUpdateCase
 	});

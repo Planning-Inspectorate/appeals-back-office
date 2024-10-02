@@ -150,8 +150,8 @@ export const householdAppeal = {
 		id: 1,
 		appealId: 1,
 		visitDate: new Date('2022-03-31T01:00:00.000Z'),
-		visitEndTime: '03:00',
-		visitStartTime: '01:00',
+		visitEndTime: new Date('2022-03-31T03:00:00.000Z'),
+		visitStartTime: new Date('2022-03-31T01:00:00.000Z'),
 		siteVisitType: {
 			id: 1,
 			name: 'Access required',

@@ -1,5 +1,4 @@
-import { dateToDisplayDate } from '#lib/dates.js';
-import { convert24hTo12hTimeStringFormat } from '#lib/times.js';
+import { dateISOStringToDisplayDate, dateISOStringToDisplayTime12hr } from '#lib/dates.js';
 import { dateAndTimeFormatter } from '../../global-mapper-formatter.js';
 
 /** @type {import('../appeal.mapper.js').SubMapper} */
@@ -13,9 +12,9 @@ export const mapSiteVisitDate = ({ appealDetails, currentRoute }) => ({
 			value: {
 				html:
 					dateAndTimeFormatter(
-						dateToDisplayDate(appealDetails.siteVisit?.visitDate),
-						convert24hTo12hTimeStringFormat(appealDetails.siteVisit?.visitStartTime),
-						convert24hTo12hTimeStringFormat(appealDetails.siteVisit?.visitEndTime)
+						dateISOStringToDisplayDate(appealDetails.siteVisit?.visitDate),
+						dateISOStringToDisplayTime12hr(appealDetails.siteVisit?.visitStartTime),
+						dateISOStringToDisplayTime12hr(appealDetails.siteVisit?.visitEndTime)
 					) || 'Visit date not yet set'
 			},
 			actions: {

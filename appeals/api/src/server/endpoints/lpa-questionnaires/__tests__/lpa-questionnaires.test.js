@@ -7,7 +7,7 @@ import {
 	ERROR_INVALID_LPA_QUESTIONNAIRE_VALIDATION_OUTCOME,
 	ERROR_LPA_QUESTIONNAIRE_VALID_VALIDATION_OUTCOME_REASONS_REQUIRED,
 	ERROR_MUST_BE_BOOLEAN,
-	ERROR_MUST_BE_CORRECT_DATE_FORMAT,
+	ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT,
 	ERROR_MUST_BE_INCOMPLETE_INVALID_REASON,
 	ERROR_MUST_BE_IN_FUTURE,
 	ERROR_MUST_BE_NUMBER,
@@ -353,10 +353,15 @@ describe('lpa questionnaires routes', () => {
 				databaseConnector.lPAQuestionnaireIncompleteReason.findMany.mockResolvedValue(
 					lpaQuestionnaireIncompleteReasons
 				);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
 
 				const body = {
 					incompleteReasons: [{ id: 1 }, { id: 2 }],
-					lpaQuestionnaireDueDate: '2099-06-22',
+					lpaQuestionnaireDueDate: '2099-06-22T23:59:00.000Z',
 					validationOutcome: 'incomplete'
 				};
 				const { id, lpaQuestionnaire } = householdAppeal;
@@ -412,7 +417,7 @@ describe('lpa questionnaires routes', () => {
 
 				const body = {
 					incompleteReasons: [{ id: 1 }, { id: 2 }],
-					lpaQuestionnaireDueDate: '2025-08-23',
+					lpaQuestionnaireDueDate: '2025-08-23T00:00:00.000Z',
 					validationOutcome: 'incomplete'
 				};
 				const { id, lpaQuestionnaire } = householdAppeal;
@@ -468,7 +473,7 @@ describe('lpa questionnaires routes', () => {
 
 				const body = {
 					incompleteReasons: [{ id: 1 }, { id: 2 }],
-					lpaQuestionnaireDueDate: '2025-04-18',
+					lpaQuestionnaireDueDate: '2025-04-18T00:00:00.000Z',
 					validationOutcome: 'incomplete'
 				};
 				const { id, lpaQuestionnaire } = householdAppeal;
@@ -524,7 +529,7 @@ describe('lpa questionnaires routes', () => {
 
 				const body = {
 					incompleteReasons: [{ id: 1 }, { id: 2 }],
-					lpaQuestionnaireDueDate: '2024-12-25',
+					lpaQuestionnaireDueDate: '2024-12-25T00:00:00.000Z',
 					validationOutcome: 'incomplete'
 				};
 				const { id, lpaQuestionnaire } = householdAppeal;
@@ -580,7 +585,7 @@ describe('lpa questionnaires routes', () => {
 
 				const body = {
 					incompleteReasons: [{ id: 1 }, { id: 2 }],
-					lpaQuestionnaireDueDate: '2099-06-22',
+					lpaQuestionnaireDueDate: '2099-06-22T00:00:00.000Z',
 					validationOutcome: 'Incomplete'
 				};
 				const { id, lpaQuestionnaire } = householdAppeal;
@@ -645,7 +650,7 @@ describe('lpa questionnaires routes', () => {
 							text: ['Reason 3', 'Reason 4']
 						}
 					],
-					lpaQuestionnaireDueDate: '2099-06-22',
+					lpaQuestionnaireDueDate: '2099-06-22T00:00:00.000Z',
 					validationOutcome: 'Incomplete'
 				};
 				const { id, lpaQuestionnaire } = householdAppeal;
@@ -739,7 +744,7 @@ describe('lpa questionnaires routes', () => {
 							text: ['Reason 3', 'Reason 4', '']
 						}
 					],
-					lpaQuestionnaireDueDate: '2099-06-22',
+					lpaQuestionnaireDueDate: '2099-06-22T00:00:00.000Z',
 					validationOutcome: 'Incomplete'
 				};
 				const { id, lpaQuestionnaire } = householdAppeal;
@@ -830,7 +835,7 @@ describe('lpa questionnaires routes', () => {
 							text: [...eightItemArray, '', '']
 						}
 					],
-					lpaQuestionnaireDueDate: '2099-06-22',
+					lpaQuestionnaireDueDate: '2099-06-22T00:00:00.000Z',
 					validationOutcome: 'Incomplete'
 				};
 				const { id, lpaQuestionnaire } = householdAppeal;
@@ -890,7 +895,7 @@ describe('lpa questionnaires routes', () => {
 
 				const body = {
 					incompleteReasons: [{ id: 1 }, { id: 2 }],
-					lpaQuestionnaireDueDate: '2099-06-22',
+					lpaQuestionnaireDueDate: '2099-06-22T00:00:00.000Z',
 					validationOutcome: 'Incomplete'
 				};
 				const { id, lpaQuestionnaire } = householdAppeal;
@@ -1003,7 +1008,7 @@ describe('lpa questionnaires routes', () => {
 
 				const body = {
 					incompleteReasons: [{ id: '1' }, { id: '2' }],
-					lpaQuestionnaireDueDate: '2099-06-22',
+					lpaQuestionnaireDueDate: '2099-06-22T00:00:00.000Z',
 					validationOutcome: 'incomplete'
 				};
 				const { id, lpaQuestionnaire } = householdAppeal;
@@ -1028,7 +1033,7 @@ describe('lpa questionnaires routes', () => {
 							text: new Array(LENGTH_10 + 1).fill('A')
 						}
 					],
-					lpaQuestionnaireDueDate: '2099-06-22',
+					lpaQuestionnaireDueDate: '2099-06-22T00:00:00.000Z',
 					validationOutcome: 'incomplete'
 				};
 				const { id, lpaQuestionnaire } = householdAppeal;
@@ -1074,7 +1079,7 @@ describe('lpa questionnaires routes', () => {
 				const response = await request
 					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
 					.send({
-						lpaQuestionnaireDueDate: '2099-06-22',
+						lpaQuestionnaireDueDate: '2099-06-22T00:00:00.000Z',
 						validationOutcome: 'Complete'
 					})
 					.set('azureAdUserId', azureAdUserId);
@@ -1121,7 +1126,7 @@ describe('lpa questionnaires routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						lpaQuestionnaireDueDate: ERROR_MUST_BE_CORRECT_DATE_FORMAT
+						lpaQuestionnaireDueDate: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 					}
 				});
 			});
@@ -1140,7 +1145,7 @@ describe('lpa questionnaires routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						lpaQuestionnaireDueDate: ERROR_MUST_BE_CORRECT_DATE_FORMAT
+						lpaQuestionnaireDueDate: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 					}
 				});
 			});
@@ -1153,7 +1158,7 @@ describe('lpa questionnaires routes', () => {
 					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
 					.send({
 						incompleteReasons: [{ id: 1 }],
-						lpaQuestionnaireDueDate: '2023-06-04',
+						lpaQuestionnaireDueDate: '2023-06-04T00:00:00.000Z',
 						validationOutcome: 'Incomplete'
 					})
 					.set('azureAdUserId', azureAdUserId);
@@ -1172,7 +1177,7 @@ describe('lpa questionnaires routes', () => {
 					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
 					.send({
 						incompleteReasons: [{ id: 1 }],
-						lpaQuestionnaireDueDate: '2099-02-30',
+						lpaQuestionnaireDueDate: '2099-02-30X765273865',
 						validationOutcome: 'Incomplete'
 					})
 					.set('azureAdUserId', azureAdUserId);
@@ -1180,7 +1185,7 @@ describe('lpa questionnaires routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						lpaQuestionnaireDueDate: ERROR_MUST_BE_CORRECT_DATE_FORMAT
+						lpaQuestionnaireDueDate: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 					}
 				});
 			});
@@ -1224,7 +1229,7 @@ describe('lpa questionnaires routes', () => {
 					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
 					.send({
 						incompleteReasons: [{ id: 1 }, { id: 10 }],
-						lpaQuestionnaireDueDate: '2099-06-22',
+						lpaQuestionnaireDueDate: '2099-06-22T00:00:00.000Z',
 						validationOutcome: 'Incomplete'
 					})
 					.set('azureAdUserId', azureAdUserId);

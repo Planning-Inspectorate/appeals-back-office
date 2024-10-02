@@ -1565,48 +1565,6 @@ exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-ques
 </main>"
 `;
 
-exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-questionnaire/1/incomplete/date should render the update due date page without pre-populated date values, if there is no existing due date 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-xl govuk-!-margin-bottom-1">Appeal 351062</span>
-            <h1             class="govuk-fieldset__legend--xl govuk-!-margin-top-0">Update LPA questionnaire due date</h1>
-                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 30 November 1899</div>
-        </div>
-    </div>
-    <form method="post" novalidate="novalidate">
-        <div class="govuk-form-group">
-            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-            <div class="govuk-date-input" id="due-date">
-                <div class="govuk-date-input__item">
-                    <div class="govuk-form-group">
-                        <label class="govuk-label govuk-date-input__label" for="due-date-day">Day</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                        id="due-date-day" name="due-date-day" type="text" inputmode="numeric">
-                    </div>
-                </div>
-                <div class="govuk-date-input__item">
-                    <div class="govuk-form-group">
-                        <label class="govuk-label govuk-date-input__label" for="due-date-month">Month</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                        id="due-date-month" name="due-date-month" type="text" inputmode="numeric">
-                    </div>
-                </div>
-                <div class="govuk-date-input__item">
-                    <div class="govuk-form-group">
-                        <label class="govuk-label govuk-date-input__label" for="due-date-year">Year</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-4"
-                        id="due-date-year" name="due-date-year" type="text" inputmode="numeric">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="govuk-button-group">
-            <button type="submit" class="govuk-button" data-module="govuk-button">Save and continue</button>
-        </div>
-    </form>
-</main>"
-`;
-
 exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-document-details/:folderId/ should render a 500 error page if fileUploadInfo is not present in the session 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
@@ -4689,7 +4647,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-xl govuk-!-margin-bottom-1">Appeal 351062</span>
             <h1             class="govuk-fieldset__legend--xl govuk-!-margin-top-0">Update LPA questionnaire due date</h1>
-                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 1 March 3000</div>
+                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 11 October 2024</div>
         </div>
     </div>
     <form method="post" novalidate="novalidate">
@@ -4748,7 +4706,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-xl govuk-!-margin-bottom-1">Appeal 351062</span>
             <h1             class="govuk-fieldset__legend--xl govuk-!-margin-top-0">Update LPA questionnaire due date</h1>
-                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 31 December 2999</div>
+                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 11 October 2024</div>
         </div>
     </div>
     <form method="post" novalidate="novalidate">
@@ -4807,7 +4765,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-xl govuk-!-margin-bottom-1">Appeal 351062</span>
             <h1             class="govuk-fieldset__legend--xl govuk-!-margin-top-0">Update LPA questionnaire due date</h1>
-                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 1 February 3000</div>
+                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 11 October 2024</div>
         </div>
     </div>
     <form method="post" novalidate="novalidate">
@@ -4866,7 +4824,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-xl govuk-!-margin-bottom-1">Appeal 351062</span>
             <h1             class="govuk-fieldset__legend--xl govuk-!-margin-top-0">Update LPA questionnaire due date</h1>
-                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 31 December 2999</div>
+                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 11 October 2024</div>
         </div>
     </div>
     <form method="post" novalidate="novalidate">
@@ -4925,7 +4883,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-xl govuk-!-margin-bottom-1">Appeal 351062</span>
             <h1             class="govuk-fieldset__legend--xl govuk-!-margin-top-0">Update LPA questionnaire due date</h1>
-                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 1 December 2999</div>
+                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 11 October 2024</div>
         </div>
     </div>
     <form method="post" novalidate="novalidate">
@@ -4984,7 +4942,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-xl govuk-!-margin-bottom-1">Appeal 351062</span>
             <h1             class="govuk-fieldset__legend--xl govuk-!-margin-top-0">Update LPA questionnaire due date</h1>
-                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 1 January 3001</div>
+                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 11 October 2024</div>
         </div>
     </div>
     <form method="post" novalidate="novalidate">
@@ -5043,7 +5001,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-xl govuk-!-margin-bottom-1">Appeal 351062</span>
             <h1             class="govuk-fieldset__legend--xl govuk-!-margin-top-0">Update LPA questionnaire due date</h1>
-                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 1 December 2999</div>
+                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 11 October 2024</div>
         </div>
     </div>
     <form method="post" novalidate="novalidate">
@@ -5102,7 +5060,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-xl govuk-!-margin-bottom-1">Appeal 351062</span>
             <h1             class="govuk-fieldset__legend--xl govuk-!-margin-top-0">Update LPA questionnaire due date</h1>
-                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 1 January 1923</div>
+                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 11 October 2024</div>
         </div>
     </div>
     <form method="post" novalidate="novalidate">
@@ -5161,7 +5119,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-xl govuk-!-margin-bottom-1">Appeal 351062</span>
             <h1             class="govuk-fieldset__legend--xl govuk-!-margin-top-0">Update LPA questionnaire due date</h1>
-                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 1 January 1900</div>
+                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 11 October 2024</div>
         </div>
     </div>
     <form method="post" novalidate="novalidate">
@@ -5224,7 +5182,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-xl govuk-!-margin-bottom-1">Appeal 351062</span>
             <h1             class="govuk-fieldset__legend--xl govuk-!-margin-top-0">Update LPA questionnaire due date</h1>
-                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 30 November 1899</div>
+                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 11 October 2024</div>
         </div>
     </div>
     <form method="post" novalidate="novalidate">
@@ -5281,7 +5239,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-xl govuk-!-margin-bottom-1">Appeal 351062</span>
             <h1             class="govuk-fieldset__legend--xl govuk-!-margin-top-0">Update LPA questionnaire due date</h1>
-                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 1 January 2000</div>
+                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 11 October 2024</div>
         </div>
     </div>
     <form method="post" novalidate="novalidate">

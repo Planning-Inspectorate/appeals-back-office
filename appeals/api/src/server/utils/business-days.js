@@ -5,6 +5,14 @@ import {
 	CONFIG_APPEAL_TIMETABLE,
 	BANK_HOLIDAY_FEED_DIVISION_ENGLAND
 } from '#endpoints/constants.js';
+import { formatInTimeZone, zonedTimeToUtc } from 'date-fns-tz';
+import {
+	DEADLINE_HOUR,
+	DEADLINE_MINUTE,
+	DAYTIME_HOUR,
+	DAYTIME_MINUTE,
+	DEFAULT_TIMEZONE
+} from '@pins/appeals/constants/dates.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.BankHolidayFeedEvents} BankHolidayFeedEvents */
 /** @typedef {import('@pins/appeals.api').Appeals.BankHolidayFeedDivisions} BankHolidayFeedDivisions */
@@ -58,11 +66,11 @@ const recalculateDateForBankHolidays = (dateFrom, dateTo, bankHolidays) => {
 	if (bankHolidayCount) {
 		return {
 			bankHolidayCount,
-			calculatedDate: addBusinessDays(new Date(dateTo), bankHolidayCount)
+			calculatedDate: addBusinessDays(dateTo, bankHolidayCount)
 		};
 	}
 
-	return { bankHolidayCount, calculatedDate: new Date(dateTo) };
+	return { bankHolidayCount, calculatedDate: dateTo };
 };
 
 /**
@@ -117,6 +125,20 @@ const recalculateDateIfNotBusinessDay = async (date) => {
 };
 
 /**
+ *
+ * @param {string | Date} date
+ * @param {Number} hours
+ * @param {Number} minutes
+ * @returns {Date}
+ */
+const setTimeInTimeZone = (date, hours, minutes) => {
+	const ymd = formatInTimeZone(date, DEFAULT_TIMEZONE, 'yyyy-MM-dd');
+	const paddedHours = hours.toString().padStart(2, '0');
+	const paddedMinutes = minutes.toString().padStart(2, '0');
+	return zonedTimeToUtc(`${ymd} ${paddedHours}:${paddedMinutes}`, DEFAULT_TIMEZONE);
+};
+
+/**
  * Calculates the timetable deadlines excluding weekends and bank holidays
  *
  * 1. The deadline day is calculated excluding weekends
@@ -124,11 +146,13 @@ const recalculateDateIfNotBusinessDay = async (date) => {
  * 3. If the new deadline day (and any consecutive days) are bank holidays, these are added to the deadline day
  *
  * @param {string} appealType
- * @param {Date} startedAt
+ * @param {Date|null} startedAt
  * @returns {Promise<TimetableDeadlineDate | undefined>}
  */
 const calculateTimetable = async (appealType, startedAt) => {
 	if (startedAt) {
+		const startDate = setTimeInTimeZone(startedAt, DAYTIME_HOUR, DAYTIME_MINUTE);
+
 		// @ts-ignore
 		const appealTimetableConfig = CONFIG_APPEAL_TIMETABLE[appealType];
 
@@ -137,14 +161,16 @@ const calculateTimetable = async (appealType, startedAt) => {
 
 			return Object.fromEntries(
 				Object.entries(appealTimetableConfig).map(([fieldName, { daysFromStartDate }]) => {
-					let calculatedDate = addBusinessDays(new Date(startedAt), daysFromStartDate);
-					calculatedDate = addBankHolidayDays(startedAt, calculatedDate, bankHolidays);
+					let calculatedDate = addBusinessDays(startDate, daysFromStartDate);
+					calculatedDate = addBankHolidayDays(startDate, calculatedDate, bankHolidays);
 
-					return [fieldName, calculatedDate];
+					const deadline = setTimeInTimeZone(calculatedDate, DEADLINE_HOUR, DEADLINE_MINUTE);
+
+					return [fieldName, deadline];
 				})
 			);
 		}
 	}
 };
 
-export { calculateTimetable, recalculateDateIfNotBusinessDay };
+export { calculateTimetable, recalculateDateIfNotBusinessDay, setTimeInTimeZone };

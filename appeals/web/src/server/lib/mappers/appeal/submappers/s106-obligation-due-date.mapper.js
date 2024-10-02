@@ -1,4 +1,4 @@
-import { dateToDisplayDate } from '#lib/dates.js';
+import { dateISOStringToDisplayDate } from '#lib/dates.js';
 
 /** @type {import('../appeal.mapper.js').SubMapper} */
 export const mapS106ObligationDue = ({ appealDetails, currentRoute }) => ({
@@ -10,7 +10,7 @@ export const mapS106ObligationDue = ({ appealDetails, currentRoute }) => ({
 			},
 			value: {
 				// @ts-ignore
-				html: dateToDisplayDate(appealDetails.appealTimetable?.s106ObligationDue) || ''
+				html: dateISOStringToDisplayDate(appealDetails.appealTimetable?.s106ObligationDue) || ''
 			},
 			actions: {
 				items: [

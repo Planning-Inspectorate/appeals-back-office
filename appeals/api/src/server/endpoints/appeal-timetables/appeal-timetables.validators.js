@@ -14,10 +14,10 @@ import stringTokenReplacement from '#utils/string-token-replacement.js';
  * @returns {Error | boolean}
  */
 const validateFPATimetableDate = (value, { req }) => {
-	if (!isFPA(req.appeal.appealType.key)) {
-		throw new Error(
-			stringTokenReplacement(ERROR_MUST_NOT_HAVE_TIMETABLE_DATE, [req.appeal.appealType.key])
-		);
+	const appealTypeKey = req.appeal?.appealType?.key || '';
+
+	if (!isFPA(appealTypeKey)) {
+		throw new Error(stringTokenReplacement(ERROR_MUST_NOT_HAVE_TIMETABLE_DATE, [appealTypeKey]));
 	}
 	return true;
 };

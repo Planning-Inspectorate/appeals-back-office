@@ -16,6 +16,7 @@ const formatAppellantCase = (appeal, folders = null) => {
 	const { appellantCase } = appeal;
 
 	if (appellantCase) {
+		// @ts-ignore
 		return {
 			appealId: appeal.id,
 			appealReference: appeal.reference,
@@ -29,16 +30,12 @@ const formatAppellantCase = (appeal, folders = null) => {
 				surname: appeal.appellant?.lastName || ''
 			},
 			isAppellantNamedOnApplication: appeal.agent == null,
-			// @ts-ignore
 			applicationDate: appellantCase.applicationDate && appellantCase.applicationDate.toISOString(),
-			// @ts-ignore
 			applicationDecisionDate:
 				appellantCase.applicationDecisionDate &&
 				appellantCase.applicationDecisionDate?.toISOString(),
-			// @ts-ignore
 			caseSubmissionDueDate:
 				appellantCase.caseSubmissionDueDate && appellantCase.caseSubmissionDueDate?.toISOString(),
-			// @ts-ignore
 			caseSubmittedDate:
 				appellantCase.caseSubmittedDate && appellantCase.caseSubmittedDate?.toISOString(),
 			planningApplicationReference: appeal.applicationReference || '',

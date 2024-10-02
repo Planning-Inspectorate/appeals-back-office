@@ -14,6 +14,9 @@ import {
 	checkTransferPage
 } from './change-appeal-type.mapper.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { dayMonthYearHourMinuteToISOString } from '#lib/dates.js';
+import { DEADLINE_HOUR } from '@pins/appeals/constants/dates.js';
+import { DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -177,16 +180,19 @@ export const postChangeAppealFinalDate = async (request, response) => {
 			return renderChangeAppealFinalDate(request, response);
 		}
 		const appealTypeId = parseInt(request.session.changeAppealType.appealTypeId, 10);
-		const appealTypeFinalDate = new Date(year, month - 1, day);
-		const formattedDate = appealTypeFinalDate.toISOString().split('T')[0];
 
-		/** @type {import('./change-appeal-type.types.js').ChangeAppealTypeRequest} */
-		request.session.changeAppealType = {
-			...request.session.changeAppealType,
-			appealTypeFinalDate: appealTypeFinalDate
-		};
-
-		await postAppealChangeRequest(request.apiClient, appealId, appealTypeId, formattedDate);
+		await postAppealChangeRequest(
+			request.apiClient,
+			appealId,
+			appealTypeId,
+			dayMonthYearHourMinuteToISOString({
+				year,
+				month,
+				day,
+				hour: DEADLINE_HOUR,
+				minute: DEADLINE_MINUTE
+			})
+		);
 
 		/** @type {import('./change-appeal-type.types.js').ChangeAppealTypeRequest} */
 		request.session.changeAppealType = {};

@@ -5,12 +5,17 @@ import { azureAdUserId } from '#tests/shared/mocks.js';
 import { householdAppeal } from '#tests/appeals/mocks.js';
 import formatDate from '#utils/date-formatter.js';
 import { add, sub } from 'date-fns';
-import { ERROR_MUST_BE_CORRECT_DATE_FORMAT, ERROR_MUST_BE_IN_PAST } from '#endpoints/constants.js';
+import {
+	ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT,
+	ERROR_MUST_NOT_BE_IN_FUTURE
+} from '#endpoints/constants.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import config from '#config/config.js';
+import { recalculateDateIfNotBusinessDay, setTimeInTimeZone } from '#utils/business-days.js';
+
 const { databaseConnector } = await import('#utils/database-connector.js');
 
-describe('appeal decision routes', () => {
+describe('appeal withdrawal routes', () => {
 	beforeEach(() => {
 		databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
 	});
@@ -31,29 +36,27 @@ describe('appeal decision routes', () => {
 			expect(response.status).toEqual(400);
 			expect(response.body).toEqual({
 				errors: {
-					withdrawalRequestDate: ERROR_MUST_BE_CORRECT_DATE_FORMAT
+					withdrawalRequestDate: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 				}
 			});
 		});
 		test('returns 400 when date is in the future', async () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 
-			const today = add(new Date(), { days: 1 });
-			const year = today.toLocaleString('default', { year: 'numeric' });
-			const month = today.toLocaleString('default', { month: '2-digit' });
-			const day = today.toLocaleString('default', { day: '2-digit' });
+			const tomorrow = add(new Date(), { days: 1 });
+			const utcDate = setTimeInTimeZone(tomorrow, 10, 0);
 
 			const response = await request
 				.post(`/appeals/${householdAppeal.id}/withdrawal`)
 				.send({
-					withdrawalRequestDate: [year, month, day].join('-')
+					withdrawalRequestDate: utcDate.toISOString()
 				})
 				.set('azureAdUserId', azureAdUserId);
 
 			expect(response.status).toEqual(400);
 			expect(response.body).toEqual({
 				errors: {
-					withdrawalRequestDate: ERROR_MUST_BE_IN_PAST
+					withdrawalRequestDate: ERROR_MUST_NOT_BE_IN_FUTURE
 				}
 			});
 		});
@@ -70,15 +73,14 @@ describe('appeal decision routes', () => {
 			};
 			databaseConnector.appeal.findUnique.mockResolvedValue(correctAppealState);
 
-			const today = sub(new Date(), { days: 10 });
-			const year = today.toLocaleString('default', { year: 'numeric' });
-			const month = today.toLocaleString('default', { month: '2-digit' });
-			const day = today.toLocaleString('default', { day: '2-digit' });
+			const tenDaysAgo = sub(new Date(), { days: 10 });
+			const withoutWeekends = await recalculateDateIfNotBusinessDay(tenDaysAgo.toISOString());
+			const utcDate = setTimeInTimeZone(withoutWeekends, 10, 0);
 
 			const response = await request
 				.post(`/appeals/${householdAppeal.id}/withdrawal`)
 				.send({
-					withdrawalRequestDate: [year, month, day].join('-')
+					withdrawalRequestDate: utcDate.toISOString()
 				})
 				.set('azureAdUserId', azureAdUserId);
 
@@ -95,7 +97,7 @@ describe('appeal decision routes', () => {
 						appeal_reference_number: '1345264',
 						lpa_reference: '48269/APP/2021/1482',
 						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						withdrawal_date: formatDate(today, false)
+						withdrawal_date: formatDate(utcDate, false)
 					},
 					reference: null
 				}
@@ -111,7 +113,7 @@ describe('appeal decision routes', () => {
 						appeal_reference_number: '1345264',
 						lpa_reference: '48269/APP/2021/1482',
 						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						withdrawal_date: formatDate(today, false)
+						withdrawal_date: formatDate(utcDate, false)
 					},
 					reference: null
 				}

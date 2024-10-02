@@ -7,13 +7,14 @@ import { documentCreated } from '#tests/documents/mocks.js';
 import formatDate from '#utils/date-formatter.js';
 import { add, sub } from 'date-fns';
 import {
-	ERROR_MUST_BE_CORRECT_DATE_FORMAT,
-	ERROR_MUST_BE_IN_PAST,
+	ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT,
+	ERROR_MUST_NOT_BE_IN_FUTURE,
 	ERROR_CASE_OUTCOME_MUST_BE_ONE_OF,
 	ERROR_INVALID_APPEAL_STATE,
 	FRONT_OFFICE_URL
 } from '#endpoints/constants.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { recalculateDateIfNotBusinessDay, setTimeInTimeZone } from '#utils/business-days.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 import config from '#config/config.js';
@@ -89,7 +90,7 @@ describe('appeal decision routes', () => {
 			expect(response.status).toEqual(400);
 			expect(response.body).toEqual({
 				errors: {
-					documentDate: ERROR_MUST_BE_CORRECT_DATE_FORMAT
+					documentDate: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 				}
 			});
 		});
@@ -99,16 +100,14 @@ describe('appeal decision routes', () => {
 			// @ts-ignore
 			databaseConnector.document.findUnique.mockResolvedValue(documentCreated);
 
-			const today = add(new Date(), { days: 1 });
-			const year = today.toLocaleString('default', { year: 'numeric' });
-			const month = today.toLocaleString('default', { month: '2-digit' });
-			const day = today.toLocaleString('default', { day: '2-digit' });
+			const tomorrow = add(new Date(), { days: 1 });
+			const utcDate = setTimeInTimeZone(tomorrow, 10, 0);
 
 			const response = await request
 				.post(`/appeals/${householdAppeal.id}/inspector-decision`)
 				.send({
 					outcome: 'allowed',
-					documentDate: [year, month, day].join('-'),
+					documentDate: utcDate.toISOString(),
 					documentGuid: documentCreated.guid
 				})
 				.set('azureAdUserId', azureAdUserId);
@@ -116,7 +115,7 @@ describe('appeal decision routes', () => {
 			expect(response.status).toEqual(400);
 			expect(response.body).toEqual({
 				errors: {
-					documentDate: ERROR_MUST_BE_IN_PAST
+					documentDate: ERROR_MUST_NOT_BE_IN_FUTURE
 				}
 			});
 		});
@@ -126,16 +125,15 @@ describe('appeal decision routes', () => {
 			// @ts-ignore
 			databaseConnector.document.findUnique.mockResolvedValue(documentCreated);
 
-			const today = sub(new Date(), { days: 10 });
-			const year = today.toLocaleString('default', { year: 'numeric' });
-			const month = today.toLocaleString('default', { month: '2-digit' });
-			const day = today.toLocaleString('default', { day: '2-digit' });
+			const tenDaysAgo = sub(new Date(), { days: 10 });
+			const withoutWeekends = await recalculateDateIfNotBusinessDay(tenDaysAgo.toISOString());
+			const utcDate = setTimeInTimeZone(withoutWeekends, 10, 0);
 
 			const response = await request
 				.post(`/appeals/${householdAppeal.id}/inspector-decision`)
 				.send({
 					outcome: 'allowed',
-					documentDate: [year, month, day].join('-'),
+					documentDate: utcDate.toISOString(),
 					documentGuid: documentCreated.guid
 				})
 				.set('azureAdUserId', azureAdUserId);
@@ -164,16 +162,15 @@ describe('appeal decision routes', () => {
 			// @ts-ignore
 			databaseConnector.inspectorDecision.create.mockResolvedValue({});
 
-			const today = sub(new Date(), { days: 10 });
-			const year = today.toLocaleString('default', { year: 'numeric' });
-			const month = today.toLocaleString('default', { month: '2-digit' });
-			const day = today.toLocaleString('default', { day: '2-digit' });
+			const tenDaysAgo = sub(new Date(), { days: 10 });
+			const withoutWeekends = await recalculateDateIfNotBusinessDay(tenDaysAgo.toISOString());
+			const utcDate = setTimeInTimeZone(withoutWeekends, 10, 0);
 
 			const response = await request
 				.post(`/appeals/${householdAppeal.id}/inspector-decision`)
 				.send({
 					outcome: 'allowed',
-					documentDate: [year, month, day].join('-'),
+					documentDate: utcDate.toISOString(),
 					documentGuid: documentCreated.guid
 				})
 				.set('azureAdUserId', azureAdUserId);
@@ -192,7 +189,7 @@ describe('appeal decision routes', () => {
 						lpa_reference: '48269/APP/2021/1482',
 						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 						url: FRONT_OFFICE_URL,
-						decision_date: formatDate(new Date(today || ''), false)
+						decision_date: formatDate(utcDate, false)
 					},
 					reference: null
 				}
@@ -209,7 +206,7 @@ describe('appeal decision routes', () => {
 						lpa_reference: '48269/APP/2021/1482',
 						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 						url: FRONT_OFFICE_URL,
-						decision_date: formatDate(new Date(today || ''), false)
+						decision_date: formatDate(utcDate, false)
 					},
 					reference: null
 				}

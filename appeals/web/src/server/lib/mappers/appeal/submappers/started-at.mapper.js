@@ -1,4 +1,4 @@
-import { dateToDisplayDate } from '#lib/dates.js';
+import { dateISOStringToDisplayDate } from '#lib/dates.js';
 
 /** @type {import('../appeal.mapper.js').SubMapper} */
 export const mapStartedAt = ({ appealDetails, currentRoute }) => {
@@ -33,7 +33,7 @@ export const mapStartedAt = ({ appealDetails, currentRoute }) => {
 				value: {
 					html: appealDetails.validAt
 						? appealDetails.startedAt
-							? dateToDisplayDate(appealDetails.startedAt) || ''
+							? dateISOStringToDisplayDate(appealDetails.startedAt) || ''
 							: 'Not added'
 						: ''
 				},

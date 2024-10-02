@@ -1,4 +1,4 @@
-import { dateToDisplayDate } from '#lib/dates.js';
+import { dateISOStringToDisplayDate } from '#lib/dates.js';
 
 /** @type {import('../appeal.mapper.js').SubMapper} */
 export const mapFinalCommentReviewDueDate = ({ appealDetails, currentRoute }) => ({
@@ -10,7 +10,7 @@ export const mapFinalCommentReviewDueDate = ({ appealDetails, currentRoute }) =>
 			},
 			value: {
 				html:
-					dateToDisplayDate(appealDetails.appealTimetable?.finalCommentReviewDate) ||
+					dateISOStringToDisplayDate(appealDetails.appealTimetable?.finalCommentReviewDate) ||
 					'Due date not yet set'
 			},
 			actions: {

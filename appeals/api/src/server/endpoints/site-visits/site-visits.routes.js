@@ -27,12 +27,12 @@ router.post(
 		#swagger.requestBody = {
 			in: 'body',
 			description: 'Site visit details to create',
-			schema: { $ref: '#/components/schemas/CreateSiteVisitRequest' },
+			schema: { $ref: '#/components/schemas/SiteVisitCreateRequest' },
 			required: true
 		}
 		#swagger.responses[200] = {
 			description: 'Creates a single site visit',
-			schema: { $ref: '#/components/schemas/CreateSiteVisitResponse' }
+			schema: { $ref: '#/components/schemas/SiteVisitSingleResponse' }
 		}
 		#swagger.responses[400] = {}
 		#swagger.responses[500] = {}
@@ -60,7 +60,7 @@ router.get(
 		}
 		#swagger.responses[200] = {
 			description: 'Gets a single site visit by id',
-			schema: { $ref: '#/components/schemas/SingleSiteVisitResponse' }
+			schema: { $ref: '#/components/schemas/SiteVisitSingleResponse' }
 		}
 		#swagger.responses[400] = {}
 		#swagger.responses[500] = {}
@@ -85,12 +85,12 @@ router.patch(
 		#swagger.requestBody = {
 			in: 'body',
 			description: 'Site visit details to create',
-			schema: { $ref: '#/components/schemas/UpdateSiteVisitRequest' },
+			schema: { $ref: '#/components/schemas/SiteVisitUpdateRequest' },
 			required: true
 		}
 		#swagger.responses[200] = {
 			description: 'Creates a single site visit by id',
-			schema: { $ref: '#/components/schemas/UpdateSiteVisitResponse' }
+			schema: { $ref: '#/components/schemas/SiteVisitUpdateRequest' }
 		}
 		#swagger.responses[400] = {}
 		#swagger.responses[500] = {}
