@@ -561,6 +561,109 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		cypressDataName: 'costs-document'
 	});
 
+	/** @type {Instructions} */
+	mappedData.procedurePreference = {
+		id: 'procedure-preference',
+		display: {
+			summaryListItem: {
+				key: {
+					text: 'Preferred procedure'
+				},
+				value: {
+					text: capitalize(appellantCaseData.appellantProcedurePreference || 'Not answered')
+				},
+				actions: {
+					items: [
+						{
+							text: 'Change',
+							visuallyHiddenText: 'preferred procedure',
+							href: `${currentRoute}/procedure-preference/change`,
+							attributes: { 'data-cy': 'change-procedure-preference' }
+						}
+					]
+				}
+			}
+		}
+	};
+
+	/** @type {Instructions} */
+	mappedData.procedurePreferenceDetails = {
+		id: 'procedure-preference-details',
+		display: {
+			summaryListItem: {
+				key: {
+					text: 'Reason for preference'
+				},
+				value: {
+					text: appellantCaseData.appellantProcedurePreferenceDetails || 'Not applicable'
+				},
+				actions: {
+					items: [
+						{
+							text: 'Change',
+							visuallyHiddenText: 'reason for preference',
+							href: `${currentRoute}/procedure-preference/details/change`,
+							attributes: { 'data-cy': 'change-procedure-preference-details' }
+						}
+					]
+				}
+			}
+		}
+	};
+
+	/** @type {Instructions} */
+	mappedData.procedurePreferenceDuration = {
+		id: 'procedure-preference-duration',
+		display: {
+			summaryListItem: {
+				key: {
+					text: 'Expected length of procedure'
+				},
+				value: {
+					text:
+						'appellantProcedurePreferenceDuration' in appellantCaseData
+							? `${appellantCaseData.appellantProcedurePreferenceDuration} days`
+							: 'Not applicable'
+				},
+				actions: {
+					items: [
+						{
+							text: 'Change',
+							visuallyHiddenText: 'Expected length of procedure',
+							href: `${currentRoute}/procedure-preference/duration/change`,
+							attributes: { 'data-cy': 'change-procedure-preference-duration' }
+						}
+					]
+				}
+			}
+		}
+	};
+
+	/** @type {Instructions} */
+	mappedData.inquiryNumberOfWitnesses = {
+		id: 'inquiry-number-of-witnesses',
+		display: {
+			summaryListItem: {
+				key: {
+					text: 'Expected number of witnesses'
+				},
+				value: {
+					text: appellantCaseData.inquiryHowManyWitnesses || 'Not applicable'
+				},
+				actions: {
+					items: [
+						{
+							text: 'Change',
+							visuallyHiddenText: 'Expected number of witnesses',
+							href: `${currentRoute}/procedure-preference/inquiry/witnesses/change`,
+							attributes: { 'data-cy': 'change-inquiry-number-of-witnesses' }
+						}
+					]
+				}
+			}
+		}
+	};
+
 	return mappedData;
 }
 

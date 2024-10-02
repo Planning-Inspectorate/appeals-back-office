@@ -10,7 +10,8 @@ import validateDateParameter from '#common/validators/date-parameter.js';
 import validateIdParameter from '#common/validators/id-parameter.js';
 import {
 	validateStringParameter,
-	validateTextAreaParameter
+	validateTextAreaParameter,
+	validateOptionalTextAreaParameter
 } from '#common/validators/string-parameter.js';
 import validateNumberParameter from '#common/validators/number-parameter.js';
 import { validateBooleanParameter } from '#common/validators/boolean-parameter.js';
@@ -88,7 +89,7 @@ const patchAppellantCaseValidator = composeMiddleware(
 	validateBooleanParameter('developmentDescription.isChanged'),
 	validateBooleanParameter('appellantCostsAppliedFor'),
 	validateEnumParameter('appellantProcedurePreference', Object.values(APPEAL_CASE_PROCEDURE), true),
-	validateTextAreaParameter('appellantProcedurePreferenceDetails').optional(),
+	validateOptionalTextAreaParameter('appellantProcedurePreferenceDetails').optional(),
 	validateNumberParameter('appellantProcedurePreferenceDuration').optional(),
 	validateNumberRangeParameter('appellantProcedurePreferenceDuration', 0, 99).optional(),
 	validateNumberParameter('inquiryHowManyWitnesses').optional(),

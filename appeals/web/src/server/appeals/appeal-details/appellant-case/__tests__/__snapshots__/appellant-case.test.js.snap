@@ -2209,6 +2209,30 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Appeal type</dt>
                     <dd class="govuk-summary-list__value">Planning appeal</dd>
                 </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Preferred procedure</dt>
+                    <dd class="govuk-summary-list__value">Not answered</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/procedure-preference/change"
+                        data-cy="change-procedure-preference"> Change<span class="govuk-visually-hidden"> preferred procedure</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Reason for preference</dt>
+                    <dd class="govuk-summary-list__value">Not applicable</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/procedure-preference/details/change"
+                        data-cy="change-procedure-preference-details"> Change<span class="govuk-visually-hidden"> reason for preference</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Expected length of procedure</dt>
+                    <dd                     class="govuk-summary-list__value">Not applicable</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/procedure-preference/duration/change"
+                            data-cy="change-procedure-preference-duration"> Change<span class="govuk-visually-hidden"> Expected length of procedure</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Expected number of witnesses</dt>
+                    <dd                     class="govuk-summary-list__value">Not applicable</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/procedure-preference/inquiry/witnesses/change"
+                            data-cy="change-inquiry-number-of-witnesses"> Change<span class="govuk-visually-hidden"> Expected number of witnesses</span></a>
+                        </dd>
+                </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal statement</dt>
                     <dd class="govuk-summary-list__value"></dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70456"
