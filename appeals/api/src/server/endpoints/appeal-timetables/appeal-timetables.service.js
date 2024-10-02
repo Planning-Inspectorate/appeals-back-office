@@ -1,7 +1,11 @@
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import appealTimetableRepository from '#repositories/appeal-timetable.repository.js';
-import { calculateTimetable, recalculateDateIfNotBusinessDay } from '#utils/business-days.js';
+import {
+	calculateTimetable,
+	recalculateDateIfNotBusinessDay,
+	setTimeInTimeZone
+} from '#utils/business-days.js';
 import logger from '#utils/logger.js';
 import {
 	AUDIT_TRAIL_CASE_TIMELINE_CREATED,
@@ -17,6 +21,8 @@ import config from '#config/config.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { PROCEDURE_TYPE_MAP } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { DAYTIME_HOUR } from '@pins/appeals/constants/dates.js';
+import { DAYTIME_MINUTE } from '@pins/appeals/constants/dates.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('express').Request} Request */
@@ -58,7 +64,13 @@ const startCase = async (appeal, startDate, notifyClient, siteAddress, azureAdUs
 		if (!appealType) {
 			throw new Error('Appeal type is required to start a case.');
 		}
-		const startedAt = await recalculateDateIfNotBusinessDay(startDate);
+
+		const processedStartDate = setTimeInTimeZone(
+			startDate,
+			DAYTIME_HOUR,
+			DAYTIME_MINUTE
+		).toISOString();
+		const startedAt = await recalculateDateIfNotBusinessDay(processedStartDate);
 		const timetable = await calculateTimetable(appealType.key, startedAt);
 
 		const appellantTemplate = appeal.caseStartedDate

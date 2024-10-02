@@ -6,8 +6,13 @@ import {
 	BANK_HOLIDAY_FEED_DIVISION_ENGLAND
 } from '#endpoints/constants.js';
 import { formatInTimeZone, zonedTimeToUtc } from 'date-fns-tz';
-import { DEADLINE_HOUR } from '@pins/appeals/constants/dates.js';
-import { DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
+import {
+	DEADLINE_HOUR,
+	DEADLINE_MINUTE,
+	DAYTIME_HOUR,
+	DAYTIME_MINUTE,
+	DEFAULT_TIMEZONE
+} from '@pins/appeals/constants/dates.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.BankHolidayFeedEvents} BankHolidayFeedEvents */
 /** @typedef {import('@pins/appeals.api').Appeals.BankHolidayFeedDivisions} BankHolidayFeedDivisions */
@@ -120,6 +125,20 @@ const recalculateDateIfNotBusinessDay = async (date) => {
 };
 
 /**
+ *
+ * @param {string | Date} date
+ * @param {Number} hours
+ * @param {Number} minutes
+ * @returns {Date}
+ */
+const setTimeInTimeZone = (date, hours, minutes) => {
+	const ymd = formatInTimeZone(date, DEFAULT_TIMEZONE, 'yyyy-MM-dd');
+	const paddedHours = hours.toString().padStart(2, '0');
+	const paddedMinutes = minutes.toString().padStart(2, '0');
+	return zonedTimeToUtc(`${ymd} ${paddedHours}:${paddedMinutes}`, DEFAULT_TIMEZONE);
+};
+
+/**
  * Calculates the timetable deadlines excluding weekends and bank holidays
  *
  * 1. The deadline day is calculated excluding weekends
@@ -131,11 +150,8 @@ const recalculateDateIfNotBusinessDay = async (date) => {
  * @returns {Promise<TimetableDeadlineDate | undefined>}
  */
 const calculateTimetable = async (appealType, startedAt) => {
-	const tz = 'Europe/London';
-
 	if (startedAt) {
-		const ymd = formatInTimeZone(startedAt, tz, 'yyyy-MM-dd');
-		const startDate = zonedTimeToUtc(`${ymd} 10:00`, tz);
+		const startDate = setTimeInTimeZone(startedAt, DAYTIME_HOUR, DAYTIME_MINUTE);
 
 		// @ts-ignore
 		const appealTimetableConfig = CONFIG_APPEAL_TIMETABLE[appealType];
@@ -148,8 +164,7 @@ const calculateTimetable = async (appealType, startedAt) => {
 					let calculatedDate = addBusinessDays(startDate, daysFromStartDate);
 					calculatedDate = addBankHolidayDays(startDate, calculatedDate, bankHolidays);
 
-					const ymd = formatInTimeZone(calculatedDate, tz, 'yyyy-MM-dd');
-					const deadline = zonedTimeToUtc(`${ymd} ${DEADLINE_HOUR}:${DEADLINE_MINUTE}`, tz);
+					const deadline = setTimeInTimeZone(calculatedDate, DEADLINE_HOUR, DEADLINE_MINUTE);
 
 					return [fieldName, deadline];
 				})
@@ -158,4 +173,4 @@ const calculateTimetable = async (appealType, startedAt) => {
 	}
 };
 
-export { calculateTimetable, recalculateDateIfNotBusinessDay };
+export { calculateTimetable, recalculateDateIfNotBusinessDay, setTimeInTimeZone };

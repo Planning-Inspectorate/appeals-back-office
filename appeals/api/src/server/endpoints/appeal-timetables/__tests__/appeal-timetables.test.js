@@ -13,7 +13,6 @@ import {
 } from '../../constants.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { householdAppeal, fullPlanningAppeal } from '#tests/appeals/mocks.js';
-//import joinDateAndTime from '#utils/join-date-and-time.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import config from '#config/config.js';
 
@@ -803,7 +802,9 @@ describe('appeal timetables routes', () => {
 					azureAdUserId
 				});
 
-				jest.useFakeTimers({ doNotFake: ['performance'] }).setSystemTime(new Date('2023-06-05'));
+				jest
+					.useFakeTimers({ doNotFake: ['performance'] })
+					.setSystemTime(new Date('2023-06-05T22:59:00Z'));
 
 				const response = await request
 					.post(`/appeals/${householdAppeal.id}/appeal-timetables`)
