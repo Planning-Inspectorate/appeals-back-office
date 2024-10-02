@@ -1,4 +1,4 @@
-import { dateToDisplayDate } from '#lib/dates.js';
+import { dateISOStringToDisplayDate } from '#lib/dates.js';
 
 /** @type {import('../appeal.mapper.js').SubMapper} */
 export const mapLpaFinalCommentDueDate = ({ appealDetails, currentRoute }) => ({
@@ -9,8 +9,9 @@ export const mapLpaFinalCommentDueDate = ({ appealDetails, currentRoute }) => ({
 				text: 'LPA final comments due'
 			},
 			value: {
-				// @ts-ignore
-				html: dateToDisplayDate(appealDetails.appealTimetable?.lpaFinalCommentDueDate) || ''
+				html:
+					// @ts-ignore
+					dateISOStringToDisplayDate(appealDetails.appealTimetable?.lpaFinalCommentDueDate) || ''
 			},
 			actions: {
 				items: [

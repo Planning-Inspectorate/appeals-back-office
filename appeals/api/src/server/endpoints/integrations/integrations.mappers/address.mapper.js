@@ -48,10 +48,14 @@ export const mapAddressOut = (appeal) => {
 
 /**
  *
- * @param {Appeal} appeal
+ * @param {Appeal | undefined} appeal
  * @returns
  */
 export const mapEventAddressOut = (appeal) => {
+	if (!appeal) {
+		return null;
+	}
+
 	return {
 		addressLine1: appeal.address?.addressLine1,
 		addressLine2: appeal.address?.addressLine2 || '',

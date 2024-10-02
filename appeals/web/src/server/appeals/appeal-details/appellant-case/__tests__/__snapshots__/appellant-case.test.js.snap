@@ -7998,14 +7998,14 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
                                 <div class="govuk-form-group">
                                     <label class="govuk-label govuk-date-input__label" for="valid-date-day">Day</label>
                                     <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                    id="valid-date-day" name="valid-date-day" type="text" value="20" inputmode="numeric">
+                                    id="valid-date-day" name="valid-date-day" type="text" value="1" inputmode="numeric">
                                 </div>
                             </div>
                             <div class="govuk-date-input__item">
                                 <div class="govuk-form-group">
                                     <label class="govuk-label govuk-date-input__label" for="valid-date-month">Month</label>
                                     <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                    id="valid-date-month" name="valid-date-month" type="text" value="5" inputmode="numeric">
+                                    id="valid-date-month" name="valid-date-month" type="text" value="1" inputmode="numeric">
                                 </div>
                             </div>
                             <div class="govuk-date-input__item">

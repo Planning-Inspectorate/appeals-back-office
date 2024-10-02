@@ -1,4 +1,4 @@
-import { dateToDisplayDate } from '#lib/dates.js';
+import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
 
 /** @type {import('../appeal.mapper.js').SubMapper} */
@@ -16,7 +16,9 @@ export const mapAppellantCase = ({ appealDetails, currentRoute }) => ({
 				)
 			},
 			{
-				text: dateToDisplayDate(appealDetails?.documentationSummary?.appellantCase?.receivedAt)
+				text: dateISOStringToDisplayDate(
+					appealDetails?.documentationSummary?.appellantCase?.receivedAt
+				)
 			},
 			{
 				html:

@@ -1,4 +1,4 @@
-import { dateToDisplayDate } from '#lib/dates.js';
+import { dateISOStringToDisplayDate } from '#lib/dates.js';
 
 /** @type {import('../appeal.mapper.js').SubMapper} */
 export const mapValidAt = ({ appealDetails, currentRoute }) => ({
@@ -9,7 +9,7 @@ export const mapValidAt = ({ appealDetails, currentRoute }) => ({
 				text: 'Valid date'
 			},
 			value: {
-				html: dateToDisplayDate(appealDetails.validAt) || ''
+				html: dateISOStringToDisplayDate(appealDetails.validAt) || ''
 			},
 			actions: {
 				items: [

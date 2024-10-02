@@ -9,7 +9,7 @@ import {
 	ERROR_FAILED_TO_SAVE_DATA,
 	ERROR_LENGTH_BETWEEN_2_AND_8_CHARACTERS,
 	ERROR_MUST_BE_BOOLEAN,
-	ERROR_MUST_BE_CORRECT_DATE_FORMAT,
+	ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT,
 	ERROR_MUST_BE_GREATER_THAN_ZERO,
 	ERROR_MUST_BE_NUMBER,
 	ERROR_MUST_BE_SET_AS_HEADER,
@@ -801,8 +801,8 @@ describe('appeals routes', () => {
 					siteVisit: {
 						siteVisitId: householdAppeal.siteVisit.id,
 						visitDate: householdAppeal.siteVisit.visitDate.toISOString(),
-						visitStartTime: householdAppeal.siteVisit.visitStartTime,
-						visitEndTime: householdAppeal.siteVisit.visitEndTime,
+						visitStartTime: householdAppeal.siteVisit.visitStartTime.toISOString(),
+						visitEndTime: householdAppeal.siteVisit.visitEndTime.toISOString(),
 						visitType: householdAppeal.siteVisit.siteVisitType.name
 					},
 					createdAt: householdAppeal.caseCreatedDate.toISOString()
@@ -905,8 +905,8 @@ describe('appeals routes', () => {
 					siteVisit: {
 						siteVisitId: fullPlanningAppeal.siteVisit.id,
 						visitDate: fullPlanningAppeal.siteVisit.visitDate.toISOString(),
-						visitStartTime: fullPlanningAppeal.siteVisit.visitStartTime,
-						visitEndTime: fullPlanningAppeal.siteVisit.visitEndTime,
+						visitStartTime: fullPlanningAppeal.siteVisit.visitStartTime.toISOString(),
+						visitEndTime: fullPlanningAppeal.siteVisit.visitEndTime.toISOString(),
 						visitType: fullPlanningAppeal.siteVisit.siteVisitType.name
 					},
 					createdAt: householdAppeal.caseCreatedDate.toISOString(),
@@ -948,15 +948,15 @@ describe('appeals routes', () => {
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}`)
 					.send({
-						startedAt: '2023-05-05',
-						validAt: '2023-05-25'
+						startedAt: '2023-05-05T00:00:00.000Z',
+						validAt: '2023-05-25T00:00:00.000Z'
 					})
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
 					data: {
-						caseStartedDate: '2023-05-05T01:00:00.000Z',
-						caseValidDate: '2023-05-25T01:00:00.000Z',
+						caseStartedDate: new Date('2023-05-05T00:00:00.000Z'),
+						caseValidDate: new Date('2023-05-25T00:00:00.000Z'),
 						caseUpdatedDate: expect.any(Date)
 					},
 					where: {
@@ -965,8 +965,8 @@ describe('appeals routes', () => {
 				});
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
-					startedAt: '2023-05-05T01:00:00.000Z',
-					validAt: '2023-05-25T01:00:00.000Z'
+					startedAt: '2023-05-05T00:00:00.000Z',
+					validAt: '2023-05-25T00:00:00.000Z'
 				});
 			});
 
@@ -1188,7 +1188,7 @@ describe('appeals routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						startedAt: ERROR_MUST_BE_CORRECT_DATE_FORMAT
+						startedAt: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 					}
 				});
 			});
@@ -1204,7 +1204,7 @@ describe('appeals routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						startedAt: ERROR_MUST_BE_CORRECT_DATE_FORMAT
+						startedAt: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 					}
 				});
 			});
@@ -1220,7 +1220,7 @@ describe('appeals routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						startedAt: ERROR_MUST_BE_CORRECT_DATE_FORMAT
+						startedAt: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 					}
 				});
 			});
@@ -1236,7 +1236,7 @@ describe('appeals routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						validAt: ERROR_MUST_BE_CORRECT_DATE_FORMAT
+						validAt: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 					}
 				});
 			});
@@ -1252,7 +1252,7 @@ describe('appeals routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						validAt: ERROR_MUST_BE_CORRECT_DATE_FORMAT
+						validAt: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 					}
 				});
 			});
@@ -1268,7 +1268,7 @@ describe('appeals routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						validAt: ERROR_MUST_BE_CORRECT_DATE_FORMAT
+						validAt: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 					}
 				});
 			});
@@ -1277,7 +1277,7 @@ describe('appeals routes', () => {
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}`)
 					.send({
-						validAt: '3000-02-02'
+						validAt: '3000-02-02T00:00:00.000Z'
 					})
 					.set('azureAdUserId', azureAdUserId);
 
@@ -1517,8 +1517,8 @@ describe('appeals/case-reference/:caseReference', () => {
 				siteVisit: {
 					siteVisitId: householdAppeal.siteVisit.id,
 					visitDate: householdAppeal.siteVisit.visitDate.toISOString(),
-					visitStartTime: householdAppeal.siteVisit.visitStartTime,
-					visitEndTime: householdAppeal.siteVisit.visitEndTime,
+					visitStartTime: householdAppeal.siteVisit.visitStartTime.toISOString(),
+					visitEndTime: householdAppeal.siteVisit.visitEndTime.toISOString(),
 					visitType: householdAppeal.siteVisit.siteVisitType.name
 				},
 				createdAt: householdAppeal.caseCreatedDate.toISOString(),
@@ -1622,8 +1622,8 @@ describe('appeals/case-reference/:caseReference', () => {
 				siteVisit: {
 					siteVisitId: fullPlanningAppeal.siteVisit.id,
 					visitDate: fullPlanningAppeal.siteVisit.visitDate.toISOString(),
-					visitStartTime: fullPlanningAppeal.siteVisit.visitStartTime,
-					visitEndTime: fullPlanningAppeal.siteVisit.visitEndTime,
+					visitStartTime: fullPlanningAppeal.siteVisit.visitStartTime.toISOString(),
+					visitEndTime: fullPlanningAppeal.siteVisit.visitEndTime.toISOString(),
 					visitType: fullPlanningAppeal.siteVisit.siteVisitType.name
 				},
 				createdAt: fullPlanningAppeal.caseCreatedDate.toISOString(),

@@ -6,10 +6,9 @@
  * @returns {Promise<{}>}
  */
 export function changeApplicationDecisionDate(apiClient, appealId, appellantCaseId, updatedDate) {
-	const formattedDate = updatedDate ? new Date(updatedDate).toISOString() : updatedDate;
 	return apiClient.patch(`appeals/${appealId}/appellant-cases/${appellantCaseId}`, {
 		json: {
-			applicationDecisionDate: formattedDate
+			applicationDecisionDate: updatedDate
 		}
 	});
 }

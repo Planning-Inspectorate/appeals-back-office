@@ -62,12 +62,16 @@ const formatMyAppeals = (appeal, linkedAppeals) => ({
 	appealTimetable: appeal.appealTimetable
 		? {
 				appealTimetableId: appeal.appealTimetable.id,
-				lpaQuestionnaireDueDate: appeal.appealTimetable.lpaQuestionnaireDueDate || null,
-				caseResubmissionDueDate: appeal.appealTimetable.caseResubmissionDueDate || null,
+				lpaQuestionnaireDueDate:
+					appeal.appealTimetable.lpaQuestionnaireDueDate?.toISOString() || null,
+				caseResubmissionDueDate:
+					appeal.appealTimetable.caseResubmissionDueDate?.toISOString() || null,
 				...(isFPA(appeal.appealType?.key || '') && {
-					finalCommentReviewDate: appeal.appealTimetable.finalCommentReviewDate || null,
-					statementReviewDate: appeal.appealTimetable.statementReviewDate || null,
-					issueDeterminationDate: appeal.appealTimetable.issueDeterminationDate || null
+					finalCommentReviewDate:
+						appeal.appealTimetable.finalCommentReviewDate?.toISOString() || null,
+					statementReviewDate: appeal.appealTimetable.statementReviewDate?.toISOString() || null,
+					issueDeterminationDate:
+						appeal.appealTimetable.issueDeterminationDate?.toISOString() || null
 				})
 		  }
 		: undefined,
@@ -235,17 +239,19 @@ const formatAppeal = (
 						appealTimetableId: appeal.appealTimetable.id,
 						lpaQuestionnaireDueDate:
 							(appeal.appealTimetable.lpaQuestionnaireDueDate &&
-								appeal.appealTimetable.lpaQuestionnaireDueDate) ||
+								appeal.appealTimetable.lpaQuestionnaireDueDate.toISOString()) ||
 							null,
-						caseResubmissionDueDate: appeal.appealTimetable.caseResubmissionDueDate || null,
+						caseResubmissionDueDate: appeal.appealTimetable.caseResubmissionDueDate
+							? appeal.appealTimetable.caseResubmissionDueDate.toISOString()
+							: null,
 						...(isFPA(appeal.appealType?.key || '') && {
 							finalCommentReviewDate:
 								(appeal.appealTimetable.finalCommentReviewDate &&
-									appeal.appealTimetable.finalCommentReviewDate) ||
+									appeal.appealTimetable.finalCommentReviewDate.toISOString()) ||
 								null,
 							statementReviewDate:
 								(appeal.appealTimetable.statementReviewDate &&
-									appeal.appealTimetable.statementReviewDate) ||
+									appeal.appealTimetable.statementReviewDate.toISOString()) ||
 								null
 						})
 				  }
@@ -264,8 +270,7 @@ const formatAppeal = (
 							folderId: decisionFolder?.folderId,
 							outcome: appeal.inspectorDecision.outcome,
 							documentId: appeal.inspectorDecision?.decisionLetterGuid,
-							letterDate:
-								(decisionInfo.letterDate && decisionInfo.letterDate?.toISOString()) || null,
+							letterDate: (decisionInfo.letterDate && decisionInfo.letterDate) || null,
 							virusCheckStatus: decisionInfo.virusCheckStatus
 					  }
 					: {
@@ -326,8 +331,8 @@ const formatAppeal = (
 				siteVisit: {
 					siteVisitId: appeal.siteVisit.id,
 					visitDate: appeal.siteVisit.visitDate?.toISOString() || null,
-					visitStartTime: appeal.siteVisit.visitStartTime,
-					visitEndTime: appeal.siteVisit?.visitEndTime || null,
+					visitStartTime: appeal.siteVisit.visitStartTime ? appeal.siteVisit.visitStartTime : null,
+					visitEndTime: appeal.siteVisit.visitEndTime ? appeal.siteVisit.visitEndTime : null,
 					visitType: appeal.siteVisit.siteVisitType.name
 				}
 			}),
@@ -437,6 +442,7 @@ const getIdsOfReferencedAppeals = (otherAppeals, currentAppealRef) => {
 	otherAppeals.map((relation) => {
 		if (
 			relation.childRef === currentAppealRef &&
+			relation.parentId &&
 			relation.parentId !== null &&
 			relevantIds.indexOf(relation.parentId) === -1
 		) {
@@ -444,6 +450,7 @@ const getIdsOfReferencedAppeals = (otherAppeals, currentAppealRef) => {
 		}
 		if (
 			relation.parentRef === currentAppealRef &&
+			relation.childId &&
 			relation.childId !== null &&
 			relevantIds.indexOf(relation.childId) === -1
 		) {

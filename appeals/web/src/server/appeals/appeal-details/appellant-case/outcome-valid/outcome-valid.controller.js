@@ -1,4 +1,8 @@
-import { dayMonthYearToApiDateString } from '#lib/dates.js';
+import { isBefore } from 'date-fns';
+import {
+	dayMonthYearHourMinuteToISOString,
+	dateISOStringToDayMonthYearHourMinute
+} from '#lib/dates.js';
 import logger from '#lib/logger.js';
 import { updateValidDatePage } from './outcome-valid.mapper.js';
 import * as outcomeValidService from './outcome-valid.service.js';
@@ -32,14 +36,24 @@ export const postValidDate = async (request, response) => {
 		}
 
 		const { appealId, appellantCaseId, createdAt } = currentAppeal;
-		const validDate = new Date(
-			updatedValidDateYear,
-			updatedValidDateMonth - 1,
-			updatedValidDateDay
-		);
-		const receivedDate = new Date(createdAt).setHours(0, 0, 0, 0);
+		const validDateISOString = dayMonthYearHourMinuteToISOString({
+			year: updatedValidDateYear,
+			month: updatedValidDateMonth,
+			day: updatedValidDateDay
+		});
 
-		if (validDate < new Date(receivedDate)) {
+		const {
+			day: createdAtDay,
+			month: createdAtMonth,
+			year: createdAtYear
+		} = dateISOStringToDayMonthYearHourMinute(createdAt);
+		const createdAtDateAtMidnight = dayMonthYearHourMinuteToISOString({
+			day: createdAtDay,
+			month: createdAtMonth,
+			year: createdAtYear
+		});
+
+		if (isBefore(new Date(validDateISOString), new Date(createdAtDateAtMidnight))) {
 			let errorMessage = [
 				{ msg: 'The valid date must be on or after the date the case was received.' }
 			];
@@ -51,7 +65,7 @@ export const postValidDate = async (request, response) => {
 			request.apiClient,
 			appealId,
 			appellantCaseId,
-			dayMonthYearToApiDateString({
+			dayMonthYearHourMinuteToISOString({
 				day: updatedValidDateDay,
 				month: updatedValidDateMonth,
 				year: updatedValidDateYear

@@ -20,6 +20,7 @@ import {
 	generateIssueDecisionUrl,
 	generateStartTimetableUrl
 } from './issue-decision/issue-decision.mapper.js';
+import { dateISOStringToDisplayDate, getTodaysISOString } from '#lib/dates.js';
 
 export const pageHeading = 'Case details';
 
@@ -109,8 +110,8 @@ export async function appealDetailsPage(
 	const isAppealWithdrawn = appealDetails.appealStatus === APPEAL_CASE_STATUS.WITHDRAWN;
 	if (isAppealComplete && statusTag && appealDetails.decision.documentId) {
 		const letterDate = appealDetails.decision?.letterDate
-			? new Date(appealDetails.decision.letterDate)
-			: new Date();
+			? dateISOStringToDisplayDate(appealDetails.decision.letterDate)
+			: dateISOStringToDisplayDate(getTodaysISOString());
 
 		const virusCheckStatus = mapVirusCheckStatus(
 			appealDetails.decision.virusCheckStatus || APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED
@@ -119,13 +120,7 @@ export async function appealDetailsPage(
 		statusTagsComponentGroup.push({
 			type: 'inset-text',
 			parameters: {
-				html: `<p>
-					Appeal completed: ${letterDate.toLocaleDateString('en-gb', {
-						day: 'numeric',
-						month: 'long',
-						year: 'numeric'
-					})}
-						</p>
+				html: `<p>Appeal completed: ${letterDate}</p>
 						<p>Decision: ${appealDetails.decision?.outcome}</p>
 						<p>${
 							!(virusCheckStatus.checked && virusCheckStatus.safe)
@@ -143,7 +138,7 @@ export async function appealDetailsPage(
 	) {
 		const withdrawalRequestDate =
 			appealDetails.withdrawal?.withdrawalRequestDate &&
-			new Date(appealDetails.withdrawal?.withdrawalRequestDate);
+			dateISOStringToDisplayDate(appealDetails.withdrawal?.withdrawalRequestDate);
 
 		const virusCheckStatus = mapVirusCheckStatus(
 			appealDetails?.withdrawal.withdrawalFolder.documents[0].latestDocumentVersion
@@ -155,29 +150,15 @@ export async function appealDetailsPage(
 				statusTagsComponentGroup.push({
 					type: 'inset-text',
 					parameters: {
-						html: `<p>
-							Withdrawn: ${withdrawalRequestDate.toLocaleDateString('en-gb', {
-								day: 'numeric',
-								month: 'long',
-								year: 'numeric'
-							})}
-								</p>
-								<p><a class="govuk-link" href="/appeals-service/appeal-details/${
-									appealDetails.appealId
-								}/withdrawal/view">View withdrawal request</a></p>`
+						html: `<p>Withdrawn: ${withdrawalRequestDate}</p>
+								<p><a class="govuk-link" href="/appeals-service/appeal-details/${appealDetails.appealId}/withdrawal/view">View withdrawal request</a></p>`
 					}
 				});
 			} else {
 				statusTagsComponentGroup.push({
 					type: 'inset-text',
 					parameters: {
-						html: `<p>
-							Withdrawn: ${withdrawalRequestDate.toLocaleDateString('en-gb', {
-								day: 'numeric',
-								month: 'long',
-								year: 'numeric'
-							})}
-								</p>
+						html: `<p>Withdrawn: ${withdrawalRequestDate}</p>
 								<p><span class="govuk-body">View withdrawal request</span>
 								<strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></p>`
 					}
@@ -197,20 +178,15 @@ export async function appealDetailsPage(
 			appealTypeById?.key && appealTypeById?.type
 				? `${appealTypeById.type} (${appealTypeById.key})`
 				: '';
-		const caseResubmissionDueDate = new Date(appealDetails.appealTimetable.caseResubmissionDueDate);
+		const caseResubmissionDueDate = dateISOStringToDisplayDate(
+			appealDetails.appealTimetable.caseResubmissionDueDate
+		);
 
 		if (appealTypeText) {
 			statusTagsComponentGroup.push({
 				type: 'inset-text',
 				parameters: {
-					html: `<p>This appeal needed to change to ${appealTypeText}</p><p>The appellant has until ${caseResubmissionDueDate.toLocaleDateString(
-						'en-gb',
-						{
-							day: 'numeric',
-							month: 'long',
-							year: 'numeric'
-						}
-					)} to resubmit.</p>`
+					html: `<p>This appeal needed to change to ${appealTypeText}</p><p>The appellant has until ${caseResubmissionDueDate} to resubmit.</p>`
 				}
 			});
 		}

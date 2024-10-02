@@ -120,6 +120,7 @@ export const ERROR_MUST_BE_BOOLEAN = 'must be a boolean';
 export const ERROR_MUST_BE_BUSINESS_DAY = 'must be a business day';
 export const ERROR_MUST_BE_CORRECT_DATE_FORMAT = `must be a valid date and in the format ${DEFAULT_DATE_FORMAT_DATABASE}`;
 export const ERROR_MUST_BE_CORRECT_TIME_FORMAT = 'must be a valid time and in the format hh:mm';
+export const ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT = 'must be a valid utc date time format';
 export const ERROR_MUST_BE_GREATER_THAN_ZERO = 'must be greater than 0';
 export const ERROR_MUST_BE_IN_FUTURE = 'must be in the future';
 export const ERROR_MUST_BE_IN_PAST = 'must be in the past';

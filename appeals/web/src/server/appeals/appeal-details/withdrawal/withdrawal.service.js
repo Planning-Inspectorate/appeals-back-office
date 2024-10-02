@@ -6,7 +6,7 @@
  *
  * @param {import('got').Got} apiClient
  * @param {string} appealId
- * @param {string|null} withdrawalRequestDate
+ * @param {string} withdrawalRequestDate
  * @returns {Promise<WebAppeal>}
  */
 export async function postWithdrawalRequest(apiClient, appealId, withdrawalRequestDate) {

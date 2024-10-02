@@ -27,7 +27,7 @@ import {
 import config from '@pins/appeals.web/environment/config.js';
 import { redactionStatusNameToId } from '#lib/redaction-statuses.js';
 import { isFileUploadInfo } from '#lib/ts-utilities.js';
-import { dateToDayMonthYear, dayMonthYearToApiDateString } from '#lib/dates.js';
+import { getTodaysISOString } from '#lib/dates.js';
 import { folderIsAdditionalDocuments } from '#lib/documents.js';
 
 /**
@@ -147,7 +147,7 @@ export const postDocumentUpload = async (request, response, nextPageUrl) => {
 	request.session.fileUploadInfo = uploadInfo.map((infoItem) => ({
 		...infoItem,
 		redactionStatus: redactionStatusNameToId(redactionStatuses, 'unredacted'),
-		receivedDate: dayMonthYearToApiDateString(dateToDayMonthYear(new Date()))
+		receivedDate: getTodaysISOString()
 	}));
 
 	response.redirect(nextPageUrl);
@@ -595,7 +595,7 @@ export const postUploadDocumentVersionCheckAndConfirm = async (request, response
  * @typedef {Object} DocumentDetailsItem
  * @property {string} name
  * @property {string} documentId
- * @property {import('#appeals/appeals.types.js').DayMonthYear|undefined} receivedDate
+ * @property {import('#appeals/appeals.types.js').DayMonthYearHourMinute|undefined} receivedDate
  * @property {import('@pins/appeals.api').Schema.DocumentRedactionStatus} redactionStatus
  */
 

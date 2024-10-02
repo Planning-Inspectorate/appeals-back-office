@@ -150,7 +150,7 @@ export const appealData = {
 		folderId: 123,
 		outcome: 'dismissed',
 		documentId: 'e1e90a49-fab3-44b8-a21a-bb73af089f6b',
-		letterDate: new Date('2023-12-25T00:00:00.000Z')
+		letterDate: '2023-12-25T00:00:00.000Z'
 	},
 	internalCorrespondence: {
 		crossTeam: {
@@ -231,8 +231,8 @@ export const appealData = {
 	siteVisit: {
 		siteVisitId: 0,
 		visitDate: '2023-10-09T01:00:00.000Z',
-		visitEndTime: '10:44',
-		visitStartTime: '09:38',
+		visitEndTime: '2023-10-09T09:44:00.000Z',
+		visitStartTime: '2023-10-09T08:38:00.000Z',
 		visitType: 'Accompanied'
 	},
 	createdAt: '2023-05-21T10:27:06.626Z',

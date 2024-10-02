@@ -17,10 +17,12 @@ export interface SelectItemParameter {
 	checked?: boolean;
 }
 
-export interface DayMonthYear {
-	day: number;
-	month: number; // 1-based, i.e. January === 1 (Date stores this as 0-based value, eg. Date.getMonth() called on a date in January will return 0)
-	year: number;
+export interface DayMonthYearHourMinute {
+	day?: number | string;
+	month?: number | string; // 1-based, i.e. January === 1 (Date stores this as 0-based value, eg. Date.getMonth() called on a date in January will return 0)
+	year?: number | string;
+	hour?: number | string;
+	minute?: number | string;
 }
 
 export type DocumentVirusCheckStatus = 'not_scanned' | 'scanned' | 'affected';

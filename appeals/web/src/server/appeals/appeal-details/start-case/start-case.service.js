@@ -4,13 +4,13 @@
  *
  * @param {import('got').Got} apiClient
  * @param {string} appealId
- * @param {string} todayApiDateString
+ * @param {string} dateISOString
  * @returns {Promise<Appeal>}
  */
-export async function setStartDate(apiClient, appealId, todayApiDateString) {
+export async function setStartDate(apiClient, appealId, dateISOString) {
 	return await apiClient
 		.post(`appeals/${appealId}/appeal-timetables`, {
-			json: { startDate: todayApiDateString }
+			json: { startDate: dateISOString }
 		})
 		.json();
 }

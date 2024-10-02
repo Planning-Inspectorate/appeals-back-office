@@ -1,7 +1,7 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
-import { dateToDisplayDate } from '#lib/dates.js';
+import { dateISOStringToDisplayDate } from '#lib/dates.js';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
@@ -159,7 +159,7 @@ export function dateDecisionLetterPage(
 export function checkAndConfirmPage(request, appealData, session) {
 	const decisionOutcome = mapDecisionOutcome(session.inspectorDecision?.outcome);
 	const decisionLetter = session.fileUploadInfo?.[0]?.name;
-	const letterDate = new Date(session.inspectorDecision?.letterDate);
+	const letterDate = session.inspectorDecision?.letterDate;
 
 	/** @type {PageComponent} */
 	const summaryListComponent = {
@@ -203,7 +203,7 @@ export function checkAndConfirmPage(request, appealData, session) {
 						text: 'Decision date'
 					},
 					value: {
-						text: dateToDisplayDate(letterDate)
+						text: dateISOStringToDisplayDate(letterDate)
 					},
 					actions: {
 						items: [

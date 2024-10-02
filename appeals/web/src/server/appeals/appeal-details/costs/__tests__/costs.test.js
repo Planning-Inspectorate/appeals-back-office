@@ -24,7 +24,7 @@ import {
 } from '#testing/app/fixtures/referencedata.js';
 import usersService from '#appeals/appeal-users/users-service.js';
 import { capitalize, cloneDeep } from 'lodash-es';
-import { dateToDisplayDate } from '#lib/dates.js';
+import { dateISOStringToDisplayDate } from '#lib/dates.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -968,7 +968,7 @@ describe('costs', () => {
 						);
 						expect(unprettifiedElement.innerHTML).toContain('Date received</dt>');
 						expect(unprettifiedElement.innerHTML).toContain(
-							`${dateToDisplayDate(new Date())}</dd>`
+							`${dateISOStringToDisplayDate(new Date().toISOString())}</dd>`
 						);
 						expect(unprettifiedElement.innerHTML).toContain('Redaction status</dt>');
 						expect(unprettifiedElement.innerHTML).toContain('Unredacted</dd>');
@@ -1084,7 +1084,7 @@ describe('costs', () => {
 						);
 						expect(unprettifiedElement.innerHTML).toContain('Date received</dt>');
 						expect(unprettifiedElement.innerHTML).toContain(
-							`${dateToDisplayDate(new Date())}</dd>`
+							`${dateISOStringToDisplayDate(new Date().toISOString())}</dd>`
 						);
 						expect(unprettifiedElement.innerHTML).toContain('Redaction status</dt>');
 						expect(unprettifiedElement.innerHTML).toContain('Unredacted</dd>');
