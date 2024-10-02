@@ -166,6 +166,10 @@ interface SingleAppellantCaseResponse {
 	applicationDecision: string | null;
 	enforcementNotice: null;
 	appellantCostsAppliedFor: boolean | null;
+	appellantProcedurePreference: string | null;
+	appellantProcedurePreferenceDetails: string | null;
+	appellantProcedurePreferenceDuration: number | null;
+	inquiryHowManyWitnesses: number | null;
 	documents: {
 		appellantCaseCorrespondence?: FolderInfo | null;
 		appellantCaseWithdrawalLetter?: FolderInfo | null;
