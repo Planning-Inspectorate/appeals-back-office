@@ -9,7 +9,7 @@ import { dateAndTimeFormatter } from './global-mapper-formatter.js';
 import { dateISOStringToDisplayTime12hr } from '#lib/dates.js';
 import { linkedAppealStatus } from '#lib/appeals-formatter.js';
 import { generateIssueDecisionUrl } from '#appeals/appeal-details/issue-decision/issue-decision.mapper.js';
-import { mapActionComponent } from './component-permissions.mapper.js';
+import { mapActionComponent, userHasPermission } from './permissions.mapper.js';
 import { permissionNames } from '#environment/permissions.js';
 import { formatServiceUserAsHtmlList } from '#lib/service-user-formatter.js';
 import {
@@ -17,6 +17,7 @@ import {
 	mapVirusCheckStatus
 } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 import { APPEAL_CASE_STATUS, APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
+import { textDisplayField } from '#lib/page-components/text.js';
 
 /**
  * @param {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} appealDetails
@@ -38,6 +39,8 @@ export async function initialiseAndMapAppealData(
 	currentRoute =
 		currentRoute[currentRoute.length - 1] === '/' ? currentRoute.slice(0, -1) : currentRoute;
 
+	const userHasUpdateCase = userHasPermission(permissionNames.updateCase, session);
+
 	/** @type {{appeal: MappedInstructions}} */
 	let mappedData = {};
 	mappedData.appeal = {};
@@ -58,85 +61,36 @@ export async function initialiseAndMapAppealData(
 		}
 	};
 
-	/** @type {Instructions} */
-	mappedData.appeal.appealType = {
+	mappedData.appeal.appealType = textDisplayField({
 		id: 'appeal-type',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Appeal type'
-				},
-				value: {
-					text: appealDetails.appealType || 'No appeal type'
-				},
-				actions: {
-					items: [
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Change',
-							href: `${currentRoute}/change-appeal-type/appeal-type`,
-							visuallyHiddenText: 'Appeal type',
-							attributes: { 'data-cy': 'change-appeal-type' }
-						})
-					]
-				},
-				classes: 'appeal-appeal-type'
-			}
-		}
-	};
+		text: 'Appeal type',
+		value: appealDetails.appealType || 'No appeal type',
+		link: `${currentRoute}/change-appeal-type/appeal-type`,
+		userHasEditPermission: userHasUpdateCase,
+		classes: 'appeal-appeal-type'
+	});
 
-	/** @type {Instructions} */
-	mappedData.appeal.caseProcedure = {
+	mappedData.appeal.caseProcedure = textDisplayField({
 		id: 'case-procedure',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Case procedure'
-				},
-				value: {
-					text: appealDetails.procedureType || `No case procedure`
-				},
-				actions: {
-					items: [
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Change',
-							href: `${currentRoute}/change-appeal-details/case-procedure`,
-							visuallyHiddenText: 'Case procedure',
-							attributes: { 'data-cy': 'change-case-procedure' }
-						})
-					]
-				},
-				classes: 'appeal-case-procedure'
-			}
-		}
-	};
+		text: 'Case procedure',
+		value: appealDetails.procedureType || `No case procedure`,
+		link: `${currentRoute}/change-appeal-details/case-procedure`,
+		userHasEditPermission: userHasUpdateCase,
+		classes: 'appeal-case-procedure'
+	});
 
-	/** @type {Instructions} */
-	mappedData.appeal.appellant = {
+	mappedData.appeal.appellant = textDisplayField({
 		id: 'appellant',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Appellant'
-				},
-				value: {
-					html: appealDetails.appellant
-						? formatServiceUserAsHtmlList(appealDetails.appellant)
-						: 'No appellant'
-				},
-				actions: {
-					items: [
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Change',
-							href: `${currentRoute}/service-user/change/appellant`,
-							visuallyHiddenText: 'Appellant',
-							attributes: { 'data-cy': 'change-appellant' }
-						})
-					]
-				},
-				classes: 'appeal-appellant'
-			}
-		}
-	};
+		text: 'Appellant',
+		value: {
+			html: appealDetails.appellant
+				? formatServiceUserAsHtmlList(appealDetails.appellant)
+				: 'No appellant'
+		},
+		link: `${currentRoute}/service-user/change/appellant`,
+		userHasEditPermission: userHasUpdateCase,
+		classes: 'appeal-appellant'
+	});
 
 	/** @type {Instructions} */
 	mappedData.appeal.agent = {
@@ -470,8 +424,10 @@ export async function initialiseAndMapAppealData(
 				},
 				value: {
 					html: displayPageFormatter.formatAnswerAndDetails(
-						convertFromBooleanToYesNo(appealDetails.inspectorAccess.appellantCase.isRequired) ??
-							'No answer provided',
+						convertFromBooleanToYesNo(
+							appealDetails.inspectorAccess.appellantCase.isRequired,
+							'No answer provided'
+						),
 						appealDetails.inspectorAccess.appellantCase.details
 					)
 				},
@@ -512,9 +468,10 @@ export async function initialiseAndMapAppealData(
 					text: 'Could a neighbouring site be affected?'
 				},
 				value: {
-					html:
-						convertFromBooleanToYesNo(appealDetails.isAffectingNeighbouringSites) ||
+					html: convertFromBooleanToYesNo(
+						appealDetails.isAffectingNeighbouringSites,
 						'No answer provided'
+					)
 				},
 				actions: {
 					items: neighbouringSiteIsAffectedActionItems
@@ -650,8 +607,10 @@ export async function initialiseAndMapAppealData(
 				},
 				value: {
 					html: displayPageFormatter.formatAnswerAndDetails(
-						convertFromBooleanToYesNo(appealDetails.healthAndSafety.appellantCase.hasIssues) ||
-							'No answer provided',
+						convertFromBooleanToYesNo(
+							appealDetails.healthAndSafety.appellantCase.hasIssues,
+							'No answer provided'
+						),
 						appealDetails.healthAndSafety.appellantCase.details
 					)
 				},

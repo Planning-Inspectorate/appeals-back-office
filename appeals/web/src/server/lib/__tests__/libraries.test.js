@@ -15,10 +15,7 @@ import { appealShortReference } from '../nunjucks-filters/appeals.js';
 import { nameToString } from '../person-name-formatter.js';
 import { objectContainsAllKeys } from '../object-utilities.js';
 import { getIdByNameFromIdNamePairs } from '../id-name-pairs.js';
-import {
-	convertFromBooleanToYesNo,
-	convertFromBooleanToYesNoWithOptionalDetails
-} from '#lib/boolean-formatter.js';
+import { convertFromBooleanToYesNo } from '#lib/boolean-formatter.js';
 import { addConditionalHtml } from '#lib/nunjucks-filters/add-conditional-html.js';
 import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
 import {
@@ -441,28 +438,6 @@ describe('Libraries', () => {
 		});
 		it('should return "No" if provided boolean is false', () => {
 			expect(convertFromBooleanToYesNo(false)).toBe('No');
-		});
-	});
-
-	describe('convertFromBooleanToYesNoWithOptionalDetails', () => {
-		const testOptionalDetails = 'test optional details';
-		it('should return "Yes", if provided boolean is true and optionalDetailsIfYes is not provided', () => {
-			expect(convertFromBooleanToYesNoWithOptionalDetails(true)).toBe('Yes');
-		});
-		it('should return an array with "Yes" as the first item and optional details as the second item, if provided boolean is true and optionalDetailsIfYes is provided', () => {
-			expect(convertFromBooleanToYesNoWithOptionalDetails(true, testOptionalDetails)).toEqual([
-				'Yes',
-				testOptionalDetails
-			]);
-		});
-		it('should return "No" if provided boolean is false', () => {
-			expect(convertFromBooleanToYesNoWithOptionalDetails(false)).toBe('No');
-		});
-		it('should return an empty string if provided boolean is null', () => {
-			expect(convertFromBooleanToYesNoWithOptionalDetails(null)).toBe('');
-		});
-		it('should return an empty string if provided boolean is undefined', () => {
-			expect(convertFromBooleanToYesNoWithOptionalDetails(undefined)).toBe('');
 		});
 	});
 

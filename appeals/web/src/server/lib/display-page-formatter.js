@@ -6,8 +6,6 @@ import { mapDocumentInfoVirusCheckStatus } from '#appeals/appeal-documents/appea
 import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
 import { dateISOStringToDayMonthYearHourMinute, dateIsInThePast } from '#lib/dates.js';
 import { appealSiteToMultilineAddressStringHtml } from './address-formatter.js';
-import { isFolderInfo } from '#lib/ts-utilities.js';
-import { mapActionComponent } from '#lib/mappers/component-permissions.mapper.js';
 
 /**
  * @typedef {import('@pins/appeals.api').Schema.Folder} Folder
@@ -379,56 +377,4 @@ export const formatPlanningObligationStatus = (planningObligationStatus) => {
 		default:
 			return 'Not applicable';
 	}
-};
-
-/**
- * @param {string} labelText
- * @param {number} appealId
- * @param {FolderInfo|null|undefined} folderInfo
- * @param {string} requiredPermissionName
- * @param {import('../app/auth/auth-session.service').SessionWithAuth} session
- * @param {string} manageUrl
- * @param {string} uploadUrlTemplate
- * @param {string} cypressDataName
- * @returns {SummaryListRowProperties}
- */
-export const formatFolderSummaryListItem = (
-	labelText,
-	appealId,
-	folderInfo,
-	requiredPermissionName,
-	session,
-	manageUrl,
-	uploadUrlTemplate,
-	cypressDataName
-) => {
-	return {
-		key: {
-			text: labelText
-		},
-		value: formatDocumentValues(
-			appealId,
-			isFolderInfo(folderInfo) ? folderInfo?.documents || [] : []
-		),
-		actions: {
-			items: [
-				...(((isFolderInfo(folderInfo) && folderInfo.documents) || []).length
-					? [
-							mapActionComponent(requiredPermissionName, session, {
-								text: 'Manage',
-								visuallyHiddenText: labelText,
-								href: manageUrl,
-								attributes: { 'data-cy': `manage-${cypressDataName}` }
-							})
-					  ]
-					: []),
-				mapActionComponent(requiredPermissionName, session, {
-					text: 'Add',
-					visuallyHiddenText: labelText,
-					href: formatDocumentActionLink(appealId, folderInfo, uploadUrlTemplate),
-					attributes: { 'data-cy': `add-${cypressDataName}` }
-				})
-			]
-		}
-	};
 };
