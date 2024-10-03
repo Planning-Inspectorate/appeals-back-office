@@ -18,10 +18,12 @@ import { dateISOStringToDisplayDate } from '#lib/dates.js';
  * @returns {Promise<PageContent>}
  */
 export async function interestedPartyCommentsPage(appealDetails, awaitingReview, valid, invalid) {
+	const appealUrl = `/appeals-service/appeal-details/${appealDetails.appealId}`;
 	const shortReference = appealShortReference(appealDetails.appealReference);
 	const pageContent = {
 		title: `Interested Party Comments`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
+		backLinkUrl: appealUrl,
+		addCommentUrl: `${appealUrl}/interested-party-comments/add`,
 		preHeading: `Appeal ${shortReference}`,
 		heading: 'Interested Party Comments',
 		headingClasses: 'govuk-heading-l',
