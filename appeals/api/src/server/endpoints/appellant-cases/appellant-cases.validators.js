@@ -90,9 +90,9 @@ const patchAppellantCaseValidator = composeMiddleware(
 	validateEnumParameter('appellantProcedurePreference', Object.values(APPEAL_CASE_PROCEDURE), true),
 	validateTextAreaParameter('appellantProcedurePreferenceDetails').optional(),
 	validateNumberParameter('appellantProcedurePreferenceDuration').optional(),
-	validateNumberRangeParameter('appellantProcedurePreferenceDuration', 0, 9).optional(),
+	validateNumberRangeParameter('appellantProcedurePreferenceDuration', 0, 99).optional(),
 	validateNumberParameter('inquiryHowManyWitnesses').optional(),
-	validateNumberRangeParameter('inquiryHowManyWitnesses', 0, 9).optional(),
+	validateNumberRangeParameter('inquiryHowManyWitnesses', 0, 99).optional(),
 	validationErrorHandler
 );
 
