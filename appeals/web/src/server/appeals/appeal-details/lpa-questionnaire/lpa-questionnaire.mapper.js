@@ -764,7 +764,11 @@ const generateHASLpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 					text: '4. Planning officer’s report and supplementary documents'
 				}
 			},
-			rows: [mappedLPAQData.lpaq?.officersReport?.display.summaryListItem].filter(isDefined)
+			rows: [
+				mappedLPAQData.lpaq?.officersReport?.display.summaryListItem,
+				mappedLPAQData.lpaq?.plansDrawings?.display.summaryListItem,
+				mappedLPAQData.lpaq?.developmentPlanPolicies?.display.summaryListItem
+			].filter(isDefined)
 		}
 	});
 

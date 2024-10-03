@@ -183,6 +183,18 @@ export function initialiseAndMapLPAQData(
 		folderInfo: lpaQuestionnaireData.documents.planningOfficerReport
 	});
 
+	mappedData.lpaq.plansDrawings = documentInstruction({
+		id: 'plans-drawings',
+		text: `Plans, drawings and list of plans`,
+		folderInfo: lpaQuestionnaireData.documents.plansDrawings
+	});
+
+	mappedData.lpaq.developmentPlanPolicies = documentInstruction({
+		id: 'development-plan-policies',
+		text: `Relevant policies from statutory development plan`,
+		folderInfo: lpaQuestionnaireData.documents.developmentPlanPolicies
+	});
+
 	/** @type {Instructions} */
 	mappedData.lpaq.siteAccess = {
 		id: 'does-site-require-inspector-access',

@@ -180,6 +180,16 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
                             </ul>
                         </dd>
                 </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Plans, drawings and list of plans</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-plans-drawings"> Add<span class="govuk-visually-hidden"> Plans, drawings and list of plans</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Relevant policies from statutory development plan</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-development-plan-policies"> Add<span class="govuk-visually-hidden"> Relevant policies from statutory development plan</span></a>
+                        </dd>
+                </div>
             </dl>
         </div>
     </div>
@@ -490,6 +500,16 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
                                     data-cy="add-officers-report"> Add<span class="govuk-visually-hidden"> Planning officer&#39;s report</span></a>
                                 </li>
                             </ul>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Plans, drawings and list of plans</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-plans-drawings"> Add<span class="govuk-visually-hidden"> Plans, drawings and list of plans</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Relevant policies from statutory development plan</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-development-plan-policies"> Add<span class="govuk-visually-hidden"> Relevant policies from statutory development plan</span></a>
                         </dd>
                 </div>
             </dl>
@@ -839,6 +859,16 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                             </ul>
                         </dd>
                 </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Plans, drawings and list of plans</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-plans-drawings"> Add<span class="govuk-visually-hidden"> Plans, drawings and list of plans</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Relevant policies from statutory development plan</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-development-plan-policies"> Add<span class="govuk-visually-hidden"> Relevant policies from statutory development plan</span></a>
+                        </dd>
+                </div>
             </dl>
         </div>
     </div>
@@ -1143,6 +1173,16 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                                     data-cy="add-officers-report"> Add<span class="govuk-visually-hidden"> Planning officer&#39;s report</span></a>
                                 </li>
                             </ul>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Plans, drawings and list of plans</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-plans-drawings"> Add<span class="govuk-visually-hidden"> Plans, drawings and list of plans</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Relevant policies from statutory development plan</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-development-plan-policies"> Add<span class="govuk-visually-hidden"> Relevant policies from statutory development plan</span></a>
                         </dd>
                 </div>
             </dl>
@@ -3326,6 +3366,16 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                                     data-cy="add-officers-report"> Add<span class="govuk-visually-hidden"> Planning officer&#39;s report</span></a>
                                 </li>
                             </ul>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Plans, drawings and list of plans</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-plans-drawings"> Add<span class="govuk-visually-hidden"> Plans, drawings and list of plans</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Relevant policies from statutory development plan</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-development-plan-policies"> Add<span class="govuk-visually-hidden"> Relevant policies from statutory development plan</span></a>
                         </dd>
                 </div>
             </dl>

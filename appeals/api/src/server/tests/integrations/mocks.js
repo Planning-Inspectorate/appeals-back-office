@@ -249,6 +249,12 @@ export const appealIngestionInput = {
 				path: 'lpa-questionnaire/planningOfficerReport'
 			},
 			{
+				path: 'lpa-questionnaire/plansDrawings'
+			},
+			{
+				path: 'lpa-questionnaire/developmentPlanPolicies'
+			},
+			{
 				path: 'lpa-questionnaire/lpaCaseCorrespondence'
 			},
 			{
