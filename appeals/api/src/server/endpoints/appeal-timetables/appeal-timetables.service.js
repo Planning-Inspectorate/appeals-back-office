@@ -69,8 +69,11 @@ const startCase = async (appeal, startDate, notifyClient, siteAddress, azureAdUs
 			DAYTIME_HOUR,
 			DAYTIME_MINUTE
 		).toISOString();
+
 		const startedAt = await recalculateDateIfNotBusinessDay(processedStartDate);
 		const timetable = await calculateTimetable(appealType.key, startedAt);
+
+		const startDateWithTimeCorrection = setTimeInTimeZone(processedStartDate, 0, 0);
 
 		const appellantTemplate = appeal.caseStartedDate
 			? config.govNotify.template.appealStartDateChange.appellant
@@ -83,7 +86,9 @@ const startCase = async (appeal, startDate, notifyClient, siteAddress, azureAdUs
 		if (timetable) {
 			await Promise.all([
 				appealTimetableRepository.upsertAppealTimetableById(appeal.id, timetable),
-				appealRepository.updateAppealById(appeal.id, { caseStartedDate: startedAt.toISOString() })
+				appealRepository.updateAppealById(appeal.id, {
+					caseStartedDate: startDateWithTimeCorrection.toISOString()
+				})
 			]);
 
 			await createAuditTrail({

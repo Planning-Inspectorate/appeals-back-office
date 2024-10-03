@@ -5,8 +5,7 @@
 		"program": "node_modules/jest/bin/jest.js",
 		"args": ["--testTimeout=300000"],
 		"env": {
-			"NODE_OPTIONS": "--experimental-vm-modules",
-			"TZ": "UTC"
+			"NODE_OPTIONS": "--experimental-vm-modules"
 		}
 	},
 	"jestrunner.jestCommand": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
