@@ -27,7 +27,7 @@ describe('Upload Documents to appellant case', () => {
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.verifyAnswerSummaryValue('sample-doc.pdf');
+			caseDetailsPage.verifyAnswerSummaryValue('sample-file.doc');
 		});
 	});
 });

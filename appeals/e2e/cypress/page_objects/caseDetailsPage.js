@@ -122,7 +122,7 @@ export class CaseDetailsPage extends Page {
 	}
 
 	uploadSamplePdf() {
-		cy.get('#upload-file-1').selectFile('cypress/fixtures/sample-doc.pdf', { force: true });
+		cy.get('#upload-file-1').selectFile('cypress/fixtures/sample-file.doc', { force: true });
 	}
 	uploadTestPdf() {
 		cy.get('#upload-file-1').selectFile('cypress/fixtures/test.pdf', { force: true });
