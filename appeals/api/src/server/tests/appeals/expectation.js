@@ -28,7 +28,11 @@ export const baseExpectedLPAQuestionnaireResponse = (appeal) => ({
 		// @ts-ignore
 		otherPartyRepresentations: {},
 		// @ts-ignore
-		planningOfficerReport: {}
+		planningOfficerReport: {},
+		// @ts-ignore
+		plansDrawings: {},
+		// @ts-ignore
+		developmentPlanPolicies: {}
 	}
 });
 

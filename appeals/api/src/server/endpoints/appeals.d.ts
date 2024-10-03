@@ -288,6 +288,8 @@ interface SingleLPAQuestionnaireResponse {
 		lpaCaseCorrespondence?: FolderInfo | null;
 		otherPartyRepresentations?: FolderInfo | null;
 		planningOfficerReport?: FolderInfo | null;
+		plansDrawings?: FolderInfo | null;
+		developmentPlanPolicies?: FolderInfo | null;
 	};
 	validation: ValidationOutcomeResponse | null;
 	lpaNotificationMethods?: LPANotificationMethodDetails[] | null;

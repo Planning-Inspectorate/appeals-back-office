@@ -14,6 +14,7 @@ import { APPEAL_CASE_STAGE } from 'pins-data-model';
  * @returns {ListedBuildingDetailsResponse | null}
  */
 const formatListedBuildingDetails = (affectsListedBuilding, values) =>
+	// @ts-ignore
 	(values &&
 		values
 			.filter((value) => value.affectsListedBuilding === affectsListedBuilding)

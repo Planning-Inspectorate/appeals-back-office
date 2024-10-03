@@ -6,6 +6,7 @@ import {
 	APPEAL_EVENT_TYPE
 } from 'pins-data-model';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { FOLDERS } from '@pins/appeals/constants/documents.js';
 /**
  * Static data required by the back-office service
  */
@@ -389,4 +390,45 @@ export async function seedStaticData(databaseConnector) {
 			update: {}
 		});
 	}
+
+	await updateFolderDefinitionsForExistingAppeals(databaseConnector);
 }
+
+/**
+ *
+ * @param {import('../../server/utils/db-client/index.js').PrismaClient} databaseConnector
+ */
+const updateFolderDefinitionsForExistingAppeals = async (databaseConnector) => {
+	//Find cases that have less folders than expected
+	const queryRaw = `SELECT caseId FROM [Folder] GROUP BY [Folder].[caseId] HAVING COUNT(*) != ${FOLDERS.length}`;
+
+	/**
+	 * @type {{ caseId: number }[]}
+	 */
+	const existingAppealIDsWithMissingFolders = await databaseConnector.$queryRawUnsafe(queryRaw);
+
+	for (const result of existingAppealIDsWithMissingFolders) {
+		/**
+		 * @type {{ caseId: number, path: string }[]}
+		 */
+		const defaultFolders = FOLDERS.map((/** @type {string} */ path) => {
+			return {
+				caseId: result.caseId,
+				path
+			};
+		});
+
+		for (const folder of defaultFolders) {
+			await databaseConnector.folder.upsert({
+				create: folder,
+				update: folder,
+				where: {
+					caseId_path: {
+						caseId: folder.caseId,
+						path: folder.path
+					}
+				}
+			});
+		}
+	}
+};
