@@ -25,7 +25,7 @@ describe('manage docs on appellant case', () => {
 			caseDetailsPage.clickManageAgreementToChangeDescriptionEvidence();
 			caseDetailsPage.clickLinkByText('View and edit');
 			caseDetailsPage.clickButtonByText('upload a new version');
-			caseDetailsPage.uploadTestPdf();
+			caseDetailsPage.uploadSampleImg();
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.clickButtonByText('Confirm');
