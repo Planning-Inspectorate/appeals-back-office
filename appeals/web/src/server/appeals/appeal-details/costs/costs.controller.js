@@ -469,7 +469,7 @@ export const renderDecisionCheckAndConfirm = async (request, response) => {
 	const mappedPageContent = decisionCheckAndConfirmPage(
 		currentAppeal,
 		currentFolder,
-		session,
+		session.fileUploadInfo.files,
 		redactionStatuses,
 		documentId
 	);

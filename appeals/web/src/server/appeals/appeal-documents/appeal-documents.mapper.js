@@ -25,7 +25,7 @@ import { folderIsAdditionalDocuments } from '#lib/documents.js';
  * @typedef {import('#lib/nunjucks-template-builders/tag-builders.js').HtmlLink} HtmlLink
  * @typedef {import('@pins/appeals.api').Schema.DocumentRedactionStatus} RedactionStatus
  * @typedef {import('@pins/appeals.api').Api.DocumentVersionAuditEntry} DocumentVersionAuditEntry
- * @typedef {import('#lib/ts-utilities.js').FileUploadInfoItem} FileUploadInfoItem
+ * @typedef {import('#appeals/appeal-documents/appeal-documents.types').FileUploadInfoItem} FileUploadInfoItem
  */
 
 /**
@@ -39,7 +39,7 @@ import { folderIsAdditionalDocuments } from '#lib/documents.js';
  * @param {string} backButtonUrl
  * @param {string|undefined} nextPageUrl
  * @param {boolean} isLateEntry
- * @param {any} session
+ * @param {import('#appeals/appeal-documents/appeal-documents.types').FileUploadInfo} fileUploadInfo
  * @param {import('@pins/express').ValidationErrors|undefined} errors
  * @param {string} [pageHeadingTextOverride]
  * @param {PageComponent[]} [pageBodyComponents]
@@ -59,7 +59,7 @@ export async function documentUploadPage(
 	backButtonUrl,
 	nextPageUrl,
 	isLateEntry,
-	session,
+	fileUploadInfo,
 	errors,
 	pageHeadingTextOverride,
 	pageBodyComponents = [],
@@ -73,7 +73,6 @@ export async function documentUploadPage(
 	const pathComponents = folderPath.split('/');
 	const documentStage = pathComponents[0];
 	const documentTypeComputed = documentType || pathComponents[1];
-	const { fileUploadInfo } = session;
 
 	return {
 		backButtonUrl: backButtonUrl?.replace('{{folderId}}', folderId),
@@ -85,13 +84,13 @@ export async function documentUploadPage(
 		documentVersion: latestVersion,
 		useBlobEmulator: config.useBlobEmulator,
 		filenamesInFolder,
-		...(fileUploadInfo && {
-			uncommittedFiles: JSON.stringify({
-				files: fileUploadInfo.map(
-					(/** @type {FileUploadInfoItem} */ infoItem) => infoItem.blobStoreUrl
-				)
-			})
-		}),
+		...(fileUploadInfo &&
+			fileUploadInfo.appealId === appealId &&
+			fileUploadInfo.folderId === folderId && {
+				uncommittedFiles: JSON.stringify({
+					files: fileUploadInfo.files
+				})
+			}),
 		blobStorageHost:
 			config.useBlobEmulator === true ? config.blobEmulatorSasUrl : config.blobStorageUrl,
 		blobStorageContainer: config.blobStorageDefaultContainer,
@@ -125,13 +124,18 @@ export const mapDocumentDownloadUrl = (appealId, documentId, documentVersion) =>
 };
 
 /**
- * @param {string|number} appealId
+ * @param {string|number} appealReference
  * @param {string} documentId
  * @param {string} filename
  * @param {string|number} [documentVersion]
  */
-export const mapStagedDocumentDownloadUrl = (appealId, documentId, filename, documentVersion) => {
-	return `/documents/${appealId}/download-staged/${documentId}/${filename}${
+export const mapUncommittedDocumentDownloadUrl = (
+	appealReference,
+	documentId,
+	filename,
+	documentVersion
+) => {
+	return `/documents/${appealReference}/download-uncommitted/${documentId}/${filename}${
 		documentVersion ? `/${documentVersion}` : ''
 	}`;
 };
@@ -292,8 +296,8 @@ function mapManageFolderPageHeading(folderPath) {
 
 /**
  * @param {string} backLinkUrl
- * @param {FolderInfo} folder - API type needs to be updated here (should be Folder, but there are worse problems with that type)
- * @param {FileUploadInfoItem[]} uploadInfo
+ * @param {FolderInfo} folder
+ * @param {FileUploadInfoItem[]} uncommittedFiles
  * @param {Object<string, any>} bodyItems
  * @param {RedactionStatus[]} redactionStatuses
  * @param {string} [pageHeadingTextOverride]
@@ -303,7 +307,7 @@ function mapManageFolderPageHeading(folderPath) {
 export function addDocumentDetailsPage(
 	backLinkUrl,
 	folder,
-	uploadInfo,
+	uncommittedFiles,
 	bodyItems,
 	redactionStatuses,
 	pageHeadingTextOverride,
@@ -316,10 +320,10 @@ export function addDocumentDetailsPage(
 		backLinkUrl: backLinkUrl?.replace('{{folderId}}', folder.folderId.toString()),
 		preHeading: 'Add document details',
 		heading: pageHeadingTextOverride || mapAddDocumentDetailsPageHeading(folder.path, documentId),
-		pageComponents: uploadInfo.flatMap((uploadInfoItem, index) => {
+		pageComponents: uncommittedFiles.flatMap((uncommittedFile, index) => {
 			return mapFileUploadInfoItemToDocumentDetailsPageComponents(
-				uploadInfo,
-				uploadInfoItem,
+				uncommittedFiles,
+				uncommittedFile,
 				bodyItems,
 				index,
 				redactionStatuses
@@ -331,25 +335,25 @@ export function addDocumentDetailsPage(
 }
 
 /**
- * @param {FileUploadInfoItem[]} uploadInfo
- * @param {FileUploadInfoItem} uploadInfoItem
+ * @param {FileUploadInfoItem[]} uncommittedFiles
+ * @param {FileUploadInfoItem} uncommittedFile
  * @param {Object<string, any>} bodyItems
  * @param {number} index
  * @param {RedactionStatus[]} redactionStatuses
  * @returns {PageComponent[]}
  */
 function mapFileUploadInfoItemToDocumentDetailsPageComponents(
-	uploadInfo,
-	uploadInfoItem,
+	uncommittedFiles,
+	uncommittedFile,
 	bodyItems,
 	index,
 	redactionStatuses
 ) {
 	const receivedDateDayMonthYear = dateISOStringToDayMonthYearHourMinute(
-		uploadInfoItem.receivedDate
+		uncommittedFile.receivedDate
 	);
 	const bodyItem = bodyItems?.find(
-		(/** @type {{ documentId: string; }} */ item) => item.documentId === uploadInfoItem.GUID
+		(/** @type {{ documentId: string; }} */ item) => item.documentId === uncommittedFile.GUID
 	);
 	const bodyRecievedDateDay = bodyItem?.receivedDate?.day;
 	const bodyRecievedDateMonth = bodyItem?.receivedDate?.month;
@@ -359,14 +363,14 @@ function mapFileUploadInfoItemToDocumentDetailsPageComponents(
 	return [
 		{
 			wrapperHtml: {
-				opening: `<div class="govuk-form-group"><h2 class="govuk-heading-m">${uploadInfoItem.name}</h2>`,
+				opening: `<div class="govuk-form-group"><h2 class="govuk-heading-m">${uncommittedFile.name}</h2>`,
 				closing: ''
 			},
 			type: 'input',
 			parameters: {
 				type: 'hidden',
 				name: `items[${index}][documentId]`,
-				value: uploadInfoItem.GUID
+				value: uncommittedFile.GUID
 			}
 		},
 		{
@@ -417,7 +421,7 @@ function mapFileUploadInfoItemToDocumentDetailsPageComponents(
 			wrapperHtml: {
 				opening: '',
 				closing:
-					index < uploadInfo.length - 1 ? '<hr class="govuk-!-margin-top-7"></div>' : '</div>'
+					index < uncommittedFiles.length - 1 ? '<hr class="govuk-!-margin-top-7"></div>' : '</div>'
 			},
 			type: 'radios',
 			parameters: {
@@ -434,7 +438,7 @@ function mapFileUploadInfoItemToDocumentDetailsPageComponents(
 						checked:
 							(bodyRedactionStatus
 								? bodyRedactionStatus
-								: redactionStatusIdToName(redactionStatuses, uploadInfoItem.redactionStatus)) ===
+								: redactionStatusIdToName(redactionStatuses, uncommittedFile.redactionStatus)) ===
 							'redacted'
 					},
 					{
@@ -443,7 +447,7 @@ function mapFileUploadInfoItemToDocumentDetailsPageComponents(
 						checked:
 							(bodyRedactionStatus
 								? bodyRedactionStatus
-								: redactionStatusIdToName(redactionStatuses, uploadInfoItem.redactionStatus)) ===
+								: redactionStatusIdToName(redactionStatuses, uncommittedFile.redactionStatus)) ===
 							'unredacted'
 					},
 					{
@@ -455,7 +459,7 @@ function mapFileUploadInfoItemToDocumentDetailsPageComponents(
 						checked:
 							(bodyRedactionStatus
 								? bodyRedactionStatus
-								: redactionStatusIdToName(redactionStatuses, uploadInfoItem.redactionStatus)) ===
+								: redactionStatusIdToName(redactionStatuses, uncommittedFile.redactionStatus)) ===
 							'no redaction required'
 					}
 				]
@@ -581,7 +585,7 @@ function mapDocumentDetailsItemToDocumentDetailsPageComponents(item, redactionSt
  * @param {string} changeDateLinkUrl
  * @param {string} changeRedactionStatusLinkUrl
  * @param {string} appealReference
- * @param {FileUploadInfoItem[]} fileUploadInfo
+ * @param {FileUploadInfoItem[]} uncommittedFiles
  * @param {RedactionStatus[]} redactionStatuses
  * @param {number} [documentVersion] current version being uploaded (if uploading a new version of an existing document)
  * @param {string} [documentFileName] filename of existing document, not new version being uploaded (if uploading a new version of an existing document)
@@ -595,7 +599,7 @@ export function addDocumentsCheckAndConfirmPage(
 	changeDateLinkUrl,
 	changeRedactionStatusLinkUrl,
 	appealReference,
-	fileUploadInfo,
+	uncommittedFiles,
 	redactionStatuses,
 	documentVersion,
 	documentFileName,
@@ -608,71 +612,89 @@ export function addDocumentsCheckAndConfirmPage(
 		backLinkUrl,
 		preHeading: `Appeal ${appealShortReference(appealReference)}`,
 		heading: 'Check your answers',
-		pageComponents: [
-			{
-				type: 'summary-list',
-				parameters: {
-					rows: [
-						{
-							key: {
-								text: summaryListNameLabelOverride || 'Name'
-							},
-							value: {
-								html: `<a class="govuk-link" href="${mapStagedDocumentDownloadUrl(
-									appealReference,
-									fileUploadInfo[0].GUID,
-									documentFileName || fileUploadInfo[0].name,
-									documentVersion
-								)}" target="_blank">${fileUploadInfo[0].name}</a>`
-							},
-							actions: {
-								items: [
-									{
-										text: 'Change',
-										href: changeFileLinkUrl
-									}
-								]
-							}
-						},
-						{
-							key: {
-								text: 'Date received'
-							},
-							value: {
-								text: dateISOStringToDisplayDate(fileUploadInfo[0].receivedDate)
-							},
-							actions: {
-								items: [
-									{
-										text: 'Change',
-										href: changeDateLinkUrl
-									}
-								]
-							}
-						},
-						{
-							key: {
-								text: 'Redaction status'
-							},
-							value: {
-								text: capitalize(
-									redactionStatusIdToName(redactionStatuses, fileUploadInfo[0].redactionStatus)
-								)
-							},
-							actions: {
-								items: [
-									{
-										text: 'Change',
-										href: changeRedactionStatusLinkUrl
-									}
-								]
-							}
-						}
-					]
-				}
-			}
-		]
+		pageComponents: []
 	};
+
+	uncommittedFiles.forEach((uncommittedFile, index) => {
+		/** @type {HtmlPageComponent} */
+		const htmlComponent = {
+			type: 'html',
+			parameters: {
+				html: `<h2 class="govuk-heading-l govuk-!-margin-top-${
+					index === 0 ? '5' : '8'
+				} govuk-!-margin-bottom-4">Uploaded file${
+					uncommittedFiles.length > 1 ? ` ${index + 1}` : ''
+				}</h2>`
+			}
+		};
+
+		/** @type {SummaryListPageComponent} */
+		const summaryListComponent = {
+			type: 'summary-list',
+			parameters: {
+				rows: [
+					{
+						key: {
+							text: summaryListNameLabelOverride || 'Name'
+						},
+						value: {
+							html: `<a class="govuk-link" href="${mapUncommittedDocumentDownloadUrl(
+								appealReference,
+								uncommittedFile.GUID,
+								documentFileName || uncommittedFile.name,
+								documentVersion
+							)}" target="_blank">${uncommittedFile.name}</a>`
+						},
+						actions: {
+							items: [
+								{
+									text: 'Change',
+									href: changeFileLinkUrl
+								}
+							]
+						}
+					},
+					{
+						key: {
+							text: 'Date received'
+						},
+						value: {
+							text: dateISOStringToDisplayDate(uncommittedFile.receivedDate)
+						},
+						actions: {
+							items: [
+								{
+									text: 'Change',
+									href: changeDateLinkUrl
+								}
+							]
+						}
+					},
+					{
+						key: {
+							text: 'Redaction status'
+						},
+						value: {
+							text: capitalize(
+								redactionStatusIdToName(redactionStatuses, uncommittedFile.redactionStatus)
+							)
+						},
+						actions: {
+							items: [
+								{
+									text: 'Change',
+									href: changeRedactionStatusLinkUrl
+								}
+							]
+						}
+					}
+				]
+			}
+		};
+
+		pageContent.pageComponents?.push(htmlComponent);
+		pageContent.pageComponents?.push(summaryListComponent);
+	});
 
 	return pageContent;
 }
@@ -1557,17 +1579,17 @@ export const mapDocumentDetailsFormDataToAPIRequest = (formData, redactionStatus
 
 /**
  * @param {DocumentDetailsFormData} formData
- * @param {FileUploadInfoItem[]} fileUploadInfo
+ * @param {FileUploadInfoItem[]} uncommittedFiles
  * @param {import('@pins/appeals.api').Schema.DocumentRedactionStatus[] | undefined} redactionStatuses
  * @returns
  */
 export const addDocumentDetailsFormDataToFileUploadInfo = (
 	formData,
-	fileUploadInfo,
+	uncommittedFiles,
 	redactionStatuses
 ) => {
 	for (const item of formData.items) {
-		const matchingInfoItem = fileUploadInfo.find((infoItem) => infoItem.GUID === item.documentId);
+		const matchingInfoItem = uncommittedFiles.find((file) => file.GUID === item.documentId);
 
 		if (matchingInfoItem) {
 			if (

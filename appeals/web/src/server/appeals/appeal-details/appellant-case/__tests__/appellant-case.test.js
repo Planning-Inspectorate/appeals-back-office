@@ -4254,7 +4254,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Check your answers</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('Name</dt>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-staged/1/test-document.txt" target="_blank">test-document.txt</a></dd>'
+				'<a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/test-document.txt" target="_blank">test-document.txt</a></dd>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				`href="/appeals-service/appeal-details/1/appellant-case/add-documents/${documentFolderInfo.folderId}"> Change</a>`
@@ -4385,7 +4385,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Check your answers</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('Name</dt>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-staged/1/ph0-documentFileInfo.jpeg/2" target="_blank">test-document.txt</a></dd>'
+				'<a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/ph0-documentFileInfo.jpeg/2" target="_blank">test-document.txt</a></dd>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				`href="/appeals-service/appeal-details/1/appellant-case/add-documents/${documentFolderInfo.folderId}/1"> Change</a></dd>`
