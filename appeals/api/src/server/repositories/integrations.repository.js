@@ -3,7 +3,8 @@ import { mapBlobPath } from '#endpoints/documents/documents.mapper.js';
 import { getDefaultRedactionStatus } from './document-metadata.repository.js';
 import { createAppealReference } from '#utils/appeal-reference.js';
 import config from '#config/config.js';
-import { APPEAL_CASE_STATUS, APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
+import { APPEAL_CASE_STATUS, APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
+import { getFolderIdFromDocumentType } from '#endpoints/integrations/integrations.mappers/document-folder.mapper.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.DocumentVersion} DocumentVersion */
@@ -235,47 +236,4 @@ const setDocumentVersions = async (tx, appealId, caseReference, documents) => {
 		});
 	}
 	return [];
-};
-
-/**
- *
- * @param {{ path: string, id: number }[]} caseFolders
- * @param {string} documentType
- * @param {string|null} stage
- * @returns {number}
- */
-const getFolderIdFromDocumentType = (caseFolders, documentType, stage) => {
-	const caseFolder = caseFolders.find(
-		(caseFolder) => caseFolder.path.indexOf(`/${documentType}`) > 0
-	);
-
-	if (caseFolder) {
-		return caseFolder.id;
-	}
-
-	if (stage && stage === APPEAL_CASE_STAGE.APPELLANT_CASE) {
-		const appellantCorrespondence = caseFolders.find(
-			(caseFolder) =>
-				caseFolder.path === `${stage}/${APPEAL_DOCUMENT_TYPE.APPELLANT_CASE_CORRESPONDENCE}`
-		);
-		if (appellantCorrespondence) {
-			return appellantCorrespondence.id;
-		}
-	}
-
-	if (stage && stage === APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE) {
-		const lpaCorrespondence = caseFolders.find(
-			(caseFolder) => caseFolder.path === `${stage}/${APPEAL_DOCUMENT_TYPE.LPA_CASE_CORRESPONDENCE}`
-		);
-
-		if (lpaCorrespondence) {
-			return lpaCorrespondence.id;
-		}
-	}
-
-	// @ts-ignore
-	return caseFolders.find(
-		(caseFolder) =>
-			caseFolder.path === `${APPEAL_CASE_STAGE.INTERNAL}/${APPEAL_DOCUMENT_TYPE.UNCATEGORISED}`
-	)?.id;
 };

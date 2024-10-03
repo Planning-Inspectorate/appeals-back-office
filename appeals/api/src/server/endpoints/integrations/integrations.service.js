@@ -7,11 +7,14 @@ import {
 import { EventType } from '@pins/event-client';
 import BackOfficeAppError from '#utils/app-error.js';
 
+/** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
+/** @typedef {import('@pins/appeals.api').Schema.DocumentVersion} DocumentVersion */
+
 /**
  * @param {import('#db-client').Prisma.AppealCreateInput} data
  * @param {import('#db-client').Prisma.DocumentVersionCreateInput[]} documents
  * @param {string[] | null} relatedReferences
- * @returns { }
+ * @returns {Promise<{appeal: Appeal, documentVersions: DocumentVersion[]}>}
  */
 const importAppellantCase = async (data, documents, relatedReferences) => {
 	const result = await createAppeal(data, documents, relatedReferences || []);
