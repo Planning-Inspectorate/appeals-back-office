@@ -6,9 +6,9 @@ const allUploadForms = document.querySelectorAll('.pins-file-upload');
 const initFileUploaderModule = () => {
 	if (allUploadForms.length === 0) return;
 
-	const { registerEvents } = clientActions(allUploadForms[0]);
+	const { bindEvents } = clientActions(allUploadForms[0]);
 
-	registerEvents();
+	bindEvents();
 };
 
 export default initFileUploaderModule;

@@ -209,7 +209,7 @@ const renderDateDecisionLetter = async (request, response) => {
 	/** @type {import('./issue-decision.types.js').InspectorDecisionRequest} */
 	request.session.inspectorDecision = {
 		...session.inspectorDecision,
-		documentId: session.fileUploadInfo[0].GUID
+		documentId: session.fileUploadInfo.files[0].GUID
 	};
 
 	let decisionLetterDay = request.body['decision-letter-date-day'];

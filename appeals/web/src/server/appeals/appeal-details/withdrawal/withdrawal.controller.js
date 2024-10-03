@@ -171,7 +171,7 @@ const renderDateWithdrawalRequest = async (request, response) => {
 	/** @type {import('./withdrawal.types.js').WithdrawalRequest} */
 	request.session.withdrawal = {
 		...session.withdrawal,
-		documentId: session.fileUploadInfo[0].GUID
+		documentId: session.fileUploadInfo.files[0].GUID
 	};
 
 	let withdrawalRequestDay = request.body['withdrawal-request-date-day'];
@@ -319,7 +319,7 @@ export const postCheckYourAnswers = async (request, response) => {
 
 		addDocumentDetailsFormDataToFileUploadInfo(
 			{ items: [{ documentId, receivedDate: {}, redactionStatus }] },
-			request.session.fileUploadInfo,
+			request.session.fileUploadInfo.files,
 			redactionStatuses
 		);
 
