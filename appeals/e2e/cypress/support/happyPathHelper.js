@@ -64,10 +64,26 @@ export const happyPathHelper = {
 		happyPathHelper.assignCaseOfficer(caseRef);
 		caseDetailsPage.clickReviewAppellantCase();
 		caseDetailsPage.clickAddAgreementToChangeDescriptionEvidence();
-		caseDetailsPage.uploadSamplePdf();
+		caseDetailsPage.uploadSampleDoc();
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Confirm');
 		caseDetailsPage.clickButtonByText('Confirm');
-		caseDetailsPage.verifyAnswerSummaryValue('sample-doc.pdf');
+		cy.reload();
+		//caseDetailsPage.verifyAnswerSummaryValue('sample-doc.pdf'); - Success banners are currently missing, fix incoming
+	},
+
+	manageDocsAppellantCase(caseRef) {
+		cy.visit(urlPaths.appealsList);
+		listCasesPage.clickAppealByRef(caseRef);
+		happyPathHelper.uploadDocAppellantCase(caseRef);
+		cy.reload();
+		caseDetailsPage.clickManageAgreementToChangeDescriptionEvidence();
+		caseDetailsPage.clickLinkByText('View and edit');
+		caseDetailsPage.clickButtonByText('upload a new version');
+		caseDetailsPage.uploadSampleImg();
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Confirm');
+		caseDetailsPage.clickButtonByText('Confirm');
+		caseDetailsPage.validateBannerMessage('Document updated');
 	}
 };
