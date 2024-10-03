@@ -16,8 +16,8 @@ export const mapSiteVisitOut = (siteVisit) => {
 		eventStatus: 'offered',
 		isUrgent: false,
 		eventPublished: true,
-		eventStartDateTime: siteVisit.visitStartTime ?? siteVisit.visitDate,
-		eventEndDateTime: siteVisit.visitEndTime,
+		eventStartDateTime: (siteVisit.visitStartTime ?? siteVisit.visitDate)?.toISOString(),
+		eventEndDateTime: siteVisit.visitEndTime?.toISOString() || null,
 		notificationOfSiteVisit: null,
 		...mapEventAddressOut(siteVisit.appeal)
 	};
