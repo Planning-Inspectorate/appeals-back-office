@@ -23,7 +23,8 @@ export class CaseDetailsPage extends Page {
 		changeAppealType: 'change-appeal-type',
 		addAgreementToChangeDescriptionEvidence: 'add-agreement-to-change-description-evidence',
 		manageAgreementToChangeDescriptionEvidence: 'manage-agreement-to-change-description-evidence',
-		addCostsDecision: 'add-costs-decision'
+		addCostsDecision: 'add-costs-decision',
+		changeSiteOwnership: 'change-site-ownership'
 	};
 
 	elements = {
@@ -47,7 +48,8 @@ export class CaseDetailsPage extends Page {
 		manageAgreementToChangeDescriptionEvidence: () =>
 			cy.getByData(this._cyDataSelectors.manageAgreementToChangeDescriptionEvidence),
 		addCostsDecision: () => cy.getByData(this._cyDataSelectors.addCostsDecision),
-		costDecisionStatus: () => cy.get('.govuk-table__cell appeal-costs-decision-status')
+		costDecisionStatus: () => cy.get('.govuk-table__cell appeal-costs-decision-status'),
+		changeSiteOwnership: () => cy.getByData(this._cyDataSelectors.changeSiteOwnership)
 	};
 	/********************************************************
 	 ************************ Actions ************************
@@ -121,11 +123,15 @@ export class CaseDetailsPage extends Page {
 		this.elements.addCostsDecision().click();
 	}
 
-	uploadSamplePdf() {
+	clickChangeSiteOwnership() {
+		this.elements.changeSiteOwnership().click();
+	}
+
+	uploadSampleDoc() {
 		cy.get('#upload-file-1').selectFile('cypress/fixtures/sample-file.doc', { force: true });
 	}
-	uploadTestPdf() {
-		cy.get('#upload-file-1').selectFile('cypress/fixtures/test.pdf', { force: true });
+	uploadSampleImg() {
+		cy.get('#upload-file-1').selectFile('cypress/fixtures/sample-img.jpeg', { force: true });
 	}
 	// TODO Get this to use the vanilla 'clickButtonByText()' function
 	// This currently doesn't work, as there are multiple matches and some of not invisible
@@ -143,13 +149,11 @@ export class CaseDetailsPage extends Page {
 
 	confirmCostDecisionStatus(text) {
 		this.elements.costDecisionStatus().contains(text);
-
 	}
 
 	/***************************************************************
 	 ************************ Verfifications ************************
 	 ****************************************************************/
-
 
 	verifyAnswerSummaryValue(answer) {
 		this.elements.answerCellAppeals(answer).then(($elem) => {
