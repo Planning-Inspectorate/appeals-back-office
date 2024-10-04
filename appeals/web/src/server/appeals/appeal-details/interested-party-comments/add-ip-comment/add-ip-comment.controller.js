@@ -8,7 +8,7 @@ import { checkAddressPage, ipAddressPage, ipDetailsPage } from './add-ip-comment
 export async function renderIpDetails(request, response) {
 	const pageContent = ipDetailsPage(request.currentAppeal, request.body, request.errors);
 
-	return response.status(200).render('patterns/change-page.pattern.njk', {
+	return response.status(request.errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
 		errors: request.errors,
 		pageContent
 	});
@@ -22,10 +22,12 @@ export async function renderIpDetails(request, response) {
 export async function renderCheckAddress(request, response) {
 	const pageContent = checkAddressPage(request.currentAppeal, request.errors);
 
-	return response.status(200).render('patterns/check-and-confirm-page.pattern.njk', {
-		errors: request.errors,
-		pageContent
-	});
+	return response
+		.status(request.errors ? 400 : 200)
+		.render('patterns/check-and-confirm-page.pattern.njk', {
+			errors: request.errors,
+			pageContent
+		});
 }
 
 /**
@@ -36,7 +38,7 @@ export async function renderCheckAddress(request, response) {
 export async function renderIpAddress(request, response) {
 	const pageContent = ipAddressPage(request.currentAppeal, request.body, request.errors);
 
-	return response.status(200).render('patterns/change-page.pattern.njk', {
+	return response.status(request.errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
 		errors: request.errors,
 		pageContent
 	});
