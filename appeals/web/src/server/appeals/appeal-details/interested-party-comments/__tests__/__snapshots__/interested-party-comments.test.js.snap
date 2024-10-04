@@ -9,7 +9,8 @@ exports[`interested-party-comments GET /interested-party-comments with data shou
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <p class="govuk-body govuk-!-margin-bottom-6"><a href="#" class="govuk-link">Add IP comment</a>
+            <p class="govuk-body govuk-!-margin-bottom-6"><a href="/appeals-service/appeal-details/2/interested-party-comments/add"
+                class="govuk-link">Add IP comment</a>
             </p>
             <div id="interested-party-comments-tabs" class="govuk-tabs pins-tabs"
             data-module="govuk-tabs">
@@ -132,7 +133,8 @@ exports[`interested-party-comments GET /interested-party-comments with data shou
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <p class="govuk-body govuk-!-margin-bottom-6"><a href="#" class="govuk-link">Add IP comment</a>
+            <p class="govuk-body govuk-!-margin-bottom-6"><a href="/appeals-service/appeal-details/2/interested-party-comments/add"
+                class="govuk-link">Add IP comment</a>
             </p>
             <div id="interested-party-comments-tabs" class="govuk-tabs pins-tabs"
             data-module="govuk-tabs">
@@ -255,7 +257,8 @@ exports[`interested-party-comments GET /interested-party-comments with data shou
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <p class="govuk-body govuk-!-margin-bottom-6"><a href="#" class="govuk-link">Add IP comment</a>
+            <p class="govuk-body govuk-!-margin-bottom-6"><a href="/appeals-service/appeal-details/2/interested-party-comments/add"
+                class="govuk-link">Add IP comment</a>
             </p>
             <div id="interested-party-comments-tabs" class="govuk-tabs pins-tabs"
             data-module="govuk-tabs">
