@@ -70,10 +70,10 @@ HTTPS_ENABLED=true
 HTTPS_PORT=8080
 
 # The path to the SSL certificate file – required when https is enabled.
-SSL_CERT_FILE=(location)/cert.pem
+SSL_CERT_FILE="../../certificate.pem"
 
 # The path to the SSL certificate key file – required when https is enabled.
-SSL_KEY_FILE=(location)/cert-key.pem
+SSL_KEY_FILE="../../certificate-key.pem"
 
 
 ## LOGGING ####################################################################
@@ -91,9 +91,9 @@ OS_PLACES_API_KEY=os_places_api_key
 SESSION_SECRET=(any)
 
 ## BLOB STORAGE (EMULATOR) ############################################################
-AZURE_BLOB_STORE_HOST=https://127.0.0.1:10000/
+AZURE_BLOB_STORE_HOST=https://127.0.0.1:10000/devstoreaccount1/
 AZURE_BLOB_DEFAULT_CONTAINER=document-service-uploads
-AZURE_BLOB_EMULATOR_SAS_HOST=https://127.0.0.1:10000/devstoreaccount1/document-service-uploads?sv=2018-03-28&st=2023-07-04T15%3A25%3A26Z&se=2027-12-31T16%3A25%3A00Z&sr=c&sp=rwl&sig=bYGGyVZbw%2B84HwjmpTb4St7CUz4d4l2kJXBIWTIHOo4%3D&api-version=2023-06-01
+AZURE_BLOB_EMULATOR_SAS_HOST=(retrieve from emulator)
 AZURE_BLOB_USE_EMULATOR=true
 NODE_TLS_REJECT_UNAUTHORIZED=0
 APP_HOSTNAME=localhost:8080
