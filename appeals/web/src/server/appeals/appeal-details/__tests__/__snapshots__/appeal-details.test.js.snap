@@ -118,7 +118,7 @@ exports[`appeal-details GET /:appealId Notification banners should render a "Hor
 </div>"
 `;
 
-exports[`appeal-details GET /:appealId Notification banners should render a "LPA questionnaire ready for review" notification banner with a link to review the questionnaire when the appeal status is "lpa_questionnaire" and the appeal has an LPA questionnaire ID 1`] = `
+exports[`appeal-details GET /:appealId Notification banners should render a "LPA questionnaire ready for review" important notification banner with a link to review the questionnaire when the appeal status is "lpa_questionnaire" and the appeal has an LPA questionnaire ID 1`] = `
 "<div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
 data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
