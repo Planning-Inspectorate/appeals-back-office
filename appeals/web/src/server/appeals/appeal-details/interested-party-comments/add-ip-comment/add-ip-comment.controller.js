@@ -6,7 +6,7 @@ import { checkAddressPage, ipAddressPage, ipDetailsPage } from './add-ip-comment
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export async function renderIpDetails(request, response) {
-	const pageContent = ipDetailsPage(request.currentAppeal);
+	const pageContent = ipDetailsPage(request.currentAppeal, request.errors);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
 		errors: request.errors,
@@ -20,7 +20,7 @@ export async function renderIpDetails(request, response) {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export async function renderCheckAddress(request, response) {
-	const pageContent = checkAddressPage(request.currentAppeal);
+	const pageContent = checkAddressPage(request.currentAppeal, request.errors);
 
 	return response.status(200).render('patterns/check-and-confirm-page.pattern.njk', {
 		errors: request.errors,
@@ -34,7 +34,7 @@ export async function renderCheckAddress(request, response) {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export async function renderIpAddress(request, response) {
-	const pageContent = ipAddressPage(request.currentAppeal);
+	const pageContent = ipAddressPage(request.currentAppeal, request.errors);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
 		errors: request.errors,
@@ -48,6 +48,10 @@ export async function renderIpAddress(request, response) {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export async function postIpDetails(request, response) {
+	if (request.errors) {
+		return renderIpDetails(request, response);
+	}
+
 	return response.redirect('./check-address');
 }
 
@@ -57,11 +61,15 @@ export async function postIpDetails(request, response) {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export async function postCheckAddress(request, response) {
+	if (request.errors) {
+		return renderCheckAddress(request, response);
+	}
+
 	const { currentAppeal } = request;
-	const addressProvided = request.body['address-provided'] === 'yes';
+	const { addressProvided } = request.body;
 
 	return response.redirect(
-		addressProvided
+		addressProvided === 'yes'
 			? './ip-address'
 			: `/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments`
 	);
@@ -73,6 +81,10 @@ export async function postCheckAddress(request, response) {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export async function postIpAddress(request, response) {
+	if (request.errors) {
+		return renderIpAddress(request, response);
+	}
+
 	const { currentAppeal } = request;
 
 	return response.redirect(

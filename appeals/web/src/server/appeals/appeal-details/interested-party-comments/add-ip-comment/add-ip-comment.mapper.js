@@ -1,12 +1,22 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
+import {
+	errorAddressLine1,
+	errorAddressProvidedRadio,
+	errorEmail,
+	errorFirstName,
+	errorLastName,
+	errorPostcode,
+	errorTown
+} from '#lib/error-handlers/change-screen-error-handlers.js';
 
 /** @typedef {import("../../appeal-details.types.js").WebAppeal} Appeal */
 
 /**
  * @param {Appeal} appealDetails
+ * @param {import('@pins/express').ValidationErrors | undefined} errors
  * @returns {PageContent}
  * */
-export const ipDetailsPage = (appealDetails) => ({
+export const ipDetailsPage = (appealDetails, errors) => ({
 	title: "Interested party's details",
 	backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments`,
 	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
@@ -21,7 +31,8 @@ export const ipDetailsPage = (appealDetails) => ({
 				label: {
 					isPageHeading: false,
 					text: 'First name'
-				}
+				},
+				errorMessage: errorFirstName(errors)
 			}
 		},
 		{
@@ -33,7 +44,8 @@ export const ipDetailsPage = (appealDetails) => ({
 				label: {
 					isPageHeading: false,
 					text: 'Last name'
-				}
+				},
+				errorMessage: errorLastName(errors)
 			}
 		},
 		{
@@ -45,7 +57,8 @@ export const ipDetailsPage = (appealDetails) => ({
 				label: {
 					isPageHeading: false,
 					text: 'Email address (optional)'
-				}
+				},
+				errorMessage: errorEmail(errors)
 			}
 		}
 	]
@@ -53,9 +66,10 @@ export const ipDetailsPage = (appealDetails) => ({
 
 /**
  * @param {Appeal} appealDetails
+ * @param {import('@pins/express').ValidationErrors | undefined} errors
  * @returns {PageContent}
  * */
-export const checkAddressPage = (appealDetails) => ({
+export const checkAddressPage = (appealDetails, errors) => ({
 	title: 'Did the interested party provide an address?',
 	backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/ip-details`,
 	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
@@ -67,7 +81,7 @@ export const checkAddressPage = (appealDetails) => ({
 		{
 			type: 'radios',
 			parameters: {
-				name: 'address-provided',
+				name: 'addressProvided',
 				items: [
 					{
 						value: 'yes',
@@ -77,7 +91,8 @@ export const checkAddressPage = (appealDetails) => ({
 						value: 'no',
 						text: 'No'
 					}
-				]
+				],
+				errorMessage: errorAddressProvidedRadio(errors)
 			}
 		}
 	]
@@ -85,9 +100,10 @@ export const checkAddressPage = (appealDetails) => ({
 
 /**
  * @param {Appeal} appealDetails
+ * @param {import('@pins/express').ValidationErrors | undefined} errors
  * @returns {PageContent}
  * */
-export const ipAddressPage = (appealDetails) => ({
+export const ipAddressPage = (appealDetails, errors) => ({
 	title: "Interested party's address",
 	backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/check-address`,
 	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
@@ -102,7 +118,8 @@ export const ipAddressPage = (appealDetails) => ({
 				label: {
 					isPageHeading: false,
 					text: 'Address line 1'
-				}
+				},
+				errorMessage: errorAddressLine1(errors)
 			}
 		},
 		{
@@ -126,7 +143,8 @@ export const ipAddressPage = (appealDetails) => ({
 				label: {
 					isPageHeading: false,
 					text: 'Town or city'
-				}
+				},
+				errorMessage: errorTown(errors)
 			}
 		},
 		{
@@ -144,13 +162,14 @@ export const ipAddressPage = (appealDetails) => ({
 		{
 			type: 'input',
 			parameters: {
-				id: 'postcode',
-				name: 'postcode',
+				id: 'postCode',
+				name: 'postCode',
 				type: 'text',
 				label: {
 					isPageHeading: false,
 					text: 'Postcode'
-				}
+				},
+				errorMessage: errorPostcode(errors)
 			}
 		}
 	]
