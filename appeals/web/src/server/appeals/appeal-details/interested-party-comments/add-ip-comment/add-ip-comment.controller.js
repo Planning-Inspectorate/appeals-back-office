@@ -6,7 +6,7 @@ import { checkAddressPage, ipAddressPage, ipDetailsPage } from './add-ip-comment
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export async function renderIpDetails(request, response) {
-	const pageContent = ipDetailsPage(request.currentAppeal, request.errors);
+	const pageContent = ipDetailsPage(request.currentAppeal, request.body, request.errors);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
 		errors: request.errors,
@@ -34,7 +34,7 @@ export async function renderCheckAddress(request, response) {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export async function renderIpAddress(request, response) {
-	const pageContent = ipAddressPage(request.currentAppeal, request.errors);
+	const pageContent = ipAddressPage(request.currentAppeal, request.body, request.errors);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
 		errors: request.errors,

@@ -13,10 +13,11 @@ import {
 
 /**
  * @param {Appeal} appealDetails
+ * @param {{ firstName: string, lastName: string, emailAddress: string }} values
  * @param {import('@pins/express').ValidationErrors | undefined} errors
  * @returns {PageContent}
  * */
-export const ipDetailsPage = (appealDetails, errors) => ({
+export const ipDetailsPage = (appealDetails, values, errors) => ({
 	title: "Interested party's details",
 	backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments`,
 	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
@@ -32,6 +33,7 @@ export const ipDetailsPage = (appealDetails, errors) => ({
 					isPageHeading: false,
 					text: 'First name'
 				},
+				value: values.firstName,
 				errorMessage: errorFirstName(errors)
 			}
 		},
@@ -45,6 +47,7 @@ export const ipDetailsPage = (appealDetails, errors) => ({
 					isPageHeading: false,
 					text: 'Last name'
 				},
+				value: values.lastName,
 				errorMessage: errorLastName(errors)
 			}
 		},
@@ -58,6 +61,7 @@ export const ipDetailsPage = (appealDetails, errors) => ({
 					isPageHeading: false,
 					text: 'Email address (optional)'
 				},
+				value: values.emailAddress,
 				errorMessage: errorEmail(errors)
 			}
 		}
@@ -100,10 +104,11 @@ export const checkAddressPage = (appealDetails, errors) => ({
 
 /**
  * @param {Appeal} appealDetails
+ * @param {{ addressLine1: string, addressLine2: string, town: string, county: string, postCode: string }} values
  * @param {import('@pins/express').ValidationErrors | undefined} errors
  * @returns {PageContent}
  * */
-export const ipAddressPage = (appealDetails, errors) => ({
+export const ipAddressPage = (appealDetails, values, errors) => ({
 	title: "Interested party's address",
 	backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/check-address`,
 	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
@@ -119,6 +124,7 @@ export const ipAddressPage = (appealDetails, errors) => ({
 					isPageHeading: false,
 					text: 'Address line 1'
 				},
+				value: values.addressLine1,
 				errorMessage: errorAddressLine1(errors)
 			}
 		},
@@ -131,7 +137,8 @@ export const ipAddressPage = (appealDetails, errors) => ({
 				label: {
 					isPageHeading: false,
 					text: 'Address line 2 (optional)'
-				}
+				},
+				value: values.addressLine2
 			}
 		},
 		{
@@ -144,6 +151,7 @@ export const ipAddressPage = (appealDetails, errors) => ({
 					isPageHeading: false,
 					text: 'Town or city'
 				},
+				value: values.town,
 				errorMessage: errorTown(errors)
 			}
 		},
@@ -156,7 +164,8 @@ export const ipAddressPage = (appealDetails, errors) => ({
 				label: {
 					isPageHeading: false,
 					text: 'County (optional)'
-				}
+				},
+				value: values.county
 			}
 		},
 		{
@@ -169,6 +178,7 @@ export const ipAddressPage = (appealDetails, errors) => ({
 					isPageHeading: false,
 					text: 'Postcode'
 				},
+				value: values.postCode,
 				errorMessage: errorPostcode(errors)
 			}
 		}
