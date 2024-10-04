@@ -73,6 +73,12 @@ export const notificationBannerDefinitions = {
 	readyForDecision: {
 		pages: ['appealDetails']
 	},
+	readyForValidation: {
+		pages: ['appealDetails']
+	},
+	readyForLpaQuestionnaireReview: {
+		pages: ['appealDetails']
+	},
 	lpaQuestionnaireNotValid: {
 		pages: ['lpaQuestionnaire'],
 		persist: true

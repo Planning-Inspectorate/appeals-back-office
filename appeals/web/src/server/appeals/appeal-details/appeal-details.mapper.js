@@ -249,6 +249,24 @@ function mapStatusDependentNotifications(
 				`<p class="govuk-notification-banner__heading">Appeal ready to be assigned to case officer</p><p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/${appealDetails.appealId}/assign-user/case-officer" data-cy="banner-assign-case-officer">Assign case officer</a></p>`
 			);
 			break;
+		case APPEAL_CASE_STATUS.VALIDATION:
+			addNotificationBannerToSession(
+				session,
+				'readyForValidation',
+				appealDetails.appealId,
+				`<p class="govuk-notification-banner__heading">Appeal ready for validation</p><p><a class="govuk-notification-banner__link" data-cy="validate-appeal" href="/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case">Validate <span class="govuk-visually-hidden">appeal</span></a></p>`
+			);
+			break;
+		case APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE:
+			if (appealDetails.lpaQuestionnaireId) {
+				addNotificationBannerToSession(
+					session,
+					'readyForLpaQuestionnaireReview',
+					appealDetails.appealId,
+					`<p class="govuk-notification-banner__heading">LPA questionnaire ready for review</p><p><a class="govuk-notification-banner__link" data-cy="review-lpa-questionnaire" href="/appeals-service/appeal-details/${appealDetails.appealId}/lpa-questionnaire/${appealDetails.lpaQuestionnaireId}">Review <span class="govuk-visually-hidden">LPA questionnaire</span></a></p>`
+				);
+			}
+			break;
 		case APPEAL_CASE_STATUS.ISSUE_DETERMINATION:
 			addNotificationBannerToSession(
 				session,
