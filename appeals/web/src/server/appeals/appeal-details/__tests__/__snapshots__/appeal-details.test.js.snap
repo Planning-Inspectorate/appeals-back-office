@@ -68,6 +68,20 @@ exports[`appeal-details GET /:appealId Appeal decision should render a row in th
 
 exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with with "Issue" action link to the issue decision start page, if the appeal status is "issue_determination" 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not yet issued</dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/issue-decision/decision"> Issue<span class="govuk-visually-hidden"> decision</span></a></dd></div>"`;
 
+exports[`appeal-details GET /:appealId Notification banners should render a "Appeal ready for validation" important notification banner with a link to validate the appeal when the appeal status is "validation" 1`] = `
+"<div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
+data-module="govuk-notification-banner">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
+    </div>
+    <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">Appeal ready for validation</p>
+        <p><a class="govuk-notification-banner__link" data-cy="validate-appeal" href="/appeals-service/appeal-details/2/appellant-case">Validate <span class="govuk-visually-hidden">appeal</span></a>
+        </p>
+    </div>
+</div>"
+`;
+
 exports[`appeal-details GET /:appealId Notification banners should render a "Appeal ready to be assigned to case officer" important notification banner with a link to assign case officer when status is "Assign case officer" 1`] = `
 "<div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
 data-module="govuk-notification-banner">
@@ -101,6 +115,21 @@ exports[`appeal-details GET /:appealId Notification banners should render a "Hor
 "<div class="govuk-inset-text govuk-!-margin-top-0">
     <p class="govuk-body">This appeal needed to change to a (C) Enforcement notice appeal</p>
     <p     class="govuk-body">It has been transferred to Horizon with the reference 12345</p>
+</div>"
+`;
+
+exports[`appeal-details GET /:appealId Notification banners should render a "LPA questionnaire ready for review" notification banner with a link to review the questionnaire when the appeal status is "lpa_questionnaire" and the appeal has an LPA questionnaire ID 1`] = `
+"<div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
+data-module="govuk-notification-banner">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
+    </div>
+    <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">LPA questionnaire ready for review</p>
+        <p><a class="govuk-notification-banner__link" data-cy="review-lpa-questionnaire"
+            href="/appeals-service/appeal-details/2/lpa-questionnaire/123">Review <span class="govuk-visually-hidden">LPA questionnaire</span></a>
+        </p>
+    </div>
 </div>"
 `;
 
@@ -3360,6 +3389,21 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
 exports[`appeal-details GET /:appealId should render the appellant case status as "Incomplete" if the appellant case validation status is incomplete, and the due date is in the future 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
+            data-module="govuk-notification-banner">
+                <div class="govuk-notification-banner__header">
+                    <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
+                </div>
+                <div class="govuk-notification-banner__content">
+                    <p class="govuk-notification-banner__heading">Appeal ready for validation</p>
+                    <p><a class="govuk-notification-banner__link" data-cy="validate-appeal" href="/appeals-service/appeal-details/1/appellant-case">Validate <span class="govuk-visually-hidden">appeal</span></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
             <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Case details</h1>
         </div>
@@ -3772,6 +3816,21 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
 exports[`appeal-details GET /:appealId should render the appellant case status as "Incomplete" if the appellant case validation status is incomplete, and the due date is today 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
+            data-module="govuk-notification-banner">
+                <div class="govuk-notification-banner__header">
+                    <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
+                </div>
+                <div class="govuk-notification-banner__content">
+                    <p class="govuk-notification-banner__heading">Appeal ready for validation</p>
+                    <p><a class="govuk-notification-banner__link" data-cy="validate-appeal" href="/appeals-service/appeal-details/1/appellant-case">Validate <span class="govuk-visually-hidden">appeal</span></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
             <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Case details</h1>
         </div>
@@ -4183,6 +4242,21 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
 
 exports[`appeal-details GET /:appealId should render the appellant case status as "Overdue" if the appellant case validation status is incomplete, and the due date is in the past 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
+            data-module="govuk-notification-banner">
+                <div class="govuk-notification-banner__header">
+                    <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
+                </div>
+                <div class="govuk-notification-banner__content">
+                    <p class="govuk-notification-banner__heading">Appeal ready for validation</p>
+                    <p><a class="govuk-notification-banner__link" data-cy="validate-appeal" href="/appeals-service/appeal-details/1/appellant-case">Validate <span class="govuk-visually-hidden">appeal</span></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
             <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Case details</h1>
