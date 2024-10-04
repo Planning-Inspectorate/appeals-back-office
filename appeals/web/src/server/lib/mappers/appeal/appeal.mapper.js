@@ -76,7 +76,7 @@ export async function initialiseAndMapAppealData(
 
 	const inspectorUser = appealDetails.inspector
 		? await usersService.getUserByRoleAndId(
-				config.referenceData.appeals.caseOfficerGroupId,
+				config.referenceData.appeals.inspectorGroupId,
 				session,
 				appealDetails.inspector
 		  )
