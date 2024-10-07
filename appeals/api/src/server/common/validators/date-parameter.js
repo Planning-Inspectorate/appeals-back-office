@@ -1,4 +1,4 @@
-import { isEqual } from 'date-fns';
+import { parseISO } from 'date-fns';
 import {
 	ERROR_MUST_BE_BUSINESS_DAY,
 	ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT,
@@ -37,7 +37,7 @@ const validateDateParameter = ({
 
 	return validator
 		.custom((value) => {
-			const parsedDate = new Date(value);
+			const parsedDate = parseISO(value);
 			if (isNaN(parsedDate.getTime())) {
 				throw new Error(ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT);
 			}
@@ -45,17 +45,21 @@ const validateDateParameter = ({
 			return parsedDate;
 		})
 		.matches(isoUtcRegex)
-		.toDate()
 		.withMessage(ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT)
-		.custom((value) => (mustBeFutureDate ? dateIsAfterDate(value, new Date()) : true))
+		.bail()
+		.custom((value) => (mustBeFutureDate ? dateIsAfterDate(parseISO(value), new Date()) : true))
 		.withMessage(ERROR_MUST_BE_IN_FUTURE)
-		.custom((value) => (mustBeNotBeFutureDate ? dateIsPastOrToday(value, new Date()) : true))
+		.bail()
+		.custom((value) =>
+			mustBeNotBeFutureDate ? dateIsPastOrToday(parseISO(value), new Date()) : true
+		)
 		.withMessage(ERROR_MUST_NOT_BE_IN_FUTURE)
+		.bail()
 		.custom(async (value) => {
 			if (mustBeBusinessDay) {
-				const recalculatedDate = await recalculateDateIfNotBusinessDay(value.toISOString());
-
-				if (!isEqual(value, recalculatedDate)) {
+				const recalculatedDate = await recalculateDateIfNotBusinessDay(value);
+				const originalDate = parseISO(value);
+				if (!isSameDay(originalDate, recalculatedDate)) {
 					throw new Error(ERROR_MUST_BE_BUSINESS_DAY);
 				}
 			}
@@ -64,5 +68,16 @@ const validateDateParameter = ({
 		})
 		.custom(customFn);
 };
+
+/**
+ *
+ * @param {Date} dateleft
+ * @param {Date} dateright
+ * @returns {boolean}
+ */
+const isSameDay = (dateleft, dateright) =>
+	dateleft.getDay() === dateright.getDay() &&
+	dateleft.getMonth() === dateright.getMonth() &&
+	dateleft.getFullYear() === dateright.getFullYear();
 
 export default validateDateParameter;

@@ -130,9 +130,15 @@ export class CaseDetailsPage extends Page {
 	uploadSampleDoc() {
 		cy.get('#upload-file-1').selectFile('cypress/fixtures/sample-file.doc', { force: true });
 	}
+
 	uploadSampleImg() {
 		cy.get('#upload-file-1').selectFile('cypress/fixtures/sample-img.jpeg', { force: true });
 	}
+
+	uploadSamplePdf() {
+		cy.get('#upload-file-1').selectFile('cypress/fixtures/test.pdf', { force: true });
+	}
+
 	// TODO Get this to use the vanilla 'clickButtonByText()' function
 	// This currently doesn't work, as there are multiple matches and some of not invisible
 	clickAddAnother() {

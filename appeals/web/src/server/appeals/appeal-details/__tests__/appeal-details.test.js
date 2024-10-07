@@ -1053,7 +1053,9 @@ describe('appeal-details', () => {
 				expect(notificationBannerElementHTML).toContain(
 					`href="/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}"`
 				);
-				expect(notificationBannerElementHTML).toContain('data-cy="review-lpa-questionnaire"');
+				expect(notificationBannerElementHTML).toContain(
+					'data-cy="review-lpa-questionnaire-banner"'
+				);
 				expect(notificationBannerElementHTML).toContain(
 					'Review <span class="govuk-visually-hidden">LPA questionnaire</span></a>'
 				);

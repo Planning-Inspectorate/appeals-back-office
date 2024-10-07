@@ -25,7 +25,7 @@ describe('business day validation routes', () => {
 
 			test('BST weekend day', async () => {
 				const payload = {
-					inputDate: '2024-10-26T00:00:00.000Z'
+					inputDate: '2024-10-25T23:00:00.000Z'
 				};
 
 				const response = await request.post('/appeals/validate-business-date').send(payload);
@@ -35,7 +35,7 @@ describe('business day validation routes', () => {
 
 			test('BST business day', async () => {
 				const payload = {
-					inputDate: '2024-10-25T22:00:00.000Z'
+					inputDate: '2024-10-24T23:00:00.000Z'
 				};
 
 				const response = await request.post('/appeals/validate-business-date').send(payload);

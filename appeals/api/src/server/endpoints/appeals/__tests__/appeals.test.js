@@ -955,8 +955,8 @@ describe('appeals routes', () => {
 
 				expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
 					data: {
-						caseStartedDate: new Date('2023-05-05T00:00:00.000Z'),
-						caseValidDate: new Date('2023-05-25T00:00:00.000Z'),
+						caseStartedDate: '2023-05-05T00:00:00.000Z',
+						caseValidDate: '2023-05-25T00:00:00.000Z',
 						caseUpdatedDate: expect.any(Date)
 					},
 					where: {

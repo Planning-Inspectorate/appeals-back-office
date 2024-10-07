@@ -101,7 +101,7 @@ describe('appeal decision routes', () => {
 			databaseConnector.document.findUnique.mockResolvedValue(documentCreated);
 
 			const tomorrow = add(new Date(), { days: 1 });
-			const utcDate = setTimeInTimeZone(tomorrow, 10, 0);
+			const utcDate = setTimeInTimeZone(tomorrow, 0, 0);
 
 			const response = await request
 				.post(`/appeals/${householdAppeal.id}/inspector-decision`)
@@ -127,7 +127,7 @@ describe('appeal decision routes', () => {
 
 			const tenDaysAgo = sub(new Date(), { days: 10 });
 			const withoutWeekends = await recalculateDateIfNotBusinessDay(tenDaysAgo.toISOString());
-			const utcDate = setTimeInTimeZone(withoutWeekends, 10, 0);
+			const utcDate = setTimeInTimeZone(withoutWeekends, 0, 0);
 
 			const response = await request
 				.post(`/appeals/${householdAppeal.id}/inspector-decision`)
@@ -164,7 +164,7 @@ describe('appeal decision routes', () => {
 
 			const tenDaysAgo = sub(new Date(), { days: 10 });
 			const withoutWeekends = await recalculateDateIfNotBusinessDay(tenDaysAgo.toISOString());
-			const utcDate = setTimeInTimeZone(withoutWeekends, 10, 0);
+			const utcDate = setTimeInTimeZone(withoutWeekends, 0, 0);
 
 			const response = await request
 				.post(`/appeals/${householdAppeal.id}/inspector-decision`)

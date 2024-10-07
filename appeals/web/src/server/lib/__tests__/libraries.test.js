@@ -202,7 +202,9 @@ describe('Libraries', () => {
 				const convertedDate = dayMonthYearHourMinuteToISOString({
 					day: 1,
 					month: 12,
-					year: 2023
+					year: 2023,
+					hour: 0,
+					minute: 0
 				});
 
 				expect(convertedDate).toBe('2023-12-01T00:00:00.000Z');
@@ -212,7 +214,9 @@ describe('Libraries', () => {
 				const convertedDate = dayMonthYearHourMinuteToISOString({
 					day: 10,
 					month: 12,
-					year: 2023
+					year: 2023,
+					hour: 0,
+					minute: 0
 				});
 
 				expect(convertedDate).toBe('2023-12-10T00:00:00.000Z');
