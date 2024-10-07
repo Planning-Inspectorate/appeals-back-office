@@ -9,7 +9,7 @@ import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { capitalize } from 'lodash-es';
 import { APPEAL_APPLICATION_DECISION, APPEAL_KNOWS_OTHER_OWNERS } from 'pins-data-model';
 import { booleanSummaryListItem } from '#lib/mappers/components/boolean.js';
-import { documentTypeDisplayInstruction } from '#lib/mappers/components/document.js';
+import { documentSummaryListItem } from '#lib/mappers/components/document.js';
 import { textDisplayField } from '#lib/mappers/components/text.js';
 
 /**
@@ -42,7 +42,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 	 * @returns {Instructions}
 	 */
 	const documentInstruction = ({ id, text, folderInfo, cypressDataName }) => {
-		return documentTypeDisplayInstruction({
+		return documentSummaryListItem({
 			id,
 			text,
 			appealId: appellantCaseData.appealId,
