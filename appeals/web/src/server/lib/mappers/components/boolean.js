@@ -12,7 +12,7 @@ import { convertFromBooleanToYesNo } from '#lib/boolean-formatter.js';
  * @param {boolean} options.userHasEditPermission
  * @returns {Instructions}
  */
-export function booleanDisplayInstruction({
+export function booleanSummaryListItem({
 	id,
 	text,
 	value,

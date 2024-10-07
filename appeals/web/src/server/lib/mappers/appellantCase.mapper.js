@@ -8,7 +8,7 @@ import { formatServiceUserAsHtmlList } from '#lib/service-user-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { capitalize } from 'lodash-es';
 import { APPEAL_APPLICATION_DECISION, APPEAL_KNOWS_OTHER_OWNERS } from 'pins-data-model';
-import { booleanDisplayInstruction } from '#lib/mappers/components/boolean.js';
+import { booleanSummaryListItem } from '#lib/mappers/components/boolean.js';
 import { documentTypeDisplayInstruction } from '#lib/mappers/components/document.js';
 import { textDisplayField } from '#lib/mappers/components/text.js';
 
@@ -109,7 +109,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		userHasEditPermission: userHasUpdateCase
 	});
 
-	mappedData.inGreenBelt = booleanDisplayInstruction({
+	mappedData.inGreenBelt = booleanSummaryListItem({
 		id: 'green-belt',
 		text: 'In green belt',
 		value: appellantCaseData.isGreenBelt,
@@ -143,7 +143,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		withShowMore: true
 	});
 
-	mappedData.changedDevelopmentDescription = booleanDisplayInstruction({
+	mappedData.changedDevelopmentDescription = booleanSummaryListItem({
 		id: 'changed-development-description',
 		text: 'LPA changed the development description',
 		value: appellantCaseData.developmentDescription?.isChanged,
@@ -220,7 +220,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		userHasEditPermission: userHasUpdateCase
 	});
 
-	mappedData.advertisedAppeal = booleanDisplayInstruction({
+	mappedData.advertisedAppeal = booleanSummaryListItem({
 		id: 'advertised-appeal',
 		text: 'Advertised appeal',
 		value: appellantCaseData.hasAdvertisedAppeal,
@@ -323,7 +323,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		folderInfo: appellantCaseData.documents.planningObligation
 	});
 
-	mappedData.ownershipCertificateSubmitted = booleanDisplayInstruction({
+	mappedData.ownershipCertificateSubmitted = booleanSummaryListItem({
 		id: 'ownership-certificate-submitted',
 		text: 'Ownership certificate or land declaration submitted',
 		value: appellantCaseData.ownershipCertificateSubmitted,
@@ -500,7 +500,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		}
 	};
 
-	mappedData.planningObligationInSupport = booleanDisplayInstruction({
+	mappedData.planningObligationInSupport = booleanSummaryListItem({
 		id: 'planning-obligation-in-support',
 		text: 'Planning obligation in support',
 		value: appellantCaseData.planningObligation?.hasObligation,
@@ -519,7 +519,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		userHasEditPermission: userHasUpdateCase
 	});
 
-	mappedData.partOfAgriculturalHolding = booleanDisplayInstruction({
+	mappedData.partOfAgriculturalHolding = booleanSummaryListItem({
 		id: 'part-of-agricultural-holding',
 		text: 'Part of agricultural holding',
 		value: appellantCaseData.agriculturalHolding.isPartOfAgriculturalHolding,
@@ -528,7 +528,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		userHasEditPermission: userHasUpdateCase
 	});
 
-	mappedData.tenantOfAgriculturalHolding = booleanDisplayInstruction({
+	mappedData.tenantOfAgriculturalHolding = booleanSummaryListItem({
 		id: 'tenant-of-agricultural-holding',
 		text: 'Tenant of agricultural holding',
 		value: appellantCaseData.agriculturalHolding.isTenant,
@@ -537,7 +537,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		userHasEditPermission: userHasUpdateCase
 	});
 
-	mappedData.otherTenantsOfAgriculturalHolding = booleanDisplayInstruction({
+	mappedData.otherTenantsOfAgriculturalHolding = booleanSummaryListItem({
 		id: 'other-tenants-of-agricultural-holding',
 		text: 'Other tenants',
 		value: appellantCaseData.agriculturalHolding.hasOtherTenants,
@@ -546,7 +546,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		userHasEditPermission: userHasUpdateCase
 	});
 
-	mappedData.appellantCostsApplication = booleanDisplayInstruction({
+	mappedData.appellantCostsApplication = booleanSummaryListItem({
 		id: 'appellant-costs-application',
 		text: 'Applied for award of appeal costs',
 		value: appellantCaseData.appellantCostsAppliedFor,
