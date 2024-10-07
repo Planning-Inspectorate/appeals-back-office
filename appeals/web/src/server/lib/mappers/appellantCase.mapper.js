@@ -8,9 +8,9 @@ import { formatServiceUserAsHtmlList } from '#lib/service-user-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { capitalize } from 'lodash-es';
 import { APPEAL_APPLICATION_DECISION, APPEAL_KNOWS_OTHER_OWNERS } from 'pins-data-model';
-import { booleanDisplayInstruction } from '#lib/page-components/boolean.js';
-import { documentTypeDisplayInstruction } from '#lib/page-components/document.js';
-import { textDisplayField } from '#lib/page-components/text.js';
+import { booleanDisplayInstruction } from '#lib/mappers/components/boolean.js';
+import { documentTypeDisplayInstruction } from '#lib/mappers/components/document.js';
+import { textDisplayField } from '#lib/mappers/components/text.js';
 
 /**
  * @typedef {import('@pins/appeals.api').Appeals.FolderInfo} FolderInfo

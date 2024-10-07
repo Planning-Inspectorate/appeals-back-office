@@ -1,4 +1,4 @@
-import { textDisplayField } from '#lib/page-components/text.js';
+import { textDisplayField } from '#lib/mappers/components/text.js';
 
 /** @type {import('../appeal.mapper.js').SubMapper} */
 export const mapCaseProcedure = ({ appealDetails, currentRoute, userHasUpdateCasePermission }) =>
