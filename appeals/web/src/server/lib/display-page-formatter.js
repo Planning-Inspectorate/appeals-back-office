@@ -1,6 +1,5 @@
 import logger from '#lib/logger.js';
 import config from '#environment/config.js';
-import { buildHtmSpan } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { appealShortReference } from './nunjucks-filters/appeals.js';
 import { mapDocumentInfoVirusCheckStatus } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
@@ -47,23 +46,6 @@ export const formatListOfNotificationMethodsToHtml = (notificationMethods) => {
 	// TODO: check LPANotificationMethodDetails in SingleAppellantCaseResponse
 	// @ts-ignore
 	return `<ul>${notificationMethods.map((method) => `<li>${method.name}</li>`).join('')}</ul>`;
-};
-
-/**
- * @param {string|null|undefined} answer
- * @param {string|null|undefined} details
- * @returns {string}
- */
-export const formatAnswerAndDetails = (answer, details) => {
-	if (!details) {
-		details = '';
-	}
-	if (!answer) {
-		answer = '';
-	}
-	return answer === 'Yes'
-		? `${buildHtmSpan(answer)}<br>${buildHtmSpan(details)}`
-		: `${buildHtmSpan(answer)}`;
 };
 
 /**

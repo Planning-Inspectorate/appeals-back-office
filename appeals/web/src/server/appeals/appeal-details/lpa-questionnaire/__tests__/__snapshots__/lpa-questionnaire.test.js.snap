@@ -204,7 +204,7 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
                         <br><span>The entrance is at the back of the property</span>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/2/inspector-access/change/lpa"
-                        lpaQuestionnaireData-cy="change-does-site-require-inspector-access"> Change<span class="govuk-visually-hidden"> Site access required</span></a>
+                        data-cy="change-does-site-require-inspector-access"> Change<span class="govuk-visually-hidden"> Site access required</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
@@ -228,7 +228,7 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
                         <br><span>There is no mobile signal at the property</span>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/2/safety-risks/change/lpa"
-                        lpaQuestionnaireData-cy="change-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks</span></a>
+                        data-cy="change-health-and-safety"> Change<span class="govuk-visually-hidden"> Potential safety risks</span></a>
                     </dd>
                 </div>
             </dl>
@@ -526,7 +526,7 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
                         <br><span>The entrance is at the back of the property</span>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/inspector-access/change/lpa"
-                        lpaQuestionnaireData-cy="change-does-site-require-inspector-access"> Change<span class="govuk-visually-hidden"> Site access required</span></a>
+                        data-cy="change-does-site-require-inspector-access"> Change<span class="govuk-visually-hidden"> Site access required</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
@@ -550,7 +550,7 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
                         <br><span>There is no mobile signal at the property</span>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/safety-risks/change/lpa"
-                        lpaQuestionnaireData-cy="change-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks</span></a>
+                        data-cy="change-health-and-safety"> Change<span class="govuk-visually-hidden"> Potential safety risks</span></a>
                     </dd>
                 </div>
             </dl>
@@ -883,7 +883,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                         <br><span>The entrance is at the back of the property</span>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/inspector-access/change/lpa"
-                        lpaQuestionnaireData-cy="change-does-site-require-inspector-access"> Change<span class="govuk-visually-hidden"> Site access required</span></a>
+                        data-cy="change-does-site-require-inspector-access"> Change<span class="govuk-visually-hidden"> Site access required</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
@@ -907,7 +907,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                         <br><span>There is no mobile signal at the property</span>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/safety-risks/change/lpa"
-                        lpaQuestionnaireData-cy="change-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks</span></a>
+                        data-cy="change-health-and-safety"> Change<span class="govuk-visually-hidden"> Potential safety risks</span></a>
                     </dd>
                 </div>
             </dl>
@@ -1199,7 +1199,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                         <br><span>The entrance is at the back of the property</span>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/inspector-access/change/lpa"
-                        lpaQuestionnaireData-cy="change-does-site-require-inspector-access"> Change<span class="govuk-visually-hidden"> Site access required</span></a>
+                        data-cy="change-does-site-require-inspector-access"> Change<span class="govuk-visually-hidden"> Site access required</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
@@ -1223,7 +1223,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                         <br><span>There is no mobile signal at the property</span>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/safety-risks/change/lpa"
-                        lpaQuestionnaireData-cy="change-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks</span></a>
+                        data-cy="change-health-and-safety"> Change<span class="govuk-visually-hidden"> Potential safety risks</span></a>
                     </dd>
                 </div>
             </dl>
@@ -3396,7 +3396,7 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                         <br><span>The entrance is at the back of the property</span>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/inspector-access/change/lpa"
-                        lpaQuestionnaireData-cy="change-does-site-require-inspector-access"> Change<span class="govuk-visually-hidden"> Site access required</span></a>
+                        data-cy="change-does-site-require-inspector-access"> Change<span class="govuk-visually-hidden"> Site access required</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
@@ -3420,7 +3420,7 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                         <br><span>There is no mobile signal at the property</span>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/safety-risks/change/lpa"
-                        lpaQuestionnaireData-cy="change-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks</span></a>
+                        data-cy="change-health-and-safety"> Change<span class="govuk-visually-hidden"> Potential safety risks</span></a>
                     </dd>
                 </div>
             </dl>

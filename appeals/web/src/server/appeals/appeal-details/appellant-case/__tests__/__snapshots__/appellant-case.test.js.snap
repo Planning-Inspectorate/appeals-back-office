@@ -142,7 +142,7 @@ exports[`appellant-case GET /appellant-case should render a "Inspector access (a
                         <br><span>Dogs on site</span>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/safety-risks/change/appellant"
-                        data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks</span></a>
+                        data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> Potential safety risks</span></a>
                     </dd>
                 </div>
             </dl>
@@ -402,7 +402,7 @@ exports[`appellant-case GET /appellant-case should render a "LPA application ref
                         <br><span>Dogs on site</span>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/safety-risks/change/appellant"
-                        data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks</span></a>
+                        data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> Potential safety risks</span></a>
                     </dd>
                 </div>
             </dl>
@@ -698,7 +698,7 @@ exports[`appellant-case GET /appellant-case should render a "Site area updated" 
                         <br><span>Dogs on site</span>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/safety-risks/change/appellant"
-                        data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks</span></a>
+                        data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> Potential safety risks</span></a>
                     </dd>
                 </div>
             </dl>
@@ -958,7 +958,7 @@ exports[`appellant-case GET /appellant-case should render a "Site health and saf
                         <br><span>Dogs on site</span>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/safety-risks/change/appellant"
-                        data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks</span></a>
+                        data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> Potential safety risks</span></a>
                     </dd>
                 </div>
             </dl>
@@ -1218,7 +1218,7 @@ exports[`appellant-case GET /appellant-case should render a "Site updated" notif
                         <br><span>Dogs on site</span>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/safety-risks/change/appellant"
-                        data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks</span></a>
+                        data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> Potential safety risks</span></a>
                     </dd>
                 </div>
             </dl>
@@ -1490,7 +1490,7 @@ exports[`appellant-case GET /appellant-case should render a success notification
                         <br><span>Dogs on site</span>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/safety-risks/change/appellant"
-                        data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks</span></a>
+                        data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> Potential safety risks</span></a>
                     </dd>
                 </div>
             </dl>
@@ -1832,7 +1832,7 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
                         <br><span>Dogs on site</span>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/safety-risks/change/appellant"
-                        data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks</span></a>
+                        data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> Potential safety risks</span></a>
                     </dd>
                 </div>
             </dl>
@@ -2112,7 +2112,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         <br><span>Dogs on site</span>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/safety-risks/change/appellant"
-                        data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks</span></a>
+                        data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> Potential safety risks</span></a>
                     </dd>
                 </div>
             </dl>
@@ -2418,7 +2418,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         <br><span>Dogs on site</span>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/safety-risks/change/appellant"
-                        data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks</span></a>
+                        data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> Potential safety risks</span></a>
                     </dd>
                 </div>
             </dl>
@@ -4689,7 +4689,7 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                         <br><span>Dogs on site</span>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/safety-risks/change/appellant"
-                        data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks</span></a>
+                        data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> Potential safety risks</span></a>
                     </dd>
                 </div>
             </dl>

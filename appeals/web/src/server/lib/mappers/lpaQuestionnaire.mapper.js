@@ -1,9 +1,11 @@
-import { convertFromBooleanToYesNo } from '../boolean-formatter.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
 import { isFolderInfo } from '#lib/ts-utilities.js';
 import { mapActionComponent, userHasPermission } from './permissions.mapper.js';
 import { permissionNames } from '#environment/permissions.js';
-import { booleanSummaryListItem } from '#lib/mappers/components/boolean.js';
+import {
+	booleanSummaryListItem,
+	booleanWithDetailsSummaryListItem
+} from '#lib/mappers/components/boolean.js';
 import { documentSummaryListItem } from '#lib/mappers/components/document.js';
 import { textSummaryListItem } from '#lib/mappers/components/text.js';
 
@@ -195,68 +197,28 @@ export function initialiseAndMapLPAQData(
 		folderInfo: lpaQuestionnaireData.documents.developmentPlanPolicies
 	});
 
-	/** @type {Instructions} */
-	mappedData.lpaq.siteAccess = {
+	mappedData.lpaq.siteAccess = booleanWithDetailsSummaryListItem({
 		id: 'does-site-require-inspector-access',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Site access required'
-				},
-				value: {
-					html: displayPageFormatter.formatAnswerAndDetails(
-						convertFromBooleanToYesNo(
-							lpaQuestionnaireData.doesSiteRequireInspectorAccess,
-							'No answer provided'
-						),
-						lpaQuestionnaireData.inspectorAccessDetails
-					)
-				},
-				actions: {
-					items: [
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Change',
-							visuallyHiddenText: 'Site access required',
-							href: `${currentRoute}/inspector-access/change/lpa`,
-							attributes: { 'lpaQuestionnaireData-cy': 'change-does-site-require-inspector-access' }
-						})
-					]
-				}
-			}
-		}
-	};
+		text: 'Site access required',
+		value: lpaQuestionnaireData.doesSiteRequireInspectorAccess,
+		valueDetails: lpaQuestionnaireData.inspectorAccessDetails,
+		defaultText: 'No answer provided',
+		link: `${currentRoute}/inspector-access/change/lpa`,
+		userHasEditPermission: userHasUpdateCase,
+		addCyAttribute: true
+	});
 
-	/** @type {Instructions} */
-	mappedData.lpaq.lpaHealthAndSafety = {
+	mappedData.lpaq.lpaHealthAndSafety = booleanWithDetailsSummaryListItem({
 		id: 'health-and-safety',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Potential safety risks'
-				},
-				value: {
-					html: displayPageFormatter.formatAnswerAndDetails(
-						convertFromBooleanToYesNo(
-							lpaQuestionnaireData.doesSiteHaveHealthAndSafetyIssues,
-							'No answer provided'
-						),
-						lpaQuestionnaireData.healthAndSafetyDetails
-					)
-				},
-				actions: {
-					items: [
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Change',
-							href: `${currentRoute}/safety-risks/change/lpa`,
-							visuallyHiddenText: 'potential safety risks',
-							attributes: { 'lpaQuestionnaireData-cy': 'change-health-and-safety' }
-						})
-					]
-				},
-				classes: 'lpa-health-and-safety'
-			}
-		}
-	};
+		text: 'Potential safety risks',
+		value: lpaQuestionnaireData.doesSiteHaveHealthAndSafetyIssues,
+		valueDetails: lpaQuestionnaireData.healthAndSafetyDetails,
+		defaultText: 'No answer provided',
+		link: `${currentRoute}/safety-risks/change/lpa`,
+		userHasEditPermission: userHasUpdateCase,
+		addCyAttribute: true,
+		classes: 'lpa-health-and-safety'
+	});
 
 	const otherAppealsItems = [];
 
@@ -300,32 +262,15 @@ export function initialiseAndMapLPAQData(
 		}
 	};
 
-	/** @type {Instructions} */
-	mappedData.lpaq.extraConditions = {
+	mappedData.lpaq.extraConditions = booleanWithDetailsSummaryListItem({
 		id: 'extra-conditions',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Extra conditions'
-				},
-				value: {
-					html: displayPageFormatter.formatAnswerAndDetails(
-						convertFromBooleanToYesNo(lpaQuestionnaireData.hasExtraConditions, ''),
-						lpaQuestionnaireData.extraConditions
-					)
-				},
-				actions: {
-					items: [
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Change',
-							visuallyHiddenText: 'Extra conditions',
-							href: `${currentRoute}/extra-conditions/change`
-						})
-					]
-				}
-			}
-		}
-	};
+		text: 'Extra conditions',
+		value: lpaQuestionnaireData.hasExtraConditions,
+		valueDetails: lpaQuestionnaireData.extraConditions,
+		defaultText: '',
+		link: `${currentRoute}/extra-conditions/change`,
+		userHasEditPermission: userHasUpdateCase
+	});
 
 	/** @type {Instructions} */
 	mappedData.lpaq.additionalDocumentsContents = {

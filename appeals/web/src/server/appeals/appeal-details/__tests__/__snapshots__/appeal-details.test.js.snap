@@ -540,8 +540,7 @@ exports[`appeal-details GET /:appealId should not render action links to the man
                         <div class="govuk-summary-list__row appeal-appellant-inspector-access"><dt class="govuk-summary-list__key"> Inspection access (appellant answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inspector-access/change/appellant"
-                                    data-cy="change-inspection-access-appellant"> Change<span class="govuk-visually-hidden"> inspection access (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inspector-access/change/appellant"> Change<span class="govuk-visually-hidden"> Inspection access (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
@@ -588,8 +587,7 @@ exports[`appeal-details GET /:appealId should not render action links to the man
                             <dd                             class="govuk-summary-list__value"><span>Yes</span>
                                 <br><span>Dogs on site</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/safety-risks/change/appellant"
-                                    data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/safety-risks/change/appellant"> Change<span class="govuk-visually-hidden"> Potential safety risks (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
@@ -964,8 +962,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                         <div class="govuk-summary-list__row appeal-appellant-inspector-access"><dt class="govuk-summary-list__key"> Inspection access (appellant answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inspector-access/change/appellant"
-                                    data-cy="change-inspection-access-appellant"> Change<span class="govuk-visually-hidden"> inspection access (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inspector-access/change/appellant"> Change<span class="govuk-visually-hidden"> Inspection access (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
@@ -1012,8 +1009,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                             <dd                             class="govuk-summary-list__value"><span>Yes</span>
                                 <br><span>Dogs on site</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/appellant"
-                                    data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/appellant"> Change<span class="govuk-visually-hidden"> Potential safety risks (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
@@ -1383,8 +1379,7 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                         <div class="govuk-summary-list__row appeal-appellant-inspector-access"><dt class="govuk-summary-list__key"> Inspection access (appellant answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inspector-access/change/appellant"
-                                    data-cy="change-inspection-access-appellant"> Change<span class="govuk-visually-hidden"> inspection access (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inspector-access/change/appellant"> Change<span class="govuk-visually-hidden"> Inspection access (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
@@ -1431,8 +1426,7 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                             <dd                             class="govuk-summary-list__value"><span>Yes</span>
                                 <br><span>Dogs on site</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/safety-risks/change/appellant"
-                                    data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/safety-risks/change/appellant"> Change<span class="govuk-visually-hidden"> Potential safety risks (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
@@ -1802,8 +1796,7 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                         <div class="govuk-summary-list__row appeal-appellant-inspector-access"><dt class="govuk-summary-list__key"> Inspection access (appellant answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inspector-access/change/appellant"
-                                    data-cy="change-inspection-access-appellant"> Change<span class="govuk-visually-hidden"> inspection access (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inspector-access/change/appellant"> Change<span class="govuk-visually-hidden"> Inspection access (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
@@ -1850,8 +1843,7 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                             <dd                             class="govuk-summary-list__value"><span>Yes</span>
                                 <br><span>Dogs on site</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/safety-risks/change/appellant"
-                                    data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/safety-risks/change/appellant"> Change<span class="govuk-visually-hidden"> Potential safety risks (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
@@ -2237,8 +2229,7 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
                         <div class="govuk-summary-list__row appeal-appellant-inspector-access"><dt class="govuk-summary-list__key"> Inspection access (appellant answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inspector-access/change/appellant"
-                                    data-cy="change-inspection-access-appellant"> Change<span class="govuk-visually-hidden"> inspection access (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inspector-access/change/appellant"> Change<span class="govuk-visually-hidden"> Inspection access (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
@@ -2285,8 +2276,7 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
                             <dd                             class="govuk-summary-list__value"><span>Yes</span>
                                 <br><span>Dogs on site</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/safety-risks/change/appellant"
-                                    data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/safety-risks/change/appellant"> Change<span class="govuk-visually-hidden"> Potential safety risks (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
@@ -2657,8 +2647,7 @@ exports[`appeal-details GET /:appealId should render an Issue a decision notific
                         <div class="govuk-summary-list__row appeal-appellant-inspector-access"><dt class="govuk-summary-list__key"> Inspection access (appellant answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inspector-access/change/appellant"
-                                    data-cy="change-inspection-access-appellant"> Change<span class="govuk-visually-hidden"> inspection access (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inspector-access/change/appellant"> Change<span class="govuk-visually-hidden"> Inspection access (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
@@ -2705,8 +2694,7 @@ exports[`appeal-details GET /:appealId should render an Issue a decision notific
                             <dd                             class="govuk-summary-list__value"><span>Yes</span>
                                 <br><span>Dogs on site</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/appellant"
-                                    data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/appellant"> Change<span class="govuk-visually-hidden"> Potential safety risks (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
@@ -3064,8 +3052,7 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                         <div class="govuk-summary-list__row appeal-appellant-inspector-access"><dt class="govuk-summary-list__key"> Inspection access (appellant answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inspector-access/change/appellant"
-                                    data-cy="change-inspection-access-appellant"> Change<span class="govuk-visually-hidden"> inspection access (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inspector-access/change/appellant"> Change<span class="govuk-visually-hidden"> Inspection access (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
@@ -3112,8 +3099,7 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                             <dd                             class="govuk-summary-list__value"><span>Yes</span>
                                 <br><span>Dogs on site</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/safety-risks/change/appellant"
-                                    data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/safety-risks/change/appellant"> Change<span class="govuk-visually-hidden"> Potential safety risks (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
@@ -3479,15 +3465,13 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                         <div class="govuk-summary-list__row appeal-lpa-inspector-access"><dt class="govuk-summary-list__key"> Inspection access (LPA answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inspector-access/change/lpa"
-                                    data-cy="change-inspection-access-lpa"> Change<span class="govuk-visually-hidden"> inspection access (L P A answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inspector-access/change/lpa"> Change<span class="govuk-visually-hidden"> Inspection access (LPA answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-appellant-inspector-access"><dt class="govuk-summary-list__key"> Inspection access (appellant answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inspector-access/change/appellant"
-                                    data-cy="change-inspection-access-appellant"> Change<span class="govuk-visually-hidden"> inspection access (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inspector-access/change/appellant"> Change<span class="govuk-visually-hidden"> Inspection access (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
@@ -3532,16 +3516,14 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                         <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/lpa"
-                                    data-cy="change-lpa-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/lpa"> Change<span class="govuk-visually-hidden"> Potential safety risks (LPA answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>Yes</span>
                                 <br><span>Dogs on site</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/appellant"
-                                    data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/appellant"> Change<span class="govuk-visually-hidden"> Potential safety risks (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
@@ -3906,15 +3888,13 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                         <div class="govuk-summary-list__row appeal-lpa-inspector-access"><dt class="govuk-summary-list__key"> Inspection access (LPA answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inspector-access/change/lpa"
-                                    data-cy="change-inspection-access-lpa"> Change<span class="govuk-visually-hidden"> inspection access (L P A answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inspector-access/change/lpa"> Change<span class="govuk-visually-hidden"> Inspection access (LPA answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-appellant-inspector-access"><dt class="govuk-summary-list__key"> Inspection access (appellant answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inspector-access/change/appellant"
-                                    data-cy="change-inspection-access-appellant"> Change<span class="govuk-visually-hidden"> inspection access (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inspector-access/change/appellant"> Change<span class="govuk-visually-hidden"> Inspection access (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
@@ -3959,16 +3939,14 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                         <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/lpa"
-                                    data-cy="change-lpa-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/lpa"> Change<span class="govuk-visually-hidden"> Potential safety risks (LPA answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>Yes</span>
                                 <br><span>Dogs on site</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/appellant"
-                                    data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/appellant"> Change<span class="govuk-visually-hidden"> Potential safety risks (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
@@ -4333,15 +4311,13 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                         <div class="govuk-summary-list__row appeal-lpa-inspector-access"><dt class="govuk-summary-list__key"> Inspection access (LPA answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inspector-access/change/lpa"
-                                    data-cy="change-inspection-access-lpa"> Change<span class="govuk-visually-hidden"> inspection access (L P A answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inspector-access/change/lpa"> Change<span class="govuk-visually-hidden"> Inspection access (LPA answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-appellant-inspector-access"><dt class="govuk-summary-list__key"> Inspection access (appellant answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inspector-access/change/appellant"
-                                    data-cy="change-inspection-access-appellant"> Change<span class="govuk-visually-hidden"> inspection access (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inspector-access/change/appellant"> Change<span class="govuk-visually-hidden"> Inspection access (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
@@ -4386,16 +4362,14 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                         <div class="govuk-summary-list__row appeal-lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (LPA answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/lpa"
-                                    data-cy="change-lpa-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (L P A answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/lpa"> Change<span class="govuk-visually-hidden"> Potential safety risks (LPA answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-appellant-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks (appellant answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>Yes</span>
                                 <br><span>Dogs on site</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/appellant"
-                                    data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/appellant"> Change<span class="govuk-visually-hidden"> Potential safety risks (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
@@ -4766,8 +4740,7 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                         <div class="govuk-summary-list__row appeal-appellant-inspector-access"><dt class="govuk-summary-list__key"> Inspection access (appellant answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inspector-access/change/appellant"
-                                    data-cy="change-inspection-access-appellant"> Change<span class="govuk-visually-hidden"> inspection access (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inspector-access/change/appellant"> Change<span class="govuk-visually-hidden"> Inspection access (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
@@ -4814,8 +4787,7 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                             <dd                             class="govuk-summary-list__value"><span>Yes</span>
                                 <br><span>Dogs on site</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/safety-risks/change/appellant"
-                                    data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/safety-risks/change/appellant"> Change<span class="govuk-visually-hidden"> Potential safety risks (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
@@ -5327,8 +5299,7 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                         <div class="govuk-summary-list__row appeal-appellant-inspector-access"><dt class="govuk-summary-list__key"> Inspection access (appellant answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inspector-access/change/appellant"
-                                    data-cy="change-inspection-access-appellant"> Change<span class="govuk-visually-hidden"> inspection access (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inspector-access/change/appellant"> Change<span class="govuk-visually-hidden"> Inspection access (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
@@ -5375,8 +5346,7 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                             <dd                             class="govuk-summary-list__value"><span>Yes</span>
                                 <br><span>Dogs on site</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/safety-risks/change/appellant"
-                                    data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/safety-risks/change/appellant"> Change<span class="govuk-visually-hidden"> Potential safety risks (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
@@ -5760,8 +5730,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                         <div class="govuk-summary-list__row appeal-appellant-inspector-access"><dt class="govuk-summary-list__key"> Inspection access (appellant answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inspector-access/change/appellant"
-                                    data-cy="change-inspection-access-appellant"> Change<span class="govuk-visually-hidden"> inspection access (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inspector-access/change/appellant"> Change<span class="govuk-visually-hidden"> Inspection access (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
@@ -5808,8 +5777,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             <dd                             class="govuk-summary-list__value"><span>Yes</span>
                                 <br><span>Dogs on site</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/safety-risks/change/appellant"
-                                    data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/safety-risks/change/appellant"> Change<span class="govuk-visually-hidden"> Potential safety risks (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
@@ -6164,8 +6132,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                         <div class="govuk-summary-list__row appeal-appellant-inspector-access"><dt class="govuk-summary-list__key"> Inspection access (appellant answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inspector-access/change/appellant"
-                                    data-cy="change-inspection-access-appellant"> Change<span class="govuk-visually-hidden"> inspection access (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inspector-access/change/appellant"> Change<span class="govuk-visually-hidden"> Inspection access (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
@@ -6212,8 +6179,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             <dd                             class="govuk-summary-list__value"><span>Yes</span>
                                 <br><span>Dogs on site</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/safety-risks/change/appellant"
-                                    data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/safety-risks/change/appellant"> Change<span class="govuk-visually-hidden"> Potential safety risks (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
@@ -6592,8 +6558,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                         <div class="govuk-summary-list__row appeal-appellant-inspector-access"><dt class="govuk-summary-list__key"> Inspection access (appellant answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inspector-access/change/appellant"
-                                    data-cy="change-inspection-access-appellant"> Change<span class="govuk-visually-hidden"> inspection access (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inspector-access/change/appellant"> Change<span class="govuk-visually-hidden"> Inspection access (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
@@ -6640,8 +6605,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             <dd                             class="govuk-summary-list__value"><span>Yes</span>
                                 <br><span>Dogs on site</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/appellant"
-                                    data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/appellant"> Change<span class="govuk-visually-hidden"> Potential safety risks (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
@@ -6996,8 +6960,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                         <div class="govuk-summary-list__row appeal-appellant-inspector-access"><dt class="govuk-summary-list__key"> Inspection access (appellant answer)</dt>
                             <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inspector-access/change/appellant"
-                                    data-cy="change-inspection-access-appellant"> Change<span class="govuk-visually-hidden"> inspection access (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inspector-access/change/appellant"> Change<span class="govuk-visually-hidden"> Inspection access (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
@@ -7044,8 +7007,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             <dd                             class="govuk-summary-list__value"><span>Yes</span>
                                 <br><span>Dogs on site</span>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/appellant"
-                                    data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/appellant"> Change<span class="govuk-visually-hidden"> Potential safety risks (appellant answer)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
@@ -7524,8 +7486,7 @@ exports[`appeal-details should not render a back button 1`] = `
                                     <div class="govuk-summary-list__row appeal-appellant-inspector-access"><dt class="govuk-summary-list__key"> Inspection access (appellant answer)</dt>
                                         <dd                                         class="govuk-summary-list__value"><span>No</span>
                                             </dd>
-                                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inspector-access/change/appellant"
-                                                data-cy="change-inspection-access-appellant"> Change<span class="govuk-visually-hidden"> inspection access (appellant answer)</span></a>
+                                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inspector-access/change/appellant"> Change<span class="govuk-visually-hidden"> Inspection access (appellant answer)</span></a>
                                             </dd>
                                     </div>
                                     <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
@@ -7572,8 +7533,7 @@ exports[`appeal-details should not render a back button 1`] = `
                                         <dd                                         class="govuk-summary-list__value"><span>Yes</span>
                                             <br><span>Dogs on site</span>
                                             </dd>
-                                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/appellant"
-                                                data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks (appellant answer)</span></a>
+                                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/safety-risks/change/appellant"> Change<span class="govuk-visually-hidden"> Potential safety risks (appellant answer)</span></a>
                                             </dd>
                                     </div>
                                     <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>

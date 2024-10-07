@@ -1,40 +1,23 @@
-import * as displayPageFormatter from '#lib/display-page-formatter.js';
-import { convertFromBooleanToYesNo } from '../../../boolean-formatter.js';
 import { shouldDisplayChangeLinksForLPAQStatus } from '../appeal.mapper.js';
+import { booleanWithDetailsSummaryListItem } from '#lib/mappers/components/boolean.js';
 
 /** @type {import('../appeal.mapper.js').SubMapper} */
-export const mapLpaInspectorAccess = ({ appealDetails, currentRoute }) => {
-	const lpaInspectorAccessActionItems = shouldDisplayChangeLinksForLPAQStatus(
-		appealDetails.documentationSummary?.lpaQuestionnaire?.status
-	)
-		? [
-				{
-					text: 'Change',
-					href: `${currentRoute}/inspector-access/change/lpa`,
-					visuallyHiddenText: 'inspection access (L P A answer)',
-					attributes: { 'data-cy': 'change-inspection-access-lpa' }
-				}
-		  ]
-		: [];
-
-	return {
+export const mapLpaInspectorAccess = ({
+	appealDetails,
+	currentRoute,
+	userHasUpdateCasePermission
+}) =>
+	booleanWithDetailsSummaryListItem({
 		id: 'lpa-inspector-access',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Inspection access (LPA answer)'
-				},
-				value: {
-					html: displayPageFormatter.formatAnswerAndDetails(
-						convertFromBooleanToYesNo(appealDetails.inspectorAccess.lpaQuestionnaire?.isRequired),
-						appealDetails.inspectorAccess.lpaQuestionnaire.details
-					)
-				},
-				actions: {
-					items: lpaInspectorAccessActionItems
-				},
-				classes: 'appeal-lpa-inspector-access'
-			}
-		}
-	};
-};
+		text: 'Inspection access (LPA answer)',
+		value: appealDetails.inspectorAccess.lpaQuestionnaire?.isRequired,
+		valueDetails: appealDetails.inspectorAccess.lpaQuestionnaire.details,
+		defaultText: '',
+		link: `${currentRoute}/inspector-access/change/lpa`,
+		userHasEditPermission:
+			userHasUpdateCasePermission &&
+			shouldDisplayChangeLinksForLPAQStatus(
+				appealDetails.documentationSummary?.lpaQuestionnaire?.status
+			),
+		classes: 'appeal-lpa-inspector-access'
+	});
