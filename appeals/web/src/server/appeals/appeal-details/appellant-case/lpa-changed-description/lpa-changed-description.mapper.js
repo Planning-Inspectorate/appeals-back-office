@@ -3,7 +3,7 @@
  */
 
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { yesNoInput } from '#lib/page-components/radio.js';
+import { yesNoInput } from '#lib/mappers/components/radio.js';
 
 /**
  * @param {Appeal} appealData

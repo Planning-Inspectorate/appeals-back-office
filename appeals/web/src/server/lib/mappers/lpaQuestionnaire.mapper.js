@@ -3,9 +3,9 @@ import * as displayPageFormatter from '#lib/display-page-formatter.js';
 import { isFolderInfo } from '#lib/ts-utilities.js';
 import { mapActionComponent, userHasPermission } from './permissions.mapper.js';
 import { permissionNames } from '#environment/permissions.js';
-import { booleanDisplayInstruction } from '#lib/page-components/boolean.js';
-import { documentTypeDisplayInstruction } from '#lib/page-components/document.js';
-import { textDisplayField } from '#lib/page-components/text.js';
+import { booleanDisplayInstruction } from '#lib/mappers/components/boolean.js';
+import { documentTypeDisplayInstruction } from '#lib/mappers/components/document.js';
+import { textDisplayField } from '#lib/mappers/components/text.js';
 
 /**
  * @typedef StatusTag
