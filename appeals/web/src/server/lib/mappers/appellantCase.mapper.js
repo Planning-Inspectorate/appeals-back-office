@@ -1,4 +1,3 @@
-import { convertFromBooleanToYesNo } from '../boolean-formatter.js';
 import { appealSiteToAddressString } from '#lib/address-formatter.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
 import { isFolderInfo } from '#lib/ts-utilities.js';
@@ -8,7 +7,10 @@ import { formatServiceUserAsHtmlList } from '#lib/service-user-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { capitalize } from 'lodash-es';
 import { APPEAL_APPLICATION_DECISION, APPEAL_KNOWS_OTHER_OWNERS } from 'pins-data-model';
-import { booleanSummaryListItem } from '#lib/mappers/components/boolean.js';
+import {
+	booleanSummaryListItem,
+	booleanWithDetailsSummaryListItem
+} from '#lib/mappers/components/boolean.js';
 import { documentSummaryListItem } from '#lib/mappers/components/document.js';
 import { textSummaryListItem } from '#lib/mappers/components/text.js';
 
@@ -230,68 +232,28 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		userHasEditPermission: userHasUpdateCase
 	});
 
-	/** @type {Instructions} */
-	mappedData.inspectorAccess = {
+	mappedData.inspectorAccess = booleanWithDetailsSummaryListItem({
 		id: 'inspector-access',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Inspector access required'
-				},
-				value: {
-					html: displayPageFormatter.formatAnswerAndDetails(
-						convertFromBooleanToYesNo(
-							appealDetails.inspectorAccess.appellantCase.isRequired,
-							'No answer provided'
-						),
-						appealDetails.inspectorAccess.appellantCase.details
-					)
-				},
-				actions: {
-					items: [
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Change',
-							href: `${currentRoute}/inspector-access/change/appellant`,
-							visuallyHiddenText: 'Inspector access required',
-							attributes: { 'data-cy': 'change-inspector-access' }
-						})
-					]
-				},
-				classes: 'appellantcase-inspector-access'
-			}
-		}
-	};
+		text: 'Inspector access required',
+		value: appealDetails.inspectorAccess.appellantCase.isRequired,
+		valueDetails: appealDetails.inspectorAccess.appellantCase.details,
+		defaultText: 'No answer provided',
+		link: `${currentRoute}/inspector-access/change/appellant`,
+		userHasEditPermission: userHasUpdateCase,
+		classes: 'appellantcase-inspector-access',
+		addCyAttribute: true
+	});
 
-	/** @type {Instructions} */
-	mappedData.healthAndSafetyIssues = {
+	mappedData.healthAndSafetyIssues = booleanWithDetailsSummaryListItem({
 		id: 'appellant-case-health-and-safety',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Potential safety risks'
-				},
-				value: {
-					html: displayPageFormatter.formatAnswerAndDetails(
-						convertFromBooleanToYesNo(
-							appealDetails.healthAndSafety.appellantCase.hasIssues,
-							'No answer provided'
-						),
-						appealDetails.healthAndSafety.appellantCase.details
-					)
-				},
-				actions: {
-					items: [
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Change',
-							href: `${currentRoute}/safety-risks/change/appellant`,
-							visuallyHiddenText: 'potential safety risks',
-							attributes: { 'data-cy': 'change-appellant-case-health-and-safety' }
-						})
-					]
-				}
-			}
-		}
-	};
+		text: 'Potential safety risks',
+		value: appealDetails.healthAndSafety.appellantCase.hasIssues,
+		valueDetails: appealDetails.healthAndSafety.appellantCase.details,
+		defaultText: 'No answer provided',
+		link: `${currentRoute}/safety-risks/change/appellant`,
+		userHasEditPermission: userHasUpdateCase,
+		addCyAttribute: true
+	});
 
 	mappedData.applicationForm = documentInstruction({
 		id: 'application-form',

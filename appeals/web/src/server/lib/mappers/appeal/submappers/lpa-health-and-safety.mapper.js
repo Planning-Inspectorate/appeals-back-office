@@ -1,40 +1,23 @@
-import * as displayPageFormatter from '#lib/display-page-formatter.js';
-import { convertFromBooleanToYesNo } from '../../../boolean-formatter.js';
 import { shouldDisplayChangeLinksForLPAQStatus } from '../appeal.mapper.js';
+import { booleanWithDetailsSummaryListItem } from '#lib/mappers/components/boolean.js';
 
 /** @type {import('../appeal.mapper.js').SubMapper} */
-export const mapLpaHealthAndSafety = ({ appealDetails, currentRoute }) => {
-	const lpaHealthAndSafetyActionItems = shouldDisplayChangeLinksForLPAQStatus(
-		appealDetails.documentationSummary?.lpaQuestionnaire?.status
-	)
-		? [
-				{
-					text: 'Change',
-					href: `${currentRoute}/safety-risks/change/lpa`,
-					visuallyHiddenText: 'potential safety risks (L P A answer)',
-					attributes: { 'data-cy': 'change-lpa-health-and-safety' }
-				}
-		  ]
-		: [];
-
-	return {
+export const mapLpaHealthAndSafety = ({
+	appealDetails,
+	currentRoute,
+	userHasUpdateCasePermission
+}) =>
+	booleanWithDetailsSummaryListItem({
 		id: 'lpa-health-and-safety',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Potential safety risks (LPA answer)'
-				},
-				value: {
-					html: displayPageFormatter.formatAnswerAndDetails(
-						convertFromBooleanToYesNo(appealDetails.healthAndSafety.lpaQuestionnaire?.hasIssues),
-						appealDetails.healthAndSafety.lpaQuestionnaire?.details
-					)
-				},
-				actions: {
-					items: lpaHealthAndSafetyActionItems
-				},
-				classes: 'appeal-lpa-health-and-safety'
-			}
-		}
-	};
-};
+		text: 'Potential safety risks (LPA answer)',
+		value: appealDetails.healthAndSafety.lpaQuestionnaire?.hasIssues,
+		valueDetails: appealDetails.healthAndSafety.lpaQuestionnaire?.details,
+		defaultText: 'No answer provided',
+		link: `${currentRoute}/safety-risks/change/lpa`,
+		userHasEditPermission:
+			userHasUpdateCasePermission &&
+			shouldDisplayChangeLinksForLPAQStatus(
+				appealDetails.documentationSummary?.lpaQuestionnaire?.status
+			),
+		classes: 'appeal-lpa-health-and-safety'
+	});
