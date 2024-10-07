@@ -4,7 +4,7 @@ import { isFolderInfo } from '#lib/ts-utilities.js';
 import { mapActionComponent, userHasPermission } from './permissions.mapper.js';
 import { permissionNames } from '#environment/permissions.js';
 import { booleanSummaryListItem } from '#lib/mappers/components/boolean.js';
-import { documentTypeDisplayInstruction } from '#lib/mappers/components/document.js';
+import { documentSummaryListItem } from '#lib/mappers/components/document.js';
 import { textDisplayField } from '#lib/mappers/components/text.js';
 
 /**
@@ -43,7 +43,7 @@ export function initialiseAndMapLPAQData(
 	 * @returns {Instructions}
 	 */
 	const documentInstruction = ({ id, text, folderInfo, cypressDataName }) => {
-		return documentTypeDisplayInstruction({
+		return documentSummaryListItem({
 			id,
 			text,
 			appealId: lpaQuestionnaireData.appealId,
