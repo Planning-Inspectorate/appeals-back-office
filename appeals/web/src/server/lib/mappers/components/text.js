@@ -14,7 +14,7 @@ import { SHOW_MORE_MAXIMUM_CHARACTERS_BEFORE_HIDING } from '#lib/constants.js';
  * @param {string} [options.cypressDataName]
  * @returns {Instructions}
  */
-export function textDisplayField({
+export function textSummaryListItem({
 	id,
 	text,
 	value,

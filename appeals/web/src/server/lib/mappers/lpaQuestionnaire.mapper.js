@@ -5,7 +5,7 @@ import { mapActionComponent, userHasPermission } from './permissions.mapper.js';
 import { permissionNames } from '#environment/permissions.js';
 import { booleanSummaryListItem } from '#lib/mappers/components/boolean.js';
 import { documentSummaryListItem } from '#lib/mappers/components/document.js';
-import { textDisplayField } from '#lib/mappers/components/text.js';
+import { textSummaryListItem } from '#lib/mappers/components/text.js';
 
 /**
  * @typedef StatusTag
@@ -159,7 +159,7 @@ export function initialiseAndMapLPAQData(
 		cypressDataName: 'press-advert-notification'
 	});
 
-	mappedData.lpaq.notificationMethods = textDisplayField({
+	mappedData.lpaq.notificationMethods = textSummaryListItem({
 		id: 'notification-methods',
 		text: 'Notification methods',
 		value: {
