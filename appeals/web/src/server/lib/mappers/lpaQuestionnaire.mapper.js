@@ -3,7 +3,7 @@ import * as displayPageFormatter from '#lib/display-page-formatter.js';
 import { isFolderInfo } from '#lib/ts-utilities.js';
 import { mapActionComponent, userHasPermission } from './permissions.mapper.js';
 import { permissionNames } from '#environment/permissions.js';
-import { booleanDisplayInstruction } from '#lib/mappers/components/boolean.js';
+import { booleanSummaryListItem } from '#lib/mappers/components/boolean.js';
 import { documentTypeDisplayInstruction } from '#lib/mappers/components/document.js';
 import { textDisplayField } from '#lib/mappers/components/text.js';
 
@@ -106,7 +106,7 @@ export function initialiseAndMapLPAQData(
 		}
 	};
 
-	mappedData.lpaq.isCorrectAppealType = booleanDisplayInstruction({
+	mappedData.lpaq.isCorrectAppealType = booleanSummaryListItem({
 		id: 'is-correct-appeal-type',
 		text: 'Correct appeal type',
 		value: lpaQuestionnaireData.isCorrectAppealType,
@@ -123,7 +123,7 @@ export function initialiseAndMapLPAQData(
 		cypressDataName: 'conservation-area-map-and-guidance'
 	});
 
-	mappedData.lpaq.siteWithinGreenBelt = booleanDisplayInstruction({
+	mappedData.lpaq.siteWithinGreenBelt = booleanSummaryListItem({
 		id: 'site-within-green-belt',
 		text: 'Green belt',
 		value: lpaQuestionnaireData.isGreenBelt,
