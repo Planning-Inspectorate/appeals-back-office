@@ -1,8 +1,8 @@
-import { textDisplayField } from '#lib/mappers/components/text.js';
+import { textSummaryListItem } from '#lib/mappers/components/text.js';
 
 /** @type {import('../appeal.mapper.js').SubMapper} */
 export const mapAppealType = ({ appealDetails, currentRoute, userHasUpdateCasePermission }) =>
-	textDisplayField({
+	textSummaryListItem({
 		id: 'appeal-type',
 		text: 'Appeal type',
 		value: appealDetails.appealType || 'No appeal type',

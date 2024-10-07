@@ -10,7 +10,7 @@ import { capitalize } from 'lodash-es';
 import { APPEAL_APPLICATION_DECISION, APPEAL_KNOWS_OTHER_OWNERS } from 'pins-data-model';
 import { booleanSummaryListItem } from '#lib/mappers/components/boolean.js';
 import { documentSummaryListItem } from '#lib/mappers/components/document.js';
-import { textDisplayField } from '#lib/mappers/components/text.js';
+import { textSummaryListItem } from '#lib/mappers/components/text.js';
 
 /**
  * @typedef {import('@pins/appeals.api').Appeals.FolderInfo} FolderInfo
@@ -58,7 +58,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 	/** @type {MappedInstructions} */
 	const mappedData = {};
 
-	mappedData.appellant = textDisplayField({
+	mappedData.appellant = textSummaryListItem({
 		id: 'appellant',
 		text: 'Appellant',
 		value: {
@@ -72,7 +72,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		cypressDataName: 'appellant'
 	});
 
-	mappedData.agent = textDisplayField({
+	mappedData.agent = textSummaryListItem({
 		id: 'agent',
 		text: 'Agent',
 		value: {
@@ -83,7 +83,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		classes: 'appeal-agent'
 	});
 
-	mappedData.applicationReference = textDisplayField({
+	mappedData.applicationReference = textSummaryListItem({
 		id: 'application-reference',
 		text: 'LPA application reference',
 		value: appellantCaseData.planningApplicationReference,
@@ -91,7 +91,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		userHasEditPermission: userHasUpdateCase
 	});
 
-	mappedData.siteAddress = textDisplayField({
+	mappedData.siteAddress = textSummaryListItem({
 		id: 'site-address',
 		text: 'Site address',
 		value: appealSiteToAddressString(appellantCaseData.appealSite),
@@ -99,7 +99,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		userHasEditPermission: userHasUpdateCase
 	});
 
-	mappedData.siteArea = textDisplayField({
+	mappedData.siteArea = textSummaryListItem({
 		id: 'site-area',
 		text: 'Site area (m²)',
 		value: appellantCaseData.siteAreaSquareMetres
@@ -118,7 +118,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		userHasEditPermission: userHasUpdateCase
 	});
 
-	mappedData.applicationDecisionDate = textDisplayField({
+	mappedData.applicationDecisionDate = textSummaryListItem({
 		id: 'application-decision-date',
 		text: 'Decision date',
 		value: dateISOStringToDisplayDate(appellantCaseData.applicationDecisionDate),
@@ -126,7 +126,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		userHasEditPermission: userHasUpdateCase
 	});
 
-	mappedData.applicationDate = textDisplayField({
+	mappedData.applicationDate = textSummaryListItem({
 		id: 'application-date',
 		text: 'Application submitted',
 		value: dateISOStringToDisplayDate(appellantCaseData.applicationDate),
@@ -134,7 +134,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		userHasEditPermission: userHasUpdateCase
 	});
 
-	mappedData.developmentDescription = textDisplayField({
+	mappedData.developmentDescription = textSummaryListItem({
 		id: 'development-description',
 		text: 'Original Development description',
 		value: appellantCaseData.developmentDescription?.details || 'Not provided',
@@ -151,7 +151,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		userHasEditPermission: userHasUpdateCase
 	});
 
-	mappedData.applicationDecision = textDisplayField({
+	mappedData.applicationDecision = textSummaryListItem({
 		id: 'application-decision',
 		text: 'Outcome',
 		value:
@@ -170,7 +170,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		cypressDataName: 'agreement-to-change-description-evidence'
 	});
 
-	mappedData.localPlanningAuthority = textDisplayField({
+	mappedData.localPlanningAuthority = textSummaryListItem({
 		id: 'local-planning-authority',
 		text: 'Local planning authority (LPA)',
 		value: appellantCaseData.localPlanningDepartment,
@@ -193,7 +193,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		}
 	};
 
-	mappedData.siteOwnership = textDisplayField({
+	mappedData.siteOwnership = textSummaryListItem({
 		id: 'site-ownership',
 		text: 'Site ownership',
 		value: siteOwnershipText(
@@ -204,7 +204,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		userHasEditPermission: userHasUpdateCase
 	});
 
-	mappedData.ownersKnown = textDisplayField({
+	mappedData.ownersKnown = textSummaryListItem({
 		id: 'owners-known',
 		text: 'Owners known',
 		value: mapOwnersKnownLabelText(appellantCaseData.siteOwnership.knowsOtherLandowners),
@@ -212,7 +212,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		userHasEditPermission: userHasUpdateCase
 	});
 
-	mappedData.appealType = textDisplayField({
+	mappedData.appealType = textSummaryListItem({
 		id: 'appeal-type',
 		text: 'Appeal type',
 		value: appealDetails.appealType,
@@ -509,7 +509,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		userHasEditPermission: userHasUpdateCase
 	});
 
-	mappedData.statusPlanningObligation = textDisplayField({
+	mappedData.statusPlanningObligation = textSummaryListItem({
 		id: 'planning-obligation-status',
 		text: 'Planning obligation status',
 		value: displayPageFormatter.formatPlanningObligationStatus(
