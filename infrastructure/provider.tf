@@ -33,3 +33,4 @@ provider "azurerm" {
 
   features {}
 }
+
