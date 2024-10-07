@@ -13,6 +13,7 @@ import {
 	DAYTIME_MINUTE,
 	DEFAULT_TIMEZONE
 } from '@pins/appeals/constants/dates.js';
+import { getCache, setCache } from './cache-data.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.BankHolidayFeedEvents} BankHolidayFeedEvents */
 /** @typedef {import('@pins/appeals.api').Appeals.BankHolidayFeedDivisions} BankHolidayFeedDivisions */
@@ -42,11 +43,17 @@ const getNumberOfBankHolidaysBetweenDates = (dateFrom, dateTo, bankHolidays) => 
  */
 const fetchBankHolidaysForDivision = async (division = BANK_HOLIDAY_FEED_DIVISION_ENGLAND) => {
 	try {
-		const bankHolidayFeed = await fetch(CONFIG_BANKHOLIDAYS_FEED_URL);
-		const bankHolidayFeedJson = await bankHolidayFeed.json();
+		const cacheKey = 'bankHolidayFeedJsonCache';
 
-		// @ts-ignore
-		return bankHolidayFeedJson[division].events;
+		if (getCache(cacheKey) == null) {
+			const bankHolidayFeed = await fetch(CONFIG_BANKHOLIDAYS_FEED_URL);
+			const bankHolidayFeedJson = await bankHolidayFeed.json();
+
+			// @ts-ignore
+			setCache(cacheKey, bankHolidayFeedJson);
+		}
+
+		return getCache(cacheKey)[division].events;
 	} catch (error) {
 		throw new Error(String(error));
 	}
@@ -118,10 +125,17 @@ const addWeekendDays = (date) => {
  * @returns {Promise<Date>}
  */
 const recalculateDateIfNotBusinessDay = async (date) => {
-	const bankHolidays = await fetchBankHolidaysForDivision();
-	const calculatedDate = addWeekendDays(date);
+	const processedDate = setTimeInTimeZone(date, DAYTIME_HOUR, DAYTIME_MINUTE).toISOString();
 
-	return addBankHolidayDays(calculatedDate, calculatedDate, bankHolidays);
+	const bankHolidays = await fetchBankHolidaysForDivision();
+	const calculatedDate = addWeekendDays(processedDate);
+	const calculatedDateWithoutBankHolidays = addBankHolidayDays(
+		calculatedDate,
+		calculatedDate,
+		bankHolidays
+	);
+
+	return setTimeInTimeZone(calculatedDateWithoutBankHolidays, 0, 0);
 };
 
 /**

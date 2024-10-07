@@ -15,9 +15,21 @@ import { azureAdUserId } from '#tests/shared/mocks.js';
 import { householdAppeal, fullPlanningAppeal } from '#tests/appeals/mocks.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import config from '#config/config.js';
+import { add } from 'date-fns';
+import { recalculateDateIfNotBusinessDay, setTimeInTimeZone } from '#utils/business-days.js';
+import { DEADLINE_HOUR } from '@pins/appeals/constants/dates.js';
+import { DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
-const futureDate = '2099-09-01T23:59:00.000Z';
+
+const baseDate = '2024-06-05T22:50:00.000Z';
+jest.useFakeTimers({ doNotFake: ['performance'] }).setSystemTime(new Date(baseDate));
+
+const futureDate = add(new Date(baseDate), { days: 5 });
+const withoutWeekends = await recalculateDateIfNotBusinessDay(futureDate.toISOString());
+const utcDate = setTimeInTimeZone(withoutWeekends, 0, 0);
+const responseDateSet = setTimeInTimeZone(utcDate, DEADLINE_HOUR, DEADLINE_MINUTE).toISOString();
+
 const houseAppealWithTimetable = {
 	...householdAppeal,
 	caseStartedDate: new Date(2022, 4, 18),
@@ -25,24 +37,20 @@ const houseAppealWithTimetable = {
 	caseValidDate: new Date(2022, 4, 20),
 	appealTimetable: {
 		appealId: 1,
-		finalCommentReviewDate: null,
 		id: 101,
-		issueDeterminationDate: null,
-		lpaQuestionnaireDueDate: new Date('2023-05-16T01:00:00.000Z'),
-		statementReviewDate: null
+		lpaQuestionnaireDueDate: new Date('2023-05-16T01:00:00.000Z')
 	}
 };
 
 const fullPlanningAppealWithTimetable = {
 	...fullPlanningAppeal,
-	caseStartedDate: new Date(2022, 4, 18),
+	caseStartedDate: new Date(2022, 4, 22),
 	caseValidationDate: new Date(2022, 4, 20),
 	caseValidDate: new Date(2022, 4, 20),
 	appealTimetable: {
 		appealId: 1,
 		finalCommentReviewDate: null,
 		id: 101,
-		issueDeterminationDate: null,
 		lpaQuestionnaireDueDate: new Date('2023-05-16T01:00:00.000Z'),
 		statementReviewDate: null
 	}
@@ -60,24 +68,21 @@ describe('appeal timetables routes', () => {
 	describe('/appeals/:appealId/appeal-timetables/:appealTimetableId', () => {
 		describe('PATCH', () => {
 			const householdAppealRequestBody = {
-				issueDeterminationDate: futureDate,
-				lpaQuestionnaireDueDate: futureDate
-			};
-			const householdAppealResponseBody = {
-				issueDeterminationDate: new Date(futureDate),
-				lpaQuestionnaireDueDate: new Date(futureDate)
+				lpaQuestionnaireDueDate: utcDate.toISOString()
 			};
 			const fullPlanningAppealRequestBody = {
-				finalCommentReviewDate: futureDate,
-				issueDeterminationDate: futureDate,
-				lpaQuestionnaireDueDate: futureDate,
-				statementReviewDate: futureDate
+				finalCommentReviewDate: utcDate.toISOString(),
+				lpaQuestionnaireDueDate: utcDate.toISOString(),
+				statementReviewDate: utcDate.toISOString()
+			};
+
+			const householdAppealReponseBody = {
+				lpaQuestionnaireDueDate: responseDateSet
 			};
 			const fullPlanningAppealResponseBody = {
-				finalCommentReviewDate: new Date(futureDate),
-				issueDeterminationDate: new Date(futureDate),
-				lpaQuestionnaireDueDate: new Date(futureDate),
-				statementReviewDate: new Date(futureDate)
+				finalCommentReviewDate: responseDateSet,
+				lpaQuestionnaireDueDate: responseDateSet,
+				statementReviewDate: responseDateSet
 			};
 
 			test('updates a household appeal timetable', async () => {
@@ -96,7 +101,7 @@ describe('appeal timetables routes', () => {
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(databaseConnector.appealTimetable.update).toHaveBeenCalledWith({
-					data: householdAppealResponseBody,
+					data: householdAppealReponseBody,
 					where: {
 						id: appealTimetable.id
 					}
@@ -338,7 +343,7 @@ describe('appeal timetables routes', () => {
 
 				const { appealTimetable, appealType, id } = houseAppealWithTimetable;
 				const body = {
-					finalCommentReviewDate: futureDate
+					finalCommentReviewDate: utcDate.toISOString()
 				};
 				const response = await request
 					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
@@ -730,7 +735,7 @@ describe('appeal timetables routes', () => {
 
 				const { appealTimetable, appealType, id } = houseAppealWithTimetable;
 				const body = {
-					statementReviewDate: futureDate
+					statementReviewDate: utcDate.toISOString()
 				};
 				const response = await request
 					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
@@ -776,7 +781,7 @@ describe('appeal timetables routes', () => {
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(databaseConnector.appealTimetable.update).toHaveBeenCalledWith({
-					data: householdAppealResponseBody,
+					data: householdAppealReponseBody,
 					where: {
 						id: appealTimetable.id
 					}

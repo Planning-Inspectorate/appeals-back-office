@@ -126,7 +126,7 @@ data-module="govuk-notification-banner">
     </div>
     <div class="govuk-notification-banner__content">
         <p class="govuk-notification-banner__heading">LPA questionnaire ready for review</p>
-        <p><a class="govuk-notification-banner__link" data-cy="review-lpa-questionnaire"
+        <p><a class="govuk-notification-banner__link" data-cy="review-lpa-questionnaire-banner"
             href="/appeals-service/appeal-details/2/lpa-questionnaire/123">Review <span class="govuk-visually-hidden">LPA questionnaire</span></a>
         </p>
     </div>

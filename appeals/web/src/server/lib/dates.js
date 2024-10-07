@@ -107,9 +107,7 @@ export function getTodaysISOString() {
 	return dayMonthYearHourMinuteToISOString({
 		day,
 		month,
-		year,
-		hour: 0,
-		minute: 0
+		year
 	});
 }
 

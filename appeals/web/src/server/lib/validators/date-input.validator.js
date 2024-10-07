@@ -8,7 +8,6 @@ import {
 	dayMonthYearHourMinuteToISOString
 } from '../dates.js';
 import { capitalize } from 'lodash-es';
-import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 
 export const createDateInputFieldsValidator = (
 	fieldNamePrefix = 'date',
@@ -199,9 +198,7 @@ export const createDateInputDateBusinessDayValidator = async (
 				const dateToValidate = dayMonthYearHourMinuteToISOString({
 					day,
 					month,
-					year,
-					hour: DEADLINE_HOUR,
-					minute: DEADLINE_MINUTE
+					year
 				});
 
 				const result = await dateIsABusinessDay(req.apiClient, dateToValidate);
