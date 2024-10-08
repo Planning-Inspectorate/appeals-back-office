@@ -129,15 +129,15 @@ describe('add-ip-comment', () => {
 		});
 
 		it('should render a Town or city field', () => {
-			expect(pageHtml.querySelector('input#town')).not.toBeNull();
+			expect(pageHtml.querySelector('input#address-town')).not.toBeNull();
 		});
 
 		it('should render a County field', () => {
-			expect(pageHtml.querySelector('input#county')).not.toBeNull();
+			expect(pageHtml.querySelector('input#address-county')).not.toBeNull();
 		});
 
 		it('should render a Postcode field', () => {
-			expect(pageHtml.querySelector('input#postCode')).not.toBeNull();
+			expect(pageHtml.querySelector('input#address-postcode')).not.toBeNull();
 		});
 	});
 
