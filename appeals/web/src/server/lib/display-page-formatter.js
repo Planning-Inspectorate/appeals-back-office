@@ -172,7 +172,7 @@ export const formatDocumentValues = (appealId, listOfDocuments, addLateEntryStat
 				documentPageComponents.push({
 					type: 'html',
 					parameters: {
-						html: `<a href='/documents/${appealId}/download/${document.id}/preview' data-cy='document-${document.id}' target="'_blank'" class="govuk-link">${document.name}</a>`
+						html: `<a href='/documents/${appealId}/download/${document.id}/${document.name}' data-cy='document-${document.id}' target="_blank" class="govuk-link">${document.name}</a>`
 					}
 				});
 			} else {

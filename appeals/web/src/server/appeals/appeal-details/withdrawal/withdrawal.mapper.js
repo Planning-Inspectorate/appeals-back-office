@@ -117,13 +117,15 @@ export function manageWithdrawalRequestFolderPage(
 						{
 							html:
 								document?.id &&
+								document?.name &&
 								document?.latestDocumentVersion?.virusCheckStatus &&
 								document?.latestDocumentVersion?.virusCheckStatus ===
 									APPEAL_VIRUS_CHECK_STATUS.SCANNED
 									? `<a class="govuk-link" href="${mapDocumentDownloadUrl(
 											folder.caseId,
-											document.id
-									  )}">View</a>`.trim()
+											document.id,
+											document.name
+									  )}" target="_blank">View<span class="govuk-visually-hidden"> document</span></a>`.trim()
 									: ''
 						}
 					])

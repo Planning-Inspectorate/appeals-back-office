@@ -156,11 +156,17 @@ export function generateDecisionDocumentDownloadHtml(appealDetails, linkText = '
 
 	if (virusCheckStatus.checked) {
 		if (virusCheckStatus.safe) {
+			const { decision } = appealDetails;
+
 			html = `<a class="govuk-link" href="${
-				appealDetails.decision?.documentId
-					? mapDocumentDownloadUrl(appealDetails.appealId, appealDetails.decision?.documentId)
+				decision?.documentId && decision?.documentName
+					? mapDocumentDownloadUrl(
+							appealDetails.appealId,
+							decision?.documentId,
+							decision?.documentName
+					  )
 					: '#'
-			}">${linkText}</a>`;
+			}" target="_blank">${linkText}</a>`;
 		} else {
 			html = '<strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong>';
 		}

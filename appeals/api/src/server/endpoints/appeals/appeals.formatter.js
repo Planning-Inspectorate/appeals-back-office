@@ -90,7 +90,7 @@ const formatMyAppeals = (appeal, linkedAppeals) => ({
  * @param {Appeal} appeal
  * @param {Folder[]} rootFolders
  * @param {{ transferredAppealType: string, transferredAppealReference: string } | null} transferAppealTypeInfo
- * @param {{ letterDate: Date|null, virusCheckStatus: string|null } | null} decisionInfo
+ * @param {{ letterDate: Date|null, documentName: string|null, virusCheckStatus: string|null } | null} decisionInfo
  * @param { Appeal[] | null} referencedAppeals
  * @returns {SingleAppealDetailsResponse | void}}
  */
@@ -270,6 +270,7 @@ const formatAppeal = (
 							folderId: decisionFolder?.folderId,
 							outcome: appeal.inspectorDecision.outcome,
 							documentId: appeal.inspectorDecision?.decisionLetterGuid,
+							documentName: decisionInfo.documentName,
 							letterDate: (decisionInfo.letterDate && decisionInfo.letterDate) || null,
 							virusCheckStatus: decisionInfo.virusCheckStatus
 					  }
