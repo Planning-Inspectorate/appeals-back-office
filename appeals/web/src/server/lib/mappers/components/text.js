@@ -11,6 +11,7 @@ import { SHOW_MORE_MAXIMUM_CHARACTERS_BEFORE_HIDING } from '#lib/constants.js';
  * @param {boolean} options.userHasEditPermission
  * @param {boolean} [options.withShowMore]
  * @param {string} [options.classes]
+ * @param {string} [options.actionText]
  * @param {string} [options.cypressDataName]
  * @returns {Instructions}
  */
@@ -22,7 +23,8 @@ export function textSummaryListItem({
 	userHasEditPermission,
 	withShowMore,
 	classes,
-	cypressDataName = 'change-' + id
+	actionText = 'Change',
+	cypressDataName = actionText.toLowerCase() + '-' + id
 }) {
 	/** @type {TextProperty & ClassesProperty | HtmlProperty & ClassesProperty} */
 	let displayValue = { text: value };
@@ -53,7 +55,7 @@ export function textSummaryListItem({
 	const actions = [];
 	if (userHasEditPermission) {
 		actions.push({
-			text: 'Change',
+			text: actionText,
 			visuallyHiddenText: text,
 			href: link,
 			attributes: { 'data-cy': cypressDataName }

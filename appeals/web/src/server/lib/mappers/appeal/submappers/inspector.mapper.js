@@ -1,10 +1,12 @@
 import { surnameFirstToFullName } from '#lib/person-name-formatter.js';
+import { textSummaryListItem } from '#lib/mappers/components/text.js';
 
 /** @type {import('../appeal.mapper.js').SubMapper} */ export const mapInspector = ({
 	appealDetails,
 	currentRoute,
 	skipAssignedUsersData,
-	inspectorUser
+	inspectorUser,
+	userHasUpdateCasePermission
 }) => {
 	let inspectorRowValue = '';
 
@@ -13,33 +15,18 @@ import { surnameFirstToFullName } from '#lib/person-name-formatter.js';
 			? `<ul class="govuk-list"><li>${surnameFirstToFullName(inspectorUser?.name)}</li><li>${
 					inspectorUser?.email
 			  }</li></ul>`
-			: '<p class="govuk-body">An inspector is assigned but their user account was not found';
+			: '<p class="govuk-body">An inspector is assigned but their user account was not found</p>';
 	}
 
-	return {
+	return textSummaryListItem({
 		id: 'inspector',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Inspector'
-				},
-				value: {
-					html: inspectorRowValue
-				},
-				actions: {
-					items: [
-						{
-							text: appealDetails.inspector ? 'Change' : 'Assign',
-							href: `${currentRoute}/assign-user/inspector`,
-							visuallyHiddenText: 'inspector',
-							attributes: {
-								'data-cy': (appealDetails.inspector ? 'change' : 'assign') + '-inspector'
-							}
-						}
-					]
-				},
-				classes: 'appeal-inspector'
-			}
-		}
-	};
+		text: 'Inspector',
+		value: {
+			html: inspectorRowValue
+		},
+		link: `${currentRoute}/assign-user/inspector`,
+		userHasEditPermission: userHasUpdateCasePermission,
+		classes: 'appeal-inspector',
+		actionText: appealDetails.inspector ? 'Change' : 'Assign'
+	});
 };

@@ -1,32 +1,16 @@
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
+import { textSummaryListItem } from '#lib/mappers/components/text.js';
 
 /** @type {import('../appeal.mapper.js').SubMapper} */
-export const mapCompleteDate = ({ appealDetails, currentRoute }) => ({
-	id: 'complete-date',
-	display: {
-		summaryListItem: {
-			key: {
-				text: 'Complete'
-			},
-			value: {
-				html:
-					dateISOStringToDisplayDate(appealDetails.appealTimetable?.completeDate) ||
-					'Due date not yet set'
-			},
-			actions: {
-				items: [
-					{
-						text: appealDetails.appealTimetable?.completeDate ? 'Change' : 'Schedule',
-						href: `${currentRoute}/change-appeal-details/complete-date`,
-						attributes: {
-							'data-cy':
-								(appealDetails.appealTimetable?.completeDate ? 'change' : 'schedule') +
-								'-complete-date'
-						}
-					}
-				]
-			},
-			classes: 'appeal-complete-date'
-		}
-	}
-});
+export const mapCompleteDate = ({ appealDetails, currentRoute, userHasUpdateCasePermission }) =>
+	textSummaryListItem({
+		id: 'complete-date',
+		text: 'Complete',
+		value:
+			dateISOStringToDisplayDate(appealDetails.appealTimetable?.completeDate) ||
+			'Due date not yet set',
+		link: `${currentRoute}/change-appeal-details/complete-date`,
+		userHasEditPermission: userHasUpdateCasePermission,
+		classes: 'appeal-complete-date',
+		actionText: appealDetails.appealTimetable?.completeDate ? 'Change' : 'Schedule'
+	});

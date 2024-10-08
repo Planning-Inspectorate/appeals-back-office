@@ -385,7 +385,7 @@ interface LinkableAppealSummary {
 	source: 'horizon' | 'back-office';
 }
 
-interface AppealAllocation {
+export interface AppealAllocation {
 	level: string;
 	band: number;
 	specialisms: string[];

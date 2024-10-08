@@ -1,30 +1,13 @@
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
+import { textSummaryListItem } from '#lib/mappers/components/text.js';
 
 /** @type {import('../appeal.mapper.js').SubMapper} */
-export const mapValidAt = ({ appealDetails, currentRoute }) => ({
-	id: 'valid-date',
-	display: {
-		summaryListItem: {
-			key: {
-				text: 'Valid date'
-			},
-			value: {
-				html: dateISOStringToDisplayDate(appealDetails.validAt) || ''
-			},
-			actions: {
-				items: [
-					appealDetails.validAt
-						? {
-								text: 'Change',
-								href: `${currentRoute}/appellant-case/valid/date`,
-								visuallyHiddenText:
-									'The date all case documentation was received and the appeal was valid',
-								attributes: { 'data-cy': 'change-valid-date' }
-						  }
-						: {}
-				]
-			},
-			classes: 'appeal-valid-date'
-		}
-	}
-});
+export const mapValidAt = ({ appealDetails, currentRoute, userHasUpdateCasePermission }) =>
+	textSummaryListItem({
+		id: 'valid-date',
+		text: 'Valid date',
+		value: dateISOStringToDisplayDate(appealDetails.validAt) || '',
+		link: `${currentRoute}/appellant-case/valid/date`,
+		userHasEditPermission: Boolean(appealDetails.validAt && userHasUpdateCasePermission),
+		classes: 'appeal-valid-date'
+	});
