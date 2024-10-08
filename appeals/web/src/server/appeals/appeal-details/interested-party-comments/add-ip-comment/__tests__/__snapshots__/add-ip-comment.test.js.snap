@@ -52,18 +52,19 @@ exports[`add-ip-comment GET /add/ip-address should match the snapshot 1`] = `
                     name="addressLine2" type="text">
                 </div>
                 <div class="govuk-form-group">
-                    <label class="govuk-label" for="town">Town or city</label>
-                    <input class="govuk-input" id="town" name="town" type="text">
+                    <label class="govuk-label" for="address-town">Town or city</label>
+                    <input class="govuk-input govuk-input govuk-input--width-20"
+                    id="address-town" name="town" type="text">
                 </div>
                 <div class="govuk-form-group">
-                    <label class="govuk-label" for="county">County (optional)</label>
-                    <input class="govuk-input" id="county" name="county"
-                    type="text">
+                    <label class="govuk-label" for="address-county">County (optional)</label>
+                    <input class="govuk-input govuk-input govuk-input--width-20"
+                    id="address-county" name="county" type="text">
                 </div>
                 <div class="govuk-form-group">
-                    <label class="govuk-label" for="postCode">Postcode</label>
-                    <input class="govuk-input" id="postCode" name="postCode"
-                    type="text">
+                    <label class="govuk-label" for="address-postcode">Postcode</label>
+                    <input class="govuk-input govuk-input govuk-input--width-10"
+                    id="address-postcode" name="postCode" type="text">
                 </div>
                 <button type="submit" data-prevent-double-click="true" class="govuk-button"
                 data-module="govuk-button">Continue</button>

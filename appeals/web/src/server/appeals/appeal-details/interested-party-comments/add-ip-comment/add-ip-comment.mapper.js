@@ -1,13 +1,11 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import {
-	errorAddressLine1,
 	errorAddressProvidedRadio,
 	errorEmail,
 	errorFirstName,
-	errorLastName,
-	errorPostcode,
-	errorTown
+	errorLastName
 } from '#lib/error-handlers/change-screen-error-handlers.js';
+import { addressInputs } from '#lib/page-components/address.js';
 
 /** @typedef {import("../../appeal-details.types.js").WebAppeal} Appeal */
 
@@ -104,83 +102,14 @@ export const checkAddressPage = (appealDetails, errors) => ({
 
 /**
  * @param {Appeal} appealDetails
- * @param {{ addressLine1: string, addressLine2: string, town: string, county: string, postCode: string }} values
+ * @param {{ addressLine1: string, addressLine2: string, town: string, county: string, postCode: string }} address
  * @param {import('@pins/express').ValidationErrors | undefined} errors
  * @returns {PageContent}
  * */
-export const ipAddressPage = (appealDetails, values, errors) => ({
+export const ipAddressPage = (appealDetails, address, errors) => ({
 	title: "Interested party's address",
 	backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/check-address`,
 	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
 	heading: "Interested party's address",
-	pageComponents: [
-		{
-			type: 'input',
-			parameters: {
-				id: 'address-line-1',
-				name: 'addressLine1',
-				type: 'text',
-				label: {
-					isPageHeading: false,
-					text: 'Address line 1'
-				},
-				value: values.addressLine1,
-				errorMessage: errorAddressLine1(errors)
-			}
-		},
-		{
-			type: 'input',
-			parameters: {
-				id: 'address-line-2',
-				name: 'addressLine2',
-				type: 'text',
-				label: {
-					isPageHeading: false,
-					text: 'Address line 2 (optional)'
-				},
-				value: values.addressLine2
-			}
-		},
-		{
-			type: 'input',
-			parameters: {
-				id: 'town',
-				name: 'town',
-				type: 'text',
-				label: {
-					isPageHeading: false,
-					text: 'Town or city'
-				},
-				value: values.town,
-				errorMessage: errorTown(errors)
-			}
-		},
-		{
-			type: 'input',
-			parameters: {
-				id: 'county',
-				name: 'county',
-				type: 'text',
-				label: {
-					isPageHeading: false,
-					text: 'County (optional)'
-				},
-				value: values.county
-			}
-		},
-		{
-			type: 'input',
-			parameters: {
-				id: 'postCode',
-				name: 'postCode',
-				type: 'text',
-				label: {
-					isPageHeading: false,
-					text: 'Postcode'
-				},
-				value: values.postCode,
-				errorMessage: errorPostcode(errors)
-			}
-		}
-	]
+	pageComponents: addressInputs({ address, errors })
 });
