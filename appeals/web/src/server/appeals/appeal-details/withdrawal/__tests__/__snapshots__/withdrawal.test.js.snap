@@ -107,7 +107,8 @@ exports[`withdrawal GET /view should render the view withdrawal request document
         <tbody class="govuk-table__body">
             <tr class="govuk-table__row">
                 <td class="govuk-table__cell">
-                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/38/download/614dbbaa-da49-40df-8e39-e6f299225425/preview/">withdrawal-request-document.pdf</a>
+                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/38/download/614dbbaa-da49-40df-8e39-e6f299225425/withdrawal-request-document.pdf"
+                        target="_blank">withdrawal-request-document.pdf</a>
                     </div>
                     <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
                         <dd>PDF, 3 KB</dd>
@@ -115,7 +116,8 @@ exports[`withdrawal GET /view should render the view withdrawal request document
                 </td>
                 <td class="govuk-table__cell">8 July 2024</td>
                 <td class="govuk-table__cell">No redaction required</td>
-                <td class="govuk-table__cell"><a class="govuk-link" href="/documents/38/download/614dbbaa-da49-40df-8e39-e6f299225425/preview/">View</a>
+                <td class="govuk-table__cell"><a class="govuk-link" href="/documents/38/download/614dbbaa-da49-40df-8e39-e6f299225425/withdrawal-request-document.pdf"
+                    target="_blank">View<span class="govuk-visually-hidden"> document</span></a>
                 </td>
             </tr>
         </tbody>
