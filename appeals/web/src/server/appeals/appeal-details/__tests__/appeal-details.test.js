@@ -2033,6 +2033,7 @@ describe('appeal-details', () => {
 							documentId: '448efec9-43d4-406a-92b7-1aecbdcd5e87',
 							folderId: 72,
 							letterDate: '2024-06-26T00:00:00.000Z',
+							documentName: 'test-document.txt',
 							outcome: 'allowed',
 							virusCheckStatus: 'scanned'
 						}
@@ -2047,7 +2048,7 @@ describe('appeal-details', () => {
 
 				expect(columnHtml).toMatchSnapshot();
 				expect(columnHtml).toContain(
-					'<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/documents/2/download/448efec9-43d4-406a-92b7-1aecbdcd5e87/preview/">View</a></li>'
+					'<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/documents/2/download/448efec9-43d4-406a-92b7-1aecbdcd5e87/test-document.txt" target="_blank">View</a></li>'
 				);
 			});
 		});
