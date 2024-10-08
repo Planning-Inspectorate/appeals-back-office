@@ -117,17 +117,17 @@ export const getAddDocumentDetails = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
-	await renderDocumentDetails(
+	await renderDocumentDetails({
 		request,
 		response,
-		`/appeals-service/appeal-details/${
+		backLinkUrl: `/appeals-service/appeal-details/${
 			currentAppeal.appealId
 		}/internal-correspondence/${correspondenceCategory}/upload-documents/${
 			currentFolder?.folderId
 		}${documentId ? `/${documentId}` : ''}`,
-		false,
-		`${capitalize(correspondenceCategory)} correspondence`
-	);
+		pageHeadingTextOverride: `${capitalize(correspondenceCategory)} correspondence`,
+		documentId
+	});
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
@@ -275,13 +275,13 @@ export const getManageFolder = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
-	await renderManageFolder(
+	await renderManageFolder({
 		request,
 		response,
-		`/appeals-service/appeal-details/${currentAppeal.appealId}`,
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/manage-documents/${currentFolder.folderId}/{{documentId}}`,
-		`${capitalize(correspondenceCategory)} correspondence documents`
-	);
+		backLinkUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}`,
+		viewAndEditUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/manage-documents/${currentFolder.folderId}/{{documentId}}`,
+		pageHeadingTextOverride: `${capitalize(correspondenceCategory)} correspondence documents`
+	});
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
@@ -296,13 +296,13 @@ export const getManageDocument = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
-	await renderManageDocument(
+	await renderManageDocument({
 		request,
 		response,
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/manage-documents/${currentFolder.folderId}`,
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/upload-documents/${currentFolder?.folderId}/{{documentId}}`,
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/manage-documents/${currentFolder.folderId}/{{documentId}}/{{versionId}}/delete`
-	);
+		backLinkUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/manage-documents/${currentFolder.folderId}`,
+		uploadUpdatedDocumentUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/upload-documents/${currentFolder?.folderId}/{{documentId}}`,
+		removeDocumentUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/manage-documents/${currentFolder.folderId}/{{documentId}}/{{versionId}}/delete`
+	});
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */

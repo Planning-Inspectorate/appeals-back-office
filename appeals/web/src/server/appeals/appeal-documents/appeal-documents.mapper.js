@@ -295,24 +295,27 @@ function mapManageFolderPageHeading(folderPath) {
 }
 
 /**
- * @param {string} backLinkUrl
- * @param {FolderInfo} folder
- * @param {FileUploadInfoItem[]} uncommittedFiles
- * @param {Object<string, any>} bodyItems
- * @param {RedactionStatus[]} redactionStatuses
- * @param {string} [pageHeadingTextOverride]
- * @param {string} [documentId]
+ * @param {Object} params
+ * @param {string} params.backLinkUrl
+ * @param {FolderInfo} params.folder
+ * @param {FileUploadInfoItem[]} params.uncommittedFiles
+ * @param {Object<string, any>} params.bodyItems
+ * @param {RedactionStatus[]} params.redactionStatuses
+ * @param {string} [params.pageHeadingTextOverride]
+ * @param {string} [params.dateLabelTextOverride]
+ * @param {string} [params.documentId]
  * @returns {PageContent}
  */
-export function addDocumentDetailsPage(
+export function addDocumentDetailsPage({
 	backLinkUrl,
 	folder,
 	uncommittedFiles,
 	bodyItems,
 	redactionStatuses,
 	pageHeadingTextOverride,
+	dateLabelTextOverride,
 	documentId
-) {
+}) {
 	/** @type {PageContent} */
 	const pageContent = {
 		title: pageHeadingTextOverride || 'Add document details',
@@ -321,13 +324,14 @@ export function addDocumentDetailsPage(
 		preHeading: 'Add document details',
 		heading: pageHeadingTextOverride || mapAddDocumentDetailsPageHeading(folder.path, documentId),
 		pageComponents: uncommittedFiles.flatMap((uncommittedFile, index) => {
-			return mapFileUploadInfoItemToDocumentDetailsPageComponents(
+			return mapFileUploadInfoItemToDocumentDetailsPageComponents({
 				uncommittedFiles,
 				uncommittedFile,
 				bodyItems,
 				index,
-				redactionStatuses
-			);
+				redactionStatuses,
+				dateLabelTextOverride
+			});
 		})
 	};
 
@@ -335,20 +339,23 @@ export function addDocumentDetailsPage(
 }
 
 /**
- * @param {FileUploadInfoItem[]} uncommittedFiles
- * @param {FileUploadInfoItem} uncommittedFile
- * @param {Object<string, any>} bodyItems
- * @param {number} index
- * @param {RedactionStatus[]} redactionStatuses
+ * @param {Object} params
+ * @param {FileUploadInfoItem[]} params.uncommittedFiles
+ * @param {FileUploadInfoItem} params.uncommittedFile
+ * @param {Object<string, any>} params.bodyItems
+ * @param {number} params.index
+ * @param {RedactionStatus[]} params.redactionStatuses
+ * @param {string} [params.dateLabelTextOverride]
  * @returns {PageComponent[]}
  */
-function mapFileUploadInfoItemToDocumentDetailsPageComponents(
+function mapFileUploadInfoItemToDocumentDetailsPageComponents({
 	uncommittedFiles,
 	uncommittedFile,
 	bodyItems,
 	index,
-	redactionStatuses
-) {
+	redactionStatuses,
+	dateLabelTextOverride
+}) {
 	const receivedDateDayMonthYear = dateISOStringToDayMonthYearHourMinute(
 		uncommittedFile.receivedDate
 	);
@@ -380,7 +387,7 @@ function mapFileUploadInfoItemToDocumentDetailsPageComponents(
 				namePrefix: `items[${index}][receivedDate]`,
 				fieldset: {
 					legend: {
-						text: 'Date received'
+						text: dateLabelTextOverride || 'Date received'
 					}
 				},
 				items: [
@@ -580,20 +587,22 @@ function mapDocumentDetailsItemToDocumentDetailsPageComponents(item, redactionSt
 }
 
 /**
- * @param {string} backLinkUrl
- * @param {string} changeFileLinkUrl
- * @param {string} changeDateLinkUrl
- * @param {string} changeRedactionStatusLinkUrl
- * @param {string} appealReference
- * @param {FileUploadInfoItem[]} uncommittedFiles
- * @param {RedactionStatus[]} redactionStatuses
- * @param {number} [documentVersion] current version being uploaded (if uploading a new version of an existing document)
- * @param {string} [documentFileName] filename of existing document, not new version being uploaded (if uploading a new version of an existing document)
- * @param {string} [titleTextOverride]
- * @param {string} [summaryListNameLabelOverride]
+ * @param {Object} params
+ * @param {string} params.backLinkUrl
+ * @param {string} params.changeFileLinkUrl
+ * @param {string} params.changeDateLinkUrl
+ * @param {string} params.changeRedactionStatusLinkUrl
+ * @param {string} params.appealReference
+ * @param {FileUploadInfoItem[]} params.uncommittedFiles
+ * @param {RedactionStatus[]} params.redactionStatuses
+ * @param {number} [params.documentVersion] current version being uploaded (if uploading a new version of an existing document)
+ * @param {string} [params.documentFileName] filename of existing document, not new version being uploaded (if uploading a new version of an existing document)
+ * @param {string} [params.titleTextOverride]
+ * @param {string} [params.summaryListNameLabelOverride]
+ * @param {string} [params.summaryListDateLabelOverride]
  * @returns {PageContent}
  */
-export function addDocumentsCheckAndConfirmPage(
+export function addDocumentsCheckAndConfirmPage({
 	backLinkUrl,
 	changeFileLinkUrl,
 	changeDateLinkUrl,
@@ -604,8 +613,9 @@ export function addDocumentsCheckAndConfirmPage(
 	documentVersion,
 	documentFileName,
 	titleTextOverride,
-	summaryListNameLabelOverride
-) {
+	summaryListNameLabelOverride,
+	summaryListDateLabelOverride
+}) {
 	/** @type {PageContent} */
 	const pageContent = {
 		title: titleTextOverride || 'Check your answers',
@@ -656,7 +666,7 @@ export function addDocumentsCheckAndConfirmPage(
 					},
 					{
 						key: {
-							text: 'Date received'
+							text: summaryListDateLabelOverride || 'Date received'
 						},
 						value: {
 							text: dateISOStringToDisplayDate(uncommittedFile.receivedDate)
@@ -790,22 +800,23 @@ export function mapFolderDocumentActionsHtmlProperty(folder, document, viewAndEd
 }
 
 /**
- * @param {string} backLinkUrl
- * @param {string} viewAndEditUrl
- * @param {FolderInfo} folder - API type needs to be updated (should be Folder, but there are worse problems with that type)
- * @param {RedactionStatus[]} redactionStatuses
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {string} [pageHeadingTextOverride]
+ * @param {Object} params
+ * @param {string} params.backLinkUrl
+ * @param {string} params.viewAndEditUrl
+ * @param {FolderInfo} params.folder - API type needs to be updated (should be Folder, but there are worse problems with that type)
+ * @param {import('@pins/express/types/express.js').Request} params.request
+ * @param {string} [params.pageHeadingTextOverride]
+ * @param {string} [params.dateColumnLabelTextOverride]
  * @returns {PageContent}
  */
-export function manageFolderPage(
+export function manageFolderPage({
 	backLinkUrl,
 	viewAndEditUrl,
 	folder,
-	redactionStatuses,
 	request,
-	pageHeadingTextOverride
-) {
+	pageHeadingTextOverride,
+	dateColumnLabelTextOverride
+}) {
 	if (getDocumentsForVirusStatus(folder, APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED).length > 0) {
 		addNotificationBannerToSession(
 			request.session,
@@ -861,7 +872,7 @@ export function manageFolderPage(
 							text: 'Name'
 						},
 						{
-							text: 'Date received'
+							text: dateColumnLabelTextOverride || 'Date received'
 						},
 						{
 							text: 'Redaction status'
@@ -1077,17 +1088,19 @@ function mapDocumentNameHtmlProperty(document, documentVersion) {
 }
 
 /**
- * @param {string|number} appealId
- * @param {string} backLinkUrl
- * @param {string} uploadUpdatedDocumentUrl
- * @param {string} removeDocumentUrl
- * @param {DocumentInfo} document
- * @param {FolderInfo} folder
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {string} [pageTitleTextOverride]
+ * @param {Object} params
+ * @param {string|number} params.appealId
+ * @param {string} params.backLinkUrl
+ * @param {string} params.uploadUpdatedDocumentUrl
+ * @param {string} params.removeDocumentUrl
+ * @param {DocumentInfo} params.document
+ * @param {FolderInfo} params.folder
+ * @param {import('@pins/express/types/express.js').Request} params.request
+ * @param {string} [params.pageTitleTextOverride]
+ * @param {string} [params.dateRowLabelTextOverride]
  * @returns {Promise<PageContent>}
  */
-export async function manageDocumentPage(
+export async function manageDocumentPage({
 	appealId,
 	backLinkUrl,
 	uploadUpdatedDocumentUrl,
@@ -1095,8 +1108,9 @@ export async function manageDocumentPage(
 	document,
 	folder,
 	request,
-	pageTitleTextOverride
-) {
+	pageTitleTextOverride,
+	dateRowLabelTextOverride
+}) {
 	const changeDetailsUrl = request.originalUrl.replace(
 		'manage-documents',
 		'change-document-details'
@@ -1166,7 +1180,7 @@ export async function manageDocumentPage(
 					}
 				},
 				{
-					key: { text: 'Date received' },
+					key: { text: dateRowLabelTextOverride || 'Date received' },
 					value:
 						folderIsAdditionalDocuments(folder.path) && latestVersion?.isLateEntry
 							? {

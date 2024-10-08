@@ -170,22 +170,24 @@ export const postDocumentUpload = async (request, response, nextPageUrl) => {
 };
 
 /**
- *
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- * @param {string} backButtonUrl
- * @param {boolean} [isLateEntry]
- * @param {string} [pageHeadingTextOverride]
- * @param {string} [documentId]
+ * @param {Object} params
+ * @param {import('@pins/express/types/express.js').Request} params.request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} params.response
+ * @param {string} params.backLinkUrl
+ * @param {boolean} [params.isLateEntry]
+ * @param {string} [params.pageHeadingTextOverride]
+ * @param {string} [params.dateLabelTextOverride]
+ * @param {string} [params.documentId]
  */
-export const renderDocumentDetails = async (
+export const renderDocumentDetails = async ({
 	request,
 	response,
-	backButtonUrl,
+	backLinkUrl,
 	isLateEntry = false,
 	pageHeadingTextOverride,
+	dateLabelTextOverride,
 	documentId
-) => {
+}) => {
 	const { currentFolder, body, errors } = request;
 
 	if (!currentFolder) {
@@ -202,15 +204,16 @@ export const renderDocumentDetails = async (
 		return response.status(500).render('app/500.njk');
 	}
 
-	const mappedPageContent = addDocumentDetailsPage(
-		backButtonUrl,
-		currentFolder,
-		request.session.fileUploadInfo.files,
-		body?.items,
+	const mappedPageContent = addDocumentDetailsPage({
+		backLinkUrl,
+		folder: currentFolder,
+		uncommittedFiles: request.session.fileUploadInfo.files,
+		bodyItems: body?.items,
 		redactionStatuses,
 		pageHeadingTextOverride,
+		dateLabelTextOverride,
 		documentId
-	);
+	});
 
 	const isAdditionalDocument = folderIsAdditionalDocuments(currentFolder.path);
 
@@ -222,39 +225,36 @@ export const renderDocumentDetails = async (
 };
 
 /**
- *
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- * @param {string} backButtonUrl
- * @param {string} viewAndEditUrl
- * @param {string} [pageHeadingTextOverride]
+ * @param {Object} params
+ * @param {import('@pins/express/types/express.js').Request} params.request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} params.response
+ * @param {string} params.backLinkUrl
+ * @param {string} params.viewAndEditUrl
+ * @param {string} [params.pageHeadingTextOverride]
+ * @param {string} [params.dateColumnLabelTextOverride]
  */
-export const renderManageFolder = async (
+export const renderManageFolder = async ({
 	request,
 	response,
-	backButtonUrl,
+	backLinkUrl,
 	viewAndEditUrl,
-	pageHeadingTextOverride
-) => {
+	pageHeadingTextOverride,
+	dateColumnLabelTextOverride
+}) => {
 	const { currentFolder, errors } = request;
 
 	if (!currentFolder) {
 		return response.status(404).render('app/404.njk');
 	}
 
-	const redactionStatuses = await getDocumentRedactionStatuses(request.apiClient);
-	if (!redactionStatuses) {
-		return response.status(500).render('app/500.njk');
-	}
-
-	const mappedPageContent = manageFolderPage(
-		backButtonUrl,
+	const mappedPageContent = manageFolderPage({
+		backLinkUrl,
 		viewAndEditUrl,
-		currentFolder,
-		redactionStatuses,
+		folder: currentFolder,
 		request,
-		pageHeadingTextOverride
-	);
+		pageHeadingTextOverride,
+		dateColumnLabelTextOverride
+	});
 
 	return response.status(200).render('appeals/documents/manage-folder.njk', {
 		pageContent: mappedPageContent,
@@ -263,22 +263,24 @@ export const renderManageFolder = async (
 };
 
 /**
- *
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- * @param {string} backButtonUrl
- * @param {string} uploadUpdatedDocumentUrl
- * @param {string} removeDocumentUrl
- * @param {string} [pageTitleTextOverride]
+ * @param {Object} params
+ * @param {import('@pins/express/types/express.js').Request} params.request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} params.response
+ * @param {string} params.backLinkUrl
+ * @param {string} params.uploadUpdatedDocumentUrl
+ * @param {string} params.removeDocumentUrl
+ * @param {string} [params.pageTitleTextOverride]
+ * @param {string} [params.dateRowLabelTextOverride]
  */
-export const renderManageDocument = async (
+export const renderManageDocument = async ({
 	request,
 	response,
-	backButtonUrl,
+	backLinkUrl,
 	uploadUpdatedDocumentUrl,
 	removeDocumentUrl,
-	pageTitleTextOverride
-) => {
+	pageTitleTextOverride,
+	dateRowLabelTextOverride
+}) => {
 	const {
 		currentFolder,
 		errors,
@@ -302,16 +304,17 @@ export const renderManageDocument = async (
 		return response.status(500).render('app/500.njk');
 	}
 
-	const mappedPageContent = await manageDocumentPage(
+	const mappedPageContent = await manageDocumentPage({
 		appealId,
-		backButtonUrl,
+		backLinkUrl,
 		uploadUpdatedDocumentUrl,
 		removeDocumentUrl,
 		document,
-		currentFolder,
+		folder: currentFolder,
 		request,
-		pageTitleTextOverride
-	);
+		pageTitleTextOverride,
+		dateRowLabelTextOverride
+	});
 
 	return response.status(200).render('appeals/documents/manage-document.njk', {
 		pageContent: mappedPageContent,
@@ -322,14 +325,14 @@ export const renderManageDocument = async (
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- * @param {string} backButtonUrl
+ * @param {string} backLinkUrl
  * @param {string} [nextPageUrl]
  * @param {string} [pageHeadingTextOverride]
  */
 export const postDocumentDetails = async (
 	request,
 	response,
-	backButtonUrl,
+	backLinkUrl,
 	nextPageUrl,
 	pageHeadingTextOverride
 ) => {
@@ -343,13 +346,12 @@ export const postDocumentDetails = async (
 		} = request;
 
 		if (errors) {
-			return await renderDocumentDetails(
+			return await renderDocumentDetails({
 				request,
 				response,
-				backButtonUrl,
-				false,
+				backLinkUrl,
 				pageHeadingTextOverride
-			);
+			});
 		}
 
 		if (!currentFolder) {
@@ -393,6 +395,8 @@ export const postDocumentDetails = async (
  * @param {string} changeFileLinkUrl
  * @param {string} changeDateLinkUrl
  * @param {string} changeRedactionStatusLinkUrl
+ * @param {string} [summaryListNameLabelOverride]
+ * @param {string} [summaryListDateLabelOverride]
  */
 export const renderUploadDocumentsCheckAndConfirm = async (
 	request,
@@ -400,7 +404,9 @@ export const renderUploadDocumentsCheckAndConfirm = async (
 	backLinkUrl,
 	changeFileLinkUrl,
 	changeDateLinkUrl,
-	changeRedactionStatusLinkUrl
+	changeRedactionStatusLinkUrl,
+	summaryListNameLabelOverride,
+	summaryListDateLabelOverride
 ) => {
 	const {
 		currentAppeal,
@@ -440,17 +446,23 @@ export const renderUploadDocumentsCheckAndConfirm = async (
 		documentFileName = fileInfo.name;
 	}
 
-	const mappedPageContent = addDocumentsCheckAndConfirmPage(
+	const mappedPageContent = addDocumentsCheckAndConfirmPage({
 		backLinkUrl,
 		changeFileLinkUrl,
 		changeDateLinkUrl,
 		changeRedactionStatusLinkUrl,
-		currentAppeal.appealReference,
-		request.session.fileUploadInfo.files,
+		appealReference: currentAppeal.appealReference,
+		uncommittedFiles: request.session.fileUploadInfo.files,
 		redactionStatuses,
 		documentVersion,
-		documentFileName
-	);
+		documentFileName,
+		...(summaryListNameLabelOverride && {
+			summaryListNameLabelOverride
+		}),
+		...(summaryListDateLabelOverride && {
+			summaryListDateLabelOverride
+		})
+	});
 
 	return response.render('patterns/check-and-confirm-page.pattern.njk', {
 		pageContent: mappedPageContent
@@ -536,7 +548,7 @@ export const postUploadDocumentsCheckAndConfirm = async (
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- * @param {string} nextPageUrl
+ * @param {string} [nextPageUrl]
  */
 export const postUploadDocumentVersionCheckAndConfirm = async (request, response, nextPageUrl) => {
 	const { currentAppeal, currentFolder } = request;
@@ -592,7 +604,9 @@ export const postUploadDocumentVersionCheckAndConfirm = async (request, response
 			Number.parseInt(currentAppeal.appealId, 10)
 		);
 
-		return response.redirect(nextPageUrl);
+		if (nextPageUrl) {
+			return response.redirect(nextPageUrl);
+		}
 	} catch (error) {
 		logger.error(
 			error,

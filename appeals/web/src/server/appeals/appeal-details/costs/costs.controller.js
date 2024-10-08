@@ -14,7 +14,10 @@ import {
 	renderChangeDocumentDetails,
 	postChangeDocumentDetails
 } from '#appeals/appeal-documents/appeal-documents.controller.js';
-import { getDocumentRedactionStatuses } from '#appeals/appeal-documents/appeal.documents.service.js';
+import {
+	getDocumentRedactionStatuses,
+	getFileInfo
+} from '#appeals/appeal-documents/appeal.documents.service.js';
 import { capitalize } from 'lodash-es';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import logger from '#lib/logger.js';
@@ -154,15 +157,19 @@ export const getAddDocumentDetails = async (request, response) => {
 
 	const documentIdFragment = documentId ? `/${documentId}` : '';
 
-	await renderDocumentDetails(
+	await renderDocumentDetails({
 		request,
 		response,
-		costsCategory === 'decision'
-			? `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/decision/upload-documents/${currentFolder?.folderId}${documentIdFragment}`
-			: `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/${costsDocumentType}/upload-documents/${currentFolder?.folderId}${documentIdFragment}`,
-		false,
-		costsCategoryLabel
-	);
+		backLinkUrl:
+			costsCategory === 'decision'
+				? `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/decision/upload-documents/${currentFolder?.folderId}${documentIdFragment}`
+				: `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/${costsDocumentType}/upload-documents/${currentFolder?.folderId}${documentIdFragment}`,
+		pageHeadingTextOverride: costsCategoryLabel,
+		documentId,
+		...(costsCategory === 'decision' && {
+			dateLabelTextOverride: 'Decision date'
+		})
+	});
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
@@ -333,15 +340,19 @@ export const getManageFolder = async (request, response) => {
 			break;
 	}
 
-	await renderManageFolder(
+	await renderManageFolder({
 		request,
 		response,
-		`/appeals-service/appeal-details/${request.params.appealId}`,
-		costsCategory === 'decision'
-			? `/appeals-service/appeal-details/${request.params.appealId}/costs/decision/manage-documents/${currentFolder.folderId}/{{documentId}}`
-			: `/appeals-service/appeal-details/${request.params.appealId}/costs/${costsCategory}/${costsDocumentType}/manage-documents/${currentFolder.folderId}/{{documentId}}`,
-		costsCategoryLabel
-	);
+		backLinkUrl: `/appeals-service/appeal-details/${request.params.appealId}`,
+		viewAndEditUrl:
+			costsCategory === 'decision'
+				? `/appeals-service/appeal-details/${request.params.appealId}/costs/decision/manage-documents/${currentFolder.folderId}/{{documentId}}`
+				: `/appeals-service/appeal-details/${request.params.appealId}/costs/${costsCategory}/${costsDocumentType}/manage-documents/${currentFolder.folderId}/{{documentId}}`,
+		pageHeadingTextOverride: costsCategoryLabel,
+		...(costsCategory === 'decision' && {
+			dateColumnLabelTextOverride: 'Decision date'
+		})
+	});
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
@@ -356,20 +367,28 @@ export const getManageDocument = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
-	await renderManageDocument(
+	await renderManageDocument({
 		request,
 		response,
-		costsCategory === 'decision'
-			? `/appeals-service/appeal-details/${request.params.appealId}/costs/decision/manage-documents/${currentFolder.folderId}`
-			: `/appeals-service/appeal-details/${request.params.appealId}/costs/${costsCategory}/${costsDocumentType}/manage-documents/${currentFolder.folderId}`,
-		costsCategory === 'decision'
-			? `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/decision/upload-documents/${currentFolder?.folderId}/{{documentId}}`
-			: `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/${costsDocumentType}/upload-documents/${currentFolder?.folderId}/{{documentId}}`,
-		costsCategory === 'decision'
-			? `/appeals-service/appeal-details/${request.params.appealId}/costs/decision/manage-documents/${currentFolder.folderId}/{{documentId}}/{{versionId}}/delete`
-			: `/appeals-service/appeal-details/${request.params.appealId}/costs/${costsCategory}/${costsDocumentType}/manage-documents/${currentFolder.folderId}/{{documentId}}/{{versionId}}/delete`,
-		'Manage decision document'
-	);
+		backLinkUrl:
+			costsCategory === 'decision'
+				? `/appeals-service/appeal-details/${request.params.appealId}/costs/decision/manage-documents/${currentFolder.folderId}`
+				: `/appeals-service/appeal-details/${request.params.appealId}/costs/${costsCategory}/${costsDocumentType}/manage-documents/${currentFolder.folderId}`,
+		uploadUpdatedDocumentUrl:
+			costsCategory === 'decision'
+				? `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/decision/upload-documents/${currentFolder?.folderId}/{{documentId}}`
+				: `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/${costsDocumentType}/upload-documents/${currentFolder?.folderId}/{{documentId}}`,
+		removeDocumentUrl:
+			costsCategory === 'decision'
+				? `/appeals-service/appeal-details/${request.params.appealId}/costs/decision/manage-documents/${currentFolder.folderId}/{{documentId}}/{{versionId}}/delete`
+				: `/appeals-service/appeal-details/${request.params.appealId}/costs/${costsCategory}/${costsDocumentType}/manage-documents/${currentFolder.folderId}/{{documentId}}/{{versionId}}/delete`,
+		...(costsCategory === 'decision' && {
+			pageTitleTextOverride: 'Manage decision document'
+		}),
+		...(costsCategory === 'decision' && {
+			dateRowLabelTextOverride: 'Decision date'
+		})
+	});
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
@@ -466,12 +485,34 @@ export const renderDecisionCheckAndConfirm = async (request, response) => {
 		return response.status(500).render('app/500.njk');
 	}
 
+	let documentVersion;
+	let documentFileName;
+
+	if (documentId) {
+		const fileInfo = await getFileInfo(request.apiClient, currentAppeal.appealId, documentId);
+
+		if (!fileInfo) {
+			return response.status(404).render('app/404');
+		}
+
+		const { latestDocumentVersion, name } = fileInfo;
+
+		if (!latestDocumentVersion || !name) {
+			return response.status(500).render('app/500.njk');
+		}
+
+		documentVersion = latestDocumentVersion.version + 1;
+		documentFileName = name;
+	}
+
 	const mappedPageContent = decisionCheckAndConfirmPage(
 		currentAppeal,
 		currentFolder,
 		session.fileUploadInfo.files,
 		redactionStatuses,
-		documentId
+		documentId,
+		documentVersion,
+		documentFileName
 	);
 
 	return response.status(200).render('patterns/check-and-confirm-page.pattern.njk', {
@@ -491,7 +532,13 @@ export const getDecisionCheckAndConfirm = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const postDecisionCheckAndConfirm = async (request, response) => {
-	const { session, errors, currentAppeal, currentFolder } = request;
+	const {
+		session,
+		errors,
+		currentAppeal,
+		currentFolder,
+		params: { documentId }
+	} = request;
 
 	if (!currentAppeal || !currentFolder) {
 		return response.status(404).render('app/404.njk');
@@ -501,14 +548,18 @@ export const postDecisionCheckAndConfirm = async (request, response) => {
 		return renderDecisionCheckAndConfirm(request, response);
 	}
 
-	await postUploadDocumentsCheckAndConfirm(request, response);
+	if (documentId) {
+		await postUploadDocumentVersionCheckAndConfirm(request, response);
+	} else {
+		await postUploadDocumentsCheckAndConfirm(request, response);
+	}
 
 	addNotificationBannerToSession(
 		session,
 		'costsDocumentAdded',
 		currentAppeal.appealId,
 		'',
-		`Costs decision uploaded`
+		`Costs decision ${documentId ? 'updated' : 'uploaded'}`
 	);
 
 	return response.redirect(`/appeals-service/appeal-details/${currentAppeal.appealId}`);
