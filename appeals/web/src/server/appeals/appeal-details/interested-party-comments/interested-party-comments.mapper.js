@@ -93,6 +93,16 @@ export function viewInterestedPartyCommentPage(appealDetails, comment) {
 		comment.represented.address.addressLine1 &&
 		comment.represented.address.postCode;
 
+	const commentText = (() => {
+		if (comment.originalRepresentation) {
+			return comment.originalRepresentation;
+		}
+
+		if (comment.attachments?.length > 0) {
+			return 'Added as document';
+		}
+	})();
+
 	/** @type {PageComponent} */
 	const commentSummaryList = {
 		type: 'summary-list',
@@ -137,7 +147,7 @@ export function viewInterestedPartyCommentPage(appealDetails, comment) {
 				},
 				{
 					key: { text: comment.redactedRepresentation ? 'Original comment' : 'Comment' },
-					value: { text: comment.originalRepresentation },
+					value: { text: commentText },
 					actions: {
 						items: [
 							{
@@ -160,7 +170,7 @@ export function viewInterestedPartyCommentPage(appealDetails, comment) {
 					value: attachmentsList ? { html: attachmentsList } : { text: 'Not provided' },
 					actions: {
 						items: [
-							...(comment.attachments
+							...(comment.attachments?.length > 0
 								? [
 										{
 											text: 'Manage',
@@ -176,7 +186,15 @@ export function viewInterestedPartyCommentPage(appealDetails, comment) {
 							}
 						]
 					}
-				}
+				},
+				...(comment.status === 'invalid'
+					? [
+							{
+								key: { text: 'Why comment invalid' },
+								value: { text: comment.notes }
+							}
+					  ]
+					: [])
 			]
 		}
 	};
