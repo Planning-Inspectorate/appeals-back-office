@@ -11,6 +11,7 @@ import { buildHtmSpan } from '#lib/nunjucks-template-builders/tag-builders.js';
  * @param {string} options.link
  * @param {boolean} [options.addCyAttribute]
  * @param {boolean} options.userHasEditPermission
+ * @param {string} [options.classes]
  * @returns {Instructions}
  */
 export function booleanSummaryListItem({
@@ -20,7 +21,8 @@ export function booleanSummaryListItem({
 	defaultText,
 	link,
 	addCyAttribute,
-	userHasEditPermission
+	userHasEditPermission,
+	classes
 }) {
 	/** @type {ActionItemProperties[]} */
 	const actions = [];
@@ -40,7 +42,8 @@ export function booleanSummaryListItem({
 				value: {
 					text: convertFromBooleanToYesNo(value, defaultText)
 				},
-				actions: { items: actions }
+				actions: { items: actions },
+				classes
 			}
 		}
 	};

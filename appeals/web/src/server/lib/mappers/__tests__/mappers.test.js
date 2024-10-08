@@ -50,7 +50,7 @@ describe('appeal-mapper', () => {
 			const preFormattedDate = '2023-10-11T01:00:00.000Z';
 			const mappedDateHtml =
 				// @ts-ignore
-				validMappedData.appeal.lpaQuestionnaireDueDate.display.summaryListItem?.value.html;
+				validMappedData.appeal.lpaQuestionnaireDueDate.display.summaryListItem?.value.text;
 
 			// Check date is the same after being formatted
 			expect(new Date(mappedDateHtml).getDate()).toEqual(new Date(preFormattedDate).getDate());

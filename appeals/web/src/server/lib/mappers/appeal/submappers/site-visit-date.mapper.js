@@ -1,38 +1,26 @@
 import { dateISOStringToDisplayDate, dateISOStringToDisplayTime12hr } from '#lib/dates.js';
 import { dateAndTimeFormatter } from '../../global-mapper-formatter.js';
+import { textSummaryListItem } from '#lib/mappers/components/text.js';
 
 /** @type {import('../appeal.mapper.js').SubMapper} */
-export const mapSiteVisitDate = ({ appealDetails, currentRoute }) => ({
-	id: 'schedule-visit',
-	display: {
-		summaryListItem: {
-			key: {
-				text: 'Site visit'
-			},
-			value: {
-				html:
-					dateAndTimeFormatter(
-						dateISOStringToDisplayDate(appealDetails.siteVisit?.visitDate),
-						dateISOStringToDisplayTime12hr(appealDetails.siteVisit?.visitStartTime),
-						dateISOStringToDisplayTime12hr(appealDetails.siteVisit?.visitEndTime)
-					) || 'Visit date not yet set'
-			},
-			actions: {
-				items: [
-					{
-						text: appealDetails.siteVisit?.visitDate ? 'Change' : 'Arrange',
-						href: `${currentRoute}/site-visit/${
-							appealDetails.siteVisit?.visitDate ? 'manage' : 'schedule'
-						}-visit`,
-						visuallyHiddenText: 'site visit',
-						attributes: {
-							'data-cy':
-								(appealDetails.siteVisit?.visitDate ? 'change' : 'arrange') + '-schedule-visit'
-						}
-					}
-				]
-			},
-			classes: 'appeal-site-visit'
-		}
-	}
-});
+export const mapSiteVisitDate = ({ appealDetails, currentRoute, userHasUpdateCasePermission }) => {
+	const hasVisit = Boolean(appealDetails.siteVisit?.visitDate);
+	const value =
+		(hasVisit &&
+			dateAndTimeFormatter(
+				dateISOStringToDisplayDate(appealDetails.siteVisit?.visitDate),
+				dateISOStringToDisplayTime12hr(appealDetails.siteVisit?.visitStartTime),
+				dateISOStringToDisplayTime12hr(appealDetails.siteVisit?.visitEndTime)
+			)) ||
+		'Visit date not yet set';
+
+	return textSummaryListItem({
+		id: 'schedule-visit',
+		text: 'Site visit',
+		value: { html: value },
+		link: `${currentRoute}/site-visit/${hasVisit ? 'manage' : 'schedule'}-visit`,
+		actionText: hasVisit ? 'Change' : 'Arrange',
+		userHasEditPermission: userHasUpdateCasePermission,
+		classes: 'appeal-site-visit'
+	});
+};

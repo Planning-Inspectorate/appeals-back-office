@@ -1,27 +1,13 @@
 import { appealSiteToAddressString } from '#lib/address-formatter.js';
+import { textSummaryListItem } from '#lib/mappers/components/text.js';
 
 /** @type {import('../appeal.mapper.js').SubMapper} */
-export const mapSiteAddress = ({ appealDetails, currentRoute }) => ({
-	id: 'site-address',
-	display: {
-		summaryListItem: {
-			key: {
-				text: 'Site address'
-			},
-			value: {
-				text: appealSiteToAddressString(appealDetails.appealSite)
-			},
-			actions: {
-				items: [
-					{
-						text: 'Change',
-						href: `${currentRoute}/change-appeal-details/site-address`,
-						visuallyHiddenText: 'site address',
-						attributes: { 'data-cy': 'change-site-address' }
-					}
-				]
-			},
-			classes: 'appeal-site-address'
-		}
-	}
-});
+export const mapSiteAddress = ({ appealDetails, currentRoute, userHasUpdateCasePermission }) =>
+	textSummaryListItem({
+		id: 'site-address',
+		text: 'Site address',
+		value: appealSiteToAddressString(appealDetails.appealSite),
+		link: `${currentRoute}/change-appeal-details/site-address`,
+		userHasEditPermission: userHasUpdateCasePermission,
+		classes: 'appeal-site-address'
+	});

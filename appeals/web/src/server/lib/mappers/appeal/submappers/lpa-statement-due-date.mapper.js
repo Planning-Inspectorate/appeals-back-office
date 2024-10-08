@@ -1,31 +1,18 @@
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
+import { textSummaryListItem } from '#lib/mappers/components/text.js';
 
 /** @type {import('../appeal.mapper.js').SubMapper} */
-export const mapLpaStatementDueDate = ({ appealDetails, currentRoute }) => ({
-	id: 'lpa-statement-due-date',
-	display: {
-		summaryListItem: {
-			key: {
-				text: 'LPA statements due'
-			},
-			value: {
-				// @ts-ignore
-				html: dateISOStringToDisplayDate(appealDetails.appealTimetable?.lpaStatementDueDate) || ''
-			},
-			actions: {
-				items: [
-					appealDetails.validAt
-						? {
-								text: 'Change',
-								href: `${currentRoute}/appellant-case/valid/date`,
-								visuallyHiddenText:
-									'The date all case documentation was received and the appeal was valid',
-								attributes: { 'data-cy': 'change-lpa-statement-due-date' }
-						  }
-						: {}
-				]
-			},
-			classes: 'appeal-lpa-statement-due-date'
-		}
-	}
-});
+export const mapLpaStatementDueDate = ({
+	appealDetails,
+	currentRoute,
+	userHasUpdateCasePermission
+}) =>
+	textSummaryListItem({
+		id: 'lpa-statement-due-date',
+		text: 'LPA statements due',
+		// @ts-ignore
+		value: dateISOStringToDisplayDate(appealDetails.appealTimetable?.lpaStatementDueDate) || '',
+		link: `${currentRoute}/appellant-case/valid/date`,
+		userHasEditPermission: Boolean(userHasUpdateCasePermission && appealDetails.validAt),
+		classes: 'appeal-lpa-statement-due-date'
+	});

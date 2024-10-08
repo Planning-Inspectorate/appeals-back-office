@@ -1,32 +1,18 @@
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
+import { textSummaryListItem } from '#lib/mappers/components/text.js';
 
 /** @type {import('../appeal.mapper.js').SubMapper} */
-export const mapLpaFinalCommentDueDate = ({ appealDetails, currentRoute }) => ({
-	id: 'lpa-final-comment-due-date',
-	display: {
-		summaryListItem: {
-			key: {
-				text: 'LPA final comments due'
-			},
-			value: {
-				html:
-					// @ts-ignore
-					dateISOStringToDisplayDate(appealDetails.appealTimetable?.lpaFinalCommentDueDate) || ''
-			},
-			actions: {
-				items: [
-					appealDetails.validAt
-						? {
-								text: 'Change',
-								href: `${currentRoute}/lpa-case/valid/date`,
-								visuallyHiddenText:
-									'The date all case documentation was received and the appeal was valid',
-								attributes: { 'data-cy': 'change-lpa-final-comment-due-date' }
-						  }
-						: {}
-				]
-			},
-			classes: 'appeal-lpa-final-comment-due-date'
-		}
-	}
-});
+export const mapLpaFinalCommentDueDate = ({
+	appealDetails,
+	currentRoute,
+	userHasUpdateCasePermission
+}) =>
+	textSummaryListItem({
+		id: 'lpa-final-comment-due-date',
+		text: 'LPA final comments due',
+		// @ts-ignore
+		value: dateISOStringToDisplayDate(appealDetails.appealTimetable?.lpaFinalCommentDueDate) || '',
+		link: `${currentRoute}/lpa-case/valid/date`,
+		userHasEditPermission: Boolean(userHasUpdateCasePermission && appealDetails.validAt),
+		classes: 'appeal-lpa-final-comment-due-date'
+	});
