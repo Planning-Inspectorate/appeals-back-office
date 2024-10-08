@@ -39,7 +39,7 @@ describe('procedure-preference', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<dt class="govuk-summary-list__key"> Preferred procedure</dt><dd class="govuk-summary-list__value"> Not answered</dd>'
+				'<dt class="govuk-summary-list__key"> Procedure preference</dt><dd class="govuk-summary-list__value"> Not answered</dd>'
 			);
 		});
 
@@ -59,7 +59,7 @@ describe('procedure-preference', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<dt class="govuk-summary-list__key"> Preferred procedure</dt><dd class="govuk-summary-list__value"> Hearing</dd>'
+				'<dt class="govuk-summary-list__key"> Procedure preference</dt><dd class="govuk-summary-list__value"> Hearing</dd>'
 			);
 		});
 

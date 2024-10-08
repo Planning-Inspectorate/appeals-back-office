@@ -567,7 +567,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		display: {
 			summaryListItem: {
 				key: {
-					text: 'Preferred procedure'
+					text: 'Procedure preference'
 				},
 				value: {
 					text: capitalize(appellantCaseData.appellantProcedurePreference || 'Not answered')
@@ -576,7 +576,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 					items: [
 						{
 							text: 'Change',
-							visuallyHiddenText: 'preferred procedure',
+							visuallyHiddenText: 'procedure preference',
 							href: `${currentRoute}/procedure-preference/change`,
 							attributes: { 'data-cy': 'change-procedure-preference' }
 						}

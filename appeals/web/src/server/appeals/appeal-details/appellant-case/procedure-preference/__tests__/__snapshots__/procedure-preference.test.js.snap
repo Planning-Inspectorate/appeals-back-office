@@ -205,10 +205,10 @@ exports[`procedure-preference GET /appellant-case should render a summary list r
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Appeal type</dt>
                     <dd class="govuk-summary-list__value">Planning appeal</dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Preferred procedure</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Procedure preference</dt>
                     <dd class="govuk-summary-list__value">Not answered</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/procedure-preference/change"
-                        data-cy="change-procedure-preference"> Change<span class="govuk-visually-hidden"> preferred procedure</span></a>
+                        data-cy="change-procedure-preference"> Change<span class="govuk-visually-hidden"> procedure preference</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Reason for preference</dt>
@@ -526,10 +526,10 @@ exports[`procedure-preference GET /appellant-case should render a summary list r
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Appeal type</dt>
                     <dd class="govuk-summary-list__value">Planning appeal</dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Preferred procedure</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Procedure preference</dt>
                     <dd class="govuk-summary-list__value">Not answered</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/procedure-preference/change"
-                        data-cy="change-procedure-preference"> Change<span class="govuk-visually-hidden"> preferred procedure</span></a>
+                        data-cy="change-procedure-preference"> Change<span class="govuk-visually-hidden"> procedure preference</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Reason for preference</dt>
@@ -847,10 +847,10 @@ exports[`procedure-preference GET /appellant-case should render a summary list r
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Appeal type</dt>
                     <dd class="govuk-summary-list__value">Planning appeal</dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Preferred procedure</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Procedure preference</dt>
                     <dd class="govuk-summary-list__value">Not answered</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/procedure-preference/change"
-                        data-cy="change-procedure-preference"> Change<span class="govuk-visually-hidden"> preferred procedure</span></a>
+                        data-cy="change-procedure-preference"> Change<span class="govuk-visually-hidden"> procedure preference</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Reason for preference</dt>
@@ -1168,10 +1168,10 @@ exports[`procedure-preference GET /appellant-case should render a summary list r
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Appeal type</dt>
                     <dd class="govuk-summary-list__value">Planning appeal</dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Preferred procedure</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Procedure preference</dt>
                     <dd class="govuk-summary-list__value">Not answered</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/procedure-preference/change"
-                        data-cy="change-procedure-preference"> Change<span class="govuk-visually-hidden"> preferred procedure</span></a>
+                        data-cy="change-procedure-preference"> Change<span class="govuk-visually-hidden"> procedure preference</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Reason for preference</dt>
@@ -1489,10 +1489,10 @@ exports[`procedure-preference GET /appellant-case should render a summary list r
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Appeal type</dt>
                     <dd class="govuk-summary-list__value">Planning appeal</dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Preferred procedure</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Procedure preference</dt>
                     <dd class="govuk-summary-list__value">Not answered</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/procedure-preference/change"
-                        data-cy="change-procedure-preference"> Change<span class="govuk-visually-hidden"> preferred procedure</span></a>
+                        data-cy="change-procedure-preference"> Change<span class="govuk-visually-hidden"> procedure preference</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Reason for preference</dt>
@@ -1810,10 +1810,10 @@ exports[`procedure-preference GET /appellant-case should render a summary list r
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Appeal type</dt>
                     <dd class="govuk-summary-list__value">Planning appeal</dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Preferred procedure</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Procedure preference</dt>
                     <dd class="govuk-summary-list__value">Hearing</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/procedure-preference/change"
-                        data-cy="change-procedure-preference"> Change<span class="govuk-visually-hidden"> preferred procedure</span></a>
+                        data-cy="change-procedure-preference"> Change<span class="govuk-visually-hidden"> procedure preference</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Reason for preference</dt>
@@ -2131,10 +2131,10 @@ exports[`procedure-preference GET /appellant-case should render a summary list r
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Appeal type</dt>
                     <dd class="govuk-summary-list__value">Planning appeal</dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Preferred procedure</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Procedure preference</dt>
                     <dd class="govuk-summary-list__value">Not answered</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/procedure-preference/change"
-                        data-cy="change-procedure-preference"> Change<span class="govuk-visually-hidden"> preferred procedure</span></a>
+                        data-cy="change-procedure-preference"> Change<span class="govuk-visually-hidden"> procedure preference</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Reason for preference</dt>
@@ -2452,10 +2452,10 @@ exports[`procedure-preference GET /appellant-case should render a summary list r
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Appeal type</dt>
                     <dd class="govuk-summary-list__value">Planning appeal</dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Preferred procedure</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Procedure preference</dt>
                     <dd class="govuk-summary-list__value">Not answered</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/procedure-preference/change"
-                        data-cy="change-procedure-preference"> Change<span class="govuk-visually-hidden"> preferred procedure</span></a>
+                        data-cy="change-procedure-preference"> Change<span class="govuk-visually-hidden"> procedure preference</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Reason for preference</dt>
