@@ -67,11 +67,11 @@ router.route('/').get(viewHomepage);
 router.route('/auth/signout').get(handleSignout);
 
 router
-	.route('/documents/:caseId/download/:guid/:preview?')
+	.route('/documents/:caseId/download/:guid/:filename?')
 	.get(addApiClientToRequest, asyncHandler(getDocumentDownload));
 
 router
-	.route('/documents/:caseId/download/:guid/:version/:preview?')
+	.route('/documents/:caseId/download/:guid/:version/:filename?')
 	.get(addApiClientToRequest, asyncHandler(getDocumentDownloadByVersion));
 
 router

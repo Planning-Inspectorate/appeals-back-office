@@ -114,13 +114,14 @@ export async function documentUploadPage(
 /**
  * @param {string|number} appealId
  * @param {string} documentId
+ * @param {string} filename
  * @param {number} [documentVersion]
  */
-export const mapDocumentDownloadUrl = (appealId, documentId, documentVersion) => {
+export const mapDocumentDownloadUrl = (appealId, documentId, filename, documentVersion) => {
 	if (documentVersion) {
-		return `/documents/${appealId}/download/${documentId}/${documentVersion}/preview/`;
+		return `/documents/${appealId}/download/${documentId}/${documentVersion}/${filename}`;
 	}
-	return `/documents/${appealId}/download/${documentId}/preview/`;
+	return `/documents/${appealId}/download/${documentId}/${filename}`;
 };
 
 /**
@@ -735,8 +736,9 @@ export function mapFolderDocumentInformationHtmlProperty(folder, document) {
 				parameters: {
 					html: `<a class="govuk-link" href="${mapDocumentDownloadUrl(
 						folder.caseId,
-						document.id
-					)}">${document.name || ''}</a>`.trim()
+						document.id,
+						document.name
+					)}" target="_blank">${document.name || ''}</a>`.trim()
 				}
 			});
 		} else {
@@ -969,8 +971,9 @@ function mapVersionDocumentInformationHtmlProperty(document, documentVersion) {
 					document?.id
 						? `<a class="govuk-link" href="${mapDocumentDownloadUrl(
 								document?.caseId,
-								document.id
-						  )}">${document.name || ''}</a>`
+								document.id,
+								document.name
+						  )}" target="_blank">${document.name || ''}</a>`
 						: document.name || ''
 			}
 		});
@@ -1031,8 +1034,9 @@ function mapDocumentNameHtmlProperty(document, documentVersion) {
 						? `<a class="govuk-link" href="${mapDocumentDownloadUrl(
 								document.caseId,
 								document.id,
+								documentVersion.originalFilename,
 								documentVersion.version
-						  )}">${documentVersion.originalFilename || ''}</a>`
+						  )}" target="_blank">${documentVersion.originalFilename || ''}</a>`
 						: documentVersion.originalFilename || ''
 			}
 		});

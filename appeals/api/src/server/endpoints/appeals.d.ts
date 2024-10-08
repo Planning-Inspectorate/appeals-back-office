@@ -57,6 +57,7 @@ interface SingleAppealDetailsResponse {
 		folderId: number;
 		outcome?: string | null;
 		documentId?: string | null;
+		documentName?: string | null;
 		letterDate?: string | null;
 		virusCheckStatus?: string | null;
 	};
