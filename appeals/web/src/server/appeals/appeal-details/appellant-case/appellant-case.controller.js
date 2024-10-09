@@ -24,6 +24,7 @@ import {
 	renderManageFolder
 } from '../../appeal-documents/appeal-documents.controller.js';
 import { capitalize } from 'lodash-es';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 
 /**
  *
@@ -329,7 +330,10 @@ export const postAddDocumentsCheckAndConfirm = async (request, response) => {
 		await postUploadDocumentsCheckAndConfirm(
 			request,
 			response,
-			`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case`
+			`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case`,
+			() => {
+				addNotificationBannerToSession(request.session, 'documentAdded', currentAppeal.appealId);
+			}
 		);
 	} catch (error) {
 		logger.error(

@@ -4329,6 +4329,34 @@ describe('appellant-case', () => {
 			);
 			expect(mockDocumentsEndpoint.isDone()).toBe(true);
 		});
+
+		it('should display a "document added" notification banner on the appellant case page after a document was uploaded', async () => {
+			nock('http://test/').post('/appeals/1/documents').reply(200);
+
+			const addDocumentsResponse = await request
+				.post(`${baseUrl}/1${appellantCasePagePath}/add-documents/1`)
+				.send({
+					'upload-info': fileUploadInfo
+				});
+
+			expect(addDocumentsResponse.statusCode).toBe(302);
+
+			const checkYourAnswersResponse = await request
+				.post(`${baseUrl}/1${appellantCasePagePath}/add-documents/1/check-your-answers`)
+				.send({});
+
+			expect(checkYourAnswersResponse.statusCode).toBe(302);
+
+			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
+
+			const unprettifiedElement = parseHtml(response.text, {
+				rootElement: notificationBannerElement,
+				skipPrettyPrint: true
+			});
+
+			expect(unprettifiedElement.innerHTML).toContain('Success</h3>');
+			expect(unprettifiedElement.innerHTML).toContain('Document added</p>');
+		});
 	});
 
 	describe('GET /appellant-case/add-documents/:folderId/:documentId/check-your-answers', () => {

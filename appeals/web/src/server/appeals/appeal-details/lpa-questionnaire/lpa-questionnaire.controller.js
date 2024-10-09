@@ -24,6 +24,7 @@ import {
 	postChangeDocumentDetails,
 	postDeleteDocument
 } from '../../appeal-documents/appeal-documents.controller.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -382,7 +383,10 @@ export const postAddDocumentsCheckAndConfirm = async (request, response) => {
 		await postUploadDocumentsCheckAndConfirm(
 			request,
 			response,
-			`/appeals-service/appeal-details/${currentAppeal.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}`
+			`/appeals-service/appeal-details/${currentAppeal.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}`,
+			() => {
+				addNotificationBannerToSession(request.session, 'documentAdded', currentAppeal.appealId);
+			}
 		);
 	} catch (error) {
 		logger.error(
