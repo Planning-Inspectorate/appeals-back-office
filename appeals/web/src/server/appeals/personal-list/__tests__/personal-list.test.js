@@ -233,6 +233,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 		const result = mapAppealStatusToActionRequiredHtml(
 			appealId,
 			'validation',
+			false,
 			lpaQuestionnaireId,
 			'',
 			'',
@@ -248,6 +249,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 		const result = mapAppealStatusToActionRequiredHtml(
 			appealId,
 			'validation',
+			false,
 			lpaQuestionnaireId,
 			'Incomplete',
 			'',
@@ -263,6 +265,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 		const result = mapAppealStatusToActionRequiredHtml(
 			appealId,
 			'validation',
+			false,
 			lpaQuestionnaireId,
 			'Incomplete',
 			'',
@@ -276,6 +279,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 		const result = mapAppealStatusToActionRequiredHtml(
 			appealId,
 			'ready_to_start',
+			false,
 			lpaQuestionnaireId,
 			'',
 			'',
@@ -291,6 +295,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 		const result = mapAppealStatusToActionRequiredHtml(
 			appealId,
 			'ready_to_start',
+			false,
 			lpaQuestionnaireId,
 			'',
 			'',
@@ -304,6 +309,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 		const result = mapAppealStatusToActionRequiredHtml(
 			appealId,
 			'lpa_questionnaire',
+			false,
 			null,
 			'',
 			'',
@@ -317,6 +323,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 		const result = mapAppealStatusToActionRequiredHtml(
 			appealId,
 			'lpa_questionnaire',
+			false,
 			lpaQuestionnaireId,
 			'',
 			'Incomplete',
@@ -332,6 +339,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 		const result = mapAppealStatusToActionRequiredHtml(
 			appealId,
 			'lpa_questionnaire',
+			false,
 			lpaQuestionnaireId,
 			'',
 			'Incomplete',
@@ -345,6 +353,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 		const result = mapAppealStatusToActionRequiredHtml(
 			appealId,
 			'lpa_questionnaire',
+			false,
 			lpaQuestionnaireId,
 			'',
 			'',
@@ -360,6 +369,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 		const result = mapAppealStatusToActionRequiredHtml(
 			appealId,
 			'lpa_questionnaire',
+			false,
 			lpaQuestionnaireId,
 			'',
 			'',
@@ -373,6 +383,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 		const result = mapAppealStatusToActionRequiredHtml(
 			appealId,
 			'lpa_questionnaire',
+			false,
 			null,
 			'',
 			'',
@@ -386,6 +397,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 		const result = mapAppealStatusToActionRequiredHtml(
 			appealId,
 			'issue_determination',
+			false,
 			null,
 			'',
 			'',
@@ -401,6 +413,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 		const result = mapAppealStatusToActionRequiredHtml(
 			appealId,
 			'awaiting_transfer',
+			false,
 			null,
 			'',
 			'',
@@ -416,6 +429,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 		const result = mapAppealStatusToActionRequiredHtml(
 			appealId,
 			'some_other_status',
+			false,
 			null,
 			'',
 			'',
