@@ -9,7 +9,7 @@ export const mapIpCommentsDueDate = ({
 }) =>
 	textSummaryListItem({
 		id: 'ip-comments-due-date',
-		text: 'Comments from interested parties due',
+		text: 'Interested party comments due',
 		// @ts-ignore
 		value: dateISOStringToDisplayDate(appealDetails.appealTimetable?.ipCommentsDueDate) || '',
 		link: `${currentRoute}/appellant-case/valid/date`,
