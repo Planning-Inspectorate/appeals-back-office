@@ -13,6 +13,6 @@ export const mapAppellantInspectorAccess = ({
 		valueDetails: appealDetails.inspectorAccess.appellantCase.details,
 		defaultText: 'No answer provided',
 		link: `${currentRoute}/inspector-access/change/appellant`,
-		userHasEditPermission: userHasUpdateCasePermission,
+		editable: userHasUpdateCasePermission,
 		classes: 'appeal-appellant-inspector-access'
 	});

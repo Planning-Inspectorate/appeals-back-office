@@ -14,7 +14,7 @@ export const mapLpaHealthAndSafety = ({
 		valueDetails: appealDetails.healthAndSafety.lpaQuestionnaire?.details,
 		defaultText: 'No answer provided',
 		link: `${currentRoute}/safety-risks/change/lpa`,
-		userHasEditPermission:
+		editable:
 			userHasUpdateCasePermission &&
 			shouldDisplayChangeLinksForLPAQStatus(
 				appealDetails.documentationSummary?.lpaQuestionnaire?.status

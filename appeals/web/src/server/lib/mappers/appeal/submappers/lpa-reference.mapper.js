@@ -8,6 +8,6 @@ export const mapLpaReference = ({ appealDetails, currentRoute, userHasUpdateCase
 		value:
 			appealDetails.planningApplicationReference || 'No LPA application reference for this appeal',
 		link: `${currentRoute}/lpa-reference/change`,
-		userHasEditPermission: userHasUpdateCasePermission,
+		editable: userHasUpdateCasePermission,
 		classes: 'appeal-lpa-reference'
 	});

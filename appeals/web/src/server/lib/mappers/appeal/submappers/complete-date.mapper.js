@@ -10,7 +10,7 @@ export const mapCompleteDate = ({ appealDetails, currentRoute, userHasUpdateCase
 			dateISOStringToDisplayDate(appealDetails.appealTimetable?.completeDate) ||
 			'Due date not yet set',
 		link: `${currentRoute}/change-appeal-details/complete-date`,
-		userHasEditPermission: userHasUpdateCasePermission,
+		editable: userHasUpdateCasePermission,
 		classes: 'appeal-complete-date',
 		actionText: appealDetails.appealTimetable?.completeDate ? 'Change' : 'Schedule'
 	});

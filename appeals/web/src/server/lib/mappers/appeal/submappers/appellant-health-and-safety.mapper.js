@@ -13,6 +13,6 @@ export const mapAppellantHealthAndSafety = ({
 		valueDetails: appealDetails.healthAndSafety.appellantCase.details,
 		defaultText: 'No answer provided',
 		link: `${currentRoute}/safety-risks/change/appellant`,
-		userHasEditPermission: userHasUpdateCasePermission,
+		editable: userHasUpdateCasePermission,
 		classes: 'appeal-appellant-health-and-safety'
 	});

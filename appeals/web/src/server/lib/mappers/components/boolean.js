@@ -10,7 +10,7 @@ import { buildHtmSpan } from '#lib/nunjucks-template-builders/tag-builders.js';
  * @param {string} [options.defaultText]
  * @param {string} options.link
  * @param {boolean} [options.addCyAttribute]
- * @param {boolean} options.userHasEditPermission
+ * @param {boolean} options.editable
  * @param {string} [options.classes]
  * @returns {Instructions}
  */
@@ -21,12 +21,12 @@ export function booleanSummaryListItem({
 	defaultText,
 	link,
 	addCyAttribute,
-	userHasEditPermission,
+	editable,
 	classes
 }) {
 	/** @type {ActionItemProperties[]} */
 	const actions = [];
-	if (userHasEditPermission) {
+	if (editable) {
 		actions.push({
 			text: 'Change',
 			visuallyHiddenText: text,
@@ -59,7 +59,7 @@ export function booleanSummaryListItem({
  * @param {string} [options.defaultText]
  * @param {string} options.link
  * @param {boolean} [options.addCyAttribute]
- * @param {boolean} options.userHasEditPermission
+ * @param {boolean} options.editable
  * @param {string} [options.classes]
  * @returns {Instructions}
  */
@@ -71,12 +71,12 @@ export function booleanWithDetailsSummaryListItem({
 	defaultText,
 	link,
 	addCyAttribute,
-	userHasEditPermission,
+	editable,
 	classes
 }) {
 	/** @type {ActionItemProperties[]} */
 	const actions = [];
-	if (userHasEditPermission) {
+	if (editable) {
 		actions.push({
 			text: 'Change',
 			visuallyHiddenText: text,

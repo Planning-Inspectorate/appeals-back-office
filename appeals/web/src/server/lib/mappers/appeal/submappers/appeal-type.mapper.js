@@ -7,6 +7,6 @@ export const mapAppealType = ({ appealDetails, currentRoute, userHasUpdateCasePe
 		text: 'Appeal type',
 		value: appealDetails.appealType || 'No appeal type',
 		link: `${currentRoute}/change-appeal-type/appeal-type`,
-		userHasEditPermission: userHasUpdateCasePermission,
+		editable: userHasUpdateCasePermission,
 		classes: 'appeal-appeal-type'
 	});

@@ -12,6 +12,6 @@ export const mapAppellant = ({ appealDetails, currentRoute, userHasUpdateCasePer
 				: 'No appellant'
 		},
 		link: `${currentRoute}/service-user/change/appellant`,
-		userHasEditPermission: userHasUpdateCasePermission,
+		editable: userHasUpdateCasePermission,
 		classes: 'appeal-appellant'
 	});

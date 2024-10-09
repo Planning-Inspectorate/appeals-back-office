@@ -20,7 +20,7 @@ export const mapSiteVisitDate = ({ appealDetails, currentRoute, userHasUpdateCas
 		value: { html: value },
 		link: `${currentRoute}/site-visit/${hasVisit ? 'manage' : 'schedule'}-visit`,
 		actionText: hasVisit ? 'Change' : 'Arrange',
-		userHasEditPermission: userHasUpdateCasePermission,
+		editable: userHasUpdateCasePermission,
 		classes: 'appeal-site-visit'
 	});
 };

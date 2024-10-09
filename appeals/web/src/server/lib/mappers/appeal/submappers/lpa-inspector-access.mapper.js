@@ -14,7 +14,7 @@ export const mapLpaInspectorAccess = ({
 		valueDetails: appealDetails.inspectorAccess.lpaQuestionnaire.details,
 		defaultText: '',
 		link: `${currentRoute}/inspector-access/change/lpa`,
-		userHasEditPermission:
+		editable:
 			userHasUpdateCasePermission &&
 			shouldDisplayChangeLinksForLPAQStatus(
 				appealDetails.documentationSummary?.lpaQuestionnaire?.status

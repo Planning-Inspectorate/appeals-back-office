@@ -13,6 +13,6 @@ export const mapIpCommentsDueDate = ({
 		// @ts-ignore
 		value: dateISOStringToDisplayDate(appealDetails.appealTimetable?.ipCommentsDueDate) || '',
 		link: `${currentRoute}/appellant-case/valid/date`,
-		userHasEditPermission: userHasUpdateCasePermission,
+		editable: userHasUpdateCasePermission,
 		classes: 'appeal-ip-comments-due-date'
 	});

@@ -8,6 +8,6 @@ export const mapSiteAddress = ({ appealDetails, currentRoute, userHasUpdateCaseP
 		text: 'Site address',
 		value: appealSiteToAddressString(appealDetails.appealSite),
 		link: `${currentRoute}/change-appeal-details/site-address`,
-		userHasEditPermission: userHasUpdateCasePermission,
+		editable: userHasUpdateCasePermission,
 		classes: 'appeal-site-address'
 	});
