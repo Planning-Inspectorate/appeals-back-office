@@ -1,6 +1,6 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import logger from '#lib/logger.js';
-import { initialiseAndMapAppealData } from '#lib/mappers/appeal.mapper.js';
+import { initialiseAndMapAppealData } from '#lib/mappers/appeal/appeal.mapper.js';
 import { initialiseAndMapLPAQData } from '#lib/mappers/lpaQuestionnaire.mapper.js';
 
 /**

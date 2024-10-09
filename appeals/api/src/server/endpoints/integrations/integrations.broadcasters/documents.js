@@ -48,6 +48,7 @@ export const broadcastDocument = async (documentId, version, updateType) => {
 		return false;
 	}
 
+	// @ts-ignore
 	const msg = messageMappers.mapDocument(document);
 
 	if (msg) {

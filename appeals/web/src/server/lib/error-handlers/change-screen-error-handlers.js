@@ -86,3 +86,11 @@ export const errorInspectorAccessRadio = (/** @type {Error}*/ errors) => {
 		  }
 		: undefined;
 };
+
+export const errorAddressProvidedRadio = (/** @type {Error} */ errors) => {
+	return errors?.addressProvided
+		? {
+				text: 'Select one option'
+		  }
+		: undefined;
+};

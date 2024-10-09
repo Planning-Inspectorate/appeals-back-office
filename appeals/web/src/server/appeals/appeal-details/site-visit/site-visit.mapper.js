@@ -1,9 +1,12 @@
-import { initialiseAndMapAppealData } from '#lib/mappers/appeal.mapper.js';
+import { initialiseAndMapAppealData } from '#lib/mappers/appeal/appeal.mapper.js';
 import { removeSummaryListActions } from '#lib/mappers/mapper-utilities.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { capitalize } from 'lodash-es';
-import { hourMinuteToApiDateString, dayMonthYearToApiDateString } from '#lib/dates.js';
+import {
+	dayMonthYearHourMinuteToISOString,
+	dateISOStringToDayMonthYearHourMinute
+} from '#lib/dates.js';
 
 /**
  * @typedef {'unaccompanied'|'accompanied'|'accessRequired'} WebSiteVisitType
@@ -48,13 +51,13 @@ export function mapGetApiVisitTypeToWebVisitType(getApiVisitType) {
  * @param {string} currentRoute
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
  * @param {WebSiteVisitType|null|undefined} visitType
- * @param {string|null|undefined} visitDateDay
- * @param {string|null|undefined} visitDateMonth
- * @param {string|null|undefined} visitDateYear
- * @param {string|null|undefined} visitStartTimeHour
- * @param {string|null|undefined} visitStartTimeMinute
- * @param {string|null|undefined} visitEndTimeHour
- * @param {string|null|undefined} visitEndTimeMinute
+ * @param {string|number|null|undefined} visitDateDay
+ * @param {string|number|null|undefined} visitDateMonth
+ * @param {string|number|null|undefined} visitDateYear
+ * @param {string|number|null|undefined} visitStartTimeHour
+ * @param {string|number|null|undefined} visitStartTimeMinute
+ * @param {string|number|null|undefined} visitEndTimeHour
+ * @param {string|number|null|undefined} visitEndTimeMinute
  * @returns {Promise<PageContent>}
  */
 export async function scheduleOrManageSiteVisitPage(
@@ -75,27 +78,24 @@ export async function scheduleOrManageSiteVisitPage(
 	const titlePrefix = capitalize(pageType);
 
 	visitType ??= mapGetApiVisitTypeToWebVisitType(appealDetails.siteVisit?.visitType);
-	visitDateDay ??= appealDetails.siteVisit?.visitDate
-		? new Date(appealDetails.siteVisit?.visitDate).getDate().toString()
-		: undefined;
-	visitDateMonth ??= appealDetails.siteVisit?.visitDate
-		? (new Date(appealDetails.siteVisit?.visitDate).getMonth() + 1).toString()
-		: undefined;
-	visitDateYear ??= appealDetails.siteVisit?.visitDate
-		? new Date(appealDetails.siteVisit?.visitDate).getFullYear().toString()
-		: undefined;
-	visitStartTimeHour ??= appealDetails.siteVisit?.visitStartTime
-		? appealDetails.siteVisit?.visitStartTime.split(':')[0]?.toString()
-		: undefined;
-	visitStartTimeMinute ??= appealDetails.siteVisit?.visitStartTime
-		? appealDetails.siteVisit?.visitStartTime.split(':')[1]?.toString()
-		: undefined;
-	visitEndTimeHour ??= appealDetails.siteVisit?.visitEndTime
-		? appealDetails.siteVisit?.visitEndTime.split(':')[0]?.toString()
-		: undefined;
-	visitEndTimeMinute ??= appealDetails.siteVisit?.visitEndTime
-		? appealDetails.siteVisit?.visitEndTime.split(':')[1]?.toString()
-		: undefined;
+
+	const { day, month, year } = dateISOStringToDayMonthYearHourMinute(
+		appealDetails.siteVisit?.visitDate
+	);
+	const { hour: startTimeHour, minute: startTimeMinute } = dateISOStringToDayMonthYearHourMinute(
+		appealDetails.siteVisit?.visitStartTime
+	);
+	const { hour: endTimeHour, minute: endTimeMinute } = dateISOStringToDayMonthYearHourMinute(
+		appealDetails.siteVisit?.visitEndTime
+	);
+
+	visitDateDay ??= appealDetails.siteVisit?.visitDate ? day : undefined;
+	visitDateMonth ??= appealDetails.siteVisit?.visitDate ? month : undefined;
+	visitDateYear ??= appealDetails.siteVisit?.visitDate ? year : undefined;
+	visitStartTimeHour ??= appealDetails.siteVisit?.visitStartTime ? startTimeHour : undefined;
+	visitStartTimeMinute ??= appealDetails.siteVisit?.visitStartTime ? startTimeMinute : undefined;
+	visitEndTimeHour ??= appealDetails.siteVisit?.visitEndTime ? endTimeHour : undefined;
+	visitEndTimeMinute ??= appealDetails.siteVisit?.visitEndTime ? endTimeMinute : undefined;
 
 	/**
 	 * @type {(SummaryListRowProperties)[]}
@@ -520,13 +520,31 @@ export function mapPostScheduleOrManageSiteVisitCommonParameters(
 ) {
 	return {
 		appealIdNumber: parseInt(appealId, 10),
-		visitDate: dayMonthYearToApiDateString({
-			day: parseInt(visitDateDay, 10),
-			month: parseInt(visitDateMonth, 10),
-			year: parseInt(visitDateYear, 10)
+		visitDate: dayMonthYearHourMinuteToISOString({
+			day: visitDateDay,
+			month: visitDateMonth,
+			year: visitDateYear
 		}),
-		visitStartTime: hourMinuteToApiDateString(visitStartTimeHour, visitStartTimeMinute),
-		visitEndTime: hourMinuteToApiDateString(visitEndTimeHour, visitEndTimeMinute),
+		visitStartTime:
+			visitStartTimeHour && visitStartTimeMinute
+				? dayMonthYearHourMinuteToISOString({
+						day: visitDateDay,
+						month: visitDateMonth,
+						year: visitDateYear,
+						hour: visitStartTimeHour,
+						minute: visitStartTimeMinute
+				  })
+				: undefined,
+		visitEndTime:
+			visitEndTimeHour && visitEndTimeMinute
+				? dayMonthYearHourMinuteToISOString({
+						day: visitDateDay,
+						month: visitDateMonth,
+						year: visitDateYear,
+						hour: visitEndTimeHour,
+						minute: visitEndTimeMinute
+				  })
+				: undefined,
 		apiVisitType: mapWebVisitTypeToApiVisitType(visitType),
 		previousVisitType: ''
 	};

@@ -658,6 +658,8 @@ exports[`application-date POST /change should re-render the Date page with an er
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#application-submission-date-year">Date year must be 4 digits</a>
                             </li>
+                            <li><a href="#">Date must be a valid date</a>
+                            </li>
                         </ul>
                     </div>
                 </div>

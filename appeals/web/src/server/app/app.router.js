@@ -15,11 +15,13 @@ import { handleSignout } from './auth/auth.controller.js';
 import { assertIsAuthenticated } from './auth/auth.guards.js';
 import {
 	getDocumentDownload,
-	getDocumentDownloadByVersion
+	getDocumentDownloadByVersion,
+	getUncommittedDocumentDownload
 } from './components/file-downloader.component.js';
 import { addApiClientToRequest } from '../lib/middleware/add-apiclient-to-request.js';
 import { APPEAL_START_RANGE } from '@pins/appeals/constants/common.js';
 import logger from '#lib/logger.js';
+import { deleteUncommittedDocumentFromSession } from '#appeals/appeal-documents/appeal-documents.controller.js';
 
 const router = createRouter();
 
@@ -65,12 +67,20 @@ router.route('/').get(viewHomepage);
 router.route('/auth/signout').get(handleSignout);
 
 router
-	.route('/documents/:caseId/download/:guid/:preview?')
+	.route('/documents/:caseId/download/:guid/:filename?')
 	.get(addApiClientToRequest, asyncHandler(getDocumentDownload));
 
 router
-	.route('/documents/:caseId/download/:guid/:version/:preview?')
+	.route('/documents/:caseId/download/:guid/:version/:filename?')
 	.get(addApiClientToRequest, asyncHandler(getDocumentDownloadByVersion));
+
+router
+	.route('/documents/:caseReference/download-uncommitted/:guid/:filename/:version?')
+	.get(asyncHandler(getUncommittedDocumentDownload));
+
+router
+	.route('/documents/delete-uncommitted/:guid')
+	.delete(asyncHandler(deleteUncommittedDocumentFromSession));
 
 router.use('/appeals-service', addApiClientToRequest, appealsRouter);
 

@@ -56,5 +56,34 @@ export const happyPathHelper = {
 		let visitDate = new Date();
 		visitDate.setMonth(visitDate.getMonth() + 10); // TODO What is a suitable dynamic date to use here?
 		return visitDate;
+	},
+
+	uploadDocAppellantCase(caseRef) {
+		cy.visit(urlPaths.appealsList);
+		listCasesPage.clickAppealByRef(caseRef);
+		happyPathHelper.assignCaseOfficer(caseRef);
+		caseDetailsPage.clickReviewAppellantCase();
+		caseDetailsPage.clickAddAgreementToChangeDescriptionEvidence();
+		caseDetailsPage.uploadSampleDoc();
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Confirm');
+		caseDetailsPage.clickButtonByText('Confirm');
+		cy.reload();
+		//caseDetailsPage.verifyAnswerSummaryValue('sample-doc.pdf'); - Success banners are currently missing, fix incoming
+	},
+
+	manageDocsAppellantCase(caseRef) {
+		cy.visit(urlPaths.appealsList);
+		listCasesPage.clickAppealByRef(caseRef);
+		happyPathHelper.uploadDocAppellantCase(caseRef);
+		cy.reload();
+		caseDetailsPage.clickManageAgreementToChangeDescriptionEvidence();
+		caseDetailsPage.clickLinkByText('View and edit');
+		caseDetailsPage.clickButtonByText('upload a new version');
+		caseDetailsPage.uploadSampleImg();
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Confirm');
+		caseDetailsPage.clickButtonByText('Confirm');
+		caseDetailsPage.validateBannerMessage('Document updated');
 	}
 };

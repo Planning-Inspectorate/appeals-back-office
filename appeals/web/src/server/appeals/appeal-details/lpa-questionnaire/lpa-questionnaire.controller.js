@@ -322,13 +322,13 @@ export const getAddDocumentDetails = async (request, response) => {
 		? 'Notification documents'
 		: '';
 
-	await renderDocumentDetails(
+	await renderDocumentDetails({
 		request,
 		response,
-		`/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/add-documents/{{folderId}}`,
-		getValidationOutcomeFromLpaQuestionnaire(lpaQuestionnaireDetails) === 'complete',
+		backLinkUrl: `/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/add-documents/{{folderId}}`,
+		isLateEntry: getValidationOutcomeFromLpaQuestionnaire(lpaQuestionnaireDetails) === 'complete',
 		pageHeadingTextOverride
-	);
+	});
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
@@ -447,24 +447,24 @@ export const getManageFolder = async (request, response) => {
 			break;
 	}
 
-	await renderManageFolder(
+	await renderManageFolder({
 		request,
 		response,
-		`/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/`,
-		`/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/manage-documents/{{folderId}}/{{documentId}}`,
-		managePageHeadingText
-	);
+		backLinkUrl: `/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/`,
+		viewAndEditUrl: `/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/manage-documents/{{folderId}}/{{documentId}}`,
+		pageHeadingTextOverride: managePageHeadingText
+	});
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const getManageDocument = async (request, response) => {
-	await renderManageDocument(
+	await renderManageDocument({
 		request,
 		response,
-		`/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/manage-documents/{{folderId}}`,
-		`/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/add-documents/{{folderId}}/{{documentId}}`,
-		`/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/manage-documents/{{folderId}}/{{documentId}}/{{versionId}}/delete`
-	);
+		backLinkUrl: `/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/manage-documents/{{folderId}}`,
+		uploadUpdatedDocumentUrl: `/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/add-documents/{{folderId}}/{{documentId}}`,
+		removeDocumentUrl: `/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/manage-documents/{{folderId}}/{{documentId}}/{{versionId}}/delete`
+	});
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
@@ -525,14 +525,13 @@ export const getAddDocumentVersionDetails = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
-	await renderDocumentDetails(
+	await renderDocumentDetails({
 		request,
 		response,
-		`/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/add-documents/${request.params.folderId}/${request.params.documentId}`,
-		getValidationOutcomeFromLpaQuestionnaire(lpaQuestionnaireDetails) === 'complete',
-		undefined,
+		backLinkUrl: `/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/add-documents/${request.params.folderId}/${request.params.documentId}`,
+		isLateEntry: getValidationOutcomeFromLpaQuestionnaire(lpaQuestionnaireDetails) === 'complete',
 		documentId
-	);
+	});
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */

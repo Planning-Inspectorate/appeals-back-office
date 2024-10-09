@@ -18,7 +18,9 @@ To enable the features above, it is necessary for the front-end to run over [HTT
 
 ## EntraID client ID, secret and groups
 
-The front-end, which communicates with EntraID, requires [additional environment settings](web.md). Some of these settings cannot be publicly disclosed, and need to be retrieved through the repository owner.
+The front-end, which communicates with EntraID, requires [additional web environment settings](web.md).  
+The back-end also requires [additional api environment settings](api.md).  
+Some of these settings cannot be publicly disclosed, and need to be retrieved through the repository owner.
 
 ## Files stored in a local emulator
 

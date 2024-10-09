@@ -20,6 +20,7 @@ describe('Assign user to case', () => {
 		{ tags: tag.smoke },
 		() => {
 			cy.createCase().then((caseRef) => {
+				console.log(users.appeals);
 				cy.visit(urlPaths.appealsList);
 				listCasesPage.clickAppealByRef(caseRef);
 				caseDetailsPage.clickAssignCaseOfficer();

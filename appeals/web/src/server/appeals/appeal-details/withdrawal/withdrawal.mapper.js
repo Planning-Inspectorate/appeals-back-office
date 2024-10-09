@@ -1,6 +1,6 @@
 import { capitalize } from 'lodash-es';
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { dateToDisplayDate } from '#lib/dates.js';
+import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { buildNotificationBanners } from '#lib/mappers/notification-banners.mapper.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
@@ -21,7 +21,7 @@ import {
  * @typedef {import('@pins/appeals.api').Appeals.FolderInfo} FolderInfo
  * @typedef {import('@pins/appeals.api').Schema.DocumentRedactionStatus} RedactionStatus
  * @typedef {import('#lib/nunjucks-template-builders/tag-builders.js').HtmlLink} HtmlLink
- * @typedef {import('#lib/ts-utilities.js').FileUploadInfoItem} FileUploadInfoItem
+ * @typedef {import('#appeals/appeal-documents/appeal-documents.types').FileUploadInfoItem} FileUploadInfoItem
  */
 
 /**
@@ -109,7 +109,7 @@ export function manageWithdrawalRequestFolderPage(
 					rows: (folder?.documents || []).map((document) => [
 						mapFolderDocumentInformationHtmlProperty(folder, document),
 						{
-							text: dateToDisplayDate(withdrawalRequestDate)
+							text: dateISOStringToDisplayDate(withdrawalRequestDate)
 						},
 						{
 							text: document?.latestDocumentVersion?.redactionStatus
@@ -117,13 +117,15 @@ export function manageWithdrawalRequestFolderPage(
 						{
 							html:
 								document?.id &&
+								document?.name &&
 								document?.latestDocumentVersion?.virusCheckStatus &&
 								document?.latestDocumentVersion?.virusCheckStatus ===
 									APPEAL_VIRUS_CHECK_STATUS.SCANNED
 									? `<a class="govuk-link" href="${mapDocumentDownloadUrl(
 											folder.caseId,
-											document.id
-									  )}">View</a>`.trim()
+											document.id,
+											document.name
+									  )}" target="_blank">View<span class="govuk-visually-hidden"> document</span></a>`.trim()
 									: ''
 						}
 					])
@@ -260,15 +262,11 @@ export function withdrawalDocumentRedactionStatusPage(
 }
 
 /**
- * @param {import('@pins/express/types/express.js').Request} request
  * @param {Appeal} appealData
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
  * @returns {PageContent}
  */
-export function checkAndConfirmPage(request, appealData, session) {
-	const withdrawalRequest = session.fileUploadInfo?.[0]?.name;
-	const withdrawalRequestDate = new Date(session.withdrawal?.withdrawalRequestDate);
-
+export function checkAndConfirmPage(appealData, session) {
 	/** @type {PageComponent} */
 	const summaryListComponent = {
 		type: 'summary-list',
@@ -279,7 +277,7 @@ export function checkAndConfirmPage(request, appealData, session) {
 						text: 'Withdrawal request'
 					},
 					value: {
-						text: withdrawalRequest
+						text: session.fileUploadInfo?.files[0]?.name
 					},
 					actions: {
 						items: [
@@ -295,7 +293,7 @@ export function checkAndConfirmPage(request, appealData, session) {
 						text: 'Request date'
 					},
 					value: {
-						text: dateToDisplayDate(withdrawalRequestDate)
+						text: dateISOStringToDisplayDate(session.withdrawal?.withdrawalRequestDate)
 					},
 					actions: {
 						items: [

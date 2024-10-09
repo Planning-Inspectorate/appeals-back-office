@@ -1,7 +1,10 @@
+import { appealShortReference } from '#lib/appeals-formatter.js';
+import { dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
+
 /**
  * @typedef {import('../../appeal-details.types.js').WebAppeal} Appeal
+ * @typedef {import('../../../../appeals/appeals.types.js').DayMonthYearHourMinute} DayMonthYearHourMinute
  */
-import { appealShortReference } from '#lib/appeals-formatter.js';
 
 /**
  * @param {Appeal} appealData
@@ -15,11 +18,24 @@ export const changeApplicationSubmissionDatePage = (
 	storedSessionData
 ) => {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
-	const formattedApplicationDate = new Date(appellantCaseData.applicationDate);
 
-	const day = storedSessionData?.day ?? formattedApplicationDate.getDate();
-	const month = storedSessionData?.month ?? formattedApplicationDate.getMonth() + 1;
-	const year = storedSessionData?.year ?? formattedApplicationDate.getFullYear();
+	let day = '';
+	let month = '';
+	let year = '';
+
+	if (storedSessionData) {
+		day = String(storedSessionData.day);
+		month = String(storedSessionData.month);
+		year = String(storedSessionData.year);
+	} else if (!storedSessionData && appellantCaseData.applicationDate) {
+		const formattedApplicationDecisionDate = dateISOStringToDayMonthYearHourMinute(
+			appellantCaseData.applicationDate
+		);
+
+		day = String(formattedApplicationDecisionDate.day);
+		month = String(formattedApplicationDecisionDate.month);
+		year = String(formattedApplicationDecisionDate.year);
+	}
 
 	/** @type {PageContent} */
 	const pageContent = {

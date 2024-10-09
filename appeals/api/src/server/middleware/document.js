@@ -5,7 +5,7 @@ import { ERROR_NOT_FOUND } from '#endpoints/constants.js';
  * @type {import("express").RequestHandler}
  * @returns {Promise<object|void>}
  */
-export const validateDecisionDocumentAndAddToRequest = async (req, res, next) => {
+export const checkDocumentExistsAndAddToRequest = async (req, res, next) => {
 	const { documentGuid } = req.body;
 	const document = await getDocumentById(documentGuid);
 

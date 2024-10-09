@@ -57,7 +57,8 @@ interface SingleAppealDetailsResponse {
 		folderId: number;
 		outcome?: string | null;
 		documentId?: string | null;
-		letterDate?: Date | null;
+		documentName?: string | null;
+		letterDate?: string | null;
 		virusCheckStatus?: string | null;
 	};
 	internalCorrespondence: {
@@ -97,14 +98,14 @@ interface SingleAppealDetailsResponse {
 	procedureType?: string | null;
 	siteVisit?: {
 		siteVisitId: number;
-		visitDate: Date;
+		visitDate: string;
 		visitStartTime: string;
 		visitEndTime?: string | null;
 		visitType: string;
 	} | null;
-	createdAt: Date;
-	startedAt?: Date | null;
-	validAt?: Date | null;
+	createdAt: string;
+	startedAt?: string | null;
+	validAt?: string | null;
 	internalCorrespondence: {
 		crossTeam?: FolderInfo | null;
 		inspector?: FolderInfo | null;
@@ -134,10 +135,10 @@ interface SingleAppellantCaseResponse {
 		firstName: string | null;
 		surname: string | null;
 	};
-	applicationDate: Date;
-	applicationDecisionDate: Date | null;
-	caseSubmissionDueDate: Date | null;
-	caseSubmittedDate: Date | null;
+	applicationDate: string;
+	applicationDecisionDate: string | null;
+	caseSubmissionDueDate: string | null;
+	caseSubmittedDate: string | null;
 	isAppellantNamedOnApplication: boolean | null;
 	planningApplicationReference: string;
 	hasAdvertisedAppeal: boolean | null;
@@ -148,6 +149,10 @@ interface SingleAppellantCaseResponse {
 	localPlanningDepartment: string;
 	procedureType?: string;
 	enforcementNotice?: boolean | null;
+	siteAccessRequired?: {
+		details: string | null;
+		hasIssues: boolean | null;
+	};
 	siteOwnership: {
 		areAllOwnersKnown: string | null;
 		knowsOtherLandowners: string | null;
@@ -166,6 +171,10 @@ interface SingleAppellantCaseResponse {
 	applicationDecision: string | null;
 	enforcementNotice: null;
 	appellantCostsAppliedFor: boolean | null;
+	appellantProcedurePreference: string | null;
+	appellantProcedurePreferenceDetails: string | null;
+	appellantProcedurePreferenceDuration: number | null;
+	inquiryHowManyWitnesses: number | null;
 	documents: {
 		appellantCaseCorrespondence?: FolderInfo | null;
 		appellantCaseWithdrawalLetter?: FolderInfo | null;
@@ -192,6 +201,10 @@ interface SingleAppellantCaseResponse {
 		hasOtherTenants: boolean | null;
 	};
 	ownershipCertificateSubmitted?: boolean | null;
+	appellantProcedurePreference?: string | null;
+	appellantProcedurePreferenceDetails?: string | null;
+	appellantProcedurePreferenceDuration?: number | null;
+	inquiryHowManyWitnesses?: number | null;
 }
 
 interface UpdateAppellantCaseRequest {
@@ -276,6 +289,8 @@ interface SingleLPAQuestionnaireResponse {
 		lpaCaseCorrespondence?: FolderInfo | null;
 		otherPartyRepresentations?: FolderInfo | null;
 		planningOfficerReport?: FolderInfo | null;
+		plansDrawings?: FolderInfo | null;
+		developmentPlanPolicies?: FolderInfo | null;
 	};
 	validation: ValidationOutcomeResponse | null;
 	lpaNotificationMethods?: LPANotificationMethodDetails[] | null;
@@ -323,7 +338,7 @@ interface UpdateLPAQuestionnaireValidationOutcomeParams {
 	};
 	azureAdUserId: string;
 	data: {
-		lpaQuestionnaireDueDate: string;
+		lpaQuestionnaireDueDate: Date;
 		incompleteReasons: IncompleteInvalidReasons;
 	};
 	lpaQuestionnaireId: number;
@@ -370,7 +385,7 @@ interface LinkableAppealSummary {
 	source: 'horizon' | 'back-office';
 }
 
-interface AppealAllocation {
+export interface AppealAllocation {
 	level: string;
 	band: number;
 	specialisms: string[];
@@ -393,12 +408,12 @@ interface NeighbouringSite {
 
 interface AppealTimetable {
 	appealTimetableId: number;
-	finalCommentReviewDate?: Date | null;
-	lpaQuestionnaireDueDate: Date | null;
-	statementReviewDate?: Date | null;
-	issueDeterminationDate?: Date | null;
-	completeDate?: Date | null;
-	caseResubmissionDueDate?: Date | null;
+	finalCommentReviewDate?: string | null;
+	lpaQuestionnaireDueDate: string | null;
+	statementReviewDate?: string | null;
+	issueDeterminationDate?: string | null;
+	completeDate?: string | null;
+	caseResubmissionDueDate?: string | null;
 }
 
 interface UpdateTimetableRequest {
@@ -491,8 +506,8 @@ interface SingleSiteVisitDetailsResponse {
 	appealId: number;
 	visitDate: Date | null;
 	siteVisitId: number;
-	visitEndTime: string | null;
-	visitStartTime: string | null;
+	visitEndTime: Date | null;
+	visitStartTime: Date | null;
 	visitType: string;
 }
 
@@ -669,9 +684,9 @@ interface CreateAuditTrailRequest {
 
 export interface CreateSiteVisitData {
 	appealId: number;
-	visitDate?: string;
-	visitEndTime?: string;
-	visitStartTime?: string;
+	visitDate?: Date;
+	visitEndTime?: Date;
+	visitStartTime?: Date;
 	visitType?: any;
 	appellantEmail: string;
 	lpaEmail: string;
@@ -683,9 +698,9 @@ export interface CreateSiteVisitData {
 export interface UpdateSiteVisitData {
 	siteVisitId: number;
 	appealId: number;
-	visitDate?: string;
-	visitEndTime?: string;
-	visitStartTime?: string;
+	visitDate?: Date;
+	visitEndTime?: Date;
+	visitStartTime?: Date;
 	visitType?: any;
 	previousVisitType: string;
 	appellantEmail: string;
@@ -699,7 +714,7 @@ export interface UpdateSiteVisitData {
 type GetAuditTrailsResponse = {
 	azureAdUserId: string;
 	details: string;
-	loggedDate: Date;
+	loggedDate: string;
 	doc?:
 		| {
 				documentGuid: string;

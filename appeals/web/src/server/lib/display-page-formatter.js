@@ -1,13 +1,10 @@
 import logger from '#lib/logger.js';
 import config from '#environment/config.js';
-import { buildHtmSpan } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { appealShortReference } from './nunjucks-filters/appeals.js';
 import { mapDocumentInfoVirusCheckStatus } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
-import { apiDateStringToDayMonthYear, dateIsInThePast } from '#lib/dates.js';
+import { dateISOStringToDayMonthYearHourMinute, dateIsInThePast } from '#lib/dates.js';
 import { appealSiteToMultilineAddressStringHtml } from './address-formatter.js';
-import { isFolderInfo } from '#lib/ts-utilities.js';
-import { mapActionComponent } from '#lib/mappers/component-permissions.mapper.js';
 
 /**
  * @typedef {import('@pins/appeals.api').Schema.Folder} Folder
@@ -49,23 +46,6 @@ export const formatListOfNotificationMethodsToHtml = (notificationMethods) => {
 	// TODO: check LPANotificationMethodDetails in SingleAppellantCaseResponse
 	// @ts-ignore
 	return `<ul>${notificationMethods.map((method) => `<li>${method.name}</li>`).join('')}</ul>`;
-};
-
-/**
- * @param {string|null|undefined} answer
- * @param {string|null|undefined} details
- * @returns {string}
- */
-export const formatAnswerAndDetails = (answer, details) => {
-	if (!details) {
-		details = '';
-	}
-	if (!answer) {
-		answer = '';
-	}
-	return answer === 'Yes'
-		? `${buildHtmSpan(answer)}<br>${buildHtmSpan(details)}`
-		: `${buildHtmSpan(answer)}`;
 };
 
 /**
@@ -174,7 +154,7 @@ export const formatDocumentValues = (appealId, listOfDocuments, addLateEntryStat
 				documentPageComponents.push({
 					type: 'html',
 					parameters: {
-						html: `<a href='/documents/${appealId}/download/${document.id}/preview' data-cy='document-${document.id}' target="'_blank'" class="govuk-link">${document.name}</a>`
+						html: `<a href='/documents/${appealId}/download/${document.id}/${document.name}' data-cy='document-${document.id}' target="_blank" class="govuk-link">${document.name}</a>`
 					}
 				});
 			} else {
@@ -303,13 +283,17 @@ export function mapDocumentStatus(status, dueDate) {
 			return 'Invalid';
 		case 'incomplete':
 			if (dueDate) {
-				const parsedDueDate = apiDateStringToDayMonthYear(dueDate);
+				const parsedDueDate = dateISOStringToDayMonthYearHourMinute(dueDate);
 				if (
 					parsedDueDate &&
 					parsedDueDate.year &&
 					parsedDueDate.month &&
 					parsedDueDate.day &&
-					dateIsInThePast(parsedDueDate.year, parsedDueDate.month, parsedDueDate.day)
+					dateIsInThePast({
+						year: parsedDueDate.year,
+						month: parsedDueDate.month,
+						day: parsedDueDate.day
+					})
 				) {
 					return 'Overdue';
 				}
@@ -379,56 +363,4 @@ export const formatPlanningObligationStatus = (planningObligationStatus) => {
 		default:
 			return 'Not applicable';
 	}
-};
-
-/**
- * @param {string} labelText
- * @param {number} appealId
- * @param {FolderInfo|null|undefined} folderInfo
- * @param {string} requiredPermissionName
- * @param {import('../app/auth/auth-session.service').SessionWithAuth} session
- * @param {string} manageUrl
- * @param {string} uploadUrlTemplate
- * @param {string} cypressDataName
- * @returns {SummaryListRowProperties}
- */
-export const formatFolderSummaryListItem = (
-	labelText,
-	appealId,
-	folderInfo,
-	requiredPermissionName,
-	session,
-	manageUrl,
-	uploadUrlTemplate,
-	cypressDataName
-) => {
-	return {
-		key: {
-			text: labelText
-		},
-		value: formatDocumentValues(
-			appealId,
-			isFolderInfo(folderInfo) ? folderInfo?.documents || [] : []
-		),
-		actions: {
-			items: [
-				...(((isFolderInfo(folderInfo) && folderInfo.documents) || []).length
-					? [
-							mapActionComponent(requiredPermissionName, session, {
-								text: 'Manage',
-								visuallyHiddenText: labelText,
-								href: manageUrl,
-								attributes: { 'data-cy': `manage-${cypressDataName}` }
-							})
-					  ]
-					: []),
-				mapActionComponent(requiredPermissionName, session, {
-					text: 'Add',
-					visuallyHiddenText: labelText,
-					href: formatDocumentActionLink(appealId, folderInfo, uploadUrlTemplate),
-					attributes: { 'data-cy': `add-${cypressDataName}` }
-				})
-			]
-		}
-	};
 };

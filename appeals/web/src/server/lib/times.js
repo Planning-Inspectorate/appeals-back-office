@@ -1,5 +1,3 @@
-import logger from './logger.js';
-
 /**
  *
  * @param {number} timeHour
@@ -10,27 +8,6 @@ import logger from './logger.js';
  */
 export function timeIsBeforeTime(timeHour, timeMinute, beforeTimeHour, beforeTimeMinute) {
 	return timeHour * 60 + timeMinute < beforeTimeHour * 60 + beforeTimeMinute;
-}
-
-/**
- * @param {string | null | undefined} time24
- * @returns {string | undefined}
- */
-export function convert24hTo12hTimeStringFormat(time24) {
-	if (time24 && is24HourTimeValid(time24)) {
-		const [hours, minutes] = time24.split(':');
-		const hoursInt = parseInt(hours, 10);
-		const period = hoursInt >= 12 ? 'pm' : 'am';
-		const hours12 = hoursInt % 12 || 12;
-		const minutesInt = parseInt(minutes, 10);
-		const formattedMinutes = minutesInt < 10 ? `0${minutesInt}` : `${minutesInt}`;
-		const minutesIsZero = minutes === '00';
-		return minutesIsZero ? `${hours12}${period}` : `${hours12}:${formattedMinutes}${period}`;
-	}
-	logger.warn(
-		`Issue converting ${time24} from 24h to 12h: Time is either null, undefined, or invalid`
-	);
-	return undefined;
 }
 
 /**

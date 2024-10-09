@@ -1,4 +1,4 @@
-import { createPostcodeValidator } from '#lib/validators/postcode.validator.js';
+import { createPostcodeValidator } from '#lib/validators/address.validator.js';
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
 

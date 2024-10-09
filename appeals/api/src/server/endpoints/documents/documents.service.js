@@ -1,5 +1,6 @@
 import { PromisePool } from '@supercharge/promise-pool/dist/promise-pool.js';
 import logger from '#utils/logger.js';
+import config from '#config/config.js';
 import {
 	mapDocumentsForDatabase,
 	mapDocumentsForBlobStorage,
@@ -23,6 +24,7 @@ import {
 	APPEAL_CASE_STATUS,
 	APPEAL_DOCUMENT_TYPE
 } from 'pins-data-model';
+import { validateBlobContents } from '#utils/blob-validation.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Document} Document */
@@ -120,6 +122,8 @@ export const getFoldersForStage = (path) => {
 				`${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/${APPEAL_DOCUMENT_TYPE.CONSERVATION_MAP}`,
 				`${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/${APPEAL_DOCUMENT_TYPE.OTHER_PARTY_REPRESENTATIONS}`,
 				`${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/${APPEAL_DOCUMENT_TYPE.PLANNING_OFFICER_REPORT}`,
+				`${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/${APPEAL_DOCUMENT_TYPE.PLANS_DRAWINGS}`,
+				`${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/${APPEAL_DOCUMENT_TYPE.DEVELOPMENT_PLAN_POLICIES}`,
 				`${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/${APPEAL_DOCUMENT_TYPE.LPA_CASE_CORRESPONDENCE}`
 			];
 			break;
@@ -162,10 +166,20 @@ export const addDocumentsToAppeal = async (upload, appeal) => {
 	const { blobStorageHost, blobStorageContainer, documents } = upload;
 	const documentsToSendToDatabase = mapDocumentsForDatabase(
 		appeal.id,
-		blobStorageHost,
-		blobStorageContainer,
+		blobStorageHost ?? config.BO_BLOB_STORAGE_ACCOUNT,
+		blobStorageContainer ?? config.BO_BLOB_CONTAINER,
 		documents
 	);
+
+	const blobValidation = await validateBlobContents(
+		appeal.reference,
+		documentsToSendToDatabase.map((doc) => doc.blobStoragePath ?? '')
+	);
+
+	if (!blobValidation) {
+		throw new Error(`Invalid blobs submitted`);
+	}
+
 	const documentsCreated = await addDocumentAndVersion(
 		appeal.id,
 		appeal.reference,
@@ -262,6 +276,14 @@ export const addVersionToDocument = async (upload, appeal, document) => {
 		[uploadedDocument]
 	)[0];
 
+	const blobValidation = await validateBlobContents(appeal.reference, [
+		documentToSendToDatabase.blobStoragePath ?? ''
+	]);
+
+	if (!blobValidation) {
+		throw new Error(`Invalid blobs submitted`);
+	}
+
 	const documentVersionCreated = await addDocumentVersion({
 		documentGuid: document.guid,
 		fileName: document.name,
@@ -319,7 +341,7 @@ export const getDocumentRedactionStatusIds = async () => {
 /**
  *
  * @param {DocumentVersion} documentVersion
- * @returns
+ * @returns {string}
  */
 export const getAvScanStatus = (documentVersion) => {
 	return documentVersion.virusCheckStatus || APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED;

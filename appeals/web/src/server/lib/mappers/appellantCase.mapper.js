@@ -1,14 +1,18 @@
-import { convertFromBooleanToYesNo } from '../boolean-formatter.js';
 import { appealSiteToAddressString } from '#lib/address-formatter.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
 import { isFolderInfo } from '#lib/ts-utilities.js';
-import { mapActionComponent } from './component-permissions.mapper.js';
+import { mapActionComponent, userHasPermission } from './permissions.mapper.js';
 import { permissionNames } from '#environment/permissions.js';
 import { formatServiceUserAsHtmlList } from '#lib/service-user-formatter.js';
-import { dateToDisplayDate } from '#lib/dates.js';
+import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { capitalize } from 'lodash-es';
-import { APPEAL_KNOWS_OTHER_OWNERS } from 'pins-data-model';
-import { SHOW_MORE_MAXIMUM_CHARACTERS_BEFORE_HIDING } from '#lib/constants.js';
+import { APPEAL_APPLICATION_DECISION, APPEAL_KNOWS_OTHER_OWNERS } from 'pins-data-model';
+import {
+	booleanSummaryListItem,
+	booleanWithDetailsSummaryListItem
+} from '#lib/mappers/components/boolean.js';
+import { documentSummaryListItem } from '#lib/mappers/components/document.js';
+import { textSummaryListItem } from '#lib/mappers/components/text.js';
 
 /**
  * @typedef {import('@pins/appeals.api').Appeals.FolderInfo} FolderInfo
@@ -29,348 +33,152 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 	currentRoute =
 		currentRoute[currentRoute.length - 1] === '/' ? currentRoute.slice(0, -1) : currentRoute;
 
+	/**
+	 * Generates a document field with defaults
+	 *
+	 * @param {Object} options
+	 * @param {string} options.id
+	 * @param {string} options.text
+	 * @param {FolderInfo|null|undefined} options.folderInfo
+	 * @param {string} [options.cypressDataName]
+	 * @returns {Instructions}
+	 */
+	const documentInstruction = ({ id, text, folderInfo, cypressDataName }) => {
+		return documentSummaryListItem({
+			id,
+			text,
+			appealId: appellantCaseData.appealId,
+			folderInfo,
+			editable: userHasPermission(permissionNames.updateCase, session),
+			uploadUrlTemplate: documentUploadUrlTemplate,
+			manageUrl: mapDocumentManageUrl(appellantCaseData.appealId, folderInfo?.folderId),
+			cypressDataName
+		});
+	};
+	const userHasUpdateCase = userHasPermission(permissionNames.updateCase, session);
+
 	/** @type {MappedInstructions} */
-	let mappedData = {};
+	const mappedData = {};
 
-	/** @type {Instructions} */
-	mappedData.appellant = {
+	mappedData.appellant = textSummaryListItem({
 		id: 'appellant',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Appellant'
-				},
-				value: {
-					html: appealDetails.appellant
-						? formatServiceUserAsHtmlList(appealDetails.appellant)
-						: 'No appellant'
-				},
-				actions: {
-					items: [
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Change',
-							href: `${currentRoute}/service-user/change/appellant`,
-							visuallyHiddenText: 'Appellant',
-							attributes: { 'data-cy': 'appellant' }
-						})
-					]
-				},
-				classes: 'appeal-appellant'
-			}
-		}
-	};
+		text: 'Appellant',
+		value: {
+			html: appealDetails.appellant
+				? formatServiceUserAsHtmlList(appealDetails.appellant)
+				: 'No appellant'
+		},
+		link: `${currentRoute}/service-user/change/appellant`,
+		editable: userHasUpdateCase,
+		classes: 'appeal-appellant',
+		cypressDataName: 'appellant'
+	});
 
-	/** @type {Instructions} */
-	mappedData.agent = {
+	mappedData.agent = textSummaryListItem({
 		id: 'agent',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Agent'
-				},
-				value: {
-					html: appealDetails.agent ? formatServiceUserAsHtmlList(appealDetails.agent) : 'No agent'
-				},
-				actions: {
-					items: [
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Change',
-							href: `${currentRoute}/service-user/change/agent`,
-							visuallyHiddenText: 'Agent',
-							attributes: { 'data-cy': 'change-agent' }
-						})
-					]
-				},
-				classes: 'appeal-agent'
-			}
-		}
-	};
+		text: 'Agent',
+		value: {
+			html: appealDetails.agent ? formatServiceUserAsHtmlList(appealDetails.agent) : 'No agent'
+		},
+		link: `${currentRoute}/service-user/change/agent`,
+		editable: userHasUpdateCase,
+		classes: 'appeal-agent'
+	});
 
-	/** @type {Instructions} */
-	mappedData.applicationReference = {
+	mappedData.applicationReference = textSummaryListItem({
 		id: 'application-reference',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'LPA application reference'
-				},
-				value: {
-					text: appellantCaseData.planningApplicationReference
-				},
-				actions: {
-					items: [
-						{
-							text: 'Change',
-							visuallyHiddenText: 'LPA application reference',
-							href: `${currentRoute}/lpa-reference/change`,
-							attributes: { 'data-cy': 'change-application-reference' }
-						}
-					]
-				}
-			}
-		}
-	};
+		text: 'LPA application reference',
+		value: appellantCaseData.planningApplicationReference,
+		link: `${currentRoute}/lpa-reference/change`,
+		editable: userHasUpdateCase
+	});
 
-	/** @type {Instructions} */
-	mappedData.siteAddress = {
+	mappedData.siteAddress = textSummaryListItem({
 		id: 'site-address',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Site address'
-				},
-				value: {
-					text: appealSiteToAddressString(appellantCaseData.appealSite)
-				},
-				actions: {
-					items: [
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Change',
-							visuallyHiddenText: 'Site address',
-							href: `${currentRoute}/site-address/change/${appealDetails.appealSite.addressId}`,
-							attributes: { 'data-cy': 'change-site-address' }
-						})
-					]
-				}
-			}
-		}
-	};
+		text: 'Site address',
+		value: appealSiteToAddressString(appellantCaseData.appealSite),
+		link: `${currentRoute}/site-address/change/${appealDetails.appealSite.addressId}`,
+		editable: userHasUpdateCase
+	});
 
-	/** @type {Instructions} */
-	mappedData.siteArea = {
+	mappedData.siteArea = textSummaryListItem({
 		id: 'site-area',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Site area (m²)'
-				},
-				value: {
-					text: appellantCaseData.siteAreaSquareMetres
-						? `${appellantCaseData.siteAreaSquareMetres} m²`
-						: ''
-				},
-				actions: {
-					items: [
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Change',
-							visuallyHiddenText: 'Site area in square metres ',
-							href: `${currentRoute}/site-area/change`
-						})
-					]
-				}
-			}
-		}
-	};
+		text: 'Site area (m²)',
+		value: appellantCaseData.siteAreaSquareMetres
+			? `${appellantCaseData.siteAreaSquareMetres} m²`
+			: '',
+		link: `${currentRoute}/site-area/change`,
+		editable: userHasUpdateCase
+	});
 
-	/** @type {Instructions} */
-	mappedData.inGreenBelt = {
+	mappedData.inGreenBelt = booleanSummaryListItem({
 		id: 'green-belt',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'In green belt'
-				},
-				value: {
-					text: convertFromBooleanToYesNo(appellantCaseData.isGreenBelt) || ''
-				},
-				actions: {
-					items: [
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Change',
-							visuallyHiddenText: 'In green belt',
-							href: `${currentRoute}/green-belt/change/appellant`
-						})
-					]
-				}
-			}
-		}
-	};
+		text: 'In green belt',
+		value: appellantCaseData.isGreenBelt,
+		defaultText: '',
+		link: `${currentRoute}/green-belt/change/appellant`,
+		editable: userHasUpdateCase
+	});
 
-	/** @type {Instructions} */
-	mappedData.applicationDecisionDate = {
+	mappedData.applicationDecisionDate = textSummaryListItem({
 		id: 'application-decision-date',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Decision date'
-				},
-				value: {
-					text: dateToDisplayDate(appellantCaseData.applicationDecisionDate)
-				},
-				actions: {
-					items: [
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Change',
-							visuallyHiddenText: 'Decision date',
-							href: `${currentRoute}/application-decision-date/change`
-						})
-					]
-				}
-			}
-		}
-	};
+		text: 'Decision date',
+		value: dateISOStringToDisplayDate(appellantCaseData.applicationDecisionDate),
+		link: `${currentRoute}/application-decision-date/change`,
+		editable: userHasUpdateCase
+	});
 
-	/** @type {Instructions} */
-	mappedData.applicationDate = {
+	mappedData.applicationDate = textSummaryListItem({
 		id: 'application-date',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Application submitted'
-				},
-				value: {
-					text: dateToDisplayDate(appellantCaseData.applicationDate)
-				},
-				actions: {
-					items: [
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Change',
-							visuallyHiddenText: 'Application submitted',
-							href: `${currentRoute}/application-date/change`
-						})
-					]
-				}
-			}
-		}
-	};
+		text: 'Application submitted',
+		value: dateISOStringToDisplayDate(appellantCaseData.applicationDate),
+		link: `${currentRoute}/application-date/change`,
+		editable: userHasUpdateCase
+	});
 
-	/** @type {Instructions} */
-	mappedData.developmentDescription = {
+	mappedData.developmentDescription = textSummaryListItem({
 		id: 'development-description',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Original Development description'
-				},
-				value: {
-					...(appellantCaseData.developmentDescription?.details?.length &&
-					appellantCaseData.developmentDescription?.details.length >
-						SHOW_MORE_MAXIMUM_CHARACTERS_BEFORE_HIDING
-						? {
-								html: '',
-								pageComponents: [
-									{
-										type: 'show-more',
-										parameters: {
-											text: appellantCaseData.developmentDescription?.details ?? 'Not provided',
-											labelText: 'Original development description'
-										}
-									}
-								]
-						  }
-						: {
-								text: appellantCaseData.developmentDescription?.details ?? 'Not provided'
-						  })
-				},
-				actions: {
-					items: [
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Change',
-							visuallyHiddenText: 'Development description',
-							href: `${currentRoute}/development-description/change`
-						})
-					]
-				}
-			}
-		}
-	};
+		text: 'Original Development description',
+		value: appellantCaseData.developmentDescription?.details || 'Not provided',
+		link: `${currentRoute}/development-description/change`,
+		editable: userHasUpdateCase,
+		withShowMore: true
+	});
 
-	/** @type {Instructions} */
-	mappedData.changedDevelopmentDescription = {
+	mappedData.changedDevelopmentDescription = booleanSummaryListItem({
 		id: 'changed-development-description',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'LPA changed the development description'
-				},
-				value: {
-					text: convertFromBooleanToYesNo(appellantCaseData.developmentDescription?.isChanged)
-				},
-				actions: {
-					items: [
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Change',
-							visuallyHiddenText: 'LPA changed the development description',
-							href: `${currentRoute}/lpa-changed-description/change`
-						})
-					]
-				}
-			}
-		}
-	};
+		text: 'LPA changed the development description',
+		value: appellantCaseData.developmentDescription?.isChanged,
+		link: `${currentRoute}/lpa-changed-description/change`,
+		editable: userHasUpdateCase
+	});
 
-	/** @type {Instructions} */
-	mappedData.applicationDecision = {
+	mappedData.applicationDecision = textSummaryListItem({
 		id: 'application-decision',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Outcome'
-				},
-				value: {
-					text:
-						appellantCaseData.applicationDecision === 'not_received'
-							? 'Not received'
-							: capitalize(appellantCaseData.applicationDecision ?? '')
-				},
-				actions: {
-					items: [
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Change',
-							visuallyHiddenText: 'Application outcome',
-							href: `${currentRoute}/application-outcome/change`
-						})
-					]
-				}
-			}
-		}
-	};
+		text: 'Outcome',
+		value:
+			appellantCaseData.applicationDecision === APPEAL_APPLICATION_DECISION.NOT_RECEIVED
+				? 'Not received'
+				: capitalize(appellantCaseData.applicationDecision ?? ''),
+		link: `${currentRoute}/application-outcome/change`,
+		editable: userHasUpdateCase
+	});
 
 	//TODO: update with new document type
-	/** @type {Instructions} */
-	mappedData.changedDevelopmentDescriptionDocument = {
+	mappedData.changedDevelopmentDescriptionDocument = documentInstruction({
 		id: 'changed-development-description.document',
-		display: {
-			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
-				'Agreement to change description evidence',
-				appellantCaseData.appealId,
-				appellantCaseData.documents.changedDescription,
-				permissionNames.updateCase,
-				session,
-				mapDocumentManageUrl(
-					appellantCaseData.appealId,
-					appellantCaseData.documents.changedDescription?.folderId
-				),
-				documentUploadUrlTemplate,
-				'agreement-to-change-description-evidence'
-			)
-		}
-	};
+		text: 'Agreement to change description evidence',
+		folderInfo: appellantCaseData.documents.changedDescription,
+		cypressDataName: 'agreement-to-change-description-evidence'
+	});
 
-	/** @type {Instructions} */
-	mappedData.localPlanningAuthority = {
+	mappedData.localPlanningAuthority = textSummaryListItem({
 		id: 'local-planning-authority',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Local planning authority (LPA)'
-				},
-				value: {
-					text: appellantCaseData.localPlanningDepartment
-				},
-				actions: {
-					items: [
-						{
-							text: 'Change',
-							visuallyHiddenText: 'local planning authority (LPA)',
-							href: `${currentRoute}/change-appeal-details/local-planning-authority`,
-							attributes: { 'data-cy': 'change-local-planning-authority' }
-						}
-					]
-				}
-			}
-		}
-	};
+		text: 'Local planning authority (LPA)',
+		value: appellantCaseData.localPlanningDepartment,
+		link: `${currentRoute}/change-appeal-details/local-planning-authority`,
+		editable: userHasUpdateCase
+	});
 
 	/**
 	 * @param {Boolean | null} ownsAllLand
@@ -387,372 +195,129 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		}
 	};
 
-	/** @type {Instructions} */
-	mappedData.siteOwnership = {
+	mappedData.siteOwnership = textSummaryListItem({
 		id: 'site-ownership',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Site ownership'
-				},
-				value: {
-					text: siteOwnershipText(
-						appellantCaseData.siteOwnership.ownsAllLand,
-						appellantCaseData.siteOwnership.ownsSomeLand
-					)
-				},
-				actions: {
-					items: [
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Change',
-							visuallyHiddenText: 'Site ownership',
-							href: `${currentRoute}/site-ownership/change`,
-							attributes: { 'data-cy': 'change-site-ownership' }
-						})
-					]
-				}
-			}
-		}
-	};
+		text: 'Site ownership',
+		value: siteOwnershipText(
+			appellantCaseData.siteOwnership.ownsAllLand,
+			appellantCaseData.siteOwnership.ownsSomeLand
+		),
+		link: `${currentRoute}/site-ownership/change`,
+		editable: userHasUpdateCase
+	});
 
-	/** @type {Instructions} */
-	mappedData.ownersKnown = {
+	mappedData.ownersKnown = textSummaryListItem({
 		id: 'owners-known',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Owners known'
-				},
-				value: {
-					text: mapOwnersKnownLabelText(appellantCaseData.siteOwnership.knowsOtherLandowners)
-				},
-				actions: {
-					items: [
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Change',
-							visuallyHiddenText: 'Owners known',
-							href: `${currentRoute}/owners-known/change`,
-							attributes: { 'data-cy': 'change-owners-known' }
-						})
-					]
-				}
-			}
-		}
-	};
+		text: 'Owners known',
+		value: mapOwnersKnownLabelText(appellantCaseData.siteOwnership.knowsOtherLandowners),
+		link: `${currentRoute}/owners-known/change`,
+		editable: userHasUpdateCase
+	});
 
-	/** @type {Instructions} */
-	mappedData.appealType = {
+	mappedData.appealType = textSummaryListItem({
 		id: 'appeal-type',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Appeal type'
-				},
-				value: {
-					text: appealDetails.appealType
-				},
-				actions: {
-					items: [
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Change',
-							visuallyHiddenText: 'Appeal type',
-							href: `${currentRoute}/#`,
-							attributes: { 'data-cy': 'change-appeal-type' }
-						})
-					]
-				}
-			}
-		}
-	};
+		text: 'Appeal type',
+		value: appealDetails.appealType,
+		link: `${currentRoute}/#`,
+		editable: userHasUpdateCase
+	});
 
-	/** @type {Instructions} */
-	mappedData.advertisedAppeal = {
+	mappedData.advertisedAppeal = booleanSummaryListItem({
 		id: 'advertised-appeal',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Advertised appeal'
-				},
-				value: {
-					text: convertFromBooleanToYesNo(appellantCaseData.hasAdvertisedAppeal) || ''
-				},
-				actions: {
-					items: [
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Change',
-							visuallyHiddenText: 'Advertised appeal',
-							href: `${currentRoute}/change-appeal-details/advertised-appeal`,
-							attributes: { 'data-cy': 'change-advertised-appeal' }
-						})
-					]
-				}
-			}
-		}
-	};
+		text: 'Advertised appeal',
+		value: appellantCaseData.hasAdvertisedAppeal,
+		defaultText: '',
+		link: `${currentRoute}/change-appeal-details/advertised-appeal`,
+		addCyAttribute: true,
+		editable: userHasUpdateCase
+	});
 
-	/** @type {Instructions} */
-	mappedData.inspectorAccess = {
+	mappedData.inspectorAccess = booleanWithDetailsSummaryListItem({
 		id: 'inspector-access',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Inspector access required'
-				},
-				value: {
-					html: displayPageFormatter.formatAnswerAndDetails(
-						convertFromBooleanToYesNo(appealDetails.inspectorAccess.appellantCase.isRequired) ??
-							'No answer provided',
-						appealDetails.inspectorAccess.appellantCase.details
-					)
-				},
-				actions: {
-					items: [
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Change',
-							href: `${currentRoute}/inspector-access/change/appellant`,
-							visuallyHiddenText: 'Inspector access required',
-							attributes: { 'data-cy': 'change-inspector-access' }
-						})
-					]
-				},
-				classes: 'appellantcase-inspector-access'
-			}
-		}
-	};
+		text: 'Inspector access required',
+		value: appealDetails.inspectorAccess.appellantCase.isRequired,
+		valueDetails: appealDetails.inspectorAccess.appellantCase.details,
+		defaultText: 'No answer provided',
+		link: `${currentRoute}/inspector-access/change/appellant`,
+		editable: userHasUpdateCase,
+		classes: 'appellantcase-inspector-access',
+		addCyAttribute: true
+	});
 
-	/** @type {Instructions} */
-	mappedData.healthAndSafetyIssues = {
+	mappedData.healthAndSafetyIssues = booleanWithDetailsSummaryListItem({
 		id: 'appellant-case-health-and-safety',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Potential safety risks'
-				},
-				value: {
-					html: displayPageFormatter.formatAnswerAndDetails(
-						convertFromBooleanToYesNo(appealDetails.healthAndSafety.appellantCase.hasIssues) ||
-							'No answer provided',
-						appealDetails.healthAndSafety.appellantCase.details
-					)
-				},
-				actions: {
-					items: [
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Change',
-							href: `${currentRoute}/safety-risks/change/appellant`,
-							visuallyHiddenText: 'potential safety risks',
-							attributes: { 'data-cy': 'change-appellant-case-health-and-safety' }
-						})
-					]
-				}
-			}
-		}
-	};
+		text: 'Potential safety risks',
+		value: appealDetails.healthAndSafety.appellantCase.hasIssues,
+		valueDetails: appealDetails.healthAndSafety.appellantCase.details,
+		defaultText: 'No answer provided',
+		link: `${currentRoute}/safety-risks/change/appellant`,
+		editable: userHasUpdateCase,
+		addCyAttribute: true
+	});
 
-	/** @type {Instructions} */
-	mappedData.applicationForm = {
+	mappedData.applicationForm = documentInstruction({
 		id: 'application-form',
-		display: {
-			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
-				'Application form',
-				appellantCaseData.appealId,
-				appellantCaseData.documents.originalApplicationForm,
-				permissionNames.updateCase,
-				session,
-				mapDocumentManageUrl(
-					appellantCaseData.appealId,
-					appellantCaseData.documents.originalApplicationForm?.folderId
-				),
-				documentUploadUrlTemplate,
-				'application-form'
-			)
-		}
-	};
+		text: 'Application form',
+		folderInfo: appellantCaseData.documents.originalApplicationForm
+	});
 
-	/** @type {Instructions} */
-	mappedData.designAccessStatement = {
+	mappedData.designAccessStatement = documentInstruction({
 		id: 'design-access-statement',
-		display: {
-			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
-				'Design and access statement',
-				appellantCaseData.appealId,
-				appellantCaseData.documents.designAccessStatement,
-				permissionNames.updateCase,
-				session,
-				mapDocumentManageUrl(
-					appellantCaseData.appealId,
-					appellantCaseData.documents.designAccessStatement?.folderId
-				),
-				documentUploadUrlTemplate,
-				'design-access-statement'
-			)
-		}
-	};
+		text: 'Design and access statement',
+		folderInfo: appellantCaseData.documents.designAccessStatement
+	});
 
-	/** @type {Instructions} */
-	mappedData.newPlansDrawings = {
+	mappedData.newPlansDrawings = documentInstruction({
 		id: 'new-plans-drawings',
-		display: {
-			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
-				'New plans or drawings',
-				appellantCaseData.appealId,
-				appellantCaseData.documents.newPlansDrawings,
-				permissionNames.updateCase,
-				session,
-				mapDocumentManageUrl(
-					appellantCaseData.appealId,
-					appellantCaseData.documents.newPlansDrawings?.folderId
-				),
-				documentUploadUrlTemplate,
-				'new-plans-drawings'
-			)
-		}
-	};
+		text: 'New plans or drawings',
+		folderInfo: appellantCaseData.documents.newPlansDrawings
+	});
 
-	/** @type {Instructions} */
-	mappedData.supportingDocuments = {
+	mappedData.supportingDocuments = documentInstruction({
 		id: 'supporting-documents',
-		display: {
-			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
-				'Supporting documents submitted with statement',
-				appellantCaseData.appealId,
-				appellantCaseData.documents.plansDrawings,
-				permissionNames.updateCase,
-				session,
-				mapDocumentManageUrl(
-					appellantCaseData.appealId,
-					appellantCaseData.documents.plansDrawings?.folderId
-				),
-				documentUploadUrlTemplate,
-				'supporting-documents'
-			)
-		}
-	};
+		text: 'Supporting documents submitted with statement',
+		folderInfo: appellantCaseData.documents.plansDrawings
+	});
 
-	/** @type {Instructions} */
-	mappedData.planningObligation = {
+	mappedData.planningObligation = documentInstruction({
 		id: 'planning-obligation',
-		display: {
-			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
-				'Planning obligation',
-				appellantCaseData.appealId,
-				appellantCaseData.documents.planningObligation,
-				permissionNames.updateCase,
-				session,
-				mapDocumentManageUrl(
-					appellantCaseData.appealId,
-					appellantCaseData.documents.planningObligation?.folderId
-				),
-				documentUploadUrlTemplate,
-				'planning-obligation'
-			)
-		}
-	};
+		text: 'Planning obligation',
+		folderInfo: appellantCaseData.documents.planningObligation
+	});
 
-	/** @type {Instructions} */
-	mappedData.ownershipCertificateSubmitted = {
+	mappedData.ownershipCertificateSubmitted = booleanSummaryListItem({
 		id: 'ownership-certificate-submitted',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Ownership certificate or land declaration submitted'
-				},
-				value: {
-					text: convertFromBooleanToYesNo(appellantCaseData.ownershipCertificateSubmitted) || ''
-				},
-				actions: {
-					items: [
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Change',
-							visuallyHiddenText: 'Ownership certificate or land declaration submitted',
-							href: `${currentRoute}/ownership-certificate/change`,
-							attributes: { 'data-cy': 'change-ownership-certificate-submitted' }
-						})
-					]
-				}
-			}
-		}
-	};
+		text: 'Ownership certificate or land declaration submitted',
+		value: appellantCaseData.ownershipCertificateSubmitted,
+		defaultText: '',
+		link: `${currentRoute}/ownership-certificate/change`,
+		addCyAttribute: true,
+		editable: userHasUpdateCase
+	});
 
-	/** @type {Instructions} */
-	mappedData.ownershipCertificate = {
+	mappedData.ownershipCertificate = documentInstruction({
 		id: 'ownership-certificate',
-		display: {
-			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
-				'Ownership certificate or land declaration',
-				appellantCaseData.appealId,
-				appellantCaseData.documents.ownershipCertificate,
-				permissionNames.updateCase,
-				session,
-				mapDocumentManageUrl(
-					appellantCaseData.appealId,
-					appellantCaseData.documents.ownershipCertificate?.folderId
-				),
-				documentUploadUrlTemplate,
-				'ownership-certificate'
-			)
-		}
-	};
+		text: 'Ownership certificate or land declaration',
+		folderInfo: appellantCaseData.documents.ownershipCertificate
+	});
 
-	/** @type {Instructions} */
-	mappedData.decisionLetter = {
+	mappedData.decisionLetter = documentInstruction({
 		id: 'decision-letter',
-		display: {
-			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
-				'Decision letter',
-				appellantCaseData.appealId,
-				appellantCaseData.documents.applicationDecisionLetter,
-				permissionNames.updateCase,
-				session,
-				mapDocumentManageUrl(
-					appellantCaseData.appealId,
-					appellantCaseData.documents.applicationDecisionLetter?.folderId
-				),
-				documentUploadUrlTemplate,
-				'decision-letter'
-			)
-		}
-	};
+		text: 'Decision letter',
+		folderInfo: appellantCaseData.documents.applicationDecisionLetter
+	});
 
-	/** @type {Instructions} */
-	mappedData.appealStatement = {
+	mappedData.appealStatement = documentInstruction({
 		id: 'appeal-statement',
-		display: {
-			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
-				'Appeal statement',
-				appellantCaseData.appealId,
-				appellantCaseData.documents.appellantStatement,
-				permissionNames.updateCase,
-				session,
-				mapDocumentManageUrl(
-					appellantCaseData.appealId,
-					appellantCaseData.documents.appellantStatement?.folderId
-				),
-				documentUploadUrlTemplate,
-				'appeal-statement'
-			)
-		}
-	};
+		text: 'Appeal statement',
+		folderInfo: appellantCaseData.documents.appellantStatement
+	});
 
-	/** @type {Instructions} */
-	mappedData.otherNewDocuments = {
+	mappedData.otherNewDocuments = documentInstruction({
 		id: 'new-supporting-documents',
-		display: {
-			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
-				'New supporting documents',
-				appellantCaseData.appealId,
-				appellantCaseData.documents.otherNewDocuments,
-				permissionNames.updateCase,
-				session,
-				mapDocumentManageUrl(
-					appellantCaseData.appealId,
-					appellantCaseData.documents.otherNewDocuments?.folderId
-				),
-				documentUploadUrlTemplate,
-				'new-supporting-documents'
-			)
-		}
-	};
+		text: 'New supporting documents',
+		folderInfo: appellantCaseData.documents.otherNewDocuments
+	});
 
 	/** @type {Instructions} */
 	mappedData.additionalDocuments = {
@@ -897,101 +462,86 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		}
 	};
 
-	/** @type {Instructions} */
-	mappedData.planningObligationInSupport = {
+	mappedData.planningObligationInSupport = booleanSummaryListItem({
 		id: 'planning-obligation-in-support',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Planning obligation in support'
-				},
-				value: {
-					text: convertFromBooleanToYesNo(appellantCaseData.planningObligation?.hasObligation) || ''
-				},
-				actions: {
-					items: [
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Change',
-							visuallyHiddenText: 'Planning obligation in support',
-							href: `${currentRoute}/planning-obligation/change`
-						})
-					]
-				}
-			}
-		}
-	};
+		text: 'Planning obligation in support',
+		value: appellantCaseData.planningObligation?.hasObligation,
+		defaultText: '',
+		link: `${currentRoute}/planning-obligation/change`,
+		editable: userHasUpdateCase
+	});
 
-	/** @type {Instructions} */
-	mappedData.statusPlanningObligation = {
+	mappedData.statusPlanningObligation = textSummaryListItem({
 		id: 'planning-obligation-status',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Planning obligation status'
-				},
-				value: {
-					text: displayPageFormatter.formatPlanningObligationStatus(
-						appellantCaseData.planningObligation?.status
-					)
-				},
-				actions: {
-					items: [
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Change',
-							visuallyHiddenText: 'Planning obligation status',
-							href: `${currentRoute}/planning-obligation/status/change`
-						})
-					]
-				}
-			}
-		}
-	};
+		text: 'Planning obligation status',
+		value: displayPageFormatter.formatPlanningObligationStatus(
+			appellantCaseData.planningObligation?.status
+		),
+		link: `${currentRoute}/planning-obligation/status/change`,
+		editable: userHasUpdateCase
+	});
 
-	/** @type {Instructions} */
-	mappedData.partOfAgriculturalHolding = {
+	mappedData.partOfAgriculturalHolding = booleanSummaryListItem({
 		id: 'part-of-agricultural-holding',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Part of agricultural holding'
-				},
-				value: {
-					text:
-						convertFromBooleanToYesNo(
-							appellantCaseData.agriculturalHolding.isPartOfAgriculturalHolding
-						) || ''
-				},
-				actions: {
-					items: [
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Change',
-							visuallyHiddenText: 'Part of agricultural holding',
-							href: `${currentRoute}/agricultural-holding/change`
-						})
-					]
-				}
-			}
-		}
-	};
+		text: 'Part of agricultural holding',
+		value: appellantCaseData.agriculturalHolding.isPartOfAgriculturalHolding,
+		defaultText: '',
+		link: `${currentRoute}/agricultural-holding/change`,
+		editable: userHasUpdateCase
+	});
 
-	/** @type {Instructions} */
-	mappedData.tenantOfAgriculturalHolding = {
+	mappedData.tenantOfAgriculturalHolding = booleanSummaryListItem({
 		id: 'tenant-of-agricultural-holding',
+		text: 'Tenant of agricultural holding',
+		value: appellantCaseData.agriculturalHolding.isTenant,
+		defaultText: '',
+		link: `${currentRoute}/agricultural-holding/tenant/change`,
+		editable: userHasUpdateCase
+	});
+
+	mappedData.otherTenantsOfAgriculturalHolding = booleanSummaryListItem({
+		id: 'other-tenants-of-agricultural-holding',
+		text: 'Other tenants',
+		value: appellantCaseData.agriculturalHolding.hasOtherTenants,
+		defaultText: '',
+		link: `${currentRoute}/agricultural-holding/other-tenants/change`,
+		editable: userHasUpdateCase
+	});
+
+	mappedData.appellantCostsApplication = booleanSummaryListItem({
+		id: 'appellant-costs-application',
+		text: 'Applied for award of appeal costs',
+		value: appellantCaseData.appellantCostsAppliedFor,
+		link: `${currentRoute}/appeal-costs-application/change`,
+		editable: userHasUpdateCase
+	});
+
+	mappedData.costsDocument = documentInstruction({
+		id: 'costs-appellant',
+		text: 'Costs document',
+		folderInfo: appealDetails.costs.appellantApplicationFolder,
+		cypressDataName: 'costs-document'
+	});
+
+	/** @type {Instructions} */
+	mappedData.procedurePreference = {
+		id: 'procedure-preference',
 		display: {
 			summaryListItem: {
 				key: {
-					text: 'Tenant of agricultural holding'
+					text: 'Procedure preference'
 				},
 				value: {
-					text: convertFromBooleanToYesNo(appellantCaseData.agriculturalHolding.isTenant) || ''
+					text: capitalize(appellantCaseData.appellantProcedurePreference || 'Not answered')
 				},
 				actions: {
 					items: [
-						mapActionComponent(permissionNames.updateCase, session, {
+						{
 							text: 'Change',
-							visuallyHiddenText: 'Tenant of agricultural holding',
-							href: `${currentRoute}/agricultural-holding/tenant/change`
-						})
+							visuallyHiddenText: 'procedure preference',
+							href: `${currentRoute}/procedure-preference/change`,
+							attributes: { 'data-cy': 'change-procedure-preference' }
+						}
 					]
 				}
 			}
@@ -999,24 +549,52 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 	};
 
 	/** @type {Instructions} */
-	mappedData.otherTenantsOfAgriculturalHolding = {
-		id: 'other-tenants-of-agricultural-holding',
+	mappedData.procedurePreferenceDetails = {
+		id: 'procedure-preference-details',
 		display: {
 			summaryListItem: {
 				key: {
-					text: 'Other tenants'
+					text: 'Reason for preference'
+				},
+				value: {
+					text: appellantCaseData.appellantProcedurePreferenceDetails || 'Not applicable'
+				},
+				actions: {
+					items: [
+						{
+							text: 'Change',
+							visuallyHiddenText: 'reason for preference',
+							href: `${currentRoute}/procedure-preference/details/change`,
+							attributes: { 'data-cy': 'change-procedure-preference-details' }
+						}
+					]
+				}
+			}
+		}
+	};
+
+	/** @type {Instructions} */
+	mappedData.procedurePreferenceDuration = {
+		id: 'procedure-preference-duration',
+		display: {
+			summaryListItem: {
+				key: {
+					text: 'Expected length of procedure'
 				},
 				value: {
 					text:
-						convertFromBooleanToYesNo(appellantCaseData.agriculturalHolding.hasOtherTenants) || ''
+						'appellantProcedurePreferenceDuration' in appellantCaseData
+							? `${appellantCaseData.appellantProcedurePreferenceDuration} days`
+							: 'Not applicable'
 				},
 				actions: {
 					items: [
-						mapActionComponent(permissionNames.updateCase, session, {
+						{
 							text: 'Change',
-							visuallyHiddenText: 'Other tenants',
-							href: `${currentRoute}/agricultural-holding/other-tenants/change`
-						})
+							visuallyHiddenText: 'Expected length of procedure',
+							href: `${currentRoute}/procedure-preference/duration/change`,
+							attributes: { 'data-cy': 'change-procedure-preference-duration' }
+						}
 					]
 				}
 			}
@@ -1024,46 +602,27 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 	};
 
 	/** @type {Instructions} */
-	mappedData.appellantCostsApplication = {
-		id: 'appellant-costs-application',
+	mappedData.inquiryNumberOfWitnesses = {
+		id: 'inquiry-number-of-witnesses',
 		display: {
 			summaryListItem: {
 				key: {
-					text: 'Applied for award of appeal costs'
+					text: 'Expected number of witnesses'
 				},
 				value: {
-					text: convertFromBooleanToYesNo(appellantCaseData.appellantCostsAppliedFor)
+					text: appellantCaseData.inquiryHowManyWitnesses || 'Not applicable'
 				},
 				actions: {
 					items: [
-						mapActionComponent(permissionNames.updateCase, session, {
+						{
 							text: 'Change',
-							visuallyHiddenText: 'Applied for award of appeal costs',
-							href: `${currentRoute}/appeal-costs-application/change`
-						})
+							visuallyHiddenText: 'Expected number of witnesses',
+							href: `${currentRoute}/procedure-preference/inquiry/witnesses/change`,
+							attributes: { 'data-cy': 'change-inquiry-number-of-witnesses' }
+						}
 					]
 				}
 			}
-		}
-	};
-
-	/** @type {Instructions} */
-	mappedData.costsDocument = {
-		id: 'costs-appellant',
-		display: {
-			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
-				'Costs document',
-				appellantCaseData.appealId,
-				appealDetails.costs.appellantApplicationFolder,
-				permissionNames.updateCase,
-				session,
-				mapDocumentManageUrl(
-					appellantCaseData.appealId,
-					appealDetails.costs.appellantApplicationFolder?.folderId
-				),
-				documentUploadUrlTemplate,
-				'costs-document'
-			)
 		}
 	};
 

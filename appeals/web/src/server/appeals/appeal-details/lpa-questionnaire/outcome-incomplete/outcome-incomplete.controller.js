@@ -100,7 +100,8 @@ const renderUpdateDueDate = async (request, response) => {
 		lpaQuestionnaireId,
 		dueDateDay,
 		dueDateMonth,
-		dueDateYear
+		dueDateYear,
+		!!errors
 	);
 
 	return response.status(200).render('appeals/appeal/update-date.njk', {

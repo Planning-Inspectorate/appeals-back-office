@@ -10,8 +10,8 @@ import { databaseConnector } from '#utils/database-connector.js';
  * @param {{
  *  appealId: number;
  * 	visitDate?: Date;
- * 	visitEndTime?: string;
- * 	visitStartTime?: string;
+ * 	visitEndTime?: Date;
+ * 	visitStartTime?: Date;
  * 	siteVisitTypeId?: number;
  * }} data
  * @returns
@@ -25,8 +25,8 @@ const createSiteVisitById = (data) =>
  * @param {number} id
  * @param {{
  * 	visitDate?: Date;
- * 	visitEndTime?: string;
- * 	visitStartTime?: string;
+ * 	visitEndTime?: Date;
+ * 	visitStartTime?: Date;
  * 	siteVisitTypeId?: number;
  * }} data
  * @returns {PrismaPromise<object>}

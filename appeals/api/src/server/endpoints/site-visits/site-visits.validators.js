@@ -3,7 +3,6 @@ import { validationErrorHandler } from '#middleware/error-handler.js';
 import { composeMiddleware } from '@pins/express';
 import validateIdParameter from '#common/validators/id-parameter.js';
 import validateDateParameter from '#common/validators/date-parameter.js';
-import validateTimeParameter from '#common/validators/time-parameter.js';
 import validateTimeRangeParameters from '#common/validators/time-range-parameters.js';
 import {
 	ERROR_INVALID_SITE_VISIT_TYPE,
@@ -63,8 +62,8 @@ const postSiteVisitValidator = composeMiddleware(
 	validateSiteVisitRequiredDateTimeFields,
 	validateSiteVisitType(true),
 	validateDateParameter({ parameterName: 'visitDate' }),
-	validateTimeParameter('visitStartTime'),
-	validateTimeParameter('visitEndTime'),
+	validateDateParameter({ parameterName: 'visitStartTime' }),
+	validateDateParameter({ parameterName: 'visitEndTime' }),
 	validateTimeRangeParameters('visitStartTime', 'visitEndTime'),
 	validationErrorHandler
 );
@@ -79,7 +78,7 @@ const patchSiteVisitValidator = composeMiddleware(
 		.if(body('visitType').not().equals(SITE_VISIT_TYPE_UNACCOMPANIED))
 		.custom((value, { req }) => {
 			if (value) {
-				return validateTimeParameter('visitStartTime')(req, {}, () => {});
+				return validateDateParameter({ parameterName: 'visitStartTime' })(req, {}, () => {});
 			}
 			return true;
 		}),
@@ -87,7 +86,7 @@ const patchSiteVisitValidator = composeMiddleware(
 		.if(body('visitType').not().equals(SITE_VISIT_TYPE_UNACCOMPANIED))
 		.custom((value, { req }) => {
 			if (value) {
-				return validateTimeParameter('visitEndTime')(req, {}, () => {});
+				return validateDateParameter({ parameterName: 'visitEndTime' })(req, {}, () => {});
 			}
 			return true;
 		}),

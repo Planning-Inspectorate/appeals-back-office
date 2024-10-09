@@ -4,7 +4,7 @@ import {
 	lpaQuestionnaireDataIncompleteOutcome
 } from '#testing/app/fixtures/referencedata.js';
 import { createAccountInfo } from '#testing/app/app.js';
-import { initialiseAndMapAppealData } from '../appeal.mapper.js';
+import { initialiseAndMapAppealData } from '../appeal/appeal.mapper.js';
 import { initialiseAndMapLPAQData } from '../lpaQuestionnaire.mapper.js';
 import { areIdsDefinedAndUnique } from '#testing/lib/testMappers.js';
 import {
@@ -48,12 +48,11 @@ describe('appeal-mapper', () => {
 	describe('Test 2: Value transformation', () => {
 		it('should format dates using UK format', async () => {
 			const preFormattedDate = '2023-10-11T01:00:00.000Z';
-			const mappedDateHtml =
-				// @ts-ignore
-				validMappedData.appeal.lpaQuestionnaireDueDate.display.summaryListItem?.value.html;
+			const mappedDate =
+				validMappedData.appeal.lpaQuestionnaireDueDate.display.summaryListItem?.value.text;
 
 			// Check date is the same after being formatted
-			expect(new Date(mappedDateHtml).getDate()).toEqual(new Date(preFormattedDate).getDate());
+			expect(new Date(mappedDate).getDate()).toEqual(new Date(preFormattedDate).getDate());
 
 			//Check date format is correct
 			const expectedLongFormatRegex =
@@ -71,7 +70,7 @@ describe('appeal-mapper', () => {
 				);
 			}
 
-			expect(isDateInCorrectFormat(mappedDateHtml)).toBe(true);
+			expect(isDateInCorrectFormat(mappedDate)).toBe(true);
 		});
 	});
 });

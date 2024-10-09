@@ -1,8 +1,7 @@
-import { isEqual, parseISO } from 'date-fns';
-import joinDateAndTime from '#utils/join-date-and-time.js';
+import { parseISO } from 'date-fns';
 import {
 	ERROR_MUST_BE_BUSINESS_DAY,
-	ERROR_MUST_BE_CORRECT_DATE_FORMAT,
+	ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT,
 	ERROR_MUST_BE_IN_FUTURE,
 	ERROR_MUST_NOT_BE_IN_FUTURE
 } from '#endpoints/constants.js';
@@ -34,30 +33,51 @@ const validateDateParameter = ({
 	const validator = body(parameterName);
 
 	!isRequired && validator.optional();
+	const isoUtcRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/;
 
 	return validator
-		.isDate()
-		.withMessage(ERROR_MUST_BE_CORRECT_DATE_FORMAT)
-		.custom((value) => (mustBeFutureDate ? dateIsAfterDate(new Date(value), new Date()) : true))
+		.custom((value) => {
+			const parsedDate = parseISO(value);
+			if (isNaN(parsedDate.getTime())) {
+				throw new Error(ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT);
+			}
+
+			return parsedDate;
+		})
+		.matches(isoUtcRegex)
+		.withMessage(ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT)
+		.bail()
+		.custom((value) => (mustBeFutureDate ? dateIsAfterDate(parseISO(value), new Date()) : true))
 		.withMessage(ERROR_MUST_BE_IN_FUTURE)
+		.bail()
 		.custom((value) =>
-			mustBeNotBeFutureDate ? dateIsPastOrToday(new Date(value), new Date()) : true
+			mustBeNotBeFutureDate ? dateIsPastOrToday(parseISO(value), new Date()) : true
 		)
 		.withMessage(ERROR_MUST_NOT_BE_IN_FUTURE)
+		.bail()
 		.custom(async (value) => {
 			if (mustBeBusinessDay) {
-				const originalDate = joinDateAndTime(value);
-				const recalculatedDate = await recalculateDateIfNotBusinessDay(originalDate);
-
-				if (!isEqual(parseISO(originalDate), recalculatedDate)) {
+				const recalculatedDate = await recalculateDateIfNotBusinessDay(value);
+				const originalDate = parseISO(value);
+				if (!isSameDay(originalDate, recalculatedDate)) {
 					throw new Error(ERROR_MUST_BE_BUSINESS_DAY);
 				}
 			}
 
 			return true;
 		})
-		.custom(customFn)
-		.customSanitizer(joinDateAndTime);
+		.custom(customFn);
 };
+
+/**
+ *
+ * @param {Date} dateleft
+ * @param {Date} dateright
+ * @returns {boolean}
+ */
+const isSameDay = (dateleft, dateright) =>
+	dateleft.getDay() === dateright.getDay() &&
+	dateleft.getMonth() === dateright.getMonth() &&
+	dateleft.getFullYear() === dateright.getFullYear();
 
 export default validateDateParameter;

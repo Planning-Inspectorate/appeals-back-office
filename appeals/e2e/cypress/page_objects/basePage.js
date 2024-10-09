@@ -137,6 +137,10 @@ export class Page {
 			});
 	}
 
+	checkEmailRelevantParties(index) {
+		this.basePageElements.checkbox(index).check();
+	}
+
 	clickChangeLink(question) {
 		this.basePageElements.changeLink(question).click();
 	}
@@ -145,6 +149,10 @@ export class Page {
 		this.basePageElements
 			.checkbox()
 			.each(($checkbox) => cy.wrap($checkbox).uncheck({ force: true }));
+	}
+
+	selectCheckbox() {
+		this.basePageElements.checkbox().check({ force: true });
 	}
 
 	clickAccordionByText(text) {

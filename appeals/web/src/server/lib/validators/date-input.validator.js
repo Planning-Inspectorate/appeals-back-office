@@ -4,7 +4,8 @@ import {
 	dateIsValid,
 	dateIsInTheFuture,
 	dateIsTodayOrInThePast,
-	dateIsInThePast
+	dateIsInThePast,
+	dayMonthYearHourMinuteToISOString
 } from '../dates.js';
 import { capitalize } from 'lodash-es';
 
@@ -149,7 +150,7 @@ export const createDateInputDateValidityValidator = (
 				const monthNumber = Number.parseInt(month, 10);
 				const yearNumber = Number.parseInt(year, 10);
 
-				return dateIsValid(yearNumber, monthNumber, dayNumber);
+				return dateIsValid({ day: dayNumber, month: monthNumber, year: yearNumber });
 			})
 			.withMessage(
 				capitalize(
@@ -194,13 +195,11 @@ export const createDateInputDateBusinessDayValidator = async (
 					return false;
 				}
 
-				const dayNumber = Number.parseInt(day, 10);
-				const monthNumber = Number.parseInt(month, 10);
-				const yearNumber = Number.parseInt(year, 10);
-
-				const dateToValidate = new Date(yearNumber, monthNumber - 1, dayNumber)
-					.toISOString()
-					.split('T')[0];
+				const dateToValidate = dayMonthYearHourMinuteToISOString({
+					day,
+					month,
+					year
+				});
 
 				const result = await dateIsABusinessDay(req.apiClient, dateToValidate);
 				if (result === false) {
@@ -237,7 +236,7 @@ export const createDateInputDateInFutureValidator = (
 				const monthNumber = Number.parseInt(month, 10);
 				const yearNumber = Number.parseInt(year, 10);
 
-				return dateIsInTheFuture(yearNumber, monthNumber, dayNumber);
+				return dateIsInTheFuture({ day: dayNumber, month: monthNumber, year: yearNumber });
 			})
 			.withMessage(
 				capitalize(
@@ -268,7 +267,7 @@ export const createDateInputDateInPastOrTodayValidator = (
 				const monthNumber = Number.parseInt(month, 10);
 				const yearNumber = Number.parseInt(year, 10);
 
-				return dateIsTodayOrInThePast(yearNumber, monthNumber, dayNumber);
+				return dateIsTodayOrInThePast({ day: dayNumber, month: monthNumber, year: yearNumber });
 			})
 			.withMessage(
 				capitalize(
@@ -301,7 +300,7 @@ export const createDateInputDateInPastValidator = (
 				const monthNumber = Number.parseInt(month, 10);
 				const yearNumber = Number.parseInt(year, 10);
 
-				return dateIsInThePast(yearNumber, monthNumber, dayNumber);
+				return dateIsInThePast({ day: dayNumber, month: monthNumber, year: yearNumber });
 			})
 			.withMessage(
 				capitalize(

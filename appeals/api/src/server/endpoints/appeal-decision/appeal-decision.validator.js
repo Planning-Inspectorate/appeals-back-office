@@ -6,13 +6,11 @@ import {
 	CASE_OUTCOME_DISMISSED,
 	CASE_OUTCOME_SPLIT_DECISION,
 	ERROR_MUST_BE_STRING,
-	ERROR_MUST_BE_CORRECT_DATE_FORMAT,
-	ERROR_MUST_BE_IN_PAST,
 	ERROR_CASE_OUTCOME_MUST_BE_ONE_OF,
 	ERROR_MUST_BE_UUID
 } from '#endpoints/constants.js';
 
-import { dateIsAfterDate } from '#utils/date-comparison.js';
+import validateDateParameter from '#common/validators/date-parameter.js';
 
 const getOutcomeValidator = composeMiddleware(
 	body('outcome').isString().withMessage(ERROR_MUST_BE_STRING),
@@ -23,11 +21,11 @@ const getOutcomeValidator = composeMiddleware(
 );
 
 const getDateValidator = composeMiddleware(
-	body('documentDate').isDate().withMessage(ERROR_MUST_BE_CORRECT_DATE_FORMAT),
-	body('documentDate')
-		.custom((value) => dateIsAfterDate(new Date(), new Date(value)))
-		.withMessage(ERROR_MUST_BE_IN_PAST),
-	validationErrorHandler
+	validateDateParameter({
+		parameterName: 'documentDate',
+		mustBeNotBeFutureDate: true,
+		mustBeBusinessDay: true
+	})
 );
 
 const getDocumentValidator = composeMiddleware(

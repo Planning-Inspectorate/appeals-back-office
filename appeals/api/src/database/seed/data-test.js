@@ -264,6 +264,30 @@ const newS78Appeals = [
 		status: { status: APPEAL_CASE_STATUS.VALIDATION, createdAt: getDateTwoWeeksAgo() },
 		assignCaseOfficer: true,
 		agent: false
+	}),
+	appealFactory({
+		typeShorthand: APPEAL_TYPE_SHORTHAND_FPA,
+		status: { status: APPEAL_CASE_STATUS.VALIDATION, createdAt: getDateTwoWeeksAgo() },
+		assignCaseOfficer: true,
+		agent: false
+	}),
+	appealFactory({
+		typeShorthand: APPEAL_TYPE_SHORTHAND_FPA,
+		status: { status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE, createdAt: getDateTwoWeeksAgo() },
+		lpaQuestionnaire: true,
+		startedAt: new Date(),
+		validAt: getDateTwoWeeksAgo(),
+		assignCaseOfficer: true,
+		agent: false
+	}),
+	appealFactory({
+		typeShorthand: APPEAL_TYPE_SHORTHAND_FPA,
+		status: { status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE, createdAt: getDateTwoWeeksAgo() },
+		lpaQuestionnaire: true,
+		startedAt: new Date(),
+		validAt: getDateTwoWeeksAgo(),
+		assignCaseOfficer: true,
+		agent: false
 	})
 ];
 
@@ -612,7 +636,20 @@ export async function seedTestData(databaseConnector) {
 
 		//REPS
 		if (appealType === APPEAL_TYPE_SHORTHAND_FPA) {
-			for (let counter = 0; counter < 10; counter++) {
+			for (let counter = 0; counter < 110; counter++) {
+				let originalRepresentation;
+				let status;
+
+				if (counter < 50) {
+					originalRepresentation = `Awaiting review comment ${counter + 1}`;
+				} else if (counter < 90) {
+					originalRepresentation = `Valid comment ${counter - 49}`;
+					status = 'valid';
+				} else {
+					originalRepresentation = `Invalid comment ${counter - 89}`;
+					status = 'invalid';
+				}
+
 				await databaseConnector.representation.create({
 					data: {
 						appeal: {
@@ -621,7 +658,8 @@ export async function seedTestData(databaseConnector) {
 							}
 						},
 						representationType: APPEAL_REPRESENTATION_TYPE.COMMENT,
-						originalRepresentation: `Some autogen text ${counter}`,
+						originalRepresentation,
+						...(status && { status }),
 						represented: {
 							create: appellantsList[pickRandom(appellantsList)]
 						}
@@ -719,13 +757,15 @@ export async function seedTestData(databaseConnector) {
 				[APPEAL_CASE_STATUS.ISSUE_DETERMINATION, APPEAL_CASE_STATUS.COMPLETE].includes(status)
 		);
 
+		const today = new Date();
+
 		if (statusWithSiteVisitSet) {
 			await databaseConnector.siteVisit.create({
 				data: {
 					appealId: id,
-					visitDate: new Date(),
-					visitEndTime: '16:00',
-					visitStartTime: '14:00',
+					visitDate: today,
+					visitEndTime: `${today.toISOString().split('T')[0]}T16:00:00.000Z`,
+					visitStartTime: `${today.toISOString().split('T')[0]}T14:00:00.000Z`,
 					siteVisitTypeId: siteVisitType[pickRandom(siteVisitType)].id
 				}
 			});

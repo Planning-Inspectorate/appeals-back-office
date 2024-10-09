@@ -45,6 +45,19 @@ export const validateTextAreaParameter = (parameterName, maxLength = LENGTH_1000
  * @param {number} maxLength
  * @returns {ValidationChain}
  */
+export const validateOptionalTextAreaParameter = (parameterName, maxLength = LENGTH_1000) =>
+	body(parameterName)
+		.optional()
+		.isString()
+		.withMessage(ERROR_MUST_BE_STRING)
+		.isLength({ max: maxLength })
+		.withMessage(stringTokenReplacement(ERROR_MAX_LENGTH_CHARACTERS, [maxLength]));
+
+/**
+ * @param {string} parameterName
+ * @param {number} maxLength
+ * @returns {ValidationChain}
+ */
 export const validateStringParameterAllowingEmpty = (parameterName, maxLength = LENGTH_300) =>
 	body(parameterName)
 		.optional({ nullable: true })

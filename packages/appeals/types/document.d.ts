@@ -21,7 +21,6 @@ export interface MappedDocument {
 	mimeType: string;
 	documentSize: number;
 	stage: string;
-	fileRowId: string;
 	folderId: number;
 	GUID: string;
 	receivedDate: string;
@@ -30,12 +29,4 @@ export interface MappedDocument {
 
 export interface AddDocumentsResponse {
 	documents: (DocumentAuditTrailInfo | null)[];
-}
-
-export interface UploadRequest {
-	accessToken: AccessToken;
-	blobStorageContainer: string;
-	blobStorageHost: string;
-	blobStoreUrl: string;
-	documents: BlobInfo[];
 }

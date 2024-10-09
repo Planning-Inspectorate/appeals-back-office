@@ -1,31 +1,42 @@
-import { buildProgressMessage, errorMessage } from './_html.js';
+import { errorMessage } from './_html.js';
 
-/** @typedef {import('./_html.js').AnError} AnError */
+const CLASSES = {
+	topErrors: 'govuk-error-summary pins-file-upload__errors-top',
+	errorSummaryTitle: 'govuk-error-summary__title',
+	errorSummaryList: 'govuk-list govuk-error-summary__list',
+	fileRowRed: 'colour--red'
+};
+const SELECTORS = {
+	container: '.pins-file-upload__container',
+	topErrorsHook: '.top-errors-hook',
+	filesRows: '.pins-file-upload__files-rows',
+	errorRow: '.error-row'
+};
 
 /**
- * @param {string[]} messages
+ * @param {{message: string; guid: string;}[]} errors
  * @returns {HTMLElement}
  */
-const buildTopErrorsMarkup = (messages) => {
+const buildTopErrorsMarkup = (errors) => {
 	const div = document.createElement('div');
-	div.className = 'govuk-error-summary pins-file-upload__errors-top';
+	div.className = CLASSES.topErrors;
 	div.setAttribute('aria-labelledby', 'error-summary-title-{{ params.formId }}');
 	div.setAttribute('role', 'alert');
 	div.setAttribute('data-module', 'govuk-error-summary');
 
 	const h2 = document.createElement('h2');
-	h2.className = 'govuk-error-summary__title';
+	h2.className = CLASSES.errorSummaryTitle;
 	h2.id = 'error-summary-title-{{ params.formId }}';
 	h2.textContent = 'There is a problem';
 
 	const ul = document.createElement('ul');
-	ul.className = 'govuk-list govuk-error-summary__list';
+	ul.className = CLASSES.errorSummaryList;
 
-	messages.forEach((message) => {
+	errors.forEach((errorItem) => {
 		const li = document.createElement('li');
 		const a = document.createElement('a');
-		a.href = '#';
-		a.textContent = message;
+		a.href = `#${errorItem.guid}`;
+		a.textContent = errorItem.message;
 		li.appendChild(a);
 		ul.appendChild(li);
 	});
@@ -36,60 +47,51 @@ const buildTopErrorsMarkup = (messages) => {
 };
 
 /**
- * @param {string} message
- * @returns {HTMLElement}
- */
-const buildMiddleErrorsMarkup = (message) => {
-	const p = document.createElement('p');
-	p.className = 'font-weight--700 colour--red';
-	p.textContent = message;
-	return p;
-};
-
-/**
  *
- * @param {{details: AnError[], message: string}} error
+ * @param {{message: string, details?: import('#appeals/appeal-documents/appeal-documents.types').FileUploadError[]}} error
  * @param {Element} uploadForm
  */
 export const showErrors = (error, uploadForm) => {
-	const formContainer = uploadForm.querySelector('.pins-file-upload__container');
-	const topHook = uploadForm.querySelector('.top-errors-hook');
-	const middleHook = uploadForm.querySelector('.middle-errors-hook');
+	const formContainer = uploadForm.querySelector(SELECTORS.container);
+	const topHook = uploadForm.querySelector(SELECTORS.topErrorsHook);
 
-	if (!formContainer || !topHook || !middleHook) return;
+	if (!formContainer || !topHook) return;
 
-	buildProgressMessage({ show: false }, uploadForm);
 	formContainer.classList.remove('error');
 
 	topHook.textContent = '';
-	middleHook.textContent = '';
 
 	if (error.message === 'FILE_SPECIFIC_ERRORS' && error.details) {
-		const messages = error.details.map((wrongFile) =>
-			errorMessage(wrongFile.message || '', wrongFile.name)
-		);
+		const errors = error.details.map((errorDetails) => ({
+			message: errorMessage(errorDetails.message || '', errorDetails.name),
+			guid: errorDetails.guid
+		}));
 
-		for (const wrongFile of error.details) {
-			const fileRow = uploadForm.querySelector(`#${CSS.escape(wrongFile.fileRowId)}`);
+		for (const errorDetails of error.details) {
+			const fileRow = uploadForm.querySelector(`#${CSS.escape(errorDetails.guid)}`);
 
 			if (fileRow && fileRow.children.length > 1) {
-				fileRow.children[0].classList.add('colour--red');
-				fileRow.children[0].textContent = errorMessage(wrongFile.message || '', wrongFile.name);
+				fileRow.children[0].classList.add(CLASSES.fileRowRed);
+				fileRow.children[0].textContent = errorMessage(
+					errorDetails.message || '',
+					errorDetails.name
+				);
 				if (fileRow.children[1]) fileRow.children[1].remove();
 			}
 		}
-		const topErrorsElement = buildTopErrorsMarkup(messages);
+		const topErrorsElement = buildTopErrorsMarkup(errors);
 		topHook.appendChild(topErrorsElement);
 	} else {
 		formContainer.classList.add('error');
 
 		const replaceValue = error.details ? error.details[0].message : null;
-
-		const topErrorsElement = buildTopErrorsMarkup([errorMessage(error.message, replaceValue)]);
+		const topErrorsElement = buildTopErrorsMarkup([
+			{
+				message: errorMessage(error.message, replaceValue),
+				guid: '#'
+			}
+		]);
 		topHook.appendChild(topErrorsElement);
-
-		const middleErrorsElement = buildMiddleErrorsMarkup(errorMessage(error.message, replaceValue));
-		middleHook.appendChild(middleErrorsElement);
 	}
 };
 
@@ -97,18 +99,16 @@ export const showErrors = (error, uploadForm) => {
  * @param {HTMLElement} uploadForm
  */
 export const hideErrors = (uploadForm) => {
-	const formContainer = uploadForm.querySelector('.pins-file-upload__container');
-	const topHook = uploadForm.querySelector('.top-errors-hook');
-	const middleHook = uploadForm.querySelector('.middle-errors-hook');
-	const filesRows = uploadForm.querySelector('.pins-file-upload__files-rows');
+	const formContainer = uploadForm.querySelector(SELECTORS.container);
+	const topHook = uploadForm.querySelector(SELECTORS.topErrorsHook);
+	const filesRows = uploadForm.querySelector(SELECTORS.filesRows);
 
-	if (!formContainer || !topHook || !middleHook || !filesRows) return;
+	if (!formContainer || !topHook || !filesRows) return;
 
-	const errorRows = filesRows.querySelectorAll('.error-row');
+	const errorRows = filesRows.querySelectorAll(SELECTORS.errorRow);
 	for (const errorRow of errorRows) {
 		errorRow.remove();
 	}
 	topHook.textContent = '';
-	middleHook.textContent = '';
 	formContainer.classList.remove('error');
 };

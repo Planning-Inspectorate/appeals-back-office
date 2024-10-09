@@ -22,6 +22,11 @@ import {
 	relatedAppealLegacyRequest,
 	unlinkAppealRequest
 } from '#tests/linked-appeals/mocks.js';
+import {
+	SITE_VISIT_TYPE_ACCESS_REQUIRED,
+	SITE_VISIT_TYPE_ACCOMPANIED,
+	SITE_VISIT_TYPE_UNACCOMPANIED
+} from '#endpoints/constants.js';
 
 export const spec = {
 	info: {
@@ -603,42 +608,6 @@ export const spec = {
 			isGreenBelt: true
 		},
 		UpdateLPAQuestionnaireResponse: {},
-		CreateSiteVisitRequest: {
-			visitDate: '2024-07-07',
-			visitEndTime: '18:00',
-			visitStartTime: '16:00',
-			visitType: 'access required'
-		},
-		CreateSiteVisitResponse: {
-			visitDate: '2024-07-07T01:00:00.000Z',
-			visitEndTime: '18:00',
-			visitStartTime: '16:00',
-			visitType: 'access required'
-		},
-		UpdateSiteVisitRequest: {
-			visitDate: '2024-07-09',
-			visitEndTime: '12:00',
-			visitStartTime: '10:00',
-			visitType: 'Accompanied',
-			previousVisitType: 'Unaccompanied',
-			siteVisitChangeType: 'all'
-		},
-		UpdateSiteVisitResponse: {
-			visitDate: '2024-07-09T01:00:00.000Z',
-			visitEndTime: '12:00',
-			visitStartTime: '10:00',
-			visitType: 'Accompanied',
-			previousVisitType: 'Unaccompanied',
-			siteVisitChangeType: 'all'
-		},
-		SingleSiteVisitResponse: {
-			appealId: 2,
-			siteVisitId: 1,
-			visitType: 'Access required',
-			visitDate: '2024-07-07',
-			visitEndTime: '18:00',
-			visitStartTime: '16:00'
-		},
 		AllAppellantCaseIncompleteReasonsResponse: [
 			{
 				id: 1,
@@ -948,6 +917,74 @@ export const spec = {
 					example: true
 				}
 			}
+		},
+		SiteVisitCreateRequest: {
+			type: 'object',
+			required: ['visitType', 'visitDate'],
+			properties: {
+				visitDate: {
+					type: 'string',
+					format: 'date-time',
+					example: '2024-08-24T00:00:00Z'
+				},
+				visitStartTime: {
+					type: 'string',
+					format: 'date-time',
+					example: '2024-08-24T10:30:00Z'
+				},
+				visitEndTime: {
+					type: 'string',
+					format: 'date-time',
+					example: '2024-08-24T11:30:00Z'
+				},
+				visitType: {
+					type: 'string',
+					enum: [
+						SITE_VISIT_TYPE_UNACCOMPANIED,
+						SITE_VISIT_TYPE_ACCESS_REQUIRED,
+						SITE_VISIT_TYPE_ACCOMPANIED
+					]
+				}
+			}
+		},
+		SiteVisitUpdateRequest: {
+			allOf: [
+				{ $ref: '#/components/schemas/SiteVisitCreateRequest' },
+				{
+					type: 'object',
+					properties: {
+						previousVisitType: {
+							type: 'string',
+							enum: [
+								SITE_VISIT_TYPE_UNACCOMPANIED,
+								SITE_VISIT_TYPE_ACCESS_REQUIRED,
+								SITE_VISIT_TYPE_ACCOMPANIED
+							]
+						},
+						siteVisitChangeType: {
+							type: 'string',
+							enum: ['unchanged', 'date-time', 'visit-type', 'all']
+						}
+					}
+				}
+			]
+		},
+		SiteVisitSingleResponse: {
+			allOf: [
+				{ $ref: '#/components/schemas/SiteVisitCreateRequest' },
+				{
+					type: 'object',
+					required: ['appealId', 'siteVisitId'],
+					properties: {
+						appealId: {
+							type: 'number'
+						},
+						siteVisitId: {
+							type: 'number'
+						}
+					}
+				}
+			]
 		},
 		UpdateServiceUserRequest: {
 			type: 'object',

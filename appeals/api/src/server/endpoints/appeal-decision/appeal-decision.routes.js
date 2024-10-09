@@ -6,8 +6,8 @@ import {
 	getDateValidator,
 	getDocumentValidator
 } from './appeal-decision.validator.js';
-import { validateDecisionDocumentAndAddToRequest } from './appeal-decision.middleware.js';
 import { asyncHandler } from '@pins/express';
+import { checkDocumentExistsAndAddToRequest } from '#middleware/document.js';
 
 const router = createRouter();
 
@@ -39,7 +39,7 @@ router.post(
 	getOutcomeValidator,
 	getDateValidator,
 	getDocumentValidator,
-	validateDecisionDocumentAndAddToRequest,
+	checkDocumentExistsAndAddToRequest,
 	asyncHandler(postInspectorDecision)
 );
 

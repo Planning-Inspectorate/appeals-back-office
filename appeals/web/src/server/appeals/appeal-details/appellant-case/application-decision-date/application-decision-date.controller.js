@@ -8,6 +8,7 @@ import {
 } from './application-decision-date.mapper.js';
 import { changeApplicationDecisionDate } from './application-decision-date.service.js';
 import { getOriginPathname, isInternalUrl } from '#lib/url-utilities.js';
+import { dayMonthYearHourMinuteToISOString } from '#lib/dates.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -178,18 +179,15 @@ export const postChangeApplicationSetDecisionDate = async (request, response) =>
 			return response.status(400).render('app/500.njk');
 		}
 
-		const updatedApplicationDecisionDayString = updatedApplicationDecisionDay
-			.toString()
-			.padStart(2, '0');
-		const updatedApplicationDecisionMonthString = updatedApplicationDecisionMonth
-			.toString()
-			.padStart(2, '0');
-
 		await changeApplicationDecisionDate(
 			apiClient,
 			appealId,
 			appellantCaseId,
-			`${updatedApplicationDecisionYear}-${updatedApplicationDecisionMonthString}-${updatedApplicationDecisionDayString}`
+			dayMonthYearHourMinuteToISOString({
+				day: updatedApplicationDecisionDay,
+				month: updatedApplicationDecisionMonth,
+				year: updatedApplicationDecisionYear
+			})
 		);
 
 		addNotificationBannerToSession(

@@ -3,13 +3,16 @@ import { jest } from '@jest/globals';
 import config from '#config/config.js';
 import { NODE_ENV_PRODUCTION } from '#endpoints/constants.js';
 
+const mockValidateBlob = jest.fn().mockResolvedValue(true);
 const mockRepGetById = jest.fn().mockResolvedValue({});
 const mockRepUpdateById = jest.fn().mockResolvedValue({});
 const mockAppealRelationshipAdd = jest.fn().mockResolvedValue({});
 const mockAppealRelationshipRemove = jest.fn().mockResolvedValue({});
 const mockAppealRelationshipFindMany = jest.fn().mockResolvedValue({});
+const mockAppealRelationshipCreateMany = jest.fn().mockResolvedValue({});
 const mockAppealDecision = jest.fn().mockResolvedValue({});
 const mockAppealFindUnique = jest.fn().mockResolvedValue({});
+const mockAppealCreate = jest.fn().mockResolvedValue({});
 const mocklPAQuestionnaireCreate = jest.fn().mockResolvedValue({});
 const mocklPAQuestionnaireUpdate = jest.fn().mockResolvedValue({});
 const mockAppealStatusUpdateMany = jest.fn().mockResolvedValue({});
@@ -32,7 +35,10 @@ const mockDocumentFindMany = jest.fn().mockResolvedValue({});
 const mockDocumentCount = jest.fn().mockResolvedValue({});
 const mockDocumentFindFirst = jest.fn().mockResolvedValue({});
 const mockDocumentDelete = jest.fn().mockResolvedValue({});
+const mockDocumentCreateMany = jest.fn().mockResolvedValue({});
 const mockDocumentVersionCreate = jest.fn().mockResolvedValue({});
+const mockDocumentVersionCreateMany = jest.fn().mockResolvedValue({});
+const mockDocumentVersionFindMany = jest.fn().mockResolvedValue({});
 const mockDocumentMetdataFindFirst = jest.fn().mockResolvedValue({});
 const mockDocumentMetdataFindUnique = jest.fn().mockResolvedValue({});
 const mockDocumentMetdataUpsert = jest.fn().mockResolvedValue({});
@@ -108,7 +114,8 @@ class MockPrismaClient {
 			findUnique: mockAppealFindUnique,
 			update: mockAppealUpdate,
 			findMany: mockAppealFindMany,
-			count: mockAppealCount
+			count: mockAppealCount,
+			create: mockAppealCreate
 		};
 	}
 
@@ -116,7 +123,8 @@ class MockPrismaClient {
 		return {
 			findMany: mockAppealRelationshipFindMany,
 			delete: mockAppealRelationshipRemove,
-			create: mockAppealRelationshipAdd
+			create: mockAppealRelationshipAdd,
+			createMany: mockAppealRelationshipCreateMany
 		};
 	}
 
@@ -156,13 +164,16 @@ class MockPrismaClient {
 			findUnique: mockDocumentFindUnique,
 			findMany: mockDocumentFindMany,
 			update: mockDocumentUpdate,
-			upsert: mockDocumentUpsert
+			upsert: mockDocumentUpsert,
+			createMany: mockDocumentCreateMany
 		};
 	}
 
 	get documentVersion() {
 		return {
 			create: mockDocumentVersionCreate,
+			createMany: mockDocumentVersionCreateMany,
+			findMany: mockDocumentVersionFindMany,
 			findFirst: mockDocumentMetdataFindFirst,
 			findUnique: mockDocumentMetdataFindUnique,
 			upsert: mockDocumentMetdataUpsert,
@@ -441,6 +452,12 @@ jest.unstable_mockModule('notifications-node-client', () => ({
 		sendEmail = mockSendEmail;
 	}
 }));
+
+jest.unstable_mockModule('./src/server/utils/blob-validation', () => {
+	return {
+		validateBlobContents: mockValidateBlob
+	};
+});
 
 jest.unstable_mockModule('./src/server/config/config.js', () => ({
 	default: {

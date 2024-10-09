@@ -133,7 +133,10 @@ router
 	);
 
 router
-	.route('/decision/check-and-confirm/:folderId')
+	.route([
+		'/decision/check-and-confirm/:folderId',
+		'/decision/check-and-confirm/:folderId/:documentId'
+	])
 	.get(validateCaseFolderId, asyncHandler(controller.getDecisionCheckAndConfirm))
 	.post(
 		validateCaseFolderId,

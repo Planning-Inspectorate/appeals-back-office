@@ -2,7 +2,7 @@ import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
 import { appealShortReference, linkedAppealStatus } from '#lib/appeals-formatter.js';
 import { appealSiteToAddressString } from '#lib/address-formatter.js';
 import { appealStatusToStatusTag } from '#lib/nunjucks-filters/status-tag.js';
-import { dateToDisplayDate } from '#lib/dates.js';
+import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { generateHorizonAppealUrl } from '#lib/display-page-formatter.js';
 
 /**
@@ -274,7 +274,7 @@ export function addLinkedAppealCheckAndConfirmPage(
 								text: 'Submission date'
 							},
 							value: {
-								text: dateToDisplayDate(linkCandidateSummary.submissionDate)
+								text: dateISOStringToDisplayDate(linkCandidateSummary.submissionDate)
 							}
 						}
 					]

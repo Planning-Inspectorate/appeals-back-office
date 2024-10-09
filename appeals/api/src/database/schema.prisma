@@ -502,8 +502,8 @@ model SiteVisit {
   appealId        Int            @unique
   siteVisitTypeId Int?
   visitDate       DateTime?
-  visitStartTime  String?
-  visitEndTime    String?
+  visitStartTime  DateTime?
+  visitEndTime    DateTime?
   appeal          Appeal         @relation(fields: [appealId], references: [id])
   siteVisitType   SiteVisitType? @relation(fields: [siteVisitTypeId], references: [id])
 }
@@ -665,7 +665,7 @@ model Representation {
   representationType     String
   dateCreated            DateTime                   @default(now())
   dateLastUpdated        DateTime                   @default(now())
-  originalRepresentation String
+  originalRepresentation String?
   redactedRepresentation String?
   represented            ServiceUser?               @relation("represented", fields: [representedId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   representedId          Int?

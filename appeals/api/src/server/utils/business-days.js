@@ -5,6 +5,15 @@ import {
 	CONFIG_APPEAL_TIMETABLE,
 	BANK_HOLIDAY_FEED_DIVISION_ENGLAND
 } from '#endpoints/constants.js';
+import { formatInTimeZone, zonedTimeToUtc } from 'date-fns-tz';
+import {
+	DEADLINE_HOUR,
+	DEADLINE_MINUTE,
+	DAYTIME_HOUR,
+	DAYTIME_MINUTE,
+	DEFAULT_TIMEZONE
+} from '@pins/appeals/constants/dates.js';
+import { getCache, setCache } from './cache-data.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.BankHolidayFeedEvents} BankHolidayFeedEvents */
 /** @typedef {import('@pins/appeals.api').Appeals.BankHolidayFeedDivisions} BankHolidayFeedDivisions */
@@ -34,11 +43,17 @@ const getNumberOfBankHolidaysBetweenDates = (dateFrom, dateTo, bankHolidays) => 
  */
 const fetchBankHolidaysForDivision = async (division = BANK_HOLIDAY_FEED_DIVISION_ENGLAND) => {
 	try {
-		const bankHolidayFeed = await fetch(CONFIG_BANKHOLIDAYS_FEED_URL);
-		const bankHolidayFeedJson = await bankHolidayFeed.json();
+		const cacheKey = 'bankHolidayFeedJsonCache';
 
-		// @ts-ignore
-		return bankHolidayFeedJson[division].events;
+		if (getCache(cacheKey) == null) {
+			const bankHolidayFeed = await fetch(CONFIG_BANKHOLIDAYS_FEED_URL);
+			const bankHolidayFeedJson = await bankHolidayFeed.json();
+
+			// @ts-ignore
+			setCache(cacheKey, bankHolidayFeedJson);
+		}
+
+		return getCache(cacheKey)[division].events;
 	} catch (error) {
 		throw new Error(String(error));
 	}
@@ -58,11 +73,11 @@ const recalculateDateForBankHolidays = (dateFrom, dateTo, bankHolidays) => {
 	if (bankHolidayCount) {
 		return {
 			bankHolidayCount,
-			calculatedDate: addBusinessDays(new Date(dateTo), bankHolidayCount)
+			calculatedDate: addBusinessDays(dateTo, bankHolidayCount)
 		};
 	}
 
-	return { bankHolidayCount, calculatedDate: new Date(dateTo) };
+	return { bankHolidayCount, calculatedDate: dateTo };
 };
 
 /**
@@ -110,10 +125,31 @@ const addWeekendDays = (date) => {
  * @returns {Promise<Date>}
  */
 const recalculateDateIfNotBusinessDay = async (date) => {
-	const bankHolidays = await fetchBankHolidaysForDivision();
-	const calculatedDate = addWeekendDays(date);
+	const processedDate = setTimeInTimeZone(date, DAYTIME_HOUR, DAYTIME_MINUTE).toISOString();
 
-	return addBankHolidayDays(calculatedDate, calculatedDate, bankHolidays);
+	const bankHolidays = await fetchBankHolidaysForDivision();
+	const calculatedDate = addWeekendDays(processedDate);
+	const calculatedDateWithoutBankHolidays = addBankHolidayDays(
+		calculatedDate,
+		calculatedDate,
+		bankHolidays
+	);
+
+	return setTimeInTimeZone(calculatedDateWithoutBankHolidays, 0, 0);
+};
+
+/**
+ *
+ * @param {string | Date} date
+ * @param {Number} hours
+ * @param {Number} minutes
+ * @returns {Date}
+ */
+const setTimeInTimeZone = (date, hours, minutes) => {
+	const ymd = formatInTimeZone(date, DEFAULT_TIMEZONE, 'yyyy-MM-dd');
+	const paddedHours = hours.toString().padStart(2, '0');
+	const paddedMinutes = minutes.toString().padStart(2, '0');
+	return zonedTimeToUtc(`${ymd} ${paddedHours}:${paddedMinutes}`, DEFAULT_TIMEZONE);
 };
 
 /**
@@ -124,11 +160,13 @@ const recalculateDateIfNotBusinessDay = async (date) => {
  * 3. If the new deadline day (and any consecutive days) are bank holidays, these are added to the deadline day
  *
  * @param {string} appealType
- * @param {Date} startedAt
+ * @param {Date|null} startedAt
  * @returns {Promise<TimetableDeadlineDate | undefined>}
  */
 const calculateTimetable = async (appealType, startedAt) => {
 	if (startedAt) {
+		const startDate = setTimeInTimeZone(startedAt, DAYTIME_HOUR, DAYTIME_MINUTE);
+
 		// @ts-ignore
 		const appealTimetableConfig = CONFIG_APPEAL_TIMETABLE[appealType];
 
@@ -137,14 +175,16 @@ const calculateTimetable = async (appealType, startedAt) => {
 
 			return Object.fromEntries(
 				Object.entries(appealTimetableConfig).map(([fieldName, { daysFromStartDate }]) => {
-					let calculatedDate = addBusinessDays(new Date(startedAt), daysFromStartDate);
-					calculatedDate = addBankHolidayDays(startedAt, calculatedDate, bankHolidays);
+					let calculatedDate = addBusinessDays(startDate, daysFromStartDate);
+					calculatedDate = addBankHolidayDays(startDate, calculatedDate, bankHolidays);
 
-					return [fieldName, calculatedDate];
+					const deadline = setTimeInTimeZone(calculatedDate, DEADLINE_HOUR, DEADLINE_MINUTE);
+
+					return [fieldName, deadline];
 				})
 			);
 		}
 	}
 };
 
-export { calculateTimetable, recalculateDateIfNotBusinessDay };
+export { calculateTimetable, recalculateDateIfNotBusinessDay, setTimeInTimeZone };

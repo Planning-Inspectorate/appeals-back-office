@@ -233,10 +233,7 @@ export const getAddDocuments = async (request, response) => {
 		currentAppeal,
 		`/appeals-service/appeal-details/${request.params.appealId}/appellant-case/`,
 		`/appeals-service/appeal-details/${request.params.appealId}/appellant-case/add-document-details/{{folderId}}`,
-		getValidationOutcomeFromAppellantCase(appellantCaseDetails) === 'valid',
-		'',
-		undefined,
-		false
+		getValidationOutcomeFromAppellantCase(appellantCaseDetails) === 'valid'
 	);
 };
 
@@ -270,13 +267,15 @@ export const getAddDocumentDetails = async (request, response) => {
 
 	const headingTextOverride = getPageHeadingTextOverrideForFolder(currentFolder);
 
-	await renderDocumentDetails(
+	await renderDocumentDetails({
 		request,
 		response,
-		`/appeals-service/appeal-details/${request.params.appealId}/appellant-case/add-documents/{{folderId}}`,
-		getValidationOutcomeFromAppellantCase(appellantCaseDetails) === 'valid',
-		headingTextOverride && capitalize(headingTextOverride)
-	);
+		backLinkUrl: `/appeals-service/appeal-details/${request.params.appealId}/appellant-case/add-documents/{{folderId}}`,
+		isLateEntry: getValidationOutcomeFromAppellantCase(appellantCaseDetails) === 'valid',
+		...(headingTextOverride && {
+			pageHeadingTextOverride: capitalize(headingTextOverride)
+		})
+	});
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
@@ -380,24 +379,26 @@ export const getManageFolder = async (request, response) => {
 
 	const headingTextOverride = getPageHeadingTextOverrideForFolder(currentFolder);
 
-	await renderManageFolder(
+	await renderManageFolder({
 		request,
 		response,
-		`/appeals-service/appeal-details/${request.params.appealId}/appellant-case/`,
-		`/appeals-service/appeal-details/${request.params.appealId}/appellant-case/manage-documents/{{folderId}}/{{documentId}}`,
-		headingTextOverride && capitalize(headingTextOverride)
-	);
+		backLinkUrl: `/appeals-service/appeal-details/${request.params.appealId}/appellant-case/`,
+		viewAndEditUrl: `/appeals-service/appeal-details/${request.params.appealId}/appellant-case/manage-documents/{{folderId}}/{{documentId}}`,
+		...(headingTextOverride && {
+			pageHeadingTextOverride: capitalize(headingTextOverride)
+		})
+	});
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const getManageDocument = async (request, response) => {
-	await renderManageDocument(
+	await renderManageDocument({
 		request,
 		response,
-		`/appeals-service/appeal-details/${request.params.appealId}/appellant-case/manage-documents/{{folderId}}`,
-		`/appeals-service/appeal-details/${request.params.appealId}/appellant-case/add-documents/{{folderId}}/{{documentId}}`,
-		`/appeals-service/appeal-details/${request.params.appealId}/appellant-case/manage-documents/{{folderId}}/{{documentId}}/{{versionId}}/delete`
-	);
+		backLinkUrl: `/appeals-service/appeal-details/${request.params.appealId}/appellant-case/manage-documents/{{folderId}}`,
+		uploadUpdatedDocumentUrl: `/appeals-service/appeal-details/${request.params.appealId}/appellant-case/add-documents/{{folderId}}/{{documentId}}`,
+		removeDocumentUrl: `/appeals-service/appeal-details/${request.params.appealId}/appellant-case/manage-documents/{{folderId}}/{{documentId}}/{{versionId}}/delete`
+	});
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
@@ -461,14 +462,16 @@ export const getAddDocumentVersionDetails = async (request, response) => {
 
 	const headingTextOverride = getPageHeadingTextOverrideForFolder(currentFolder);
 
-	await renderDocumentDetails(
+	await renderDocumentDetails({
 		request,
 		response,
-		`/appeals-service/appeal-details/${request.params.appealId}/appellant-case/add-documents/${request.params.folderId}/${request.params.documentId}`,
-		getValidationOutcomeFromAppellantCase(appellantCaseDetails) === 'valid',
-		headingTextOverride && `Updated ${headingTextOverride} document`,
-		documentId
-	);
+		backLinkUrl: `/appeals-service/appeal-details/${request.params.appealId}/appellant-case/add-documents/${request.params.folderId}/${request.params.documentId}`,
+		isLateEntry: getValidationOutcomeFromAppellantCase(appellantCaseDetails) === 'valid',
+		documentId,
+		...(headingTextOverride && {
+			pageHeadingTextOverride: `Updated ${headingTextOverride} document`
+		})
+	});
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */

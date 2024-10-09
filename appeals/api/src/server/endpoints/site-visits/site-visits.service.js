@@ -9,8 +9,8 @@ import {
 } from '#endpoints/constants.js';
 import config from '#config/config.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-import formatDate from '#utils/date-formatter.js';
-import { format, parseISO } from 'date-fns';
+import formatDate, { formatTime } from '#utils/date-formatter.js';
+import { format } from 'date-fns';
 import { broadcastEvent } from '#endpoints/integrations/integrations.broadcasters/event.js';
 import { EVENT_TYPE } from '@pins/appeals/constants/common.js';
 import { ERROR_NOT_FOUND } from '#endpoints/constants.js';
@@ -42,7 +42,6 @@ export const createSiteVisit = async (azureAdUserId, siteVisitData, notifyClient
 
 		const siteVisit = await siteVisitRepository.createSiteVisitById({
 			appealId,
-			// @ts-ignore
 			visitDate,
 			visitEndTime,
 			visitStartTime,
@@ -55,7 +54,7 @@ export const createSiteVisit = async (azureAdUserId, siteVisitData, notifyClient
 				appealId,
 				azureAdUserId,
 				details: stringTokenReplacement(AUDIT_TRAIL_SITE_VISIT_ARRANGED, [
-					format(parseISO(visitDate), DEFAULT_DATE_FORMAT_AUDIT_TRAIL)
+					format(new Date(visitDate), DEFAULT_DATE_FORMAT_AUDIT_TRAIL)
 				])
 			});
 		}
@@ -67,8 +66,8 @@ export const createSiteVisit = async (azureAdUserId, siteVisitData, notifyClient
 			appeal_reference_number: siteVisitData.appealReferenceNumber,
 			lpa_reference: siteVisitData.lpaReference,
 			site_address: siteVisitData.siteAddress,
-			start_time: siteVisitData.visitStartTime || '',
-			end_time: siteVisitData.visitEndTime || '',
+			start_time: formatTime(siteVisitData.visitStartTime),
+			end_time: formatTime(siteVisitData.visitEndTime),
 			visit_date: formatDate(new Date(siteVisitData.visitDate || ''), false)
 		};
 
@@ -130,8 +129,8 @@ const updateSiteVisit = async (azureAdUserId, updateSiteVisitData, notifyClient)
 
 		const updateData = {
 			...(visitDate && { visitDate }),
-			...(visitEndTime !== undefined && { visitEndTime }),
-			...(visitStartTime !== undefined && { visitStartTime }),
+			visitEndTime: visitEndTime || null,
+			visitStartTime: visitStartTime || null,
 			...(siteVisitTypeId && { siteVisitTypeId })
 		};
 
@@ -168,8 +167,8 @@ const updateSiteVisit = async (azureAdUserId, updateSiteVisitData, notifyClient)
 			appeal_reference_number: updateSiteVisitData.appealReferenceNumber,
 			lpa_reference: updateSiteVisitData.lpaReference,
 			site_address: updateSiteVisitData.siteAddress,
-			start_time: updateSiteVisitData.visitStartTime || '',
-			end_time: updateSiteVisitData.visitEndTime || '',
+			start_time: formatTime(updateSiteVisitData.visitStartTime),
+			end_time: formatTime(updateSiteVisitData.visitEndTime),
 			visit_date: formatDate(new Date(updateSiteVisitData.visitDate || ''), false)
 		};
 

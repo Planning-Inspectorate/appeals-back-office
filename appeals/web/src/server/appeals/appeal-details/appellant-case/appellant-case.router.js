@@ -34,6 +34,7 @@ import lpaChangedDescriptionRouter from './lpa-changed-description/lpa-changed-d
 import applicationOutcomeRouter from './application-outcome/application-outcome.router.js';
 import appealCostsApplicationRouter from './appeal-costs-application/appeal-costs-application.router.js';
 import ownershipCertificateRouter from './ownership-certificate/ownership-certificate.router.js';
+import procedurePreferenceRouter from './procedure-preference/procedure-preference.router.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -168,6 +169,12 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	ownershipCertificateRouter
+);
+router.use(
+	'/procedure-preference',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	procedurePreferenceRouter
 );
 
 router

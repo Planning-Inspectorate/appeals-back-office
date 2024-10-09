@@ -73,6 +73,12 @@ export const notificationBannerDefinitions = {
 	readyForDecision: {
 		pages: ['appealDetails']
 	},
+	readyForValidation: {
+		pages: ['appealDetails']
+	},
+	readyForLpaQuestionnaireReview: {
+		pages: ['appealDetails']
+	},
 	lpaQuestionnaireNotValid: {
 		pages: ['lpaQuestionnaire'],
 		persist: true
@@ -170,6 +176,10 @@ export const notificationBannerDefinitions = {
 	changePage: {
 		type: 'success',
 		pages: ['appealDetails', 'appellantCase', 'lpaQuestionnaire']
+	},
+	interestedPartyCommentsAwaitingReview: {
+		pages: ['appealDetails'],
+		persist: true
 	}
 };
 

@@ -5,6 +5,7 @@ import nock from 'nock';
 import supertest from 'supertest';
 import {
 	appealData,
+	appealDataFullPlanning,
 	linkedAppeals,
 	linkableAppealSummaryBackOffice,
 	linkableAppealSummaryHorizon,
@@ -17,7 +18,8 @@ import {
 	documentRedactionStatuses,
 	appealCostsDocumentItem,
 	linkedAppealsWithExternalLead,
-	fileUploadInfo
+	fileUploadInfo,
+	interestedPartyCommentsAwaitingReview
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { capitalize } from 'lodash-es';
@@ -966,6 +968,117 @@ describe('appeal-details', () => {
 					'Inspector correspondence documents uploaded</p>'
 				);
 			});
+
+			it('should render an important notification banner when the appeal has unreviewed IP comments', async () => {
+				nock('http://test/')
+					.get('/appeals/2')
+					.reply(200, {
+						...appealDataFullPlanning,
+						appealId: 2,
+						appealStatus: 'statements'
+					});
+				nock('http://test/')
+					.get('/appeals/2/reps/comments?pageNumber=1&pageSize=30&status=awaiting_review')
+					.reply(200, interestedPartyCommentsAwaitingReview);
+
+				const caseDetailsResponse = await request.get(`${baseUrl}/2`);
+
+				const notificationBannerElementHTML = parseHtml(caseDetailsResponse.text, {
+					rootElement: notificationBannerElement
+				}).innerHTML;
+
+				expect(notificationBannerElementHTML).toMatchSnapshot();
+
+				const unprettifiedElementHtml = parseHtml(caseDetailsResponse.text, {
+					rootElement: notificationBannerElement,
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(unprettifiedElementHtml).toContain('Important</h3>');
+				expect(unprettifiedElementHtml).toContain(
+					'<p class="govuk-notification-banner__heading">Review comments</p>'
+				);
+				expect(unprettifiedElementHtml).toContain(
+					'<p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/2/interested-party-comments" data-cy="banner-review-ip-comments">Review <span class="govuk-visually-hidden">interested party comments</span></a></p>'
+				);
+			});
+
+			it('should render a "Appeal ready for validation" important notification banner with a link to validate the appeal when the appeal status is "validation"', async () => {
+				const appealId = 2;
+
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, { ...appealData, appealId, appealStatus: 'validation' });
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.statusCode).toBe(200);
+				const notificationBannerElementHTML = parseHtml(response.text, {
+					rootElement: '.govuk-notification-banner'
+				}).innerHTML;
+				expect(notificationBannerElementHTML).toMatchSnapshot();
+				expect(notificationBannerElementHTML).toContain('Important</h3>');
+				expect(notificationBannerElementHTML).toContain('Appeal ready for validation</p>');
+				expect(notificationBannerElementHTML).toContain(
+					`href="/appeals-service/appeal-details/${appealId}/appellant-case"`
+				);
+				expect(notificationBannerElementHTML).toContain('data-cy="validate-appeal"');
+				expect(notificationBannerElementHTML).toContain(
+					'Validate <span class="govuk-visually-hidden">appeal</span></a>'
+				);
+			});
+
+			it('should render a "LPA questionnaire ready for review" important notification banner with a link to review the questionnaire when the appeal status is "lpa_questionnaire" and the appeal has an LPA questionnaire ID', async () => {
+				const appealId = 2;
+				const lpaQuestionnaireId = 123;
+
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealData,
+						appealId,
+						appealStatus: 'lpa_questionnaire',
+						lpaQuestionnaireId
+					});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.statusCode).toBe(200);
+				const notificationBannerElementHTML = parseHtml(response.text, {
+					rootElement: '.govuk-notification-banner'
+				}).innerHTML;
+				expect(notificationBannerElementHTML).toMatchSnapshot();
+				expect(notificationBannerElementHTML).toContain('Important</h3>');
+				expect(notificationBannerElementHTML).toContain('LPA questionnaire ready for review</p>');
+				expect(notificationBannerElementHTML).toContain(
+					`href="/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}"`
+				);
+				expect(notificationBannerElementHTML).toContain(
+					'data-cy="review-lpa-questionnaire-banner"'
+				);
+				expect(notificationBannerElementHTML).toContain(
+					'Review <span class="govuk-visually-hidden">LPA questionnaire</span></a>'
+				);
+			});
+
+			it('should not render a "LPA questionnaire ready for review" important notification banner when the appeal status is "lpa_questionnaire" but the appeal does not have an LPA questionnaire ID', async () => {
+				const appealId = 2;
+
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealData,
+						appealId,
+						appealStatus: 'lpa_questionnaire',
+						lpaQuestionnaireId: null
+					});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.statusCode).toBe(200);
+				const notificationBannerElement = response.text.includes('govuk-notification-banner');
+				expect(notificationBannerElement).toBe(false);
+			});
 		});
 
 		it('should render the received appeal details for a valid appealId with no linked/other appeals', async () => {
@@ -1660,7 +1773,7 @@ describe('appeal-details', () => {
 				expect(rowHtml).toMatchSnapshot();
 				expect(rowHtml).toContain('Decision</dt>');
 				expect(rowHtml).toContain(
-					'<a class="govuk-link" href="/appeals-service/appeal-details/2/issue-decision/decision"> Issue<span class="govuk-visually-hidden"> decision</span></a>'
+					'<a class="govuk-link" href="/appeals-service/appeal-details/2/issue-decision/decision" data-cy="issue-decision"> Issue<span class="govuk-visually-hidden"> Decision</span></a>'
 				);
 			});
 
@@ -1920,6 +2033,7 @@ describe('appeal-details', () => {
 							documentId: '448efec9-43d4-406a-92b7-1aecbdcd5e87',
 							folderId: 72,
 							letterDate: '2024-06-26T00:00:00.000Z',
+							documentName: 'test-document.txt',
 							outcome: 'allowed',
 							virusCheckStatus: 'scanned'
 						}
@@ -1934,7 +2048,7 @@ describe('appeal-details', () => {
 
 				expect(columnHtml).toMatchSnapshot();
 				expect(columnHtml).toContain(
-					'<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/documents/2/download/448efec9-43d4-406a-92b7-1aecbdcd5e87/preview/">View</a></li>'
+					'<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/documents/2/download/448efec9-43d4-406a-92b7-1aecbdcd5e87/test-document.txt" target="_blank">View</a></li>'
 				);
 			});
 		});

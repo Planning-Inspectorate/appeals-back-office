@@ -16,14 +16,14 @@ import { APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
 const validScanResult = APPEAL_VIRUS_CHECK_STATUS.SCANNED;
 
 /**
- * Download one document or redirects to its url if preview is active
+ * Download one document or redirects to its url if filename is provided
  *
- * @param {{apiClient: import('got').Got, params: {caseId: string, guid: string, preview?: string}, session: SessionWithAuth}} request
+ * @param {{apiClient: import('got').Got, params: {caseId: string, guid: string, filename?: string}, session: SessionWithAuth}} request
  * @param {Response} response
  * @returns {Promise<Response>}
  */
 export const getDocumentDownload = async ({ apiClient, params, session }, response) => {
-	const { guid: fileGuid, preview, caseId } = params;
+	const { guid: fileGuid, filename: requestedFilename, caseId } = params;
 
 	const fileInfo = await getFileInfo(apiClient, caseId.toString(), fileGuid);
 
@@ -51,7 +51,7 @@ export const getDocumentDownload = async ({ apiClient, params, session }, respon
 
 	// Document URIs are persisted with a prepended slash, but this slash is treated as part of the key by blob storage so we need to remove it
 	const documentKey = blobStoragePath.startsWith('/') ? blobStoragePath.slice(1) : blobStoragePath;
-	const fileName = `${documentKey}`.split(/\/+/).pop();
+	const extractedFilename = `${documentKey}`.split(/\/+/).pop();
 
 	const blobProperties = await blobStorageClient.getBlobProperties(
 		blobStorageContainer,
@@ -61,10 +61,10 @@ export const getDocumentDownload = async ({ apiClient, params, session }, respon
 		return response.status(404);
 	}
 
-	if (preview && blobProperties?.contentType) {
+	if (requestedFilename && blobProperties?.contentType) {
 		response.setHeader('content-type', blobProperties.contentType);
 	} else {
-		response.setHeader('content-disposition', `attachment; filename=${fileName}`);
+		response.setHeader('content-disposition', `attachment; filename=${extractedFilename}`);
 	}
 
 	const blobStream = await blobStorageClient.downloadStream(blobStorageContainer, documentKey);
@@ -79,14 +79,64 @@ export const getDocumentDownload = async ({ apiClient, params, session }, respon
 };
 
 /**
- * Download one document or redirects to its url if preview is active
+ * Download one uncommitted document
  *
- * @param {{apiClient: import('got').Got, params: {caseId: string, guid: string, preview?: string, version: string}, session: SessionWithAuth}} request
+ * @param {{ params: { caseReference: string, guid: string, filename: string, version: string | undefined }, session: SessionWithAuth }} request
+ * @param {Response} response
+ * @returns {Promise<Response>}
+ */
+export const getUncommittedDocumentDownload = async (
+	{ params: { caseReference, guid, filename: requestedFilename, version }, session },
+	response
+) => {
+	let blobStorageClient = undefined;
+	if (config.useBlobEmulator === true) {
+		blobStorageClient = new BlobStorageClient(new BlobServiceClient(config.blobEmulatorSasUrl));
+	} else {
+		const accessToken = await getActiveDirectoryAccessToken(session);
+		blobStorageClient = BlobStorageClient.fromUrlAndToken(config.blobStorageUrl, accessToken);
+	}
+
+	const documentKey = `appeal/${caseReference}/${guid}/v${version || 1}/${requestedFilename}`;
+	const extractedFilename = `${documentKey}`.split(/\/+/).pop();
+
+	const blobProperties = await blobStorageClient.getBlobProperties(
+		config.blobStorageDefaultContainer,
+		documentKey
+	);
+	if (!blobProperties) {
+		return response.status(404);
+	}
+
+	if (blobProperties?.contentType) {
+		response.setHeader('content-type', blobProperties.contentType);
+	} else {
+		response.setHeader('content-disposition', `attachment; filename=${extractedFilename}`);
+	}
+
+	const blobStream = await blobStorageClient.downloadStream(
+		config.blobStorageDefaultContainer,
+		documentKey
+	);
+
+	if (!blobStream?.readableStreamBody) {
+		throw new Error(`Document ${documentKey} missing stream body`);
+	}
+
+	blobStream.readableStreamBody?.pipe(response);
+
+	return response.status(200);
+};
+
+/**
+ * Download one document or redirects to its url if filename is provided
+ *
+ * @param {{apiClient: import('got').Got, params: {caseId: string, guid: string, filename?: string, version: string}, session: SessionWithAuth}} request
  * @param {Response} response
  * @returns {Promise<Response>}
  */
 export const getDocumentDownloadByVersion = async ({ apiClient, params, session }, response) => {
-	const { guid: fileGuid, preview, caseId, version } = params;
+	const { guid: fileGuid, filename: requestedFilename, caseId, version } = params;
 
 	const filesInfo = await getFileVersionsInfo(apiClient, caseId.toString(), fileGuid);
 
@@ -122,7 +172,7 @@ export const getDocumentDownloadByVersion = async ({ apiClient, params, session 
 
 	// Document URIs are persisted with a prepended slash, but this slash is treated as part of the key by blob storage so we need to remove it
 	const documentKey = blobStoragePath.startsWith('/') ? blobStoragePath.slice(1) : blobStoragePath;
-	const fileName = `${documentKey}`.split(/\/+/).pop();
+	const extractedFilename = `${documentKey}`.split(/\/+/).pop();
 
 	const blobProperties = await blobStorageClient.getBlobProperties(
 		blobStorageContainer,
@@ -132,10 +182,10 @@ export const getDocumentDownloadByVersion = async ({ apiClient, params, session 
 		return response.status(404);
 	}
 
-	if (preview && blobProperties?.contentType) {
+	if (requestedFilename && blobProperties?.contentType) {
 		response.setHeader('content-type', blobProperties.contentType);
 	} else {
-		response.setHeader('content-disposition', `attachment; filename=${fileName}`);
+		response.setHeader('content-disposition', `attachment; filename=${extractedFilename}`);
 	}
 
 	const blobStream = await blobStorageClient.downloadStream(blobStorageContainer, documentKey);

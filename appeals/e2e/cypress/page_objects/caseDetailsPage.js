@@ -1,4 +1,5 @@
 // @ts-nocheck
+import { Then } from '@badeball/cypress-cucumber-preprocessor';
 import { Page } from './basePage';
 
 export class CaseDetailsPage extends Page {
@@ -16,7 +17,14 @@ export class CaseDetailsPage extends Page {
 		changeSetVisitType: 'change-set-visit-type',
 		arrangeScheduleVisit: 'arrange-schedule-visit',
 		readyToStart: 'ready-to-start',
-		issueDetermination: 'issue-determination'
+		issueDetermination: 'issue-determination',
+		addLinkedAppeal: 'add-linked-appeal',
+		uploadFile: '#upload-file-1',
+		changeAppealType: 'change-appeal-type',
+		addAgreementToChangeDescriptionEvidence: 'add-agreement-to-change-description-evidence',
+		manageAgreementToChangeDescriptionEvidence: 'manage-agreement-to-change-description-evidence',
+		addCostsDecision: 'add-costs-decision',
+		changeSiteOwnership: 'change-site-ownership'
 	};
 
 	elements = {
@@ -31,7 +39,17 @@ export class CaseDetailsPage extends Page {
 		changeSetVisitType: () => cy.getByData(this._cyDataSelectors.changeSetVisitType),
 		arrangeScheduleVisit: () => cy.getByData(this._cyDataSelectors.arrangeScheduleVisit),
 		readyToStart: () => cy.getByData(this._cyDataSelectors.readyToStart),
-		issueDecision: () => cy.getByData(this._cyDataSelectors.issueDetermination)
+		issueDecision: () => cy.getByData(this._cyDataSelectors.issueDetermination),
+		addLinkedAppeal: () => cy.getByData(this._cyDataSelectors.addLinkedAppeal),
+		uploadFile: () => cy.get(this.selectors.uploadFile),
+		changeAppealType: () => cy.getByData(this._cyDataSelectors.changeAppealType),
+		addAgreementToChangeDescriptionEvidence: () =>
+			cy.getByData(this._cyDataSelectors.addAgreementToChangeDescriptionEvidence),
+		manageAgreementToChangeDescriptionEvidence: () =>
+			cy.getByData(this._cyDataSelectors.manageAgreementToChangeDescriptionEvidence),
+		addCostsDecision: () => cy.getByData(this._cyDataSelectors.addCostsDecision),
+		costDecisionStatus: () => cy.get('.govuk-table__cell appeal-costs-decision-status'),
+		changeSiteOwnership: () => cy.getByData(this._cyDataSelectors.changeSiteOwnership)
 	};
 	/********************************************************
 	 ************************ Actions ************************
@@ -93,15 +111,50 @@ export class CaseDetailsPage extends Page {
 		this.elements.issueDecision().click();
 	}
 
-	uploadOneDocument() {
-		cy.get('.pins-file-upload__dropzone').selectFile('cypress/fixtures/sample-doc.pdf', {
-			action: 'drag-drop'
-		});
+	clickAddLinkedAppeal() {
+		this.elements.addLinkedAppeal().click();
 	}
+
+	clickChangeAppealType() {
+		this.elements.changeAppealType().click();
+	}
+
+	clickAddCostsDecision() {
+		this.elements.addCostsDecision().click();
+	}
+
+	clickChangeSiteOwnership() {
+		this.elements.changeSiteOwnership().click();
+	}
+
+	uploadSampleDoc() {
+		cy.get('#upload-file-1').selectFile('cypress/fixtures/sample-file.doc', { force: true });
+	}
+
+	uploadSampleImg() {
+		cy.get('#upload-file-1').selectFile('cypress/fixtures/sample-img.jpeg', { force: true });
+	}
+
+	uploadSamplePdf() {
+		cy.get('#upload-file-1').selectFile('cypress/fixtures/test.pdf', { force: true });
+	}
+
 	// TODO Get this to use the vanilla 'clickButtonByText()' function
 	// This currently doesn't work, as there are multiple matches and some of not invisible
 	clickAddAnother() {
 		cy.get(this.selectors.button).filter(':visible').contains('Add another').click();
+	}
+
+	clickAddAgreementToChangeDescriptionEvidence() {
+		this.elements.addAgreementToChangeDescriptionEvidence().click();
+	}
+
+	clickManageAgreementToChangeDescriptionEvidence() {
+		this.elements.manageAgreementToChangeDescriptionEvidence().click();
+	}
+
+	confirmCostDecisionStatus(text) {
+		this.elements.costDecisionStatus().contains(text);
 	}
 
 	/***************************************************************
@@ -110,6 +163,16 @@ export class CaseDetailsPage extends Page {
 
 	verifyAnswerSummaryValue(answer) {
 		this.elements.answerCellAppeals(answer).then(($elem) => {
+			cy.wrap($elem)
+				.invoke('text')
+				.then((text) =>
+					expect(text.trim().toLocaleLowerCase()).to.include(answer.toLocaleLowerCase())
+				);
+		});
+	}
+
+	verifyTableCellTextCaseHistory(answer) {
+		this.basePageElements.tableCell(answer).then(($elem) => {
 			cy.wrap($elem)
 				.invoke('text')
 				.then((text) =>

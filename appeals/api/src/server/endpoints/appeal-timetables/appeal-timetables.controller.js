@@ -1,6 +1,5 @@
 import logger from '#utils/logger.js';
-import { format } from 'date-fns';
-import { DEFAULT_DATE_FORMAT_DATABASE, ERROR_FAILED_TO_SAVE_DATA } from '../constants.js';
+import { ERROR_FAILED_TO_SAVE_DATA } from '../constants.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 import { startCase, updateAppealTimetable } from './appeal-timetables.service.js';
 
@@ -18,7 +17,7 @@ const startAppeal = async (req, res) => {
 		let startDate = body.startDate;
 
 		if (!startDate) {
-			startDate = format(new Date(), DEFAULT_DATE_FORMAT_DATABASE);
+			startDate = new Date().toISOString();
 		}
 
 		const notifyClient = req.notifyClient;
