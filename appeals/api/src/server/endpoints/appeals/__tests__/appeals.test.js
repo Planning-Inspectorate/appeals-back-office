@@ -77,7 +77,8 @@ describe('appeals list routes', () => {
 							lpaQuestionnaireStatus: '',
 							dueDate: null,
 							isParentAppeal: false,
-							isChildAppeal: false
+							isChildAppeal: false,
+							commentCounts: {}
 						},
 						{
 							appealId: fullPlanningAppeal.id,
@@ -97,7 +98,8 @@ describe('appeals list routes', () => {
 							lpaQuestionnaireStatus: '',
 							dueDate: null,
 							isParentAppeal: false,
-							isChildAppeal: false
+							isChildAppeal: false,
+							commentCounts: {}
 						}
 					],
 					page: 1,
@@ -145,7 +147,8 @@ describe('appeals list routes', () => {
 							lpaQuestionnaireStatus: '',
 							dueDate: null,
 							isParentAppeal: false,
-							isChildAppeal: false
+							isChildAppeal: false,
+							commentCounts: {}
 						}
 					],
 					page: 2,
@@ -215,7 +218,8 @@ describe('appeals list routes', () => {
 							lpaQuestionnaireStatus: '',
 							dueDate: null,
 							isParentAppeal: false,
-							isChildAppeal: false
+							isChildAppeal: false,
+							commentCounts: {}
 						}
 					],
 					page: 1,
@@ -285,7 +289,8 @@ describe('appeals list routes', () => {
 							lpaQuestionnaireStatus: '',
 							dueDate: null,
 							isParentAppeal: false,
-							isChildAppeal: false
+							isChildAppeal: false,
+							commentCounts: {}
 						}
 					],
 					page: 1,
@@ -355,7 +360,8 @@ describe('appeals list routes', () => {
 							lpaQuestionnaireStatus: '',
 							dueDate: null,
 							isParentAppeal: false,
-							isChildAppeal: false
+							isChildAppeal: false,
+							commentCounts: {}
 						}
 					],
 					page: 1,
@@ -412,7 +418,8 @@ describe('appeals list routes', () => {
 							lpaQuestionnaireStatus: '',
 							dueDate: null,
 							isParentAppeal: false,
-							isChildAppeal: false
+							isChildAppeal: false,
+							commentCounts: {}
 						}
 					],
 					page: 1,
@@ -471,7 +478,8 @@ describe('appeals list routes', () => {
 							lpaQuestionnaireStatus: '',
 							dueDate: null,
 							isParentAppeal: false,
-							isChildAppeal: false
+							isChildAppeal: false,
+							commentCounts: {}
 						}
 					],
 					page: 1,
@@ -528,7 +536,8 @@ describe('appeals list routes', () => {
 							lpaQuestionnaireStatus: '',
 							dueDate: null,
 							isParentAppeal: false,
-							isChildAppeal: false
+							isChildAppeal: false,
+							commentCounts: {}
 						}
 					],
 					page: 1,

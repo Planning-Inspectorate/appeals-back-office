@@ -8,6 +8,7 @@ import { getAvScanStatus } from '#endpoints/documents/documents.service.js';
 import logger from '#utils/logger.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import appealListRepository from '#repositories/appeal-lists.repository.js';
+import { countAppealRepresentationsByStatus } from '#repositories/representation.repository.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import {
 	AUDIT_TRAIL_ASSIGNED_CASE_OFFICER,
@@ -59,9 +60,12 @@ const getAppeals = async (req, res) => {
 	const formattedAppeals = await Promise.all(
 		appeals.map(async (appeal) => {
 			const linkedAppeals = await appealRepository.getLinkedAppeals(appeal.reference);
+			const commentCounts = await countAppealRepresentationsByStatus(appeal.id, 'comment');
+
 			return formatAppeals(
 				appeal,
-				linkedAppeals.filter((linkedAppeal) => linkedAppeal.type === 'linked')
+				linkedAppeals.filter((linkedAppeal) => linkedAppeal.type === 'linked'),
+				commentCounts
 			);
 		})
 	);
@@ -101,9 +105,12 @@ const getMyAppeals = async (req, res) => {
 		const formattedAppeals = await Promise.all(
 			appeals.map(async (appeal) => {
 				const linkedAppeals = await appealRepository.getLinkedAppeals(appeal.reference);
+				const commentCounts = await countAppealRepresentationsByStatus(appeal.id, 'comment');
+
 				return formatMyAppeals(
 					appeal,
-					linkedAppeals.filter((linkedAppeal) => linkedAppeal.type === 'linked')
+					linkedAppeals.filter((linkedAppeal) => linkedAppeal.type === 'linked'),
+					commentCounts
 				);
 			})
 		);

@@ -6,6 +6,7 @@ import { NODE_ENV_PRODUCTION } from '#endpoints/constants.js';
 const mockValidateBlob = jest.fn().mockResolvedValue(true);
 const mockRepGetById = jest.fn().mockResolvedValue({});
 const mockRepUpdateById = jest.fn().mockResolvedValue({});
+const mockRepGroupBy = jest.fn().mockResolvedValue([]);
 const mockAppealRelationshipAdd = jest.fn().mockResolvedValue({});
 const mockAppealRelationshipRemove = jest.fn().mockResolvedValue({});
 const mockAppealRelationshipFindMany = jest.fn().mockResolvedValue({});
@@ -98,7 +99,8 @@ class MockPrismaClient {
 	get representation() {
 		return {
 			update: mockRepUpdateById,
-			findUnique: mockRepGetById
+			findUnique: mockRepGetById,
+			groupBy: mockRepGroupBy
 		};
 	}
 
