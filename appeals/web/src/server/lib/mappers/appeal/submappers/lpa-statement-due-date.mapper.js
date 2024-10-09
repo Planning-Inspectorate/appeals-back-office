@@ -9,7 +9,7 @@ export const mapLpaStatementDueDate = ({
 }) =>
 	textSummaryListItem({
 		id: 'lpa-statement-due-date',
-		text: 'LPA statements due',
+		text: 'LPA statement due',
 		// @ts-ignore
 		value: dateISOStringToDisplayDate(appealDetails.appealTimetable?.lpaStatementDueDate) || '',
 		link: `${currentRoute}/appellant-case/valid/date`,
