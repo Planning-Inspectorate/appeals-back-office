@@ -5,35 +5,40 @@ import { addDocumentsCheckAndConfirmPage } from '#appeals/appeal-documents/appea
  *
  * @param {import('../appeal-details.types.js').WebAppeal} appealDetails
  * @param {import('@pins/appeals.api').Appeals.FolderInfo} decisionDocumentFolder
- * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
+ * @param {import('#appeals/appeal-documents/appeal-documents.types').FileUploadInfoItem[]} uncommittedFiles
  * @param {import('@pins/appeals.api').Schema.DocumentRedactionStatus[]} redactionStatuses
  * @param {string} [documentId]
+ * @param {number} [documentVersion]
+ * @param {string} [documentFileName]
  * @returns {PageContent}
  */
 export function decisionCheckAndConfirmPage(
 	appealDetails,
 	decisionDocumentFolder,
-	session,
+	uncommittedFiles,
 	redactionStatuses,
-	documentId
+	documentId,
+	documentVersion,
+	documentFileName
 ) {
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);
 	const addDocumentDetailsPageUrl = `/appeals-service/appeal-details/${appealDetails.appealId}/costs/decision/add-document-details/${decisionDocumentFolder.folderId}`;
 
 	/** @type {PageContent} */
-	const pageContent = addDocumentsCheckAndConfirmPage(
-		addDocumentDetailsPageUrl,
-		`/appeals-service/appeal-details/${appealDetails.appealId}/costs/decision/upload-documents/${decisionDocumentFolder.folderId}`,
-		addDocumentDetailsPageUrl,
-		addDocumentDetailsPageUrl,
-		appealDetails.appealReference,
-		session.fileUploadInfo,
+	const pageContent = addDocumentsCheckAndConfirmPage({
+		backLinkUrl: addDocumentDetailsPageUrl,
+		changeFileLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/costs/decision/upload-documents/${decisionDocumentFolder.folderId}`,
+		changeDateLinkUrl: addDocumentDetailsPageUrl,
+		changeRedactionStatusLinkUrl: addDocumentDetailsPageUrl,
+		appealReference: appealDetails.appealReference,
+		uncommittedFiles,
 		redactionStatuses,
-		undefined,
-		undefined,
-		`Check your answers - ${shortAppealReference}`,
-		documentId ? 'Updated costs decision' : 'Costs decision'
-	);
+		titleTextOverride: `Check your answers - ${shortAppealReference}`,
+		summaryListNameLabelOverride: documentId ? 'Updated costs decision' : 'Costs decision',
+		summaryListDateLabelOverride: 'Decision date',
+		documentVersion,
+		documentFileName
+	});
 
 	pageContent.pageComponents?.push(
 		{

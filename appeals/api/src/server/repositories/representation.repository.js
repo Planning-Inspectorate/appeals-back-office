@@ -11,11 +11,19 @@ export const getById = (id) => {
 		where: { id },
 		include: {
 			representative: true,
-			represented: true,
+			represented: {
+				include: {
+					address: true
+				}
+			},
 			lpa: true,
 			attachments: {
 				include: {
-					documentVersion: true
+					documentVersion: {
+						include: {
+							document: true
+						}
+					}
 				}
 			}
 		}
@@ -61,34 +69,44 @@ export const getFinalCommentsByAppealId = (appealId) => {
 };
 
 /**
- *
  * @param {number} appealId
  * @param {number} pageNumber
  * @param {number} pageSize
  * @param {string|undefined} status
- * @returns {Promise<import('@pins/appeals.api').Schema.Representation[]>}
+ * @returns {Promise<{ itemCount: number, comments: import('@pins/appeals.api').Schema.Representation[] }>}
  */
-export const getThirdPartyCommentsByAppealId = (
+export const getThirdPartyCommentsByAppealId = async (
 	appealId,
 	pageNumber = 0,
 	pageSize = 30,
 	status
 ) => {
-	return databaseConnector.representation.findMany({
-		where: {
-			appealId,
-			representationType: APPEAL_REPRESENTATION_TYPE.COMMENT,
-			...(status && { status })
-		},
-		include: {
-			representative: true,
-			represented: true,
-			lpa: true
-		},
-		orderBy: { dateCreated: 'desc' },
-		skip: pageNumber * pageSize,
-		take: pageSize
-	});
+	const whereClause = {
+		appealId,
+		representationType: APPEAL_REPRESENTATION_TYPE.COMMENT,
+		...(status && { status })
+	};
+
+	const transaction = await databaseConnector.$transaction([
+		databaseConnector.representation.count({
+			where: whereClause
+		}),
+		databaseConnector.representation.findMany({
+			where: whereClause,
+			include: {
+				representative: true,
+				represented: true,
+				lpa: true
+			},
+			orderBy: { dateCreated: 'desc' },
+			skip: pageNumber * pageSize,
+			take: pageSize
+		})
+	]);
+
+	const [itemCount, comments] = transaction;
+
+	return { itemCount, comments };
 };
 
 /**

@@ -415,7 +415,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         <tbody class="govuk-table__body">
             <tr class="govuk-table__row">
                 <td class="govuk-table__cell">
-                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/1/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/preview/">test-pdf-documentFolderInfo.pdf</a>
+                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/1/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/test-pdf-documentFolderInfo.pdf"
+                        target="_blank">test-pdf-documentFolderInfo.pdf</a>
                     </div>
                     <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
                         <dd>PDF, 129 KB</dd>
@@ -429,7 +430,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
             </tr>
             <tr class="govuk-table__row">
                 <td class="govuk-table__cell">
-                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/1/download/47d8f073-c837-4f07-9161-c1a5626eba56/preview/">sample-20s-documentFolderInfo.mp4</a>
+                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/1/download/47d8f073-c837-4f07-9161-c1a5626eba56/sample-20s-documentFolderInfo.mp4"
+                        target="_blank">sample-20s-documentFolderInfo.mp4</a>
                     </div>
                     <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
                         <dd>MP4, 11.8 MB</dd>
@@ -465,7 +467,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         <tbody class="govuk-table__body">
             <tr class="govuk-table__row">
                 <td class="govuk-table__cell">
-                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/1/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/preview/">test-pdf-documentFolderInfo.pdf</a>
+                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/1/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/test-pdf-documentFolderInfo.pdf"
+                        target="_blank">test-pdf-documentFolderInfo.pdf</a>
                     </div>
                     <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
                         <dd>PDF, 129 KB</dd>
@@ -479,7 +482,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
             </tr>
             <tr class="govuk-table__row">
                 <td class="govuk-table__cell">
-                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/1/download/47d8f073-c837-4f07-9161-c1a5626eba56/preview/">sample-20s-documentFolderInfo.mp4</a>
+                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/1/download/47d8f073-c837-4f07-9161-c1a5626eba56/sample-20s-documentFolderInfo.mp4"
+                        target="_blank">sample-20s-documentFolderInfo.mp4</a>
                     </div>
                     <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
                         <dd>MP4, 11.8 MB</dd>
@@ -515,7 +519,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         <tbody class="govuk-table__body">
             <tr class="govuk-table__row">
                 <td class="govuk-table__cell">
-                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/1/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/preview/">test-pdf-documentFolderInfo.pdf</a>
+                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/1/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/test-pdf-documentFolderInfo.pdf"
+                        target="_blank">test-pdf-documentFolderInfo.pdf</a>
                     </div>
                     <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
                         <dd>PDF, 129 KB</dd>
@@ -529,7 +534,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
             </tr>
             <tr class="govuk-table__row">
                 <td class="govuk-table__cell">
-                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/1/download/47d8f073-c837-4f07-9161-c1a5626eba56/preview/">sample-20s-documentFolderInfo.mp4</a>
+                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/1/download/47d8f073-c837-4f07-9161-c1a5626eba56/sample-20s-documentFolderInfo.mp4"
+                        target="_blank">sample-20s-documentFolderInfo.mp4</a>
                     </div>
                     <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
                         <dd>MP4, 11.8 MB</dd>
@@ -565,7 +571,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         <tbody class="govuk-table__body">
             <tr class="govuk-table__row">
                 <td class="govuk-table__cell">
-                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/1/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/preview/">test-pdf-documentFolderInfo.pdf</a>
+                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/1/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/test-pdf-documentFolderInfo.pdf"
+                        target="_blank">test-pdf-documentFolderInfo.pdf</a>
                     </div>
                     <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
                         <dd>PDF, 129 KB</dd>
@@ -579,7 +586,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
             </tr>
             <tr class="govuk-table__row">
                 <td class="govuk-table__cell">
-                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/1/download/47d8f073-c837-4f07-9161-c1a5626eba56/preview/">sample-20s-documentFolderInfo.mp4</a>
+                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/1/download/47d8f073-c837-4f07-9161-c1a5626eba56/sample-20s-documentFolderInfo.mp4"
+                        target="_blank">sample-20s-documentFolderInfo.mp4</a>
                     </div>
                     <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
                         <dd>MP4, 11.8 MB</dd>
@@ -615,7 +623,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         <tbody class="govuk-table__body">
             <tr class="govuk-table__row">
                 <td class="govuk-table__cell">
-                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/1/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/preview/">test-pdf-documentFolderInfo.pdf</a>
+                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/1/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/test-pdf-documentFolderInfo.pdf"
+                        target="_blank">test-pdf-documentFolderInfo.pdf</a>
                     </div>
                     <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
                         <dd>PDF, 129 KB</dd>
@@ -629,7 +638,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
             </tr>
             <tr class="govuk-table__row">
                 <td class="govuk-table__cell">
-                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/1/download/47d8f073-c837-4f07-9161-c1a5626eba56/preview/">sample-20s-documentFolderInfo.mp4</a>
+                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/1/download/47d8f073-c837-4f07-9161-c1a5626eba56/sample-20s-documentFolderInfo.mp4"
+                        target="_blank">sample-20s-documentFolderInfo.mp4</a>
                     </div>
                     <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
                         <dd>MP4, 11.8 MB</dd>
@@ -665,7 +675,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         <tbody class="govuk-table__body">
             <tr class="govuk-table__row">
                 <td class="govuk-table__cell">
-                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/1/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/preview/">test-pdf-documentFolderInfo.pdf</a>
+                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/1/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/test-pdf-documentFolderInfo.pdf"
+                        target="_blank">test-pdf-documentFolderInfo.pdf</a>
                     </div>
                     <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
                         <dd>PDF, 129 KB</dd>
@@ -679,7 +690,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
             </tr>
             <tr class="govuk-table__row">
                 <td class="govuk-table__cell">
-                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/1/download/47d8f073-c837-4f07-9161-c1a5626eba56/preview/">sample-20s-documentFolderInfo.mp4</a>
+                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/1/download/47d8f073-c837-4f07-9161-c1a5626eba56/sample-20s-documentFolderInfo.mp4"
+                        target="_blank">sample-20s-documentFolderInfo.mp4</a>
                     </div>
                     <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
                         <dd>MP4, 11.8 MB</dd>
@@ -882,7 +894,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage decision document</span>
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
             <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
@@ -986,7 +998,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage decision document</span>
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
             <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
@@ -1090,7 +1102,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage decision document</span>
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
             <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
@@ -1194,7 +1206,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage decision document</span>
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
             <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
@@ -1298,7 +1310,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage decision document</span>
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
             <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
@@ -1402,7 +1414,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage decision document</span>
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
             <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
@@ -1504,7 +1516,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage decision document</span>
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
             <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
@@ -1595,7 +1607,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage decision document</span>
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
             <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
@@ -1686,7 +1698,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage decision document</span>
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
             <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
@@ -1777,7 +1789,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage decision document</span>
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
             <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
@@ -1868,7 +1880,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage decision document</span>
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
             <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
@@ -1959,7 +1971,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage decision document</span>
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
             <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
@@ -2037,7 +2049,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "scanned" (appellant application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage decision document</span>
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
             <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
@@ -2046,7 +2058,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Name</dt>
                     <dd class="govuk-summary-list__value">
-                        <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/preview/">test-pdf-documentFileVersionsInfo.pdf</a>
+                        <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/test-pdf-documentFileVersionsInfo.pdf"
+                            target="_blank">test-pdf-documentFileVersionsInfo.pdf</a>
                         </div>
                     </dd>
                 </div>
@@ -2099,7 +2112,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                             <tr class="govuk-table__row">
                                 <td class="govuk-table__cell">1</td>
                                 <td class="govuk-table__cell">
-                                    <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/preview/">test-pdf-documentFileVersionsInfo.pdf</a>
+                                    <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/test-pdf-documentFileVersionsInfo.pdf"
+                                        target="_blank">test-pdf-documentFileVersionsInfo.pdf</a>
                                     </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">CURRENT VERSION</strong>
                                 </td>
                                 <td class="govuk-table__cell">
@@ -2122,7 +2136,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "scanned" (appellant correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage decision document</span>
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
             <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
@@ -2131,7 +2145,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Name</dt>
                     <dd class="govuk-summary-list__value">
-                        <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/preview/">test-pdf-documentFileVersionsInfo.pdf</a>
+                        <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/test-pdf-documentFileVersionsInfo.pdf"
+                            target="_blank">test-pdf-documentFileVersionsInfo.pdf</a>
                         </div>
                     </dd>
                 </div>
@@ -2184,7 +2199,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                             <tr class="govuk-table__row">
                                 <td class="govuk-table__cell">1</td>
                                 <td class="govuk-table__cell">
-                                    <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/preview/">test-pdf-documentFileVersionsInfo.pdf</a>
+                                    <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/test-pdf-documentFileVersionsInfo.pdf"
+                                        target="_blank">test-pdf-documentFileVersionsInfo.pdf</a>
                                     </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">CURRENT VERSION</strong>
                                 </td>
                                 <td class="govuk-table__cell">
@@ -2207,7 +2223,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "scanned" (appellant withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage decision document</span>
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
             <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
@@ -2216,7 +2232,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Name</dt>
                     <dd class="govuk-summary-list__value">
-                        <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/preview/">test-pdf-documentFileVersionsInfo.pdf</a>
+                        <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/test-pdf-documentFileVersionsInfo.pdf"
+                            target="_blank">test-pdf-documentFileVersionsInfo.pdf</a>
                         </div>
                     </dd>
                 </div>
@@ -2269,7 +2286,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                             <tr class="govuk-table__row">
                                 <td class="govuk-table__cell">1</td>
                                 <td class="govuk-table__cell">
-                                    <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/preview/">test-pdf-documentFileVersionsInfo.pdf</a>
+                                    <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/test-pdf-documentFileVersionsInfo.pdf"
+                                        target="_blank">test-pdf-documentFileVersionsInfo.pdf</a>
                                     </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">CURRENT VERSION</strong>
                                 </td>
                                 <td class="govuk-table__cell">
@@ -2292,7 +2310,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "scanned" (lpa application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage decision document</span>
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
             <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
@@ -2301,7 +2319,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Name</dt>
                     <dd class="govuk-summary-list__value">
-                        <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/preview/">test-pdf-documentFileVersionsInfo.pdf</a>
+                        <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/test-pdf-documentFileVersionsInfo.pdf"
+                            target="_blank">test-pdf-documentFileVersionsInfo.pdf</a>
                         </div>
                     </dd>
                 </div>
@@ -2354,7 +2373,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                             <tr class="govuk-table__row">
                                 <td class="govuk-table__cell">1</td>
                                 <td class="govuk-table__cell">
-                                    <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/preview/">test-pdf-documentFileVersionsInfo.pdf</a>
+                                    <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/test-pdf-documentFileVersionsInfo.pdf"
+                                        target="_blank">test-pdf-documentFileVersionsInfo.pdf</a>
                                     </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">CURRENT VERSION</strong>
                                 </td>
                                 <td class="govuk-table__cell">
@@ -2377,7 +2397,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "scanned" (lpa correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage decision document</span>
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
             <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
@@ -2386,7 +2406,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Name</dt>
                     <dd class="govuk-summary-list__value">
-                        <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/preview/">test-pdf-documentFileVersionsInfo.pdf</a>
+                        <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/test-pdf-documentFileVersionsInfo.pdf"
+                            target="_blank">test-pdf-documentFileVersionsInfo.pdf</a>
                         </div>
                     </dd>
                 </div>
@@ -2439,7 +2460,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                             <tr class="govuk-table__row">
                                 <td class="govuk-table__cell">1</td>
                                 <td class="govuk-table__cell">
-                                    <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/preview/">test-pdf-documentFileVersionsInfo.pdf</a>
+                                    <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/test-pdf-documentFileVersionsInfo.pdf"
+                                        target="_blank">test-pdf-documentFileVersionsInfo.pdf</a>
                                     </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">CURRENT VERSION</strong>
                                 </td>
                                 <td class="govuk-table__cell">
@@ -2462,7 +2484,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "scanned" (lpa withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage decision document</span>
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
             <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
@@ -2471,7 +2493,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Name</dt>
                     <dd class="govuk-summary-list__value">
-                        <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/preview/">test-pdf-documentFileVersionsInfo.pdf</a>
+                        <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/test-pdf-documentFileVersionsInfo.pdf"
+                            target="_blank">test-pdf-documentFileVersionsInfo.pdf</a>
                         </div>
                     </dd>
                 </div>
@@ -2524,7 +2547,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                             <tr class="govuk-table__row">
                                 <td class="govuk-table__cell">1</td>
                                 <td class="govuk-table__cell">
-                                    <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/preview/">test-pdf-documentFileVersionsInfo.pdf</a>
+                                    <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/test-pdf-documentFileVersionsInfo.pdf"
+                                        target="_blank">test-pdf-documentFileVersionsInfo.pdf</a>
                                     </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">CURRENT VERSION</strong>
                                 </td>
                                 <td class="govuk-table__cell">
@@ -2560,7 +2584,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage decision document</span>
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
             <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
@@ -2651,7 +2675,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage decision document</span>
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
             <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
@@ -2742,7 +2766,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage decision document</span>
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
             <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
@@ -2833,7 +2857,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage decision document</span>
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
             <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
@@ -2924,7 +2948,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage decision document</span>
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
             <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
@@ -3015,7 +3039,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage decision document</span>
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
             <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
@@ -3602,7 +3626,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     data-document-type="appellantCostsApplication" data-document-stage="costs"
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
     data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
-        <div class="top-errors-hook"></div>
+        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
         <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
         data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0Il0=">
             <div class="pins-file-upload__container">
@@ -3639,7 +3663,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     data-document-type="appellantCostsCorrespondence" data-document-stage="costs"
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
     data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
-        <div class="top-errors-hook"></div>
+        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
         <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
         data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0Il0=">
             <div class="pins-file-upload__container">
@@ -3676,7 +3700,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     data-document-type="appellantCostsWithdrawal" data-document-stage="costs"
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
     data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
-        <div class="top-errors-hook"></div>
+        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
         <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
         data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0Il0=">
             <div class="pins-file-upload__container">
@@ -3712,7 +3736,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="4"
     data-document-type="lpaCostsApplication" data-document-stage="costs" data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1"
     data-blob-storage-container="document-service-uploads" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
-        <div class="top-errors-hook"></div>
+        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
         <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
         data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0Il0=">
             <div class="pins-file-upload__container">
@@ -3749,7 +3773,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     data-document-type="lpaCostsCorrespondence" data-document-stage="costs"
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
     data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
-        <div class="top-errors-hook"></div>
+        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
         <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
         data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0Il0=">
             <div class="pins-file-upload__container">
@@ -3785,7 +3809,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="5"
     data-document-type="lpaCostsWithdrawal" data-document-stage="costs" data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1"
     data-blob-storage-container="document-service-uploads" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
-        <div class="top-errors-hook"></div>
+        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
         <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
         data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0Il0=">
             <div class="pins-file-upload__container">
@@ -3823,7 +3847,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
     data-document-id="1" data-document-original-file-name="test-pdf-documentFileVersionsInfo.pdf"
     data-document-version="1" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
-        <div class="top-errors-hook"></div>
+        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
         <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
         data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0Il0=">
             <div class="pins-file-upload__container">
@@ -3861,7 +3885,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
     data-document-id="1" data-document-original-file-name="test-pdf-documentFileVersionsInfo.pdf"
     data-document-version="1" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
-        <div class="top-errors-hook"></div>
+        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
         <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
         data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0Il0=">
             <div class="pins-file-upload__container">
@@ -3899,7 +3923,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
     data-document-id="1" data-document-original-file-name="test-pdf-documentFileVersionsInfo.pdf"
     data-document-version="1" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
-        <div class="top-errors-hook"></div>
+        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
         <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
         data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0Il0=">
             <div class="pins-file-upload__container">
@@ -3937,7 +3961,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
     data-document-id="1" data-document-original-file-name="test-pdf-documentFileVersionsInfo.pdf"
     data-document-version="1" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
-        <div class="top-errors-hook"></div>
+        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
         <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
         data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0Il0=">
             <div class="pins-file-upload__container">
@@ -3975,7 +3999,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
     data-document-id="1" data-document-original-file-name="test-pdf-documentFileVersionsInfo.pdf"
     data-document-version="1" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
-        <div class="top-errors-hook"></div>
+        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
         <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
         data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0Il0=">
             <div class="pins-file-upload__container">
@@ -4013,7 +4037,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
     data-document-id="1" data-document-original-file-name="test-pdf-documentFileVersionsInfo.pdf"
     data-document-version="1" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
-        <div class="top-errors-hook"></div>
+        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
         <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
         data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0Il0=">
             <div class="pins-file-upload__container">
@@ -4904,6 +4928,34 @@ exports[`costs decision GET /costs/decision/check-and-confirm/:folderId should r
 </main>"
 `;
 
+exports[`costs decision GET /costs/decision/check-and-confirm/:folderId/:documentId should render a 404 error page if the documentId is not valid 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">Page not found</h1>
+            <p class="govuk-body">If you typed the web address, check it is correct.</p>
+            <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
+            <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
+                the problem persists</p>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`costs decision GET /costs/decision/check-and-confirm/:folderId/:documentId should render a 404 error page if the folderId is not valid 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">Page not found</h1>
+            <p class="govuk-body">If you typed the web address, check it is correct.</p>
+            <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
+            <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
+                the problem persists</p>
+        </div>
+    </div>
+</main>"
+`;
+
 exports[`costs decision GET /costs/decision/manage-documents/:folderId should render a 404 error page if the folderId is not valid 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
@@ -4929,7 +4981,7 @@ exports[`costs decision GET /costs/decision/manage-documents/:folderId should re
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
                 <th scope="col" class="govuk-table__header">Name</th>
-                <th scope="col" class="govuk-table__header">Date received</th>
+                <th scope="col" class="govuk-table__header">Decision date</th>
                 <th scope="col" class="govuk-table__header">Redaction status</th>
                 <th scope="col" class="govuk-table__header">Actions</th>
             </tr>
@@ -4937,7 +4989,8 @@ exports[`costs decision GET /costs/decision/manage-documents/:folderId should re
         <tbody class="govuk-table__body">
             <tr class="govuk-table__row">
                 <td class="govuk-table__cell">
-                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/1/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/preview/">test-pdf-documentFolderInfo.pdf</a>
+                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/1/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/test-pdf-documentFolderInfo.pdf"
+                        target="_blank">test-pdf-documentFolderInfo.pdf</a>
                     </div>
                     <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
                         <dd>PDF, 129 KB</dd>
@@ -4951,7 +5004,8 @@ exports[`costs decision GET /costs/decision/manage-documents/:folderId should re
             </tr>
             <tr class="govuk-table__row">
                 <td class="govuk-table__cell">
-                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/1/download/47d8f073-c837-4f07-9161-c1a5626eba56/preview/">sample-20s-documentFolderInfo.mp4</a>
+                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/1/download/47d8f073-c837-4f07-9161-c1a5626eba56/sample-20s-documentFolderInfo.mp4"
+                        target="_blank">sample-20s-documentFolderInfo.mp4</a>
                     </div>
                     <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
                         <dd>MP4, 11.8 MB</dd>
@@ -5032,7 +5086,7 @@ exports[`costs decision GET /costs/decision/manage-documents/:folderId/:document
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Version</dt>
                     <dd class="govuk-summary-list__value">1</dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date received</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision date</dt>
                     <dd class="govuk-summary-list__value">1 February 2023</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/decision/change-document-details/7/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf date received</span></a>
                     </dd>
@@ -5134,7 +5188,7 @@ exports[`costs decision GET /costs/decision/manage-documents/:folderId/:document
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Version</dt>
                     <dd class="govuk-summary-list__value">1</dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date received</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision date</dt>
                     <dd class="govuk-summary-list__value">1 February 2023</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/decision/change-document-details/7/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf date received</span></a>
                     </dd>
@@ -5203,14 +5257,15 @@ exports[`costs decision GET /costs/decision/manage-documents/:folderId/:document
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Name</dt>
                     <dd class="govuk-summary-list__value">
-                        <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/preview/">test-pdf-documentFileVersionsInfo.pdf</a>
+                        <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/test-pdf-documentFileVersionsInfo.pdf"
+                            target="_blank">test-pdf-documentFileVersionsInfo.pdf</a>
                         </div>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Version</dt>
                     <dd class="govuk-summary-list__value">1</dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date received</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision date</dt>
                     <dd class="govuk-summary-list__value">1 February 2023</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/decision/change-document-details/7/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf date received</span></a>
                     </dd>
@@ -5256,7 +5311,8 @@ exports[`costs decision GET /costs/decision/manage-documents/:folderId/:document
                             <tr class="govuk-table__row">
                                 <td class="govuk-table__cell">1</td>
                                 <td class="govuk-table__cell">
-                                    <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/preview/">test-pdf-documentFileVersionsInfo.pdf</a>
+                                    <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/test-pdf-documentFileVersionsInfo.pdf"
+                                        target="_blank">test-pdf-documentFileVersionsInfo.pdf</a>
                                     </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">CURRENT VERSION</strong>
                                 </td>
                                 <td class="govuk-table__cell">
@@ -5310,7 +5366,7 @@ exports[`costs decision GET /costs/decision/manage-documents/:folderId/:document
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Version</dt>
                     <dd class="govuk-summary-list__value">1</dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date received</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision date</dt>
                     <dd class="govuk-summary-list__value">1 February 2023</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/decision/change-document-details/7/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf date received</span></a>
                     </dd>
@@ -5458,7 +5514,7 @@ exports[`costs decision GET /costs/decision/upload-documents/:folderId should re
     data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="7"
     data-document-type="costsDecisionLetter" data-document-stage="costs" data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1"
     data-blob-storage-container="document-service-uploads" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
-        <div class="top-errors-hook"></div>
+        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
         <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
         data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0Il0=">
             <div class="pins-file-upload__container">
@@ -5496,7 +5552,7 @@ exports[`costs decision GET /costs/decision/upload-documents/:folderId/:document
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
     data-document-id="1" data-document-original-file-name="test-pdf-documentFileVersionsInfo.pdf"
     data-document-version="1" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
-        <div class="top-errors-hook"></div>
+        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
         <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
         data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0Il0=">
             <div class="pins-file-upload__container">
@@ -5526,6 +5582,20 @@ exports[`costs decision GET /costs/decision/upload-documents/:folderId/:document
 `;
 
 exports[`costs decision POST /costs/decision/check-and-confirm/:folderId should render a 404 error page if the folderId is not valid 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">Page not found</h1>
+            <p class="govuk-body">If you typed the web address, check it is correct.</p>
+            <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
+            <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
+                the problem persists</p>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`costs decision POST /costs/decision/check-and-confirm/:folderId/:documentId should render a 404 error page if the folderId is not valid 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">

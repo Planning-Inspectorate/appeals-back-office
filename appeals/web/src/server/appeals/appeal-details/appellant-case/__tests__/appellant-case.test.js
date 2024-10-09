@@ -27,7 +27,7 @@ import {
 import { cloneDeep } from 'lodash-es';
 import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
 import usersService from '#appeals/appeal-users/users-service.js';
-import { dateToDisplayDate } from '#lib/dates.js';
+import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
@@ -135,6 +135,10 @@ describe('appellant-case', () => {
 				'Ownership certificate or land declaration</dt>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('New supporting documents</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('Procedure preference</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('Reason for preference</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('Expected length of procedure</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('Expected number of witnesses</dt>');
 		});
 
 		const text300Characters =
@@ -167,7 +171,7 @@ describe('appellant-case', () => {
 			});
 
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<div class="pins-show-more" data-label="Original development description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillu</div>'
+				'<div class="pins-show-more" data-label="Original Development description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillu</div>'
 			);
 		});
 
@@ -2399,8 +2403,8 @@ describe('appellant-case', () => {
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}${validOutcomePagePath}${validDatePagePath}`)
 				.send({
-					'valid-date-day': '20',
-					'valid-date-month': '5',
+					'valid-date-day': '1',
+					'valid-date-month': '1',
 					'valid-date-year': '2023'
 				});
 
@@ -4250,13 +4254,15 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Check your answers</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('Name</dt>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-staged/1/test-document.txt" target="_blank">test-document.txt</a></dd>'
+				'<a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/test-document.txt" target="_blank">test-document.txt</a></dd>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				`href="/appeals-service/appeal-details/1/appellant-case/add-documents/${documentFolderInfo.folderId}"> Change</a>`
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Date received</dt>');
-			expect(unprettifiedElement.innerHTML).toContain(`${dateToDisplayDate(new Date())}</dd>`);
+			expect(unprettifiedElement.innerHTML).toContain(
+				`${dateISOStringToDisplayDate(new Date().toISOString())}</dd>`
+			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				`href="/appeals-service/appeal-details/1/appellant-case/add-document-details/${documentFolderInfo.folderId}"> Change</a>`
 			);
@@ -4379,13 +4385,15 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Check your answers</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('Name</dt>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-staged/1/ph0-documentFileInfo.jpeg/2" target="_blank">test-document.txt</a></dd>'
+				'<a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/ph0-documentFileInfo.jpeg/2" target="_blank">test-document.txt</a></dd>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				`href="/appeals-service/appeal-details/1/appellant-case/add-documents/${documentFolderInfo.folderId}/1"> Change</a></dd>`
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Date received</dt>');
-			expect(unprettifiedElement.innerHTML).toContain(`${dateToDisplayDate(new Date())}</dd>`);
+			expect(unprettifiedElement.innerHTML).toContain(
+				`${dateISOStringToDisplayDate(new Date().toISOString())}</dd>`
+			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				`href="/appeals-service/appeal-details/1/appellant-case/add-document-details/${documentFolderInfo.folderId}/1"> Change</a></dd>`
 			);

@@ -25,7 +25,6 @@ import {
 } from '#tests/appeals/mocks.js';
 import { baseExpectedAppellantCaseResponse } from '#tests/appeals/expectation.js';
 
-import joinDateAndTime from '#utils/join-date-and-time.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 
 const { databaseConnector } = await import('../../../utils/database-connector.js');
@@ -296,7 +295,7 @@ describe('appellant cases routes', () => {
 				databaseConnector.appellantCaseIncompleteReasonsSelected.createMany.mockResolvedValue(true);
 
 				const body = {
-					appealDueDate: '2099-07-14',
+					appealDueDate: '2099-07-14T00:00:00.000Z',
 					incompleteReasons: [{ id: 1 }, { id: 2 }],
 					validationOutcome: 'Incomplete'
 				};
@@ -314,11 +313,10 @@ describe('appellant cases routes', () => {
 					}
 				});
 
-				const formattedAppealDueDate = joinDateAndTime(body.appealDueDate);
 				expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
 					where: { id },
 					data: {
-						caseExtensionDate: formattedAppealDueDate,
+						caseExtensionDate: body.appealDueDate,
 						caseUpdatedDate: expect.any(Date)
 					}
 				});
@@ -363,7 +361,7 @@ describe('appellant cases routes', () => {
 				databaseConnector.appellantCaseIncompleteReasonsSelected.createMany.mockResolvedValue(true);
 
 				const body = {
-					appealDueDate: '2099-07-14',
+					appealDueDate: '2099-07-14T00:00:00.000Z',
 					incompleteReasons: [
 						{
 							id: 1,
@@ -447,7 +445,7 @@ describe('appellant cases routes', () => {
 				});
 
 				const body = {
-					appealDueDate: '2099-07-14',
+					appealDueDate: '2099-07-14T00:00:00.000Z',
 					incompleteReasons: [
 						{
 							id: 1,
@@ -540,7 +538,7 @@ describe('appellant cases routes', () => {
 
 				const eightItemArray = new Array(LENGTH_8).fill('A');
 				const body = {
-					appealDueDate: '2099-07-14',
+					appealDueDate: '2099-07-14T00:00:00.000Z',
 					incompleteReasons: [
 						{
 							id: 1,
@@ -606,7 +604,7 @@ describe('appellant cases routes', () => {
 				);
 
 				const body = {
-					appealDueDate: '2099-07-14',
+					appealDueDate: '2099-07-14T00:00:00.000Z',
 					incompleteReasons: [{ id: 1 }, { id: 2 }],
 					validationOutcome: 'Incomplete'
 				};
@@ -1059,7 +1057,7 @@ describe('appellant cases routes', () => {
 				const patchBody = {
 					appellantProcedurePreference: 'inquiry',
 					appellantProcedurePreferenceDetails: 'Need for a detailed examination.',
-					appellantProcedurePreferenceDuration: 11,
+					appellantProcedurePreferenceDuration: 100,
 					inquiryHowManyWitnesses: 1
 				};
 
@@ -1071,7 +1069,7 @@ describe('appellant cases routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body.errors).toHaveProperty(
 					'appellantProcedurePreferenceDuration',
-					'must be a number between 0 and 9'
+					'must be a number between 0 and 99'
 				);
 			});
 			test('returns an error if inquiryHowManyWitnesses is not a number', async () => {
@@ -1098,7 +1096,7 @@ describe('appellant cases routes', () => {
 					appellantProcedurePreference: 'inquiry',
 					appellantProcedurePreferenceDetails: 'Need for a detailed examination.',
 					appellantProcedurePreferenceDuration: 2,
-					inquiryHowManyWitnesses: 11
+					inquiryHowManyWitnesses: 100
 				};
 
 				const response = await request
@@ -1109,7 +1107,7 @@ describe('appellant cases routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body.errors).toHaveProperty(
 					'inquiryHowManyWitnesses',
-					'must be a number between 0 and 9'
+					'must be a number between 0 and 99'
 				);
 			});
 

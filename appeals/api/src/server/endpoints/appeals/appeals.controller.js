@@ -152,6 +152,7 @@ const getAppeal = async (req, res) => {
 		if (document && document.latestDocumentVersion) {
 			decisionInfo = {
 				letterDate: document.latestDocumentVersion.dateReceived,
+				documentName: document.name,
 				virusCheckStatus: getAvScanStatus(document.latestDocumentVersion)
 			};
 		}

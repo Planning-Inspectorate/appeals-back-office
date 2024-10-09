@@ -127,6 +127,10 @@ export function generateFPAComponents(appealDetails, appellantCaseData, mappedAp
 				},
 				rows: [
 					removeSummaryListActions(mappedAppellantCaseData.appealType.display.summaryListItem),
+					mappedAppellantCaseData.procedurePreference.display.summaryListItem,
+					mappedAppellantCaseData.procedurePreferenceDetails.display.summaryListItem,
+					mappedAppellantCaseData.procedurePreferenceDuration.display.summaryListItem,
+					mappedAppellantCaseData.inquiryNumberOfWitnesses.display.summaryListItem,
 					mappedAppellantCaseData.appealStatement.display.summaryListItem,
 					mappedAppellantCaseData.relatedAppeals.display.summaryListItem,
 					mappedAppellantCaseData.planningObligationInSupport.display.summaryListItem,

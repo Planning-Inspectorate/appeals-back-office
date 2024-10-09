@@ -16,7 +16,7 @@ import {
 	documentFileVersionsInfoVirusFound
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
-import { dateToDisplayDate } from '#lib/dates.js';
+import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import usersService from '#appeals/appeal-users/users-service.js';
 import { cloneDeep } from 'lodash-es';
 
@@ -1122,13 +1122,15 @@ describe('internal correspondence', () => {
 				expect(unprettifiedElement.innerHTML).toContain('Check your answers</h1>');
 				expect(unprettifiedElement.innerHTML).toContain('Name</dt>');
 				expect(unprettifiedElement.innerHTML).toContain(
-					'<a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-staged/1/test-document.txt" target="_blank">test-document.txt</a></dd>'
+					'<a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/test-document.txt" target="_blank">test-document.txt</a></dd>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
 					`href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/upload-documents/${folder.folderId}"> Change</a></dd>`
 				);
 				expect(unprettifiedElement.innerHTML).toContain('Date received</dt>');
-				expect(unprettifiedElement.innerHTML).toContain(`${dateToDisplayDate(new Date())}</dd>`);
+				expect(unprettifiedElement.innerHTML).toContain(
+					`${dateISOStringToDisplayDate(new Date().toISOString())}</dd>`
+				);
 				expect(unprettifiedElement.innerHTML).toContain(
 					`href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/add-document-details/${folder.folderId}"> Change</a></dd>`
 				);
@@ -1279,13 +1281,15 @@ describe('internal correspondence', () => {
 				expect(unprettifiedElement.innerHTML).toContain('Check your answers</h1>');
 				expect(unprettifiedElement.innerHTML).toContain('Name</dt>');
 				expect(unprettifiedElement.innerHTML).toContain(
-					'<a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-staged/1/ph0-documentFileInfo.jpeg/2" target="_blank">test-document.txt</a></dd>'
+					'<a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/ph0-documentFileInfo.jpeg/2" target="_blank">test-document.txt</a></dd>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
 					`href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/upload-documents/${folder.folderId}/1"> Change</a></dd>`
 				);
 				expect(unprettifiedElement.innerHTML).toContain('Date received</dt>');
-				expect(unprettifiedElement.innerHTML).toContain(`${dateToDisplayDate(new Date())}</dd>`);
+				expect(unprettifiedElement.innerHTML).toContain(
+					`${dateISOStringToDisplayDate(new Date().toISOString())}</dd>`
+				);
 				expect(unprettifiedElement.innerHTML).toContain(
 					`href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/add-document-details/${folder.folderId}/1"> Change</a></dd>`
 				);

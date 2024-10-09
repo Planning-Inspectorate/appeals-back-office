@@ -1,4 +1,4 @@
-import { dateToDisplayDate, apiDateStringToDayMonthYear } from '#lib/dates.js';
+import { dateISOStringToDisplayDate, dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
 import { capitalize } from 'lodash-es';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 
@@ -34,9 +34,9 @@ export const routeToObjectMapper = {
  */
 export const mapUpdateDueDatePage = (appealTimetables, timetableType, appealDetails) => {
 	const currentDueDateIso = appealTimetables && appealTimetables[timetableType];
-	const currentDueDate = currentDueDateIso && dateToDisplayDate(currentDueDateIso);
+	const currentDueDate = currentDueDateIso && dateISOStringToDisplayDate(currentDueDateIso);
 	const currentDueDateDayMonthYear =
-		currentDueDateIso && apiDateStringToDayMonthYear(currentDueDateIso);
+		currentDueDateIso && dateISOStringToDayMonthYearHourMinute(currentDueDateIso);
 	const changeOrScheduleText = currentDueDate ? 'Change' : 'Schedule';
 	const timetableTypeText = getTimetableTypeText(timetableType);
 

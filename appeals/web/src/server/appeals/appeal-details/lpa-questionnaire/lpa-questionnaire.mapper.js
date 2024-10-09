@@ -1,12 +1,12 @@
 import config from '#environment/config.js';
 import { inputInstructionIsRadiosInputInstruction } from '#lib/mappers/global-mapper-formatter.js';
-import { initialiseAndMapAppealData } from '#lib/mappers/appeal.mapper.js';
+import { initialiseAndMapAppealData } from '#lib/mappers/appeal/appeal.mapper.js';
 import { initialiseAndMapLPAQData } from '#lib/mappers/lpaQuestionnaire.mapper.js';
 import {
-	dayMonthYearToApiDateString,
-	webDateToDisplayDate,
-	apiDateStringToDayMonthYear,
-	apiDateStringToDisplayDate
+	dayMonthYearHourMinuteToISOString,
+	dayMonthYearHourMinuteToDisplayDate,
+	dateISOStringToDayMonthYearHourMinute,
+	dateISOStringToDisplayDate
 } from '#lib/dates.js';
 import {
 	mapReasonOptionsToCheckboxItemParameters,
@@ -20,13 +20,14 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 import { isFeatureActive } from '#common/feature-flags.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 /**
  * @typedef {import('@pins/appeals.api').Appeals.SingleLPAQuestionnaireResponse} LPAQuestionnaire
  * @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} Appeal
- * @typedef {import('../../appeals.types.js').DayMonthYear} DayMonthYear
+ * @typedef {import('../../appeals.types.js').DayMonthYearHourMinute} DayMonthYearHourMinute
  * @typedef {import('./lpa-questionnaire.types.js').LPAQuestionnaireValidationOutcome} LPAQuestionnaireValidationOutcome
  * @typedef {import('@pins/appeals.api').Appeals.IncompleteInvalidReasonsResponse} IncompleteInvalidReasonResponse
  * @typedef {import('@pins/appeals.api').Appeals.NotValidReasonOption} NotValidReasonOption
@@ -209,6 +210,7 @@ export async function lpaQuestionnairePage(lpaqDetails, appealDetails, currentRo
  * @param {number} [dueDateDay]
  * @param {number} [dueDateMonth]
  * @param {number} [dueDateYear]
+ * @param {boolean} [errorsOnPage]
  * @returns {PageContent}
  */
 export function updateDueDatePage(
@@ -216,26 +218,22 @@ export function updateDueDatePage(
 	lpaQuestionnaireId,
 	dueDateDay,
 	dueDateMonth,
-	dueDateYear
+	dueDateYear,
+	errorsOnPage
 ) {
 	let existingDueDateDayMonthYear;
 
-	if (
-		dueDateDay === undefined &&
-		dueDateMonth === undefined &&
-		dueDateYear === undefined &&
-		appealData.documentationSummary.lpaQuestionnaire?.dueDate
-	) {
-		existingDueDateDayMonthYear = apiDateStringToDayMonthYear(
-			appealData.documentationSummary.lpaQuestionnaire?.dueDate
-		);
-	} else {
-		/** @type {DayMonthYear} */
+	if (errorsOnPage) {
+		/** @type {DayMonthYearHourMinute} */
 		existingDueDateDayMonthYear = {
 			day: dueDateDay,
 			month: dueDateMonth,
 			year: dueDateYear
 		};
+	} else if (appealData.documentationSummary.lpaQuestionnaire?.dueDate) {
+		existingDueDateDayMonthYear = dateISOStringToDayMonthYearHourMinute(
+			appealData.documentationSummary.lpaQuestionnaire?.dueDate
+		);
 	}
 
 	/** @type {PageContent} */
@@ -281,15 +279,13 @@ export function updateDueDatePage(
 		]
 	};
 
-	if (existingDueDateDayMonthYear) {
+	if (appealData.documentationSummary.lpaQuestionnaire?.dueDate) {
 		pageContent.pageComponents?.push({
 			type: 'inset-text',
 			parameters: {
-				text: `The current due date for the LPA questionnaire is ${webDateToDisplayDate({
-					day: existingDueDateDayMonthYear.day || 0,
-					month: existingDueDateDayMonthYear.month || 0,
-					year: existingDueDateDayMonthYear.year || 0
-				})}`,
+				text: `The current due date for the LPA questionnaire is ${dateISOStringToDisplayDate(
+					appealData.documentationSummary.lpaQuestionnaire?.dueDate
+				)}`,
 				classes: 'govuk-!-margin-bottom-7'
 			}
 		});
@@ -307,7 +303,7 @@ export function updateDueDatePage(
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
  * @param {string|string[]} [incompleteReasons]
  * @param {Object<string, string[]>} [incompleteReasonsText]
- * @param {DayMonthYear} [updatedDueDate]
+ * @param {DayMonthYearHourMinute} [updatedDueDate]
  * @returns {PageContent}
  */
 export function checkAndConfirmPage(
@@ -376,7 +372,7 @@ export function checkAndConfirmPage(
 				text: 'Updated due date'
 			},
 			value: {
-				text: webDateToDisplayDate(updatedDueDate)
+				text: dayMonthYearHourMinuteToDisplayDate(updatedDueDate)
 			},
 			actions: {
 				items: [
@@ -479,7 +475,7 @@ function mapNotificationBannerComponentParameters(session, lpaqData, appealId, l
 								text: 'Due date'
 							},
 							value: {
-								text: apiDateStringToDisplayDate(lpaqDueDate)
+								text: dateISOStringToDisplayDate(lpaqDueDate)
 							}
 						}
 					]
@@ -551,7 +547,7 @@ export function mapIncompleteReasonOptionsToCheckboxItemParameters(
  * @param {LPAQuestionnaireValidationOutcome} validationOutcome
  * @param {string|string[]} [incompleteReasons]
  * @param {Object<string, string[]>} [incompleteReasonsText]
- * @param {DayMonthYear} [updatedDueDate]
+ * @param {DayMonthYearHourMinute} [updatedDueDate]
  * @returns {import('./lpa-questionnaire.types.js').LPAQuestionnaireValidationOutcomeRequest}
  */
 export function mapWebValidationOutcomeToApiValidationOutcome(
@@ -586,7 +582,11 @@ export function mapWebValidationOutcomeToApiValidationOutcome(
 				}))
 			}),
 		...(updatedDueDate && {
-			lpaQuestionnaireDueDate: dayMonthYearToApiDateString(updatedDueDate)
+			lpaQuestionnaireDueDate: dayMonthYearHourMinuteToISOString({
+				...updatedDueDate,
+				hour: DEADLINE_HOUR,
+				minute: DEADLINE_MINUTE
+			})
 		})
 	};
 }
@@ -764,7 +764,11 @@ const generateHASLpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 					text: '4. Planning officer’s report and supplementary documents'
 				}
 			},
-			rows: [mappedLPAQData.lpaq?.officersReport?.display.summaryListItem].filter(isDefined)
+			rows: [
+				mappedLPAQData.lpaq?.officersReport?.display.summaryListItem,
+				mappedLPAQData.lpaq?.plansDrawings?.display.summaryListItem,
+				mappedLPAQData.lpaq?.developmentPlanPolicies?.display.summaryListItem
+			].filter(isDefined)
 		}
 	});
 

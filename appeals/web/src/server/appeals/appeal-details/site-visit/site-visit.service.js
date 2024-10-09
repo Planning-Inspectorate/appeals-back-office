@@ -2,8 +2,8 @@
  * @typedef {Object} UpdateOrCreateSiteVisitParameters
  * @property {number} appealIdNumber
  * @property {string} visitDate
- * @property {string} visitStartTime
- * @property {string} visitEndTime
+ * @property {string|undefined} visitStartTime
+ * @property {string|undefined} visitEndTime
  * @property {import('@pins/appeals/types/inspector.js').SiteVisitType} apiVisitType
  * @property {string} previousVisitType
  */
@@ -13,8 +13,8 @@
  * @param {number} appealId
  * @param {import('@pins/appeals/types/inspector.js').SiteVisitType} visitType
  * @param {string} visitDate
- * @param {string} visitStartTime
- * @param {string} visitEndTime
+ * @param {string|undefined} visitStartTime
+ * @param {string|undefined} visitEndTime
  */
 export async function createSiteVisit(
 	apiClient,

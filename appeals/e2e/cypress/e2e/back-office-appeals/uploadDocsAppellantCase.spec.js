@@ -23,11 +23,11 @@ describe('Upload Documents to appellant case', () => {
 			happyPathHelper.assignCaseOfficer(caseRef);
 			caseDetailsPage.clickReviewAppellantCase();
 			caseDetailsPage.clickAddAgreementToChangeDescriptionEvidence();
-			caseDetailsPage.uploadSamplePdf();
+			caseDetailsPage.uploadSampleDoc();
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.verifyAnswerSummaryValue('sample-doc.pdf');
+			caseDetailsPage.verifyAnswerSummaryValue('sample-file.doc');
 		});
 	});
 });

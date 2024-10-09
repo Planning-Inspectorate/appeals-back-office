@@ -15,6 +15,11 @@ import {
 	postDocumentUpload,
 	postUploadDocumentsCheckAndConfirm
 } from '../../appeal-documents/appeal-documents.controller.js';
+import {
+	dayMonthYearHourMinuteToISOString,
+	dateISOStringToDayMonthYearHourMinute
+} from '#lib/dates.js';
+
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
 
@@ -170,12 +175,10 @@ export const postDateDecisionLetter = async (request, response) => {
 			return renderDateDecisionLetter(request, response);
 		}
 
-		const letterDate = new Date(year, month - 1, day);
-
 		/** @type {import('./issue-decision.types.js').InspectorDecisionRequest} */
 		request.session.inspectorDecision = {
 			...request.session.inspectorDecision,
-			letterDate: letterDate
+			letterDate: dayMonthYearHourMinuteToISOString({ year, month, day })
 		};
 
 		return response.redirect(
@@ -206,7 +209,7 @@ const renderDateDecisionLetter = async (request, response) => {
 	/** @type {import('./issue-decision.types.js').InspectorDecisionRequest} */
 	request.session.inspectorDecision = {
 		...session.inspectorDecision,
-		documentId: session.fileUploadInfo[0].GUID
+		documentId: session.fileUploadInfo.files[0].GUID
 	};
 
 	let decisionLetterDay = request.body['decision-letter-date-day'];
@@ -215,10 +218,12 @@ const renderDateDecisionLetter = async (request, response) => {
 
 	if (!decisionLetterDay || !decisionLetterMonth || !decisionLetterYear) {
 		if (request.session.inspectorDecision?.letterDate) {
-			const letterDate = new Date(request.session.inspectorDecision.letterDate);
-			decisionLetterDay = letterDate.getDate();
-			decisionLetterMonth = letterDate.getMonth() + 1; // Months are 0-indexed
-			decisionLetterYear = letterDate.getFullYear();
+			const letterDate = dateISOStringToDayMonthYearHourMinute(
+				request.session.inspectorDecision.letterDate
+			);
+			decisionLetterDay = letterDate.day;
+			decisionLetterMonth = letterDate.month;
+			decisionLetterYear = letterDate.year;
 		}
 	}
 
@@ -332,8 +337,6 @@ export const postCheckDecision = async (request, response) => {
 
 		const decisionOutcome = request.session.inspectorDecision.outcome;
 		const documentId = request.session.inspectorDecision.documentId;
-		const letterDate = new Date(request.session.inspectorDecision.letterDate);
-		const formattedDate = letterDate.toISOString().split('T')[0];
 
 		await postUploadDocumentsCheckAndConfirm(request, response);
 
@@ -342,7 +345,7 @@ export const postCheckDecision = async (request, response) => {
 			appealId,
 			mapDecisionOutcome(decisionOutcome).toLowerCase(),
 			documentId,
-			formattedDate
+			request.session.inspectorDecision.letterDate
 		);
 
 		return response.redirect(

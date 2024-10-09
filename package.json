@@ -25,6 +25,7 @@
 		"tscheck": "turbo run prisma-generate --concurrency=1 && turbo run tscheck --parallel --filter=!@pins/appeals.api",
 		"dev": "turbo run dev --filter=./appeals/* --no-cache --parallel --continue",
 		"test": "dotenv turbo run test -- --concurrency=2",
+		"test:cov": "dotenv turbo run test:cov -- --concurrency=2",
 		"web": "npm run dev --workspace=@pins/appeals.web",
 		"api": "npm run dev --workspace=@pins/appeals.api",
 		"c4": "docker pull structurizr/lite && docker run -it --rm -p 8082:8080 -v $PWD:/usr/local/structurizr structurizr/lite"
@@ -36,7 +37,7 @@
 		"joi": "^17.7.0",
 		"node-cache": "^5.1.2",
 		"nodemon": "3.0.3",
-		"pins-data-model": "github:Planning-Inspectorate/data-model#1.8.3"
+		"pins-data-model": "github:Planning-Inspectorate/data-model#1.9.1"
 	},
 	"devDependencies": {
 		"@commitlint/cli": "17.0.1",

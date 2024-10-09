@@ -51,7 +51,7 @@ extends:
               script: npm run lint:js
           - template: ../steps/node_script.yml
             parameters:
-              script: npm run test
+              script: npm run test:cov
               nodeVersion: 20
               environmentVariables:
                 TURBO_TEAM: $(TURBO_TEAM)

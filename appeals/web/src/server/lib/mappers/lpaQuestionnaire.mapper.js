@@ -1,8 +1,13 @@
-import { convertFromBooleanToYesNo } from '../boolean-formatter.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
 import { isFolderInfo } from '#lib/ts-utilities.js';
-import { mapActionComponent } from './component-permissions.mapper.js';
+import { mapActionComponent, userHasPermission } from './permissions.mapper.js';
 import { permissionNames } from '#environment/permissions.js';
+import {
+	booleanSummaryListItem,
+	booleanWithDetailsSummaryListItem
+} from '#lib/mappers/components/boolean.js';
+import { documentSummaryListItem } from '#lib/mappers/components/document.js';
+import { textSummaryListItem } from '#lib/mappers/components/text.js';
 
 /**
  * @typedef StatusTag
@@ -29,6 +34,34 @@ export function initialiseAndMapLPAQData(
 	session,
 	currentRoute
 ) {
+	/**
+	 * Generates a document field with defaults
+	 *
+	 * @param {Object} options
+	 * @param {string} options.id
+	 * @param {string} options.text
+	 * @param {FolderInfo|null|undefined} options.folderInfo
+	 * @param {string} [options.cypressDataName]
+	 * @returns {Instructions}
+	 */
+	const documentInstruction = ({ id, text, folderInfo, cypressDataName }) => {
+		return documentSummaryListItem({
+			id,
+			text,
+			appealId: lpaQuestionnaireData.appealId,
+			folderInfo,
+			editable: userHasPermission(permissionNames.updateCase, session),
+			uploadUrlTemplate: buildDocumentUploadUrlTemplate(lpaQuestionnaireData.lpaQuestionnaireId),
+			manageUrl: mapDocumentManageUrl(
+				lpaQuestionnaireData.appealId,
+				lpaQuestionnaireData.lpaQuestionnaireId,
+				folderInfo?.folderId
+			),
+			cypressDataName
+		});
+	};
+	const userHasUpdateCase = userHasPermission(permissionNames.updateCase, session);
+
 	/** @type {{lpaq: MappedInstructions}} */
 	const mappedData = {};
 	mappedData.lpaq = {};
@@ -75,302 +108,117 @@ export function initialiseAndMapLPAQData(
 		}
 	};
 
-	/** @type {Instructions} */
-	mappedData.lpaq.isCorrectAppealType = {
+	mappedData.lpaq.isCorrectAppealType = booleanSummaryListItem({
 		id: 'is-correct-appeal-type',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Correct appeal type'
-				},
-				value: {
-					html: convertFromBooleanToYesNo(lpaQuestionnaireData.isCorrectAppealType) || ''
-				},
-				actions: {
-					items: [
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Change',
-							visuallyHiddenText: 'Correct appeal type',
-							href: `${currentRoute}/is-correct-appeal-type/change`,
-							attributes: { 'lpaQuestionnaireData-cy': 'change-is-correct-appeal-type' }
-						})
-					]
-				}
-			}
-		}
-	};
+		text: 'Correct appeal type',
+		value: lpaQuestionnaireData.isCorrectAppealType,
+		defaultText: '',
+		addCyAttribute: true,
+		link: `${currentRoute}/is-correct-appeal-type/change`,
+		editable: userHasUpdateCase
+	});
 
-	/** @type {Instructions} */
-	mappedData.lpaq.conservationAreaMap = {
+	mappedData.lpaq.conservationAreaMap = documentInstruction({
 		id: 'conservation-area-map',
-		display: {
-			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
-				'Conservation area map and guidance',
-				lpaQuestionnaireData.appealId,
-				lpaQuestionnaireData.documents.conservationMap,
-				permissionNames.updateCase,
-				session,
-				mapDocumentManageUrl(
-					lpaQuestionnaireData.appealId,
-					lpaQuestionnaireData.lpaQuestionnaireId,
-					isFolderInfo(lpaQuestionnaireData.documents.conservationMap)
-						? lpaQuestionnaireData.documents.conservationMap.folderId
-						: undefined
-				),
-				buildDocumentUploadUrlTemplate(lpaQuestionnaireData.lpaQuestionnaireId),
-				'conservation-area-map-and-guidance'
-			)
-		}
-	};
+		text: 'Conservation area map and guidance',
+		folderInfo: lpaQuestionnaireData.documents.conservationMap,
+		cypressDataName: 'conservation-area-map-and-guidance'
+	});
 
-	/** @type {Instructions} */
-	mappedData.lpaq.siteWithinGreenBelt = {
+	mappedData.lpaq.siteWithinGreenBelt = booleanSummaryListItem({
 		id: 'site-within-green-belt',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Green belt'
-				},
-				value: {
-					text: convertFromBooleanToYesNo(lpaQuestionnaireData.isGreenBelt) || ''
-				},
-				actions: {
-					items: [
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Change',
-							visuallyHiddenText: 'Green belt',
-							href: `${currentRoute}/green-belt/change/lpa`,
-							attributes: { 'lpaQuestionnaireData-cy': 'change-site-within-green-belt' }
-						})
-					]
-				}
-			}
-		}
-	};
+		text: 'Green belt',
+		value: lpaQuestionnaireData.isGreenBelt,
+		defaultText: '',
+		addCyAttribute: true,
+		link: `${currentRoute}/green-belt/change/lpa`,
+		editable: userHasUpdateCase
+	});
 
-	/** @type {Instructions} */
-	mappedData.lpaq.notifyingParties = {
+	mappedData.lpaq.notifyingParties = documentInstruction({
 		id: 'notifying-parties',
-		display: {
-			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
-				'Who was notified',
-				lpaQuestionnaireData.appealId,
-				lpaQuestionnaireData.documents.whoNotified,
-				permissionNames.updateCase,
-				session,
-				mapDocumentManageUrl(
-					lpaQuestionnaireData.appealId,
-					lpaQuestionnaireData.lpaQuestionnaireId,
-					isFolderInfo(lpaQuestionnaireData.documents.whoNotified)
-						? lpaQuestionnaireData.documents.whoNotified.folderId
-						: undefined
-				),
-				buildDocumentUploadUrlTemplate(lpaQuestionnaireData.lpaQuestionnaireId),
-				'notifying-parties'
-			)
-		}
-	};
+		text: 'Who was notified',
+		folderInfo: lpaQuestionnaireData.documents.whoNotified
+	});
 
-	/** @type {Instructions} */
-	mappedData.lpaq.siteNotice = {
+	mappedData.lpaq.siteNotice = documentInstruction({
 		id: 'site-notice',
-		display: {
-			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
-				'Site notice',
-				lpaQuestionnaireData.appealId,
-				lpaQuestionnaireData.documents.whoNotifiedSiteNotice,
-				permissionNames.updateCase,
-				session,
-				mapDocumentManageUrl(
-					lpaQuestionnaireData.appealId,
-					lpaQuestionnaireData.lpaQuestionnaireId,
-					isFolderInfo(lpaQuestionnaireData.documents.whoNotifiedSiteNotice)
-						? lpaQuestionnaireData.documents.whoNotifiedSiteNotice.folderId
-						: undefined
-				),
-				buildDocumentUploadUrlTemplate(lpaQuestionnaireData.lpaQuestionnaireId),
-				'site-notice'
-			)
-		}
-	};
+		text: 'Site notice',
+		folderInfo: lpaQuestionnaireData.documents.whoNotifiedSiteNotice
+	});
 
-	/** @type {Instructions} */
-	mappedData.lpaq.lettersToNeighbours = {
+	mappedData.lpaq.lettersToNeighbours = documentInstruction({
 		id: 'letters-to-neighbours',
-		display: {
-			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
-				'Letter or email notification',
-				lpaQuestionnaireData.appealId,
-				lpaQuestionnaireData.documents.whoNotifiedLetterToNeighbours,
-				permissionNames.updateCase,
-				session,
-				mapDocumentManageUrl(
-					lpaQuestionnaireData.appealId,
-					lpaQuestionnaireData.lpaQuestionnaireId,
-					isFolderInfo(lpaQuestionnaireData.documents.whoNotifiedLetterToNeighbours)
-						? lpaQuestionnaireData.documents.whoNotifiedLetterToNeighbours.folderId
-						: undefined
-				),
-				buildDocumentUploadUrlTemplate(lpaQuestionnaireData.lpaQuestionnaireId),
-				'letter-or-email-notification'
-			)
-		}
-	};
+		text: 'Letter or email notification',
+		folderInfo: lpaQuestionnaireData.documents.whoNotifiedLetterToNeighbours,
+		cypressDataName: 'letter-or-email-notification'
+	});
 
-	/** @type {Instructions} */
-	mappedData.lpaq.pressAdvert = {
+	mappedData.lpaq.pressAdvert = documentInstruction({
 		id: 'press-advert',
-		display: {
-			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
-				'Press advert notification',
-				lpaQuestionnaireData.appealId,
-				lpaQuestionnaireData.documents.whoNotifiedPressAdvert,
-				permissionNames.updateCase,
-				session,
-				mapDocumentManageUrl(
-					lpaQuestionnaireData.appealId,
-					lpaQuestionnaireData.lpaQuestionnaireId,
-					isFolderInfo(lpaQuestionnaireData.documents.whoNotifiedPressAdvert)
-						? lpaQuestionnaireData.documents.whoNotifiedPressAdvert.folderId
-						: undefined
-				),
-				buildDocumentUploadUrlTemplate(lpaQuestionnaireData.lpaQuestionnaireId),
-				'press-advert-notification'
-			)
-		}
-	};
+		text: 'Press advert notification',
+		folderInfo: lpaQuestionnaireData.documents.whoNotifiedPressAdvert,
+		cypressDataName: 'press-advert-notification'
+	});
 
-	/** @type {Instructions} */
-	mappedData.lpaq.notificationMethods = {
+	mappedData.lpaq.notificationMethods = textSummaryListItem({
 		id: 'notification-methods',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Notification methods'
-				},
-				value: {
-					html: displayPageFormatter.formatListOfNotificationMethodsToHtml(
-						lpaQuestionnaireData.lpaNotificationMethods
-					)
-				},
-				actions: {
-					items: [
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Change',
-							visuallyHiddenText: 'notification methods',
-							href: `${currentRoute}/notification-methods/change`,
-							attributes: { 'lpaQuestionnaireData-cy': 'change-notification-methods' }
-						})
-					]
-				}
-			}
-		}
-	};
+		text: 'Notification methods',
+		value: {
+			html: displayPageFormatter.formatListOfNotificationMethodsToHtml(
+				lpaQuestionnaireData.lpaNotificationMethods
+			)
+		},
+		link: `${currentRoute}/notification-methods/change`,
+		editable: userHasUpdateCase
+	});
 
-	/** @type {Instructions} */
-	mappedData.lpaq.representations = {
+	mappedData.lpaq.representations = documentInstruction({
 		id: 'representations-from-other-parties',
-		display: {
-			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
-				'Representations from other parties documents',
-				lpaQuestionnaireData.appealId,
-				lpaQuestionnaireData.documents.otherPartyRepresentations,
-				permissionNames.updateCase,
-				session,
-				mapDocumentManageUrl(
-					lpaQuestionnaireData.appealId,
-					lpaQuestionnaireData.lpaQuestionnaireId,
-					isFolderInfo(lpaQuestionnaireData.documents.otherPartyRepresentations)
-						? lpaQuestionnaireData.documents.otherPartyRepresentations.folderId
-						: undefined
-				),
-				buildDocumentUploadUrlTemplate(lpaQuestionnaireData.lpaQuestionnaireId),
-				'representations-from-other-parties'
-			)
-		}
-	};
+		text: 'Representations from other parties documents',
+		folderInfo: lpaQuestionnaireData.documents.otherPartyRepresentations
+	});
 
-	/** @type {Instructions} */
-	mappedData.lpaq.officersReport = {
+	mappedData.lpaq.officersReport = documentInstruction({
 		id: 'officers-report',
-		display: {
-			summaryListItem: displayPageFormatter.formatFolderSummaryListItem(
-				"Planning officer's report",
-				lpaQuestionnaireData.appealId,
-				lpaQuestionnaireData.documents.planningOfficerReport,
-				permissionNames.updateCase,
-				session,
-				mapDocumentManageUrl(
-					lpaQuestionnaireData.appealId,
-					lpaQuestionnaireData.lpaQuestionnaireId,
-					isFolderInfo(lpaQuestionnaireData.documents.planningOfficerReport)
-						? lpaQuestionnaireData.documents.planningOfficerReport.folderId
-						: undefined
-				),
-				buildDocumentUploadUrlTemplate(lpaQuestionnaireData.lpaQuestionnaireId),
-				'officers-report'
-			)
-		}
-	};
+		text: `Planning officer's report`,
+		folderInfo: lpaQuestionnaireData.documents.planningOfficerReport
+	});
 
-	/** @type {Instructions} */
-	mappedData.lpaq.siteAccess = {
+	mappedData.lpaq.plansDrawings = documentInstruction({
+		id: 'plans-drawings',
+		text: `Plans, drawings and list of plans`,
+		folderInfo: lpaQuestionnaireData.documents.plansDrawings
+	});
+
+	mappedData.lpaq.developmentPlanPolicies = documentInstruction({
+		id: 'development-plan-policies',
+		text: `Relevant policies from statutory development plan`,
+		folderInfo: lpaQuestionnaireData.documents.developmentPlanPolicies
+	});
+
+	mappedData.lpaq.siteAccess = booleanWithDetailsSummaryListItem({
 		id: 'does-site-require-inspector-access',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Site access required'
-				},
-				value: {
-					html: displayPageFormatter.formatAnswerAndDetails(
-						convertFromBooleanToYesNo(lpaQuestionnaireData.doesSiteRequireInspectorAccess) ??
-							'No answer provided',
-						lpaQuestionnaireData.inspectorAccessDetails
-					)
-				},
-				actions: {
-					items: [
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Change',
-							visuallyHiddenText: 'Site access required',
-							href: `${currentRoute}/inspector-access/change/lpa`,
-							attributes: { 'lpaQuestionnaireData-cy': 'change-does-site-require-inspector-access' }
-						})
-					]
-				}
-			}
-		}
-	};
+		text: 'Site access required',
+		value: lpaQuestionnaireData.doesSiteRequireInspectorAccess,
+		valueDetails: lpaQuestionnaireData.inspectorAccessDetails,
+		defaultText: 'No answer provided',
+		link: `${currentRoute}/inspector-access/change/lpa`,
+		editable: userHasUpdateCase,
+		addCyAttribute: true
+	});
 
-	/** @type {Instructions} */
-	mappedData.lpaq.lpaHealthAndSafety = {
+	mappedData.lpaq.lpaHealthAndSafety = booleanWithDetailsSummaryListItem({
 		id: 'health-and-safety',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Potential safety risks'
-				},
-				value: {
-					html: displayPageFormatter.formatAnswerAndDetails(
-						convertFromBooleanToYesNo(lpaQuestionnaireData.doesSiteHaveHealthAndSafetyIssues) ||
-							'No answer provided',
-						lpaQuestionnaireData.healthAndSafetyDetails
-					)
-				},
-				actions: {
-					items: [
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Change',
-							href: `${currentRoute}/safety-risks/change/lpa`,
-							visuallyHiddenText: 'potential safety risks',
-							attributes: { 'lpaQuestionnaireData-cy': 'change-health-and-safety' }
-						})
-					]
-				},
-				classes: 'lpa-health-and-safety'
-			}
-		}
-	};
+		text: 'Potential safety risks',
+		value: lpaQuestionnaireData.doesSiteHaveHealthAndSafetyIssues,
+		valueDetails: lpaQuestionnaireData.healthAndSafetyDetails,
+		defaultText: 'No answer provided',
+		link: `${currentRoute}/safety-risks/change/lpa`,
+		editable: userHasUpdateCase,
+		addCyAttribute: true,
+		classes: 'lpa-health-and-safety'
+	});
 
 	const otherAppealsItems = [];
 
@@ -414,32 +262,15 @@ export function initialiseAndMapLPAQData(
 		}
 	};
 
-	/** @type {Instructions} */
-	mappedData.lpaq.extraConditions = {
+	mappedData.lpaq.extraConditions = booleanWithDetailsSummaryListItem({
 		id: 'extra-conditions',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Extra conditions'
-				},
-				value: {
-					html: displayPageFormatter.formatAnswerAndDetails(
-						convertFromBooleanToYesNo(lpaQuestionnaireData.hasExtraConditions) || '',
-						lpaQuestionnaireData.extraConditions
-					)
-				},
-				actions: {
-					items: [
-						mapActionComponent(permissionNames.updateCase, session, {
-							text: 'Change',
-							visuallyHiddenText: 'Extra conditions',
-							href: `${currentRoute}/extra-conditions/change`
-						})
-					]
-				}
-			}
-		}
-	};
+		text: 'Extra conditions',
+		value: lpaQuestionnaireData.hasExtraConditions,
+		valueDetails: lpaQuestionnaireData.extraConditions,
+		defaultText: '',
+		link: `${currentRoute}/extra-conditions/change`,
+		editable: userHasUpdateCase
+	});
 
 	/** @type {Instructions} */
 	mappedData.lpaq.additionalDocumentsContents = {

@@ -1,8 +1,11 @@
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import appealTimetableRepository from '#repositories/appeal-timetable.repository.js';
-import { calculateTimetable, recalculateDateIfNotBusinessDay } from '#utils/business-days.js';
-import joinDateAndTime from '#utils/join-date-and-time.js';
+import {
+	calculateTimetable,
+	recalculateDateIfNotBusinessDay,
+	setTimeInTimeZone
+} from '#utils/business-days.js';
 import logger from '#utils/logger.js';
 import {
 	AUDIT_TRAIL_CASE_TIMELINE_CREATED,
@@ -18,6 +21,7 @@ import config from '#config/config.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { PROCEDURE_TYPE_MAP } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('express').Request} Request */
@@ -59,8 +63,10 @@ const startCase = async (appeal, startDate, notifyClient, siteAddress, azureAdUs
 		if (!appealType) {
 			throw new Error('Appeal type is required to start a case.');
 		}
-		const startedAt = await recalculateDateIfNotBusinessDay(joinDateAndTime(startDate));
+
+		const startedAt = await recalculateDateIfNotBusinessDay(startDate);
 		const timetable = await calculateTimetable(appealType.key, startedAt);
+		const startDateWithTimeCorrection = setTimeInTimeZone(startedAt, 0, 0);
 
 		const appellantTemplate = appeal.caseStartedDate
 			? config.govNotify.template.appealStartDateChange.appellant
@@ -73,7 +79,9 @@ const startCase = async (appeal, startDate, notifyClient, siteAddress, azureAdUs
 		if (timetable) {
 			await Promise.all([
 				appealTimetableRepository.upsertAppealTimetableById(appeal.id, timetable),
-				appealRepository.updateAppealById(appeal.id, { caseStartedDate: startedAt.toISOString() })
+				appealRepository.updateAppealById(appeal.id, {
+					caseStartedDate: startDateWithTimeCorrection.toISOString()
+				})
 			]);
 
 			await createAuditTrail({
@@ -143,7 +151,14 @@ const startCase = async (appeal, startDate, notifyClient, siteAddress, azureAdUs
  * @returns {Promise<void>}
  */
 const updateAppealTimetable = async (appealId, appealTimetableId, body, azureAdUserId) => {
-	await appealTimetableRepository.updateAppealTimetableById(appealTimetableId, body);
+	const processedBody = Object.fromEntries(
+		Object.entries(body).map(([item, value]) => [
+			item,
+			setTimeInTimeZone(value, DEADLINE_HOUR, DEADLINE_MINUTE).toISOString()
+		])
+	);
+
+	await appealTimetableRepository.updateAppealTimetableById(appealTimetableId, processedBody);
 
 	await createAuditTrail({
 		appealId: appealId,

@@ -20,7 +20,7 @@ export async function postInspectorDecision(
 ) {
 	return await apiClient
 		.post(`appeals/${appealId}/inspector-decision`, {
-			json: { outcome: outcome, documentGuid: documentGuid, documentDate: documentDate }
+			json: { outcome, documentGuid, documentDate }
 		})
 		.json();
 }

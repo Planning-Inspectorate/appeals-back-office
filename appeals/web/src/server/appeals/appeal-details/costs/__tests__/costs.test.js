@@ -24,7 +24,7 @@ import {
 } from '#testing/app/fixtures/referencedata.js';
 import usersService from '#appeals/appeal-users/users-service.js';
 import { capitalize, cloneDeep } from 'lodash-es';
-import { dateToDisplayDate } from '#lib/dates.js';
+import { dateISOStringToDisplayDate } from '#lib/dates.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -964,11 +964,11 @@ describe('costs', () => {
 						expect(unprettifiedElement.innerHTML).toContain('Check your answers</h1>');
 						expect(unprettifiedElement.innerHTML).toContain('Name</dt>');
 						expect(unprettifiedElement.innerHTML).toContain(
-							'<a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-staged/1/test-document.txt" target="_blank">test-document.txt</a></dd>'
+							'<a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/test-document.txt" target="_blank">test-document.txt</a></dd>'
 						);
 						expect(unprettifiedElement.innerHTML).toContain('Date received</dt>');
 						expect(unprettifiedElement.innerHTML).toContain(
-							`${dateToDisplayDate(new Date())}</dd>`
+							`${dateISOStringToDisplayDate(new Date().toISOString())}</dd>`
 						);
 						expect(unprettifiedElement.innerHTML).toContain('Redaction status</dt>');
 						expect(unprettifiedElement.innerHTML).toContain('Unredacted</dd>');
@@ -1080,11 +1080,11 @@ describe('costs', () => {
 						expect(unprettifiedElement.innerHTML).toContain('Check your answers</h1>');
 						expect(unprettifiedElement.innerHTML).toContain('Name</dt>');
 						expect(unprettifiedElement.innerHTML).toContain(
-							'<a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-staged/1/ph0-documentFileInfo.jpeg/2" target="_blank">test-document.txt</a></dd>'
+							'<a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/ph0-documentFileInfo.jpeg/2" target="_blank">test-document.txt</a></dd>'
 						);
 						expect(unprettifiedElement.innerHTML).toContain('Date received</dt>');
 						expect(unprettifiedElement.innerHTML).toContain(
-							`${dateToDisplayDate(new Date())}</dd>`
+							`${dateISOStringToDisplayDate(new Date().toISOString())}</dd>`
 						);
 						expect(unprettifiedElement.innerHTML).toContain('Redaction status</dt>');
 						expect(unprettifiedElement.innerHTML).toContain('Unredacted</dd>');
@@ -1705,7 +1705,7 @@ describe('costs', () => {
 				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
 				expect(unprettifiedElement.innerHTML).toContain(`Costs decision document</h1>`);
 				expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
-				expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
+				expect(unprettifiedElement.innerHTML).toContain('Decision date</legend>');
 				expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
 			});
 
@@ -1995,7 +1995,7 @@ describe('costs', () => {
 				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
 				expect(unprettifiedElement.innerHTML).toContain(`Costs decision document</h1>`);
 				expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
-				expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
+				expect(unprettifiedElement.innerHTML).toContain('Decision date</legend>');
 				expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
 			});
 
@@ -2265,10 +2265,6 @@ describe('costs', () => {
 			});
 
 			it('should render a 404 error page if the folderId is not valid', async () => {
-				nock('http://test/')
-					.get('/appeals/1/documents/1/versions')
-					.reply(200, documentFileVersionsInfo);
-
 				expect(addDocumentsResponse.statusCode).toBe(302);
 
 				const response = await request.get(`${baseUrl}/1/costs/decision/check-and-confirm/99`);
@@ -2283,10 +2279,6 @@ describe('costs', () => {
 			});
 
 			it('should render the check and confirm costs decision page if the folderId is valid', async () => {
-				nock('http://test/')
-					.get('/appeals/1/documents/1/versions')
-					.reply(200, documentFileVersionsInfo);
-
 				expect(addDocumentsResponse.statusCode).toBe(302);
 
 				const response = await request.get(
@@ -2364,6 +2356,145 @@ describe('costs', () => {
 				const mockDocumentsEndpoint = nock('http://test/').post('/appeals/1/documents').reply(200);
 				const response = await request
 					.post(`${baseUrl}/1/costs/decision/check-and-confirm/3`)
+					.send({
+						confirm: 'yes'
+					});
+
+				expect(mockDocumentsEndpoint.isDone()).toBe(true);
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toEqual(`Found. Redirecting to /appeals-service/appeal-details/1`);
+			});
+		});
+
+		describe('GET /costs/decision/check-and-confirm/:folderId/:documentId', () => {
+			/**
+			 * @type {import("superagent").Response}
+			 */
+			let addDocumentsResponse;
+
+			const costsDecisionFolder = appealData.costs.decisionFolder;
+
+			beforeEach(async () => {
+				addDocumentsResponse = await request
+					.post(`${baseUrl}/1/costs/decision/upload-documents/${costsDecisionFolder?.folderId}/1`)
+					.send({
+						'upload-info': fileUploadInfo
+					});
+			});
+
+			it('should render a 404 error page if the folderId is not valid', async () => {
+				expect(addDocumentsResponse.statusCode).toBe(302);
+
+				const response = await request.get(`${baseUrl}/1/costs/decision/check-and-confirm/99/1`);
+
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('Page not found</h1>');
+			});
+
+			it('should render a 404 error page if the documentId is not valid', async () => {
+				expect(addDocumentsResponse.statusCode).toBe(302);
+
+				const response = await request.get(`${baseUrl}/1/costs/decision/check-and-confirm/1/99`);
+
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('Page not found</h1>');
+			});
+
+			it('should render the check and confirm costs decision page if the folderId and documentId are both valid', async () => {
+				expect(addDocumentsResponse.statusCode).toBe(302);
+
+				const response = await request.get(
+					`${baseUrl}/1/costs/decision/check-and-confirm/${costsDecisionFolder?.folderId}/1`
+				);
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('Check your answers</h1>');
+				expect(unprettifiedElement.innerHTML).toContain('Updated costs decision</dt>');
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/ph0-documentFileInfo.jpeg/2" target="_blank">test-document.txt</a>'
+				);
+				expect(unprettifiedElement.innerHTML).toContain('Decision date</dt>');
+				expect(unprettifiedElement.innerHTML).toContain(
+					'Warning</span> You must email the relevant parties to inform them of the decision.'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'name="confirm" type="checkbox" value="yes">'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'for="confirm"> I will email the relevant parties'
+				);
+			});
+		});
+
+		describe('POST /costs/decision/check-and-confirm/:folderId/:documentId', () => {
+			/**
+			 * @type {import("superagent").Response}
+			 */
+			let addDocumentsResponse;
+
+			const costsDecisionFolder = appealData.costs.decisionFolder;
+
+			beforeEach(async () => {
+				addDocumentsResponse = await request
+					.post(`${baseUrl}/1/costs/decision/upload-documents/${costsDecisionFolder?.folderId}`)
+					.send({
+						'upload-info': fileUploadInfo
+					});
+			});
+
+			it('should render a 404 error page if the folderId is not valid', async () => {
+				expect(addDocumentsResponse.statusCode).toBe(302);
+
+				const response = await request
+					.post(`${baseUrl}/1/costs/decision/check-and-confirm/99/1`)
+					.send({
+						confirm: 'yes'
+					});
+
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('Page not found</h1>');
+			});
+
+			it('should re-render the check and confirm costs decision page with the expected error message if confirmation was not provided', async () => {
+				expect(addDocumentsResponse.statusCode).toBe(302);
+
+				const response = await request
+					.post(`${baseUrl}/1/costs/decision/check-and-confirm/${costsDecisionFolder?.folderId}/1`)
+					.send({});
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('Check your answers</h1>');
+				expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
+				expect(unprettifiedElement.innerHTML).toContain(
+					'Select that you will email the relevant parties</a></li>'
+				);
+			});
+
+			it('should redirect to the case details page if confirmation was provided', async () => {
+				expect(addDocumentsResponse.statusCode).toBe(302);
+
+				const mockDocumentsEndpoint = nock('http://test/')
+					.post('/appeals/1/documents/1')
+					.reply(200);
+				const response = await request
+					.post(`${baseUrl}/1/costs/decision/check-and-confirm/${costsDecisionFolder?.folderId}/1`)
 					.send({
 						confirm: 'yes'
 					});

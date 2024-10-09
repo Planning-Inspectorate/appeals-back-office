@@ -1,25 +1,26 @@
 import logger from '../../lib/logger.js';
-import config from '#environment/config.js';
 import {
 	initialiseAndMapAppealData,
 	generateDecisionDocumentDownloadHtml
-} from '#lib/mappers/appeal.mapper.js';
+} from '#lib/mappers/appeal/appeal.mapper.js';
 import { buildNotificationBanners } from '#lib/mappers/notification-banners.mapper.js';
 import { isDefined } from '#lib/ts-utilities.js';
 import { removeSummaryListActions } from '#lib/mappers/mapper-utilities.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { mapVirusCheckStatus } from '#appeals/appeal-documents/appeal-documents.mapper.js';
-import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import {
-	generateIssueDecisionUrl,
-	generateStartTimetableUrl
-} from '#appeals/appeal-details/issue-decision/issue-decision.mapper.js';
 import { getAppealTypesFromId } from '#appeals/appeal-details/change-appeal-type/change-appeal-type.service.js';
 import { APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { isFeatureActive } from '#common/feature-flags.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import config from '#environment/config.js';
+import {
+	generateIssueDecisionUrl,
+	generateStartTimetableUrl
+} from './issue-decision/issue-decision.mapper.js';
+import { dateISOStringToDisplayDate, getTodaysISOString } from '#lib/dates.js';
 
 export const pageHeading = 'Case details';
 
@@ -109,8 +110,8 @@ export async function appealDetailsPage(
 	const isAppealWithdrawn = appealDetails.appealStatus === APPEAL_CASE_STATUS.WITHDRAWN;
 	if (isAppealComplete && statusTag && appealDetails.decision.documentId) {
 		const letterDate = appealDetails.decision?.letterDate
-			? new Date(appealDetails.decision.letterDate)
-			: new Date();
+			? dateISOStringToDisplayDate(appealDetails.decision.letterDate)
+			: dateISOStringToDisplayDate(getTodaysISOString());
 
 		const virusCheckStatus = mapVirusCheckStatus(
 			appealDetails.decision.virusCheckStatus || APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED
@@ -119,13 +120,7 @@ export async function appealDetailsPage(
 		statusTagsComponentGroup.push({
 			type: 'inset-text',
 			parameters: {
-				html: `<p>
-					Appeal completed: ${letterDate.toLocaleDateString('en-gb', {
-						day: 'numeric',
-						month: 'long',
-						year: 'numeric'
-					})}
-						</p>
+				html: `<p>Appeal completed: ${letterDate}</p>
 						<p>Decision: ${appealDetails.decision?.outcome}</p>
 						<p>${
 							!(virusCheckStatus.checked && virusCheckStatus.safe)
@@ -143,7 +138,7 @@ export async function appealDetailsPage(
 	) {
 		const withdrawalRequestDate =
 			appealDetails.withdrawal?.withdrawalRequestDate &&
-			new Date(appealDetails.withdrawal?.withdrawalRequestDate);
+			dateISOStringToDisplayDate(appealDetails.withdrawal?.withdrawalRequestDate);
 
 		const virusCheckStatus = mapVirusCheckStatus(
 			appealDetails?.withdrawal.withdrawalFolder.documents[0].latestDocumentVersion
@@ -155,29 +150,15 @@ export async function appealDetailsPage(
 				statusTagsComponentGroup.push({
 					type: 'inset-text',
 					parameters: {
-						html: `<p>
-							Withdrawn: ${withdrawalRequestDate.toLocaleDateString('en-gb', {
-								day: 'numeric',
-								month: 'long',
-								year: 'numeric'
-							})}
-								</p>
-								<p><a class="govuk-link" href="/appeals-service/appeal-details/${
-									appealDetails.appealId
-								}/withdrawal/view">View withdrawal request</a></p>`
+						html: `<p>Withdrawn: ${withdrawalRequestDate}</p>
+								<p><a class="govuk-link" href="/appeals-service/appeal-details/${appealDetails.appealId}/withdrawal/view">View withdrawal request</a></p>`
 					}
 				});
 			} else {
 				statusTagsComponentGroup.push({
 					type: 'inset-text',
 					parameters: {
-						html: `<p>
-							Withdrawn: ${withdrawalRequestDate.toLocaleDateString('en-gb', {
-								day: 'numeric',
-								month: 'long',
-								year: 'numeric'
-							})}
-								</p>
+						html: `<p>Withdrawn: ${withdrawalRequestDate}</p>
 								<p><span class="govuk-body">View withdrawal request</span>
 								<strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></p>`
 					}
@@ -197,20 +178,15 @@ export async function appealDetailsPage(
 			appealTypeById?.key && appealTypeById?.type
 				? `${appealTypeById.type} (${appealTypeById.key})`
 				: '';
-		const caseResubmissionDueDate = new Date(appealDetails.appealTimetable.caseResubmissionDueDate);
+		const caseResubmissionDueDate = dateISOStringToDisplayDate(
+			appealDetails.appealTimetable.caseResubmissionDueDate
+		);
 
 		if (appealTypeText) {
 			statusTagsComponentGroup.push({
 				type: 'inset-text',
 				parameters: {
-					html: `<p>This appeal needed to change to ${appealTypeText}</p><p>The appellant has until ${caseResubmissionDueDate.toLocaleDateString(
-						'en-gb',
-						{
-							day: 'numeric',
-							month: 'long',
-							year: 'numeric'
-						}
-					)} to resubmit.</p>`
+					html: `<p>This appeal needed to change to ${appealTypeText}</p><p>The appellant has until ${caseResubmissionDueDate} to resubmit.</p>`
 				}
 			});
 		}
@@ -272,6 +248,24 @@ function mapStatusDependentNotifications(
 				appealDetails.appealId,
 				`<p class="govuk-notification-banner__heading">Appeal ready to be assigned to case officer</p><p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/${appealDetails.appealId}/assign-user/case-officer" data-cy="banner-assign-case-officer">Assign case officer</a></p>`
 			);
+			break;
+		case APPEAL_CASE_STATUS.VALIDATION:
+			addNotificationBannerToSession(
+				session,
+				'readyForValidation',
+				appealDetails.appealId,
+				`<p class="govuk-notification-banner__heading">Appeal ready for validation</p><p><a class="govuk-notification-banner__link" data-cy="validate-appeal" href="/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case">Validate <span class="govuk-visually-hidden">appeal</span></a></p>`
+			);
+			break;
+		case APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE:
+			if (appealDetails.lpaQuestionnaireId) {
+				addNotificationBannerToSession(
+					session,
+					'readyForLpaQuestionnaireReview',
+					appealDetails.appealId,
+					`<p class="govuk-notification-banner__heading">LPA questionnaire ready for review</p><p><a class="govuk-notification-banner__link" data-cy="review-lpa-questionnaire-banner" href="/appeals-service/appeal-details/${appealDetails.appealId}/lpa-questionnaire/${appealDetails.lpaQuestionnaireId}">Review <span class="govuk-visually-hidden">LPA questionnaire</span></a></p>`
+				);
+			}
 			break;
 		case APPEAL_CASE_STATUS.ISSUE_DETERMINATION:
 			addNotificationBannerToSession(
@@ -365,13 +359,12 @@ function removeAccordionComponentsActions(accordionComponents) {
 function generateAccordionItems(appealDetails, mappedData, session, ipCommentsAwaitingReview) {
 	switch (appealDetails.appealType) {
 		case APPEAL_TYPE.D:
-			return generateHASAccordion(appealDetails, mappedData, session);
+			return generateAccordion(appealDetails, mappedData, session);
 		case APPEAL_TYPE.W:
-			if (isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78)) {
-				return generateHASAccordion(appealDetails, mappedData, session, ipCommentsAwaitingReview);
-			} else {
+			if (!isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78)) {
 				throw new Error('Feature flag inactive for S78');
 			}
+			return generateAccordion(appealDetails, mappedData, session, ipCommentsAwaitingReview);
 		default:
 			throw new Error('Invalid appealType, unable to generate display page');
 	}
@@ -385,7 +378,7 @@ function generateAccordionItems(appealDetails, mappedData, session, ipCommentsAw
  * @param {boolean} [ipCommentsAwaitingReview]
  * @returns
  */
-function generateHASAccordion(appealDetails, mappedData, session, ipCommentsAwaitingReview) {
+function generateAccordion(appealDetails, mappedData, session, ipCommentsAwaitingReview) {
 	/** @type {PageComponent} */
 	const caseOverview = {
 		type: 'summary-list',
@@ -420,31 +413,60 @@ function generateHASAccordion(appealDetails, mappedData, session, ipCommentsAwai
 	};
 
 	/** @type {PageComponent[]} */
-	const caseTimetable = appealDetails.startedAt
-		? [
-				{
-					type: 'summary-list',
-					parameters: {
-						rows: [
-							mappedData.appeal.validAt.display.summaryListItem,
-							mappedData.appeal.startedAt.display.summaryListItem,
-							mappedData.appeal.lpaQuestionnaireDueDate.display.summaryListItem,
-							mappedData.appeal.siteVisitDate.display.summaryListItem
-						].filter(isDefined)
-					}
+	const caseTimetable = (() => {
+		switch (appealDetails.appealType) {
+			case APPEAL_TYPE.D:
+				return appealDetails.startedAt
+					? [
+							{
+								type: 'summary-list',
+								parameters: {
+									rows: [
+										mappedData.appeal.validAt.display.summaryListItem,
+										mappedData.appeal.startedAt.display.summaryListItem,
+										mappedData.appeal.lpaQuestionnaireDueDate.display.summaryListItem,
+										mappedData.appeal.siteVisitDate.display.summaryListItem
+									].filter(isDefined)
+								}
+							}
+					  ]
+					: [
+							{
+								type: 'summary-list',
+								parameters: {
+									rows: [
+										mappedData.appeal.validAt.display.summaryListItem,
+										mappedData.appeal.startedAt.display.summaryListItem
+									].filter(isDefined)
+								}
+							}
+					  ];
+			case APPEAL_TYPE.W:
+				if (!isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78)) {
+					throw new Error('Feature flag inactive for S78');
 				}
-		  ]
-		: [
-				{
-					type: 'summary-list',
-					parameters: {
-						rows: [
-							mappedData.appeal.validAt.display.summaryListItem,
-							mappedData.appeal.startedAt.display.summaryListItem
-						].filter(isDefined)
+				return [
+					{
+						type: 'summary-list',
+						parameters: {
+							rows: [
+								mappedData.appeal.validAt.display.summaryListItem,
+								mappedData.appeal.startedAt.display.summaryListItem,
+								mappedData.appeal.lpaQuestionnaireDueDate.display.summaryListItem,
+								mappedData.appeal.lpaStatementDueDate.display.summaryListItem,
+								mappedData.appeal.ipCommentsDueDate.display.summaryListItem,
+								mappedData.appeal.appellantFinalCommentDueDate.display.summaryListItem,
+								mappedData.appeal.lpaFinalCommentDueDate.display.summaryListItem,
+								mappedData.appeal.s106ObligationDueDate.display.summaryListItem
+							].filter(isDefined)
+						}
 					}
-				}
-		  ];
+				];
+			default:
+				throw new Error('Invalid appealType, unable to generate display page');
+		}
+	})();
+
 	/** @type {PageComponent} */
 	const caseDocumentation = {
 		type: 'table',

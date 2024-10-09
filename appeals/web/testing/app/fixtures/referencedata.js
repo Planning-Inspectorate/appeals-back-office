@@ -150,7 +150,7 @@ export const appealData = {
 		folderId: 123,
 		outcome: 'dismissed',
 		documentId: 'e1e90a49-fab3-44b8-a21a-bb73af089f6b',
-		letterDate: new Date('2023-12-25T00:00:00.000Z')
+		letterDate: '2023-12-25T00:00:00.000Z'
 	},
 	internalCorrespondence: {
 		crossTeam: {
@@ -231,8 +231,8 @@ export const appealData = {
 	siteVisit: {
 		siteVisitId: 0,
 		visitDate: '2023-10-09T01:00:00.000Z',
-		visitEndTime: '10:44',
-		visitStartTime: '09:38',
+		visitEndTime: '2023-10-09T09:44:00.000Z',
+		visitStartTime: '2023-10-09T08:38:00.000Z',
 		visitType: 'Accompanied'
 	},
 	createdAt: '2023-05-21T10:27:06.626Z',
@@ -2268,41 +2268,131 @@ export const lpaNotificationMethodsData = [
 	}
 ];
 
-export const interestedPartyCommentsAwaitingReview = [
-	{
-		id: 6383,
-		origin: 'citizen',
-		author: 'Roger Simmons',
-		status: 'awaiting_review',
-		originalRepresentation: 'Some autogen text 9',
-		redactedRepresentation: '',
-		created: '2024-09-13T12:04:55.565Z',
-		notes: '',
-		attachments: []
-	},
-	{
-		id: 6382,
-		origin: 'citizen',
-		author: 'Fiona Burgess',
-		status: 'awaiting_review',
-		originalRepresentation: 'Some autogen text 8',
-		redactedRepresentation: '',
-		created: '2024-09-13T12:04:55.555Z',
-		notes: '',
-		attachments: []
-	},
-	{
-		id: 6381,
-		origin: 'citizen',
-		author: 'Elaine Madsen',
-		status: 'awaiting_review',
-		originalRepresentation: 'Some autogen text 7',
-		redactedRepresentation: '',
-		created: '2024-09-13T12:04:55.545Z',
-		notes: '',
-		attachments: []
-	}
-];
+export const interestedPartyCommentsAwaitingReview = {
+	itemCount: 3,
+	items: [
+		{
+			id: 3812,
+			origin: 'citizen',
+			author: 'Eva Sharma',
+			status: 'awaiting_review',
+			originalRepresentation: 'Awaiting review comment 1',
+			redactedRepresentation: '',
+			created: '2024-09-24T10:36:25.774Z',
+			notes: '',
+			attachments: []
+		},
+		{
+			id: 3811,
+			origin: 'citizen',
+			author: 'Roger Simmons',
+			status: 'awaiting_review',
+			originalRepresentation: 'Awaiting review comment 2',
+			redactedRepresentation: '',
+			created: '2024-09-24T10:36:25.770Z',
+			notes: '',
+			attachments: []
+		},
+		{
+			id: 3810,
+			origin: 'citizen',
+			author: 'Roger Simmons',
+			status: 'awaiting_review',
+			originalRepresentation: 'Awaiting review comment 3',
+			redactedRepresentation: '',
+			created: '2024-09-24T10:36:25.767Z',
+			notes: '',
+			attachments: []
+		}
+	],
+	page: 1,
+	pageCount: 1,
+	pageSize: 1000
+};
+
+export const interestedPartyCommentsValid = {
+	itemCount: 3,
+	items: [
+		{
+			id: 3852,
+			origin: 'citizen',
+			author: 'Roger Simmons',
+			status: 'valid',
+			originalRepresentation: 'Valid comment 1',
+			redactedRepresentation: '',
+			created: '2024-09-24T10:36:25.933Z',
+			notes: '',
+			attachments: []
+		},
+		{
+			id: 3851,
+			origin: 'citizen',
+			author: 'Roger Simmons',
+			status: 'valid',
+			originalRepresentation: 'Valid comment 2',
+			redactedRepresentation: '',
+			created: '2024-09-24T10:36:25.928Z',
+			notes: '',
+			attachments: []
+		},
+		{
+			id: 3850,
+			origin: 'citizen',
+			author: 'Haley Eland',
+			status: 'valid',
+			originalRepresentation: 'Valid comment 3',
+			redactedRepresentation: '',
+			created: '2024-09-24T10:36:25.922Z',
+			notes: '',
+			attachments: []
+		}
+	],
+	page: 1,
+	pageCount: 1,
+	pageSize: 1000
+};
+
+export const interestedPartyCommentsInvalid = {
+	itemCount: 3,
+	items: [
+		{
+			id: 3872,
+			origin: 'citizen',
+			author: 'Ryan Marshall',
+			status: 'invalid',
+			originalRepresentation: 'Invalid comment 1',
+			redactedRepresentation: '',
+			created: '2024-09-24T10:36:26.033Z',
+			notes: '',
+			attachments: []
+		},
+		{
+			id: 3871,
+			origin: 'citizen',
+			author: 'Ryan Marshall',
+			status: 'invalid',
+			originalRepresentation: 'Invalid comment 2',
+			redactedRepresentation: '',
+			created: '2024-09-24T10:36:26.027Z',
+			notes: '',
+			attachments: []
+		},
+		{
+			id: 3870,
+			origin: 'citizen',
+			author: 'Eva Sharma',
+			status: 'invalid',
+			originalRepresentation: 'Invalid comment 3',
+			redactedRepresentation: '',
+			created: '2024-09-24T10:36:26.022Z',
+			notes: '',
+			attachments: []
+		}
+	],
+	page: 1,
+	pageCount: 1,
+	pageSize: 1000
+};
 
 export const baseSession = {
 	id: '',

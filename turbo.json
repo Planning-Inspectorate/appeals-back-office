@@ -16,6 +16,9 @@
 			"outputs": ["coverage/**"],
 			"dependsOn": ["topo"]
 		},
+		"test:cov": {
+			"outputs": ["coverage/**"]
+		},
 		"lint:js": {
 			"dependsOn": ["^build"],
 			"outputs": []

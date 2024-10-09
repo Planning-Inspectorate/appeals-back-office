@@ -1,0 +1,108 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`add-ip-comment GET /add/check-address should match the snapshot 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+                    <h1                     class="govuk-heading-xl govuk-!-margin-bottom-3">Did the interested party provide an address?</h1>
+                </div>
+            </div>
+            <form method="post" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <div class="govuk-radios" data-module="govuk-radios">
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="addressProvided" name="addressProvided"
+                            type="radio" value="yes">
+                            <label class="govuk-label govuk-radios__label" for="addressProvided">Yes</label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="addressProvided-2" name="addressProvided"
+                            type="radio" value="no">
+                            <label class="govuk-label govuk-radios__label" for="addressProvided-2">No</label>
+                        </div>
+                    </div>
+                </div>
+                <button class="govuk-button" data-module="govuk-button">Continue</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`add-ip-comment GET /add/ip-address should match the snapshot 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Interested party&#39;s address</h1>
+                </div>
+            </div>
+            <form method="POST" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="address-line-1">Address line 1</label>
+                    <input class="govuk-input" id="address-line-1" name="addressLine1"
+                    type="text">
+                </div>
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="address-line-2">Address line 2 (optional)</label>
+                    <input class="govuk-input" id="address-line-2"
+                    name="addressLine2" type="text">
+                </div>
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="address-town">Town or city</label>
+                    <input class="govuk-input govuk-input govuk-input--width-20"
+                    id="address-town" name="town" type="text">
+                </div>
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="address-county">County (optional)</label>
+                    <input class="govuk-input govuk-input govuk-input--width-20"
+                    id="address-county" name="county" type="text">
+                </div>
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="address-postcode">Postcode</label>
+                    <input class="govuk-input govuk-input govuk-input--width-10"
+                    id="address-postcode" name="postCode" type="text">
+                </div>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`add-ip-comment GET /add/ip-details should match the snapshot 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Interested party&#39;s details</h1>
+                </div>
+            </div>
+            <form method="POST" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="first-name">First name</label>
+                    <input class="govuk-input" id="first-name" name="firstName"
+                    type="text">
+                </div>
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="last-name">Last name</label>
+                    <input class="govuk-input" id="last-name" name="lastName"
+                    type="text">
+                </div>
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="email-address">Email address (optional)</label>
+                    <input class="govuk-input" id="email-address"
+                    name="emailAddress" type="text">
+                </div>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;

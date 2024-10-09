@@ -3,7 +3,10 @@ import * as representationRepository from '#repositories/representation.reposito
 /**
  *
  * @param {number} appealId
- * @param {string|undefined} status //APPEAL_REPRESENTATION_STATUS
+ * @param {number} pageNumber
+ * @param {number} pageSize
+ * @param {string|undefined} status // APPEAL_REPRESENTATION_STATUS
+ * @returns {Promise<{ itemCount: number, comments: import('@pins/appeals.api').Schema.Representation[] }>}
  */
 export const getThirdPartComments = async (
 	appealId,
@@ -11,13 +14,13 @@ export const getThirdPartComments = async (
 	pageSize = 30,
 	status = undefined
 ) => {
-	const reps = await representationRepository.getThirdPartyCommentsByAppealId(
+	const { itemCount, comments } = await representationRepository.getThirdPartyCommentsByAppealId(
 		appealId,
 		pageNumber - 1,
 		pageSize,
 		status
 	);
-	return reps;
+	return { itemCount, comments };
 };
 
 /**

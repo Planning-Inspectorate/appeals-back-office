@@ -2,12 +2,10 @@
 import { request } from '../../../app-test.js';
 import { jest } from '@jest/globals';
 import {
-	AUDIT_TRAIL_CASE_TIMELINE_CREATED,
 	AUDIT_TRAIL_CASE_TIMELINE_UPDATED,
-	DEFAULT_TIMESTAMP_TIME,
 	ERROR_FAILED_TO_SAVE_DATA,
 	ERROR_MUST_BE_BUSINESS_DAY,
-	ERROR_MUST_BE_CORRECT_DATE_FORMAT,
+	ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT,
 	ERROR_MUST_BE_IN_FUTURE,
 	ERROR_MUST_NOT_HAVE_TIMETABLE_DATE,
 	ERROR_NOT_FOUND,
@@ -15,13 +13,23 @@ import {
 } from '../../constants.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { householdAppeal, fullPlanningAppeal } from '#tests/appeals/mocks.js';
-import joinDateAndTime from '#utils/join-date-and-time.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import config from '#config/config.js';
+import { add } from 'date-fns';
+import { recalculateDateIfNotBusinessDay, setTimeInTimeZone } from '#utils/business-days.js';
+import { DEADLINE_HOUR } from '@pins/appeals/constants/dates.js';
+import { DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
-const futureDate = '2099-09-01';
-const futureDateAndTime = joinDateAndTime(futureDate);
+
+const baseDate = '2024-06-05T22:50:00.000Z';
+jest.useFakeTimers({ doNotFake: ['performance'] }).setSystemTime(new Date(baseDate));
+
+const futureDate = add(new Date(baseDate), { days: 5 });
+const withoutWeekends = await recalculateDateIfNotBusinessDay(futureDate.toISOString());
+const utcDate = setTimeInTimeZone(withoutWeekends, 0, 0);
+const responseDateSet = setTimeInTimeZone(utcDate, DEADLINE_HOUR, DEADLINE_MINUTE).toISOString();
+
 const houseAppealWithTimetable = {
 	...householdAppeal,
 	caseStartedDate: new Date(2022, 4, 18),
@@ -29,24 +37,20 @@ const houseAppealWithTimetable = {
 	caseValidDate: new Date(2022, 4, 20),
 	appealTimetable: {
 		appealId: 1,
-		finalCommentReviewDate: null,
 		id: 101,
-		issueDeterminationDate: null,
-		lpaQuestionnaireDueDate: new Date('2023-05-16T01:00:00.000Z'),
-		statementReviewDate: null
+		lpaQuestionnaireDueDate: new Date('2023-05-16T01:00:00.000Z')
 	}
 };
 
 const fullPlanningAppealWithTimetable = {
 	...fullPlanningAppeal,
-	caseStartedDate: new Date(2022, 4, 18),
+	caseStartedDate: new Date(2022, 4, 22),
 	caseValidationDate: new Date(2022, 4, 20),
 	caseValidDate: new Date(2022, 4, 20),
 	appealTimetable: {
 		appealId: 1,
 		finalCommentReviewDate: null,
 		id: 101,
-		issueDeterminationDate: null,
 		lpaQuestionnaireDueDate: new Date('2023-05-16T01:00:00.000Z'),
 		statementReviewDate: null
 	}
@@ -64,24 +68,21 @@ describe('appeal timetables routes', () => {
 	describe('/appeals/:appealId/appeal-timetables/:appealTimetableId', () => {
 		describe('PATCH', () => {
 			const householdAppealRequestBody = {
-				issueDeterminationDate: futureDate,
-				lpaQuestionnaireDueDate: futureDate
-			};
-			const householdAppealResponseBody = {
-				issueDeterminationDate: futureDateAndTime,
-				lpaQuestionnaireDueDate: futureDateAndTime
+				lpaQuestionnaireDueDate: utcDate.toISOString()
 			};
 			const fullPlanningAppealRequestBody = {
-				finalCommentReviewDate: futureDate,
-				issueDeterminationDate: futureDate,
-				lpaQuestionnaireDueDate: futureDate,
-				statementReviewDate: futureDate
+				finalCommentReviewDate: utcDate.toISOString(),
+				lpaQuestionnaireDueDate: utcDate.toISOString(),
+				statementReviewDate: utcDate.toISOString()
+			};
+
+			const householdAppealReponseBody = {
+				lpaQuestionnaireDueDate: responseDateSet
 			};
 			const fullPlanningAppealResponseBody = {
-				finalCommentReviewDate: futureDateAndTime,
-				issueDeterminationDate: futureDateAndTime,
-				lpaQuestionnaireDueDate: futureDateAndTime,
-				statementReviewDate: futureDateAndTime
+				finalCommentReviewDate: responseDateSet,
+				lpaQuestionnaireDueDate: responseDateSet,
+				statementReviewDate: responseDateSet
 			};
 
 			test('updates a household appeal timetable', async () => {
@@ -100,7 +101,7 @@ describe('appeal timetables routes', () => {
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(databaseConnector.appealTimetable.update).toHaveBeenCalledWith({
-					data: householdAppealResponseBody,
+					data: householdAppealReponseBody,
 					where: {
 						id: appealTimetable.id
 					}
@@ -114,7 +115,7 @@ describe('appeal timetables routes', () => {
 					}
 				});
 				expect(response.status).toEqual(200);
-				expect(response.body).toEqual(householdAppealResponseBody);
+				expect(response.body).toEqual(householdAppealRequestBody);
 			});
 
 			test('updates a full planning appeal timetable', async () => {
@@ -138,16 +139,9 @@ describe('appeal timetables routes', () => {
 						id: appealTimetable.id
 					}
 				});
-				// expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
-				// 	data: {
-				// 		appealId: fullPlanningAppeal.id,
-				// 		details: AUDIT_TRAIL_CASE_TIMELINE_UPDATED,
-				// 		loggedAt: expect.any(Date),
-				// 		userId: fullPlanningAppeal.caseOfficer.id
-				// 	}
-				// });
+
 				expect(response.status).toEqual(200);
-				expect(response.body).toEqual(fullPlanningAppealResponseBody);
+				expect(response.body).toEqual(fullPlanningAppealRequestBody);
 			});
 
 			test('returns an error if appealId is not numeric', async () => {
@@ -235,7 +229,7 @@ describe('appeal timetables routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						finalCommentReviewDate: ERROR_MUST_BE_CORRECT_DATE_FORMAT
+						finalCommentReviewDate: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 					}
 				});
 			});
@@ -255,7 +249,7 @@ describe('appeal timetables routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						finalCommentReviewDate: ERROR_MUST_BE_CORRECT_DATE_FORMAT
+						finalCommentReviewDate: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 					}
 				});
 			});
@@ -266,7 +260,7 @@ describe('appeal timetables routes', () => {
 
 				const { appealTimetable, id } = fullPlanningAppealWithTimetable;
 				const body = {
-					finalCommentReviewDate: '2023-06-04'
+					finalCommentReviewDate: '2023-06-04T23:59:00.000Z'
 				};
 				const response = await request
 					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
@@ -287,7 +281,7 @@ describe('appeal timetables routes', () => {
 
 				const { appealTimetable, id } = fullPlanningAppealWithTimetable;
 				const body = {
-					finalCommentReviewDate: '2099-09-19'
+					finalCommentReviewDate: '2099-09-19T23:59:00.000Z'
 				};
 				const response = await request
 					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
@@ -308,7 +302,7 @@ describe('appeal timetables routes', () => {
 
 				const { appealTimetable, id } = fullPlanningAppealWithTimetable;
 				const body = {
-					finalCommentReviewDate: '2025-12-25'
+					finalCommentReviewDate: '2025-12-25T23:59:00.000Z'
 				};
 				const response = await request
 					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
@@ -338,7 +332,7 @@ describe('appeal timetables routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						finalCommentReviewDate: ERROR_MUST_BE_CORRECT_DATE_FORMAT
+						finalCommentReviewDate: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 					}
 				});
 			});
@@ -349,7 +343,7 @@ describe('appeal timetables routes', () => {
 
 				const { appealTimetable, appealType, id } = houseAppealWithTimetable;
 				const body = {
-					finalCommentReviewDate: futureDate
+					finalCommentReviewDate: utcDate.toISOString()
 				};
 				const response = await request
 					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
@@ -381,7 +375,7 @@ describe('appeal timetables routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						issueDeterminationDate: ERROR_MUST_BE_CORRECT_DATE_FORMAT
+						issueDeterminationDate: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 					}
 				});
 			});
@@ -401,7 +395,7 @@ describe('appeal timetables routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						issueDeterminationDate: ERROR_MUST_BE_CORRECT_DATE_FORMAT
+						issueDeterminationDate: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 					}
 				});
 			});
@@ -412,7 +406,7 @@ describe('appeal timetables routes', () => {
 
 				const { appealTimetable, id } = houseAppealWithTimetable;
 				const body = {
-					issueDeterminationDate: '2023-06-04'
+					issueDeterminationDate: '2023-06-04T23:59:00.000Z'
 				};
 				const response = await request
 					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
@@ -433,7 +427,7 @@ describe('appeal timetables routes', () => {
 
 				const { appealTimetable, id } = houseAppealWithTimetable;
 				const body = {
-					issueDeterminationDate: '2099-09-19'
+					issueDeterminationDate: '2099-09-19T23:59:00.000Z'
 				};
 				const response = await request
 					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
@@ -454,7 +448,7 @@ describe('appeal timetables routes', () => {
 
 				const { appealTimetable, id } = houseAppealWithTimetable;
 				const body = {
-					issueDeterminationDate: '2025-12-25'
+					issueDeterminationDate: '2025-12-25T23:59:00.000Z'
 				};
 				const response = await request
 					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
@@ -484,7 +478,7 @@ describe('appeal timetables routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						issueDeterminationDate: ERROR_MUST_BE_CORRECT_DATE_FORMAT
+						issueDeterminationDate: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 					}
 				});
 			});
@@ -504,7 +498,7 @@ describe('appeal timetables routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						lpaQuestionnaireDueDate: ERROR_MUST_BE_CORRECT_DATE_FORMAT
+						lpaQuestionnaireDueDate: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 					}
 				});
 			});
@@ -524,7 +518,7 @@ describe('appeal timetables routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						lpaQuestionnaireDueDate: ERROR_MUST_BE_CORRECT_DATE_FORMAT
+						lpaQuestionnaireDueDate: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 					}
 				});
 			});
@@ -535,7 +529,7 @@ describe('appeal timetables routes', () => {
 
 				const { appealTimetable, id } = houseAppealWithTimetable;
 				const body = {
-					lpaQuestionnaireDueDate: '2023-06-04'
+					lpaQuestionnaireDueDate: '2023-06-04T23:59:00.000Z'
 				};
 				const response = await request
 					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
@@ -556,7 +550,7 @@ describe('appeal timetables routes', () => {
 
 				const { appealTimetable, id } = houseAppealWithTimetable;
 				const body = {
-					lpaQuestionnaireDueDate: '2099-09-19'
+					lpaQuestionnaireDueDate: '2099-09-19T23:59:00.000Z'
 				};
 				const response = await request
 					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
@@ -577,7 +571,7 @@ describe('appeal timetables routes', () => {
 
 				const { appealTimetable, id } = houseAppealWithTimetable;
 				const body = {
-					lpaQuestionnaireDueDate: '2025-12-25'
+					lpaQuestionnaireDueDate: '2025-12-25T23:59:00.000Z'
 				};
 				const response = await request
 					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
@@ -607,7 +601,7 @@ describe('appeal timetables routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						lpaQuestionnaireDueDate: ERROR_MUST_BE_CORRECT_DATE_FORMAT
+						lpaQuestionnaireDueDate: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 					}
 				});
 			});
@@ -627,7 +621,7 @@ describe('appeal timetables routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						statementReviewDate: ERROR_MUST_BE_CORRECT_DATE_FORMAT
+						statementReviewDate: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 					}
 				});
 			});
@@ -647,7 +641,7 @@ describe('appeal timetables routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						statementReviewDate: ERROR_MUST_BE_CORRECT_DATE_FORMAT
+						statementReviewDate: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 					}
 				});
 			});
@@ -658,7 +652,7 @@ describe('appeal timetables routes', () => {
 
 				const { appealTimetable, id } = fullPlanningAppealWithTimetable;
 				const body = {
-					statementReviewDate: '2023-06-04'
+					statementReviewDate: '2023-06-04T23:59:00.000Z'
 				};
 				const response = await request
 					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
@@ -679,7 +673,7 @@ describe('appeal timetables routes', () => {
 
 				const { appealTimetable, id } = fullPlanningAppealWithTimetable;
 				const body = {
-					statementReviewDate: '2099-09-19'
+					statementReviewDate: '2099-09-19T23:59:00.000Z'
 				};
 				const response = await request
 					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
@@ -700,7 +694,7 @@ describe('appeal timetables routes', () => {
 
 				const { appealTimetable, id } = fullPlanningAppealWithTimetable;
 				const body = {
-					statementReviewDate: '2025-12-25'
+					statementReviewDate: '2025-12-25T23:59:00.000Z'
 				};
 				const response = await request
 					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
@@ -730,7 +724,7 @@ describe('appeal timetables routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						statementReviewDate: ERROR_MUST_BE_CORRECT_DATE_FORMAT
+						statementReviewDate: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 					}
 				});
 			});
@@ -741,7 +735,7 @@ describe('appeal timetables routes', () => {
 
 				const { appealTimetable, appealType, id } = houseAppealWithTimetable;
 				const body = {
-					statementReviewDate: futureDate
+					statementReviewDate: utcDate.toISOString()
 				};
 				const response = await request
 					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
@@ -787,7 +781,7 @@ describe('appeal timetables routes', () => {
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(databaseConnector.appealTimetable.update).toHaveBeenCalledWith({
-					data: householdAppealResponseBody,
+					data: householdAppealReponseBody,
 					where: {
 						id: appealTimetable.id
 					}
@@ -802,163 +796,8 @@ describe('appeal timetables routes', () => {
 		});
 	});
 
-	describe('/appeals/LappealId/appeal-timetables/', () => {
+	describe('/appeals/:appealId/appeal-timetables/', () => {
 		describe('POST', () => {
-			test('sets the timetable deadline to the Monday after the deadline if the deadline is a Saturday', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-				// @ts-ignore
-				databaseConnector.user.upsert.mockResolvedValue({
-					id: 1,
-					azureAdUserId
-				});
-
-				jest.useFakeTimers({ doNotFake: ['performance'] }).setSystemTime(new Date('2023-06-05'));
-
-				const response = await request
-					.post(`/appeals/${householdAppeal.id}/appeal-timetables`)
-					.send({})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(databaseConnector.appealTimetable.upsert).toHaveBeenCalledWith(
-					expect.objectContaining({
-						update: {
-							lpaQuestionnaireDueDate: new Date(`2023-06-12T${DEFAULT_TIMESTAMP_TIME}Z`)
-						}
-					})
-				);
-
-				// eslint-disable-next-line no-undef
-				expect(mockSendEmail).toHaveBeenCalledTimes(2);
-
-				// eslint-disable-next-line no-undef
-				expect(mockSendEmail).toHaveBeenCalledWith(
-					config.govNotify.template.appealValidStartCase.appellant.id,
-					'test@136s7.com',
-					{
-						emailReplyToId: null,
-						personalisation: {
-							appeal_reference_number: '1345264',
-							lpa_reference: '48269/APP/2021/1482',
-							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-							url: FRONT_OFFICE_URL,
-							start_date: '5 June 2023',
-							questionnaire_due_date: '12 June 2023',
-							local_planning_authority: 'Maidstone Borough Council',
-							appeal_type: 'Householder',
-							procedure_type: 'a written procedure',
-							appellant_email_address: 'test@136s7.com'
-						},
-						reference: null
-					}
-				);
-
-				// eslint-disable-next-line no-undef
-				expect(mockSendEmail).toHaveBeenCalledWith(
-					config.govNotify.template.appealValidStartCase.lpa.id,
-					'maid@lpa-email.gov.uk',
-					{
-						emailReplyToId: null,
-						personalisation: {
-							appeal_reference_number: '1345264',
-							lpa_reference: '48269/APP/2021/1482',
-							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-							url: FRONT_OFFICE_URL,
-							start_date: '5 June 2023',
-							questionnaire_due_date: '12 June 2023',
-							local_planning_authority: 'Maidstone Borough Council',
-							appeal_type: 'Householder',
-							procedure_type: 'a written procedure',
-							appellant_email_address: 'test@136s7.com'
-						},
-						reference: null
-					}
-				);
-				expect(response.status).toEqual(200);
-			});
-
-			test('sets the timetable deadline to the Tuesday after the deadline if the deadline is a Saturday and the Monday after is a bank holiday', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-				// @ts-ignore
-				databaseConnector.user.upsert.mockResolvedValue({
-					id: 1,
-					azureAdUserId
-				});
-
-				jest.useFakeTimers({ doNotFake: ['performance'] }).setSystemTime(new Date('2023-05-22'));
-
-				const response = await request
-					.post(`/appeals/${householdAppeal.id}/appeal-timetables`)
-					.send({})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(databaseConnector.appealTimetable.upsert).toHaveBeenCalledWith(
-					expect.objectContaining({
-						update: {
-							lpaQuestionnaireDueDate: new Date(`2023-05-30T${DEFAULT_TIMESTAMP_TIME}Z`)
-						}
-					})
-				);
-				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
-					data: {
-						appealId: householdAppeal.id,
-						details: AUDIT_TRAIL_CASE_TIMELINE_CREATED,
-						loggedAt: expect.any(Date),
-						userId: householdAppeal.caseOfficer.id
-					}
-				});
-
-				// eslint-disable-next-line no-undef
-				expect(mockSendEmail).toHaveBeenCalledTimes(2);
-
-				// eslint-disable-next-line no-undef
-				expect(mockSendEmail).toHaveBeenCalledWith(
-					config.govNotify.template.appealValidStartCase.appellant.id,
-					'test@136s7.com',
-					{
-						emailReplyToId: null,
-						personalisation: {
-							appeal_reference_number: '1345264',
-							lpa_reference: '48269/APP/2021/1482',
-							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-							url: FRONT_OFFICE_URL,
-							start_date: '22 May 2023',
-							questionnaire_due_date: '30 May 2023',
-							local_planning_authority: 'Maidstone Borough Council',
-							appeal_type: 'Householder',
-							procedure_type: 'a written procedure',
-							appellant_email_address: 'test@136s7.com'
-						},
-						reference: null
-					}
-				);
-
-				// eslint-disable-next-line no-undef
-				expect(mockSendEmail).toHaveBeenCalledWith(
-					config.govNotify.template.appealValidStartCase.lpa.id,
-					'maid@lpa-email.gov.uk',
-					{
-						emailReplyToId: null,
-						personalisation: {
-							appeal_reference_number: '1345264',
-							lpa_reference: '48269/APP/2021/1482',
-							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-							url: FRONT_OFFICE_URL,
-							start_date: '22 May 2023',
-							questionnaire_due_date: '30 May 2023',
-							local_planning_authority: 'Maidstone Borough Council',
-							appeal_type: 'Householder',
-							procedure_type: 'a written procedure',
-							appellant_email_address: 'test@136s7.com'
-						},
-						reference: null
-					}
-				);
-
-				expect(response.status).toEqual(200);
-			});
-
 			test('updates start date when a start date has previously been set', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(houseAppealWithTimetable);
@@ -968,7 +807,9 @@ describe('appeal timetables routes', () => {
 					azureAdUserId
 				});
 
-				jest.useFakeTimers({ doNotFake: ['performance'] }).setSystemTime(new Date('2023-06-05'));
+				jest
+					.useFakeTimers({ doNotFake: ['performance'] })
+					.setSystemTime(new Date('2023-06-05T22:59:00Z'));
 
 				const response = await request
 					.post(`/appeals/${householdAppeal.id}/appeal-timetables`)
@@ -978,7 +819,7 @@ describe('appeal timetables routes', () => {
 				expect(databaseConnector.appealTimetable.upsert).toHaveBeenCalledWith(
 					expect.objectContaining({
 						update: {
-							lpaQuestionnaireDueDate: new Date(`2023-06-12T${DEFAULT_TIMESTAMP_TIME}Z`)
+							lpaQuestionnaireDueDate: new Date('2023-06-12T22:59:00.000Z')
 						}
 					})
 				);

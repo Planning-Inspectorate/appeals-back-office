@@ -29,6 +29,7 @@ import inspectorAccessRouter from './inspector-access/inspector-access.router.js
 import safetyRisksRouter from './safety-risks/safety-risks.router.js';
 import internalCorrespondenceRouter from './internal-correspondence/internal-correspondence.router.js';
 import withdrawalRouter from './withdrawal/withdrawal.router.js';
+import interestedPartyCommentsRouter from './interested-party-comments/interested-party-comments.router.js';
 
 const router = createRouter();
 
@@ -54,6 +55,7 @@ router.use('/:appealId/lpa-questionnaire', lpaQuestionnaireRouter);
 router.use('/:appealId/allocation-details', allocationDetailsRouter);
 router.use('/:appealId/appeal-timetables', appealTimetablesRouter);
 router.use('/:appealId/appellant-case', appellantCaseRouter);
+router.use('/:appealId/interested-party-comments', interestedPartyCommentsRouter);
 router.use(
 	'/:appealId/site-visit',
 	validateAppeal,

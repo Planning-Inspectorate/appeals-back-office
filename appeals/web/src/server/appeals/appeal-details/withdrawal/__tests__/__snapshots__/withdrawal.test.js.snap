@@ -45,7 +45,7 @@ exports[`withdrawal GET /start should render the withdrawal request upload page 
     data-document-type="appellantCaseWithdrawalLetter" data-document-stage="appellant-case"
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
     data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
-        <div class="top-errors-hook"></div>
+        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
         <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
         data-filenames-in-folder="">
             <div class="pins-file-upload__container">
@@ -107,7 +107,8 @@ exports[`withdrawal GET /view should render the view withdrawal request document
         <tbody class="govuk-table__body">
             <tr class="govuk-table__row">
                 <td class="govuk-table__cell">
-                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/38/download/614dbbaa-da49-40df-8e39-e6f299225425/preview/">withdrawal-request-document.pdf</a>
+                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/38/download/614dbbaa-da49-40df-8e39-e6f299225425/withdrawal-request-document.pdf"
+                        target="_blank">withdrawal-request-document.pdf</a>
                     </div>
                     <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
                         <dd>PDF, 3 KB</dd>
@@ -115,7 +116,8 @@ exports[`withdrawal GET /view should render the view withdrawal request document
                 </td>
                 <td class="govuk-table__cell">8 July 2024</td>
                 <td class="govuk-table__cell">No redaction required</td>
-                <td class="govuk-table__cell"><a class="govuk-link" href="/documents/38/download/614dbbaa-da49-40df-8e39-e6f299225425/preview/">View</a>
+                <td class="govuk-table__cell"><a class="govuk-link" href="/documents/38/download/614dbbaa-da49-40df-8e39-e6f299225425/withdrawal-request-document.pdf"
+                    target="_blank">View<span class="govuk-visually-hidden"> document</span></a>
                 </td>
             </tr>
         </tbody>

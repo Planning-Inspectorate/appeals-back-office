@@ -6,6 +6,8 @@ A local self-signed certificate can be created either using OS built-in tools, o
 
 Once a certificate is created, it can be put in the root of the solution, and referenced when configuring the site over HTTPS.
 
+Make sure the certificate files are named as certificate.pem and certificate-key.pem so they match the docker command when emulating blob storage.
+
 > [!IMPORTANT]
 > Ensure the certificate created will validate against both `localhost` and `127.0.0.1`
 

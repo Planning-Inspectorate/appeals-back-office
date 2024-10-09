@@ -1,10 +1,10 @@
 import config from '#environment/config.js';
 import { inputInstructionIsRadiosInputInstruction } from '#lib/mappers/global-mapper-formatter.js';
 import {
-	apiDateStringToDayMonthYear,
-	apiDateStringToDisplayDate,
-	dayMonthYearToApiDateString,
-	webDateToDisplayDate
+	dateISOStringToDayMonthYearHourMinute,
+	dateISOStringToDisplayDate,
+	dayMonthYearHourMinuteToISOString,
+	dayMonthYearHourMinuteToDisplayDate
 } from '#lib/dates.js';
 import { capitalize } from 'lodash-es';
 import {
@@ -23,13 +23,14 @@ import {
 	APPEAL_VIRUS_CHECK_STATUS,
 	APPEAL_DOCUMENT_TYPE
 } from 'pins-data-model';
+import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 import { isFeatureActive } from '#common/feature-flags.js';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { generateHASComponents } from '#lib/mappers/appellant-case/appeal-type-has.mapper.js';
 import { generateFPAComponents } from '#lib/mappers/appellant-case/appeal-type-fpa.mapper.js';
 
 /**
- * @typedef {import('../../appeals.types.js').DayMonthYear} DayMonthYear
+ * @typedef {import('../../appeals.types.js').DayMonthYearHourMinute} DayMonthYearHourMinute
  * @typedef {import('@pins/appeals.api').Appeals.NotValidReasonOption} NotValidReasonOption
  * @typedef {import('@pins/appeals.api').Appeals.IncompleteInvalidReasonsResponse} IncompleteInvalidReasonsResponse
  * @typedef {import('../appeal-details.types.js').BodyValidationOutcome} BodyValidationOutcome
@@ -215,27 +216,23 @@ export function getValidationOutcomeFromAppellantCase(appellantCaseData) {
  * @param {number} [dueDateDay]
  * @param {number} [dueDateMonth]
  * @param {number} [dueDateYear]
+ * @param {boolean} [errorsOnPage]
  * @returns {PageContent}
  */
-export function updateDueDatePage(appealData, dueDateDay, dueDateMonth, dueDateYear) {
+export function updateDueDatePage(appealData, dueDateDay, dueDateMonth, dueDateYear, errorsOnPage) {
 	let existingDueDateDayMonthYear;
 
-	if (
-		dueDateDay === undefined &&
-		dueDateMonth === undefined &&
-		dueDateYear === undefined &&
-		appealData.documentationSummary.appellantCase?.dueDate
-	) {
-		existingDueDateDayMonthYear = apiDateStringToDayMonthYear(
-			appealData.documentationSummary.appellantCase?.dueDate
-		);
-	} else {
-		/** @type {DayMonthYear} */
+	if (errorsOnPage) {
+		/** @type {DayMonthYearHourMinute} */
 		existingDueDateDayMonthYear = {
 			day: dueDateDay,
 			month: dueDateMonth,
 			year: dueDateYear
 		};
+	} else if (appealData.documentationSummary.appellantCase?.dueDate) {
+		existingDueDateDayMonthYear = dateISOStringToDayMonthYearHourMinute(
+			appealData.documentationSummary.appellantCase?.dueDate
+		);
 	}
 
 	/** @type {PageContent} */
@@ -293,7 +290,7 @@ export function updateDueDatePage(appealData, dueDateDay, dueDateMonth, dueDateY
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
  * @param {string|string[]} [invalidOrIncompleteReasons]
  * @param {Object<string, string[]>} [invalidOrIncompleteReasonsText]
- * @param {DayMonthYear} [updatedDueDate]
+ * @param {DayMonthYearHourMinute} [updatedDueDate]
  * @returns {PageContent}
  */
 export function checkAndConfirmPage(
@@ -366,7 +363,7 @@ export function checkAndConfirmPage(
 				text: 'Updated due date'
 			},
 			value: {
-				text: webDateToDisplayDate(updatedDueDate)
+				text: dayMonthYearHourMinuteToDisplayDate(updatedDueDate)
 			},
 			actions: {
 				items: [
@@ -479,7 +476,7 @@ export function mapNotificationBannerComponentParameters(
 								text: 'Due date'
 							},
 							value: {
-								text: apiDateStringToDisplayDate(appealDueDate)
+								text: dateISOStringToDisplayDate(appealDueDate)
 							}
 						}
 					]
@@ -559,7 +556,7 @@ export function mapInvalidOrIncompleteReasonOptionsToCheckboxItemParameters(
  * @param {AppellantCaseValidationOutcome} validationOutcome
  * @param {string|string[]} [invalidOrIncompleteReasons]
  * @param {Object<string, string[]>} [invalidOrIncompleteReasonsText]
- * @param {DayMonthYear} [updatedDueDate]
+ * @param {DayMonthYearHourMinute} [updatedDueDate]
  * @returns {import('./appellant-case.types.js').AppellantCaseValidationOutcomeRequest}
  */
 export function mapWebReviewOutcomeToApiReviewOutcome(
@@ -603,7 +600,11 @@ export function mapWebReviewOutcomeToApiReviewOutcome(
 				}))
 			}),
 		...(updatedDueDate && {
-			appealDueDate: dayMonthYearToApiDateString(updatedDueDate)
+			appealDueDate: dayMonthYearHourMinuteToISOString({
+				...updatedDueDate,
+				hour: DEADLINE_HOUR,
+				minute: DEADLINE_MINUTE
+			})
 		})
 	};
 }

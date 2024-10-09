@@ -109,7 +109,8 @@ exports[`appellant-case GET /appellant-case should render a "Inspector access (a
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site area (m²)</dt>
                     <dd class="govuk-summary-list__value">30.1 m²</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-area/change"> Change<span class="govuk-visually-hidden"> Site area in square metres </span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-area/change"
+                        data-cy="change-site-area"> Change<span class="govuk-visually-hidden"> Site area (m²)</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> In green belt</dt>
@@ -141,7 +142,7 @@ exports[`appellant-case GET /appellant-case should render a "Inspector access (a
                         <br><span>Dogs on site</span>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/safety-risks/change/appellant"
-                        data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks</span></a>
+                        data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> Potential safety risks</span></a>
                     </dd>
                 </div>
             </dl>
@@ -161,7 +162,8 @@ exports[`appellant-case GET /appellant-case should render a "Inspector access (a
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application submitted</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-date/change"> Change<span class="govuk-visually-hidden"> Application submitted</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-date/change"
+                        data-cy="change-application-date"> Change<span class="govuk-visually-hidden"> Application submitted</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
@@ -172,7 +174,8 @@ exports[`appellant-case GET /appellant-case should render a "Inspector access (a
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Original Development description</dt>
                     <dd                     class="govuk-summary-list__value">Test development description details</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/development-description/change"> Change<span class="govuk-visually-hidden"> Development description</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/development-description/change"
+                            data-cy="change-development-description"> Change<span class="govuk-visually-hidden"> Original Development description</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA changed the development description</dt>
@@ -188,7 +191,8 @@ exports[`appellant-case GET /appellant-case should render a "Inspector access (a
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision date</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-decision-date/change"> Change<span class="govuk-visually-hidden"> Decision date</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-decision-date/change"
+                        data-cy="change-application-decision-date"> Change<span class="govuk-visually-hidden"> Decision date</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
@@ -199,7 +203,8 @@ exports[`appellant-case GET /appellant-case should render a "Inspector access (a
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Outcome</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-outcome/change"> Change<span class="govuk-visually-hidden"> Application outcome</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-outcome/change"
+                        data-cy="change-application-decision"> Change<span class="govuk-visually-hidden"> Outcome</span></a>
                     </dd>
                 </div>
             </dl>
@@ -256,8 +261,8 @@ exports[`appellant-case GET /appellant-case should render a "Inspector access (a
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/preview'
-                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="'_blank'"
+                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg'
+                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank"
                                 class="govuk-link">ph1.jpeg</a>
                             </li>
                         </ul>
@@ -266,8 +271,8 @@ exports[`appellant-case GET /appellant-case should render a "Inspector access (a
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/preview'
-                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="'_blank'"
+                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg'
+                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank"
                                 class="govuk-link">ph0.jpeg</a>
                             </li>
                         </ul>
@@ -364,7 +369,8 @@ exports[`appellant-case GET /appellant-case should render a "LPA application ref
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site area (m²)</dt>
                     <dd class="govuk-summary-list__value">30.1 m²</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-area/change"> Change<span class="govuk-visually-hidden"> Site area in square metres </span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-area/change"
+                        data-cy="change-site-area"> Change<span class="govuk-visually-hidden"> Site area (m²)</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> In green belt</dt>
@@ -396,7 +402,7 @@ exports[`appellant-case GET /appellant-case should render a "LPA application ref
                         <br><span>Dogs on site</span>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/safety-risks/change/appellant"
-                        data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks</span></a>
+                        data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> Potential safety risks</span></a>
                     </dd>
                 </div>
             </dl>
@@ -416,7 +422,8 @@ exports[`appellant-case GET /appellant-case should render a "LPA application ref
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application submitted</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-date/change"> Change<span class="govuk-visually-hidden"> Application submitted</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-date/change"
+                        data-cy="change-application-date"> Change<span class="govuk-visually-hidden"> Application submitted</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
@@ -427,7 +434,8 @@ exports[`appellant-case GET /appellant-case should render a "LPA application ref
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Original Development description</dt>
                     <dd                     class="govuk-summary-list__value">Test development description details</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/development-description/change"> Change<span class="govuk-visually-hidden"> Development description</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/development-description/change"
+                            data-cy="change-development-description"> Change<span class="govuk-visually-hidden"> Original Development description</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA changed the development description</dt>
@@ -443,7 +451,8 @@ exports[`appellant-case GET /appellant-case should render a "LPA application ref
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision date</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-decision-date/change"> Change<span class="govuk-visually-hidden"> Decision date</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-decision-date/change"
+                        data-cy="change-application-decision-date"> Change<span class="govuk-visually-hidden"> Decision date</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
@@ -454,7 +463,8 @@ exports[`appellant-case GET /appellant-case should render a "LPA application ref
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Outcome</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-outcome/change"> Change<span class="govuk-visually-hidden"> Application outcome</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-outcome/change"
+                        data-cy="change-application-decision"> Change<span class="govuk-visually-hidden"> Outcome</span></a>
                     </dd>
                 </div>
             </dl>
@@ -511,8 +521,8 @@ exports[`appellant-case GET /appellant-case should render a "LPA application ref
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/preview'
-                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="'_blank'"
+                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg'
+                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank"
                                 class="govuk-link">ph1.jpeg</a>
                             </li>
                         </ul>
@@ -521,8 +531,8 @@ exports[`appellant-case GET /appellant-case should render a "LPA application ref
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/preview'
-                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="'_blank'"
+                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg'
+                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank"
                                 class="govuk-link">ph0.jpeg</a>
                             </li>
                         </ul>
@@ -655,7 +665,8 @@ exports[`appellant-case GET /appellant-case should render a "Site area updated" 
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site area (m²)</dt>
                     <dd class="govuk-summary-list__value">30.1 m²</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-area/change"> Change<span class="govuk-visually-hidden"> Site area in square metres </span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-area/change"
+                        data-cy="change-site-area"> Change<span class="govuk-visually-hidden"> Site area (m²)</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> In green belt</dt>
@@ -687,7 +698,7 @@ exports[`appellant-case GET /appellant-case should render a "Site area updated" 
                         <br><span>Dogs on site</span>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/safety-risks/change/appellant"
-                        data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks</span></a>
+                        data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> Potential safety risks</span></a>
                     </dd>
                 </div>
             </dl>
@@ -707,7 +718,8 @@ exports[`appellant-case GET /appellant-case should render a "Site area updated" 
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application submitted</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-date/change"> Change<span class="govuk-visually-hidden"> Application submitted</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-date/change"
+                        data-cy="change-application-date"> Change<span class="govuk-visually-hidden"> Application submitted</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
@@ -718,7 +730,8 @@ exports[`appellant-case GET /appellant-case should render a "Site area updated" 
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Original Development description</dt>
                     <dd                     class="govuk-summary-list__value">Test development description details</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/development-description/change"> Change<span class="govuk-visually-hidden"> Development description</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/development-description/change"
+                            data-cy="change-development-description"> Change<span class="govuk-visually-hidden"> Original Development description</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA changed the development description</dt>
@@ -734,7 +747,8 @@ exports[`appellant-case GET /appellant-case should render a "Site area updated" 
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision date</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-decision-date/change"> Change<span class="govuk-visually-hidden"> Decision date</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-decision-date/change"
+                        data-cy="change-application-decision-date"> Change<span class="govuk-visually-hidden"> Decision date</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
@@ -745,7 +759,8 @@ exports[`appellant-case GET /appellant-case should render a "Site area updated" 
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Outcome</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-outcome/change"> Change<span class="govuk-visually-hidden"> Application outcome</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-outcome/change"
+                        data-cy="change-application-decision"> Change<span class="govuk-visually-hidden"> Outcome</span></a>
                     </dd>
                 </div>
             </dl>
@@ -802,8 +817,8 @@ exports[`appellant-case GET /appellant-case should render a "Site area updated" 
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/preview'
-                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="'_blank'"
+                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg'
+                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank"
                                 class="govuk-link">ph1.jpeg</a>
                             </li>
                         </ul>
@@ -812,8 +827,8 @@ exports[`appellant-case GET /appellant-case should render a "Site area updated" 
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/preview'
-                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="'_blank'"
+                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg'
+                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank"
                                 class="govuk-link">ph0.jpeg</a>
                             </li>
                         </ul>
@@ -910,7 +925,8 @@ exports[`appellant-case GET /appellant-case should render a "Site health and saf
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site area (m²)</dt>
                     <dd class="govuk-summary-list__value">30.1 m²</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-area/change"> Change<span class="govuk-visually-hidden"> Site area in square metres </span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-area/change"
+                        data-cy="change-site-area"> Change<span class="govuk-visually-hidden"> Site area (m²)</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> In green belt</dt>
@@ -942,7 +958,7 @@ exports[`appellant-case GET /appellant-case should render a "Site health and saf
                         <br><span>Dogs on site</span>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/safety-risks/change/appellant"
-                        data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks</span></a>
+                        data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> Potential safety risks</span></a>
                     </dd>
                 </div>
             </dl>
@@ -962,7 +978,8 @@ exports[`appellant-case GET /appellant-case should render a "Site health and saf
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application submitted</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-date/change"> Change<span class="govuk-visually-hidden"> Application submitted</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-date/change"
+                        data-cy="change-application-date"> Change<span class="govuk-visually-hidden"> Application submitted</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
@@ -973,7 +990,8 @@ exports[`appellant-case GET /appellant-case should render a "Site health and saf
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Original Development description</dt>
                     <dd                     class="govuk-summary-list__value">Test development description details</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/development-description/change"> Change<span class="govuk-visually-hidden"> Development description</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/development-description/change"
+                            data-cy="change-development-description"> Change<span class="govuk-visually-hidden"> Original Development description</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA changed the development description</dt>
@@ -989,7 +1007,8 @@ exports[`appellant-case GET /appellant-case should render a "Site health and saf
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision date</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-decision-date/change"> Change<span class="govuk-visually-hidden"> Decision date</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-decision-date/change"
+                        data-cy="change-application-decision-date"> Change<span class="govuk-visually-hidden"> Decision date</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
@@ -1000,7 +1019,8 @@ exports[`appellant-case GET /appellant-case should render a "Site health and saf
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Outcome</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-outcome/change"> Change<span class="govuk-visually-hidden"> Application outcome</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-outcome/change"
+                        data-cy="change-application-decision"> Change<span class="govuk-visually-hidden"> Outcome</span></a>
                     </dd>
                 </div>
             </dl>
@@ -1057,8 +1077,8 @@ exports[`appellant-case GET /appellant-case should render a "Site health and saf
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/preview'
-                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="'_blank'"
+                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg'
+                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank"
                                 class="govuk-link">ph1.jpeg</a>
                             </li>
                         </ul>
@@ -1067,8 +1087,8 @@ exports[`appellant-case GET /appellant-case should render a "Site health and saf
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/preview'
-                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="'_blank'"
+                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg'
+                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank"
                                 class="govuk-link">ph0.jpeg</a>
                             </li>
                         </ul>
@@ -1165,7 +1185,8 @@ exports[`appellant-case GET /appellant-case should render a "Site updated" notif
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site area (m²)</dt>
                     <dd class="govuk-summary-list__value">30.1 m²</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-area/change"> Change<span class="govuk-visually-hidden"> Site area in square metres </span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-area/change"
+                        data-cy="change-site-area"> Change<span class="govuk-visually-hidden"> Site area (m²)</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> In green belt</dt>
@@ -1197,7 +1218,7 @@ exports[`appellant-case GET /appellant-case should render a "Site updated" notif
                         <br><span>Dogs on site</span>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/safety-risks/change/appellant"
-                        data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks</span></a>
+                        data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> Potential safety risks</span></a>
                     </dd>
                 </div>
             </dl>
@@ -1217,7 +1238,8 @@ exports[`appellant-case GET /appellant-case should render a "Site updated" notif
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application submitted</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-date/change"> Change<span class="govuk-visually-hidden"> Application submitted</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-date/change"
+                        data-cy="change-application-date"> Change<span class="govuk-visually-hidden"> Application submitted</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
@@ -1228,7 +1250,8 @@ exports[`appellant-case GET /appellant-case should render a "Site updated" notif
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Original Development description</dt>
                     <dd                     class="govuk-summary-list__value">Test development description details</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/development-description/change"> Change<span class="govuk-visually-hidden"> Development description</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/development-description/change"
+                            data-cy="change-development-description"> Change<span class="govuk-visually-hidden"> Original Development description</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA changed the development description</dt>
@@ -1244,7 +1267,8 @@ exports[`appellant-case GET /appellant-case should render a "Site updated" notif
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision date</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-decision-date/change"> Change<span class="govuk-visually-hidden"> Decision date</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-decision-date/change"
+                        data-cy="change-application-decision-date"> Change<span class="govuk-visually-hidden"> Decision date</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
@@ -1255,7 +1279,8 @@ exports[`appellant-case GET /appellant-case should render a "Site updated" notif
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Outcome</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-outcome/change"> Change<span class="govuk-visually-hidden"> Application outcome</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-outcome/change"
+                        data-cy="change-application-decision"> Change<span class="govuk-visually-hidden"> Outcome</span></a>
                     </dd>
                 </div>
             </dl>
@@ -1312,8 +1337,8 @@ exports[`appellant-case GET /appellant-case should render a "Site updated" notif
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/preview'
-                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="'_blank'"
+                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg'
+                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank"
                                 class="govuk-link">ph1.jpeg</a>
                             </li>
                         </ul>
@@ -1322,8 +1347,8 @@ exports[`appellant-case GET /appellant-case should render a "Site updated" notif
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/preview'
-                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="'_blank'"
+                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg'
+                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank"
                                 class="govuk-link">ph0.jpeg</a>
                             </li>
                         </ul>
@@ -1432,7 +1457,8 @@ exports[`appellant-case GET /appellant-case should render a success notification
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site area (m²)</dt>
                     <dd class="govuk-summary-list__value">30.1 m²</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-area/change"> Change<span class="govuk-visually-hidden"> Site area in square metres </span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-area/change"
+                        data-cy="change-site-area"> Change<span class="govuk-visually-hidden"> Site area (m²)</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> In green belt</dt>
@@ -1464,7 +1490,7 @@ exports[`appellant-case GET /appellant-case should render a success notification
                         <br><span>Dogs on site</span>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/safety-risks/change/appellant"
-                        data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks</span></a>
+                        data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> Potential safety risks</span></a>
                     </dd>
                 </div>
             </dl>
@@ -1484,7 +1510,8 @@ exports[`appellant-case GET /appellant-case should render a success notification
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application submitted</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-date/change"> Change<span class="govuk-visually-hidden"> Application submitted</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-date/change"
+                        data-cy="change-application-date"> Change<span class="govuk-visually-hidden"> Application submitted</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
@@ -1495,7 +1522,8 @@ exports[`appellant-case GET /appellant-case should render a success notification
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Original Development description</dt>
                     <dd                     class="govuk-summary-list__value">Test development description details</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/development-description/change"> Change<span class="govuk-visually-hidden"> Development description</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/development-description/change"
+                            data-cy="change-development-description"> Change<span class="govuk-visually-hidden"> Original Development description</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA changed the development description</dt>
@@ -1511,7 +1539,8 @@ exports[`appellant-case GET /appellant-case should render a success notification
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision date</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-decision-date/change"> Change<span class="govuk-visually-hidden"> Decision date</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-decision-date/change"
+                        data-cy="change-application-decision-date"> Change<span class="govuk-visually-hidden"> Decision date</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
@@ -1522,7 +1551,8 @@ exports[`appellant-case GET /appellant-case should render a success notification
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Outcome</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-outcome/change"> Change<span class="govuk-visually-hidden"> Application outcome</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-outcome/change"
+                        data-cy="change-application-decision"> Change<span class="govuk-visually-hidden"> Outcome</span></a>
                     </dd>
                 </div>
             </dl>
@@ -1579,8 +1609,8 @@ exports[`appellant-case GET /appellant-case should render a success notification
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/preview'
-                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="'_blank'"
+                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg'
+                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank"
                                 class="govuk-link">ph1.jpeg</a>
                             </li>
                         </ul>
@@ -1589,8 +1619,8 @@ exports[`appellant-case GET /appellant-case should render a success notification
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/preview'
-                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="'_blank'"
+                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg'
+                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank"
                                 class="govuk-link">ph0.jpeg</a>
                             </li>
                         </ul>
@@ -1769,7 +1799,8 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site area (m²)</dt>
                     <dd class="govuk-summary-list__value">30.1 m²</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/site-area/change"> Change<span class="govuk-visually-hidden"> Site area in square metres </span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/site-area/change"
+                        data-cy="change-site-area"> Change<span class="govuk-visually-hidden"> Site area (m²)</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> In green belt</dt>
@@ -1801,7 +1832,7 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
                         <br><span>Dogs on site</span>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/safety-risks/change/appellant"
-                        data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks</span></a>
+                        data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> Potential safety risks</span></a>
                     </dd>
                 </div>
             </dl>
@@ -1821,7 +1852,8 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application submitted</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-date/change"> Change<span class="govuk-visually-hidden"> Application submitted</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-date/change"
+                        data-cy="change-application-date"> Change<span class="govuk-visually-hidden"> Application submitted</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
@@ -1832,7 +1864,8 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Original Development description</dt>
                     <dd                     class="govuk-summary-list__value">Test development description details</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/development-description/change"> Change<span class="govuk-visually-hidden"> Development description</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/development-description/change"
+                            data-cy="change-development-description"> Change<span class="govuk-visually-hidden"> Original Development description</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA changed the development description</dt>
@@ -1848,7 +1881,8 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision date</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-decision-date/change"> Change<span class="govuk-visually-hidden"> Decision date</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-decision-date/change"
+                        data-cy="change-application-decision-date"> Change<span class="govuk-visually-hidden"> Decision date</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
@@ -1859,7 +1893,8 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Outcome</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-outcome/change"> Change<span class="govuk-visually-hidden"> Application outcome</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-outcome/change"
+                        data-cy="change-application-decision"> Change<span class="govuk-visually-hidden"> Outcome</span></a>
                     </dd>
                 </div>
             </dl>
@@ -1916,8 +1951,8 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/preview'
-                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="'_blank'"
+                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg'
+                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank"
                                 class="govuk-link">ph1.jpeg</a>
                             </li>
                         </ul>
@@ -1926,8 +1961,8 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/preview'
-                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="'_blank'"
+                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg'
+                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank"
                                 class="govuk-link">ph0.jpeg</a>
                             </li>
                         </ul>
@@ -2029,7 +2064,8 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site area (m²)</dt>
                     <dd class="govuk-summary-list__value">30.1 m²</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/site-area/change"> Change<span class="govuk-visually-hidden"> Site area in square metres </span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/site-area/change"
+                        data-cy="change-site-area"> Change<span class="govuk-visually-hidden"> Site area (m²)</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> In green belt</dt>
@@ -2076,7 +2112,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         <br><span>Dogs on site</span>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/safety-risks/change/appellant"
-                        data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks</span></a>
+                        data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> Potential safety risks</span></a>
                     </dd>
                 </div>
             </dl>
@@ -2096,7 +2132,8 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application submitted</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-date/change"> Change<span class="govuk-visually-hidden"> Application submitted</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-date/change"
+                        data-cy="change-application-date"> Change<span class="govuk-visually-hidden"> Application submitted</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
@@ -2107,7 +2144,8 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Original Development description</dt>
                     <dd                     class="govuk-summary-list__value">Test development description details</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/development-description/change"> Change<span class="govuk-visually-hidden"> Development description</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/development-description/change"
+                            data-cy="change-development-description"> Change<span class="govuk-visually-hidden"> Original Development description</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA changed the development description</dt>
@@ -2143,7 +2181,8 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision date</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-decision-date/change"> Change<span class="govuk-visually-hidden"> Decision date</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-decision-date/change"
+                        data-cy="change-application-decision-date"> Change<span class="govuk-visually-hidden"> Decision date</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
@@ -2154,7 +2193,8 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Outcome</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-outcome/change"> Change<span class="govuk-visually-hidden"> Application outcome</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-outcome/change"
+                        data-cy="change-application-decision"> Change<span class="govuk-visually-hidden"> Outcome</span></a>
                     </dd>
                 </div>
             </dl>
@@ -2168,6 +2208,30 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
             <dl class="govuk-summary-list" id="appeal-summary">
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Appeal type</dt>
                     <dd class="govuk-summary-list__value">Planning appeal</dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Procedure preference</dt>
+                    <dd class="govuk-summary-list__value">Not answered</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/procedure-preference/change"
+                        data-cy="change-procedure-preference"> Change<span class="govuk-visually-hidden"> procedure preference</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Reason for preference</dt>
+                    <dd class="govuk-summary-list__value">Not applicable</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/procedure-preference/details/change"
+                        data-cy="change-procedure-preference-details"> Change<span class="govuk-visually-hidden"> reason for preference</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Expected length of procedure</dt>
+                    <dd                     class="govuk-summary-list__value">Not applicable</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/procedure-preference/duration/change"
+                            data-cy="change-procedure-preference-duration"> Change<span class="govuk-visually-hidden"> Expected length of procedure</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Expected number of witnesses</dt>
+                    <dd                     class="govuk-summary-list__value">Not applicable</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/procedure-preference/inquiry/witnesses/change"
+                            data-cy="change-inquiry-number-of-witnesses"> Change<span class="govuk-visually-hidden"> Expected number of witnesses</span></a>
+                        </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal statement</dt>
                     <dd class="govuk-summary-list__value"></dd>
@@ -2189,7 +2253,8 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning obligation status</dt>
                     <dd                     class="govuk-summary-list__value">Finalised</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/planning-obligation/status/change"> Change<span class="govuk-visually-hidden"> Planning obligation status</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/planning-obligation/status/change"
+                            data-cy="change-planning-obligation-status"> Change<span class="govuk-visually-hidden"> Planning obligation status</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Applied for award of appeal costs</dt>
@@ -2237,8 +2302,8 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/preview'
-                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="'_blank'"
+                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg'
+                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank"
                                 class="govuk-link">ph1.jpeg</a>
                             </li>
                         </ul>
@@ -2247,8 +2312,8 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/preview'
-                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="'_blank'"
+                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg'
+                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank"
                                 class="govuk-link">ph0.jpeg</a>
                             </li>
                         </ul>
@@ -2320,7 +2385,8 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site area (m²)</dt>
                     <dd class="govuk-summary-list__value">30.1 m²</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-area/change"> Change<span class="govuk-visually-hidden"> Site area in square metres </span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-area/change"
+                        data-cy="change-site-area"> Change<span class="govuk-visually-hidden"> Site area (m²)</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> In green belt</dt>
@@ -2352,7 +2418,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         <br><span>Dogs on site</span>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/safety-risks/change/appellant"
-                        data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks</span></a>
+                        data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> Potential safety risks</span></a>
                     </dd>
                 </div>
             </dl>
@@ -2372,7 +2438,8 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application submitted</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-date/change"> Change<span class="govuk-visually-hidden"> Application submitted</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-date/change"
+                        data-cy="change-application-date"> Change<span class="govuk-visually-hidden"> Application submitted</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
@@ -2383,7 +2450,8 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Original Development description</dt>
                     <dd                     class="govuk-summary-list__value">Test development description details</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/development-description/change"> Change<span class="govuk-visually-hidden"> Development description</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/development-description/change"
+                            data-cy="change-development-description"> Change<span class="govuk-visually-hidden"> Original Development description</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA changed the development description</dt>
@@ -2399,7 +2467,8 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision date</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-decision-date/change"> Change<span class="govuk-visually-hidden"> Decision date</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-decision-date/change"
+                        data-cy="change-application-decision-date"> Change<span class="govuk-visually-hidden"> Decision date</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
@@ -2410,7 +2479,8 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Outcome</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-outcome/change"> Change<span class="govuk-visually-hidden"> Application outcome</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-outcome/change"
+                        data-cy="change-application-decision"> Change<span class="govuk-visually-hidden"> Outcome</span></a>
                     </dd>
                 </div>
             </dl>
@@ -2467,8 +2537,8 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/preview'
-                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="'_blank'"
+                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg'
+                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank"
                                 class="govuk-link">ph1.jpeg</a>
                             </li>
                         </ul>
@@ -2477,8 +2547,8 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/preview'
-                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="'_blank'"
+                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg'
+                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank"
                                 class="govuk-link">ph0.jpeg</a>
                             </li>
                         </ul>
@@ -2550,17 +2620,18 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/ should rend
     data-document-type="changedDescription" data-document-stage="appellant-case"
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
     data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
-        <div class="top-errors-hook"></div>
+        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
         <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
         data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
             <div class="pins-file-upload__container">
                 <div class="govuk-body colour--secondary pins-file-upload__instructions">
-                    <label for="upload-file-1">Choose a single file to upload.</label><span>The file must be smaller than 1 GB.</span><span>The file must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span>
+                    <label for="upload-file-1">Choose a single or multiple files to upload.</label><span>The total size of the files must be smaller than 1 GB.</span><span>The files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span>
                     <div                     class="middle-errors-hook"></div>
             </div>
             <div class="pins-file-upload__upload">
                 <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
-                type="file" name="files" value="Choose file" aria-controls="file-list-1">
+                type="file" name="files" value="Choose file" aria-controls="file-list-1"
+                multiple>
                 <button type='button' class="pins-file-upload__button govuk-button">Choose file</button><span role="status" aria-live="assertive" class='govuk-body pins-file-upload__counter'> No file chosen</span>
             </div>
             <div id="file-list-1">
@@ -2587,17 +2658,18 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/ should rend
     data-document-type="appellantCaseCorrespondence" data-document-stage="appellant-case"
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
     data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
-        <div class="top-errors-hook"></div>
+        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
         <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
         data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
             <div class="pins-file-upload__container">
                 <div class="govuk-body colour--secondary pins-file-upload__instructions">
-                    <label for="upload-file-1">Choose a single file to upload.</label><span>The file must be smaller than 1 GB.</span><span>The file must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span>
+                    <label for="upload-file-1">Choose a single or multiple files to upload.</label><span>The total size of the files must be smaller than 1 GB.</span><span>The files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span>
                     <div                     class="middle-errors-hook"></div>
             </div>
             <div class="pins-file-upload__upload">
                 <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
-                type="file" name="files" value="Choose file" aria-controls="file-list-1">
+                type="file" name="files" value="Choose file" aria-controls="file-list-1"
+                multiple>
                 <button type='button' class="pins-file-upload__button govuk-button">Choose file</button><span role="status" aria-live="assertive" class='govuk-body pins-file-upload__counter'> No file chosen</span>
             </div>
             <div id="file-list-1">
@@ -2639,17 +2711,18 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/ should rend
     data-document-type="appellantCaseCorrespondence" data-document-stage="appellant-case"
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
     data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
-        <div class="top-errors-hook"></div>
+        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
         <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
         data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
             <div class="pins-file-upload__container">
                 <div class="govuk-body colour--secondary pins-file-upload__instructions">
-                    <label for="upload-file-1">Choose a single file to upload.</label><span>The file must be smaller than 1 GB.</span><span>The file must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span>
+                    <label for="upload-file-1">Choose a single or multiple files to upload.</label><span>The total size of the files must be smaller than 1 GB.</span><span>The files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span>
                     <div                     class="middle-errors-hook"></div>
             </div>
             <div class="pins-file-upload__upload">
                 <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
-                type="file" name="files" value="Choose file" aria-controls="file-list-1">
+                type="file" name="files" value="Choose file" aria-controls="file-list-1"
+                multiple>
                 <button type='button' class="pins-file-upload__button govuk-button">Choose file</button><span role="status" aria-live="assertive" class='govuk-body pins-file-upload__counter'> No file chosen</span>
             </div>
             <div id="file-list-1">
@@ -2691,17 +2764,18 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/ should rend
     data-document-type="appellantCaseCorrespondence" data-document-stage="appellant-case"
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
     data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
-        <div class="top-errors-hook"></div>
+        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
         <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
         data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
             <div class="pins-file-upload__container">
                 <div class="govuk-body colour--secondary pins-file-upload__instructions">
-                    <label for="upload-file-1">Choose a single file to upload.</label><span>The file must be smaller than 1 GB.</span><span>The file must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span>
+                    <label for="upload-file-1">Choose a single or multiple files to upload.</label><span>The total size of the files must be smaller than 1 GB.</span><span>The files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span>
                     <div                     class="middle-errors-hook"></div>
             </div>
             <div class="pins-file-upload__upload">
                 <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
-                type="file" name="files" value="Choose file" aria-controls="file-list-1">
+                type="file" name="files" value="Choose file" aria-controls="file-list-1"
+                multiple>
                 <button type='button' class="pins-file-upload__button govuk-button">Choose file</button><span role="status" aria-live="assertive" class='govuk-body pins-file-upload__counter'> No file chosen</span>
             </div>
             <div id="file-list-1">
@@ -2758,17 +2832,18 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/ should rend
     data-document-type="appellantCaseCorrespondence" data-document-stage="appellant-case"
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
     data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
-        <div class="top-errors-hook"></div>
+        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
         <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
         data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
             <div class="pins-file-upload__container">
                 <div class="govuk-body colour--secondary pins-file-upload__instructions">
-                    <label for="upload-file-1">Choose a single file to upload.</label><span>The file must be smaller than 1 GB.</span><span>The file must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span>
+                    <label for="upload-file-1">Choose a single or multiple files to upload.</label><span>The total size of the files must be smaller than 1 GB.</span><span>The files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span>
                     <div                     class="middle-errors-hook"></div>
             </div>
             <div class="pins-file-upload__upload">
                 <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
-                type="file" name="files" value="Choose file" aria-controls="file-list-1">
+                type="file" name="files" value="Choose file" aria-controls="file-list-1"
+                multiple>
                 <button type='button' class="pins-file-upload__button govuk-button">Choose file</button><span role="status" aria-live="assertive" class='govuk-body pins-file-upload__counter'> No file chosen</span>
             </div>
             <div id="file-list-1">
@@ -2796,7 +2871,7 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId 
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
     data-document-id="1" data-document-original-file-name="test-pdf-documentFileVersionsInfo.pdf"
     data-document-version="1" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
-        <div class="top-errors-hook"></div>
+        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
         <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
         data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
             <div class="pins-file-upload__container">
@@ -2834,7 +2909,7 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId 
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
     data-document-id="1" data-document-original-file-name="test-pdf-documentFileVersionsInfo.pdf"
     data-document-version="1" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
-        <div class="top-errors-hook"></div>
+        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
         <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
         data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
             <div class="pins-file-upload__container">
@@ -2887,7 +2962,7 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId 
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
     data-document-id="1" data-document-original-file-name="test-pdf-documentFileVersionsInfo.pdf"
     data-document-version="1" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
-        <div class="top-errors-hook"></div>
+        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
         <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
         data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
             <div class="pins-file-upload__container">
@@ -2940,7 +3015,7 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId 
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
     data-document-id="1" data-document-original-file-name="test-pdf-documentFileVersionsInfo.pdf"
     data-document-version="1" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
-        <div class="top-errors-hook"></div>
+        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
         <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
         data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
             <div class="pins-file-upload__container">
@@ -3008,7 +3083,7 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId 
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
     data-document-id="1" data-document-original-file-name="test-pdf-documentFileVersionsInfo.pdf"
     data-document-version="1" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
-        <div class="top-errors-hook"></div>
+        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
         <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
         data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
             <div class="pins-file-upload__container">
@@ -3638,7 +3713,8 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
             </tr>
             <tr class="govuk-table__row">
                 <td class="govuk-table__cell">
-                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/103/download/97260151-4334-407f-a76a-0b5666cbcfa7/preview/">ph1-documentFolderInfo.jpeg</a>
+                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/103/download/97260151-4334-407f-a76a-0b5666cbcfa7/ph1-documentFolderInfo.jpeg"
+                        target="_blank">ph1-documentFolderInfo.jpeg</a>
                     </div>
                     <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
                         <dd>JPEG, 59 KB</dd>
@@ -3754,7 +3830,8 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
             </tr>
             <tr class="govuk-table__row">
                 <td class="govuk-table__cell">
-                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/103/download/97260151-4334-407f-a76a-0b5666cbcfa7/preview/">ph1-documentFolderInfo.jpeg</a>
+                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/103/download/97260151-4334-407f-a76a-0b5666cbcfa7/ph1-documentFolderInfo.jpeg"
+                        target="_blank">ph1-documentFolderInfo.jpeg</a>
                     </div>
                     <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
                         <dd>JPEG, 59 KB</dd>
@@ -4115,7 +4192,8 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Name</dt>
                     <dd class="govuk-summary-list__value">
-                        <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/preview/">test-pdf-documentFileVersionsInfo.pdf</a>
+                        <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/test-pdf-documentFileVersionsInfo.pdf"
+                            target="_blank">test-pdf-documentFileVersionsInfo.pdf</a>
                         </div>
                     </dd>
                 </div>
@@ -4168,7 +4246,8 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
                             <tr class="govuk-table__row">
                                 <td class="govuk-table__cell">1</td>
                                 <td class="govuk-table__cell">
-                                    <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/preview/">test-pdf-documentFileVersionsInfo.pdf</a>
+                                    <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/test-pdf-documentFileVersionsInfo.pdf"
+                                        target="_blank">test-pdf-documentFileVersionsInfo.pdf</a>
                                     </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">CURRENT VERSION</strong>
                                 </td>
                                 <td class="govuk-table__cell">
@@ -4577,7 +4656,8 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site area (m²)</dt>
                     <dd class="govuk-summary-list__value">30.1 m²</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-area/change"> Change<span class="govuk-visually-hidden"> Site area in square metres </span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-area/change"
+                        data-cy="change-site-area"> Change<span class="govuk-visually-hidden"> Site area (m²)</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> In green belt</dt>
@@ -4609,7 +4689,7 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                         <br><span>Dogs on site</span>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/safety-risks/change/appellant"
-                        data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks</span></a>
+                        data-cy="change-appellant-case-health-and-safety"> Change<span class="govuk-visually-hidden"> Potential safety risks</span></a>
                     </dd>
                 </div>
             </dl>
@@ -4629,7 +4709,8 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application submitted</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-date/change"> Change<span class="govuk-visually-hidden"> Application submitted</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-date/change"
+                        data-cy="change-application-date"> Change<span class="govuk-visually-hidden"> Application submitted</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
@@ -4640,7 +4721,8 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Original Development description</dt>
                     <dd                     class="govuk-summary-list__value">Test development description details</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/development-description/change"> Change<span class="govuk-visually-hidden"> Development description</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/development-description/change"
+                            data-cy="change-development-description"> Change<span class="govuk-visually-hidden"> Original Development description</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA changed the development description</dt>
@@ -4656,7 +4738,8 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision date</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-decision-date/change"> Change<span class="govuk-visually-hidden"> Decision date</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-decision-date/change"
+                        data-cy="change-application-decision-date"> Change<span class="govuk-visually-hidden"> Decision date</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
@@ -4667,7 +4750,8 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Outcome</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-outcome/change"> Change<span class="govuk-visually-hidden"> Application outcome</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-outcome/change"
+                        data-cy="change-application-decision"> Change<span class="govuk-visually-hidden"> Outcome</span></a>
                     </dd>
                 </div>
             </dl>
@@ -4724,8 +4808,8 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/preview'
-                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="'_blank'"
+                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg'
+                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank"
                                 class="govuk-link">ph1.jpeg</a>
                             </li>
                         </ul>
@@ -4734,8 +4818,8 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/preview'
-                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="'_blank'"
+                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg'
+                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank"
                                 class="govuk-link">ph0.jpeg</a>
                             </li>
                         </ul>
@@ -7947,14 +8031,14 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
                                 <div class="govuk-form-group">
                                     <label class="govuk-label govuk-date-input__label" for="valid-date-day">Day</label>
                                     <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                    id="valid-date-day" name="valid-date-day" type="text" value="20" inputmode="numeric">
+                                    id="valid-date-day" name="valid-date-day" type="text" value="1" inputmode="numeric">
                                 </div>
                             </div>
                             <div class="govuk-date-input__item">
                                 <div class="govuk-form-group">
                                     <label class="govuk-label govuk-date-input__label" for="valid-date-month">Month</label>
                                     <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                    id="valid-date-month" name="valid-date-month" type="text" value="5" inputmode="numeric">
+                                    id="valid-date-month" name="valid-date-month" type="text" value="1" inputmode="numeric">
                                 </div>
                             </div>
                             <div class="govuk-date-input__item">

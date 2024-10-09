@@ -24,7 +24,7 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Correct appeal type</dt>
                     <dd class="govuk-summary-list__value">Yes</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/2/is-correct-appeal-type/change"
-                        lpaQuestionnaireData-cy="change-is-correct-appeal-type"> Change<span class="govuk-visually-hidden"> Correct appeal type</span></a>
+                        data-cy="change-is-correct-appeal-type"> Change<span class="govuk-visually-hidden"> Correct appeal type</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Listed buildings</dt>
@@ -70,7 +70,7 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Green belt</dt>
                     <dd class="govuk-summary-list__value"></dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/2/green-belt/change/lpa"
-                        lpaQuestionnaireData-cy="change-site-within-green-belt"> Change<span class="govuk-visually-hidden"> Green belt</span></a>
+                        data-cy="change-site-within-green-belt"> Change<span class="govuk-visually-hidden"> Green belt</span></a>
                     </dd>
                 </div>
             </dl>
@@ -123,7 +123,7 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
                         </ul>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/2/notification-methods/change"
-                        lpaQuestionnaireData-cy="change-notification-methods"> Change<span class="govuk-visually-hidden"> notification methods</span></a>
+                        data-cy="change-notification-methods"> Change<span class="govuk-visually-hidden"> Notification methods</span></a>
                     </dd>
                 </div>
             </dl>
@@ -180,6 +180,16 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
                             </ul>
                         </dd>
                 </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Plans, drawings and list of plans</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-plans-drawings"> Add<span class="govuk-visually-hidden"> Plans, drawings and list of plans</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Relevant policies from statutory development plan</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-development-plan-policies"> Add<span class="govuk-visually-hidden"> Relevant policies from statutory development plan</span></a>
+                        </dd>
+                </div>
             </dl>
         </div>
     </div>
@@ -194,7 +204,7 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
                         <br><span>The entrance is at the back of the property</span>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/2/inspector-access/change/lpa"
-                        lpaQuestionnaireData-cy="change-does-site-require-inspector-access"> Change<span class="govuk-visually-hidden"> Site access required</span></a>
+                        data-cy="change-does-site-require-inspector-access"> Change<span class="govuk-visually-hidden"> Site access required</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
@@ -218,7 +228,7 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
                         <br><span>There is no mobile signal at the property</span>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/2/safety-risks/change/lpa"
-                        lpaQuestionnaireData-cy="change-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks</span></a>
+                        data-cy="change-health-and-safety"> Change<span class="govuk-visually-hidden"> Potential safety risks</span></a>
                     </dd>
                 </div>
             </dl>
@@ -336,7 +346,7 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Correct appeal type</dt>
                     <dd class="govuk-summary-list__value">Yes</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/is-correct-appeal-type/change"
-                        lpaQuestionnaireData-cy="change-is-correct-appeal-type"> Change<span class="govuk-visually-hidden"> Correct appeal type</span></a>
+                        data-cy="change-is-correct-appeal-type"> Change<span class="govuk-visually-hidden"> Correct appeal type</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Listed buildings</dt>
@@ -382,7 +392,7 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Green belt</dt>
                     <dd class="govuk-summary-list__value"></dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/green-belt/change/lpa"
-                        lpaQuestionnaireData-cy="change-site-within-green-belt"> Change<span class="govuk-visually-hidden"> Green belt</span></a>
+                        data-cy="change-site-within-green-belt"> Change<span class="govuk-visually-hidden"> Green belt</span></a>
                     </dd>
                 </div>
             </dl>
@@ -435,7 +445,7 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
                         </ul>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/notification-methods/change"
-                        lpaQuestionnaireData-cy="change-notification-methods"> Change<span class="govuk-visually-hidden"> notification methods</span></a>
+                        data-cy="change-notification-methods"> Change<span class="govuk-visually-hidden"> Notification methods</span></a>
                     </dd>
                 </div>
             </dl>
@@ -492,6 +502,16 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
                             </ul>
                         </dd>
                 </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Plans, drawings and list of plans</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-plans-drawings"> Add<span class="govuk-visually-hidden"> Plans, drawings and list of plans</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Relevant policies from statutory development plan</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-development-plan-policies"> Add<span class="govuk-visually-hidden"> Relevant policies from statutory development plan</span></a>
+                        </dd>
+                </div>
             </dl>
         </div>
     </div>
@@ -506,7 +526,7 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
                         <br><span>The entrance is at the back of the property</span>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/inspector-access/change/lpa"
-                        lpaQuestionnaireData-cy="change-does-site-require-inspector-access"> Change<span class="govuk-visually-hidden"> Site access required</span></a>
+                        data-cy="change-does-site-require-inspector-access"> Change<span class="govuk-visually-hidden"> Site access required</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
@@ -530,7 +550,7 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
                         <br><span>There is no mobile signal at the property</span>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/safety-risks/change/lpa"
-                        lpaQuestionnaireData-cy="change-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks</span></a>
+                        data-cy="change-health-and-safety"> Change<span class="govuk-visually-hidden"> Potential safety risks</span></a>
                     </dd>
                 </div>
             </dl>
@@ -681,7 +701,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Correct appeal type</dt>
                     <dd class="govuk-summary-list__value">Yes</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/is-correct-appeal-type/change"
-                        lpaQuestionnaireData-cy="change-is-correct-appeal-type"> Change<span class="govuk-visually-hidden"> Correct appeal type</span></a>
+                        data-cy="change-is-correct-appeal-type"> Change<span class="govuk-visually-hidden"> Correct appeal type</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Listed buildings</dt>
@@ -729,7 +749,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Green belt</dt>
                     <dd class="govuk-summary-list__value"></dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/green-belt/change/lpa"
-                        lpaQuestionnaireData-cy="change-site-within-green-belt"> Change<span class="govuk-visually-hidden"> Green belt</span></a>
+                        data-cy="change-site-within-green-belt"> Change<span class="govuk-visually-hidden"> Green belt</span></a>
                     </dd>
                 </div>
             </dl>
@@ -782,7 +802,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                         </ul>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/notification-methods/change"
-                        lpaQuestionnaireData-cy="change-notification-methods"> Change<span class="govuk-visually-hidden"> notification methods</span></a>
+                        data-cy="change-notification-methods"> Change<span class="govuk-visually-hidden"> Notification methods</span></a>
                     </dd>
                 </div>
             </dl>
@@ -839,6 +859,16 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                             </ul>
                         </dd>
                 </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Plans, drawings and list of plans</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-plans-drawings"> Add<span class="govuk-visually-hidden"> Plans, drawings and list of plans</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Relevant policies from statutory development plan</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-development-plan-policies"> Add<span class="govuk-visually-hidden"> Relevant policies from statutory development plan</span></a>
+                        </dd>
+                </div>
             </dl>
         </div>
     </div>
@@ -853,7 +883,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                         <br><span>The entrance is at the back of the property</span>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/inspector-access/change/lpa"
-                        lpaQuestionnaireData-cy="change-does-site-require-inspector-access"> Change<span class="govuk-visually-hidden"> Site access required</span></a>
+                        data-cy="change-does-site-require-inspector-access"> Change<span class="govuk-visually-hidden"> Site access required</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
@@ -877,7 +907,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                         <br><span>There is no mobile signal at the property</span>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/safety-risks/change/lpa"
-                        lpaQuestionnaireData-cy="change-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks</span></a>
+                        data-cy="change-health-and-safety"> Change<span class="govuk-visually-hidden"> Potential safety risks</span></a>
                     </dd>
                 </div>
             </dl>
@@ -987,7 +1017,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Correct appeal type</dt>
                     <dd class="govuk-summary-list__value">Yes</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/is-correct-appeal-type/change"
-                        lpaQuestionnaireData-cy="change-is-correct-appeal-type"> Change<span class="govuk-visually-hidden"> Correct appeal type</span></a>
+                        data-cy="change-is-correct-appeal-type"> Change<span class="govuk-visually-hidden"> Correct appeal type</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Listed buildings</dt>
@@ -1035,7 +1065,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Green belt</dt>
                     <dd class="govuk-summary-list__value"></dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/green-belt/change/lpa"
-                        lpaQuestionnaireData-cy="change-site-within-green-belt"> Change<span class="govuk-visually-hidden"> Green belt</span></a>
+                        data-cy="change-site-within-green-belt"> Change<span class="govuk-visually-hidden"> Green belt</span></a>
                     </dd>
                 </div>
             </dl>
@@ -1088,7 +1118,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                         </ul>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/notification-methods/change"
-                        lpaQuestionnaireData-cy="change-notification-methods"> Change<span class="govuk-visually-hidden"> notification methods</span></a>
+                        data-cy="change-notification-methods"> Change<span class="govuk-visually-hidden"> Notification methods</span></a>
                     </dd>
                 </div>
             </dl>
@@ -1145,6 +1175,16 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                             </ul>
                         </dd>
                 </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Plans, drawings and list of plans</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-plans-drawings"> Add<span class="govuk-visually-hidden"> Plans, drawings and list of plans</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Relevant policies from statutory development plan</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-development-plan-policies"> Add<span class="govuk-visually-hidden"> Relevant policies from statutory development plan</span></a>
+                        </dd>
+                </div>
             </dl>
         </div>
     </div>
@@ -1159,7 +1199,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                         <br><span>The entrance is at the back of the property</span>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/inspector-access/change/lpa"
-                        lpaQuestionnaireData-cy="change-does-site-require-inspector-access"> Change<span class="govuk-visually-hidden"> Site access required</span></a>
+                        data-cy="change-does-site-require-inspector-access"> Change<span class="govuk-visually-hidden"> Site access required</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
@@ -1183,7 +1223,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                         <br><span>There is no mobile signal at the property</span>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/safety-risks/change/lpa"
-                        lpaQuestionnaireData-cy="change-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks</span></a>
+                        data-cy="change-health-and-safety"> Change<span class="govuk-visually-hidden"> Potential safety risks</span></a>
                     </dd>
                 </div>
             </dl>
@@ -1565,48 +1605,6 @@ exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-ques
 </main>"
 `;
 
-exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-questionnaire/1/incomplete/date should render the update due date page without pre-populated date values, if there is no existing due date 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-xl govuk-!-margin-bottom-1">Appeal 351062</span>
-            <h1             class="govuk-fieldset__legend--xl govuk-!-margin-top-0">Update LPA questionnaire due date</h1>
-                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 30 November 1899</div>
-        </div>
-    </div>
-    <form method="post" novalidate="novalidate">
-        <div class="govuk-form-group">
-            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-            <div class="govuk-date-input" id="due-date">
-                <div class="govuk-date-input__item">
-                    <div class="govuk-form-group">
-                        <label class="govuk-label govuk-date-input__label" for="due-date-day">Day</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                        id="due-date-day" name="due-date-day" type="text" inputmode="numeric">
-                    </div>
-                </div>
-                <div class="govuk-date-input__item">
-                    <div class="govuk-form-group">
-                        <label class="govuk-label govuk-date-input__label" for="due-date-month">Month</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                        id="due-date-month" name="due-date-month" type="text" inputmode="numeric">
-                    </div>
-                </div>
-                <div class="govuk-date-input__item">
-                    <div class="govuk-form-group">
-                        <label class="govuk-label govuk-date-input__label" for="due-date-year">Year</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-4"
-                        id="due-date-year" name="due-date-year" type="text" inputmode="numeric">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="govuk-button-group">
-            <button type="submit" class="govuk-button" data-module="govuk-button">Save and continue</button>
-        </div>
-    </form>
-</main>"
-`;
-
 exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-document-details/:folderId/ should render a 500 error page if fileUploadInfo is not present in the session 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
@@ -1641,7 +1639,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
     data-document-type="changedDescription" data-document-stage="appellant-case"
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
     data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
-        <div class="top-errors-hook"></div>
+        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
         <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
         data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
             <div class="pins-file-upload__container">
@@ -1678,7 +1676,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
     data-document-type="appellantCaseCorrespondence" data-document-stage="appellant-case"
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
     data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
-        <div class="top-errors-hook"></div>
+        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
         <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
         data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
             <div class="pins-file-upload__container">
@@ -1730,7 +1728,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
     data-document-type="appellantCaseCorrespondence" data-document-stage="appellant-case"
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
     data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
-        <div class="top-errors-hook"></div>
+        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
         <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
         data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
             <div class="pins-file-upload__container">
@@ -1797,7 +1795,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
     data-document-type="appellantCaseCorrespondence" data-document-stage="appellant-case"
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
     data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
-        <div class="top-errors-hook"></div>
+        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
         <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
         data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
             <div class="pins-file-upload__container">
@@ -1835,7 +1833,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
     data-document-id="1" data-document-original-file-name="test-pdf-documentFileVersionsInfo.pdf"
     data-document-version="1" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
-        <div class="top-errors-hook"></div>
+        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
         <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
         data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
             <div class="pins-file-upload__container">
@@ -1873,7 +1871,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
     data-document-id="1" data-document-original-file-name="test-pdf-documentFileVersionsInfo.pdf"
     data-document-version="1" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
-        <div class="top-errors-hook"></div>
+        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
         <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
         data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
             <div class="pins-file-upload__container">
@@ -1926,7 +1924,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
     data-document-id="1" data-document-original-file-name="test-pdf-documentFileVersionsInfo.pdf"
     data-document-version="1" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
-        <div class="top-errors-hook"></div>
+        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
         <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
         data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
             <div class="pins-file-upload__container">
@@ -1994,7 +1992,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
     data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
     data-document-id="1" data-document-original-file-name="test-pdf-documentFileVersionsInfo.pdf"
     data-document-version="1" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
-        <div class="top-errors-hook"></div>
+        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
         <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
         data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
             <div class="pins-file-upload__container">
@@ -2158,7 +2156,8 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
             </tr>
             <tr class="govuk-table__row">
                 <td class="govuk-table__cell">
-                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/103/download/97260151-4334-407f-a76a-0b5666cbcfa7/preview/">ph1-documentFolderInfo.jpeg</a>
+                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/103/download/97260151-4334-407f-a76a-0b5666cbcfa7/ph1-documentFolderInfo.jpeg"
+                        target="_blank">ph1-documentFolderInfo.jpeg</a>
                     </div>
                     <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
                         <dd>JPEG, 59 KB</dd>
@@ -2274,7 +2273,8 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
             </tr>
             <tr class="govuk-table__row">
                 <td class="govuk-table__cell">
-                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/103/download/97260151-4334-407f-a76a-0b5666cbcfa7/preview/">ph1-documentFolderInfo.jpeg</a>
+                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/103/download/97260151-4334-407f-a76a-0b5666cbcfa7/ph1-documentFolderInfo.jpeg"
+                        target="_blank">ph1-documentFolderInfo.jpeg</a>
                     </div>
                     <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
                         <dd>JPEG, 59 KB</dd>
@@ -2635,7 +2635,8 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Name</dt>
                     <dd class="govuk-summary-list__value">
-                        <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/preview/">test-pdf-documentFileVersionsInfo.pdf</a>
+                        <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/test-pdf-documentFileVersionsInfo.pdf"
+                            target="_blank">test-pdf-documentFileVersionsInfo.pdf</a>
                         </div>
                     </dd>
                 </div>
@@ -2688,7 +2689,8 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
                             <tr class="govuk-table__row">
                                 <td class="govuk-table__cell">1</td>
                                 <td class="govuk-table__cell">
-                                    <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/preview/">test-pdf-documentFileVersionsInfo.pdf</a>
+                                    <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/test-pdf-documentFileVersionsInfo.pdf"
+                                        target="_blank">test-pdf-documentFileVersionsInfo.pdf</a>
                                     </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">CURRENT VERSION</strong>
                                 </td>
                                 <td class="govuk-table__cell">
@@ -3214,7 +3216,7 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Correct appeal type</dt>
                     <dd class="govuk-summary-list__value">Yes</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/is-correct-appeal-type/change"
-                        lpaQuestionnaireData-cy="change-is-correct-appeal-type"> Change<span class="govuk-visually-hidden"> Correct appeal type</span></a>
+                        data-cy="change-is-correct-appeal-type"> Change<span class="govuk-visually-hidden"> Correct appeal type</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Listed buildings</dt>
@@ -3260,7 +3262,7 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Green belt</dt>
                     <dd class="govuk-summary-list__value"></dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/green-belt/change/lpa"
-                        lpaQuestionnaireData-cy="change-site-within-green-belt"> Change<span class="govuk-visually-hidden"> Green belt</span></a>
+                        data-cy="change-site-within-green-belt"> Change<span class="govuk-visually-hidden"> Green belt</span></a>
                     </dd>
                 </div>
             </dl>
@@ -3313,7 +3315,7 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                         </ul>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/notification-methods/change"
-                        lpaQuestionnaireData-cy="change-notification-methods"> Change<span class="govuk-visually-hidden"> notification methods</span></a>
+                        data-cy="change-notification-methods"> Change<span class="govuk-visually-hidden"> Notification methods</span></a>
                     </dd>
                 </div>
             </dl>
@@ -3370,6 +3372,16 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                             </ul>
                         </dd>
                 </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Plans, drawings and list of plans</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-plans-drawings"> Add<span class="govuk-visually-hidden"> Plans, drawings and list of plans</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Relevant policies from statutory development plan</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-development-plan-policies"> Add<span class="govuk-visually-hidden"> Relevant policies from statutory development plan</span></a>
+                        </dd>
+                </div>
             </dl>
         </div>
     </div>
@@ -3384,7 +3396,7 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                         <br><span>The entrance is at the back of the property</span>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/inspector-access/change/lpa"
-                        lpaQuestionnaireData-cy="change-does-site-require-inspector-access"> Change<span class="govuk-visually-hidden"> Site access required</span></a>
+                        data-cy="change-does-site-require-inspector-access"> Change<span class="govuk-visually-hidden"> Site access required</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
@@ -3408,7 +3420,7 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                         <br><span>There is no mobile signal at the property</span>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/safety-risks/change/lpa"
-                        lpaQuestionnaireData-cy="change-health-and-safety"> Change<span class="govuk-visually-hidden"> potential safety risks</span></a>
+                        data-cy="change-health-and-safety"> Change<span class="govuk-visually-hidden"> Potential safety risks</span></a>
                     </dd>
                 </div>
             </dl>
@@ -4689,7 +4701,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-xl govuk-!-margin-bottom-1">Appeal 351062</span>
             <h1             class="govuk-fieldset__legend--xl govuk-!-margin-top-0">Update LPA questionnaire due date</h1>
-                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 1 March 3000</div>
+                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 11 October 2024</div>
         </div>
     </div>
     <form method="post" novalidate="novalidate">
@@ -4748,7 +4760,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-xl govuk-!-margin-bottom-1">Appeal 351062</span>
             <h1             class="govuk-fieldset__legend--xl govuk-!-margin-top-0">Update LPA questionnaire due date</h1>
-                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 31 December 2999</div>
+                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 11 October 2024</div>
         </div>
     </div>
     <form method="post" novalidate="novalidate">
@@ -4807,7 +4819,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-xl govuk-!-margin-bottom-1">Appeal 351062</span>
             <h1             class="govuk-fieldset__legend--xl govuk-!-margin-top-0">Update LPA questionnaire due date</h1>
-                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 1 February 3000</div>
+                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 11 October 2024</div>
         </div>
     </div>
     <form method="post" novalidate="novalidate">
@@ -4866,7 +4878,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-xl govuk-!-margin-bottom-1">Appeal 351062</span>
             <h1             class="govuk-fieldset__legend--xl govuk-!-margin-top-0">Update LPA questionnaire due date</h1>
-                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 31 December 2999</div>
+                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 11 October 2024</div>
         </div>
     </div>
     <form method="post" novalidate="novalidate">
@@ -4925,7 +4937,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-xl govuk-!-margin-bottom-1">Appeal 351062</span>
             <h1             class="govuk-fieldset__legend--xl govuk-!-margin-top-0">Update LPA questionnaire due date</h1>
-                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 1 December 2999</div>
+                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 11 October 2024</div>
         </div>
     </div>
     <form method="post" novalidate="novalidate">
@@ -4984,7 +4996,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-xl govuk-!-margin-bottom-1">Appeal 351062</span>
             <h1             class="govuk-fieldset__legend--xl govuk-!-margin-top-0">Update LPA questionnaire due date</h1>
-                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 1 January 3001</div>
+                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 11 October 2024</div>
         </div>
     </div>
     <form method="post" novalidate="novalidate">
@@ -5043,7 +5055,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-xl govuk-!-margin-bottom-1">Appeal 351062</span>
             <h1             class="govuk-fieldset__legend--xl govuk-!-margin-top-0">Update LPA questionnaire due date</h1>
-                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 1 December 2999</div>
+                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 11 October 2024</div>
         </div>
     </div>
     <form method="post" novalidate="novalidate">
@@ -5102,7 +5114,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-xl govuk-!-margin-bottom-1">Appeal 351062</span>
             <h1             class="govuk-fieldset__legend--xl govuk-!-margin-top-0">Update LPA questionnaire due date</h1>
-                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 1 January 1923</div>
+                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 11 October 2024</div>
         </div>
     </div>
     <form method="post" novalidate="novalidate">
@@ -5161,7 +5173,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-xl govuk-!-margin-bottom-1">Appeal 351062</span>
             <h1             class="govuk-fieldset__legend--xl govuk-!-margin-top-0">Update LPA questionnaire due date</h1>
-                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 1 January 1900</div>
+                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 11 October 2024</div>
         </div>
     </div>
     <form method="post" novalidate="novalidate">
@@ -5224,7 +5236,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-xl govuk-!-margin-bottom-1">Appeal 351062</span>
             <h1             class="govuk-fieldset__legend--xl govuk-!-margin-top-0">Update LPA questionnaire due date</h1>
-                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 30 November 1899</div>
+                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 11 October 2024</div>
         </div>
     </div>
     <form method="post" novalidate="novalidate">
@@ -5281,7 +5293,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-xl govuk-!-margin-bottom-1">Appeal 351062</span>
             <h1             class="govuk-fieldset__legend--xl govuk-!-margin-top-0">Update LPA questionnaire due date</h1>
-                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 1 January 2000</div>
+                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 11 October 2024</div>
         </div>
     </div>
     <form method="post" novalidate="novalidate">
