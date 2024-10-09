@@ -6,6 +6,8 @@ import formatDate from '#utils/date-formatter.js';
 import config from '#config/config.js';
 import timetableRepository from '#repositories/appeal-timetable.repository.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { setTimeInTimeZone } from '#utils/business-days.js';
+import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('express').Request} Request */
@@ -40,7 +42,7 @@ const changeAppealType = async (
 			}
 		}),
 		await timetableRepository.upsertAppealTimetableById(appeal.id, {
-			caseResubmissionDueDate: new Date(dueDate)
+			caseResubmissionDueDate: setTimeInTimeZone(dueDate, DEADLINE_HOUR, DEADLINE_MINUTE)
 		}),
 		await transitionState(
 			appeal.id,
