@@ -1,31 +1,18 @@
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
+import { textSummaryListItem } from '#lib/mappers/components/text.js';
 
 /** @type {import('../appeal.mapper.js').SubMapper} */
-export const mapIpCommentsDueDate = ({ appealDetails, currentRoute }) => ({
-	id: 'ip-comments-due-date',
-	display: {
-		summaryListItem: {
-			key: {
-				text: 'Comments from interested parties due'
-			},
-			value: {
-				// @ts-ignore
-				html: dateISOStringToDisplayDate(appealDetails.appealTimetable?.ipCommentsDueDate) || ''
-			},
-			actions: {
-				items: [
-					appealDetails.validAt
-						? {
-								text: 'Change',
-								href: `${currentRoute}/appellant-case/valid/date`,
-								visuallyHiddenText:
-									'The date all case documentation was received and the appeal was valid',
-								attributes: { 'data-cy': 'change-ip-comments-due-date' }
-						  }
-						: {}
-				]
-			},
-			classes: 'appeal-ip-comments-due-date'
-		}
-	}
-});
+export const mapIpCommentsDueDate = ({
+	appealDetails,
+	currentRoute,
+	userHasUpdateCasePermission
+}) =>
+	textSummaryListItem({
+		id: 'ip-comments-due-date',
+		text: 'Comments from interested parties due',
+		// @ts-ignore
+		value: dateISOStringToDisplayDate(appealDetails.appealTimetable?.ipCommentsDueDate) || '',
+		link: `${currentRoute}/appellant-case/valid/date`,
+		editable: userHasUpdateCasePermission,
+		classes: 'appeal-ip-comments-due-date'
+	});

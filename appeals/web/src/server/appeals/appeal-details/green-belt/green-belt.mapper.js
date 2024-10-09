@@ -2,7 +2,7 @@
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
  */
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { yesNoInput } from '#lib/page-components/radio.js';
+import { yesNoInput } from '#lib/mappers/components/radio.js';
 
 /**
  * @param {Appeal} appealData

@@ -1773,7 +1773,7 @@ describe('appeal-details', () => {
 				expect(rowHtml).toMatchSnapshot();
 				expect(rowHtml).toContain('Decision</dt>');
 				expect(rowHtml).toContain(
-					'<a class="govuk-link" href="/appeals-service/appeal-details/2/issue-decision/decision"> Issue<span class="govuk-visually-hidden"> decision</span></a>'
+					'<a class="govuk-link" href="/appeals-service/appeal-details/2/issue-decision/decision" data-cy="issue-decision"> Issue<span class="govuk-visually-hidden"> Decision</span></a>'
 				);
 			});
 

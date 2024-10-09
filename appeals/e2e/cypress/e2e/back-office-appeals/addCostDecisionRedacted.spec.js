@@ -25,7 +25,7 @@ describe('add cost decision and redact', () => {
 			happyPathHelper.startCase(caseRef);
 			caseDetailsPage.clickAccordionByButton('Costs');
 			caseDetailsPage.clickAddCostsDecision();
-			caseDetailsPage.uploadSamplePdf();
+			caseDetailsPage.uploadSampleDoc();
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.selectRadioButtonByValue('Redacted');
 			caseDetailsPage.clickButtonByText('Confirm');

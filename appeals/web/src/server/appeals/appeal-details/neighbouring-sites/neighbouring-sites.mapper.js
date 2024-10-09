@@ -1,8 +1,8 @@
 import { appealSiteToMultilineAddressStringHtml } from '#lib/address-formatter.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { buildNotificationBanners } from '#lib/mappers/notification-banners.mapper.js';
-import { addressInputs } from '#lib/page-components/address.js';
-import { yesNoInput } from '#lib/page-components/radio.js';
+import { addressInputs } from '#lib/mappers/components/address.js';
+import { yesNoInput } from '#lib/mappers/components/radio.js';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
