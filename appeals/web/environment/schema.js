@@ -27,6 +27,7 @@ export default baseSchema
 		blobStorageUrl: joi.string(),
 		blobEmulatorSasUrl: joi.string().when('useBlobEmulator', { not: 'true', then: joi.optional() }),
 		blobStorageDefaultContainer: joi.string(),
+		cacheControl: joi.object({ maxAge: joi.string() }).options({ presence: 'required' }),
 		horizonAppealBaseUrl: joi.string().optional().empty(''),
 		useBlobEmulator: joi.boolean().optional(),
 		logLevelStdOut: joi.string().valid(...logLevel),
