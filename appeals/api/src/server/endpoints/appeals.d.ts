@@ -452,6 +452,7 @@ interface AppealListResponse {
 	dueDate: Date | undefined | null;
 	isParentAppeal: boolean | null;
 	isChildAppeal: boolean | null;
+  commentCounts: Record<string, number>;
 }
 
 interface DocumentationSummary {

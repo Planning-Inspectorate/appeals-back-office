@@ -137,3 +137,27 @@ export const updateRepresentationById = (id, redactedRepresentation, status, not
 		}
 	});
 };
+
+/**
+ * @param {number} appealId
+ * @param {string} [representationType]
+ * @returns {Promise<Record<string, number>>}
+ * */
+export const countAppealRepresentationsByStatus = async (appealId, representationType) => {
+	const statusCounts = await databaseConnector.representation.groupBy({
+		by: ['status'],
+		where: {
+			appealId,
+			representationType
+		},
+		_count: true
+	});
+
+	return statusCounts.reduce(
+		(acc, item) => ({
+			...acc,
+			[item.status]: item._count
+		}),
+		{}
+	);
+};

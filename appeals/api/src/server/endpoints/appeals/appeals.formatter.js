@@ -28,9 +28,10 @@ const approxStageCompletion = {
 /**
  * @param {Appeal} appeal
  * @param {AppealRelationship[]} linkedAppeals
+ * @param {Record<string, number>} commentCounts
  * @returns {AppealListResponse}}
  */
-const formatAppeals = (appeal, linkedAppeals) => ({
+const formatAppeals = (appeal, linkedAppeals, commentCounts) => ({
 	appealId: appeal.id,
 	appealReference: appeal.reference,
 	appealSite: formatAddress(appeal.address),
@@ -42,15 +43,17 @@ const formatAppeals = (appeal, linkedAppeals) => ({
 	lpaQuestionnaireStatus: '',
 	dueDate: null,
 	isParentAppeal: linkedAppeals.filter((link) => link.parentRef === appeal.reference).length > 0,
-	isChildAppeal: linkedAppeals.filter((link) => link.childRef === appeal.reference).length > 0
+	isChildAppeal: linkedAppeals.filter((link) => link.childRef === appeal.reference).length > 0,
+  commentCounts
 });
 
 /**
  * @param {Appeal} appeal
  * @param {AppealRelationship[]} linkedAppeals
+ * @param {Record<string, number>} commentCounts
  * @returns {AppealListResponse}}
  */
-const formatMyAppeals = (appeal, linkedAppeals) => ({
+const formatMyAppeals = (appeal, linkedAppeals, commentCounts) => ({
 	appealId: appeal.id,
 	appealReference: appeal.reference,
 	appealSite: formatAddress(appeal.address),
@@ -83,7 +86,8 @@ const formatMyAppeals = (appeal, linkedAppeals) => ({
 		appeal.caseExtensionDate
 	),
 	isParentAppeal: linkedAppeals.filter((link) => link.parentRef === appeal.reference).length > 0,
-	isChildAppeal: linkedAppeals.filter((link) => link.childRef === appeal.reference).length > 0
+	isChildAppeal: linkedAppeals.filter((link) => link.childRef === appeal.reference).length > 0,
+  commentCounts
 });
 
 /**
@@ -101,6 +105,8 @@ const formatAppeal = (
 	decisionInfo = null,
 	referencedAppeals = null
 ) => {
+  // TODO: This if statement shouldn't be needed because appeal is non-optional
+  // Need to make sure removing it doesn't break anything though
 	if (appeal) {
 		const decisionFolder = formatFolder(
 			rootFolders.find(
