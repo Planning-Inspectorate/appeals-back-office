@@ -528,12 +528,6 @@ export const postUploadDocumentsCheckAndConfirm = async (
 
 		delete request.session.fileUploadInfo;
 
-		// addNotificationBannerToSession(
-		// 	request.session,
-		// 	'documentAdded',
-		// 	currentAppeal.appealId
-		// );
-
 		if (successCallback) {
 			successCallback(request);
 		}
