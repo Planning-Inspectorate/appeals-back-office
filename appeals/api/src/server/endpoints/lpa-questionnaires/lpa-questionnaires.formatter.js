@@ -64,7 +64,8 @@ const formatLpaQuestionnaire = (appeal, folders = null) => {
 			costsAppliedFor: lpaQuestionnaire.lpaCostsAppliedFor,
 			lpaStatement: lpaQuestionnaire.lpaStatement,
 			extraConditions: lpaQuestionnaire.newConditionDetails,
-			hasExtraConditions: lpaQuestionnaire.newConditionDetails !== null
+			hasExtraConditions: lpaQuestionnaire.newConditionDetails !== null,
+			affectsSheduledMonument: lpaQuestionnaire.affectsScheduledMonument
 		};
 	} else {
 		return {};

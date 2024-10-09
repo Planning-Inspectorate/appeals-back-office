@@ -14,26 +14,35 @@ import { APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { isFeatureActive } from '#common/feature-flags.js';
+import { mapUser } from './audit/audit.service.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import config from '#environment/config.js';
 import {
 	generateIssueDecisionUrl,
 	generateStartTimetableUrl
 } from './issue-decision/issue-decision.mapper.js';
-import { dateISOStringToDisplayDate, getTodaysISOString } from '#lib/dates.js';
+import {
+	dateISOStringToDisplayDate,
+	dateISOStringToDisplayTime12hr,
+	getTodaysISOString
+} from '#lib/dates.js';
 
 export const pageHeading = 'Case details';
 
+/** @typedef {import('@pins/appeals.api/src/server/endpoints/appeals').GetCaseNotesResponse} GetCaseNotesResponse */
+
 /**
  * @param {import('./appeal-details.types.js').WebAppeal} appealDetails
+ * @param {GetCaseNotesResponse} appealCaseNotes
  * @param {string} currentRoute
- * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
+ * @param {import('express-session').Session & Partial<import('express-session').SessionData>} session
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {boolean} [ipCommentsAwaitingReview]
  * @returns {Promise<PageContent>}
  */
 export async function appealDetailsPage(
 	appealDetails,
+	appealCaseNotes,
 	currentRoute,
 	session,
 	request,
@@ -86,6 +95,37 @@ export async function appealDetailsPage(
 		}
 	};
 
+	const caseNotes = await Promise.all(
+		appealCaseNotes.map(async (caseNote) => {
+			const createdAt = new Date(caseNote.createdAt);
+			return {
+				date: dateISOStringToDisplayDate(caseNote.createdAt),
+				day: new Intl.DateTimeFormat('en-GB', { weekday: 'long' }).format(createdAt),
+				time: dateISOStringToDisplayTime12hr(caseNote.createdAt),
+				comment: caseNote.comment,
+				user: (await mapUser(caseNote.azureAdUserId, request.session)).split('@')[0]
+			};
+		})
+	);
+
+	/** @type {PageComponent} */
+	const caseNotesComponent = {
+		type: 'details',
+		parameters: {
+			summaryText:
+				caseNotes.length === 1 ? `${caseNotes.length} case note` : `${caseNotes.length} case notes`,
+			html: '',
+			pageComponents: [
+				{
+					type: 'case-notes',
+					parameters: {
+						caseNotes: caseNotes
+					}
+				}
+			]
+		}
+	};
+
 	/** @type {PageComponent} */
 	let appealDetailsAccordion = generateAccordionItems(
 		appealDetails,
@@ -129,8 +169,6 @@ export async function appealDetailsPage(
 						}${generateDecisionDocumentDownloadHtml(appealDetails, 'View decision letter')}</p>`
 			}
 		});
-
-		shortAppealReference;
 	} else if (
 		isAppealWithdrawn &&
 		statusTag &&
@@ -217,6 +255,7 @@ export async function appealDetailsPage(
 		...notificationBanners,
 		...statusTagsComponentGroup,
 		caseSummary,
+		caseNotesComponent,
 		appealDetailsAccordion
 	];
 
@@ -229,7 +268,7 @@ export async function appealDetailsPage(
 
 /**
  * @param {import('./appeal-details.types.js').WebAppeal} appealDetails
- * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
+ * @param {import('express-session').Session & Partial<import('express-session').SessionData>} session
  * @param {PageComponent[]} accordionComponents
  * @param {boolean} [ipCommentsAwaitingReview]
  * @returns {void}
@@ -352,7 +391,7 @@ function removeAccordionComponentsActions(accordionComponents) {
  *
  * @param {import('./appeal-details.types.js').WebAppeal} appealDetails
  * @param {{appeal: MappedInstructions}} mappedData
- * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
+ * @param {import('express-session').Session & Partial<import('express-session').SessionData>} session
  * @param {boolean} [ipCommentsAwaitingReview]
  * @returns {PageComponent}
  */
@@ -374,7 +413,7 @@ function generateAccordionItems(appealDetails, mappedData, session, ipCommentsAw
  *
  * @param {import('./appeal-details.types.js').WebAppeal} appealDetails
  * @param {{appeal: MappedInstructions}} mappedData
- * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
+ * @param {import('express-session').Session & Partial<import('express-session').SessionData>} session
  * @param {boolean} [ipCommentsAwaitingReview]
  * @returns
  */
