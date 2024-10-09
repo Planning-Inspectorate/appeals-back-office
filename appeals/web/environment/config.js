@@ -50,6 +50,7 @@ export function loadConfig() {
 		AZURE_BLOB_DEFAULT_CONTAINER,
 		AZURE_BLOB_EMULATOR_SAS_HOST,
 		AZURE_BLOB_USE_EMULATOR,
+		CACHE_CONTROL_MAX_AGE,
 		FEATURE_FLAG_S78_WRITTEN,
 		HORIZON_APPEAL_BASE_URL,
 		HTTP_PORT = 8080,
@@ -77,6 +78,9 @@ export function loadConfig() {
 		blobStorageUrl: AZURE_BLOB_STORE_HOST,
 		blobStorageDefaultContainer: AZURE_BLOB_DEFAULT_CONTAINER,
 		blobEmulatorSasUrl: AZURE_BLOB_EMULATOR_SAS_HOST,
+		cacheControl: {
+			maxAge: CACHE_CONTROL_MAX_AGE || '1d'
+		},
 		horizonAppealBaseUrl: HORIZON_APPEAL_BASE_URL,
 		useBlobEmulator: AZURE_BLOB_USE_EMULATOR,
 		logLevelStdOut: LOG_LEVEL_STDOUT,
