@@ -84,8 +84,15 @@ export function viewInterestedPartyCommentPage(appealDetails, comment) {
 			return null;
 		}
 
-		const items = comment.attachments.map((a) => `<li>${a.documentVersion.document.name}</li>`);
-		return `<ul class="govuk-list govuk-list--bullet">${items.join('')}</ul>`;
+		const items = comment.attachments.map(
+			(a) => `
+      <li>
+        <a href="#">${a.documentVersion.document.name}</a>
+      </li>
+    `
+		);
+
+		return `<ul class="govuk-list">${items.join('')}</ul>`;
 	})();
 
 	const hasAddress =
@@ -93,15 +100,7 @@ export function viewInterestedPartyCommentPage(appealDetails, comment) {
 		comment.represented.address.addressLine1 &&
 		comment.represented.address.postCode;
 
-	const commentText = (() => {
-		if (comment.originalRepresentation) {
-			return comment.originalRepresentation;
-		}
-
-		if (comment.attachments?.length > 0) {
-			return 'Added as document';
-		}
-	})();
+	const commentIsDocument = !comment.originalRepresentation && comment.attachments?.length > 0;
 
 	/** @type {PageComponent} */
 	const commentSummaryList = {
@@ -147,14 +146,18 @@ export function viewInterestedPartyCommentPage(appealDetails, comment) {
 				},
 				{
 					key: { text: comment.redactedRepresentation ? 'Original comment' : 'Comment' },
-					value: { text: commentText },
+					value: {
+						text: commentIsDocument ? 'Added as a document' : comment.originalRepresentation
+					},
 					actions: {
-						items: [
-							{
-								text: 'Redact',
-								href: '#'
-							}
-						]
+						items: commentIsDocument
+							? []
+							: [
+									{
+										text: 'Redact',
+										href: '#'
+									}
+							  ]
 					}
 				},
 				...(comment.redactedRepresentation
