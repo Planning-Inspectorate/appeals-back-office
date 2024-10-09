@@ -162,6 +162,7 @@ export function personalListPage(
 						html: mapAppealStatusToActionRequiredHtml(
 							appeal.appealId,
 							appeal.appealStatus,
+							Boolean(appeal.commentCounts?.awaiting_review),
 							appeal.lpaQuestionnaireId,
 							appeal.appellantCaseStatus,
 							appeal.lpaQuestionnaireStatus,
@@ -233,6 +234,7 @@ export function personalListPage(
 /**
  * @param {number} appealId
  * @param {string} appealStatus
+ * @param {boolean} hasAwaitingComments
  * @param {number|null|undefined} lpaQuestionnaireId
  * @param {string} appellantCaseStatus
  * @param {string} lpaQuestionnaireStatus
@@ -243,47 +245,57 @@ export function personalListPage(
 export function mapAppealStatusToActionRequiredHtml(
 	appealId,
 	appealStatus,
+	hasAwaitingComments,
 	lpaQuestionnaireId,
 	appellantCaseStatus,
 	lpaQuestionnaireStatus,
 	appealDueDate,
 	isCaseOfficer = false
 ) {
+	const dueDatePassed = dateIsInThePast(dateISOStringToDayMonthYearHourMinute(appealDueDate));
+
 	switch (appealStatus) {
 		case APPEAL_CASE_STATUS.READY_TO_START:
-			if (!isCaseOfficer) {
-				return 'Start case';
-			}
-			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/start-case/add">Start case</a>`;
+			return isCaseOfficer
+				? `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/start-case/add">Start case</a>`
+				: 'Start case';
 		case APPEAL_CASE_STATUS.VALIDATION:
 			if (appellantCaseStatus == 'Incomplete') {
-				if (!isCaseOfficer) {
-					return 'Awaiting appellant update';
-				}
-				return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/appellant-case">Awaiting appellant update</a>`;
+				return isCaseOfficer
+					? `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/appellant-case">Awaiting appellant update</a>`
+					: 'Awaiting appellant update';
 			}
+
 			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/appellant-case">Review appellant case</a>`;
 		case APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE:
-			if (dateIsInThePast(dateISOStringToDayMonthYearHourMinute(appealDueDate))) {
+			if (dueDatePassed) {
 				return 'LPA questionnaire overdue';
 			}
+
 			if (lpaQuestionnaireStatus == 'Incomplete') {
-				if (!isCaseOfficer) {
-					return 'Awaiting LPA update';
-				}
-				return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}">Awaiting LPA update</a>`;
+				return isCaseOfficer
+					? `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}">Awaiting LPA update</a>`
+					: 'Awaiting LPA update';
 			}
+
 			if (lpaQuestionnaireId) {
-				if (!isCaseOfficer) {
-					return 'Review LPA questionnaire';
-				}
-				return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}">Review LPA questionnaire</a>`;
+				return isCaseOfficer
+					? `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}">Review LPA questionnaire</a>`
+					: 'Review LPA questionnaire';
 			}
 			return 'Awaiting LPA questionnaire';
 		case APPEAL_CASE_STATUS.ISSUE_DETERMINATION:
 			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/issue-decision/decision">Issue decision</a>`;
 		case APPEAL_CASE_STATUS.AWAITING_TRANSFER:
 			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/change-appeal-type/add-horizon-reference">Update Horizon reference</a>`;
+		case APPEAL_CASE_STATUS.STATEMENTS:
+			if (dueDatePassed && !hasAwaitingComments) {
+				return '<a class="govuk-link" href="#">Share IP comments and statements</a>';
+			}
+
+			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/interested-party-comments">${
+				hasAwaitingComments ? 'Review IP comments' : 'Awaiting IP comments'
+			}</a>`;
 		default:
 			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}">View case</a>`;
 	}
