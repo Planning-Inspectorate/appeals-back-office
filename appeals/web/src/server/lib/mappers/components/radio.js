@@ -8,7 +8,7 @@ import { kebabCase } from 'lodash-es';
  * @param {string} [params.id]
  * @param {string|boolean|null} [params.value]
  * @param {string} [params.legendText]
- * @param {import('../mappers/global-mapper-formatter.js').ConditionalParams} [params.yesConditional]
+ * @param {import('../global-mapper-formatter.js').ConditionalParams} [params.yesConditional]
  * @returns {PageComponent}
  */
 export function yesNoInput({ name, id, value, legendText, yesConditional }) {

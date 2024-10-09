@@ -1,9 +1,9 @@
 import { formatServiceUserAsHtmlList } from '#lib/service-user-formatter.js';
-import { textDisplayField } from '#lib/page-components/text.js';
+import { textSummaryListItem } from '#lib/mappers/components/text.js';
 
 /** @type {import('../appeal.mapper.js').SubMapper} */
 export const mapAppellant = ({ appealDetails, currentRoute, userHasUpdateCasePermission }) =>
-	textDisplayField({
+	textSummaryListItem({
 		id: 'appellant',
 		text: 'Appellant',
 		value: {
@@ -12,6 +12,6 @@ export const mapAppellant = ({ appealDetails, currentRoute, userHasUpdateCasePer
 				: 'No appellant'
 		},
 		link: `${currentRoute}/service-user/change/appellant`,
-		userHasEditPermission: userHasUpdateCasePermission,
+		editable: userHasUpdateCasePermission,
 		classes: 'appeal-appellant'
 	});

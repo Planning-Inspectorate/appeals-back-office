@@ -1,32 +1,20 @@
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
+import { textSummaryListItem } from '#lib/mappers/components/text.js';
 
 /** @type {import('../appeal.mapper.js').SubMapper} */
-export const mapIssueDeterminationDate = ({ appealDetails, currentRoute }) => ({
-	id: 'issue-determination',
-	display: {
-		summaryListItem: {
-			key: {
-				text: 'Issue determination'
-			},
-			value: {
-				html:
-					dateISOStringToDisplayDate(appealDetails.appealTimetable?.issueDeterminationDate) ||
-					'Due date not yet set'
-			},
-			actions: {
-				items: [
-					{
-						text: appealDetails.appealTimetable?.issueDeterminationDate ? 'Change' : 'Schedule',
-						href: `${currentRoute}/appeal-timetables/issue-determination`,
-						attributes: {
-							'data-cy':
-								(appealDetails.appealTimetable?.issueDeterminationDate ? 'change' : 'schedule') +
-								'-issue-determination'
-						}
-					}
-				]
-			},
-			classes: 'appeal-issue-determination'
-		}
-	}
-});
+export const mapIssueDeterminationDate = ({
+	appealDetails,
+	currentRoute,
+	userHasUpdateCasePermission
+}) =>
+	textSummaryListItem({
+		id: 'issue-determination',
+		text: 'Issue determination',
+		value:
+			dateISOStringToDisplayDate(appealDetails.appealTimetable?.issueDeterminationDate) ||
+			'Due date not yet set',
+		link: `${currentRoute}/appeal-timetables/issue-determination`,
+		editable: userHasUpdateCasePermission,
+		actionText: appealDetails.appealTimetable?.issueDeterminationDate ? 'Change' : 'Schedule',
+		classes: 'appeal-issue-determination'
+	});

@@ -1,30 +1,26 @@
-import { permissionNames } from '#environment/permissions.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
-import { mapActionComponent } from '../../permissions.mapper.js';
 
 /** @type {import('../appeal.mapper.js').SubMapper} */
-export const mapOtherAppeals = ({ appealDetails, currentRoute, session }) => {
+export const mapOtherAppeals = ({ appealDetails, currentRoute, userHasUpdateCasePermission }) => {
 	const otherAppealsItems = [];
 
-	if (appealDetails.otherAppeals.length) {
-		otherAppealsItems.push(
-			mapActionComponent(permissionNames.updateCase, session, {
+	if (userHasUpdateCasePermission) {
+		if (appealDetails.otherAppeals.length) {
+			otherAppealsItems.push({
 				text: 'Manage',
 				href: `${currentRoute}/other-appeals/manage`,
 				visuallyHiddenText: 'Related appeals',
 				attributes: { 'data-cy': 'manage-related-appeals' }
-			})
-		);
-	}
+			});
+		}
 
-	otherAppealsItems.push(
-		mapActionComponent(permissionNames.updateCase, session, {
+		otherAppealsItems.push({
 			text: 'Add',
 			href: `${currentRoute}/other-appeals/add`,
 			visuallyHiddenText: 'Related appeals',
 			attributes: { 'data-cy': 'add-related-appeals' }
-		})
-	);
+		});
+	}
 
 	return {
 		id: 'other-appeals',

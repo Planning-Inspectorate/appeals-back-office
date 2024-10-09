@@ -1,29 +1,20 @@
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
+import { textSummaryListItem } from '#lib/mappers/components/text.js';
 
 /** @type {import('../appeal.mapper.js').SubMapper} */
-export const mapStatementReviewDueDate = ({ appealDetails, currentRoute }) => ({
-	id: 'statement-review-due-date',
-	display: {
-		summaryListItem: {
-			key: {
-				text: 'Statement review due'
-			},
-			value: {
-				html:
-					dateISOStringToDisplayDate(appealDetails.appealTimetable?.statementReviewDate) ||
-					'Due date not yet set'
-			},
-			actions: {
-				items: [
-					{
-						text: appealDetails.appealTimetable?.statementReviewDate ? 'Change' : 'Schedule',
-						href: `${currentRoute}/appeal-timetables/statement-review`,
-						visuallyHiddenText: 'statement review due date',
-						attributes: { 'data-cy': 'statement-review-due-date' }
-					}
-				]
-			},
-			classes: 'appeal-statement-review-due-date'
-		}
-	}
-});
+export const mapStatementReviewDueDate = ({
+	appealDetails,
+	currentRoute,
+	userHasUpdateCasePermission
+}) =>
+	textSummaryListItem({
+		id: 'statement-review-due-date',
+		text: 'Statement review due',
+		value:
+			dateISOStringToDisplayDate(appealDetails.appealTimetable?.statementReviewDate) ||
+			'Due date not yet set',
+		link: `${currentRoute}/appeal-timetables/statement-review`,
+		editable: userHasUpdateCasePermission,
+		classes: 'appeal-statement-review-due-date',
+		actionText: appealDetails.appealTimetable?.statementReviewDate ? 'Change' : 'Schedule'
+	});

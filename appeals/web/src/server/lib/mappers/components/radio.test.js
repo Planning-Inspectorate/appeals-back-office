@@ -1,4 +1,4 @@
-import { yesNoInput } from '#lib/page-components/radio.js';
+import { yesNoInput } from '#lib/mappers/components/radio.js';
 
 describe('radio', () => {
 	describe('yesNoInput', () => {

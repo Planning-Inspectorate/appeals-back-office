@@ -260,12 +260,20 @@ const clientActions = (container) => {
 
 		showProgressMessage(container);
 
-		const addedFiles = Array.from(fileList).map((file) => ({
+		let addedFiles = Array.from(fileList).map((file) => ({
 			file,
 			guid: isNewVersionOfExistingFile()
 				? container.dataset?.documentId || ''
 				: window.crypto.randomUUID()
 		}));
+
+		if (allowSingleFileOnly()) {
+			stagedFiles.files.forEach(async (file) => {
+				await removeFileByGUID(file.guid);
+			});
+
+			addedFiles = [addedFiles[0]];
+		}
 
 		stagedFiles.errors.length = 0;
 

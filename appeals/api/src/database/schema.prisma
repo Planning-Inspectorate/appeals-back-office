@@ -665,7 +665,7 @@ model Representation {
   representationType     String
   dateCreated            DateTime                   @default(now())
   dateLastUpdated        DateTime                   @default(now())
-  originalRepresentation String
+  originalRepresentation String?
   redactedRepresentation String?
   represented            ServiceUser?               @relation("represented", fields: [representedId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   representedId          Int?

@@ -1,34 +1,18 @@
-import * as displayPageFormatter from '#lib/display-page-formatter.js';
-import { convertFromBooleanToYesNo } from '../../../boolean-formatter.js';
+import { booleanWithDetailsSummaryListItem } from '#lib/mappers/components/boolean.js';
 
 /** @type {import('../appeal.mapper.js').SubMapper} */
-export const mapAppellantHealthAndSafety = ({ appealDetails, currentRoute }) => ({
-	id: 'appellant-case-health-and-safety',
-	display: {
-		summaryListItem: {
-			key: {
-				text: 'Potential safety risks (appellant answer)'
-			},
-			value: {
-				html: displayPageFormatter.formatAnswerAndDetails(
-					convertFromBooleanToYesNo(
-						appealDetails.healthAndSafety.appellantCase.hasIssues,
-						'No answer provided'
-					),
-					appealDetails.healthAndSafety.appellantCase.details
-				)
-			},
-			actions: {
-				items: [
-					{
-						text: 'Change',
-						href: `${currentRoute}/safety-risks/change/appellant`,
-						visuallyHiddenText: 'potential safety risks (appellant answer)',
-						attributes: { 'data-cy': 'change-appellant-case-health-and-safety' }
-					}
-				]
-			},
-			classes: 'appeal-appellant-health-and-safety'
-		}
-	}
-});
+export const mapAppellantHealthAndSafety = ({
+	appealDetails,
+	currentRoute,
+	userHasUpdateCasePermission
+}) =>
+	booleanWithDetailsSummaryListItem({
+		id: 'appellant-case-health-and-safety',
+		text: 'Potential safety risks (appellant answer)',
+		value: appealDetails.healthAndSafety.appellantCase.hasIssues,
+		valueDetails: appealDetails.healthAndSafety.appellantCase.details,
+		defaultText: 'No answer provided',
+		link: `${currentRoute}/safety-risks/change/appellant`,
+		editable: userHasUpdateCasePermission,
+		classes: 'appeal-appellant-health-and-safety'
+	});

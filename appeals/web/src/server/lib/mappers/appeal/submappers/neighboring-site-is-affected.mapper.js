@@ -1,38 +1,22 @@
-import { convertFromBooleanToYesNo } from '../../../boolean-formatter.js';
 import { shouldDisplayChangeLinksForLPAQStatus } from '../appeal.mapper.js';
+import { booleanSummaryListItem } from '#lib/mappers/components/boolean.js';
 
 /** @type {import('../appeal.mapper.js').SubMapper} */
-export const mapNeighboringSiteIsAffected = ({ appealDetails, currentRoute }) => {
-	const neighbouringSiteIsAffectedActionItems = shouldDisplayChangeLinksForLPAQStatus(
-		appealDetails.documentationSummary?.lpaQuestionnaire?.status
-	)
-		? [
-				{
-					text: 'Change',
-					href: `${currentRoute}/neighbouring-sites/change/affected`,
-					visuallyHiddenText: 'could a neighbouring site be affected',
-					attributes: { 'data-cy': 'change-neighbouuring-site-is-affected' }
-				}
-		  ]
-		: [];
-
-	return {
+export const mapNeighboringSiteIsAffected = ({
+	appealDetails,
+	currentRoute,
+	userHasUpdateCasePermission
+}) =>
+	booleanSummaryListItem({
 		id: 'neighbouring-site-is-affected',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Could a neighbouring site be affected?'
-				},
-				value: {
-					html:
-						convertFromBooleanToYesNo(appealDetails.isAffectingNeighbouringSites) ||
-						'No answer provided'
-				},
-				actions: {
-					items: neighbouringSiteIsAffectedActionItems
-				},
-				classes: 'appeal-neighbouring-site-is-affected'
-			}
-		}
-	};
-};
+		text: 'Could a neighbouring site be affected?',
+		value: appealDetails.isAffectingNeighbouringSites,
+		defaultText: 'No answer provided',
+		link: `${currentRoute}/neighbouring-sites/change/affected`,
+		editable:
+			userHasUpdateCasePermission &&
+			shouldDisplayChangeLinksForLPAQStatus(
+				appealDetails.documentationSummary?.lpaQuestionnaire?.status
+			),
+		classes: 'appeal-neighbouring-site-is-affected'
+	});

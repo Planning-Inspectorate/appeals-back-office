@@ -5,7 +5,7 @@ import {
 	errorFirstName,
 	errorLastName
 } from '#lib/error-handlers/change-screen-error-handlers.js';
-import { addressInputs } from '#lib/page-components/address.js';
+import { addressInputs } from '#lib/mappers/components/address.js';
 
 /** @typedef {import("../../appeal-details.types.js").WebAppeal} Appeal */
 

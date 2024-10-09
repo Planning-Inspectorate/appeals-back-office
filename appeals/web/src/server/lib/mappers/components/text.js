@@ -8,21 +8,23 @@ import { SHOW_MORE_MAXIMUM_CHARACTERS_BEFORE_HIDING } from '#lib/constants.js';
  * @param {string} options.text
  * @param {string|HtmlProperty|null} [options.value]
  * @param {string} options.link
- * @param {boolean} options.userHasEditPermission
+ * @param {boolean} options.editable
  * @param {boolean} [options.withShowMore]
  * @param {string} [options.classes]
+ * @param {string} [options.actionText]
  * @param {string} [options.cypressDataName]
  * @returns {Instructions}
  */
-export function textDisplayField({
+export function textSummaryListItem({
 	id,
 	text,
 	value,
 	link,
-	userHasEditPermission,
+	editable,
 	withShowMore,
 	classes,
-	cypressDataName = 'change-' + id
+	actionText = 'Change',
+	cypressDataName = actionText.toLowerCase() + '-' + id
 }) {
 	/** @type {TextProperty & ClassesProperty | HtmlProperty & ClassesProperty} */
 	let displayValue = { text: value };
@@ -51,9 +53,9 @@ export function textDisplayField({
 	}
 	/** @type {ActionItemProperties[]} */
 	const actions = [];
-	if (userHasEditPermission) {
+	if (editable) {
 		actions.push({
-			text: 'Change',
+			text: actionText,
 			visuallyHiddenText: text,
 			href: link,
 			attributes: { 'data-cy': cypressDataName }
