@@ -145,10 +145,10 @@ describe('appeal change type resubmit routes', () => {
 			expect(databaseConnector.appealTimetable.upsert).toHaveBeenCalledWith({
 				create: {
 					appealId: householdAppeal.id,
-					caseResubmissionDueDate: new Date('3000-02-05T00:00:00.000Z')
+					caseResubmissionDueDate: new Date('3000-02-05T23:59:00.000Z')
 				},
 				update: {
-					caseResubmissionDueDate: new Date('3000-02-05T00:00:00.000Z')
+					caseResubmissionDueDate: new Date('3000-02-05T23:59:00.000Z')
 				},
 				where: {
 					appealId: householdAppeal.id
