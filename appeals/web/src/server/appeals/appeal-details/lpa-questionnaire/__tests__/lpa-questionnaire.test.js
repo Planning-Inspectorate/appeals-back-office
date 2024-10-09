@@ -2515,7 +2515,7 @@ describe('LPA Questionnaire review', () => {
 			);
 		});
 
-		it('should send an API request to create a new document and redirect to the appellant case page', async () => {
+		it('should send an API request to create a new document and redirect to the LPA questionnaire page', async () => {
 			const mockDocumentsEndpoint = nock('http://test/').post('/appeals/1/documents').reply(200);
 
 			const addDocumentsResponse = await request.post(`${baseUrl}/add-documents/1`).send({
@@ -2532,6 +2532,35 @@ describe('LPA Questionnaire review', () => {
 			);
 
 			expect(mockDocumentsEndpoint.isDone()).toBe(true);
+		});
+
+		it('should display a "document added" notification banner on the LPA questionnaire page after a document was uploaded', async () => {
+			nock('http://test/')
+				.get('/appeals/1/lpa-questionnaires/2')
+				.reply(200, lpaQuestionnaireDataNotValidated);
+			nock('http://test/').post('/appeals/1/documents').reply(200);
+
+			const addDocumentsResponse = await request.post(`${baseUrl}/add-documents/1`).send({
+				'upload-info': fileUploadInfo
+			});
+
+			expect(addDocumentsResponse.statusCode).toBe(302);
+
+			const checkYourAnswersResponse = await request
+				.post(`${baseUrl}/add-documents/1/check-your-answers`)
+				.send({});
+
+			expect(checkYourAnswersResponse.statusCode).toBe(302);
+
+			const response = await request.get(`${baseUrl}`);
+
+			const unprettifiedElement = parseHtml(response.text, {
+				rootElement: notificationBannerElement,
+				skipPrettyPrint: true
+			});
+
+			expect(unprettifiedElement.innerHTML).toContain('Success</h3>');
+			expect(unprettifiedElement.innerHTML).toContain('Document added</p>');
 		});
 	});
 
