@@ -48,12 +48,11 @@ describe('appeal-mapper', () => {
 	describe('Test 2: Value transformation', () => {
 		it('should format dates using UK format', async () => {
 			const preFormattedDate = '2023-10-11T01:00:00.000Z';
-			const mappedDateHtml =
-				// @ts-ignore
+			const mappedDate =
 				validMappedData.appeal.lpaQuestionnaireDueDate.display.summaryListItem?.value.text;
 
 			// Check date is the same after being formatted
-			expect(new Date(mappedDateHtml).getDate()).toEqual(new Date(preFormattedDate).getDate());
+			expect(new Date(mappedDate).getDate()).toEqual(new Date(preFormattedDate).getDate());
 
 			//Check date format is correct
 			const expectedLongFormatRegex =
@@ -71,7 +70,7 @@ describe('appeal-mapper', () => {
 				);
 			}
 
-			expect(isDateInCorrectFormat(mappedDateHtml)).toBe(true);
+			expect(isDateInCorrectFormat(mappedDate)).toBe(true);
 		});
 	});
 });
