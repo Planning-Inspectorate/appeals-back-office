@@ -261,8 +261,8 @@ exports[`appellant-case GET /appellant-case should render a "Inspector access (a
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/preview'
-                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="'_blank'"
+                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg'
+                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank"
                                 class="govuk-link">ph1.jpeg</a>
                             </li>
                         </ul>
@@ -271,8 +271,8 @@ exports[`appellant-case GET /appellant-case should render a "Inspector access (a
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/preview'
-                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="'_blank'"
+                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg'
+                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank"
                                 class="govuk-link">ph0.jpeg</a>
                             </li>
                         </ul>
@@ -521,8 +521,8 @@ exports[`appellant-case GET /appellant-case should render a "LPA application ref
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/preview'
-                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="'_blank'"
+                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg'
+                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank"
                                 class="govuk-link">ph1.jpeg</a>
                             </li>
                         </ul>
@@ -531,8 +531,8 @@ exports[`appellant-case GET /appellant-case should render a "LPA application ref
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/preview'
-                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="'_blank'"
+                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg'
+                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank"
                                 class="govuk-link">ph0.jpeg</a>
                             </li>
                         </ul>
@@ -817,8 +817,8 @@ exports[`appellant-case GET /appellant-case should render a "Site area updated" 
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/preview'
-                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="'_blank'"
+                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg'
+                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank"
                                 class="govuk-link">ph1.jpeg</a>
                             </li>
                         </ul>
@@ -827,8 +827,8 @@ exports[`appellant-case GET /appellant-case should render a "Site area updated" 
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/preview'
-                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="'_blank'"
+                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg'
+                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank"
                                 class="govuk-link">ph0.jpeg</a>
                             </li>
                         </ul>
@@ -1077,8 +1077,8 @@ exports[`appellant-case GET /appellant-case should render a "Site health and saf
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/preview'
-                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="'_blank'"
+                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg'
+                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank"
                                 class="govuk-link">ph1.jpeg</a>
                             </li>
                         </ul>
@@ -1087,8 +1087,8 @@ exports[`appellant-case GET /appellant-case should render a "Site health and saf
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/preview'
-                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="'_blank'"
+                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg'
+                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank"
                                 class="govuk-link">ph0.jpeg</a>
                             </li>
                         </ul>
@@ -1337,8 +1337,8 @@ exports[`appellant-case GET /appellant-case should render a "Site updated" notif
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/preview'
-                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="'_blank'"
+                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg'
+                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank"
                                 class="govuk-link">ph1.jpeg</a>
                             </li>
                         </ul>
@@ -1347,8 +1347,8 @@ exports[`appellant-case GET /appellant-case should render a "Site updated" notif
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/preview'
-                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="'_blank'"
+                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg'
+                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank"
                                 class="govuk-link">ph0.jpeg</a>
                             </li>
                         </ul>
@@ -1609,8 +1609,8 @@ exports[`appellant-case GET /appellant-case should render a success notification
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/preview'
-                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="'_blank'"
+                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg'
+                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank"
                                 class="govuk-link">ph1.jpeg</a>
                             </li>
                         </ul>
@@ -1619,8 +1619,8 @@ exports[`appellant-case GET /appellant-case should render a success notification
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/preview'
-                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="'_blank'"
+                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg'
+                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank"
                                 class="govuk-link">ph0.jpeg</a>
                             </li>
                         </ul>
@@ -1951,8 +1951,8 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/preview'
-                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="'_blank'"
+                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg'
+                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank"
                                 class="govuk-link">ph1.jpeg</a>
                             </li>
                         </ul>
@@ -1961,8 +1961,8 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/preview'
-                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="'_blank'"
+                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg'
+                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank"
                                 class="govuk-link">ph0.jpeg</a>
                             </li>
                         </ul>
@@ -2302,8 +2302,8 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/preview'
-                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="'_blank'"
+                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg'
+                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank"
                                 class="govuk-link">ph1.jpeg</a>
                             </li>
                         </ul>
@@ -2312,8 +2312,8 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/preview'
-                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="'_blank'"
+                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg'
+                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank"
                                 class="govuk-link">ph0.jpeg</a>
                             </li>
                         </ul>
@@ -2537,8 +2537,8 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/preview'
-                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="'_blank'"
+                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg'
+                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank"
                                 class="govuk-link">ph1.jpeg</a>
                             </li>
                         </ul>
@@ -2547,8 +2547,8 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/preview'
-                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="'_blank'"
+                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg'
+                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank"
                                 class="govuk-link">ph0.jpeg</a>
                             </li>
                         </ul>
@@ -3713,7 +3713,8 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
             </tr>
             <tr class="govuk-table__row">
                 <td class="govuk-table__cell">
-                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/103/download/97260151-4334-407f-a76a-0b5666cbcfa7/preview/">ph1-documentFolderInfo.jpeg</a>
+                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/103/download/97260151-4334-407f-a76a-0b5666cbcfa7/ph1-documentFolderInfo.jpeg"
+                        target="_blank">ph1-documentFolderInfo.jpeg</a>
                     </div>
                     <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
                         <dd>JPEG, 59 KB</dd>
@@ -3829,7 +3830,8 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
             </tr>
             <tr class="govuk-table__row">
                 <td class="govuk-table__cell">
-                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/103/download/97260151-4334-407f-a76a-0b5666cbcfa7/preview/">ph1-documentFolderInfo.jpeg</a>
+                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/103/download/97260151-4334-407f-a76a-0b5666cbcfa7/ph1-documentFolderInfo.jpeg"
+                        target="_blank">ph1-documentFolderInfo.jpeg</a>
                     </div>
                     <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
                         <dd>JPEG, 59 KB</dd>
@@ -4190,7 +4192,8 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Name</dt>
                     <dd class="govuk-summary-list__value">
-                        <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/preview/">test-pdf-documentFileVersionsInfo.pdf</a>
+                        <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/test-pdf-documentFileVersionsInfo.pdf"
+                            target="_blank">test-pdf-documentFileVersionsInfo.pdf</a>
                         </div>
                     </dd>
                 </div>
@@ -4243,7 +4246,8 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
                             <tr class="govuk-table__row">
                                 <td class="govuk-table__cell">1</td>
                                 <td class="govuk-table__cell">
-                                    <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/preview/">test-pdf-documentFileVersionsInfo.pdf</a>
+                                    <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/test-pdf-documentFileVersionsInfo.pdf"
+                                        target="_blank">test-pdf-documentFileVersionsInfo.pdf</a>
                                     </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">CURRENT VERSION</strong>
                                 </td>
                                 <td class="govuk-table__cell">
@@ -4804,8 +4808,8 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/preview'
-                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="'_blank'"
+                            <li><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg'
+                                data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank"
                                 class="govuk-link">ph1.jpeg</a>
                             </li>
                         </ul>
@@ -4814,8 +4818,8 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/preview'
-                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="'_blank'"
+                            <li><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg'
+                                data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank"
                                 class="govuk-link">ph0.jpeg</a>
                             </li>
                         </ul>
