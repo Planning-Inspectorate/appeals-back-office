@@ -50,7 +50,7 @@ export function initialiseAndMapLPAQData(
 			text,
 			appealId: lpaQuestionnaireData.appealId,
 			folderInfo,
-			userHasEditPermission: userHasPermission(permissionNames.updateCase, session),
+			editable: userHasPermission(permissionNames.updateCase, session),
 			uploadUrlTemplate: buildDocumentUploadUrlTemplate(lpaQuestionnaireData.lpaQuestionnaireId),
 			manageUrl: mapDocumentManageUrl(
 				lpaQuestionnaireData.appealId,
@@ -115,7 +115,7 @@ export function initialiseAndMapLPAQData(
 		defaultText: '',
 		addCyAttribute: true,
 		link: `${currentRoute}/is-correct-appeal-type/change`,
-		userHasEditPermission: userHasUpdateCase
+		editable: userHasUpdateCase
 	});
 
 	mappedData.lpaq.conservationAreaMap = documentInstruction({
@@ -132,7 +132,7 @@ export function initialiseAndMapLPAQData(
 		defaultText: '',
 		addCyAttribute: true,
 		link: `${currentRoute}/green-belt/change/lpa`,
-		userHasEditPermission: userHasUpdateCase
+		editable: userHasUpdateCase
 	});
 
 	mappedData.lpaq.notifyingParties = documentInstruction({
@@ -170,7 +170,7 @@ export function initialiseAndMapLPAQData(
 			)
 		},
 		link: `${currentRoute}/notification-methods/change`,
-		userHasEditPermission: userHasUpdateCase
+		editable: userHasUpdateCase
 	});
 
 	mappedData.lpaq.representations = documentInstruction({
@@ -204,7 +204,7 @@ export function initialiseAndMapLPAQData(
 		valueDetails: lpaQuestionnaireData.inspectorAccessDetails,
 		defaultText: 'No answer provided',
 		link: `${currentRoute}/inspector-access/change/lpa`,
-		userHasEditPermission: userHasUpdateCase,
+		editable: userHasUpdateCase,
 		addCyAttribute: true
 	});
 
@@ -215,7 +215,7 @@ export function initialiseAndMapLPAQData(
 		valueDetails: lpaQuestionnaireData.healthAndSafetyDetails,
 		defaultText: 'No answer provided',
 		link: `${currentRoute}/safety-risks/change/lpa`,
-		userHasEditPermission: userHasUpdateCase,
+		editable: userHasUpdateCase,
 		addCyAttribute: true,
 		classes: 'lpa-health-and-safety'
 	});
@@ -269,7 +269,7 @@ export function initialiseAndMapLPAQData(
 		valueDetails: lpaQuestionnaireData.extraConditions,
 		defaultText: '',
 		link: `${currentRoute}/extra-conditions/change`,
-		userHasEditPermission: userHasUpdateCase
+		editable: userHasUpdateCase
 	});
 
 	/** @type {Instructions} */

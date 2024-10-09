@@ -14,7 +14,7 @@ export const mapDecision = ({ appealDetails, userHasUpdateCasePermission }) => {
 		text: 'Decision',
 		value: appealDetails.decision?.outcome || 'Not yet issued',
 		link: generateIssueDecisionUrl(appealDetails.appealId),
-		userHasEditPermission: userHasUpdateCasePermission && canIssueDecision,
+		editable: userHasUpdateCasePermission && canIssueDecision,
 		actionText: 'Issue',
 		classes: 'appeal-decision'
 	});

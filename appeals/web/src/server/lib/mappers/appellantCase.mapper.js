@@ -49,7 +49,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 			text,
 			appealId: appellantCaseData.appealId,
 			folderInfo,
-			userHasEditPermission: userHasPermission(permissionNames.updateCase, session),
+			editable: userHasPermission(permissionNames.updateCase, session),
 			uploadUrlTemplate: documentUploadUrlTemplate,
 			manageUrl: mapDocumentManageUrl(appellantCaseData.appealId, folderInfo?.folderId),
 			cypressDataName
@@ -69,7 +69,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 				: 'No appellant'
 		},
 		link: `${currentRoute}/service-user/change/appellant`,
-		userHasEditPermission: userHasUpdateCase,
+		editable: userHasUpdateCase,
 		classes: 'appeal-appellant',
 		cypressDataName: 'appellant'
 	});
@@ -81,7 +81,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 			html: appealDetails.agent ? formatServiceUserAsHtmlList(appealDetails.agent) : 'No agent'
 		},
 		link: `${currentRoute}/service-user/change/agent`,
-		userHasEditPermission: userHasUpdateCase,
+		editable: userHasUpdateCase,
 		classes: 'appeal-agent'
 	});
 
@@ -90,7 +90,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		text: 'LPA application reference',
 		value: appellantCaseData.planningApplicationReference,
 		link: `${currentRoute}/lpa-reference/change`,
-		userHasEditPermission: userHasUpdateCase
+		editable: userHasUpdateCase
 	});
 
 	mappedData.siteAddress = textSummaryListItem({
@@ -98,7 +98,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		text: 'Site address',
 		value: appealSiteToAddressString(appellantCaseData.appealSite),
 		link: `${currentRoute}/site-address/change/${appealDetails.appealSite.addressId}`,
-		userHasEditPermission: userHasUpdateCase
+		editable: userHasUpdateCase
 	});
 
 	mappedData.siteArea = textSummaryListItem({
@@ -108,7 +108,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 			? `${appellantCaseData.siteAreaSquareMetres} m²`
 			: '',
 		link: `${currentRoute}/site-area/change`,
-		userHasEditPermission: userHasUpdateCase
+		editable: userHasUpdateCase
 	});
 
 	mappedData.inGreenBelt = booleanSummaryListItem({
@@ -117,7 +117,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		value: appellantCaseData.isGreenBelt,
 		defaultText: '',
 		link: `${currentRoute}/green-belt/change/appellant`,
-		userHasEditPermission: userHasUpdateCase
+		editable: userHasUpdateCase
 	});
 
 	mappedData.applicationDecisionDate = textSummaryListItem({
@@ -125,7 +125,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		text: 'Decision date',
 		value: dateISOStringToDisplayDate(appellantCaseData.applicationDecisionDate),
 		link: `${currentRoute}/application-decision-date/change`,
-		userHasEditPermission: userHasUpdateCase
+		editable: userHasUpdateCase
 	});
 
 	mappedData.applicationDate = textSummaryListItem({
@@ -133,7 +133,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		text: 'Application submitted',
 		value: dateISOStringToDisplayDate(appellantCaseData.applicationDate),
 		link: `${currentRoute}/application-date/change`,
-		userHasEditPermission: userHasUpdateCase
+		editable: userHasUpdateCase
 	});
 
 	mappedData.developmentDescription = textSummaryListItem({
@@ -141,7 +141,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		text: 'Original Development description',
 		value: appellantCaseData.developmentDescription?.details || 'Not provided',
 		link: `${currentRoute}/development-description/change`,
-		userHasEditPermission: userHasUpdateCase,
+		editable: userHasUpdateCase,
 		withShowMore: true
 	});
 
@@ -150,7 +150,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		text: 'LPA changed the development description',
 		value: appellantCaseData.developmentDescription?.isChanged,
 		link: `${currentRoute}/lpa-changed-description/change`,
-		userHasEditPermission: userHasUpdateCase
+		editable: userHasUpdateCase
 	});
 
 	mappedData.applicationDecision = textSummaryListItem({
@@ -161,7 +161,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 				? 'Not received'
 				: capitalize(appellantCaseData.applicationDecision ?? ''),
 		link: `${currentRoute}/application-outcome/change`,
-		userHasEditPermission: userHasUpdateCase
+		editable: userHasUpdateCase
 	});
 
 	//TODO: update with new document type
@@ -177,7 +177,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		text: 'Local planning authority (LPA)',
 		value: appellantCaseData.localPlanningDepartment,
 		link: `${currentRoute}/change-appeal-details/local-planning-authority`,
-		userHasEditPermission: userHasUpdateCase
+		editable: userHasUpdateCase
 	});
 
 	/**
@@ -203,7 +203,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 			appellantCaseData.siteOwnership.ownsSomeLand
 		),
 		link: `${currentRoute}/site-ownership/change`,
-		userHasEditPermission: userHasUpdateCase
+		editable: userHasUpdateCase
 	});
 
 	mappedData.ownersKnown = textSummaryListItem({
@@ -211,7 +211,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		text: 'Owners known',
 		value: mapOwnersKnownLabelText(appellantCaseData.siteOwnership.knowsOtherLandowners),
 		link: `${currentRoute}/owners-known/change`,
-		userHasEditPermission: userHasUpdateCase
+		editable: userHasUpdateCase
 	});
 
 	mappedData.appealType = textSummaryListItem({
@@ -219,7 +219,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		text: 'Appeal type',
 		value: appealDetails.appealType,
 		link: `${currentRoute}/#`,
-		userHasEditPermission: userHasUpdateCase
+		editable: userHasUpdateCase
 	});
 
 	mappedData.advertisedAppeal = booleanSummaryListItem({
@@ -229,7 +229,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		defaultText: '',
 		link: `${currentRoute}/change-appeal-details/advertised-appeal`,
 		addCyAttribute: true,
-		userHasEditPermission: userHasUpdateCase
+		editable: userHasUpdateCase
 	});
 
 	mappedData.inspectorAccess = booleanWithDetailsSummaryListItem({
@@ -239,7 +239,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		valueDetails: appealDetails.inspectorAccess.appellantCase.details,
 		defaultText: 'No answer provided',
 		link: `${currentRoute}/inspector-access/change/appellant`,
-		userHasEditPermission: userHasUpdateCase,
+		editable: userHasUpdateCase,
 		classes: 'appellantcase-inspector-access',
 		addCyAttribute: true
 	});
@@ -251,7 +251,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		valueDetails: appealDetails.healthAndSafety.appellantCase.details,
 		defaultText: 'No answer provided',
 		link: `${currentRoute}/safety-risks/change/appellant`,
-		userHasEditPermission: userHasUpdateCase,
+		editable: userHasUpdateCase,
 		addCyAttribute: true
 	});
 
@@ -292,7 +292,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		defaultText: '',
 		link: `${currentRoute}/ownership-certificate/change`,
 		addCyAttribute: true,
-		userHasEditPermission: userHasUpdateCase
+		editable: userHasUpdateCase
 	});
 
 	mappedData.ownershipCertificate = documentInstruction({
@@ -468,7 +468,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		value: appellantCaseData.planningObligation?.hasObligation,
 		defaultText: '',
 		link: `${currentRoute}/planning-obligation/change`,
-		userHasEditPermission: userHasUpdateCase
+		editable: userHasUpdateCase
 	});
 
 	mappedData.statusPlanningObligation = textSummaryListItem({
@@ -478,7 +478,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 			appellantCaseData.planningObligation?.status
 		),
 		link: `${currentRoute}/planning-obligation/status/change`,
-		userHasEditPermission: userHasUpdateCase
+		editable: userHasUpdateCase
 	});
 
 	mappedData.partOfAgriculturalHolding = booleanSummaryListItem({
@@ -487,7 +487,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		value: appellantCaseData.agriculturalHolding.isPartOfAgriculturalHolding,
 		defaultText: '',
 		link: `${currentRoute}/agricultural-holding/change`,
-		userHasEditPermission: userHasUpdateCase
+		editable: userHasUpdateCase
 	});
 
 	mappedData.tenantOfAgriculturalHolding = booleanSummaryListItem({
@@ -496,7 +496,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		value: appellantCaseData.agriculturalHolding.isTenant,
 		defaultText: '',
 		link: `${currentRoute}/agricultural-holding/tenant/change`,
-		userHasEditPermission: userHasUpdateCase
+		editable: userHasUpdateCase
 	});
 
 	mappedData.otherTenantsOfAgriculturalHolding = booleanSummaryListItem({
@@ -505,7 +505,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		value: appellantCaseData.agriculturalHolding.hasOtherTenants,
 		defaultText: '',
 		link: `${currentRoute}/agricultural-holding/other-tenants/change`,
-		userHasEditPermission: userHasUpdateCase
+		editable: userHasUpdateCase
 	});
 
 	mappedData.appellantCostsApplication = booleanSummaryListItem({
@@ -513,7 +513,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		text: 'Applied for award of appeal costs',
 		value: appellantCaseData.appellantCostsAppliedFor,
 		link: `${currentRoute}/appeal-costs-application/change`,
-		userHasEditPermission: userHasUpdateCase
+		editable: userHasUpdateCase
 	});
 
 	mappedData.costsDocument = documentInstruction({

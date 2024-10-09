@@ -7,6 +7,6 @@ export const mapCaseProcedure = ({ appealDetails, currentRoute, userHasUpdateCas
 		text: 'Case procedure',
 		value: appealDetails.procedureType || `No case procedure`,
 		link: `${currentRoute}/change-appeal-details/case-procedure`,
-		userHasEditPermission: userHasUpdateCasePermission,
+		editable: userHasUpdateCasePermission,
 		classes: 'appeal-case-procedure'
 	});

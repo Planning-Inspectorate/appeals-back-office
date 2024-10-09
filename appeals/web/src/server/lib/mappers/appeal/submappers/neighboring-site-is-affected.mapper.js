@@ -13,7 +13,7 @@ export const mapNeighboringSiteIsAffected = ({
 		value: appealDetails.isAffectingNeighbouringSites,
 		defaultText: 'No answer provided',
 		link: `${currentRoute}/neighbouring-sites/change/affected`,
-		userHasEditPermission:
+		editable:
 			userHasUpdateCasePermission &&
 			shouldDisplayChangeLinksForLPAQStatus(
 				appealDetails.documentationSummary?.lpaQuestionnaire?.status

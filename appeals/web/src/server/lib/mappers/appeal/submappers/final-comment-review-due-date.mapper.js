@@ -14,7 +14,7 @@ export const mapFinalCommentReviewDueDate = ({
 			dateISOStringToDisplayDate(appealDetails.appealTimetable?.finalCommentReviewDate) ||
 			'Due date not yet set',
 		link: `${currentRoute}/appeal-timetables/final-comment-review`,
-		userHasEditPermission: userHasUpdateCasePermission,
+		editable: userHasUpdateCasePermission,
 		classes: 'appeal-final-comment-review-due-date',
 		actionText: appealDetails.appealTimetable?.finalCommentReviewDate ? 'Change' : 'Schedule'
 	});

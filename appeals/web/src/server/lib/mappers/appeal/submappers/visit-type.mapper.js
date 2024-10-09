@@ -9,6 +9,6 @@ export const mapVisitType = ({ appealDetails, currentRoute, userHasUpdateCasePer
 		link: `${currentRoute}/site-visit/${
 			appealDetails.siteVisit?.visitType ? 'visit-booked' : 'schedule-visit'
 		}`,
-		userHasEditPermission: userHasUpdateCasePermission,
+		editable: userHasUpdateCasePermission,
 		classes: 'appeal-visit-type'
 	});

@@ -13,6 +13,6 @@ export const mapLpaStatementDueDate = ({
 		// @ts-ignore
 		value: dateISOStringToDisplayDate(appealDetails.appealTimetable?.lpaStatementDueDate) || '',
 		link: `${currentRoute}/appellant-case/valid/date`,
-		userHasEditPermission: Boolean(userHasUpdateCasePermission && appealDetails.validAt),
+		editable: Boolean(userHasUpdateCasePermission && appealDetails.validAt),
 		classes: 'appeal-lpa-statement-due-date'
 	});

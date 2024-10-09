@@ -25,7 +25,7 @@ import { textSummaryListItem } from '#lib/mappers/components/text.js';
 			html: inspectorRowValue
 		},
 		link: `${currentRoute}/assign-user/inspector`,
-		userHasEditPermission: userHasUpdateCasePermission,
+		editable: userHasUpdateCasePermission,
 		classes: 'appeal-inspector',
 		actionText: appealDetails.inspector ? 'Change' : 'Assign'
 	});

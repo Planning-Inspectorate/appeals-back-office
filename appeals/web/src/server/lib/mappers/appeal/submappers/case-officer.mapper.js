@@ -24,7 +24,7 @@ import { textSummaryListItem } from '#lib/mappers/components/text.js';
 			html: caseOfficerRowValue
 		},
 		link: `${currentRoute}/assign-user/case-officer`,
-		userHasEditPermission: userHasUpdateCasePermission,
+		editable: userHasUpdateCasePermission,
 		classes: 'appeal-case-officer',
 		actionText: appealDetails.caseOfficer ? 'Change' : 'Assign'
 	});

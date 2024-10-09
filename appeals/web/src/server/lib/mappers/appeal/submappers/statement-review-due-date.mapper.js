@@ -14,7 +14,7 @@ export const mapStatementReviewDueDate = ({
 			dateISOStringToDisplayDate(appealDetails.appealTimetable?.statementReviewDate) ||
 			'Due date not yet set',
 		link: `${currentRoute}/appeal-timetables/statement-review`,
-		userHasEditPermission: userHasUpdateCasePermission,
+		editable: userHasUpdateCasePermission,
 		classes: 'appeal-statement-review-due-date',
 		actionText: appealDetails.appealTimetable?.statementReviewDate ? 'Change' : 'Schedule'
 	});

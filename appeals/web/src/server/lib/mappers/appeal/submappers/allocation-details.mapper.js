@@ -13,7 +13,7 @@ export const mapAllocationDetails = ({
 			html: mapDetailsHtml(appealDetails.allocationDetails)
 		},
 		link: `${currentRoute}/allocation-details/allocation-level`,
-		userHasEditPermission: userHasUpdateCasePermission,
+		editable: userHasUpdateCasePermission,
 		classes: 'appeal-allocation-details',
 		actionText: appealDetails.allocationDetails ? 'Change' : 'Add'
 	});

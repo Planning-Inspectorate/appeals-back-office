@@ -13,6 +13,6 @@ export const mapLpaFinalCommentDueDate = ({
 		// @ts-ignore
 		value: dateISOStringToDisplayDate(appealDetails.appealTimetable?.lpaFinalCommentDueDate) || '',
 		link: `${currentRoute}/lpa-case/valid/date`,
-		userHasEditPermission: Boolean(userHasUpdateCasePermission && appealDetails.validAt),
+		editable: Boolean(userHasUpdateCasePermission && appealDetails.validAt),
 		classes: 'appeal-lpa-final-comment-due-date'
 	});

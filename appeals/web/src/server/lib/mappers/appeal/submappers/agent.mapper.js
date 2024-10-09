@@ -10,6 +10,6 @@ export const mapAgent = ({ appealDetails, currentRoute, userHasUpdateCasePermiss
 			html: appealDetails.agent ? formatServiceUserAsHtmlList(appealDetails.agent) : 'No agent'
 		},
 		link: `${currentRoute}/service-user/change/agent`,
-		userHasEditPermission: 'agent' in appealDetails && userHasUpdateCasePermission,
+		editable: 'agent' in appealDetails && userHasUpdateCasePermission,
 		classes: 'appeal-agent'
 	});

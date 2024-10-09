@@ -9,7 +9,7 @@ import { formatDocumentActionLink, formatDocumentValues } from '#lib/display-pag
  * @param {string} options.text
  * @param {number} options.appealId
  * @param {import('@pins/appeals.api').Appeals.FolderInfo|null|undefined} options.folderInfo
- * @param {boolean} options.userHasEditPermission
+ * @param {boolean} options.editable
  * @param {string} options.manageUrl
  * @param {string} options.uploadUrlTemplate
  * @param {string} [options.cypressDataName]
@@ -20,7 +20,7 @@ export function documentSummaryListItem({
 	text,
 	appealId,
 	folderInfo,
-	userHasEditPermission,
+	editable,
 	manageUrl,
 	uploadUrlTemplate,
 	cypressDataName = id
@@ -28,7 +28,7 @@ export function documentSummaryListItem({
 	const documents = (isFolderInfo(folderInfo) && folderInfo.documents) || [];
 	/** @type {ActionItemProperties[]} */
 	const actions = [];
-	if (userHasEditPermission) {
+	if (editable) {
 		if (documents.length) {
 			actions.push({
 				text: 'Manage',

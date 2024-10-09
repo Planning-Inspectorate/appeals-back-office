@@ -8,7 +8,7 @@ import { SHOW_MORE_MAXIMUM_CHARACTERS_BEFORE_HIDING } from '#lib/constants.js';
  * @param {string} options.text
  * @param {string|HtmlProperty|null} [options.value]
  * @param {string} options.link
- * @param {boolean} options.userHasEditPermission
+ * @param {boolean} options.editable
  * @param {boolean} [options.withShowMore]
  * @param {string} [options.classes]
  * @param {string} [options.actionText]
@@ -20,7 +20,7 @@ export function textSummaryListItem({
 	text,
 	value,
 	link,
-	userHasEditPermission,
+	editable,
 	withShowMore,
 	classes,
 	actionText = 'Change',
@@ -53,7 +53,7 @@ export function textSummaryListItem({
 	}
 	/** @type {ActionItemProperties[]} */
 	const actions = [];
-	if (userHasEditPermission) {
+	if (editable) {
 		actions.push({
 			text: actionText,
 			visuallyHiddenText: text,
