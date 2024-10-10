@@ -2394,6 +2394,28 @@ export const interestedPartyCommentsInvalid = {
 	pageSize: 1000
 };
 
+export const interestedPartyCommentForReview = {
+	id: 3670,
+	origin: 'citizen',
+	author: 'Lee Thornton',
+	status: 'awaiting_review',
+	originalRepresentation: 'Awaiting review comment 47',
+	redactedRepresentation: '',
+	created: '2024-10-09T17:23:24.406Z',
+	notes: '',
+	attachments: [],
+	representationType: 'comment',
+	represented: {
+		id: 3838,
+		name: 'Lee Thornton',
+		email: 'test1@example.com',
+		address: {
+			addressLine1: '',
+			postCode: ''
+		}
+	}
+};
+
 export const baseSession = {
 	id: '',
 	cookie: { originalMaxAge: 1 },

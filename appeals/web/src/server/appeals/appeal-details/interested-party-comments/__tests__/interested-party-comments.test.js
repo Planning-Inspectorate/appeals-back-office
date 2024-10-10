@@ -4,7 +4,8 @@ import {
 	appealDataFullPlanning,
 	interestedPartyCommentsAwaitingReview,
 	interestedPartyCommentsValid,
-	interestedPartyCommentsInvalid
+	interestedPartyCommentsInvalid,
+	interestedPartyCommentForReview
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import nock from 'nock';
@@ -180,6 +181,36 @@ describe('interested-party-comments', () => {
 			const invalidMessage = invalidTable?.querySelector('p');
 			expect(invalidMessage).not.toBeNull();
 			expect(invalidMessage?.textContent?.trim()).toBe('No invalid comments');
+		});
+	});
+
+	describe('GET /review-comment with data', () => {
+		beforeEach(() => {
+			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
+		});
+
+		it('should render review comment page with the provided comment details', async () => {
+			const response = await request.get(`${baseUrl}/2/interested-party-comments/5/review`);
+
+			expect(response.statusCode).toBe(200);
+
+			const elementInnerHtml = parseHtml(response.text).innerHTML;
+			expect(elementInnerHtml).toMatchSnapshot();
+		});
+	});
+
+	describe('GET /review-comment with no data', () => {
+		beforeEach(() => {
+			nock('http://test/').get('/appeals/2/reps/comments/999').reply(404, {});
+		});
+
+		it('should render 404 page when the comment is not found', async () => {
+			const response = await request.get(`${baseUrl}/2/review/999`);
+
+			expect(response.statusCode).toBe(404);
+
+			const elementInnerHtml = parseHtml(response.text).innerHTML;
+			expect(elementInnerHtml).toContain('Page not found');
 		});
 	});
 });

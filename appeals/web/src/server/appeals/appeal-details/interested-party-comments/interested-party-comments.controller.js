@@ -1,6 +1,7 @@
 import logger from '#lib/logger.js';
 import {
 	interestedPartyCommentsPage,
+	reviewInterestedPartyCommentPage,
 	viewInterestedPartyCommentPage
 } from './interested-party-comments.mapper.js';
 import * as interestedPartyCommentsService from './interested-party-comments.service.js';
@@ -82,3 +83,60 @@ export async function renderViewInterestedPartyComment(request, response) {
 		pageContent
 	});
 }
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export async function renderReviewInterestedPartyComment(request, response) {
+	const { errors, currentComment } = request;
+
+	console.log('renderReviewInterestedPartyComment');
+	console.log(request.currentComment);
+
+	if (!currentComment) {
+		return response.status(404).render('app/404.njk');
+	}
+
+	const pageContent = reviewInterestedPartyCommentPage(request.currentAppeal, currentComment);
+
+	return response.status(200).render('patterns/change-page.pattern.njk', {
+		errors,
+		pageContent
+	});
+}
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const renderPostReviewInterestedPartyComment = async (request, response) => {
+	try {
+		const { appealId, commentId } = request.params;
+		const { errors, currentAppeal } = request;
+
+		if (!currentAppeal) {
+			logger.error('Current appeal not found.');
+			return response.status(500).render('app/500.njk');
+		}
+
+		if (errors) {
+			const pageContent = reviewInterestedPartyCommentPage(
+				request.currentAppeal,
+				request.currentComment
+			);
+
+			return response.status(200).render('patterns/change-page.pattern.njk', {
+				errors,
+				pageContent
+			});
+		}
+
+		return response.redirect(
+			`/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/reject-comment`
+		);
+	} catch (error) {
+		logger.error('Error in postReviewComment: ', error);
+		return response.status(500).render('app/500.njk');
+	}
+};
