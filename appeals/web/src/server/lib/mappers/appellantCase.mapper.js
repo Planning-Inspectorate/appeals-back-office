@@ -591,7 +591,8 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 				},
 				value: {
 					text:
-						'appellantProcedurePreferenceDuration' in appellantCaseData
+						'appellantProcedurePreferenceDuration' in appellantCaseData &&
+						appellantCaseData?.appellantProcedurePreferenceDuration !== null
 							? `${appellantCaseData.appellantProcedurePreferenceDuration} days`
 							: 'Not applicable'
 				},
