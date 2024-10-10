@@ -43,6 +43,22 @@ describe('procedure-preference', () => {
 			);
 		});
 
+		it('should render a summary list row for preferred procedure with "Not answered" populated in the value column if appellantProcedurePreference is null', async () => {
+			nock('http://test/')
+				.get(`/appeals/2/appellant-cases/${appealDataFullPlanning.appellantCaseId}`)
+				.reply(200, {
+					...appellantCaseDataNotValidated,
+					appellantProcedurePreference: null
+				});
+
+			const response = await request.get(`${baseUrl}/2/appellant-case`);
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<dt class="govuk-summary-list__key"> Procedure preference</dt><dd class="govuk-summary-list__value"> Not answered</dd>'
+			);
+		});
+
 		it('should render a summary list row for preferred procedure with appellantProcedurePreference populated in the value column if appellantProcedurePreference is present in the appellant case', async () => {
 			nock('http://test/')
 				.get(`/appeals/2/appellant-cases/${appealDataFullPlanning.appellantCaseId}`)
@@ -73,6 +89,22 @@ describe('procedure-preference', () => {
 
 			expect(element.innerHTML).toMatchSnapshot();
 
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<dt class="govuk-summary-list__key"> Reason for preference</dt><dd class="govuk-summary-list__value"> Not applicable</dd>'
+			);
+		});
+
+		it('should render a summary list row for reason for preference with "Not applicable" populated in the value column if appellantProcedurePreferenceDetails is null', async () => {
+			nock('http://test/')
+				.get(`/appeals/2/appellant-cases/${appealDataFullPlanning.appellantCaseId}`)
+				.reply(200, {
+					...appellantCaseDataNotValidated,
+					appellantProcedurePreferenceDetails: null
+				});
+
+			const response = await request.get(`${baseUrl}/2/appellant-case`);
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain(
@@ -117,6 +149,22 @@ describe('procedure-preference', () => {
 			);
 		});
 
+		it('should render a summary list row for expected length of procedure with "Not applicable" populated in the value column if appellantProcedurePreferenceDuration null', async () => {
+			nock('http://test/')
+				.get(`/appeals/2/appellant-cases/${appealDataFullPlanning.appellantCaseId}`)
+				.reply(200, {
+					...appellantCaseDataNotValidated,
+					appellantProcedurePreferenceDuration: null
+				});
+
+			const response = await request.get(`${baseUrl}/2/appellant-case`);
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<dt class="govuk-summary-list__key"> Expected length of procedure</dt><dd class="govuk-summary-list__value"> Not applicable</dd>'
+			);
+		});
+
 		it('should render a summary list row for expected length of procedure with appellantProcedurePreferenceDuration populated in the value column if appellantProcedurePreferenceDuration is present in the appellant case', async () => {
 			nock('http://test/')
 				.get(`/appeals/2/appellant-cases/${appealDataFullPlanning.appellantCaseId}`)
@@ -147,6 +195,22 @@ describe('procedure-preference', () => {
 
 			expect(element.innerHTML).toMatchSnapshot();
 
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<dt class="govuk-summary-list__key"> Expected number of witnesses</dt><dd class="govuk-summary-list__value"> Not applicable</dd>'
+			);
+		});
+
+		it('should render a summary list row for expected number of witnesses with "Not applicable" populated in the value column if inquiryHowManyWitnesses is null', async () => {
+			nock('http://test/')
+				.get(`/appeals/2/appellant-cases/${appealDataFullPlanning.appellantCaseId}`)
+				.reply(200, {
+					...appellantCaseDataNotValidated,
+					inquiryHowManyWitnesses: null
+				});
+
+			const response = await request.get(`${baseUrl}/2/appellant-case`);
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain(
