@@ -1,6 +1,8 @@
 import { addressToMultilineStringHtml } from '#lib/address-formatter.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
+import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
+import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 
 /**
  * @typedef {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} SingleAppellantCaseResponse */
@@ -134,12 +136,12 @@ export function reviewInterestedPartyCommentPage(appealDetails, comment) {
 				{
 					value: 'valid',
 					text: 'Comment valid',
-					checked: comment?.status === 'valid'
+					checked: comment?.status === COMMENT_STATUS.VALID
 				},
 				{
 					value: 'invalid',
 					text: 'Comment invalid',
-					checked: comment?.status === 'invalid'
+					checked: comment?.status === COMMENT_STATUS.INVALID
 				}
 			]
 		}
@@ -185,6 +187,11 @@ function generateWithdrawLink() {
  * @param {Representation} comment - The comment object.
  * @returns {PageComponent} The generated comment summary list component.
  */
+/**
+ * Generates the comment summary list used in both view and review pages.
+ * @param {Representation} comment - The comment object.
+ * @returns {PageComponent} The generated comment summary list component.
+ */
 function generateCommentSummaryList(comment) {
 	const hasAddress =
 		comment.represented.address &&
@@ -195,9 +202,9 @@ function generateCommentSummaryList(comment) {
 
 	const attachmentsList =
 		comment.attachments.length > 0
-			? `<ul class="govuk-list">${comment.attachments
-					.map((a) => `<li><a href="#">${a.documentVersion.document.name}</a></li>`)
-					.join('')}</ul>`
+			? buildHtmUnorderedList(
+					comment.attachments.map((a) => `<a href="#">${a.documentVersion.document.name}</a>`)
+			  )
 			: null;
 
 	return {
@@ -224,10 +231,6 @@ function generateCommentSummaryList(comment) {
 								: { text: 'Add', href: '#', visuallyHiddenText: 'address' }
 						]
 					}
-				},
-				{
-					key: { text: 'Site visit requested' },
-					value: { text: '' }
 				},
 				{
 					key: { text: 'Submitted date' },

@@ -91,9 +91,6 @@ export async function renderViewInterestedPartyComment(request, response) {
 export async function renderReviewInterestedPartyComment(request, response) {
 	const { errors, currentComment } = request;
 
-	console.log('renderReviewInterestedPartyComment');
-	console.log(request.currentComment);
-
 	if (!currentComment) {
 		return response.status(404).render('app/404.njk');
 	}
@@ -112,8 +109,11 @@ export async function renderReviewInterestedPartyComment(request, response) {
  */
 export const renderPostReviewInterestedPartyComment = async (request, response) => {
 	try {
-		const { appealId, commentId } = request.params;
-		const { errors, currentAppeal } = request;
+		const {
+			errors,
+			currentAppeal,
+			params: { appealId, commentId }
+		} = request;
 
 		if (!currentAppeal) {
 			logger.error('Current appeal not found.');
@@ -136,7 +136,7 @@ export const renderPostReviewInterestedPartyComment = async (request, response) 
 			`/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/reject-comment`
 		);
 	} catch (error) {
-		logger.error('Error in postReviewComment: ', error);
+		logger.error(error);
 		return response.status(500).render('app/500.njk');
 	}
 };

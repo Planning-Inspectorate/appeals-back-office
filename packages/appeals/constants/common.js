@@ -50,3 +50,8 @@ export const APPEAL_REPRESENTATION_STATUS = Object.freeze({
 	PUBLISHED: 'published',
 	WITHDRAWN: 'withdrawn'
 });
+export const COMMENT_STATUS = Object.freeze({
+	AWAITING_REVIEW: 'awaiting_review',
+	VALID: 'valid',
+	INVALID: 'invalid'
+});
