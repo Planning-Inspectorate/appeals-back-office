@@ -1,3 +1,4 @@
+import config from '@pins/appeals.web/environment/config.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import {
 	errorAddressProvidedRadio,
@@ -112,6 +113,30 @@ export const ipAddressPage = (appealDetails, address, errors) => ({
 	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
 	heading: "Interested party's address",
 	pageComponents: addressInputs({ address, errors })
+});
+
+/**
+ * @param {Appeal} appealDetails
+ * @param {import('@pins/express').ValidationErrors | undefined} errors
+ * @returns {import('#appeals/appeal-documents/appeal-documents.types.js').DocumentUploadPageParameters}
+ * */
+export const uploadPage = (appealDetails, errors) => ({
+	backButtonUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/ip-address`,
+	appealId: String(appealDetails.appealId),
+	appealReference: appealDetails.appealReference,
+	appealShortReference: appealShortReference(appealDetails.appealReference),
+	multiple: false,
+	// TODO: replace with real values
+	folderId: '',
+	useBlobEmulator: config.useBlobEmulator,
+	blobStorageHost: '',
+	blobStorageContainer: '',
+	documentStage: '',
+	pageHeadingText: 'Upload interested party comment',
+	pageBodyComponents: [],
+	documentType: '',
+	nextPageUrl: '',
+	errors
 });
 
 /**
