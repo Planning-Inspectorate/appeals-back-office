@@ -42,6 +42,8 @@ router
 
 router.route('/upload').get(asyncHandler(controller.renderUpload));
 
+router.route('/redaction-status').get(asyncHandler(controller.renderRedactionStatus));
+
 router.route('/').get(asyncHandler(controller.redirectTopLevel));
 
 export default router;
