@@ -177,7 +177,7 @@ export const redactionStatusPage = (appealDetails, errors) => ({
 /**
  * @param {Appeal} appealDetails
  * @param {import('@pins/express').ValidationErrors | undefined} errors
- * @param {{ day: string, month: string, year: string }} date
+ * @param {{ 'date-day': string, 'date-month': string, 'date-year': string }} date
  * @returns {PageContent}
  * */
 export const dateSubmittedPage = (appealDetails, errors, date) => ({
@@ -189,8 +189,8 @@ export const dateSubmittedPage = (appealDetails, errors, date) => ({
 		{
 			type: 'date-input',
 			parameters: {
-				id: 'date-submitted',
-				namePrefix: 'date-submitted',
+				id: 'date',
+				namePrefix: 'date',
 				fieldset: {
 					legend: {
 						text: '',
@@ -204,17 +204,17 @@ export const dateSubmittedPage = (appealDetails, errors, date) => ({
 					{
 						classes: 'govuk-input govuk-date-input__input govuk-input--width-2',
 						name: 'day',
-						value: date.day || ''
+						value: date['date-day'] || ''
 					},
 					{
 						classes: 'govuk-input govuk-date-input__input govuk-input--width-2',
 						name: 'month',
-						value: date.month || ''
+						value: date['date-month'] || ''
 					},
 					{
 						classes: 'govuk-input govuk-date-input__input govuk-input--width-4',
 						name: 'year',
-						value: date.year || ''
+						value: date['date-year'] || ''
 					}
 				],
 				errors

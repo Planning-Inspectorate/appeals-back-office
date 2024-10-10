@@ -12,6 +12,7 @@ import {
 	createFirstNameValidator,
 	createLastNameValidator
 } from '#lib/validators/service-user.validator.js';
+import { createDateInputDateInPastValidator } from '#lib/validators/date-input.validator.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -47,7 +48,10 @@ router
 	.get(asyncHandler(controller.renderRedactionStatus))
 	.post(validateRedactionStatus, asyncHandler(controller.postRedactionStatus));
 
-router.route('/date-submitted').get(asyncHandler(controller.renderDateSubmitted));
+router
+	.route('/date-submitted')
+	.get(asyncHandler(controller.renderDateSubmitted))
+	.post(createDateInputDateInPastValidator(), asyncHandler(controller.postDateSubmitted));
 
 router.route('/').get(asyncHandler(controller.redirectTopLevel));
 
