@@ -75,26 +75,117 @@ function generateTableRows(items, isReview = false) {
  * @param {Appeal} appealDetails
  * @param {Representation} comment
  * @returns {PageContent}
- * */
+ */
 export function viewInterestedPartyCommentPage(appealDetails, comment) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
+	const commentSummaryList = generateCommentSummaryList(comment);
+	const withdrawLink = generateWithdrawLink();
 
-	const attachmentsList = (() => {
-		if (comment.attachments.length === 0) {
-			return null;
+	const pageContent = {
+		title: 'View comment',
+		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments`,
+		preHeading: `Appeal ${shortReference}`,
+		heading: 'View comment',
+		headingClasses: 'govuk-heading-l',
+		pageComponents: [commentSummaryList, withdrawLink]
+	};
+
+	return pageContent;
+}
+
+/**
+ * @param {Appeal} appealDetails
+ * @param {Representation} comment
+ * @returns {PageContent}
+ */
+export function reviewInterestedPartyCommentPage(appealDetails, comment) {
+	const shortReference = appealShortReference(appealDetails.appealReference);
+	const commentSummaryList = generateCommentSummaryList(comment);
+	const withdrawLink = generateWithdrawLink();
+
+	/** @type {PageComponent} */
+	const siteVisitRequestCheckbox = {
+		type: 'checkboxes',
+		parameters: {
+			name: 'site-visit-request',
+			items: [
+				{
+					text: 'The comment includes a site visit request',
+					value: 'site-visit',
+					checked: false
+				}
+			]
 		}
+	};
 
-		const items = comment.attachments.map(
-			(a) => `
-      <li>
-        <a href="#">${a.documentVersion.document.name}</a>
-      </li>
-    `
-		);
+	/** @type {PageComponent} */
+	const commentValidityRadioButtons = {
+		type: 'radios',
+		parameters: {
+			name: 'status',
+			fieldset: {
+				legend: {
+					text: 'Do you accept the comment?',
+					isPageHeading: false,
+					classes: 'govuk-fieldset__legend--m'
+				}
+			},
+			items: [
+				{
+					value: 'valid',
+					text: 'Comment valid',
+					checked: comment?.status === 'valid'
+				},
+				{
+					value: 'invalid',
+					text: 'Comment invalid',
+					checked: comment?.status === 'invalid'
+				}
+			]
+		}
+	};
 
-		return `<ul class="govuk-list">${items.join('')}</ul>`;
-	})();
+	const pageContent = {
+		title: 'Review comment',
+		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments`,
+		preHeading: `Appeal ${shortReference}`,
+		heading: 'Review comment',
+		headingClasses: 'govuk-heading-l',
+		submitButtonText: 'Confirm',
+		pageComponents: [
+			commentSummaryList,
+			siteVisitRequestCheckbox,
+			commentValidityRadioButtons,
+			withdrawLink
+		]
+	};
 
+	return pageContent;
+}
+
+/**
+ * Generates the withdraw link component.
+ * @returns {PageComponent} The withdraw link component.
+ */
+function generateWithdrawLink() {
+	return {
+		type: 'html',
+		wrapperHtml: {
+			opening: '<div class="govuk-!-margin-bottom-3">',
+			closing: '</div>'
+		},
+		parameters: {
+			html: '<a class="govuk-link" href="#">Withdraw comment</a>'
+		}
+	};
+}
+
+/**
+ * Generates the comment summary list used in both view and review pages.
+ * @param {Representation} comment - The comment object.
+ * @returns {PageComponent} The generated comment summary list component.
+ */
+function generateCommentSummaryList(comment) {
 	const hasAddress =
 		comment.represented.address &&
 		comment.represented.address.addressLine1 &&
@@ -102,8 +193,14 @@ export function viewInterestedPartyCommentPage(appealDetails, comment) {
 
 	const commentIsDocument = !comment.originalRepresentation && comment.attachments?.length > 0;
 
-	/** @type {PageComponent} */
-	const commentSummaryList = {
+	const attachmentsList =
+		comment.attachments.length > 0
+			? `<ul class="govuk-list">${comment.attachments
+					.map((a) => `<li><a href="#">${a.documentVersion.document.name}</a></li>`)
+					.join('')}</ul>`
+			: null;
+
+	return {
 		type: 'summary-list',
 		parameters: {
 			rows: [
@@ -123,16 +220,8 @@ export function viewInterestedPartyCommentPage(appealDetails, comment) {
 					actions: {
 						items: [
 							hasAddress
-								? {
-										text: 'Change',
-										href: '#',
-										visuallyHiddenText: 'address'
-								  }
-								: {
-										text: 'Add',
-										href: '#',
-										visuallyHiddenText: 'address'
-								  }
+								? { text: 'Change', href: '#', visuallyHiddenText: 'address' }
+								: { text: 'Add', href: '#', visuallyHiddenText: 'address' }
 						]
 					}
 				},
@@ -150,23 +239,11 @@ export function viewInterestedPartyCommentPage(appealDetails, comment) {
 						text: commentIsDocument ? 'Added as a document' : comment.originalRepresentation
 					},
 					actions: {
-						items: commentIsDocument
-							? []
-							: [
-									{
-										text: 'Redact',
-										href: '#'
-									}
-							  ]
+						items: commentIsDocument ? [] : [{ text: 'Redact', href: '#' }]
 					}
 				},
 				...(comment.redactedRepresentation
-					? [
-							{
-								key: { text: 'Redacted comment' },
-								value: { text: comment.redactedRepresentation }
-							}
-					  ]
+					? [{ key: { text: 'Redacted comment' }, value: { text: comment.redactedRepresentation } }]
 					: []),
 				{
 					key: { text: 'Supporting documents' },
@@ -174,50 +251,16 @@ export function viewInterestedPartyCommentPage(appealDetails, comment) {
 					actions: {
 						items: [
 							...(comment.attachments?.length > 0
-								? [
-										{
-											text: 'Manage',
-											href: '#',
-											visuallyHiddenText: 'supporting documents'
-										}
-								  ]
+								? [{ text: 'Manage', href: '#', visuallyHiddenText: 'supporting documents' }]
 								: []),
-							{
-								text: 'Add',
-								href: '#',
-								visuallyHiddenText: 'supporting documents'
-							}
+							{ text: 'Add', href: '#', visuallyHiddenText: 'supporting documents' }
 						]
 					}
 				},
 				...(comment.status === 'invalid'
-					? [
-							{
-								key: { text: 'Why comment invalid' },
-								value: { text: comment.notes }
-							}
-					  ]
+					? [{ key: { text: 'Why comment invalid' }, value: { text: comment.notes } }]
 					: [])
 			]
 		}
 	};
-
-	/** @type {PageComponent} */
-	const withdrawLink = {
-		type: 'html',
-		parameters: {
-			html: '<a class="govuk-link" href="#">Withdraw comment</a>'
-		}
-	};
-
-	const pageContent = {
-		title: 'View comment',
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments`,
-		preHeading: `Appeal ${shortReference}`,
-		heading: 'View comment',
-		headingClasses: 'govuk-heading-l',
-		pageComponents: [commentSummaryList, withdrawLink]
-	};
-
-	return pageContent;
 }
