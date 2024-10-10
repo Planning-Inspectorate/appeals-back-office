@@ -1,3 +1,4 @@
+import config from '@pins/appeals.web/environment/config.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import {
 	errorAddressProvidedRadio,
@@ -112,4 +113,112 @@ export const ipAddressPage = (appealDetails, address, errors) => ({
 	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
 	heading: "Interested party's address",
 	pageComponents: addressInputs({ address, errors })
+});
+
+/**
+ * @param {Appeal} appealDetails
+ * @param {import('@pins/express').ValidationErrors | undefined} errors
+ * @returns {import('#appeals/appeal-documents/appeal-documents.types.js').DocumentUploadPageParameters}
+ * */
+export const uploadPage = (appealDetails, errors) => ({
+	backButtonUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/ip-address`,
+	appealId: String(appealDetails.appealId),
+	appealReference: appealDetails.appealReference,
+	appealShortReference: appealShortReference(appealDetails.appealReference),
+	multiple: false,
+	// TODO: replace with real values
+	folderId: '',
+	useBlobEmulator: config.useBlobEmulator,
+	blobStorageHost: '',
+	blobStorageContainer: '',
+	documentStage: '',
+	pageHeadingText: 'Upload interested party comment',
+	pageBodyComponents: [],
+	documentType: '',
+	nextPageUrl: '',
+	errors
+});
+
+/**
+ * @param {Appeal} appealDetails
+ * @param {import('@pins/express').ValidationErrors | undefined} errors
+ * @returns {PageContent}
+ * */
+export const redactionStatusPage = (appealDetails, errors) => ({
+	title: 'Enter redaction status',
+	backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/upload`,
+	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
+	heading: 'Enter redaction status',
+	pageComponents: [
+		{
+			type: 'radios',
+			parameters: {
+				name: 'redactionStatus',
+				items: [
+					{
+						value: 'redacted',
+						text: 'Redacted'
+					},
+					{
+						value: 'unredacted',
+						text: 'Unredacted'
+					},
+					{
+						value: 'not-required',
+						text: 'No redaction required'
+					}
+				],
+				errorMessage: errorAddressProvidedRadio(errors)
+			}
+		}
+	]
+});
+
+/**
+ * @param {Appeal} appealDetails
+ * @param {import('@pins/express').ValidationErrors | undefined} errors
+ * @param {{ 'date-day': string, 'date-month': string, 'date-year': string }} date
+ * @returns {PageContent}
+ * */
+export const dateSubmittedPage = (appealDetails, errors, date) => ({
+	title: 'Enter date submitted',
+	backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/redaction-status`,
+	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
+	heading: 'Enter redaction status',
+	pageComponents: [
+		{
+			type: 'date-input',
+			parameters: {
+				id: 'date',
+				namePrefix: 'date',
+				fieldset: {
+					legend: {
+						text: '',
+						classes: 'govuk-fieldset__legend--m'
+					}
+				},
+				hint: {
+					text: 'For example, 28 10 2024'
+				},
+				items: [
+					{
+						classes: 'govuk-input govuk-date-input__input govuk-input--width-2',
+						name: 'day',
+						value: date['date-day'] || ''
+					},
+					{
+						classes: 'govuk-input govuk-date-input__input govuk-input--width-2',
+						name: 'month',
+						value: date['date-month'] || ''
+					},
+					{
+						classes: 'govuk-input govuk-date-input__input govuk-input--width-4',
+						name: 'year',
+						value: date['date-year'] || ''
+					}
+				],
+				errors
+			}
+		}
+	]
 });

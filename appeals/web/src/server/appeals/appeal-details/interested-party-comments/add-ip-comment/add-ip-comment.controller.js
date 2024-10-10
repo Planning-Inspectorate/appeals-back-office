@@ -1,4 +1,11 @@
-import { checkAddressPage, ipAddressPage, ipDetailsPage } from './add-ip-comment.mapper.js';
+import {
+	checkAddressPage,
+	ipAddressPage,
+	ipDetailsPage,
+	redactionStatusPage,
+	uploadPage,
+	dateSubmittedPage
+} from './add-ip-comment.mapper.js';
 
 /**
  *
@@ -49,12 +56,61 @@ export async function renderIpAddress(request, response) {
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
+export async function renderUpload(request, response) {
+	const { currentAppeal, errors } = request;
+
+	const pageContent = uploadPage(currentAppeal, errors);
+
+	return response
+		.status(request.errors ? 400 : 200)
+		.render('appeals/documents/document-upload.njk', pageContent);
+}
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export async function renderRedactionStatus(request, response) {
+	const pageContent = redactionStatusPage(request.currentAppeal, request.errors);
+
+	return response.status(request.errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
+		errors: request.errors,
+		pageContent
+	});
+}
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export async function renderDateSubmitted(request, response) {
+	const pageContent = dateSubmittedPage(request.currentAppeal, request.errors, request.body);
+
+	return response.status(request.errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
+		errors: request.errors,
+		pageContent
+	});
+}
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
 export async function postIpDetails(request, response) {
 	if (request.errors) {
 		return renderIpDetails(request, response);
 	}
 
-	return response.redirect('./check-address');
+	request.session.addIpComment = request.body;
+
+	const { currentAppeal } = request;
+
+	return response.redirect(
+		`/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/add/check-address`
+	);
 }
 
 /**
@@ -72,8 +128,8 @@ export async function postCheckAddress(request, response) {
 
 	return response.redirect(
 		addressProvided === 'yes'
-			? './ip-address'
-			: `/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments`
+			? `/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/add/ip-address`
+			: `/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/add/upload`
 	);
 }
 
@@ -90,6 +146,40 @@ export async function postIpAddress(request, response) {
 	const { currentAppeal } = request;
 
 	return response.redirect(
+		`/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/add/upload`
+	);
+}
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export async function postRedactionStatus(request, response) {
+	if (request.errors) {
+		return renderRedactionStatus(request, response);
+	}
+
+	const { currentAppeal } = request;
+
+	return response.redirect(
+		`/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/add/date-submitted`
+	);
+}
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export async function postDateSubmitted(request, response) {
+	if (request.errors) {
+		return renderDateSubmitted(request, response);
+	}
+
+	const { currentAppeal } = request;
+
+	return response.redirect(
 		`/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments`
 	);
 }
@@ -100,5 +190,9 @@ export async function postIpAddress(request, response) {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export async function redirectTopLevel(request, response) {
-	return response.redirect('./add/ip-details');
+	const { currentAppeal } = request;
+
+	return response.redirect(
+		`/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/add/ip-details`
+	);
 }

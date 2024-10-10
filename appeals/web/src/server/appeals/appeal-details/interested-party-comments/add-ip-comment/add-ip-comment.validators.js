@@ -6,3 +6,7 @@ export const validateCheckAddress = createValidator(
 		.exists()
 		.withMessage('Please indicate whether the interested party provided an address.')
 );
+
+export const validateRedactionStatus = createValidator(
+	body('redactionStatus').exists().withMessage('Please select a redaction status.')
+);
