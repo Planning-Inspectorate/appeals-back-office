@@ -3,7 +3,8 @@ import {
 	ipAddressPage,
 	ipDetailsPage,
 	redactionStatusPage,
-	uploadPage
+	uploadPage,
+	dateSubmittedPage
 } from './add-ip-comment.mapper.js';
 
 /**
@@ -84,6 +85,20 @@ export async function renderRedactionStatus(request, response) {
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
+export async function renderDateSubmitted(request, response) {
+	const pageContent = dateSubmittedPage(request.currentAppeal, request.errors, request.body);
+
+	return response.status(request.errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
+		errors: request.errors,
+		pageContent
+	});
+}
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
 export async function postIpDetails(request, response) {
 	if (request.errors) {
 		return renderIpDetails(request, response);
@@ -112,7 +127,7 @@ export async function postCheckAddress(request, response) {
 	return response.redirect(
 		addressProvided === 'yes'
 			? `/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/add/ip-address`
-			: `/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments`
+			: `/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/add/upload`
 	);
 }
 
@@ -146,7 +161,7 @@ export async function postRedactionStatus(request, response) {
 	const { currentAppeal } = request;
 
 	return response.redirect(
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments`
+		`/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/add/date-submitted`
 	);
 }
 

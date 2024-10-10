@@ -173,3 +173,52 @@ export const redactionStatusPage = (appealDetails, errors) => ({
 		}
 	]
 });
+
+/**
+ * @param {Appeal} appealDetails
+ * @param {import('@pins/express').ValidationErrors | undefined} errors
+ * @param {{ day: string, month: string, year: string }} date
+ * @returns {PageContent}
+ * */
+export const dateSubmittedPage = (appealDetails, errors, date) => ({
+	title: 'Enter date submitted',
+	backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/redaction-status`,
+	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
+	heading: 'Enter redaction status',
+	pageComponents: [
+		{
+			type: 'date-input',
+			parameters: {
+				id: 'date-submitted',
+				namePrefix: 'date-submitted',
+				fieldset: {
+					legend: {
+						text: '',
+						classes: 'govuk-fieldset__legend--m'
+					}
+				},
+				hint: {
+					text: 'For example, 28 10 2024'
+				},
+				items: [
+					{
+						classes: 'govuk-input govuk-date-input__input govuk-input--width-2',
+						name: 'day',
+						value: date.day || ''
+					},
+					{
+						classes: 'govuk-input govuk-date-input__input govuk-input--width-2',
+						name: 'month',
+						value: date.month || ''
+					},
+					{
+						classes: 'govuk-input govuk-date-input__input govuk-input--width-4',
+						name: 'year',
+						value: date.year || ''
+					}
+				],
+				errors
+			}
+		}
+	]
+});
