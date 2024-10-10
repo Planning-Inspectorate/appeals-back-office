@@ -170,6 +170,23 @@ export async function postRedactionStatus(request, response) {
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
+export async function postDateSubmitted(request, response) {
+	if (request.errors) {
+		return renderDateSubmitted(request, response);
+	}
+
+	const { currentAppeal } = request;
+
+	return response.redirect(
+		`/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments`
+	);
+}
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
 export async function redirectTopLevel(request, response) {
 	const { currentAppeal } = request;
 
