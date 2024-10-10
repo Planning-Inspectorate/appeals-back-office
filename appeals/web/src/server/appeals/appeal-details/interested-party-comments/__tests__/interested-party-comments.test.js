@@ -148,8 +148,6 @@ describe('interested-party-comments', () => {
 			const awaitingReviewTable = dom.querySelector('#awaiting-review');
 			expect(awaitingReviewTable).not.toBeNull();
 
-			console.log(awaitingReviewTable?.innerHTML);
-
 			const awaitingMessage = awaitingReviewTable?.querySelector('p');
 			expect(awaitingMessage).not.toBeNull();
 			expect(awaitingMessage?.textContent?.trim()).toBe('Awaiting comments');
@@ -194,8 +192,17 @@ describe('interested-party-comments', () => {
 
 			expect(response.statusCode).toBe(200);
 
-			const elementInnerHtml = parseHtml(response.text).innerHTML;
+			const dom = parseHtml(response.text);
+			const elementInnerHtml = dom.innerHTML;
 			expect(elementInnerHtml).toMatchSnapshot();
+			expect(elementInnerHtml).toContain('Review comment</h1>');
+
+			const interestedPartyRow = dom.querySelectorAll('.govuk-summary-list__row')[0];
+			expect(interestedPartyRow).not.toBeNull();
+			const partyKey = interestedPartyRow?.querySelector('.govuk-summary-list__key');
+			const partyValue = interestedPartyRow?.querySelector('.govuk-summary-list__value');
+			expect(partyKey?.textContent?.trim()).toBe('Interested party');
+			expect(partyValue?.textContent?.trim()).toBe('Lee Thornton');
 		});
 	});
 

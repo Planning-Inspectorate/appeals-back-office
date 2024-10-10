@@ -394,9 +394,6 @@ exports[`interested-party-comments GET /review-comment with data should render r
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#"> Add<span class="govuk-visually-hidden"> address</span></a>
                         </dd>
                     </div>
-                    <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Site visit requested</dt>
-                        <dd class="govuk-summary-list__value"></dd>
-                    </div>
                     <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Submitted date</dt>
                         <dd class="govuk-summary-list__value">9 October 2024</dd>
                     </div>
