@@ -60,6 +60,15 @@ export async function renderUpload(request, response) {
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
+export async function renderRedactionStatus(request, response) {
+	return response.status(request.errors ? 400 : 200).render('patterns/change-page.pattern.njk');
+}
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
 export async function postIpDetails(request, response) {
 	if (request.errors) {
 		return renderIpDetails(request, response);
