@@ -1,7 +1,7 @@
 import { Router as createRouter } from 'express';
 import { asyncHandler } from '@pins/express';
 import * as controller from './add-ip-comment.controller.js';
-import { validateCheckAddress } from './add-ip-comment.validators.js';
+import { validateCheckAddress, validateRedactionStatus } from './add-ip-comment.validators.js';
 import {
 	createPostcodeValidator,
 	createAddressLine1Validator,
@@ -42,7 +42,10 @@ router
 
 router.route('/upload').get(asyncHandler(controller.renderUpload));
 
-router.route('/redaction-status').get(asyncHandler(controller.renderRedactionStatus));
+router
+	.route('/redaction-status')
+	.get(asyncHandler(controller.renderRedactionStatus))
+	.post(validateRedactionStatus, asyncHandler(controller.postRedactionStatus));
 
 router.route('/').get(asyncHandler(controller.redirectTopLevel));
 
