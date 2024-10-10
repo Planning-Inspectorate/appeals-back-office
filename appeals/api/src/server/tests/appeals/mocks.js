@@ -55,6 +55,24 @@ export const auditTrails = [
 	}
 ];
 
+export const caseNotes = [
+	{
+		id: 1,
+		comment: 'Comment 1',
+		createdAt: new Date('2024-03-25T23:59:59.999Z').toISOString(),
+		user: {
+			azureAdUserId
+		}
+	},
+	{
+		id: 2,
+		comment: 'Document received by email',
+		createdAt: new Date('2024-03-26T23:59:59.999Z').toISOString(),
+		user: {
+			azureAdUserId
+		}
+	}
+];
 export const householdAppeal = {
 	caseCreatedDate: new Date('2024-03-25T23:59:59.999Z'),
 	id: 1,

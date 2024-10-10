@@ -94,6 +94,9 @@ const mockNeighbouringSites = jest.fn().mockResolvedValue({});
 const mockListedBuildingSelected = jest.fn().mockResolvedValue({});
 const mockServiceUserUpdate = jest.fn().mockResolvedValue({});
 const mockServiceUserFindUnique = jest.fn().mockResolvedValue({});
+const mockCaseNotesFindMany = jest.fn().mockResolvedValue({});
+const mockCaseNotesFindUnique = jest.fn().mockResolvedValue({});
+const mockCaseNotesCreate = jest.fn().mockResolvedValue({});
 
 class MockPrismaClient {
 	get representation() {
@@ -101,6 +104,14 @@ class MockPrismaClient {
 			update: mockRepUpdateById,
 			findUnique: mockRepGetById,
 			groupBy: mockRepGroupBy
+		};
+	}
+
+	get caseNote() {
+		return {
+			findMany: mockCaseNotesFindMany,
+			findUnique: mockCaseNotesFindUnique,
+			create: mockCaseNotesCreate
 		};
 	}
 

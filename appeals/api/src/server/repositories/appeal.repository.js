@@ -92,7 +92,8 @@ const getAppealById = async (id) => {
 				include: {
 					siteVisitType: true
 				}
-			}
+			},
+			caseNotes: true
 		}
 	});
 

@@ -2438,3 +2438,16 @@ export const baseSession = {
 		throw new Error('Function not implemented.');
 	}
 };
+
+export const caseNotes = [
+	{
+		createdAt: '2024-10-01T10:00:00.000Z',
+		comment: 'A case note you should see.',
+		azureAdUserId: '923ac03b-9031-4cf4-8b17-348c274321f9'
+	},
+	{
+		createdAt: '2024-10-01T10:00:00.000Z',
+		comment: 'A case note you should see.',
+		azureAdUserId: '923ac03b-9031-4cf4-8b17-348c274321f9'
+	}
+];

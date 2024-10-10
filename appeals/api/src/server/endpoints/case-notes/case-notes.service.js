@@ -1,0 +1,33 @@
+import userRepository from '#repositories/user.repository.js';
+import * as caseNotesRepository from '#repositories/case-notes.repository.js';
+import logger from '#utils/logger.js';
+
+/** @typedef {import('@pins/appeals.api').Schema.CaseNote} CaseNote */
+
+/**
+ *
+ * @param {string} appealId
+ * @param {string | undefined} azureAdUserId
+ * @param {string} comment
+ * @returns {Promise<T>}
+ */
+const postCaseNote = async (appealId, azureAdUserId, comment) => {
+	try {
+		const { id: userId } = await userRepository.findOrCreateUser(azureAdUserId);
+
+		if (userId) {
+			return await caseNotesRepository.postCaseNote({
+				caseId: Number(appealId),
+				comment,
+				userId,
+				createdAt: new Date(),
+				archived: false
+			});
+		}
+	} catch (error) {
+		logger.error(error);
+		throw new Error('Failed to create comment');
+	}
+};
+
+export { postCaseNote };

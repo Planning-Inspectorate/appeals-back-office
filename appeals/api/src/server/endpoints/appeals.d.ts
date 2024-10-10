@@ -309,6 +309,7 @@ interface SingleLPAQuestionnaireResponse {
 	lpaStatement?: string | null;
 	extraConditions?: string | null;
 	hasExtraConditions?: boolean | null;
+	affectsScheduledMonument?: boolean | null;
 }
 
 interface UpdateLPAQuestionnaireRequest {
@@ -683,6 +684,28 @@ interface CreateAuditTrailRequest {
 	userId: number;
 }
 
+export interface CreateCaseNote {
+	caseId: number;
+	comment: string;
+	userId: number;
+	createdAt: Date;
+	archived?: boolean;
+}
+
+type GetCaseNotesResponse = {
+	id: number;
+	comment: string;
+	createdAt: string;
+	azureAdUserId: string;
+}[];
+
+type GetCaseNoteResponse = {
+	id: number;
+	comment: string;
+	createdAt: string;
+	azureAdUserId: string;
+};
+
 export interface CreateSiteVisitData {
 	appealId: number;
 	visitDate?: Date;
@@ -818,5 +841,7 @@ export {
 	SetAppealDecisionRequest,
 	SetInvalidAppealDecisionRequest,
 	AppealRelationshipRequest,
-	ServiceUserResponse
+	ServiceUserResponse,
+	GetCaseNotesResponse,
+	GetCaseNoteResponse
 };

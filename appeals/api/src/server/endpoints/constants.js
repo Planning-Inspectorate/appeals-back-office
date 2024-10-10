@@ -14,6 +14,7 @@ export const APPEAL_TYPE_SHORTHAND_FPA = 'W';
 export const APPEAL_TYPE_SHORTHAND_HAS = 'D';
 
 export const AUDIT_TRAIL_ALLOCATION_DETAILS_ADDED = 'The allocation details were added';
+export const AUDIT_TRAIL_CASE_NOTE_ADDED = 'Case note added: "{replacement0}"';
 export const AUDIT_TRAIL_APPELLANT_IMPORT_MSG = 'The appellant case was received';
 export const AUDIT_TRAIL_ASSIGNED_CASE_OFFICER =
 	'The case officer {replacement0} was added to the team';
