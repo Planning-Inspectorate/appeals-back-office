@@ -1,4 +1,9 @@
-import { checkAddressPage, ipAddressPage, ipDetailsPage } from './add-ip-comment.mapper.js';
+import {
+	checkAddressPage,
+	ipAddressPage,
+	ipDetailsPage,
+	redactionStatusPage
+} from './add-ip-comment.mapper.js';
 
 /**
  *
@@ -61,7 +66,12 @@ export async function renderUpload(request, response) {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export async function renderRedactionStatus(request, response) {
-	return response.status(request.errors ? 400 : 200).render('patterns/change-page.pattern.njk');
+	const pageContent = redactionStatusPage(request.currentAppeal, request.errors);
+
+	return response.status(request.errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
+		errors: request.errors,
+		pageContent
+	});
 }
 
 /**
