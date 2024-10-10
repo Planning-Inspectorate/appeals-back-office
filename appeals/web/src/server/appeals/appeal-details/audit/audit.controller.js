@@ -11,8 +11,9 @@ import { getAppealCaseNotes } from '#appeals/appeal-details/case-notes/case-note
 export const renderAudit = async (request, response) => {
 	const { appealId } = request.params;
 	const appeal = request.currentAppeal;
-	const auditInfo = await getAppealAudit(request.apiClient, appealId);
-	const caseNotes = await getAppealCaseNotes(request.apiClient, appealId);
+	const auditInfoRequest = getAppealAudit(request.apiClient, appealId);
+	const caseNotesRequest = getAppealCaseNotes(request.apiClient, appealId);
+	const [auditInfo, caseNotes] = await Promise.all([auditInfoRequest, caseNotesRequest]);
 
 	if (auditInfo || caseNotes) {
 		const auditTrails = await Promise.all(

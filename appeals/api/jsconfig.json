@@ -1,6 +1,7 @@
 {
 	"extends": "../../jsconfig.json",
 	"include": ["**/*.js", "../../packages/event-client/src/event-client.js"],
+	"exclude": ["./src/server/utils/db-client", "./coverage"],
 	"compilerOptions": {
 		"baseUrl": ".",
 		"paths": {

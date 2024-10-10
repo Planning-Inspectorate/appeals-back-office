@@ -9,7 +9,8 @@ import {
 	dayMonthYearHourMinuteToDisplayDate,
 	dateISOStringToDayMonthYearHourMinute,
 	dateISOStringToDisplayDate,
-	dateISOStringToDisplayTime24hr
+	dateISOStringToDisplayTime24hr,
+	getDayFromISODate
 } from '../dates.js';
 import { appealShortReference } from '../nunjucks-filters/appeals.js';
 import { nameToString } from '../person-name-formatter.js';
@@ -341,6 +342,25 @@ describe('Libraries', () => {
 				for (const set of validTimes) {
 					expect(is24HourTimeValid(set)).toBe(false);
 				}
+			});
+		});
+
+		describe('getDayFromISODate', () => {
+			it('should return an empty string for a null value', () => {
+				const date = null;
+				expect(getDayFromISODate(date)).toEqual('');
+			});
+			it('should return an empty string for an undefined value', () => {
+				const date = undefined;
+				expect(getDayFromISODate(date)).toEqual('');
+			});
+			it('should return the correct day for a valid ISODate during BST', () => {
+				const date = '2011-06-01T00:00:00.000Z';
+				expect(getDayFromISODate(date)).toEqual('Wednesday');
+			});
+			it('should return the correct day for a valid ISODate during GMT', () => {
+				const date = '2024-12-05T00:00:00.000Z';
+				expect(getDayFromISODate(date)).toEqual('Thursday');
 			});
 		});
 	});

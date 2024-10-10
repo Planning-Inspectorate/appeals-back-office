@@ -31,6 +31,7 @@ import internalCorrespondenceRouter from './internal-correspondence/internal-cor
 import withdrawalRouter from './withdrawal/withdrawal.router.js';
 import interestedPartyCommentsRouter from './interested-party-comments/interested-party-comments.router.js';
 import { postCaseNote } from '#appeals/appeal-details/case-notes/case-notes.controller.js';
+import { validateCaseNoteEntry } from '#appeals/appeal-details/appeals-details.validator.js';
 
 const router = createRouter();
 
@@ -44,7 +45,7 @@ router
 		),
 		asyncHandler(controller.viewAppealDetails)
 	)
-	.post(asyncHandler(postCaseNote));
+	.post(validateCaseNoteEntry, asyncHandler(postCaseNote));
 
 router.use(
 	'/:appealId/start-case',

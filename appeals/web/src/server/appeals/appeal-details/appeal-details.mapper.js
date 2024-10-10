@@ -24,6 +24,7 @@ import {
 import {
 	dateISOStringToDisplayDate,
 	dateISOStringToDisplayTime12hr,
+	getDayFromISODate,
 	getTodaysISOString
 } from '#lib/dates.js';
 
@@ -97,10 +98,9 @@ export async function appealDetailsPage(
 
 	const caseNotes = await Promise.all(
 		appealCaseNotes.map(async (caseNote) => {
-			const createdAt = new Date(caseNote.createdAt);
 			return {
 				date: dateISOStringToDisplayDate(caseNote.createdAt),
-				day: new Intl.DateTimeFormat('en-GB', { weekday: 'long' }).format(createdAt),
+				day: getDayFromISODate(caseNote.createdAt),
 				time: dateISOStringToDisplayTime12hr(caseNote.createdAt),
 				comment: caseNote.comment,
 				user: (await mapUser(caseNote.azureAdUserId, request.session)).split('@')[0]
@@ -112,8 +112,7 @@ export async function appealDetailsPage(
 	const caseNotesComponent = {
 		type: 'details',
 		parameters: {
-			summaryText:
-				caseNotes.length === 1 ? `${caseNotes.length} case note` : `${caseNotes.length} case notes`,
+			summaryText: `${caseNotes.length} case note${caseNotes.length === 1 ? '' : 's'}`,
 			html: '',
 			pageComponents: [
 				{
