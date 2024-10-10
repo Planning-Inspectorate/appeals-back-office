@@ -40,6 +40,8 @@ router
 		asyncHandler(controller.postIpAddress)
 	);
 
+router.route('/upload').get(asyncHandler(controller.renderUpload));
+
 router.route('/').get(asyncHandler(controller.redirectTopLevel));
 
 export default router;

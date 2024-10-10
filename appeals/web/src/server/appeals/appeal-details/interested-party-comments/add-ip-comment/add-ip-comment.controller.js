@@ -49,6 +49,17 @@ export async function renderIpAddress(request, response) {
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
+export async function renderUpload(request, response) {
+	return response.status(request.errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
+		errors: request.errors
+	});
+}
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
 export async function postIpDetails(request, response) {
 	if (request.errors) {
 		return renderIpDetails(request, response);
