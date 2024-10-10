@@ -197,7 +197,10 @@ describe('interested-party-comments', () => {
 			expect(elementInnerHtml).toMatchSnapshot();
 			expect(elementInnerHtml).toContain('Review comment</h1>');
 
-			const interestedPartyRow = dom.querySelectorAll('.govuk-summary-list__row')[0];
+			const interestedPartyRow = parseHtml(response.text, {
+				rootElement: '.govuk-summary-list__row:first-of-type'
+			});
+
 			expect(interestedPartyRow).not.toBeNull();
 			const partyKey = interestedPartyRow?.querySelector('.govuk-summary-list__key');
 			const partyValue = interestedPartyRow?.querySelector('.govuk-summary-list__value');
