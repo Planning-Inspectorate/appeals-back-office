@@ -102,9 +102,36 @@ const createIncompleteInvalidReasons = ({
 	})
 ];
 
+/**
+ *
+ * @param {{
+ *  id: number;
+ *  relation: string;
+ *  incompleteInvalidReasonTable: string;
+ *  incompleteInvalidReasonTextTable: string;
+ * }} param0
+ * @returns
+ */
+const clearIncompleteInvalidReasons = ({
+	id,
+	relation,
+	incompleteInvalidReasonTable,
+	incompleteInvalidReasonTextTable
+}) => [
+	// @ts-ignore
+	databaseConnector[incompleteInvalidReasonTextTable].deleteMany({
+		where: { [relation]: id }
+	}),
+	// @ts-ignore
+	databaseConnector[incompleteInvalidReasonTable].deleteMany({
+		where: { [relation]: id }
+	})
+];
+
 export default {
 	createIncompleteInvalidReasons,
 	getLookupList,
 	getLookupListValueByName,
-	updateManyToManyRelationTable
+	updateManyToManyRelationTable,
+	clearIncompleteInvalidReasons
 };

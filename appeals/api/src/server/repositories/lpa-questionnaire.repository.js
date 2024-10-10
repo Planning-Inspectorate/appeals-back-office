@@ -1,6 +1,7 @@
 import { databaseConnector } from '#utils/database-connector.js';
 import appealTimetablesRepository from '#repositories/appeal-timetable.repository.js';
 import commonRepository from './common.repository.js';
+import { isOutcomeComplete } from '#utils/check-validation-outcome.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateLPAQuestionnaireRequest} UpdateLPAQuestionnaireRequest */
 /**
@@ -48,6 +49,17 @@ const updateLPAQuestionnaireById = (id, data) => {
 				manyToManyRelationTable: 'lPAQuestionnaireIncompleteReasonsSelected',
 				incompleteInvalidReasonTextTable: 'lPAQuestionnaireIncompleteReasonText',
 				data: incompleteReasons
+			})
+		);
+	}
+
+	if (data.validationOutcomeName && isOutcomeComplete(data.validationOutcomeName)) {
+		transaction.push(
+			...commonRepository.clearIncompleteInvalidReasons({
+				id,
+				relation: 'lpaQuestionnaireId',
+				incompleteInvalidReasonTable: 'lPAQuestionnaireIncompleteReasonsSelected',
+				incompleteInvalidReasonTextTable: 'lPAQuestionnaireIncompleteReasonText'
 			})
 		);
 	}

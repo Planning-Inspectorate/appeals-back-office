@@ -105,6 +105,14 @@ const updateAppellantCaseValidationOutcome = ({
 				caseValidDate: new Date(validAt).toISOString()
 			})
 		);
+		transaction.push(
+			...commonRepository.clearIncompleteInvalidReasons({
+				id: appellantCaseId,
+				relation: 'appellantCaseId',
+				incompleteInvalidReasonTable: 'appellantCaseIncompleteReasonsSelected',
+				incompleteInvalidReasonTextTable: 'appellantCaseIncompleteReasonText'
+			})
+		);
 	}
 
 	const tx = databaseConnector.$transaction(transaction);

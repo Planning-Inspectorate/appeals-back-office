@@ -60,6 +60,7 @@ const updateLPAQuestionnaireValidationOutcome = async (
 
 	await lpaQuestionnaireRepository.updateLPAQuestionnaireById(lpaQuestionnaireId, {
 		validationOutcomeId: validationOutcome.id,
+		validationOutcomeName: validationOutcome.name,
 		...(isOutcomeIncomplete(validationOutcome.name) && {
 			appealId,
 			incompleteReasons,

@@ -323,6 +323,7 @@ interface UpdateLPAQuestionnaireRequest {
 	isCorrectAppealType?: boolean;
 	incompleteReasons?: IncompleteInvalidReasons;
 	validationOutcomeId?: number;
+	validationOutcomeName?: string;
 	lpaNotificationMethods?: LPANotificationMethodsSelectedUncheckedUpdateManyWithoutLpaQuestionnaireNestedInput;
 	isAffectingNeighbouringSites?: boolean;
 }
