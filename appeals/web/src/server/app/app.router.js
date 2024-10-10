@@ -78,9 +78,13 @@ router
 	.route('/documents/:caseReference/download-uncommitted/:guid/:filename/:version?')
 	.get(asyncHandler(getUncommittedDocumentDownload));
 
-router
-	.route('/documents/delete-uncommitted/:guid')
-	.delete(asyncHandler(deleteUncommittedDocumentFromSession));
+router.route('/documents/delete-uncommitted/:guid').delete(
+	asyncHandler(
+		/** @type {import('@pins/express').RequestHandler<Response>} */ (request, response) => {
+			deleteUncommittedDocumentFromSession({ request, response });
+		}
+	)
+);
 
 router.use('/appeals-service', addApiClientToRequest, appealsRouter);
 

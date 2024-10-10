@@ -31,19 +31,19 @@ import { getTodaysISOString } from '#lib/dates.js';
 import { folderIsAdditionalDocuments } from '#lib/documents.js';
 
 /**
- *
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- * @param {import('../appeal-details/appeal-details.types.js').WebAppeal} appealDetails
- * @param {string} backButtonUrl
- * @param {string} [nextPageUrl]
- * @param {boolean} [isLateEntry]
- * @param {string} [pageHeadingTextOverride]
- * @param {PageComponent[]} [pageBodyComponents]
- * @param {boolean} [allowMultipleFiles]
- * @param {string} [documentType]
+ * @param {Object} params
+ * @param {import('@pins/express/types/express.js').Request} params.request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} params.response
+ * @param {import('../appeal-details/appeal-details.types.js').WebAppeal} params.appealDetails
+ * @param {string} params.backButtonUrl
+ * @param {string} [params.nextPageUrl]
+ * @param {boolean} [params.isLateEntry]
+ * @param {string} [params.pageHeadingTextOverride]
+ * @param {PageComponent[]} [params.pageBodyComponents]
+ * @param {boolean} [params.allowMultipleFiles]
+ * @param {string} [params.documentType]
  */
-export const renderDocumentUpload = async (
+export const renderDocumentUpload = async ({
 	request,
 	response,
 	appealDetails,
@@ -54,7 +54,7 @@ export const renderDocumentUpload = async (
 	pageBodyComponents,
 	allowMultipleFiles = true,
 	documentType
-) => {
+}) => {
 	const {
 		currentFolder,
 		errors,
@@ -124,11 +124,12 @@ export const renderDocumentUpload = async (
 };
 
 /**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- * @param {string} nextPageUrl
+ * @param {Object} params
+ * @param {import('@pins/express/types/express.js').Request} params.request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} params.response
+ * @param {string} params.nextPageUrl
  */
-export const postDocumentUpload = async (request, response, nextPageUrl) => {
+export const postDocumentUpload = async ({ request, response, nextPageUrl }) => {
 	const { body, currentAppeal, currentFolder } = request;
 
 	if (!currentAppeal || !currentFolder) {
@@ -323,19 +324,20 @@ export const renderManageDocument = async ({
 };
 
 /**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- * @param {string} backLinkUrl
- * @param {string} [nextPageUrl]
- * @param {string} [pageHeadingTextOverride]
+ * @param {Object} params
+ * @param {import('@pins/express/types/express.js').Request} params.request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} params.response
+ * @param {string} params.backLinkUrl
+ * @param {string} [params.nextPageUrl]
+ * @param {string} [params.pageHeadingTextOverride]
  */
-export const postDocumentDetails = async (
+export const postDocumentDetails = async ({
 	request,
 	response,
 	backLinkUrl,
 	nextPageUrl,
 	pageHeadingTextOverride
-) => {
+}) => {
 	try {
 		const {
 			body,
@@ -389,16 +391,17 @@ export const postDocumentDetails = async (
 };
 
 /**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- * @param {string} backLinkUrl
- * @param {string} changeFileLinkUrl
- * @param {string} changeDateLinkUrl
- * @param {string} changeRedactionStatusLinkUrl
- * @param {string} [summaryListNameLabelOverride]
- * @param {string} [summaryListDateLabelOverride]
+ * @param {Object} params
+ * @param {import('@pins/express/types/express.js').Request} params.request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} params.response
+ * @param {string} params.backLinkUrl
+ * @param {string} params.changeFileLinkUrl
+ * @param {string} params.changeDateLinkUrl
+ * @param {string} params.changeRedactionStatusLinkUrl
+ * @param {string} [params.summaryListNameLabelOverride]
+ * @param {string} [params.summaryListDateLabelOverride]
  */
-export const renderUploadDocumentsCheckAndConfirm = async (
+export const renderUploadDocumentsCheckAndConfirm = async ({
 	request,
 	response,
 	backLinkUrl,
@@ -407,7 +410,7 @@ export const renderUploadDocumentsCheckAndConfirm = async (
 	changeRedactionStatusLinkUrl,
 	summaryListNameLabelOverride,
 	summaryListDateLabelOverride
-) => {
+}) => {
 	const {
 		currentAppeal,
 		currentFolder,
@@ -470,17 +473,18 @@ export const renderUploadDocumentsCheckAndConfirm = async (
 };
 
 /**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- * @param {string} [nextPageUrl]
- * @param {function} [successCallback]
+ * @param {Object} params
+ * @param {import('@pins/express/types/express.js').Request} params.request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} params.response
+ * @param {string} [params.nextPageUrl]
+ * @param {function} [params.successCallback]
  */
-export const postUploadDocumentsCheckAndConfirm = async (
+export const postUploadDocumentsCheckAndConfirm = async ({
 	request,
 	response,
 	nextPageUrl,
 	successCallback
-) => {
+}) => {
 	const { currentAppeal, currentFolder } = request;
 
 	if (!currentAppeal || !currentFolder) {
@@ -546,11 +550,16 @@ export const postUploadDocumentsCheckAndConfirm = async (
 };
 
 /**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- * @param {string} [nextPageUrl]
+ * @param {Object} params
+ * @param {import('@pins/express/types/express.js').Request} params.request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} params.response
+ * @param {string} [params.nextPageUrl]
  */
-export const postUploadDocumentVersionCheckAndConfirm = async (request, response, nextPageUrl) => {
+export const postUploadDocumentVersionCheckAndConfirm = async ({
+	request,
+	response,
+	nextPageUrl
+}) => {
 	const { currentAppeal, currentFolder } = request;
 
 	if (!currentAppeal || !currentFolder) {
@@ -630,12 +639,12 @@ export const postUploadDocumentVersionCheckAndConfirm = async (request, response
 /** @typedef {import('@pins/appeals.api').Schema.Document} Document */
 
 /**
- *
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- * @param {string} backButtonUrl
+ * @param {Object} params
+ * @param {import('@pins/express/types/express.js').Request} params.request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} params.response
+ * @param {string} params.backButtonUrl
  */
-export const renderChangeDocumentDetails = async (request, response, backButtonUrl) => {
+export const renderChangeDocumentDetails = async ({ request, response, backButtonUrl }) => {
 	const {
 		currentFolder,
 		errors,
@@ -672,12 +681,18 @@ export const renderChangeDocumentDetails = async (request, response, backButtonU
 };
 
 /**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- * @param {string} backButtonUrl
- * @param {string} [nextPageUrl]
+ * @param {Object} params
+ * @param {import('@pins/express/types/express.js').Request} params.request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} params.response
+ * @param {string} params.backButtonUrl
+ * @param {string} [params.nextPageUrl]
  */
-export const postChangeDocumentDetails = async (request, response, backButtonUrl, nextPageUrl) => {
+export const postChangeDocumentDetails = async ({
+	request,
+	response,
+	backButtonUrl,
+	nextPageUrl
+}) => {
 	try {
 		const {
 			body,
@@ -687,7 +702,7 @@ export const postChangeDocumentDetails = async (request, response, backButtonUrl
 		} = request;
 
 		if (errors) {
-			return await renderChangeDocumentDetails(request, response, backButtonUrl);
+			return await renderChangeDocumentDetails({ request, response, backButtonUrl });
 		}
 
 		const redactionStatuses = await getDocumentRedactionStatuses(apiClient);
@@ -718,12 +733,12 @@ export const postChangeDocumentDetails = async (request, response, backButtonUrl
 };
 
 /**
- *
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- * @param {string} backButtonUrl
+ * @param {Object} params
+ * @param {import('@pins/express/types/express.js').Request} params.request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} params.response
+ * @param {string} params.backButtonUrl
  */
-export const renderDeleteDocument = async (request, response, backButtonUrl) => {
+export const renderDeleteDocument = async ({ request, response, backButtonUrl }) => {
 	const {
 		currentFolder,
 		errors,
@@ -762,20 +777,20 @@ export const renderDeleteDocument = async (request, response, backButtonUrl) => 
 };
 
 /**
- *
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- * @param {string} returnUrl
- * @param {string} cancelUrl
- * @param {string} uploadNewDocumentUrl
+ * @param {Object} params
+ * @param {import('@pins/express/types/express.js').Request} params.request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} params.response
+ * @param {string} params.returnUrl
+ * @param {string} params.cancelUrl
+ * @param {string} params.uploadNewDocumentUrl
  */
-export const postDeleteDocument = async (
+export const postDeleteDocument = async ({
 	request,
 	response,
 	returnUrl,
 	cancelUrl,
 	uploadNewDocumentUrl
-) => {
+}) => {
 	const {
 		apiClient,
 		currentFolder,
@@ -785,7 +800,7 @@ export const postDeleteDocument = async (
 	} = request;
 
 	if (errors) {
-		return await renderDeleteDocument(request, response, cancelUrl);
+		return await renderDeleteDocument({ request, response, backButtonUrl: cancelUrl });
 	}
 
 	if (!currentFolder) {
@@ -829,8 +844,12 @@ export const postDeleteDocument = async (
 	return response.status(500).render('app/500.njk');
 };
 
-/** @type {import('express').RequestHandler} */
-export const deleteUncommittedDocumentFromSession = async (request, response) => {
+/**
+ * @param {Object} params
+ * @param {import('@pins/express/types/express.js').Request} params.request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} params.response
+ */
+export const deleteUncommittedDocumentFromSession = async ({ request, response }) => {
 	const {
 		params: { guid },
 		session

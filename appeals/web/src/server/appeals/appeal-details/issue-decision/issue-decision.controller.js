@@ -114,11 +114,11 @@ export const postDecisionLetterUpload = async (request, response) => {
 		path: `${APPEAL_CASE_STAGE.APPEAL_DECISION}/${APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER}`
 	};
 
-	await postDocumentUpload(
+	await postDocumentUpload({
 		request,
 		response,
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/issue-decision/decision-letter-date`
-	);
+		nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/issue-decision/decision-letter-date`
+	});
 };
 
 /**
@@ -136,17 +136,16 @@ const renderDecisionLetterUpload = async (request, response) => {
 
 	const pageBodyComponents = decisionLetterUploadPageBodyComponents();
 
-	await renderDocumentUpload(
+	await renderDocumentUpload({
 		request,
 		response,
-		currentAppeal,
-		`/appeals-service/appeal-details/${request.params.appealId}/issue-decision/decision`,
-		`/appeals-service/appeal-details/${request.params.appealId}/issue-decision/decision-letter-date`,
-		false,
-		'Upload decision letter',
+		appealDetails: currentAppeal,
+		backButtonUrl: `/appeals-service/appeal-details/${request.params.appealId}/issue-decision/decision`,
+		nextPageUrl: `/appeals-service/appeal-details/${request.params.appealId}/issue-decision/decision-letter-date`,
+		pageHeadingTextOverride: 'Upload decision letter',
 		pageBodyComponents,
-		false
-	);
+		allowMultipleFiles: false
+	});
 };
 
 /**
@@ -338,7 +337,7 @@ export const postCheckDecision = async (request, response) => {
 		const decisionOutcome = request.session.inspectorDecision.outcome;
 		const documentId = request.session.inspectorDecision.documentId;
 
-		await postUploadDocumentsCheckAndConfirm(request, response);
+		await postUploadDocumentsCheckAndConfirm({ request, response });
 
 		await postInspectorDecision(
 			request.apiClient,
