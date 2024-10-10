@@ -113,3 +113,38 @@ export const ipAddressPage = (appealDetails, address, errors) => ({
 	heading: "Interested party's address",
 	pageComponents: addressInputs({ address, errors })
 });
+
+/**
+ * @param {Appeal} appealDetails
+ * @param {import('@pins/express').ValidationErrors | undefined} errors
+ * @returns {PageContent}
+ * */
+export const redactionStatusPage = (appealDetails, errors) => ({
+	title: 'Enter redaction status',
+	backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/upload`,
+	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
+	heading: 'Enter redaction status',
+	pageComponents: [
+		{
+			type: 'radios',
+			parameters: {
+				name: 'redactionStatus',
+				items: [
+					{
+						value: 'redacted',
+						text: 'Redacted'
+					},
+					{
+						value: 'unredacted',
+						text: 'Unredacted'
+					},
+					{
+						value: 'not-required',
+						text: 'No redaction required'
+					}
+				],
+				errorMessage: errorAddressProvidedRadio(errors)
+			}
+		}
+	]
+});
