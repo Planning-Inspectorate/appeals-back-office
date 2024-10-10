@@ -47,6 +47,8 @@ router
 	.get(asyncHandler(controller.renderRedactionStatus))
 	.post(validateRedactionStatus, asyncHandler(controller.postRedactionStatus));
 
+router.route('/date-submitted').get(asyncHandler(controller.renderDateSubmitted));
+
 router.route('/').get(asyncHandler(controller.redirectTopLevel));
 
 export default router;
