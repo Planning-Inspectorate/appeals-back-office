@@ -34,7 +34,7 @@ export const changeApplicationOutcomePage = (appealData, appellantCaseData, stor
 					items: [
 						{
 							value: 'granted',
-							text: 'Granted',
+							text: 'Granted with conditions',
 							checked: storedSessionData
 								? storedSessionData === 'granted'
 								: appellantCaseData.applicationDecision === 'granted'

@@ -15,7 +15,7 @@ exports[`application-outcome GET /change should render the applicationOutcome ch
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="application-outcome" name="application-outcome"
                             type="radio" value="granted">
-                            <label class="govuk-label govuk-radios__label" for="application-outcome">Granted</label>
+                            <label class="govuk-label govuk-radios__label" for="application-outcome">Granted with conditions</label>
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="application-outcome-2" name="application-outcome"
@@ -63,7 +63,7 @@ exports[`application-outcome POST /change should re-render applicationOutcome ch
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="application-outcome" name="application-outcome"
                             type="radio" value="granted">
-                            <label class="govuk-label govuk-radios__label" for="application-outcome">Granted</label>
+                            <label class="govuk-label govuk-radios__label" for="application-outcome">Granted with conditions</label>
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="application-outcome-2" name="application-outcome"

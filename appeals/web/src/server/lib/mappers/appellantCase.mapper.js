@@ -156,10 +156,18 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 	mappedData.applicationDecision = textSummaryListItem({
 		id: 'application-decision',
 		text: 'Outcome',
-		value:
-			appellantCaseData.applicationDecision === APPEAL_APPLICATION_DECISION.NOT_RECEIVED
-				? 'Not received'
-				: capitalize(appellantCaseData.applicationDecision ?? ''),
+		value: (() => {
+			switch (appellantCaseData.applicationDecision) {
+				case APPEAL_APPLICATION_DECISION.NOT_RECEIVED:
+					return 'Not received';
+				case APPEAL_APPLICATION_DECISION.GRANTED:
+					return 'Granted with conditions';
+				case APPEAL_APPLICATION_DECISION.REFUSED:
+					return 'Refused';
+				default:
+					return '';
+			}
+		})(),
 		link: `${currentRoute}/application-outcome/change`,
 		editable: userHasUpdateCase
 	});
