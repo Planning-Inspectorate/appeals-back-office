@@ -9,7 +9,8 @@ import {
 	folderPathToFolderNameText,
 	getDocumentsForVirusStatus,
 	mapDocumentDownloadUrl,
-	mapFolderDocumentInformationHtmlProperty
+	mapFolderDocumentInformationHtmlProperty,
+	mapUncommittedDocumentDownloadUrl
 } from '../../appeal-documents/appeal-documents.mapper.js';
 
 /**
@@ -267,6 +268,8 @@ export function withdrawalDocumentRedactionStatusPage(
  * @returns {PageContent}
  */
 export function checkAndConfirmPage(appealData, session) {
+	const uncommittedFile = session.fileUploadInfo?.files[0];
+
 	/** @type {PageComponent} */
 	const summaryListComponent = {
 		type: 'summary-list',
@@ -277,7 +280,11 @@ export function checkAndConfirmPage(appealData, session) {
 						text: 'Withdrawal request'
 					},
 					value: {
-						text: session.fileUploadInfo?.files[0]?.name
+						html: `<a class="govuk-link" href="${mapUncommittedDocumentDownloadUrl(
+							appealData.appealReference,
+							uncommittedFile.GUID,
+							uncommittedFile.name
+						)}" target="_blank">${uncommittedFile.name}</a>`
 					},
 					actions: {
 						items: [

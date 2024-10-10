@@ -49,20 +49,19 @@ export const getDocumentUpload = async (request, response) => {
 			break;
 	}
 
-	await renderDocumentUpload(
+	await renderDocumentUpload({
 		request,
 		response,
-		currentAppeal,
-		`/appeals-service/appeal-details/${currentAppeal.appealId}`,
-		costsCategory === 'decision'
-			? `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/decision/add-document-details/${currentFolder.folderId}`
-			: `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/${costsDocumentType}/add-document-details/${currentFolder.folderId}`,
-		false,
-		uploadPageHeadingText,
-		undefined,
-		false,
-		session.costsDocumentType
-	);
+		appealDetails: currentAppeal,
+		backButtonUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}`,
+		nextPageUrl:
+			costsCategory === 'decision'
+				? `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/decision/add-document-details/${currentFolder.folderId}`
+				: `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/${costsDocumentType}/add-document-details/${currentFolder.folderId}`,
+		pageHeadingTextOverride: uploadPageHeadingText,
+		allowMultipleFiles: false,
+		documentType: session.costsDocumentType
+	});
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
@@ -73,13 +72,14 @@ export const postDocumentUploadPage = async (request, response) => {
 		params: { costsCategory, costsDocumentType }
 	} = request;
 
-	await postDocumentUpload(
+	await postDocumentUpload({
 		request,
 		response,
-		costsCategory === 'decision'
-			? `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/decision/add-document-details/${currentFolder.folderId}`
-			: `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/${costsDocumentType}/add-document-details/${currentFolder.folderId}`
-	);
+		nextPageUrl:
+			costsCategory === 'decision'
+				? `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/decision/add-document-details/${currentFolder.folderId}`
+				: `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/${costsDocumentType}/add-document-details/${currentFolder.folderId}`
+	});
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
@@ -94,21 +94,20 @@ export const getDocumentVersionUpload = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
-	await renderDocumentUpload(
+	await renderDocumentUpload({
 		request,
 		response,
-		currentAppeal,
-		costsCategory === 'decision'
-			? `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/decision/manage-documents/${currentFolder.folderId}/${documentId}`
-			: `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/${costsDocumentType}/manage-documents/${currentFolder.folderId}/${documentId}`,
-		costsCategory === 'decision'
-			? `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/decision/add-document-details/${currentFolder.folderId}/${documentId}`
-			: `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/${costsDocumentType}/add-document-details/${currentFolder.folderId}/${documentId}`,
-		false,
-		undefined,
-		[],
-		false
-	);
+		appealDetails: currentAppeal,
+		backButtonUrl:
+			costsCategory === 'decision'
+				? `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/decision/manage-documents/${currentFolder.folderId}/${documentId}`
+				: `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/${costsDocumentType}/manage-documents/${currentFolder.folderId}/${documentId}`,
+		nextPageUrl:
+			costsCategory === 'decision'
+				? `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/decision/add-document-details/${currentFolder.folderId}/${documentId}`
+				: `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/${costsDocumentType}/add-document-details/${currentFolder.folderId}/${documentId}`,
+		allowMultipleFiles: false
+	});
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
@@ -123,13 +122,14 @@ export const postDocumentVersionUpload = async (request, response) => {
 		return response.status(404).render('app/404');
 	}
 
-	await postDocumentUpload(
+	await postDocumentUpload({
 		request,
 		response,
-		costsCategory === 'decision'
-			? `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/decision/add-document-details/${currentFolder.folderId}/${documentId}`
-			: `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/${costsDocumentType}/add-document-details/${currentFolder.folderId}/${documentId}`
-	);
+		nextPageUrl:
+			costsCategory === 'decision'
+				? `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/decision/add-document-details/${currentFolder.folderId}/${documentId}`
+				: `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/${costsDocumentType}/add-document-details/${currentFolder.folderId}/${documentId}`
+	});
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
@@ -197,15 +197,16 @@ export const postAddDocumentDetails = async (request, response) => {
 
 	const documentIdFragment = documentId ? `/${documentId}` : '';
 
-	await postDocumentDetails(
+	await postDocumentDetails({
 		request,
 		response,
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/upload-documents/${currentFolder?.folderId}`,
-		costsCategory === 'decision'
-			? `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/decision/check-and-confirm/${currentFolder?.folderId}${documentIdFragment}`
-			: `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/${costsDocumentType}/check-your-answers/${currentFolder?.folderId}${documentIdFragment}`,
-		costsCategoryLabel
-	);
+		backLinkUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/upload-documents/${currentFolder?.folderId}`,
+		nextPageUrl:
+			costsCategory === 'decision'
+				? `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/decision/check-and-confirm/${currentFolder?.folderId}${documentIdFragment}`
+				: `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/${costsDocumentType}/check-your-answers/${currentFolder?.folderId}${documentIdFragment}`,
+		pageHeadingTextOverride: costsCategoryLabel
+	});
 };
 
 /**
@@ -230,18 +231,18 @@ export const getAddDocumentsCheckAndConfirm = async (request, response) => {
 		documentId ? `/${documentId}` : ''
 	}`;
 
-	await renderUploadDocumentsCheckAndConfirm(
+	await renderUploadDocumentsCheckAndConfirm({
 		request,
 		response,
-		addDocumentDetailsPageUrl,
-		`/appeals-service/appeal-details/${
+		backLinkUrl: addDocumentDetailsPageUrl,
+		changeFileLinkUrl: `/appeals-service/appeal-details/${
 			request.currentAppeal.appealId
 		}/costs/${costsCategory}/${costsDocumentType}/upload-documents/${currentFolder.folderId}${
 			documentId ? `/${documentId}` : ''
 		}`,
-		addDocumentDetailsPageUrl,
-		addDocumentDetailsPageUrl
-	);
+		changeDateLinkUrl: addDocumentDetailsPageUrl,
+		changeRedactionStatusLinkUrl: addDocumentDetailsPageUrl
+	});
 };
 
 /**
@@ -261,11 +262,13 @@ export const postAddDocumentsCheckAndConfirm = async (request, response) => {
 	}
 
 	try {
-		await postUploadDocumentsCheckAndConfirm(
+		await postUploadDocumentsCheckAndConfirm({
 			request,
 			response,
-			`/appeals-service/appeal-details/${currentAppeal.appealId}`,
-			(/** @type {import('@pins/express/types/express.js').Request} */ request) => {
+			nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}`,
+			successCallback: (
+				/** @type {import('@pins/express/types/express.js').Request} */ request
+			) => {
 				if (request.session.costsDocumentType) {
 					delete request.session.costsDocumentType;
 				}
@@ -280,7 +283,7 @@ export const postAddDocumentsCheckAndConfirm = async (request, response) => {
 					} costs ${costsDocumentType} documents uploaded`
 				);
 			}
-		);
+		});
 	} catch (error) {
 		logger.error(
 			error,
@@ -300,11 +303,11 @@ export const postAddDocumentVersionCheckAndConfirm = async (request, response) =
 	}
 
 	try {
-		await postUploadDocumentVersionCheckAndConfirm(
+		await postUploadDocumentVersionCheckAndConfirm({
 			request,
 			response,
-			`/appeals-service/appeal-details/${currentAppeal.appealId}`
-		);
+			nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}`
+		});
 	} catch (error) {
 		logger.error(
 			error,
@@ -402,13 +405,14 @@ export const getDeleteCostsDocument = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
-	await renderDeleteDocument(
+	await renderDeleteDocument({
 		request,
 		response,
-		costsCategory === 'decision'
-			? `/appeals-service/appeal-details/${request.params.appealId}/costs/decision/manage-documents/${currentFolder.folderId}/{{documentId}}`
-			: `/appeals-service/appeal-details/${request.params.appealId}/costs/${costsCategory}/${costsDocumentType}/manage-documents/${currentFolder.folderId}/{{documentId}}`
-	);
+		backButtonUrl:
+			costsCategory === 'decision'
+				? `/appeals-service/appeal-details/${request.params.appealId}/costs/decision/manage-documents/${currentFolder.folderId}/{{documentId}}`
+				: `/appeals-service/appeal-details/${request.params.appealId}/costs/${costsCategory}/${costsDocumentType}/manage-documents/${currentFolder.folderId}/{{documentId}}`
+	});
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
@@ -423,42 +427,47 @@ export const postDeleteCostsDocument = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
-	await postDeleteDocument(
+	await postDeleteDocument({
 		request,
 		response,
-		`/appeals-service/appeal-details/${request.params.appealId}`,
-		costsCategory === 'decision'
-			? `/appeals-service/appeal-details/${request.params.appealId}/costs/decision/manage-documents/{{folderId}}/{{documentId}}`
-			: `/appeals-service/appeal-details/${request.params.appealId}/costs/${costsCategory}/${costsDocumentType}/manage-documents/{{folderId}}/{{documentId}}`,
-		costsCategory === 'decision'
-			? `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/decision/upload-documents/{{folderId}}`
-			: `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/${costsDocumentType}/upload-documents/{{folderId}}`
-	);
+		returnUrl: `/appeals-service/appeal-details/${request.params.appealId}`,
+		cancelUrl:
+			costsCategory === 'decision'
+				? `/appeals-service/appeal-details/${request.params.appealId}/costs/decision/manage-documents/{{folderId}}/{{documentId}}`
+				: `/appeals-service/appeal-details/${request.params.appealId}/costs/${costsCategory}/${costsDocumentType}/manage-documents/{{folderId}}/{{documentId}}`,
+		uploadNewDocumentUrl:
+			costsCategory === 'decision'
+				? `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/decision/upload-documents/{{folderId}}`
+				: `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/${costsDocumentType}/upload-documents/{{folderId}}`
+	});
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const getChangeDocumentVersionDetails = async (request, response) => {
-	await renderChangeDocumentDetails(
+	await renderChangeDocumentDetails({
 		request,
 		response,
-		request.params.costsCategory === 'decision'
-			? `/appeals-service/appeal-details/${request.params.appealId}/costs/decision/manage-documents/${request.params.folderId}/${request.params.documentId}`
-			: `/appeals-service/appeal-details/${request.params.appealId}/costs/${request.params.costsCategory}/${request.params.costsDocumentType}/manage-documents/${request.params.folderId}/${request.params.documentId}`
-	);
+		backButtonUrl:
+			request.params.costsCategory === 'decision'
+				? `/appeals-service/appeal-details/${request.params.appealId}/costs/decision/manage-documents/${request.params.folderId}/${request.params.documentId}`
+				: `/appeals-service/appeal-details/${request.params.appealId}/costs/${request.params.costsCategory}/${request.params.costsDocumentType}/manage-documents/${request.params.folderId}/${request.params.documentId}`
+	});
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const postChangeDocumentVersionDetails = async (request, response) => {
-	await postChangeDocumentDetails(
+	await postChangeDocumentDetails({
 		request,
 		response,
-		request.params.costsCategory === 'decision'
-			? `/appeals-service/appeal-details/${request.params.appealId}/costs/decision/manage-documents/${request.params.folderId}/${request.params.documentId}`
-			: `/appeals-service/appeal-details/${request.params.appealId}/costs/${request.params.costsCategory}/${request.params.costsDocumentType}/manage-documents/${request.params.folderId}/${request.params.documentId}`,
-		request.params.costsCategory === 'decision'
-			? `/appeals-service/appeal-details/${request.params.appealId}/costs/decision/manage-documents/${request.params.folderId}/${request.params.documentId}`
-			: `/appeals-service/appeal-details/${request.params.appealId}/costs/${request.params.costsCategory}/${request.params.costsDocumentType}/manage-documents/${request.params.folderId}/${request.params.documentId}`
-	);
+		backButtonUrl:
+			request.params.costsCategory === 'decision'
+				? `/appeals-service/appeal-details/${request.params.appealId}/costs/decision/manage-documents/${request.params.folderId}/${request.params.documentId}`
+				: `/appeals-service/appeal-details/${request.params.appealId}/costs/${request.params.costsCategory}/${request.params.costsDocumentType}/manage-documents/${request.params.folderId}/${request.params.documentId}`,
+		nextPageUrl:
+			request.params.costsCategory === 'decision'
+				? `/appeals-service/appeal-details/${request.params.appealId}/costs/decision/manage-documents/${request.params.folderId}/${request.params.documentId}`
+				: `/appeals-service/appeal-details/${request.params.appealId}/costs/${request.params.costsCategory}/${request.params.costsDocumentType}/manage-documents/${request.params.folderId}/${request.params.documentId}`
+	});
 };
 
 /**
@@ -549,9 +558,9 @@ export const postDecisionCheckAndConfirm = async (request, response) => {
 	}
 
 	if (documentId) {
-		await postUploadDocumentVersionCheckAndConfirm(request, response);
+		await postUploadDocumentVersionCheckAndConfirm({ request, response });
 	} else {
-		await postUploadDocumentsCheckAndConfirm(request, response);
+		await postUploadDocumentsCheckAndConfirm({ request, response });
 	}
 
 	addNotificationBannerToSession(

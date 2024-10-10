@@ -33,17 +33,15 @@ export const getDocumentUpload = async (request, response) => {
 		return response.status(500).render('app/500.njk');
 	}
 
-	await renderDocumentUpload(
+	await renderDocumentUpload({
 		request,
 		response,
-		currentAppeal,
-		`/appeals-service/appeal-details/${currentAppeal.appealId}`,
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/add-document-details/${currentFolder.folderId}`,
-		false,
-		`Upload ${correspondenceCategory} correspondence`,
-		undefined,
-		false
-	);
+		appealDetails: currentAppeal,
+		backButtonUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}`,
+		nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/add-document-details/${currentFolder.folderId}`,
+		pageHeadingTextOverride: `Upload ${correspondenceCategory} correspondence`,
+		allowMultipleFiles: false
+	});
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
@@ -54,11 +52,11 @@ export const postDocumentUploadPage = async (request, response) => {
 		params: { correspondenceCategory }
 	} = request;
 
-	await postDocumentUpload(
+	await postDocumentUpload({
 		request,
 		response,
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/add-document-details/${currentFolder.folderId}`
-	);
+		nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/add-document-details/${currentFolder.folderId}`
+	});
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
@@ -73,17 +71,14 @@ export const getDocumentVersionUpload = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
-	await renderDocumentUpload(
+	await renderDocumentUpload({
 		request,
 		response,
-		currentAppeal,
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/manage-documents/${currentFolder.folderId}/${documentId}`,
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/add-document-details/${currentFolder.folderId}/${documentId}`,
-		false,
-		undefined,
-		[],
-		false
-	);
+		appealDetails: currentAppeal,
+		backButtonUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/manage-documents/${currentFolder.folderId}/${documentId}`,
+		nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/add-document-details/${currentFolder.folderId}/${documentId}`,
+		allowMultipleFiles: false
+	});
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
@@ -98,11 +93,11 @@ export const postDocumentVersionUpload = async (request, response) => {
 		return response.status(404).render('app/404');
 	}
 
-	await postDocumentUpload(
+	await postDocumentUpload({
 		request,
 		response,
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/add-document-details/${currentFolder.folderId}/${documentId}`
-	);
+		nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/add-document-details/${currentFolder.folderId}/${documentId}`
+	});
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
@@ -142,17 +137,17 @@ export const postAddDocumentDetails = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
-	await postDocumentDetails(
+	await postDocumentDetails({
 		request,
 		response,
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/upload-documents/${currentFolder?.folderId}`,
-		`/appeals-service/appeal-details/${
+		backLinkUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/upload-documents/${currentFolder?.folderId}`,
+		nextPageUrl: `/appeals-service/appeal-details/${
 			currentAppeal.appealId
 		}/internal-correspondence/${correspondenceCategory}/check-your-answers/${
 			currentFolder?.folderId
 		}${documentId ? `/${documentId}` : ''}`,
-		`${capitalize(correspondenceCategory)} correspondence`
-	);
+		pageHeadingTextOverride: `${capitalize(correspondenceCategory)} correspondence`
+	});
 };
 
 /**
@@ -177,18 +172,18 @@ export const getAddDocumentsCheckAndConfirm = async (request, response) => {
 		currentFolder.folderId
 	}${documentId ? `/${documentId}` : ''}`;
 
-	await renderUploadDocumentsCheckAndConfirm(
+	await renderUploadDocumentsCheckAndConfirm({
 		request,
 		response,
-		addDocumentDetailsPageUrl,
-		`/appeals-service/appeal-details/${
+		backLinkUrl: addDocumentDetailsPageUrl,
+		changeFileLinkUrl: `/appeals-service/appeal-details/${
 			currentAppeal.appealId
 		}/internal-correspondence/${correspondenceCategory}/upload-documents/${currentFolder.folderId}${
 			documentId ? `/${documentId}` : ''
 		}`,
-		addDocumentDetailsPageUrl,
-		addDocumentDetailsPageUrl
-	);
+		changeDateLinkUrl: addDocumentDetailsPageUrl,
+		changeRedactionStatusLinkUrl: addDocumentDetailsPageUrl
+	});
 };
 
 /**
@@ -208,11 +203,11 @@ export const postAddDocumentsCheckAndConfirm = async (request, response) => {
 	}
 
 	try {
-		await postUploadDocumentsCheckAndConfirm(
+		await postUploadDocumentsCheckAndConfirm({
 			request,
 			response,
-			`/appeals-service/appeal-details/${currentAppeal.appealId}`,
-			() => {
+			nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}`,
+			successCallback: () => {
 				addNotificationBannerToSession(
 					session,
 					'internalCorrespondenceDocumentAdded',
@@ -221,7 +216,7 @@ export const postAddDocumentsCheckAndConfirm = async (request, response) => {
 					`${capitalize(correspondenceCategory)} correspondence documents uploaded`
 				);
 			}
-		);
+		});
 	} catch (error) {
 		logger.error(
 			error,
@@ -246,11 +241,11 @@ export const postAddDocumentVersionCheckAndConfirm = async (request, response) =
 	}
 
 	try {
-		await postUploadDocumentVersionCheckAndConfirm(
+		await postUploadDocumentVersionCheckAndConfirm({
 			request,
 			response,
-			`/appeals-service/appeal-details/${currentAppeal.appealId}`
-		);
+			nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}`
+		});
 	} catch (error) {
 		logger.error(
 			error,
@@ -311,11 +306,11 @@ export const getChangeDocumentVersionDetails = async (request, response) => {
 		params: { appealId, correspondenceCategory, folderId, documentId }
 	} = request;
 
-	await renderChangeDocumentDetails(
+	await renderChangeDocumentDetails({
 		request,
 		response,
-		`/appeals-service/appeal-details/${appealId}/internal-correspondence/${correspondenceCategory}/manage-documents/${folderId}/${documentId}`
-	);
+		backButtonUrl: `/appeals-service/appeal-details/${appealId}/internal-correspondence/${correspondenceCategory}/manage-documents/${folderId}/${documentId}`
+	});
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
@@ -324,12 +319,12 @@ export const postChangeDocumentVersionDetails = async (request, response) => {
 		params: { appealId, correspondenceCategory, folderId, documentId }
 	} = request;
 
-	await postChangeDocumentDetails(
+	await postChangeDocumentDetails({
 		request,
 		response,
-		`/appeals-service/appeal-details/${appealId}/internal-correspondence/${correspondenceCategory}/manage-documents/${folderId}/${documentId}`,
-		`/appeals-service/appeal-details/${appealId}/internal-correspondence/${correspondenceCategory}/manage-documents/${folderId}/${documentId}`
-	);
+		backButtonUrl: `/appeals-service/appeal-details/${appealId}/internal-correspondence/${correspondenceCategory}/manage-documents/${folderId}/${documentId}`,
+		nextPageUrl: `/appeals-service/appeal-details/${appealId}/internal-correspondence/${correspondenceCategory}/manage-documents/${folderId}/${documentId}`
+	});
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
@@ -343,11 +338,11 @@ export const getDeleteInternalCorrespondenceDocument = async (request, response)
 		return response.status(404).render('app/404.njk');
 	}
 
-	await renderDeleteDocument(
+	await renderDeleteDocument({
 		request,
 		response,
-		`/appeals-service/appeal-details/${request.params.appealId}/internal-correspondence/${correspondenceCategory}/manage-documents/${currentFolder.folderId}/{{documentId}}`
-	);
+		backButtonUrl: `/appeals-service/appeal-details/${request.params.appealId}/internal-correspondence/${correspondenceCategory}/manage-documents/${currentFolder.folderId}/{{documentId}}`
+	});
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
@@ -362,11 +357,11 @@ export const postDeleteInternalCorrespondenceDocument = async (request, response
 		return response.status(404).render('app/404.njk');
 	}
 
-	await postDeleteDocument(
+	await postDeleteDocument({
 		request,
 		response,
-		`/appeals-service/appeal-details/${currentAppeal.appealId}`,
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/manage-documents/{{folderId}}/{{documentId}}`,
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/upload-documents/{{folderId}}`
-	);
+		returnUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}`,
+		cancelUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/manage-documents/{{folderId}}/{{documentId}}`,
+		uploadNewDocumentUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/upload-documents/{{folderId}}`
+	});
 };

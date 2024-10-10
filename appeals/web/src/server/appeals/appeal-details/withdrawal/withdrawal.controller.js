@@ -67,11 +67,11 @@ export const postWithdrawalRequestRequestUpload = async (request, response) => {
 		path: `${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.APPELLANT_CASE_WITHDRAWAL_LETTER}`
 	};
 
-	await postDocumentUpload(
+	await postDocumentUpload({
 		request,
 		response,
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/withdrawal/withdrawal-request-date`
-	);
+		nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/withdrawal/withdrawal-request-date`
+	});
 };
 
 /**
@@ -91,17 +91,15 @@ const renderWithdrawalRequestUpload = async (request, response) => {
 		path: `${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.APPELLANT_CASE_WITHDRAWAL_LETTER}`
 	};
 
-	await renderDocumentUpload(
+	await renderDocumentUpload({
 		request,
 		response,
-		currentAppeal,
-		`/appeals-service/appeal-details/${request.params.appealId}`,
-		`/appeals-service/appeal-details/${request.params.appealId}/withdrawal/withdrawal-request-date`,
-		false,
-		`Upload appellant's withdrawal request`,
-		[],
-		false
-	);
+		appealDetails: currentAppeal,
+		backButtonUrl: `/appeals-service/appeal-details/${request.params.appealId}`,
+		nextPageUrl: `/appeals-service/appeal-details/${request.params.appealId}/withdrawal/withdrawal-request-date`,
+		pageHeadingTextOverride: `Upload appellant's withdrawal request`,
+		allowMultipleFiles: false
+	});
 };
 
 /**
@@ -323,7 +321,7 @@ export const postCheckYourAnswers = async (request, response) => {
 			redactionStatuses
 		);
 
-		await postUploadDocumentsCheckAndConfirm(request, response);
+		await postUploadDocumentsCheckAndConfirm({ request, response });
 
 		await postWithdrawalRequest(
 			request.apiClient,
