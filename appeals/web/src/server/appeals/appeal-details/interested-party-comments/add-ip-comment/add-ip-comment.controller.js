@@ -104,6 +104,8 @@ export async function postIpDetails(request, response) {
 		return renderIpDetails(request, response);
 	}
 
+	request.session.addIpComment = request.body;
+
 	const { currentAppeal } = request;
 
 	return response.redirect(
