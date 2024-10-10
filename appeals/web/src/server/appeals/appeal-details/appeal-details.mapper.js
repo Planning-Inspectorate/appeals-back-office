@@ -100,10 +100,10 @@ export async function appealDetailsPage(
 		appealCaseNotes.map(async (caseNote) => {
 			return {
 				date: dateISOStringToDisplayDate(caseNote.createdAt),
-				day: getDayFromISODate(caseNote.createdAt),
+				dayOfWeek: getDayFromISODate(caseNote.createdAt),
 				time: dateISOStringToDisplayTime12hr(caseNote.createdAt),
-				comment: caseNote.comment,
-				user: (await mapUser(caseNote.azureAdUserId, request.session)).split('@')[0]
+				commentText: caseNote.comment,
+				userName: (await mapUser(caseNote.azureAdUserId, request.session)).split('@')[0]
 			};
 		})
 	);

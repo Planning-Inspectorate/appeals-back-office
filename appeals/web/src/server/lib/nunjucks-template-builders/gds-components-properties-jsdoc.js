@@ -728,8 +728,8 @@
  * @typedef CaseNote
  * @type {Object<string, any>}
  * @property {string} date
- * @property {string} days
+ * @property {string} dayOfWeek
  * @property {string} time
- * @property {string} comment
- * @property {string} user
+ * @property {string} commentText
+ * @property {string} userName
  */

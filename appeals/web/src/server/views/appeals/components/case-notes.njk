@@ -19,10 +19,10 @@
 		{%- for caseNote in params.caseNotes -%}
 		<section>
 			<p class="govuk-body govuk-!-margin-bottom-1">
-				{{caseNote.comment}}
+				{{caseNote.commentText}}
 			</p>
 			<p class="govuk-hint govuk-!-margin-bottom-6">
-				{{ [caseNote.time, ' on ', caseNote.day, ' ', caseNote.date, ' by ', caseNote.user] | join }}
+				{{ [caseNote.time, ' on ', caseNote.dayOfWeek, ' ', caseNote.date, ' by ', caseNote.userName] | join }}
 			</p>
 			<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 		</section>

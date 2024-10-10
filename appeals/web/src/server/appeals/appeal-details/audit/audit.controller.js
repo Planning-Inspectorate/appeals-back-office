@@ -43,7 +43,7 @@ export const renderAudit = async (request, response) => {
 			})
 		);
 
-		const bothArraysSorted = [...auditTrails, ...caseNotesArray].sort(
+		const sortedCaseNotesAndAuditEntries = [...auditTrails, ...caseNotesArray].sort(
 			(a, b) => b.dateTime - a.dateTime
 		);
 
@@ -51,7 +51,7 @@ export const renderAudit = async (request, response) => {
 
 		return response.status(200).render('appeals/appeal/audit.njk', {
 			pageContent: {
-				auditTrails: bothArraysSorted,
+				auditTrails: sortedCaseNotesAndAuditEntries,
 				caseReference: shortAppealReference,
 				backLinkUrl: `/appeals-service/appeal-details/${appeal.appealId}`,
 				title: `Case history - ${shortAppealReference}`,
