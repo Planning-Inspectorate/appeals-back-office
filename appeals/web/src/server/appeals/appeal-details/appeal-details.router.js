@@ -30,6 +30,8 @@ import safetyRisksRouter from './safety-risks/safety-risks.router.js';
 import internalCorrespondenceRouter from './internal-correspondence/internal-correspondence.router.js';
 import withdrawalRouter from './withdrawal/withdrawal.router.js';
 import interestedPartyCommentsRouter from './interested-party-comments/interested-party-comments.router.js';
+import { postCaseNote } from '#appeals/appeal-details/case-notes/case-notes.controller.js';
+import { validateCaseNoteEntry } from '#appeals/appeal-details/appeals-details.validator.js';
 
 const router = createRouter();
 
@@ -42,7 +44,8 @@ router
 			permissionNames.viewAssignedCaseDetails
 		),
 		asyncHandler(controller.viewAppealDetails)
-	);
+	)
+	.post(validateCaseNoteEntry, asyncHandler(postCaseNote));
 
 router.use(
 	'/:appealId/start-case',

@@ -68,6 +68,8 @@ exports[`appeal-details GET /:appealId Appeal decision should render a row in th
 
 exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with with "Issue" action link to the issue decision start page, if the appeal status is "issue_determination" 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not yet issued</dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/issue-decision/decision" data-cy="issue-decision"> Issue<span class="govuk-visually-hidden"> Decision</span></a></dd></div>"`;
 
+exports[`appeal-details GET /:appealId Case notes should render the case note details 1`] = `"<details class="govuk-details" data-module="govuk-details"><summary class="govuk-details__summary"><span class="govuk-details__summary-text"> 2 case notes</span></summary><div class="govuk-details__text"><form method="POST" novalidate="novalidate"><div class="govuk-form-group"><textarea class="govuk-textarea" id="comment" name="comment" rows="5"></textarea></div><button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-1" data-module="govuk-button"> Add case note</button></form><div><hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible"><section><p class="govuk-body govuk-!-margin-bottom-1"> A case note you should see.</p><p class="govuk-hint govuk-!-margin-bottom-6"> 11:00am on Tuesday 1 October 2024 by John.Smith</p><hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible"></section><section><p class="govuk-body govuk-!-margin-bottom-1"> A case note you should see.</p><p class="govuk-hint govuk-!-margin-bottom-6"> 11:00am on Tuesday 1 October 2024 by John.Smith</p><hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible"></section></div></div></details>"`;
+
 exports[`appeal-details GET /:appealId Notification banners should render a "Appeal ready for validation" important notification banner with a link to validate the appeal when the appeal status is "validation" 1`] = `
 "<div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
 data-module="govuk-notification-banner">
@@ -466,6 +468,32 @@ exports[`appeal-details GET /:appealId should not render action links to the man
                 <dd                 class="govuk-summary-list__value">Wiltshire Council</dd>
             </div>
         </dl>
+        <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> 2 case notes</span>
+            </summary>
+            <div class="govuk-details__text">
+                <form method="POST" novalidate="novalidate">
+                    <div class="govuk-form-group">
+                        <textarea class="govuk-textarea" id="comment" name="comment" rows="5"></textarea>
+                    </div>
+                    <button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-1"
+                    data-module="govuk-button">Add case note</button>
+                </form>
+                <div>
+                    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    <section>
+                        <p class="govuk-body govuk-!-margin-bottom-1">A case note you should see.</p>
+                        <p class="govuk-hint govuk-!-margin-bottom-6">11:00am on Tuesday 1 October 2024 by John.Smith</p>
+                        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    </section>
+                    <section>
+                        <p class="govuk-body govuk-!-margin-bottom-1">A case note you should see.</p>
+                        <p class="govuk-hint govuk-!-margin-bottom-6">11:00am on Tuesday 1 October 2024 by John.Smith</p>
+                        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    </section>
+                </div>
+            </div>
+        </details>
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default1">
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
@@ -895,6 +923,32 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                 <dd                 class="govuk-summary-list__value">Wiltshire Council</dd>
             </div>
         </dl>
+        <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> 2 case notes</span>
+            </summary>
+            <div class="govuk-details__text">
+                <form method="POST" novalidate="novalidate">
+                    <div class="govuk-form-group">
+                        <textarea class="govuk-textarea" id="comment" name="comment" rows="5"></textarea>
+                    </div>
+                    <button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-1"
+                    data-module="govuk-button">Add case note</button>
+                </form>
+                <div>
+                    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    <section>
+                        <p class="govuk-body govuk-!-margin-bottom-1">A case note you should see.</p>
+                        <p class="govuk-hint govuk-!-margin-bottom-6">11:00am on Tuesday 1 October 2024 by John.Smith</p>
+                        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    </section>
+                    <section>
+                        <p class="govuk-body govuk-!-margin-bottom-1">A case note you should see.</p>
+                        <p class="govuk-hint govuk-!-margin-bottom-6">11:00am on Tuesday 1 October 2024 by John.Smith</p>
+                        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    </section>
+                </div>
+            </div>
+        </details>
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default1">
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
@@ -1301,6 +1355,32 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                 <dd                 class="govuk-summary-list__value">Wiltshire Council</dd>
             </div>
         </dl>
+        <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> 2 case notes</span>
+            </summary>
+            <div class="govuk-details__text">
+                <form method="POST" novalidate="novalidate">
+                    <div class="govuk-form-group">
+                        <textarea class="govuk-textarea" id="comment" name="comment" rows="5"></textarea>
+                    </div>
+                    <button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-1"
+                    data-module="govuk-button">Add case note</button>
+                </form>
+                <div>
+                    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    <section>
+                        <p class="govuk-body govuk-!-margin-bottom-1">A case note you should see.</p>
+                        <p class="govuk-hint govuk-!-margin-bottom-6">11:00am on Tuesday 1 October 2024 by John.Smith</p>
+                        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    </section>
+                    <section>
+                        <p class="govuk-body govuk-!-margin-bottom-1">A case note you should see.</p>
+                        <p class="govuk-hint govuk-!-margin-bottom-6">11:00am on Tuesday 1 October 2024 by John.Smith</p>
+                        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    </section>
+                </div>
+            </div>
+        </details>
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default1">
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
@@ -1715,6 +1795,32 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                 <dd                 class="govuk-summary-list__value">Wiltshire Council</dd>
             </div>
         </dl>
+        <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> 2 case notes</span>
+            </summary>
+            <div class="govuk-details__text">
+                <form method="POST" novalidate="novalidate">
+                    <div class="govuk-form-group">
+                        <textarea class="govuk-textarea" id="comment" name="comment" rows="5"></textarea>
+                    </div>
+                    <button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-1"
+                    data-module="govuk-button">Add case note</button>
+                </form>
+                <div>
+                    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    <section>
+                        <p class="govuk-body govuk-!-margin-bottom-1">A case note you should see.</p>
+                        <p class="govuk-hint govuk-!-margin-bottom-6">11:00am on Tuesday 1 October 2024 by John.Smith</p>
+                        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    </section>
+                    <section>
+                        <p class="govuk-body govuk-!-margin-bottom-1">A case note you should see.</p>
+                        <p class="govuk-hint govuk-!-margin-bottom-6">11:00am on Tuesday 1 October 2024 by John.Smith</p>
+                        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    </section>
+                </div>
+            </div>
+        </details>
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default1">
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
@@ -2146,6 +2252,32 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
                 <dd                 class="govuk-summary-list__value">Wiltshire Council</dd>
             </div>
         </dl>
+        <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> 2 case notes</span>
+            </summary>
+            <div class="govuk-details__text">
+                <form method="POST" novalidate="novalidate">
+                    <div class="govuk-form-group">
+                        <textarea class="govuk-textarea" id="comment" name="comment" rows="5"></textarea>
+                    </div>
+                    <button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-1"
+                    data-module="govuk-button">Add case note</button>
+                </form>
+                <div>
+                    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    <section>
+                        <p class="govuk-body govuk-!-margin-bottom-1">A case note you should see.</p>
+                        <p class="govuk-hint govuk-!-margin-bottom-6">11:00am on Tuesday 1 October 2024 by John.Smith</p>
+                        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    </section>
+                    <section>
+                        <p class="govuk-body govuk-!-margin-bottom-1">A case note you should see.</p>
+                        <p class="govuk-hint govuk-!-margin-bottom-6">11:00am on Tuesday 1 October 2024 by John.Smith</p>
+                        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    </section>
+                </div>
+            </div>
+        </details>
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default1">
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
@@ -2580,6 +2712,32 @@ exports[`appeal-details GET /:appealId should render an Issue a decision notific
             <dd             class="govuk-summary-list__value">Wiltshire Council</dd>
         </div>
         </dl>
+        <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> 2 case notes</span>
+            </summary>
+            <div class="govuk-details__text">
+                <form method="POST" novalidate="novalidate">
+                    <div class="govuk-form-group">
+                        <textarea class="govuk-textarea" id="comment" name="comment" rows="5"></textarea>
+                    </div>
+                    <button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-1"
+                    data-module="govuk-button">Add case note</button>
+                </form>
+                <div>
+                    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    <section>
+                        <p class="govuk-body govuk-!-margin-bottom-1">A case note you should see.</p>
+                        <p class="govuk-hint govuk-!-margin-bottom-6">11:00am on Tuesday 1 October 2024 by John.Smith</p>
+                        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    </section>
+                    <section>
+                        <p class="govuk-body govuk-!-margin-bottom-1">A case note you should see.</p>
+                        <p class="govuk-hint govuk-!-margin-bottom-6">11:00am on Tuesday 1 October 2024 by John.Smith</p>
+                        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    </section>
+                </div>
+            </div>
+        </details>
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default1">
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
@@ -2985,6 +3143,32 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
             <dd             class="govuk-summary-list__value">Wiltshire Council</dd>
         </div>
         </dl>
+        <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> 2 case notes</span>
+            </summary>
+            <div class="govuk-details__text">
+                <form method="POST" novalidate="novalidate">
+                    <div class="govuk-form-group">
+                        <textarea class="govuk-textarea" id="comment" name="comment" rows="5"></textarea>
+                    </div>
+                    <button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-1"
+                    data-module="govuk-button">Add case note</button>
+                </form>
+                <div>
+                    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    <section>
+                        <p class="govuk-body govuk-!-margin-bottom-1">A case note you should see.</p>
+                        <p class="govuk-hint govuk-!-margin-bottom-6">11:00am on Tuesday 1 October 2024 by John.Smith</p>
+                        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    </section>
+                    <section>
+                        <p class="govuk-body govuk-!-margin-bottom-1">A case note you should see.</p>
+                        <p class="govuk-hint govuk-!-margin-bottom-6">11:00am on Tuesday 1 October 2024 by John.Smith</p>
+                        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    </section>
+                </div>
+            </div>
+        </details>
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default1">
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
@@ -3402,6 +3586,32 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
             <dd             class="govuk-summary-list__value">Wiltshire Council</dd>
         </div>
         </dl>
+        <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> 2 case notes</span>
+            </summary>
+            <div class="govuk-details__text">
+                <form method="POST" novalidate="novalidate">
+                    <div class="govuk-form-group">
+                        <textarea class="govuk-textarea" id="comment" name="comment" rows="5"></textarea>
+                    </div>
+                    <button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-1"
+                    data-module="govuk-button">Add case note</button>
+                </form>
+                <div>
+                    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    <section>
+                        <p class="govuk-body govuk-!-margin-bottom-1">A case note you should see.</p>
+                        <p class="govuk-hint govuk-!-margin-bottom-6">11:00am on Tuesday 1 October 2024 by John.Smith</p>
+                        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    </section>
+                    <section>
+                        <p class="govuk-body govuk-!-margin-bottom-1">A case note you should see.</p>
+                        <p class="govuk-hint govuk-!-margin-bottom-6">11:00am on Tuesday 1 October 2024 by John.Smith</p>
+                        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    </section>
+                </div>
+            </div>
+        </details>
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default1">
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
@@ -3824,6 +4034,32 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
             <dd             class="govuk-summary-list__value">Wiltshire Council</dd>
         </div>
         </dl>
+        <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> 2 case notes</span>
+            </summary>
+            <div class="govuk-details__text">
+                <form method="POST" novalidate="novalidate">
+                    <div class="govuk-form-group">
+                        <textarea class="govuk-textarea" id="comment" name="comment" rows="5"></textarea>
+                    </div>
+                    <button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-1"
+                    data-module="govuk-button">Add case note</button>
+                </form>
+                <div>
+                    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    <section>
+                        <p class="govuk-body govuk-!-margin-bottom-1">A case note you should see.</p>
+                        <p class="govuk-hint govuk-!-margin-bottom-6">11:00am on Tuesday 1 October 2024 by John.Smith</p>
+                        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    </section>
+                    <section>
+                        <p class="govuk-body govuk-!-margin-bottom-1">A case note you should see.</p>
+                        <p class="govuk-hint govuk-!-margin-bottom-6">11:00am on Tuesday 1 October 2024 by John.Smith</p>
+                        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    </section>
+                </div>
+            </div>
+        </details>
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default1">
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
@@ -4246,6 +4482,32 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
             <dd             class="govuk-summary-list__value">Wiltshire Council</dd>
         </div>
         </dl>
+        <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> 2 case notes</span>
+            </summary>
+            <div class="govuk-details__text">
+                <form method="POST" novalidate="novalidate">
+                    <div class="govuk-form-group">
+                        <textarea class="govuk-textarea" id="comment" name="comment" rows="5"></textarea>
+                    </div>
+                    <button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-1"
+                    data-module="govuk-button">Add case note</button>
+                </form>
+                <div>
+                    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    <section>
+                        <p class="govuk-body govuk-!-margin-bottom-1">A case note you should see.</p>
+                        <p class="govuk-hint govuk-!-margin-bottom-6">11:00am on Tuesday 1 October 2024 by John.Smith</p>
+                        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    </section>
+                    <section>
+                        <p class="govuk-body govuk-!-margin-bottom-1">A case note you should see.</p>
+                        <p class="govuk-hint govuk-!-margin-bottom-6">11:00am on Tuesday 1 October 2024 by John.Smith</p>
+                        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    </section>
+                </div>
+            </div>
+        </details>
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default1">
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
@@ -4654,6 +4916,32 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                 <dd                 class="govuk-summary-list__value">Wiltshire Council</dd>
             </div>
         </dl>
+        <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> 2 case notes</span>
+            </summary>
+            <div class="govuk-details__text">
+                <form method="POST" novalidate="novalidate">
+                    <div class="govuk-form-group">
+                        <textarea class="govuk-textarea" id="comment" name="comment" rows="5"></textarea>
+                    </div>
+                    <button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-1"
+                    data-module="govuk-button">Add case note</button>
+                </form>
+                <div>
+                    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    <section>
+                        <p class="govuk-body govuk-!-margin-bottom-1">A case note you should see.</p>
+                        <p class="govuk-hint govuk-!-margin-bottom-6">11:00am on Tuesday 1 October 2024 by John.Smith</p>
+                        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    </section>
+                    <section>
+                        <p class="govuk-body govuk-!-margin-bottom-1">A case note you should see.</p>
+                        <p class="govuk-hint govuk-!-margin-bottom-6">11:00am on Tuesday 1 October 2024 by John.Smith</p>
+                        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    </section>
+                </div>
+            </div>
+        </details>
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default1">
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
@@ -5213,6 +5501,32 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                 <dd                 class="govuk-summary-list__value">Wiltshire Council</dd>
             </div>
         </dl>
+        <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> 2 case notes</span>
+            </summary>
+            <div class="govuk-details__text">
+                <form method="POST" novalidate="novalidate">
+                    <div class="govuk-form-group">
+                        <textarea class="govuk-textarea" id="comment" name="comment" rows="5"></textarea>
+                    </div>
+                    <button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-1"
+                    data-module="govuk-button">Add case note</button>
+                </form>
+                <div>
+                    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    <section>
+                        <p class="govuk-body govuk-!-margin-bottom-1">A case note you should see.</p>
+                        <p class="govuk-hint govuk-!-margin-bottom-6">11:00am on Tuesday 1 October 2024 by John.Smith</p>
+                        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    </section>
+                    <section>
+                        <p class="govuk-body govuk-!-margin-bottom-1">A case note you should see.</p>
+                        <p class="govuk-hint govuk-!-margin-bottom-6">11:00am on Tuesday 1 October 2024 by John.Smith</p>
+                        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    </section>
+                </div>
+            </div>
+        </details>
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default1">
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
@@ -5632,6 +5946,32 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                 <dd                 class="govuk-summary-list__value">Wiltshire Council</dd>
             </div>
         </dl>
+        <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> 2 case notes</span>
+            </summary>
+            <div class="govuk-details__text">
+                <form method="POST" novalidate="novalidate">
+                    <div class="govuk-form-group">
+                        <textarea class="govuk-textarea" id="comment" name="comment" rows="5"></textarea>
+                    </div>
+                    <button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-1"
+                    data-module="govuk-button">Add case note</button>
+                </form>
+                <div>
+                    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    <section>
+                        <p class="govuk-body govuk-!-margin-bottom-1">A case note you should see.</p>
+                        <p class="govuk-hint govuk-!-margin-bottom-6">11:00am on Tuesday 1 October 2024 by John.Smith</p>
+                        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    </section>
+                    <section>
+                        <p class="govuk-body govuk-!-margin-bottom-1">A case note you should see.</p>
+                        <p class="govuk-hint govuk-!-margin-bottom-6">11:00am on Tuesday 1 October 2024 by John.Smith</p>
+                        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    </section>
+                </div>
+            </div>
+        </details>
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default3">
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
@@ -6062,6 +6402,32 @@ exports[`appeal-details GET /:appealId should render the received appeal details
             <dd             class="govuk-summary-list__value">Wiltshire Council</dd>
         </div>
         </dl>
+        <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> 2 case notes</span>
+            </summary>
+            <div class="govuk-details__text">
+                <form method="POST" novalidate="novalidate">
+                    <div class="govuk-form-group">
+                        <textarea class="govuk-textarea" id="comment" name="comment" rows="5"></textarea>
+                    </div>
+                    <button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-1"
+                    data-module="govuk-button">Add case note</button>
+                </form>
+                <div>
+                    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    <section>
+                        <p class="govuk-body govuk-!-margin-bottom-1">A case note you should see.</p>
+                        <p class="govuk-hint govuk-!-margin-bottom-6">11:00am on Tuesday 1 October 2024 by John.Smith</p>
+                        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    </section>
+                    <section>
+                        <p class="govuk-body govuk-!-margin-bottom-1">A case note you should see.</p>
+                        <p class="govuk-hint govuk-!-margin-bottom-6">11:00am on Tuesday 1 October 2024 by John.Smith</p>
+                        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    </section>
+                </div>
+            </div>
+        </details>
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default1">
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
@@ -6465,6 +6831,32 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                 <dd                 class="govuk-summary-list__value">Wiltshire Council</dd>
             </div>
         </dl>
+        <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> 2 case notes</span>
+            </summary>
+            <div class="govuk-details__text">
+                <form method="POST" novalidate="novalidate">
+                    <div class="govuk-form-group">
+                        <textarea class="govuk-textarea" id="comment" name="comment" rows="5"></textarea>
+                    </div>
+                    <button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-1"
+                    data-module="govuk-button">Add case note</button>
+                </form>
+                <div>
+                    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    <section>
+                        <p class="govuk-body govuk-!-margin-bottom-1">A case note you should see.</p>
+                        <p class="govuk-hint govuk-!-margin-bottom-6">11:00am on Tuesday 1 October 2024 by John.Smith</p>
+                        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    </section>
+                    <section>
+                        <p class="govuk-body govuk-!-margin-bottom-1">A case note you should see.</p>
+                        <p class="govuk-hint govuk-!-margin-bottom-6">11:00am on Tuesday 1 October 2024 by John.Smith</p>
+                        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    </section>
+                </div>
+            </div>
+        </details>
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default2">
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
@@ -6890,6 +7282,32 @@ exports[`appeal-details GET /:appealId should render the received appeal details
             <dd             class="govuk-summary-list__value">Wiltshire Council</dd>
         </div>
         </dl>
+        <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> 2 case notes</span>
+            </summary>
+            <div class="govuk-details__text">
+                <form method="POST" novalidate="novalidate">
+                    <div class="govuk-form-group">
+                        <textarea class="govuk-textarea" id="comment" name="comment" rows="5"></textarea>
+                    </div>
+                    <button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-1"
+                    data-module="govuk-button">Add case note</button>
+                </form>
+                <div>
+                    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    <section>
+                        <p class="govuk-body govuk-!-margin-bottom-1">A case note you should see.</p>
+                        <p class="govuk-hint govuk-!-margin-bottom-6">11:00am on Tuesday 1 October 2024 by John.Smith</p>
+                        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    </section>
+                    <section>
+                        <p class="govuk-body govuk-!-margin-bottom-1">A case note you should see.</p>
+                        <p class="govuk-hint govuk-!-margin-bottom-6">11:00am on Tuesday 1 October 2024 by John.Smith</p>
+                        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    </section>
+                </div>
+            </div>
+        </details>
         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default1">
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
@@ -7416,6 +7834,32 @@ exports[`appeal-details should not render a back button 1`] = `
                         <dd                         class="govuk-summary-list__value">Wiltshire Council</dd>
                     </div>
                     </dl>
+                    <details class="govuk-details" data-module="govuk-details">
+                        <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> 2 case notes</span>
+                        </summary>
+                        <div class="govuk-details__text">
+                            <form method="POST" novalidate="novalidate">
+                                <div class="govuk-form-group">
+                                    <textarea class="govuk-textarea" id="comment" name="comment" rows="5"></textarea>
+                                </div>
+                                <button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-1"
+                                data-module="govuk-button">Add case note</button>
+                            </form>
+                            <div>
+                                <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                                <section>
+                                    <p class="govuk-body govuk-!-margin-bottom-1">A case note you should see.</p>
+                                    <p class="govuk-hint govuk-!-margin-bottom-6">11:00am on Tuesday 1 October 2024 by John.Smith</p>
+                                    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                                </section>
+                                <section>
+                                    <p class="govuk-body govuk-!-margin-bottom-1">A case note you should see.</p>
+                                    <p class="govuk-hint govuk-!-margin-bottom-6">11:00am on Tuesday 1 October 2024 by John.Smith</p>
+                                    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                                </section>
+                            </div>
+                        </div>
+                    </details>
                     <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default2">
                         <div class="govuk-accordion__section">
                             <div class="govuk-accordion__section-header">

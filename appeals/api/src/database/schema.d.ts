@@ -19,7 +19,6 @@ export interface Appeal extends schema.Appeal {
 	lpaQuestionnaire?: LPAQuestionnaire | null;
 	appealTimetable?: AppealTimetable | null;
 	appellantCase?: AppellantCase | null;
-	lpaQuestionnaire?: LPAQuestionnaire | null;
 	caseOfficer?: User | null;
 	inspector?: User | null;
 	siteVisit?: SiteVisit | null;
@@ -29,6 +28,9 @@ export interface Appeal extends schema.Appeal {
 	appellantProcedurePreference?: string | null;
 	appellantProcedurePreferenceDetails?: string | null;
 	appellantProcedurePreferenceDuration?: number | null;
+}
+export interface CaseNote extends schema.CaseNote {
+	user: User;
 }
 export interface AppealRelationship extends schema.AppealRelationship {}
 export interface AppealType extends schema.AppealType {}

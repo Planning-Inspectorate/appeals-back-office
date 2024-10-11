@@ -1,4 +1,4 @@
-import { formatInTimeZone, zonedTimeToUtc } from 'date-fns-tz';
+import { formatInTimeZone, utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz';
 import enGB from 'date-fns/locale/en-GB/index.js';
 import { isValid, isBefore, isAfter } from 'date-fns';
 import { padNumberWithZero } from '#lib/string-utilities.js';
@@ -209,3 +209,15 @@ export function dayMonthYearHourMinuteToDisplayDate(dayMonthYearHourMinute) {
 
 	return dateISOStringToDisplayDate(dayMonthYearHourMinuteToISOString(dayMonthYearHourMinute));
 }
+
+/**
+ * @param {string | null | undefined} isoDate
+ * @returns {string} Day of the week
+ */
+export const getDayFromISODate = (isoDate) => {
+	if (typeof isoDate === 'undefined' || isoDate === null) {
+		return '';
+	}
+	const dateInZone = utcToZonedTime(isoDate, DEFAULT_TIMEZONE);
+	return new Intl.DateTimeFormat('en-GB', { weekday: 'long' }).format(dateInZone);
+};

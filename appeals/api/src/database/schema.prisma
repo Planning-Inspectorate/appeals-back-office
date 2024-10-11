@@ -57,6 +57,7 @@ model Appeal {
   parentAppeals         AppealRelationship[] @relation("childAppeal")
   childAppeals          AppealRelationship[] @relation("parentAppeal")
   representations       Representation[]
+  caseNotes             CaseNote[]
 }
 
 /// AppealRelationship model
@@ -195,6 +196,7 @@ model User {
   caseOfficer   Appeal[]     @relation("caseOfficer")
   inspector     Appeal[]     @relation("inspector")
   auditTrail    AuditTrail[]
+  caseNotes     CaseNote[]
 }
 
 /// Address model
@@ -689,4 +691,17 @@ model RepresentationAttachment {
   representationId Int
 
   @@id([documentGuid, version])
+}
+
+/// Comment model
+/// Stores internal user comment (for internal use only)
+model CaseNote {
+  id        Int      @id @default(autoincrement())
+  case      Appeal   @relation(fields: [caseId], references: [id])
+  caseId    Int
+  comment   String
+  createdAt DateTime @default(now())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  archived  Boolean  @default(false)
 }

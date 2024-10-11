@@ -93,7 +93,7 @@ export interface ValidateDate {
 
 export interface AppellantCaseData {
 	casedata?: {
-		/** @example "b535a2fc-b6b6-4a15-a05f-ac93a89ab950" */
+		/** @example "c38ef972-f6d1-44b6-933b-41437b619062" */
 		submissionId?: string;
 		/** @example true */
 		advertisedAppeal?: boolean;

@@ -1,4 +1,5 @@
 import { appealDetailsPage } from './appeal-details.mapper.js';
+import { getAppealCaseNotes } from './case-notes/case-notes.service.js';
 import { getInterestedPartyComments } from './interested-party-comments/interested-party-comments.service.js';
 import { APPEAL_REPRESENTATION_STATUS, APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 
@@ -17,14 +18,19 @@ export const viewAppealDetails = async (request, response) => {
 			if (appealDetails.appealType === APPEAL_TYPE.W) {
 				unreviewedIPComments = await getInterestedPartyComments(
 					request.apiClient,
-					appealDetails.appealId,
+					appealDetails.appealId.toString(),
 					APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
 				);
 			}
+			const appealCaseNotes = await getAppealCaseNotes(
+				request.apiClient,
+				appealDetails.appealId.toString()
+			);
 
 			const currentUrl = request.originalUrl;
 			const mappedPageContent = await appealDetailsPage(
 				appealDetails,
+				appealCaseNotes,
 				currentUrl,
 				session,
 				request,
