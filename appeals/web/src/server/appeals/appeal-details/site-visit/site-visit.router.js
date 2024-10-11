@@ -11,7 +11,10 @@ router
 	.route('/schedule-visit')
 	.get(asyncHandler(controller.getScheduleSiteVisit))
 	.post(
-		assertGroupAccess(config.referenceData.appeals.caseOfficerGroupId),
+		assertGroupAccess(
+			config.referenceData.appeals.caseOfficerGroupId,
+			config.referenceData.appeals.inspectorGroupId
+		),
 		validators.validateSiteVisitType,
 		validators.validateVisitDateFields,
 		validators.validateVisitDateValid,
@@ -26,7 +29,10 @@ router
 	.route('/manage-visit')
 	.get(asyncHandler(controller.getManageSiteVisit))
 	.post(
-		assertGroupAccess(config.referenceData.appeals.caseOfficerGroupId),
+		assertGroupAccess(
+			config.referenceData.appeals.caseOfficerGroupId,
+			config.referenceData.appeals.inspectorGroupId
+		),
 		validators.validateSiteVisitType,
 		validators.validateVisitDateFields,
 		validators.validateVisitDateValid,
@@ -45,7 +51,10 @@ router
 	.route('/set-visit-type')
 	.get(asyncHandler(controller.getSetVisitType))
 	.post(
-		assertGroupAccess(config.referenceData.appeals.caseOfficerGroupId),
+		assertGroupAccess(
+			config.referenceData.appeals.caseOfficerGroupId,
+			config.referenceData.appeals.inspectorGroupId
+		),
 		validators.validateSiteVisitType,
 		asyncHandler(controller.postSetVisitType)
 	);

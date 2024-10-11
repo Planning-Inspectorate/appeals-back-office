@@ -47,7 +47,10 @@ router
 		documentsValidators.validateDocumentDetailsReceivedDateValid,
 		documentsValidators.validateDocumentDetailsReceivedDateIsNotFutureDate,
 		documentsValidators.validateDocumentDetailsRedactionStatuses,
-		assertGroupAccess(config.referenceData.appeals.caseOfficerGroupId),
+		assertGroupAccess(
+			config.referenceData.appeals.caseOfficerGroupId,
+			config.referenceData.appeals.inspectorGroupId
+		),
 		asyncHandler(controller.postAddDocumentDetails)
 	);
 
@@ -128,7 +131,10 @@ router
 		documentsValidators.validateDocumentDetailsReceivedDateValid,
 		documentsValidators.validateDocumentDetailsReceivedDateIsNotFutureDate,
 		documentsValidators.validateDocumentDetailsRedactionStatuses,
-		assertGroupAccess(config.referenceData.appeals.caseOfficerGroupId),
+		assertGroupAccess(
+			config.referenceData.appeals.caseOfficerGroupId,
+			config.referenceData.appeals.inspectorGroupId
+		),
 		asyncHandler(controller.postChangeDocumentVersionDetails)
 	);
 

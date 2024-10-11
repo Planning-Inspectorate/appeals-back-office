@@ -209,7 +209,10 @@ export function personalListPage(
 	}
 
 	if (
-		!session.account.idTokenClaims.groups.includes(config.referenceData.appeals.caseOfficerGroupId)
+		!session.account.idTokenClaims.groups.includes(
+			config.referenceData.appeals.caseOfficerGroupId,
+			config.referenceData.appeals.inspectorGroupId
+		)
 	) {
 		pageContent.pageComponents?.forEach((component) => {
 			if (

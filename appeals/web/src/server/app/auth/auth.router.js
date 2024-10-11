@@ -29,7 +29,7 @@ const allowedGroups = config.referenceData.appeals;
 router
 	.route('/auth/get-access-token')
 	.get(
-		assertGroupAccess(allowedGroups.caseOfficerGroupId),
+		assertGroupAccess(allowedGroups.caseOfficerGroupId, allowedGroups.inspectorGroupId),
 		addApiClientToRequest,
 		asyncHandler(getAccessToken)
 	);
