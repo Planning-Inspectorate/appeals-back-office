@@ -45,7 +45,7 @@ router
 		),
 		asyncHandler(controller.viewAppealDetails)
 	)
-	.post(validateCaseNoteEntry, asyncHandler(postCaseNote));
+	.post(validateAppeal, validateCaseNoteEntry, asyncHandler(postCaseNote));
 
 router.use(
 	'/:appealId/start-case',

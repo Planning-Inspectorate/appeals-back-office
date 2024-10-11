@@ -11,6 +11,7 @@ import { APPEAL_REPRESENTATION_STATUS, APPEAL_TYPE } from '@pins/appeals/constan
 export const viewAppealDetails = async (request, response) => {
 	const appealDetails = request.currentAppeal;
 	const session = request.session;
+	const { errors } = request;
 	try {
 		if (appealDetails) {
 			let unreviewedIPComments;
@@ -38,7 +39,8 @@ export const viewAppealDetails = async (request, response) => {
 			);
 
 			return response.status(200).render('patterns/display-page.pattern.njk', {
-				pageContent: mappedPageContent
+				pageContent: mappedPageContent,
+				errors
 			});
 		} else {
 			return response.status(404).render('app/404.njk');

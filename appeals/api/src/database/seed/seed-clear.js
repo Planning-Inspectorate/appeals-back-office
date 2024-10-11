@@ -13,6 +13,7 @@ export async function deleteAllRecords(databaseConnector) {
 	const deleteAudits = databaseConnector.auditTrail.deleteMany();
 	const deleteFolders = databaseConnector.folder.deleteMany();
 	const deleteAppeals = databaseConnector.appeal.deleteMany();
+	const deleteCaseNotes = databaseConnector.caseNote.deleteMany();
 	const deleteUsers = databaseConnector.user.deleteMany();
 	const deleteAddresses = databaseConnector.address.deleteMany();
 	const deleteAppellantCase = databaseConnector.appellantCase.deleteMany();
@@ -83,6 +84,7 @@ export async function deleteAllRecords(databaseConnector) {
 		deleteRepsAttachments,
 		deleteReps,
 		deleteAudits,
+		deleteCaseNotes,
 		deleteUsers,
 		deleteAppealAllocationLevels,
 		deleteAppealSpecialisms,
