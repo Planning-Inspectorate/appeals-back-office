@@ -30,29 +30,6 @@ router.get(
 	asyncHandler(controller.getAllCaseNotesByAppealId)
 );
 
-router.get(
-	'/:appealId/case-notes/:caseNoteId',
-	/*
-	#swagger.tags = ['Case notes']
-	#swagger.path = '/appeals/{appealId}/case-notes/{caseNoteId}'
-	#swagger.description = Returns a case note for an appeal by id
-	#swagger.parameters['azureAdUserId'] = {
-		in: 'header',
-		required: true,
-		example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
-	}
-	#swagger.responses[200] = {
-		description: 'Returns a comment by caseNoteId',
-		schema: { $ref: '#/components/schemas/GetCaseNoteResponse' }
-	}
-	#swagger.responses[400] = {}
-	#swagger.responses[404] = {}
- */
-	getAppealValidator,
-	checkAppealExistsByIdAndAddToRequest,
-	asyncHandler(controller.getCaseNoteByCaseNoteId)
-);
-
 router.post(
 	'/:appealId/case-notes',
 	/*
