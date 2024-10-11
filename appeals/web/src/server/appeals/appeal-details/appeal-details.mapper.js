@@ -15,13 +15,14 @@ import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { isFeatureActive } from '#common/feature-flags.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import config from '#environment/config.js';
 import {
 	generateIssueDecisionUrl,
 	generateStartTimetableUrl
 } from './issue-decision/issue-decision.mapper.js';
 import { dateISOStringToDisplayDate, getTodaysISOString } from '#lib/dates.js';
 import { caseNotesWithMappedUsers } from '#appeals/appeal-details/case-notes/case-notes.formatter.js';
+import { userHasPermission } from '#lib/mappers/permissions.mapper.js';
+import { permissionNames } from '#environment/permissions.js';
 
 export const pageHeading = 'Case details';
 
@@ -584,9 +585,7 @@ function generateAccordion(appealDetails, mappedData, session, ipCommentsAwaitin
 		ipCommentsAwaitingReview
 	);
 
-	if (
-		!session.account.idTokenClaims.groups.includes(config.referenceData.appeals.caseOfficerGroupId)
-	) {
+	if (!userHasPermission(permissionNames.viewCaseDetails, session)) {
 		removeAccordionComponentsActions(accordionComponents);
 	}
 
