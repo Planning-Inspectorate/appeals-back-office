@@ -118,10 +118,13 @@ export const ipAddressPage = (appealDetails, address, errors) => ({
 /**
  * @param {Appeal} appealDetails
  * @param {import('@pins/express').ValidationErrors | undefined} errors
+ * @param {boolean} providedAddress
  * @returns {import('#appeals/appeal-documents/appeal-documents.types.js').DocumentUploadPageParameters}
  * */
-export const uploadPage = (appealDetails, errors) => ({
-	backButtonUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/ip-address`,
+export const uploadPage = (appealDetails, errors, providedAddress) => ({
+	backButtonUrl: providedAddress
+		? `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/ip-address`
+		: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/check-address`,
 	appealId: String(appealDetails.appealId),
 	appealReference: appealDetails.appealReference,
 	appealShortReference: appealShortReference(appealDetails.appealReference),
