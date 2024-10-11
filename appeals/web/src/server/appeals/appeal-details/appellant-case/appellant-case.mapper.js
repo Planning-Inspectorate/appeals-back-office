@@ -170,7 +170,10 @@ export async function appellantCasePage(appellantCaseData, appealDetails, curren
 	};
 
 	if (
-		!session.account.idTokenClaims.groups.includes(config.referenceData.appeals.caseOfficerGroupId)
+		!session.account.idTokenClaims.groups.includes(
+			config.referenceData.appeals.caseOfficerGroupId,
+			config.referenceData.appeals.inspectorGroupId
+		)
 	) {
 		pageContent.pageComponents?.forEach((component) => {
 			if ('rows' in component.parameters && Array.isArray(component.parameters.rows)) {
@@ -397,7 +400,10 @@ export function checkAndConfirmPage(
 	};
 
 	if (
-		!session.account.idTokenClaims.groups.includes(config.referenceData.appeals.caseOfficerGroupId)
+		!session.account.idTokenClaims.groups.includes(
+			config.referenceData.appeals.caseOfficerGroupId,
+			config.referenceData.appeals.inspectorGroupId
+		)
 	) {
 		pageContent.pageComponents?.forEach((component) => {
 			if ('rows' in component.parameters && Array.isArray(component.parameters.rows)) {

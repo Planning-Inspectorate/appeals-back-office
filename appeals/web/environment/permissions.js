@@ -26,9 +26,9 @@ export const calculatePermissions = (currentUserGroups) => {
 		viewCaseList: !isPads,
 		viewCaseDetails: !isPads,
 		viewAssignedCaseDetails: isPads,
-		updateStage: isCaseOfficer,
-		updateCase: isCaseOfficer,
-		setStageOutcome: isCaseOfficer,
+		updateStage: isCaseOfficer || isInspector,
+		updateCase: isCaseOfficer || isInspector,
+		setStageOutcome: isCaseOfficer || isInspector,
 		setCaseOutcome: isCaseOfficer || isInspector,
 		setEvents: isCaseOfficer || isInspector
 	};
