@@ -58,8 +58,9 @@ export async function renderIpAddress(request, response) {
  */
 export async function renderUpload(request, response) {
 	const { currentAppeal, errors } = request;
+	const providedAddress = request.session.addIpComment?.addressProvided === 'yes';
 
-	const pageContent = uploadPage(currentAppeal, errors);
+	const pageContent = uploadPage(currentAppeal, errors, providedAddress);
 
 	return response
 		.status(request.errors ? 400 : 200)
