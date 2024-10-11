@@ -33,6 +33,7 @@ import { serviceUserRoutes } from './service-user/service-user.routes.js';
 import { withdrawalRoutes } from './withdrawal/withdrawal.routes.js';
 import { representationRoutes } from './representations/representations.routes.js';
 import { listedBuildingRoutes } from './listed-buildings/listed-buildings.routes.js';
+import { caseNotesRoutes } from './case-notes/case-notes.routes.js';
 
 const router = createRouter();
 router.use(integrationsRoutes);
@@ -71,5 +72,6 @@ router.use(serviceUserRoutes);
 router.use(withdrawalRoutes);
 router.use(representationRoutes);
 router.use(listedBuildingRoutes);
+router.use(caseNotesRoutes);
 
 export { router as appealsRoutes };
