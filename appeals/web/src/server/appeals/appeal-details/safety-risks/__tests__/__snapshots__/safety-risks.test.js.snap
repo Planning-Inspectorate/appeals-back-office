@@ -20,9 +20,9 @@ exports[`safety-risks GET /change/:source should render changeSafetyRisksAccess 
                         <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
                         id="conditional-safetyRisksRadio">
                             <div class="govuk-form-group">
-                                <label class="govuk-label" for="safety-risk-details">Health and safety risks (LPA details)</label>
+                                <label class="govuk-label" for="safetyRisksDetails">Health and safety risks (LPA details)</label>
                                 <textarea class="govuk-textarea"
-                                id="safety-risk-details" name="safetyRisksDetails" rows="3"></textarea>
+                                id="safetyRisksDetails" name="safetyRisksDetails" rows="3"></textarea>
                             </div>
                         </div>
                         <div class="govuk-radios__item">
@@ -60,9 +60,9 @@ exports[`safety-risks GET /change/:source should render changeSafetyRisksAccess 
                         <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
                         id="conditional-safetyRisksRadio">
                             <div class="govuk-form-group">
-                                <label class="govuk-label" for="safety-risk-details">Health and safety risks (LPA details)</label>
+                                <label class="govuk-label" for="safetyRisksDetails">Health and safety risks (LPA details)</label>
                                 <textarea class="govuk-textarea"
-                                id="safety-risk-details" name="safetyRisksDetails" rows="3"></textarea>
+                                id="safetyRisksDetails" name="safetyRisksDetails" rows="3"></textarea>
                             </div>
                         </div>
                         <div class="govuk-radios__item">
@@ -99,9 +99,9 @@ exports[`safety-risks GET /change/:source should render changeSafetyRisksAccess 
                         </div>
                         <div class="govuk-radios__conditional" id="conditional-safetyRisksRadio">
                             <div class="govuk-form-group">
-                                <label class="govuk-label" for="safety-risk-details">Health and safety risks (appellant details)</label>
+                                <label class="govuk-label" for="safetyRisksDetails">Health and safety risks (appellant details)</label>
                                 <textarea class="govuk-textarea"
-                                id="safety-risk-details" name="safetyRisksDetails" rows="3">Dogs on site</textarea>
+                                id="safetyRisksDetails" name="safetyRisksDetails" rows="3">Dogs on site</textarea>
                             </div>
                         </div>
                         <div class="govuk-radios__item">
@@ -138,9 +138,9 @@ exports[`safety-risks GET /change/:source should render changeSafetyRisksAccess 
                         </div>
                         <div class="govuk-radios__conditional" id="conditional-safetyRisksRadio">
                             <div class="govuk-form-group">
-                                <label class="govuk-label" for="safety-risk-details">Health and safety risks (appellant details)</label>
+                                <label class="govuk-label" for="safetyRisksDetails">Health and safety risks (appellant details)</label>
                                 <textarea class="govuk-textarea"
-                                id="safety-risk-details" name="safetyRisksDetails" rows="3">Dogs on site</textarea>
+                                id="safetyRisksDetails" name="safetyRisksDetails" rows="3">Dogs on site</textarea>
                             </div>
                         </div>
                         <div class="govuk-radios__item">
@@ -187,10 +187,12 @@ exports[`safety-risks POST /change/:source should re-render changeSafetyRisksAcc
                             <label class="govuk-label govuk-radios__label" for="safetyRisksRadio">Yes</label>
                         </div>
                         <div class="govuk-radios__conditional" id="conditional-safetyRisksRadio">
-                            <div class="govuk-form-group">
-                                <label class="govuk-label" for="safety-risk-details">Health and safety risks (LPA details)</label>
-                                <textarea class="govuk-textarea"
-                                id="safety-risk-details" name="safetyRisksDetails" rows="3"></textarea>
+                            <div class="govuk-form-group govuk-form-group--error">
+                                <label class="govuk-label" for="safetyRisksDetails">Health and safety risks (LPA details)</label>
+                                <p class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Provide details of health
+                                    and safety risks</p>
+                                <textarea class="govuk-textarea govuk-textarea--error"
+                                id="safetyRisksDetails" name="safetyRisksDetails" rows="3"></textarea>
                             </div>
                         </div>
                         <div class="govuk-radios__item">
