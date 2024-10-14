@@ -24,7 +24,8 @@ export function yesNoInput({ name, id, value, legendText, yesConditional }) {
 			yesConditional.name,
 			yesConditional.hint,
 			yesConditional.details,
-			yesConditional.type
+			yesConditional.type,
+			yesConditional.error
 		);
 	}
 

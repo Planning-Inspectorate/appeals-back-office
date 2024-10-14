@@ -1,5 +1,6 @@
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
+ * @typedef {import('@pins/express').ValidationErrors} ValidationErrors
  */
 
 import { appealShortReference } from '#lib/appeals-formatter.js';
@@ -10,9 +11,16 @@ import { yesNoInput } from '#lib/mappers/components/radio.js';
  * @param {{radio: string, details: string}} storedSessionData
  * @param {string} origin
  * @param {string} source
+ * @param {ValidationErrors|undefined} errors
  * @returns {PageContent}
  */
-export const changeInspectorAccessPage = (appealData, storedSessionData, origin, source) => {
+export const changeInspectorAccessPage = (
+	appealData,
+	storedSessionData,
+	origin,
+	source,
+	errors = undefined
+) => {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
 	const sourceKey = source === 'lpa' ? 'lpaQuestionnaire' : 'appellantCase';
@@ -34,8 +42,9 @@ export const changeInspectorAccessPage = (appealData, storedSessionData, origin,
 				name: 'inspectorAccessRadio',
 				value: currentRadioValue,
 				yesConditional: {
-					id: 'inspector-access-details',
+					id: 'inspectorAccessDetails',
 					name: 'inspectorAccessDetails',
+					error: errors?.inspectorAccessDetails,
 					hint: `Inspector access (${formattedSource} details)`,
 					details: currentDetailsValue
 				}

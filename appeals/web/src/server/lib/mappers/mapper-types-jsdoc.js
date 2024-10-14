@@ -1,4 +1,8 @@
 /**
+ * @typedef {import('@pins/express').ValidationErrors} ValidationErrors
+ */
+
+/**
  * @typedef Instructions
  * A series of instructions pages where you display data, input data, and the API associated with that data
  * @type {object}
@@ -316,6 +320,7 @@
  * @property {string} [submitButtonText]
  * @property {ButtonProperties} [submitButtonProperties]
  * @property {string} [skipButtonUrl]
+ * @property {ValidationErrors} [ValidationError]
  * @property {PageComponent[]} [pageComponents]
  */
 
