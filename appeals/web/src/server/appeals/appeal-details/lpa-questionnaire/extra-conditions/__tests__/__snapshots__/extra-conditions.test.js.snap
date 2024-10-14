@@ -19,8 +19,8 @@ exports[`extra-conditions GET /change should render the change extra conditions 
                         </div>
                         <div class="govuk-radios__conditional" id="conditional-extraConditionsRadio">
                             <div class="govuk-form-group">
-                                <label class="govuk-label" for="extra-conditions-details">Extra conditions details</label>
-                                <textarea class="govuk-textarea" id="extra-conditions-details"
+                                <label class="govuk-label" for="extraConditionsDetails">Extra conditions details</label>
+                                <textarea class="govuk-textarea" id="extraConditionsDetails"
                                 name="extraConditionsDetails" rows="3">Some extra conditions</textarea>
                             </div>
                         </div>
@@ -69,8 +69,8 @@ exports[`extra-conditions POST /change should re-render the change extra conditi
                         </div>
                         <div class="govuk-radios__conditional" id="conditional-extraConditionsRadio">
                             <div class="govuk-form-group">
-                                <label class="govuk-label" for="extra-conditions-details">Extra conditions details</label>
-                                <textarea class="govuk-textarea" id="extra-conditions-details"
+                                <label class="govuk-label" for="extraConditionsDetails">Extra conditions details</label>
+                                <textarea class="govuk-textarea" id="extraConditionsDetails"
                                 name="extraConditionsDetails" rows="3"></textarea>
                             </div>
                         </div>

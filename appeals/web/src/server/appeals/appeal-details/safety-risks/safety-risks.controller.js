@@ -30,7 +30,8 @@ const renderChangeSafetyRisks = async (request, response) => {
 			appealData,
 			request.session.safetyRisks,
 			backLinkUrl,
-			source
+			source,
+			errors
 		);
 
 		delete request.session.safetyRisks;

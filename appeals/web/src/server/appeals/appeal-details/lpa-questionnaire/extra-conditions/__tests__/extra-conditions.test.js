@@ -38,7 +38,7 @@ describe('extra-conditions', () => {
 				'name="extraConditionsRadio" type="radio" value="yes"'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<textarea class="govuk-textarea" id="extra-conditions-details" name="extraConditionsDetails" rows="3">'
+				'<textarea class="govuk-textarea" id="extraConditionsDetails" name="extraConditionsDetails" rows="3">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="extraConditionsRadio" type="radio" value="no"'

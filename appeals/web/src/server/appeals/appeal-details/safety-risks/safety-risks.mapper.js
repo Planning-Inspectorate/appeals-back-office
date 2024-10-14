@@ -1,18 +1,27 @@
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
+ * @typedef {import('@pins/express').ValidationErrors} ValidationErrors
  */
 
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { yesNoInput } from '#lib/mappers/components/radio.js';
+import { errorMessage } from '#lib/error-handlers/change-screen-error-handlers.js';
 
 /**
  * @param {Appeal} appealData
  * @param {{radio: string, details: string}} storedSessionData
  * @param {string} backLinkUrl
  * @param {string} source
+ * @param {ValidationErrors|undefined} errors
  * @returns {PageContent}
  */
-export const changeSafetyRisksPage = (appealData, storedSessionData, backLinkUrl, source) => {
+export const changeSafetyRisksPage = (
+	appealData,
+	storedSessionData,
+	backLinkUrl,
+	source,
+	errors = undefined
+) => {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 	const sourceKey = source === 'lpa' ? 'lpaQuestionnaire' : 'appellantCase';
 	const formattedSource = source === 'lpa' ? 'LPA' : source;
@@ -33,10 +42,11 @@ export const changeSafetyRisksPage = (appealData, storedSessionData, backLinkUrl
 				name: 'safetyRisksRadio',
 				value: currentRadioValue,
 				yesConditional: {
-					id: 'safety-risk-details',
+					id: 'safetyRisksDetails',
 					name: 'safetyRisksDetails',
 					hint: `Health and safety risks (${formattedSource} details)`,
-					details: currentDetailsValue
+					details: currentDetailsValue,
+					errorMessage: errorMessage('safetyRisksDetails', errors)
 				}
 			})
 		]

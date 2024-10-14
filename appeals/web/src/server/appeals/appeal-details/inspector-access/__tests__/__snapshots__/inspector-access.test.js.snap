@@ -20,9 +20,9 @@ exports[`inspector-access GET /change/:source should render changeInspectorAcces
                         <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
                         id="conditional-inspectorAccessRadio">
                             <div class="govuk-form-group">
-                                <label class="govuk-label" for="inspector-access-details">Inspector access (appellant details)</label>
+                                <label class="govuk-label" for="inspectorAccessDetails">Inspector access (appellant details)</label>
                                 <textarea class="govuk-textarea"
-                                id="inspector-access-details" name="inspectorAccessDetails" rows="3"></textarea>
+                                id="inspectorAccessDetails" name="inspectorAccessDetails" rows="3"></textarea>
                             </div>
                         </div>
                         <div class="govuk-radios__item">
@@ -60,9 +60,9 @@ exports[`inspector-access GET /change/:source should render changeInspectorAcces
                         <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
                         id="conditional-inspectorAccessRadio">
                             <div class="govuk-form-group">
-                                <label class="govuk-label" for="inspector-access-details">Inspector access (appellant details)</label>
+                                <label class="govuk-label" for="inspectorAccessDetails">Inspector access (appellant details)</label>
                                 <textarea class="govuk-textarea"
-                                id="inspector-access-details" name="inspectorAccessDetails" rows="3"></textarea>
+                                id="inspectorAccessDetails" name="inspectorAccessDetails" rows="3"></textarea>
                             </div>
                         </div>
                         <div class="govuk-radios__item">
@@ -100,9 +100,9 @@ exports[`inspector-access GET /change/:source should render changeInspectorAcces
                         <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
                         id="conditional-inspectorAccessRadio">
                             <div class="govuk-form-group">
-                                <label class="govuk-label" for="inspector-access-details">Inspector access (LPA details)</label>
+                                <label class="govuk-label" for="inspectorAccessDetails">Inspector access (LPA details)</label>
                                 <textarea class="govuk-textarea"
-                                id="inspector-access-details" name="inspectorAccessDetails" rows="3"></textarea>
+                                id="inspectorAccessDetails" name="inspectorAccessDetails" rows="3"></textarea>
                             </div>
                         </div>
                         <div class="govuk-radios__item">
@@ -140,9 +140,9 @@ exports[`inspector-access GET /change/:source should render changeInspectorAcces
                         <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
                         id="conditional-inspectorAccessRadio">
                             <div class="govuk-form-group">
-                                <label class="govuk-label" for="inspector-access-details">Inspector access (LPA details)</label>
+                                <label class="govuk-label" for="inspectorAccessDetails">Inspector access (LPA details)</label>
                                 <textarea class="govuk-textarea"
-                                id="inspector-access-details" name="inspectorAccessDetails" rows="3"></textarea>
+                                id="inspectorAccessDetails" name="inspectorAccessDetails" rows="3"></textarea>
                             </div>
                         </div>
                         <div class="govuk-radios__item">
@@ -189,10 +189,12 @@ exports[`inspector-access POST /change/:source should re-render changeInspectorA
                             <label class="govuk-label govuk-radios__label" for="inspectorAccessRadio">Yes</label>
                         </div>
                         <div class="govuk-radios__conditional" id="conditional-inspectorAccessRadio">
-                            <div class="govuk-form-group">
-                                <label class="govuk-label" for="inspector-access-details">Inspector access (LPA details)</label>
-                                <textarea class="govuk-textarea"
-                                id="inspector-access-details" name="inspectorAccessDetails" rows="3"></textarea>
+                            <div class="govuk-form-group govuk-form-group--error">
+                                <label class="govuk-label" for="inspectorAccessDetails">Inspector access (LPA details)</label>
+                                <p class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Provide details when
+                                    inspector access is required</p>
+                                <textarea class="govuk-textarea govuk-textarea--error"
+                                id="inspectorAccessDetails" name="inspectorAccessDetails" rows="3"></textarea>
                             </div>
                         </div>
                         <div class="govuk-radios__item">

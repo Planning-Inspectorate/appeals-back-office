@@ -34,7 +34,8 @@ export function yesNoInput({
 			yesConditional.name,
 			yesConditional.hint,
 			yesConditional.details,
-			yesConditional.type
+			yesConditional.type,
+			yesConditional.errorMessage
 		);
 	}
 
