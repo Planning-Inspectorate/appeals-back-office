@@ -22,7 +22,7 @@ Once the command executes, it will create and download `node_modules` in the roo
 The main requirement to have the applications up and running is the installation of a SQL server Docker container.
 
 ```shell
-docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=<YourStrong@Passw0rd>" -p 1433:1433 --name pins_sql_server --hostname pins_sql_server -d mcr.microsoft.com/azure-sql-edge
+docker run --cap-add SYS_PTRACE -e 'ACCEPT_EULA=1' -e 'MSSQL_SA_PASSWORD=<YourStrong@Passw0rd>' -p 1433:1433 --name pins_sql_server -d mcr.microsoft.com/azure-sql-edge
 ```
 
 The above command will download and install the latest Azure SQL Edge image, which will result in a new docker container named `pins_sql_server` and runnning on the default port.
