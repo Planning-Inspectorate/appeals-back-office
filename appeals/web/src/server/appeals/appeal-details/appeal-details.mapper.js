@@ -15,7 +15,7 @@ import { isDefined } from '#lib/ts-utilities.js';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_STATUS, APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
 import logger from '../../lib/logger.js';
-import { generateFpaAccordion, generateHasAccordion } from './accordions/index.js';
+import { generateS78Accordion, generateHasAccordion } from './accordions/index.js';
 
 export const pageHeading = 'Case details';
 
@@ -260,7 +260,7 @@ function generateAccordionItems(appealDetails, mappedData, session, ipCommentsAw
 			if (!isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78)) {
 				throw new Error('Feature flag inactive for S78');
 			}
-			return generateFpaAccordion(appealDetails, mappedData, session, ipCommentsAwaitingReview);
+			return generateS78Accordion(appealDetails, mappedData, session, ipCommentsAwaitingReview);
 		default:
 			throw new Error('Invalid appealType, unable to generate display page');
 	}
