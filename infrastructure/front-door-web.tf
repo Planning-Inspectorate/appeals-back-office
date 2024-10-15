@@ -91,6 +91,24 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "web" {
 
   tags = local.tags
 
+  # custom rules in priority order to match the API
+  custom_rule {
+    name     = "IpBlock"
+    action   = "Block"
+    enabled  = true
+    priority = 10
+    type     = "MatchRule"
+
+    match_condition {
+      match_variable     = "RemoteAddr"
+      operator           = "IPMatch"
+      negation_condition = false
+      match_values = [
+        "10.255.255.255" # placeholder value
+      ]
+    }
+  }
+
   custom_rule {
     name                           = "RateLimitHttpRequest"
     enabled                        = true
@@ -126,6 +144,14 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "web" {
     type    = "Microsoft_BotManagerRuleSet"
     version = "1.1"
     action  = "Block"
+  }
+
+  lifecycle {
+    ignore_changes = [
+      # match the first custom rule (IpBlock) and ignore the match values (IPs)
+      # managed in Portal
+      custom_rule[0].match_condition[0].match_values
+    ]
   }
 }
 
