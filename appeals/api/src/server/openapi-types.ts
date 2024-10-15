@@ -60,6 +60,8 @@ export interface RepResponse {
 	attachments?: any[];
 	/** @example "comment" */
 	representationType?: string;
+	/** @example false */
+	siteVisitRequested?: boolean;
 	represented?: {
 		/** @example 1 */
 		id?: number;

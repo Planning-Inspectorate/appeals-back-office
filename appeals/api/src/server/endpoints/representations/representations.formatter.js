@@ -22,7 +22,8 @@ export const formatRepresentation = (rep) => {
 		created: rep.dateCreated.toISOString(),
 		notes: rep.notes || '',
 		attachments: rep.attachments || [],
-		representationType: rep.representationType
+		representationType: rep.representationType,
+		siteVisitRequested: rep.siteVisitRequested
 	};
 
 	if (rep.represented) {

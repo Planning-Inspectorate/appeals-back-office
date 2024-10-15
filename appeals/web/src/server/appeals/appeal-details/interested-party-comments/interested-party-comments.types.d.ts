@@ -21,6 +21,7 @@ export interface Representation {
 	notes: string;
 	attachments: any[];
 	represented: Represented;
+	siteVisitRequested: boolean;
 }
 
 export interface RepresentationList {

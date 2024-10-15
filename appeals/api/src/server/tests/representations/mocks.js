@@ -18,6 +18,7 @@ export const repResponse = {
 	notes: '',
 	attachments: [],
 	representationType: 'comment',
+	siteVisitRequested: false,
 	represented: {
 		id: 1,
 		name: 'Joe Bloggs',
