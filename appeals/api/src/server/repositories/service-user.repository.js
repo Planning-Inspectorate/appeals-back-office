@@ -1,5 +1,6 @@
 import { databaseConnector } from '#utils/database-connector.js';
 
+/** @typedef {import('@pins/appeals.api').Appeals.UpdateAddressRequest} UpdateAddressRequest */
 /** @typedef {import('@pins/appeals.api').Schema.ServiceUser} ServiceUser */
 /**
  * @typedef {Object} ServiceUserInput
@@ -11,7 +12,7 @@ import { databaseConnector } from '#utils/database-connector.js';
  * @property {string} [email]
  * @property {string} [website]
  * @property {string} [phoneNumber]
- * @property {number} addressId
+ * @property {UpdateAddressRequest} address
  * */
 
 /**
@@ -40,6 +41,34 @@ const updateServiceUserById = (id, data) => {
  * @param {ServiceUserInput} data
  * @returns {Promise<ServiceUser>}
  * */
-const createServiceUser = (data) => databaseConnector.serviceUser.create({ data });
+const createServiceUser = async (data) => {
+	const {
+		organisationName,
+		salutation,
+		firstName,
+		middleName,
+		lastName,
+		email,
+		website,
+		phoneNumber,
+		address
+	} = data;
+
+	return databaseConnector.serviceUser.create({
+		data: {
+			organisationName,
+			salutation,
+			firstName,
+			middleName,
+			lastName,
+			email,
+			website,
+			phoneNumber,
+			address: {
+				create: address
+			}
+		}
+	});
+};
 
 export default { createServiceUser, updateServiceUserById };

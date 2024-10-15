@@ -83,10 +83,11 @@ export const addRepresentation = async (appealId, pageNumber = 0, pageSize = 30,
  * @param {string} reviewer
  */
 export const updateRepresentationStatus = async (id, status, notes, reviewer) => {
-	const rep = await representationRepository.updateRepresentationById(
-		id,
-    { status, notes, reviewer }
-	);
+	const rep = await representationRepository.updateRepresentationById(id, {
+		status,
+		notes,
+		reviewer
+	});
 	return rep;
 };
 
@@ -96,10 +97,8 @@ export const updateRepresentationStatus = async (id, status, notes, reviewer) =>
  * @param {string} redactedRepresentation
  * @param {string} reviewer
  */
-export const redactRepresentation = (id, redactedRepresentation, reviewer) => representationRepository.updateRepresentationById(
-  id,
-  { redactedRepresentation, reviewer }
-);
+export const redactRepresentation = (id, redactedRepresentation, reviewer) =>
+	representationRepository.updateRepresentationById(id, { redactedRepresentation, reviewer });
 
 /**
  * @typedef {Object} CreateRepresentationInput
@@ -114,10 +113,23 @@ export const redactRepresentation = (id, redactedRepresentation, reviewer) => re
  * @returns {Promise<import('@pins/appeals.api').Schema.Representation>}
  * */
 export const createRepresentation = async (appealId, input) => {
-	const rep = await representationRepository.createRepresentation(
+	const { ipDetails, ipAddress } = input;
+
+	const representation = await representationRepository.createRepresentation(
 		appealId,
 		input.representationType
 	);
 
-	return rep;
+	const represented = await serviceUserRepository.createServiceUser({
+		firstName: ipDetails.firstName,
+		lastName: ipDetails.lastName,
+		email: ipDetails.email,
+		address: ipAddress
+	});
+
+	await representationRepository.updateRepresentationById(representation.id, {
+		representedId: represented.id
+	});
+
+	return representation;
 };
