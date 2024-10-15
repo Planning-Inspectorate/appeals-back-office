@@ -2,6 +2,20 @@ import { databaseConnector } from '#utils/database-connector.js';
 import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 
 /**
+ * @typedef {Object} RepresentationPayload
+ * @property {number} [appealId]
+ * @property {string} [representationType]
+ * @property {string} [originalRepresentation]
+ * @property {string} [redactedRepresentation]
+ * @property {number} [representedId]
+ * @property {number} [representativeId]
+ * @property {string} [lpaCode]
+ * @property {string} [status]
+ * @property {string} [reviewer]
+ * @property {string} [notes]
+ * */
+
+/**
  *
  * @param {number} id
  * @returns {Promise<import('@pins/appeals.api').Schema.Representation | null>}
@@ -112,13 +126,12 @@ export const getThirdPartyCommentsByAppealId = async (
 /**
  *
  * @param {number} id
- * @param {string|undefined} redactedRepresentation
- * @param {string|undefined} status
- * @param {string|undefined} notes
- * @param {string} reviewer
+ * @param {RepresentationPayload} data
  * @returns {Promise<import('@pins/appeals.api').Schema.Representation>}
  */
-export const updateRepresentationById = (id, redactedRepresentation, status, notes, reviewer) => {
+export const updateRepresentationById = (id, data) => {
+  const { status, redactedRepresentation, notes, reviewer } = data;
+
 	return databaseConnector.representation.update({
 		where: {
 			id

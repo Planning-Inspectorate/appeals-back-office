@@ -1,7 +1,7 @@
 export const createRepRequest = {
-	representedFirstName: 'Kevin',
-	representedLastName: 'Fowler',
-	representedEmail: 'kevin.fowler@email.com',
+	firstName: 'Kevin',
+	lastName: 'Fowler',
+	email: 'kevin.fowler@email.com',
 	attachmentId: '1a14cb3a-35ef-4f93-a597-61010e6b0ad8',
 	redactionStatus: 'unredacted'
 };

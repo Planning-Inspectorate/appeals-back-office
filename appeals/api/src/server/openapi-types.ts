@@ -41,11 +41,11 @@ export interface RepStatusUpdateRequest {
 
 export interface CreateRepRequest {
 	/** @example "Kevin" */
-	representedFirstName?: string;
+	firstName?: string;
 	/** @example "Fowler" */
-	representedLastName?: string;
+	lastName?: string;
 	/** @example "kevin.fowler@email.com" */
-	representedEmail?: string;
+	email?: string;
 	/** @example "1a14cb3a-35ef-4f93-a597-61010e6b0ad8" */
 	attachmentId?: string;
 	/** @example "unredacted" */
@@ -108,7 +108,7 @@ export interface ValidateDate {
 
 export interface AppellantCaseData {
 	casedata?: {
-		/** @example "7e1ec32e-1ca1-44e7-993f-417f6f00b160" */
+		/** @example "992a401e-ea40-4d9b-9413-1ba3f5f4ca48" */
 		submissionId?: string;
 		/** @example true */
 		advertisedAppeal?: boolean;

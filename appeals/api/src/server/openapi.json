@@ -4040,15 +4040,15 @@
 			"CreateRepRequest": {
 				"type": "object",
 				"properties": {
-					"representedFirstName": {
+					"firstName": {
 						"type": "string",
 						"example": "Kevin"
 					},
-					"representedLastName": {
+					"lastName": {
 						"type": "string",
 						"example": "Fowler"
 					},
-					"representedEmail": {
+					"email": {
 						"type": "string",
 						"example": "kevin.fowler@email.com"
 					},
@@ -4188,7 +4188,7 @@
 						"properties": {
 							"submissionId": {
 								"type": "string",
-								"example": "7e1ec32e-1ca1-44e7-993f-417f6f00b160"
+								"example": "992a401e-ea40-4d9b-9413-1ba3f5f4ca48"
 							},
 							"advertisedAppeal": {
 								"type": "boolean",

@@ -1,4 +1,7 @@
 import * as representationRepository from '#repositories/representation.repository.js';
+import serviceUserRepository from '#repositories/service-user.repository.js';
+
+/** @typedef {import('@pins/appeals.api').Appeals.UpdateAddressRequest} UpdateAddressRequest */
 
 /**
  *
@@ -82,10 +85,7 @@ export const addRepresentation = async (appealId, pageNumber = 0, pageSize = 30,
 export const updateRepresentationStatus = async (id, status, notes, reviewer) => {
 	const rep = await representationRepository.updateRepresentationById(
 		id,
-		undefined,
-		status,
-		notes,
-		reviewer
+    { status, notes, reviewer }
 	);
 	return rep;
 };
@@ -96,21 +96,16 @@ export const updateRepresentationStatus = async (id, status, notes, reviewer) =>
  * @param {string} redactedRepresentation
  * @param {string} reviewer
  */
-export const redactRepresentation = (id, redactedRepresentation, reviewer) =>
-	representationRepository.updateRepresentationById(
-		id,
-		redactedRepresentation,
-		undefined,
-		undefined,
-		reviewer
-	);
+export const redactRepresentation = (id, redactedRepresentation, reviewer) => representationRepository.updateRepresentationById(
+  id,
+  { redactedRepresentation, reviewer }
+);
 
 /**
  * @typedef {Object} CreateRepresentationInput
  * @property {'comment' | 'statement' | 'final_comment'} representationType
- * @property {string} representedFirstName
- * @property {string} representedLastName
- * @property {string} representedEmail
+ * @property {{ firstName: string, lastName: string, email: string }} ipDetails
+ * @property {UpdateAddressRequest} ipAddress
  * @property {string} attachmentId
  * @property {string} redactionStatus
  *
