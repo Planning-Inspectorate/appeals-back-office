@@ -56,7 +56,7 @@ extends:
           - Test
       - name: Prod
         dependsOn:
-          - Test
+          - Training
     deploymentStages:
       - name: Deploy Appeals
         deploymentJobs:
