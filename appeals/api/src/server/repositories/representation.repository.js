@@ -161,3 +161,16 @@ export const countAppealRepresentationsByStatus = async (appealId, representatio
 		{}
 	);
 };
+
+/**
+ * @param {number} appealId
+ * @param {'comment' | 'statement' | 'final_comment'} representationType
+ * @returns {Promise<import('@pins/appeals.api').Schema.Representation>}
+ * */
+export const createRepresentation = (appealId, representationType) =>
+	databaseConnector.representation.create({
+		data: {
+			appealId,
+			representationType
+		}
+	});

@@ -96,13 +96,33 @@ export const updateRepresentationStatus = async (id, status, notes, reviewer) =>
  * @param {string} redactedRepresentation
  * @param {string} reviewer
  */
-export const redactRepresentation = async (id, redactedRepresentation, reviewer) => {
-	const rep = await representationRepository.updateRepresentationById(
+export const redactRepresentation = (id, redactedRepresentation, reviewer) =>
+	representationRepository.updateRepresentationById(
 		id,
 		redactedRepresentation,
 		undefined,
 		undefined,
 		reviewer
 	);
+
+/**
+ * @typedef {Object} CreateRepresentationInput
+ * @property {'comment' | 'statement' | 'final_comment'} representationType
+ * @property {string} representedFirstName
+ * @property {string} representedLastName
+ * @property {string} representedEmail
+ * @property {string} attachmentId
+ * @property {string} redactionStatus
+ *
+ * @param {number} appealId
+ * @param {CreateRepresentationInput} input
+ * @returns {Promise<import('@pins/appeals.api').Schema.Representation>}
+ * */
+export const createRepresentation = async (appealId, input) => {
+	const rep = await representationRepository.createRepresentation(
+		appealId,
+		input.representationType
+	);
+
 	return rep;
 };

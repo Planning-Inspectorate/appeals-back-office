@@ -139,5 +139,12 @@ export const changeRepresentationStatus = async (req, res) => {
  * @returns {(req: Request, res: Response) => Promise<Response>}
  * */
 export const createRepresentation = (representationType) => async (req, res) => {
-	return res.status(501).end();
+	const { appealId } = req.params;
+
+	const rep = await representationService.createRepresentation(parseInt(appealId), {
+		representationType,
+		...req.body
+	});
+
+	return res.send(rep);
 };
