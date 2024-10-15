@@ -133,3 +133,11 @@ export const changeRepresentationStatus = async (req, res) => {
 
 	return res.send(formatRepresentation(rep));
 };
+
+/**
+ * @param {'comment' | 'statement' | 'final_comment'} representationType
+ * @returns {(req: Request, res: Response) => Promise<Response>}
+ * */
+export const createRepresentation = (representationType) => async (req, res) => {
+	return res.status(501).end();
+};

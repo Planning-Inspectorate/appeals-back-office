@@ -39,6 +39,19 @@ export interface RepStatusUpdateRequest {
 	notes?: string;
 }
 
+export interface CreateRepRequest {
+	/** @example "Kevin" */
+	representedFirstName?: string;
+	/** @example "Fowler" */
+	representedLastName?: string;
+	/** @example "kevin.fowler@email.com" */
+	representedEmail?: string;
+	/** @example "1a14cb3a-35ef-4f93-a597-61010e6b0ad8" */
+	attachmentId?: string;
+	/** @example "unredacted" */
+	redactionStatus?: string;
+}
+
 export interface RepResponse {
 	/** @example 261 */
 	id?: number;
@@ -95,7 +108,7 @@ export interface ValidateDate {
 
 export interface AppellantCaseData {
 	casedata?: {
-		/** @example "c38ef972-f6d1-44b6-933b-41437b619062" */
+		/** @example "7e1ec32e-1ca1-44e7-993f-417f6f00b160" */
 		submissionId?: string;
 		/** @example true */
 		advertisedAppeal?: boolean;

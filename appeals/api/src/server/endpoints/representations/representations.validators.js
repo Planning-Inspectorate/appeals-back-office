@@ -26,3 +26,24 @@ export const getRepresentationUpdateValidator = composeMiddleware(
 		.withMessage(ERROR_REP_OUTCOME_MUST_BE_ONE_OF),
 	validationErrorHandler
 );
+
+export const createRepresentationValidator = composeMiddleware(
+	validateIdParameter('appealId'),
+	body('representedFirstName')
+		.exists()
+		.notEmpty()
+		.withMessage("The represented party's first name is required."),
+	body('representedLastName')
+		.exists()
+		.notEmpty()
+		.withMessage("The represented party's last name is required."),
+	body('email')
+		.optional()
+		.isEmail()
+		.withMessage("The represented party's email must be a valid email address."),
+	body('attachmentId').exists().notEmpty().withMessage('A document UUID is required.'),
+	body('redactionStatus')
+		.exists()
+		.notEmpty()
+		.withMessage('The redaction status of the comment is required')
+);
