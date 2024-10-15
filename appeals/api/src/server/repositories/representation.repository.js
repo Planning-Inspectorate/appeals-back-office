@@ -130,7 +130,7 @@ export const getThirdPartyCommentsByAppealId = async (
  * @returns {Promise<import('@pins/appeals.api').Schema.Representation>}
  */
 export const updateRepresentationById = (id, data) => {
-  const { status, redactedRepresentation, notes, reviewer } = data;
+	const { status, redactedRepresentation, notes, reviewer } = data;
 
 	return databaseConnector.representation.update({
 		where: {
@@ -185,5 +185,21 @@ export const createRepresentation = (appealId, representationType) =>
 		data: {
 			appealId,
 			representationType
+		}
+	});
+
+/**
+ * @param {number} repId
+ * @param {{ documentGuid: string, version: number }[]} attachments
+ * */
+export const addAttachments = (repId, attachments) =>
+	databaseConnector.representation.update({
+		where: { id: repId },
+		data: {
+			attachments: {
+				connect: attachments.map((a) => ({
+					documentGuid_version: a
+				}))
+			}
 		}
 	});
