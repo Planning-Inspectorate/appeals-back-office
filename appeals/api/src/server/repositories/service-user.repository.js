@@ -2,7 +2,17 @@ import { databaseConnector } from '#utils/database-connector.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.ServiceUser} ServiceUser */
 /**
-
+ * @typedef {Object} ServiceUserInput
+ * @property {string} [organisationName]
+ * @property {string} [salutation]
+ * @property {string} [firstName]
+ * @property {string} [middleName]
+ * @property {string} [lastName]
+ * @property {string} [email]
+ * @property {string} [website]
+ * @property {string} [phoneNumber]
+ * @property {number} addressId
+ * */
 
 /**
  * Updates a service user's details
@@ -25,4 +35,11 @@ const updateServiceUserById = (id, data) => {
 
 	return transaction;
 };
-export default { updateServiceUserById };
+
+/**
+ * @param {ServiceUserInput} data
+ * @returns {Promise<ServiceUser>}
+ * */
+const createServiceUser = (data) => databaseConnector.serviceUser.create({ data });
+
+export default { createServiceUser, updateServiceUserById };
