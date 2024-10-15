@@ -148,10 +148,10 @@ export const uploadPage = (appealDetails, errors, providedAddress) => ({
  * @returns {PageContent}
  * */
 export const redactionStatusPage = (appealDetails, errors) => ({
-	title: 'Enter redaction status',
+	title: 'Select redaction status',
 	backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/upload`,
 	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
-	heading: 'Enter redaction status',
+	heading: 'Select redaction status',
 	pageComponents: [
 		{
 			type: 'radios',
@@ -187,7 +187,7 @@ export const dateSubmittedPage = (appealDetails, errors, date) => ({
 	title: 'Enter date submitted',
 	backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/redaction-status`,
 	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
-	heading: 'Enter redaction status',
+	heading: 'Enter date submitted',
 	pageComponents: [
 		{
 			type: 'date-input',
