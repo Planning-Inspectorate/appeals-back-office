@@ -39,6 +39,29 @@ export interface RepStatusUpdateRequest {
 	notes?: string;
 }
 
+export interface CreateRepRequest {
+	ipDetails?: {
+		/** @example "Kevin" */
+		firstName?: string;
+		/** @example "Fowler" */
+		lastName?: string;
+		/** @example "kevin.fowler@email.com" */
+		email?: string;
+	};
+	ipAddress?: {
+		/** @example "Example line 1" */
+		addressLine1?: string;
+		/** @example "London" */
+		town?: string;
+		/** @example "AB1 2CD" */
+		postCode?: string;
+	};
+	/** @example ["1a14cb3a-35ef-4f93-a597-61010e6b0ad8"] */
+	attachments?: string[];
+	/** @example "unredacted" */
+	redactionStatus?: string;
+}
+
 export interface RepResponse {
 	/** @example 261 */
 	id?: number;
@@ -95,7 +118,7 @@ export interface ValidateDate {
 
 export interface AppellantCaseData {
 	casedata?: {
-		/** @example "c38ef972-f6d1-44b6-933b-41437b619062" */
+		/** @example "ba35248c-0b50-4352-ac3e-89d5c8fd165f" */
 		submissionId?: string;
 		/** @example true */
 		advertisedAppeal?: boolean;

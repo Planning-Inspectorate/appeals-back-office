@@ -1,5 +1,10 @@
 import validateIdParameter from '#common/validators/id-parameter.js';
-import { ERROR_REP_OUTCOME_MUST_BE_ONE_OF, ERROR_MUST_BE_STRING } from '#endpoints/constants.js';
+import {
+	ERROR_REP_OUTCOME_MUST_BE_ONE_OF,
+	ERROR_MUST_BE_STRING,
+	ERROR_INVALID_EMAIL,
+	ERROR_MUST_BE_ARRAY_OF_STRINGS
+} from '#endpoints/constants.js';
 import { validationErrorHandler } from '#middleware/error-handler.js';
 import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
 import { composeMiddleware } from '@pins/express';
@@ -24,5 +29,19 @@ export const getRepresentationUpdateValidator = composeMiddleware(
 			APPEAL_REPRESENTATION_STATUS.VALID
 		])
 		.withMessage(ERROR_REP_OUTCOME_MUST_BE_ONE_OF),
+	validationErrorHandler
+);
+
+export const createRepresentationValidator = composeMiddleware(
+	validateIdParameter('appealId'),
+	body('ipDetails.firstName').isString().withMessage(ERROR_MUST_BE_STRING),
+	body('ipDetails.lastName').isString().withMessage(ERROR_MUST_BE_STRING),
+	body('ipDetails.email').optional().isEmail().withMessage(ERROR_INVALID_EMAIL),
+	body('attachments')
+		.optional()
+		.isArray()
+		.custom((value) => value.every((/** @type {*} */ item) => typeof item === 'string'))
+		.withMessage(ERROR_MUST_BE_ARRAY_OF_STRINGS),
+	body('redactionStatus').isString(),
 	validationErrorHandler
 );

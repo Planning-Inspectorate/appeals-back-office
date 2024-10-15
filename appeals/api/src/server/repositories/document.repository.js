@@ -28,6 +28,22 @@ export const getDocumentById = (guid) => {
 };
 
 /**
+ * @param {string[]} guids
+ * @returns {Promise<Document[]>}
+ * */
+export const getDocumentsByIds = (guids) =>
+	Promise.all(
+		guids.map(async (guid) => {
+			const doc = await getDocumentById(guid);
+			if (!doc) {
+				throw new Error(`no document found with guid: ${guid}`);
+			}
+
+			return doc;
+		})
+	);
+
+/**
  * @param {string} guid
  * @param {Number} version
  * @returns {PrismaPromise<Document|null>}

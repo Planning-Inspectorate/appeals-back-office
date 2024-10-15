@@ -1,4 +1,9 @@
+import addressRepository from '#repositories/address.repository.js';
 import * as representationRepository from '#repositories/representation.repository.js';
+import * as documentRepository from '#repositories/document.repository.js';
+import serviceUserRepository from '#repositories/service-user.repository.js';
+
+/** @typedef {import('@pins/appeals.api').Appeals.UpdateAddressRequest} UpdateAddressRequest */
 
 /**
  *
@@ -80,13 +85,11 @@ export const addRepresentation = async (appealId, pageNumber = 0, pageSize = 30,
  * @param {string} reviewer
  */
 export const updateRepresentationStatus = async (id, status, notes, reviewer) => {
-	const rep = await representationRepository.updateRepresentationById(
-		id,
-		undefined,
+	const rep = await representationRepository.updateRepresentationById(id, {
 		status,
 		notes,
 		reviewer
-	);
+	});
 	return rep;
 };
 
@@ -96,13 +99,55 @@ export const updateRepresentationStatus = async (id, status, notes, reviewer) =>
  * @param {string} redactedRepresentation
  * @param {string} reviewer
  */
-export const redactRepresentation = async (id, redactedRepresentation, reviewer) => {
-	const rep = await representationRepository.updateRepresentationById(
-		id,
-		redactedRepresentation,
-		undefined,
-		undefined,
-		reviewer
-	);
-	return rep;
+export const redactRepresentation = (id, redactedRepresentation, reviewer) =>
+	representationRepository.updateRepresentationById(id, { redactedRepresentation, reviewer });
+
+/**
+ * @typedef {Object} CreateRepresentationInput
+ * @property {'comment' | 'statement' | 'final_comment'} representationType
+ * @property {{ firstName: string, lastName: string, email: string }} ipDetails
+ * @property {{ addressLine1: string, addressLine2?: string, town: string, county?: string, postCode: string }} ipAddress
+ * @property {string[]} attachments
+ * @property {string} redactionStatus
+ *
+ * @param {number} appealId
+ * @param {CreateRepresentationInput} input
+ * @returns {Promise<import('@pins/appeals.api').Schema.Representation>}
+ * */
+export const createRepresentation = async (appealId, input) => {
+	const { ipDetails, ipAddress } = input;
+
+	const address = await addressRepository.createAddress({
+		addressLine1: ipAddress.addressLine1,
+		addressLine2: ipAddress.addressLine2,
+		addressTown: ipAddress.town,
+		addressCounty: ipAddress.county,
+		postcode: ipAddress.postCode
+	});
+
+	const represented = await serviceUserRepository.createServiceUser({
+		firstName: ipDetails.firstName,
+		lastName: ipDetails.lastName,
+		email: ipDetails.email,
+		addressId: address.id
+	});
+
+	const representation = await representationRepository.createRepresentation({
+		appealId,
+		representedId: represented.id,
+		representationType: input.representationType
+	});
+
+	if (input.attachments.length > 0) {
+		const documents = await documentRepository.getDocumentsByIds(input.attachments);
+
+		const mappedDocuments = documents.map((d) => ({
+			documentGuid: d.guid,
+			version: d.latestDocumentVersion?.version ?? 1
+		}));
+
+		await representationRepository.addAttachments(representation.id, mappedDocuments);
+	}
+
+	return representation;
 };

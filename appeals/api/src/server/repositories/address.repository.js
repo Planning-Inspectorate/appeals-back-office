@@ -18,4 +18,10 @@ const updateAddressById = (id, data) =>
 		data
 	});
 
-export default { updateAddressById };
+/**
+ * @param {UpdateAddressRequest} data
+ * @returns {PrismaPromise<Address>}
+ * */
+const createAddress = (data) => databaseConnector.address.create({ data });
+
+export default { createAddress, updateAddressById };
