@@ -1,6 +1,7 @@
 import { Router as createRouter } from 'express';
 import { asyncHandler } from '@pins/express';
 import {
+	createRepresentationValidator,
 	getRepresentationRouteValidator,
 	getRepresentationUpdateValidator
 } from './representations.validators.js';
@@ -180,6 +181,33 @@ router.patch(
 	getRepresentationUpdateValidator,
 	checkAppealExistsByIdAndAddToRequest,
 	asyncHandler(controller.addRedactedRepresentation)
+);
+
+router.post(
+	'/:appealId/reps/comments',
+	/*
+	#swagger.tags = ['Representations']
+	#swagger.path = '/appeals/{appealId}/reps/comments'
+	#swagger.description = Create a representation
+	#swagger.parameters['azureAdUserId'] = {
+		in: 'header',
+		required: true,
+		example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+	}
+	#swagger.requestBody = {
+		in: 'body',
+		required: true,
+		schema: { $ref: '#/components/schemas/CreateRepRequest' },
+	}
+	#swagger.responses[200] = {
+		description: 'Create a Representation against an appeal',
+		schema: { $ref: '#/components/schemas/RepResponse' }
+	}
+	#swagger.responses[400] = {}
+ */
+	checkAppealExistsByIdAndAddToRequest,
+	createRepresentationValidator,
+	asyncHandler(controller.createRepresentation('comment'))
 );
 
 export { router as representationRoutes };

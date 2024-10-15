@@ -1,5 +1,6 @@
 import { validAppellantCase, validLpaQuestionnaire } from '#tests/integrations/mocks.js';
 import {
+	createRepRequest,
 	repRedactionRequest,
 	repStatusUpdateRequest,
 	repResponse
@@ -80,6 +81,9 @@ export const spec = {
 		},
 		RepStatusUpdateRequest: {
 			...repStatusUpdateRequest
+		},
+		CreateRepRequest: {
+			...createRepRequest
 		},
 		RepResponse: {
 			...repResponse
