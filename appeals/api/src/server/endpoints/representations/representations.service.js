@@ -105,7 +105,7 @@ export const redactRepresentation = (id, redactedRepresentation, reviewer) =>
  * @property {'comment' | 'statement' | 'final_comment'} representationType
  * @property {{ firstName: string, lastName: string, email: string }} ipDetails
  * @property {UpdateAddressRequest} ipAddress
- * @property {string} attachmentId
+ * @property {string[]} attachments
  * @property {string} redactionStatus
  *
  * @param {number} appealId

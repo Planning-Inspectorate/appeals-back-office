@@ -1,8 +1,15 @@
 export const createRepRequest = {
-	firstName: 'Kevin',
-	lastName: 'Fowler',
-	email: 'kevin.fowler@email.com',
-	attachmentId: '1a14cb3a-35ef-4f93-a597-61010e6b0ad8',
+	ipDetails: {
+		firstName: 'Kevin',
+		lastName: 'Fowler',
+		email: 'kevin.fowler@email.com'
+	},
+	ipAddress: {
+		addressLine1: 'Example line 1',
+		town: 'London',
+		postCode: 'AB1 2CD'
+	},
+	attachments: ['1a14cb3a-35ef-4f93-a597-61010e6b0ad8'],
 	redactionStatus: 'unredacted'
 };
 

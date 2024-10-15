@@ -41,7 +41,12 @@ export const createRepresentationValidator = composeMiddleware(
 		.optional()
 		.isEmail()
 		.withMessage("The represented party's email must be a valid email address."),
-	body('attachmentId').exists().notEmpty().withMessage('A document UUID is required.'),
+	body('attachments').exists().notEmpty().withMessage('A document UUID is required.'),
+	body('attachments')
+		.optional()
+		.isArray()
+		.custom((value) => value.every((/** @type {*} */ item) => typeof item === 'string'))
+		.withMessage('`attachments` must be an array of UUIDs.'),
 	body('redactionStatus')
 		.exists()
 		.notEmpty()
