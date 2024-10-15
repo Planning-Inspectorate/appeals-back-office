@@ -1,7 +1,7 @@
 import config from '#environment/config.js';
 import { inputInstructionIsRadiosInputInstruction } from '#lib/mappers/global-mapper-formatter.js';
 import { initialiseAndMapAppealData } from '#lib/mappers/appeal/appeal.mapper.js';
-import { initialiseAndMapLPAQData } from '#lib/mappers/lpaQuestionnaire.mapper.js';
+import { initialiseAndMapLPAQData } from '#lib/mappers/lpa-questionnaire/lpa-questionnaire.mapper.js';
 import {
 	dayMonthYearHourMinuteToISOString,
 	dayMonthYearHourMinuteToDisplayDate,
