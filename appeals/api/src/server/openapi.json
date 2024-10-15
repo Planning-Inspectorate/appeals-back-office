@@ -4076,6 +4076,10 @@
 						"type": "string",
 						"example": "comment"
 					},
+					"siteVisitRequested": {
+						"type": "boolean",
+						"example": false
+					},
 					"represented": {
 						"type": "object",
 						"properties": {

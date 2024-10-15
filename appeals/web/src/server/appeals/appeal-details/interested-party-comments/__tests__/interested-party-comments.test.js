@@ -223,4 +223,46 @@ describe('interested-party-comments', () => {
 			expect(elementInnerHtml).toContain('Page not found');
 		});
 	});
+
+	describe('GET /view-comment with data', () => {
+		beforeEach(() => {
+			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
+		});
+
+		it('should render view comment page with the provided comment details', async () => {
+			const response = await request.get(`${baseUrl}/2/interested-party-comments/5/view`);
+
+			expect(response.statusCode).toBe(200);
+
+			const dom = parseHtml(response.text);
+			const elementInnerHtml = dom.innerHTML;
+			expect(elementInnerHtml).toMatchSnapshot();
+			expect(elementInnerHtml).toContain('View comment</h1>');
+
+			const interestedPartyRow = parseHtml(response.text, {
+				rootElement: '.govuk-summary-list__row:first-of-type'
+			});
+
+			expect(interestedPartyRow).not.toBeNull();
+			const partyKey = interestedPartyRow?.querySelector('.govuk-summary-list__key');
+			const partyValue = interestedPartyRow?.querySelector('.govuk-summary-list__value');
+			expect(partyKey?.textContent?.trim()).toBe('Interested party');
+			expect(partyValue?.textContent?.trim()).toBe('Lee Thornton');
+		});
+	});
+
+	describe('GET /view-comment with no data', () => {
+		beforeEach(() => {
+			nock('http://test/').get('/appeals/2/reps/comments/999').reply(404, {});
+		});
+
+		it('should render 404 page when the comment is not found', async () => {
+			const response = await request.get(`${baseUrl}/2/view/999`);
+
+			expect(response.statusCode).toBe(404);
+
+			const elementInnerHtml = parseHtml(response.text).innerHTML;
+			expect(elementInnerHtml).toContain('Page not found');
+		});
+	});
 });

@@ -394,7 +394,7 @@ exports[`interested-party-comments GET /review-comment with data should render r
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#"> Add<span class="govuk-visually-hidden"> address</span></a>
                         </dd>
                     </div>
-                    <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Submitted date</dt>
+                    <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Submitted</dt>
                         <dd class="govuk-summary-list__value">9 October 2024</dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Comment</dt>
@@ -440,6 +440,47 @@ exports[`interested-party-comments GET /review-comment with data should render r
                 data-module="govuk-button">Confirm</button>
             </form>
         </div>
+    </div>
+</main>"
+`;
+
+exports[`interested-party-comments GET /view-comment with data should render view comment page with the provided comment details 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+            <h1             class="govuk-heading-l">View comment</h1>
+        </div>
+    </div>
+    <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Interested party</dt>
+            <dd class="govuk-summary-list__value">Lee Thornton</dd>
+        </div>
+        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Email</dt>
+            <dd class="govuk-summary-list__value">test1@example.com</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Address</dt>
+            <dd class="govuk-summary-list__value">Not provided</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#"> Add<span class="govuk-visually-hidden"> address</span></a>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Site visit requested</dt>
+            <dd class="govuk-summary-list__value">No</dd>
+        </div>
+        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Submitted</dt>
+            <dd class="govuk-summary-list__value">9 October 2024</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Comment</dt>
+            <dd class="govuk-summary-list__value">Awaiting review comment 47</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#"> Redact</a>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
+            <dd class="govuk-summary-list__value">Not provided</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#"> Add<span class="govuk-visually-hidden"> supporting documents</span></a>
+            </dd>
+        </div>
+    </dl>
+    <div class="govuk-!-margin-bottom-3"><a class="govuk-link" href="#">Withdraw comment</a>
     </div>
 </main>"
 `;

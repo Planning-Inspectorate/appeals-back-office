@@ -2405,6 +2405,7 @@ export const interestedPartyCommentForReview = {
 	notes: '',
 	attachments: [],
 	representationType: 'comment',
+	siteVisitRequested: false,
 	represented: {
 		id: 3838,
 		name: 'Lee Thornton',

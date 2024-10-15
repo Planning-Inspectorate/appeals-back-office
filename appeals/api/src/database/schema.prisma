@@ -679,6 +679,7 @@ model Representation {
   reviewer               String?
   notes                  String?
   attachments            RepresentationAttachment[]
+  siteVisitRequested     Boolean                    @default(false)
 }
 
 /// Representation model

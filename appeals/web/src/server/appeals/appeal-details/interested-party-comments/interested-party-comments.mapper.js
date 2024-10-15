@@ -102,7 +102,7 @@ export function viewInterestedPartyCommentPage(appealDetails, comment) {
  */
 export function reviewInterestedPartyCommentPage(appealDetails, comment) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
-	const commentSummaryList = generateCommentSummaryList(comment);
+	const commentSummaryList = generateCommentSummaryList(comment, true);
 	const withdrawLink = generateWithdrawLink();
 
 	/** @type {PageComponent} */
@@ -114,7 +114,7 @@ export function reviewInterestedPartyCommentPage(appealDetails, comment) {
 				{
 					text: 'The comment includes a site visit request',
 					value: 'site-visit',
-					checked: false
+					checked: comment?.siteVisitRequested
 				}
 			]
 		}
@@ -192,7 +192,7 @@ function generateWithdrawLink() {
  * @param {Representation} comment - The comment object.
  * @returns {PageComponent} The generated comment summary list component.
  */
-function generateCommentSummaryList(comment) {
+function generateCommentSummaryList(comment, isReviewPage = false) {
 	const hasAddress =
 		comment.represented.address &&
 		comment.represented.address.addressLine1 &&
@@ -207,63 +207,74 @@ function generateCommentSummaryList(comment) {
 			  )
 			: null;
 
+	const rows = [
+		{
+			key: { text: 'Interested party' },
+			value: { text: comment.represented.name }
+		},
+		{
+			key: { text: 'Email' },
+			value: { text: comment.represented.email }
+		},
+		{
+			key: { text: 'Address' },
+			value: hasAddress
+				? { html: addressToMultilineStringHtml(comment.represented.address) }
+				: { text: 'Not provided' },
+			actions: {
+				items: [
+					hasAddress
+						? { text: 'Change', href: '#', visuallyHiddenText: 'address' }
+						: { text: 'Add', href: '#', visuallyHiddenText: 'address' }
+				]
+			}
+		},
+		{
+			key: { text: 'Submitted' },
+			value: { html: dateISOStringToDisplayDate(comment.created) }
+		},
+		{
+			key: { text: comment.redactedRepresentation ? 'Original comment' : 'Comment' },
+			value: {
+				text: commentIsDocument ? 'Added as a document' : comment.originalRepresentation
+			},
+			actions: {
+				items: commentIsDocument ? [] : [{ text: 'Redact', href: '#' }]
+			}
+		},
+		...(comment.redactedRepresentation
+			? [{ key: { text: 'Redacted comment' }, value: { text: comment.redactedRepresentation } }]
+			: []),
+		{
+			key: { text: 'Supporting documents' },
+			value: attachmentsList ? { html: attachmentsList } : { text: 'Not provided' },
+			actions: {
+				items: [
+					...(comment.attachments?.length > 0
+						? [{ text: 'Manage', href: '#', visuallyHiddenText: 'supporting documents' }]
+						: []),
+					{ text: 'Add', href: '#', visuallyHiddenText: 'supporting documents' }
+				]
+			}
+		}
+	];
+
+	if (!isReviewPage) {
+		rows.splice(3, 0, {
+			key: { text: 'Site visit requested' },
+			value: { text: comment.siteVisitRequested ? 'Yes' : 'No' }
+		});
+	}
+
+	if (!isReviewPage && comment.status === COMMENT_STATUS.INVALID) {
+		rows.push({
+			key: { text: 'Why comment invalid' },
+			value: { text: comment.notes }
+		});
+	}
+
 	return {
 		type: 'summary-list',
-		parameters: {
-			rows: [
-				{
-					key: { text: 'Interested party' },
-					value: { text: comment.represented.name }
-				},
-				{
-					key: { text: 'Email' },
-					value: { text: comment.represented.email }
-				},
-				{
-					key: { text: 'Address' },
-					value: hasAddress
-						? { html: addressToMultilineStringHtml(comment.represented.address) }
-						: { text: 'Not provided' },
-					actions: {
-						items: [
-							hasAddress
-								? { text: 'Change', href: '#', visuallyHiddenText: 'address' }
-								: { text: 'Add', href: '#', visuallyHiddenText: 'address' }
-						]
-					}
-				},
-				{
-					key: { text: 'Submitted date' },
-					value: { html: dateISOStringToDisplayDate(comment.created) }
-				},
-				{
-					key: { text: comment.redactedRepresentation ? 'Original comment' : 'Comment' },
-					value: {
-						text: commentIsDocument ? 'Added as a document' : comment.originalRepresentation
-					},
-					actions: {
-						items: commentIsDocument ? [] : [{ text: 'Redact', href: '#' }]
-					}
-				},
-				...(comment.redactedRepresentation
-					? [{ key: { text: 'Redacted comment' }, value: { text: comment.redactedRepresentation } }]
-					: []),
-				{
-					key: { text: 'Supporting documents' },
-					value: attachmentsList ? { html: attachmentsList } : { text: 'Not provided' },
-					actions: {
-						items: [
-							...(comment.attachments?.length > 0
-								? [{ text: 'Manage', href: '#', visuallyHiddenText: 'supporting documents' }]
-								: []),
-							{ text: 'Add', href: '#', visuallyHiddenText: 'supporting documents' }
-						]
-					}
-				},
-				...(comment.status === 'invalid'
-					? [{ key: { text: 'Why comment invalid' }, value: { text: comment.notes } }]
-					: [])
-			]
-		}
+		parameters: { rows }
 	};
 }
