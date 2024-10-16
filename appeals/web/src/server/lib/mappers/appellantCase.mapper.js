@@ -249,7 +249,9 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		link: `${currentRoute}/inspector-access/change/appellant`,
 		editable: userHasUpdateCase,
 		classes: 'appellantcase-inspector-access',
-		addCyAttribute: true
+		addCyAttribute: true,
+		withShowMore: true,
+		showMoreLabelText: 'Inspector access required'
 	});
 
 	mappedData.healthAndSafetyIssues = booleanWithDetailsSummaryListItem({
@@ -260,7 +262,9 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		defaultText: 'No answer provided',
 		link: `${currentRoute}/safety-risks/change/appellant`,
 		editable: userHasUpdateCase,
-		addCyAttribute: true
+		addCyAttribute: true,
+		withShowMore: true,
+		showMoreLabelText: 'Potential safety risks'
 	});
 
 	mappedData.applicationForm = documentInstruction({
