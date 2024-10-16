@@ -187,34 +187,45 @@ export const addressListForTrainers = addressesList.map((address) => ({
 
 /**
  * An array of objects representing LPA questionnaire lists.
- * @type {Object<string, import('#db-client').Prisma.LPAQuestionnaireCreateWithoutAppealInput>}
+ * @param {string} appealTypeShorthand
+ * @returns {import('#db-client').Prisma.LPAQuestionnaireCreateWithoutAppealInput | undefined}
  */
-export const lpaQuestionnaireList = {
-	[APPEAL_TYPE_SHORTHAND_HAS]: {
-		siteSafetyDetails: 'There may be no mobile reception at the site',
-		siteAccessDetails: 'There is a tall hedge around the site which obstructs the view of the site',
-		inConservationArea: true,
-		isCorrectAppealType: true,
-		lpaStatement: null,
-		newConditionDetails: null,
-		lpaCostsAppliedFor: false,
-		lpaqCreatedDate: new Date(2023, 4, 9),
-		lpaQuestionnaireSubmittedDate: new Date(2023, 4, 9),
-		isGreenBelt: randomBool()
-	},
-	[APPEAL_TYPE_SHORTHAND_FPA]: {
-		siteSafetyDetails: 'There may be no mobile reception at the site',
-		siteAccessDetails: 'There is a tall hedge around the site which obstructs the view of the site',
-		inConservationArea: true,
-		isCorrectAppealType: true,
-		lpaStatement: null,
-		newConditionDetails: null,
-		lpaCostsAppliedFor: false,
-		lpaqCreatedDate: new Date(2023, 4, 9),
-		lpaQuestionnaireSubmittedDate: new Date(2023, 4, 9),
-		isGreenBelt: randomBool()
+export function createLPAQuestionnaireForAppealType(appealTypeShorthand) {
+	switch (appealTypeShorthand) {
+		case APPEAL_TYPE_SHORTHAND_HAS:
+			return {
+				siteSafetyDetails: 'There may be no mobile reception at the site',
+				siteAccessDetails:
+					'There is a tall hedge around the site which obstructs the view of the site',
+				inConservationArea: true,
+				isCorrectAppealType: true,
+				lpaStatement: null,
+				newConditionDetails: null,
+				lpaCostsAppliedFor: false,
+				lpaqCreatedDate: new Date(2023, 4, 9),
+				lpaQuestionnaireSubmittedDate: new Date(2023, 4, 9),
+				isGreenBelt: randomBool()
+			};
+		case APPEAL_TYPE_SHORTHAND_FPA:
+			return {
+				siteSafetyDetails: 'There may be no mobile reception at the site',
+				siteAccessDetails:
+					'There is a tall hedge around the site which obstructs the view of the site',
+				inConservationArea: true,
+				isCorrectAppealType: true,
+				lpaStatement: null,
+				newConditionDetails: null,
+				lpaCostsAppliedFor: false,
+				lpaqCreatedDate: new Date(2023, 4, 9),
+				lpaQuestionnaireSubmittedDate: new Date(2023, 4, 9),
+				isGreenBelt: randomBool(),
+				eiaColumnTwoThreshold: randomBool(),
+				eiaRequiresEnvironmentalStatement: randomBool()
+			};
+		default:
+			return;
 	}
-};
+}
 
 /**
  * Sample incomplete review questionnaire data.

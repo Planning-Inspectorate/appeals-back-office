@@ -735,7 +735,23 @@ const generateHASLpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 		parameters: {
 			card: {
 				title: {
-					text: '2. Notifying relevant parties of the application'
+					text: '2. Environmental impact assessment'
+				}
+			},
+			rows: [
+				mappedLPAQData.lpaq?.eiaColumnTwoThreshold?.display.summaryListItem,
+				mappedLPAQData.lpaq?.eiaRequiresEnvironmentalStatement?.display.summaryListItem
+			].filter(isDefined)
+		}
+	});
+
+	pageComponents.push({
+		/** @type {'summary-list'} */
+		type: 'summary-list',
+		parameters: {
+			card: {
+				title: {
+					text: '3. Notifying relevant parties of the application'
 				}
 			},
 			rows: [
@@ -754,7 +770,7 @@ const generateHASLpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 		parameters: {
 			card: {
 				title: {
-					text: '3. Consultation responses and representations'
+					text: '4. Consultation responses and representations'
 				}
 			},
 			rows: [mappedLPAQData.lpaq?.representations?.display.summaryListItem].filter(isDefined)
@@ -767,7 +783,7 @@ const generateHASLpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 		parameters: {
 			card: {
 				title: {
-					text: '4. Planning officer’s report and supplementary documents'
+					text: '5. Planning officer’s report and supplementary documents'
 				}
 			},
 			rows: [
@@ -784,7 +800,7 @@ const generateHASLpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 		parameters: {
 			card: {
 				title: {
-					text: '5. Site access'
+					text: '6. Site access'
 				}
 			},
 			rows: [
@@ -801,7 +817,7 @@ const generateHASLpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 		parameters: {
 			card: {
 				title: {
-					text: '6. Appeal process'
+					text: '7. Appeal process'
 				}
 			},
 			rows: [

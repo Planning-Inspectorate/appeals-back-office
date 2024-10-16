@@ -24,6 +24,7 @@ import greenBeltRouter from '../green-belt/green-belt.router.js';
 import extraConditionsRouter from './extra-conditions/extra-conditions.router.js';
 import notificationMethodsRouter from './notification-methods/notification-methods.router.js';
 import affectedListedBuildingsRouter from './affected-listed-buildings/affected-listed-buildings.router.js';
+import environmentalImpactAssessmentRouter from './environmental-impact-assessment/environmental-impact-assessment.router.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -96,6 +97,13 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	affectedListedBuildingsRouter
+);
+
+router.use(
+	'/:lpaQuestionnaireId/environmental-impact-assessment',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	environmentalImpactAssessmentRouter
 );
 
 router

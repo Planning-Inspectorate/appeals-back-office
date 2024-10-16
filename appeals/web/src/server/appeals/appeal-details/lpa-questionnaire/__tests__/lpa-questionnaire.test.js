@@ -339,6 +339,54 @@ describe('LPA Questionnaire review', () => {
 			expect(notificationBannerElementHTML).toContain('Success');
 			expect(notificationBannerElementHTML).toContain('Notification methods updated');
 		});
+
+		it('should render a "Column 2 threshold criteria status changed" success notification banner when meets eia column two threshold is changed', async () => {
+			nock('http://test/').get(`/appeals/1`).reply(200, appealData).persist();
+			nock('http://test/')
+				.get(`/appeals/1/lpa-questionnaires/2`)
+				.reply(200, lpaQuestionnaireDataNotValidated)
+				.persist();
+			nock('http://test/').patch(`/appeals/1/lpa-questionnaires/2`).reply(200, {});
+
+			await request
+				.post(`${baseUrl}/environmental-impact-assessment/column-two-threshold/change`)
+				.send({
+					eiaColumnTwoThreshold: 'yes'
+				});
+
+			const response = await request.get(`${baseUrl}`);
+
+			const notificationBannerElementHTML = parseHtml(response.text, {
+				rootElement: notificationBannerElement
+			}).innerHTML;
+			expect(notificationBannerElementHTML).toMatchSnapshot();
+			expect(notificationBannerElementHTML).toContain('Success');
+			expect(notificationBannerElementHTML).toContain('Column 2 threshold criteria status changed');
+		});
+
+		it('should render an "Environmental statement status changed" success notification banner when meets eia requires environmental statement is changed', async () => {
+			nock('http://test/').get(`/appeals/1`).reply(200, appealData).persist();
+			nock('http://test/')
+				.get(`/appeals/1/lpa-questionnaires/2`)
+				.reply(200, lpaQuestionnaireDataNotValidated)
+				.persist();
+			nock('http://test/').patch(`/appeals/1/lpa-questionnaires/2`).reply(200, {});
+
+			await request
+				.post(`${baseUrl}/environmental-impact-assessment/requires-environmental-statement/change`)
+				.send({
+					eiaRequiresEnvironmentalStatement: 'yes'
+				});
+
+			const response = await request.get(`${baseUrl}`);
+
+			const notificationBannerElementHTML = parseHtml(response.text, {
+				rootElement: notificationBannerElement
+			}).innerHTML;
+			expect(notificationBannerElementHTML).toMatchSnapshot();
+			expect(notificationBannerElementHTML).toContain('Success');
+			expect(notificationBannerElementHTML).toContain('Environmental statement status changed');
+		});
 	});
 
 	describe('GET /', () => {
@@ -353,13 +401,14 @@ describe('LPA Questionnaire review', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('LPA questionnaire</h1>');
 			expect(element.innerHTML).toContain('1. Constraints, designations and other issues</h2>');
-			expect(element.innerHTML).toContain('2. Notifying relevant parties of the application</h2>');
-			expect(element.innerHTML).toContain('3. Consultation responses and representations</h2>');
+			expect(element.innerHTML).toContain('2. Environmental impact assessment</h2>');
+			expect(element.innerHTML).toContain('3. Notifying relevant parties of the application</h2>');
+			expect(element.innerHTML).toContain('4. Consultation responses and representations</h2>');
 			expect(element.innerHTML).toContain(
-				'4. Planning officer’s report and supplementary documents</h2>'
+				'5. Planning officer’s report and supplementary documents</h2>'
 			);
-			expect(element.innerHTML).toContain('5. Site access</h2>');
-			expect(element.innerHTML).toContain('6. Appeal process</h2>');
+			expect(element.innerHTML).toContain('6. Site access</h2>');
+			expect(element.innerHTML).toContain('7. Appeal process</h2>');
 			expect(element.innerHTML).toContain('Additional documents</h2>');
 		}, 10000);
 
