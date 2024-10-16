@@ -371,6 +371,7 @@ export interface WebDocumentationSummaryEntry extends DocumentationSummaryEntry 
 export interface WebDocumentationSummary extends DocumentationSummary {
 	appellantCase?: WebDocumentationSummaryEntry;
 	lpaQuestionnaire?: WebDocumentationSummaryEntry;
+	ipComments?: Omit<WebDocumentationSummaryEntry, 'dueDate' | 'receivedAt'>;
 }
 
 export interface WebAppeal extends SingleAppealDetailsResponse {

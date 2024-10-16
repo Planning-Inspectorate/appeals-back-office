@@ -3,7 +3,6 @@ import { userHasPermission } from '#lib/mappers/permissions.mapper.js';
 import { isDefined } from '#lib/ts-utilities.js';
 import { getCaseContacts } from './common/case-contacts.js';
 import { getCaseCosts } from './common/case-costs.js';
-import { getCaseDocumentation } from './common/case-documentation.js';
 import { getCaseManagement } from './common/case-management.js';
 import { getCaseOverview } from './common/case-overview.js';
 import { getCaseTeam } from './common/case-team.js';
@@ -53,7 +52,24 @@ export function generateAccordion(appealDetails, mappedData, session, ipComments
 				}
 		  ];
 
-	const caseDocumentation = getCaseDocumentation(mappedData);
+	/** @type {PageComponent} */
+	const caseDocumentation = {
+		type: 'table',
+		parameters: {
+			head: [
+				{ text: 'Documentation' },
+				{ text: 'Status' },
+				{ text: 'Received' },
+				{ text: 'Action' }
+			],
+			rows: [
+				mappedData.appeal.appellantCase.display.tableItem,
+				mappedData.appeal.lpaQuestionnaire.display.tableItem,
+				mappedData.appeal.appealDecision.display.tableItem
+			].filter(isDefined),
+			firstCellIsHeader: true
+		}
+	};
 
 	const caseCosts = getCaseCosts(mappedData);
 
