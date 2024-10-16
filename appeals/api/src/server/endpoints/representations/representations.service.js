@@ -1,4 +1,5 @@
 import * as representationRepository from '#repositories/representation.repository.js';
+import * as documentRepository from '#repositories/document.repository.js';
 import serviceUserRepository from '#repositories/service-user.repository.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAddressRequest} UpdateAddressRequest */
@@ -130,6 +131,17 @@ export const createRepresentation = async (appealId, input) => {
 	await representationRepository.updateRepresentationById(representation.id, {
 		representedId: represented.id
 	});
+
+	if (input.attachments.length > 0) {
+		const documents = await documentRepository.getDocumentsByIds(input.attachments);
+
+		const mappedDocuments = documents.map((d) => ({
+			documentGuid: d.guid,
+			version: d.latestDocumentVersion?.version ?? 1
+		}));
+
+		await representationRepository.addAttachments(representation.id, mappedDocuments);
+	}
 
 	return representation;
 };
