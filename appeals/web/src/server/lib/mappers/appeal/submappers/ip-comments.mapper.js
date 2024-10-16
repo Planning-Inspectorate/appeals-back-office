@@ -16,10 +16,11 @@ export const mapIpComments = ({ appealDetails, currentRoute }) => {
 					text: 'Not applicable'
 				},
 				{
-					html:
+					html: `<a href="${currentRoute}/interested-party-comments" data-cy="review-ip-comments" class="govuk-link">${
 						appealDetails?.documentationSummary?.ipComments?.status === 'received'
-							? `<a href="${currentRoute}/interested-party-comments" data-cy="review-ip-comments" class="govuk-link">Review <span class="govuk-visually-hidden">I P comments</span></a>`
-							: `<a href="${currentRoute}/interested-party-comments" data-cy="review-ip-comments" class="govuk-link">Add <span class="govuk-visually-hidden">I P comments</span></a>`
+							? 'Review'
+							: 'Add'
+					} <span class="govuk-visually-hidden">I P comments</span></a>`
 				}
 			]
 		}
