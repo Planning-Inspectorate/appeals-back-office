@@ -105,28 +105,6 @@ extends:
                   appResourceGroup: $(resourceGroup)
                   azurecrName: $(azurecrName)
                   repository: back-office/appeals-web
-          - name: Deploy Appeals 2
-            condition: eq(${{ parameters.deployAppealsWeb }}, 'true')
-            steps:
-              # temporary while we figure out deployment issues, deploy to web-2 in TEST
-              # will deploy twice in other environments
-              - bash: |
-                    if [[ $ENVIRONMENT == "test" ]]; then
-                      echo "Name: pins-app-appeals-bo-web-2 (env: $ENVIRONMENT)"
-                      echo "##vso[task.setvariable variable=appName;]pins-app-appeals-bo-web-2"
-                    else
-                      echo "Name: pins-app-appeals-bo-web (env: $ENVIRONMENT)"
-                      echo "##vso[task.setvariable variable=appName;]pins-app-appeals-bo-web"
-                    fi
-                displayName: Set App Name
-                env:
-                  ENVIRONMENT: $(ENVIRONMENT)
-              - template: ../steps/azure_web_app_deploy.yml
-                parameters:
-                  appName: $(appName)-$(ENVIRONMENT)
-                  appResourceGroup: $(resourceGroup)
-                  azurecrName: $(azurecrName)
-                  repository: back-office/appeals-web
           - name: Deploy Function - Appeals Casedata Import
             condition: eq(${{ parameters.deployFunctionAppealsCasedataImport }}, 'true')
             steps:

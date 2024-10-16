@@ -40,8 +40,8 @@ resource "azurerm_cdn_frontdoor_origin" "web" {
   certificate_name_check_enabled = true
 
   # use the second web app for now in TEST while diagnosing deployment issues
-  host_name          = var.environment == "test" ? module.app_web_2[0].default_site_hostname : module.app_web.default_site_hostname
-  origin_host_header = var.environment == "test" ? module.app_web_2[0].default_site_hostname : module.app_web.default_site_hostname
+  host_name          = module.app_web.default_site_hostname
+  origin_host_header = module.app_web.default_site_hostname
   http_port          = 80
   https_port         = 443
   priority           = 1
