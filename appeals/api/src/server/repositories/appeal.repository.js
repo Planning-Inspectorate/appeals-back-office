@@ -93,7 +93,8 @@ const getAppealById = async (id) => {
 					siteVisitType: true
 				}
 			},
-			caseNotes: true
+			caseNotes: true,
+			representations: true
 		}
 	});
 

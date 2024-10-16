@@ -8,6 +8,7 @@ import {
 import { add } from 'date-fns';
 import { formatFolder } from '#endpoints/documents/documents.formatter.js';
 import { APPEAL_CASE_STATUS, APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
+import { DOCUMENT_STATUS_NOT_RECEIVED, DOCUMENT_STATUS_RECEIVED } from '#endpoints/constants.js';
 
 const approxStageCompletion = {
 	STATE_TARGET_READY_TO_START: 5,
@@ -44,7 +45,7 @@ const formatAppeals = (appeal, linkedAppeals, commentCounts) => ({
 	dueDate: null,
 	isParentAppeal: linkedAppeals.filter((link) => link.parentRef === appeal.reference).length > 0,
 	isChildAppeal: linkedAppeals.filter((link) => link.childRef === appeal.reference).length > 0,
-  commentCounts
+	commentCounts
 });
 
 /**
@@ -87,7 +88,7 @@ const formatMyAppeals = (appeal, linkedAppeals, commentCounts) => ({
 	),
 	isParentAppeal: linkedAppeals.filter((link) => link.parentRef === appeal.reference).length > 0,
 	isChildAppeal: linkedAppeals.filter((link) => link.childRef === appeal.reference).length > 0,
-  commentCounts
+	commentCounts
 });
 
 /**
@@ -105,8 +106,8 @@ const formatAppeal = (
 	decisionInfo = null,
 	referencedAppeals = null
 ) => {
-  // TODO: This if statement shouldn't be needed because appeal is non-optional
-  // Need to make sure removing it doesn't break anything though
+	// TODO: This if statement shouldn't be needed because appeal is non-optional
+	// Need to make sure removing it doesn't break anything though
 	if (appeal) {
 		const decisionFolder = formatFolder(
 			rootFolders.find(
@@ -366,6 +367,11 @@ const formatAppeal = (
 					receivedAt:
 						appeal.lpaQuestionnaire?.lpaqCreatedDate &&
 						appeal.lpaQuestionnaire?.lpaqCreatedDate.toISOString()
+				},
+				ipComments: {
+					status: appeal.representations.length
+						? DOCUMENT_STATUS_RECEIVED
+						: DOCUMENT_STATUS_NOT_RECEIVED
 				}
 			}
 		};
