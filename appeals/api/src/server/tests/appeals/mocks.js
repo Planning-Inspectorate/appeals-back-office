@@ -234,7 +234,8 @@ export const fullPlanningAppeal = {
 		isDevelopmentDescriptionStillCorrect: false,
 		newDevelopmentDescription: 'A new extension has been added at the back',
 		ownershipCertificateSubmitted: false
-	}
+	},
+	representations: []
 };
 
 export const householdAppealAppellantCaseValid = {
