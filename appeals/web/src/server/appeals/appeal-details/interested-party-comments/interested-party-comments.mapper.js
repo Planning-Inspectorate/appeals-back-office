@@ -229,6 +229,14 @@ function generateCommentSummaryList(comment, isReviewPage = false) {
 				]
 			}
 		},
+		...(isReviewPage
+			? []
+			: [
+					{
+						key: { text: 'Site visit requested' },
+						value: { text: comment.siteVisitRequested ? 'Yes' : 'No' }
+					}
+			  ]),
 		{
 			key: { text: 'Submitted' },
 			value: { html: dateISOStringToDisplayDate(comment.created) }
@@ -256,22 +264,16 @@ function generateCommentSummaryList(comment, isReviewPage = false) {
 					{ text: 'Add', href: '#', visuallyHiddenText: 'supporting documents' }
 				]
 			}
-		}
+		},
+		...(isReviewPage || comment.status !== COMMENT_STATUS.INVALID
+			? []
+			: [
+					{
+						key: { text: 'Why comment invalid' },
+						value: { text: comment.notes }
+					}
+			  ])
 	];
-
-	if (!isReviewPage) {
-		rows.splice(3, 0, {
-			key: { text: 'Site visit requested' },
-			value: { text: comment.siteVisitRequested ? 'Yes' : 'No' }
-		});
-	}
-
-	if (!isReviewPage && comment.status === COMMENT_STATUS.INVALID) {
-		rows.push({
-			key: { text: 'Why comment invalid' },
-			value: { text: comment.notes }
-		});
-	}
 
 	return {
 		type: 'summary-list',
