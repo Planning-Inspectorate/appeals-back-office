@@ -12,7 +12,7 @@ import { databaseConnector } from '#utils/database-connector.js';
  * @property {string} [email]
  * @property {string} [website]
  * @property {string} [phoneNumber]
- * @property {UpdateAddressRequest} address
+ * @property {number} [addressId]
  * */
 
 /**
@@ -41,34 +41,6 @@ const updateServiceUserById = (id, data) => {
  * @param {ServiceUserInput} data
  * @returns {Promise<ServiceUser>}
  * */
-const createServiceUser = async (data) => {
-	const {
-		organisationName,
-		salutation,
-		firstName,
-		middleName,
-		lastName,
-		email,
-		website,
-		phoneNumber,
-		address
-	} = data;
-
-	return databaseConnector.serviceUser.create({
-		data: {
-			organisationName,
-			salutation,
-			firstName,
-			middleName,
-			lastName,
-			email,
-			website,
-			phoneNumber,
-			address: {
-				create: address
-			}
-		}
-	});
-};
+const createServiceUser = (data) => databaseConnector.serviceUser.create({ data });
 
 export default { createServiceUser, updateServiceUserById };

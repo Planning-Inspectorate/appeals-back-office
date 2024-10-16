@@ -1,3 +1,4 @@
+import addressRepository from '#repositories/address.repository.js';
 import * as representationRepository from '#repositories/representation.repository.js';
 import * as documentRepository from '#repositories/document.repository.js';
 import serviceUserRepository from '#repositories/service-user.repository.js';
@@ -105,7 +106,7 @@ export const redactRepresentation = (id, redactedRepresentation, reviewer) =>
  * @typedef {Object} CreateRepresentationInput
  * @property {'comment' | 'statement' | 'final_comment'} representationType
  * @property {{ firstName: string, lastName: string, email: string }} ipDetails
- * @property {UpdateAddressRequest} ipAddress
+ * @property {{ addressLine1: string, addressLine2?: string, town: string, county?: string, postCode: string }} ipAddress
  * @property {string[]} attachments
  * @property {string} redactionStatus
  *
@@ -116,20 +117,25 @@ export const redactRepresentation = (id, redactedRepresentation, reviewer) =>
 export const createRepresentation = async (appealId, input) => {
 	const { ipDetails, ipAddress } = input;
 
-	const representation = await representationRepository.createRepresentation(
-		appealId,
-		input.representationType
-	);
+	const address = await addressRepository.createAddress({
+		addressLine1: ipAddress.addressLine1,
+		addressLine2: ipAddress.addressLine2,
+		addressTown: ipAddress.town,
+		addressCounty: ipAddress.county,
+		postcode: ipAddress.postCode
+	});
 
 	const represented = await serviceUserRepository.createServiceUser({
 		firstName: ipDetails.firstName,
 		lastName: ipDetails.lastName,
 		email: ipDetails.email,
-		address: ipAddress
+		addressId: address.id
 	});
 
-	await representationRepository.updateRepresentationById(representation.id, {
-		representedId: represented.id
+	const representation = await representationRepository.createRepresentation({
+		appealId,
+		representedId: represented.id,
+		representationType: input.representationType
 	});
 
 	if (input.attachments.length > 0) {

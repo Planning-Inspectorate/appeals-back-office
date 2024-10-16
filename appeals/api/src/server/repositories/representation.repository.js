@@ -2,6 +2,20 @@ import { databaseConnector } from '#utils/database-connector.js';
 import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 
 /**
+ * @typedef {Object} CreateRepresentationPayload
+ * @property {number} appealId
+ * @property {'comment' | 'statement' | 'final_comment'} representationType
+ * @property {string} [originalRepresentation]
+ * @property {string} [redactedRepresentation]
+ * @property {number} [representedId]
+ * @property {number} [representativeId]
+ * @property {string} [lpaCode]
+ * @property {string} [status]
+ * @property {string} [reviewer]
+ * @property {string} [notes]
+ * */
+
+/**
  * @typedef {Object} RepresentationPayload
  * @property {number} [appealId]
  * @property {string} [representationType]
@@ -176,17 +190,10 @@ export const countAppealRepresentationsByStatus = async (appealId, representatio
 };
 
 /**
- * @param {number} appealId
- * @param {'comment' | 'statement' | 'final_comment'} representationType
+ * @param {CreateRepresentationPayload} data
  * @returns {Promise<import('@pins/appeals.api').Schema.Representation>}
  * */
-export const createRepresentation = (appealId, representationType) =>
-	databaseConnector.representation.create({
-		data: {
-			appealId,
-			representationType
-		}
-	});
+export const createRepresentation = (data) => databaseConnector.representation.create({ data });
 
 /**
  * @param {number} repId
