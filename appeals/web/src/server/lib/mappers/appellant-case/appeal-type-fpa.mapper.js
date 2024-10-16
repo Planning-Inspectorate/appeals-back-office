@@ -135,9 +135,9 @@ export function generateFPAComponents(appealDetails, appellantCaseData, mappedAp
 					mappedAppellantCaseData.relatedAppeals.display.summaryListItem,
 					mappedAppellantCaseData.planningObligationInSupport.display.summaryListItem,
 					mappedAppellantCaseData.statusPlanningObligation.display.summaryListItem,
+					mappedAppellantCaseData.planningObligation.display.summaryListItem,
 					mappedAppellantCaseData.appellantCostsApplication.display.summaryListItem,
 					mappedAppellantCaseData.costsDocument.display.summaryListItem,
-					mappedAppellantCaseData.planningObligation.display.summaryListItem,
 					mappedAppellantCaseData.ownershipCertificateSubmitted.display.summaryListItem,
 					mappedAppellantCaseData.ownershipCertificate.display.summaryListItem
 				]
