@@ -45,7 +45,9 @@ const updateLPAQuestionnaireById = async (req, res) => {
 			isCorrectAppealType,
 			isGreenBelt,
 			lpaNotificationMethods,
-			isAffectingNeighbouringSites
+			isAffectingNeighbouringSites,
+			eiaColumnTwoThreshold,
+			eiaRequiresEnvironmentalStatement
 		},
 		params,
 		validationOutcome
@@ -80,7 +82,9 @@ const updateLPAQuestionnaireById = async (req, res) => {
 					isConservationArea,
 					isCorrectAppealType,
 					lpaNotificationMethods,
-					isAffectingNeighbouringSites
+					isAffectingNeighbouringSites,
+					eiaColumnTwoThreshold,
+					eiaRequiresEnvironmentalStatement
 			  });
 
 		const updatedProperties = Object.keys(body).filter((key) => body[key] !== undefined);

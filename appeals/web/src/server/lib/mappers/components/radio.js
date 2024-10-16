@@ -9,13 +9,23 @@ import { kebabCase } from 'lodash-es';
  * @param {string|boolean|null} [params.value]
  * @param {string} [params.legendText]
  * @param {import('../global-mapper-formatter.js').ConditionalParams} [params.yesConditional]
+ * @param {string} [params.customYesLabel]
+ * @param {string} [params.customNoLabel]
  * @returns {PageComponent}
  */
-export function yesNoInput({ name, id, value, legendText, yesConditional }) {
+export function yesNoInput({
+	name,
+	id,
+	value,
+	legendText,
+	yesConditional,
+	customYesLabel,
+	customNoLabel
+}) {
 	/** @type {RadioItem} */
 	const yes = {
 		value: 'yes',
-		text: 'Yes',
+		text: customYesLabel || 'Yes',
 		checked: Boolean(value)
 	};
 	if (yesConditional) {
@@ -38,7 +48,7 @@ export function yesNoInput({ name, id, value, legendText, yesConditional }) {
 				yes,
 				{
 					value: 'no',
-					text: 'No',
+					text: customNoLabel || 'No',
 					// only show 'No' checked if value is defined
 					checked: typeof value !== 'undefined' && !value
 				}

@@ -78,7 +78,15 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
     </div>
     <div class="govuk-summary-card">
         <div class="govuk-summary-card__title-wrapper">
-            <h2 class="govuk-summary-card__title">2. Notifying relevant parties of the application</h2>
+            <h2 class="govuk-summary-card__title">2. Environmental impact assessment</h2>
+        </div>
+        <div class="govuk-summary-card__content">
+            <dl class="govuk-summary-list"></dl>
+        </div>
+    </div>
+    <div class="govuk-summary-card">
+        <div class="govuk-summary-card__title-wrapper">
+            <h2 class="govuk-summary-card__title">3. Notifying relevant parties of the application</h2>
         </div>
         <div class="govuk-summary-card__content">
             <dl class="govuk-summary-list">
@@ -131,7 +139,7 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
     </div>
     <div class="govuk-summary-card">
         <div class="govuk-summary-card__title-wrapper">
-            <h2 class="govuk-summary-card__title">3. Consultation responses and representations</h2>
+            <h2 class="govuk-summary-card__title">4. Consultation responses and representations</h2>
         </div>
         <div class="govuk-summary-card__content">
             <dl class="govuk-summary-list">
@@ -158,7 +166,7 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
     </div>
     <div class="govuk-summary-card">
         <div class="govuk-summary-card__title-wrapper">
-            <h2 class="govuk-summary-card__title">4. Planning officer’s report and supplementary documents</h2>
+            <h2 class="govuk-summary-card__title">5. Planning officer’s report and supplementary documents</h2>
         </div>
         <div class="govuk-summary-card__content">
             <dl class="govuk-summary-list">
@@ -195,7 +203,7 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
     </div>
     <div class="govuk-summary-card">
         <div class="govuk-summary-card__title-wrapper">
-            <h2 class="govuk-summary-card__title">5. Site access</h2>
+            <h2 class="govuk-summary-card__title">6. Site access</h2>
         </div>
         <div class="govuk-summary-card__content">
             <dl class="govuk-summary-list">
@@ -236,7 +244,7 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
     </div>
     <div class="govuk-summary-card">
         <div class="govuk-summary-card__title-wrapper">
-            <h2 class="govuk-summary-card__title">6. Appeal process</h2>
+            <h2 class="govuk-summary-card__title">7. Appeal process</h2>
         </div>
         <div class="govuk-summary-card__content">
             <dl class="govuk-summary-list">
@@ -400,7 +408,15 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
     </div>
     <div class="govuk-summary-card">
         <div class="govuk-summary-card__title-wrapper">
-            <h2 class="govuk-summary-card__title">2. Notifying relevant parties of the application</h2>
+            <h2 class="govuk-summary-card__title">2. Environmental impact assessment</h2>
+        </div>
+        <div class="govuk-summary-card__content">
+            <dl class="govuk-summary-list"></dl>
+        </div>
+    </div>
+    <div class="govuk-summary-card">
+        <div class="govuk-summary-card__title-wrapper">
+            <h2 class="govuk-summary-card__title">3. Notifying relevant parties of the application</h2>
         </div>
         <div class="govuk-summary-card__content">
             <dl class="govuk-summary-list">
@@ -453,7 +469,7 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
     </div>
     <div class="govuk-summary-card">
         <div class="govuk-summary-card__title-wrapper">
-            <h2 class="govuk-summary-card__title">3. Consultation responses and representations</h2>
+            <h2 class="govuk-summary-card__title">4. Consultation responses and representations</h2>
         </div>
         <div class="govuk-summary-card__content">
             <dl class="govuk-summary-list">
@@ -480,7 +496,7 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
     </div>
     <div class="govuk-summary-card">
         <div class="govuk-summary-card__title-wrapper">
-            <h2 class="govuk-summary-card__title">4. Planning officer’s report and supplementary documents</h2>
+            <h2 class="govuk-summary-card__title">5. Planning officer’s report and supplementary documents</h2>
         </div>
         <div class="govuk-summary-card__content">
             <dl class="govuk-summary-list">
@@ -517,7 +533,7 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
     </div>
     <div class="govuk-summary-card">
         <div class="govuk-summary-card__title-wrapper">
-            <h2 class="govuk-summary-card__title">5. Site access</h2>
+            <h2 class="govuk-summary-card__title">6. Site access</h2>
         </div>
         <div class="govuk-summary-card__content">
             <dl class="govuk-summary-list">
@@ -558,7 +574,7 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
     </div>
     <div class="govuk-summary-card">
         <div class="govuk-summary-card__title-wrapper">
-            <h2 class="govuk-summary-card__title">6. Appeal process</h2>
+            <h2 class="govuk-summary-card__title">7. Appeal process</h2>
         </div>
         <div class="govuk-summary-card__content">
             <dl class="govuk-summary-list">
@@ -757,7 +773,15 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
     </div>
     <div class="govuk-summary-card">
         <div class="govuk-summary-card__title-wrapper">
-            <h2 class="govuk-summary-card__title">2. Notifying relevant parties of the application</h2>
+            <h2 class="govuk-summary-card__title">2. Environmental impact assessment</h2>
+        </div>
+        <div class="govuk-summary-card__content">
+            <dl class="govuk-summary-list"></dl>
+        </div>
+    </div>
+    <div class="govuk-summary-card">
+        <div class="govuk-summary-card__title-wrapper">
+            <h2 class="govuk-summary-card__title">3. Notifying relevant parties of the application</h2>
         </div>
         <div class="govuk-summary-card__content">
             <dl class="govuk-summary-list">
@@ -810,7 +834,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
     </div>
     <div class="govuk-summary-card">
         <div class="govuk-summary-card__title-wrapper">
-            <h2 class="govuk-summary-card__title">3. Consultation responses and representations</h2>
+            <h2 class="govuk-summary-card__title">4. Consultation responses and representations</h2>
         </div>
         <div class="govuk-summary-card__content">
             <dl class="govuk-summary-list">
@@ -837,7 +861,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
     </div>
     <div class="govuk-summary-card">
         <div class="govuk-summary-card__title-wrapper">
-            <h2 class="govuk-summary-card__title">4. Planning officer’s report and supplementary documents</h2>
+            <h2 class="govuk-summary-card__title">5. Planning officer’s report and supplementary documents</h2>
         </div>
         <div class="govuk-summary-card__content">
             <dl class="govuk-summary-list">
@@ -874,7 +898,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
     </div>
     <div class="govuk-summary-card">
         <div class="govuk-summary-card__title-wrapper">
-            <h2 class="govuk-summary-card__title">5. Site access</h2>
+            <h2 class="govuk-summary-card__title">6. Site access</h2>
         </div>
         <div class="govuk-summary-card__content">
             <dl class="govuk-summary-list">
@@ -915,7 +939,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
     </div>
     <div class="govuk-summary-card">
         <div class="govuk-summary-card__title-wrapper">
-            <h2 class="govuk-summary-card__title">6. Appeal process</h2>
+            <h2 class="govuk-summary-card__title">7. Appeal process</h2>
         </div>
         <div class="govuk-summary-card__content">
             <dl class="govuk-summary-list">
@@ -1073,7 +1097,15 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
     </div>
     <div class="govuk-summary-card">
         <div class="govuk-summary-card__title-wrapper">
-            <h2 class="govuk-summary-card__title">2. Notifying relevant parties of the application</h2>
+            <h2 class="govuk-summary-card__title">2. Environmental impact assessment</h2>
+        </div>
+        <div class="govuk-summary-card__content">
+            <dl class="govuk-summary-list"></dl>
+        </div>
+    </div>
+    <div class="govuk-summary-card">
+        <div class="govuk-summary-card__title-wrapper">
+            <h2 class="govuk-summary-card__title">3. Notifying relevant parties of the application</h2>
         </div>
         <div class="govuk-summary-card__content">
             <dl class="govuk-summary-list">
@@ -1126,7 +1158,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
     </div>
     <div class="govuk-summary-card">
         <div class="govuk-summary-card__title-wrapper">
-            <h2 class="govuk-summary-card__title">3. Consultation responses and representations</h2>
+            <h2 class="govuk-summary-card__title">4. Consultation responses and representations</h2>
         </div>
         <div class="govuk-summary-card__content">
             <dl class="govuk-summary-list">
@@ -1153,7 +1185,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
     </div>
     <div class="govuk-summary-card">
         <div class="govuk-summary-card__title-wrapper">
-            <h2 class="govuk-summary-card__title">4. Planning officer’s report and supplementary documents</h2>
+            <h2 class="govuk-summary-card__title">5. Planning officer’s report and supplementary documents</h2>
         </div>
         <div class="govuk-summary-card__content">
             <dl class="govuk-summary-list">
@@ -1190,7 +1222,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
     </div>
     <div class="govuk-summary-card">
         <div class="govuk-summary-card__title-wrapper">
-            <h2 class="govuk-summary-card__title">5. Site access</h2>
+            <h2 class="govuk-summary-card__title">6. Site access</h2>
         </div>
         <div class="govuk-summary-card__content">
             <dl class="govuk-summary-list">
@@ -1231,7 +1263,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
     </div>
     <div class="govuk-summary-card">
         <div class="govuk-summary-card__title-wrapper">
-            <h2 class="govuk-summary-card__title">6. Appeal process</h2>
+            <h2 class="govuk-summary-card__title">7. Appeal process</h2>
         </div>
         <div class="govuk-summary-card__content">
             <dl class="govuk-summary-list">
@@ -2976,6 +3008,18 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
 </main>"
 `;
 
+exports[`LPA Questionnaire review Notification banners should render a "Column 2 threshold criteria status changed" success notification banner when meets eia column two threshold is changed 1`] = `
+"<div class="govuk-notification-banner govuk-notification-banner--success"
+role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
+    </div>
+    <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">Column 2 threshold criteria status changed</p>
+    </div>
+</div>"
+`;
+
 exports[`LPA Questionnaire review Notification banners should render a "Inspector access (lpa) updated" success notification banner when the inspector access (lpa) is updated 1`] = `
 "<div class="govuk-notification-banner govuk-notification-banner--success"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
@@ -3080,6 +3124,18 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
     </div>
     <div class="govuk-notification-banner__content">
         <p class="govuk-notification-banner__heading">Neighbouring site affected status updated</p>
+    </div>
+</div>"
+`;
+
+exports[`LPA Questionnaire review Notification banners should render an "Environmental statement status changed" success notification banner when meets eia requires environmental statement is changed 1`] = `
+"<div class="govuk-notification-banner govuk-notification-banner--success"
+role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
+    </div>
+    <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">Environmental statement status changed</p>
     </div>
 </div>"
 `;
@@ -3270,7 +3326,15 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
     </div>
     <div class="govuk-summary-card">
         <div class="govuk-summary-card__title-wrapper">
-            <h2 class="govuk-summary-card__title">2. Notifying relevant parties of the application</h2>
+            <h2 class="govuk-summary-card__title">2. Environmental impact assessment</h2>
+        </div>
+        <div class="govuk-summary-card__content">
+            <dl class="govuk-summary-list"></dl>
+        </div>
+    </div>
+    <div class="govuk-summary-card">
+        <div class="govuk-summary-card__title-wrapper">
+            <h2 class="govuk-summary-card__title">3. Notifying relevant parties of the application</h2>
         </div>
         <div class="govuk-summary-card__content">
             <dl class="govuk-summary-list">
@@ -3323,7 +3387,7 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
     </div>
     <div class="govuk-summary-card">
         <div class="govuk-summary-card__title-wrapper">
-            <h2 class="govuk-summary-card__title">3. Consultation responses and representations</h2>
+            <h2 class="govuk-summary-card__title">4. Consultation responses and representations</h2>
         </div>
         <div class="govuk-summary-card__content">
             <dl class="govuk-summary-list">
@@ -3350,7 +3414,7 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
     </div>
     <div class="govuk-summary-card">
         <div class="govuk-summary-card__title-wrapper">
-            <h2 class="govuk-summary-card__title">4. Planning officer’s report and supplementary documents</h2>
+            <h2 class="govuk-summary-card__title">5. Planning officer’s report and supplementary documents</h2>
         </div>
         <div class="govuk-summary-card__content">
             <dl class="govuk-summary-list">
@@ -3387,7 +3451,7 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
     </div>
     <div class="govuk-summary-card">
         <div class="govuk-summary-card__title-wrapper">
-            <h2 class="govuk-summary-card__title">5. Site access</h2>
+            <h2 class="govuk-summary-card__title">6. Site access</h2>
         </div>
         <div class="govuk-summary-card__content">
             <dl class="govuk-summary-list">
@@ -3428,7 +3492,7 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
     </div>
     <div class="govuk-summary-card">
         <div class="govuk-summary-card__title-wrapper">
-            <h2 class="govuk-summary-card__title">6. Appeal process</h2>
+            <h2 class="govuk-summary-card__title">7. Appeal process</h2>
         </div>
         <div class="govuk-summary-card__content">
             <dl class="govuk-summary-list">

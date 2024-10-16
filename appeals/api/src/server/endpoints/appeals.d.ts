@@ -310,6 +310,8 @@ interface SingleLPAQuestionnaireResponse {
 	extraConditions?: string | null;
 	hasExtraConditions?: boolean | null;
 	affectsScheduledMonument?: boolean | null;
+	eiaColumnTwoThreshold?: boolean | null;
+	eiaRequiresEnvironmentalStatement?: boolean | null;
 }
 
 interface UpdateLPAQuestionnaireRequest {
@@ -326,6 +328,8 @@ interface UpdateLPAQuestionnaireRequest {
 	validationOutcomeId?: number;
 	lpaNotificationMethods?: LPANotificationMethodsSelectedUncheckedUpdateManyWithoutLpaQuestionnaireNestedInput;
 	isAffectingNeighbouringSites?: boolean;
+	eiaColumnTwoThreshold?: boolean;
+	eiaRequiresEnvironmentalStatement?: boolean;
 }
 
 interface UpdateLPAQuestionnaireValidationOutcomeParams {

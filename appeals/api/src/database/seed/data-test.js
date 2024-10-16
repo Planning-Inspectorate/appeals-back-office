@@ -9,7 +9,7 @@ import {
 	getRandomisedAppellantCaseCreateInput,
 	appellantsList,
 	agentsList,
-	lpaQuestionnaireList
+	createLPAQuestionnaireForAppealType
 } from './data-samples.js';
 import { localPlanningDepartmentList } from './LPAs/dev.js';
 import { calculateTimetable } from '#utils/business-days.js';
@@ -125,7 +125,9 @@ const appealFactory = ({
 				}
 			}
 		}),
-		...(lpaQuestionnaire && { lpaQuestionnaire: { create: lpaQuestionnaireList[typeShorthand] } })
+		...(lpaQuestionnaire && {
+			lpaQuestionnaire: { create: createLPAQuestionnaireForAppealType(typeShorthand) }
+		})
 	};
 
 	return appeal;
@@ -262,12 +264,14 @@ const newS78Appeals = [
 	appealFactory({
 		typeShorthand: APPEAL_TYPE_SHORTHAND_FPA,
 		status: { status: APPEAL_CASE_STATUS.VALIDATION, createdAt: getDateTwoWeeksAgo() },
+		lpaQuestionnaire: true,
 		assignCaseOfficer: true,
 		agent: false
 	}),
 	appealFactory({
 		typeShorthand: APPEAL_TYPE_SHORTHAND_FPA,
 		status: { status: APPEAL_CASE_STATUS.VALIDATION, createdAt: getDateTwoWeeksAgo() },
+		lpaQuestionnaire: true,
 		assignCaseOfficer: true,
 		agent: false
 	}),

@@ -34,7 +34,9 @@ const updateLPAQuestionnaireById = (id, data) => {
 				inConservationArea: data.isConservationArea,
 				isCorrectAppealType: data.isCorrectAppealType,
 				lpaNotificationMethods: processNotificationMethods(id, data, transaction),
-				isAffectingNeighbouringSites: data.isAffectingNeighbouringSites
+				isAffectingNeighbouringSites: data.isAffectingNeighbouringSites,
+				eiaColumnTwoThreshold: data.eiaColumnTwoThreshold,
+				eiaRequiresEnvironmentalStatement: data.eiaRequiresEnvironmentalStatement
 			}
 		})
 	);

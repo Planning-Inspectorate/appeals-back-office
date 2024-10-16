@@ -65,7 +65,9 @@ const formatLpaQuestionnaire = (appeal, folders = null) => {
 			lpaStatement: lpaQuestionnaire.lpaStatement,
 			extraConditions: lpaQuestionnaire.newConditionDetails,
 			hasExtraConditions: lpaQuestionnaire.newConditionDetails !== null,
-			affectsSheduledMonument: lpaQuestionnaire.affectsScheduledMonument
+			affectsSheduledMonument: lpaQuestionnaire.affectsScheduledMonument,
+			eiaColumnTwoThreshold: lpaQuestionnaire.eiaColumnTwoThreshold,
+			eiaRequiresEnvironmentalStatement: lpaQuestionnaire.eiaRequiresEnvironmentalStatement
 		};
 	} else {
 		return {};
