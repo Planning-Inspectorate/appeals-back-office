@@ -708,7 +708,8 @@ describe('appeals routes', () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...householdAppeal,
-					childAppeals: linkedAppeals
+					childAppeals: linkedAppeals,
+					representations: []
 				});
 
 				const response = await request
@@ -764,6 +765,9 @@ describe('appeals routes', () => {
 						lpaQuestionnaire: {
 							status: 'received',
 							receivedAt: householdAppeal.lpaQuestionnaire.lpaqCreatedDate.toISOString()
+						},
+						ipComments: {
+							status: 'not_received'
 						}
 					},
 					healthAndSafety: {
@@ -876,6 +880,9 @@ describe('appeals routes', () => {
 						lpaQuestionnaire: {
 							status: 'received',
 							receivedAt: householdAppeal.lpaQuestionnaire.lpaqCreatedDate.toISOString()
+						},
+						ipComments: {
+							status: 'not_received'
 						}
 					},
 					healthAndSafety: {
