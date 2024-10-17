@@ -260,6 +260,7 @@ interface UpdateAppellantCaseValidationOutcomeParams {
 		agent: Agent;
 		id: number;
 		reference: string;
+		applicationReference: string;
 	};
 	appellantCaseId: number;
 	azureAdUserId: string;

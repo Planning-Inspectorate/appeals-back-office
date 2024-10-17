@@ -91,6 +91,7 @@ const updateLPAQuestionnaireValidationOutcome = async (
 		try {
 			await notifyClient.sendEmail(config.govNotify.template.lpaqComplete, recipientEmail, {
 				appeal_reference_number: appeal.reference,
+				lpa_reference: appeal.applicationReference || '',
 				site_address: siteAddress
 			});
 		} catch (error) {
@@ -118,7 +119,7 @@ const updateLPAQuestionnaireValidationOutcome = async (
 			try {
 				await notifyClient.sendEmail(config.govNotify.template.lpaqIncomplete, recipientEmail, {
 					appeal_reference_number: appeal.reference,
-					lpa_reference: lpaReference || 'No LPA reference',
+					lpa_reference: lpaReference || '',
 					site_address: siteAddress,
 					due_date: formatDate(new Date(lpaQuestionnaireDueDate), false),
 					reasons: incompleteReasonsList

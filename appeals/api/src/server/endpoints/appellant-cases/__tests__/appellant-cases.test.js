@@ -624,6 +624,7 @@ describe('appellant cases routes', () => {
 						emailReplyToId: null,
 						personalisation: {
 							appeal_reference_number: '1345264',
+							lpa_reference: '48269/APP/2021/1482',
 							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 							due_date: '14 July 2099',
 							reasons: [
@@ -894,6 +895,7 @@ describe('appellant cases routes', () => {
 						emailReplyToId: null,
 						personalisation: {
 							appeal_reference_number: '1345264',
+							lpa_reference: '48269/APP/2021/1482',
 							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 							reasons: [
 								'Appeal has not been submitted on time',
@@ -964,6 +966,7 @@ describe('appellant cases routes', () => {
 						emailReplyToId: null,
 						personalisation: {
 							appeal_reference_number: '1345264',
+							lpa_reference: '48269/APP/2021/1482',
 							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom'
 						},
 						reference: null

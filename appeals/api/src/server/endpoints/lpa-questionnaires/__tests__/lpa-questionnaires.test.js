@@ -265,6 +265,7 @@ describe('lpa questionnaires routes', () => {
 					{
 						emailReplyToId: null,
 						personalisation: {
+							lpa_reference: '48269/APP/2021/1482',
 							appeal_reference_number: '1345264',
 							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom'
 						},
