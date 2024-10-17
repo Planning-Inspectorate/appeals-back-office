@@ -79,7 +79,9 @@ function generateTableRows(items, isReview = false) {
 		{ text: comment.author },
 		{ text: dateISOStringToDisplayDate(comment.created) },
 		{
-			html: `<a href="./interested-party-comments/${comment.id}/${isReview ? 'review' : 'view'}">${
+			html: `<a href="./interested-party-comments/${comment.id}/${
+				isReview ? 'review' : 'view'
+			}" class="govuk-link">${
 				isReview ? 'Review' : 'View'
 			}<span class="govuk-visually-hidden"> interested party comments from ${
 				comment.author
