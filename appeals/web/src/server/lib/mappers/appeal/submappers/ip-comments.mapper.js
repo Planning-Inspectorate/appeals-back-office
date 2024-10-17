@@ -20,7 +20,7 @@ export const mapIpComments = ({ appealDetails, currentRoute }) => {
 						appealDetails?.documentationSummary?.ipComments?.status === 'received'
 							? 'Review'
 							: 'Add'
-					} <span class="govuk-visually-hidden">I P comments</span></a>`
+					} <span class="govuk-visually-hidden">Interested party comments</span></a>`
 				}
 			]
 		}
