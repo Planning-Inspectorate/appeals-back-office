@@ -94,3 +94,12 @@ export const errorAddressProvidedRadio = (/** @type {Error} */ errors) => {
 		  }
 		: undefined;
 };
+
+export const errorMessage = (/** @type {string}*/ fieldName, /** @type {Error}*/ errors) => {
+	const errorDetails = errors && Object.values(errors).find((error) => error.param === fieldName);
+	return errorDetails
+		? {
+				text: errorDetails.msg
+		  }
+		: undefined;
+};
