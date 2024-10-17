@@ -121,6 +121,12 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "web" {
     version = "2.1"
     action  = "Log"
   }
+
+  managed_rule {
+    type    = "Microsoft_BotManagerRuleSet"
+    version = "1.1"
+    action  = "Block"
+  }
 }
 
 resource "azurerm_cdn_frontdoor_security_policy" "web" {
