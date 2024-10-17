@@ -116,10 +116,33 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "web" {
     }
   }
 
+  custom_rule {
+    name     = "IpBlock"
+    action   = "Block"
+    enabled  = true
+    priority = 10
+    type     = "MatchRule"
+
+    match_condition {
+      match_variable     = "RemoteAddr"
+      operator           = "IPMatch"
+      negation_condition = false
+      match_values       = []
+    }
+  }
+
   managed_rule {
     type    = "Microsoft_DefaultRuleSet"
     version = "2.1"
     action  = "Log"
+  }
+
+  lifecycle {
+    ignore_changes = [
+      # match the second custom rule (IpBlock) and ignore the match values (IPs)
+      # managed in Portal
+      custom_rule[1].match_condition[0].match_values
+    ]
   }
 }
 
