@@ -62,7 +62,7 @@ const incompleteReasonsWithoutTextIds = incompleteReasonsWithoutText.map((reason
 const incompleteReasonsWithTextIds = incompleteReasonsWithText.map((reason) => reason.id);
 
 const text300Characters =
-			'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cill';
+	'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cill';
 const text301Characters = text300Characters + 'u';
 
 describe('appellant-case', () => {
@@ -696,121 +696,241 @@ describe('appellant-case', () => {
 			);
 		});
 
-		describe.only('show more', () => {
-			it('should not render a "show more" component on the "original development description" row if the associated value is less than or equal to 300 characters in length', async () => {
-				nock('http://test/')
-					.get('/appeals/2')
-					.reply(200, {
-						...appealData,
-						appealId: 2
-					});
-				nock('http://test/')
-					.get('/appeals/2/appellant-cases/0')
-					.reply(200, {
-						...appellantCaseDataNotValidated,
-						developmentDescription: {
-							...appellantCaseDataNotValidated.developmentDescription,
-							details: text300Characters
-						}
+		describe('show more', () => {
+			describe('inspector access required', () => {
+				it('should not render a "show more" component on the "inspector access required" row if the associated value is less than or equal to 300 characters in length', async () => {
+					nock('http://test/')
+						.get('/appeals/2')
+						.reply(200, {
+							...appealData,
+							appealId: 2,
+							inspectorAccess: {
+								appellantCase: {
+									isRequired: true,
+									details: text300Characters
+								}
+							}
+						});
+					nock('http://test/')
+						.get('/appeals/2/appellant-cases/0')
+						.reply(200, appellantCaseDataNotValidated);
+
+					const response = await request.get(`${baseUrl}/2${appellantCasePagePath}`);
+					const unprettifiedElement = parseHtml(response.text, {
+						rootElement: '#site-details',
+						skipPrettyPrint: true
 					});
 
-				const response = await request.get(`${baseUrl}/2${appellantCasePagePath}`);
-				const unprettifiedElement = parseHtml(response.text, {
-					rootElement: '#application-summary',
-					skipPrettyPrint: true
+					expect(unprettifiedElement.innerHTML).toContain(
+						`<dd class="govuk-summary-list__value"><span>Yes</span><br><span>${text300Characters}</span></dd>`
+					);
+					expect(unprettifiedElement.innerHTML).not.toContain('class="pins-show-more"');
 				});
 
-				expect(unprettifiedElement.innerHTML).toContain(
-					`<dd class="govuk-summary-list__value"> ${text300Characters}</dd>`
-				);
-				expect(unprettifiedElement.innerHTML).not.toContain('class="pins-show-more"');
+				it('should render a "show more" component with the expected HTML on the "inspector access required" row if the associated value is over 300 characters in length', async () => {
+					nock('http://test/')
+						.get('/appeals/2')
+						.reply(200, {
+							...appealData,
+							appealId: 2,
+							inspectorAccess: {
+								appellantCase: {
+									isRequired: true,
+									details: text301Characters
+								}
+							}
+						});
+					nock('http://test/')
+						.get('/appeals/2/appellant-cases/0')
+						.reply(200, appellantCaseDataNotValidated);
+
+					const response = await request.get(`${baseUrl}/2${appellantCasePagePath}`);
+
+					const unprettifiedElement = parseHtml(response.text, {
+						rootElement: '#site-details',
+						skipPrettyPrint: true
+					});
+
+					expect(unprettifiedElement.innerHTML).toContain(
+						`<dd class="govuk-summary-list__value"><span>Yes</span><br><div class="pins-show-more" data-label="Inspector access details">${text301Characters}</div></dd>`
+					);
+				});
 			});
 
-			it('should render a "show more" component with the expected HTML on the "original development description" row if the associated value is over 300 characters in length', async () => {
-				nock('http://test/')
-					.get('/appeals/2')
-					.reply(200, {
-						...appealData,
-						appealId: 2
-					});
-				nock('http://test/')
-					.get('/appeals/2/appellant-cases/0')
-					.reply(200, {
-						...appellantCaseDataNotValidated,
-						developmentDescription: {
-							...appellantCaseDataNotValidated.developmentDescription,
-							details: text301Characters
-						}
+			describe('potential safety risks', () => {
+				it('should not render a "show more" component on the "potential safety risks" row if the associated value is less than or equal to 300 characters in length', async () => {
+					nock('http://test/')
+						.get('/appeals/2')
+						.reply(200, {
+							...appealData,
+							appealId: 2,
+							healthAndSafety: {
+								appellantCase: {
+									hasIssues: true,
+									details: text300Characters
+								}
+							}
+						});
+					nock('http://test/')
+						.get('/appeals/2/appellant-cases/0')
+						.reply(200, appellantCaseDataNotValidated);
+
+					const response = await request.get(`${baseUrl}/2${appellantCasePagePath}`);
+					const unprettifiedElement = parseHtml(response.text, {
+						rootElement: '#site-details',
+						skipPrettyPrint: true
 					});
 
-				const response = await request.get(`${baseUrl}/2${appellantCasePagePath}`);
-
-				const unprettifiedElement = parseHtml(response.text, {
-					rootElement: '#application-summary',
-					skipPrettyPrint: true
+					expect(unprettifiedElement.innerHTML).toContain(
+						`<dd class="govuk-summary-list__value"><span>Yes</span><br><span>${text300Characters}</span></dd>`
+					);
+					expect(unprettifiedElement.innerHTML).not.toContain('class="pins-show-more"');
 				});
 
-				expect(unprettifiedElement.innerHTML).toContain(
-					`<div class="pins-show-more" data-label="Original Development description details">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillu</div>`
-				);
+				it('should render a "show more" component with the expected HTML on the "potential safety risks" row if the associated value is over 300 characters in length', async () => {
+					nock('http://test/')
+						.get('/appeals/2')
+						.reply(200, {
+							...appealData,
+							appealId: 2,
+							healthAndSafety: {
+								appellantCase: {
+									hasIssues: true,
+									details: text301Characters
+								}
+							}
+						});
+					nock('http://test/')
+						.get('/appeals/2/appellant-cases/0')
+						.reply(200, appellantCaseDataNotValidated);
+
+					const response = await request.get(`${baseUrl}/2${appellantCasePagePath}`);
+
+					const unprettifiedElement = parseHtml(response.text, {
+						rootElement: '#site-details',
+						skipPrettyPrint: true
+					});
+
+					expect(unprettifiedElement.innerHTML).toContain(
+						`<dd class="govuk-summary-list__value"><span>Yes</span><br><div class="pins-show-more" data-label="Potential safety risks details">${text301Characters}</div></dd>`
+					);
+				});
 			});
 
-			it.only('should not render a "show more" component on the "inspector access required" row if the associated value is less than or equal to 300 characters in length', async () => {
-				nock('http://test/')
-					.get('/appeals/2')
-					.reply(200, {
-						...appealData,
-						appealId: 2,
-						inspectorAccess: {
-							appellantCase: {
-								isRequired: true,
+			describe('original development description', () => {
+				it('should not render a "show more" component on the "original development description" row if the associated value is less than or equal to 300 characters in length', async () => {
+					nock('http://test/')
+						.get('/appeals/2')
+						.reply(200, {
+							...appealData,
+							appealId: 2
+						});
+					nock('http://test/')
+						.get('/appeals/2/appellant-cases/0')
+						.reply(200, {
+							...appellantCaseDataNotValidated,
+							developmentDescription: {
+								...appellantCaseDataNotValidated.developmentDescription,
 								details: text300Characters
 							}
-						}
-					});
-				nock('http://test/')
-					.get('/appeals/2/appellant-cases/0')
-					.reply(200, appellantCaseDataNotValidated);
+						});
 
-				const response = await request.get(`${baseUrl}/2${appellantCasePagePath}`);
-				const unprettifiedElement = parseHtml(response.text, {
-					rootElement: '#site-details',
-					skipPrettyPrint: true
+					const response = await request.get(`${baseUrl}/2${appellantCasePagePath}`);
+					const unprettifiedElement = parseHtml(response.text, {
+						rootElement: '#application-summary',
+						skipPrettyPrint: true
+					});
+
+					expect(unprettifiedElement.innerHTML).toContain(
+						`<dd class="govuk-summary-list__value"> ${text300Characters}</dd>`
+					);
+					expect(unprettifiedElement.innerHTML).not.toContain('class="pins-show-more"');
 				});
 
-				expect(unprettifiedElement.innerHTML).toContain(
-					`<dd class="govuk-summary-list__value"><span>Yes</span><br><span>${text300Characters}</span></dd>`
-				);
-				expect(unprettifiedElement.innerHTML).not.toContain('class="pins-show-more"');
+				it('should render a "show more" component with the expected HTML on the "original development description" row if the associated value is over 300 characters in length', async () => {
+					nock('http://test/')
+						.get('/appeals/2')
+						.reply(200, {
+							...appealData,
+							appealId: 2
+						});
+					nock('http://test/')
+						.get('/appeals/2/appellant-cases/0')
+						.reply(200, {
+							...appellantCaseDataNotValidated,
+							developmentDescription: {
+								...appellantCaseDataNotValidated.developmentDescription,
+								details: text301Characters
+							}
+						});
+
+					const response = await request.get(`${baseUrl}/2${appellantCasePagePath}`);
+
+					const unprettifiedElement = parseHtml(response.text, {
+						rootElement: '#application-summary',
+						skipPrettyPrint: true
+					});
+
+					expect(unprettifiedElement.innerHTML).toContain(
+						`<div class="pins-show-more" data-label="Original Development description details">${text301Characters}</div>`
+					);
+				});
 			});
 
-			it('should render a "show more" component with the expected HTML on the "inspector access required" row if the associated value is over 300 characters in length', async () => {
-				nock('http://test/')
-					.get('/appeals/2')
-					.reply(200, {
-						...appealData,
-						appealId: 2,
-						inspectorAccess: {
-							appellantCase: {
-								isRequired: true,
-								details: text300Characters
-							}
-						}
+			describe('reason for preference', () => {
+				it('should not render a "show more" component on the "reason for preference" row if the associated value is less than or equal to 300 characters in length', async () => {
+					nock('http://test/')
+						.get('/appeals/2')
+						.reply(200, {
+							...appealData,
+							appealId: 2,
+							appealType: 'Planning appeal'
+						});
+					nock('http://test/')
+						.get('/appeals/2/appellant-cases/0')
+						.reply(200, {
+							...appellantCaseDataNotValidated,
+							appellantProcedurePreferenceDetails: text300Characters
+						});
+
+					const response = await request.get(`${baseUrl}/2${appellantCasePagePath}`);
+					const unprettifiedElement = parseHtml(response.text, {
+						rootElement: '#appeal-summary',
+						skipPrettyPrint: true
 					});
-				nock('http://test/')
-					.get('/appeals/2/appellant-cases/0')
-					.reply(200, appellantCaseDataNotValidated);
 
-				const response = await request.get(`${baseUrl}/2${appellantCasePagePath}`);
-
-				const unprettifiedElement = parseHtml(response.text, {
-					rootElement: '#site-details',
-					skipPrettyPrint: true
+					expect(unprettifiedElement.innerHTML).toContain(
+						`<dd class="govuk-summary-list__value"> ${text300Characters}</dd>`
+					);
+					expect(unprettifiedElement.innerHTML).not.toContain('class="pins-show-more"');
 				});
 
-				expect(unprettifiedElement.innerHTML).toContain(
-					`<div class="pins-show-more" data-label="Original Development description details">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillu</div>`
-				);
+				it('should render a "show more" component with the expected HTML on the "reason for preference" row if the associated value is over 300 characters in length', async () => {
+					nock('http://test/')
+						.get('/appeals/2')
+						.reply(200, {
+							...appealData,
+							appealId: 2,
+							appealType: 'Planning appeal'
+						});
+					nock('http://test/')
+						.get('/appeals/2/appellant-cases/0')
+						.reply(200, {
+							...appellantCaseDataNotValidated,
+							appellantProcedurePreferenceDetails: text301Characters
+						});
+
+					const response = await request.get(`${baseUrl}/2${appellantCasePagePath}`);
+
+					const unprettifiedElement = parseHtml(response.text, {
+						rootElement: '#appeal-summary',
+						skipPrettyPrint: true
+					});
+
+					expect(unprettifiedElement.innerHTML).toContain(
+						`<div class="pins-show-more" data-label="Reason for preference details">${text301Characters}</div>`
+					);
+				});
 			});
 		});
 	});
