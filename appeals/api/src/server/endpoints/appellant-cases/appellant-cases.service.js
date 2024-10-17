@@ -89,7 +89,8 @@ const updateAppellantCaseValidationOutcome = async (
 		try {
 			await notifyClient.sendEmail(config.govNotify.template.appealConfirmed, recipientEmail, {
 				appeal_reference_number: appeal.reference,
-				site_address: siteAddress
+				site_address: siteAddress,
+				lpa_reference: appeal.applicationReference
 			});
 		} catch (error) {
 			if (error) {
@@ -118,6 +119,7 @@ const updateAppellantCaseValidationOutcome = async (
 				try {
 					await notifyClient.sendEmail(config.govNotify.template.appealIncomplete, recipientEmail, {
 						appeal_reference_number: appeal.reference,
+						lpa_reference: appeal.applicationReference,
 						site_address: siteAddress,
 						due_date: formatDate(new Date(updatedDueDate), false),
 						reasons: incompleteReasonsList
@@ -143,6 +145,7 @@ const updateAppellantCaseValidationOutcome = async (
 			try {
 				await notifyClient.sendEmail(config.govNotify.template.appealInvalid, recipientEmail, {
 					appeal_reference_number: appeal.reference,
+					lpa_reference: appeal.applicationReference,
 					site_address: siteAddress,
 					reasons: invalidReasonsList
 				});
