@@ -289,6 +289,9 @@ export const appealIngestionInput = {
 			},
 			{
 				path: 'appeal-decision/caseDecisionLetter'
+			},
+			{
+				path: 'representation/representationAttachments'
 			}
 		]
 	}

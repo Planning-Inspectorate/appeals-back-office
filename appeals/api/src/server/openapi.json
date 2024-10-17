@@ -1825,12 +1825,12 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/CreateSiteVisitResponse"
+									"$ref": "#/components/schemas/SiteVisitSingleResponse"
 								}
 							},
 							"application/xml": {
 								"schema": {
-									"$ref": "#/components/schemas/CreateSiteVisitResponse"
+									"$ref": "#/components/schemas/SiteVisitSingleResponse"
 								}
 							}
 						}
@@ -1849,12 +1849,12 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/CreateSiteVisitRequest"
+								"$ref": "#/components/schemas/SiteVisitCreateRequest"
 							}
 						},
 						"application/xml": {
 							"schema": {
-								"$ref": "#/components/schemas/CreateSiteVisitRequest"
+								"$ref": "#/components/schemas/SiteVisitCreateRequest"
 							}
 						}
 					}
@@ -1898,12 +1898,12 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/SingleSiteVisitResponse"
+									"$ref": "#/components/schemas/SiteVisitSingleResponse"
 								}
 							},
 							"application/xml": {
 								"schema": {
-									"$ref": "#/components/schemas/SingleSiteVisitResponse"
+									"$ref": "#/components/schemas/SiteVisitSingleResponse"
 								}
 							}
 						}
@@ -1955,12 +1955,12 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/UpdateSiteVisitResponse"
+									"$ref": "#/components/schemas/SiteVisitUpdateRequest"
 								}
 							},
 							"application/xml": {
 								"schema": {
-									"$ref": "#/components/schemas/UpdateSiteVisitResponse"
+									"$ref": "#/components/schemas/SiteVisitUpdateRequest"
 								}
 							}
 						}
@@ -1982,12 +1982,12 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/UpdateSiteVisitRequest"
+								"$ref": "#/components/schemas/SiteVisitUpdateRequest"
 							}
 						},
 						"application/xml": {
 							"schema": {
-								"$ref": "#/components/schemas/UpdateSiteVisitRequest"
+								"$ref": "#/components/schemas/SiteVisitUpdateRequest"
 							}
 						}
 					}
@@ -3363,6 +3363,65 @@
 						"description": "Not Found"
 					}
 				}
+			},
+			"post": {
+				"tags": ["Representations"],
+				"description": "Create a representation",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Create a Representation against an appeal",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RepResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/RepResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateRepRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateRepRequest"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/appeals/{appealId}/reps/{repId}": {
@@ -3876,62 +3935,6 @@
 					}
 				}
 			}
-		},
-		"/appeals/{appealId}/case-notes/{caseNoteId}": {
-			"get": {
-				"tags": ["Case notes"],
-				"description": "Returns a case note for an appeal by id",
-				"parameters": [
-					{
-						"name": "appealId",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"name": "caseNoteId",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"name": "azureAdUserId",
-						"in": "header",
-						"required": true,
-						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Returns a comment by caseNoteId",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/GetCaseNoteResponse"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/GetCaseNoteResponse"
-								}
-							}
-						}
-					},
-					"400": {
-						"description": "Bad Request"
-					},
-					"404": {
-						"description": "Not Found"
-					}
-				}
-			}
 		}
 	},
 	"components": {
@@ -4030,6 +4033,59 @@
 				},
 				"xml": {
 					"name": "RepStatusUpdateRequest"
+				}
+			},
+			"CreateRepRequest": {
+				"type": "object",
+				"properties": {
+					"ipDetails": {
+						"type": "object",
+						"properties": {
+							"firstName": {
+								"type": "string",
+								"example": "Kevin"
+							},
+							"lastName": {
+								"type": "string",
+								"example": "Fowler"
+							},
+							"email": {
+								"type": "string",
+								"example": "kevin.fowler@email.com"
+							}
+						}
+					},
+					"ipAddress": {
+						"type": "object",
+						"properties": {
+							"addressLine1": {
+								"type": "string",
+								"example": "Example line 1"
+							},
+							"town": {
+								"type": "string",
+								"example": "London"
+							},
+							"postCode": {
+								"type": "string",
+								"example": "AB1 2CD"
+							}
+						}
+					},
+					"attachments": {
+						"type": "array",
+						"example": ["1a14cb3a-35ef-4f93-a597-61010e6b0ad8"],
+						"items": {
+							"type": "string"
+						}
+					},
+					"redactionStatus": {
+						"type": "string",
+						"example": "unredacted"
+					}
+				},
+				"xml": {
+					"name": "CreateRepRequest"
 				}
 			},
 			"RepResponse": {
@@ -4155,7 +4211,7 @@
 						"properties": {
 							"submissionId": {
 								"type": "string",
-								"example": "c38ef972-f6d1-44b6-933b-41437b619062"
+								"example": "ba35248c-0b50-4352-ac3e-89d5c8fd165f"
 							},
 							"advertisedAppeal": {
 								"type": "boolean",

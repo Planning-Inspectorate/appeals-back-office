@@ -1,6 +1,9 @@
 import { databaseConnector } from '#utils/database-connector.js';
 import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 
+/** @typedef {import('#db-client').Prisma.RepresentationUpdateInput} RepresentationUpdateInput */
+/** @typedef {import('#db-client').Prisma.RepresentationUncheckedCreateInput} RepresentationCreateInput */
+
 /**
  *
  * @param {number} id
@@ -112,13 +115,12 @@ export const getThirdPartyCommentsByAppealId = async (
 /**
  *
  * @param {number} id
- * @param {string|undefined} redactedRepresentation
- * @param {string|undefined} status
- * @param {string|undefined} notes
- * @param {string} reviewer
+ * @param {RepresentationUpdateInput} data
  * @returns {Promise<import('@pins/appeals.api').Schema.Representation>}
  */
-export const updateRepresentationById = (id, redactedRepresentation, status, notes, reviewer) => {
+export const updateRepresentationById = (id, data) => {
+	const { status, redactedRepresentation, notes, reviewer } = data;
+
 	return databaseConnector.representation.update({
 		where: {
 			id
@@ -161,3 +163,25 @@ export const countAppealRepresentationsByStatus = async (appealId, representatio
 		{}
 	);
 };
+
+/**
+ * @param {RepresentationCreateInput} data
+ * @returns {Promise<import('@pins/appeals.api').Schema.Representation>}
+ * */
+export const createRepresentation = (data) => databaseConnector.representation.create({ data });
+
+/**
+ * @param {number} repId
+ * @param {{ documentGuid: string, version: number }[]} attachments
+ * */
+export const addAttachments = (repId, attachments) =>
+	databaseConnector.representation.update({
+		where: { id: repId },
+		data: {
+			attachments: {
+				connect: attachments.map((a) => ({
+					documentGuid_version: a
+				}))
+			}
+		}
+	});
