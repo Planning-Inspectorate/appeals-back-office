@@ -265,4 +265,22 @@ describe('interested-party-comments', () => {
 			expect(elementInnerHtml).toContain('Page not found');
 		});
 	});
+
+	describe('POST /review', () => {
+		beforeEach(() => {
+			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
+			nock('http://test/').patch('/appeals/2/reps/5/status').reply(200, {});
+		});
+
+		it('should set represnetation status to valid', async () => {
+			const response = await request
+				.post(`${baseUrl}/2/interested-party-comments/5/review`)
+				.send({ status: 'valid' });
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/2/interested-party-comments'
+			);
+		});
+	});
 });
