@@ -122,4 +122,83 @@ describe('/appeals/:id/representations', () => {
 			});
 		});
 	});
+
+	describe('POST representation/comments', () => {
+		test('400 when missing first name', async () => {
+			const response = await request
+				.post('/appeals/1/reps/comments')
+				.send({ ipDetails: { lastName: 'test' }, redactionStatus: 'test' })
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual({
+				errors: {
+					'ipDetails.firstName': 'must be a string'
+				}
+			});
+		});
+
+		test('400 when missing last name', async () => {
+			const response = await request
+				.post('/appeals/1/reps/comments')
+				.send({ ipDetails: { firstName: 'test' }, redactionStatus: 'test' })
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual({
+				errors: {
+					'ipDetails.lastName': 'must be a string'
+				}
+			});
+		});
+
+		test('400 when missing redaction status', async () => {
+			const response = await request
+				.post('/appeals/1/reps/comments')
+				.send({ ipDetails: { firstName: 'test', lastName: 'test' } })
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual({
+				errors: {
+					redactionStatus: 'Invalid value'
+				}
+			});
+		});
+
+		test('400 when email is invalid', async () => {
+			const response = await request
+				.post('/appeals/1/reps/comments')
+				.send({
+					ipDetails: { firstName: 'test', lastName: 'test', email: 'invalid email' },
+					redactionStatus: 'test'
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual({
+				errors: {
+					'ipDetails.email': 'must be a valid email'
+				}
+			});
+		});
+
+		test('400 when attachment guids are invalid', async () => {
+			const response = await request
+				.post('/appeals/1/reps/comments')
+				.send({
+					ipDetails: { firstName: 'test', lastName: 'test' },
+					redactionStatus: 'test',
+					attachments: [0]
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual({
+				errors: {
+					attachments: 'must be an array of strings'
+				}
+			});
+		});
+	});
 });
