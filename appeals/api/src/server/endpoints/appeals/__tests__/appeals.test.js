@@ -1433,7 +1433,8 @@ describe('appeals/case-reference/:caseReference', () => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockResolvedValue({
 				...householdAppeal,
-				childAppeals: linkedAppeals
+				childAppeals: linkedAppeals,
+				representations: []
 			});
 			const response = await request
 				.get(`/appeals/case-reference/${householdAppeal.reference}`)
@@ -1487,6 +1488,9 @@ describe('appeals/case-reference/:caseReference', () => {
 					lpaQuestionnaire: {
 						status: 'received',
 						receivedAt: householdAppeal.lpaQuestionnaire.lpaqCreatedDate.toISOString()
+					},
+					ipComments: {
+						status: 'not_received'
 					}
 				},
 				healthAndSafety: {
@@ -1600,6 +1604,9 @@ describe('appeals/case-reference/:caseReference', () => {
 					lpaQuestionnaire: {
 						status: 'received',
 						receivedAt: householdAppeal.lpaQuestionnaire.lpaqCreatedDate.toISOString()
+					},
+					ipComments: {
+						status: 'not_received'
 					}
 				},
 				healthAndSafety: {
