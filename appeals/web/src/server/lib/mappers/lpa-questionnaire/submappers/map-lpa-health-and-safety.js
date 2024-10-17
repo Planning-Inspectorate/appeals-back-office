@@ -11,5 +11,7 @@ export const mapLpaHealthAndSafety = ({ lpaQuestionnaireData, currentRoute, user
 		link: `${currentRoute}/safety-risks/change/lpa`,
 		editable: userHasUpdateCase,
 		addCyAttribute: true,
-		classes: 'lpa-health-and-safety'
+		classes: 'lpa-health-and-safety',
+		withShowMore: true,
+		showMoreLabelText: 'Potential safety risks details'
 	});

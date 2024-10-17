@@ -214,7 +214,7 @@ exports[`procedure-preference GET /appellant-case should render a summary list r
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Reason for preference</dt>
                     <dd class="govuk-summary-list__value">Not applicable</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/procedure-preference/details/change"
-                        data-cy="change-procedure-preference-details"> Change<span class="govuk-visually-hidden"> reason for preference</span></a>
+                        data-cy="change-procedure-preference-details"> Change<span class="govuk-visually-hidden"> Reason for preference</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Expected length of procedure</dt>
@@ -535,7 +535,7 @@ exports[`procedure-preference GET /appellant-case should render a summary list r
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Reason for preference</dt>
                     <dd class="govuk-summary-list__value">Not applicable</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/procedure-preference/details/change"
-                        data-cy="change-procedure-preference-details"> Change<span class="govuk-visually-hidden"> reason for preference</span></a>
+                        data-cy="change-procedure-preference-details"> Change<span class="govuk-visually-hidden"> Reason for preference</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Expected length of procedure</dt>
@@ -856,7 +856,7 @@ exports[`procedure-preference GET /appellant-case should render a summary list r
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Reason for preference</dt>
                     <dd class="govuk-summary-list__value">Not applicable</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/procedure-preference/details/change"
-                        data-cy="change-procedure-preference-details"> Change<span class="govuk-visually-hidden"> reason for preference</span></a>
+                        data-cy="change-procedure-preference-details"> Change<span class="govuk-visually-hidden"> Reason for preference</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Expected length of procedure</dt>
@@ -1177,7 +1177,7 @@ exports[`procedure-preference GET /appellant-case should render a summary list r
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Reason for preference</dt>
                     <dd class="govuk-summary-list__value">Not applicable</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/procedure-preference/details/change"
-                        data-cy="change-procedure-preference-details"> Change<span class="govuk-visually-hidden"> reason for preference</span></a>
+                        data-cy="change-procedure-preference-details"> Change<span class="govuk-visually-hidden"> Reason for preference</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Expected length of procedure</dt>
@@ -1498,7 +1498,7 @@ exports[`procedure-preference GET /appellant-case should render a summary list r
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Reason for preference</dt>
                     <dd class="govuk-summary-list__value">Not applicable</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/procedure-preference/details/change"
-                        data-cy="change-procedure-preference-details"> Change<span class="govuk-visually-hidden"> reason for preference</span></a>
+                        data-cy="change-procedure-preference-details"> Change<span class="govuk-visually-hidden"> Reason for preference</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Expected length of procedure</dt>
@@ -1819,7 +1819,7 @@ exports[`procedure-preference GET /appellant-case should render a summary list r
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Reason for preference</dt>
                     <dd class="govuk-summary-list__value">Not applicable</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/procedure-preference/details/change"
-                        data-cy="change-procedure-preference-details"> Change<span class="govuk-visually-hidden"> reason for preference</span></a>
+                        data-cy="change-procedure-preference-details"> Change<span class="govuk-visually-hidden"> Reason for preference</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Expected length of procedure</dt>
@@ -2140,7 +2140,7 @@ exports[`procedure-preference GET /appellant-case should render a summary list r
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Reason for preference</dt>
                     <dd class="govuk-summary-list__value">Not applicable</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/procedure-preference/details/change"
-                        data-cy="change-procedure-preference-details"> Change<span class="govuk-visually-hidden"> reason for preference</span></a>
+                        data-cy="change-procedure-preference-details"> Change<span class="govuk-visually-hidden"> Reason for preference</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Expected length of procedure</dt>
@@ -2461,7 +2461,7 @@ exports[`procedure-preference GET /appellant-case should render a summary list r
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Reason for preference</dt>
                     <dd class="govuk-summary-list__value">Lorem ipsum</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/procedure-preference/details/change"
-                        data-cy="change-procedure-preference-details"> Change<span class="govuk-visually-hidden"> reason for preference</span></a>
+                        data-cy="change-procedure-preference-details"> Change<span class="govuk-visually-hidden"> Reason for preference</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Expected length of procedure</dt>

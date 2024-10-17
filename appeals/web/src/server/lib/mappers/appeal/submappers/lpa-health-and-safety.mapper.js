@@ -19,5 +19,7 @@ export const mapLpaHealthAndSafety = ({
 			shouldDisplayChangeLinksForLPAQStatus(
 				appealDetails.documentationSummary?.lpaQuestionnaire?.status
 			),
-		classes: 'appeal-lpa-health-and-safety'
+		classes: 'appeal-lpa-health-and-safety',
+		withShowMore: true,
+		showMoreLabelText: 'Potential safety risks details (LPA answer)'
 	});

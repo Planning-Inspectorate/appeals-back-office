@@ -14,5 +14,7 @@ export const mapAppellantHealthAndSafety = ({
 		defaultText: 'No answer provided',
 		link: `${currentRoute}/safety-risks/change/appellant`,
 		editable: userHasUpdateCasePermission,
-		classes: 'appeal-appellant-health-and-safety'
+		classes: 'appeal-appellant-health-and-safety',
+		withShowMore: true,
+		showMoreLabelText: 'Potential safety risks details (appellant answer)'
 	});
