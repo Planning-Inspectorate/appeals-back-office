@@ -1,4 +1,5 @@
 import logger from '#lib/logger.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import {
 	interestedPartyCommentsPage,
 	reviewInterestedPartyCommentPage,
@@ -12,7 +13,7 @@ import * as interestedPartyCommentsService from './interested-party-comments.ser
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const renderInterestedPartyComments = async (request, response) => {
-	const { errors, currentAppeal } = request;
+	const { errors, currentAppeal, session } = request;
 	const paginationParameters = {
 		pageNumber: 1,
 		pageSize: 1000
@@ -51,7 +52,8 @@ export const renderInterestedPartyComments = async (request, response) => {
 			currentAppeal,
 			awaitingReviewComments,
 			validComments,
-			invalidComments
+			invalidComments,
+			session
 		);
 
 		return response.status(200).render('appeals/appeal/interested-party-comments.njk', {
@@ -112,7 +114,10 @@ export const renderPostReviewInterestedPartyComment = async (request, response) 
 		const {
 			errors,
 			currentAppeal,
-			params: { appealId, commentId }
+			params: { appealId, commentId },
+			body: { status },
+			apiClient,
+			session
 		} = request;
 
 		if (!currentAppeal) {
@@ -132,10 +137,20 @@ export const renderPostReviewInterestedPartyComment = async (request, response) 
 			});
 		}
 
+		await interestedPartyCommentsService.patchInterestedPartyCommentStatus(
+			apiClient,
+			appealId,
+			commentId,
+			status
+		);
+
+		addNotificationBannerToSession(session, 'interestedPartyCommentsValidSuccess', appealId);
+
 		return response.redirect(
-			`/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/reject-comment`
+			`/appeals-service/appeal-details/${appealId}/interested-party-comments`
 		);
 	} catch (error) {
+		console.log('🚀 ~ renderPostReviewInterestedPartyComment ~ error:', error);
 		logger.error(error);
 		return response.status(500).render('app/500.njk');
 	}

@@ -1,6 +1,7 @@
 import { addressToMultilineStringHtml } from '#lib/address-formatter.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
+import { buildNotificationBanners } from '#lib/mappers/notification-banners.mapper.js';
 import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 
@@ -17,11 +18,25 @@ import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
  * @param {IPCommentsList} awaitingReview
  * @param {IPCommentsList} valid
  * @param {IPCommentsList} invalid
+ * @param {import('@pins/express').Session} session
  * @returns {Promise<PageContent>}
  */
-export async function interestedPartyCommentsPage(appealDetails, awaitingReview, valid, invalid) {
+export async function interestedPartyCommentsPage(
+	appealDetails,
+	awaitingReview,
+	valid,
+	invalid,
+	session
+) {
 	const appealUrl = `/appeals-service/appeal-details/${appealDetails.appealId}`;
 	const shortReference = appealShortReference(appealDetails.appealReference);
+
+	const notificationBanners = buildNotificationBanners(
+		session,
+		'ipComments',
+		appealDetails.appealId
+	);
+
 	const pageContent = {
 		title: `Interested Party Comments`,
 		backLinkUrl: appealUrl,
@@ -29,7 +44,7 @@ export async function interestedPartyCommentsPage(appealDetails, awaitingReview,
 		preHeading: `Appeal ${shortReference}`,
 		heading: 'Interested Party Comments',
 		headingClasses: 'govuk-heading-l',
-		pageComponents: [],
+		pageComponents: [...notificationBanners],
 		awaitingReviewTable: createTable(awaitingReview, true),
 		validTable: createTable(valid, false),
 		invalidTable: createTable(invalid, false)

@@ -180,6 +180,11 @@ export const notificationBannerDefinitions = {
 	interestedPartyCommentsAwaitingReview: {
 		pages: ['appealDetails'],
 		persist: true
+	},
+	interestedPartyCommentsValidSuccess: {
+		type: 'success',
+		pages: ['ipComments'],
+		text: 'Comment valid'
 	}
 };
 
