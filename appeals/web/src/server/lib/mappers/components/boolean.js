@@ -99,7 +99,7 @@ export function booleanWithDetailsSummaryListItem({
 					convertFromBooleanToYesNo(value, defaultText),
 					valueDetails,
 					withShowMore,
-					showMoreLabelText
+					showMoreLabelText || text
 				),
 				actions: { items: actions },
 				classes

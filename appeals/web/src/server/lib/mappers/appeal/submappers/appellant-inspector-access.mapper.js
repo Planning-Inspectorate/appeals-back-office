@@ -14,5 +14,7 @@ export const mapAppellantInspectorAccess = ({
 		defaultText: 'No answer provided',
 		link: `${currentRoute}/inspector-access/change/appellant`,
 		editable: userHasUpdateCasePermission,
-		classes: 'appeal-appellant-inspector-access'
+		classes: 'appeal-appellant-inspector-access',
+		withShowMore: true,
+		showMoreLabelText: 'Inspection access details (appellant answer)'
 	});

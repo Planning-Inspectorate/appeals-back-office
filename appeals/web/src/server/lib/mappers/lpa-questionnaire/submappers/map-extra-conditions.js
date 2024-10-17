@@ -9,5 +9,7 @@ export const mapExtraConditions = ({ lpaQuestionnaireData, currentRoute, userHas
 		valueDetails: lpaQuestionnaireData.extraConditions,
 		defaultText: '',
 		link: `${currentRoute}/extra-conditions/change`,
-		editable: userHasUpdateCase
+		editable: userHasUpdateCase,
+		withShowMore: true,
+		showMoreLabelText: 'Extra conditions details'
 	});

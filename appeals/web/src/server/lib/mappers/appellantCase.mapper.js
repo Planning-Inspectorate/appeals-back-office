@@ -142,7 +142,8 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		value: appellantCaseData.developmentDescription?.details || 'Not provided',
 		link: `${currentRoute}/development-description/change`,
 		editable: userHasUpdateCase,
-		withShowMore: true
+		withShowMore: true,
+		showMoreLabelText: 'Original Development description details'
 	});
 
 	mappedData.changedDevelopmentDescription = booleanSummaryListItem({
@@ -251,7 +252,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		classes: 'appellantcase-inspector-access',
 		addCyAttribute: true,
 		withShowMore: true,
-		showMoreLabelText: 'Inspector access required'
+		showMoreLabelText: 'Inspector access details'
 	});
 
 	mappedData.healthAndSafetyIssues = booleanWithDetailsSummaryListItem({
@@ -264,7 +265,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		editable: userHasUpdateCase,
 		addCyAttribute: true,
 		withShowMore: true,
-		showMoreLabelText: 'Potential safety risks'
+		showMoreLabelText: 'Potential safety risks details'
 	});
 
 	mappedData.applicationForm = documentInstruction({
@@ -560,30 +561,15 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		}
 	};
 
-	/** @type {Instructions} */
-	mappedData.procedurePreferenceDetails = {
+	mappedData.procedurePreferenceDetails = textSummaryListItem({
 		id: 'procedure-preference-details',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Reason for preference'
-				},
-				value: {
-					text: appellantCaseData.appellantProcedurePreferenceDetails || 'Not applicable'
-				},
-				actions: {
-					items: [
-						{
-							text: 'Change',
-							visuallyHiddenText: 'reason for preference',
-							href: `${currentRoute}/procedure-preference/details/change`,
-							attributes: { 'data-cy': 'change-procedure-preference-details' }
-						}
-					]
-				}
-			}
-		}
-	};
+		text: 'Reason for preference',
+		value: appellantCaseData.appellantProcedurePreferenceDetails || 'Not applicable',
+		link: `${currentRoute}/procedure-preference/details/change`,
+		editable: userHasUpdateCase,
+		withShowMore: true,
+		showMoreLabelText: 'Reason for preference details'
+	});
 
 	/** @type {Instructions} */
 	mappedData.procedurePreferenceDuration = {
