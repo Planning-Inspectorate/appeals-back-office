@@ -1,5 +1,10 @@
 import validateIdParameter from '#common/validators/id-parameter.js';
-import { ERROR_REP_OUTCOME_MUST_BE_ONE_OF, ERROR_MUST_BE_STRING } from '#endpoints/constants.js';
+import {
+	ERROR_REP_OUTCOME_MUST_BE_ONE_OF,
+	ERROR_MUST_BE_STRING,
+	ERROR_INVALID_EMAIL,
+	ERROR_MUST_BE_ARRAY_OF_STRINGS
+} from '#endpoints/constants.js';
 import { validationErrorHandler } from '#middleware/error-handler.js';
 import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
 import { composeMiddleware } from '@pins/express';
@@ -29,26 +34,14 @@ export const getRepresentationUpdateValidator = composeMiddleware(
 
 export const createRepresentationValidator = composeMiddleware(
 	validateIdParameter('appealId'),
-	body('representedFirstName')
-		.exists()
-		.notEmpty()
-		.withMessage("The represented party's first name is required."),
-	body('representedLastName')
-		.exists()
-		.notEmpty()
-		.withMessage("The represented party's last name is required."),
-	body('email')
-		.optional()
-		.isEmail()
-		.withMessage("The represented party's email must be a valid email address."),
-	body('attachments').exists().notEmpty().withMessage('A document UUID is required.'),
+	body('ipDetails.firstName').isString().withMessage(ERROR_MUST_BE_STRING),
+	body('ipDetails.lastName').isString().withMessage(ERROR_MUST_BE_STRING),
+	body('ipDetails.email').optional().isEmail().withMessage(ERROR_INVALID_EMAIL),
 	body('attachments')
 		.optional()
 		.isArray()
 		.custom((value) => value.every((/** @type {*} */ item) => typeof item === 'string'))
-		.withMessage('`attachments` must be an array of UUIDs.'),
-	body('redactionStatus')
-		.exists()
-		.notEmpty()
-		.withMessage('The redaction status of the comment is required')
+		.withMessage(ERROR_MUST_BE_ARRAY_OF_STRINGS),
+	body('redactionStatus').isString(),
+	validationErrorHandler
 );
