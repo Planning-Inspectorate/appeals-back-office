@@ -2,18 +2,7 @@ import { databaseConnector } from '#utils/database-connector.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAddressRequest} UpdateAddressRequest */
 /** @typedef {import('@pins/appeals.api').Schema.ServiceUser} ServiceUser */
-/**
- * @typedef {Object} ServiceUserInput
- * @property {string} [organisationName]
- * @property {string} [salutation]
- * @property {string} [firstName]
- * @property {string} [middleName]
- * @property {string} [lastName]
- * @property {string} [email]
- * @property {string} [website]
- * @property {string} [phoneNumber]
- * @property {number} [addressId]
- * */
+/** @typedef {import('#db-client').Prisma.ServiceUserCreateInput} ServiceUserCreateInput */
 
 /**
  * Updates a service user's details
@@ -38,7 +27,7 @@ const updateServiceUserById = (id, data) => {
 };
 
 /**
- * @param {ServiceUserInput} data
+ * @param {ServiceUserCreateInput} data
  * @returns {Promise<ServiceUser>}
  * */
 const createServiceUser = (data) => databaseConnector.serviceUser.create({ data });
