@@ -680,6 +680,7 @@ model Representation {
   notes                  String?
   attachments            RepresentationAttachment[]
   siteVisitRequested     Boolean                    @default(false)
+  source                 String                     @default("citizen")
 }
 
 /// Representation model
