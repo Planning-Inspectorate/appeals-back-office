@@ -168,6 +168,7 @@ describe('appeal change type resubmit routes', () => {
 				{
 					emailReplyToId: null,
 					personalisation: {
+						existing_appeal_type: 'Householder',
 						appeal_reference_number: '1345264',
 						lpa_reference: '48269/APP/2021/1482',
 						appeal_type: 'type a',

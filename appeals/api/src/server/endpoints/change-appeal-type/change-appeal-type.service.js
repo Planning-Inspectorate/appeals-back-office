@@ -56,6 +56,7 @@ const changeAppealType = async (
 
 	const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
 	const emailVariables = {
+		existing_appeal_type: appeal.appealType?.type || '',
 		appeal_reference_number: appeal.reference,
 		lpa_reference: appeal.applicationReference || '',
 		site_address: siteAddress,
