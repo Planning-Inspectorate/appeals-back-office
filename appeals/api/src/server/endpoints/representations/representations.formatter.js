@@ -23,7 +23,8 @@ export const formatRepresentation = (rep) => {
 		notes: rep.notes || '',
 		attachments: rep.attachments || [],
 		representationType: rep.representationType,
-		siteVisitRequested: rep.siteVisitRequested
+		siteVisitRequested: rep.siteVisitRequested,
+		source: rep.source
 	};
 
 	if (rep.represented) {
