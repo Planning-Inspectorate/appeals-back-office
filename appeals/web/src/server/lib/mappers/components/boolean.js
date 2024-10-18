@@ -1,5 +1,6 @@
 import { convertFromBooleanToYesNo } from '#lib/boolean-formatter.js';
 import { buildHtmSpan } from '#lib/nunjucks-template-builders/tag-builders.js';
+import { SHOW_MORE_MAXIMUM_CHARACTERS_BEFORE_HIDING } from '#lib/constants.js';
 
 /**
  *
@@ -61,6 +62,8 @@ export function booleanSummaryListItem({
  * @param {boolean} [options.addCyAttribute]
  * @param {boolean} options.editable
  * @param {string} [options.classes]
+ * @param {boolean} [options.withShowMore]
+ * @param {string} [options.showMoreLabelText]
  * @returns {Instructions}
  */
 export function booleanWithDetailsSummaryListItem({
@@ -72,7 +75,9 @@ export function booleanWithDetailsSummaryListItem({
 	link,
 	addCyAttribute,
 	editable,
-	classes
+	classes,
+	withShowMore,
+	showMoreLabelText
 }) {
 	/** @type {ActionItemProperties[]} */
 	const actions = [];
@@ -84,14 +89,18 @@ export function booleanWithDetailsSummaryListItem({
 			attributes: addCyAttribute && { 'data-cy': 'change-' + id }
 		});
 	}
+
 	return {
 		id,
 		display: {
 			summaryListItem: {
 				key: { text },
-				value: {
-					html: formatAnswerAndDetails(convertFromBooleanToYesNo(value, defaultText), valueDetails)
-				},
+				value: formatAnswerAndDetails(
+					convertFromBooleanToYesNo(value, defaultText),
+					valueDetails,
+					withShowMore,
+					showMoreLabelText || text
+				),
 				actions: { items: actions },
 				classes
 			}
@@ -102,12 +111,45 @@ export function booleanWithDetailsSummaryListItem({
 /**
  * @param {string|null|undefined} answer
  * @param {string|null|undefined} details
- * @returns {string}
+ * @param {boolean} [withShowMore]
+ * @param {string} [showMoreLabelText]
+ * @returns {HtmlProperty}
  */
-const formatAnswerAndDetails = (answer, details) => {
-	let formatted = buildHtmSpan(answer || '');
+const formatAnswerAndDetails = (answer, details, withShowMore, showMoreLabelText) => {
+	const formattedAnswer = buildHtmSpan(answer || '');
+
 	if (answer === 'Yes') {
-		formatted += `<br>${buildHtmSpan(details || '')}`;
+		if (
+			withShowMore &&
+			typeof details === 'string' &&
+			details.length > SHOW_MORE_MAXIMUM_CHARACTERS_BEFORE_HIDING
+		) {
+			return {
+				html: '',
+				pageComponents: [
+					{
+						type: 'html',
+						parameters: {
+							html: `${formattedAnswer}<br>`
+						}
+					},
+					{
+						type: 'show-more',
+						parameters: {
+							text: details,
+							labelText: showMoreLabelText || ''
+						}
+					}
+				]
+			};
+		} else {
+			return {
+				html: `${formattedAnswer}<br>${buildHtmSpan(details || '')}`
+			};
+		}
+	} else {
+		return {
+			html: formattedAnswer
+		};
 	}
-	return formatted;
 };

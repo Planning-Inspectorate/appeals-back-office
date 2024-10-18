@@ -16,7 +16,7 @@ import { mapPlansDrawings } from './submappers/map-plans-drawings.js';
 import { mapPressAdvert } from './submappers/map-press-advert.js';
 import { mapRepresentations } from './submappers/map-representations.js';
 import { mapReviewOutcome } from './submappers/map-review-outcome.js';
-import { mapSiteAccess } from './submappers/map-site-address.js';
+import { mapSiteAccess } from './submappers/map-site-access.js';
 import { mapSiteNotice } from './submappers/map-site-notice.js';
 import { mapSiteWithinGreenBelt } from './submappers/map-site-within-green-belt.js';
 import { mapSupplementaryPlanning } from './submappers/map-supplementary-planning.js';
