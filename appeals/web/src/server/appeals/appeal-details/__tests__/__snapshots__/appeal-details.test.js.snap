@@ -656,7 +656,7 @@ exports[`appeal-details GET /:appealId should not render action links to the man
                             <dd class="govuk-summary-list__value">
                                 <ul class="govuk-list govuk-!-margin-top-0 govuk-!-padding-left-0">
                                     <li>9 October 2023</li>
-                                    <li>9:38am - 10:44am</li>
+                                    <li>9:38am - 10:00am</li>
                                 </ul>
                             </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/manage-visit"
@@ -1104,7 +1104,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                             <dd class="govuk-summary-list__value">
                                 <ul class="govuk-list govuk-!-margin-top-0 govuk-!-padding-left-0">
                                     <li>9 October 2023</li>
-                                    <li>9:38am - 10:44am</li>
+                                    <li>9:38am - 10:00am</li>
                                 </ul>
                             </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/manage-visit"
@@ -1547,7 +1547,7 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                             <dd class="govuk-summary-list__value">
                                 <ul class="govuk-list govuk-!-margin-top-0 govuk-!-padding-left-0">
                                     <li>9 October 2023</li>
-                                    <li>9:38am - 10:44am</li>
+                                    <li>9:38am - 10:00am</li>
                                 </ul>
                             </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/manage-visit"
@@ -1990,7 +1990,7 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                             <dd class="govuk-summary-list__value">
                                 <ul class="govuk-list govuk-!-margin-top-0 govuk-!-padding-left-0">
                                     <li>9 October 2023</li>
-                                    <li>9:38am - 10:44am</li>
+                                    <li>9:38am - 10:00am</li>
                                 </ul>
                             </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/manage-visit"
@@ -2449,7 +2449,7 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
                             <dd class="govuk-summary-list__value">
                                 <ul class="govuk-list govuk-!-margin-top-0 govuk-!-padding-left-0">
                                     <li>9 October 2023</li>
-                                    <li>9:38am - 10:44am</li>
+                                    <li>9:38am - 10:00am</li>
                                 </ul>
                             </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/manage-visit"
@@ -2893,7 +2893,7 @@ exports[`appeal-details GET /:appealId should render an Issue a decision notific
                             <dd class="govuk-summary-list__value">
                                 <ul class="govuk-list govuk-!-margin-top-0 govuk-!-padding-left-0">
                                     <li>9 October 2023</li>
-                                    <li>9:38am - 10:44am</li>
+                                    <li>9:38am - 10:00am</li>
                                 </ul>
                             </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/manage-visit"
@@ -3324,7 +3324,7 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                             <dd class="govuk-summary-list__value">
                                 <ul class="govuk-list govuk-!-margin-top-0 govuk-!-padding-left-0">
                                     <li>9 October 2023</li>
-                                    <li>9:38am - 10:44am</li>
+                                    <li>9:38am - 10:00am</li>
                                 </ul>
                             </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/manage-visit"
@@ -3770,7 +3770,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             <dd class="govuk-summary-list__value">
                                 <ul class="govuk-list govuk-!-margin-top-0 govuk-!-padding-left-0">
                                     <li>9 October 2023</li>
-                                    <li>9:38am - 10:44am</li>
+                                    <li>9:38am - 10:00am</li>
                                 </ul>
                             </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/manage-visit"
@@ -4218,7 +4218,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             <dd class="govuk-summary-list__value">
                                 <ul class="govuk-list govuk-!-margin-top-0 govuk-!-padding-left-0">
                                     <li>9 October 2023</li>
-                                    <li>9:38am - 10:44am</li>
+                                    <li>9:38am - 10:00am</li>
                                 </ul>
                             </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/manage-visit"
@@ -4666,7 +4666,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             <dd class="govuk-summary-list__value">
                                 <ul class="govuk-list govuk-!-margin-top-0 govuk-!-padding-left-0">
                                     <li>9 October 2023</li>
-                                    <li>9:38am - 10:44am</li>
+                                    <li>9:38am - 10:00am</li>
                                 </ul>
                             </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/manage-visit"
@@ -5113,7 +5113,7 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                             <dd class="govuk-summary-list__value">
                                 <ul class="govuk-list govuk-!-margin-top-0 govuk-!-padding-left-0">
                                     <li>9 October 2023</li>
-                                    <li>9:38am - 10:44am</li>
+                                    <li>9:38am - 10:00am</li>
                                 </ul>
                             </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/manage-visit"
@@ -5698,7 +5698,7 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                             <dd class="govuk-summary-list__value">
                                 <ul class="govuk-list govuk-!-margin-top-0 govuk-!-padding-left-0">
                                     <li>9 October 2023</li>
-                                    <li>9:38am - 10:44am</li>
+                                    <li>9:38am - 10:00am</li>
                                 </ul>
                             </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/manage-visit"
@@ -6155,7 +6155,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             <dd class="govuk-summary-list__value">
                                 <ul class="govuk-list govuk-!-margin-top-0 govuk-!-padding-left-0">
                                     <li>9 October 2023</li>
-                                    <li>9:38am - 10:44am</li>
+                                    <li>9:38am - 10:00am</li>
                                 </ul>
                             </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/site-visit/manage-visit"
@@ -6583,7 +6583,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             <dd class="govuk-summary-list__value">
                                 <ul class="govuk-list govuk-!-margin-top-0 govuk-!-padding-left-0">
                                     <li>9 October 2023</li>
-                                    <li>9:38am - 10:44am</li>
+                                    <li>9:38am - 10:00am</li>
                                 </ul>
                             </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/manage-visit"
@@ -7035,7 +7035,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             <dd class="govuk-summary-list__value">
                                 <ul class="govuk-list govuk-!-margin-top-0 govuk-!-padding-left-0">
                                     <li>9 October 2023</li>
-                                    <li>9:38am - 10:44am</li>
+                                    <li>9:38am - 10:00am</li>
                                 </ul>
                             </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/manage-visit"
@@ -8015,7 +8015,7 @@ exports[`appeal-details should not render a back button 1`] = `
                                         <dd class="govuk-summary-list__value">
                                             <ul class="govuk-list govuk-!-margin-top-0 govuk-!-padding-left-0">
                                                 <li>9 October 2023</li>
-                                                <li>9:38am - 10:44am</li>
+                                                <li>9:38am - 10:00am</li>
                                             </ul>
                                         </dd>
                                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/manage-visit"
