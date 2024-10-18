@@ -101,7 +101,7 @@ exports[`site-visit GET /site-visit/manage-visit should render the manage visit 
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                    name="visit-start-time-hour" type="number" value="9">&nbsp;:&nbsp;
+                    name="visit-start-time-hour" type="number" value="09">&nbsp;:&nbsp;
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                     name="visit-start-time-minute" type="number" value="38">
                 </fieldset>
@@ -110,7 +110,7 @@ exports[`site-visit GET /site-visit/manage-visit should render the manage visit 
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
                     name="visit-end-time-hour" type="number" value="10">&nbsp;:&nbsp;
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
-                    name="visit-end-time-minute" type="number" value="44">
+                    name="visit-end-time-minute" type="number" value="00">
                 </fieldset>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
                 <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
@@ -221,7 +221,7 @@ exports[`site-visit GET /site-visit/schedule-visit should render the schedule vi
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                    name="visit-start-time-hour" type="number" value="9">&nbsp;:&nbsp;
+                    name="visit-start-time-hour" type="number" value="09">&nbsp;:&nbsp;
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                     name="visit-start-time-minute" type="number" value="38">
                 </fieldset>
@@ -230,7 +230,7 @@ exports[`site-visit GET /site-visit/schedule-visit should render the schedule vi
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
                     name="visit-end-time-hour" type="number" value="10">&nbsp;:&nbsp;
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
-                    name="visit-end-time-minute" type="number" value="44">
+                    name="visit-end-time-minute" type="number" value="00">
                 </fieldset>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
                 <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>

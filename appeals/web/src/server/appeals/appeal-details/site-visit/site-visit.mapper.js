@@ -1,6 +1,7 @@
 import { initialiseAndMapAppealData } from '#lib/mappers/appeal/appeal.mapper.js';
 import { removeSummaryListActions } from '#lib/mappers/mapper-utilities.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
+import { padNumberWithZero } from '#lib/string-utilities.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { capitalize } from 'lodash-es';
 import {
@@ -82,12 +83,17 @@ export async function scheduleOrManageSiteVisitPage(
 	const { day, month, year } = dateISOStringToDayMonthYearHourMinute(
 		appealDetails.siteVisit?.visitDate
 	);
-	const { hour: startTimeHour, minute: startTimeMinute } = dateISOStringToDayMonthYearHourMinute(
+	let { hour: startTimeHour, minute: startTimeMinute } = dateISOStringToDayMonthYearHourMinute(
 		appealDetails.siteVisit?.visitStartTime
 	);
-	const { hour: endTimeHour, minute: endTimeMinute } = dateISOStringToDayMonthYearHourMinute(
+	let { hour: endTimeHour, minute: endTimeMinute } = dateISOStringToDayMonthYearHourMinute(
 		appealDetails.siteVisit?.visitEndTime
 	);
+
+	startTimeHour = startTimeHour !== undefined ? padNumberWithZero(startTimeHour) : undefined;
+	startTimeMinute = startTimeMinute !== undefined ? padNumberWithZero(startTimeMinute) : undefined;
+	endTimeHour = endTimeHour !== undefined ? padNumberWithZero(endTimeHour) : undefined;
+	endTimeMinute = endTimeMinute !== undefined ? padNumberWithZero(endTimeMinute) : undefined;
 
 	visitDateDay ??= appealDetails.siteVisit?.visitDate ? day : undefined;
 	visitDateMonth ??= appealDetails.siteVisit?.visitDate ? month : undefined;

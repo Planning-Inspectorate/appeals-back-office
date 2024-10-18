@@ -231,7 +231,7 @@ export const appealData = {
 	siteVisit: {
 		siteVisitId: 0,
 		visitDate: '2023-10-09T01:00:00.000Z',
-		visitEndTime: '2023-10-09T09:44:00.000Z',
+		visitEndTime: '2023-10-09T09:00:00.000Z',
 		visitStartTime: '2023-10-09T08:38:00.000Z',
 		visitType: 'Accompanied'
 	},
