@@ -16,11 +16,29 @@ Make sure the certificate files are named as certificate.pem and certificate-key
 Run the following command to generate the pem files:
 
 ```
-&"C:\Program Files\Git\usr\bin\openssl" req -newkey rsa:2048 -x509 -nodes -keyout key.pem -new -out cert.pem -sha256 -days 365 -addext "subjectAltName=IP:127.0.0.1" -subj "/C=CO/ST=ST/L=LO/O=OR/OU=OU/CN=CN"
+&"C:\Program Files\Git\usr\bin\openssl" req -newkey rsa:2048 -x509 -nodes -keyout certificate-key.pem -new -out certificate.pem -sha256 -days 365 -addext "subjectAltName=IP:127.0.0.1" -subj "/C=CO/ST=ST/L=LO/O=OR/OU=OU/CN=CN"
 ```
 
 Then run the following command to add the certificate to the `Trusted Root Certification Authorities`:
 
 ```
-certutil –addstore -enterprise –f "Root" cert.pem
+certutil –addstore -enterprise –f "Root" certificate.pem
+```
+
+#### MacOS-specific
+
+Run the following command to generate the pem files:
+
+```
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout certificate-key.pem -out certificate.pem -subj "/C=UK/ST=./L=./O=./CN=localhost" \
+-addext "subjectAltName=DNS:localhost,IP:127.0.0.1" \
+-addext "keyUsage=digitalSignature,keyEncipherment" \
+-addext "extendedKeyUsage=serverAuth,clientAuth"
+
+```
+
+Then run the following command to add the certificate to the `Trusted Root Certification Authorities`:
+
+```
+sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain ~/certificate.pem
 ```
