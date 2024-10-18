@@ -7,6 +7,7 @@ import {
 	errorLastName
 } from '#lib/error-handlers/change-screen-error-handlers.js';
 import { addressInputs } from '#lib/mappers/components/address.js';
+import { DOCUMENT_STAGE, DOCUMENT_TYPE } from './add-ip-comment.service.js';
 
 /** @typedef {import("../../appeal-details.types.js").WebAppeal} Appeal */
 
@@ -119,9 +120,10 @@ export const ipAddressPage = (appealDetails, address, errors) => ({
  * @param {Appeal} appealDetails
  * @param {import('@pins/express').ValidationErrors | undefined} errors
  * @param {boolean} providedAddress
+ * @param {number} folderId
  * @returns {import('#appeals/appeal-documents/appeal-documents.types.js').DocumentUploadPageParameters}
  * */
-export const uploadPage = (appealDetails, errors, providedAddress) => ({
+export const uploadPage = (appealDetails, errors, providedAddress, folderId) => ({
 	backButtonUrl: providedAddress
 		? `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/ip-address`
 		: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/check-address`,
@@ -130,15 +132,15 @@ export const uploadPage = (appealDetails, errors, providedAddress) => ({
 	appealShortReference: appealShortReference(appealDetails.appealReference),
 	multiple: false,
 	// TODO: replace with real values
-	folderId: '',
+	folderId: String(folderId),
 	useBlobEmulator: config.useBlobEmulator,
-	blobStorageHost: '',
-	blobStorageContainer: '',
-	documentStage: '',
+	blobStorageHost: config.useBlobEmulator ? config.blobEmulatorSasUrl : config.blobStorageUrl,
+	blobStorageContainer: config.blobStorageDefaultContainer,
+	documentStage: DOCUMENT_STAGE,
 	pageHeadingText: 'Upload interested party comment',
 	pageBodyComponents: [],
-	documentType: '',
-	nextPageUrl: '',
+	documentType: DOCUMENT_TYPE,
+	nextPageUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/redaction-status`,
 	errors
 });
 
