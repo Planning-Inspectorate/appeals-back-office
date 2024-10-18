@@ -401,14 +401,13 @@ describe('LPA Questionnaire review', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('LPA questionnaire</h1>');
 			expect(element.innerHTML).toContain('1. Constraints, designations and other issues</h2>');
-			expect(element.innerHTML).toContain('2. Environmental impact assessment</h2>');
-			expect(element.innerHTML).toContain('3. Notifying relevant parties of the application</h2>');
-			expect(element.innerHTML).toContain('4. Consultation responses and representations</h2>');
+			expect(element.innerHTML).toContain('2. Notifying relevant parties of the application</h2>');
+			expect(element.innerHTML).toContain('3. Consultation responses and representations</h2>');
 			expect(element.innerHTML).toContain(
-				'5. Planning officer’s report and supplementary documents</h2>'
+				'4. Planning officer’s report and supplementary documents</h2>'
 			);
-			expect(element.innerHTML).toContain('6. Site access</h2>');
-			expect(element.innerHTML).toContain('7. Appeal process</h2>');
+			expect(element.innerHTML).toContain('5. Site access</h2>');
+			expect(element.innerHTML).toContain('6. Appeal process</h2>');
 			expect(element.innerHTML).toContain('Additional documents</h2>');
 		}, 10000);
 
