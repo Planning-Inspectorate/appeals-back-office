@@ -3,6 +3,7 @@ import { mapAdditionalDocuments } from './submappers/map-additional-documents.js
 import { mapAffectsListedBuildingDetails } from './submappers/map-affects-listed-building-details.js';
 import { mapConservationAreaMap } from './submappers/map-conservation-area-map.js';
 import { mapDevelopmentPlanPolicies } from './submappers/map-development-plan-policies.js';
+import { mapEmergingPlan } from './submappers/map-emerging-plan.js';
 import { mapExtraConditions } from './submappers/map-extra-conditions.js';
 import { mapIsCorrectAppealType } from './submappers/map-is-correct-appeal-type.js';
 import { mapLettersToNeighbours } from './submappers/map-letters-to-neighbours.js';
@@ -18,6 +19,7 @@ import { mapReviewOutcome } from './submappers/map-review-outcome.js';
 import { mapSiteAccess } from './submappers/map-site-address.js';
 import { mapSiteNotice } from './submappers/map-site-notice.js';
 import { mapSiteWithinGreenBelt } from './submappers/map-site-within-green-belt.js';
+import { mapSupplementaryPlanning } from './submappers/map-supplementary-planning.js';
 
 export const submaps = {
 	affectsListedBuildingDetails: mapAffectsListedBuildingDetails,
@@ -33,6 +35,8 @@ export const submaps = {
 	officersReport: mapOfficersReport,
 	plansDrawings: mapPlansDrawings,
 	developmentPlanPolicies: mapDevelopmentPlanPolicies,
+	supplementaryPlanning: mapSupplementaryPlanning,
+	emergingPlan: mapEmergingPlan,
 	siteAccess: mapSiteAccess,
 	lpaHealthAndSafety: mapLpaHealthAndSafety,
 	extraConditions: mapExtraConditions,

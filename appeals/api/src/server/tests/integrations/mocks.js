@@ -258,6 +258,30 @@ export const appealIngestionInput = {
 				path: 'lpa-questionnaire/treePreservationPlan'
 			},
 			{
+				path: 'lpa-questionnaire/definitiveMapStatement'
+			},
+			{
+				path: 'lpa-questionnaire/communityInfrastructureLevy'
+			},
+			{
+				path: 'lpa-questionnaire/supplementaryPlanning'
+			},
+			{
+				path: 'lpa-questionnaire/emergingPlan'
+			},
+			{
+				path: 'lpa-questionnaire/consultationResponses'
+			},
+			{
+				path: 'lpa-questionnaire/eiaEnvironmentalStatement'
+			},
+			{
+				path: 'lpa-questionnaire/eiaScreeningOpinion'
+			},
+			{
+				path: 'lpa-questionnaire/eiaScreeningDirection'
+			},
+			{
 				path: 'lpa-questionnaire/lpaCaseCorrespondence'
 			},
 			{

@@ -772,7 +772,9 @@ const generateHASLpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 			rows: [
 				mappedLPAQData.lpaq?.officersReport?.display.summaryListItem,
 				mappedLPAQData.lpaq?.plansDrawings?.display.summaryListItem,
-				mappedLPAQData.lpaq?.developmentPlanPolicies?.display.summaryListItem
+				mappedLPAQData.lpaq?.developmentPlanPolicies?.display.summaryListItem,
+				mappedLPAQData.lpaq?.supplementaryPlanning?.display.summaryListItem,
+				mappedLPAQData.lpaq?.emergingPlan?.display.summaryListItem
 			].filter(isDefined)
 		}
 	});
@@ -856,7 +858,10 @@ const generateS78LpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 			},
 			rows: [
 				mappedLPAQData.lpaq?.eiaColumnTwoThreshold?.display.summaryListItem,
-				mappedLPAQData.lpaq?.eiaRequiresEnvironmentalStatement?.display.summaryListItem
+				mappedLPAQData.lpaq?.eiaRequiresEnvironmentalStatement?.display.summaryListItem,
+				mappedLPAQData.lpaq?.eiaEnvironmentalStatement?.display.summaryListItem,
+				mappedLPAQData.lpaq?.eiaScreeningOpinion?.display.summaryListItem,
+				mappedLPAQData.lpaq?.eiaScreeningDirection?.display.summaryListItem
 			].filter(isDefined)
 		}
 	});
@@ -905,7 +910,9 @@ const generateS78LpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 			rows: [
 				mappedLPAQData.lpaq?.officersReport?.display.summaryListItem,
 				mappedLPAQData.lpaq?.plansDrawings?.display.summaryListItem,
-				mappedLPAQData.lpaq?.developmentPlanPolicies?.display.summaryListItem
+				mappedLPAQData.lpaq?.developmentPlanPolicies?.display.summaryListItem,
+				mappedLPAQData.lpaq?.supplementaryPlanning?.display.summaryListItem,
+				mappedLPAQData.lpaq?.emergingPlan?.display.summaryListItem
 			].filter(isDefined)
 		}
 	});
