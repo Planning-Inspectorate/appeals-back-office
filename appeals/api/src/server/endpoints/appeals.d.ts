@@ -293,6 +293,14 @@ interface SingleLPAQuestionnaireResponse {
 		plansDrawings?: FolderInfo | null;
 		developmentPlanPolicies?: FolderInfo | null;
 		treePreservationPlan?: FolderInfo | null;
+		definitiveMapStatement?: FolderInfo | null;
+		communityInfrastructureLevy?: FolderInfo | null;
+		supplementaryPlanning?: FolderInfo | null;
+		emergingPlan?: FolderInfo | null;
+		consultationResponses?: FolderInfo | null;
+		eiaEnvironmentalStatement?: FolderInfo | null;
+		eiaScreeningOpinion?: FolderInfo | null;
+		eiaScreeningDirection?: FolderInfo | null;
 	};
 	validation: ValidationOutcomeResponse | null;
 	lpaNotificationMethods?: LPANotificationMethodDetails[] | null;

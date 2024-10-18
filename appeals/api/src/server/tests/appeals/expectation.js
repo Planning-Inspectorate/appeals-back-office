@@ -34,7 +34,23 @@ export const baseExpectedLPAQuestionnaireResponse = (appeal) => ({
 		// @ts-ignore
 		developmentPlanPolicies: {},
 		// @ts-ignore
-		treePreservationPlan: {}
+		treePreservationPlan: {},
+		// @ts-ignore
+		definitiveMapStatement: {},
+		// @ts-ignore
+		communityInfrastructureLevy: {},
+		// @ts-ignore
+		supplementaryPlanning: {},
+		// @ts-ignore
+		emergingPlan: {},
+		// @ts-ignore
+		consultationResponses: {},
+		// @ts-ignore
+		eiaEnvironmentalStatement: {},
+		// @ts-ignore
+		eiaScreeningOpinion: {},
+		// @ts-ignore
+		eiaScreeningDirection: {}
 	}
 });
 

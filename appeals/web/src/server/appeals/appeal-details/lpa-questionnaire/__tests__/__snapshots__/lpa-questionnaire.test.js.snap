@@ -190,6 +190,16 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-development-plan-policies"> Add<span class="govuk-visually-hidden"> Relevant policies from statutory development plan</span></a>
                         </dd>
                 </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supplementary planning documents</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-supplementary-planning"> Add<span class="govuk-visually-hidden"> Supplementary planning documents</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Emerging plan relevant to appeal</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-emerging-plan"> Add<span class="govuk-visually-hidden"> Emerging plan relevant to appeal</span></a>
+                        </dd>
+                </div>
             </dl>
         </div>
     </div>
@@ -510,6 +520,16 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Relevant policies from statutory development plan</dt>
                     <dd                     class="govuk-summary-list__value"></dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-development-plan-policies"> Add<span class="govuk-visually-hidden"> Relevant policies from statutory development plan</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supplementary planning documents</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-supplementary-planning"> Add<span class="govuk-visually-hidden"> Supplementary planning documents</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Emerging plan relevant to appeal</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-emerging-plan"> Add<span class="govuk-visually-hidden"> Emerging plan relevant to appeal</span></a>
                         </dd>
                 </div>
             </dl>
@@ -869,6 +889,16 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-development-plan-policies"> Add<span class="govuk-visually-hidden"> Relevant policies from statutory development plan</span></a>
                         </dd>
                 </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supplementary planning documents</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-supplementary-planning"> Add<span class="govuk-visually-hidden"> Supplementary planning documents</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Emerging plan relevant to appeal</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-emerging-plan"> Add<span class="govuk-visually-hidden"> Emerging plan relevant to appeal</span></a>
+                        </dd>
+                </div>
             </dl>
         </div>
     </div>
@@ -1183,6 +1213,16 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Relevant policies from statutory development plan</dt>
                     <dd                     class="govuk-summary-list__value"></dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-development-plan-policies"> Add<span class="govuk-visually-hidden"> Relevant policies from statutory development plan</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supplementary planning documents</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-supplementary-planning"> Add<span class="govuk-visually-hidden"> Supplementary planning documents</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Emerging plan relevant to appeal</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-emerging-plan"> Add<span class="govuk-visually-hidden"> Emerging plan relevant to appeal</span></a>
                         </dd>
                 </div>
             </dl>
@@ -3404,6 +3444,16 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Relevant policies from statutory development plan</dt>
                     <dd                     class="govuk-summary-list__value"></dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-development-plan-policies"> Add<span class="govuk-visually-hidden"> Relevant policies from statutory development plan</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supplementary planning documents</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-supplementary-planning"> Add<span class="govuk-visually-hidden"> Supplementary planning documents</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Emerging plan relevant to appeal</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-emerging-plan"> Add<span class="govuk-visually-hidden"> Emerging plan relevant to appeal</span></a>
                         </dd>
                 </div>
             </dl>
