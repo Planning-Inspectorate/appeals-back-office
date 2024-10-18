@@ -6,6 +6,7 @@ import {
 	uploadPage,
 	dateSubmittedPage
 } from './add-ip-comment.mapper.js';
+import { getAttachmentsFolderId } from './add-ip-comment.service.js';
 
 /**
  *
@@ -60,7 +61,9 @@ export async function renderUpload(request, response) {
 	const { currentAppeal, errors } = request;
 	const providedAddress = request.session.addIpComment?.addressProvided === 'yes';
 
-	const pageContent = uploadPage(currentAppeal, errors, providedAddress);
+	const folderId = await getAttachmentsFolderId(request.apiClient, currentAppeal.appealId);
+
+	const pageContent = uploadPage(currentAppeal, errors, providedAddress, folderId);
 
 	return response
 		.status(request.errors ? 400 : 200)

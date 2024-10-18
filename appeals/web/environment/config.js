@@ -82,7 +82,7 @@ export function loadConfig() {
 			maxAge: CACHE_CONTROL_MAX_AGE || '1d'
 		},
 		horizonAppealBaseUrl: HORIZON_APPEAL_BASE_URL,
-		useBlobEmulator: AZURE_BLOB_USE_EMULATOR,
+		useBlobEmulator: AZURE_BLOB_USE_EMULATOR === 'true',
 		logLevelStdOut: LOG_LEVEL_STDOUT,
 		msal: {
 			clientId: AUTH_CLIENT_ID,
