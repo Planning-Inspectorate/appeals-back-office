@@ -56,6 +56,7 @@ export const VALID_MIME_TYPES = Object.freeze({
 		hexSignature: '504B03041400',
 		extensions: ['xlsx']
 	},
+	'application/vnd.ms-outlook': { hexSignature: 'D0CF11E0', extensions: ['msg'] },
 	'image/jpeg': { hexSignature: 'FFD8FFE0', extensions: ['jpg', 'jpeg'] },
 	'video/mpeg': { hexSignature: '000001B3, 000001BA', extensions: ['mpeg'] },
 	'audio/mpeg': { hexSignature: 'FFFB, 494433', extensions: ['mp3'] },

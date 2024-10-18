@@ -92,11 +92,20 @@ const serverActions = (uploadForm) => {
 		let response;
 
 		try {
+			let mimeType = fileToUpload.type;
+
+			if (!mimeType) {
+				// Required for MacOS as it doesn't set the mime type for msg files
+				if (fileToUpload.name.endsWith('.msg')) {
+					mimeType = 'application/vnd.ms-outlook';
+				}
+			}
+
 			await blobStorageClient.uploadFile(
 				blobStorageContainer,
 				fileToUpload,
 				blobStoreUrl,
-				fileToUpload.type
+				mimeType
 			);
 		} catch {
 			response = {

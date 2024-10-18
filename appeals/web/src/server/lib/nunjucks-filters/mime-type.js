@@ -7,6 +7,7 @@ const MIMEs = {
 	pptx: 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
 	xls: 'application/vnd.ms-excel',
 	xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+	msg: 'application/vnd.ms-outlook',
 	jpg: 'image/jpeg',
 	jpeg: 'image/jpeg',
 	mpeg: 'video/mpeg',
