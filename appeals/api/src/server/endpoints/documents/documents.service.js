@@ -37,13 +37,13 @@ import { validateBlobContents } from '#utils/blob-validation.js';
 /** @typedef {import('@pins/appeals/index.js').AddDocumentsResponse} AddDocumentsResponse */
 
 /**
- * @param {Appeal} appeal
+ * @param {number} appealId
  * @param {string} folderId
  * @returns {Promise<FolderInfo | null>}
  */
-export const getFolderForAppeal = async (appeal, folderId) => {
+export const getFolderForAppeal = async (appealId, folderId) => {
 	const folder = await getById(Number(folderId));
-	if (folder && folder.caseId === appeal.id) {
+	if (folder && folder.caseId === appealId) {
 		return formatFolder(folder) || null;
 	}
 
@@ -51,25 +51,37 @@ export const getFolderForAppeal = async (appeal, folderId) => {
 };
 
 /**
- * @param {Appeal} appeal
- * @param {string?} stage
- * @returns {Promise<Folder[]>}
- */
-export const getFoldersForAppeal = async (appeal, stage = null) => {
-	if (stage && stage != null) {
-		const paths = getFoldersForStage(stage);
-		return await getByCaseIdAndPaths(appeal.id, paths);
-	}
+ * @param {number} appealId
+ * @param {string} path
+ * @returns {Promise<FolderInfo[]>}
+ * */
+export const getFolderByPath = async (appealId, path) => {
+	const folders = await getByCaseIdAndPaths(appealId, [path]);
+	const formatted = /** @type {FolderInfo[]} */ (folders.map(formatFolder).filter(Boolean));
 
-	return await getByCaseId(appeal.id);
+	return formatted;
 };
 
 /**
- * @param {Appeal} appeal
+ * @param {number} appealId
+ * @param {string?} stage
  * @returns {Promise<Folder[]>}
  */
-export const getRootFoldersForAppeal = async (appeal) => {
-	return await getByCaseIdAndPaths(appeal.id, [
+export const getFoldersForAppeal = async (appealId, stage = null) => {
+	if (stage && stage != null) {
+		const paths = getFoldersForStage(stage);
+		return await getByCaseIdAndPaths(appealId, paths);
+	}
+
+	return await getByCaseId(appealId);
+};
+
+/**
+ * @param {number} appealId
+ * @returns {Promise<Folder[]>}
+ */
+export const getRootFoldersForAppeal = async (appealId) => {
+	return await getByCaseIdAndPaths(appealId, [
 		`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_APPLICATION}`,
 		`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_WITHDRAWAL}`,
 		`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_CORRESPONDENCE}`,

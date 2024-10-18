@@ -21,7 +21,7 @@ import { camelToScreamingSnake } from '#utils/string-utils.js';
  */
 const getLpaQuestionnaireById = async (req, res) => {
 	const { appeal } = req;
-	const folders = await getFoldersForAppeal(appeal, APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE);
+	const folders = await getFoldersForAppeal(appeal.id, APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE);
 	const formattedAppeal = formatLpaQuestionnaire(appeal, folders);
 	return res.send(formattedAppeal);
 };

@@ -137,7 +137,7 @@ const getMyAppeals = async (req, res) => {
  */
 const getAppeal = async (req, res) => {
 	const { appeal } = req;
-	const appealRootFolders = await getRootFoldersForAppeal(appeal);
+	const appealRootFolders = await getRootFoldersForAppeal(appeal.id);
 
 	let transferAppealTypeInfo;
 	if (appeal.caseResubmittedTypeId && appeal.caseTransferredId) {

@@ -16,6 +16,29 @@ import * as controller from './documents.controller.js';
 const router = createRouter();
 
 router.get(
+	'/:appealId/document-folders',
+	/*
+		#swagger.tags = ['Documents']
+		#swagger.path = '/appeals/{appealId}/document-folders'
+		#swagger.description = 'Returns the list of folders for the appeal, optionally querying based on the folder name'
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: true,
+			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+		}
+		#swagger.responses[200] = {
+			description: 'Returns the contents of a single appeal folder, by id',
+			schema: { $ref: '#/components/schemas/Folder' }
+		}
+		#swagger.responses[400] = {}
+		#swagger.responses[404] = {}
+	 */
+	getAppealValidator,
+	checkAppealExistsByIdAndAddToRequest,
+	controller.getFolders
+);
+
+router.get(
 	'/:appealId/document-folders/:folderId',
 	/*
 		#swagger.tags = ['Documents']

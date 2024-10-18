@@ -20,7 +20,7 @@ import { camelToScreamingSnake } from '#utils/string-utils.js';
  */
 const getAppellantCaseById = async (req, res) => {
 	const { appeal } = req;
-	const folders = await getFoldersForAppeal(appeal, APPEAL_CASE_STAGE.APPELLANT_CASE);
+	const folders = await getFoldersForAppeal(appeal.id, APPEAL_CASE_STAGE.APPELLANT_CASE);
 	const formattedAppeal = formatAppellantCase(appeal, folders);
 
 	return res.send(formattedAppeal);

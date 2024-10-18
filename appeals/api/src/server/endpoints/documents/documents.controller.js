@@ -32,9 +32,27 @@ import { EventType } from '@pins/event-client';
 const getFolder = async (req, res) => {
 	const { appeal } = req;
 	const { folderId } = req.params;
-	const folder = await service.getFolderForAppeal(appeal, folderId);
+	const folder = await service.getFolderForAppeal(appeal.id, folderId);
 
 	return res.send(folder);
+};
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ * */
+const getFolders = async (req, res) => {
+	const { appeal } = req;
+	const { path } = req.query;
+
+	if (path) {
+		const folders = await service.getFolderByPath(appeal.id, /** @type {string} */ (path));
+		return res.send(folders);
+	}
+
+	const folders = await service.getFoldersForAppeal(appeal.id);
+	return res.send(folders);
 };
 
 /**
@@ -365,6 +383,7 @@ export {
 	getDocument,
 	getDocumentAndVersions,
 	getFolder,
+	getFolders,
 	updateDocuments,
 	updateDocumentsAvCheckStatus,
 	deleteDocumentVersion
