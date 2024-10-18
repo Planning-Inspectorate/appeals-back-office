@@ -70,10 +70,10 @@ HTTPS_ENABLED=true
 HTTPS_PORT=8080
 
 # The path to the SSL certificate file – required when https is enabled.
-SSL_CERT_FILE="../../certificate.pem"
+SSL_CERT_FILE="certificate.pem"
 
 # The path to the SSL certificate key file – required when https is enabled.
-SSL_KEY_FILE="../../certificate-key.pem"
+SSL_KEY_FILE="certificate-key.pem"
 
 
 ## LOGGING ####################################################################
