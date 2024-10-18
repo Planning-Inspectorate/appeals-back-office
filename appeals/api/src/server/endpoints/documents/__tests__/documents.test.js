@@ -344,7 +344,7 @@ describe('appeals documents', () => {
 	describe('documents services', () => {
 		test('get folders for appeal', async () => {
 			databaseConnector.folder.findMany.mockReturnValue([folder]);
-			const folders = await service.getFoldersForAppeal(householdAppeal, 'appellantCase');
+			const folders = await service.getFoldersForAppeal(householdAppeal.id, 'appellantCase');
 			expect(folders).toEqual([folder]);
 		});
 	});

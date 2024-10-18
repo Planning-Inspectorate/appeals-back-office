@@ -996,6 +996,61 @@
 				}
 			}
 		},
+		"/appeals/{appealId}/document-folders": {
+			"get": {
+				"tags": ["Documents"],
+				"description": "Returns the list of folders for the appeal, optionally querying based on the folder name",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "path",
+						"in": "query",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Returns the contents of a single appeal folder, by id",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Folder"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Folder"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
 		"/appeals/{appealId}/document-folders/{folderId}": {
 			"get": {
 				"tags": ["Documents"],
@@ -4211,7 +4266,7 @@
 						"properties": {
 							"submissionId": {
 								"type": "string",
-								"example": "ba35248c-0b50-4352-ac3e-89d5c8fd165f"
+								"example": "40df3b3d-fc9c-4e65-85db-4a9c383e0fcf"
 							},
 							"advertisedAppeal": {
 								"type": "boolean",
