@@ -26,6 +26,7 @@ import { FOLDERS } from '@pins/appeals/constants/documents.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import { randomBool } from './data-samples.js';
 import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
+import { ODW_SYSTEM_ID } from '@pins/appeals/constants/common.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.AppealSite} AppealSite */
 
@@ -654,6 +655,8 @@ export async function seedTestData(databaseConnector) {
 					status = 'invalid';
 				}
 
+				const source = Math.random() < 0.5 ? ODW_SYSTEM_ID : 'citizen';
+
 				await databaseConnector.representation.create({
 					data: {
 						appeal: {
@@ -666,7 +669,8 @@ export async function seedTestData(databaseConnector) {
 						...(status && { status }),
 						represented: {
 							create: appellantsList[pickRandom(appellantsList)]
-						}
+						},
+						source
 					},
 					include: {
 						represented: true
