@@ -2452,3 +2452,8 @@ export const caseNotes = [
 		azureAdUserId: '923ac03b-9031-4cf4-8b17-348c274321f9'
 	}
 ];
+
+export const text300Characters =
+	'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cill';
+
+export const text301Characters = text300Characters + 'u';

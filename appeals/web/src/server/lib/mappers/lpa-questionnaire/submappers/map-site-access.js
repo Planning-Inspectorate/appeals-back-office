@@ -10,5 +10,7 @@ export const mapSiteAccess = ({ lpaQuestionnaireData, currentRoute, userHasUpdat
 		defaultText: 'No answer provided',
 		link: `${currentRoute}/inspector-access/change/lpa`,
 		editable: userHasUpdateCase,
-		addCyAttribute: true
+		addCyAttribute: true,
+		withShowMore: true,
+		showMoreLabelText: 'Site access required details'
 	});

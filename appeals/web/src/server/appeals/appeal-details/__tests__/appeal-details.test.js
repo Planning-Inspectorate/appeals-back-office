@@ -21,7 +21,9 @@ import {
 	fileUploadInfo,
 	interestedPartyCommentsAwaitingReview,
 	caseNotes,
-	activeDirectoryUsersData
+	activeDirectoryUsersData,
+	text300Characters,
+	text301Characters
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { capitalize } from 'lodash-es';
@@ -2186,6 +2188,220 @@ describe('appeal-details', () => {
 				expect(columnHtml).toContain(
 					'<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/documents/2/download/448efec9-43d4-406a-92b7-1aecbdcd5e87/test-document.txt" target="_blank">View</a></li>'
 				);
+			});
+		});
+
+		describe('show more', () => {
+			describe('Inspection access (LPA answer)', () => {
+				it('should not render a "show more" component on the "Inspection access (LPA answer)" row if the associated value is less than or equal to 300 characters in length', async () => {
+					nock('http://test/')
+						.get('/appeals/2')
+						.reply(200, {
+							...appealData,
+							inspectorAccess: {
+								...appealData.inspectorAccess,
+								lpaQuestionnaire: {
+									isRequired: true,
+									details: text300Characters
+								}
+							}
+						});
+
+					const response = await request.get(`${baseUrl}/2`);
+					const unprettifiedElement = parseHtml(response.text, {
+						rootElement: '.appeal-lpa-inspector-access',
+						skipPrettyPrint: true
+					});
+
+					expect(unprettifiedElement.innerHTML).toContain(
+						`<dd class="govuk-summary-list__value"><span>Yes</span><br><span>${text300Characters}</span></dd>`
+					);
+					expect(unprettifiedElement.innerHTML).not.toContain('class="pins-show-more"');
+				});
+
+				it('should render a "show more" component with the expected HTML on the "Inspection access (LPA answer)" row if the associated value is over 300 characters in length', async () => {
+					nock('http://test/')
+						.get('/appeals/2')
+						.reply(200, {
+							...appealData,
+							inspectorAccess: {
+								...appealData.inspectorAccess,
+								lpaQuestionnaire: {
+									isRequired: true,
+									details: text301Characters
+								}
+							}
+						});
+
+					const response = await request.get(`${baseUrl}/2`);
+					const unprettifiedElement = parseHtml(response.text, {
+						rootElement: '.appeal-lpa-inspector-access',
+						skipPrettyPrint: true
+					});
+
+					expect(unprettifiedElement.innerHTML).toContain(
+						`<dd class="govuk-summary-list__value"><span>Yes</span><br><div class="pins-show-more" data-label="Inspection access details (LPA answer)">${text301Characters}</div></dd>`
+					);
+				});
+			});
+
+			describe('Inspection access (appellant answer)', () => {
+				it('should not render a "show more" component on the "Inspection access (appellant answer)" row if the associated value is less than or equal to 300 characters in length', async () => {
+					nock('http://test/')
+						.get('/appeals/2')
+						.reply(200, {
+							...appealData,
+							inspectorAccess: {
+								...appealData.inspectorAccess,
+								appellantCase: {
+									isRequired: true,
+									details: text300Characters
+								}
+							}
+						});
+
+					const response = await request.get(`${baseUrl}/2`);
+					const unprettifiedElement = parseHtml(response.text, {
+						rootElement: '.appeal-appellant-inspector-access',
+						skipPrettyPrint: true
+					});
+
+					expect(unprettifiedElement.innerHTML).toContain(
+						`<dd class="govuk-summary-list__value"><span>Yes</span><br><span>${text300Characters}</span></dd>`
+					);
+					expect(unprettifiedElement.innerHTML).not.toContain('class="pins-show-more"');
+				});
+
+				it('should render a "show more" component with the expected HTML on the "Inspection access (appellant answer)" row if the associated value is over 300 characters in length', async () => {
+					nock('http://test/')
+						.get('/appeals/2')
+						.reply(200, {
+							...appealData,
+							inspectorAccess: {
+								...appealData.inspectorAccess,
+								appellantCase: {
+									isRequired: true,
+									details: text301Characters
+								}
+							}
+						});
+
+					const response = await request.get(`${baseUrl}/2`);
+					const unprettifiedElement = parseHtml(response.text, {
+						rootElement: '.appeal-appellant-inspector-access',
+						skipPrettyPrint: true
+					});
+
+					expect(unprettifiedElement.innerHTML).toContain(
+						`<dd class="govuk-summary-list__value"><span>Yes</span><br><div class="pins-show-more" data-label="Inspection access details (appellant answer)">${text301Characters}</div></dd>`
+					);
+				});
+			});
+
+			describe('Potential safety risks (LPA answer)', () => {
+				it('should not render a "show more" component on the "Potential safety risks (LPA answer)" row if the associated value is less than or equal to 300 characters in length', async () => {
+					nock('http://test/')
+						.get('/appeals/2')
+						.reply(200, {
+							...appealData,
+							healthAndSafety: {
+								...appealData.healthAndSafety,
+								lpaQuestionnaire: {
+									hasIssues: true,
+									details: text300Characters
+								}
+							}
+						});
+
+					const response = await request.get(`${baseUrl}/2`);
+					const unprettifiedElement = parseHtml(response.text, {
+						rootElement: '.appeal-lpa-health-and-safety',
+						skipPrettyPrint: true
+					});
+
+					expect(unprettifiedElement.innerHTML).toContain(
+						`<dd class="govuk-summary-list__value"><span>Yes</span><br><span>${text300Characters}</span></dd>`
+					);
+					expect(unprettifiedElement.innerHTML).not.toContain('class="pins-show-more"');
+				});
+
+				it('should render a "show more" component with the expected HTML on the "Potential safety risks (LPA answer)" row if the associated value is over 300 characters in length', async () => {
+					nock('http://test/')
+						.get('/appeals/2')
+						.reply(200, {
+							...appealData,
+							healthAndSafety: {
+								...appealData.healthAndSafety,
+								lpaQuestionnaire: {
+									hasIssues: true,
+									details: text301Characters
+								}
+							}
+						});
+
+					const response = await request.get(`${baseUrl}/2`);
+					const unprettifiedElement = parseHtml(response.text, {
+						rootElement: '.appeal-lpa-health-and-safety',
+						skipPrettyPrint: true
+					});
+
+					expect(unprettifiedElement.innerHTML).toContain(
+						`<dd class="govuk-summary-list__value"><span>Yes</span><br><div class="pins-show-more" data-label="Potential safety risks details (LPA answer)">${text301Characters}</div></dd>`
+					);
+				});
+			});
+
+			describe('Potential safety risks (appellant answer)', () => {
+				it('should not render a "show more" component on the "Potential safety risks (appellant answer)" row if the associated value is less than or equal to 300 characters in length', async () => {
+					nock('http://test/')
+						.get('/appeals/2')
+						.reply(200, {
+							...appealData,
+							healthAndSafety: {
+								...appealData.healthAndSafety,
+								appellantCase: {
+									hasIssues: true,
+									details: text300Characters
+								}
+							}
+						});
+
+					const response = await request.get(`${baseUrl}/2`);
+					const unprettifiedElement = parseHtml(response.text, {
+						rootElement: '.appeal-appellant-health-and-safety',
+						skipPrettyPrint: true
+					});
+
+					expect(unprettifiedElement.innerHTML).toContain(
+						`<dd class="govuk-summary-list__value"><span>Yes</span><br><span>${text300Characters}</span></dd>`
+					);
+					expect(unprettifiedElement.innerHTML).not.toContain('class="pins-show-more"');
+				});
+
+				it('should render a "show more" component with the expected HTML on the "Potential safety risks (appellant answer)" row if the associated value is over 300 characters in length', async () => {
+					nock('http://test/')
+						.get('/appeals/2')
+						.reply(200, {
+							...appealData,
+							healthAndSafety: {
+								...appealData.healthAndSafety,
+								appellantCase: {
+									hasIssues: true,
+									details: text301Characters
+								}
+							}
+						});
+
+					const response = await request.get(`${baseUrl}/2`);
+					const unprettifiedElement = parseHtml(response.text, {
+						rootElement: '.appeal-appellant-health-and-safety',
+						skipPrettyPrint: true
+					});
+
+					expect(unprettifiedElement.innerHTML).toContain(
+						`<dd class="govuk-summary-list__value"><span>Yes</span><br><div class="pins-show-more" data-label="Potential safety risks details (appellant answer)">${text301Characters}</div></dd>`
+					);
+				});
 			});
 		});
 	});

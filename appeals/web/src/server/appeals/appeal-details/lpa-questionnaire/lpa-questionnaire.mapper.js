@@ -737,6 +737,9 @@ const generateHASLpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 					text: '2. Notifying relevant parties of the application'
 				}
 			},
+			attributes: {
+				id: 'notifications-summary'
+			},
 			rows: [
 				mappedLPAQData.lpaq?.notifyingParties?.display.summaryListItem,
 				mappedLPAQData.lpaq?.siteNotice?.display.summaryListItem,
@@ -756,6 +759,9 @@ const generateHASLpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 					text: '3. Consultation responses and representations'
 				}
 			},
+			attributes: {
+				id: 'representations-summary'
+			},
 			rows: [mappedLPAQData.lpaq?.representations?.display.summaryListItem].filter(isDefined)
 		}
 	});
@@ -768,6 +774,9 @@ const generateHASLpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 				title: {
 					text: '4. Planning officer’s report and supplementary documents'
 				}
+			},
+			attributes: {
+				id: 'supplementary-documents-summary'
 			},
 			rows: [
 				mappedLPAQData.lpaq?.officersReport?.display.summaryListItem,
@@ -788,6 +797,9 @@ const generateHASLpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 					text: '5. Site access'
 				}
 			},
+			attributes: {
+				id: 'site-access-summary'
+			},
 			rows: [
 				mappedLPAQData.lpaq?.siteAccess?.display.summaryListItem,
 				mappedAppealDetails.appeal.lpaNeighbouringSites?.display.summaryListItem,
@@ -804,6 +816,9 @@ const generateHASLpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 				title: {
 					text: '6. Appeal process'
 				}
+			},
+			attributes: {
+				id: 'appeal-process-summary'
 			},
 			rows: [
 				mappedLPAQData.lpaq?.otherAppeals?.display.summaryListItem,

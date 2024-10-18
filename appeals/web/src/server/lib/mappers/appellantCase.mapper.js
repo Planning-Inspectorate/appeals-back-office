@@ -142,7 +142,8 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		value: appellantCaseData.developmentDescription?.details || 'Not provided',
 		link: `${currentRoute}/development-description/change`,
 		editable: userHasUpdateCase,
-		withShowMore: true
+		withShowMore: true,
+		showMoreLabelText: 'Original Development description details'
 	});
 
 	mappedData.changedDevelopmentDescription = booleanSummaryListItem({
@@ -243,24 +244,28 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 	mappedData.inspectorAccess = booleanWithDetailsSummaryListItem({
 		id: 'inspector-access',
 		text: 'Inspector access required',
-		value: appealDetails.inspectorAccess.appellantCase.isRequired,
-		valueDetails: appealDetails.inspectorAccess.appellantCase.details,
+		value: appellantCaseData.siteAccessRequired?.hasIssues,
+		valueDetails: appellantCaseData.siteAccessRequired?.details,
 		defaultText: 'No answer provided',
 		link: `${currentRoute}/inspector-access/change/appellant`,
 		editable: userHasUpdateCase,
 		classes: 'appellantcase-inspector-access',
-		addCyAttribute: true
+		addCyAttribute: true,
+		withShowMore: true,
+		showMoreLabelText: 'Inspector access details'
 	});
 
 	mappedData.healthAndSafetyIssues = booleanWithDetailsSummaryListItem({
 		id: 'appellant-case-health-and-safety',
 		text: 'Potential safety risks',
-		value: appealDetails.healthAndSafety.appellantCase.hasIssues,
-		valueDetails: appealDetails.healthAndSafety.appellantCase.details,
+		value: appellantCaseData.healthAndSafety?.hasIssues,
+		valueDetails: appellantCaseData.healthAndSafety?.details,
 		defaultText: 'No answer provided',
 		link: `${currentRoute}/safety-risks/change/appellant`,
 		editable: userHasUpdateCase,
-		addCyAttribute: true
+		addCyAttribute: true,
+		withShowMore: true,
+		showMoreLabelText: 'Potential safety risks details'
 	});
 
 	mappedData.applicationForm = documentInstruction({
@@ -556,30 +561,15 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		}
 	};
 
-	/** @type {Instructions} */
-	mappedData.procedurePreferenceDetails = {
+	mappedData.procedurePreferenceDetails = textSummaryListItem({
 		id: 'procedure-preference-details',
-		display: {
-			summaryListItem: {
-				key: {
-					text: 'Reason for preference'
-				},
-				value: {
-					text: appellantCaseData.appellantProcedurePreferenceDetails || 'Not applicable'
-				},
-				actions: {
-					items: [
-						{
-							text: 'Change',
-							visuallyHiddenText: 'reason for preference',
-							href: `${currentRoute}/procedure-preference/details/change`,
-							attributes: { 'data-cy': 'change-procedure-preference-details' }
-						}
-					]
-				}
-			}
-		}
-	};
+		text: 'Reason for preference',
+		value: appellantCaseData.appellantProcedurePreferenceDetails || 'Not applicable',
+		link: `${currentRoute}/procedure-preference/details/change`,
+		editable: userHasUpdateCase,
+		withShowMore: true,
+		showMoreLabelText: 'Reason for preference details'
+	});
 
 	/** @type {Instructions} */
 	mappedData.procedurePreferenceDuration = {

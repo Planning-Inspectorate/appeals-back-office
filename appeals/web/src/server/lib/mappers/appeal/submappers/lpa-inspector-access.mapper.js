@@ -19,5 +19,7 @@ export const mapLpaInspectorAccess = ({
 			shouldDisplayChangeLinksForLPAQStatus(
 				appealDetails.documentationSummary?.lpaQuestionnaire?.status
 			),
-		classes: 'appeal-lpa-inspector-access'
+		classes: 'appeal-lpa-inspector-access',
+		withShowMore: true,
+		showMoreLabelText: 'Inspection access details (LPA answer)'
 	});

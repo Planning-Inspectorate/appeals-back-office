@@ -10,6 +10,7 @@ import { SHOW_MORE_MAXIMUM_CHARACTERS_BEFORE_HIDING } from '#lib/constants.js';
  * @param {string} options.link
  * @param {boolean} options.editable
  * @param {boolean} [options.withShowMore]
+ * @param {string} [options.showMoreLabelText]
  * @param {string} [options.classes]
  * @param {string} [options.actionText]
  * @param {string} [options.cypressDataName]
@@ -22,6 +23,7 @@ export function textSummaryListItem({
 	link,
 	editable,
 	withShowMore,
+	showMoreLabelText,
 	classes,
 	actionText = 'Change',
 	cypressDataName = actionText.toLowerCase() + '-' + id
@@ -45,7 +47,7 @@ export function textSummaryListItem({
 					type: 'show-more',
 					parameters: {
 						text: value,
-						labelText: text
+						labelText: showMoreLabelText || text
 					}
 				}
 			]

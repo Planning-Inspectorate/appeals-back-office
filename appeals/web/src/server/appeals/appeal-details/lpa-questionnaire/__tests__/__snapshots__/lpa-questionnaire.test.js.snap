@@ -81,7 +81,7 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
             <h2 class="govuk-summary-card__title">2. Notifying relevant parties of the application</h2>
         </div>
         <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list">
+            <dl class="govuk-summary-list" id="notifications-summary">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who was notified</dt>
                     <dd class="govuk-summary-list__value">
                         <ul class="govuk-list">
@@ -134,7 +134,7 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
             <h2 class="govuk-summary-card__title">3. Consultation responses and representations</h2>
         </div>
         <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list">
+            <dl class="govuk-summary-list" id="representations-summary">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Representations from other parties documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
@@ -161,7 +161,7 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
             <h2 class="govuk-summary-card__title">4. Planning officer’s report and supplementary documents</h2>
         </div>
         <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list">
+            <dl class="govuk-summary-list" id="supplementary-documents-summary">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning officer&#39;s report</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
@@ -208,7 +208,7 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
             <h2 class="govuk-summary-card__title">5. Site access</h2>
         </div>
         <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list">
+            <dl class="govuk-summary-list" id="site-access-summary">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site access required</dt>
                     <dd class="govuk-summary-list__value"><span>Yes</span>
                         <br><span>The entrance is at the back of the property</span>
@@ -249,7 +249,7 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
             <h2 class="govuk-summary-card__title">6. Appeal process</h2>
         </div>
         <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list">
+            <dl class="govuk-summary-list" id="appeal-process-summary">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeals near the site</dt>
                     <dd class="govuk-summary-list__value"><span>No appeals</span>
                     </dd>
@@ -413,7 +413,7 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
             <h2 class="govuk-summary-card__title">2. Notifying relevant parties of the application</h2>
         </div>
         <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list">
+            <dl class="govuk-summary-list" id="notifications-summary">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who was notified</dt>
                     <dd class="govuk-summary-list__value">
                         <ul class="govuk-list">
@@ -466,7 +466,7 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
             <h2 class="govuk-summary-card__title">3. Consultation responses and representations</h2>
         </div>
         <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list">
+            <dl class="govuk-summary-list" id="representations-summary">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Representations from other parties documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
@@ -493,7 +493,7 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
             <h2 class="govuk-summary-card__title">4. Planning officer’s report and supplementary documents</h2>
         </div>
         <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list">
+            <dl class="govuk-summary-list" id="supplementary-documents-summary">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning officer&#39;s report</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
@@ -540,7 +540,7 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
             <h2 class="govuk-summary-card__title">5. Site access</h2>
         </div>
         <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list">
+            <dl class="govuk-summary-list" id="site-access-summary">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site access required</dt>
                     <dd class="govuk-summary-list__value"><span>Yes</span>
                         <br><span>The entrance is at the back of the property</span>
@@ -581,7 +581,7 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
             <h2 class="govuk-summary-card__title">6. Appeal process</h2>
         </div>
         <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list">
+            <dl class="govuk-summary-list" id="appeal-process-summary">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeals near the site</dt>
                     <dd class="govuk-summary-list__value"><span>No appeals</span>
                     </dd>
@@ -780,7 +780,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
             <h2 class="govuk-summary-card__title">2. Notifying relevant parties of the application</h2>
         </div>
         <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list">
+            <dl class="govuk-summary-list" id="notifications-summary">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who was notified</dt>
                     <dd class="govuk-summary-list__value">
                         <ul class="govuk-list">
@@ -833,7 +833,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
             <h2 class="govuk-summary-card__title">3. Consultation responses and representations</h2>
         </div>
         <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list">
+            <dl class="govuk-summary-list" id="representations-summary">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Representations from other parties documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
@@ -860,7 +860,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
             <h2 class="govuk-summary-card__title">4. Planning officer’s report and supplementary documents</h2>
         </div>
         <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list">
+            <dl class="govuk-summary-list" id="supplementary-documents-summary">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning officer&#39;s report</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
@@ -907,7 +907,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
             <h2 class="govuk-summary-card__title">5. Site access</h2>
         </div>
         <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list">
+            <dl class="govuk-summary-list" id="site-access-summary">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site access required</dt>
                     <dd class="govuk-summary-list__value"><span>Yes</span>
                         <br><span>The entrance is at the back of the property</span>
@@ -948,7 +948,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
             <h2 class="govuk-summary-card__title">6. Appeal process</h2>
         </div>
         <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list">
+            <dl class="govuk-summary-list" id="appeal-process-summary">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeals near the site</dt>
                     <dd class="govuk-summary-list__value"><span>No appeals</span>
                     </dd>
@@ -1106,7 +1106,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
             <h2 class="govuk-summary-card__title">2. Notifying relevant parties of the application</h2>
         </div>
         <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list">
+            <dl class="govuk-summary-list" id="notifications-summary">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who was notified</dt>
                     <dd class="govuk-summary-list__value">
                         <ul class="govuk-list">
@@ -1159,7 +1159,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
             <h2 class="govuk-summary-card__title">3. Consultation responses and representations</h2>
         </div>
         <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list">
+            <dl class="govuk-summary-list" id="representations-summary">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Representations from other parties documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
@@ -1186,7 +1186,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
             <h2 class="govuk-summary-card__title">4. Planning officer’s report and supplementary documents</h2>
         </div>
         <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list">
+            <dl class="govuk-summary-list" id="supplementary-documents-summary">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning officer&#39;s report</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
@@ -1233,7 +1233,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
             <h2 class="govuk-summary-card__title">5. Site access</h2>
         </div>
         <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list">
+            <dl class="govuk-summary-list" id="site-access-summary">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site access required</dt>
                     <dd class="govuk-summary-list__value"><span>Yes</span>
                         <br><span>The entrance is at the back of the property</span>
@@ -1274,7 +1274,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
             <h2 class="govuk-summary-card__title">6. Appeal process</h2>
         </div>
         <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list">
+            <dl class="govuk-summary-list" id="appeal-process-summary">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeals near the site</dt>
                     <dd class="govuk-summary-list__value"><span>No appeals</span>
                     </dd>
@@ -3337,7 +3337,7 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
             <h2 class="govuk-summary-card__title">2. Notifying relevant parties of the application</h2>
         </div>
         <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list">
+            <dl class="govuk-summary-list" id="notifications-summary">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who was notified</dt>
                     <dd class="govuk-summary-list__value">
                         <ul class="govuk-list">
@@ -3390,7 +3390,7 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
             <h2 class="govuk-summary-card__title">3. Consultation responses and representations</h2>
         </div>
         <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list">
+            <dl class="govuk-summary-list" id="representations-summary">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Representations from other parties documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
@@ -3417,7 +3417,7 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
             <h2 class="govuk-summary-card__title">4. Planning officer’s report and supplementary documents</h2>
         </div>
         <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list">
+            <dl class="govuk-summary-list" id="supplementary-documents-summary">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning officer&#39;s report</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
@@ -3464,7 +3464,7 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
             <h2 class="govuk-summary-card__title">5. Site access</h2>
         </div>
         <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list">
+            <dl class="govuk-summary-list" id="site-access-summary">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site access required</dt>
                     <dd class="govuk-summary-list__value"><span>Yes</span>
                         <br><span>The entrance is at the back of the property</span>
@@ -3505,7 +3505,7 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
             <h2 class="govuk-summary-card__title">6. Appeal process</h2>
         </div>
         <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list">
+            <dl class="govuk-summary-list" id="appeal-process-summary">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeals near the site</dt>
                     <dd class="govuk-summary-list__value"><span>No appeals</span>
                     </dd>
