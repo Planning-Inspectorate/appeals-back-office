@@ -292,6 +292,7 @@ interface SingleLPAQuestionnaireResponse {
 		planningOfficerReport?: FolderInfo | null;
 		plansDrawings?: FolderInfo | null;
 		developmentPlanPolicies?: FolderInfo | null;
+		treePreservationPlan?: FolderInfo | null;
 	};
 	validation: ValidationOutcomeResponse | null;
 	lpaNotificationMethods?: LPANotificationMethodDetails[] | null;

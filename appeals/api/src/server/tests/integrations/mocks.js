@@ -255,6 +255,9 @@ export const appealIngestionInput = {
 				path: 'lpa-questionnaire/developmentPlanPolicies'
 			},
 			{
+				path: 'lpa-questionnaire/treePreservationPlan'
+			},
+			{
 				path: 'lpa-questionnaire/lpaCaseCorrespondence'
 			},
 			{

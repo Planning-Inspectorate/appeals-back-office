@@ -32,7 +32,9 @@ export const baseExpectedLPAQuestionnaireResponse = (appeal) => ({
 		// @ts-ignore
 		plansDrawings: {},
 		// @ts-ignore
-		developmentPlanPolicies: {}
+		developmentPlanPolicies: {},
+		// @ts-ignore
+		treePreservationPlan: {}
 	}
 });
 
