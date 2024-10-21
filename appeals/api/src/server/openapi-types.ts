@@ -85,6 +85,7 @@ export interface RepResponse {
 	representationType?: string;
 	/** @example false */
 	siteVisitRequested?: boolean;
+	source: string;
 	represented?: {
 		/** @example 1 */
 		id?: number;

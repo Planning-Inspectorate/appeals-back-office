@@ -18,7 +18,7 @@ router
 		validateAppeal,
 		validateComment,
 		validateReviewComment,
-		asyncHandler(controller.renderPostReviewInterestedPartyComment)
+		asyncHandler(controller.postReviewInterestedPartyComment)
 	);
 
 export default router;
