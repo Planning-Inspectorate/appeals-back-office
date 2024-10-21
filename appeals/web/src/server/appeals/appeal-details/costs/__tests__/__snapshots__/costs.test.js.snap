@@ -901,12 +901,14 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Name</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Name</dt>
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                         </div>
                         <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong>
                         </div>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/appellant/application/change-document-name/1/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Version</dt>
@@ -1005,12 +1007,14 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Name</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Name</dt>
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                         </div>
                         <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong>
                         </div>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/appellant/correspondence/change-document-name/3/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Version</dt>
@@ -1109,12 +1113,14 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Name</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Name</dt>
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                         </div>
                         <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong>
                         </div>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/appellant/withdrawal/change-document-name/2/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Version</dt>
@@ -1213,12 +1219,14 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Name</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Name</dt>
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                         </div>
                         <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong>
                         </div>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/lpa/application/change-document-name/4/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Version</dt>
@@ -1317,12 +1325,14 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Name</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Name</dt>
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                         </div>
                         <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong>
                         </div>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/lpa/correspondence/change-document-name/6/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Version</dt>
@@ -1421,12 +1431,14 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Name</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Name</dt>
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                         </div>
                         <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong>
                         </div>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/lpa/withdrawal/change-document-name/5/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Version</dt>
@@ -1523,12 +1535,14 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Name</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Name</dt>
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                         </div>
                         <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
                         </div>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/appellant/application/change-document-name/1/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Version</dt>
@@ -1614,12 +1628,14 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Name</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Name</dt>
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                         </div>
                         <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
                         </div>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/appellant/correspondence/change-document-name/3/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Version</dt>
@@ -1705,12 +1721,14 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Name</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Name</dt>
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                         </div>
                         <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
                         </div>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/appellant/withdrawal/change-document-name/2/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Version</dt>
@@ -1796,12 +1814,14 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Name</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Name</dt>
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                         </div>
                         <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
                         </div>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/lpa/application/change-document-name/4/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Version</dt>
@@ -1887,12 +1907,14 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Name</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Name</dt>
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                         </div>
                         <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
                         </div>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/lpa/correspondence/change-document-name/6/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Version</dt>
@@ -1978,12 +2000,14 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Name</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Name</dt>
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                         </div>
                         <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
                         </div>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/lpa/withdrawal/change-document-name/5/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Version</dt>
@@ -2056,11 +2080,13 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Name</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Name</dt>
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/test-pdf-documentFileVersionsInfo.pdf"
                             target="_blank">test-pdf-documentFileVersionsInfo.pdf</a>
                         </div>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/appellant/application/change-document-name/1/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Version</dt>
@@ -2143,11 +2169,13 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Name</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Name</dt>
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/test-pdf-documentFileVersionsInfo.pdf"
                             target="_blank">test-pdf-documentFileVersionsInfo.pdf</a>
                         </div>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/appellant/correspondence/change-document-name/3/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Version</dt>
@@ -2230,11 +2258,13 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Name</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Name</dt>
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/test-pdf-documentFileVersionsInfo.pdf"
                             target="_blank">test-pdf-documentFileVersionsInfo.pdf</a>
                         </div>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/appellant/withdrawal/change-document-name/2/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Version</dt>
@@ -2317,11 +2347,13 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Name</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Name</dt>
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/test-pdf-documentFileVersionsInfo.pdf"
                             target="_blank">test-pdf-documentFileVersionsInfo.pdf</a>
                         </div>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/lpa/application/change-document-name/4/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Version</dt>
@@ -2404,11 +2436,13 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Name</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Name</dt>
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/test-pdf-documentFileVersionsInfo.pdf"
                             target="_blank">test-pdf-documentFileVersionsInfo.pdf</a>
                         </div>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/lpa/correspondence/change-document-name/6/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Version</dt>
@@ -2491,11 +2525,13 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Name</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Name</dt>
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/test-pdf-documentFileVersionsInfo.pdf"
                             target="_blank">test-pdf-documentFileVersionsInfo.pdf</a>
                         </div>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/lpa/withdrawal/change-document-name/5/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Version</dt>
@@ -2591,12 +2627,14 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Name</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Name</dt>
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                         </div>
                         <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
                         </div>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/appellant/application/change-document-name/1/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Version</dt>
@@ -2682,12 +2720,14 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Name</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Name</dt>
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                         </div>
                         <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
                         </div>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/appellant/correspondence/change-document-name/3/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Version</dt>
@@ -2773,12 +2813,14 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Name</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Name</dt>
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                         </div>
                         <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
                         </div>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/appellant/withdrawal/change-document-name/2/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Version</dt>
@@ -2864,12 +2906,14 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Name</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Name</dt>
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                         </div>
                         <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
                         </div>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/lpa/application/change-document-name/4/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Version</dt>
@@ -2955,12 +2999,14 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Name</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Name</dt>
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                         </div>
                         <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
                         </div>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/lpa/correspondence/change-document-name/6/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Version</dt>
@@ -3046,12 +3092,14 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Name</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Name</dt>
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                         </div>
                         <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
                         </div>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/lpa/withdrawal/change-document-name/5/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Version</dt>
@@ -5075,12 +5123,14 @@ exports[`costs decision GET /costs/decision/manage-documents/:folderId/:document
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Name</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Name</dt>
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                         </div>
                         <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong>
                         </div>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/decision/change-document-name/7/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Version</dt>
@@ -5177,12 +5227,14 @@ exports[`costs decision GET /costs/decision/manage-documents/:folderId/:document
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Name</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Name</dt>
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                         </div>
                         <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
                         </div>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/decision/change-document-name/7/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Version</dt>
@@ -5255,11 +5307,13 @@ exports[`costs decision GET /costs/decision/manage-documents/:folderId/:document
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Name</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Name</dt>
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/test-pdf-documentFileVersionsInfo.pdf"
                             target="_blank">test-pdf-documentFileVersionsInfo.pdf</a>
                         </div>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/decision/change-document-name/7/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Version</dt>
@@ -5355,12 +5409,14 @@ exports[`costs decision GET /costs/decision/manage-documents/:folderId/:document
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Name</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Name</dt>
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                         </div>
                         <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
                         </div>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/costs/decision/change-document-name/7/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Version</dt>

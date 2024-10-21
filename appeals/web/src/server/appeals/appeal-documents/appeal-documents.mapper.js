@@ -586,6 +586,45 @@ function mapDocumentDetailsItemToDocumentDetailsPageComponents(item, redactionSt
 
 	return pageComponents;
 }
+/**
+ * @param {{originalFilename: string, fileName: string, documentId: string}} item
+ * @returns {PageComponent[]}
+ */
+function mapDocumentNameItemToDocumentNamePageComponents(item) {
+	/** @type {PageComponent[]} */
+	const pageComponents = [
+		{
+			wrapperHtml: {
+				opening: `<div class="govuk-form-group"><h2 class="govuk-heading-m">${item.originalFilename}</h2>`,
+				closing: ''
+			},
+			type: 'input',
+			parameters: {
+				type: 'hidden',
+				name: `documentId`,
+				value: item.documentId
+			}
+		},
+		{
+			wrapperHtml: {
+				opening: '',
+				closing: '</div>'
+			},
+			type: 'input',
+			parameters: {
+				id: `fileName`,
+				name: `fileName`,
+				label: {
+					text: 'Filename',
+					classes: 'govuk-caption-m govuk-!-margin-bottom-3'
+				},
+				value: item.fileName
+			}
+		}
+	];
+
+	return pageComponents;
+}
 
 /**
  * @param {Object} params
@@ -1119,6 +1158,7 @@ export async function manageDocumentPage({
 		'manage-documents',
 		'change-document-details'
 	);
+	const changeNameUrl = request.originalUrl.replace('manage-documents', 'change-document-name');
 	const session = request.session;
 	const latestVersion = getDocumentLatestVersion(document);
 	const virusCheckStatus = mapDocumentVersionDetailsVirusCheckStatus(latestVersion);
@@ -1175,7 +1215,16 @@ export async function manageDocumentPage({
 			rows: [
 				{
 					key: { text: 'Name' },
-					value: mapVersionDocumentInformationHtmlProperty(document, latestVersion)
+					value: mapVersionDocumentInformationHtmlProperty(document, latestVersion),
+					actions: {
+						items: [
+							{
+								text: 'Change',
+								href: changeNameUrl,
+								visuallyHiddenText: `${document.name} name`
+							}
+						]
+					}
 				},
 				{
 					key: { text: 'Version' },
@@ -1693,6 +1742,30 @@ export const folderPathToFolderNameText = (folderPath, capitalizeFirstLetter = t
 
 /** @typedef {import('./appeal-documents.controller.js').DocumentDetailsItem} DocumentDetailsItem */
 /** @typedef {Object<string, any>} Document */
+
+/**
+ * @param {string} backLinkUrl
+ * @param {FolderInfo} folder
+ * @param {Document} file
+ * @returns {PageContent}
+ */
+export function changeDocumentNamePage(backLinkUrl, folder, file) {
+	/** @type {PageContent} */
+	const pageContent = {
+		title: 'Change document details',
+		backLinkText: 'Back',
+		backLinkUrl: backLinkUrl?.replace('{{folderId}}', folder.folderId.toString()),
+		preHeading: 'Change document details',
+		heading: `${folderPathToFolderNameText(folder.path)} documents`,
+		pageComponents: mapDocumentNameItemToDocumentNamePageComponents(file.latestDocumentVersion)
+	};
+
+	if (pageContent.pageComponents) {
+		preRenderPageComponents(pageContent.pageComponents);
+	}
+
+	return pageContent;
+}
 
 /**
  * @param {string} backLinkUrl

@@ -21,7 +21,9 @@ import {
 	renderDocumentUpload,
 	postDocumentUpload,
 	renderManageDocument,
-	renderManageFolder
+	renderManageFolder,
+	renderChangeDocumentName,
+	postChangeDocumentName
 } from '../../appeal-documents/appeal-documents.controller.js';
 import { capitalize } from 'lodash-es';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
@@ -485,6 +487,25 @@ export const postDocumentVersionDetails = async (request, response) => {
 		response,
 		backLinkUrl: `/appeals-service/appeal-details/${request.params.appealId}/appellant-case/add-documents/${request.params.folderId}/${request.params.documentId}`,
 		nextPageUrl: `/appeals-service/appeal-details/${request.params.appealId}/appellant-case/add-documents/${request.params.folderId}/${request.params.documentId}/check-your-answers`
+	});
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const getChangeDocumentNameDetails = async (request, response) => {
+	await renderChangeDocumentName({
+		request,
+		response,
+		backButtonUrl: `/appeals-service/appeal-details/${request.params.appealId}/appellant-case/manage-documents/${request.params.folderId}/${request.params.documentId}`
+	});
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const postChangeDocumentNameDetails = async (request, response) => {
+	await postChangeDocumentName({
+		request,
+		response,
+		backButtonUrl: `/appeals-service/appeal-details/${request.params.appealId}/appellant-case/manage-documents/${request.params.folderId}/${request.params.documentId}`,
+		nextPageUrl: `/appeals-service/appeal-details/${request.params.appealId}/appellant-case/manage-documents/${request.params.folderId}/${request.params.documentId}`
 	});
 };
 

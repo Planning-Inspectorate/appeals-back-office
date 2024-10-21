@@ -7,13 +7,12 @@ import * as documentsValidators from '../../appeal-documents/appeal-documents.va
 import outcomeValidRouter from './outcome-valid/outcome-valid.router.js';
 import outcomeInvalidRouter from './outcome-invalid/outcome-invalid.router.js';
 import outcomeIncompleteRouter from './outcome-incomplete/outcome-incomplete.router.js';
-import { assertGroupAccess } from '#app/auth/auth.guards.js';
+import { assertGroupAccess, assertUserHasPermission } from '#app/auth/auth.guards.js';
 import { validateAppeal } from '../appeal-details.middleware.js';
-import { assertUserHasPermission } from '#app/auth/auth.guards.js';
 import { permissionNames } from '#environment/permissions.js';
 import {
-	validateCaseFolderId,
-	validateCaseDocumentId
+	validateCaseDocumentId,
+	validateCaseFolderId
 } from '../../appeal-documents/appeal-documents.middleware.js';
 import lpaReferenceRouter from '../lpa-reference/lpa-reference.router.js';
 import inspectorAccessRouter from '../inspector-access/inspector-access.router.js';
@@ -319,6 +318,27 @@ router
 		validateCaseFolderId,
 		validateCaseDocumentId,
 		asyncHandler(controller.getManageDocument)
+	);
+
+router
+	.route('/change-document-name/:folderId/:documentId')
+	.get(
+		validateAppeal,
+		assertUserHasPermission(permissionNames.updateCase),
+		validateCaseFolderId,
+		asyncHandler(controller.getChangeDocumentNameDetails)
+	)
+	.post(
+		validateAppeal,
+		assertUserHasPermission(permissionNames.updateCase),
+		validateCaseFolderId,
+		documentsValidators.validateDocumentNameBodyFormat,
+		documentsValidators.validateDocumentName,
+		assertGroupAccess(
+			config.referenceData.appeals.caseOfficerGroupId,
+			config.referenceData.appeals.inspectorGroupId
+		),
+		asyncHandler(controller.postChangeDocumentNameDetails)
 	);
 
 router
