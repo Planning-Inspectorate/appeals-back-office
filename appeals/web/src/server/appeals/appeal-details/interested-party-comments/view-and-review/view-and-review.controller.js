@@ -6,50 +6,45 @@ import {
 } from './view-and-review.mapper.js';
 import { patchInterestedPartyCommentStatus } from './view-and-review.service.js';
 
+/** @typedef {import("../../appeal-details.types.js").WebAppeal} Appeal */
+/** @typedef {import("../interested-party-comments.types.js").Representation} Representation */
+
 /**
  *
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * @param {(appealDetails: Appeal, comment: Representation) => PageContent} contentMapper
+ * @param {string} templatePath
+ * @returns {import('@pins/express').RenderHandler<unknown>}
  */
-export async function renderViewInterestedPartyComment(request, response) {
-	const { errors, currentComment } = request;
+const render = (contentMapper, templatePath) => (request, response) => {
+	const { errors, currentComment, currentAppeal } = request;
 
 	if (!currentComment) {
 		return response.status(404).render('app/404.njk');
 	}
 
-	const pageContent = viewInterestedPartyCommentPage(request.currentAppeal, request.currentComment);
+	const pageContent = contentMapper(currentAppeal, currentComment);
 
-	return response.status(200).render('patterns/display-page.pattern.njk', {
+	return response.status(200).render(templatePath, {
 		errors,
 		pageContent
 	});
-}
+};
+
+export const renderViewInterestedPartyComment = render(
+	viewInterestedPartyCommentPage,
+	'patterns/display-page.pattern.njk'
+);
+
+export const renderReviewInterestedPartyComment = render(
+	reviewInterestedPartyCommentPage,
+	'patterns/change-page.pattern.njk'
+);
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export async function renderReviewInterestedPartyComment(request, response) {
-	const { errors, currentComment } = request;
-
-	if (!currentComment) {
-		return response.status(404).render('app/404.njk');
-	}
-
-	const pageContent = reviewInterestedPartyCommentPage(request.currentAppeal, currentComment);
-
-	return response.status(200).render('patterns/change-page.pattern.njk', {
-		errors,
-		pageContent
-	});
-}
-
-/**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- */
-export const renderPostReviewInterestedPartyComment = async (request, response) => {
+export const postReviewInterestedPartyComment = async (request, response) => {
 	try {
 		const {
 			errors,
@@ -85,7 +80,6 @@ export const renderPostReviewInterestedPartyComment = async (request, response) 
 			`/appeals-service/appeal-details/${appealId}/interested-party-comments`
 		);
 	} catch (error) {
-		console.log('🚀 ~ renderPostReviewInterestedPartyComment ~ error:', error);
 		logger.error(error);
 		return response.status(500).render('app/500.njk');
 	}

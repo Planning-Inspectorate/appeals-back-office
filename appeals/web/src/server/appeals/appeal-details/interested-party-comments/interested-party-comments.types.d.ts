@@ -22,6 +22,7 @@ export interface Representation {
 	attachments: any[];
 	represented: Represented;
 	siteVisitRequested: boolean;
+	source: string;
 }
 
 export interface RepresentationList {
