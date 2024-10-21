@@ -3,6 +3,19 @@ import { body } from 'express-validator';
 import { createDateInputFieldsValidator } from '#lib/validators/date-input.validator.js';
 import { dateIsValid, dateIsTodayOrInThePast } from '#lib/dates.js';
 
+export const validateDocumentNameBodyFormat = createValidator(
+	body()
+		.custom((bodyFields) => {
+			const items = Object.keys(bodyFields);
+			return items.includes('documentId') && items.includes('fileName');
+		})
+		.withMessage('There is a problem with the service')
+);
+
+export const validateDocumentName = createValidator(
+	body('fileName').trim().notEmpty().withMessage('Filename must be entered').bail()
+);
+
 export const validateDocumentDetailsBodyFormat = createValidator(
 	body()
 		.custom((bodyFields) => {

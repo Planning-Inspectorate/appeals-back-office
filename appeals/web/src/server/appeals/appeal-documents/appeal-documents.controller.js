@@ -14,6 +14,7 @@ import {
 	manageFolderPage,
 	manageDocumentPage,
 	changeDocumentDetailsPage,
+	changeDocumentNamePage,
 	deleteDocumentPage,
 	documentUploadPage
 } from './appeal-documents.mapper.js';
@@ -635,6 +636,83 @@ export const postUploadDocumentVersionCheckAndConfirm = async ({
  */
 
 /** @typedef {import('@pins/appeals.api').Schema.Document} Document */
+/**
+ * @param {Object} params
+ * @param {import('@pins/express/types/express.js').Request} params.request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} params.response
+ * @param {string} params.backButtonUrl
+ */
+export const renderChangeDocumentName = async ({ request, response, backButtonUrl }) => {
+	const {
+		currentFolder,
+		errors,
+		params: { appealId, documentId }
+	} = request;
+
+	if (!currentFolder) {
+		return response.status(500).render('app/500.njk');
+	}
+
+	const currentFile = await getFileInfo(request.apiClient, appealId, documentId);
+
+	if (!currentFile) {
+		return response.status(500).render('app/500.njk');
+	}
+
+	const mappedPageContent = changeDocumentNamePage(backButtonUrl, currentFolder, currentFile);
+
+	return response.status(200).render('appeals/documents/add-document-details.njk', {
+		pageContent: mappedPageContent,
+		errors
+	});
+};
+
+/**
+ * @param {Object} params
+ * @param {import('@pins/express/types/express.js').Request} params.request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} params.response
+ * @param {string} params.backButtonUrl
+ * @param {string} [params.nextPageUrl]
+ */
+export const postChangeDocumentName = async ({ request, response, backButtonUrl, nextPageUrl }) => {
+	try {
+		const {
+			body,
+			apiClient,
+			params: { appealId },
+			errors
+		} = request;
+
+		if (errors) {
+			return await renderChangeDocumentName({ request, response, backButtonUrl });
+		}
+
+		const redactionStatuses = await getDocumentRedactionStatuses(apiClient);
+
+		if (redactionStatuses) {
+			const apiRequest = mapDocumentDetailsFormDataToAPIRequest(body, redactionStatuses);
+			const updateDocumentsResult = await updateDocuments(apiClient, appealId, apiRequest);
+
+			if (updateDocumentsResult) {
+				addNotificationBannerToSession(
+					request.session,
+					'documentDetailsUpdated',
+					Number.parseInt(appealId, 10)
+				);
+				return response.redirect(nextPageUrl || `/appeals-service/appeal-details/${appealId}/`);
+			}
+		}
+
+		return response.status(500).render('app/500.njk');
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error ? error.message : 'Something went wrong when adding document details'
+		);
+
+		return response.status(500).render('app/500.njk');
+	}
+};
 
 /**
  * @param {Object} params
