@@ -1,19 +1,23 @@
 // @ts-nocheck
-import { appealsApiRequests } from '../fixtures/appealsApiRequests';
-
-// TODO Consider moving this into it's own file
-const apiPaths = {
-	caseSubmission: 'appeals/case-submission',
-	lpqaSubmission: 'appeals/lpaq-submission'
-};
+import { appealsApiRequests, documentsApiRequest } from '../fixtures/appealsApiRequests';
+import { apiPaths } from './apiPaths.js';
 
 const baseUrl = Cypress.config('apiBaseUrl');
+
+const createApiSubmission = (submission, type) => {
+	const env = baseUrl.indexOf('test') > -1 ? 'test' : 'dev';
+
+	return {
+		...submission,
+		...documentsApiRequest[env][type]
+	};
+};
 
 export const appealsApiClient = {
 	async caseSubmission(requestBody) {
 		try {
 			if (requestBody === undefined) {
-				requestBody = appealsApiRequests.caseSubmission;
+				requestBody = createApiSubmission(appealsApiRequests.caseSubmission, 'appellant');
 			}
 
 			const url = baseUrl + apiPaths.caseSubmission;
@@ -39,7 +43,7 @@ export const appealsApiClient = {
 	},
 	async lpqaSubmission(reference) {
 		try {
-			let requestBody = appealsApiRequests.lpaqSubmission;
+			const requestBody = createApiSubmission(appealsApiRequests.lpaqSubmission, 'lpaq');
 			requestBody.casedata.caseReference = reference;
 
 			const url = baseUrl + apiPaths.lpqaSubmission;
