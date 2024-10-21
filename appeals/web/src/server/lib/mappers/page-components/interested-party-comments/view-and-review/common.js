@@ -3,7 +3,7 @@ import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 
-/** @typedef {import("../../interested-party-comments.types.js").Representation} Representation */
+/** @typedef {import("../../../../../appeals/appeal-details/interested-party-comments/interested-party-comments.types.js").Representation} Representation */
 
 /**
  * Generates the withdraw link component.

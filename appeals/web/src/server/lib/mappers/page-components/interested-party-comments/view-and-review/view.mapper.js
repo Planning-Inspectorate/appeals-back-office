@@ -1,8 +1,8 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { generateCommentSummaryList, generateWithdrawLink } from './common.js';
 
-/** @typedef {import("../../../appeal-details.types.js").WebAppeal} Appeal */
-/** @typedef {import("../../interested-party-comments.types.js").Representation} Representation */
+/** @typedef {import("../../../../appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
+/** @typedef {import("../../../../appeals/appeal-details/interested-party-comments/interested-party-comments.types.js").Representation} Representation */
 
 /**
  * @param {Appeal} appealDetails
