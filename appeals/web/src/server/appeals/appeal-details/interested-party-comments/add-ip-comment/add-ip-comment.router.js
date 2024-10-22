@@ -44,7 +44,10 @@ router
 		asyncHandler(controller.postIpAddress)
 	);
 
-router.route('/upload').get(asyncHandler(controller.renderUpload));
+router
+	.route('/upload')
+	.get(asyncHandler(controller.renderUpload))
+	.post(asyncHandler(controller.postUpload));
 
 router
 	.route('/redaction-status')
