@@ -8,10 +8,10 @@ resource "azurerm_virtual_network" "secondary" {
 }
 
 resource "azurerm_subnet" "secondary_apps" {
-  name                 = "${local.org}-snet-${local.service_name}-apps-secondary-${var.environment}"
-  resource_group_name  = azurerm_resource_group.secondary.name
-  virtual_network_name = azurerm_virtual_network.secondary.name
-  address_prefixes     = [var.vnet_config.secondary_apps_subnet_address_space]
+  name                              = "${local.org}-snet-${local.service_name}-apps-secondary-${var.environment}"
+  resource_group_name               = azurerm_resource_group.secondary.name
+  virtual_network_name              = azurerm_virtual_network.secondary.name
+  address_prefixes                  = [var.vnet_config.secondary_apps_subnet_address_space]
   private_endpoint_network_policies = "Enabled"
 
   # for app services
@@ -28,10 +28,10 @@ resource "azurerm_subnet" "secondary_apps" {
 }
 
 resource "azurerm_subnet" "secondary" {
-  name                 = "${local.org}-snet-${local.secondary_resource_suffix}"
-  resource_group_name  = azurerm_resource_group.secondary.name
-  virtual_network_name = azurerm_virtual_network.secondary.name
-  address_prefixes     = [var.vnet_config.secondary_subnet_address_space]
+  name                              = "${local.org}-snet-${local.secondary_resource_suffix}"
+  resource_group_name               = azurerm_resource_group.secondary.name
+  virtual_network_name              = azurerm_virtual_network.secondary.name
+  address_prefixes                  = [var.vnet_config.secondary_subnet_address_space]
   private_endpoint_network_policies = "Enabled"
 }
 
