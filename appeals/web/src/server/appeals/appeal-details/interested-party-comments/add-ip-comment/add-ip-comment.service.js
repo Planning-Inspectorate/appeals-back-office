@@ -4,9 +4,9 @@ export const DOCUMENT_TYPE = 'representationAttachments';
 /**
  * @param {import('got').Got} apiClient
  * @param {number} appealId
- * @returns {Promise<number>}
+ * @returns {Promise<import('@pins/appeals.api').Appeals.FolderInfo>}
  * */
-export const getAttachmentsFolderId = async (apiClient, appealId) => {
+export const getAttachmentsFolder = async (apiClient, appealId) => {
 	const folders = await apiClient
 		.get(`appeals/${appealId}/document-folders?path=${DOCUMENT_STAGE}/${DOCUMENT_TYPE}`)
 		.json();
@@ -14,5 +14,5 @@ export const getAttachmentsFolderId = async (apiClient, appealId) => {
 		throw new Error(`failed to find folder for appeal ID ${appealId}`);
 	}
 
-	return folders[0].folderId;
+	return folders[0];
 };

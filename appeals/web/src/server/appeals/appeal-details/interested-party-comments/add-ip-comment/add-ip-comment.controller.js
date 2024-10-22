@@ -1,3 +1,4 @@
+import { postDocumentUpload } from '#appeals/appeal-documents/appeal-documents.controller.js';
 import {
 	checkAddressPage,
 	ipAddressPage,
@@ -6,7 +7,7 @@ import {
 	uploadPage,
 	dateSubmittedPage
 } from './add-ip-comment.mapper.js';
-import { getAttachmentsFolderId } from './add-ip-comment.service.js';
+import { getAttachmentsFolder } from './add-ip-comment.service.js';
 
 /**
  *
@@ -61,13 +62,29 @@ export async function renderUpload(request, response) {
 	const { currentAppeal, errors } = request;
 	const providedAddress = request.session.addIpComment?.addressProvided === 'yes';
 
-	const folderId = await getAttachmentsFolderId(request.apiClient, currentAppeal.appealId);
+	const { folderId } = await getAttachmentsFolder(request.apiClient, currentAppeal.appealId);
 
 	const pageContent = uploadPage(currentAppeal, errors, providedAddress, folderId);
 
 	return response
 		.status(request.errors ? 400 : 200)
 		.render('appeals/documents/document-upload.njk', pageContent);
+}
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * */
+export async function postUpload(request, response) {
+	const { currentAppeal } = request;
+
+	request.currentFolder = await getAttachmentsFolder(request.apiClient, currentAppeal.id);
+
+	await postDocumentUpload({
+		request,
+		response,
+		nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/add/redaction-status`
+	});
 }
 
 /**
