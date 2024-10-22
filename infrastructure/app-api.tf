@@ -98,7 +98,7 @@ module "app_api" {
 
   providers = {
     azurerm = azurerm
-    # azurerm.tooling = azurerm.tooling
+    azurerm.tooling = azurerm.tooling
   }
 }
 
