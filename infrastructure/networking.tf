@@ -12,6 +12,7 @@ resource "azurerm_subnet" "apps" {
   resource_group_name  = azurerm_resource_group.primary.name
   virtual_network_name = azurerm_virtual_network.main.name
   address_prefixes     = [var.vnet_config.apps_subnet_address_space]
+  private_endpoint_network_policies = "Enabled"
 
   # for app services
   delegation {
@@ -31,6 +32,7 @@ resource "azurerm_subnet" "main" {
   resource_group_name  = azurerm_resource_group.primary.name
   virtual_network_name = azurerm_virtual_network.main.name
   address_prefixes     = [var.vnet_config.main_subnet_address_space]
+  private_endpoint_network_policies = "Enabled"
 }
 
 ## peer to tooling VNET for DevOps agents
