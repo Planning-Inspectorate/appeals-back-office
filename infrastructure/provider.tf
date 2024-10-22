@@ -9,7 +9,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 3.99.0"
+      version = "4.5.0"
     }
   }
   required_version = ">= 1.1.6, < 1.10.0"
@@ -27,9 +27,9 @@ provider "azurerm" {
 }
 
 provider "azurerm" {
-  alias                      = "horizon"
-  subscription_id            = var.horizon_infra_config.subscription_id
-  skip_provider_registration = true
+  alias                           = "horizon"
+  subscription_id                 = var.horizon_infra_config.subscription_id
+  resource_provider_registrations = "none"
 
   features {}
 }

@@ -14,4 +14,4 @@ Differences between environments are managed with simple tfvars files, found in 
 
 Variables with common values across environments are set in the `terraform.tfvars` file, which Terraform looks for automatically.
 
-https://developer.hashicorp.com/terraform/language/values/variables#variable-definitions-tfvars-files
+<https://developer.hashicorp.com/terraform/language/values/variables#variable-definitions-tfvars-files>
