@@ -341,23 +341,24 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 				: []
 			).length > 0
 				? {
-						summaryListItems: (isFolderInfo(appellantCaseData.documents.appellantCaseCorrespondence)
-							? appellantCaseData.documents.appellantCaseCorrespondence.documents || []
-							: []
-						).map((document) => ({
-							key: {
-								text: 'Additional documents',
-								classes: 'govuk-visually-hidden'
-							},
-							value: displayPageFormatter.formatDocumentValues(
-								appellantCaseData.appealId,
-								[document],
-								document.latestDocumentVersion?.isLateEntry || false
-							),
-							actions: {
-								items: []
+						summaryListItems: [
+							{
+								key: {
+									text: 'Additional documents',
+									classes: 'govuk-visually-hidden'
+								},
+								value: displayPageFormatter.formatDocumentValues(
+									appellantCaseData.appealId,
+									isFolderInfo(appellantCaseData.documents.appellantCaseCorrespondence)
+										? appellantCaseData.documents.appellantCaseCorrespondence.documents || []
+										: [],
+									true
+								),
+								actions: {
+									items: []
+								}
 							}
-						}))
+						]
 				  }
 				: {
 						summaryListItems: [

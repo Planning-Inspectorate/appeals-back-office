@@ -1,3 +1,5 @@
 {%- macro showMore(params) -%}
-	<div class="pins-show-more" data-label="{{ params.labelText }}">{{ params.text }}</div>
+	<div class="pins-show-more" data-label="{{ params.labelText }}" data-mode="{{ 'html' if params.html else 'text' }}"{%- if params.contentRowSelector -%} data-content-row-selector="{{ params.contentRowSelector }}"{%- endif -%}{%- if params.maximumBeforeHiding -%} data-max-before-hiding="{{ params.maximumBeforeHiding }}"{%- endif -%}{%- if params.toggleTextCollapsed -%} data-toggle-text-collapsed="{{ params.toggleTextCollapsed }}"{%- endif -%}{%- if params.toggleTextExpanded -%} data-toggle-text-expanded="{{ params.toggleTextExpanded }}"{%- endif -%}>
+		{%- if params.html -%}{{ params.html | safe }}{%- else -%}{{ params.text }}{%- endif -%}
+	</div>
 {%- endmacro -%}

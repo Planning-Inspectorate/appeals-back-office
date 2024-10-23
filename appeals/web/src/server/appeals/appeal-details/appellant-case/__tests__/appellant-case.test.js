@@ -750,7 +750,7 @@ describe('appellant-case', () => {
 					});
 
 					expect(unprettifiedElement.innerHTML).toContain(
-						`<dd class="govuk-summary-list__value"><span>Yes</span><br><div class="pins-show-more" data-label="Inspector access details">${text301Characters}</div></dd>`
+						`<dd class="govuk-summary-list__value"><span>Yes</span><br><div class="pins-show-more" data-label="Inspector access details" data-mode="text">${text301Characters}</div></dd>`
 					);
 				});
 			});
@@ -810,7 +810,7 @@ describe('appellant-case', () => {
 					});
 
 					expect(unprettifiedElement.innerHTML).toContain(
-						`<dd class="govuk-summary-list__value"><span>Yes</span><br><div class="pins-show-more" data-label="Potential safety risks details">${text301Characters}</div></dd>`
+						`<dd class="govuk-summary-list__value"><span>Yes</span><br><div class="pins-show-more" data-label="Potential safety risks details" data-mode="text">${text301Characters}</div></dd>`
 					);
 				});
 			});
@@ -868,7 +868,7 @@ describe('appellant-case', () => {
 					});
 
 					expect(unprettifiedElement.innerHTML).toContain(
-						`<div class="pins-show-more" data-label="Original Development description details">${text301Characters}</div>`
+						`<div class="pins-show-more" data-label="Original Development description details" data-mode="text">${text301Characters}</div>`
 					);
 				});
 			});
@@ -924,7 +924,7 @@ describe('appellant-case', () => {
 					});
 
 					expect(unprettifiedElement.innerHTML).toContain(
-						`<div class="pins-show-more" data-label="Reason for preference details">${text301Characters}</div>`
+						`<div class="pins-show-more" data-label="Reason for preference details" data-mode="text">${text301Characters}</div>`
 					);
 				});
 			});
