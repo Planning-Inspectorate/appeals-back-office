@@ -290,7 +290,7 @@ export const checkYourAnswersPage = (appealDetails, values, fileUpload, errors) 
 							text: 'Comment'
 						},
 						value: {
-							html: `<a href='#'>${fileUpload.files[0]?.name}</a>`
+							html: `<a href='#'>${fileUpload?.files[0]?.name || ''}</a>`
 						},
 						actions: {
 							items: [
