@@ -1,6 +1,40 @@
 import { APPEAL_REDACTED_STATUS, APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
 import { sample } from 'lodash-es';
 
+export const documentFileInfo = {
+	guid: 'd51f408c-7c6f-4f49-bcc0-abbb5bea3be6',
+	name: 'ph0-documentFileInfo.jpeg',
+	folderId: 1269,
+	createdAt: '2023-10-11T13:57:41.592Z',
+	isDeleted: false,
+	caseId: '1',
+	latestDocumentVersion: {
+		documentId: 'd51f408c-7c6f-4f49-bcc0-abbb5bea3be6',
+		version: 1,
+		documentType: 'conservationAreaMap',
+		originalFilename: 'ph0-documentFileInfo.jpeg',
+		fileName: 'ph0-documentFileInfo.jpeg',
+		mime: 'image/jpeg',
+		horizonDataID: null,
+		fileMD5: null,
+		path: null,
+		virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.SCANNED,
+		size: 58861,
+		stage: 'lpa_questionnaire',
+		blobStorageContainer: 'document-service-uploads',
+		blobStoragePath:
+			'appeal/APP-Q9999-D-21-655112/d51f408c-7c6f-4f49-bcc0-abbb5bea3be6/v1/ph0.jpeg',
+		dateCreated: '2023-10-11T13:57:41.592Z',
+		datePublished: null,
+		isDeleted: false,
+		isLateEntry: false,
+		redactedStatus: null,
+		documentURI:
+			'https://127.0.0.1:10000/devstoreaccount1/document-service-uploads/document-service-uploads/appeal/APP-Q9999-D-21-655112/d51f408c-7c6f-4f49-bcc0-abbb5bea3be6/v1/ph0.jpeg',
+		dateReceived: '2023-10-11T13:57:41.592Z'
+	}
+};
+
 export const localPlanningDepartments = [
 	'Maidstone Borough Council',
 	'Barnsley Metropolitan Borough Council',
@@ -1088,28 +1122,31 @@ export const lpaQuestionnaireDataNotValidated = {
 			path: 'lpa-questionnaire/lpaCaseCorrespondence',
 			documents: [
 				{
-					id: '00c43c8c-829a-4aa8-883a-fd6fc1f52c3d',
-					name: 'ph1.jpeg',
-					folderId: 3420,
-					caseId: 111,
-					isLateEntry: true,
-					virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.SCANNED
+					...documentFileInfo,
+					name: 'ph0.jpg',
+					folderId: 21,
+					latestDocumentVersion: {
+						...documentFileInfo.latestDocumentVersion,
+						documentType: 'lpaCaseCorrespondence'
+					}
 				},
 				{
-					id: 'a78446aa-167a-4bef-89b7-18bcb0da11c1',
-					name: 'ph0.jpeg',
-					folderId: 3420,
-					caseId: 111,
-					isLateEntry: false,
-					virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.SCANNED
+					...documentFileInfo,
+					name: 'ph1.jpg',
+					folderId: 21,
+					latestDocumentVersion: {
+						...documentFileInfo.latestDocumentVersion,
+						documentType: 'lpaCaseCorrespondence'
+					}
 				},
 				{
-					id: 'a78446aa-167a-4bef-89b7-18bcb0da11c2',
-					name: 'test-doc.jpeg',
-					folderId: 3420,
-					caseId: 111,
-					isLateEntry: false,
-					virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED
+					...documentFileInfo,
+					name: 'ph2.jpg',
+					folderId: 21,
+					latestDocumentVersion: {
+						...documentFileInfo.latestDocumentVersion,
+						documentType: 'lpaCaseCorrespondence'
+					}
 				}
 			]
 		}
@@ -1421,40 +1458,6 @@ export const allocationDetailsData = {
 			name: 'Specialism 3'
 		}
 	]
-};
-
-export const documentFileInfo = {
-	guid: 'd51f408c-7c6f-4f49-bcc0-abbb5bea3be6',
-	name: 'ph0-documentFileInfo.jpeg',
-	folderId: 1269,
-	createdAt: '2023-10-11T13:57:41.592Z',
-	isDeleted: false,
-	caseId: '1',
-	latestDocumentVersion: {
-		documentId: 'd51f408c-7c6f-4f49-bcc0-abbb5bea3be6',
-		version: 1,
-		documentType: 'conservationAreaMap',
-		originalFilename: 'ph0-documentFileInfo.jpeg',
-		fileName: 'ph0-documentFileInfo.jpeg',
-		mime: 'image/jpeg',
-		horizonDataID: null,
-		fileMD5: null,
-		path: null,
-		virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.SCANNED,
-		size: 58861,
-		stage: 'lpa_questionnaire',
-		blobStorageContainer: 'document-service-uploads',
-		blobStoragePath:
-			'appeal/APP-Q9999-D-21-655112/d51f408c-7c6f-4f49-bcc0-abbb5bea3be6/v1/ph0.jpeg',
-		dateCreated: '2023-10-11T13:57:41.592Z',
-		datePublished: null,
-		isDeleted: false,
-		isLateEntry: false,
-		redactedStatus: null,
-		documentURI:
-			'https://127.0.0.1:10000/devstoreaccount1/document-service-uploads/document-service-uploads/appeal/APP-Q9999-D-21-655112/d51f408c-7c6f-4f49-bcc0-abbb5bea3be6/v1/ph0.jpeg',
-		dateReceived: '2023-10-11T13:57:41.592Z'
-	}
 };
 
 export const documentFileInfoLateEntry = {

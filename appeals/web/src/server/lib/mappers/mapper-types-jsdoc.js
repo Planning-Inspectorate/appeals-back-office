@@ -283,16 +283,31 @@
  */
 
 /**
- * @typedef ShowMoreProperties
+ * @typedef SharedShowMoreProperties
  * @type {Object<string, any>}
  * @property {string} labelText
+ * @property {string} [maximumBeforeHiding]
+ * @property {string} [toggleTextCollapsed]
+ * @property {string} [toggleTextExpanded]
+ */
+
+/**
+ * @typedef ShowMoreTextProperties
+ * @type {Object<string, any>}
  * @property {string} text
+ */
+
+/**
+ * @typedef ShowMoreHtmlProperties
+ * @type {Object<string, any>}
+ * @property {string} html
+ * @property {string} contentRowSelector
  */
 
 /**
  * @typedef {Object} ShowMorePageComponent
  * @property {'show-more'} type
- * @property {ShowMoreProperties} parameters
+ * @property {SharedShowMoreProperties & (ShowMoreTextProperties | ShowMoreHtmlProperties)} parameters
  */
 
 /**

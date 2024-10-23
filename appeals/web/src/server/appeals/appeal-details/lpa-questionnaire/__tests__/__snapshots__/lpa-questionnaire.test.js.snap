@@ -282,23 +282,14 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><span><div class="govuk-body govuk-!-margin-bottom-2">ph1.jpeg</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                            <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><a href='/documents/1/download/undefined/ph0.jpg' data-cy='document-undefined'
+                                target="_blank" class="govuk-link">ph0.jpg</a>
                             </li>
-                        </ul>
-                        </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
-                    <dd                     class="govuk-summary-list__value">
-                        <ul class="govuk-list">
-                            <li><span><div class="govuk-body govuk-!-margin-bottom-2">ph0.jpeg</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                            <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2 pins-border-bottom"><a href='/documents/1/download/undefined/ph1.jpg' data-cy='document-undefined'
+                                target="_blank" class="govuk-link">ph1.jpg</a>
                             </li>
-                        </ul>
-                        </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
-                    <dd                     class="govuk-summary-list__value">
-                        <ul class="govuk-list">
-                            <li><span><div class="govuk-body govuk-!-margin-bottom-2">test-doc.jpeg</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                            <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><a href='/documents/1/download/undefined/ph2.jpg' data-cy='document-undefined'
+                                target="_blank" class="govuk-link">ph2.jpg</a>
                             </li>
                         </ul>
                         </dd>
@@ -614,23 +605,14 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><span><div class="govuk-body govuk-!-margin-bottom-2">ph1.jpeg</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                            <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><a href='/documents/1/download/undefined/ph0.jpg' data-cy='document-undefined'
+                                target="_blank" class="govuk-link">ph0.jpg</a>
                             </li>
-                        </ul>
-                        </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
-                    <dd                     class="govuk-summary-list__value">
-                        <ul class="govuk-list">
-                            <li><span><div class="govuk-body govuk-!-margin-bottom-2">ph0.jpeg</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                            <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2 pins-border-bottom"><a href='/documents/1/download/undefined/ph1.jpg' data-cy='document-undefined'
+                                target="_blank" class="govuk-link">ph1.jpg</a>
                             </li>
-                        </ul>
-                        </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
-                    <dd                     class="govuk-summary-list__value">
-                        <ul class="govuk-list">
-                            <li><span><div class="govuk-body govuk-!-margin-bottom-2">test-doc.jpeg</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                            <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><a href='/documents/1/download/undefined/ph2.jpg' data-cy='document-undefined'
+                                target="_blank" class="govuk-link">ph2.jpg</a>
                             </li>
                         </ul>
                         </dd>
@@ -981,23 +963,14 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><span><div class="govuk-body govuk-!-margin-bottom-2">ph1.jpeg</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                            <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><a href='/documents/1/download/undefined/ph0.jpg' data-cy='document-undefined'
+                                target="_blank" class="govuk-link">ph0.jpg</a>
                             </li>
-                        </ul>
-                        </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
-                    <dd                     class="govuk-summary-list__value">
-                        <ul class="govuk-list">
-                            <li><span><div class="govuk-body govuk-!-margin-bottom-2">ph0.jpeg</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                            <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2 pins-border-bottom"><a href='/documents/1/download/undefined/ph1.jpg' data-cy='document-undefined'
+                                target="_blank" class="govuk-link">ph1.jpg</a>
                             </li>
-                        </ul>
-                        </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
-                    <dd                     class="govuk-summary-list__value">
-                        <ul class="govuk-list">
-                            <li><span><div class="govuk-body govuk-!-margin-bottom-2">test-doc.jpeg</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                            <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><a href='/documents/1/download/undefined/ph2.jpg' data-cy='document-undefined'
+                                target="_blank" class="govuk-link">ph2.jpg</a>
                             </li>
                         </ul>
                         </dd>
@@ -1307,23 +1280,14 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><span><div class="govuk-body govuk-!-margin-bottom-2">ph1.jpeg</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                            <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><a href='/documents/1/download/undefined/ph0.jpg' data-cy='document-undefined'
+                                target="_blank" class="govuk-link">ph0.jpg</a>
                             </li>
-                        </ul>
-                        </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
-                    <dd                     class="govuk-summary-list__value">
-                        <ul class="govuk-list">
-                            <li><span><div class="govuk-body govuk-!-margin-bottom-2">ph0.jpeg</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                            <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2 pins-border-bottom"><a href='/documents/1/download/undefined/ph1.jpg' data-cy='document-undefined'
+                                target="_blank" class="govuk-link">ph1.jpg</a>
                             </li>
-                        </ul>
-                        </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
-                    <dd                     class="govuk-summary-list__value">
-                        <ul class="govuk-list">
-                            <li><span><div class="govuk-body govuk-!-margin-bottom-2">test-doc.jpeg</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                            <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><a href='/documents/1/download/undefined/ph2.jpg' data-cy='document-undefined'
+                                target="_blank" class="govuk-link">ph2.jpg</a>
                             </li>
                         </ul>
                         </dd>
@@ -3538,23 +3502,14 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                     <dd                     class="govuk-summary-list__value">
                         <ul class="govuk-list">
-                            <li><span><div class="govuk-body govuk-!-margin-bottom-2">ph1.jpeg</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                            <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><a href='/documents/1/download/undefined/ph0.jpg' data-cy='document-undefined'
+                                target="_blank" class="govuk-link">ph0.jpg</a>
                             </li>
-                        </ul>
-                        </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
-                    <dd                     class="govuk-summary-list__value">
-                        <ul class="govuk-list">
-                            <li><span><div class="govuk-body govuk-!-margin-bottom-2">ph0.jpeg</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                            <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2 pins-border-bottom"><a href='/documents/1/download/undefined/ph1.jpg' data-cy='document-undefined'
+                                target="_blank" class="govuk-link">ph1.jpg</a>
                             </li>
-                        </ul>
-                        </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
-                    <dd                     class="govuk-summary-list__value">
-                        <ul class="govuk-list">
-                            <li><span><div class="govuk-body govuk-!-margin-bottom-2">test-doc.jpeg</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                            <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><a href='/documents/1/download/undefined/ph2.jpg' data-cy='document-undefined'
+                                target="_blank" class="govuk-link">ph2.jpg</a>
                             </li>
                         </ul>
                         </dd>

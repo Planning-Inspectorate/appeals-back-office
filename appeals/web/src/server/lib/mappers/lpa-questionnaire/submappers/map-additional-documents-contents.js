@@ -10,27 +10,24 @@ export const mapAdditionalDocumentsContents = ({ lpaQuestionnaireData }) => ({
 			: []
 		).length > 0
 			? {
-					summaryListItems: (isFolderInfo(lpaQuestionnaireData.documents.lpaCaseCorrespondence)
-						? lpaQuestionnaireData.documents.lpaCaseCorrespondence.documents || []
-						: []
-					).map(
-						(
-							/** @type {import('@pins/appeals.api/src/server/endpoints/appeals.js').DocumentInfo} */ document
-						) => ({
+					summaryListItems: [
+						{
 							key: {
 								text: 'Additional documents',
 								classes: 'govuk-visually-hidden'
 							},
 							value: formatDocumentValues(
 								lpaQuestionnaireData.appealId,
-								[document],
-								document.latestDocumentVersion?.isLateEntry || false
+								isFolderInfo(lpaQuestionnaireData.documents.lpaCaseCorrespondence)
+									? lpaQuestionnaireData.documents.lpaCaseCorrespondence.documents || []
+									: [],
+								true
 							),
 							actions: {
 								items: []
 							}
-						})
-					)
+						}
+					]
 			  }
 			: {
 					summaryListItems: [

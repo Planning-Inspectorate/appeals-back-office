@@ -5,6 +5,7 @@ import { mapDocumentInfoVirusCheckStatus } from '#appeals/appeal-documents/appea
 import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
 import { dateISOStringToDayMonthYearHourMinute, dateIsInThePast } from '#lib/dates.js';
 import { appealSiteToMultilineAddressStringHtml } from './address-formatter.js';
+import { SHOW_MORE_MAXIMUM_ROWS_BEFORE_HIDING } from '#lib/constants.js';
 
 /**
  * @typedef {import('@pins/appeals.api').Schema.Folder} Folder
@@ -132,10 +133,10 @@ export const formatListOfListedBuildingNumbers = (listOfListedBuildingNumbers) =
 /**
  * @param {number} appealId
  * @param {*[]} listOfDocuments
- * @param {boolean} [addLateEntryStatusTag]
+ * @param {boolean} [isAdditionalDocuments]
  * @returns {HtmlProperty & ClassesProperty}
  */
-export const formatDocumentValues = (appealId, listOfDocuments, addLateEntryStatusTag = false) => {
+export const formatDocumentValues = (appealId, listOfDocuments, isAdditionalDocuments = false) => {
 	/** @type {HtmlProperty} */
 	const htmlProperty = {
 		html: '',
@@ -196,7 +197,7 @@ export const formatDocumentValues = (appealId, listOfDocuments, addLateEntryStat
 				});
 			}
 
-			if (addLateEntryStatusTag) {
+			if (isAdditionalDocuments && document.latestDocumentVersion.isLateEntry) {
 				documentPageComponents.push({
 					type: 'status-tag',
 					parameters: {
@@ -207,7 +208,13 @@ export const formatDocumentValues = (appealId, listOfDocuments, addLateEntryStat
 
 			htmlProperty.pageComponents.push({
 				wrapperHtml: {
-					opening: '<li>',
+					opening: isAdditionalDocuments
+						? `<li class="govuk-!-margin-bottom-0${
+								i > 0 ? ' govuk-!-padding-top-2' : ''
+						  } govuk-!-padding-bottom-2${
+								i < listOfDocuments.length - 1 ? ' pins-border-bottom' : ''
+						  }">`
+						: '<li>',
 					closing: '</li>'
 				},
 				type: 'html',
@@ -226,6 +233,32 @@ export const formatDocumentValues = (appealId, listOfDocuments, addLateEntryStat
 		}
 	} else {
 		logger.debug('No documents in this folder');
+	}
+
+	if (listOfDocuments.length > SHOW_MORE_MAXIMUM_ROWS_BEFORE_HIDING && isAdditionalDocuments) {
+		htmlProperty.pageComponents = [
+			{
+				type: 'show-more',
+				parameters: {
+					labelText: 'additional documents',
+					html: '',
+					contentRowSelector: 'li',
+					toggleTextCollapsed: 'View all',
+					pageComponents: [
+						{
+							type: 'html',
+							wrapperHtml: htmlProperty.wrapperHtml,
+							parameters: {
+								html: '',
+								pageComponents: htmlProperty.pageComponents
+							}
+						}
+					]
+				}
+			}
+		];
+
+		delete htmlProperty.wrapperHtml;
 	}
 
 	return htmlProperty;

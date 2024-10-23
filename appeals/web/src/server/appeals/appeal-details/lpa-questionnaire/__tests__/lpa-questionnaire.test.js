@@ -520,7 +520,7 @@ describe('LPA Questionnaire review', () => {
 					});
 
 					expect(unprettifiedElement.innerHTML).toContain(
-						`<dd class="govuk-summary-list__value"><span>Yes</span><br><div class="pins-show-more" data-label="Site access required details">${text301Characters}</div></dd>`
+						`<dd class="govuk-summary-list__value"><span>Yes</span><br><div class="pins-show-more" data-label="Site access required details" data-mode="text">${text301Characters}</div></dd>`
 					);
 				});
 			});
@@ -563,7 +563,7 @@ describe('LPA Questionnaire review', () => {
 					});
 
 					expect(unprettifiedElement.innerHTML).toContain(
-						`<dd class="govuk-summary-list__value"><span>Yes</span><br><div class="pins-show-more" data-label="Potential safety risks details">${text301Characters}</div></dd>`
+						`<dd class="govuk-summary-list__value"><span>Yes</span><br><div class="pins-show-more" data-label="Potential safety risks details" data-mode="text">${text301Characters}</div></dd>`
 					);
 				});
 			});
@@ -606,7 +606,7 @@ describe('LPA Questionnaire review', () => {
 					});
 
 					expect(unprettifiedElement.innerHTML).toContain(
-						`<dd class="govuk-summary-list__value"><span>Yes</span><br><div class="pins-show-more" data-label="Extra conditions details">${text301Characters}</div></dd>`
+						`<dd class="govuk-summary-list__value"><span>Yes</span><br><div class="pins-show-more" data-label="Extra conditions details" data-mode="text">${text301Characters}</div></dd>`
 					);
 				});
 			});
