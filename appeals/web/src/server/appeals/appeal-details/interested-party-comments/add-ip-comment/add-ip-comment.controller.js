@@ -221,11 +221,10 @@ export async function postIPComment(request, response) {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export async function renderCheckYourAnswers(request, response) {
-	console.log(request.session);
-
 	const pageContent = checkYourAnswersPage(
 		request.currentAppeal,
 		request.session?.addIpComment,
+		request.session?.fileUploadInfo,
 		request.errors
 	);
 

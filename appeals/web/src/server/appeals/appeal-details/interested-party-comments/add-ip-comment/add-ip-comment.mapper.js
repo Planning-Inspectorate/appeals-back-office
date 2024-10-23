@@ -232,10 +232,11 @@ export const dateSubmittedPage = (appealDetails, errors, date) => ({
 /**
  * @param {Appeal} appealDetails
  * @param {{ firstName: string, lastName: string, emailAddress: string, addressLine1: string, addressLine2: string, town: string, county: string, postCode: string, redactionStatus: boolean, 'date-day': string, 'date-month': string, 'date-year': string }} values
+ * @param {{ files: [{ name:string }] }} fileUpload
  * @param {import('@pins/express').ValidationErrors | undefined} errors
  * @returns {PageContent}
  * */
-export const checkYourAnswersPage = (appealDetails, values, errors) => ({
+export const checkYourAnswersPage = (appealDetails, values, fileUpload, errors) => ({
 	title: 'Check details and add comment',
 	backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/date-submitted`,
 	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
@@ -289,7 +290,7 @@ export const checkYourAnswersPage = (appealDetails, values, errors) => ({
 							text: 'Comment'
 						},
 						value: {
-							html: ``
+							html: `<a href='#'>${fileUpload.files[0]?.name}</a>`
 						},
 						actions: {
 							items: [
