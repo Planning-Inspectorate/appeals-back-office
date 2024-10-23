@@ -32,10 +32,12 @@ export async function renderIpDetails(request, response) {
 export async function renderCheckAddress(request, response) {
 	const pageContent = checkAddressPage(request.currentAppeal, request.errors);
 
-	return response.status(request.errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
-		errors: request.errors,
-		pageContent
-	});
+	return response
+		.status(request.errors ? 400 : 200)
+		.render('patterns/check-and-confirm-page.pattern.njk', {
+			errors: request.errors,
+			pageContent
+		});
 }
 
 /**
