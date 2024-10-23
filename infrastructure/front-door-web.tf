@@ -95,8 +95,8 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "web" {
     name                           = "RateLimitHttpRequest"
     enabled                        = true
     priority                       = 100
-    rate_limit_duration_in_minutes = 1
-    rate_limit_threshold           = 300
+    rate_limit_duration_in_minutes = 5
+    rate_limit_threshold           = 150
     type                           = "RateLimitRule"
     action                         = "Block"
 
