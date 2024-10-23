@@ -227,3 +227,120 @@ export const dateSubmittedPage = (appealDetails, errors, date) => ({
 		}
 	]
 });
+
+/**
+/**
+ * @param {Appeal} appealDetails
+ * @param {{ firstName: string, lastName: string, emailAddress: string, addressLine1: string, addressLine2: string, town: string, county: string, postCode: string, redactionStatus: boolean, 'date-day': string, 'date-month': string, 'date-year': string }} values
+ * @param {import('@pins/express').ValidationErrors | undefined} errors
+ * @returns {PageContent}
+ * */
+export const checkYourAnswersPage = (appealDetails, values, errors) => ({
+	title: 'Check details and add comment',
+	backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/date-submitted`,
+	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
+	heading: 'Check details and add comment',
+	pageComponents: [
+		{
+			type: 'summary-list',
+			parameters: {
+				rows: [
+					{
+						key: {
+							text: 'Contact Details'
+						},
+						value: {
+							html: `
+								${values?.firstName || ''} ${values?.lastName || ''} <br>
+								${values?.emailAddress || ''}
+														`
+						},
+						actions: {
+							items: [
+								{
+									text: 'Change',
+									href: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/ip-details`
+								}
+							]
+						}
+					},
+					{
+						key: {
+							text: 'Address'
+						},
+						value: {
+							html: `
+								${[values?.addressLine1, values?.addressLine2, values?.town, values?.county, values?.postCode]
+									.filter(Boolean)
+									.join('<br>')}		
+							`
+						},
+						actions: {
+							items: [
+								{
+									text: 'Change',
+									href: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/ip-address`
+								}
+							]
+						}
+					},
+					{
+						key: {
+							text: 'Comment'
+						},
+						value: {
+							html: ``
+						},
+						actions: {
+							items: [
+								{
+									text: 'Change',
+									href: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/upload`
+								}
+							]
+						}
+					},
+					{
+						key: {
+							text: 'Redaction Status'
+						},
+						value: {
+							html: `
+								${values?.redactionStatus || ''}
+							`
+						},
+						actions: {
+							items: [
+								{
+									text: 'Change',
+									href: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/redaction-status`
+								}
+							]
+						}
+					},
+					{
+						key: {
+							text: 'Date Submitted'
+						},
+						value: {
+							html: `
+								${values?.['date-day'] || ''}
+								${values?.['date-month'] || ''}
+								${values?.['date-year'] || ''}
+							`
+						},
+						actions: {
+							items: [
+								{
+									text: 'Change',
+									href: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/date-submitted`
+								}
+							]
+						}
+					}
+				],
+				errors
+			}
+		}
+	]
+});
