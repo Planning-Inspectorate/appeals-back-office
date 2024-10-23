@@ -25,7 +25,6 @@ export async function interestedPartyCommentsPage(
 	invalid,
 	session
 ) {
-	const appealUrl = `/appeals-service/appeal-details/${appealDetails.appealId}`;
 	const shortReference = appealShortReference(appealDetails.appealReference);
 
 	const notificationBanners = buildNotificationBanners(
@@ -36,8 +35,8 @@ export async function interestedPartyCommentsPage(
 
 	const pageContent = {
 		title: `Interested Party Comments`,
-		backLinkUrl: appealUrl,
-		addCommentUrl: `${appealUrl}/interested-party-comments/add`,
+		backLinkUrl: '/appeals-service/personal-list',
+		addCommentUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add`,
 		preHeading: `Appeal ${shortReference}`,
 		heading: 'Interested Party Comments',
 		headingClasses: 'govuk-heading-l',
