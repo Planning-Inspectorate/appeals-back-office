@@ -78,7 +78,7 @@ export async function renderUpload(request, response) {
 export async function postUpload(request, response) {
 	const { currentAppeal } = request;
 
-	request.currentFolder = await getAttachmentsFolder(request.apiClient, currentAppeal.id);
+	request.currentFolder = await getAttachmentsFolder(request.apiClient, currentAppeal.appealId);
 
 	await postDocumentUpload({
 		request,
