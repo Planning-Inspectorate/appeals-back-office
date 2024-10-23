@@ -2,6 +2,7 @@ import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
 import { createDateInputFieldsValidator } from '#lib/validators/date-input.validator.js';
 import { dateIsValid, dateIsTodayOrInThePast } from '#lib/dates.js';
+import { folderPathToFolderNameText } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 
 export const validateDocumentNameBodyFormat = createValidator(
 	body()
@@ -13,7 +14,27 @@ export const validateDocumentNameBodyFormat = createValidator(
 );
 
 export const validateDocumentName = createValidator(
-	body('fileName').trim().notEmpty().withMessage('Filename must be entered').bail()
+	body('fileName')
+		.trim()
+		.notEmpty()
+		.withMessage('Filename must be entered')
+		.bail()
+		.matches('^[a-zA-Z0-9_-]+.[a-zA-Z0-9_-]+$')
+		.withMessage(
+			'Filename must only contain alphanumeric characters, underscores, hyphens and one period followed by a suffix'
+		)
+		.custom((value, { req }) => {
+			// @ts-ignore
+			const hasDuplicate = req.currentFolder.documents.some(
+				({ name, id }) => name.toLowerCase() === value.toLowerCase() && id !== req.body.documentId
+			);
+			if (hasDuplicate) {
+				return Promise.reject(
+					`Filename already exists within ${folderPathToFolderNameText(req.currentFolder.path)}`
+				);
+			}
+			return true;
+		})
 );
 
 export const validateDocumentDetailsBodyFormat = createValidator(
