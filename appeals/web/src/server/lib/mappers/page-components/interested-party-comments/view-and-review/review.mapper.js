@@ -12,7 +12,9 @@ import { generateCommentSummaryList, generateWithdrawLink } from './common.js';
  */
 export function reviewInterestedPartyCommentPage(appealDetails, comment) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
-	const commentSummaryList = generateCommentSummaryList(comment, { isReviewPage: true });
+	const commentSummaryList = generateCommentSummaryList(appealDetails.appealId, comment, {
+		isReviewPage: true
+	});
 	const withdrawLink = generateWithdrawLink();
 
 	/** @type {PageComponent} */

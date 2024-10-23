@@ -1,13 +1,13 @@
 import { postDocumentUpload } from '#appeals/appeal-documents/appeal-documents.controller.js';
 import {
 	checkAddressPage,
-	ipAddressPage,
 	ipDetailsPage,
 	redactionStatusPage,
 	uploadPage,
 	dateSubmittedPage,
 	checkYourAnswersPage
 } from './add-ip-comment.mapper.js';
+import { ipAddressPage } from '../interested-party-comments.mapper.js';
 import { getAttachmentsFolder } from './add-ip-comment.service.js';
 
 /**
@@ -46,7 +46,12 @@ export async function renderCheckAddress(request, response) {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export async function renderIpAddress(request, response) {
-	const pageContent = ipAddressPage(request.currentAppeal, request.body, request.errors);
+	const pageContent = ipAddressPage(
+		request.currentAppeal,
+		request.body,
+		request.errors,
+		'add/check-address'
+	);
 
 	return response.status(request.errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
 		errors: request.errors,
