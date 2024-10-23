@@ -273,4 +273,34 @@ describe('add-ip-comment', () => {
 			expect(response.statusCode).toBe(400);
 		});
 	});
+
+	describe('GET /add/check-your-answers', () => {
+		const appealId = 2;
+
+		/** @type {*} */
+		let pageHtml;
+
+		beforeAll(async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/interested-party-comments/add/check-your-answers`
+			);
+			pageHtml = parseHtml(response.text);
+		});
+
+		it('should match the snapshot', () => {
+			expect(pageHtml.innerHTML).toMatchSnapshot();
+		});
+
+		it('should render the correct heading', () => {
+			expect(pageHtml.querySelector('h1')?.innerHTML).toBe('Check details and add comment');
+		});
+
+		it('should render a summary list', () => {
+			expect(pageHtml.querySelector('dl.govuk-summary-list')).not.toBeNull();
+		});
+	});
 });

@@ -63,6 +63,11 @@ router
 		asyncHandler(controller.postDateSubmitted)
 	);
 
+router
+	.route('/check-your-answers')
+	.get(asyncHandler(controller.renderCheckYourAnswers))
+	.post(asyncHandler(controller.postIPComment));
+
 router.route('/').get(asyncHandler(controller.redirectTopLevel));
 
 export default router;

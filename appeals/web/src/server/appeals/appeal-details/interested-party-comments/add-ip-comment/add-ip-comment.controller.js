@@ -5,7 +5,8 @@ import {
 	ipDetailsPage,
 	redactionStatusPage,
 	uploadPage,
-	dateSubmittedPage
+	dateSubmittedPage,
+	checkYourAnswersPage
 } from './add-ip-comment.mapper.js';
 import { getAttachmentsFolder } from './add-ip-comment.service.js';
 
@@ -31,12 +32,10 @@ export async function renderIpDetails(request, response) {
 export async function renderCheckAddress(request, response) {
 	const pageContent = checkAddressPage(request.currentAppeal, request.errors);
 
-	return response
-		.status(request.errors ? 400 : 200)
-		.render('patterns/check-and-confirm-page.pattern.njk', {
-			errors: request.errors,
-			pageContent
-		});
+	return response.status(request.errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
+		errors: request.errors,
+		pageContent
+	});
 }
 
 /**
@@ -203,6 +202,37 @@ export async function postDateSubmitted(request, response) {
 	return response.redirect(
 		`/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments`
 	);
+}
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export async function postIPComment(request, response) {
+	response.end();
+}
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export async function renderCheckYourAnswers(request, response) {
+	console.log(request.session);
+
+	const pageContent = checkYourAnswersPage(
+		request.currentAppeal,
+		request.session?.addIpComment,
+		request.errors
+	);
+
+	return response
+		.status(request.errors ? 400 : 200)
+		.render('patterns/check-and-confirm-page.pattern.njk', {
+			errors: request.errors,
+			pageContent
+		});
 }
 
 /**
