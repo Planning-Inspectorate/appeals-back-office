@@ -11,7 +11,7 @@ import { generateCommentSummaryList, generateWithdrawLink } from './common.js';
  */
 export function viewInterestedPartyCommentPage(appealDetails, comment) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
-	const commentSummaryList = generateCommentSummaryList(comment);
+	const commentSummaryList = generateCommentSummaryList(appealDetails.appealId, comment);
 	const withdrawLink = generateWithdrawLink();
 
 	const pageContent = {

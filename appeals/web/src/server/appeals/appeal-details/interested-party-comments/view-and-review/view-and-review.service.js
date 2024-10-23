@@ -12,11 +12,3 @@ export const patchInterestedPartyCommentStatus = (apiClient, appealId, commentId
 			}
 		})
 		.json();
-
-/**
- * @param {import('got').Got} apiClient
- * @param {string} appealId
- * @param {string} commentId
- * */
-export const getInterestedPartyComment = (apiClient, appealId, commentId) =>
-	apiClient.get(`appeals/${appealId}/reps/${commentId}`).json();

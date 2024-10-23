@@ -24,11 +24,16 @@ export function generateWithdrawLink() {
 
 /**
  * Generates the comment summary list used in both view and review pages.
+ * @param {number} appealId
  * @param {Representation} comment - The comment object.
  * @param {{ isReviewPage?: boolean }} [options]
  * @returns {PageComponent} The generated comment summary list component.
  */
-export function generateCommentSummaryList(comment, { isReviewPage } = { isReviewPage: false }) {
+export function generateCommentSummaryList(
+	appealId,
+	comment,
+	{ isReviewPage } = { isReviewPage: false }
+) {
 	const hasAddress =
 		comment.represented.address &&
 		comment.represented.address.addressLine1 &&
@@ -59,9 +64,11 @@ export function generateCommentSummaryList(comment, { isReviewPage } = { isRevie
 				: { text: 'Not provided' },
 			actions: {
 				items: [
-					hasAddress
-						? { text: 'Change', href: '#', visuallyHiddenText: 'address' }
-						: { text: 'Add', href: '#', visuallyHiddenText: 'address' }
+					{
+						text: hasAddress ? 'Change' : 'Add',
+						href: `/appeals-service/appeal-details/${appealId}/interested-party-comments/${comment.id}/edit/address?review=${isReviewPage}`,
+						visuallyHiddenText: 'address'
+					}
 				]
 			}
 		},

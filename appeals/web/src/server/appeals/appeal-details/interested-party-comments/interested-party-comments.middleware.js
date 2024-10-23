@@ -1,4 +1,4 @@
-import { getInterestedPartyComment } from './view-and-review.service.js';
+import { getInterestedPartyComment } from './interested-party-comments.service.js';
 
 /**
  * @type {import('express').RequestHandler}

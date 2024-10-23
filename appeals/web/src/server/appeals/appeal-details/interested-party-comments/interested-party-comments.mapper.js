@@ -1,6 +1,7 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { buildNotificationBanners } from '#lib/mappers/notification-banners.mapper.js';
+import { addressInputs } from '#lib/mappers/components/address.js';
 
 /**
  * @typedef {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} SingleAppellantCaseResponse */
@@ -48,6 +49,21 @@ export async function interestedPartyCommentsPage(
 
 	return pageContent;
 }
+
+/**
+ * @param {Appeal} appealDetails
+ * @param {{ addressLine1: string, addressLine2: string, town: string, county: string, postCode: string }} address
+ * @param {import('@pins/express').ValidationErrors | undefined} errors
+ * @param {string} backPath
+ * @returns {PageContent}
+ * */
+export const ipAddressPage = (appealDetails, address, errors, backPath) => ({
+	title: "Interested party's address",
+	backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${backPath}`,
+	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
+	heading: "Interested party's address",
+	pageComponents: addressInputs({ address, errors })
+});
 
 /**
  * Creates a table object for the interested party comments.

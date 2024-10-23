@@ -6,7 +6,6 @@ import {
 	errorFirstName,
 	errorLastName
 } from '#lib/error-handlers/change-screen-error-handlers.js';
-import { addressInputs } from '#lib/mappers/components/address.js';
 import { DOCUMENT_STAGE, DOCUMENT_TYPE } from './add-ip-comment.service.js';
 
 /** @typedef {import("../../appeal-details.types.js").WebAppeal} Appeal */
@@ -100,20 +99,6 @@ export const checkAddressPage = (appealDetails, errors) => ({
 			}
 		}
 	]
-});
-
-/**
- * @param {Appeal} appealDetails
- * @param {{ addressLine1: string, addressLine2: string, town: string, county: string, postCode: string }} address
- * @param {import('@pins/express').ValidationErrors | undefined} errors
- * @returns {PageContent}
- * */
-export const ipAddressPage = (appealDetails, address, errors) => ({
-	title: "Interested party's address",
-	backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/check-address`,
-	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
-	heading: "Interested party's address",
-	pageComponents: addressInputs({ address, errors })
 });
 
 /**
