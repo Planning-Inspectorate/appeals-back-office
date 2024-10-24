@@ -154,9 +154,6 @@ export const updateDocuments = (data) => {
 			},
 			where: {
 				documentGuid_version: { documentGuid: document.id, version: document.latestVersion }
-			},
-			include: {
-				document: true
 			}
 		})
 	);
