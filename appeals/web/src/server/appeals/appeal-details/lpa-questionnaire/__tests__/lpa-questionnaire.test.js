@@ -440,7 +440,7 @@ describe('LPA Questionnaire review', () => {
 				'name="review-outcome" type="radio" value="incomplete">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Confirming this review will inform the relevant parties of the outcome</div>'
+				'Confirming this review will inform the relevant parties of the outcome.</div>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 		}, 10000);
@@ -1430,7 +1430,7 @@ describe('LPA Questionnaire review', () => {
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Incomplete reasons</dt>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Confirming this review will inform the relevant parties of the outcome</div>'
+				'Confirming this review will inform the relevant parties of the outcome.</div>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 		});
@@ -2654,7 +2654,7 @@ describe('LPA Questionnaire review', () => {
 				`${dateISOStringToDisplayDate(new Date().toISOString())}</dd>`
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</dt>');
-			expect(unprettifiedElement.innerHTML).toContain('Unredacted</dd>');
+			expect(unprettifiedElement.innerHTML).toContain('No redaction required</dd>');
 			expect(unprettifiedElement.innerHTML).toContain(
 				`<a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/${documentFolderInfo.folderId}"> Change</a></dd>`
 			);
@@ -2800,7 +2800,7 @@ describe('LPA Questionnaire review', () => {
 				`${dateISOStringToDisplayDate(new Date().toISOString())}</dd>`
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</dt>');
-			expect(unprettifiedElement.innerHTML).toContain('Unredacted</dd>');
+			expect(unprettifiedElement.innerHTML).toContain('No redaction required</dd>');
 			expect(unprettifiedElement.innerHTML).toContain(
 				`<a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/${documentFolderInfo.folderId}/1"> Change</a></dd>`
 			);

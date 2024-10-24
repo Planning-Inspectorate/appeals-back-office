@@ -930,6 +930,16 @@ describe('appellant cases routes', () => {
 					id: 1,
 					azureAdUserId
 				});
+				// @ts-ignore
+				databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+				// @ts-ignore
+				databaseConnector.documentVersion.update.mockResolvedValue([]);
+				// @ts-ignore
+				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+					{ id: 1, key: 'no_redaction_required' }
+				]);
+				// @ts-ignore
+				databaseConnector.document.findUnique.mockResolvedValue(null);
 
 				const body = {
 					validationOutcome: 'valid'

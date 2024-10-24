@@ -104,7 +104,15 @@ export async function lpaQuestionnairePage(lpaqDetails, appealDetails, currentRo
 	const insetTextComponent = {
 		type: 'inset-text',
 		parameters: {
-			text: 'Confirming this review will inform the relevant parties of the outcome'
+			text: 'Confirming this review will inform the relevant parties of the outcome.'
+		}
+	};
+
+	/** @type {PageComponent} */
+	const documentsWarningComponent = {
+		type: 'warning-text',
+		parameters: {
+			text: 'Do not select an outcome until you have reviewed all of the supporting documents and redacted any sensitive information.'
 		}
 	};
 
@@ -130,6 +138,7 @@ export async function lpaQuestionnairePage(lpaqDetails, appealDetails, currentRo
 			parameters: reviewOutcomeRadiosInputInstruction.properties
 		});
 		reviewOutcomeComponents.push(insetTextComponent);
+		reviewOutcomeComponents.push(documentsWarningComponent);
 	}
 
 	if (getDocumentsForVirusStatus(lpaqDetails, 'not_scanned').length > 0) {
@@ -392,7 +401,7 @@ export function checkAndConfirmPage(
 	const insetTextComponent = {
 		type: 'inset-text',
 		parameters: {
-			text: 'Confirming this review will inform the relevant parties of the outcome'
+			text: 'Confirming this review will inform the relevant parties of the outcome.'
 		}
 	};
 

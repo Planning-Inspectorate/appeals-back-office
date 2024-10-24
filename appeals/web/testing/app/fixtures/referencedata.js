@@ -28,7 +28,7 @@ export const documentFileInfo = {
 		datePublished: null,
 		isDeleted: false,
 		isLateEntry: false,
-		redactedStatus: null,
+		redactedStatus: 3,
 		documentURI:
 			'https://127.0.0.1:10000/devstoreaccount1/document-service-uploads/document-service-uploads/appeal/APP-Q9999-D-21-655112/d51f408c-7c6f-4f49-bcc0-abbb5bea3be6/v1/ph0.jpeg',
 		dateReceived: '2023-10-11T13:57:41.592Z'
@@ -1536,7 +1536,7 @@ export const documentFolderInfoWithoutDraftDocuments = {
 			latestDocumentVersion: {
 				draft: false,
 				dateReceived: '2023-02-01T01:00:00.000Z',
-				redactionStatus: 'Redacted',
+				redactionStatus: null,
 				size: 129363,
 				mime: 'application/pdf',
 				isLateEntry: false
@@ -1548,7 +1548,7 @@ export const documentFolderInfoWithoutDraftDocuments = {
 			latestDocumentVersion: {
 				draft: false,
 				dateReceived: '2024-03-02T01:00:00.000Z',
-				redactionStatus: 'Unredacted',
+				redactionStatus: null,
 				size: 11815175,
 				mime: 'video/mp4',
 				virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED,
@@ -2089,7 +2089,7 @@ export const costsFolderInfoAppellantApplication = {
 			latestDocumentVersion: {
 				draft: false,
 				dateReceived: '2023-02-01T01:00:00.000Z',
-				redactionStatus: 'Redacted',
+				redactionStatus: 'No redaction required',
 				size: 129363,
 				mime: 'application/pdf',
 				virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.SCANNED,
@@ -2201,7 +2201,7 @@ export const appealCostsDocumentItem = {
 		dateReceived: '2024-04-09T13:10:07.562Z',
 		isDeleted: false,
 		isLateEntry: false,
-		redactionStatusId: 2,
+		redactionStatusId: 0,
 		redacted: false,
 		documentURI:
 			'https://127.0.0.1:10000/devstoreaccount1/document-service-uploads/document-service-uploads/appeal/6014692/d2197025-5edb-4477-8e98-2a1bf13ed2ea/v1/test-doc-alternate.docx'
@@ -2209,7 +2209,7 @@ export const appealCostsDocumentItem = {
 };
 
 export const fileUploadInfo =
-	'[{"name": "test-document.txt", "GUID": "1", "fileRowId": "1", "blobStoreUrl": "/", "mimeType": "txt", "documentType": "txt", "size": 1, "stage": "appellant-case"}]';
+	'[{"name": "test-document.txt", "GUID": "1", "fileRowId": "1", "blobStoreUrl": "/", "mimeType": "txt", "documentType": "txt", "size": 1, "stage": "appellant-case", "redactionStatus": 3}]';
 
 export const withdrawalRequestData = {
 	withdrawal: {

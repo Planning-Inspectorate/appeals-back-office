@@ -2178,7 +2178,7 @@ describe('appellant-case', () => {
 				'Review outcome</dt><dd class="govuk-summary-list__value"> Invalid</dd>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Confirming this review will inform the relevant parties of the outcome</div>'
+				'Confirming this review will inform the relevant parties of the outcome.</div>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 		});
@@ -2227,7 +2227,7 @@ describe('appellant-case', () => {
 				'Review outcome</dt><dd class="govuk-summary-list__value"> Incomplete</dd>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Confirming this review will inform the relevant parties of the outcome</div>'
+				'Confirming this review will inform the relevant parties of the outcome.</div>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 		});
@@ -4442,7 +4442,7 @@ describe('appellant-case', () => {
 				`href="/appeals-service/appeal-details/1/appellant-case/add-document-details/${documentFolderInfo.folderId}"> Change</a>`
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</dt>');
-			expect(unprettifiedElement.innerHTML).toContain('Unredacted</dd>');
+			expect(unprettifiedElement.innerHTML).toContain('No redaction required</dd>');
 			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 		});
 	});
@@ -4601,7 +4601,7 @@ describe('appellant-case', () => {
 				`href="/appeals-service/appeal-details/1/appellant-case/add-document-details/${documentFolderInfo.folderId}/1"> Change</a></dd>`
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</dt>');
-			expect(unprettifiedElement.innerHTML).toContain('Unredacted</dd>');
+			expect(unprettifiedElement.innerHTML).toContain('No redaction required</dd>');
 			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 		});
 	});

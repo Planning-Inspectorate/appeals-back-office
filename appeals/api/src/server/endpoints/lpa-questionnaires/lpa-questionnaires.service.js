@@ -13,6 +13,8 @@ import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.j
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import formatDate from '#utils/date-formatter.js';
 import { getFormattedReasons } from '#utils/appeal-formatter.js';
+import * as documentRepository from '#repositories/document.repository.js';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import config from '#config/config.js';
 
 /** @typedef {import('express').RequestHandler} RequestHandler */
@@ -84,6 +86,15 @@ const updateLPAQuestionnaireValidationOutcome = async (
 	}
 
 	if (isOutcomeComplete(validationOutcome.name)) {
+		const documentsUpdated = await documentRepository.setRedactionStatusOnValidation(appeal.id);
+		for (const documentUpdated of documentsUpdated) {
+			await broadcasters.broadcastDocument(
+				documentUpdated.documentGuid,
+				documentUpdated.version,
+				'update'
+			);
+		}
+
 		const recipientEmail = appeal.lpa?.email;
 		if (!recipientEmail) {
 			throw new Error(ERROR_NO_RECIPIENT_EMAIL);

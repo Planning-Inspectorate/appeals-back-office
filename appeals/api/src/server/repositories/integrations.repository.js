@@ -1,6 +1,5 @@
 import { databaseConnector } from '#utils/database-connector.js';
 import { mapBlobPath } from '#endpoints/documents/documents.mapper.js';
-import { getDefaultRedactionStatus } from './document-metadata.repository.js';
 import { createAppealReference } from '#utils/appeal-reference.js';
 import config from '#config/config.js';
 import { APPEAL_CASE_STATUS, APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
@@ -169,7 +168,6 @@ const setAppealRelationships = async (tx, appealId, caseReference, relatedRefere
  * @returns {Promise<import('#db-client').DocumentVersion[]>}
  */
 const setDocumentVersions = async (tx, appealId, caseReference, documents) => {
-	const unredactedStatus = await getDefaultRedactionStatus();
 	if (documents) {
 		const caseFolders = await tx.folder.findMany({ where: { caseId: appealId } });
 
@@ -212,8 +210,7 @@ const setDocumentVersions = async (tx, appealId, caseReference, documents) => {
 					documentURI,
 					blobStoragePath,
 					dateReceived: new Date().toISOString(),
-					draft: false,
-					redactionStatusId: unredactedStatus?.id
+					draft: false
 				};
 			})
 		});
