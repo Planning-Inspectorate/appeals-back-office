@@ -4,6 +4,7 @@ import stringTokenReplacement from '#utils/string-token-replacement.js';
 import serviceUserRepository from '#repositories/service-user.repository.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { EventType } from '@pins/event-client';
+import { upsertServiceUserAddress } from './service-user.service.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -60,3 +61,31 @@ export const updateServiceUserById = async (req, res) => {
 		serviceUserId
 	});
 };
+
+/**
+ * @param {Request} request
+ * @param {Response} response
+ * @returns {Promise<Response>}
+ * */
+export async function updateServiceUserAddress(request, response) {
+	const { serviceUserId } = request.params;
+
+	const { addressLine1, addressLine2, county, country, postcode, town } = request.body;
+
+	const addressInput = {
+		addressLine1,
+		addressLine2,
+		addressCountry: country,
+		addressCounty: county,
+		addressTown: town,
+		postcode
+	};
+
+	const result = await upsertServiceUserAddress(parseInt(serviceUserId), addressInput);
+
+	if (!result) {
+		return response.status(404).end();
+	}
+
+	return response.send(result);
+}

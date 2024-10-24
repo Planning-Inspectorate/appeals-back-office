@@ -3166,6 +3166,79 @@
 				}
 			}
 		},
+		"/appeals/{appealId}/service-user/{serviceUserId}/address": {
+			"patch": {
+				"tags": ["Service Users"],
+				"description": "Updates or creates the address for a single service user by id",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "serviceUserId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Updates a single service user by id",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UpdateServiceUserResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/UpdateServiceUserResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Service user to update",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateAddressRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateAddressRequest"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/appeals/{appealId}/withdrawal": {
 			"post": {
 				"tags": ["Withdrawal"],
@@ -4266,7 +4339,7 @@
 						"properties": {
 							"submissionId": {
 								"type": "string",
-								"example": "40df3b3d-fc9c-4e65-85db-4a9c383e0fcf"
+								"example": "78f0f6db-1d93-48f8-837a-827bb30ea760"
 							},
 							"advertisedAppeal": {
 								"type": "boolean",
