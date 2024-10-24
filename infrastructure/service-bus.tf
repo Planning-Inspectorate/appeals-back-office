@@ -8,7 +8,6 @@ resource "azurerm_servicebus_namespace" "main" {
 
   sku                          = var.service_bus_config.sku
   capacity                     = var.service_bus_config.capacity
-  zone_redundant               = var.service_bus_config.sku == "Premium"
   premium_messaging_partitions = var.service_bus_config.sku == "Premium" ? 1 : 0
 
   minimum_tls_version           = "1.2"
