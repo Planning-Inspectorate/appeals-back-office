@@ -1,6 +1,6 @@
 module "function_user_import" {
   #checkov:skip=CKV_TF_1: Use of commit hash are not required for our Terraform modules
-  source = "github.com/Planning-Inspectorate/infrastructure-modules.git//modules/node-function-app?ref=6ecb665"
+  source = "github.com/Planning-Inspectorate/infrastructure-modules.git//modules/node-function-app?ref=7e4e94e"
 
   resource_group_name = azurerm_resource_group.primary.name
   location            = module.primary_region.location
