@@ -101,6 +101,14 @@ export async function appellantCasePage(appellantCaseData, appealDetails, curren
 	/** @type {PageComponent[]} */
 	const reviewOutcomeComponents = [];
 
+	/** @type {PageComponent} */
+	const documentsWarningComponent = {
+		type: 'warning-text',
+		parameters: {
+			text: 'Do not select an outcome until you have reviewed all of the supporting documents and redacted any sensitive information.'
+		}
+	};
+
 	if (
 		reviewOutcomeRadiosInputInstruction &&
 		appealDetails.appealStatus === APPEAL_CASE_STATUS.VALIDATION
@@ -109,6 +117,7 @@ export async function appellantCasePage(appellantCaseData, appealDetails, curren
 			type: 'radios',
 			parameters: reviewOutcomeRadiosInputInstruction.properties
 		});
+		reviewOutcomeComponents.push(documentsWarningComponent);
 	}
 
 	if (
@@ -383,7 +392,7 @@ export function checkAndConfirmPage(
 	const insetTextComponent = {
 		type: 'inset-text',
 		parameters: {
-			text: 'Confirming this review will inform the relevant parties of the outcome'
+			text: 'Confirming this review will inform the relevant parties of the outcome.'
 		}
 	};
 

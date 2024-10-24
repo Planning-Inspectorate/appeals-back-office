@@ -1,5 +1,6 @@
 import { databaseConnector } from '#utils/database-connector.js';
-import { APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
+import { APPEAL_VIRUS_CHECK_STATUS, APPEAL_REDACTED_STATUS } from 'pins-data-model';
+import documentRedactionStatusRepository from '#repositories/document-redaction-status.repository.js';
 
 /**
  * @typedef {import('#db-client').Prisma.PrismaPromise<T>} PrismaPromise
@@ -158,6 +159,59 @@ export const updateDocuments = (data) =>
 			})
 		)
 	);
+
+/**
+ * @param {number} appealId
+ * @returns {Promise<{documentGuid: string, version: number}[]>}
+ */
+export const setRedactionStatusOnValidation = async (appealId) => {
+	const documentsToUpdate = await databaseConnector.documentVersion.findMany({
+		where: {
+			AND: [
+				{
+					redactionStatusId: null
+				},
+				{
+					document: {
+						caseId: appealId
+					}
+				}
+			]
+		},
+		include: {
+			document: true
+		}
+	});
+
+	const redactionStatuses =
+		await documentRedactionStatusRepository.getAllDocumentRedactionStatuses();
+	const noRedactionRequiredStatus = redactionStatuses.find(
+		(redaction) => redaction.key === APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED
+	);
+
+	if (!noRedactionRequiredStatus) {
+		throw new Error('No redaction status found for no redaction required');
+	}
+
+	for (const documentToUpdate of documentsToUpdate) {
+		await databaseConnector.documentVersion.update({
+			where: {
+				documentGuid_version: {
+					documentGuid: documentToUpdate.documentGuid,
+					version: documentToUpdate.version
+				}
+			},
+			data: {
+				redactionStatusId: noRedactionRequiredStatus.id
+			}
+		});
+	}
+
+	return documentsToUpdate.map((document) => ({
+		documentGuid: document.documentGuid,
+		version: document.version
+	}));
+};
 
 /**
  * @param {UpdateDocumentAvCheckRequest[]} data

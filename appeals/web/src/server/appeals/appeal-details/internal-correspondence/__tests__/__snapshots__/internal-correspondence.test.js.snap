@@ -116,7 +116,7 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
                                 <div class="govuk-radios__divider">Or</div>
                                 <div class="govuk-radios__item">
                                     <input class="govuk-radios__input" id="items[0][redactionStatus]-4" name="items[0][redactionStatus]"
-                                    type="radio" value="no redaction required">
+                                    type="radio" value="no redaction required" checked>
                                     <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]-4">No redaction required</label>
                                 </div>
                             </div>
@@ -194,7 +194,7 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
                                 <div class="govuk-radios__divider">Or</div>
                                 <div class="govuk-radios__item">
                                     <input class="govuk-radios__input" id="items[0][redactionStatus]-4" name="items[0][redactionStatus]"
-                                    type="radio" value="no redaction required">
+                                    type="radio" value="no redaction required" checked>
                                     <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]-4">No redaction required</label>
                                 </div>
                             </div>
@@ -315,7 +315,7 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
                     </dl>
                 </td>
                 <td class="govuk-table__cell">1 February 2023</td>
-                <td class="govuk-table__cell">Redacted</td>
+                <td class="govuk-table__cell">No redaction required</td>
                 <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/internal-correspondence/cross-team/manage-documents/10/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
                     class="govuk-link">View and edit <span class="govuk-visually-hidden">test-pdf-documentFolderInfo.pdf</span></a>
                 </td>
@@ -367,7 +367,7 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
                     </dl>
                 </td>
                 <td class="govuk-table__cell">1 February 2023</td>
-                <td class="govuk-table__cell">Redacted</td>
+                <td class="govuk-table__cell">No redaction required</td>
                 <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/internal-correspondence/inspector/manage-documents/11/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
                     class="govuk-link">View and edit <span class="govuk-visually-hidden">test-pdf-documentFolderInfo.pdf</span></a>
                 </td>

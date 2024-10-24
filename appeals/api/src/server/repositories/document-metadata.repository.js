@@ -1,8 +1,6 @@
 import { databaseConnector } from '#utils/database-connector.js';
-import documentRedactionStatusRepository from '#repositories/document-redaction-status.repository.js';
 import { findPreviousVersion } from '#utils/find-previous-version.js';
 import { randomUUID } from 'node:crypto';
-import { APPEAL_REDACTED_STATUS } from 'pins-data-model';
 import { APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
 
 /** @typedef {import('@pins/appeals.api').Schema.Document} Document */
@@ -10,25 +8,11 @@ import { APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
 /** @typedef {import('@pins/appeals.api').Schema.DocumentRedactionStatus} RedactionStatus */
 
 /**
- * @returns {Promise<RedactionStatus | undefined>}
- */
-export const getDefaultRedactionStatus = async () => {
-	const redactionStatuses =
-		await documentRedactionStatusRepository.getAllDocumentRedactionStatuses();
-	const defaultRedactionStatus = APPEAL_REDACTED_STATUS.NOT_REDACTED;
-	const unredactedStatus = redactionStatuses.find(
-		(redactionStatus) => redactionStatus.key === defaultRedactionStatus
-	);
-	return unredactedStatus;
-};
-
-/**
  * @param {any} metadata
  * @param {any} context
  * @returns {Promise<DocumentVersion | null>}
  */
 export const addDocument = async (metadata, context) => {
-	const unredactedStatus = await getDefaultRedactionStatus();
 	const transaction = await databaseConnector.$transaction(async (tx) => {
 		const guid = metadata.GUID;
 
@@ -68,7 +52,7 @@ export const addDocument = async (metadata, context) => {
 				...metadata,
 				lastModified: new Date(),
 				dateReceived: metadata.dateReceived ?? new Date().toISOString(),
-				redactionStatusId: metadata.redactionStatusId ?? unredactedStatus?.id,
+				redactionStatusId: metadata.redactionStatusId ?? null,
 				published: false,
 				draft: false
 			}
@@ -95,7 +79,6 @@ export const addDocument = async (metadata, context) => {
  * @returns {Promise<DocumentVersion | null>}
  */
 export const addDocumentVersion = async ({ documentGuid, ...metadata }) => {
-	const unredactedStatus = await getDefaultRedactionStatus();
 	const transaction = await databaseConnector.$transaction(async (tx) => {
 		const document = await tx.document.findFirst({
 			include: {
@@ -138,7 +121,7 @@ export const addDocumentVersion = async ({ documentGuid, ...metadata }) => {
 				lastModified: new Date(),
 				documentGuid,
 				dateReceived: metadata.dateReceived ?? new Date().toISOString(),
-				redactionStatusId: metadata.redactionStatusId ?? unredactedStatus?.id,
+				redactionStatusId: metadata.redactionStatusId ?? null,
 				published: false,
 				draft: false
 			}

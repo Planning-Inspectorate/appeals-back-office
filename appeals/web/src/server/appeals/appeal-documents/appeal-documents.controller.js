@@ -25,7 +25,6 @@ import {
 	createNewDocumentVersion
 } from '#app/components/file-uploader.component.js';
 import config from '@pins/appeals.web/environment/config.js';
-import { redactionStatusNameToId } from '#lib/redaction-statuses.js';
 import { isFileUploadInfoItemArray } from '#lib/ts-utilities.js';
 import { getTodaysISOString } from '#lib/dates.js';
 import { folderIsAdditionalDocuments } from '#lib/documents.js';
@@ -156,7 +155,6 @@ export const postDocumentUpload = async ({ request, response, nextPageUrl }) => 
 	/** @type {import('#appeals/appeal-documents/appeal-documents.types').UncommittedFile[]} */
 	const uncommittedFiles = uploadInfo.map((infoItem) => ({
 		...infoItem,
-		redactionStatus: redactionStatusNameToId(redactionStatuses, 'unredacted'),
 		receivedDate: getTodaysISOString()
 	}));
 

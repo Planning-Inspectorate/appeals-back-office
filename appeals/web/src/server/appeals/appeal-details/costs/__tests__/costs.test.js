@@ -570,7 +570,7 @@ describe('costs', () => {
 											month: '2',
 											year: '2023'
 										},
-										redactionStatus: 2
+										redactionStatus: 3
 									}
 								]
 							});
@@ -971,7 +971,7 @@ describe('costs', () => {
 							`${dateISOStringToDisplayDate(new Date().toISOString())}</dd>`
 						);
 						expect(unprettifiedElement.innerHTML).toContain('Redaction status</dt>');
-						expect(unprettifiedElement.innerHTML).toContain('Unredacted</dd>');
+						expect(unprettifiedElement.innerHTML).toContain('No redaction required</dd>');
 						expect(unprettifiedElement.innerHTML).toContain(
 							`<a class="govuk-link" href="/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/upload-documents/${costsFolder.folderId}"> Change</a></dd>`
 						);
@@ -1087,7 +1087,7 @@ describe('costs', () => {
 							`${dateISOStringToDisplayDate(new Date().toISOString())}</dd>`
 						);
 						expect(unprettifiedElement.innerHTML).toContain('Redaction status</dt>');
-						expect(unprettifiedElement.innerHTML).toContain('Unredacted</dd>');
+						expect(unprettifiedElement.innerHTML).toContain('No redaction required</dd>');
 						expect(unprettifiedElement.innerHTML).toContain(
 							`<a class="govuk-link" href="/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/upload-documents/${costsFolder.folderId}/1"> Change</a></dd>`
 						);
