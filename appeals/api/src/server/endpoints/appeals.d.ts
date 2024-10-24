@@ -768,6 +768,7 @@ type UpdateDocumentsRequest = {
 	id: string;
 	receivedDate: string;
 	redactionStatus: number;
+	fileName: string;
 	latestVersion: number;
 	published: boolean;
 	draft: boolean;

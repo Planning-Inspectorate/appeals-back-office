@@ -14,9 +14,10 @@ import {
 	manageFolderPage,
 	manageDocumentPage,
 	changeDocumentDetailsPage,
-	changeDocumentNamePage,
+	ChangeDocumentFilenamePage,
 	deleteDocumentPage,
-	documentUploadPage
+	documentUploadPage,
+	mapDocumentFilenameFormDataToAPIRequest
 } from './appeal-documents.mapper.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { isInternalUrl, safeRedirect } from '#lib/url-utilities.js';
@@ -644,7 +645,7 @@ export const postUploadDocumentVersionCheckAndConfirm = async ({
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} params.response
  * @param {string} params.backButtonUrl
  */
-export const renderChangeDocumentName = async ({ request, response, backButtonUrl }) => {
+export const renderChangeDocumentFilename = async ({ request, response, backButtonUrl }) => {
 	const {
 		currentFolder,
 		errors,
@@ -661,7 +662,7 @@ export const renderChangeDocumentName = async ({ request, response, backButtonUr
 		return response.status(500).render('app/500.njk');
 	}
 
-	const mappedPageContent = changeDocumentNamePage(backButtonUrl, currentFolder, currentFile);
+	const mappedPageContent = ChangeDocumentFilenamePage(backButtonUrl, currentFolder, currentFile);
 
 	return response.status(200).render('appeals/documents/add-document-details.njk', {
 		pageContent: mappedPageContent,
@@ -676,7 +677,12 @@ export const renderChangeDocumentName = async ({ request, response, backButtonUr
  * @param {string} params.backButtonUrl
  * @param {string} [params.nextPageUrl]
  */
-export const postChangeDocumentName = async ({ request, response, backButtonUrl, nextPageUrl }) => {
+export const postChangeDocumentFilename = async ({
+	request,
+	response,
+	backButtonUrl,
+	nextPageUrl
+}) => {
 	try {
 		const {
 			body,
@@ -686,23 +692,35 @@ export const postChangeDocumentName = async ({ request, response, backButtonUrl,
 		} = request;
 
 		if (errors) {
-			return await renderChangeDocumentName({ request, response, backButtonUrl });
+			return await renderChangeDocumentFilename({ request, response, backButtonUrl });
 		}
+
+		const currentFile = await getFileInfo(request.apiClient, appealId, body.documentId);
+
+		if (!currentFile) {
+			return response.status(500).render('app/500.njk');
+		}
+
+		const { dateReceived, redactionStatus } = currentFile.latestDocumentVersion;
 
 		const redactionStatuses = await getDocumentRedactionStatuses(apiClient);
 
-		if (redactionStatuses) {
-			const apiRequest = mapDocumentDetailsFormDataToAPIRequest(body, redactionStatuses);
-			const updateDocumentsResult = await updateDocuments(apiClient, appealId, apiRequest);
+		// @ts-ignore
+		const apiRequest = mapDocumentFilenameFormDataToAPIRequest(
+			body,
+			dateReceived,
+			redactionStatus,
+			redactionStatuses
+		);
+		const updateDocumentsResult = await updateDocuments(apiClient, appealId, apiRequest);
 
-			if (updateDocumentsResult) {
-				addNotificationBannerToSession(
-					request.session,
-					'documentDetailsUpdated',
-					Number.parseInt(appealId, 10)
-				);
-				return response.redirect(nextPageUrl || `/appeals-service/appeal-details/${appealId}/`);
-			}
+		if (updateDocumentsResult) {
+			addNotificationBannerToSession(
+				request.session,
+				'documentFilenameUpdated',
+				Number.parseInt(appealId, 10)
+			);
+			return response.redirect(nextPageUrl || `/appeals-service/appeal-details/${appealId}/`);
 		}
 
 		return response.status(500).render('app/500.njk');
