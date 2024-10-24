@@ -75,6 +75,7 @@ export const getDocumentRedactionStatuses = async (apiClient) => {
  * @property {string} id
  * @property {string} receivedDate
  * @property {number} redactionStatus
+ * @property {string} [fileName]
  */
 
 /**

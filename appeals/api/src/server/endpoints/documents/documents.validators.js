@@ -16,6 +16,7 @@ import stringTokenReplacement from '#utils/string-token-replacement.js';
 import validateDateParameter from '#common/validators/date-parameter.js';
 import { getDocumentRedactionStatusIds } from './documents.service.js';
 import { APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
+import { validateFileNameParameter } from '#common/validators/filename-parameter.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateDocumentsRequest} UpdateDocumentsRequest */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateDocumentsAvCheckRequest} UpdateDocumentsAvCheckRequest */
@@ -94,6 +95,7 @@ const patchDocumentsValidator = composeMiddleware(
 	validateUuidParameter({ parameterName: 'documents.*.id', parameterType: body }),
 	validateDateParameter({ parameterName: 'documents.*.receivedDate', isRequired: true }),
 	body('documents').custom(validateDocumentRedactionStatusIds),
+	validateFileNameParameter({ parameterName: 'documents.*.fileName' }),
 	validationErrorHandler
 );
 

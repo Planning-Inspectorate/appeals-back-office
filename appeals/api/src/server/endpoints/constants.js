@@ -177,6 +177,7 @@ export const ERROR_REP_OUTCOME_MUST_BE_ONE_OF = `The representation status must 
 export const ERROR_LINKING_APPEALS =
 	'The appeals cannot be linked as the lead or child are already linked to other appeals.';
 export const ERROR_INVALID_EMAIL = 'must be a valid email';
+export const ERROR_INVALID_FILENAME = 'must be a valid filename';
 
 export const ERROR_INVALID_POSTCODE = 'needs to be a valid and include spaces';
 

@@ -1626,6 +1626,40 @@ const mapDocumentVersionToAuditActivityHtml = async (
 
 /**
  *
+ * @typedef {Object} DocumentFilenameFormData
+ * @property {string} documentId
+ * @property {string} fileName
+ */
+
+/**
+ *
+ * @param {DocumentFilenameFormData} formData
+ * @param {string} dateReceived
+ * @param {string} redactionStatus
+ * @param {import('@pins/appeals.api').Schema.DocumentRedactionStatus[]} redactionStatuses
+ * @returns {import('./appeal.documents.service.js').DocumentDetailsAPIPatchRequest}
+ */
+export const mapDocumentFilenameFormDataToAPIRequest = (
+	formData,
+	dateReceived,
+	redactionStatus,
+	redactionStatuses
+) => {
+	const { documentId, fileName } = formData;
+	return {
+		documents: [
+			{
+				id: documentId,
+				receivedDate: dateReceived,
+				redactionStatus: mapRedactionStatusNameToId(redactionStatuses, redactionStatus),
+				fileName
+			}
+		]
+	};
+};
+
+/**
+ *
  * @param {DocumentDetailsFormData} formData
  * @param {import('@pins/appeals.api').Schema.DocumentRedactionStatus[]} redactionStatuses
  * @returns {import('./appeal.documents.service.js').DocumentDetailsAPIPatchRequest}
@@ -1749,7 +1783,7 @@ export const folderPathToFolderNameText = (folderPath, capitalizeFirstLetter = t
  * @param {Document} file
  * @returns {PageContent}
  */
-export function changeDocumentNamePage(backLinkUrl, folder, file) {
+export function ChangeDocumentFilenamePage(backLinkUrl, folder, file) {
 	/** @type {PageContent} */
 	const pageContent = {
 		title: 'Change document details',
