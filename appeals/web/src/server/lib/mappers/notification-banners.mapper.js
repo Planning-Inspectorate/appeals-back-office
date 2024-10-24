@@ -61,6 +61,11 @@ export const notificationBannerDefinitions = {
 		type: 'success',
 		text: 'Document details updated'
 	},
+	documentFilenameUpdated: {
+		pages: ['appellantCase', 'lpaQuestionnaire', 'manageDocuments'],
+		type: 'success',
+		text: 'Document filename updated'
+	},
 	documentDeleted: {
 		pages: ['appealDetails', 'appellantCase', 'lpaQuestionnaire'],
 		type: 'success',

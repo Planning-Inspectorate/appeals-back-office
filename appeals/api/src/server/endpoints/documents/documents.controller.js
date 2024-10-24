@@ -256,7 +256,8 @@ const updateDocuments = async (req, res) => {
 				id: document.id,
 				latestVersion: document.latestVersion,
 				redactionStatus: document.redactionStatus,
-				receivedDate: document.receivedDate
+				receivedDate: document.receivedDate,
+				fileName: document.fileName
 			});
 		}
 		await documentRepository.updateDocuments(documents);

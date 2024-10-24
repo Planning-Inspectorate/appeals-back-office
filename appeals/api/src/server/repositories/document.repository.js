@@ -139,26 +139,45 @@ export const getDocumentsInFolder = ({ folderId, skipValue, pageSize }) => {
  * @param {UpdateDocumentsRequest} data
  * @returns
  */
-export const updateDocuments = (data) =>
-	Promise.all(
-		data.map((document) =>
-			databaseConnector.documentVersion.update({
-				data: {
-					dateReceived: document.receivedDate,
-					redactionStatus: {
-						connect: {
-							id: document.redactionStatus
-						}
-					},
-					published: document.published,
-					draft: false
+export const updateDocuments = (data) => {
+	const queries = data.map((document) =>
+		databaseConnector.documentVersion.update({
+			data: {
+				dateReceived: document.receivedDate,
+				redactionStatus: {
+					connect: {
+						id: document.redactionStatus
+					}
 				},
-				where: {
-					documentGuid_version: { documentGuid: document.id, version: document.latestVersion }
-				}
-			})
-		)
+				published: document.published,
+				draft: false
+			},
+			where: {
+				documentGuid_version: { documentGuid: document.id, version: document.latestVersion }
+			},
+			include: {
+				document: true
+			}
+		})
 	);
+
+	data.forEach((document) => {
+		if (document.fileName) {
+			queries.push(
+				databaseConnector.document.update({
+					data: {
+						name: document.fileName
+					},
+					where: {
+						guid: document.id
+					}
+				})
+			);
+		}
+	});
+
+	return Promise.all(queries);
+};
 
 /**
  * @param {number} appealId

@@ -24,8 +24,8 @@ export const validateDocumentName = createValidator(
 			'Filename must only contain alphanumeric characters, underscores, hyphens and one period followed by a suffix'
 		)
 		.custom((value, { req }) => {
-			// @ts-ignore
 			const hasDuplicate = req.currentFolder.documents.some(
+				// @ts-ignore
 				({ name, id }) => name.toLowerCase() === value.toLowerCase() && id !== req.body.documentId
 			);
 			if (hasDuplicate) {
