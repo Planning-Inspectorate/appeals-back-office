@@ -181,10 +181,20 @@ describe('lpa questionnaires routes', () => {
 					lpaQuestionnaireIncompleteReasons
 				);
 				// @ts-ignore
+				databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+				// @ts-ignore
+				databaseConnector.documentVersion.update.mockResolvedValue([]);
+				// @ts-ignore
+				databaseConnector.document.findUnique.mockResolvedValue(null);
+				// @ts-ignore
 				databaseConnector.user.upsert.mockResolvedValue({
 					id: 1,
 					azureAdUserId
 				});
+				// @ts-ignore
+				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+					{ id: 1, key: 'no_redaction_required' }
+				]);
 
 				const body = {
 					validationOutcome: 'complete'
@@ -246,6 +256,16 @@ describe('lpa questionnaires routes', () => {
 				databaseConnector.lPAQuestionnaireValidationOutcome.findUnique.mockResolvedValue(
 					lpaQuestionnaireValidationOutcomes[0]
 				);
+				// @ts-ignore
+				databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+				// @ts-ignore
+				databaseConnector.documentVersion.update.mockResolvedValue([]);
+				// @ts-ignore
+				databaseConnector.document.findUnique.mockResolvedValue(null);
+				// @ts-ignore
+				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+					{ id: 1, key: 'no_redaction_required' }
+				]);
 
 				const body = {
 					validationOutcome: 'complete'
@@ -295,6 +315,12 @@ describe('lpa questionnaires routes', () => {
 				databaseConnector.lPAQuestionnaireIncompleteReason.findMany.mockResolvedValue(
 					lpaQuestionnaireIncompleteReasons
 				);
+				// @ts-ignore
+				databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+				// @ts-ignore
+				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+					{ id: 1, key: 'no_redaction_required' }
+				]);
 				// @ts-ignore
 				databaseConnector.user.upsert.mockResolvedValue({
 					id: 1,

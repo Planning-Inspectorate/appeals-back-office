@@ -1135,7 +1135,7 @@ describe('internal correspondence', () => {
 					`href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/add-document-details/${folder.folderId}"> Change</a></dd>`
 				);
 				expect(unprettifiedElement.innerHTML).toContain('Redaction status</dt>');
-				expect(unprettifiedElement.innerHTML).toContain('Unredacted</dd>');
+				expect(unprettifiedElement.innerHTML).toContain('No redaction required</dd>');
 				expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 			});
 		}
@@ -1294,7 +1294,7 @@ describe('internal correspondence', () => {
 					`href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/add-document-details/${folder.folderId}/1"> Change</a></dd>`
 				);
 				expect(unprettifiedElement.innerHTML).toContain('Redaction status</dt>');
-				expect(unprettifiedElement.innerHTML).toContain('Unredacted</dd>');
+				expect(unprettifiedElement.innerHTML).toContain('No redaction required</dd>');
 				expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 			});
 		}
@@ -1674,7 +1674,7 @@ describe('internal correspondence', () => {
 					'name="items[0][redactionStatus]" type="radio" value="unredacted">'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'name="items[0][redactionStatus]" type="radio" value="no redaction required">'
+					'name="items[0][redactionStatus]" type="radio" value="no redaction required" checked>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 			});

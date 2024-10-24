@@ -132,7 +132,6 @@ describe('/appeals/case-submission', () => {
 				}
 			});
 
-			expect(databaseConnector.documentRedactionStatus.findMany).toHaveBeenCalled();
 			expect(databaseConnector.document.createMany).toHaveBeenCalled();
 			expect(databaseConnector.documentVersion.createMany).toHaveBeenCalled();
 			expect(databaseConnector.documentVersion.findMany).toHaveBeenCalled();

@@ -19,6 +19,8 @@ import stringTokenReplacement from '#utils/string-token-replacement.js';
 import config from '#config/config.js';
 import formatDate from '#utils/date-formatter.js';
 import { getFormattedReasons } from '#utils/appeal-formatter.js';
+import * as documentRepository from '#repositories/document.repository.js';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAppellantCaseValidationOutcomeParams} UpdateAppellantCaseValidationOutcomeParams */
 /** @typedef {import('express').Request} Request */
@@ -82,6 +84,15 @@ const updateAppellantCaseValidationOutcome = async (
 	}
 
 	if (isOutcomeValid(validationOutcome.name)) {
+		const documentsUpdated = await documentRepository.setRedactionStatusOnValidation(appeal.id);
+		for (const documentUpdated of documentsUpdated) {
+			await broadcasters.broadcastDocument(
+				documentUpdated.documentGuid,
+				documentUpdated.version,
+				'update'
+			);
+		}
+
 		const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
 		if (!recipientEmail) {
 			throw new Error(ERROR_NO_RECIPIENT_EMAIL);
