@@ -587,10 +587,11 @@ function mapDocumentDetailsItemToDocumentDetailsPageComponents(item, redactionSt
 	return pageComponents;
 }
 /**
- * @param {{originalFilename: string, fileName: string, documentId: string}} item
+ * @param {string} fileName
+ * @param {{originalFilename: string, documentId: string}} item
  * @returns {PageComponent[]}
  */
-function mapDocumentNameItemToDocumentNamePageComponents(item) {
+function mapDocumentNameItemToDocumentNamePageComponents(item, fileName) {
 	/** @type {PageComponent[]} */
 	const pageComponents = [
 		{
@@ -618,7 +619,7 @@ function mapDocumentNameItemToDocumentNamePageComponents(item) {
 					text: 'Filename',
 					classes: 'govuk-caption-m govuk-!-margin-bottom-3'
 				},
-				value: item.fileName
+				value: fileName
 			}
 		}
 	];
@@ -1791,7 +1792,10 @@ export function ChangeDocumentFilenamePage(backLinkUrl, folder, file) {
 		backLinkUrl: backLinkUrl?.replace('{{folderId}}', folder.folderId.toString()),
 		preHeading: 'Change document details',
 		heading: `${folderPathToFolderNameText(folder.path)} documents`,
-		pageComponents: mapDocumentNameItemToDocumentNamePageComponents(file.latestDocumentVersion)
+		pageComponents: mapDocumentNameItemToDocumentNamePageComponents(
+			file.latestDocumentVersion,
+			file.name
+		)
 	};
 
 	if (pageContent.pageComponents) {
