@@ -423,7 +423,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                     </dl>
                 </td>
                 <td class="govuk-table__cell">1 February 2023</td>
-                <td class="govuk-table__cell">Redacted</td>
+                <td class="govuk-table__cell">No redaction required</td>
                 <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/costs/appellant/application/manage-documents/1/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
                     class="govuk-link">View and edit <span class="govuk-visually-hidden">test-pdf-documentFolderInfo.pdf</span></a>
                 </td>
@@ -475,7 +475,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                     </dl>
                 </td>
                 <td class="govuk-table__cell">1 February 2023</td>
-                <td class="govuk-table__cell">Redacted</td>
+                <td class="govuk-table__cell">No redaction required</td>
                 <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/costs/appellant/correspondence/manage-documents/3/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
                     class="govuk-link">View and edit <span class="govuk-visually-hidden">test-pdf-documentFolderInfo.pdf</span></a>
                 </td>
@@ -527,7 +527,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                     </dl>
                 </td>
                 <td class="govuk-table__cell">1 February 2023</td>
-                <td class="govuk-table__cell">Redacted</td>
+                <td class="govuk-table__cell">No redaction required</td>
                 <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/costs/appellant/withdrawal/manage-documents/2/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
                     class="govuk-link">View and edit <span class="govuk-visually-hidden">test-pdf-documentFolderInfo.pdf</span></a>
                 </td>
@@ -579,7 +579,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                     </dl>
                 </td>
                 <td class="govuk-table__cell">1 February 2023</td>
-                <td class="govuk-table__cell">Redacted</td>
+                <td class="govuk-table__cell">No redaction required</td>
                 <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/costs/lpa/application/manage-documents/4/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
                     class="govuk-link">View and edit <span class="govuk-visually-hidden">test-pdf-documentFolderInfo.pdf</span></a>
                 </td>
@@ -631,7 +631,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                     </dl>
                 </td>
                 <td class="govuk-table__cell">1 February 2023</td>
-                <td class="govuk-table__cell">Redacted</td>
+                <td class="govuk-table__cell">No redaction required</td>
                 <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/costs/lpa/correspondence/manage-documents/6/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
                     class="govuk-link">View and edit <span class="govuk-visually-hidden">test-pdf-documentFolderInfo.pdf</span></a>
                 </td>
@@ -683,7 +683,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                     </dl>
                 </td>
                 <td class="govuk-table__cell">1 February 2023</td>
-                <td class="govuk-table__cell">Redacted</td>
+                <td class="govuk-table__cell">No redaction required</td>
                 <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/costs/lpa/withdrawal/manage-documents/5/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
                     class="govuk-link">View and edit <span class="govuk-visually-hidden">test-pdf-documentFolderInfo.pdf</span></a>
                 </td>
@@ -4997,7 +4997,7 @@ exports[`costs decision GET /costs/decision/manage-documents/:folderId should re
                     </dl>
                 </td>
                 <td class="govuk-table__cell">1 February 2023</td>
-                <td class="govuk-table__cell">Redacted</td>
+                <td class="govuk-table__cell">No redaction required</td>
                 <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/costs/decision/manage-documents/7/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
                     class="govuk-link">View and edit <span class="govuk-visually-hidden">test-pdf-documentFolderInfo.pdf</span></a>
                 </td>

@@ -468,7 +468,7 @@ function mapFileUploadInfoItemToDocumentDetailsPageComponents({
 							(bodyRedactionStatus
 								? bodyRedactionStatus
 								: redactionStatusIdToName(redactionStatuses, uncommittedFile.redactionStatus)) ===
-							'no redaction required'
+								'no redaction required' || !uncommittedFile.redactionStatus
 					}
 				]
 			}
@@ -575,9 +575,9 @@ function mapDocumentDetailsItemToDocumentDetailsPageComponents(item, redactionSt
 						value: 'no redaction required',
 						checked:
 							bodyRedactionStatus ===
-							redactionStatuses.find(
-								(status) => status.key === APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED
-							)?.name
+								redactionStatuses.find(
+									(status) => status.key === APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED
+								)?.name || !bodyRedactionStatus
 					}
 				]
 			}
