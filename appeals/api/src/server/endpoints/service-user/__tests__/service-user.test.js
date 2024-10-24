@@ -31,7 +31,7 @@ describe('appeal service user routes', () => {
 		jest.clearAllMocks();
 	});
 
-	describe('invalid requests', () => {
+	describe('PATCH /service-user', () => {
 		test('returns 404 when the service user is not found', async () => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
@@ -87,9 +87,7 @@ describe('appeal service user routes', () => {
 
 			expect(response.status).toEqual(400);
 		});
-	});
 
-	describe('valid requests', () => {
 		test('returns 200 when updating a service user with correct data', async () => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
@@ -118,6 +116,40 @@ describe('appeal service user routes', () => {
 					id: 1
 				}
 			});
+			expect(response.status).toEqual(200);
+		});
+	});
+
+	describe('PATCH /service-user/:serviceUserId/address', () => {
+		test('returns 404 when the service user is not found', async () => {
+			// @ts-ignore
+			databaseConnector.serviceUser.findUnique.mockResolvedValue(null);
+
+			const response = await request
+				.patch(`/appeals/${householdAppeal.id}/service-user/1000000/address`)
+				.send({})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(404);
+		});
+
+		test("returns 200 when updating a service user's address", async () => {
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+			// @ts-ignore
+			databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
+			// @ts-ignore
+			databaseConnector.serviceUser.findUnique.mockResolvedValue(serviceUser);
+			// @ts-ignore
+			databaseConnector.serviceUser.update.mockResolvedValue(serviceUser);
+
+			const response = await request
+				.patch(
+					`/appeals/${householdAppeal.id}/service-user/${validServiceUser.serviceUserId}/address`
+				)
+				.send({ town: 'London' })
+				.set('azureAdUserId', azureAdUserId);
+
 			expect(response.status).toEqual(200);
 		});
 	});

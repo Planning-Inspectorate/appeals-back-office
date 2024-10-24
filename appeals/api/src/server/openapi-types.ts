@@ -85,7 +85,6 @@ export interface RepResponse {
 	representationType?: string;
 	/** @example false */
 	siteVisitRequested?: boolean;
-	source: string;
 	represented?: {
 		/** @example 1 */
 		id?: number;
@@ -119,7 +118,7 @@ export interface ValidateDate {
 
 export interface AppellantCaseData {
 	casedata?: {
-		/** @example "40df3b3d-fc9c-4e65-85db-4a9c383e0fcf" */
+		/** @example "78f0f6db-1d93-48f8-837a-827bb30ea760" */
 		submissionId?: string;
 		/** @example true */
 		advertisedAppeal?: boolean;
