@@ -202,6 +202,44 @@ describe('/appeals/:appealId/documents', () => {
 			expect(response.status).toEqual(200);
 		});
 	});
+
+	describe('PATCH', () => {
+		databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+		databaseConnector.documentRedactionStatus.findMany.mockResolvedValue(documentRedactionStatuses);
+		databaseConnector.user.upsert.mockResolvedValue({
+			id: 1,
+			azureAdUserId
+		});
+		databaseConnector.document.update = jest.fn().mockResolvedValue(null);
+		databaseConnector.documentVersion.update = jest.fn().mockResolvedValue(null);
+
+		const requestBody = {
+			documents: [
+				{
+					id: '987e66e0-1db4-404b-8213-8082919159e9',
+					receivedDate: new Date().toISOString(),
+					redactionStatus: 2
+				},
+				{
+					id: '8b107895-b8c9-467f-aad0-c09daafeaaad',
+					receivedDate: new Date().toISOString(),
+					redactionStatus: 2,
+					fileName: 'new_filename.txt'
+				}
+			]
+		};
+
+		test('updates filename in document', async () => {
+			const response = await request
+				.patch(`/appeals/${householdAppeal.id}/documents`)
+				.send(requestBody)
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(databaseConnector.documentVersion.update).toHaveBeenCalledTimes(2);
+			expect(databaseConnector.document.update).toHaveBeenCalledTimes(1);
+			expect(response.status).toEqual(200);
+		});
+	});
 });
 
 describe('appeals documents', () => {
