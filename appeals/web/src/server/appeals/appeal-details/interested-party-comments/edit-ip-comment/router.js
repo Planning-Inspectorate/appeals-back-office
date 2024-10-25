@@ -6,6 +6,7 @@ import {
 	createTownValidator
 } from '#lib/validators/address.validator.js';
 import * as controller from './controller.js';
+import { saveBodyToSession } from './middleware.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -16,7 +17,13 @@ router
 		createAddressLine1Validator(),
 		createTownValidator(),
 		createPostcodeValidator(),
+		saveBodyToSession,
 		asyncHandler(controller.postEditAddress)
 	);
+
+router
+	.route('/check/address')
+	.get(asyncHandler(controller.renderCheckAddress))
+	.post(asyncHandler(controller.postCheckPage));
 
 export default router;
