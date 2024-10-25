@@ -217,7 +217,7 @@ export const dateSubmittedPage = (appealDetails, errors, date) => ({
 /**
 /**
  * @param {Appeal} appealDetails
- * @param {{ firstName: string, lastName: string, emailAddress: string, addressLine1: string, addressLine2: string, town: string, county: string, postCode: string, redactionStatus: boolean, 'date-day': string, 'date-month': string, 'date-year': string }} values
+ * @param {{ firstName: string, lastName: string, addressProvided: string, emailAddress: string, addressLine1: string, addressLine2: string, town: string, county: string, postCode: string, redactionStatus: boolean, 'date-day': string, 'date-month': string, 'date-year': string }} values
  * @param {{ files: [{ name:string }] }} fileUpload
  * @param {import('@pins/express').ValidationErrors | undefined} errors
  * @returns {PageContent}
@@ -256,7 +256,11 @@ export const checkYourAnswersPage = (appealDetails, values, fileUpload, errors) 
 							text: 'Address'
 						},
 						value: {
-							html: addressToMultilineStringHtml(values)
+							html: `${
+								values?.addressProvided === 'no'
+									? 'Not provided'
+									: addressToMultilineStringHtml(values)
+							}`
 						},
 						actions: {
 							items: [
