@@ -23,6 +23,7 @@ export const validateDocumentName = createValidator(
 		.withMessage(
 			'Filename must only contain alphanumeric characters, underscores, hyphens and one period followed by a suffix'
 		)
+		.bail()
 		.custom((value, { req }) => {
 			const hasDuplicate = req.currentFolder.documents.some(
 				// @ts-ignore
@@ -30,7 +31,9 @@ export const validateDocumentName = createValidator(
 			);
 			if (hasDuplicate) {
 				return Promise.reject(
-					`Filename already exists within ${folderPathToFolderNameText(req.currentFolder.path)}`
+					`Filename already exists within ${folderPathToFolderNameText(
+						req.currentFolder.path
+					)} documents`
 				);
 			}
 			return true;
@@ -112,6 +115,7 @@ export const validateDocumentDetailsReceivedDateIsNotFutureDate = createValidato
 		})
 		.withMessage('Received date cannot be a future date')
 );
+
 export const validateDocumentDetailsRedactionStatuses = createValidator(
 	body()
 		.custom((bodyFields) => {
