@@ -1,4 +1,5 @@
 import config from '@pins/appeals.web/environment/config.js';
+import { addressToMultilineStringHtml } from '#lib/address-formatter.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import {
 	errorAddressProvidedRadio,
@@ -255,11 +256,7 @@ export const checkYourAnswersPage = (appealDetails, values, fileUpload, errors) 
 							text: 'Address'
 						},
 						value: {
-							html: `
-								${[values?.addressLine1, values?.addressLine2, values?.town, values?.county, values?.postCode]
-									.filter(Boolean)
-									.join('<br>')}		
-							`
+							html: addressToMultilineStringHtml(values)
 						},
 						actions: {
 							items: [

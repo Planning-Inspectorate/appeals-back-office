@@ -1,5 +1,6 @@
 import { ipAddressPage } from '../interested-party-comments.mapper.js';
 import { updateAddress } from './service.js';
+import { checkAddressPage } from './mappers.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -25,11 +26,26 @@ export async function renderEditAddress(request, response) {
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  * */
-export async function postEditAddress(request, response) {
-	if (request.errors) {
-		return renderEditAddress(request, response);
-	}
+export async function renderCheckAddress(request, response) {
+	const { currentAppeal, currentComment } = request;
 
+	const pageContent = checkAddressPage(
+		currentAppeal,
+		currentComment.id,
+		request.session.editIpComment
+	);
+
+	return response.render('patterns/check-and-confirm-page.pattern.njk', {
+		errors: request.errors,
+		pageContent
+	});
+}
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * */
+export async function postCheckPage(request, response) {
 	const { currentAppeal, currentComment } = request;
 
 	await updateAddress(
@@ -46,4 +62,20 @@ export async function postEditAddress(request, response) {
 		.redirect(
 			`/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/${currentComment.id}/${redirectPath}`
 		);
+}
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * */
+export async function postEditAddress(request, response) {
+	const { currentAppeal, currentComment } = request;
+
+	if (request.errors) {
+		return renderEditAddress(request, response);
+	}
+
+	return response.redirect(
+		`/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/${currentComment.id}/edit/check/address`
+	);
 }
