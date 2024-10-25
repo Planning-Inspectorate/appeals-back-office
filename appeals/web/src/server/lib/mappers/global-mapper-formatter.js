@@ -103,6 +103,10 @@ export function mapAddressInput(appealSite) {
 }
 
 /**
+ * @typedef {import('@pins/express').ValidationError} ValidationError
+ */
+
+/**
  * @typedef {'textarea'} ConditionalTypes
  */
 
@@ -112,6 +116,7 @@ export function mapAddressInput(appealSite) {
  * @property {string} name
  * @property {string} hint
  * @property {string} [details]
+ * @property {{text: string}|undefined} [errorMessage]
  * @property {ConditionalTypes} [type]
  */
 
@@ -122,18 +127,33 @@ export function mapAddressInput(appealSite) {
  * @param {string} hint
  * @param {string|undefined} details
  * @param {ConditionalTypes} [type]
+ * @param {{text: string}|undefined} errorMessage
  * @returns {{html: string}}
  */
-export function conditionalFormatter(id, name, hint, details, type = 'textarea') {
+export function conditionalFormatter(
+	id,
+	name,
+	hint,
+	details,
+	type = 'textarea',
+	errorMessage = undefined
+) {
 	let conditionalInputHtml = {
-		textarea: `<textarea class="govuk-textarea" id="${id}" name="${name}" rows="3">${details}</textarea>`
+		textarea: `<textarea class="govuk-textarea${
+			errorMessage ? ' govuk-textarea--error' : ''
+		}" id="${id}" name="${name}" rows="3">${details}</textarea>`
 		//TODO: Conditionals => add any new types here
 	};
 	return {
-		html: `<div class="govuk-form-group">
+		html: `<div class="govuk-form-group${errorMessage ? ' govuk-form-group--error' : ''}">
 		<label class="govuk-label" for="${id}">
 			${hint}
 		</label>
+		${
+			errorMessage
+				? `<p class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> ${errorMessage.text}</p>`
+				: ''
+		}
 		${conditionalInputHtml[type]}
 	  </div>`
 	};
