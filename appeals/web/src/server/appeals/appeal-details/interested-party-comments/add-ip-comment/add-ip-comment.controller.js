@@ -8,8 +8,7 @@ import {
 	checkYourAnswersPage
 } from './add-ip-comment.mapper.js';
 import { ipAddressPage } from '../interested-party-comments.mapper.js';
-import { getAttachmentsFolder } from './add-ip-comment.service.js';
-
+import { getAttachmentsFolder, createIPComment } from './add-ip-comment.service.js';
 /**
  *
  * @param {import('@pins/express/types/express.js').Request} request
@@ -209,7 +208,7 @@ export async function postDateSubmitted(request, response) {
 	const { currentAppeal } = request;
 
 	return response.redirect(
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments`
+		`/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/add/check-your-answers`
 	);
 }
 
@@ -219,7 +218,17 @@ export async function postDateSubmitted(request, response) {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export async function postIPComment(request, response) {
-	response.end();
+	// createNewDocument(request.apiClient, request.currentAppeal.appealId, request.session.fileUploadInfo)
+	const { currentAppeal } = request;
+	await createIPComment(
+		request.session?.addIpComment,
+		request.apiClient,
+		request.currentAppeal.appealId
+	);
+
+	return response.redirect(
+		`/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments`
+	);
 }
 
 /**
