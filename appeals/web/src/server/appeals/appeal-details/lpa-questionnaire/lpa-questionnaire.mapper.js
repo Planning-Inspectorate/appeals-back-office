@@ -857,7 +857,8 @@ const generateS78LpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 				mappedLPAQData.lpaq?.affectsListedBuildingDetails?.display.summaryListItem,
 				mappedLPAQData.lpaq?.conservationAreaMap?.display.summaryListItem,
 				mappedLPAQData.lpaq?.siteWithinGreenBelt?.display.summaryListItem,
-				mappedLPAQData.lpaq?.treePreservationPlan?.display.summaryListItem
+				mappedLPAQData.lpaq?.treePreservationPlan?.display.summaryListItem,
+				mappedLPAQData.lpaq?.definitiveMapStatement?.display.summaryListItem
 			].filter(isDefined)
 		}
 	});
@@ -909,7 +910,10 @@ const generateS78LpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 					text: '4. Consultation responses and representations'
 				}
 			},
-			rows: [mappedLPAQData.lpaq?.representations?.display.summaryListItem].filter(isDefined)
+			rows: [
+				mappedLPAQData.lpaq?.representations?.display.summaryListItem,
+				mappedLPAQData.lpaq?.consultationResponses?.display.summaryListItem
+			].filter(isDefined)
 		}
 	});
 
@@ -927,7 +931,8 @@ const generateS78LpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 				mappedLPAQData.lpaq?.plansDrawings?.display.summaryListItem,
 				mappedLPAQData.lpaq?.developmentPlanPolicies?.display.summaryListItem,
 				mappedLPAQData.lpaq?.supplementaryPlanning?.display.summaryListItem,
-				mappedLPAQData.lpaq?.emergingPlan?.display.summaryListItem
+				mappedLPAQData.lpaq?.emergingPlan?.display.summaryListItem,
+				mappedLPAQData.lpaq?.communityInfrastructureLevy?.display.summaryListItem
 			].filter(isDefined)
 		}
 	});
