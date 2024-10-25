@@ -8,6 +8,10 @@ parameters:
       - Test
       - Training
       - Prod
+  - name: purge
+    displayName: Purge and recreate data
+    type: boolean
+    default: false
 
 pool: pins-odt-agent-pool
 
@@ -62,7 +66,14 @@ jobs:
                     variable: appeals-bo-sql-admin-connection-string
             - template: steps/node_script.yml@templates
               parameters:
-                condition: and(ne('${{ parameters.environment }}', 'Prod'), ne('${{ parameters.environment }}', 'Training'))
+                condition: and(ne('${{ parameters.environment }}', 'Prod'), ne('${{ parameters.environment }}', 'Training'), eq('${{ parameters.purge }}', 'false'))
+                environmentVariables:
+                  DATABASE_URL: $(appeals-bo-sql-admin-connection-string)
+                script: npm run db:seed:no-purge
+                workingDirectory: $(Build.Repository.LocalPath)/appeals/api
+            - template: steps/node_script.yml@templates
+              parameters:
+                condition: and(ne('${{ parameters.environment }}', 'Prod'), ne('${{ parameters.environment }}', 'Training'), eq('${{ parameters.purge }}', 'true'))
                 environmentVariables:
                   DATABASE_URL: $(appeals-bo-sql-admin-connection-string)
                 script: npm run db:seed

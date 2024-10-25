@@ -26,6 +26,7 @@
     "db:push": "npx prisma db push --accept-data-loss",
     "db:reset": "npx prisma migrate reset --force",
     "db:seed": "npm run prisma-generate && npx prisma db seed",
+    "db:seed:no-purge": "npm run prisma-generate && node src/database/seed/seed-no-purge.js",
     "db:seed:training": "npm run prisma-generate && node src/database/seed/seed-training.js",
     "db:seed:prod": "npm run prisma-generate && node src/database/seed/seed-production.js",
     "db:seed:clear-test-data": "npm run prisma-generate && node src/database/seed/seed-clear-test-data.js",
