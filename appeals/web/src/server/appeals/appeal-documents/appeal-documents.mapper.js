@@ -1637,7 +1637,7 @@ const mapDocumentVersionToAuditActivityHtml = async (
  * @param {DocumentFilenameFormData} formData
  * @param {string} dateReceived
  * @param {string} redactionStatus
- * @param {import('@pins/appeals.api').Schema.DocumentRedactionStatus[]} redactionStatuses
+ * @param {import('@pins/appeals.api').Schema.DocumentRedactionStatus[]|undefined} redactionStatuses
  * @returns {import('./appeal.documents.service.js').DocumentDetailsAPIPatchRequest}
  */
 export const mapDocumentFilenameFormDataToAPIRequest = (
@@ -1718,11 +1718,11 @@ export const addDocumentDetailsFormDataToFileUploadInfo = (
 };
 
 /**
- * @param {import('@pins/appeals.api').Schema.DocumentRedactionStatus[]} redactionStatuses
+ * @param {import('@pins/appeals.api').Schema.DocumentRedactionStatus[]|undefined} redactionStatuses
  * @param {string} redactionStatusName
  * @returns {number}
  */
-const mapRedactionStatusNameToId = (redactionStatuses, redactionStatusName) => {
+const mapRedactionStatusNameToId = (redactionStatuses = [], redactionStatusName) => {
 	for (const status of redactionStatuses) {
 		if (status.name.toLowerCase() === redactionStatusName.toLowerCase()) {
 			return Number(status.id);
