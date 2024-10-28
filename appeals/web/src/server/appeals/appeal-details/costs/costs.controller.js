@@ -12,7 +12,9 @@ import {
 	postUploadDocumentsCheckAndConfirm,
 	postUploadDocumentVersionCheckAndConfirm,
 	renderChangeDocumentDetails,
-	postChangeDocumentDetails
+	postChangeDocumentDetails,
+	renderChangeDocumentFilename,
+	postChangeDocumentFilename
 } from '#appeals/appeal-documents/appeal-documents.controller.js';
 import {
 	getDocumentRedactionStatuses,
@@ -439,6 +441,34 @@ export const postDeleteCostsDocument = async (request, response) => {
 			costsCategory === 'decision'
 				? `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/decision/upload-documents/{{folderId}}`
 				: `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/${costsDocumentType}/upload-documents/{{folderId}}`
+	});
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const getChangeDocumentFilenameDetails = async (request, response) => {
+	await renderChangeDocumentFilename({
+		request,
+		response,
+		backButtonUrl:
+			request.params.costsCategory === 'decision'
+				? `/appeals-service/appeal-details/${request.params.appealId}/costs/decision/manage-documents/${request.params.folderId}/${request.params.documentId}`
+				: `/appeals-service/appeal-details/${request.params.appealId}/costs/${request.params.costsCategory}/${request.params.costsDocumentType}/manage-documents/${request.params.folderId}/${request.params.documentId}`
+	});
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const postChangeDocumentFilenameDetails = async (request, response) => {
+	await postChangeDocumentFilename({
+		request,
+		response,
+		backButtonUrl:
+			request.params.costsCategory === 'decision'
+				? `/appeals-service/appeal-details/${request.params.appealId}/costs/decision/manage-documents/${request.params.folderId}/${request.params.documentId}`
+				: `/appeals-service/appeal-details/${request.params.appealId}/costs/${request.params.costsCategory}/${request.params.costsDocumentType}/manage-documents/${request.params.folderId}/${request.params.documentId}`,
+		nextPageUrl:
+			request.params.costsCategory === 'decision'
+				? `/appeals-service/appeal-details/${request.params.appealId}/costs/decision/manage-documents/${request.params.folderId}/${request.params.documentId}`
+				: `/appeals-service/appeal-details/${request.params.appealId}/costs/${request.params.costsCategory}/${request.params.costsDocumentType}/manage-documents/${request.params.folderId}/${request.params.documentId}`
 	});
 };
 

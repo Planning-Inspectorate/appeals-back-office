@@ -113,6 +113,30 @@ router
 
 router
 	.route([
+		'/:costsCategory/:costsDocumentType/change-document-name/:folderId/:documentId',
+		'/:costsCategory/change-document-name/:folderId/:documentId'
+	])
+	.get(
+		validateAppeal,
+		assertUserHasPermission(permissionNames.updateCase),
+		validateCaseFolderId,
+		asyncHandler(controller.getChangeDocumentFilenameDetails)
+	)
+	.post(
+		validateAppeal,
+		assertUserHasPermission(permissionNames.updateCase),
+		validateCaseFolderId,
+		documentsValidators.validateDocumentNameBodyFormat,
+		documentsValidators.validateDocumentName,
+		assertGroupAccess(
+			config.referenceData.appeals.caseOfficerGroupId,
+			config.referenceData.appeals.inspectorGroupId
+		),
+		asyncHandler(controller.postChangeDocumentFilenameDetails)
+	);
+
+router
+	.route([
 		'/:costsCategory/:costsDocumentType/change-document-details/:folderId/:documentId',
 		'/:costsCategory/change-document-details/:folderId/:documentId'
 	])
