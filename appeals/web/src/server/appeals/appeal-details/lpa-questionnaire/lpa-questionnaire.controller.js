@@ -22,7 +22,9 @@ import {
 	renderDeleteDocument,
 	renderChangeDocumentDetails,
 	postChangeDocumentDetails,
-	postDeleteDocument
+	postDeleteDocument,
+	renderChangeDocumentFilename,
+	postChangeDocumentFilename
 } from '../../appeal-documents/appeal-documents.controller.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 
@@ -543,6 +545,15 @@ export const getAddDocumentVersionDetails = async (request, response) => {
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
+export const getChangeDocumentFilenameDetails = async (request, response) => {
+	await renderChangeDocumentFilename({
+		request,
+		response,
+		backButtonUrl: `/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/manage-documents/${request.params.folderId}/${request.params.documentId}`
+	});
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
 export const getChangeDocumentVersionDetails = async (request, response) => {
 	await renderChangeDocumentDetails({
 		request,
@@ -562,6 +573,16 @@ export const postDocumentVersionDetails = async (request, response) => {
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
+export const postChangeDocumentFilenameDetails = async (request, response) => {
+	await postChangeDocumentFilename({
+		request,
+		response,
+		backButtonUrl: `/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/manage-documents/${request.params.folderId}/${request.params.documentId}`,
+		nextPageUrl: `/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/manage-documents/${request.params.folderId}/${request.params.documentId}`
+	});
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
 export const postChangeDocumentVersionDetails = async (request, response) => {
 	await postChangeDocumentDetails({
 		request,
@@ -570,6 +591,7 @@ export const postChangeDocumentVersionDetails = async (request, response) => {
 		nextPageUrl: `/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/manage-documents/${request.params.folderId}/${request.params.documentId}`
 	});
 };
+
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const getDeleteDocument = async (request, response) => {
 	await renderDeleteDocument({

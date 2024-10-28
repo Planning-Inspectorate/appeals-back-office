@@ -11,7 +11,9 @@ import {
 	renderChangeDocumentDetails,
 	postChangeDocumentDetails,
 	renderDeleteDocument,
-	postDeleteDocument
+	postDeleteDocument,
+	postChangeDocumentFilename,
+	renderChangeDocumentFilename
 } from '#appeals/appeal-documents/appeal-documents.controller.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { capitalize } from 'lodash-es';
@@ -297,6 +299,33 @@ export const getManageDocument = async (request, response) => {
 		backLinkUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/manage-documents/${currentFolder.folderId}`,
 		uploadUpdatedDocumentUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/upload-documents/${currentFolder?.folderId}/{{documentId}}`,
 		removeDocumentUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/manage-documents/${currentFolder.folderId}/{{documentId}}/{{versionId}}/delete`
+	});
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const getChangeDocumentFilenameDetails = async (request, response) => {
+	const {
+		params: { appealId, correspondenceCategory, folderId, documentId }
+	} = request;
+
+	await renderChangeDocumentFilename({
+		request,
+		response,
+		backButtonUrl: `/appeals-service/appeal-details/${appealId}/internal-correspondence/${correspondenceCategory}/manage-documents/${folderId}/${documentId}`
+	});
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const postChangeDocumentFilenameDetails = async (request, response) => {
+	const {
+		params: { appealId, correspondenceCategory, folderId, documentId }
+	} = request;
+
+	await postChangeDocumentFilename({
+		request,
+		response,
+		backButtonUrl: `/appeals-service/appeal-details/${appealId}/internal-correspondence/${correspondenceCategory}/manage-documents/${folderId}/${documentId}`,
+		nextPageUrl: `/appeals-service/appeal-details/${appealId}/internal-correspondence/${correspondenceCategory}/manage-documents/${folderId}/${documentId}`
 	});
 };
 

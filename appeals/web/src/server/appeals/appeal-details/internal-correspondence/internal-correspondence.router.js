@@ -80,6 +80,27 @@ router
 	.get(validateCaseFolderId, asyncHandler(controller.getManageDocument));
 
 router
+	.route('/:correspondenceCategory/change-document-name/:folderId/:documentId')
+	.get(
+		validateAppeal,
+		assertUserHasPermission(permissionNames.updateCase),
+		validateCaseFolderId,
+		asyncHandler(controller.getChangeDocumentFilenameDetails)
+	)
+	.post(
+		validateAppeal,
+		assertUserHasPermission(permissionNames.updateCase),
+		validateCaseFolderId,
+		documentsValidators.validateDocumentNameBodyFormat,
+		documentsValidators.validateDocumentName,
+		assertGroupAccess(
+			config.referenceData.appeals.caseOfficerGroupId,
+			config.referenceData.appeals.inspectorGroupId
+		),
+		asyncHandler(controller.postChangeDocumentFilenameDetails)
+	);
+
+router
 	.route('/:correspondenceCategory/change-document-details/:folderId/:documentId')
 	.get(
 		validateAppeal,
