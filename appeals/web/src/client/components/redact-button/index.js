@@ -3,11 +3,18 @@ const TEXTAREA_IDENTIFIER = '#redact-textarea';
 
 /**
  * @param {HTMLTextAreaElement} textarea
+ * @returns {HTMLButtonElement['onclick']}
  */
-const generateOnClick = (textarea) => () => {
+const generateOnClick = (textarea) => (event) => {
+	// Stop the form submitting
+	event.preventDefault();
+
 	const { selectionStart, selectionEnd, value } = textarea;
 
-	console.log(selectionStart, selectionEnd, value);
+	// Return early if nothing is selected
+	if (selectionStart === selectionEnd) {
+		return;
+	}
 
 	const startBlock = value.substring(0, selectionStart);
 	const endBlock = value.substring(selectionEnd);

@@ -8,3 +8,17 @@ export const simpleHtmlComponent = (markupString) => ({
 		html: markupString
 	}
 });
+
+/**
+ * @param {PageComponent[]} pageComponents
+ * @param {PageComponent['wrapperHtml']} wrapperHtml
+ * @returns {PageComponent}
+ */
+export const wrapComponents = (pageComponents, wrapperHtml) => ({
+	type: 'html',
+	wrapperHtml,
+	parameters: {
+		html: '',
+		pageComponents
+	}
+});
