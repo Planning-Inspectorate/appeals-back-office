@@ -390,6 +390,7 @@ model LPAQuestionnaire {
   // S78 fields
   affectsScheduledMonument            Boolean?
   hasProtectedSpecies                 Boolean?
+  isAonbNationalLandscape             Boolean?
   designatedSitesNames                String?
   hasTreePreservationOrder            Boolean?
   isGypsyOrTravellerSite              Boolean?

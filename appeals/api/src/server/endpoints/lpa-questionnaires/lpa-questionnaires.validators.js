@@ -60,6 +60,10 @@ const patchLPAQuestionnaireValidator = composeMiddleware(
 		'inspectorAccessDetails',
 		true
 	),
+	validateBooleanParameter('affectsScheduledMonument'),
+	validateBooleanParameter('hasProtectedSpecies'),
+	validateBooleanParameter('isAonbNationalLandscape'),
+	validateBooleanParameter('isGypsyOrTravellerSite'),
 	validationErrorHandler
 );
 

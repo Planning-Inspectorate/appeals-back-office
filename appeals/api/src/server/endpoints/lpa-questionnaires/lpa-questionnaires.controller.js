@@ -47,7 +47,11 @@ const updateLPAQuestionnaireById = async (req, res) => {
 			lpaNotificationMethods,
 			isAffectingNeighbouringSites,
 			eiaColumnTwoThreshold,
-			eiaRequiresEnvironmentalStatement
+			eiaRequiresEnvironmentalStatement,
+			affectsScheduledMonument,
+			hasProtectedSpecies,
+			isAonbNationalLandscape,
+			isGypsyOrTravellerSite
 		},
 		params,
 		validationOutcome
@@ -84,7 +88,11 @@ const updateLPAQuestionnaireById = async (req, res) => {
 					lpaNotificationMethods,
 					isAffectingNeighbouringSites,
 					eiaColumnTwoThreshold,
-					eiaRequiresEnvironmentalStatement
+					eiaRequiresEnvironmentalStatement,
+					affectsScheduledMonument,
+					hasProtectedSpecies,
+					isAonbNationalLandscape,
+					isGypsyOrTravellerSite
 			  });
 
 		const updatedProperties = Object.keys(body).filter((key) => body[key] !== undefined);
@@ -123,7 +131,11 @@ const updateLPAQuestionnaireById = async (req, res) => {
 				extraConditions,
 				lpaCostsAppliedFor,
 				isConservationArea,
-				isCorrectAppealType
+				isCorrectAppealType,
+				affectsScheduledMonument,
+				hasProtectedSpecies,
+				isAonbNationalLandscape,
+				isGypsyOrTravellerSite
 		  };
 
 	return res.send(response);

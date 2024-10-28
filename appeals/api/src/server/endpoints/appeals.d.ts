@@ -319,9 +319,12 @@ interface SingleLPAQuestionnaireResponse {
 	lpaStatement?: string | null;
 	extraConditions?: string | null;
 	hasExtraConditions?: boolean | null;
-	affectsScheduledMonument?: boolean | null;
 	eiaColumnTwoThreshold?: boolean | null;
 	eiaRequiresEnvironmentalStatement?: boolean | null;
+	affectsScheduledMonument?: boolean;
+	hasProtectedSpecies?: boolean;
+	isAonbNationalLandscape?: boolean;
+	isGypsyOrTravellerSite?: boolean;
 }
 
 interface UpdateLPAQuestionnaireRequest {
@@ -340,6 +343,10 @@ interface UpdateLPAQuestionnaireRequest {
 	isAffectingNeighbouringSites?: boolean;
 	eiaColumnTwoThreshold?: boolean;
 	eiaRequiresEnvironmentalStatement?: boolean;
+	affectsScheduledMonument?: boolean;
+	hasProtectedSpecies?: boolean;
+	isAonbNationalLandscape?: boolean;
+	isGypsyOrTravellerSite?: boolean;
 }
 
 interface UpdateLPAQuestionnaireValidationOutcomeParams {
