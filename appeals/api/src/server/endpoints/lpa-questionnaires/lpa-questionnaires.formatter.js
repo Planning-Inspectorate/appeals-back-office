@@ -67,7 +67,11 @@ const formatLpaQuestionnaire = (appeal, folders = null) => {
 			hasExtraConditions: lpaQuestionnaire.newConditionDetails !== null,
 			affectsSheduledMonument: lpaQuestionnaire.affectsScheduledMonument,
 			eiaColumnTwoThreshold: lpaQuestionnaire.eiaColumnTwoThreshold,
-			eiaRequiresEnvironmentalStatement: lpaQuestionnaire.eiaRequiresEnvironmentalStatement
+			eiaRequiresEnvironmentalStatement: lpaQuestionnaire.eiaRequiresEnvironmentalStatement,
+			affectsScheduledMonument: lpaQuestionnaire.affectsScheduledMonument,
+			hasProtectedSpecies: lpaQuestionnaire.hasProtectedSpecies,
+			isAonbNationalLandscape: lpaQuestionnaire.isAonbNationalLandscape,
+			isGypsyOrTravellerSite: lpaQuestionnaire.isGypsyOrTravellerSite
 		};
 	} else {
 		return {};
