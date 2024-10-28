@@ -87,8 +87,32 @@ describe('inspector-access', () => {
 			}).innerHTML;
 
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Enter inspector access details</a>');
+		});
+
+		it('should re-render changeInspectorAccess page with an error when inspectorAccessDetails exceeds 1000 characters', async () => {
+			const appealId = appealData.appealId.toString();
+			const invalidData = {
+				inspectorAccessRadio: 'yes',
+				inspectorAccessDetails: 'a'.repeat(1001) // Creates string of 1001 'a' characters
+			};
+
+			const response = await request
+				.post(`${baseUrl}/${appealId}/inspector-access/change/lpa`)
+				.send(invalidData);
+
+			expect(response.statusCode).toBe(200);
+
+			const elementInnerHtml = parseHtml(response.text).innerHTML;
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(elementInnerHtml).toMatchSnapshot();
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
 			expect(unprettifiedErrorSummaryHtml).toContain(
-				'Provide details when inspector access is required</a>'
+				'Inspector access details must be 1000 characters or less</a>'
 			);
 		});
 
