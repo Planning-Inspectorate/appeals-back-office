@@ -1522,6 +1522,60 @@ describe('costs', () => {
 				}
 			}
 		});
+
+		describe('GET /costs/:costsCategory/:costsDocumentType/change-document-name/:folderId/:documentId', () => {
+			beforeEach(() => {
+				nock('http://test/')
+					.get('/appeals/1/documents/1/versions')
+					.reply(200, documentFileVersionsInfoChecked);
+			});
+			for (const costsCategory of costsCategoriesNotIncludingDecision) {
+				for (const costsDocumentType of costsDocumentTypes) {
+					it('should render the change document name page with the expected content', async () => {
+						const response = await request.get(
+							`${baseUrl}/1/costs/${costsCategory}/${costsDocumentType}/change-document-name/1/1`
+						);
+						const element = parseHtml(response.text);
+
+						expect(element.innerHTML).toMatchSnapshot();
+
+						const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+						expect(unprettifiedElement.innerHTML).toContain('Change document details</span><h1');
+						expect(unprettifiedElement.innerHTML).toContain('Filename');
+						expect(unprettifiedElement.innerHTML).toContain('value="ph0-documentFileInfo.jpeg">');
+					});
+				}
+			}
+		});
+
+		describe('POST /costs/:costsCategory/:costsDocumentType/change-document-name/:folderId/:documentId', () => {
+			beforeEach(() => {
+				nock('http://test/').get('/appeals/document-redaction-statuses').reply(200, []);
+				nock('http://test/').patch(`/appeals/1/documents`).reply(200, []);
+				nock('http://test/')
+					.get('/appeals/1/documents/1/versions')
+					.reply(200, documentFileVersionsInfoChecked);
+			});
+
+			for (const costsCategory of costsCategoriesNotIncludingDecision) {
+				for (const costsDocumentType of costsDocumentTypes) {
+					it('should redirect to manage documents page after change document name success', async () => {
+						const fullUrl = `/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/change-document-name/1/1`;
+						const response = await request
+							.post(
+								`${baseUrl}/1/costs/${costsCategory}/${costsDocumentType}/change-document-name/1/1`
+							)
+							.send({ fileName: 'new-name.jpeg', documentId: '1' });
+
+						expect(response.statusCode).toBe(302);
+						expect(response.text).toContain(
+							`Found. Redirecting to ${fullUrl.replace('change-document-name', 'manage-documents')}`
+						);
+					});
+				}
+			}
+		});
 	});
 
 	describe('decision', () => {

@@ -156,6 +156,342 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 </main>"
 `;
 
+exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/change-document-name/:folderId/:documentId should render the change document name page with the expected content 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Change document details</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Appellant costs application documents</h1>
+                </div>
+            </div>
+            <form method="post" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <h2 class="govuk-heading-m">ph0-documentFileInfo.jpeg</h2>
+                    <div class="govuk-form-group">
+                        <input class="govuk-input" id="" name="documentId" type="hidden" value="d51f408c-7c6f-4f49-bcc0-abbb5bea3be6">
+                    </div>
+                    <div class="govuk-form-group">
+                        <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3" for="fileName">Filename</label>
+                        <input class="govuk-input" id="fileName" name="fileName"
+                        type="text" value="ph0-documentFileInfo.jpeg">
+                    </div>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/change-document-name/:folderId/:documentId should render the change document name page with the expected content 2`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Change document details</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Appellant costs application documents</h1>
+                </div>
+            </div>
+            <form method="post" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <h2 class="govuk-heading-m">ph0-documentFileInfo.jpeg</h2>
+                    <div class="govuk-form-group">
+                        <input class="govuk-input" id="" name="documentId" type="hidden" value="d51f408c-7c6f-4f49-bcc0-abbb5bea3be6">
+                    </div>
+                    <div class="govuk-form-group">
+                        <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3" for="fileName">Filename</label>
+                        <input class="govuk-input" id="fileName" name="fileName"
+                        type="text" value="ph0-documentFileInfo.jpeg">
+                    </div>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/change-document-name/:folderId/:documentId should render the change document name page with the expected content 3`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Change document details</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Appellant costs application documents</h1>
+                </div>
+            </div>
+            <form method="post" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <h2 class="govuk-heading-m">ph0-documentFileInfo.jpeg</h2>
+                    <div class="govuk-form-group">
+                        <input class="govuk-input" id="" name="documentId" type="hidden" value="d51f408c-7c6f-4f49-bcc0-abbb5bea3be6">
+                    </div>
+                    <div class="govuk-form-group">
+                        <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3" for="fileName">Filename</label>
+                        <input class="govuk-input" id="fileName" name="fileName"
+                        type="text" value="ph0-documentFileInfo.jpeg">
+                    </div>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/change-document-name/:folderId/:documentId should render the change document name page with the expected content 4`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Change document details</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Appellant costs application documents</h1>
+                </div>
+            </div>
+            <form method="post" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <h2 class="govuk-heading-m">ph0-documentFileInfo.jpeg</h2>
+                    <div class="govuk-form-group">
+                        <input class="govuk-input" id="" name="documentId" type="hidden" value="d51f408c-7c6f-4f49-bcc0-abbb5bea3be6">
+                    </div>
+                    <div class="govuk-form-group">
+                        <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3" for="fileName">Filename</label>
+                        <input class="govuk-input" id="fileName" name="fileName"
+                        type="text" value="ph0-documentFileInfo.jpeg">
+                    </div>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/change-document-name/:folderId/:documentId should render the change document name page with the expected content 5`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Change document details</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Appellant costs application documents</h1>
+                </div>
+            </div>
+            <form method="post" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <h2 class="govuk-heading-m">ph0-documentFileInfo.jpeg</h2>
+                    <div class="govuk-form-group">
+                        <input class="govuk-input" id="" name="documentId" type="hidden" value="d51f408c-7c6f-4f49-bcc0-abbb5bea3be6">
+                    </div>
+                    <div class="govuk-form-group">
+                        <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3" for="fileName">Filename</label>
+                        <input class="govuk-input" id="fileName" name="fileName"
+                        type="text" value="ph0-documentFileInfo.jpeg">
+                    </div>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/change-document-name/:folderId/:documentId should render the change document name page with the expected content 6`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Change document details</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Appellant costs application documents</h1>
+                </div>
+            </div>
+            <form method="post" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <h2 class="govuk-heading-m">ph0-documentFileInfo.jpeg</h2>
+                    <div class="govuk-form-group">
+                        <input class="govuk-input" id="" name="documentId" type="hidden" value="d51f408c-7c6f-4f49-bcc0-abbb5bea3be6">
+                    </div>
+                    <div class="govuk-form-group">
+                        <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3" for="fileName">Filename</label>
+                        <input class="govuk-input" id="fileName" name="fileName"
+                        type="text" value="ph0-documentFileInfo.jpeg">
+                    </div>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/change-document-name/:folderId/:documentId should render the change document name page with the expected content if the folderId and documentId are both valid 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Change document details</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Appellant costs application documents</h1>
+                </div>
+            </div>
+            <form method="post" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <h2 class="govuk-heading-m">ph0-documentFileInfo.jpeg</h2>
+                    <div class="govuk-form-group">
+                        <input class="govuk-input" id="" name="documentId" type="hidden" value="d51f408c-7c6f-4f49-bcc0-abbb5bea3be6">
+                    </div>
+                    <div class="govuk-form-group">
+                        <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3" for="fileName">Filename</label>
+                        <input class="govuk-input" id="fileName" name="fileName"
+                        type="text" value="ph0-documentFileInfo.jpeg">
+                    </div>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/change-document-name/:folderId/:documentId should render the change document name page with the expected content if the folderId and documentId are both valid 2`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Change document details</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Appellant costs application documents</h1>
+                </div>
+            </div>
+            <form method="post" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <h2 class="govuk-heading-m">ph0-documentFileInfo.jpeg</h2>
+                    <div class="govuk-form-group">
+                        <input class="govuk-input" id="" name="documentId" type="hidden" value="d51f408c-7c6f-4f49-bcc0-abbb5bea3be6">
+                    </div>
+                    <div class="govuk-form-group">
+                        <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3" for="fileName">Filename</label>
+                        <input class="govuk-input" id="fileName" name="fileName"
+                        type="text" value="ph0-documentFileInfo.jpeg">
+                    </div>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/change-document-name/:folderId/:documentId should render the change document name page with the expected content if the folderId and documentId are both valid 3`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Change document details</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Appellant costs application documents</h1>
+                </div>
+            </div>
+            <form method="post" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <h2 class="govuk-heading-m">ph0-documentFileInfo.jpeg</h2>
+                    <div class="govuk-form-group">
+                        <input class="govuk-input" id="" name="documentId" type="hidden" value="d51f408c-7c6f-4f49-bcc0-abbb5bea3be6">
+                    </div>
+                    <div class="govuk-form-group">
+                        <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3" for="fileName">Filename</label>
+                        <input class="govuk-input" id="fileName" name="fileName"
+                        type="text" value="ph0-documentFileInfo.jpeg">
+                    </div>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/change-document-name/:folderId/:documentId should render the change document name page with the expected content if the folderId and documentId are both valid 4`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Change document details</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Appellant costs application documents</h1>
+                </div>
+            </div>
+            <form method="post" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <h2 class="govuk-heading-m">ph0-documentFileInfo.jpeg</h2>
+                    <div class="govuk-form-group">
+                        <input class="govuk-input" id="" name="documentId" type="hidden" value="d51f408c-7c6f-4f49-bcc0-abbb5bea3be6">
+                    </div>
+                    <div class="govuk-form-group">
+                        <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3" for="fileName">Filename</label>
+                        <input class="govuk-input" id="fileName" name="fileName"
+                        type="text" value="ph0-documentFileInfo.jpeg">
+                    </div>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/change-document-name/:folderId/:documentId should render the change document name page with the expected content if the folderId and documentId are both valid 5`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Change document details</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Appellant costs application documents</h1>
+                </div>
+            </div>
+            <form method="post" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <h2 class="govuk-heading-m">ph0-documentFileInfo.jpeg</h2>
+                    <div class="govuk-form-group">
+                        <input class="govuk-input" id="" name="documentId" type="hidden" value="d51f408c-7c6f-4f49-bcc0-abbb5bea3be6">
+                    </div>
+                    <div class="govuk-form-group">
+                        <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3" for="fileName">Filename</label>
+                        <input class="govuk-input" id="fileName" name="fileName"
+                        type="text" value="ph0-documentFileInfo.jpeg">
+                    </div>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/change-document-name/:folderId/:documentId should render the change document name page with the expected content if the folderId and documentId are both valid 6`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Change document details</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Appellant costs application documents</h1>
+                </div>
+            </div>
+            <form method="post" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <h2 class="govuk-heading-m">ph0-documentFileInfo.jpeg</h2>
+                    <div class="govuk-form-group">
+                        <input class="govuk-input" id="" name="documentId" type="hidden" value="d51f408c-7c6f-4f49-bcc0-abbb5bea3be6">
+                    </div>
+                    <div class="govuk-form-group">
+                        <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3" for="fileName">Filename</label>
+                        <input class="govuk-input" id="fileName" name="fileName"
+                        type="text" value="ph0-documentFileInfo.jpeg">
+                    </div>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId should render a 500 error page if fileUploadInfo is not present in the session (appellant application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">

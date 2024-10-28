@@ -13,7 +13,8 @@ import {
 	documentFileVersionsInfo,
 	documentFileVersionsInfoNotChecked,
 	documentFileVersionsInfoChecked,
-	documentFileVersionsInfoVirusFound
+	documentFileVersionsInfoVirusFound,
+	documentFolderInfo
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
@@ -1948,6 +1949,73 @@ describe('internal correspondence', () => {
 				expect(response.statusCode).toBe(302);
 				expect(response.text).toEqual(
 					`Found. Redirecting to /appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/manage-documents/${folder.folderId}/1`
+				);
+			});
+		}
+	});
+
+	describe('GET /internal-correspondence/:correspondenceCategory/change-document-name/:folderId/:documentId', () => {
+		beforeEach(() => {
+			nock('http://test/').get('/appeals/1/document-folders/10').reply(200, documentFolderInfo);
+			nock('http://test/').get('/appeals/1/document-folders/11').reply(200, documentFolderInfo);
+			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+		});
+
+		const correspondenceCategories = ['cross-team', 'inspector'];
+		for (const correspondenceCategory of correspondenceCategories) {
+			const folder =
+				// @ts-ignore
+				appealData.internalCorrespondence[
+					`${correspondenceCategory === 'cross-team' ? 'crossTeam' : correspondenceCategory}`
+				];
+
+			it(`should render the change document name page for the document being changed (${correspondenceCategory})`, async () => {
+				const response = await request.get(
+					`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/change-document-name/${folder.folderId}/1`
+				);
+
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('Change document details</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain('Filename');
+				expect(unprettifiedElement.innerHTML).toContain('value="ph0-documentFileInfo.jpeg">');
+			});
+		}
+	});
+
+	describe('POST /internal-correspondence/:correspondenceCategory/change-document-name/:folderId/:documentId', () => {
+		beforeEach(() => {
+			nock('http://test/').get('/appeals/document-redaction-statuses').reply(200, []);
+			nock('http://test/').patch(`/appeals/1/documents`).reply(200, []);
+			nock('http://test/').get('/appeals/1/document-folders/10').reply(200, documentFolderInfo);
+			nock('http://test/').get('/appeals/1/document-folders/11').reply(200, documentFolderInfo);
+			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+		});
+
+		const correspondenceCategories = ['cross-team', 'inspector'];
+
+		for (const correspondenceCategory of correspondenceCategories) {
+			const folder =
+				// @ts-ignore
+				appealData.internalCorrespondence[
+					`${correspondenceCategory === 'cross-team' ? 'crossTeam' : correspondenceCategory}`
+				];
+
+			it(`should send a patch request to the appeal documents endpoint and redirect to the manage individual document page, if a new valid document name is provided (${correspondenceCategory})`, async () => {
+				const fullUrl = `/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/change-document-name/${folder.folderId}/1`;
+				const response = await request
+					.post(
+						`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/change-document-name/${folder.folderId}/1`
+					)
+					.send({ fileName: 'new-name.jpeg', documentId: '1' });
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toContain(
+					`Found. Redirecting to ${fullUrl.replace('change-document-name', 'manage-documents')}`
 				);
 			});
 		}

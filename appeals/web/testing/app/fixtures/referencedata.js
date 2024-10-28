@@ -28,7 +28,7 @@ export const documentFileInfo = {
 		datePublished: null,
 		isDeleted: false,
 		isLateEntry: false,
-		redactedStatus: 3,
+		redactionStatus: 'No redaction required',
 		documentURI:
 			'https://127.0.0.1:10000/devstoreaccount1/document-service-uploads/document-service-uploads/appeal/APP-Q9999-D-21-655112/d51f408c-7c6f-4f49-bcc0-abbb5bea3be6/v1/ph0.jpeg',
 		dateReceived: '2023-10-11T13:57:41.592Z'
