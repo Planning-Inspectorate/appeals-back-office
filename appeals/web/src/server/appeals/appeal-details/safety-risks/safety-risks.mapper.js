@@ -33,7 +33,7 @@ export const changeSafetyRisksPage = (appealData, storedSessionData, backLinkUrl
 				name: 'safetyRisksRadio',
 				value: currentRadioValue,
 				yesConditional: {
-					id: 'safety-risk-details',
+					id: 'safety-risks-details',
 					name: 'safetyRisksDetails',
 					hint: `Health and safety risks (${formattedSource} details)`,
 					details: currentDetailsValue

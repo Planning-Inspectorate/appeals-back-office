@@ -15,7 +15,10 @@ import {
 } from '#common/validators/string-parameter.js';
 import validateNumberParameter from '#common/validators/number-parameter.js';
 import { validateBooleanParameter } from '#common/validators/boolean-parameter.js';
-import validateBooleanWithConditionalStringParameters from '#common/validators/boolean-with-conditional-string-parameters.js';
+import {
+	validateBooleanWithConditionalStringParameters,
+	validateBooleanWithConditionalTextareaParameters
+} from '#common/validators/boolean-with-conditional-string-parameters.js';
 import validateIncompleteInvalidReasonParameter from '#common/validators/incomplete-invalid-reason-parameter.js';
 import validateEnumParameter from '#common/validators/enum-parameter.js';
 import { APPEAL_KNOWS_OTHER_OWNERS, APPEAL_CASE_PROCEDURE } from 'pins-data-model';
@@ -80,10 +83,9 @@ const patchAppellantCaseValidator = composeMiddleware(
 		'healthAndSafetyIssues',
 		true
 	),
-	validateTextAreaParameter('siteAccessDetails'),
-	validateBooleanWithConditionalStringParameters(
+	validateBooleanWithConditionalTextareaParameters(
 		'doesSiteRequireInspectorAccess',
-		'inspectorAccessDetails',
+		'siteAccessDetails',
 		true
 	),
 	validateTextAreaParameter('developmentDescription.details'),
