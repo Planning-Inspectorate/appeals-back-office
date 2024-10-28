@@ -8,6 +8,8 @@ export const paginationDefaultSettings = {
 };
 
 export const textInputCharacterLimits = {
+	defaultInputLength: 300,
+	defaultTextareaLength: 1000,
 	appellantCaseNotValidReason: 1000,
 	lpaQuestionnaireNotValidReason: 1000,
 	issueDecisionInvalidReason: 1000
