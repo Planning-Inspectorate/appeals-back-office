@@ -31,14 +31,23 @@ const getControllerEndpoint = (
 };
 
 describe('appeal-documents', () => {
+	beforeEach(() => {
+		installMockApi();
+		nock('http://test/')
+			.get('/appeals/1/appellant-cases/0')
+			.reply(200, appellantCaseDataNotValidated);
+	});
+
+	afterEach(() => {
+		teardown();
+	});
+
 	describe('upload', () => {
 		beforeEach(() => {
-			installMockApi();
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataNotValidated);
 		});
-		afterEach(teardown);
 
 		it('should return 404 if appeal ID is not found', async () => {
 			nock('http://test/').get(`/appeals/${invalidAppealId}`).reply(404);
@@ -215,7 +224,6 @@ describe('appeal-documents', () => {
 		};
 
 		beforeEach(() => {
-			installMockApi();
 			nock('http://test/').get(`/appeals/${validAppealId}`).reply(200, { id: validAppealId });
 			nock('http://test/').get(`/appeals/${validAppealId}/document-folders/1`).reply(200, folder);
 			nock('http://test/')
@@ -224,8 +232,6 @@ describe('appeal-documents', () => {
 			nock('http://test/').get('/appeals/document-redaction-statuses').reply(200, []);
 			nock('http://test/').patch(`/appeals/${validAppealId}/documents`).reply(200, []);
 		});
-
-		afterEach(teardown);
 
 		it('should render change filename page', async () => {
 			const response = await request.get(fullUrl);
@@ -239,7 +245,7 @@ describe('appeal-documents', () => {
 			expect(element).toContain(fileInfo.name);
 		});
 
-		it('should render change filename page with success', async () => {
+		it('should redirect to manage documents page after change document name success', async () => {
 			const response = await request
 				.post(fullUrl)
 				.send({ fileName: 'valid-fileName_123.jpg', documentId });

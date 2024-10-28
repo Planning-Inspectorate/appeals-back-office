@@ -2600,6 +2600,47 @@ describe('LPA Questionnaire review', () => {
 		});
 	});
 
+	describe('GET /lpa-questionnaire/2/change-document-name/:folderId/:documentId', () => {
+		beforeEach(() => {
+			nock('http://test/').get('/appeals/document-redaction-statuses').reply(200, []);
+			nock('http://test/').patch(`/appeals/1/documents`).reply(200, []);
+			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
+			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+		});
+
+		it(`should render the change document name page for the document being changed`, async () => {
+			const response = await request.get(`${baseUrl}/change-document-name/1/1`);
+
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Change document details</span><h1');
+			expect(unprettifiedElement.innerHTML).toContain('Filename');
+			expect(unprettifiedElement.innerHTML).toContain('value="ph0-documentFileInfo.jpeg">');
+		});
+	});
+
+	describe('POST /lpa-questionnaire/2/change-document-name/:folderId/:documentId', () => {
+		beforeEach(() => {
+			nock('http://test/').get('/appeals/document-redaction-statuses').reply(200, []);
+			nock('http://test/').patch(`/appeals/1/documents`).reply(200, []);
+			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
+			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+		});
+
+		it(`should send a patch request to the appeal documents endpoint and redirect to the manage individual document page, if a new valid document name is provided`, async () => {
+			const response = await request
+				.post(`${baseUrl}/change-document-name/1/1`)
+				.send({ fileName: 'new-name.jpeg', documentId: '1' });
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toContain(`Found. Redirecting to ${baseUrl}/manage-documents/1/1`);
+		});
+	});
+
 	describe('GET /lpa-questionnaire/1/add-documents/:folderId/check-your-answers', () => {
 		beforeEach(() => {
 			nock.cleanAll();

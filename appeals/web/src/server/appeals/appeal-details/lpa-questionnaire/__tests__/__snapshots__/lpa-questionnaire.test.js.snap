@@ -2997,6 +2997,34 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
 </main>"
 `;
 
+exports[`LPA Questionnaire review GET /lpa-questionnaire/2/change-document-name/:folderId/:documentId should render the change document name page for the document being changed 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Change document details</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Changed description documents</h1>
+                </div>
+            </div>
+            <form method="post" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <h2 class="govuk-heading-m">ph0-documentFileInfo.jpeg</h2>
+                    <div class="govuk-form-group">
+                        <input class="govuk-input" id="" name="documentId" type="hidden" value="d51f408c-7c6f-4f49-bcc0-abbb5bea3be6">
+                    </div>
+                    <div class="govuk-form-group">
+                        <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3" for="fileName">Filename</label>
+                        <input class="govuk-input" id="fileName" name="fileName"
+                        type="text" value="ph0-documentFileInfo.jpeg">
+                    </div>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
 exports[`LPA Questionnaire review Notification banners should render a "Column 2 threshold criteria status changed" success notification banner when meets eia column two threshold is changed 1`] = `
 "<div class="govuk-notification-banner govuk-notification-banner--success"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
