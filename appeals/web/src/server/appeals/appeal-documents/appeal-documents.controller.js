@@ -706,7 +706,6 @@ export const postChangeDocumentFilename = async ({
 		const apiRequest = mapDocumentFilenameFormDataToAPIRequest(
 			body,
 			dateReceived,
-			// @ts-ignore
 			redactionStatus,
 			redactionStatuses
 		);

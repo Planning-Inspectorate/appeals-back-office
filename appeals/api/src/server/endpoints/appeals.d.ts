@@ -515,7 +515,7 @@ interface DocumentVersionInfo {
 	blobStoragePath: string;
 	documentURI: string;
 	dateReceived: string;
-	redactionStatus?: string | null;
+	redactionStatus: string;
 	virusCheckStatus: string;
 	size: string;
 	mime: string;

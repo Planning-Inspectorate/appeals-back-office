@@ -26,8 +26,8 @@ export const validateDocumentName = createValidator(
 		.bail()
 		.custom((value, { req }) => {
 			const hasDuplicate = req.currentFolder.documents.some(
-				// @ts-ignore
-				({ name, id }) => name.toLowerCase() === value.toLowerCase() && id !== req.body.documentId
+				(/** @type {import('@pins/appeals.api').Appeals.DocumentInfo} */ document) =>
+					document.name.toLowerCase() === value.toLowerCase() && document.id !== req.body.documentId
 			);
 			if (hasDuplicate) {
 				return Promise.reject(
