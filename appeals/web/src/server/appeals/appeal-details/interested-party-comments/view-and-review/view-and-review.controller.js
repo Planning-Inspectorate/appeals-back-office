@@ -24,7 +24,7 @@ import {
  * @param {string} templatePath
  * @returns {import('@pins/express').RenderHandler<unknown>}
  */
-const render = (contentMapper, templatePath) => async (request, response) => {
+export const render = (contentMapper, templatePath) => (request, response) => {
 	const { errors, currentComment, currentAppeal } = request;
 
 	if (!currentComment) {
@@ -110,6 +110,12 @@ export const postReviewInterestedPartyComment = async (request, response) => {
 				errors,
 				pageContent
 			});
+		}
+
+		if (status === 'valid_requires_redaction') {
+			return response.redirect(
+				`/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/redact`
+			);
 		}
 
 		await patchInterestedPartyCommentStatus(apiClient, appealId, commentId, status);
