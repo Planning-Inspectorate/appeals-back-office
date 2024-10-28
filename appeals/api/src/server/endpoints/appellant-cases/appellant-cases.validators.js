@@ -80,6 +80,7 @@ const patchAppellantCaseValidator = composeMiddleware(
 		'healthAndSafetyIssues',
 		true
 	),
+	validateTextAreaParameter('siteAccessDetails'),
 	validateBooleanWithConditionalStringParameters(
 		'doesSiteRequireInspectorAccess',
 		'inspectorAccessDetails',

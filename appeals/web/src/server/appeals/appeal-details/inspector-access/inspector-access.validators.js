@@ -1,9 +1,16 @@
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
+import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
+
+const charLimitForTextarea = textInputCharacterLimits.defaultTextareaLength;
 
 export const validateDetails = createValidator(
 	body('inspectorAccessDetails')
 		.if(body('inspectorAccessRadio').equals('yes'))
-		.notEmpty()
-		.withMessage('Provide details when inspector access is required')
+		.trim()
+		.isLength({ min: 1 })
+		.withMessage('Enter inspector access details')
+		.bail()
+		.isLength({ max: charLimitForTextarea })
+		.withMessage(`Inspector access details must be ${charLimitForTextarea} characters or less`)
 );

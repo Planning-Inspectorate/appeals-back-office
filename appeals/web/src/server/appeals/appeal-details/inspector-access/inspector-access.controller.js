@@ -1,6 +1,7 @@
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { getOriginPathname, isInternalUrl } from '#lib/url-utilities.js';
+import { HTTPError } from 'got';
 import { changeInspectorAccessPage } from './inspector-access.mapper.js';
 import {
 	changeAppellantInspectorAccess,
@@ -111,6 +112,13 @@ export const postChangeInspectorAccess = async (request, response) => {
 	} catch (error) {
 		logger.error(error);
 		delete request.session.inspectorAccess;
+
+		// Check if it's a validation error (400)
+		if (error instanceof HTTPError && error.response.statusCode === 400) {
+			// @ts-ignore
+			request.errors = error.response.body.errors;
+			return renderChangeInspectorAccess(request, response);
+		}
 	}
 
 	return response.status(500).render('app/500.njk');
