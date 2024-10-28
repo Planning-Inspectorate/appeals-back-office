@@ -1,6 +1,7 @@
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { getOriginPathname, isInternalUrl } from '#lib/url-utilities.js';
+import { HTTPError } from 'got';
 import { changeSafetyRisksPage } from './safety-risks.mapper.js';
 import { changeAppellantSafetyRisks, changeLpaSafetyRisks } from './safety-risks.service.js';
 
@@ -103,6 +104,13 @@ export const postChangeSafetyRisks = async (request, response) => {
 		return response.redirect(confirmRedirectURL);
 	} catch (error) {
 		logger.error(error);
+
+		// Check if it's a validation error (400)
+		if (error instanceof HTTPError && error.response.statusCode === 400) {
+			// @ts-ignore
+			request.errors = error.response.body.errors;
+			return renderChangeSafetyRisks(request, response);
+		}
 	}
 	return response.status(500).render('app/500.njk');
 };

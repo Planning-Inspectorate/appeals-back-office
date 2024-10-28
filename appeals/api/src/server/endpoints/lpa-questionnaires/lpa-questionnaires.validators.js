@@ -9,7 +9,10 @@ import { isOutcomeIncomplete } from '#utils/check-validation-outcome.js';
 import validateDateParameter from '#common/validators/date-parameter.js';
 import validateIdParameter from '#common/validators/id-parameter.js';
 import { validateBooleanParameter } from '#common/validators/boolean-parameter.js';
-import validateBooleanWithConditionalStringParameters from '#common/validators/boolean-with-conditional-string-parameters.js';
+import {
+	validateBooleanWithConditionalStringParameters,
+	validateBooleanWithConditionalTextareaParameters
+} from '#common/validators/boolean-with-conditional-string-parameters.js';
 import validateIncompleteInvalidReasonParameter from '#common/validators/incomplete-invalid-reason-parameter.js';
 
 const getLPAQuestionnaireValidator = composeMiddleware(
@@ -50,9 +53,9 @@ const patchLPAQuestionnaireValidator = composeMiddleware(
 	validateBooleanParameter('lpaCostsAppliedFor'),
 	validateBooleanParameter('isConservationArea'),
 	validateBooleanParameter('isCorrectAppealType'),
-	validateBooleanWithConditionalStringParameters(
+	validateBooleanWithConditionalTextareaParameters(
 		'doesSiteHaveHealthAndSafetyIssues',
-		'healthAndSafetyDetails',
+		'siteSafetyDetails',
 		true
 	),
 	validateBooleanWithConditionalStringParameters(

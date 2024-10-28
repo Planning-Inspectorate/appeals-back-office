@@ -30,7 +30,7 @@ describe('safety-risks', () => {
 				'name="safetyRisksRadio" type="radio" value="yes"'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<textarea class="govuk-textarea" id="safety-risk-details" name="safetyRisksDetails" rows="3">'
+				'<textarea class="govuk-textarea" id="safety-risks-details" name="safetyRisksDetails" rows="3">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="safetyRisksRadio" type="radio" value="no"'
@@ -55,7 +55,7 @@ describe('safety-risks', () => {
 				'name="safetyRisksRadio" type="radio" value="yes"'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<textarea class="govuk-textarea" id="safety-risk-details" name="safetyRisksDetails" rows="3">'
+				'<textarea class="govuk-textarea" id="safety-risks-details" name="safetyRisksDetails" rows="3">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="safetyRisksRadio" type="radio" value="no"'
@@ -83,7 +83,7 @@ describe('safety-risks', () => {
 				'name="safetyRisksRadio" type="radio" value="yes"'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<textarea class="govuk-textarea" id="safety-risk-details" name="safetyRisksDetails" rows="3">'
+				'<textarea class="govuk-textarea" id="safety-risks-details" name="safetyRisksDetails" rows="3">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="safetyRisksRadio" type="radio" value="no"'
@@ -111,7 +111,7 @@ describe('safety-risks', () => {
 				'name="safetyRisksRadio" type="radio" value="yes"'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<textarea class="govuk-textarea" id="safety-risk-details" name="safetyRisksDetails" rows="3">'
+				'<textarea class="govuk-textarea" id="safety-risks-details" name="safetyRisksDetails" rows="3">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="safetyRisksRadio" type="radio" value="no"'
@@ -147,7 +147,33 @@ describe('safety-risks', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Provide details of health and safety risks</a>');
+			expect(errorSummaryHtml).toContain('Enter health and safety risks</a>');
+		});
+
+		it('should re-render changeSafetyRisksAccess page with an error when safetyRisksDetails exceeds 1000 characters', async () => {
+			const appealId = appealData.appealId.toString();
+			const invalidData = {
+				safetyRisksRadio: 'yes',
+				safetyRisksDetails: 'a'.repeat(1001) // Creates string of 1001 'a' characters
+			};
+
+			const response = await request
+				.post(`${baseUrl}/${appealId}/safety-risks/change/lpa`)
+				.send(invalidData);
+
+			expect(response.statusCode).toBe(200);
+
+			const elementInnerHtml = parseHtml(response.text).innerHTML;
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(elementInnerHtml).toMatchSnapshot();
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain(
+				'Health and safety risks must be 1000 characters or less</a>'
+			);
 		});
 
 		it('should re-direct to appeals-details page when data is valid for LPA and came from appeal-details', async () => {
