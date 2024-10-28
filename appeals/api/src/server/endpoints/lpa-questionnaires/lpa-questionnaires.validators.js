@@ -58,6 +58,7 @@ const patchLPAQuestionnaireValidator = composeMiddleware(
 		'siteSafetyDetails',
 		true
 	),
+	validateBooleanWithConditionalTextareaParameters('hasExtraConditions', 'extraConditions', true),
 	validateBooleanWithConditionalStringParameters(
 		'doesSiteRequireInspectorAccess',
 		'inspectorAccessDetails',
