@@ -1,5 +1,6 @@
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { HTTPError } from 'got';
 import { changeExtraConditionsPage } from './extra-conditions.mapper.js';
 import { changeExtraConditions } from './extra-conditions.service.js';
 import * as lpaQuestionnaireService from '../lpa-questionnaire.service.js';
@@ -95,6 +96,13 @@ export const postChangeExtraConditions = async (request, response) => {
 		);
 	} catch (error) {
 		logger.error(error);
+
+		// Check if it's a validation error (400)
+		if (error instanceof HTTPError && error.response.statusCode === 400) {
+			// @ts-ignore
+			request.errors = error.response.body.errors;
+			return renderChangeExtraConditions(request, response);
+		}
 	}
 	return response.status(500).render('app/500.njk');
 };

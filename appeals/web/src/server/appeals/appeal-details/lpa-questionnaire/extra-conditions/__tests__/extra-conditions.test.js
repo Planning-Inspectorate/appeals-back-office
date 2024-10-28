@@ -47,6 +47,34 @@ describe('extra-conditions', () => {
 		});
 	});
 
+	it('should re-render the change extra conditions page with an error when details exceeds 1000 characters', async () => {
+		const appealId = appealData.appealId.toString();
+		const invalidData = {
+			extraConditionsRadio: 'yes',
+			extraConditionsDetails: 'a'.repeat(1001) // Creates string of 1001 'a' characters
+		};
+
+		const response = await request
+			.post(
+				`${baseUrl}/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/extra-conditions/change`
+			)
+			.send(invalidData);
+
+		expect(response.statusCode).toBe(200);
+
+		const elementInnerHtml = parseHtml(response.text).innerHTML;
+		const errorSummaryHtml = parseHtml(response.text, {
+			rootElement: '.govuk-error-summary',
+			skipPrettyPrint: true
+		}).innerHTML;
+
+		expect(elementInnerHtml).toMatchSnapshot();
+		expect(errorSummaryHtml).toContain('There is a problem</h2>');
+		expect(errorSummaryHtml).toContain(
+			'Extra conditions details must be 1000 characters or less</a>'
+		);
+	});
+
 	describe('POST /change', () => {
 		it('should re-render the change extra conditions page with an error when isRequired is "yes" but details is empty', async () => {
 			const appealId = appealData.appealId.toString();
@@ -74,7 +102,7 @@ describe('extra-conditions', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Provide details of the extra conditions</a>');
+			expect(errorSummaryHtml).toContain('Enter extra conditions details</a>');
 		});
 
 		it('should re-direct to the LPA questionnaire page when data is valid', async () => {
