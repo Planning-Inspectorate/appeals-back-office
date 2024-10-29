@@ -17,12 +17,12 @@ export const validateDocumentName = createValidator(
 	body('fileName')
 		.trim()
 		.notEmpty()
-		.withMessage('Filename must be entered')
+		.withMessage('File name must be entered')
 		.bail()
 		// Filename must only contain alphanumeric characters, underscores, hyphens and one period followed by a suffix
 		.matches('^[a-zA-Z0-9_-]+.[a-zA-Z0-9_-]+$')
 		.withMessage(
-			'Filename must only contain alphanumeric characters, underscores, hyphens and one period followed by a suffix'
+			'File name must only include letters a to z, numbers 0 to 9 and special characters such as hyphens, underscores and one full stop'
 		)
 		.bail()
 		.custom((value, { req }) => {
@@ -32,7 +32,7 @@ export const validateDocumentName = createValidator(
 			);
 			if (hasDuplicate) {
 				return Promise.reject(
-					`Filename already exists within ${folderPathToFolderNameText(
+					`File name already exists within ${folderPathToFolderNameText(
 						req.currentFolder.path
 					)} documents`
 				);
