@@ -1,11 +1,9 @@
-import { appealShortReference } from '#lib/appeals-formatter.js';
-import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
-import { form } from './components/form/index.js';
-import { instructionsList } from './components/instructions-list.js';
-import { subtitle } from './components/subtitle.js';
-
 /** @typedef {import("../../../../appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import("../../../../appeals/appeal-details/interested-party-comments/interested-party-comments.types.js").Representation} Representation */
+
+import { appealShortReference } from '#lib/appeals-formatter.js';
+import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
+import { summaryList } from './components/summary-list.js';
 
 /**
  * @param {Appeal} appealDetails
@@ -13,18 +11,31 @@ import { subtitle } from './components/subtitle.js';
  * @param {import('express-session').Session & Record<string, string>} [session]
  * @returns {PageContent}
  */
-export const redactInterestedPartyCommentPage = (appealDetails, comment, session) => {
+export const confirmRedactInterestedPartyCommentPage = (appealDetails, comment, session) => {
 	const shortReference = appealShortReference(appealDetails.appealReference);
 
 	/** @type {PageComponent[]} */
-	const pageComponents = [subtitle, instructionsList, form(comment, session)];
+	const pageComponents = [
+		summaryList(appealDetails, comment, session),
+		{
+			type: 'button',
+			parameters: {
+				text: 'Confirm redaction and accept comment',
+				type: 'submit'
+			},
+			wrapperHtml: {
+				opening: '<div class="govuk-button-group"><form method="POST">',
+				closing: '</form></div>'
+			}
+		}
+	];
 
 	preRenderPageComponents(pageComponents);
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: 'Redact comment',
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/review`,
+		title: 'Confirm redaction',
+		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/redact`,
 		preHeading: `Appeal ${shortReference}`,
 		heading: `Redact comment from ${comment.author}`,
 		headingClasses: 'govuk-heading-l',

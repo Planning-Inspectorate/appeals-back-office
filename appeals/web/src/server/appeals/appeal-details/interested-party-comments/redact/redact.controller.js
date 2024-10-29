@@ -1,9 +1,11 @@
-// I'd like to find a common place to keep this but idk where that would be
 import { render } from '../view-and-review/view-and-review.controller.js';
 import { redactInterestedPartyCommentPage } from './redact.mapper.js';
-// import { patchInterestedPartyCommentStatus } from './view-and-review.service.js';
-// import logger from '#lib/logger.js';
-// import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { confirmRedactInterestedPartyCommentPage } from './confirm.mapper.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import logger from '#lib/logger.js';
+import { patchInterestedPartyCommentRedaction } from './redact.service.js';
+import { patchInterestedPartyCommentStatus } from '../view-and-review/view-and-review.service.js';
+import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 
 /** @typedef {import("../../appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import("../interested-party-comments.types.js").Representation} Representation */
@@ -13,53 +15,60 @@ export const renderRedactInterestedPartyComment = render(
 	'patterns/display-page.pattern.njk'
 );
 
-// /**
-//  * @param {import('@pins/express/types/express.js').Request} request
-//  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
-//  */
-// export const postReviewInterestedPartyComment = async (request, response) => {
-// 	try {
-// 		const {
-// 			errors,
-// 			currentAppeal,
-// 			params: { appealId, commentId },
-// 			body: { status },
-// 			apiClient,
-// 			session
-// 		} = request;
+export const renderConfirmRedactInterestedPartyComment = render(
+	confirmRedactInterestedPartyCommentPage,
+	'patterns/display-page.pattern.njk'
+);
 
-// 		if (!currentAppeal) {
-// 			logger.error('Current appeal not found.');
-// 			return response.status(500).render('app/500.njk');
-// 		}
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const postRedactInterestedPartyComment = async (request, response) => {
+	const {
+		params: { appealId, commentId },
+		body: { redactedRepresentation },
+		session
+	} = request;
 
-// 		if (errors) {
-// 			const pageContent = reviewInterestedPartyCommentPage(
-// 				request.currentAppeal,
-// 				request.currentComment
-// 			);
+	session.redactedRepresentation = redactedRepresentation;
 
-// 			return response.status(200).render('patterns/change-page.pattern.njk', {
-// 				errors,
-// 				pageContent
-// 			});
-// 		}
+	return response.redirect(
+		`/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/redact/confirm`
+	);
+};
 
-// 		if (status === 'valid_requires_redaction') {
-// 			return response.redirect(
-// 				`/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/redact`
-// 			);
-// 		}
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const postConfirmRedactInterestedPartyComment = async (request, response) => {
+	try {
+		const {
+			params: { appealId, commentId },
+			session,
+			apiClient
+		} = request;
 
-// 		await patchInterestedPartyCommentStatus(apiClient, appealId, commentId, status);
+		await Promise.all([
+			patchInterestedPartyCommentRedaction(
+				apiClient,
+				appealId,
+				commentId,
+				session.redactedRepresentation
+			),
+			patchInterestedPartyCommentStatus(apiClient, appealId, commentId, COMMENT_STATUS.VALID)
+		]);
 
-// 		addNotificationBannerToSession(session, 'interestedPartyCommentsValidSuccess', appealId);
+		delete session.redactedRepresentation;
 
-// 		return response.redirect(
-// 			`/appeals-service/appeal-details/${appealId}/interested-party-comments`
-// 		);
-// 	} catch (error) {
-// 		logger.error(error);
-// 		return response.status(500).render('app/500.njk');
-// 	}
-// };
+		addNotificationBannerToSession(session, 'interestedPartyCommentsRedactionSuccess', appealId);
+
+		return response.redirect(
+			`/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/view`
+		);
+	} catch (error) {
+		logger.error(error);
+		return response.status(500).render('app/500.njk');
+	}
+};

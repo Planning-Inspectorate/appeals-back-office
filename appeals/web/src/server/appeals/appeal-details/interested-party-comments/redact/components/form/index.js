@@ -7,14 +7,15 @@ import { redactInput } from './redact-input.js';
 
 /**
  * @param {Representation} comment
+ * @param {import('express-session').Session & Record<string, string>} [session]
  * @returns {PageComponent}
  */
-export const form = (comment) =>
+export const form = (comment, session) =>
 	wrapComponents(
 		[
 			wrapComponents(
 				[
-					wrapComponents(redactInput(comment), {
+					wrapComponents(redactInput(comment, session), {
 						opening: '<div class="govuk-grid-column-one-half">',
 						closing: '</div>'
 					}),

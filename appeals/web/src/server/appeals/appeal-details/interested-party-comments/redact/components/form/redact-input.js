@@ -10,16 +10,20 @@ const redactedSubheadingMarkup = `
 
 /**
  * @param {Representation} comment
+ * @param {import('express-session').Session & Record<string, string>} [session]
  * @returns {PageComponent[]}
  */
-export const redactInput = (comment) => [
+export const redactInput = (comment, session) => [
 	simpleHtmlComponent(redactedSubheadingMarkup),
 	{
 		type: 'textarea',
 		parameters: {
 			name: 'redactedRepresentation',
 			id: 'redact-textarea',
-			value: comment.redactedRepresentation || comment.originalRepresentation
+			value:
+				session?.redactedRepresentation ||
+				comment.redactedRepresentation ||
+				comment.originalRepresentation
 		}
 	}
 ];

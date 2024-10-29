@@ -195,6 +195,11 @@ export const notificationBannerDefinitions = {
 		type: 'success',
 		pages: ['ipComments'],
 		text: 'Comment valid'
+	},
+	interestedPartyCommentsRedactionSuccess: {
+		type: 'success',
+		pages: ['viewIpComment'],
+		text: 'Comment redacted and accepted'
 	}
 };
 
