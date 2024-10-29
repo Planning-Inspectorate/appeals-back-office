@@ -480,7 +480,7 @@ describe('issue-decision', () => {
 			}).innerHTML;
 
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Enter invalid reason text</a>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Enter invalid reason</a>');
 		});
 
 		it('should re-render the invalid reason page with the expected error message if the provided invalid reason text exceeds the character limit', async () => {
@@ -503,7 +503,7 @@ describe('issue-decision', () => {
 
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
 			expect(unprettifiedErrorSummaryHtml).toContain(
-				'Invalid reason text must be 1000 characters or less</a>'
+				'Invalid reason must be 1000 characters or less</a>'
 			);
 		});
 
