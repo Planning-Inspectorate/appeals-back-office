@@ -1,5 +1,6 @@
 import { postInspectorDecision, postInspectorInvalidReason } from './issue-decision.service.js';
 import logger from '#lib/logger.js';
+import { HTTPError } from 'got';
 import {
 	checkAndConfirmPage,
 	dateDecisionLetterPage,
@@ -437,16 +438,16 @@ export const renderCheckInvalidDecision = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const postCheckInvalidDecision = async (request, response) => {
+	const { appealId } = request.params;
+	const { errors } = request;
+
+	if (errors) {
+		return renderCheckInvalidDecision(request, response);
+	}
+
+	const invalidReason = request.session.inspectorDecision.invalidReason;
+
 	try {
-		const { appealId } = request.params;
-		const { errors } = request;
-
-		if (errors) {
-			return renderCheckInvalidDecision(request, response);
-		}
-
-		const invalidReason = request.session.inspectorDecision.invalidReason;
-
 		await postInspectorInvalidReason(request.apiClient, appealId, invalidReason);
 
 		return response.redirect(
@@ -454,6 +455,13 @@ export const postCheckInvalidDecision = async (request, response) => {
 		);
 	} catch (error) {
 		logger.error(error);
-		return response.status(500).render('app/500.njk');
+
+		// Check if it's a validation error (400)
+		if (error instanceof HTTPError && error.response.statusCode === 400) {
+			// @ts-ignore
+			request.errors = error.response.body.errors;
+			return renderCheckInvalidDecision(request, response);
+		}
 	}
+	return response.status(500).render('app/500.njk');
 };

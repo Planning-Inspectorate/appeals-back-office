@@ -14,9 +14,9 @@ export const validateDueDateValid = createDateInputDateValidityValidator('due-da
 export const validateDueDateInFuture = createDateInputDateInFutureValidator('due-date');
 export const validateTextArea = createTextareaValidator(
 	'decisionInvalidReason',
-	'Enter invalid reason text',
+	'Enter invalid reason',
 	textInputCharacterLimits.issueDecisionInvalidReason,
-	`Invalid reason text must be ${textInputCharacterLimits.issueDecisionInvalidReason} characters or less`
+	`Invalid reason must be ${textInputCharacterLimits.issueDecisionInvalidReason} characters or less`
 );
 
 export const validateDecision = createValidator(
