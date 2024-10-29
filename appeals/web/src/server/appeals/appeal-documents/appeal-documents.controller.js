@@ -17,7 +17,7 @@ import {
 	ChangeDocumentFileNamePage,
 	deleteDocumentPage,
 	documentUploadPage,
-	mapDocumentFilenameFormDataToAPIRequest
+	mapDocumentFileNameFormDataToAPIRequest
 } from './appeal-documents.mapper.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { isInternalUrl, safeRedirect } from '#lib/url-utilities.js';
@@ -643,7 +643,7 @@ export const postUploadDocumentVersionCheckAndConfirm = async ({
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} params.response
  * @param {string} params.backButtonUrl
  */
-export const renderChangeDocumentFilename = async ({ request, response, backButtonUrl }) => {
+export const renderChangeDocumentFileName = async ({ request, response, backButtonUrl }) => {
 	const {
 		currentFolder,
 		errors,
@@ -675,7 +675,7 @@ export const renderChangeDocumentFilename = async ({ request, response, backButt
  * @param {string} params.backButtonUrl
  * @param {string} [params.nextPageUrl]
  */
-export const postChangeDocumentFilename = async ({
+export const postChangeDocumentFileName = async ({
 	request,
 	response,
 	backButtonUrl,
@@ -690,7 +690,7 @@ export const postChangeDocumentFilename = async ({
 		} = request;
 
 		if (errors) {
-			return await renderChangeDocumentFilename({ request, response, backButtonUrl });
+			return await renderChangeDocumentFileName({ request, response, backButtonUrl });
 		}
 
 		const currentFile = await getFileInfo(request.apiClient, appealId, body.documentId);
@@ -703,7 +703,7 @@ export const postChangeDocumentFilename = async ({
 
 		const redactionStatuses = await getDocumentRedactionStatuses(apiClient);
 
-		const apiRequest = mapDocumentFilenameFormDataToAPIRequest(
+		const apiRequest = mapDocumentFileNameFormDataToAPIRequest(
 			body,
 			dateReceived,
 			redactionStatus,

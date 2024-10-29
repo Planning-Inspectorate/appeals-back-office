@@ -326,7 +326,7 @@ router
 		validateAppeal,
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
-		asyncHandler(controller.getChangeDocumentFilenameDetails)
+		asyncHandler(controller.getChangeDocumentFileNameDetails)
 	)
 	.post(
 		validateAppeal,
@@ -338,7 +338,7 @@ router
 			config.referenceData.appeals.caseOfficerGroupId,
 			config.referenceData.appeals.inspectorGroupId
 		),
-		asyncHandler(controller.postChangeDocumentFilenameDetails)
+		asyncHandler(controller.postChangeDocumentFileNameDetails)
 	);
 
 router

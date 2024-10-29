@@ -12,8 +12,8 @@ import {
 	postChangeDocumentDetails,
 	renderDeleteDocument,
 	postDeleteDocument,
-	postChangeDocumentFilename,
-	renderChangeDocumentFilename
+	postChangeDocumentFileName,
+	renderChangeDocumentFileName
 } from '#appeals/appeal-documents/appeal-documents.controller.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { capitalize } from 'lodash-es';
@@ -303,12 +303,12 @@ export const getManageDocument = async (request, response) => {
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
-export const getChangeDocumentFilenameDetails = async (request, response) => {
+export const getChangeDocumentFileNameDetails = async (request, response) => {
 	const {
 		params: { appealId, correspondenceCategory, folderId, documentId }
 	} = request;
 
-	await renderChangeDocumentFilename({
+	await renderChangeDocumentFileName({
 		request,
 		response,
 		backButtonUrl: `/appeals-service/appeal-details/${appealId}/internal-correspondence/${correspondenceCategory}/manage-documents/${folderId}/${documentId}`
@@ -316,12 +316,12 @@ export const getChangeDocumentFilenameDetails = async (request, response) => {
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
-export const postChangeDocumentFilenameDetails = async (request, response) => {
+export const postChangeDocumentFileNameDetails = async (request, response) => {
 	const {
 		params: { appealId, correspondenceCategory, folderId, documentId }
 	} = request;
 
-	await postChangeDocumentFilename({
+	await postChangeDocumentFileName({
 		request,
 		response,
 		backButtonUrl: `/appeals-service/appeal-details/${appealId}/internal-correspondence/${correspondenceCategory}/manage-documents/${folderId}/${documentId}`,

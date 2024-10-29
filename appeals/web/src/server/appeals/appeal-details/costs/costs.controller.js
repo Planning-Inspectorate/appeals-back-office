@@ -13,8 +13,8 @@ import {
 	postUploadDocumentVersionCheckAndConfirm,
 	renderChangeDocumentDetails,
 	postChangeDocumentDetails,
-	renderChangeDocumentFilename,
-	postChangeDocumentFilename
+	renderChangeDocumentFileName,
+	postChangeDocumentFileName
 } from '#appeals/appeal-documents/appeal-documents.controller.js';
 import {
 	getDocumentRedactionStatuses,
@@ -445,8 +445,8 @@ export const postDeleteCostsDocument = async (request, response) => {
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
-export const getChangeDocumentFilenameDetails = async (request, response) => {
-	await renderChangeDocumentFilename({
+export const getChangeDocumentFileNameDetails = async (request, response) => {
+	await renderChangeDocumentFileName({
 		request,
 		response,
 		backButtonUrl:
@@ -457,8 +457,8 @@ export const getChangeDocumentFilenameDetails = async (request, response) => {
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
-export const postChangeDocumentFilenameDetails = async (request, response) => {
-	await postChangeDocumentFilename({
+export const postChangeDocumentFileNameDetails = async (request, response) => {
+	await postChangeDocumentFileName({
 		request,
 		response,
 		backButtonUrl:

@@ -265,9 +265,23 @@ describe('appeal-documents', () => {
 			expect(element).toContain('File name must be entered');
 		});
 
-		it('should render change filename page with invalid filename error', async () => {
+		it('should render change filename page with invalid filename error when there are invalid characters', async () => {
 			const response = await request.post(fullUrl).send({
 				fileName: 'invalid**characters'
+			});
+			expect(response.statusCode).toBe(200);
+			const element = parseHtml(response.text, {
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(element).toContain(
+				'>File name must only include letters a to z, numbers 0 to 9 and special characters such as hyphens, underscores and one full stop'
+			);
+		});
+
+		it('should render change filename page with invalid filename error when there are spaces', async () => {
+			const response = await request.post(fullUrl).send({
+				fileName: 'invalid. characters'
 			});
 			expect(response.statusCode).toBe(200);
 			const element = parseHtml(response.text, {

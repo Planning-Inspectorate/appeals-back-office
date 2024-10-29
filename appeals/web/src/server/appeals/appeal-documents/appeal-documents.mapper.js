@@ -616,7 +616,7 @@ function mapDocumentNameItemToDocumentNamePageComponents(item, fileName) {
 				id: 'fileName',
 				name: 'fileName',
 				label: {
-					text: 'Filename',
+					text: 'File name',
 					classes: 'govuk-caption-m govuk-!-margin-bottom-3'
 				},
 				value: fileName
@@ -1627,20 +1627,20 @@ const mapDocumentVersionToAuditActivityHtml = async (
 
 /**
  *
- * @typedef {Object} DocumentFilenameFormData
+ * @typedef {Object} DocumentFileNameFormData
  * @property {string} documentId
  * @property {string} fileName
  */
 
 /**
  *
- * @param {DocumentFilenameFormData} formData
+ * @param {DocumentFileNameFormData} formData
  * @param {string} dateReceived
  * @param {string} redactionStatus
  * @param {import('@pins/appeals.api').Schema.DocumentRedactionStatus[]|undefined} redactionStatuses
  * @returns {import('./appeal.documents.service.js').DocumentDetailsAPIPatchRequest}
  */
-export const mapDocumentFilenameFormDataToAPIRequest = (
+export const mapDocumentFileNameFormDataToAPIRequest = (
 	formData,
 	dateReceived,
 	redactionStatus,
