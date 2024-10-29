@@ -1784,7 +1784,7 @@ export const folderPathToFolderNameText = (folderPath, capitalizeFirstLetter = t
  * @param {Document} file
  * @returns {PageContent}
  */
-export function ChangeDocumentFileNamePage(backLinkUrl, folder, file) {
+export function changeDocumentFileNamePage(backLinkUrl, folder, file) {
 	/** @type {PageContent} */
 	const pageContent = {
 		title: 'Change document details',
