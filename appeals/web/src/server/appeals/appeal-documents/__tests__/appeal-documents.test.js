@@ -262,7 +262,7 @@ describe('appeal-documents', () => {
 				skipPrettyPrint: true
 			}).innerHTML;
 
-			expect(element).toContain('Filename must be entered');
+			expect(element).toContain('File name must be entered');
 		});
 
 		it('should render change filename page with invalid filename error', async () => {
@@ -275,7 +275,7 @@ describe('appeal-documents', () => {
 			}).innerHTML;
 
 			expect(element).toContain(
-				'Filename must only contain alphanumeric characters, underscores, hyphens and one period followed by a suffix'
+				'>File name must only include letters a to z, numbers 0 to 9 and special characters such as hyphens, underscores and one full stop'
 			);
 		});
 
@@ -289,7 +289,7 @@ describe('appeal-documents', () => {
 				skipPrettyPrint: true
 			}).innerHTML;
 
-			expect(element).toContain('Filename already exists within New supporting documents');
+			expect(element).toContain('File name already exists within New supporting documents');
 		});
 	});
 });
