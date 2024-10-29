@@ -8,9 +8,6 @@ const router = createRouter({ mergeParams: true });
 router
 	.route('/change')
 	.get(asyncHandler(controllers.getChangeDevelopmentDescription))
-	.post(
-		validators.validateMultilineString,
-		asyncHandler(controllers.postChangeDevelopmentDescription)
-	);
+	.post(validators.validateTextArea, asyncHandler(controllers.postChangeDevelopmentDescription));
 
 export default router;

@@ -1,5 +1,6 @@
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { HTTPError } from 'got';
 import { getAppellantCaseFromAppealId } from '../appellant-case.service.js';
 import { changeDevelopmentDescriptionPage } from './development-description.mapper.js';
 import { changeDevelopmentDescription } from './development-description.service.js';
@@ -67,7 +68,13 @@ export const postChangeDevelopmentDescription = async (request, response) => {
 		return response.redirect(`/appeals-service/appeal-details/${appealId}/appellant-case`);
 	} catch (error) {
 		logger.error(error);
+
+		// Check if it's a validation error (400)
+		if (error instanceof HTTPError && error.response.statusCode === 400) {
+			// @ts-ignore
+			request.errors = error.response.body.errors;
+			return renderChangeDevelopmentDescription(request, response);
+		}
 	}
-	delete request.session.developmentDescription;
 	return response.status(500).render('app/500.njk');
 };

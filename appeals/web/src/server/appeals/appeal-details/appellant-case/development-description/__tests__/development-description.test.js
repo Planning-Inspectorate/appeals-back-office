@@ -71,7 +71,7 @@ describe('development-description', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 			expect(elementInnerHtml).toContain('Change development description</h1>');
 			expect(elementInnerHtml).toContain('Enter the original description of the development');
-			expect(elementInnerHtml).toContain('Development description cannot be empty</a>');
+			expect(elementInnerHtml).toContain('Enter development description</a>');
 		});
 
 		it('should re-render the development description change page with an error if the field is over 1000 char', async () => {
@@ -97,7 +97,9 @@ describe('development-description', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 			expect(elementInnerHtml).toContain('Change development description</h1>');
 			expect(elementInnerHtml).toContain('Enter the original description of the development');
-			expect(elementInnerHtml).toContain('Text must contain 1000 characters or less</a>');
+			expect(elementInnerHtml).toContain(
+				'Development description must be 1000 characters or less</a>'
+			);
 		});
 	});
 });
