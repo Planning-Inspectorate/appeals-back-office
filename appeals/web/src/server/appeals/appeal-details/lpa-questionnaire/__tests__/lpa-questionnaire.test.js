@@ -2618,7 +2618,7 @@ describe('LPA Questionnaire review', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain('Change document details</span><h1');
-			expect(unprettifiedElement.innerHTML).toContain('Filename');
+			expect(unprettifiedElement.innerHTML).toContain('File name');
 			expect(unprettifiedElement.innerHTML).toContain('value="ph0-documentFileInfo.jpeg">');
 		});
 	});

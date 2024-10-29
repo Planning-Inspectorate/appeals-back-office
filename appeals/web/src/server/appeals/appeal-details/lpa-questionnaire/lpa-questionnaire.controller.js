@@ -23,8 +23,8 @@ import {
 	renderChangeDocumentDetails,
 	postChangeDocumentDetails,
 	postDeleteDocument,
-	renderChangeDocumentFilename,
-	postChangeDocumentFilename
+	renderChangeDocumentFileName,
+	postChangeDocumentFileName
 } from '../../appeal-documents/appeal-documents.controller.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 
@@ -545,8 +545,8 @@ export const getAddDocumentVersionDetails = async (request, response) => {
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
-export const getChangeDocumentFilenameDetails = async (request, response) => {
-	await renderChangeDocumentFilename({
+export const getChangeDocumentFileNameDetails = async (request, response) => {
+	await renderChangeDocumentFileName({
 		request,
 		response,
 		backButtonUrl: `/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/manage-documents/${request.params.folderId}/${request.params.documentId}`
@@ -573,8 +573,8 @@ export const postDocumentVersionDetails = async (request, response) => {
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
-export const postChangeDocumentFilenameDetails = async (request, response) => {
-	await postChangeDocumentFilename({
+export const postChangeDocumentFileNameDetails = async (request, response) => {
+	await postChangeDocumentFileName({
 		request,
 		response,
 		backButtonUrl: `/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/manage-documents/${request.params.folderId}/${request.params.documentId}`,

@@ -22,8 +22,8 @@ import {
 	postDocumentUpload,
 	renderManageDocument,
 	renderManageFolder,
-	renderChangeDocumentFilename,
-	postChangeDocumentFilename
+	renderChangeDocumentFileName,
+	postChangeDocumentFileName
 } from '../../appeal-documents/appeal-documents.controller.js';
 import { capitalize } from 'lodash-es';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
@@ -491,8 +491,8 @@ export const postDocumentVersionDetails = async (request, response) => {
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
-export const getChangeDocumentFilenameDetails = async (request, response) => {
-	await renderChangeDocumentFilename({
+export const getChangeDocumentFileNameDetails = async (request, response) => {
+	await renderChangeDocumentFileName({
 		request,
 		response,
 		backButtonUrl: `/appeals-service/appeal-details/${request.params.appealId}/appellant-case/manage-documents/${request.params.folderId}/${request.params.documentId}`
@@ -500,8 +500,8 @@ export const getChangeDocumentFilenameDetails = async (request, response) => {
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
-export const postChangeDocumentFilenameDetails = async (request, response) => {
-	await postChangeDocumentFilename({
+export const postChangeDocumentFileNameDetails = async (request, response) => {
+	await postChangeDocumentFileName({
 		request,
 		response,
 		backButtonUrl: `/appeals-service/appeal-details/${request.params.appealId}/appellant-case/manage-documents/${request.params.folderId}/${request.params.documentId}`,
