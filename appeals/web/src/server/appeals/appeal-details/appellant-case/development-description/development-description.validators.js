@@ -1,12 +1,9 @@
-import { createValidator } from '@pins/express';
-import { body } from 'express-validator';
+import { createTextareaValidator } from '#lib/validators/textarea-validator.js';
+import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
 
-export const validateMultilineString = createValidator(
-	body('developmentDescription')
-		.trim()
-		.notEmpty()
-		.withMessage('Development description cannot be empty')
-		.bail()
-		.isLength({ max: 1000 })
-		.withMessage('Text must contain 1000 characters or less')
+export const validateTextArea = createTextareaValidator(
+	'developmentDescription',
+	'Enter development description',
+	textInputCharacterLimits.defaultTextareaLength,
+	`Development description must be ${textInputCharacterLimits.defaultTextareaLength} characters or less`
 );
