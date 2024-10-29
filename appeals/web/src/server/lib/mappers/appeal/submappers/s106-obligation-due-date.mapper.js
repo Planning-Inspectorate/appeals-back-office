@@ -9,15 +9,14 @@ export const mapS106ObligationDue = ({ appealDetails, currentRoute }) => ({
 				text: 'S106 obligation due'
 			},
 			value: {
-				// @ts-ignore
-				html: dateISOStringToDisplayDate(appealDetails.appealTimetable?.s106ObligationDue) || ''
+				html: dateISOStringToDisplayDate(appealDetails.appealTimetable?.s106ObligationDueDate) || ''
 			},
 			actions: {
 				items: [
 					appealDetails.validAt
 						? {
 								text: 'Change',
-								href: `${currentRoute}/appellant-case/valid/date`,
+								href: `${currentRoute}/appeal-timetables/s106-obligation`,
 								visuallyHiddenText:
 									'The date all case documentation was received and the appeal was valid',
 								attributes: { 'data-cy': 'change-s106-obligation-due-date' }

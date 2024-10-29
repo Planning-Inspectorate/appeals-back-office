@@ -1,9 +1,12 @@
 /**
  * @typedef {Object} AppealTimetables
- * @property {string?} [finalCommentReviewDate]
- * @property {string?} [issueDeterminationDate]
  * @property {string?} [lpaQuestionnaireDueDate]
- * @property {string?} [statementReviewDate]
+ * @property {string?} [ipCommentsDueDate]
+ * @property {string?} [appellantStatementDueDate]
+ * @property {string?} [lpaStatementDueDate]
+ * @property {string?} [appellantFinalCommentsDueDate]
+ * @property {string?} [lpaFinalCommentsDueDate]
+ * @property {string?} [s106ObligationDueDate]
  * @property {object | string | undefined} [errors]
  */
 

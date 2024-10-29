@@ -1753,9 +1753,9 @@ describe('mapAppealToDueDate Tests', () => {
 				id: 1262,
 				appealId: 523,
 				lpaQuestionnaireDueDate: new Date('2023-03-01T00:00:00.000Z'),
-				finalCommentReviewDate: null,
+				lpaFinalCommentsDueDate: null,
 				issueDeterminationDate: null,
-				statementReviewDate: null
+				lpaStatementDueDate: null
 			}
 		};
 		mockAppealWithTimetable.appealStatus[0].status = APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE;
@@ -1790,9 +1790,9 @@ describe('mapAppealToDueDate Tests', () => {
 				id: 1262,
 				appealId: 523,
 				lpaQuestionnaireDueDate: null,
-				finalCommentReviewDate: null,
+				lpaFinalCommentsDueDate: null,
 				issueDeterminationDate: new Date('2023-03-01T00:00:00.000Z'),
-				statementReviewDate: null
+				lpaStatementDueDate: null
 			}
 		};
 		mockAppealWithTimetable.appealStatus[0].status = APPEAL_CASE_STATUS.ISSUE_DETERMINATION;
@@ -1803,7 +1803,7 @@ describe('mapAppealToDueDate Tests', () => {
 	});
 
 	test('maps STATE_TARGET_STATEMENT_REVIEW', () => {
-		mockAppeal.appealStatus[0].status = 'statement_review';
+		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.STATEMENTS;
 
 		const createdAtPlusFiftyFiveDate = new Date('2023-02-25T00:00:00.000Z');
 		// @ts-ignore
@@ -1811,20 +1811,20 @@ describe('mapAppealToDueDate Tests', () => {
 		expect(dueDate).toEqual(createdAtPlusFiftyFiveDate);
 	});
 
-	test('maps STATE_TARGET_STATEMENT_REVIEW status with appealTimetable statementReviewDate', () => {
+	test('maps STATE_TARGET_STATEMENT_REVIEW status with appealTimetable lpaStatementDueDate', () => {
 		let mockAppealWithTimetable = {
 			...mockAppeal,
 			appealTimetable: {
 				id: 1262,
 				appealId: 523,
 				lpaQuestionnaireDueDate: null,
-				finalCommentReviewDate: null,
+				lpaFinalCommentsDueDate: null,
 				issueDeterminationDate: null,
-				statementReviewDate: new Date('2023-03-01T00:00:00.000Z'),
+				lpaStatementDueDate: new Date('2023-03-01T00:00:00.000Z'),
 				resubmitAppealTypeDate: null
 			}
 		};
-		mockAppealWithTimetable.appealStatus[0].status = 'statement_review';
+		mockAppealWithTimetable.appealStatus[0].status = APPEAL_CASE_STATUS.STATEMENTS;
 
 		// @ts-ignore
 		const dueDate = mapAppealToDueDate(mockAppealWithTimetable, '', null);
@@ -1832,7 +1832,7 @@ describe('mapAppealToDueDate Tests', () => {
 	});
 
 	test('maps STATE_TARGET_FINAL_COMMENT_REVIEW', () => {
-		mockAppeal.appealStatus[0].status = 'final_comment_review';
+		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.FINAL_COMMENTS;
 
 		const createdAtPlusSixtyDate = new Date('2023-03-02T00:00:00.000Z');
 		// @ts-ignore
@@ -1840,20 +1840,20 @@ describe('mapAppealToDueDate Tests', () => {
 		expect(dueDate).toEqual(createdAtPlusSixtyDate);
 	});
 
-	test('maps STATE_TARGET_FINAL_COMMENT_REVIEW status with appealTimetable finalCommentReviewDate', () => {
+	test('maps STATE_TARGET_FINAL_COMMENT_REVIEW status with appealTimetable lpaFinalCommentsDueDate', () => {
 		let mockAppealWithTimetable = {
 			...mockAppeal,
 			appealTimetable: {
 				id: 1262,
 				appealId: 523,
 				lpaQuestionnaireDueDate: null,
-				finalCommentReviewDate: new Date('2023-03-01T00:00:00.000Z'),
+				lpaFinalCommentsDueDate: new Date('2023-03-01T00:00:00.000Z'),
 				issueDeterminationDate: null,
-				statementReviewDate: null,
+				lpaStatementDueDate: null,
 				resubmitAppealTypeDate: null
 			}
 		};
-		mockAppealWithTimetable.appealStatus[0].status = 'final_comment_review';
+		mockAppealWithTimetable.appealStatus[0].status = APPEAL_CASE_STATUS.FINAL_COMMENTS;
 
 		// @ts-ignore
 		const dueDate = mapAppealToDueDate(mockAppealWithTimetable, '', null);
@@ -1861,7 +1861,7 @@ describe('mapAppealToDueDate Tests', () => {
 	});
 
 	test('handles STATE_TARGET_COMPLETE', () => {
-		mockAppeal.appealStatus[0].status = 'complete';
+		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.COMPLETE;
 
 		// @ts-ignore
 		const dueDate = mapAppealToDueDate(mockAppeal, '', null);

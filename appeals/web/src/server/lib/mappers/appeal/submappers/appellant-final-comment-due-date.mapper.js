@@ -10,16 +10,16 @@ export const mapAppellantFinalCommentDueDate = ({ appealDetails, currentRoute })
 			},
 			value: {
 				html:
-					// @ts-ignore
-					dateISOStringToDisplayDate(appealDetails.appealTimetable?.appellantFinalCommentDueDate) ||
-					''
+					dateISOStringToDisplayDate(
+						appealDetails.appealTimetable?.appellantFinalCommentsDueDate
+					) || ''
 			},
 			actions: {
 				items: [
 					appealDetails.validAt
 						? {
 								text: 'Change',
-								href: `${currentRoute}/appellant-case/valid/date`,
+								href: `${currentRoute}/appeal-timetables/appellant-final-comments`,
 								visuallyHiddenText:
 									'The date all case documentation was received and the appeal was valid',
 								attributes: { 'data-cy': 'change-appellant-final-comment-due-date' }

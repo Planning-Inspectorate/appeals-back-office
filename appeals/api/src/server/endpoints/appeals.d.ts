@@ -432,12 +432,15 @@ interface NeighbouringSite {
 
 interface AppealTimetable {
 	appealTimetableId: number;
-	finalCommentReviewDate?: string | null;
-	lpaQuestionnaireDueDate: string | null;
-	statementReviewDate?: string | null;
-	issueDeterminationDate?: string | null;
-	completeDate?: string | null;
 	caseResubmissionDueDate?: string | null;
+	lpaQuestionnaireDueDate?: string | null;
+	ipCommentsDueDate?: string | null;
+	appellantStatementDueDate?: string | null;
+	lpaStatementDueDate?: string | null;
+	appellantFinalCommentsDueDate?: string | null;
+	lpaFinalCommentsDueDate?: string | null;
+	s106ObligationDueDate?: string | null;
+	issueDeterminationDate?: string | null;
 }
 
 interface UpdateTimetableRequest {

@@ -178,6 +178,11 @@ export const notificationBannerDefinitions = {
 		pages: ['appealDetails'],
 		text: 'LPA questionnaire due date changed'
 	},
+	timetableDueDateUpdated: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Timetable updated'
+	},
 	changePage: {
 		type: 'success',
 		pages: ['appealDetails', 'appellantCase', 'lpaQuestionnaire']

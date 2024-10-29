@@ -22,7 +22,6 @@ import { mapCostsLpaCorrespondence } from './submappers/costs-lpa-correspondence
 import { mapCostsLpaWithdrawal } from './submappers/costs-lpa-withdrawal.mapper.js';
 import { mapCrossTeamCorrespondence } from './submappers/cross-team-correspondence.mapper.js';
 import { mapDecision } from './submappers/decision.mapper.js';
-import { mapFinalCommentReviewDueDate } from './submappers/final-comment-review-due-date.mapper.js';
 import { mapInspectorCorrespondence } from './submappers/inspector-correspondence.mapper.js';
 import { mapInspectorNeighbouringSites } from './submappers/inspector-neighbouring-sites.mapper.js';
 import { mapInspector } from './submappers/inspector.mapper.js';
@@ -41,7 +40,6 @@ import { mapOtherAppeals } from './submappers/other-appeals.mapper.js';
 import { mapSiteAddress } from './submappers/site-address.mapper.js';
 import { mapSiteVisitDate } from './submappers/site-visit-date.mapper.js';
 import { mapStartedAt } from './submappers/started-at.mapper.js';
-import { mapStatementReviewDueDate } from './submappers/statement-review-due-date.mapper.js';
 import { mapValidAt } from './submappers/valid-at.mapper.js';
 import { mapVisitType } from './submappers/visit-type.mapper.js';
 
@@ -72,8 +70,6 @@ export const submaps = {
 	validAt: mapValidAt,
 	startedAt: mapStartedAt,
 	lpaQuestionnaireDueDate: mapLpaQuestionnaireDueDate,
-	statementReviewDueDate: mapStatementReviewDueDate,
-	finalCommentReviewDueDate: mapFinalCommentReviewDueDate,
 	siteVisitDate: mapSiteVisitDate,
 	caseOfficer: mapCaseOfficer,
 	inspector: mapInspector,

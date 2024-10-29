@@ -217,10 +217,22 @@ export const CONFIG_APPEAL_TIMETABLE = {
 		lpaQuestionnaireDueDate: {
 			daysFromStartDate: 5
 		},
-		statementReviewDate: {
+		ipCommentsDueDate: {
 			daysFromStartDate: 25
 		},
-		finalCommentReviewDate: {
+		appellantStatementDueDate: {
+			daysFromStartDate: 25
+		},
+		lpaStatementDueDate: {
+			daysFromStartDate: 25
+		},
+		appellantFinalCommentsDueDate: {
+			daysFromStartDate: 35
+		},
+		lpaFinalCommentsDueDate: {
+			daysFromStartDate: 35
+		},
+		s106ObligationDueDate: {
 			daysFromStartDate: 35
 		}
 	},

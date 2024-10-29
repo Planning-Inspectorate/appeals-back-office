@@ -13,17 +13,20 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
  */
 
 /**
- * @typedef {'finalCommentReviewDate' | 'issueDeterminationDate' | 'lpaQuestionnaireDueDate' | 'statementReviewDate'} AppealTimetableType
+ * @typedef {'lpaQuestionnaireDueDate' | 'ipCommentsDueDate' | 'appellantStatementDueDate' | 'lpaStatementDueDate' | 'appellantFinalCommentsDueDate' | 'lpaFinalCommentsDueDate' | 's106ObligationDueDate' } AppealTimetableType
  */
 
 /**
- * @type {Object.<'final-comment-review' | 'issue-determination' | 'lpa-questionnaire' | 'statement-review', 'finalCommentReviewDate' | 'issueDeterminationDate' | 'lpaQuestionnaireDueDate' | 'statementReviewDate'>}
+ * @type {Object.<'lpa-questionnaire' | 'ip-comments' | 'appellant-statement' | 'lpa-statement' | 'appellant-final-comments' | 'lpa-final-comments' | 's106-obligation' , 'lpaQuestionnaireDueDate' | 'ipCommentsDueDate' | 'appellantStatementDueDate' | 'lpaStatementDueDate' | 'appellantFinalCommentsDueDate' | 'lpaFinalCommentsDueDate' | 's106ObligationDueDate'>}
  */
 export const routeToObjectMapper = {
-	'final-comment-review': 'finalCommentReviewDate',
-	'issue-determination': 'issueDeterminationDate',
 	'lpa-questionnaire': 'lpaQuestionnaireDueDate',
-	'statement-review': 'statementReviewDate'
+	'ip-comments': 'ipCommentsDueDate',
+	'appellant-statement': 'appellantStatementDueDate',
+	'lpa-statement': 'lpaStatementDueDate',
+	'appellant-final-comments': 'appellantFinalCommentsDueDate',
+	'lpa-final-comments': 'lpaFinalCommentsDueDate',
+	's106-obligation': 's106ObligationDueDate'
 };
 
 /**
@@ -116,14 +119,20 @@ export const apiErrorMapper = (updatedDueDateDay, apiError) => ({
  */
 const getTimetableTypeText = (timetableType) => {
 	switch (timetableType) {
-		case 'finalCommentReviewDate':
-			return 'final comment review';
-		case 'issueDeterminationDate':
-			return 'issue determination';
 		case 'lpaQuestionnaireDueDate':
 			return 'LPA questionnaire';
-		case 'statementReviewDate':
-			return 'statement review';
+		case 'ipCommentsDueDate':
+			return 'interested-party comments';
+		case 'appellantStatementDueDate':
+			return 'appellant statement';
+		case 'lpaStatementDueDate':
+			return 'LPA statement';
+		case 'appellantFinalCommentsDueDate':
+			return 'appellant final comments';
+		case 'lpaFinalCommentsDueDate':
+			return 'LPA final comments';
+		case 's106ObligationDueDate':
+			return 'S106 obligation';
 		default:
 			return '';
 	}

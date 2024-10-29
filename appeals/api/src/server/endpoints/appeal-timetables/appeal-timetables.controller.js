@@ -56,10 +56,14 @@ const updateAppealTimetableById = async (req, res) => {
 		await updateAppealTimetable(appealId, appealTimetableId, body, req.get('azureAdUserId') || '');
 
 		const updatedTimetable = {
-			finalCommentReviewDate: body.finalCommentReviewDate,
-			issueDeterminationDate: body.issueDeterminationDate,
 			lpaQuestionnaireDueDate: body.lpaQuestionnaireDueDate,
-			statementReviewDate: body.statementReviewDate
+			ipCommentsDueDate: body.ipCommentsDueDate,
+			appellantStatementDueDate: body.appellantStatementDueDate,
+			lpaStatementDueDate: body.lpaStatementDueDate,
+			appellantFinalCommentsDueDate: body.appellantFinalCommentsDueDate,
+			lpaFinalCommentsDueDate: body.lpaFinalCommentsDueDate,
+			s106ObligationDueDate: body.s106ObligationDueDate,
+			issueDeterminationDate: body.issueDeterminationDate
 		};
 
 		return res.send(updatedTimetable);

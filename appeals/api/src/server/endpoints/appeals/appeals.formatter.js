@@ -71,9 +71,16 @@ const formatMyAppeals = (appeal, linkedAppeals, commentCounts) => ({
 				caseResubmissionDueDate:
 					appeal.appealTimetable.caseResubmissionDueDate?.toISOString() || null,
 				...(isFPA(appeal.appealType?.key || '') && {
-					finalCommentReviewDate:
-						appeal.appealTimetable.finalCommentReviewDate?.toISOString() || null,
-					statementReviewDate: appeal.appealTimetable.statementReviewDate?.toISOString() || null,
+					ipCommentsDueDate: appeal.appealTimetable.ipCommentsDueDate?.toISOString() || null,
+					appellantStatementDueDate:
+						appeal.appealTimetable.appellantStatementDueDate?.toISOString() || null,
+					lpaStatementDueDate: appeal.appealTimetable.lpaStatementDueDate?.toISOString() || null,
+					appellantFinalCommentsDueDate:
+						appeal.appealTimetable.appellantFinalCommentsDueDate?.toISOString() || null,
+					lpaFinalCommentsDueDate:
+						appeal.appealTimetable.lpaFinalCommentsDueDate?.toISOString() || null,
+					s106ObligationDueDate:
+						appeal.appealTimetable.s106ObligationDueDate?.toISOString() || null,
 					issueDeterminationDate:
 						appeal.appealTimetable.issueDeterminationDate?.toISOString() || null
 				})
@@ -252,13 +259,29 @@ const formatAppeal = (
 							? appeal.appealTimetable.caseResubmissionDueDate.toISOString()
 							: null,
 						...(isFPA(appeal.appealType?.key || '') && {
-							finalCommentReviewDate:
-								(appeal.appealTimetable.finalCommentReviewDate &&
-									appeal.appealTimetable.finalCommentReviewDate.toISOString()) ||
+							ipCommentsDueDate:
+								(appeal.appealTimetable.ipCommentsDueDate &&
+									appeal.appealTimetable.ipCommentsDueDate.toISOString()) ||
 								null,
-							statementReviewDate:
-								(appeal.appealTimetable.statementReviewDate &&
-									appeal.appealTimetable.statementReviewDate.toISOString()) ||
+							appellantStatementDueDate:
+								(appeal.appealTimetable.appellantStatementDueDate &&
+									appeal.appealTimetable.appellantStatementDueDate.toISOString()) ||
+								null,
+							lpaStatementDueDate:
+								(appeal.appealTimetable.lpaStatementDueDate &&
+									appeal.appealTimetable.lpaStatementDueDate.toISOString()) ||
+								null,
+							appellantFinalCommentsDueDate:
+								(appeal.appealTimetable.appellantFinalCommentsDueDate &&
+									appeal.appealTimetable.appellantFinalCommentsDueDate.toISOString()) ||
+								null,
+							lpaFinalCommentsDueDate:
+								(appeal.appealTimetable.lpaFinalCommentsDueDate &&
+									appeal.appealTimetable.lpaFinalCommentsDueDate.toISOString()) ||
+								null,
+							s106ObligationDueDate:
+								(appeal.appealTimetable.s106ObligationDueDate &&
+									appeal.appealTimetable.s106ObligationDueDate.toISOString()) ||
 								null
 						})
 				  }
@@ -419,18 +442,26 @@ export const mapAppealToDueDate = (appeal, appellantCaseStatus, appellantCaseDue
 		case APPEAL_CASE_STATUS.COMPLETE: {
 			return null;
 		}
-		//TODO: S78
-		case 'statement_review': {
-			if (appeal.appealTimetable?.statementReviewDate) {
-				return new Date(appeal.appealTimetable?.statementReviewDate);
+		case APPEAL_CASE_STATUS.STATEMENTS: {
+			if (appeal.appealTimetable?.appellantStatementDueDate) {
+				return new Date(appeal.appealTimetable?.appellantStatementDueDate);
+			}
+			if (appeal.appealTimetable?.lpaStatementDueDate) {
+				return new Date(appeal.appealTimetable?.lpaStatementDueDate);
+			}
+			if (appeal.appealTimetable?.ipCommentsDueDate) {
+				return new Date(appeal.appealTimetable?.ipCommentsDueDate);
 			}
 			return add(new Date(appeal.caseCreatedDate), {
 				days: approxStageCompletion.STATE_TARGET_STATEMENT_REVIEW
 			});
 		}
-		case 'final_comment_review': {
-			if (appeal.appealTimetable?.finalCommentReviewDate) {
-				return new Date(appeal.appealTimetable?.finalCommentReviewDate);
+		case APPEAL_CASE_STATUS.FINAL_COMMENTS: {
+			if (appeal.appealTimetable?.appellantFinalCommentsDueDate) {
+				return new Date(appeal.appealTimetable?.appellantFinalCommentsDueDate);
+			}
+			if (appeal.appealTimetable?.lpaFinalCommentsDueDate) {
+				return new Date(appeal.appealTimetable?.lpaFinalCommentsDueDate);
 			}
 			return add(new Date(appeal.caseCreatedDate), {
 				days: approxStageCompletion.STATE_TARGET_FINAL_COMMENT_REVIEW
