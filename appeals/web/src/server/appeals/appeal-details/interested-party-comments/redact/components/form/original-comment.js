@@ -7,7 +7,7 @@ import { simpleHtmlComponent } from '#lib/mappers/components/html.js';
  * @returns {string}
  */
 const generateOriginalRepresentationMarkup = (originalRepresentation) => `
-<p>${originalRepresentation}</p>
+<p class="govuk-body">${originalRepresentation}</p>
 `;
 
 const originalSubheadingMarkup = `

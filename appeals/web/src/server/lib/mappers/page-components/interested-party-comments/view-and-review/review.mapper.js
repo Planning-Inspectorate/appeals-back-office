@@ -46,7 +46,7 @@ export function reviewInterestedPartyCommentPage(appealDetails, comment) {
 			},
 			items: [
 				{
-					value: 'valid',
+					value: COMMENT_STATUS.VALID,
 					text: 'Comment valid',
 					checked: comment?.status === COMMENT_STATUS.VALID
 				},
@@ -60,7 +60,7 @@ export function reviewInterestedPartyCommentPage(appealDetails, comment) {
 						: null
 				].filter(Boolean),
 				{
-					value: 'invalid',
+					value: COMMENT_STATUS.INVALID,
 					text: 'Comment invalid',
 					checked: comment?.status === COMMENT_STATUS.INVALID
 				}

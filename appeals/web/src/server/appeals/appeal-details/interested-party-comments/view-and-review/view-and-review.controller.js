@@ -20,18 +20,18 @@ import {
 
 /**
  *
- * @param {(appealDetails: Appeal, comment: Representation) => PageContent} contentMapper
+ * @param {(appealDetails: Appeal, comment: Representation, session: import('express-session').Session & Record<string, string>) => PageContent} contentMapper
  * @param {string} templatePath
  * @returns {import('@pins/express').RenderHandler<unknown>}
  */
 export const render = (contentMapper, templatePath) => (request, response) => {
-	const { errors, currentComment, currentAppeal } = request;
+	const { errors, currentComment, currentAppeal, session } = request;
 
 	if (!currentComment) {
 		return response.status(404).render('app/404.njk');
 	}
 
-	const pageContent = contentMapper(currentAppeal, currentComment);
+	const pageContent = contentMapper(currentAppeal, currentComment, session);
 
 	return response.status(200).render(templatePath, {
 		errors,
