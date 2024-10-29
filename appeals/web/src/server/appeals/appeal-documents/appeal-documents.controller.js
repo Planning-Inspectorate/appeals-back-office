@@ -14,7 +14,7 @@ import {
 	manageFolderPage,
 	manageDocumentPage,
 	changeDocumentDetailsPage,
-	ChangeDocumentFilenamePage,
+	ChangeDocumentFileNamePage,
 	deleteDocumentPage,
 	documentUploadPage,
 	mapDocumentFilenameFormDataToAPIRequest
@@ -660,7 +660,7 @@ export const renderChangeDocumentFilename = async ({ request, response, backButt
 		return response.status(500).render('app/500.njk');
 	}
 
-	const mappedPageContent = ChangeDocumentFilenamePage(backButtonUrl, currentFolder, currentFile);
+	const mappedPageContent = ChangeDocumentFileNamePage(backButtonUrl, currentFolder, currentFile);
 
 	return response.status(200).render('appeals/documents/add-document-details.njk', {
 		pageContent: mappedPageContent,

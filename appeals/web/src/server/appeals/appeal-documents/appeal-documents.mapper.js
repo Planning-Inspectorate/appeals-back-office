@@ -602,7 +602,7 @@ function mapDocumentNameItemToDocumentNamePageComponents(item, fileName) {
 			type: 'input',
 			parameters: {
 				type: 'hidden',
-				name: `documentId`,
+				name: 'documentId',
 				value: item.documentId
 			}
 		},
@@ -613,8 +613,8 @@ function mapDocumentNameItemToDocumentNamePageComponents(item, fileName) {
 			},
 			type: 'input',
 			parameters: {
-				id: `fileName`,
-				name: `fileName`,
+				id: 'fileName',
+				name: 'fileName',
 				label: {
 					text: 'Filename',
 					classes: 'govuk-caption-m govuk-!-margin-bottom-3'
@@ -1784,7 +1784,7 @@ export const folderPathToFolderNameText = (folderPath, capitalizeFirstLetter = t
  * @param {Document} file
  * @returns {PageContent}
  */
-export function ChangeDocumentFilenamePage(backLinkUrl, folder, file) {
+export function ChangeDocumentFileNamePage(backLinkUrl, folder, file) {
 	/** @type {PageContent} */
 	const pageContent = {
 		title: 'Change document details',
@@ -1797,10 +1797,6 @@ export function ChangeDocumentFilenamePage(backLinkUrl, folder, file) {
 			file.name
 		)
 	};
-
-	if (pageContent.pageComponents) {
-		preRenderPageComponents(pageContent.pageComponents);
-	}
 
 	return pageContent;
 }

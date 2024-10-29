@@ -19,6 +19,7 @@ export const validateDocumentName = createValidator(
 		.notEmpty()
 		.withMessage('Filename must be entered')
 		.bail()
+		// Filename must only contain alphanumeric characters, underscores, hyphens and one period followed by a suffix
 		.matches('^[a-zA-Z0-9_-]+.[a-zA-Z0-9_-]+$')
 		.withMessage(
 			'Filename must only contain alphanumeric characters, underscores, hyphens and one period followed by a suffix'
