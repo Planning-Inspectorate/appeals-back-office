@@ -104,7 +104,7 @@ const processUpdateDueDate = async (request, response) => {
 				return response.status(500).render('app/500.njk');
 			}
 		}
-		addNotificationBannerToSession(request.session, 'lpaqDueDateUpdated', appealId);
+		addNotificationBannerToSession(request.session, 'timetableDueDateUpdated', appealId);
 
 		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {

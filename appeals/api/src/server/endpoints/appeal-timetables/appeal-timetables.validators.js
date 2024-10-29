@@ -31,7 +31,31 @@ const patchAppealTimetableValidator = composeMiddleware(
 	validateIdParameter('appealId'),
 	validateIdParameter('appealTimetableId'),
 	validateDateParameter({
-		parameterName: 'finalCommentReviewDate',
+		parameterName: 'ipCommentsDueDate',
+		mustBeFutureDate: true,
+		mustBeBusinessDay: true,
+		customFn: validateFPATimetableDate
+	}),
+	validateDateParameter({
+		parameterName: 'appellantStatementDueDate',
+		mustBeFutureDate: true,
+		mustBeBusinessDay: true,
+		customFn: validateFPATimetableDate
+	}),
+	validateDateParameter({
+		parameterName: 'lpaStatementDueDate',
+		mustBeFutureDate: true,
+		mustBeBusinessDay: true,
+		customFn: validateFPATimetableDate
+	}),
+	validateDateParameter({
+		parameterName: 'appellantFinalCommentsDueDate',
+		mustBeFutureDate: true,
+		mustBeBusinessDay: true,
+		customFn: validateFPATimetableDate
+	}),
+	validateDateParameter({
+		parameterName: 'lpaFinalCommentsDueDate',
 		mustBeFutureDate: true,
 		mustBeBusinessDay: true,
 		customFn: validateFPATimetableDate
@@ -45,12 +69,6 @@ const patchAppealTimetableValidator = composeMiddleware(
 		parameterName: 'lpaQuestionnaireDueDate',
 		mustBeFutureDate: true,
 		mustBeBusinessDay: true
-	}),
-	validateDateParameter({
-		parameterName: 'statementReviewDate',
-		mustBeFutureDate: true,
-		mustBeBusinessDay: true,
-		customFn: validateFPATimetableDate
 	}),
 	validationErrorHandler
 );

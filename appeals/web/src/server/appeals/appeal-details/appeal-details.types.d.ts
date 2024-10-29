@@ -347,9 +347,13 @@ export type BodyValidationOutcome = Object<string, string | string[]>;
 // The following types are required because the corresponding types defined in the API specify Date fields, but the dates are formatted as strings in the API response data
 
 export interface WebAppealTimetable extends AppealTimetable {
-	finalCommentReviewDate?: string | null;
-	lpaQuestionnaireDueDate: string | null;
-	statementReviewDate?: string | null;
+	lpaQuestionnaireDueDate?: string | null;
+	ipCommentsDueDate?: string | null;
+	appellantStatementDueDate?: string | null;
+	lpaStatementDueDate?: string | null;
+	appellantFinalCommentsDueDate?: string | null;
+	lpaFinalCommentsDueDate?: string | null;
+	s106ObligationDueDate?: string | null;
 	issueDeterminationDate?: string | null;
 	completeDate?: string | null;
 }

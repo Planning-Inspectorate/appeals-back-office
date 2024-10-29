@@ -47,10 +47,10 @@ const fullPlanningAppealWithTimetable = {
 	caseValidDate: new Date(2022, 4, 20),
 	appealTimetable: {
 		appealId: 1,
-		finalCommentReviewDate: null,
+		lpaFinalCommentsDueDate: null,
 		id: 101,
 		lpaQuestionnaireDueDate: new Date('2023-05-16T01:00:00.000Z'),
-		statementReviewDate: null
+		lpaStatementDueDate: null
 	}
 };
 
@@ -69,18 +69,18 @@ describe('appeal timetables routes', () => {
 				lpaQuestionnaireDueDate: utcDate.toISOString()
 			};
 			const fullPlanningAppealRequestBody = {
-				finalCommentReviewDate: utcDate.toISOString(),
+				lpaFinalCommentsDueDate: utcDate.toISOString(),
 				lpaQuestionnaireDueDate: utcDate.toISOString(),
-				statementReviewDate: utcDate.toISOString()
+				lpaStatementDueDate: utcDate.toISOString()
 			};
 
 			const householdAppealReponseBody = {
 				lpaQuestionnaireDueDate: responseDateSet
 			};
 			const fullPlanningAppealResponseBody = {
-				finalCommentReviewDate: responseDateSet,
+				lpaFinalCommentsDueDate: responseDateSet,
 				lpaQuestionnaireDueDate: responseDateSet,
-				statementReviewDate: responseDateSet
+				lpaStatementDueDate: responseDateSet
 			};
 
 			test('updates a household appeal timetable', async () => {
@@ -212,7 +212,7 @@ describe('appeal timetables routes', () => {
 				});
 			});
 
-			test('returns an error if finalCommentReviewDate is not in the correct format', async () => {
+			test('returns an error if lpaFinalCommentsDueDate is not in the correct format', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppealWithTimetable);
 
@@ -220,19 +220,19 @@ describe('appeal timetables routes', () => {
 				const response = await request
 					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
 					.send({
-						finalCommentReviewDate: '05/05/2023'
+						lpaFinalCommentsDueDate: '05/05/2023'
 					})
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						finalCommentReviewDate: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
+						lpaFinalCommentsDueDate: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 					}
 				});
 			});
 
-			test('returns an error if finalCommentReviewDate does not contain leading zeros', async () => {
+			test('returns an error if lpaFinalCommentsDueDate does not contain leading zeros', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppealWithTimetable);
 
@@ -240,25 +240,25 @@ describe('appeal timetables routes', () => {
 				const response = await request
 					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
 					.send({
-						finalCommentReviewDate: '2023-5-5'
+						lpaFinalCommentsDueDate: '2023-5-5'
 					})
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						finalCommentReviewDate: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
+						lpaFinalCommentsDueDate: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 					}
 				});
 			});
 
-			test('returns an error if finalCommentReviewDate is not in the future', async () => {
+			test('returns an error if lpaFinalCommentsDueDate is not in the future', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppealWithTimetable);
 
 				const { appealTimetable, id } = fullPlanningAppealWithTimetable;
 				const body = {
-					finalCommentReviewDate: '2023-06-04T23:59:00.000Z'
+					lpaFinalCommentsDueDate: '2023-06-04T23:59:00.000Z'
 				};
 				const response = await request
 					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
@@ -268,18 +268,18 @@ describe('appeal timetables routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						finalCommentReviewDate: ERROR_MUST_BE_IN_FUTURE
+						lpaFinalCommentsDueDate: ERROR_MUST_BE_IN_FUTURE
 					}
 				});
 			});
 
-			test('returns an error if finalCommentReviewDate is a weekend day', async () => {
+			test('returns an error if lpaFinalCommentsDueDate is a weekend day', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppealWithTimetable);
 
 				const { appealTimetable, id } = fullPlanningAppealWithTimetable;
 				const body = {
-					finalCommentReviewDate: '2099-09-19T23:59:00.000Z'
+					lpaFinalCommentsDueDate: '2099-09-19T23:59:00.000Z'
 				};
 				const response = await request
 					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
@@ -289,18 +289,18 @@ describe('appeal timetables routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						finalCommentReviewDate: ERROR_MUST_BE_BUSINESS_DAY
+						lpaFinalCommentsDueDate: ERROR_MUST_BE_BUSINESS_DAY
 					}
 				});
 			});
 
-			test('returns an error if finalCommentReviewDate is a bank holiday day', async () => {
+			test('returns an error if lpaFinalCommentsDueDate is a bank holiday day', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppealWithTimetable);
 
 				const { appealTimetable, id } = fullPlanningAppealWithTimetable;
 				const body = {
-					finalCommentReviewDate: '2025-12-25T23:59:00.000Z'
+					lpaFinalCommentsDueDate: '2025-12-25T23:59:00.000Z'
 				};
 				const response = await request
 					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
@@ -310,12 +310,12 @@ describe('appeal timetables routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						finalCommentReviewDate: ERROR_MUST_BE_BUSINESS_DAY
+						lpaFinalCommentsDueDate: ERROR_MUST_BE_BUSINESS_DAY
 					}
 				});
 			});
 
-			test('returns an error if finalCommentReviewDate is not a valid date', async () => {
+			test('returns an error if lpaFinalCommentsDueDate is not a valid date', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppealWithTimetable);
 
@@ -323,25 +323,25 @@ describe('appeal timetables routes', () => {
 				const response = await request
 					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
 					.send({
-						finalCommentReviewDate: '2099-02-30'
+						lpaFinalCommentsDueDate: '2099-02-30'
 					})
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						finalCommentReviewDate: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
+						lpaFinalCommentsDueDate: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 					}
 				});
 			});
 
-			test('returns an error if finalCommentReviewDate is given for a household appeal', async () => {
+			test('returns an error if lpaFinalCommentsDueDate is given for a household appeal', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(houseAppealWithTimetable);
 
 				const { appealTimetable, appealType, id } = houseAppealWithTimetable;
 				const body = {
-					finalCommentReviewDate: utcDate.toISOString()
+					lpaFinalCommentsDueDate: utcDate.toISOString()
 				};
 				const response = await request
 					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
@@ -351,7 +351,7 @@ describe('appeal timetables routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						finalCommentReviewDate: stringTokenReplacement(ERROR_MUST_NOT_HAVE_TIMETABLE_DATE, [
+						lpaFinalCommentsDueDate: stringTokenReplacement(ERROR_MUST_NOT_HAVE_TIMETABLE_DATE, [
 							appealType.key
 						])
 					}
@@ -604,7 +604,7 @@ describe('appeal timetables routes', () => {
 				});
 			});
 
-			test('returns an error if statementReviewDate is not in the correct format', async () => {
+			test('returns an error if lpaStatementDueDate is not in the correct format', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppealWithTimetable);
 
@@ -612,19 +612,19 @@ describe('appeal timetables routes', () => {
 				const response = await request
 					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
 					.send({
-						statementReviewDate: '05/05/2023'
+						lpaStatementDueDate: '05/05/2023'
 					})
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						statementReviewDate: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
+						lpaStatementDueDate: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 					}
 				});
 			});
 
-			test('returns an error if statementReviewDate does not contain leading zeros', async () => {
+			test('returns an error if lpaStatementDueDate does not contain leading zeros', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppealWithTimetable);
 
@@ -632,25 +632,25 @@ describe('appeal timetables routes', () => {
 				const response = await request
 					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
 					.send({
-						statementReviewDate: '2023-5-5'
+						lpaStatementDueDate: '2023-5-5'
 					})
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						statementReviewDate: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
+						lpaStatementDueDate: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 					}
 				});
 			});
 
-			test('returns an error if statementReviewDate is not in the future', async () => {
+			test('returns an error if lpaStatementDueDate is not in the future', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppealWithTimetable);
 
 				const { appealTimetable, id } = fullPlanningAppealWithTimetable;
 				const body = {
-					statementReviewDate: '2023-06-04T23:59:00.000Z'
+					lpaStatementDueDate: '2023-06-04T23:59:00.000Z'
 				};
 				const response = await request
 					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
@@ -660,18 +660,18 @@ describe('appeal timetables routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						statementReviewDate: ERROR_MUST_BE_IN_FUTURE
+						lpaStatementDueDate: ERROR_MUST_BE_IN_FUTURE
 					}
 				});
 			});
 
-			test('returns an error if statementReviewDate is a weekend day', async () => {
+			test('returns an error if lpaStatementDueDate is a weekend day', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppealWithTimetable);
 
 				const { appealTimetable, id } = fullPlanningAppealWithTimetable;
 				const body = {
-					statementReviewDate: '2099-09-19T23:59:00.000Z'
+					lpaStatementDueDate: '2099-09-19T23:59:00.000Z'
 				};
 				const response = await request
 					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
@@ -681,18 +681,18 @@ describe('appeal timetables routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						statementReviewDate: ERROR_MUST_BE_BUSINESS_DAY
+						lpaStatementDueDate: ERROR_MUST_BE_BUSINESS_DAY
 					}
 				});
 			});
 
-			test('returns an error if statementReviewDate is a bank holiday day', async () => {
+			test('returns an error if lpaStatementDueDate is a bank holiday day', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppealWithTimetable);
 
 				const { appealTimetable, id } = fullPlanningAppealWithTimetable;
 				const body = {
-					statementReviewDate: '2025-12-25T23:59:00.000Z'
+					lpaStatementDueDate: '2025-12-25T23:59:00.000Z'
 				};
 				const response = await request
 					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
@@ -702,12 +702,12 @@ describe('appeal timetables routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						statementReviewDate: ERROR_MUST_BE_BUSINESS_DAY
+						lpaStatementDueDate: ERROR_MUST_BE_BUSINESS_DAY
 					}
 				});
 			});
 
-			test('returns an error if statementReviewDate is not a valid date', async () => {
+			test('returns an error if lpaStatementDueDate is not a valid date', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppealWithTimetable);
 
@@ -715,25 +715,25 @@ describe('appeal timetables routes', () => {
 				const response = await request
 					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
 					.send({
-						statementReviewDate: '2023-02-30'
+						lpaStatementDueDate: '2023-02-30'
 					})
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						statementReviewDate: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
+						lpaStatementDueDate: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
 					}
 				});
 			});
 
-			test('returns an error if statementReviewDate is given for a household appeal', async () => {
+			test('returns an error if lpaStatementDueDate is given for a household appeal', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(houseAppealWithTimetable);
 
 				const { appealTimetable, appealType, id } = houseAppealWithTimetable;
 				const body = {
-					statementReviewDate: utcDate.toISOString()
+					lpaStatementDueDate: utcDate.toISOString()
 				};
 				const response = await request
 					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
@@ -743,7 +743,7 @@ describe('appeal timetables routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						statementReviewDate: stringTokenReplacement(ERROR_MUST_NOT_HAVE_TIMETABLE_DATE, [
+						lpaStatementDueDate: stringTokenReplacement(ERROR_MUST_NOT_HAVE_TIMETABLE_DATE, [
 							appealType.key
 						])
 					}
