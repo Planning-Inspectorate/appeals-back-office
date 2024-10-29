@@ -312,15 +312,15 @@ export const getAddDocumentDetails = async (request, response) => {
 	}
 
 	const documentType = currentFolder.path.split('/')[1];
-	const notificationDocumentTypes = [
-		`${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED}`,
-		`${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_SITE_NOTICE}`,
-		`${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_LETTER_TO_NEIGHBOURS}`,
-		`${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_PRESS_ADVERT}`
-	];
-	let pageHeadingTextOverride = notificationDocumentTypes.includes(documentType)
-		? 'Notification documents'
-		: '';
+	const pageHeadingOverrides = {
+		[`${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED}`]: 'Notification documents',
+		[`${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_SITE_NOTICE}`]: 'Notification documents',
+		[`${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_LETTER_TO_NEIGHBOURS}`]: 'Notification documents',
+		[`${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_PRESS_ADVERT}`]: 'Notification documents',
+		[`${APPEAL_DOCUMENT_TYPE.EIA_ENVIRONMENTAL_STATEMENT}`]: 'Environmental impact assessment'
+	};
+
+	const pageHeadingTextOverride = pageHeadingOverrides[documentType] ?? '';
 
 	await renderDocumentDetails({
 		request,
@@ -446,6 +446,9 @@ export const getManageFolder = async (request, response) => {
 			break;
 		case `${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_PRESS_ADVERT}`:
 			managePageHeadingText = `Press advert notification documents`;
+			break;
+		case `${APPEAL_DOCUMENT_TYPE.EIA_ENVIRONMENTAL_STATEMENT}`:
+			managePageHeadingText = `Environmental impact assessment`;
 			break;
 		default:
 			managePageHeadingText = '';
