@@ -1,3 +1,5 @@
+// @ts-nocheck
+import { jest } from '@jest/globals';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
@@ -271,6 +273,156 @@ describe('add-ip-comment', () => {
 				});
 
 			expect(response.statusCode).toBe(400);
+		});
+	});
+
+	describe('GET /date-submitted', () => {
+		const appealId = 2;
+
+		/** @type {*} */
+		let pageHtml;
+
+		beforeAll(async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted`
+			);
+			pageHtml = parseHtml(response.text);
+		});
+
+		it('should match the snapshot', () => {
+			expect(pageHtml.innerHTML).toMatchSnapshot();
+		});
+
+		it('should render the date submitted page', () => {
+			expect(pageHtml).not.toBeNull();
+		});
+
+		it('should render the correct heading', () => {
+			expect(pageHtml.querySelector('h1')?.innerHTML).toBe('Enter date submitted');
+		});
+
+		it('should render day, month, and year input fields', () => {
+			expect(pageHtml.querySelector('input#date-day')).not.toBeNull();
+			expect(pageHtml.querySelector('input#date-month')).not.toBeNull();
+			expect(pageHtml.querySelector('input#date-year')).not.toBeNull();
+		});
+	});
+
+	describe('POST /date-submitted', () => {
+		const appealId = 2;
+
+		beforeEach(() => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+			jest
+				.useFakeTimers({ doNotFake: ['nextTick', 'setImmediate'] })
+				.setSystemTime(new Date('2024-10-30'));
+		});
+
+		it('should redirect on valid today date input', async () => {
+			const response = await request
+				.post(`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted`)
+				.send({
+					'date-day': '30',
+					'date-month': '10',
+					'date-year': '2024'
+				});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.headers.location).toBe(
+				'/appeals-service/appeal-details/2/interested-party-comments'
+			);
+		});
+
+		it('should redirect on valid yesterday date input', async () => {
+			const response = await request
+				.post(`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted`)
+				.send({
+					'date-day': '30',
+					'date-month': '10',
+					'date-year': '2024'
+				});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.headers.location).toBe(
+				'/appeals-service/appeal-details/2/interested-party-comments'
+			);
+		});
+
+		it('should return 400 on valid tomorow date input with appropriate error messages', async () => {
+			const response = await request
+				.post(`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted`)
+				.send({
+					'date-day': '31',
+					'date-month': '10',
+					'date-year': '2024'
+				});
+
+			expect(response.statusCode).toBe(400);
+
+			const element = parseHtml(response.text);
+			expect(element.querySelector('h1')?.innerHTML).toBe('Enter date submitted');
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Date must be today or in the past');
+		});
+
+		it('should return 400 on empty date fields with appropriate error messages', async () => {
+			const response = await request
+				.post(`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted`)
+				.send({
+					'date-day': '',
+					'date-month': '',
+					'date-year': ''
+				});
+
+			expect(response.statusCode).toBe(400);
+
+			const element = parseHtml(response.text);
+			expect(element.querySelector('h1')?.innerHTML).toBe('Enter date submitted');
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Submitted date day cannot be empty');
+			expect(errorSummaryHtml).toContain('Submitted date month cannot be empty');
+			expect(errorSummaryHtml).toContain('Submitted date year cannot be empty');
+		});
+
+		it('should return 400 on invalid date input with appropriate error messages', async () => {
+			const response = await request
+				.post(`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted`)
+				.send({
+					'date-day': '99',
+					'date-month': '99',
+					'date-year': '9999'
+				});
+
+			expect(response.statusCode).toBe(400);
+
+			const element = parseHtml(response.text);
+			expect(element.querySelector('h1')?.innerHTML).toBe('Enter date submitted');
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Submitted date must be a valid date');
 		});
 	});
 
