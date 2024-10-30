@@ -239,6 +239,14 @@ const deleteAppealData = async (
 		}
 	});
 
+	const deleteCaseNotes = databaseConnector.caseNote.deleteMany({
+		where: {
+			caseId: {
+				in: appealIDs
+			}
+		}
+	});
+
 	const deleteAudits = databaseConnector.auditTrail.deleteMany({
 		where: {
 			appealId: {
@@ -307,6 +315,7 @@ const deleteAppealData = async (
 	await deleteDocuments;
 
 	await databaseConnector.$transaction([
+		deleteCaseNotes,
 		deleteAudits,
 		deleteSpecialisms,
 		deleteAllocationLevels,
