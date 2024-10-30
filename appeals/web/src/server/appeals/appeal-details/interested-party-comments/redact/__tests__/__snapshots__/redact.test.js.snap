@@ -1,14 +1,69 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`redact renders notification banner 1`] = `
+exports[`redact renders the confirm redaction page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
-            <p class="govuk-body">Try again later.</p>
-            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
-                the problem persists.</p>
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+            <h1             class="govuk-heading-l">Redact comment from Lee Thornton</h1>
         </div>
     </div>
+    <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Interested party</dt>
+            <dd class="govuk-summary-list__value">Lee Thornton</dd>
+        </div>
+        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Original comment</dt>
+            <dd class="govuk-summary-list__value">Awaiting review comment 47</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Redacted comment</dt>
+            <dd class="govuk-summary-list__value"></dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/redact"> Change</a>
+            </dd>
+        </div>
+    </dl>
+    <div class="govuk-button-group">
+        <form method="POST">
+            <button type="submit" class="govuk-button" data-module="govuk-button">Confirm redaction and accept comment</button>
+        </form>
+    </div>
+</main>"
+`;
+
+exports[`redact renders the redact page 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+            <h1             class="govuk-heading-l">Redact comment from Lee Thornton</h1>
+        </div>
+    </div>
+    <h2> Make redactions</h2>
+    <ol class="govuk-list govuk-list--number">
+        <li>Use the ‘redacted comment’ box to select the words you want to redact.</li>
+        <li>Select ‘redact’ to confirm your redaction. Repeat until you have finished.</li>
+        <li>Select ‘continue’ when you have finished redacting.</li>
+    </ol>
+    <form method="POST">
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-one-half">
+                <h3> Redacted comment</h3>
+                <div class="govuk-form-group">
+                    <textarea class="govuk-textarea" id="redact-textarea" name="redactedRepresentation"
+                    rows="5">Awaiting review comment 47</textarea>
+                </div>
+            </div>
+            <div class="govuk-grid-column-one-half">
+                <h3> Original comment</h3>
+                <p class="govuk-body">Awaiting review comment 47</p>
+            </div>
+            <div class="govuk-grid-column-full">
+                <div class="govuk-button-group">
+                    <button class="govuk-button govuk-button--secondary" data-module="govuk-button"
+                    id="redact-button">Redact</button>
+                </div>
+                <div class="govuk-button-group">
+                    <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </form>
 </main>"
 `;
