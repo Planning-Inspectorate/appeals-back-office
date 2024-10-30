@@ -756,6 +756,15 @@ export interface UpdateSiteVisitData {
 	siteVisitChangeType: string;
 }
 
+export interface RepresentationRejectionReason {
+	/** @example 1 */
+	id: number;
+	/** @example "Illegible or Incomplete Documentation" */
+	name: string;
+	/** @example true */
+	hasText: boolean;
+}
+
 type GetAuditTrailsResponse = {
 	azureAdUserId: string;
 	details: string;

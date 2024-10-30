@@ -201,4 +201,74 @@ describe('/appeals/:id/representations', () => {
 			});
 		});
 	});
+	describe('PATCH /appeals/:appealId/reps/:repId/rejection-reasons', () => {
+		test('400 when payload id is not a number', async () => {
+			const response = await request
+				.patch('/appeals/1/reps/1/rejection-reasons')
+				.send({
+					rejectionReasons: [{ id: 'NaN', text: [] }]
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual({
+				errors: {
+					'rejectionReasons[0].id': 'id must be a positive integer'
+				}
+			});
+		});
+		test('400 when payload is invalid', async () => {
+			const response = await request
+				.patch('/appeals/1/reps/1/rejection-reasons')
+				.send({
+					rejectionReasons: [{ id: 1, text: [1] }]
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual({
+				errors: {
+					'rejectionReasons[0].text': 'must be an array of strings'
+				}
+			});
+		});
+
+		test('404 when repId is not found', async () => {
+			// Mocking database responses
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+			// @ts-ignore
+			databaseConnector.representation.findUnique.mockResolvedValue(null);
+
+			const response = await request
+				.patch('/appeals/1/reps/999/rejection-reasons')
+				.send({
+					rejectionReasons: [
+						{ id: 1, name: 'Illegible or Incomplete Documentation', hasText: false, text: [] }
+					]
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(404);
+			expect(response.body.errors).toHaveProperty('repId', ERROR_NOT_FOUND);
+		});
+
+		test('404 when appealId is not found', async () => {
+			// Mocking database responses
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(null);
+
+			const response = await request
+				.patch('/appeals/2/reps/1/rejection-reasons')
+				.send({
+					rejectionReasons: [
+						{ id: 1, name: 'Illegible or Incomplete Documentation', hasText: false, text: [] }
+					]
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(404);
+			expect(response.body.errors).toHaveProperty('appealId', ERROR_NOT_FOUND);
+		});
+	});
 });

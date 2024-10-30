@@ -23,6 +23,7 @@ import { FOLDERS } from '@pins/appeals/constants/documents.js';
  * @typedef {import('@pins/appeals.api').Schema.SiteVisitType} SiteVisitType
  * @typedef {import('@pins/appeals.api').Schema.Specialism} Specialism
  * @typedef {import('@pins/appeals.api').Schema.DocumentRedactionStatus} DocumentRedactionStatus
+ * @typedef {import('@pins/appeals.api').Schema.RepresentationRejectionReason} RepresentationRejectionReason
  */
 
 /**
@@ -289,6 +290,42 @@ export const specialisms = [
 ];
 
 /**
+ * An array of representation rejection reasons.
+ *
+ * @type {Pick<RepresentationRejectionReason, 'name' | 'hasText'>[]}
+ */
+export const representationRejectionReasons = [
+	{
+		name: 'Illegible or Incomplete Documentation',
+		hasText: false
+	},
+	{
+		name: 'Includes personal and/or medical information',
+		hasText: false
+	},
+	{
+		name: 'Includes inflammatory content',
+		hasText: false
+	},
+	{
+		name: 'Duplicated comment',
+		hasText: false
+	},
+	{
+		name: 'Not relevant to this appeal',
+		hasText: false
+	},
+	{
+		name: 'Contains links to web pages',
+		hasText: false
+	},
+	{
+		name: 'Other',
+		hasText: true
+	}
+];
+
+/**
  * Seed static data into the database. Does not disconnect from the database or handle errors.
  *
  * @param {import('../../server/utils/db-client/index.js').PrismaClient} databaseConnector
@@ -390,6 +427,15 @@ export async function seedStaticData(databaseConnector) {
 			update: {}
 		});
 	}
+	const promises = representationRejectionReasons.map((rejectionReason) =>
+		databaseConnector.representationRejectionReason.upsert({
+			create: rejectionReason,
+			where: { name: rejectionReason.name },
+			update: {}
+		})
+	);
+
+	await Promise.all(promises);
 
 	await updateFolderDefinitionsForExistingAppeals(databaseConnector);
 }

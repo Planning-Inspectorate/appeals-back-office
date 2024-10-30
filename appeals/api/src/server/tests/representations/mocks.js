@@ -34,6 +34,7 @@ export const repResponse = {
 	attachments: [],
 	representationType: 'comment',
 	siteVisitRequested: false,
+	source: 'citizen',
 	represented: {
 		id: 1,
 		name: 'Joe Bloggs',
@@ -47,5 +48,19 @@ export const repResponse = {
 			postcode: 'MD21 5XY',
 			addressTown: 'Maidstone'
 		}
-	}
+	},
+	rejectionReasons: [
+		{
+			id: 1,
+			name: 'Illegible or Incomplete Documentation',
+			hasText: false,
+			text: ['']
+		},
+		{
+			id: 7,
+			name: 'Other',
+			hasText: true,
+			text: ['Illegible or Incomplete Documentation', 'Previously Decided or Duplicate Appeal']
+		}
+	]
 };

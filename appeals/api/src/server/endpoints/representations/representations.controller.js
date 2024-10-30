@@ -2,6 +2,7 @@ import * as representationService from './representations.service.js';
 import { formatRepresentation } from './representations.formatter.js';
 import { DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE, ERROR_NOT_FOUND } from '#endpoints/constants.js';
 import { getPageCount } from '#utils/database-pagination.js';
+import { Prisma } from '#utils/db-client/index.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -147,4 +148,32 @@ export const createRepresentation = (representationType) => async (req, res) => 
 	});
 
 	return res.send(rep);
+};
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ */
+export const updateRejectionReasons = async (req, res) => {
+	const { repId } = req.params;
+	const { rejectionReasons } = req.body;
+
+	try {
+		const rep = await representationService.updateRejectionReasons(Number(repId), rejectionReasons);
+
+		return res.send(rep);
+	} catch (error) {
+		if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2025') {
+			return res.status(404).send({
+				errors: {
+					repId: ERROR_NOT_FOUND
+				}
+			});
+		}
+
+		return res.status(500).send({
+			errors: { message: 'Failed to update rejection reasons' }
+		});
+	}
 };

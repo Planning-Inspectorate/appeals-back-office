@@ -23,6 +23,7 @@ export interface Representation {
 	represented: Represented;
 	siteVisitRequested: boolean;
 	source: string;
+	rejectionReasons: RepresentationRejectionReason[];
 }
 
 export interface RepresentationList {
@@ -32,4 +33,27 @@ export interface RepresentationList {
 	page: number;
 	pageCount: number;
 	pageSize: number;
+}
+
+export interface RepresentationRejectionReason {
+	/** @example 1 */
+	id: number;
+	/** @example "Illegible or Incomplete Documentation" */
+	name: string;
+	/** @example true */
+	hasText: boolean;
+	/** List of selected rejection reasons for a representation */
+	text?: string[];
+}
+
+export interface RejectionReasonUpdateInput {
+	/** @example 1 */
+	id: number;
+	/** List of selected rejection reasons for a representation */
+	text?: string[];
+}
+
+export interface RejectionReasons {
+	rejectionReason?: string | string[];
+	[key: string]: string | string[] | undefined;
 }

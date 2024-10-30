@@ -97,6 +97,7 @@ const mockServiceUserFindUnique = jest.fn().mockResolvedValue({});
 const mockCaseNotesFindMany = jest.fn().mockResolvedValue({});
 const mockCaseNotesFindUnique = jest.fn().mockResolvedValue({});
 const mockCaseNotesCreate = jest.fn().mockResolvedValue({});
+const mockRepresentationRejectionReasonFindMany = jest.fn().mockResolvedValue({});
 
 class MockPrismaClient {
 	get representation() {
@@ -402,6 +403,13 @@ class MockPrismaClient {
 		return {
 			update: mockServiceUserUpdate,
 			findUnique: mockServiceUserFindUnique
+		};
+	}
+
+	get representationRejectionReason() {
+		return {
+			findMany: mockRepresentationRejectionReasonFindMany,
+			deleteMany: mockRepresentationRejectionReasonFindMany
 		};
 	}
 

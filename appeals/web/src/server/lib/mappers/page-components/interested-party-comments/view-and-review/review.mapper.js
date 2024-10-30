@@ -39,7 +39,7 @@ export function reviewInterestedPartyCommentPage(appealDetails, comment) {
 			name: 'status',
 			fieldset: {
 				legend: {
-					text: 'Do you accept the comment?',
+					text: 'What is the outcome of your review?',
 					isPageHeading: false,
 					classes: 'govuk-fieldset__legend--m'
 				}

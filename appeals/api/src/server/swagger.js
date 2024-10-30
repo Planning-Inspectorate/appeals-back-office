@@ -693,6 +693,13 @@ export const spec = {
 				id: 1
 			}
 		],
+		AllRepresentationRejectionReasonsResponse: [
+			{
+				id: 1,
+				name: 'Rejection reason',
+				hasText: true
+			}
+		],
 		AllSiteVisitTypesResponse: [
 			{
 				name: 'Access required',
@@ -829,7 +836,19 @@ export const spec = {
 				details: 'The case officer 13de469c-8de6-4908-97cd-330ea73df618 was added to the team',
 				loggedDate: '2024-09-26T16:22:20.688Z'
 			}
-		]
+		],
+		RepRejectionReasonsUpdateRequest: {
+			rejectionReasons: [
+				{
+					id: 1,
+					text: []
+				},
+				{
+					id: 7,
+					text: ['Illegible or Incomplete Documentation', 'Previously Decided or Duplicate Appeal']
+				}
+			]
+		}
 	},
 	'@definitions': {
 		SingleLinkableAppealSummaryResponse: {

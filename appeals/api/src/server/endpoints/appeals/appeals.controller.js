@@ -8,7 +8,7 @@ import { getAvScanStatus } from '#endpoints/documents/documents.service.js';
 import logger from '#utils/logger.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import appealListRepository from '#repositories/appeal-lists.repository.js';
-import { countAppealRepresentationsByStatus } from '#repositories/representation.repository.js';
+import representationRepository from '#repositories/representation.repository.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import {
 	AUDIT_TRAIL_ASSIGNED_CASE_OFFICER,
@@ -60,7 +60,10 @@ const getAppeals = async (req, res) => {
 	const formattedAppeals = await Promise.all(
 		appeals.map(async (appeal) => {
 			const linkedAppeals = await appealRepository.getLinkedAppeals(appeal.reference);
-			const commentCounts = await countAppealRepresentationsByStatus(appeal.id, 'comment');
+			const commentCounts = await representationRepository.countAppealRepresentationsByStatus(
+				appeal.id,
+				'comment'
+			);
 
 			return formatAppeals(
 				appeal,
@@ -105,7 +108,10 @@ const getMyAppeals = async (req, res) => {
 		const formattedAppeals = await Promise.all(
 			appeals.map(async (appeal) => {
 				const linkedAppeals = await appealRepository.getLinkedAppeals(appeal.reference);
-				const commentCounts = await countAppealRepresentationsByStatus(appeal.id, 'comment');
+				const commentCounts = await representationRepository.countAppealRepresentationsByStatus(
+					appeal.id,
+					'comment'
+				);
 
 				return formatMyAppeals(
 					appeal,

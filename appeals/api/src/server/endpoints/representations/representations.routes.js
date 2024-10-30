@@ -3,10 +3,12 @@ import { asyncHandler } from '@pins/express';
 import {
 	createRepresentationValidator,
 	getRepresentationRouteValidator,
-	getRepresentationUpdateValidator
+	getRepresentationUpdateValidator,
+	validateRejectionReasonsPayload
 } from './representations.validators.js';
 import * as controller from './representations.controller.js';
 import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
+import { checkRepresentationExistsById } from '#middleware/check-representation-exists.js';
 
 const router = createRouter();
 
@@ -208,6 +210,35 @@ router.post(
 	checkAppealExistsByIdAndAddToRequest,
 	createRepresentationValidator,
 	asyncHandler(controller.createRepresentation('comment'))
+);
+
+router.patch(
+	'/:appealId/reps/:repId/rejection-reasons',
+	/*
+		#swagger.tags = ['Representations']
+		#swagger.path = '/appeals/{appealId}/reps/{repId}/rejection-reasons'
+		#swagger.description = 'Update rejection reasons for a representation'
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: true,
+			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+		}
+		#swagger.requestBody = {
+			in: 'body',
+			required: true,
+			schema: { $ref: '#/components/schemas/RepRejectionReasonsUpdateRequest' },
+		}
+		#swagger.responses[200] = {
+			description: 'Updated representation with rejection reasons',
+			schema: { $ref: '#/components/schemas/RepResponse' }
+		}
+		#swagger.responses[400] = {}
+		#swagger.responses[404] = {}
+	 */
+	checkAppealExistsByIdAndAddToRequest,
+	validateRejectionReasonsPayload,
+	checkRepresentationExistsById,
+	asyncHandler(controller.updateRejectionReasons)
 );
 
 export { router as representationRoutes };

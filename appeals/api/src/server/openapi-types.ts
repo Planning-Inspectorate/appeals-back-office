@@ -85,6 +85,8 @@ export interface RepResponse {
 	representationType?: string;
 	/** @example false */
 	siteVisitRequested?: boolean;
+	/** @example "citizen" */
+	source?: string;
 	represented?: {
 		/** @example 1 */
 		id?: number;
@@ -109,6 +111,16 @@ export interface RepResponse {
 			addressTown?: string;
 		};
 	};
+	rejectionReasons?: {
+		/** @example 7 */
+		id?: number;
+		/** @example "Other" */
+		name?: string;
+		/** @example true */
+		hasText?: boolean;
+		/** @example ["Illegible or Incomplete Documentation","Previously Decided or Duplicate Appeal"] */
+		text?: string[];
+	}[];
 }
 
 export interface ValidateDate {
@@ -118,7 +130,7 @@ export interface ValidateDate {
 
 export interface AppellantCaseData {
 	casedata?: {
-		/** @example "78f0f6db-1d93-48f8-837a-827bb30ea760" */
+		/** @example "eff637e5-e08a-42b7-8bbb-153a168f1232" */
 		submissionId?: string;
 		/** @example true */
 		advertisedAppeal?: boolean;
@@ -1648,6 +1660,15 @@ export type AllScheduleTypesResponse = {
 	id?: number;
 }[];
 
+export type AllRepresentationRejectionReasonsResponse = {
+	/** @example 1 */
+	id?: number;
+	/** @example "Rejection reason" */
+	name?: string;
+	/** @example true */
+	hasText?: boolean;
+}[];
+
 export type AllSiteVisitTypesResponse = {
 	/** @example "Access required" */
 	name?: string;
@@ -1861,6 +1882,15 @@ export type GetAuditTrailsResponse = {
 	/** @example "2024-09-26T16:22:20.688Z" */
 	loggedDate?: string;
 }[];
+
+export interface RepRejectionReasonsUpdateRequest {
+	rejectionReasons?: {
+		/** @example 7 */
+		id?: number;
+		/** @example ["Illegible or Incomplete Documentation","Previously Decided or Duplicate Appeal"] */
+		text?: string[];
+	}[];
+}
 
 export interface SingleLinkableAppealSummaryResponse {
 	/**

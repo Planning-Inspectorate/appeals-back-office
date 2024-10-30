@@ -135,8 +135,25 @@ export interface Representation extends schema.Representation {
 	represented?: ServiceUser | null;
 	representative?: ServiceUser | null;
 	lpa?: LPA | null;
+	representationRejectionReasonsSelected?: RepresentationRejectionReasonsSelected[];
 }
 
 export interface RepresentationAttachment extends schema.RepresentationAttachment {
 	documentVersion: DocumentVersion;
+}
+
+export interface RepresentationRejectionReason extends schema.RepresentationRejectionReason {
+	representationRejectionReasonsSelected: RepresentationRejectionReasonsSelected[];
+}
+
+export interface RepresentationRejectionReasonsSelected
+	extends schema.RepresentationRejectionReasonsSelected {
+	representationRejectionReason: RepresentationRejectionReason;
+	representation: Representation;
+	representationRejectionReasonText: RepresentationRejectionReasonText[];
+}
+
+export interface RepresentationRejectionReasonText
+	extends schema.RepresentationRejectionReasonText {
+	representationRejectionReasonsSelected: RepresentationRejectionReasonsSelected;
 }

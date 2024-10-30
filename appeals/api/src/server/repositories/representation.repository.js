@@ -9,7 +9,7 @@ import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
  * @param {number} id
  * @returns {Promise<import('@pins/appeals.api').Schema.Representation | null>}
  */
-export const getById = (id) => {
+const getById = (id) => {
 	return databaseConnector.representation.findUnique({
 		where: { id },
 		include: {
@@ -28,6 +28,12 @@ export const getById = (id) => {
 						}
 					}
 				}
+			},
+			representationRejectionReasonsSelected: {
+				include: {
+					representationRejectionReason: true,
+					representationRejectionReasonText: true
+				}
 			}
 		}
 	});
@@ -38,7 +44,7 @@ export const getById = (id) => {
  * @param {number} appealId
  * @returns {Promise<import('@pins/appeals.api').Schema.Representation[]>}
  */
-export const getStatementsByAppealId = (appealId) => {
+const getStatementsByAppealId = (appealId) => {
 	return databaseConnector.representation.findMany({
 		where: {
 			appealId,
@@ -57,7 +63,7 @@ export const getStatementsByAppealId = (appealId) => {
  * @param {number} appealId
  * @returns {Promise<import('@pins/appeals.api').Schema.Representation[]>}
  */
-export const getFinalCommentsByAppealId = (appealId) => {
+const getFinalCommentsByAppealId = (appealId) => {
 	return databaseConnector.representation.findMany({
 		where: {
 			appealId,
@@ -78,12 +84,7 @@ export const getFinalCommentsByAppealId = (appealId) => {
  * @param {string|undefined} status
  * @returns {Promise<{ itemCount: number, comments: import('@pins/appeals.api').Schema.Representation[] }>}
  */
-export const getThirdPartyCommentsByAppealId = async (
-	appealId,
-	pageNumber = 0,
-	pageSize = 30,
-	status
-) => {
+const getThirdPartyCommentsByAppealId = async (appealId, pageNumber = 0, pageSize = 30, status) => {
 	const whereClause = {
 		appealId,
 		representationType: APPEAL_REPRESENTATION_TYPE.COMMENT,
@@ -118,7 +119,7 @@ export const getThirdPartyCommentsByAppealId = async (
  * @param {RepresentationUpdateInput} data
  * @returns {Promise<import('@pins/appeals.api').Schema.Representation>}
  */
-export const updateRepresentationById = (id, data) => {
+const updateRepresentationById = (id, data) => {
 	const { status, redactedRepresentation, notes, reviewer } = data;
 
 	return databaseConnector.representation.update({
@@ -145,7 +146,7 @@ export const updateRepresentationById = (id, data) => {
  * @param {string} [representationType]
  * @returns {Promise<Record<string, number>>}
  * */
-export const countAppealRepresentationsByStatus = async (appealId, representationType) => {
+const countAppealRepresentationsByStatus = async (appealId, representationType) => {
 	const statusCounts = await databaseConnector.representation.groupBy({
 		by: ['status'],
 		where: {
@@ -168,13 +169,13 @@ export const countAppealRepresentationsByStatus = async (appealId, representatio
  * @param {RepresentationCreateInput} data
  * @returns {Promise<import('@pins/appeals.api').Schema.Representation>}
  * */
-export const createRepresentation = (data) => databaseConnector.representation.create({ data });
+const createRepresentation = (data) => databaseConnector.representation.create({ data });
 
 /**
  * @param {number} repId
  * @param {{ documentGuid: string, version: number }[]} attachments
  * */
-export const addAttachments = (repId, attachments) =>
+const addAttachments = (repId, attachments) =>
 	databaseConnector.representation.update({
 		where: { id: repId },
 		data: {
@@ -185,3 +186,53 @@ export const addAttachments = (repId, attachments) =>
 			}
 		}
 	});
+
+/**
+ * @param {number} repId
+ * @param {Array<{ id: number, text: string[] }>} rejectionReasons
+ * @returns {Promise<import('@pins/appeals.api').Schema.Representation | null>}
+ */
+const updateRejectionReasons = async (repId, rejectionReasons) => {
+	await databaseConnector.representationRejectionReasonText.deleteMany({
+		where: { representationId: repId }
+	});
+
+	return databaseConnector.representation.update({
+		where: { id: repId },
+		data: {
+			representationRejectionReasonsSelected: {
+				deleteMany: {},
+				create: rejectionReasons.map((reason) => ({
+					representationRejectionReasonId: reason.id,
+					representationRejectionReasonText: {
+						createMany: {
+							data: reason.text.map((text) => ({ text }))
+						}
+					}
+				}))
+			},
+			dateLastUpdated: new Date()
+		},
+		include: {
+			representationRejectionReasonsSelected: {
+				include: {
+					representationRejectionReason: true,
+					representationRejectionReasonText: true,
+					representation: true
+				}
+			}
+		}
+	});
+};
+
+export default {
+	getById,
+	getStatementsByAppealId,
+	getFinalCommentsByAppealId,
+	getThirdPartyCommentsByAppealId,
+	updateRepresentationById,
+	countAppealRepresentationsByStatus,
+	createRepresentation,
+	addAttachments,
+	updateRejectionReasons
+};
