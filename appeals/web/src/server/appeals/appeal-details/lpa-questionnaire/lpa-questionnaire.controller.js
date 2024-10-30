@@ -450,7 +450,13 @@ export const getManageFolder = async (request, response) => {
 			managePageHeadingText = `Press advert notification documents`;
 			break;
 		case `${APPEAL_DOCUMENT_TYPE.EIA_ENVIRONMENTAL_STATEMENT}`:
-			managePageHeadingText = `Environmental impact assessment`;
+			managePageHeadingText = `Environmental statement documents`;
+			break;
+		case `${APPEAL_DOCUMENT_TYPE.EIA_SCREENING_OPINION}`:
+			managePageHeadingText = `Screening opinion documents`;
+			break;
+		case `${APPEAL_DOCUMENT_TYPE.EIA_SCREENING_DIRECTION}`:
+			managePageHeadingText = `Screening direction documents`;
 			break;
 		default:
 			managePageHeadingText = '';
