@@ -512,7 +512,8 @@ describe('appeal-details', () => {
 					.persist();
 				nock('http://test/')
 					.get('/appeals/document-redaction-statuses')
-					.reply(200, documentRedactionStatuses);
+					.reply(200, documentRedactionStatuses)
+					.persist();
 				nock('http://test/').post('/appeals/1/documents').reply(200);
 				nock('http://test/').get(`/appeals/1/case-notes`).reply(200, caseNotes);
 
@@ -610,7 +611,8 @@ describe('appeal-details', () => {
 					.persist();
 				nock('http://test/')
 					.get('/appeals/document-redaction-statuses')
-					.reply(200, documentRedactionStatuses);
+					.reply(200, documentRedactionStatuses)
+					.persist();
 				nock('http://test/').post('/appeals/1/documents').reply(200);
 				nock('http://test/').get(`/appeals/1/case-notes`).reply(200, caseNotes);
 
@@ -708,7 +710,8 @@ describe('appeal-details', () => {
 					.persist();
 				nock('http://test/')
 					.get('/appeals/document-redaction-statuses')
-					.reply(200, documentRedactionStatuses);
+					.reply(200, documentRedactionStatuses)
+					.persist();
 				nock('http://test/').post('/appeals/1/documents').reply(200);
 				nock('http://test/').get(`/appeals/1/case-notes`).reply(200, caseNotes);
 
@@ -936,7 +939,8 @@ describe('appeal-details', () => {
 					.persist();
 				nock('http://test/')
 					.get('/appeals/document-redaction-statuses')
-					.reply(200, documentRedactionStatuses);
+					.reply(200, documentRedactionStatuses)
+					.persist();
 				nock('http://test/').post('/appeals/1/documents').reply(200);
 				nock('http://test/').get(`/appeals/1/case-notes`).reply(200, caseNotes);
 				const addDocumentsResponse = await request
@@ -976,7 +980,8 @@ describe('appeal-details', () => {
 					.persist();
 				nock('http://test/')
 					.get('/appeals/document-redaction-statuses')
-					.reply(200, documentRedactionStatuses);
+					.reply(200, documentRedactionStatuses)
+					.persist();
 				nock('http://test/').post('/appeals/1/documents').reply(200);
 				nock('http://test/').get(`/appeals/1/case-notes`).reply(200, caseNotes);
 				const addDocumentsResponse = await request

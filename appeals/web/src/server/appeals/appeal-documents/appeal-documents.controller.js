@@ -30,6 +30,7 @@ import config from '@pins/appeals.web/environment/config.js';
 import { isFileUploadInfoItemArray } from '#lib/ts-utilities.js';
 import { getTodaysISOString } from '#lib/dates.js';
 import { folderIsAdditionalDocuments } from '#lib/documents.js';
+import { APPEAL_REDACTED_STATUS } from 'pins-data-model';
 
 /**
  * @param {Object} params
@@ -501,6 +502,13 @@ export const postUploadDocumentsCheckAndConfirm = async ({
 			session: { fileUploadInfo }
 		} = request;
 
+		const redactionStatuses = await getDocumentRedactionStatuses(request.apiClient);
+		const noRedactionRequiredStatusId = redactionStatuses?.find(status => status.key === APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED)?.id;
+
+		if (!noRedactionRequiredStatusId) {
+			throw new Error('Redaction status not found.');
+		}
+
 		/** @type {import('@pins/appeals/index.js').AddDocumentsRequest} */
 		const addDocumentsRequestPayload = {
 			blobStorageHost:
@@ -519,7 +527,7 @@ export const postUploadDocumentsCheckAndConfirm = async ({
 						folderId: currentFolder.folderId,
 						GUID: document.GUID,
 						receivedDate: document.receivedDate,
-						redactionStatusId: document.redactionStatus,
+						redactionStatusId: document.redactionStatus || noRedactionRequiredStatusId,
 						blobStoragePath: document.blobStoreUrl
 					};
 
