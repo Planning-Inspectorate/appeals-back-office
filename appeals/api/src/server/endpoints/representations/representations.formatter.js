@@ -17,7 +17,7 @@ export const formatRepresentation = (rep) => {
 		origin: rep.lpa ? APPEAL_ORIGIN.LPA : APPEAL_ORIGIN.CITIZEN,
 		author: formatRepresentationSource(rep),
 		status: rep.status,
-		originalRepresentation: rep.originalRepresentation,
+		originalRepresentation: rep.originalRepresentation || '',
 		redactedRepresentation: rep.redactedRepresentation || '',
 		created: rep.dateCreated.toISOString(),
 		notes: rep.notes || '',
@@ -34,6 +34,15 @@ export const formatRepresentation = (rep) => {
 			email: rep.represented.email ?? undefined,
 			address: formatAddress(rep.represented.address)
 		};
+	}
+
+	if (rep.representationRejectionReasonsSelected) {
+		formatted.rejectionReasons = rep.representationRejectionReasonsSelected.map((reason) => ({
+			id: reason.representationRejectionReason.id,
+			name: reason.representationRejectionReason.name,
+			hasText: reason.representationRejectionReason.hasText,
+			text: reason.representationRejectionReasonText?.map((textObj) => textObj.text) || []
+		}));
 	}
 
 	return formatted;

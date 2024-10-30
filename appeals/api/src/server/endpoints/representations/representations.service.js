@@ -1,5 +1,5 @@
 import addressRepository from '#repositories/address.repository.js';
-import * as representationRepository from '#repositories/representation.repository.js';
+import representationRepository from '#repositories/representation.repository.js';
 import * as documentRepository from '#repositories/document.repository.js';
 import serviceUserRepository from '#repositories/service-user.repository.js';
 
@@ -151,3 +151,13 @@ export const createRepresentation = async (appealId, input) => {
 
 	return representation;
 };
+
+/**
+ * Updates rejection reasons for a representation.
+ *
+ * @param {number} representationId - The ID of the representation.
+ * @param {Array<{ id: number, text: string[] }>} rejectionReasons
+ * @returns {Promise<import('@pins/appeals.api').Schema.Representation | null>}
+ */
+export const updateRejectionReasons = async (representationId, rejectionReasons) =>
+	representationRepository.updateRejectionReasons(representationId, rejectionReasons);

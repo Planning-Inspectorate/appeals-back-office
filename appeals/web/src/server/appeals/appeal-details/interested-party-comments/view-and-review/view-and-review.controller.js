@@ -1,10 +1,19 @@
 import logger from '#lib/logger.js';
+import {
+	mapRejectionReasonOptionsToCheckboxItemParameters,
+	mapRejectionReasonPayload
+} from '#lib/mappers/page-components/interested-party-comments/view-and-review/reject.mapper.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import {
+	rejectInterestedPartyCommentPage,
 	reviewInterestedPartyCommentPage,
 	viewInterestedPartyCommentPage
 } from './view-and-review.mapper.js';
-import { patchInterestedPartyCommentStatus } from './view-and-review.service.js';
+import {
+	getRepresentationRejectionReasonOptions,
+	patchInterestedPartyCommentStatus,
+	updateRejectionReasons
+} from './view-and-review.service.js';
 
 /** @typedef {import("../../appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import("../interested-party-comments.types.js").Representation} Representation */
@@ -15,7 +24,7 @@ import { patchInterestedPartyCommentStatus } from './view-and-review.service.js'
  * @param {string} templatePath
  * @returns {import('@pins/express').RenderHandler<unknown>}
  */
-const render = (contentMapper, templatePath) => (request, response) => {
+const render = (contentMapper, templatePath) => async (request, response) => {
 	const { errors, currentComment, currentAppeal } = request;
 
 	if (!currentComment) {
@@ -39,6 +48,37 @@ export const renderReviewInterestedPartyComment = render(
 	reviewInterestedPartyCommentPage,
 	'patterns/change-page.pattern.njk'
 );
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const renderRejectInterestedPartyComment = async (request, response) => {
+	try {
+		const { currentAppeal, currentComment, apiClient, errors } = request;
+
+		if (!currentAppeal || !currentComment) {
+			return response.status(404).render('app/404.njk');
+		}
+
+		const rejectionReasons = await getRepresentationRejectionReasonOptions(apiClient);
+		const mappedRejectionReasons = mapRejectionReasonOptionsToCheckboxItemParameters(
+			currentComment,
+			rejectionReasons
+		);
+
+		const pageContent = rejectInterestedPartyCommentPage(currentAppeal);
+
+		return response.status(200).render('appeals/appeal/reject-ip-comment.njk', {
+			errors,
+			pageContent,
+			rejectionReasons: mappedRejectionReasons
+		});
+	} catch (error) {
+		logger.error(error);
+		return response.status(500).render('app/500.njk');
+	}
+};
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -75,6 +115,58 @@ export const postReviewInterestedPartyComment = async (request, response) => {
 		await patchInterestedPartyCommentStatus(apiClient, appealId, commentId, status);
 
 		addNotificationBannerToSession(session, 'interestedPartyCommentsValidSuccess', appealId);
+
+		return response.redirect(
+			`/appeals-service/appeal-details/${appealId}/interested-party-comments`
+		);
+	} catch (error) {
+		logger.error(error);
+		return response.status(500).render('app/500.njk');
+	}
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const postRejectInterestedPartyComment = async (request, response) => {
+	try {
+		const {
+			errors,
+			currentAppeal,
+			currentComment,
+			params: { appealId, commentId },
+			body,
+			apiClient,
+			session
+		} = request;
+
+		if (!currentAppeal) {
+			logger.error('Current appeal not found.');
+			return response.status(500).render('app/500.njk');
+		}
+
+		if (errors) {
+			const pageContent = rejectInterestedPartyCommentPage(request.currentAppeal);
+
+			const rejectionReasons = await getRepresentationRejectionReasonOptions(apiClient);
+			const mappedRejectionReasons = mapRejectionReasonOptionsToCheckboxItemParameters(
+				currentComment,
+				rejectionReasons
+			);
+
+			return response.status(200).render('appeals/appeal/reject-ip-comment.njk', {
+				errors,
+				pageContent,
+				rejectionReasons: mappedRejectionReasons
+			});
+		}
+
+		const rejectionReasons = mapRejectionReasonPayload(body);
+
+		await updateRejectionReasons(apiClient, appealId, commentId, rejectionReasons);
+
+		addNotificationBannerToSession(session, 'interestedPartyCommentsRejectedSuccess', appealId);
 
 		return response.redirect(
 			`/appeals-service/appeal-details/${appealId}/interested-party-comments`

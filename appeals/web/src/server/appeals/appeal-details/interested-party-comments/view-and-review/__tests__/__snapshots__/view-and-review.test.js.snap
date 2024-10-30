@@ -47,8 +47,9 @@ exports[`interested-party-comments GET /review-comment with data should render r
                 </div>
                 <div class="govuk-form-group">
                     <fieldset class="govuk-fieldset">
-                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Do you accept the comment?</legend>
-                        <div class="govuk-radios" data-module="govuk-radios">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">What is the outcome of your review?</legend>
+                        <div class="govuk-radios"
+                        data-module="govuk-radios">
                             <div class="govuk-radios__item">
                                 <input class="govuk-radios__input" id="status" name="status" type="radio"
                                 value="valid">

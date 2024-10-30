@@ -662,26 +662,27 @@ model AuditTrail {
 /// Representation model
 /// Stores exchange of comments and statements
 model Representation {
-  id                     Int                        @id @default(autoincrement())
-  appeal                 Appeal                     @relation(fields: [appealId], references: [id])
-  appealId               Int
-  representationType     String
-  dateCreated            DateTime                   @default(now())
-  dateLastUpdated        DateTime                   @default(now())
-  originalRepresentation String?
-  redactedRepresentation String?
-  represented            ServiceUser?               @relation("represented", fields: [representedId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  representedId          Int?
-  representative         ServiceUser?               @relation("representative", fields: [representativeId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  representativeId       Int?
-  lpa                    LPA?                       @relation("lpaRepresentation", fields: [lpaCode], references: [lpaCode], onDelete: NoAction, onUpdate: NoAction)
-  lpaCode                String?
-  status                 String                     @default("awaiting_review")
-  reviewer               String?
-  notes                  String?
-  attachments            RepresentationAttachment[]
-  siteVisitRequested     Boolean                    @default(false)
-  source                 String                     @default("citizen")
+  id                                     Int                                      @id @default(autoincrement())
+  appeal                                 Appeal                                   @relation(fields: [appealId], references: [id])
+  appealId                               Int
+  representationType                     String
+  dateCreated                            DateTime                                 @default(now())
+  dateLastUpdated                        DateTime                                 @default(now())
+  originalRepresentation                 String?
+  redactedRepresentation                 String?
+  represented                            ServiceUser?                             @relation("represented", fields: [representedId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  representedId                          Int?
+  representative                         ServiceUser?                             @relation("representative", fields: [representativeId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  representativeId                       Int?
+  lpa                                    LPA?                                     @relation("lpaRepresentation", fields: [lpaCode], references: [lpaCode], onDelete: NoAction, onUpdate: NoAction)
+  lpaCode                                String?
+  status                                 String                                   @default("awaiting_review")
+  reviewer                               String?
+  notes                                  String?
+  attachments                            RepresentationAttachment[]
+  siteVisitRequested                     Boolean                                  @default(false)
+  source                                 String                                   @default("citizen")
+  representationRejectionReasonsSelected RepresentationRejectionReasonsSelected[]
 }
 
 /// Representation model
@@ -694,6 +695,37 @@ model RepresentationAttachment {
   representationId Int
 
   @@id([documentGuid, version])
+}
+
+/// RepresentationRejectionReason model
+/// Contains all possible reasons to reject a comment.
+model RepresentationRejectionReason {
+  id                                     Int                                      @id @default(autoincrement())
+  name                                   String                                   @unique
+  hasText                                Boolean                                  @default(false)
+  representationRejectionReasonsSelected RepresentationRejectionReasonsSelected[]
+}
+
+/// RepresentationRejectionReasonsSelected model
+/// Contains information on selected reasons for rejecting a comment.
+model RepresentationRejectionReasonsSelected {
+  representationRejectionReason     RepresentationRejectionReason       @relation(fields: [representationRejectionReasonId], references: [id])
+  representationRejectionReasonId   Int
+  representation                    Representation                      @relation(fields: [representationId], references: [id])
+  representationId                  Int
+  representationRejectionReasonText RepresentationRejectionReasonText[]
+
+  @@id([representationRejectionReasonId, representationId])
+}
+
+/// RepresentationRejectionReasonText model
+/// Contains custom text for rejection reasons if 'Other' is selected.
+model RepresentationRejectionReasonText {
+  id                                     Int                                    @id @default(autoincrement())
+  text                                   String
+  representationRejectionReasonsSelected RepresentationRejectionReasonsSelected @relation(fields: [representationRejectionReasonId, representationId], references: [representationRejectionReasonId, representationId])
+  representationRejectionReasonId        Int
+  representationId                       Int
 }
 
 /// Comment model

@@ -33,6 +33,7 @@ export const siteVisitTypes = lookupListData;
 export const documentRedactionStatuses = lookupListData;
 export const documentRedactionStatusIds = documentRedactionStatuses.map(({ id }) => id);
 export const azureAdUserId = '6f930ec9-7f6f-448c-bb50-b3b898035959';
+export const representationRejectionReasons = lookupListData;
 
 export const designatedSites = [
 	{

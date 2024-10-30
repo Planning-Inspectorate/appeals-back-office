@@ -1,0 +1,54 @@
+{%- extends "app/layouts/app-two-column.layout.njk" -%}
+{%- from "govuk/components/checkboxes/macro.njk" import govukCheckboxes -%}
+{%- from "govuk/components/button/macro.njk" import govukButton -%}
+{%- from "../components/add-another-reason.njk" import addAnotherReason -%}
+
+{%- set backLinkUrl = pageContent.backLinkUrl -%}
+{%- set backLinkText = pageContent.backLinkText -%}
+{%- set pageTitle = pageContent.title if pageContent.title else 'Change' -%}
+
+{%- block pageHeading -%}
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-full">
+			{%- if pageContent.preHeading -%}
+				<span class="govuk-caption-l govuk-!-margin-bottom-3">{{ pageContent.preHeading }}</span>
+			{%- endif -%}
+			{%- if pageContent.heading -%}
+				<h1 class="govuk-heading-l govuk-!-margin-bottom-3">{{ pageContent.heading }}</h1>
+			{%- endif -%}
+		</div>
+	</div>
+{%- endblock -%}
+
+{%- block pageContent -%}
+
+	{%- for option in rejectionReasons -%}
+
+		{%- if option.hasText -%}
+			{%- set addAnotherReasonHtml = addAnotherReason({
+				textItems: option.textItems,
+				inputName: 'rejectionReason-' + option.value,
+				labelText: 'Why the comment is invalid?'
+			}) -%}
+			{%- set _ = option | addConditionalHtml(addAnotherReasonHtml) -%}
+		{%- endif -%}
+	{%- endfor -%}
+	<form method="post" novalidate="novalidate">
+		<div class="govuk-fieldset">
+
+			<div class="govuk-hint">
+				{{ pageContent.hint }}
+			</div>
+		{{ govukCheckboxes({
+			name: "rejectionReason",
+			items: rejectionReasons
+		}) }}
+
+		{{ govukButton({
+			text: pageContent.submitButtonText if pageContent.submitButtonText else "Continue",
+			type: "submit",
+			preventDoubleClick: true
+		}) }}
+		</div>
+	</form>
+{%- endblock -%}

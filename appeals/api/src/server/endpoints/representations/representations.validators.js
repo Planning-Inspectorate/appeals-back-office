@@ -45,3 +45,18 @@ export const createRepresentationValidator = composeMiddleware(
 	body('redactionStatus').isString(),
 	validationErrorHandler
 );
+
+export const validateRejectionReasonsPayload = composeMiddleware(
+	body('rejectionReasons')
+		.isArray({ min: 0 })
+		.withMessage('rejectionReasons must be a non-empty array'),
+	body('rejectionReasons.*.id').isInt({ min: 1 }).withMessage('id must be a positive integer'),
+	body('rejectionReasons.*.text')
+		.isArray()
+		.withMessage('text must be an array of strings')
+		.custom((value) =>
+			value.every((/** @type {*} */ item) => typeof item === 'string' || value.length === 0)
+		)
+		.withMessage(ERROR_MUST_BE_ARRAY_OF_STRINGS),
+	validationErrorHandler
+);
