@@ -3,36 +3,36 @@ import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { getOriginPathname, isInternalUrl } from '#lib/url-utilities.js';
 import { getLpaQuestionnaireFromId } from '../lpa-questionnaire.service.js';
-import * as mapper from './is-aonb-national-landscape.mapper.js';
-import * as service from './is-aonb-national-landscape.service.js';
+import * as mapper from './is-infrastructure-levy-formally-adopted.mapper.js';
+import * as service from './is-infrastructure-levy-formally-adopted.service.js';
+
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export const getChangeIsAonbNationalLandscape = async (request, response) => {
-	return renderChangeIsAonbNationalLandscape(request, response);
+export const getChangeIsInfrastructureLevyFormallyAdopted = async (request, response) => {
+	return renderChangeIsInfrastructureLevyFormallyAdopted(request, response);
 };
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-const renderChangeIsAonbNationalLandscape = async (request, response) => {
+const renderChangeIsInfrastructureLevyFormallyAdopted = async (request, response) => {
 	try {
 		const { currentAppeal, session, errors, originalUrl, apiClient } = request;
 		const origin = originalUrl.split('/').slice(0, -2).join('/');
-		const data = await getLpaQuestionnaireFromId(
+		const lpaQuestionnaireData = await getLpaQuestionnaireFromId(
 			apiClient,
 			currentAppeal.appealId,
 			currentAppeal.lpaQuestionnaireId
 		);
 
-		const currentRadioValue =
-			convertFromYesNoNullToBooleanOrNull(session.isAonbNationalLandscape) ??
-			data.isAonbNationalLandscape;
-		const mappedPageContents = mapper.changeIsAonbNationalLandscape(
+		const mappedPageContents = mapper.changeIsInfrastructureLevyFormallyAdopted(
 			currentAppeal,
-			currentRadioValue?.toString() || '',
+			convertFromYesNoNullToBooleanOrNull(session.isInfrastructureLevyFormallyAdopted) ||
+				lpaQuestionnaireData.isInfrastructureLevyFormallyAdopted ||
+				null,
 			origin
 		);
 
@@ -51,20 +51,22 @@ const renderChangeIsAonbNationalLandscape = async (request, response) => {
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export const postChangeIsAonbNationalLandscape = async (request, response) => {
-	request.session.isAonbNationalLandscape = request.body['isAonbNationalLandscapeRadio'];
-
-	if (request.errors) {
-		return renderChangeIsAonbNationalLandscape(request, response);
-	}
-
+export const postChangeIsInfrastructureLevyFormallyAdopted = async (request, response) => {
 	try {
 		const {
 			apiClient,
 			params: { appealId },
 			currentAppeal,
-			session
+			session,
+			errors
 		} = request;
+
+		if (errors) {
+			return renderChangeIsInfrastructureLevyFormallyAdopted(request, response);
+		}
+
+		session.isInfrastructureLevyFormallyAdopted =
+			request.body['isInfrastructureLevyFormallyAdoptedRadio'];
 
 		const currentUrl = getOriginPathname(request);
 		const origin = currentUrl.split('/').slice(0, -2).join('/');
@@ -75,11 +77,11 @@ export const postChangeIsAonbNationalLandscape = async (request, response) => {
 			});
 		}
 
-		await service.changeIsAonbNationalLandscape(
+		await service.changeIsInfrastructureLevyFormallyAdopted(
 			apiClient,
 			appealId,
 			currentAppeal.lpaQuestionnaireId,
-			session.isAonbNationalLandscape
+			session.isInfrastructureLevyFormallyAdopted
 		);
 
 		addNotificationBannerToSession(
@@ -87,10 +89,10 @@ export const postChangeIsAonbNationalLandscape = async (request, response) => {
 			'changePage',
 			appealId,
 			'',
-			'Outstanding natural beauty area status changed'
+			'Levy formally adopted status changed'
 		);
 
-		delete request.session.isAonbNationalLandscape;
+		delete request.session.isInfrastructureLevyFormallyAdopted;
 
 		if (!origin.startsWith('/')) {
 			throw new Error('unexpected originalUrl');
@@ -100,6 +102,8 @@ export const postChangeIsAonbNationalLandscape = async (request, response) => {
 	} catch (error) {
 		logger.error(error);
 	}
-	delete request.session.isAonbNationalLandscape;
+
+	delete request.session.isInfrastructureLevyFormallyAdopted;
+
 	return response.status(500).render('app/500.njk');
 };

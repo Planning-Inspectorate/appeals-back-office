@@ -325,6 +325,7 @@ interface SingleLPAQuestionnaireResponse {
 	hasProtectedSpecies?: boolean;
 	isAonbNationalLandscape?: boolean;
 	isGypsyOrTravellerSite?: boolean;
+	isInfrastructureLevyFormallyAdopted?: boolean;
 }
 
 interface UpdateLPAQuestionnaireRequest {
@@ -347,6 +348,7 @@ interface UpdateLPAQuestionnaireRequest {
 	hasProtectedSpecies?: boolean;
 	isAonbNationalLandscape?: boolean;
 	isGypsyOrTravellerSite?: boolean;
+	isInfrastructureLevyFormallyAdopted?: boolean;
 }
 
 interface UpdateLPAQuestionnaireValidationOutcomeParams {

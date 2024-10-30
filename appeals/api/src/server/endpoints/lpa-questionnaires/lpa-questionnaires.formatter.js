@@ -71,7 +71,8 @@ const formatLpaQuestionnaire = (appeal, folders = null) => {
 			affectsScheduledMonument: lpaQuestionnaire.affectsScheduledMonument,
 			hasProtectedSpecies: lpaQuestionnaire.hasProtectedSpecies,
 			isAonbNationalLandscape: lpaQuestionnaire.isAonbNationalLandscape,
-			isGypsyOrTravellerSite: lpaQuestionnaire.isGypsyOrTravellerSite
+			isGypsyOrTravellerSite: lpaQuestionnaire.isGypsyOrTravellerSite,
+			isInfrastructureLevyFormallyAdopted: lpaQuestionnaire.isInfrastructureLevyFormallyAdopted
 		};
 	} else {
 		return {};

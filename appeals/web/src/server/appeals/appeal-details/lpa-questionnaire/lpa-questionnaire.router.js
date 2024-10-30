@@ -29,6 +29,7 @@ import hasProtectedSpeciesRouter from './has-protected-species/has-protected-spe
 import affectsScheduledMonumentRouter from './affects-scheduled-monument/affects-scheduled-monument.router.js';
 import isGypsyOrTravellerSiteRouter from './is-gypsy-or-traveller-site/is-gypsy-or-traveller-site.router.js';
 import isAonbNationalLandscapeRouter from './is-aonb-national-landscape/is-aonb-national-landscape.router.js';
+import isInfrastructureLevyFormallyAdoptedRouter from './is-infrastructure-levy-formally-adopted/is-infrastructure-levy-formally-adopted.router.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -136,6 +137,13 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	isAonbNationalLandscapeRouter
+);
+
+router.use(
+	'/:lpaQuestionnaireId/is-infrastructure-levy-formally-adopted',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	isInfrastructureLevyFormallyAdoptedRouter
 );
 
 router

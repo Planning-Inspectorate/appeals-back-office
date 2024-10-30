@@ -945,7 +945,8 @@ const generateS78LpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 				mappedLPAQData.lpaq?.developmentPlanPolicies?.display.summaryListItem,
 				mappedLPAQData.lpaq?.supplementaryPlanning?.display.summaryListItem,
 				mappedLPAQData.lpaq?.emergingPlan?.display.summaryListItem,
-				mappedLPAQData.lpaq?.communityInfrastructureLevy?.display.summaryListItem
+				mappedLPAQData.lpaq?.communityInfrastructureLevy?.display.summaryListItem,
+				mappedLPAQData.lpaq?.isInfrastructureLevyFormallyAdopted?.display.summaryListItem
 			].filter(isDefined)
 		}
 	});
