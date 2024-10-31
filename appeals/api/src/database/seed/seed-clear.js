@@ -4,6 +4,8 @@ import { batchDelete } from '../prisma.batch-delete.js';
  * @param {import('../../server/utils/db-client/index.js').PrismaClient} databaseConnector
  */
 export async function deleteAllRecords(databaseConnector) {
+	const deleteRepsText = databaseConnector.representationRejectionReasonText.deleteMany();
+	const deleteRepsSelected = databaseConnector.representationRejectionReasonsSelected.deleteMany();
 	const deleteRepsAttachments = databaseConnector.representationAttachment.deleteMany();
 	const deleteReps = databaseConnector.representation.deleteMany();
 	const deleteDecisions = databaseConnector.inspectorDecision.deleteMany();
@@ -81,6 +83,8 @@ export async function deleteAllRecords(databaseConnector) {
 	await deleteDocuments;
 
 	await databaseConnector.$transaction([
+		deleteRepsText,
+		deleteRepsSelected,
 		deleteRepsAttachments,
 		deleteReps,
 		deleteAudits,
