@@ -53,7 +53,7 @@ export function reviewInterestedPartyCommentPage(appealDetails, comment) {
 				...[
 					comment.source === 'citizen'
 						? {
-								value: 'valid_requires_redaction',
+								value: COMMENT_STATUS.VALID_REQUIRES_REDACTION,
 								text: 'Comment valid but requires redaction',
 								checked: false // This status isn't persisted so will always be unchecked
 						  }

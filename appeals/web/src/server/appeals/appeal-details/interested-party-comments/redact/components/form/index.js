@@ -3,7 +3,7 @@ import { buttons } from './buttons.js';
 import { originalComment } from './original-comment.js';
 import { redactInput } from './redact-input.js';
 
-/** @typedef {import("../../../../../../appeals/appeal-details/interested-party-comments/interested-party-comments.types.js").Representation} Representation */
+/** @typedef {import("#appeals/appeal-details/interested-party-comments/interested-party-comments.types.js").Representation} Representation */
 
 /**
  * @param {Representation} comment

@@ -15,7 +15,6 @@ describe('redact', () => {
 	beforeEach(() => {
 		installMockApi();
 
-		// Common nock setup
 		nock('http://test/')
 			.get('/appeals/2')
 			.reply(200, {
@@ -36,6 +35,9 @@ describe('redact', () => {
 
 		const { innerHTML } = parseHtml(response.text);
 		expect(innerHTML).toMatchSnapshot();
+
+		expect(innerHTML).toContain('Redact comment from Lee Thornton');
+		expect(innerHTML).toContain('Awaiting review comment 47');
 	});
 
 	it('renders the confirm redaction page', async () => {
@@ -45,5 +47,10 @@ describe('redact', () => {
 
 		const { innerHTML } = parseHtml(response.text);
 		expect(innerHTML).toMatchSnapshot();
+
+		expect(innerHTML).toContain('Redact comment from Lee Thornton');
+		expect(innerHTML).toContain(
+			'<dd class="govuk-summary-list__value">Awaiting review comment 47</dd>'
+		);
 	});
 });

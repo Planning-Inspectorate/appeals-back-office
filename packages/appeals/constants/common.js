@@ -53,5 +53,6 @@ export const APPEAL_REPRESENTATION_STATUS = Object.freeze({
 export const COMMENT_STATUS = Object.freeze({
 	AWAITING_REVIEW: 'awaiting_review',
 	VALID: 'valid',
-	INVALID: 'invalid'
+	INVALID: 'invalid',
+	VALID_REQUIRES_REDACTION: 'valid_requires_redaction'
 });

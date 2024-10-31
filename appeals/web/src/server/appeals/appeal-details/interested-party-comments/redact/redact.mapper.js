@@ -4,8 +4,8 @@ import { form } from './components/form/index.js';
 import { instructionsList } from './components/instructions-list.js';
 import { subtitle } from './components/subtitle.js';
 
-/** @typedef {import("../../../../appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
-/** @typedef {import("../../../../appeals/appeal-details/interested-party-comments/interested-party-comments.types.js").Representation} Representation */
+/** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
+/** @typedef {import("#appeals/appeal-details/interested-party-comments/interested-party-comments.types.js").Representation} Representation */
 
 /**
  * @param {Appeal} appealDetails
