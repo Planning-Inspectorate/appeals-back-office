@@ -8,7 +8,8 @@ import {
 	AUDIT_TRAIL_DOCUMENT_REDACTED,
 	AUDIT_TRAIL_DOCUMENT_UNREDACTED,
 	AUDIT_TRAIL_DOCUMENT_NO_REDACTION_REQUIRED,
-	AUDIT_TRAIL_DOCUMENT_DATE_CHANGED
+	AUDIT_TRAIL_DOCUMENT_DATE_CHANGED,
+	AUDIT_TRAIL_DOCUMENT_NAME_CHANGED
 } from '#endpoints/constants.js';
 import logger from '#utils/logger.js';
 import * as service from './documents.service.js';
@@ -218,6 +219,21 @@ const updateDocuments = async (req, res) => {
 			document.latestVersion = latestDocument?.latestDocumentVersion?.version;
 
 			if (latestDocument && latestDocument.name) {
+				if (document.fileName && document.fileName !== latestDocument.name) {
+					const nameChangedMessage = stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_NAME_CHANGED, [
+						latestDocument.name,
+						document.fileName
+					]);
+					await logAuditTrail(
+						latestDocument.name,
+						document.latestVersion,
+						nameChangedMessage,
+						req,
+						appeal.id,
+						latestDocument.guid
+					);
+				}
+
 				if (document.redactionStatus !== latestDocument?.latestDocumentVersion?.redactionStatusId) {
 					const auditTrailMessage = getAuditMessage(document.redactionStatus);
 					if (auditTrailMessage) {
