@@ -166,7 +166,7 @@ exports[`appellant-case GET /appellant-case should render a "Inspector access (a
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
-                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70457"
                         data-cy="add-application-form"> Add<span class="govuk-visually-hidden"> Application form</span></a>
                     </dd>
@@ -183,7 +183,7 @@ exports[`appellant-case GET /appellant-case should render a "Inspector access (a
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agreement to change description evidence</dt>
-                    <dd                     class="govuk-summary-list__value"></dd>
+                    <dd                     class="govuk-summary-list__value">No documents available</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70459"
                             data-cy="add-agreement-to-change-description-evidence"> Add<span class="govuk-visually-hidden"> Agreement to change description evidence</span></a>
                         </dd>
@@ -195,7 +195,7 @@ exports[`appellant-case GET /appellant-case should render a "Inspector access (a
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
-                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70458"
                         data-cy="add-decision-letter"> Add<span class="govuk-visually-hidden"> Decision letter</span></a>
                     </dd>
@@ -219,7 +219,7 @@ exports[`appellant-case GET /appellant-case should render a "Inspector access (a
                     <dd class="govuk-summary-list__value">Householder</dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal statement</dt>
-                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70456"
                         data-cy="add-appeal-statement"> Add<span class="govuk-visually-hidden"> Appeal statement</span></a>
                     </dd>
@@ -237,7 +237,7 @@ exports[`appellant-case GET /appellant-case should render a "Inspector access (a
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Costs document</dt>
-                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"
                         data-cy="add-costs-document"> Add<span class="govuk-visually-hidden"> Costs document</span></a>
                     </dd>
@@ -419,7 +419,7 @@ exports[`appellant-case GET /appellant-case should render a "LPA application ref
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
-                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70457"
                         data-cy="add-application-form"> Add<span class="govuk-visually-hidden"> Application form</span></a>
                     </dd>
@@ -436,7 +436,7 @@ exports[`appellant-case GET /appellant-case should render a "LPA application ref
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agreement to change description evidence</dt>
-                    <dd                     class="govuk-summary-list__value"></dd>
+                    <dd                     class="govuk-summary-list__value">No documents available</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70459"
                             data-cy="add-agreement-to-change-description-evidence"> Add<span class="govuk-visually-hidden"> Agreement to change description evidence</span></a>
                         </dd>
@@ -448,7 +448,7 @@ exports[`appellant-case GET /appellant-case should render a "LPA application ref
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
-                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70458"
                         data-cy="add-decision-letter"> Add<span class="govuk-visually-hidden"> Decision letter</span></a>
                     </dd>
@@ -472,7 +472,7 @@ exports[`appellant-case GET /appellant-case should render a "LPA application ref
                     <dd class="govuk-summary-list__value">Householder</dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal statement</dt>
-                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70456"
                         data-cy="add-appeal-statement"> Add<span class="govuk-visually-hidden"> Appeal statement</span></a>
                     </dd>
@@ -490,7 +490,7 @@ exports[`appellant-case GET /appellant-case should render a "LPA application ref
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Costs document</dt>
-                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"
                         data-cy="add-costs-document"> Add<span class="govuk-visually-hidden"> Costs document</span></a>
                     </dd>
@@ -708,7 +708,7 @@ exports[`appellant-case GET /appellant-case should render a "Site area updated" 
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
-                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70457"
                         data-cy="add-application-form"> Add<span class="govuk-visually-hidden"> Application form</span></a>
                     </dd>
@@ -725,7 +725,7 @@ exports[`appellant-case GET /appellant-case should render a "Site area updated" 
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agreement to change description evidence</dt>
-                    <dd                     class="govuk-summary-list__value"></dd>
+                    <dd                     class="govuk-summary-list__value">No documents available</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70459"
                             data-cy="add-agreement-to-change-description-evidence"> Add<span class="govuk-visually-hidden"> Agreement to change description evidence</span></a>
                         </dd>
@@ -737,7 +737,7 @@ exports[`appellant-case GET /appellant-case should render a "Site area updated" 
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
-                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70458"
                         data-cy="add-decision-letter"> Add<span class="govuk-visually-hidden"> Decision letter</span></a>
                     </dd>
@@ -761,7 +761,7 @@ exports[`appellant-case GET /appellant-case should render a "Site area updated" 
                     <dd class="govuk-summary-list__value">Householder</dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal statement</dt>
-                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70456"
                         data-cy="add-appeal-statement"> Add<span class="govuk-visually-hidden"> Appeal statement</span></a>
                     </dd>
@@ -779,7 +779,7 @@ exports[`appellant-case GET /appellant-case should render a "Site area updated" 
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Costs document</dt>
-                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"
                         data-cy="add-costs-document"> Add<span class="govuk-visually-hidden"> Costs document</span></a>
                     </dd>
@@ -961,7 +961,7 @@ exports[`appellant-case GET /appellant-case should render a "Site health and saf
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
-                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70457"
                         data-cy="add-application-form"> Add<span class="govuk-visually-hidden"> Application form</span></a>
                     </dd>
@@ -978,7 +978,7 @@ exports[`appellant-case GET /appellant-case should render a "Site health and saf
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agreement to change description evidence</dt>
-                    <dd                     class="govuk-summary-list__value"></dd>
+                    <dd                     class="govuk-summary-list__value">No documents available</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70459"
                             data-cy="add-agreement-to-change-description-evidence"> Add<span class="govuk-visually-hidden"> Agreement to change description evidence</span></a>
                         </dd>
@@ -990,7 +990,7 @@ exports[`appellant-case GET /appellant-case should render a "Site health and saf
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
-                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70458"
                         data-cy="add-decision-letter"> Add<span class="govuk-visually-hidden"> Decision letter</span></a>
                     </dd>
@@ -1014,7 +1014,7 @@ exports[`appellant-case GET /appellant-case should render a "Site health and saf
                     <dd class="govuk-summary-list__value">Householder</dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal statement</dt>
-                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70456"
                         data-cy="add-appeal-statement"> Add<span class="govuk-visually-hidden"> Appeal statement</span></a>
                     </dd>
@@ -1032,7 +1032,7 @@ exports[`appellant-case GET /appellant-case should render a "Site health and saf
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Costs document</dt>
-                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"
                         data-cy="add-costs-document"> Add<span class="govuk-visually-hidden"> Costs document</span></a>
                     </dd>
@@ -1214,7 +1214,7 @@ exports[`appellant-case GET /appellant-case should render a "Site updated" notif
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
-                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70457"
                         data-cy="add-application-form"> Add<span class="govuk-visually-hidden"> Application form</span></a>
                     </dd>
@@ -1231,7 +1231,7 @@ exports[`appellant-case GET /appellant-case should render a "Site updated" notif
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agreement to change description evidence</dt>
-                    <dd                     class="govuk-summary-list__value"></dd>
+                    <dd                     class="govuk-summary-list__value">No documents available</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70459"
                             data-cy="add-agreement-to-change-description-evidence"> Add<span class="govuk-visually-hidden"> Agreement to change description evidence</span></a>
                         </dd>
@@ -1243,7 +1243,7 @@ exports[`appellant-case GET /appellant-case should render a "Site updated" notif
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
-                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70458"
                         data-cy="add-decision-letter"> Add<span class="govuk-visually-hidden"> Decision letter</span></a>
                     </dd>
@@ -1267,7 +1267,7 @@ exports[`appellant-case GET /appellant-case should render a "Site updated" notif
                     <dd class="govuk-summary-list__value">Householder</dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal statement</dt>
-                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70456"
                         data-cy="add-appeal-statement"> Add<span class="govuk-visually-hidden"> Appeal statement</span></a>
                     </dd>
@@ -1285,7 +1285,7 @@ exports[`appellant-case GET /appellant-case should render a "Site updated" notif
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Costs document</dt>
-                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"
                         data-cy="add-costs-document"> Add<span class="govuk-visually-hidden"> Costs document</span></a>
                     </dd>
@@ -1479,7 +1479,7 @@ exports[`appellant-case GET /appellant-case should render a success notification
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
-                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70457"
                         data-cy="add-application-form"> Add<span class="govuk-visually-hidden"> Application form</span></a>
                     </dd>
@@ -1496,7 +1496,7 @@ exports[`appellant-case GET /appellant-case should render a success notification
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agreement to change description evidence</dt>
-                    <dd                     class="govuk-summary-list__value"></dd>
+                    <dd                     class="govuk-summary-list__value">No documents available</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70459"
                             data-cy="add-agreement-to-change-description-evidence"> Add<span class="govuk-visually-hidden"> Agreement to change description evidence</span></a>
                         </dd>
@@ -1508,7 +1508,7 @@ exports[`appellant-case GET /appellant-case should render a success notification
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
-                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70458"
                         data-cy="add-decision-letter"> Add<span class="govuk-visually-hidden"> Decision letter</span></a>
                     </dd>
@@ -1532,7 +1532,7 @@ exports[`appellant-case GET /appellant-case should render a success notification
                     <dd class="govuk-summary-list__value">Householder</dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal statement</dt>
-                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70456"
                         data-cy="add-appeal-statement"> Add<span class="govuk-visually-hidden"> Appeal statement</span></a>
                     </dd>
@@ -1550,7 +1550,7 @@ exports[`appellant-case GET /appellant-case should render a success notification
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Costs document</dt>
-                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"
                         data-cy="add-costs-document"> Add<span class="govuk-visually-hidden"> Costs document</span></a>
                     </dd>
@@ -1814,7 +1814,7 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
-                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70457"
                         data-cy="add-application-form"> Add<span class="govuk-visually-hidden"> Application form</span></a>
                     </dd>
@@ -1831,7 +1831,7 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agreement to change description evidence</dt>
-                    <dd                     class="govuk-summary-list__value"></dd>
+                    <dd                     class="govuk-summary-list__value">No documents available</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70459"
                             data-cy="add-agreement-to-change-description-evidence"> Add<span class="govuk-visually-hidden"> Agreement to change description evidence</span></a>
                         </dd>
@@ -1843,7 +1843,7 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
-                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70458"
                         data-cy="add-decision-letter"> Add<span class="govuk-visually-hidden"> Decision letter</span></a>
                     </dd>
@@ -1867,7 +1867,7 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
                     <dd class="govuk-summary-list__value">Householder</dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal statement</dt>
-                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70456"
                         data-cy="add-appeal-statement"> Add<span class="govuk-visually-hidden"> Appeal statement</span></a>
                     </dd>
@@ -1885,7 +1885,7 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Costs document</dt>
-                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"
                         data-cy="add-costs-document"> Add<span class="govuk-visually-hidden"> Costs document</span></a>
                     </dd>
@@ -2092,7 +2092,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
-                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70457"
                         data-cy="add-application-form"> Add<span class="govuk-visually-hidden"> Application form</span></a>
                     </dd>
@@ -2109,28 +2109,28 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agreement to change description evidence</dt>
-                    <dd                     class="govuk-summary-list__value"></dd>
+                    <dd                     class="govuk-summary-list__value">No documents available</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70459"
                             data-cy="add-agreement-to-change-description-evidence"> Add<span class="govuk-visually-hidden"> Agreement to change description evidence</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Design and access statement</dt>
-                    <dd                     class="govuk-summary-list__value"></dd>
+                    <dd                     class="govuk-summary-list__value">No documents available</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-design-access-statement"> Add<span class="govuk-visually-hidden"> Design and access statement</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents submitted with statement</dt>
-                    <dd                     class="govuk-summary-list__value"></dd>
+                    <dd                     class="govuk-summary-list__value">No documents available</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-supporting-documents"> Add<span class="govuk-visually-hidden"> Supporting documents submitted with statement</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> New supporting documents</dt>
-                    <dd                     class="govuk-summary-list__value"></dd>
+                    <dd                     class="govuk-summary-list__value">No documents available</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-new-supporting-documents"> Add<span class="govuk-visually-hidden"> New supporting documents</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> New plans or drawings</dt>
-                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-new-plans-drawings"> Add<span class="govuk-visually-hidden"> New plans or drawings</span></a>
                     </dd>
                 </div>
@@ -2141,7 +2141,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
-                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70458"
                         data-cy="add-decision-letter"> Add<span class="govuk-visually-hidden"> Decision letter</span></a>
                     </dd>
@@ -2189,7 +2189,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal statement</dt>
-                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70456"
                         data-cy="add-appeal-statement"> Add<span class="govuk-visually-hidden"> Appeal statement</span></a>
                     </dd>
@@ -2213,7 +2213,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning obligation</dt>
-                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-planning-obligation"> Add<span class="govuk-visually-hidden"> Planning obligation</span></a>
                     </dd>
                 </div>
@@ -2223,7 +2223,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Costs document</dt>
-                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"
                         data-cy="add-costs-document"> Add<span class="govuk-visually-hidden"> Costs document</span></a>
                     </dd>
@@ -2235,7 +2235,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Ownership certificate or land declaration</dt>
-                    <dd                     class="govuk-summary-list__value"></dd>
+                    <dd                     class="govuk-summary-list__value">No documents available</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-ownership-certificate"> Add<span class="govuk-visually-hidden"> Ownership certificate or land declaration</span></a>
                         </dd>
                 </div>
@@ -2391,7 +2391,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
-                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70457"
                         data-cy="add-application-form"> Add<span class="govuk-visually-hidden"> Application form</span></a>
                     </dd>
@@ -2408,7 +2408,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agreement to change description evidence</dt>
-                    <dd                     class="govuk-summary-list__value"></dd>
+                    <dd                     class="govuk-summary-list__value">No documents available</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70459"
                             data-cy="add-agreement-to-change-description-evidence"> Add<span class="govuk-visually-hidden"> Agreement to change description evidence</span></a>
                         </dd>
@@ -2420,7 +2420,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
-                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70458"
                         data-cy="add-decision-letter"> Add<span class="govuk-visually-hidden"> Decision letter</span></a>
                     </dd>
@@ -2444,7 +2444,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                     <dd class="govuk-summary-list__value">Householder</dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal statement</dt>
-                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70456"
                         data-cy="add-appeal-statement"> Add<span class="govuk-visually-hidden"> Appeal statement</span></a>
                     </dd>
@@ -2462,7 +2462,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Costs document</dt>
-                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"
                         data-cy="add-costs-document"> Add<span class="govuk-visually-hidden"> Costs document</span></a>
                     </dd>
@@ -4667,7 +4667,7 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
-                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70457"
                         data-cy="add-application-form"> Add<span class="govuk-visually-hidden"> Application form</span></a>
                     </dd>
@@ -4684,7 +4684,7 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agreement to change description evidence</dt>
-                    <dd                     class="govuk-summary-list__value"></dd>
+                    <dd                     class="govuk-summary-list__value">No documents available</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70459"
                             data-cy="add-agreement-to-change-description-evidence"> Add<span class="govuk-visually-hidden"> Agreement to change description evidence</span></a>
                         </dd>
@@ -4696,7 +4696,7 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
-                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70458"
                         data-cy="add-decision-letter"> Add<span class="govuk-visually-hidden"> Decision letter</span></a>
                     </dd>
@@ -4720,7 +4720,7 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                     <dd class="govuk-summary-list__value">Householder</dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal statement</dt>
-                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70456"
                         data-cy="add-appeal-statement"> Add<span class="govuk-visually-hidden"> Appeal statement</span></a>
                     </dd>
@@ -4738,7 +4738,7 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Costs document</dt>
-                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"
                         data-cy="add-costs-document"> Add<span class="govuk-visually-hidden"> Costs document</span></a>
                     </dd>

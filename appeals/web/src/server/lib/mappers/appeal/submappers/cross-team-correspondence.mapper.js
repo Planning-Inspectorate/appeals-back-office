@@ -1,7 +1,11 @@
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
 
 /** @type {import('../appeal.mapper.js').SubMapper} */
-export const mapCrossTeamCorrespondence = ({ appealDetails, currentRoute }) => ({
+export const mapCrossTeamCorrespondence = ({
+	appealDetails,
+	currentRoute,
+	userHasUpdateCasePermission
+}) => ({
 	id: 'cross-team-correspondence',
 	display: {
 		summaryListItem: {
@@ -18,26 +22,34 @@ export const mapCrossTeamCorrespondence = ({ appealDetails, currentRoute }) => (
 									visuallyHiddenText: 'cross-team correspondence documents',
 									href: `${currentRoute}/internal-correspondence/cross-team/manage-documents/${appealDetails.internalCorrespondence?.crossTeam?.folderId}`
 								},
-								{
-									text: 'Add',
-									visuallyHiddenText: 'cross-team correspondence documents',
-									href: displayPageFormatter.formatDocumentActionLink(
-										appealDetails.appealId,
-										appealDetails.internalCorrespondence?.crossTeam,
-										`${currentRoute}/internal-correspondence/cross-team/upload-documents/${appealDetails.internalCorrespondence?.crossTeam?.folderId}`
-									)
-								}
+								...(userHasUpdateCasePermission
+									? [
+											{
+												text: 'Add',
+												visuallyHiddenText: 'cross-team correspondence documents',
+												href: displayPageFormatter.formatDocumentActionLink(
+													appealDetails.appealId,
+													appealDetails.internalCorrespondence?.crossTeam,
+													`${currentRoute}/internal-correspondence/cross-team/upload-documents/${appealDetails.internalCorrespondence?.crossTeam?.folderId}`
+												)
+											}
+									  ]
+									: [])
 						  ]
 						: [
-								{
-									text: 'Add',
-									visuallyHiddenText: 'cross-team correspondence documents',
-									href: displayPageFormatter.formatDocumentActionLink(
-										appealDetails.appealId,
-										appealDetails.internalCorrespondence?.crossTeam,
-										`${currentRoute}/internal-correspondence/cross-team/upload-documents/${appealDetails.internalCorrespondence?.crossTeam?.folderId}`
-									)
-								}
+								...(userHasUpdateCasePermission
+									? [
+											{
+												text: 'Add',
+												visuallyHiddenText: 'cross-team correspondence documents',
+												href: displayPageFormatter.formatDocumentActionLink(
+													appealDetails.appealId,
+													appealDetails.internalCorrespondence?.crossTeam,
+													`${currentRoute}/internal-correspondence/cross-team/upload-documents/${appealDetails.internalCorrespondence?.crossTeam?.folderId}`
+												)
+											}
+									  ]
+									: [])
 						  ]
 			}
 		}

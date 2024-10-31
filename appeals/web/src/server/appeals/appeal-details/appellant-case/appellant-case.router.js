@@ -1,5 +1,4 @@
 import { Router as createRouter } from 'express';
-import config from '#environment/config.js';
 import { asyncHandler } from '@pins/express';
 import * as controller from './appellant-case.controller.js';
 import * as validators from './appellant-case.validators.js';
@@ -7,7 +6,7 @@ import * as documentsValidators from '../../appeal-documents/appeal-documents.va
 import outcomeValidRouter from './outcome-valid/outcome-valid.router.js';
 import outcomeInvalidRouter from './outcome-invalid/outcome-invalid.router.js';
 import outcomeIncompleteRouter from './outcome-incomplete/outcome-incomplete.router.js';
-import { assertGroupAccess, assertUserHasPermission } from '#app/auth/auth.guards.js';
+import { assertUserHasPermission } from '#app/auth/auth.guards.js';
 import { validateAppeal } from '../appeal-details.middleware.js';
 import { permissionNames } from '#environment/permissions.js';
 import {
@@ -183,10 +182,6 @@ router
 		validateAppeal,
 		assertUserHasPermission(permissionNames.updateCase),
 		validators.validateReviewOutcome,
-		assertGroupAccess(
-			config.referenceData.appeals.caseOfficerGroupId,
-			config.referenceData.appeals.inspectorGroupId
-		),
 		asyncHandler(controller.postAppellantCase)
 	);
 
@@ -200,10 +195,6 @@ router
 	.post(
 		validateAppeal,
 		assertUserHasPermission(permissionNames.updateCase),
-		assertGroupAccess(
-			config.referenceData.appeals.caseOfficerGroupId,
-			config.referenceData.appeals.inspectorGroupId
-		),
 		asyncHandler(controller.postCheckAndConfirm)
 	);
 
@@ -271,10 +262,6 @@ router
 		documentsValidators.validateDocumentDetailsReceivedDateValid,
 		documentsValidators.validateDocumentDetailsReceivedDateIsNotFutureDate,
 		documentsValidators.validateDocumentDetailsRedactionStatuses,
-		assertGroupAccess(
-			config.referenceData.appeals.caseOfficerGroupId,
-			config.referenceData.appeals.inspectorGroupId
-		),
 		asyncHandler(controller.postAddDocumentDetails)
 	);
 
@@ -295,10 +282,6 @@ router
 		documentsValidators.validateDocumentDetailsReceivedDateValid,
 		documentsValidators.validateDocumentDetailsReceivedDateIsNotFutureDate,
 		documentsValidators.validateDocumentDetailsRedactionStatuses,
-		assertGroupAccess(
-			config.referenceData.appeals.caseOfficerGroupId,
-			config.referenceData.appeals.inspectorGroupId
-		),
 		asyncHandler(controller.postDocumentVersionDetails)
 	);
 
@@ -334,10 +317,6 @@ router
 		validateCaseFolderId,
 		documentsValidators.validateDocumentNameBodyFormat,
 		documentsValidators.validateDocumentName,
-		assertGroupAccess(
-			config.referenceData.appeals.caseOfficerGroupId,
-			config.referenceData.appeals.inspectorGroupId
-		),
 		asyncHandler(controller.postChangeDocumentFileNameDetails)
 	);
 
@@ -358,10 +337,6 @@ router
 		documentsValidators.validateDocumentDetailsReceivedDateValid,
 		documentsValidators.validateDocumentDetailsReceivedDateIsNotFutureDate,
 		documentsValidators.validateDocumentDetailsRedactionStatuses,
-		assertGroupAccess(
-			config.referenceData.appeals.caseOfficerGroupId,
-			config.referenceData.appeals.inspectorGroupId
-		),
 		asyncHandler(controller.postChangeDocumentVersionDetails)
 	);
 

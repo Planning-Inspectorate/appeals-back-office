@@ -1788,7 +1788,7 @@ describe('appeal-details', () => {
 							} ${costsDocumentType}</th>`
 						);
 						expect(costsStatusElement.innerHTML).toEqual(
-							`<td class="govuk-table__cell appeal-costs-${costsCategory}-${costsDocumentType}-status"></td>`
+							`<td class="govuk-table__cell appeal-costs-${costsCategory}-${costsDocumentType}-status">No documents available</td>`
 						);
 						expect(costsActionsElement.innerHTML).not.toContain(
 							`/costs/${costsCategory}/${costsDocumentType}/manage-documents/${costsFolder?.folderId}">Manage</a>`
@@ -1850,7 +1850,7 @@ describe('appeal-details', () => {
 					'<th scope="row" class="govuk-table__header appeal-costs-decision-documentation">Costs decision</th>'
 				);
 				expect(costsStatusElement.innerHTML).toEqual(
-					'<td class="govuk-table__cell appeal-costs-decision-status"></td>'
+					'<td class="govuk-table__cell appeal-costs-decision-status">No documents available</td>'
 				);
 				expect(costsActionsElement.innerHTML).not.toContain(
 					`/costs/decision/manage-documents/${appealData.costs.decisionFolder?.folderId}">Manage</a>`

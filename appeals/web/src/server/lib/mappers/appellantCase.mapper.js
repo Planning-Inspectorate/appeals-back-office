@@ -368,7 +368,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 									classes: 'govuk-visually-hidden'
 								},
 								value: {
-									text: 'None'
+									text: 'No documents available'
 								}
 							}
 						]
