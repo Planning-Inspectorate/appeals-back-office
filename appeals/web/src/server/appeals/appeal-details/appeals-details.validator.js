@@ -1,6 +1,9 @@
-import { createValidator } from '@pins/express';
-import { body } from 'express-validator';
+import { createTextareaValidator } from '#lib/validators/textarea-validator.js';
+import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
 
-export const validateCaseNoteEntry = createValidator(
-	body('comment').trim().notEmpty().withMessage('A case note entry cannot be empty')
+export const validateCaseNoteTextArea = createTextareaValidator(
+	'comment',
+	'Enter case note',
+	textInputCharacterLimits.defaultInputLength,
+	`Case note must be ${textInputCharacterLimits.defaultInputLength} characters or less`
 );
