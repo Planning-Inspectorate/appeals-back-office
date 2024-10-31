@@ -1,5 +1,7 @@
-const BUTTON_IDENTIFIER = '#redact-button';
-const TEXTAREA_IDENTIFIER = '#redact-textarea';
+const SELECTORS = {
+	BUTTON_IDENTIFIER: '#redact-button',
+	TEXTAREA_IDENTIFIER: '#redact-textarea'
+};
 
 /**
  * @param {HTMLTextAreaElement} textarea
@@ -35,8 +37,8 @@ const isHTMLTextAreaElement = (element) => element instanceof HTMLTextAreaElemen
 const isHTMLButtonElement = (element) => element instanceof HTMLButtonElement;
 
 export const initRedactButton = () => {
-	const button = document.querySelector(BUTTON_IDENTIFIER);
-	const textarea = document.querySelector(TEXTAREA_IDENTIFIER);
+	const button = document.querySelector(SELECTORS.BUTTON_IDENTIFIER);
+	const textarea = document.querySelector(SELECTORS.TEXTAREA_IDENTIFIER);
 
 	if (!button || !textarea || !isHTMLButtonElement(button) || !isHTMLTextAreaElement(textarea)) {
 		return;
