@@ -4544,7 +4544,7 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#reviewOutcome">Please select an outcome</a>
+                            <li><a href="#review-outcome">Please select an outcome</a>
                             </li>
                         </ul>
                     </div>
@@ -5858,7 +5858,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#incompleteReason">Please select one or more reasons why the appeal is incomplete</a>
+                            <li><a href="#incomplete-reason">Please select one or more reasons why the appeal is incomplete</a>
                             </li>
                         </ul>
                     </div>
@@ -7311,7 +7311,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#invalidReason">Please select one or more reasons why the appeal is invalid</a>
+                            <li><a href="#invalid-reason">Please select one or more reasons why the appeal is invalid</a>
                             </li>
                         </ul>
                     </div>

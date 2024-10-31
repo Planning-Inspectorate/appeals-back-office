@@ -133,7 +133,7 @@ exports[`other-appeals GET /other-appeals/manage should render the "Do you want 
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#removeAppealRelationship">You must answer if you want to remove the relationship</a>
+                            <li><a href="#remove-appeal-relationship">You must answer if you want to remove the relationship</a>
                             </li>
                         </ul>
                     </div>
@@ -217,7 +217,7 @@ exports[`other-appeals POST /other-appeals/add should re-render the "What is the
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#addOtherAppealsReference">Enter a valid appeal reference</a>
+                            <li><a href="#add-other-appeals-reference">Enter a valid appeal reference</a>
                             </li>
                         </ul>
                     </div>
@@ -250,7 +250,7 @@ exports[`other-appeals POST /other-appeals/add should re-render the "What is the
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#addOtherAppealsReference">Enter an appeal reference</a>
+                            <li><a href="#add-other-appeals-reference">Enter an appeal reference</a>
                             </li>
                         </ul>
                     </div>
@@ -283,7 +283,7 @@ exports[`other-appeals POST /other-appeals/add should re-render the "What is the
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#addOtherAppealsReference">Appeal reference must be 7 digits</a>
+                            <li><a href="#add-other-appeals-reference">Appeal reference must be 7 digits</a>
                             </li>
                         </ul>
                     </div>
@@ -316,7 +316,7 @@ exports[`other-appeals POST /other-appeals/add should re-render the "What is the
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#addOtherAppealsReference">Appeal reference must be 7 digits</a>
+                            <li><a href="#add-other-appeals-reference">Appeal reference must be 7 digits</a>
                             </li>
                         </ul>
                     </div>
@@ -349,7 +349,7 @@ exports[`other-appeals POST /other-appeals/confirm should re-render the "Related
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#relateAppealsAnswer">You must answer if you want to relate appeals</a>
+                            <li><a href="#relate-appeals-answer">You must answer if you want to relate appeals</a>
                             </li>
                         </ul>
                     </div>

@@ -108,7 +108,7 @@ exports[`service-user POST /change/:userType should re-render changeServiceUser 
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#emailAddress">Enter a valid email or clear the email field</a>
+                            <li><a href="#email-address">Enter a valid email or clear the email field</a>
                             </li>
                         </ul>
                     </div>
@@ -164,7 +164,7 @@ exports[`service-user POST /change/:userType should re-render changeServiceUser 
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#firstName">Enter the first name</a>
+                            <li><a href="#first-name">Enter the first name</a>
                             </li>
                         </ul>
                     </div>
@@ -219,7 +219,7 @@ exports[`service-user POST /change/:userType should re-render changeServiceUser 
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#firstName">Enter the first name</a>
+                            <li><a href="#first-name">Enter the first name</a>
                             </li>
                         </ul>
                     </div>
@@ -274,7 +274,7 @@ exports[`service-user POST /change/:userType should re-render changeServiceUser 
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#lastName">Enter the last name</a>
+                            <li><a href="#last-name">Enter the last name</a>
                             </li>
                         </ul>
                     </div>
@@ -329,7 +329,7 @@ exports[`service-user POST /change/:userType should re-render changeServiceUser 
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#lastName">Enter the last name</a>
+                            <li><a href="#last-name">Enter the last name</a>
                             </li>
                         </ul>
                     </div>
@@ -384,7 +384,7 @@ exports[`service-user POST /change/:userType should re-render changeServiceUser 
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#phoneNumber">Enter a valid phone number or clear the phone number field</a>
+                            <li><a href="#phone-number">Enter a valid phone number or clear the phone number field</a>
                             </li>
                         </ul>
                     </div>
@@ -440,7 +440,7 @@ exports[`service-user POST /change/:userType should re-render changeServiceUser 
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#firstName">Enter the first name</a>
+                            <li><a href="#first-name">Enter the first name</a>
                             </li>
                         </ul>
                     </div>
@@ -495,7 +495,7 @@ exports[`service-user POST /change/:userType should re-render changeServiceUser 
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#lastName">Enter the last name</a>
+                            <li><a href="#last-name">Enter the last name</a>
                             </li>
                         </ul>
                     </div>
