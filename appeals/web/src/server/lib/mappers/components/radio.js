@@ -26,7 +26,7 @@ export function yesNoInput({
 	const yes = {
 		value: 'yes',
 		text: customYesLabel || 'Yes',
-		checked: Boolean(value)
+		checked: (value === true || value === 'true' || value === 'yes')
 	};
 	if (yesConditional) {
 		yes.conditional = conditionalFormatter(
@@ -49,8 +49,7 @@ export function yesNoInput({
 				{
 					value: 'no',
 					text: customNoLabel || 'No',
-					// only show 'No' checked if value is defined
-					checked: typeof value !== 'undefined' && !value
+					checked: (value === false || value === 'false' || value === 'no')
 				}
 			]
 		}

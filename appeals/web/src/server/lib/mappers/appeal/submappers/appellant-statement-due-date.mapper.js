@@ -8,13 +8,12 @@ export const mapAppellantStatementDueDate = ({
 	userHasUpdateCasePermission
 }) =>
 	textSummaryListItem({
-		id: 'statement-review-due-date',
-		text: 'Statement review due',
+		id: 'appellant-statement-due-date',
+		text: 'Appellant statement due',
 		value:
-			dateISOStringToDisplayDate(appealDetails.appealTimetable?.appellantStatementDueDate) ||
-			'Due date not yet set',
+			dateISOStringToDisplayDate(appealDetails.appealTimetable?.appellantStatementDueDate) || '',
 		link: `${currentRoute}/appeal-timetables/appellant-statement`,
-		editable: userHasUpdateCasePermission,
-		classes: 'appeal-statement-review-due-date',
+		editable: Boolean(userHasUpdateCasePermission && appealDetails.startedAt),
+		classes: 'appellant-statement-due-date',
 		actionText: appealDetails.appealTimetable?.appellantStatementDueDate ? 'Change' : 'Schedule'
 	});

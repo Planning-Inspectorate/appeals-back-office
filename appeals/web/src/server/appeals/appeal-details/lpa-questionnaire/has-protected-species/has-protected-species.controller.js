@@ -31,7 +31,7 @@ const renderChangeHasProtectedSpecies = async (request, response) => {
 			convertFromYesNoNullToBooleanOrNull(session.hasProtectedSpecies) ?? data.hasProtectedSpecies;
 		const mappedPageContents = mapper.changeHasProtectedSpecies(
 			currentAppeal,
-			currentRadioValue?.toString() || '',
+			currentRadioValue,
 			origin
 		);
 

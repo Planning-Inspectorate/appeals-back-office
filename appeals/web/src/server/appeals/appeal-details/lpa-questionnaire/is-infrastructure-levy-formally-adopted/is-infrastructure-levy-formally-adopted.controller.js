@@ -30,9 +30,8 @@ const renderChangeIsInfrastructureLevyFormallyAdopted = async (request, response
 
 		const mappedPageContents = mapper.changeIsInfrastructureLevyFormallyAdopted(
 			currentAppeal,
-			convertFromYesNoNullToBooleanOrNull(session.isInfrastructureLevyFormallyAdopted) ||
-				lpaQuestionnaireData.isInfrastructureLevyFormallyAdopted ||
-				null,
+			convertFromYesNoNullToBooleanOrNull(session.isInfrastructureLevyFormallyAdopted) ??
+				lpaQuestionnaireData.isInfrastructureLevyFormallyAdopted,
 			origin
 		);
 

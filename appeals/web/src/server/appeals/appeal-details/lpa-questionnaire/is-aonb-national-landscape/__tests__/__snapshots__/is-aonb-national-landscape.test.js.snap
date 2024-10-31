@@ -19,7 +19,7 @@ exports[`is-aonb-national-landscape GET /change should render the isAonbNational
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="isAonbNationalLandscapeRadio-2"
-                            name="isAonbNationalLandscapeRadio" type="radio" value="no" checked>
+                            name="isAonbNationalLandscapeRadio" type="radio" value="no">
                             <label class="govuk-label govuk-radios__label" for="isAonbNationalLandscapeRadio-2">Not in area</label>
                         </div>
                     </div>

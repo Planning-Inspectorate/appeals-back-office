@@ -19,7 +19,7 @@ exports[`scheduled-monument GET /change should render the affectsScheduledMonume
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="affectsScheduledMonumentRadio-2"
-                            name="affectsScheduledMonumentRadio" type="radio" value="no" checked>
+                            name="affectsScheduledMonumentRadio" type="radio" value="no">
                             <label class="govuk-label govuk-radios__label" for="affectsScheduledMonumentRadio-2">Not affected</label>
                         </div>
                     </div>
