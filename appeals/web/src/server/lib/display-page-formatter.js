@@ -232,6 +232,12 @@ export const formatDocumentValues = (appealId, listOfDocuments, isAdditionalDocu
 			};
 		}
 	} else {
+		htmlProperty.pageComponents.push({
+			type: 'html',
+			parameters: {
+				html: '	No documents available'
+			}
+		});
 		logger.debug('No documents in this folder');
 	}
 

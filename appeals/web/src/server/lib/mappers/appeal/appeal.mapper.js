@@ -81,6 +81,7 @@ export async function initialiseAndMapAppealData(
 				appealDetails.inspector
 		  )
 		: null;
+
 	const userHasUpdateCasePermission = userHasPermission(permissionNames.updateCase, session);
 
 	/** @type {Record<string, SubMapper>} */

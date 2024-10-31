@@ -725,7 +725,7 @@ exports[`appeal-details GET /:appealId should not render action links to the man
                         <tbody class="govuk-table__body">
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant application</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-application-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-application-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-application-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/1/costs/appellant/application/upload-documents/1">Add</a>
@@ -735,7 +735,7 @@ exports[`appeal-details GET /:appealId should not render action links to the man
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-withdrawal-documentation">Appellant withdrawal</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-withdrawal-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-withdrawal-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-withdrawal-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-withdrawal" href="/appeals-service/appeal-details/1/costs/appellant/withdrawal/upload-documents/2">Add</a>
@@ -745,7 +745,7 @@ exports[`appeal-details GET /:appealId should not render action links to the man
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-correspondence-documentation">Appellant correspondence</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-correspondence-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-correspondence-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-correspondence-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-correspondence" href="/appeals-service/appeal-details/1/costs/appellant/correspondence/upload-documents/3">Add</a>
@@ -755,7 +755,7 @@ exports[`appeal-details GET /:appealId should not render action links to the man
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-application-documentation">LPA application</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-application-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-application-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-application-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-application" href="/appeals-service/appeal-details/1/costs/lpa/application/upload-documents/4">Add</a>
@@ -765,7 +765,7 @@ exports[`appeal-details GET /:appealId should not render action links to the man
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-withdrawal-documentation">LPA withdrawal</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-withdrawal-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-withdrawal-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-withdrawal-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-withdrawal" href="/appeals-service/appeal-details/1/costs/lpa/withdrawal/upload-documents/5">Add</a>
@@ -775,7 +775,7 @@ exports[`appeal-details GET /:appealId should not render action links to the man
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-correspondence-documentation">LPA correspondence</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-correspondence-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-correspondence-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-correspondence-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-correspondence" href="/appeals-service/appeal-details/1/costs/lpa/correspondence/upload-documents/6">Add</a>
@@ -785,7 +785,7 @@ exports[`appeal-details GET /:appealId should not render action links to the man
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-decision-documentation">Costs decision</th>
-                                <td class="govuk-table__cell appeal-costs-decision-status"></td>
+                                <td class="govuk-table__cell appeal-costs-decision-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-decision-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-decision" href="/appeals-service/appeal-details/1/costs/decision/upload-documents/7">Add</a>
@@ -1176,7 +1176,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                         <tbody class="govuk-table__body">
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant application</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-application-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-application-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-application-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/2/costs/appellant/application/upload-documents/1">Add</a>
@@ -1186,7 +1186,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-withdrawal-documentation">Appellant withdrawal</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-withdrawal-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-withdrawal-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-withdrawal-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-withdrawal" href="/appeals-service/appeal-details/2/costs/appellant/withdrawal/upload-documents/2">Add</a>
@@ -1196,7 +1196,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-correspondence-documentation">Appellant correspondence</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-correspondence-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-correspondence-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-correspondence-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-correspondence" href="/appeals-service/appeal-details/2/costs/appellant/correspondence/upload-documents/3">Add</a>
@@ -1206,7 +1206,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-application-documentation">LPA application</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-application-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-application-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-application-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-application" href="/appeals-service/appeal-details/2/costs/lpa/application/upload-documents/4">Add</a>
@@ -1216,7 +1216,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-withdrawal-documentation">LPA withdrawal</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-withdrawal-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-withdrawal-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-withdrawal-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-withdrawal" href="/appeals-service/appeal-details/2/costs/lpa/withdrawal/upload-documents/5">Add</a>
@@ -1226,7 +1226,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-correspondence-documentation">LPA correspondence</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-correspondence-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-correspondence-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-correspondence-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-correspondence" href="/appeals-service/appeal-details/2/costs/lpa/correspondence/upload-documents/6">Add</a>
@@ -1236,7 +1236,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-decision-documentation">Costs decision</th>
-                                <td class="govuk-table__cell appeal-costs-decision-status"></td>
+                                <td class="govuk-table__cell appeal-costs-decision-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-decision-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-decision" href="/appeals-service/appeal-details/2/costs/decision/upload-documents/7">Add</a>
@@ -1616,7 +1616,7 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                         <tbody class="govuk-table__body">
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant application</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-application-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-application-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-application-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/1/costs/appellant/application/upload-documents/1">Add</a>
@@ -1626,7 +1626,7 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-withdrawal-documentation">Appellant withdrawal</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-withdrawal-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-withdrawal-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-withdrawal-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-withdrawal" href="/appeals-service/appeal-details/1/costs/appellant/withdrawal/upload-documents/2">Add</a>
@@ -1636,7 +1636,7 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-correspondence-documentation">Appellant correspondence</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-correspondence-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-correspondence-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-correspondence-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-correspondence" href="/appeals-service/appeal-details/1/costs/appellant/correspondence/upload-documents/3">Add</a>
@@ -1646,7 +1646,7 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-application-documentation">LPA application</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-application-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-application-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-application-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-application" href="/appeals-service/appeal-details/1/costs/lpa/application/upload-documents/4">Add</a>
@@ -1656,7 +1656,7 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-withdrawal-documentation">LPA withdrawal</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-withdrawal-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-withdrawal-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-withdrawal-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-withdrawal" href="/appeals-service/appeal-details/1/costs/lpa/withdrawal/upload-documents/5">Add</a>
@@ -1666,7 +1666,7 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-correspondence-documentation">LPA correspondence</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-correspondence-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-correspondence-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-correspondence-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-correspondence" href="/appeals-service/appeal-details/1/costs/lpa/correspondence/upload-documents/6">Add</a>
@@ -1676,7 +1676,7 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-decision-documentation">Costs decision</th>
-                                <td class="govuk-table__cell appeal-costs-decision-status"></td>
+                                <td class="govuk-table__cell appeal-costs-decision-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-decision-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-decision" href="/appeals-service/appeal-details/1/costs/decision/upload-documents/7">Add</a>
@@ -2059,7 +2059,7 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                         <tbody class="govuk-table__body">
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant application</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-application-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-application-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-application-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/1/costs/appellant/application/upload-documents/1">Add</a>
@@ -2069,7 +2069,7 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-withdrawal-documentation">Appellant withdrawal</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-withdrawal-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-withdrawal-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-withdrawal-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-withdrawal" href="/appeals-service/appeal-details/1/costs/appellant/withdrawal/upload-documents/2">Add</a>
@@ -2079,7 +2079,7 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-correspondence-documentation">Appellant correspondence</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-correspondence-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-correspondence-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-correspondence-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-correspondence" href="/appeals-service/appeal-details/1/costs/appellant/correspondence/upload-documents/3">Add</a>
@@ -2089,7 +2089,7 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-application-documentation">LPA application</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-application-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-application-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-application-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-application" href="/appeals-service/appeal-details/1/costs/lpa/application/upload-documents/4">Add</a>
@@ -2099,7 +2099,7 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-withdrawal-documentation">LPA withdrawal</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-withdrawal-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-withdrawal-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-withdrawal-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-withdrawal" href="/appeals-service/appeal-details/1/costs/lpa/withdrawal/upload-documents/5">Add</a>
@@ -2109,7 +2109,7 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-correspondence-documentation">LPA correspondence</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-correspondence-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-correspondence-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-correspondence-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-correspondence" href="/appeals-service/appeal-details/1/costs/lpa/correspondence/upload-documents/6">Add</a>
@@ -2119,7 +2119,7 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-decision-documentation">Costs decision</th>
-                                <td class="govuk-table__cell appeal-costs-decision-status"></td>
+                                <td class="govuk-table__cell appeal-costs-decision-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-decision-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-decision" href="/appeals-service/appeal-details/1/costs/decision/upload-documents/7">Add</a>
@@ -2518,7 +2518,7 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
                         <tbody class="govuk-table__body">
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant application</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-application-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-application-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-application-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/1/costs/appellant/application/upload-documents/1">Add</a>
@@ -2528,7 +2528,7 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-withdrawal-documentation">Appellant withdrawal</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-withdrawal-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-withdrawal-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-withdrawal-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-withdrawal" href="/appeals-service/appeal-details/1/costs/appellant/withdrawal/upload-documents/2">Add</a>
@@ -2538,7 +2538,7 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-correspondence-documentation">Appellant correspondence</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-correspondence-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-correspondence-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-correspondence-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-correspondence" href="/appeals-service/appeal-details/1/costs/appellant/correspondence/upload-documents/3">Add</a>
@@ -2548,7 +2548,7 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-application-documentation">LPA application</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-application-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-application-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-application-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-application" href="/appeals-service/appeal-details/1/costs/lpa/application/upload-documents/4">Add</a>
@@ -2558,7 +2558,7 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-withdrawal-documentation">LPA withdrawal</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-withdrawal-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-withdrawal-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-withdrawal-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-withdrawal" href="/appeals-service/appeal-details/1/costs/lpa/withdrawal/upload-documents/5">Add</a>
@@ -2568,7 +2568,7 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-correspondence-documentation">LPA correspondence</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-correspondence-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-correspondence-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-correspondence-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-correspondence" href="/appeals-service/appeal-details/1/costs/lpa/correspondence/upload-documents/6">Add</a>
@@ -2578,7 +2578,7 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-decision-documentation">Costs decision</th>
-                                <td class="govuk-table__cell appeal-costs-decision-status"></td>
+                                <td class="govuk-table__cell appeal-costs-decision-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-decision-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-decision" href="/appeals-service/appeal-details/1/costs/decision/upload-documents/7">Add</a>
@@ -2965,7 +2965,7 @@ exports[`appeal-details GET /:appealId should render an Issue a decision notific
                         <tbody class="govuk-table__body">
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant application</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-application-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-application-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-application-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/2/costs/appellant/application/upload-documents/1">Add</a>
@@ -2975,7 +2975,7 @@ exports[`appeal-details GET /:appealId should render an Issue a decision notific
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-withdrawal-documentation">Appellant withdrawal</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-withdrawal-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-withdrawal-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-withdrawal-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-withdrawal" href="/appeals-service/appeal-details/2/costs/appellant/withdrawal/upload-documents/2">Add</a>
@@ -2985,7 +2985,7 @@ exports[`appeal-details GET /:appealId should render an Issue a decision notific
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-correspondence-documentation">Appellant correspondence</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-correspondence-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-correspondence-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-correspondence-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-correspondence" href="/appeals-service/appeal-details/2/costs/appellant/correspondence/upload-documents/3">Add</a>
@@ -2995,7 +2995,7 @@ exports[`appeal-details GET /:appealId should render an Issue a decision notific
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-application-documentation">LPA application</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-application-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-application-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-application-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-application" href="/appeals-service/appeal-details/2/costs/lpa/application/upload-documents/4">Add</a>
@@ -3005,7 +3005,7 @@ exports[`appeal-details GET /:appealId should render an Issue a decision notific
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-withdrawal-documentation">LPA withdrawal</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-withdrawal-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-withdrawal-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-withdrawal-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-withdrawal" href="/appeals-service/appeal-details/2/costs/lpa/withdrawal/upload-documents/5">Add</a>
@@ -3015,7 +3015,7 @@ exports[`appeal-details GET /:appealId should render an Issue a decision notific
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-correspondence-documentation">LPA correspondence</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-correspondence-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-correspondence-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-correspondence-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-correspondence" href="/appeals-service/appeal-details/2/costs/lpa/correspondence/upload-documents/6">Add</a>
@@ -3025,7 +3025,7 @@ exports[`appeal-details GET /:appealId should render an Issue a decision notific
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-decision-documentation">Costs decision</th>
-                                <td class="govuk-table__cell appeal-costs-decision-status"></td>
+                                <td class="govuk-table__cell appeal-costs-decision-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-decision-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-decision" href="/appeals-service/appeal-details/2/costs/decision/upload-documents/7">Add</a>
@@ -3393,7 +3393,7 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                         <tbody class="govuk-table__body">
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant application</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-application-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-application-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-application-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/1/costs/appellant/application/upload-documents/1">Add</a>
@@ -3403,7 +3403,7 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-withdrawal-documentation">Appellant withdrawal</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-withdrawal-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-withdrawal-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-withdrawal-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-withdrawal" href="/appeals-service/appeal-details/1/costs/appellant/withdrawal/upload-documents/2">Add</a>
@@ -3413,7 +3413,7 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-correspondence-documentation">Appellant correspondence</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-correspondence-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-correspondence-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-correspondence-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-correspondence" href="/appeals-service/appeal-details/1/costs/appellant/correspondence/upload-documents/3">Add</a>
@@ -3423,7 +3423,7 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-application-documentation">LPA application</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-application-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-application-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-application-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-application" href="/appeals-service/appeal-details/1/costs/lpa/application/upload-documents/4">Add</a>
@@ -3433,7 +3433,7 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-withdrawal-documentation">LPA withdrawal</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-withdrawal-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-withdrawal-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-withdrawal-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-withdrawal" href="/appeals-service/appeal-details/1/costs/lpa/withdrawal/upload-documents/5">Add</a>
@@ -3443,7 +3443,7 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-correspondence-documentation">LPA correspondence</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-correspondence-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-correspondence-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-correspondence-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-correspondence" href="/appeals-service/appeal-details/1/costs/lpa/correspondence/upload-documents/6">Add</a>
@@ -3453,7 +3453,7 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-decision-documentation">Costs decision</th>
-                                <td class="govuk-table__cell appeal-costs-decision-status"></td>
+                                <td class="govuk-table__cell appeal-costs-decision-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-decision-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-decision" href="/appeals-service/appeal-details/1/costs/decision/upload-documents/7">Add</a>
@@ -3841,7 +3841,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                         <tbody class="govuk-table__body">
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant application</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-application-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-application-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-application-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/2/costs/appellant/application/upload-documents/1">Add</a>
@@ -3851,7 +3851,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-withdrawal-documentation">Appellant withdrawal</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-withdrawal-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-withdrawal-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-withdrawal-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-withdrawal" href="/appeals-service/appeal-details/2/costs/appellant/withdrawal/upload-documents/2">Add</a>
@@ -3861,7 +3861,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-correspondence-documentation">Appellant correspondence</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-correspondence-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-correspondence-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-correspondence-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-correspondence" href="/appeals-service/appeal-details/2/costs/appellant/correspondence/upload-documents/3">Add</a>
@@ -3871,7 +3871,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-application-documentation">LPA application</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-application-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-application-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-application-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-application" href="/appeals-service/appeal-details/2/costs/lpa/application/upload-documents/4">Add</a>
@@ -3881,7 +3881,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-withdrawal-documentation">LPA withdrawal</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-withdrawal-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-withdrawal-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-withdrawal-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-withdrawal" href="/appeals-service/appeal-details/2/costs/lpa/withdrawal/upload-documents/5">Add</a>
@@ -3891,7 +3891,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-correspondence-documentation">LPA correspondence</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-correspondence-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-correspondence-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-correspondence-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-correspondence" href="/appeals-service/appeal-details/2/costs/lpa/correspondence/upload-documents/6">Add</a>
@@ -3901,7 +3901,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-decision-documentation">Costs decision</th>
-                                <td class="govuk-table__cell appeal-costs-decision-status"></td>
+                                <td class="govuk-table__cell appeal-costs-decision-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-decision-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-decision" href="/appeals-service/appeal-details/2/costs/decision/upload-documents/7">Add</a>
@@ -4289,7 +4289,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                         <tbody class="govuk-table__body">
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant application</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-application-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-application-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-application-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/2/costs/appellant/application/upload-documents/1">Add</a>
@@ -4299,7 +4299,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-withdrawal-documentation">Appellant withdrawal</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-withdrawal-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-withdrawal-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-withdrawal-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-withdrawal" href="/appeals-service/appeal-details/2/costs/appellant/withdrawal/upload-documents/2">Add</a>
@@ -4309,7 +4309,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-correspondence-documentation">Appellant correspondence</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-correspondence-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-correspondence-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-correspondence-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-correspondence" href="/appeals-service/appeal-details/2/costs/appellant/correspondence/upload-documents/3">Add</a>
@@ -4319,7 +4319,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-application-documentation">LPA application</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-application-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-application-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-application-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-application" href="/appeals-service/appeal-details/2/costs/lpa/application/upload-documents/4">Add</a>
@@ -4329,7 +4329,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-withdrawal-documentation">LPA withdrawal</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-withdrawal-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-withdrawal-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-withdrawal-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-withdrawal" href="/appeals-service/appeal-details/2/costs/lpa/withdrawal/upload-documents/5">Add</a>
@@ -4339,7 +4339,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-correspondence-documentation">LPA correspondence</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-correspondence-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-correspondence-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-correspondence-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-correspondence" href="/appeals-service/appeal-details/2/costs/lpa/correspondence/upload-documents/6">Add</a>
@@ -4349,7 +4349,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-decision-documentation">Costs decision</th>
-                                <td class="govuk-table__cell appeal-costs-decision-status"></td>
+                                <td class="govuk-table__cell appeal-costs-decision-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-decision-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-decision" href="/appeals-service/appeal-details/2/costs/decision/upload-documents/7">Add</a>
@@ -4737,7 +4737,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                         <tbody class="govuk-table__body">
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant application</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-application-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-application-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-application-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/2/costs/appellant/application/upload-documents/1">Add</a>
@@ -4747,7 +4747,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-withdrawal-documentation">Appellant withdrawal</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-withdrawal-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-withdrawal-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-withdrawal-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-withdrawal" href="/appeals-service/appeal-details/2/costs/appellant/withdrawal/upload-documents/2">Add</a>
@@ -4757,7 +4757,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-correspondence-documentation">Appellant correspondence</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-correspondence-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-correspondence-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-correspondence-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-correspondence" href="/appeals-service/appeal-details/2/costs/appellant/correspondence/upload-documents/3">Add</a>
@@ -4767,7 +4767,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-application-documentation">LPA application</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-application-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-application-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-application-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-application" href="/appeals-service/appeal-details/2/costs/lpa/application/upload-documents/4">Add</a>
@@ -4777,7 +4777,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-withdrawal-documentation">LPA withdrawal</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-withdrawal-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-withdrawal-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-withdrawal-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-withdrawal" href="/appeals-service/appeal-details/2/costs/lpa/withdrawal/upload-documents/5">Add</a>
@@ -4787,7 +4787,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-correspondence-documentation">LPA correspondence</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-correspondence-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-correspondence-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-correspondence-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-correspondence" href="/appeals-service/appeal-details/2/costs/lpa/correspondence/upload-documents/6">Add</a>
@@ -4797,7 +4797,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-decision-documentation">Costs decision</th>
-                                <td class="govuk-table__cell appeal-costs-decision-status"></td>
+                                <td class="govuk-table__cell appeal-costs-decision-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-decision-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-decision" href="/appeals-service/appeal-details/2/costs/decision/upload-documents/7">Add</a>
@@ -5182,7 +5182,7 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                         <tbody class="govuk-table__body">
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant application</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-application-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-application-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-application-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/1/costs/appellant/application/upload-documents/1">Add</a>
@@ -5192,7 +5192,7 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-withdrawal-documentation">Appellant withdrawal</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-withdrawal-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-withdrawal-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-withdrawal-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-withdrawal" href="/appeals-service/appeal-details/1/costs/appellant/withdrawal/upload-documents/2">Add</a>
@@ -5202,7 +5202,7 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-correspondence-documentation">Appellant correspondence</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-correspondence-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-correspondence-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-correspondence-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-correspondence" href="/appeals-service/appeal-details/1/costs/appellant/correspondence/upload-documents/3">Add</a>
@@ -5212,7 +5212,7 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-application-documentation">LPA application</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-application-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-application-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-application-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-application" href="/appeals-service/appeal-details/1/costs/lpa/application/upload-documents/4">Add</a>
@@ -5222,7 +5222,7 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-withdrawal-documentation">LPA withdrawal</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-withdrawal-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-withdrawal-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-withdrawal-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-withdrawal" href="/appeals-service/appeal-details/1/costs/lpa/withdrawal/upload-documents/5">Add</a>
@@ -5232,7 +5232,7 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-correspondence-documentation">LPA correspondence</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-correspondence-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-correspondence-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-correspondence-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-correspondence" href="/appeals-service/appeal-details/1/costs/lpa/correspondence/upload-documents/6">Add</a>
@@ -5242,7 +5242,7 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-decision-documentation">Costs decision</th>
-                                <td class="govuk-table__cell appeal-costs-decision-status"></td>
+                                <td class="govuk-table__cell appeal-costs-decision-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-decision-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-decision" href="/appeals-service/appeal-details/1/costs/decision/upload-documents/7">Add</a>
@@ -5767,7 +5767,7 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                         <tbody class="govuk-table__body">
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant application</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-application-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-application-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-application-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/1/costs/appellant/application/upload-documents/1">Add</a>
@@ -5777,7 +5777,7 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-withdrawal-documentation">Appellant withdrawal</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-withdrawal-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-withdrawal-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-withdrawal-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-withdrawal" href="/appeals-service/appeal-details/1/costs/appellant/withdrawal/upload-documents/2">Add</a>
@@ -5787,7 +5787,7 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-correspondence-documentation">Appellant correspondence</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-correspondence-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-correspondence-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-correspondence-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-correspondence" href="/appeals-service/appeal-details/1/costs/appellant/correspondence/upload-documents/3">Add</a>
@@ -5797,7 +5797,7 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-application-documentation">LPA application</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-application-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-application-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-application-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-application" href="/appeals-service/appeal-details/1/costs/lpa/application/upload-documents/4">Add</a>
@@ -5807,7 +5807,7 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-withdrawal-documentation">LPA withdrawal</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-withdrawal-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-withdrawal-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-withdrawal-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-withdrawal" href="/appeals-service/appeal-details/1/costs/lpa/withdrawal/upload-documents/5">Add</a>
@@ -5817,7 +5817,7 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-correspondence-documentation">LPA correspondence</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-correspondence-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-correspondence-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-correspondence-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-correspondence" href="/appeals-service/appeal-details/1/costs/lpa/correspondence/upload-documents/6">Add</a>
@@ -5827,7 +5827,7 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-decision-documentation">Costs decision</th>
-                                <td class="govuk-table__cell appeal-costs-decision-status"></td>
+                                <td class="govuk-table__cell appeal-costs-decision-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-decision-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-decision" href="/appeals-service/appeal-details/1/costs/decision/upload-documents/7">Add</a>
@@ -6224,7 +6224,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                         <tbody class="govuk-table__body">
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant application</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-application-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-application-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-application-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/3/costs/appellant/application/upload-documents/1">Add</a>
@@ -6234,7 +6234,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-withdrawal-documentation">Appellant withdrawal</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-withdrawal-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-withdrawal-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-withdrawal-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-withdrawal" href="/appeals-service/appeal-details/3/costs/appellant/withdrawal/upload-documents/2">Add</a>
@@ -6244,7 +6244,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-correspondence-documentation">Appellant correspondence</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-correspondence-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-correspondence-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-correspondence-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-correspondence" href="/appeals-service/appeal-details/3/costs/appellant/correspondence/upload-documents/3">Add</a>
@@ -6254,7 +6254,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-application-documentation">LPA application</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-application-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-application-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-application-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-application" href="/appeals-service/appeal-details/3/costs/lpa/application/upload-documents/4">Add</a>
@@ -6264,7 +6264,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-withdrawal-documentation">LPA withdrawal</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-withdrawal-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-withdrawal-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-withdrawal-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-withdrawal" href="/appeals-service/appeal-details/3/costs/lpa/withdrawal/upload-documents/5">Add</a>
@@ -6274,7 +6274,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-correspondence-documentation">LPA correspondence</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-correspondence-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-correspondence-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-correspondence-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-correspondence" href="/appeals-service/appeal-details/3/costs/lpa/correspondence/upload-documents/6">Add</a>
@@ -6284,7 +6284,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-decision-documentation">Costs decision</th>
-                                <td class="govuk-table__cell appeal-costs-decision-status"></td>
+                                <td class="govuk-table__cell appeal-costs-decision-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-decision-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-decision" href="/appeals-service/appeal-details/3/costs/decision/upload-documents/7">Add</a>
@@ -6652,7 +6652,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                         <tbody class="govuk-table__body">
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant application</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-application-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-application-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-application-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/1/costs/appellant/application/upload-documents/1">Add</a>
@@ -6662,7 +6662,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-withdrawal-documentation">Appellant withdrawal</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-withdrawal-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-withdrawal-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-withdrawal-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-withdrawal" href="/appeals-service/appeal-details/1/costs/appellant/withdrawal/upload-documents/2">Add</a>
@@ -6672,7 +6672,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-correspondence-documentation">Appellant correspondence</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-correspondence-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-correspondence-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-correspondence-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-correspondence" href="/appeals-service/appeal-details/1/costs/appellant/correspondence/upload-documents/3">Add</a>
@@ -6682,7 +6682,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-application-documentation">LPA application</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-application-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-application-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-application-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-application" href="/appeals-service/appeal-details/1/costs/lpa/application/upload-documents/4">Add</a>
@@ -6692,7 +6692,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-withdrawal-documentation">LPA withdrawal</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-withdrawal-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-withdrawal-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-withdrawal-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-withdrawal" href="/appeals-service/appeal-details/1/costs/lpa/withdrawal/upload-documents/5">Add</a>
@@ -6702,7 +6702,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-correspondence-documentation">LPA correspondence</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-correspondence-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-correspondence-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-correspondence-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-correspondence" href="/appeals-service/appeal-details/1/costs/lpa/correspondence/upload-documents/6">Add</a>
@@ -6712,7 +6712,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-decision-documentation">Costs decision</th>
-                                <td class="govuk-table__cell appeal-costs-decision-status"></td>
+                                <td class="govuk-table__cell appeal-costs-decision-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-decision-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-decision" href="/appeals-service/appeal-details/1/costs/decision/upload-documents/7">Add</a>
@@ -7104,7 +7104,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                         <tbody class="govuk-table__body">
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant application</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-application-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-application-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-application-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/2/costs/appellant/application/upload-documents/1">Add</a>
@@ -7114,7 +7114,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-withdrawal-documentation">Appellant withdrawal</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-withdrawal-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-withdrawal-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-withdrawal-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-withdrawal" href="/appeals-service/appeal-details/2/costs/appellant/withdrawal/upload-documents/2">Add</a>
@@ -7124,7 +7124,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-correspondence-documentation">Appellant correspondence</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-correspondence-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-correspondence-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-correspondence-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-correspondence" href="/appeals-service/appeal-details/2/costs/appellant/correspondence/upload-documents/3">Add</a>
@@ -7134,7 +7134,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-application-documentation">LPA application</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-application-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-application-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-application-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-application" href="/appeals-service/appeal-details/2/costs/lpa/application/upload-documents/4">Add</a>
@@ -7144,7 +7144,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-withdrawal-documentation">LPA withdrawal</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-withdrawal-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-withdrawal-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-withdrawal-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-withdrawal" href="/appeals-service/appeal-details/2/costs/lpa/withdrawal/upload-documents/5">Add</a>
@@ -7154,7 +7154,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-correspondence-documentation">LPA correspondence</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-correspondence-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-correspondence-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-correspondence-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-correspondence" href="/appeals-service/appeal-details/2/costs/lpa/correspondence/upload-documents/6">Add</a>
@@ -7164,7 +7164,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-decision-documentation">Costs decision</th>
-                                <td class="govuk-table__cell appeal-costs-decision-status"></td>
+                                <td class="govuk-table__cell appeal-costs-decision-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-decision-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-decision" href="/appeals-service/appeal-details/2/costs/decision/upload-documents/7">Add</a>
@@ -7515,7 +7515,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                         <tbody class="govuk-table__body">
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant application</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-application-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-application-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-application-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/2/costs/appellant/application/upload-documents/1">Add</a>
@@ -7525,7 +7525,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-withdrawal-documentation">Appellant withdrawal</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-withdrawal-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-withdrawal-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-withdrawal-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-withdrawal" href="/appeals-service/appeal-details/2/costs/appellant/withdrawal/upload-documents/2">Add</a>
@@ -7535,7 +7535,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-appellant-correspondence-documentation">Appellant correspondence</th>
-                                <td class="govuk-table__cell appeal-costs-appellant-correspondence-status"></td>
+                                <td class="govuk-table__cell appeal-costs-appellant-correspondence-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-appellant-correspondence-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-correspondence" href="/appeals-service/appeal-details/2/costs/appellant/correspondence/upload-documents/3">Add</a>
@@ -7545,7 +7545,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-application-documentation">LPA application</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-application-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-application-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-application-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-application" href="/appeals-service/appeal-details/2/costs/lpa/application/upload-documents/4">Add</a>
@@ -7555,7 +7555,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-withdrawal-documentation">LPA withdrawal</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-withdrawal-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-withdrawal-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-withdrawal-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-withdrawal" href="/appeals-service/appeal-details/2/costs/lpa/withdrawal/upload-documents/5">Add</a>
@@ -7565,7 +7565,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-lpa-correspondence-documentation">LPA correspondence</th>
-                                <td class="govuk-table__cell appeal-costs-lpa-correspondence-status"></td>
+                                <td class="govuk-table__cell appeal-costs-lpa-correspondence-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-lpa-correspondence-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-correspondence" href="/appeals-service/appeal-details/2/costs/lpa/correspondence/upload-documents/6">Add</a>
@@ -7575,7 +7575,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             </tr>
                             <tr class="govuk-table__row">
                                 <th scope="row" class="govuk-table__header appeal-costs-decision-documentation">Costs decision</th>
-                                <td class="govuk-table__cell appeal-costs-decision-status"></td>
+                                <td class="govuk-table__cell appeal-costs-decision-status">No documents available</td>
                                 <td class="govuk-table__cell appeal-costs-decision-actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-decision" href="/appeals-service/appeal-details/2/costs/decision/upload-documents/7">Add</a>
@@ -8084,7 +8084,7 @@ exports[`appeal-details should not render a back button 1`] = `
                                     <tbody class="govuk-table__body">
                                         <tr class="govuk-table__row">
                                             <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant application</th>
-                                            <td class="govuk-table__cell appeal-costs-appellant-application-status"></td>
+                                            <td class="govuk-table__cell appeal-costs-appellant-application-status">No documents available</td>
                                             <td class="govuk-table__cell appeal-costs-appellant-application-actions">
                                                 <ul class="govuk-summary-list__actions-list">
                                                     <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/2/costs/appellant/application/upload-documents/1">Add</a>
@@ -8094,7 +8094,7 @@ exports[`appeal-details should not render a back button 1`] = `
                                         </tr>
                                         <tr class="govuk-table__row">
                                             <th scope="row" class="govuk-table__header appeal-costs-appellant-withdrawal-documentation">Appellant withdrawal</th>
-                                            <td class="govuk-table__cell appeal-costs-appellant-withdrawal-status"></td>
+                                            <td class="govuk-table__cell appeal-costs-appellant-withdrawal-status">No documents available</td>
                                             <td class="govuk-table__cell appeal-costs-appellant-withdrawal-actions">
                                                 <ul class="govuk-summary-list__actions-list">
                                                     <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-withdrawal" href="/appeals-service/appeal-details/2/costs/appellant/withdrawal/upload-documents/2">Add</a>
@@ -8104,7 +8104,7 @@ exports[`appeal-details should not render a back button 1`] = `
                                         </tr>
                                         <tr class="govuk-table__row">
                                             <th scope="row" class="govuk-table__header appeal-costs-appellant-correspondence-documentation">Appellant correspondence</th>
-                                            <td class="govuk-table__cell appeal-costs-appellant-correspondence-status"></td>
+                                            <td class="govuk-table__cell appeal-costs-appellant-correspondence-status">No documents available</td>
                                             <td class="govuk-table__cell appeal-costs-appellant-correspondence-actions">
                                                 <ul class="govuk-summary-list__actions-list">
                                                     <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-correspondence" href="/appeals-service/appeal-details/2/costs/appellant/correspondence/upload-documents/3">Add</a>
@@ -8114,7 +8114,7 @@ exports[`appeal-details should not render a back button 1`] = `
                                         </tr>
                                         <tr class="govuk-table__row">
                                             <th scope="row" class="govuk-table__header appeal-costs-lpa-application-documentation">LPA application</th>
-                                            <td class="govuk-table__cell appeal-costs-lpa-application-status"></td>
+                                            <td class="govuk-table__cell appeal-costs-lpa-application-status">No documents available</td>
                                             <td class="govuk-table__cell appeal-costs-lpa-application-actions">
                                                 <ul class="govuk-summary-list__actions-list">
                                                     <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-application" href="/appeals-service/appeal-details/2/costs/lpa/application/upload-documents/4">Add</a>
@@ -8124,7 +8124,7 @@ exports[`appeal-details should not render a back button 1`] = `
                                         </tr>
                                         <tr class="govuk-table__row">
                                             <th scope="row" class="govuk-table__header appeal-costs-lpa-withdrawal-documentation">LPA withdrawal</th>
-                                            <td class="govuk-table__cell appeal-costs-lpa-withdrawal-status"></td>
+                                            <td class="govuk-table__cell appeal-costs-lpa-withdrawal-status">No documents available</td>
                                             <td class="govuk-table__cell appeal-costs-lpa-withdrawal-actions">
                                                 <ul class="govuk-summary-list__actions-list">
                                                     <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-withdrawal" href="/appeals-service/appeal-details/2/costs/lpa/withdrawal/upload-documents/5">Add</a>
@@ -8134,7 +8134,7 @@ exports[`appeal-details should not render a back button 1`] = `
                                         </tr>
                                         <tr class="govuk-table__row">
                                             <th scope="row" class="govuk-table__header appeal-costs-lpa-correspondence-documentation">LPA correspondence</th>
-                                            <td class="govuk-table__cell appeal-costs-lpa-correspondence-status"></td>
+                                            <td class="govuk-table__cell appeal-costs-lpa-correspondence-status">No documents available</td>
                                             <td class="govuk-table__cell appeal-costs-lpa-correspondence-actions">
                                                 <ul class="govuk-summary-list__actions-list">
                                                     <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-correspondence" href="/appeals-service/appeal-details/2/costs/lpa/correspondence/upload-documents/6">Add</a>
@@ -8144,7 +8144,7 @@ exports[`appeal-details should not render a back button 1`] = `
                                         </tr>
                                         <tr class="govuk-table__row">
                                             <th scope="row" class="govuk-table__header appeal-costs-decision-documentation">Costs decision</th>
-                                            <td class="govuk-table__cell appeal-costs-decision-status"></td>
+                                            <td class="govuk-table__cell appeal-costs-decision-status">No documents available</td>
                                             <td class="govuk-table__cell appeal-costs-decision-actions">
                                                 <ul class="govuk-summary-list__actions-list">
                                                     <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-decision" href="/appeals-service/appeal-details/2/costs/decision/upload-documents/7">Add</a>

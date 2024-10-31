@@ -28,6 +28,8 @@ import { isFeatureActive } from '#common/feature-flags.js';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { generateHASComponents } from '#lib/mappers/appellant-case/appeal-type-has.mapper.js';
 import { generateFPAComponents } from '#lib/mappers/appellant-case/appeal-type-fpa.mapper.js';
+import { userHasPermission } from '#lib/mappers/permissions.mapper.js';
+import { permissionNames } from '#environment/permissions.js';
 
 /**
  * @typedef {import('../../appeals.types.js').DayMonthYearHourMinute} DayMonthYearHourMinute
@@ -87,10 +89,12 @@ export async function appellantCasePage(appellantCaseData, appealDetails, curren
 		(/** @type {SummaryListRowProperties} */ row) => removeSummaryListActions(row)
 	);
 
+	const userHasUpdateCase = userHasPermission(permissionNames.updateCase, session);
 	const appealTypeSpecificComponents = generateCaseTypeSpecificComponents(
 		appealDetails,
 		appellantCaseData,
-		mappedAppellantCaseData
+		mappedAppellantCaseData,
+		userHasUpdateCase
 	);
 
 	const reviewOutcomeRadiosInputInstruction =
@@ -111,7 +115,8 @@ export async function appellantCasePage(appellantCaseData, appealDetails, curren
 
 	if (
 		reviewOutcomeRadiosInputInstruction &&
-		appealDetails.appealStatus === APPEAL_CASE_STATUS.VALIDATION
+		appealDetails.appealStatus === APPEAL_CASE_STATUS.VALIDATION &&
+		userHasPermission(permissionNames.setStageOutcome, session)
 	) {
 		reviewOutcomeComponents.push({
 			type: 'radios',
@@ -178,12 +183,7 @@ export async function appellantCasePage(appellantCaseData, appealDetails, curren
 		]
 	};
 
-	if (
-		!session.account.idTokenClaims.groups.includes(
-			config.referenceData.appeals.caseOfficerGroupId,
-			config.referenceData.appeals.inspectorGroupId
-		)
-	) {
+	if (!userHasPermission(permissionNames.updateCase, session)) {
 		pageContent.pageComponents?.forEach((component) => {
 			if ('rows' in component.parameters && Array.isArray(component.parameters.rows)) {
 				component.parameters.rows = component.parameters.rows.map((row) =>
@@ -649,19 +649,31 @@ function getDocumentsForVirusStatus(appellantCaseData, virusStatus) {
  * @param {Appeal} appealDetails
  * @param {SingleAppellantCaseResponse} appellantCaseData
  * @param {MappedInstructions} mappedAppellantCaseData
+ * @param {boolean} userHasUpdateCasePermission
  * @returns {PageComponent[]}
  */
 function generateCaseTypeSpecificComponents(
 	appealDetails,
 	appellantCaseData,
-	mappedAppellantCaseData
+	mappedAppellantCaseData,
+	userHasUpdateCasePermission
 ) {
 	switch (appealDetails.appealType) {
 		case APPEAL_TYPE.D:
-			return generateHASComponents(appealDetails, appellantCaseData, mappedAppellantCaseData);
+			return generateHASComponents(
+				appealDetails,
+				appellantCaseData,
+				mappedAppellantCaseData,
+				userHasUpdateCasePermission
+			);
 		case APPEAL_TYPE.W:
 			if (isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78)) {
-				return generateFPAComponents(appealDetails, appellantCaseData, mappedAppellantCaseData);
+				return generateFPAComponents(
+					appealDetails,
+					appellantCaseData,
+					mappedAppellantCaseData,
+					userHasUpdateCasePermission
+				);
 			} else {
 				throw new Error('Feature flag inactive for S78');
 			}

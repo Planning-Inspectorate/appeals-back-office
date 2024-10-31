@@ -1,9 +1,9 @@
 import { Router as createRouter } from 'express';
-import config from '#environment/config.js';
 import { asyncHandler } from '@pins/express';
-import { assertGroupAccess } from '#app/auth/auth.guards.js';
+import { assertUserHasPermission } from '#app/auth/auth.guards.js';
 import * as controller from './assign-user.controller.js';
 import * as validators from './assign-user.validator.js';
+import { permissionNames } from '#environment/permissions.js';
 
 const assignUserRouter = createRouter({ mergeParams: true });
 
@@ -11,10 +11,7 @@ assignUserRouter
 	.route('/case-officer')
 	.get(asyncHandler(controller.getAssignCaseOfficer))
 	.post(
-		assertGroupAccess(
-			config.referenceData.appeals.caseOfficerGroupId,
-			config.referenceData.appeals.inspectorGroupId
-		),
+		assertUserHasPermission(permissionNames.updateCase),
 		validators.validateSearchTerm,
 		asyncHandler(controller.postAssignCaseOfficer)
 	);
@@ -23,10 +20,7 @@ assignUserRouter
 	.route('/inspector')
 	.get(asyncHandler(controller.getAssignInspector))
 	.post(
-		assertGroupAccess(
-			config.referenceData.appeals.caseOfficerGroupId,
-			config.referenceData.appeals.inspectorGroupId
-		),
+		assertUserHasPermission(permissionNames.updateCase),
 		validators.validateSearchTerm,
 		asyncHandler(controller.postAssignInspector)
 	);
@@ -35,10 +29,7 @@ assignUserRouter
 	.route('/case-officer/:assigneeId/confirm')
 	.get(asyncHandler(controller.getAssignCaseOfficerCheckAndConfirm))
 	.post(
-		assertGroupAccess(
-			config.referenceData.appeals.caseOfficerGroupId,
-			config.referenceData.appeals.inspectorGroupId
-		),
+		assertUserHasPermission(permissionNames.updateCase),
 		validators.validatePostConfirmation(),
 		asyncHandler(controller.postAssignCaseOfficerCheckAndConfirm)
 	);
@@ -47,10 +38,7 @@ assignUserRouter
 	.route('/inspector/:assigneeId/confirm')
 	.get(asyncHandler(controller.getAssignInspectorCheckAndConfirm))
 	.post(
-		assertGroupAccess(
-			config.referenceData.appeals.caseOfficerGroupId,
-			config.referenceData.appeals.inspectorGroupId
-		),
+		assertUserHasPermission(permissionNames.updateCase),
 		validators.validatePostConfirmation(false, true),
 		asyncHandler(controller.postAssignInspectorCheckAndConfirm)
 	);
@@ -61,10 +49,7 @@ unassignUserRouter
 	.route('/inspector/:assigneeId/confirm')
 	.get(asyncHandler(controller.getUnassignInspectorCheckAndConfirm))
 	.post(
-		assertGroupAccess(
-			config.referenceData.appeals.caseOfficerGroupId,
-			config.referenceData.appeals.inspectorGroupId
-		),
+		assertUserHasPermission(permissionNames.updateCase),
 		validators.validatePostConfirmation(true, true),
 		asyncHandler(controller.postUnassignInspectorCheckAndConfirm)
 	);
@@ -75,10 +60,7 @@ assignNewUserRouter
 	.route('/case-officer')
 	.get(asyncHandler(controller.getAssignNewCaseOfficer))
 	.post(
-		assertGroupAccess(
-			config.referenceData.appeals.caseOfficerGroupId,
-			config.referenceData.appeals.inspectorGroupId
-		),
+		assertUserHasPermission(permissionNames.updateCase),
 		validators.validateNewUserPostConfirmation(),
 		asyncHandler(controller.postAssignNewCaseOfficer)
 	);
@@ -87,10 +69,7 @@ assignNewUserRouter
 	.route('/inspector')
 	.get(asyncHandler(controller.getAssignNewInspector))
 	.post(
-		assertGroupAccess(
-			config.referenceData.appeals.caseOfficerGroupId,
-			config.referenceData.appeals.inspectorGroupId
-		),
+		assertUserHasPermission(permissionNames.updateCase),
 		validators.validateNewUserPostConfirmation(true),
 		asyncHandler(controller.postAssignNewInspector)
 	);

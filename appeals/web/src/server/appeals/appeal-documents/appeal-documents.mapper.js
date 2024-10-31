@@ -1142,6 +1142,7 @@ function mapDocumentNameHtmlProperty(document, documentVersion) {
  * @param {import('@pins/express/types/express.js').Request} params.request
  * @param {string} [params.pageTitleTextOverride]
  * @param {string} [params.dateRowLabelTextOverride]
+ * @param {boolean} [params.editable]
  * @returns {Promise<PageContent>}
  */
 export async function manageDocumentPage({
@@ -1153,7 +1154,8 @@ export async function manageDocumentPage({
 	folder,
 	request,
 	pageTitleTextOverride,
-	dateRowLabelTextOverride
+	dateRowLabelTextOverride,
+	editable
 }) {
 	const changeDetailsUrl = request.originalUrl.replace(
 		'manage-documents',
@@ -1219,11 +1221,15 @@ export async function manageDocumentPage({
 					value: mapVersionDocumentInformationHtmlProperty(document, latestVersion),
 					actions: {
 						items: [
-							{
-								text: 'Change',
-								href: changeNameUrl,
-								visuallyHiddenText: `${document.name} name`
-							}
+							...(editable
+								? [
+										{
+											text: 'Change',
+											href: changeNameUrl,
+											visuallyHiddenText: `${document.name} name`
+										}
+								  ]
+								: [])
 						]
 					}
 				},
@@ -1275,11 +1281,15 @@ export async function manageDocumentPage({
 							  },
 					actions: {
 						items: [
-							{
-								text: 'Change',
-								href: changeDetailsUrl,
-								visuallyHiddenText: `${document.name} date received`
-							}
+							...(editable
+								? [
+										{
+											text: 'Change',
+											href: changeDetailsUrl,
+											visuallyHiddenText: `${document.name} date received`
+										}
+								  ]
+								: [])
 						]
 					}
 				},
@@ -1290,11 +1300,15 @@ export async function manageDocumentPage({
 					},
 					actions: {
 						items: [
-							{
-								text: 'Change',
-								href: changeDetailsUrl,
-								visuallyHiddenText: `${document.name} redaction status`
-							}
+							...(editable
+								? [
+										{
+											text: 'Change',
+											href: changeDetailsUrl,
+											visuallyHiddenText: `${document.name} redaction status`
+										}
+								  ]
+								: [])
 						]
 					}
 				}
@@ -1340,8 +1354,10 @@ export async function manageDocumentPage({
 			}
 		};
 
-		pageComponents.push(uploadUpdatedDocumentButton);
-		pageComponents.push(removeDocumentButton);
+		if (editable) {
+			pageComponents.push(uploadUpdatedDocumentButton);
+			pageComponents.push(removeDocumentButton);
+		}
 	}
 
 	/** @type {PageComponent} */
@@ -1400,7 +1416,7 @@ export async function manageDocumentPage({
 									},
 									{
 										html:
-											documentVersion.isDeleted || !versionVirusCheckStatus.checked
+											documentVersion.isDeleted || !versionVirusCheckStatus.checked || !editable
 												? ''
 												: `<a class="govuk-link" href="${removeDocumentUrl
 														?.replace('{{folderId}}', folder.folderId.toString())

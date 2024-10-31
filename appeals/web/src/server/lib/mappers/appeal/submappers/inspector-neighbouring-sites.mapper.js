@@ -1,7 +1,9 @@
+import { permissionNames } from '#environment/permissions.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
+import { userHasPermission } from '#lib/mappers/permissions.mapper.js';
 
 /** @type {import('../appeal.mapper.js').SubMapper} */
-export const mapInspectorNeighbouringSites = ({ appealDetails, currentRoute }) => ({
+export const mapInspectorNeighbouringSites = ({ appealDetails, currentRoute, session }) => ({
 	id: 'neighbouring-sites-inspector',
 	display: {
 		summaryListItem: {
@@ -18,7 +20,9 @@ export const mapInspectorNeighbouringSites = ({ appealDetails, currentRoute }) =
 			},
 			actions: {
 				items: [
-					...(appealDetails.neighbouringSites && appealDetails.neighbouringSites.length > 0
+					...(appealDetails.neighbouringSites &&
+					appealDetails.neighbouringSites.length > 0 &&
+					userHasPermission(permissionNames.updateCase, session)
 						? [
 								{
 									text: 'Manage',
@@ -28,12 +32,16 @@ export const mapInspectorNeighbouringSites = ({ appealDetails, currentRoute }) =
 								}
 						  ]
 						: []),
-					{
-						text: 'Add',
-						href: `${currentRoute}/neighbouring-sites/add/back-office`,
-						visuallyHiddenText: 'Neighbouring sites (inspector and or third party request)',
-						attributes: { 'data-cy': 'add-neighbouring-sites-inspector' }
-					}
+					...(userHasPermission(permissionNames.updateCase, session)
+						? [
+								{
+									text: 'Add',
+									href: `${currentRoute}/neighbouring-sites/add/back-office`,
+									visuallyHiddenText: 'Neighbouring sites (inspector and or third party request)',
+									attributes: { 'data-cy': 'add-neighbouring-sites-inspector' }
+								}
+						  ]
+						: [])
 				]
 			},
 			classes: 'appeal-neighbouring-sites-inspector'

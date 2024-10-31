@@ -1,7 +1,11 @@
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
 
 /** @type {import('../appeal.mapper.js').SubMapper} */
-export const mapLpaNeighbouringSites = ({ appealDetails, currentRoute }) => ({
+export const mapLpaNeighbouringSites = ({
+	appealDetails,
+	currentRoute,
+	userHasUpdateCasePermission
+}) => ({
 	id: 'neighbouring-sites-lpa',
 	display: {
 		summaryListItem: {
@@ -18,7 +22,9 @@ export const mapLpaNeighbouringSites = ({ appealDetails, currentRoute }) => ({
 			},
 			actions: {
 				items: [
-					...(appealDetails.neighbouringSites && appealDetails.neighbouringSites.length > 0
+					...(appealDetails.neighbouringSites &&
+					appealDetails.neighbouringSites.length > 0 &&
+					userHasUpdateCasePermission
 						? [
 								{
 									text: 'Manage',
@@ -27,12 +33,16 @@ export const mapLpaNeighbouringSites = ({ appealDetails, currentRoute }) => ({
 								}
 						  ]
 						: []),
-					{
-						text: 'Add',
-						href: `${currentRoute}/neighbouring-sites/add/lpa`,
-						visuallyHiddenText: 'Neighbouring sites (LPA)',
-						attributes: { 'data-cy': 'add-neighbouring-site-lpa' }
-					}
+					...(userHasUpdateCasePermission
+						? [
+								{
+									text: 'Add',
+									href: `${currentRoute}/neighbouring-sites/add/lpa`,
+									visuallyHiddenText: 'Neighbouring sites (LPA)',
+									attributes: { 'data-cy': 'add-neighbouring-site-lpa' }
+								}
+						  ]
+						: [])
 				]
 			},
 			classes: 'appeal-neighbouring-sites-inspector'

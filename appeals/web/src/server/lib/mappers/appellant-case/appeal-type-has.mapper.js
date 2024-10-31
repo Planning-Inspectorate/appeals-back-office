@@ -16,9 +16,15 @@ import * as displayPageFormatter from '#lib/display-page-formatter.js';
  * @param {Appeal} appealDetails
  * @param {SingleAppellantCaseResponse} appellantCaseData
  * @param {MappedInstructions} mappedAppellantCaseData
+ * @param {boolean} userHasUpdateCasePermission
  * @returns {PageComponent[]}
  */
-export function generateHASComponents(appealDetails, appellantCaseData, mappedAppellantCaseData) {
+export function generateHASComponents(
+	appealDetails,
+	appellantCaseData,
+	mappedAppellantCaseData,
+	userHasUpdateCasePermission
+) {
 	/**
 	 * @type {PageComponent}
 	 */
@@ -173,26 +179,34 @@ export function generateHASComponents(appealDetails, appellantCaseData, mappedAp
 											appellantCaseData.documents.appellantCaseCorrespondence.folderId
 										)
 									},
-									{
-										text: 'Add',
-										visuallyHiddenText: 'additional documents',
-										href: displayPageFormatter.formatDocumentActionLink(
-											appellantCaseData.appealId,
-											appellantCaseData.documents.appellantCaseCorrespondence,
-											documentUploadUrlTemplate
-										)
-									}
+									...(userHasUpdateCasePermission
+										? [
+												{
+													text: 'Add',
+													visuallyHiddenText: 'additional documents',
+													href: displayPageFormatter.formatDocumentActionLink(
+														appellantCaseData.appealId,
+														appellantCaseData.documents.appellantCaseCorrespondence,
+														documentUploadUrlTemplate
+													)
+												}
+										  ]
+										: [])
 							  ]
 							: [
-									{
-										text: 'Add',
-										visuallyHiddenText: 'additional documents',
-										href: displayPageFormatter.formatDocumentActionLink(
-											appellantCaseData.appealId,
-											appellantCaseData.documents.appellantCaseCorrespondence,
-											documentUploadUrlTemplate
-										)
-									}
+									...(userHasUpdateCasePermission
+										? [
+												{
+													text: 'Add',
+													visuallyHiddenText: 'additional documents',
+													href: displayPageFormatter.formatDocumentActionLink(
+														appellantCaseData.appealId,
+														appellantCaseData.documents.appellantCaseCorrespondence,
+														documentUploadUrlTemplate
+													)
+												}
+										  ]
+										: [])
 							  ]
 				}
 			},
