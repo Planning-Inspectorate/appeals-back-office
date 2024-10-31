@@ -1090,7 +1090,7 @@ exports[`linked-appeals POST /change-appeal-type/unlink-appeal should re-render 
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#unlinkAppeal">Please choose an option</a>
+                            <li><a href="#unlink-appeal">Please choose an option</a>
                             </li>
                         </ul>
                     </div>

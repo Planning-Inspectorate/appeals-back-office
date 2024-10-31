@@ -86,7 +86,7 @@ exports[`affected-listed-building POST /add should re-render the add affected li
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#affectedListedBuilding">Provide a listed building entry list number</a>
+                            <li><a href="#affected-listed-building">Provide a listed building entry list number</a>
                             </li>
                         </ul>
                     </div>
@@ -120,7 +120,7 @@ exports[`affected-listed-building POST /change/:listedBuildingId should re-rende
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#affectedListedBuilding">Provide a listed building entry list number</a>
+                            <li><a href="#affected-listed-building">Provide a listed building entry list number</a>
                             </li>
                         </ul>
                     </div>
