@@ -6,6 +6,7 @@ import { householdAppeal } from '#tests/appeals/mocks.js';
 import { documentCreated } from '#tests/documents/mocks.js';
 import config from '#config/config.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { ERROR_CANNOT_BE_EMPTY_STRING } from '#endpoints/constants.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 
@@ -35,7 +36,7 @@ describe('invalid appeal decision routes', () => {
 			expect(response.status).toEqual(400);
 			expect(response.body).toEqual({
 				errors: {
-					invalidDecisionReason: 'invalidDecisionReason required'
+					invalidDecisionReason: ERROR_CANNOT_BE_EMPTY_STRING
 				}
 			});
 		});
