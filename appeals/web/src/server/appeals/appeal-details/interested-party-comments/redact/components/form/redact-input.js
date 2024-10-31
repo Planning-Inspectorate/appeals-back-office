@@ -1,12 +1,6 @@
 import { simpleHtmlComponent } from '#lib/mappers/components/html.js';
 
-/** @typedef {import("../../../../../../appeals/appeal-details/interested-party-comments/interested-party-comments.types.js").Representation} Representation */
-
-const redactedSubheadingMarkup = `
-<h3>	
-  Redacted comment
-</h3>
-`;
+/** @typedef {import("#appeals/appeal-details/interested-party-comments/interested-party-comments.types.js").Representation} Representation */
 
 /**
  * @param {Representation} comment
@@ -14,7 +8,11 @@ const redactedSubheadingMarkup = `
  * @returns {PageComponent[]}
  */
 export const redactInput = (comment, session) => [
-	simpleHtmlComponent(redactedSubheadingMarkup),
+	simpleHtmlComponent(`
+    <h3>	
+      Redacted comment
+    </h3>
+`),
 	{
 		type: 'textarea',
 		parameters: {

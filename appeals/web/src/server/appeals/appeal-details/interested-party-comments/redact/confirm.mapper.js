@@ -1,5 +1,5 @@
-/** @typedef {import("../../../../appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
-/** @typedef {import("../../../../appeals/appeal-details/interested-party-comments/interested-party-comments.types.js").Representation} Representation */
+/** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
+/** @typedef {import("#appeals/appeal-details/interested-party-comments/interested-party-comments.types.js").Representation} Representation */
 
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
@@ -15,20 +15,7 @@ export const confirmRedactInterestedPartyCommentPage = (appealDetails, comment, 
 	const shortReference = appealShortReference(appealDetails.appealReference);
 
 	/** @type {PageComponent[]} */
-	const pageComponents = [
-		summaryList(appealDetails, comment, session),
-		{
-			type: 'button',
-			parameters: {
-				text: 'Confirm redaction and accept comment',
-				type: 'submit'
-			},
-			wrapperHtml: {
-				opening: '<div class="govuk-button-group"><form method="POST">',
-				closing: '</form></div>'
-			}
-		}
-	];
+	const pageComponents = [summaryList(appealDetails, comment, session)];
 
 	preRenderPageComponents(pageComponents);
 
@@ -39,6 +26,8 @@ export const confirmRedactInterestedPartyCommentPage = (appealDetails, comment, 
 		preHeading: `Appeal ${shortReference}`,
 		heading: `Redact comment from ${comment.author}`,
 		headingClasses: 'govuk-heading-l',
+		forceRenderSubmitButton: true,
+		submitButtonText: 'Confirm redaction and accept comment',
 		pageComponents
 	};
 

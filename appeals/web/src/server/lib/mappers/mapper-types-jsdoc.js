@@ -332,6 +332,7 @@
  * @property {ButtonProperties} [submitButtonProperties]
  * @property {string} [skipButtonUrl]
  * @property {PageComponent[]} [pageComponents]
+ * @property {boolean} [forceRenderSubmitButton]
  */
 
 /**

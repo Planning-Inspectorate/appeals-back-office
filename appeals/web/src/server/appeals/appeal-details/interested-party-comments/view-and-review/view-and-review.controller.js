@@ -4,6 +4,7 @@ import {
 	mapRejectionReasonPayload
 } from '#lib/mappers/page-components/interested-party-comments/view-and-review/reject.mapper.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 import {
 	rejectInterestedPartyCommentPage,
 	reviewInterestedPartyCommentPage,
@@ -32,6 +33,7 @@ export const render = (contentMapper, templatePath) => (request, response) => {
 	}
 
 	const pageContent = contentMapper(currentAppeal, currentComment, session);
+	console.log('🚀 ~ render ~ pageContent:', pageContent);
 
 	return response.status(200).render(templatePath, {
 		errors,
@@ -112,7 +114,7 @@ export const postReviewInterestedPartyComment = async (request, response) => {
 			});
 		}
 
-		if (status === 'valid_requires_redaction') {
+		if (status === COMMENT_STATUS.VALID_REQUIRES_REDACTION) {
 			return response.redirect(
 				`/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/redact`
 			);
