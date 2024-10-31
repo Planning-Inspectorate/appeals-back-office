@@ -31,7 +31,7 @@ const renderChangeIsGypsyOrTravellerSite = async (request, response) => {
 			convertFromYesNoNullToBooleanOrNull(session.hasProtectedSpecies) ?? data.hasProtectedSpecies;
 		const mappedPageContents = mapper.changeIsGypsyOrTravellerSite(
 			currentAppeal,
-			currentRadioValue?.toString() || '',
+			currentRadioValue,
 			origin
 		);
 

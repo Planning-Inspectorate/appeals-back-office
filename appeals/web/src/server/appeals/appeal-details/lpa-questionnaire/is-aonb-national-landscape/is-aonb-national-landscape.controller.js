@@ -32,7 +32,7 @@ const renderChangeIsAonbNationalLandscape = async (request, response) => {
 			data.isAonbNationalLandscape;
 		const mappedPageContents = mapper.changeIsAonbNationalLandscape(
 			currentAppeal,
-			currentRadioValue?.toString() || '',
+			currentRadioValue,
 			origin
 		);
 

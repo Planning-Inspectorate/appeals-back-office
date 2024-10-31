@@ -11,9 +11,8 @@ export const mapLpaQuestionnaireDueDate = ({
 		id: 'lpa-questionnaire-due-date',
 		text: 'LPA questionnaire due',
 		value:
-			dateISOStringToDisplayDate(appealDetails.appealTimetable?.lpaQuestionnaireDueDate) ||
-			'Due date not yet set',
+			dateISOStringToDisplayDate(appealDetails.appealTimetable?.lpaQuestionnaireDueDate) || '',
 		link: `${currentRoute}/appeal-timetables/lpa-questionnaire`,
-		editable: userHasUpdateCasePermission,
+		editable: Boolean(userHasUpdateCasePermission && appealDetails.validAt),
 		classes: 'appeal-lpa-questionnaire-due-date'
 	});

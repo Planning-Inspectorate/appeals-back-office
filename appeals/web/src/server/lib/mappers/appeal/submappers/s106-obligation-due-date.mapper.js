@@ -1,30 +1,13 @@
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
+import { textSummaryListItem } from '#lib/mappers/components/text.js';
 
 /** @type {import('../appeal.mapper.js').SubMapper} */
-export const mapS106ObligationDue = ({ appealDetails, currentRoute }) => ({
-	id: 's106-obligation-due-date',
-	display: {
-		summaryListItem: {
-			key: {
-				text: 'S106 obligation due'
-			},
-			value: {
-				html: dateISOStringToDisplayDate(appealDetails.appealTimetable?.s106ObligationDueDate) || ''
-			},
-			actions: {
-				items: [
-					appealDetails.validAt
-						? {
-								text: 'Change',
-								href: `${currentRoute}/appeal-timetables/s106-obligation`,
-								visuallyHiddenText:
-									'The date all case documentation was received and the appeal was valid',
-								attributes: { 'data-cy': 'change-s106-obligation-due-date' }
-						  }
-						: {}
-				]
-			},
-			classes: 'appeal-s106-obligation-due-date'
-		}
-	}
-});
+export const mapS106ObligationDue = ({ appealDetails, currentRoute, userHasUpdateCasePermission }) =>
+	textSummaryListItem({
+		id: 's106-obligation-due-date',
+		text: 'S106 obligation due',
+		value: dateISOStringToDisplayDate(appealDetails.appealTimetable?.s106ObligationDueDate) || '',
+		link: `${currentRoute}/appeal-timetables/s106-obligation`,
+		editable: Boolean(userHasUpdateCasePermission && appealDetails.validAt),
+		classes: 's106-obligation-due-date'
+	});

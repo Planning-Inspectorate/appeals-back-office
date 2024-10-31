@@ -32,7 +32,7 @@ const renderChangeAffectsScheduledMonument = async (request, response) => {
 			data.affectsScheduledMonument;
 		const mappedPageContents = mapper.changeAffectsScheduledMonument(
 			currentAppeal,
-			currentRadioValue?.toString() || '',
+			currentRadioValue ?? null,
 			origin
 		);
 

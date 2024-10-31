@@ -12,7 +12,7 @@ export const mapIssueDeterminationDate = ({
 		text: 'Issue determination',
 		value:
 			dateISOStringToDisplayDate(appealDetails.appealTimetable?.issueDeterminationDate) ||
-			'Due date not yet set',
+			'',
 		link: `${currentRoute}/appeal-timetables/issue-determination`,
 		editable: userHasUpdateCasePermission,
 		actionText: appealDetails.appealTimetable?.issueDeterminationDate ? 'Change' : 'Schedule',

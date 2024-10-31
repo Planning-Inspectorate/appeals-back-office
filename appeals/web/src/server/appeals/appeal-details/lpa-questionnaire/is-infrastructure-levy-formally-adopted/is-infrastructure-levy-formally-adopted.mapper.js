@@ -6,7 +6,7 @@ import { yesNoInput } from '#lib/mappers/components/radio.js';
 
 /**
  * @param {Appeal} appealData
- * @param {boolean|null} existingValue
+ * @param {boolean|null|undefined} existingValue
  * @param {string} backLinkUrl
  * @returns {PageContent}
  */

@@ -19,7 +19,7 @@ exports[`lpa-changed-description GET /change should render developmentDescriptio
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="lpaChangedDescriptionRadio-2" name="lpaChangedDescriptionRadio"
-                            type="radio" value="no" checked>
+                            type="radio" value="no">
                             <label class="govuk-label govuk-radios__label" for="lpaChangedDescriptionRadio-2">No</label>
                         </div>
                     </div>
