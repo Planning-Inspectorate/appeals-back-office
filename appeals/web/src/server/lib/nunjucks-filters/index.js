@@ -8,7 +8,6 @@ export {
 	groupBy,
 	has,
 	includes,
-	kebabCase,
 	keys,
 	lowerCase,
 	split

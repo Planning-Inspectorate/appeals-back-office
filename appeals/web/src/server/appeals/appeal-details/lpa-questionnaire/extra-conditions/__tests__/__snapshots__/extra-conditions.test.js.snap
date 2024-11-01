@@ -48,7 +48,7 @@ exports[`extra-conditions POST /change should re-render the change extra conditi
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#extra-conditions-details">Enter extra conditions details</a>
+                            <li><a href="#extraConditionsDetails">Enter extra conditions details</a>
                             </li>
                         </ul>
                     </div>
@@ -98,7 +98,7 @@ exports[`extra-conditions should re-render the change extra conditions page with
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#extra-conditions-details">Extra conditions details must be 1000 characters or less</a>
+                            <li><a href="#extraConditionsDetails">Extra conditions details must be 1000 characters or less</a>
                             </li>
                         </ul>
                     </div>
