@@ -1,10 +1,10 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 
-/** @typedef {import("../../../../../appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
-/** @typedef {import("../../../../../appeals/appeal-details/interested-party-comments/interested-party-comments.types.js").Representation} Representation */
-/** @typedef {import("../../../../../appeals/appeal-details/interested-party-comments/interested-party-comments.types.js").RepresentationRejectionReason} RepresentationRejectionReason */
-/** @typedef {import("../../../../../appeals/appeal-details/interested-party-comments/interested-party-comments.types.js").RejectionReasonUpdateInput} RejectionReasonUpdateInput */
-/** @typedef {import("../../../../../appeals/appeal-details/interested-party-comments/interested-party-comments.types.js").RejectionReasons} RejectionReasons */
+/** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
+/** @typedef {import("#appeals/appeal-details/interested-party-comments/interested-party-comments.types.js").Representation} Representation */
+/** @typedef {import("#appeals/appeal-details/interested-party-comments/interested-party-comments.types.js").RepresentationRejectionReason} RepresentationRejectionReason */
+/** @typedef {import("#appeals/appeal-details/interested-party-comments/interested-party-comments.types.js").RejectionReasonUpdateInput} RejectionReasonUpdateInput */
+/** @typedef {import("#appeals/appeal-details/interested-party-comments/interested-party-comments.types.js").RejectionReasons} RejectionReasons */
 
 /**
  * @param {Appeal} appealDetails
@@ -27,7 +27,7 @@ export function rejectInterestedPartyCommentPage(appealDetails) {
 /**
  * @param {Representation} comment - The comment containing the selected rejection reasons.
  * @param {RepresentationRejectionReason[]} rejectionReasonOptions - The available rejection reason options.
- * @returns {import('../../../../../appeals/appeals.types.js').CheckboxItemParameter[]}
+ * @returns {import('../../../../appeals.types.js').CheckboxItemParameter[]}
  */
 export function mapRejectionReasonOptionsToCheckboxItemParameters(comment, rejectionReasonOptions) {
 	const existingReasonIds = comment.rejectionReasons.map((reason) => reason.id);
