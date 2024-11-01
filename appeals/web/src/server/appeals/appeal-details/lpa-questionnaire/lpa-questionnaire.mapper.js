@@ -23,6 +23,8 @@ import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.
 import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 import { isFeatureActive } from '#common/feature-flags.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { userHasPermission } from '#lib/mappers/permissions.mapper.js';
+import { permissionNames } from '#environment/permissions.js';
 
 /**
  * @typedef {import('@pins/appeals.api').Appeals.SingleLPAQuestionnaireResponse} LPAQuestionnaire
@@ -125,7 +127,8 @@ export async function lpaQuestionnairePage(lpaqDetails, appealDetails, currentRo
 	const reviewOutcomeComponents = [];
 	if (
 		reviewOutcomeRadiosInputInstruction &&
-		appealDetails.appealStatus === APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE
+		appealDetails.appealStatus === APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE &&
+		userHasPermission(permissionNames.setStageOutcome, session)
 	) {
 		reviewOutcomeComponents.push({
 			type: 'html',

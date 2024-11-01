@@ -1,7 +1,11 @@
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 /** @type {import('../appeal.mapper.js').SubMapper} */
-export const mapAppealWithdrawal = ({ appealDetails, currentRoute }) => {
+export const mapAppealWithdrawal = ({
+	appealDetails,
+	currentRoute,
+	userHasUpdateCasePermission
+}) => {
 	const appealHasWithdrawalDocuments =
 		appealDetails?.withdrawal?.withdrawalFolder?.documents?.filter(
 			(document) => document.latestDocumentVersion?.isDeleted === false
@@ -14,11 +18,13 @@ export const mapAppealWithdrawal = ({ appealDetails, currentRoute }) => {
 					href: `${currentRoute}/withdrawal/view`,
 					visuallyHiddenText: 'View appeal withdrawal'
 			  }
-			: {
+			: userHasUpdateCasePermission
+			? {
 					text: 'Start',
 					href: `${currentRoute}/withdrawal/start`,
 					visuallyHiddenText: 'Start appeal withdrawal'
-			  };
+			  }
+			: undefined;
 
 	return {
 		id: 'appeal-withdrawal',

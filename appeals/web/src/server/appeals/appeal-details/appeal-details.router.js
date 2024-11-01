@@ -62,7 +62,7 @@ router.use('/:appealId/interested-party-comments', interestedPartyCommentsRouter
 router.use(
 	'/:appealId/site-visit',
 	validateAppeal,
-	assertUserHasPermission(permissionNames.updateCase),
+	assertUserHasPermission(permissionNames.viewCaseDetails),
 	siteVisitRouter
 );
 router.use(
@@ -92,7 +92,7 @@ router.use(
 router.use(
 	'/:appealId/issue-decision',
 	validateAppeal,
-	assertUserHasPermission(permissionNames.updateCase),
+	assertUserHasPermission(permissionNames.viewCaseList),
 	issueDecisionRouter
 );
 router.use(
@@ -124,7 +124,7 @@ router.use(
 router.use(
 	'/:appealId/costs',
 	validateAppeal,
-	assertUserHasPermission(permissionNames.updateCase),
+	assertUserHasPermission(permissionNames.viewCaseDetails, permissionNames.viewAssignedCaseDetails),
 	costsRouter
 );
 
@@ -155,7 +155,7 @@ router.use(
 router.use(
 	'/:appealId/internal-correspondence',
 	validateAppeal,
-	assertUserHasPermission(permissionNames.updateCase),
+	assertUserHasPermission(permissionNames.viewCaseDetails, permissionNames.viewAssignedCaseDetails),
 	internalCorrespondenceRouter
 );
 router.use(

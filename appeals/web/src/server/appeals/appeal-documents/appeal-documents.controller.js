@@ -31,6 +31,8 @@ import { isFileUploadInfoItemArray } from '#lib/ts-utilities.js';
 import { getTodaysISOString } from '#lib/dates.js';
 import { folderIsAdditionalDocuments } from '#lib/documents.js';
 import { APPEAL_REDACTED_STATUS } from 'pins-data-model';
+import { userHasPermission } from '#lib/mappers/permissions.mapper.js';
+import { permissionNames } from '#environment/permissions.js';
 
 /**
  * @param {Object} params
@@ -315,7 +317,8 @@ export const renderManageDocument = async ({
 		folder: currentFolder,
 		request,
 		pageTitleTextOverride,
-		dateRowLabelTextOverride
+		dateRowLabelTextOverride,
+		editable: userHasPermission(permissionNames.updateCase, request.session)
 	});
 
 	return response.status(200).render('appeals/documents/manage-document.njk', {
@@ -503,10 +506,12 @@ export const postUploadDocumentsCheckAndConfirm = async ({
 		} = request;
 
 		const redactionStatuses = await getDocumentRedactionStatuses(request.apiClient);
-		const noRedactionRequiredStatusId = redactionStatuses?.find(status => status.key === APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED)?.id;
+		const noRedactionRequiredStatusId = redactionStatuses?.find(
+			(status) => status.key === APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED
+		)?.id;
 
 		if (!noRedactionRequiredStatusId) {
-			throw new Error('Redaction status not found.');
+			throw new Error('Default redaction status not found.');
 		}
 
 		/** @type {import('@pins/appeals/index.js').AddDocumentsRequest} */

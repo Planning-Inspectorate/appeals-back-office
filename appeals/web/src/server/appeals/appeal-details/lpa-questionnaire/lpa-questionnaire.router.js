@@ -1,11 +1,9 @@
 import { Router as createRouter } from 'express';
-import config from '#environment/config.js';
 import { asyncHandler } from '@pins/express';
 import * as controller from './lpa-questionnaire.controller.js';
 import * as validators from './lpa-questionnaire.validators.js';
 import * as documentsValidators from '../../appeal-documents/appeal-documents.validators.js';
 import outcomeIncompleteRouter from './outcome-incomplete/outcome-incomplete.router.js';
-import { assertGroupAccess } from '../../../app/auth/auth.guards.js';
 import { validateAppeal } from '../appeal-details.middleware.js';
 import { assertUserHasPermission } from '#app/auth/auth.guards.js';
 import { permissionNames } from '#environment/permissions.js';
@@ -153,10 +151,6 @@ router
 		validateAppeal,
 		assertUserHasPermission(permissionNames.updateCase),
 		validators.validateReviewOutcome,
-		assertGroupAccess(
-			config.referenceData.appeals.caseOfficerGroupId,
-			config.referenceData.appeals.inspectorGroupId
-		),
 		asyncHandler(controller.postLpaQuestionnaire)
 	);
 router
@@ -169,10 +163,6 @@ router
 	.post(
 		validateAppeal,
 		assertUserHasPermission(permissionNames.updateCase),
-		assertGroupAccess(
-			config.referenceData.appeals.caseOfficerGroupId,
-			config.referenceData.appeals.inspectorGroupId
-		),
 		asyncHandler(controller.postCheckAndConfirm)
 	);
 
@@ -200,11 +190,13 @@ router
 	.get(
 		validateAppeal,
 		validateCaseFolderId,
+		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.getAddDocumentsCheckAndConfirm)
 	)
 	.post(
 		validateAppeal,
 		validateCaseFolderId,
+		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.postAddDocumentsCheckAndConfirm)
 	);
 
@@ -212,23 +204,29 @@ router
 	.route('/:lpaQuestionnaireId/add-documents/:folderId/:documentId')
 	.get(
 		validateAppeal,
-		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		validateCaseDocumentId,
 		asyncHandler(controller.getAddDocumentVersion)
 	)
-	.post(validateAppeal, validateCaseFolderId, asyncHandler(controller.postAddDocumentVersion));
+	.post(
+		validateAppeal,
+		validateCaseFolderId,
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncHandler(controller.postAddDocumentVersion)
+	);
 
 router
 	.route('/:lpaQuestionnaireId/add-documents/:folderId/:documentId/check-your-answers')
 	.get(
 		validateAppeal,
 		validateCaseFolderId,
+		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.getAddDocumentsCheckAndConfirm)
 	)
 	.post(
 		validateAppeal,
 		validateCaseFolderId,
+		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.postAddDocumentVersionCheckAndConfirm)
 	);
 
@@ -249,10 +247,6 @@ router
 		documentsValidators.validateDocumentDetailsReceivedDateValid,
 		documentsValidators.validateDocumentDetailsReceivedDateIsNotFutureDate,
 		documentsValidators.validateDocumentDetailsRedactionStatuses,
-		assertGroupAccess(
-			config.referenceData.appeals.caseOfficerGroupId,
-			config.referenceData.appeals.inspectorGroupId
-		),
 		asyncHandler(controller.postAddDocumentDetails)
 	);
 
@@ -273,17 +267,13 @@ router
 		documentsValidators.validateDocumentDetailsReceivedDateValid,
 		documentsValidators.validateDocumentDetailsReceivedDateIsNotFutureDate,
 		documentsValidators.validateDocumentDetailsRedactionStatuses,
-		assertGroupAccess(
-			config.referenceData.appeals.caseOfficerGroupId,
-			config.referenceData.appeals.inspectorGroupId
-		),
 		asyncHandler(controller.postDocumentVersionDetails)
 	);
 
 router
 	.route('/:lpaQuestionnaireId/manage-documents/:folderId/')
 	.get(
-		assertUserHasPermission(permissionNames.updateCase),
+		assertUserHasPermission(permissionNames.viewCaseDetails),
 		validateCaseFolderId,
 		asyncHandler(controller.getManageFolder)
 	);
@@ -292,7 +282,7 @@ router
 	.route('/:lpaQuestionnaireId/manage-documents/:folderId/:documentId')
 	.get(
 		validateAppeal,
-		assertUserHasPermission(permissionNames.updateCase),
+		assertUserHasPermission(permissionNames.viewCaseDetails),
 		validateCaseFolderId,
 		validateCaseDocumentId,
 		asyncHandler(controller.getManageDocument)
@@ -319,10 +309,6 @@ router
 		validateCaseFolderId,
 		documentsValidators.validateDocumentNameBodyFormat,
 		documentsValidators.validateDocumentName,
-		assertGroupAccess(
-			config.referenceData.appeals.caseOfficerGroupId,
-			config.referenceData.appeals.inspectorGroupId
-		),
 		asyncHandler(controller.postChangeDocumentFileNameDetails)
 	);
 
@@ -343,10 +329,6 @@ router
 		documentsValidators.validateDocumentDetailsReceivedDateValid,
 		documentsValidators.validateDocumentDetailsReceivedDateIsNotFutureDate,
 		documentsValidators.validateDocumentDetailsRedactionStatuses,
-		assertGroupAccess(
-			config.referenceData.appeals.caseOfficerGroupId,
-			config.referenceData.appeals.inspectorGroupId
-		),
 		asyncHandler(controller.postChangeDocumentVersionDetails)
 	);
 

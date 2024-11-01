@@ -11,13 +11,20 @@ import { generateHASComponents } from './appeal-type-has.mapper.js';
  * @param {Appeal} appealDetails
  * @param {SingleAppellantCaseResponse} appellantCaseData
  * @param {MappedInstructions} mappedAppellantCaseData
+ * @param {boolean} userHasUpdateCasePermission
  * @returns {PageComponent[]}
  */
-export function generateFPAComponents(appealDetails, appellantCaseData, mappedAppellantCaseData) {
+export function generateFPAComponents(
+	appealDetails,
+	appellantCaseData,
+	mappedAppellantCaseData,
+	userHasUpdateCasePermission
+) {
 	const pageComponents = generateHASComponents(
 		appealDetails,
 		appellantCaseData,
-		mappedAppellantCaseData
+		mappedAppellantCaseData,
+		userHasUpdateCasePermission
 	);
 
 	const siteDetailsComponentIndex = pageComponents.findIndex(
