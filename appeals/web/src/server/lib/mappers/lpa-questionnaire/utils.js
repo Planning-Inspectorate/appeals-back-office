@@ -1,6 +1,6 @@
 import { permissionNames } from '#environment/permissions.js';
 import { documentSummaryListItem } from '../components/document.js';
-import { userHasPermission } from '../utils/permissions.mapper.js';
+import { userHasPermission } from '#lib/mappers/index.js';
 
 /**
  * @param {string|number} lpaQuestionnaireId

@@ -1,6 +1,6 @@
 import { permissionNames } from '#environment/permissions.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
-import { mapActionComponent } from '../../utils/permissions.mapper.js';
+import { mapActionComponent } from '#lib/mappers/index.js';
 
 /** @type {import("../lpa-questionnaire.mapper.js").SubMapper} */
 export const mapOtherAppeals = ({ appealDetails, currentRoute, session }) => {
