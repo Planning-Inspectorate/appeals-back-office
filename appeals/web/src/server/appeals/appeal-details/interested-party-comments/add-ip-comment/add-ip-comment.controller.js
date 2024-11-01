@@ -1,4 +1,5 @@
 import { postDocumentUpload } from '#appeals/appeal-documents/appeal-documents.controller.js';
+import logger from '#lib/logger.js';
 import {
 	checkAddressPage,
 	ipDetailsPage,
@@ -9,6 +10,9 @@ import {
 } from './add-ip-comment.mapper.js';
 import { ipAddressPage } from '../interested-party-comments.mapper.js';
 import { getAttachmentsFolder, createIPComment } from './add-ip-comment.service.js';
+import config from '@pins/appeals.web/environment/config.js';
+import { createNewDocument } from '#app/components/file-uploader.component.js';
+
 /**
  *
  * @param {import('@pins/express/types/express.js').Request} request
@@ -218,17 +222,65 @@ export async function postDateSubmitted(request, response) {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export async function postIPComment(request, response) {
-	// createNewDocument(request.apiClient, request.currentAppeal.appealId, request.session.fileUploadInfo)
-	const { currentAppeal } = request;
-	await createIPComment(
-		request.session?.addIpComment,
-		request.apiClient,
-		request.currentAppeal.appealId
-	);
+	const documentGuid = request.session.fileUploadInfo?.files[0].GUID
+	const currentFolder = request.session.fileUploadInfo?.folderId
 
-	return response.redirect(
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments`
-	);
+	try {
+		const {
+			currentAppeal,
+			session: { fileUploadInfo }
+		} = request;
+
+		/** @type {import('@pins/appeals/index.js').AddDocumentsRequest} */
+		const addDocumentsRequestPayload = {
+			blobStorageHost:
+				config.useBlobEmulator === true ? config.blobEmulatorSasUrl : config.blobStorageUrl,
+			blobStorageContainer: config.blobStorageDefaultContainer,
+			documents: fileUploadInfo.files.map(
+				(/** @type {import('#lib/ts-utilities.js').FileUploadInfoItem} */ document) => {
+					/** @type {import('@pins/appeals/index.js').MappedDocument} */
+					const mappedDocument = {
+						caseId: currentAppeal.appealId,
+						documentName: document.name,
+						documentType: document.documentType,
+						mimeType: document.mimeType,
+						documentSize: document.size,
+						stage: document.stage,
+						folderId: currentFolder,
+						GUID: document.GUID,
+						receivedDate: document.receivedDate,
+						redactionStatusId: document.redactionStatus,
+						blobStoragePath: document.blobStoreUrl
+					};
+
+					return mappedDocument;
+				}
+			)
+		};
+
+		await createNewDocument(request.apiClient, currentAppeal.appealId, addDocumentsRequestPayload);
+
+		await createIPComment(
+			request.session?.addIpComment,
+			documentGuid,
+			request.apiClient,
+			request.currentAppeal.appealId
+		);
+
+		delete request.session.fileUploadInfo;
+
+		return response.redirect(
+			`/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments`
+		);
+
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error
+				? error.message
+				: 'Something went wrong when submitting the add ip comments check and confirm page'
+		);
+	}
 }
 
 /**
