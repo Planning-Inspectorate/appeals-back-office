@@ -1,14 +1,49 @@
-import { conditionalFormatter } from '#lib/mappers/global-mapper-formatter.js';
 import { kebabCase } from 'lodash-es';
 
 /**
+ * @typedef {'textarea'} ConditionalTypes
+ */
+
+/**
  *
+ * @param {string} id
+ * @param {string} name
+ * @param {string} hint
+ * @param {string|undefined} details
+ * @param {ConditionalTypes} [type]
+ * @returns {{html: string}}
+ */
+export function conditionalFormatter(id, name, hint, details, type = 'textarea') {
+	let conditionalInputHtml = {
+		textarea: `<textarea class="govuk-textarea" id="${id}" name="${name}" rows="3">${details}</textarea>`
+		//TODO: Conditionals => add any new types here
+	};
+	return {
+		html: `<div class="govuk-form-group">
+		<label class="govuk-label" for="${id}">
+			${hint}
+		</label>
+		${conditionalInputHtml[type]}
+	  </div>`
+	};
+}
+
+/**
+ * @typedef {Object} ConditionalParams
+ * @property {string} id
+ * @property {string} name
+ * @property {string} hint
+ * @property {string} [details]
+ * @property {ConditionalTypes} [type]
+ */
+
+/**
  * @param {Object} params
  * @param {string} params.name
  * @param {string} [params.id]
  * @param {string|boolean|null} [params.value]
  * @param {string} [params.legendText]
- * @param {import('../global-mapper-formatter.js').ConditionalParams} [params.yesConditional]
+ * @param {ConditionalParams} [params.yesConditional]
  * @param {string} [params.customYesLabel]
  * @param {string} [params.customNoLabel]
  * @returns {PageComponent}
@@ -26,7 +61,7 @@ export function yesNoInput({
 	const yes = {
 		value: 'yes',
 		text: customYesLabel || 'Yes',
-		checked: (value === true || value === 'true' || value === 'yes')
+		checked: value === true || value === 'true' || value === 'yes'
 	};
 	if (yesConditional) {
 		yes.conditional = conditionalFormatter(
@@ -49,7 +84,7 @@ export function yesNoInput({
 				{
 					value: 'no',
 					text: customNoLabel || 'No',
-					checked: (value === false || value === 'false' || value === 'no')
+					checked: value === false || value === 'false' || value === 'no'
 				}
 			]
 		}

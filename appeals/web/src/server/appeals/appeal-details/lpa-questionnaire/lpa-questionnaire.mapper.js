@@ -1,5 +1,5 @@
 import config from '#environment/config.js';
-import { inputInstructionIsRadiosInputInstruction } from '#lib/mappers/global-mapper-formatter.js';
+import { inputInstructionIsRadiosInputInstruction } from '#lib/mappers/index.js';
 import { initialiseAndMapAppealData } from '#lib/mappers/appeal/appeal.mapper.js';
 import { initialiseAndMapLPAQData } from '#lib/mappers/lpa-questionnaire/lpa-questionnaire.mapper.js';
 import {
@@ -15,7 +15,7 @@ import {
 import { buildNotificationBanners } from '#lib/mappers/notification-banners.mapper.js';
 import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { isDefined, isFolderInfo } from '#lib/ts-utilities.js';
-import { removeSummaryListActions } from '#lib/mappers/mapper-utilities.js';
+import { removeSummaryListActions } from '#lib/mappers/index.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
@@ -23,7 +23,7 @@ import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.
 import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 import { isFeatureActive } from '#common/feature-flags.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
-import { userHasPermission } from '#lib/mappers/permissions.mapper.js';
+import { userHasPermission } from '#lib/mappers/index.js';
 import { permissionNames } from '#environment/permissions.js';
 
 /**

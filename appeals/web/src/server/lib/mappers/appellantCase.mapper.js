@@ -1,7 +1,7 @@
 import { appealSiteToAddressString } from '#lib/address-formatter.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
 import { isFolderInfo } from '#lib/ts-utilities.js';
-import { mapActionComponent, userHasPermission } from './permissions.mapper.js';
+import { mapActionComponent, userHasPermission } from './utils/permissions.mapper.js';
 import { permissionNames } from '#environment/permissions.js';
 import { formatServiceUserAsHtmlList } from '#lib/service-user-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';

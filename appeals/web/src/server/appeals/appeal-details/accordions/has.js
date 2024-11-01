@@ -1,5 +1,5 @@
 import { permissionNames } from '#environment/permissions.js';
-import { userHasPermission } from '#lib/mappers/permissions.mapper.js';
+import { userHasPermission } from '#lib/mappers/index.js';
 import { isDefined } from '#lib/ts-utilities.js';
 import { getCaseContacts } from './common/case-contacts.js';
 import { getCaseCosts } from './common/case-costs.js';

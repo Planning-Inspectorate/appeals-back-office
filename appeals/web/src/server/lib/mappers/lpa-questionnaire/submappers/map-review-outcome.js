@@ -1,5 +1,5 @@
 import { permissionNames } from '#environment/permissions.js';
-import { mapActionComponent } from '#lib/mappers/permissions.mapper.js';
+import { mapActionComponent } from '#lib/mappers/index.js';
 
 /** @type {import("../lpa-questionnaire.mapper.js").SubMapper} */
 export const mapReviewOutcome = ({ lpaQuestionnaireData, session }) => ({

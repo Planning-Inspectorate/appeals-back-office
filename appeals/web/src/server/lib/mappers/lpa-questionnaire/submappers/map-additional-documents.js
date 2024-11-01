@@ -1,6 +1,6 @@
 import { permissionNames } from '#environment/permissions.js';
 import { formatDocumentActionLink } from '#lib/display-page-formatter.js';
-import { mapActionComponent } from '#lib/mappers/permissions.mapper.js';
+import { mapActionComponent } from '#lib/mappers/index.js';
 import { isFolderInfo } from '#lib/ts-utilities.js';
 import { buildDocumentUploadUrlTemplate, mapDocumentManageUrl } from '../utils.js';
 import { mapAdditionalDocumentsContents } from './map-additional-documents-contents.js';

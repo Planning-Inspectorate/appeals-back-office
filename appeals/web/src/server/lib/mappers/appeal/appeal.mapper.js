@@ -9,7 +9,7 @@ import { submaps as hasSubmaps } from './has.js';
 import { submaps as fpaSubmaps } from './fpa.js';
 import usersService from '#appeals/appeal-users/users-service.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
-import { userHasPermission } from '#lib/mappers/permissions.mapper.js';
+import { userHasPermission } from '#lib/mappers/index.js';
 import { permissionNames } from '#environment/permissions.js';
 
 /**

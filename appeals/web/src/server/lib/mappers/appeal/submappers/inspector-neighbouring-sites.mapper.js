@@ -1,6 +1,6 @@
 import { permissionNames } from '#environment/permissions.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
-import { userHasPermission } from '#lib/mappers/permissions.mapper.js';
+import { userHasPermission } from '#lib/mappers/index.js';
 
 /** @type {import('../appeal.mapper.js').SubMapper} */
 export const mapInspectorNeighbouringSites = ({ appealDetails, currentRoute, session }) => ({

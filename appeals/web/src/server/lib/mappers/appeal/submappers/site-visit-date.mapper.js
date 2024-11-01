@@ -1,8 +1,18 @@
 import { dateISOStringToDisplayDate, dateISOStringToDisplayTime12hr } from '#lib/dates.js';
-import { dateAndTimeFormatter } from '../../global-mapper-formatter.js';
 import { textSummaryListItem } from '#lib/mappers/components/text.js';
-import { userHasPermission } from '#lib/mappers/permissions.mapper.js';
+import { userHasPermission } from '#lib/mappers/index.js';
 import { permissionNames } from '#environment/permissions.js';
+
+/**
+ * @param {string} date
+ * @param {string} [startTime]
+ * @param {string} [endTime]
+ */
+export function dateAndTimeFormatter(date, startTime, endTime) {
+	const to = endTime ? ` - ${endTime}` : '';
+	const fromToListItem = startTime ? `<li>${startTime}${to}</li>` : '';
+	return `<ul class="govuk-list govuk-!-margin-top-0 govuk-!-padding-left-0"><li>${date}</li>${fromToListItem}</ul>`;
+}
 
 /** @type {import('../appeal.mapper.js').SubMapper} */
 export const mapSiteVisitDate = ({ appealDetails, currentRoute, session }) => {

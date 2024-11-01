@@ -1,5 +1,5 @@
 import config from '#environment/config.js';
-import { inputInstructionIsRadiosInputInstruction } from '#lib/mappers/global-mapper-formatter.js';
+import { inputInstructionIsRadiosInputInstruction } from '#lib/mappers/index.js';
 import {
 	dateISOStringToDayMonthYearHourMinute,
 	dateISOStringToDisplayDate,
@@ -14,7 +14,7 @@ import {
 import { buildNotificationBanners } from '#lib/mappers/notification-banners.mapper.js';
 import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { initialiseAndMapData } from '#lib/mappers/appellantCase.mapper.js';
-import { removeSummaryListActions } from '#lib/mappers/mapper-utilities.js';
+import { removeSummaryListActions } from '#lib/mappers/index.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
@@ -28,7 +28,7 @@ import { isFeatureActive } from '#common/feature-flags.js';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { generateHASComponents } from '#lib/mappers/appellant-case/appeal-type-has.mapper.js';
 import { generateFPAComponents } from '#lib/mappers/appellant-case/appeal-type-fpa.mapper.js';
-import { userHasPermission } from '#lib/mappers/permissions.mapper.js';
+import { userHasPermission } from '#lib/mappers/index.js';
 import { permissionNames } from '#environment/permissions.js';
 
 /**
