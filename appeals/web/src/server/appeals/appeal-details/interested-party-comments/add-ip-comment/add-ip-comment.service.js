@@ -20,10 +20,11 @@ export const getAttachmentsFolder = async (apiClient, appealId) => {
 /**
  * @param {{ firstName: string, lastName: string, emailAddress: string, addressLine1: string, addressLine2: string, town: string, county: string, postCode: string, redactionStatus: boolean, 'date-day': string, 'date-month': string, 'date-year': string }} comment
  * @param {import('got').Got} apiClient
+ * @param {string} document
  * @param {number} appealId
  * @returns {Promise<import('@pins/appeals.api').Appeals.FolderInfo>}
  * */
-export const createIPComment = async (comment, apiClient, appealId) => {
+export const createIPComment = async (comment, document, apiClient, appealId) => {
 	const json = {
 		ipDetails: {
 			firstName: comment.firstName,
@@ -37,7 +38,7 @@ export const createIPComment = async (comment, apiClient, appealId) => {
 			county: comment.county,
 			postCode: comment.postCode
 		},
-		attachments: [],
+		attachments: [document],
 		redactionStatus: comment.redactionStatus
 	};
 
