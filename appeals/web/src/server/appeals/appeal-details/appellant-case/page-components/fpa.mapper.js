@@ -1,5 +1,5 @@
 import { removeSummaryListActions } from '#lib/mappers/index.js';
-import { generateHASComponents } from './appeal-type-has.mapper.js';
+import { generateHASComponents } from './has.mapper.js';
 
 /**
  * @typedef {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} SingleAppellantCaseResponse

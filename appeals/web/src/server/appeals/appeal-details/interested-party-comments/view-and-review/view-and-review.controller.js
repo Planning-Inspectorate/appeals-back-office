@@ -2,7 +2,7 @@ import logger from '#lib/logger.js';
 import {
 	mapRejectionReasonOptionsToCheckboxItemParameters,
 	mapRejectionReasonPayload
-} from '#lib/mappers/page-components/interested-party-comments/view-and-review/reject.mapper.js';
+} from '#appeals/appeal-details/interested-party-comments/view-and-review/page-components/reject.mapper.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 import {

@@ -1,3 +1,3 @@
-export { viewInterestedPartyCommentPage } from '../../../../lib/mappers/page-components/interested-party-comments/view-and-review/view.mapper.js';
-export { reviewInterestedPartyCommentPage } from '../../../../lib/mappers/page-components/interested-party-comments/view-and-review/review.mapper.js';
-export { rejectInterestedPartyCommentPage } from '../../../../lib/mappers/page-components/interested-party-comments/view-and-review/reject.mapper.js';
+export { viewInterestedPartyCommentPage } from './page-components/view.mapper.js';
+export { reviewInterestedPartyCommentPage } from './page-components/review.mapper.js';
+export { rejectInterestedPartyCommentPage } from './page-components/reject.mapper.js';
