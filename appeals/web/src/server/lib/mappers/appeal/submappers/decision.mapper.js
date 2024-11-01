@@ -1,7 +1,7 @@
 import { generateIssueDecisionUrl } from '#appeals/appeal-details/issue-decision/issue-decision.mapper.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import { textSummaryListItem } from '#lib/mappers/components/text.js';
-import { userHasPermission } from '#lib/mappers/permissions.mapper.js';
+import { userHasPermission } from '#lib/mappers/index.js';
 import { permissionNames } from '#environment/permissions.js';
 
 /** @type {import('../appeal.mapper.js').SubMapper} */

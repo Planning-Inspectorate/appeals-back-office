@@ -1,5 +1,5 @@
 import config from '#environment/config.js';
-import { removeSummaryListActions } from '#lib/mappers/mapper-utilities.js';
+import { removeSummaryListActions } from '#lib/mappers/index.js';
 import { appealShortReference, linkedAppealStatus } from '#lib/appeals-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import {

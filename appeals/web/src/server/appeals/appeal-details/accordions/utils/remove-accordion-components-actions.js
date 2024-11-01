@@ -1,4 +1,4 @@
-import { removeSummaryListActions } from '#lib/mappers/mapper-utilities.js';
+import { removeSummaryListActions } from '#lib/mappers/index.js';
 
 const caseDocumentationTableActionColumnIndex = 3;
 

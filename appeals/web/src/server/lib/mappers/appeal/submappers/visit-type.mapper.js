@@ -1,6 +1,6 @@
 import { permissionNames } from '#environment/permissions.js';
 import { textSummaryListItem } from '#lib/mappers/components/text.js';
-import { userHasPermission } from '#lib/mappers/permissions.mapper.js';
+import { userHasPermission } from '#lib/mappers/index.js';
 
 /** @type {import('../appeal.mapper.js').SubMapper} */
 export const mapVisitType = ({ appealDetails, currentRoute, session }) =>

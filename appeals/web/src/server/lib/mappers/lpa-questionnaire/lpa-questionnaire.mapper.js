@@ -1,6 +1,6 @@
 import { permissionNames } from '#environment/permissions.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
-import { userHasPermission } from '../permissions.mapper.js';
+import { userHasPermission } from '../utils/permissions.mapper.js';
 import { submaps as hasSubmaps } from './has.js';
 import { submaps as s78Submaps } from './s78.js';
 /**

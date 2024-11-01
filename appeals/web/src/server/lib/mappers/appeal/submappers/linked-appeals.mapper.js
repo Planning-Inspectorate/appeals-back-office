@@ -1,6 +1,6 @@
 import { permissionNames } from '#environment/permissions.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
-import { mapActionComponent } from '../../permissions.mapper.js';
+import { mapActionComponent } from '../../utils/permissions.mapper.js';
 import { generateLinkedAppealsManageLinkHref } from '../appeal.mapper.js';
 
 /** @type {import('../appeal.mapper.js').SubMapper} */
