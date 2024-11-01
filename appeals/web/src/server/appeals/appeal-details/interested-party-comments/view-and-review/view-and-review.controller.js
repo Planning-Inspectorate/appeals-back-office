@@ -33,7 +33,6 @@ export const render = (contentMapper, templatePath) => (request, response) => {
 	}
 
 	const pageContent = contentMapper(currentAppeal, currentComment, session);
-	console.log('🚀 ~ render ~ pageContent:', pageContent);
 
 	return response.status(200).render(templatePath, {
 		errors,
@@ -120,6 +119,12 @@ export const postReviewInterestedPartyComment = async (request, response) => {
 			);
 		}
 
+		if (status === COMMENT_STATUS.INVALID) {
+			return response.redirect(
+				`/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/reject`
+			);
+		}
+
 		await patchInterestedPartyCommentStatus(apiClient, appealId, commentId, status);
 
 		addNotificationBannerToSession(session, 'interestedPartyCommentsValidSuccess', appealId);
@@ -173,6 +178,7 @@ export const postRejectInterestedPartyComment = async (request, response) => {
 		const rejectionReasons = mapRejectionReasonPayload(body);
 
 		await updateRejectionReasons(apiClient, appealId, commentId, rejectionReasons);
+		await patchInterestedPartyCommentStatus(apiClient, appealId, commentId, COMMENT_STATUS.INVALID);
 
 		addNotificationBannerToSession(session, 'interestedPartyCommentsRejectedSuccess', appealId);
 
