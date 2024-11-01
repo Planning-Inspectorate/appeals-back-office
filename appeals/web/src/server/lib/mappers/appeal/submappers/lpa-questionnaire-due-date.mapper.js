@@ -10,8 +10,7 @@ export const mapLpaQuestionnaireDueDate = ({
 	textSummaryListItem({
 		id: 'lpa-questionnaire-due-date',
 		text: 'LPA questionnaire due',
-		value:
-			dateISOStringToDisplayDate(appealDetails.appealTimetable?.lpaQuestionnaireDueDate) || '',
+		value: dateISOStringToDisplayDate(appealDetails.appealTimetable?.lpaQuestionnaireDueDate),
 		link: `${currentRoute}/appeal-timetables/lpa-questionnaire`,
 		editable: Boolean(userHasUpdateCasePermission && appealDetails.validAt),
 		classes: 'appeal-lpa-questionnaire-due-date'

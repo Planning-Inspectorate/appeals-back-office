@@ -113,11 +113,12 @@ export function getTodaysISOString() {
 
 /**
  * @param {string | null | undefined} dateISOString
+ * @param {string} fallback
  * @returns {string}
  */
-export function dateISOStringToDisplayDate(dateISOString) {
+export function dateISOStringToDisplayDate(dateISOString, fallback = '') {
 	if (typeof dateISOString === 'undefined' || dateISOString === null) {
-		return '';
+		return fallback;
 	}
 
 	let displayDateString;

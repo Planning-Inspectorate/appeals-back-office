@@ -33,7 +33,7 @@ export const mapStartedAt = ({ appealDetails, currentRoute }) => {
 				value: {
 					html: appealDetails.validAt
 						? appealDetails.startedAt
-							? dateISOStringToDisplayDate(appealDetails.startedAt) || ''
+							? dateISOStringToDisplayDate(appealDetails.startedAt)
 							: 'Not added'
 						: ''
 				},
