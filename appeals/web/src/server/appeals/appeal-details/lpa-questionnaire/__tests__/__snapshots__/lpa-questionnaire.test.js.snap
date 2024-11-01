@@ -4593,7 +4593,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#incomplete-reason">Please select one or more reasons why the LPA questionnaire is incomplete</a>
+                            <li><a href="#incompleteReason">Please select one or more reasons why the LPA questionnaire is incomplete</a>
                             </li>
                         </ul>
                     </div>

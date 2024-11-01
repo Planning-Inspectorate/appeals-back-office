@@ -55,7 +55,7 @@ exports[`change-lpa-reference POST /change should re-render changeLpaReference p
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#planning-application-reference">Enter the LPA application reference</a>
+                            <li><a href="#planningApplicationReference">Enter the LPA application reference</a>
                             </li>
                         </ul>
                     </div>

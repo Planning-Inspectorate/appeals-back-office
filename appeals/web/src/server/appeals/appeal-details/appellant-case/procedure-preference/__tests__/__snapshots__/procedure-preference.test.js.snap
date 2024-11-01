@@ -2764,7 +2764,7 @@ exports[`procedure-preference POST /details/change should re-render the change r
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#procedure-preference-duration-input">Provide the expected length of procedure</a>
+                            <li><a href="#procedurePreferenceDurationInput">Provide the expected length of procedure</a>
                             </li>
                         </ul>
                     </div>
@@ -2797,7 +2797,7 @@ exports[`procedure-preference POST /duration/change should re-render the change 
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#procedure-preference-duration-input">Provide the expected length of procedure</a>
+                            <li><a href="#procedurePreferenceDurationInput">Provide the expected length of procedure</a>
                             </li>
                         </ul>
                     </div>
@@ -2830,7 +2830,7 @@ exports[`procedure-preference POST /duration/change should re-render the change 
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#procedure-preference-duration-input">Expected length of procedure must be a number</a>
+                            <li><a href="#procedurePreferenceDurationInput">Expected length of procedure must be a number</a>
                             </li>
                         </ul>
                     </div>
@@ -2863,7 +2863,7 @@ exports[`procedure-preference POST /duration/change should re-render the change 
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#procedure-preference-duration-input">Expected length of procedure must be a number between 0 and 9</a>
+                            <li><a href="#procedurePreferenceDurationInput">Expected length of procedure must be a number between 0 and 9</a>
                             </li>
                         </ul>
                     </div>
@@ -2896,7 +2896,7 @@ exports[`procedure-preference POST /inquiry/witnesses/change should re-render th
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#inquiry-number-of-witnesses-input">Provide the expected number of witnesses</a>
+                            <li><a href="#inquiryNumberOfWitnessesInput">Provide the expected number of witnesses</a>
                             </li>
                         </ul>
                     </div>
@@ -2929,7 +2929,7 @@ exports[`procedure-preference POST /inquiry/witnesses/change should re-render th
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#inquiry-number-of-witnesses-input">Expected number of witnesses must be a number</a>
+                            <li><a href="#inquiryNumberOfWitnessesInput">Expected number of witnesses must be a number</a>
                             </li>
                         </ul>
                     </div>
@@ -2962,7 +2962,7 @@ exports[`procedure-preference POST /inquiry/witnesses/change should re-render th
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#inquiry-number-of-witnesses-input">Expected number of witnesses must be a number between 0 and 9</a>
+                            <li><a href="#inquiryNumberOfWitnessesInput">Expected number of witnesses must be a number between 0 and 9</a>
                             </li>
                         </ul>
                     </div>

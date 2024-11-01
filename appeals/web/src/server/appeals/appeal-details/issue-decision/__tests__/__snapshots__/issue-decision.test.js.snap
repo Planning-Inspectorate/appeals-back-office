@@ -574,7 +574,7 @@ exports[`issue-decision POST /invalid-reason should re-render the invalid reason
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#decision-invalid-reason">Enter invalid reason</a>
+                            <li><a href="#decisionInvalidReason">Enter invalid reason</a>
                             </li>
                         </ul>
                     </div>
@@ -612,7 +612,7 @@ exports[`issue-decision POST /invalid-reason should re-render the invalid reason
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#decision-invalid-reason">Invalid reason must be 1000 characters or less</a>
+                            <li><a href="#decisionInvalidReason">Invalid reason must be 1000 characters or less</a>
                             </li>
                         </ul>
                     </div>
