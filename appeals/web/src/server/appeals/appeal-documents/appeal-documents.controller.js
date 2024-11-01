@@ -4,7 +4,8 @@ import {
 	updateDocuments,
 	getFileVersionsInfo,
 	getFileInfo,
-	deleteDocument
+	deleteDocument,
+	updateDocument
 } from './appeal.documents.service.js';
 import {
 	mapDocumentDetailsFormDataToAPIRequest,
@@ -712,17 +713,8 @@ export const postChangeDocumentFileName = async ({
 			return response.status(500).render('app/500.njk');
 		}
 
-		const { dateReceived, redactionStatus } = currentFile.latestDocumentVersion;
-
-		const redactionStatuses = await getDocumentRedactionStatuses(apiClient);
-
-		const apiRequest = mapDocumentFileNameFormDataToAPIRequest(
-			body,
-			dateReceived,
-			redactionStatus,
-			redactionStatuses
-		);
-		const updateDocumentsResult = await updateDocuments(apiClient, appealId, apiRequest);
+		const apiRequest = mapDocumentFileNameFormDataToAPIRequest(body);
+		const updateDocumentsResult = await updateDocument(apiClient, appealId, apiRequest);
 
 		if (updateDocumentsResult) {
 			addNotificationBannerToSession(

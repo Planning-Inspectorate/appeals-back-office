@@ -1552,7 +1552,7 @@ describe('costs', () => {
 		describe('POST /costs/:costsCategory/:costsDocumentType/change-document-name/:folderId/:documentId', () => {
 			beforeEach(() => {
 				nock('http://test/').get('/appeals/document-redaction-statuses').reply(200, []);
-				nock('http://test/').patch(`/appeals/1/documents`).reply(200, []);
+				nock('http://test/').patch('/appeals/1/documents/1').reply(200, {});
 				nock('http://test/')
 					.get('/appeals/1/documents/1/versions')
 					.reply(200, documentFileVersionsInfoChecked);

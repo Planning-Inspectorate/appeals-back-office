@@ -1,15 +1,15 @@
 import {
+	AUDIT_TRAIL_DOCUMENT_DATE_CHANGED,
 	AUDIT_TRAIL_DOCUMENT_DELETED,
-	AUDIT_TRAIL_DOCUMENT_UPLOADED,
-	ERROR_FAILED_TO_SAVE_DATA,
-	ERROR_FAILED_TO_ADD_DOCUMENTS,
-	ERROR_DOCUMENT_NAME_ALREADY_EXISTS,
-	ERROR_NOT_FOUND,
+	AUDIT_TRAIL_DOCUMENT_NAME_CHANGED,
+	AUDIT_TRAIL_DOCUMENT_NO_REDACTION_REQUIRED,
 	AUDIT_TRAIL_DOCUMENT_REDACTED,
 	AUDIT_TRAIL_DOCUMENT_UNREDACTED,
-	AUDIT_TRAIL_DOCUMENT_NO_REDACTION_REQUIRED,
-	AUDIT_TRAIL_DOCUMENT_DATE_CHANGED,
-	AUDIT_TRAIL_DOCUMENT_NAME_CHANGED
+	AUDIT_TRAIL_DOCUMENT_UPLOADED,
+	ERROR_DOCUMENT_NAME_ALREADY_EXISTS,
+	ERROR_FAILED_TO_ADD_DOCUMENTS,
+	ERROR_FAILED_TO_SAVE_DATA,
+	ERROR_NOT_FOUND
 } from '#endpoints/constants.js';
 import logger from '#utils/logger.js';
 import * as service from './documents.service.js';
@@ -219,21 +219,6 @@ const updateDocuments = async (req, res) => {
 			document.latestVersion = latestDocument?.latestDocumentVersion?.version;
 
 			if (latestDocument && latestDocument.name) {
-				if (document.fileName && document.fileName !== latestDocument.name) {
-					const nameChangedMessage = stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_NAME_CHANGED, [
-						latestDocument.name,
-						document.fileName
-					]);
-					await logAuditTrail(
-						latestDocument.name,
-						document.latestVersion,
-						nameChangedMessage,
-						req,
-						appeal.id,
-						latestDocument.guid
-					);
-				}
-
 				if (document.redactionStatus !== latestDocument?.latestDocumentVersion?.redactionStatusId) {
 					const auditTrailMessage = getAuditMessage(document.redactionStatus);
 					if (auditTrailMessage) {
@@ -256,11 +241,10 @@ const updateDocuments = async (req, res) => {
 					: null;
 
 				if (receivedDate && latestReceivedDate && receivedDate !== latestReceivedDate) {
-					const dateChangeMessage = AUDIT_TRAIL_DOCUMENT_DATE_CHANGED;
 					await logAuditTrail(
 						latestDocument.name,
 						document.latestVersion,
-						dateChangeMessage,
+						AUDIT_TRAIL_DOCUMENT_DATE_CHANGED,
 						req,
 						appeal.id,
 						latestDocument.guid
@@ -288,6 +272,47 @@ const updateDocuments = async (req, res) => {
 	}
 
 	res.send({ documents: responseDocuments });
+};
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ */
+const updateDocumentFileName = async (req, res) => {
+	const { body, appeal, params } = req;
+	const { document } = body;
+	const { documentId } = params;
+
+	try {
+		const latestDocument = await documentRepository.getDocumentById(documentId);
+		if (latestDocument && latestDocument.name) {
+			if (document.fileName && document.fileName !== latestDocument.name) {
+				const nameChangedMessage = stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_NAME_CHANGED, [
+					latestDocument.name,
+					document.fileName
+				]);
+				await logAuditTrail(
+					latestDocument.name,
+					latestDocument.latestDocumentVersion.version,
+					nameChangedMessage,
+					req,
+					appeal.id,
+					latestDocument.guid
+				);
+			}
+
+			await documentRepository.updateDocumentById(latestDocument.guid, document);
+		}
+
+		await broadcasters.broadcastDocument(documentId, document.fileName, EventType.Update);
+	} catch (error) {
+		if (error) {
+			logger.error(error);
+			return res.status(500).send({ errors: { body: ERROR_FAILED_TO_SAVE_DATA } });
+		}
+	}
+
+	res.send({ document });
 };
 
 /**
@@ -402,6 +427,7 @@ export {
 	getFolder,
 	getFolders,
 	updateDocuments,
+	updateDocumentFileName,
 	updateDocumentsAvCheckStatus,
 	deleteDocumentVersion
 };

@@ -9,6 +9,7 @@ import {
 	getDocumentValidator,
 	getDocumentsValidator,
 	patchDocumentsValidator,
+	patchDocumentFileNameValidator,
 	patchDocumentsAvCheckValidator
 } from './documents.validators.js';
 import * as controller from './documents.controller.js';
@@ -200,6 +201,35 @@ router.patch(
 	patchDocumentsValidator,
 	checkAppealExistsByIdAndAddToRequest,
 	asyncHandler(controller.updateDocuments)
+);
+
+router.patch(
+	'/:appealId/documents/:documentId',
+	/*
+		#swagger.tags = ['Documents']
+		#swagger.path = '/appeals/{appealId}/documents/{documentId}'
+		#swagger.description = Updates document file name
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: true,
+			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+		}
+		#swagger.requestBody = {
+			in: 'body',
+			description: 'Document to update file name',
+			schema: { $ref: '#/components/schemas/UpdateDocumentFileNameRequest' },
+			required: true
+		}
+		#swagger.responses[200] = {
+			description: 'Document to update filename',
+			schema: { $ref: '#/components/schemas/UpdateDocumentFileNameResponse' }
+		}
+		#swagger.responses[400] = {}
+		#swagger.responses[404] = {}
+	 */
+	patchDocumentFileNameValidator,
+	checkAppealExistsByIdAndAddToRequest,
+	asyncHandler(controller.updateDocumentFileName)
 );
 
 router.patch(

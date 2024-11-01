@@ -2626,7 +2626,7 @@ describe('LPA Questionnaire review', () => {
 	describe('POST /lpa-questionnaire/2/change-document-name/:folderId/:documentId', () => {
 		beforeEach(() => {
 			nock('http://test/').get('/appeals/document-redaction-statuses').reply(200, []);
-			nock('http://test/').patch(`/appeals/1/documents`).reply(200, []);
+			nock('http://test/').patch('/appeals/1/documents/1').reply(200, {});
 			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 		});

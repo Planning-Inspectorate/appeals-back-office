@@ -230,7 +230,9 @@ describe('appeal-documents', () => {
 				.get(`/appeals/${validAppealId}/documents/${documentId}`)
 				.reply(200, fileInfo);
 			nock('http://test/').get('/appeals/document-redaction-statuses').reply(200, []);
-			nock('http://test/').patch(`/appeals/${validAppealId}/documents`).reply(200, []);
+			nock('http://test/')
+				.patch(`/appeals/${validAppealId}/documents/${documentId}`)
+				.reply(200, {});
 		});
 
 		it('should render change filename page', async () => {

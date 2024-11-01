@@ -812,6 +812,14 @@ export const spec = {
 				}
 			]
 		},
+		UpdateDocumentFileNameRequest: {
+			id: '987e66e0-1db4-404b-8213-8082919159e9',
+			fileName: 'renamed-document.pdf'
+		},
+		UpdateDocumentFileNameResponse: {
+			id: '987e66e0-1db4-404b-8213-8082919159e9',
+			fileName: 'renamed-document.pdf'
+		},
 		UpdateDocumentsAvCheckRequest: {
 			documents: [
 				{

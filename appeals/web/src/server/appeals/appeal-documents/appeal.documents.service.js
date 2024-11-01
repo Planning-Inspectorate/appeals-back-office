@@ -71,11 +71,52 @@ export const getDocumentRedactionStatuses = async (apiClient) => {
 };
 
 /**
+ * @typedef {Object} DocumentDetailAPIDocument
+ * @property {string} id
+ * @property {string} fileName
+ */
+
+/**
+ * @typedef {Object} DocumentDetailAPIPatchRequest
+ * @property {DocumentDetailAPIDocument} document
+ */
+
+/**
+ * @typedef {Object} DocumentDetailAPIPatchResponse
+ * @property {DocumentDetailAPIDocument} document
+ */
+
+/**
+ * @param {import('got').Got} apiClient
+ * @param {string} appealId
+ * @param {DocumentDetailAPIPatchRequest} documentDetail
+ * @returns {Promise<DocumentDetailAPIPatchResponse|undefined>}
+ */
+
+export const updateDocument = async (apiClient, appealId, documentDetail) => {
+	try {
+		return await apiClient
+			.patch(`appeals/${appealId}/documents/${documentDetail.document.id}`, {
+				json: {
+					document: documentDetail.document
+				}
+			})
+			.json();
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error
+				? error.message
+				: 'An error occurred while attempting to patch the document API endpoint'
+		);
+	}
+};
+
+/**
  * @typedef {Object} DocumentDetailsAPIDocument
  * @property {string} id
  * @property {string} receivedDate
  * @property {number} redactionStatus
- * @property {string} [fileName]
  */
 
 /**

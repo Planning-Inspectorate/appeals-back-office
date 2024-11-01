@@ -785,11 +785,15 @@ type GetAuditTrailsResponse = {
 		| undefined;
 }[];
 
+type UpdateDocumentFileNameRequest = {
+	id: string;
+	fileName: string;
+}[];
+
 type UpdateDocumentsRequest = {
 	id: string;
 	receivedDate: string;
 	redactionStatus: number;
-	fileName: string;
 	latestVersion: number;
 	published: boolean;
 	draft: boolean;
@@ -868,6 +872,7 @@ export {
 	UpdateAppellantCaseValidationOutcomeParams,
 	UpdateAppellantRequest,
 	UpdateDocumentsRequest,
+	UpdateDocumentFileNameRequest,
 	UpdateDocumentsAvCheckRequest,
 	UpdateLPAQuestionnaireValidationOutcomeParams,
 	UpdateLPAQuestionnaireRequest,
