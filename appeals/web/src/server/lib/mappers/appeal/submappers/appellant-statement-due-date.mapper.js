@@ -10,8 +10,7 @@ export const mapAppellantStatementDueDate = ({
 	textSummaryListItem({
 		id: 'appellant-statement-due-date',
 		text: 'Appellant statement due',
-		value:
-			dateISOStringToDisplayDate(appealDetails.appealTimetable?.appellantStatementDueDate) || '',
+		value: dateISOStringToDisplayDate(appealDetails.appealTimetable?.appellantStatementDueDate),
 		link: `${currentRoute}/appeal-timetables/appellant-statement`,
 		editable: Boolean(userHasUpdateCasePermission && appealDetails.startedAt),
 		classes: 'appellant-statement-due-date',

@@ -56,7 +56,7 @@ export const VALID_MIME_TYPES = Object.freeze({
 	},
 	'application/vnd.ms-powerpoint': { hexSignature: 'D0CF11E0', extensions: ['ppt'] },
 	'application/vnd.openxmlformats-officedocument.presentationml.presentation': {
-		hexSignature: 'D0CF11E0',
+		hexSignature: '504B03041400',
 		extensions: ['pptx']
 	},
 	'application/vnd.ms-excel': { hexSignature: 'D0CF11E0', extensions: ['xls'] },

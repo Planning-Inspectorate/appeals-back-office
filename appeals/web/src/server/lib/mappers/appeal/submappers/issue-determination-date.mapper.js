@@ -10,9 +10,7 @@ export const mapIssueDeterminationDate = ({
 	textSummaryListItem({
 		id: 'issue-determination',
 		text: 'Issue determination',
-		value:
-			dateISOStringToDisplayDate(appealDetails.appealTimetable?.issueDeterminationDate) ||
-			'',
+		value: dateISOStringToDisplayDate(appealDetails.appealTimetable?.issueDeterminationDate),
 		link: `${currentRoute}/appeal-timetables/issue-determination`,
 		editable: userHasUpdateCasePermission,
 		actionText: appealDetails.appealTimetable?.issueDeterminationDate ? 'Change' : 'Schedule',

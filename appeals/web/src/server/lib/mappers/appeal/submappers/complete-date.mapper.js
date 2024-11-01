@@ -6,9 +6,7 @@ export const mapCompleteDate = ({ appealDetails, currentRoute, userHasUpdateCase
 	textSummaryListItem({
 		id: 'complete-date',
 		text: 'Complete',
-		value:
-			dateISOStringToDisplayDate(appealDetails.appealTimetable?.completeDate) ||
-			'Due date not yet set',
+		value: dateISOStringToDisplayDate(appealDetails.appealTimetable?.completeDate),
 		link: `${currentRoute}/change-appeal-details/complete-date`,
 		editable: userHasUpdateCasePermission,
 		classes: 'appeal-complete-date',
