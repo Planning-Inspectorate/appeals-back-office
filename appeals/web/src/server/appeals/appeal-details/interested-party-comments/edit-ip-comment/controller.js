@@ -7,13 +7,19 @@ import { checkAddressPage } from './mappers.js';
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  * */
 export async function renderEditAddress(request, response) {
-	const { currentAppeal, currentComment, errors } = request;
+	const {
+		currentAppeal,
+		currentComment,
+		errors,
+		query: { review }
+	} = request;
+	const backLinkUrl = review === 'true' ? 'review' : 'view';
 
 	const pageContent = ipAddressPage(
 		currentAppeal,
 		currentComment?.represented?.address,
 		errors,
-		`${currentAppeal.appealId}/view`
+		`${currentComment.id}/${backLinkUrl}`
 	);
 
 	return response.status(errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
