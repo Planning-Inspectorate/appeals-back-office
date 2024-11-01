@@ -641,21 +641,17 @@ export async function seedTestData(databaseConnector) {
 
 		//REPS
 		if (appealType === APPEAL_TYPE_SHORTHAND_FPA) {
-			for (let counter = 0; counter < 110; counter++) {
-				let originalRepresentation;
-				let status;
+			const formatSourceMap = {
+				[ODW_SYSTEM_ID]: 'Back Office',
+				citizen: 'Front Office'
+			};
+			const originalRepresentation =
+				'I love cheese, especially cottage cheese queso. Ricotta monterey jack emmental cheese and biscuits jarlsberg manchego roquefort babybel. Chalk and cheese cut the cheese cream cheese croque monsieur cheese strings blue castello halloumi say cheese.';
 
-				if (counter < 50) {
-					originalRepresentation = `Awaiting review comment ${counter + 1}`;
-				} else if (counter < 90) {
-					originalRepresentation = `Valid comment ${counter - 49}`;
-					status = 'valid';
-				} else {
-					originalRepresentation = `Invalid comment ${counter - 89}`;
-					status = 'invalid';
-				}
-
-				const source = Math.random() < 0.5 ? ODW_SYSTEM_ID : 'citizen';
+			for (let ii in appellantsList) {
+				const represented = appellantsList[ii];
+				const source = Number(ii) % 2 ? 'citizen' : ODW_SYSTEM_ID;
+				const hasEmail = !!(Number(ii) % 3);
 
 				await databaseConnector.representation.create({
 					data: {
@@ -666,9 +662,12 @@ export async function seedTestData(databaseConnector) {
 						},
 						representationType: APPEAL_REPRESENTATION_TYPE.COMMENT,
 						originalRepresentation,
-						...(status && { status }),
 						represented: {
-							create: appellantsList[pickRandom(appellantsList)]
+							create: {
+								...represented,
+								email: hasEmail ? represented.email : null,
+								lastName: `${represented.lastName} - Source: ${formatSourceMap[source]} - Has email: ${hasEmail}`
+							}
 						},
 						source
 					},

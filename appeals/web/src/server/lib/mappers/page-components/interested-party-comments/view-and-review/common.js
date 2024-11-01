@@ -1,5 +1,6 @@
 import { addressToMultilineStringHtml } from '#lib/address-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
+import { simpleHtmlComponent, wrapComponents } from '#lib/mappers/components/html.js';
 import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 
@@ -10,17 +11,36 @@ import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
  * @returns {PageComponent} The withdraw link component.
  */
 export function generateWithdrawLink() {
-	return {
-		type: 'html',
-		wrapperHtml: {
+	return wrapComponents(
+		[simpleHtmlComponent('<a class="govuk-link" href="#">Withdraw comment</a>')],
+		{
 			opening: '<div class="govuk-!-margin-bottom-3">',
 			closing: '</div>'
-		},
-		parameters: {
-			html: '<a class="govuk-link" href="#">Withdraw comment</a>'
 		}
-	};
+	);
 }
+
+/**
+ * @param {import('./reject.mapper.js').RepresentationRejectionReason} rejectionReason
+ * @returns {string}
+ */
+const textToListItems = (rejectionReason) =>
+	rejectionReason.text?.reduce((textListItems, text) => `${textListItems}<li>${text}</li>`, '') ||
+	'';
+
+/**
+ * @param {Representation} comment - The comment object.
+ * @returns {string}
+ */
+const generateRejectionReasonsList = (comment) => {
+	const listItemsString = comment.rejectionReasons.reduce((listItems, rejectionReason) => {
+		if (rejectionReason.text?.length) return listItems + textToListItems(rejectionReason);
+
+		return `${listItems}<li>${rejectionReason.name}</li>`;
+	}, '');
+
+	return `<ul class="govuk-list govuk-list--bullet">${listItemsString}</ul>`;
+};
 
 /**
  * Generates the comment summary list used in both view and review pages.
@@ -90,7 +110,14 @@ export function generateCommentSummaryList(
 				text: commentIsDocument ? 'Added as a document' : comment.originalRepresentation
 			},
 			actions: {
-				items: commentIsDocument ? [] : [{ text: 'Redact', href: '#' }]
+				items: commentIsDocument
+					? []
+					: [
+							{
+								text: 'Redact',
+								href: `/appeals-service/appeal-details/${appealId}/interested-party-comments/${comment.id}/redact`
+							}
+					  ]
 			}
 		},
 		...(comment.redactedRepresentation
@@ -113,7 +140,7 @@ export function generateCommentSummaryList(
 			: [
 					{
 						key: { text: 'Why comment invalid' },
-						value: { text: comment.notes }
+						value: { html: generateRejectionReasonsList(comment) }
 					}
 			  ])
 	];
