@@ -1629,6 +1629,28 @@ const mapDocumentVersionToAuditActivityHtml = async (
 
 /**
  *
+ * @typedef {Object} DocumentFileNameFormData
+ * @property {string} documentId
+ * @property {string} fileName
+ */
+
+/**
+ *
+ * @param {DocumentFileNameFormData} formData
+ * @returns {import('./appeal.documents.service.js').DocumentDetailAPIPatchRequest}
+ */
+export const mapDocumentFileNameFormDataToAPIRequest = (formData) => {
+	const { documentId, fileName } = formData;
+	return {
+		document: {
+			id: documentId,
+			fileName
+		}
+	};
+};
+
+/**
+ *
  * @typedef {Object} DocumentDetailsFormItem
  * @property {string} documentId
  * @property {Object<string, string>} receivedDate
@@ -1640,40 +1662,6 @@ const mapDocumentVersionToAuditActivityHtml = async (
  * @typedef {Object} DocumentDetailsFormData
  * @property {DocumentDetailsFormItem[]} items
  */
-
-/**
- *
- * @typedef {Object} DocumentFileNameFormData
- * @property {string} documentId
- * @property {string} fileName
- */
-
-/**
- *
- * @param {DocumentFileNameFormData} formData
- * @param {string} dateReceived
- * @param {string} redactionStatus
- * @param {import('@pins/appeals.api').Schema.DocumentRedactionStatus[]|undefined} redactionStatuses
- * @returns {import('./appeal.documents.service.js').DocumentDetailsAPIPatchRequest}
- */
-export const mapDocumentFileNameFormDataToAPIRequest = (
-	formData,
-	dateReceived,
-	redactionStatus,
-	redactionStatuses
-) => {
-	const { documentId, fileName } = formData;
-	return {
-		documents: [
-			{
-				id: documentId,
-				receivedDate: dateReceived,
-				redactionStatus: mapRedactionStatusNameToId(redactionStatuses, redactionStatus),
-				fileName
-			}
-		]
-	};
-};
 
 /**
  *

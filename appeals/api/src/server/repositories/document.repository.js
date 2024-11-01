@@ -177,6 +177,20 @@ export const updateDocuments = (data) => {
 };
 
 /**
+ * @param {guid} documentId
+ * @param {UpdateDocumentFileNameRequest} document
+ * @returns
+ */
+export const updateDocumentById = (documentId, document) => {
+	return databaseConnector.document.update({
+		data: { name: document.fileName },
+		where: {
+			guid: documentId
+		}
+	});
+};
+
+/**
  * @param {number} appealId
  * @returns {Promise<{documentGuid: string, version: number}[]>}
  */

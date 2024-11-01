@@ -95,6 +95,12 @@ const patchDocumentsValidator = composeMiddleware(
 	validateUuidParameter({ parameterName: 'documents.*.id', parameterType: body }),
 	validateDateParameter({ parameterName: 'documents.*.receivedDate', isRequired: true }),
 	body('documents').custom(validateDocumentRedactionStatusIds),
+	validationErrorHandler
+);
+
+const patchDocumentFileNameValidator = composeMiddleware(
+	validateIdParameter('appealId'),
+	validateUuidParameter({ parameterName: 'documents.*.id', parameterType: body }),
 	validateFileNameParameter({ parameterName: 'documents.*.fileName' }),
 	validationErrorHandler
 );
@@ -114,5 +120,6 @@ export {
 	getDocumentValidator,
 	getFolderIdValidator,
 	patchDocumentsValidator,
+	patchDocumentFileNameValidator,
 	patchDocumentsAvCheckValidator
 };

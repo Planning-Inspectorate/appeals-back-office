@@ -4360,6 +4360,19 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 </main>"
 `;
 
+exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId should send an API request to create a new document and redirect to the appeal details page (lpa application) 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+            <p class="govuk-body">Try again later.</p>
+            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
+                the problem persists.</p>
+        </div>
+    </div>
+</main>"
+`;
+
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId/:documentId should render a 500 error page if fileUploadInfo is not present in the session (appellant application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
