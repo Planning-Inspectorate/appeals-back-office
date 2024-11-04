@@ -1,0 +1,5 @@
+{% macro fileDownloadLink(params) %}
+	<p>
+		<a href="{{ params.url }}" class="govuk-link" target="_blank" rel="noopener noreferrer">{{ params.filename }}</a>
+	</p>
+{% endmacro %}
