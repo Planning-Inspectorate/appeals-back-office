@@ -3,23 +3,14 @@
  * @typedef {import('../../../../app/auth/auth-session.service.js').SessionWithAuth} SessionWithAuth
  */
 
+import { textSummaryListItem } from '#lib/mappers/index.js';
+
 /** @type {import('../appeal.mapper.js').SubMapper} */
-export const mapCaseHistory = ({ currentRoute }) => ({
-	id: 'case-history',
-	display: {
-		summaryListItem: {
-			key: {
-				text: 'Case history'
-			},
-			actions: {
-				items: [
-					{
-						text: 'View',
-						href: `${currentRoute}/audit`,
-						visuallyHiddenText: 'View case history'
-					}
-				]
-			}
-		}
-	}
-});
+export const mapCaseHistory = ({ currentRoute }) =>
+	textSummaryListItem({
+		id: 'case-history',
+		text: 'Case history',
+		link: `${currentRoute}/audit`,
+		editable: true,
+		actionText: 'View'
+	});

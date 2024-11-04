@@ -32,6 +32,7 @@ export const mapDocumentManageUrl = (caseId, lpaQuestionnaireId, folderId) => {
  * @param {string} options.text
  * @param {import('@pins/appeals.api/src/server/endpoints/appeals.js').FolderInfo|null|undefined} options.folderInfo
  * @param {string} [options.cypressDataName]
+ * @param {boolean} [options.showDocuments]
  * @param {import('@pins/appeals.api/src/server/endpoints/appeals.js').SingleLPAQuestionnaireResponse} options.lpaQuestionnaireData
  * @param {import('#lib/active-directory-token.js').SessionWithAuth} options.session
  * @returns {Instructions}
@@ -41,6 +42,7 @@ export const documentInstruction = ({
 	text,
 	folderInfo,
 	cypressDataName,
+	showDocuments = true,
 	lpaQuestionnaireData,
 	session
 }) => {
@@ -49,6 +51,7 @@ export const documentInstruction = ({
 		text,
 		appealId: lpaQuestionnaireData.appealId,
 		folderInfo,
+		showDocuments,
 		editable: userHasPermission(permissionNames.updateCase, session),
 		uploadUrlTemplate: buildDocumentUploadUrlTemplate(lpaQuestionnaireData.lpaQuestionnaireId),
 		manageUrl: mapDocumentManageUrl(
