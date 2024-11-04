@@ -220,7 +220,9 @@ export function createLPAQuestionnaireForAppealType(appealTypeShorthand) {
 				lpaQuestionnaireSubmittedDate: new Date(2023, 4, 9),
 				isGreenBelt: randomBool(),
 				eiaColumnTwoThreshold: randomBool(),
-				eiaRequiresEnvironmentalStatement: randomBool()
+				eiaRequiresEnvironmentalStatement: randomBool(),
+				infrastructureLevyAdoptedDate: randomBool() ? new Date(2023, 4, 9) : null,
+				infrastructureLevyExpectedDate: randomBool() ? new Date(2023, 4, 9) : null
 			};
 		default:
 			return;
