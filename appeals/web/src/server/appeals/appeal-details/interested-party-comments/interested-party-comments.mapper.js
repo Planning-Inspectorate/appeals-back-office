@@ -1,7 +1,7 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
-import { buildNotificationBanners } from '#lib/mappers/notification-banners.mapper.js';
-import { addressInputs } from '#lib/mappers/components/address.js';
+import { buildNotificationBanners } from '#lib/mappers/index.js';
+import { addressInputs } from '#lib/mappers/index.js';
 
 /**
  * @typedef {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} SingleAppellantCaseResponse */

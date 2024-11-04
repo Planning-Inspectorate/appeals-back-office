@@ -11,7 +11,7 @@ import {
 	mapReasonOptionsToCheckboxItemParameters,
 	mapReasonsToReasonsListHtml
 } from '#lib/mappers/validation-outcome-reasons.mapper.js';
-import { buildNotificationBanners } from '#lib/mappers/notification-banners.mapper.js';
+import { buildNotificationBanners } from '#lib/mappers/index.js';
 import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { initialiseAndMapData } from '#lib/mappers/appellantCase.mapper.js';
 import { removeSummaryListActions } from '#lib/mappers/index.js';

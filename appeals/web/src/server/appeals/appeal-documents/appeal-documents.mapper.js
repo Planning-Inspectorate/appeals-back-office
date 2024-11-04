@@ -8,7 +8,7 @@ import {
 	dayMonthYearHourMinuteToISOString
 } from '#lib/dates.js';
 import { kilobyte, megabyte, gigabyte } from '#appeals/appeal.constants.js';
-import { buildNotificationBanners } from '#lib/mappers/notification-banners.mapper.js';
+import { buildNotificationBanners } from '#lib/mappers/index.js';
 import usersService from '#appeals/appeal-users/users-service.js';
 import { surnameFirstToFullName } from '#lib/person-name-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';

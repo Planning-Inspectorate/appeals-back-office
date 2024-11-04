@@ -4,7 +4,7 @@ import usersService from '#appeals/appeal-users/users-service.js';
 import { nationalListPage } from './national-list.mapper.js';
 import { getAppeals } from './national-list.service.js';
 import { getPaginationParametersFromQuery } from '#lib/pagination-utilities.js';
-import { mapPagination } from '#lib/mappers/pagination.mapper.js';
+import { mapPagination } from '#lib/mappers/index.js';
 
 /** @typedef {import('@pins/appeals').Pagination} Pagination */
 

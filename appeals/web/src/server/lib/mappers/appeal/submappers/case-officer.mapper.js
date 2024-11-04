@@ -1,5 +1,5 @@
 import { surnameFirstToFullName } from '#lib/person-name-formatter.js';
-import { textSummaryListItem } from '#lib/mappers/components/text.js';
+import { textSummaryListItem } from '#lib/mappers/index.js';
 
 /** @type {import('../appeal.mapper.js').SubMapper} */ export const mapCaseOfficer = ({
 	appealDetails,

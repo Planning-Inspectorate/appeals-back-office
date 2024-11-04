@@ -1,5 +1,5 @@
 import { dateISOStringToDisplayDate, dateISOStringToDisplayTime12hr } from '#lib/dates.js';
-import { textSummaryListItem } from '#lib/mappers/components/text.js';
+import { textSummaryListItem } from '#lib/mappers/index.js';
 import { userHasPermission } from '#lib/mappers/index.js';
 import { permissionNames } from '#environment/permissions.js';
 

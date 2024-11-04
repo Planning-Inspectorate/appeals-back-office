@@ -1,4 +1,4 @@
-import { wrapComponents } from '#lib/mappers/components/html.js';
+import { wrapComponents } from '#lib/mappers/index.js';
 import { buttons } from './buttons.js';
 import { originalComment } from './original-comment.js';
 import { redactInput } from './redact-input.js';
