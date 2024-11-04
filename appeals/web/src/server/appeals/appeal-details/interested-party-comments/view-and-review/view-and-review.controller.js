@@ -68,7 +68,7 @@ export const renderRejectInterestedPartyComment = async (request, response) => {
 			rejectionReasons
 		);
 
-		const pageContent = rejectInterestedPartyCommentPage(currentAppeal);
+		const pageContent = rejectInterestedPartyCommentPage(currentAppeal, currentComment);
 
 		return response.status(200).render('appeals/appeal/reject-ip-comment.njk', {
 			errors,
@@ -160,7 +160,7 @@ export const postRejectInterestedPartyComment = async (request, response) => {
 		}
 
 		if (errors) {
-			const pageContent = rejectInterestedPartyCommentPage(request.currentAppeal);
+			const pageContent = rejectInterestedPartyCommentPage(currentAppeal, currentComment);
 
 			const rejectionReasons = await getRepresentationRejectionReasonOptions(apiClient);
 			const mappedRejectionReasons = mapRejectionReasonOptionsToCheckboxItemParameters(
