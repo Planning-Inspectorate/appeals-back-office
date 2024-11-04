@@ -636,15 +636,9 @@ exports[`appeal-details GET /:appealId should not render action links to the man
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
                             <dd class="govuk-summary-list__value">23 May 2023</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/valid/date"
-                                data-cy="change-valid-date"> Change<span class="govuk-visually-hidden"> Valid date</span></a>
-                            </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-start-date"><dt class="govuk-summary-list__key"> Start date</dt>
                             <dd class="govuk-summary-list__value">23 May 2023</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/start-case/change"
-                                data-cy="change-start-case-date"> Change</a>
-                            </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-lpa-questionnaire-due-date"><dt class="govuk-summary-list__key"> LPA questionnaire due</dt>
                             <dd class="govuk-summary-list__value">11 October 2023</dd>
@@ -1084,15 +1078,9 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
                             <dd class="govuk-summary-list__value">23 May 2023</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/valid/date"
-                                data-cy="change-valid-date"> Change<span class="govuk-visually-hidden"> Valid date</span></a>
-                            </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-start-date"><dt class="govuk-summary-list__key"> Start date</dt>
                             <dd class="govuk-summary-list__value">23 May 2023</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/start-case/change"
-                                data-cy="change-start-case-date"> Change</a>
-                            </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-lpa-questionnaire-due-date"><dt class="govuk-summary-list__key"> LPA questionnaire due</dt>
                             <dd class="govuk-summary-list__value">11 October 2023</dd>
@@ -1527,15 +1515,9 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
                             <dd class="govuk-summary-list__value">23 May 2023</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/valid/date"
-                                data-cy="change-valid-date"> Change<span class="govuk-visually-hidden"> Valid date</span></a>
-                            </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-start-date"><dt class="govuk-summary-list__key"> Start date</dt>
                             <dd class="govuk-summary-list__value">23 May 2023</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/start-case/change"
-                                data-cy="change-start-case-date"> Change</a>
-                            </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-lpa-questionnaire-due-date"><dt class="govuk-summary-list__key"> LPA questionnaire due</dt>
                             <dd class="govuk-summary-list__value">11 October 2023</dd>
@@ -1970,15 +1952,9 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
                             <dd class="govuk-summary-list__value">23 May 2023</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/valid/date"
-                                data-cy="change-valid-date"> Change<span class="govuk-visually-hidden"> Valid date</span></a>
-                            </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-start-date"><dt class="govuk-summary-list__key"> Start date</dt>
                             <dd class="govuk-summary-list__value">23 May 2023</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/start-case/change"
-                                data-cy="change-start-case-date"> Change</a>
-                            </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-lpa-questionnaire-due-date"><dt class="govuk-summary-list__key"> LPA questionnaire due</dt>
                             <dd class="govuk-summary-list__value">11 October 2023</dd>
@@ -2429,15 +2405,9 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
                             <dd class="govuk-summary-list__value">23 May 2023</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/valid/date"
-                                data-cy="change-valid-date"> Change<span class="govuk-visually-hidden"> Valid date</span></a>
-                            </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-start-date"><dt class="govuk-summary-list__key"> Start date</dt>
                             <dd class="govuk-summary-list__value">23 May 2023</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/start-case/change"
-                                data-cy="change-start-case-date"> Change</a>
-                            </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-lpa-questionnaire-due-date"><dt class="govuk-summary-list__key"> LPA questionnaire due</dt>
                             <dd class="govuk-summary-list__value">11 October 2023</dd>
@@ -2873,15 +2843,9 @@ exports[`appeal-details GET /:appealId should render an Issue a decision notific
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
                             <dd class="govuk-summary-list__value">23 May 2023</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/valid/date"
-                                data-cy="change-valid-date"> Change<span class="govuk-visually-hidden"> Valid date</span></a>
-                            </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-start-date"><dt class="govuk-summary-list__key"> Start date</dt>
                             <dd class="govuk-summary-list__value">23 May 2023</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/start-case/change"
-                                data-cy="change-start-case-date"> Change</a>
-                            </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-lpa-questionnaire-due-date"><dt class="govuk-summary-list__key"> LPA questionnaire due</dt>
                             <dd class="govuk-summary-list__value">11 October 2023</dd>
@@ -3304,15 +3268,9 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
                             <dd class="govuk-summary-list__value">23 May 2023</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/valid/date"
-                                data-cy="change-valid-date"> Change<span class="govuk-visually-hidden"> Valid date</span></a>
-                            </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-start-date"><dt class="govuk-summary-list__key"> Start date</dt>
                             <dd class="govuk-summary-list__value">23 May 2023</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/start-case/change"
-                                data-cy="change-start-case-date"> Change</a>
-                            </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-lpa-questionnaire-due-date"><dt class="govuk-summary-list__key"> LPA questionnaire due</dt>
                             <dd class="govuk-summary-list__value">11 October 2023</dd>
@@ -3753,11 +3711,8 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
                             <dd class="govuk-summary-list__value">23 May 2023</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/valid/date"
-                                data-cy="change-valid-date"> Change<span class="govuk-visually-hidden"> Valid date</span></a>
-                            </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-start-date"><dt class="govuk-summary-list__key"> Start date</dt>
+                        <div class="govuk-summary-list__row appeal-start-date"><dt class="govuk-summary-list__key"> Start date</dt>
                             <dd class="govuk-summary-list__value">23 May 2023</dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-lpa-questionnaire-due-date"><dt class="govuk-summary-list__key"> LPA questionnaire due</dt>
@@ -4201,11 +4156,8 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
                             <dd class="govuk-summary-list__value">23 May 2023</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/valid/date"
-                                data-cy="change-valid-date"> Change<span class="govuk-visually-hidden"> Valid date</span></a>
-                            </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-start-date"><dt class="govuk-summary-list__key"> Start date</dt>
+                        <div class="govuk-summary-list__row appeal-start-date"><dt class="govuk-summary-list__key"> Start date</dt>
                             <dd class="govuk-summary-list__value">23 May 2023</dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-lpa-questionnaire-due-date"><dt class="govuk-summary-list__key"> LPA questionnaire due</dt>
@@ -4649,11 +4601,8 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
                             <dd class="govuk-summary-list__value">23 May 2023</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/valid/date"
-                                data-cy="change-valid-date"> Change<span class="govuk-visually-hidden"> Valid date</span></a>
-                            </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-start-date"><dt class="govuk-summary-list__key"> Start date</dt>
+                        <div class="govuk-summary-list__row appeal-start-date"><dt class="govuk-summary-list__key"> Start date</dt>
                             <dd class="govuk-summary-list__value">23 May 2023</dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-lpa-questionnaire-due-date"><dt class="govuk-summary-list__key"> LPA questionnaire due</dt>
@@ -5093,15 +5042,9 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
                             <dd class="govuk-summary-list__value">23 May 2023</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/valid/date"
-                                data-cy="change-valid-date"> Change<span class="govuk-visually-hidden"> Valid date</span></a>
-                            </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-start-date"><dt class="govuk-summary-list__key"> Start date</dt>
                             <dd class="govuk-summary-list__value">23 May 2023</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/start-case/change"
-                                data-cy="change-start-case-date"> Change</a>
-                            </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-lpa-questionnaire-due-date"><dt class="govuk-summary-list__key"> LPA questionnaire due</dt>
                             <dd class="govuk-summary-list__value">11 October 2023</dd>
@@ -5678,15 +5621,9 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
                             <dd class="govuk-summary-list__value">23 May 2023</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/valid/date"
-                                data-cy="change-valid-date"> Change<span class="govuk-visually-hidden"> Valid date</span></a>
-                            </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-start-date"><dt class="govuk-summary-list__key"> Start date</dt>
                             <dd class="govuk-summary-list__value">23 May 2023</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/start-case/change"
-                                data-cy="change-start-case-date"> Change</a>
-                            </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-lpa-questionnaire-due-date"><dt class="govuk-summary-list__key"> LPA questionnaire due</dt>
                             <dd class="govuk-summary-list__value">11 October 2023</dd>
@@ -6135,15 +6072,9 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
                             <dd class="govuk-summary-list__value">23 May 2023</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/appellant-case/valid/date"
-                                data-cy="change-valid-date"> Change<span class="govuk-visually-hidden"> Valid date</span></a>
-                            </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-start-date"><dt class="govuk-summary-list__key"> Start date</dt>
                             <dd class="govuk-summary-list__value">23 May 2023</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/start-case/change"
-                                data-cy="change-start-case-date"> Change</a>
-                            </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-lpa-questionnaire-due-date"><dt class="govuk-summary-list__key"> LPA questionnaire due</dt>
                             <dd class="govuk-summary-list__value">11 October 2023</dd>
@@ -6563,15 +6494,9 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
                             <dd class="govuk-summary-list__value">23 May 2023</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/valid/date"
-                                data-cy="change-valid-date"> Change<span class="govuk-visually-hidden"> Valid date</span></a>
-                            </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-start-date"><dt class="govuk-summary-list__key"> Start date</dt>
                             <dd class="govuk-summary-list__value">23 May 2023</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/start-case/change"
-                                data-cy="change-start-case-date"> Change</a>
-                            </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-lpa-questionnaire-due-date"><dt class="govuk-summary-list__key"> LPA questionnaire due</dt>
                             <dd class="govuk-summary-list__value">11 October 2023</dd>
@@ -7015,15 +6940,9 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
                             <dd class="govuk-summary-list__value">23 May 2023</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/valid/date"
-                                data-cy="change-valid-date"> Change<span class="govuk-visually-hidden"> Valid date</span></a>
-                            </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-start-date"><dt class="govuk-summary-list__key"> Start date</dt>
                             <dd class="govuk-summary-list__value">23 May 2023</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/start-case/change"
-                                data-cy="change-start-case-date"> Change</a>
-                            </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-lpa-questionnaire-due-date"><dt class="govuk-summary-list__key"> LPA questionnaire due</dt>
                             <dd class="govuk-summary-list__value">11 October 2023</dd>
@@ -7450,7 +7369,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                         <div class="govuk-summary-list__row appeal-start-date"><dt class="govuk-summary-list__key"> Start date</dt>
                             <dd class="govuk-summary-list__value">Not added</dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/start-case/add"
-                                data-cy="add-start-case-date"> Add<span class="govuk-visually-hidden"> The date the case was started</span></a>
+                                data-cy="add-start-date"> Add<span class="govuk-visually-hidden"> Start date</span></a>
                             </dd>
                         </div>
                     </dl>
@@ -7995,15 +7914,9 @@ exports[`appeal-details should not render a back button 1`] = `
                                 <dl class="govuk-summary-list">
                                     <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
                                         <dd class="govuk-summary-list__value">23 May 2023</dd>
-                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/valid/date"
-                                            data-cy="change-valid-date"> Change<span class="govuk-visually-hidden"> Valid date</span></a>
-                                        </dd>
                                     </div>
                                     <div class="govuk-summary-list__row appeal-start-date"><dt class="govuk-summary-list__key"> Start date</dt>
                                         <dd class="govuk-summary-list__value">23 May 2023</dd>
-                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/start-case/change"
-                                            data-cy="change-start-case-date"> Change</a>
-                                        </dd>
                                     </div>
                                     <div class="govuk-summary-list__row appeal-lpa-questionnaire-due-date"><dt class="govuk-summary-list__key"> LPA questionnaire due</dt>
                                         <dd class="govuk-summary-list__value">11 October 2023</dd>

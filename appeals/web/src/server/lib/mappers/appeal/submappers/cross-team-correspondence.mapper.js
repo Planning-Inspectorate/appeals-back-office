@@ -1,11 +1,9 @@
+import { permissionNames } from '#environment/permissions.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
+import { userHasPermission } from '#lib/mappers/utils/permissions.mapper.js';
 
 /** @type {import('../appeal.mapper.js').SubMapper} */
-export const mapCrossTeamCorrespondence = ({
-	appealDetails,
-	currentRoute,
-	userHasUpdateCasePermission
-}) => ({
+export const mapCrossTeamCorrespondence = ({ appealDetails, currentRoute, session }) => ({
 	id: 'cross-team-correspondence',
 	display: {
 		summaryListItem: {
@@ -22,7 +20,7 @@ export const mapCrossTeamCorrespondence = ({
 									visuallyHiddenText: 'cross-team correspondence documents',
 									href: `${currentRoute}/internal-correspondence/cross-team/manage-documents/${appealDetails.internalCorrespondence?.crossTeam?.folderId}`
 								},
-								...(userHasUpdateCasePermission
+								...(userHasPermission(permissionNames.viewCaseDetails, session)
 									? [
 											{
 												text: 'Add',
@@ -37,7 +35,7 @@ export const mapCrossTeamCorrespondence = ({
 									: [])
 						  ]
 						: [
-								...(userHasUpdateCasePermission
+								...(userHasPermission(permissionNames.viewCaseDetails, session)
 									? [
 											{
 												text: 'Add',
