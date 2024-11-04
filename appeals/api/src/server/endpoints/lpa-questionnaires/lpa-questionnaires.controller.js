@@ -52,7 +52,9 @@ const updateLPAQuestionnaireById = async (req, res) => {
 			hasProtectedSpecies,
 			isAonbNationalLandscape,
 			isGypsyOrTravellerSite,
-			isInfrastructureLevyFormallyAdopted
+			isInfrastructureLevyFormallyAdopted,
+			infrastructureLevyAdoptedDate,
+			infrastructureLevyExpectedDate
 		},
 		params,
 		validationOutcome
@@ -94,7 +96,9 @@ const updateLPAQuestionnaireById = async (req, res) => {
 					hasProtectedSpecies,
 					isAonbNationalLandscape,
 					isGypsyOrTravellerSite,
-					isInfrastructureLevyFormallyAdopted
+					isInfrastructureLevyFormallyAdopted,
+					infrastructureLevyAdoptedDate,
+					infrastructureLevyExpectedDate
 			  });
 
 		const updatedProperties = Object.keys(body).filter((key) => body[key] !== undefined);
