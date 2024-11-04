@@ -4,7 +4,7 @@
 
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { convertFromYesNoToBoolean } from '#lib/boolean-formatter.js';
-import { yesNoInput } from '#lib/mappers/components/radio.js';
+import { yesNoInput } from '#lib/mappers/index.js';
 
 /**
  * @param {Appeal} appealData

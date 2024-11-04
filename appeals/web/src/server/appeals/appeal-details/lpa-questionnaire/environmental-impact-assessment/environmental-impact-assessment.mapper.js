@@ -1,5 +1,5 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { yesNoInput } from '#lib/mappers/components/radio.js';
+import { yesNoInput } from '#lib/mappers/index.js';
 
 /**
  * @typedef {import('../../appeal-details.types.js').WebAppeal} Appeal

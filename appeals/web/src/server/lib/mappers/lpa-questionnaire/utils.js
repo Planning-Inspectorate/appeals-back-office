@@ -1,5 +1,5 @@
 import { permissionNames } from '#environment/permissions.js';
-import { documentSummaryListItem } from '../components/document.js';
+import { documentSummaryListItem } from '../components/instructions/document.js';
 import { userHasPermission } from '#lib/mappers/index.js';
 
 /**

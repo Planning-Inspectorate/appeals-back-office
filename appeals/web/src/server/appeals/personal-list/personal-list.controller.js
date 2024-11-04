@@ -2,7 +2,7 @@ import logger from '#lib/logger.js';
 import { personalListPage } from './personal-list.mapper.js';
 import { getAppealsAssignedToCurrentUser } from './personal-list.service.js';
 import { getPaginationParametersFromQuery } from '#lib/pagination-utilities.js';
-import { mapPagination } from '#lib/mappers/pagination.mapper.js';
+import { mapPagination } from '#lib/mappers/index.js';
 
 /** @typedef {import('@pins/appeals').Pagination} Pagination */
 

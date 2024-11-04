@@ -7,12 +7,9 @@ import { formatServiceUserAsHtmlList } from '#lib/service-user-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { capitalize } from 'lodash-es';
 import { APPEAL_APPLICATION_DECISION, APPEAL_KNOWS_OTHER_OWNERS } from 'pins-data-model';
-import {
-	booleanSummaryListItem,
-	booleanWithDetailsSummaryListItem
-} from '#lib/mappers/components/boolean.js';
-import { documentSummaryListItem } from '#lib/mappers/components/document.js';
-import { textSummaryListItem } from '#lib/mappers/components/text.js';
+import { booleanSummaryListItem, booleanWithDetailsSummaryListItem } from '#lib/mappers/index.js';
+import { documentSummaryListItem } from '#lib/mappers/index.js';
+import { textSummaryListItem } from '#lib/mappers/index.js';
 
 /**
  * @typedef {import('@pins/appeals.api').Appeals.FolderInfo} FolderInfo

@@ -1,6 +1,6 @@
 import { addressToMultilineStringHtml } from '#lib/address-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
-import { simpleHtmlComponent, wrapComponents } from '#lib/mappers/components/html.js';
+import { simpleHtmlComponent, wrapComponents } from '#lib/mappers/index.js';
 import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 

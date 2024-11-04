@@ -1,9 +1,9 @@
-import { notificationBannerDefinitions } from './mappers/notification-banners.mapper.js';
+import { notificationBannerDefinitions } from './mappers/index.js';
 
 /**
  *
  * @param {import('../app/auth/auth-session.service').SessionWithAuth & Object<string, any>} session
- * @param {keyof import('./mappers/notification-banners.mapper.js').notificationBannerDefinitions} bannerDefinitionKey
+ * @param {keyof import('./mappers/index.js').notificationBannerDefinitions} bannerDefinitionKey
  * @param {number|string} appealId
  * @param {string} [html]
  * @param {string} [text]
