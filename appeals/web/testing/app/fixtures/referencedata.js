@@ -2420,6 +2420,44 @@ export const interestedPartyCommentForReview = {
 	}
 };
 
+export const representationRejectionReasons = [
+	{
+		id: 1,
+		name: 'Received after deadline',
+		hasText: false
+	},
+	{
+		id: 2,
+		name: 'Includes personal and/or medical information',
+		hasText: false
+	},
+	{
+		id: 3,
+		name: 'Includes inflammatory content',
+		hasText: false
+	},
+	{
+		id: 4,
+		name: 'Duplicated comment',
+		hasText: false
+	},
+	{
+		id: 5,
+		name: 'Not relevant to this appeal',
+		hasText: false
+	},
+	{
+		id: 6,
+		name: 'Contains links to web pages',
+		hasText: false
+	},
+	{
+		id: 7,
+		name: 'Other',
+		hasText: true
+	}
+];
+
 export const baseSession = {
 	id: '',
 	cookie: { originalMaxAge: 1 },

@@ -296,6 +296,10 @@ export const specialisms = [
  */
 export const representationRejectionReasons = [
 	{
+		name: 'Received after deadline',
+		hasText: false
+	},
+	{
 		name: 'Illegible or Incomplete Documentation',
 		hasText: false
 	},
@@ -427,15 +431,13 @@ export async function seedStaticData(databaseConnector) {
 			update: {}
 		});
 	}
-	const promises = representationRejectionReasons.map((rejectionReason) =>
-		databaseConnector.representationRejectionReason.upsert({
+	for (const rejectionReason of representationRejectionReasons) {
+		await databaseConnector.representationRejectionReason.upsert({
 			create: rejectionReason,
 			where: { name: rejectionReason.name },
 			update: {}
-		})
-	);
-
-	await Promise.all(promises);
+		});
+	}
 
 	await updateFolderDefinitionsForExistingAppeals(databaseConnector);
 }
