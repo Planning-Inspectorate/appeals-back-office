@@ -74,7 +74,9 @@ const formatLpaQuestionnaire = (appeal, folders = null) => {
 			isGypsyOrTravellerSite: lpaQuestionnaire.isGypsyOrTravellerSite,
 			isInfrastructureLevyFormallyAdopted: lpaQuestionnaire.isInfrastructureLevyFormallyAdopted,
 			infrastructureLevyAdoptedDate: lpaQuestionnaire.infrastructureLevyAdoptedDate,
-			infrastructureLevyExpectedDate: lpaQuestionnaire.infrastructureLevyExpectedDate
+			infrastructureLevyExpectedDate: lpaQuestionnaire.infrastructureLevyExpectedDate,
+			eiaSensitiveAreaDetails: lpaQuestionnaire.eiaSensitiveAreaDetails,
+			hasStatutoryConsultees: lpaQuestionnaire.hasStatutoryConsultees
 		};
 	} else {
 		return {};
