@@ -24,7 +24,8 @@ export class CaseDetailsPage extends Page {
 		addAgreementToChangeDescriptionEvidence: 'add-agreement-to-change-description-evidence',
 		manageAgreementToChangeDescriptionEvidence: 'manage-agreement-to-change-description-evidence',
 		addCostsDecision: 'add-costs-decision',
-		changeSiteOwnership: 'change-site-ownership'
+		changeSiteOwnership: 'change-site-ownership',
+		changeLpaqDueDate: 'change-lpa-questionnaire-due-date'
 	};
 
 	elements = {
@@ -49,7 +50,8 @@ export class CaseDetailsPage extends Page {
 			cy.getByData(this._cyDataSelectors.manageAgreementToChangeDescriptionEvidence),
 		addCostsDecision: () => cy.getByData(this._cyDataSelectors.addCostsDecision),
 		costDecisionStatus: () => cy.get('.govuk-table__cell appeal-costs-decision-status'),
-		changeSiteOwnership: () => cy.getByData(this._cyDataSelectors.changeSiteOwnership)
+		changeSiteOwnership: () => cy.getByData(this._cyDataSelectors.changeSiteOwnership),
+		changeLpaqDueDate: () => cy.getByData(this._cyDataSelectors.changeLpaqDueDate)
 	};
 	/********************************************************
 	 ************************ Actions ************************
@@ -125,6 +127,11 @@ export class CaseDetailsPage extends Page {
 
 	clickChangeSiteOwnership() {
 		this.elements.changeSiteOwnership().click();
+	}
+
+	clickChangeLpaqDueDate() {
+		this.clickAccordionByText('Timetable');
+		this.elements.changeLpaqDueDate().click();
 	}
 
 	uploadSampleDoc() {
