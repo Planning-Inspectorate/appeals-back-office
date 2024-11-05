@@ -9,9 +9,9 @@ import { initialiseAndMapLPAQData } from '../lpa-questionnaire/lpa-questionnaire
 import { areIdsDefinedAndUnique } from '#testing/lib/testMappers.js';
 import {
 	buildNotificationBanners,
-	notificationBannerDefinitions
-} from '../notification-banners.mapper.js';
-import { mapPagination } from '../pagination.mapper.js';
+	notificationBannerDefinitions,
+	mapPagination
+} from '../index.js';
 
 /** @typedef {import('../../../app/auth/auth-session.service').SessionWithAuth} SessionWithAuth */
 

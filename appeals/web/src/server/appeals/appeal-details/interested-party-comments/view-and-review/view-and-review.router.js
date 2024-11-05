@@ -6,8 +6,6 @@ import {
 	validateRejectReason,
 	validateReviewComment
 } from './view-and-review.validators.js';
-import { validateAppeal } from '#appeals/appeal-details/appeal-details.middleware.js';
-import { validateComment } from '../interested-party-comments.middleware.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -20,10 +18,8 @@ router
 
 router
 	.route('/reject')
-	.get(validateAppeal, validateComment, asyncHandler(controller.renderRejectInterestedPartyComment))
+	.get(asyncHandler(controller.renderRejectInterestedPartyComment))
 	.post(
-		validateAppeal,
-		validateComment,
 		validateRejectReason,
 		validateRejectionReasonTextItems,
 		asyncHandler(controller.postRejectInterestedPartyComment)

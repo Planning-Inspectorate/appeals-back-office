@@ -1,5 +1,5 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { addressInputs } from '#lib/mappers/components/address.js';
+import { addressInputs } from '#lib/mappers/index.js';
 
 /**
  * @typedef {import('../../appeal-details.types.js').WebAppeal} Appeal

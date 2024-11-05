@@ -1,4 +1,4 @@
-import { booleanSummaryListItem } from '#lib/mappers/components/boolean.js';
+import { booleanSummaryListItem } from '#lib/mappers/index.js';
 
 /** @type {import("../lpa-questionnaire.mapper.js").SubMapper} */
 export const mapIsAonbNationalLandscape = ({

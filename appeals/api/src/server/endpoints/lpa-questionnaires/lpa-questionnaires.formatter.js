@@ -72,7 +72,9 @@ const formatLpaQuestionnaire = (appeal, folders = null) => {
 			hasProtectedSpecies: lpaQuestionnaire.hasProtectedSpecies,
 			isAonbNationalLandscape: lpaQuestionnaire.isAonbNationalLandscape,
 			isGypsyOrTravellerSite: lpaQuestionnaire.isGypsyOrTravellerSite,
-			isInfrastructureLevyFormallyAdopted: lpaQuestionnaire.isInfrastructureLevyFormallyAdopted
+			isInfrastructureLevyFormallyAdopted: lpaQuestionnaire.isInfrastructureLevyFormallyAdopted,
+			infrastructureLevyAdoptedDate: lpaQuestionnaire.infrastructureLevyAdoptedDate,
+			infrastructureLevyExpectedDate: lpaQuestionnaire.infrastructureLevyExpectedDate
 		};
 	} else {
 		return {};

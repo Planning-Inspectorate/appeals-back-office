@@ -326,6 +326,8 @@ interface SingleLPAQuestionnaireResponse {
 	isAonbNationalLandscape?: boolean;
 	isGypsyOrTravellerSite?: boolean;
 	isInfrastructureLevyFormallyAdopted?: boolean;
+	infrastructureLevyAdoptedDate: string | null;
+	infrastructureLevyExpectedDate: string | null;
 }
 
 interface UpdateLPAQuestionnaireRequest {
@@ -349,6 +351,8 @@ interface UpdateLPAQuestionnaireRequest {
 	isAonbNationalLandscape?: boolean;
 	isGypsyOrTravellerSite?: boolean;
 	isInfrastructureLevyFormallyAdopted?: boolean;
+	infrastructureLevyAdoptedDate?: string;
+	infrastructureLevyExpectedDate?: string;
 }
 
 interface UpdateLPAQuestionnaireValidationOutcomeParams {

@@ -8,14 +8,15 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 
 /**
  * @param {Appeal} appealDetails
+ * @param {Representation} comment
  * @returns {PageContent}
  */
-export function rejectInterestedPartyCommentPage(appealDetails) {
+export function rejectInterestedPartyCommentPage(appealDetails, comment) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
 
 	const pageContent = {
 		heading: 'Why are you rejecting the comment?',
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/review`,
+		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/review`,
 		preHeading: `Appeal ${shortReference}`,
 		hint: 'Select all that apply.',
 		headingClasses: 'govuk-heading-l'
@@ -25,27 +26,23 @@ export function rejectInterestedPartyCommentPage(appealDetails) {
 }
 
 /**
- * @param {Representation} comment - The comment containing the selected rejection reasons.
- * @param {RepresentationRejectionReason[]} rejectionReasonOptions - The available rejection reason options.
- * @returns {import('../../../../appeals.types.js').CheckboxItemParameter[]}
+ * @param {Representation} comment
+ * @param {RepresentationRejectionReason[]} rejectionReasonOptions
+ * @returns {import('../../../../../appeals/appeals.types.js').CheckboxItemParameter[]}
  */
 export function mapRejectionReasonOptionsToCheckboxItemParameters(comment, rejectionReasonOptions) {
-	const existingReasonIds = comment.rejectionReasons.map((reason) => reason.id);
+	const rejectionReasons = comment.rejectionReasons || [];
+	const rejectionReasonMap = new Map(rejectionReasons.map((reason) => [reason.id, reason]));
 
 	return rejectionReasonOptions.map((reason) => {
-		const isChecked = existingReasonIds.includes(reason.id);
-		const selectedReason = comment.rejectionReasons.find((r) => r.id === reason.id);
-		const existingText = selectedReason?.text || [''];
-
-		const item = {
+		const selectedReason = rejectionReasonMap.get(reason.id);
+		return {
 			value: reason.id.toString(),
 			text: reason.name,
-			checked: isChecked,
+			checked: Boolean(selectedReason),
 			hasText: reason.hasText,
-			textItems: existingText
+			textItems: selectedReason?.text || ['']
 		};
-
-		return item;
 	});
 }
 

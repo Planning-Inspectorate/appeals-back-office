@@ -1,4 +1,4 @@
-import { textSummaryListItem } from '#lib/mappers/components/text.js';
+import { textSummaryListItem } from '#lib/mappers/index.js';
 import { formatListOfNotificationMethodsToHtml } from '#lib/display-page-formatter.js';
 
 /** @type {import("../lpa-questionnaire.mapper.js").SubMapper} */

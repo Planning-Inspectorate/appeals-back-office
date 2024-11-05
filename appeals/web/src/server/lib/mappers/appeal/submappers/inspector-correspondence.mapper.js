@@ -1,11 +1,9 @@
+import { permissionNames } from '#environment/permissions.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
+import { userHasPermission } from '#lib/mappers/utils/permissions.mapper.js';
 
 /** @type {import('../appeal.mapper.js').SubMapper} */
-export const mapInspectorCorrespondence = ({
-	appealDetails,
-	currentRoute,
-	userHasUpdateCasePermission
-}) => ({
+export const mapInspectorCorrespondence = ({ appealDetails, currentRoute, session }) => ({
 	id: 'inspector-correspondence',
 	display: {
 		summaryListItem: {
@@ -22,7 +20,7 @@ export const mapInspectorCorrespondence = ({
 									visuallyHiddenText: 'inspector correspondence documents',
 									href: `${currentRoute}/internal-correspondence/inspector/manage-documents/${appealDetails.internalCorrespondence?.inspector?.folderId}`
 								},
-								...(userHasUpdateCasePermission
+								...(userHasPermission(permissionNames.viewCaseDetails, session)
 									? [
 											{
 												text: 'Add',
@@ -37,7 +35,7 @@ export const mapInspectorCorrespondence = ({
 									: [])
 						  ]
 						: [
-								...(userHasUpdateCasePermission
+								...(userHasPermission(permissionNames.viewCaseDetails, session)
 									? [
 											{
 												text: 'Add',

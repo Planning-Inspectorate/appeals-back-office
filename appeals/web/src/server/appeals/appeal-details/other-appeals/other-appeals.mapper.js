@@ -1,7 +1,7 @@
 import { addressToString } from '#lib/address-formatter.js';
 import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { buildNotificationBanners } from '#lib/mappers/notification-banners.mapper.js';
+import { buildNotificationBanners } from '#lib/mappers/index.js';
 import { generateHorizonAppealUrl } from '#lib/display-page-formatter.js';
 
 /**

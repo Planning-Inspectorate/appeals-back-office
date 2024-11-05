@@ -17,13 +17,13 @@ router
 	.get(
 		validateAppeal,
 		validateCaseFolderId,
-		assertUserHasPermission(permissionNames.updateCase),
+		assertUserHasPermission(permissionNames.viewCaseDetails),
 		asyncHandler(controller.getDocumentUpload)
 	)
 	.post(
 		validateAppeal,
 		validateCaseFolderId,
-		assertUserHasPermission(permissionNames.updateCase),
+		assertUserHasPermission(permissionNames.viewCaseDetails),
 		asyncHandler(controller.postDocumentUploadPage)
 	);
 
@@ -32,13 +32,13 @@ router
 	.get(
 		validateAppeal,
 		validateCaseFolderId,
-		assertUserHasPermission(permissionNames.updateCase),
+		assertUserHasPermission(permissionNames.viewCaseDetails),
 		asyncHandler(controller.getDocumentVersionUpload)
 	)
 	.post(
 		validateAppeal,
 		validateCaseFolderId,
-		assertUserHasPermission(permissionNames.updateCase),
+		assertUserHasPermission(permissionNames.viewCaseDetails),
 		asyncHandler(controller.postDocumentVersionUpload)
 	);
 
@@ -50,7 +50,7 @@ router
 	.get(
 		validateAppeal,
 		validateCaseFolderId,
-		assertUserHasPermission(permissionNames.updateCase),
+		assertUserHasPermission(permissionNames.viewCaseDetails),
 		asyncHandler(controller.getAddDocumentDetails)
 	)
 	.post(
@@ -61,7 +61,7 @@ router
 		documentsValidators.validateDocumentDetailsReceivedDateValid,
 		documentsValidators.validateDocumentDetailsReceivedDateIsNotFutureDate,
 		documentsValidators.validateDocumentDetailsRedactionStatuses,
-		assertUserHasPermission(permissionNames.updateCase),
+		assertUserHasPermission(permissionNames.viewCaseDetails),
 		asyncHandler(controller.postAddDocumentDetails)
 	);
 
@@ -70,13 +70,13 @@ router
 	.get(
 		validateAppeal,
 		validateCaseFolderId,
-		assertUserHasPermission(permissionNames.updateCase),
+		assertUserHasPermission(permissionNames.viewCaseDetails),
 		asyncHandler(controller.getAddDocumentsCheckAndConfirm)
 	)
 	.post(
 		validateAppeal,
 		validateCaseFolderId,
-		assertUserHasPermission(permissionNames.updateCase),
+		assertUserHasPermission(permissionNames.viewCaseDetails),
 		asyncHandler(controller.postAddDocumentsCheckAndConfirm)
 	);
 
@@ -85,13 +85,13 @@ router
 	.get(
 		validateAppeal,
 		validateCaseFolderId,
-		assertUserHasPermission(permissionNames.updateCase),
+		assertUserHasPermission(permissionNames.viewCaseDetails),
 		asyncHandler(controller.getAddDocumentsCheckAndConfirm)
 	)
 	.post(
 		validateAppeal,
 		validateCaseFolderId,
-		assertUserHasPermission(permissionNames.updateCase),
+		assertUserHasPermission(permissionNames.viewCaseDetails),
 		asyncHandler(controller.postAddDocumentVersionCheckAndConfirm)
 	);
 
@@ -107,13 +107,13 @@ router
 	.route('/:correspondenceCategory/change-document-name/:folderId/:documentId')
 	.get(
 		validateAppeal,
-		assertUserHasPermission(permissionNames.updateCase),
+		assertUserHasPermission(permissionNames.viewCaseDetails),
 		validateCaseFolderId,
 		asyncHandler(controller.getChangeDocumentFileNameDetails)
 	)
 	.post(
 		validateAppeal,
-		assertUserHasPermission(permissionNames.updateCase),
+		assertUserHasPermission(permissionNames.viewCaseDetails),
 		validateCaseFolderId,
 		documentsValidators.validateDocumentNameBodyFormat,
 		documentsValidators.validateDocumentName,
@@ -124,13 +124,13 @@ router
 	.route('/:correspondenceCategory/change-document-details/:folderId/:documentId')
 	.get(
 		validateAppeal,
-		assertUserHasPermission(permissionNames.updateCase),
+		assertUserHasPermission(permissionNames.viewCaseDetails),
 		validateCaseFolderId,
 		asyncHandler(controller.getChangeDocumentVersionDetails)
 	)
 	.post(
 		validateAppeal,
-		assertUserHasPermission(permissionNames.updateCase),
+		assertUserHasPermission(permissionNames.viewCaseDetails),
 		validateCaseFolderId,
 		documentsValidators.validateDocumentDetailsBodyFormat,
 		documentsValidators.validateDocumentDetailsReceivedDatesFields,
@@ -145,13 +145,13 @@ router
 	.get(
 		validateCaseFolderId,
 		validateCaseDocumentId,
-		assertUserHasPermission(permissionNames.updateCase),
+		assertUserHasPermission(permissionNames.viewCaseDetails),
 		asyncHandler(controller.getDeleteInternalCorrespondenceDocument)
 	)
 	.post(
 		validateCaseFolderId,
 		validateCaseDocumentId,
-		assertUserHasPermission(permissionNames.updateCase),
+		assertUserHasPermission(permissionNames.viewCaseDetails),
 		documentsValidators.validateDocumentDeleteAnswer,
 		asyncHandler(controller.postDeleteInternalCorrespondenceDocument)
 	);

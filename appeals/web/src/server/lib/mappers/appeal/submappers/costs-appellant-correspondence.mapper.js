@@ -1,4 +1,4 @@
-import { costsFolderTableItem } from '#lib/mappers/components/folder.js';
+import { costsFolderTableItem } from '#lib/mappers/index.js';
 
 /** @type {import('../appeal.mapper.js').SubMapper} */
 export const mapCostsAppellantCorrespondence = ({

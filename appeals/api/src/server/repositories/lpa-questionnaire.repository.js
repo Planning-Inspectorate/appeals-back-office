@@ -41,7 +41,9 @@ const updateLPAQuestionnaireById = (id, data) => {
 				hasProtectedSpecies: data.hasProtectedSpecies,
 				isAonbNationalLandscape: data.isAonbNationalLandscape,
 				isGypsyOrTravellerSite: data.isGypsyOrTravellerSite,
-				isInfrastructureLevyFormallyAdopted: data.isInfrastructureLevyFormallyAdopted
+				isInfrastructureLevyFormallyAdopted: data.isInfrastructureLevyFormallyAdopted,
+				infrastructureLevyAdoptedDate: data.infrastructureLevyAdoptedDate,
+				infrastructureLevyExpectedDate: data.infrastructureLevyExpectedDate
 			}
 		})
 	);

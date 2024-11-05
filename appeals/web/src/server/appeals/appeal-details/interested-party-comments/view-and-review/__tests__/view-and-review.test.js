@@ -1,6 +1,7 @@
 import {
 	appealDataFullPlanning,
-	interestedPartyCommentForReview
+	interestedPartyCommentForReview,
+	representationRejectionReasons
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { parseHtml } from '@pins/platform';
@@ -126,6 +127,26 @@ describe('interested-party-comments', () => {
 			expect(response.text).toBe(
 				'Found. Redirecting to /appeals-service/appeal-details/2/interested-party-comments'
 			);
+		});
+	});
+
+	describe('GET /reject-comment', () => {
+		beforeEach(() => {
+			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
+			nock('http://test')
+				.get('/appeals/representation-rejection-reasons')
+				.reply(200, representationRejectionReasons);
+		});
+		afterEach(teardown);
+		it('should render reject comment page', async () => {
+			const response = await request.get(`${baseUrl}/2/interested-party-comments/5/reject`);
+
+			expect(response.statusCode).toBe(200);
+
+			const dom = parseHtml(response.text);
+			const elementInnerHtml = dom.innerHTML;
+			expect(elementInnerHtml).toMatchSnapshot();
+			expect(elementInnerHtml).toContain('Why are you rejecting the comment?</h1>');
 		});
 	});
 });

@@ -28,6 +28,8 @@ import affectsScheduledMonumentRouter from './affects-scheduled-monument/affects
 import isGypsyOrTravellerSiteRouter from './is-gypsy-or-traveller-site/is-gypsy-or-traveller-site.router.js';
 import isAonbNationalLandscapeRouter from './is-aonb-national-landscape/is-aonb-national-landscape.router.js';
 import isInfrastructureLevyFormallyAdoptedRouter from './is-infrastructure-levy-formally-adopted/is-infrastructure-levy-formally-adopted.router.js';
+import infrastructureLevyAdoptedDateRouter from './infrastructure-levy-adopted-date/infrastructure-levy-adopted-date.router.js';
+import infrastructureLevyExpectedDateRouter from './infrastructure-levy-expected-date/infrastructure-levy-expected-date.router.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -142,6 +144,20 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	isInfrastructureLevyFormallyAdoptedRouter
+);
+
+router.use(
+	'/:lpaQuestionnaireId/infrastructure-levy-adopted-date',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	infrastructureLevyAdoptedDateRouter
+);
+
+router.use(
+	'/:lpaQuestionnaireId/infrastructure-levy-expected-date',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	infrastructureLevyExpectedDateRouter
 );
 
 router

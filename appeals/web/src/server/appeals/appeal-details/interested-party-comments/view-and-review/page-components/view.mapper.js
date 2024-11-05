@@ -1,5 +1,5 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { buildNotificationBanners } from '#lib/mappers/notification-banners.mapper.js';
+import { buildNotificationBanners } from '#lib/mappers/index.js';
 import { generateCommentSummaryList, generateWithdrawLink } from './common.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */

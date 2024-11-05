@@ -1,4 +1,4 @@
-import { simpleHtmlComponent } from '#lib/mappers/components/html.js';
+import { simpleHtmlComponent } from '#lib/mappers/index.js';
 
 /** @typedef {import("#appeals/appeal-details/interested-party-comments/interested-party-comments.types.js").Representation} Representation */
 

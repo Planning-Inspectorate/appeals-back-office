@@ -12,7 +12,7 @@ import {
 	mapReasonOptionsToCheckboxItemParameters,
 	mapReasonsToReasonsListHtml
 } from '#lib/mappers/validation-outcome-reasons.mapper.js';
-import { buildNotificationBanners } from '#lib/mappers/notification-banners.mapper.js';
+import { buildNotificationBanners } from '#lib/mappers/index.js';
 import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { isDefined, isFolderInfo } from '#lib/ts-utilities.js';
 import { removeSummaryListActions } from '#lib/mappers/index.js';
@@ -949,7 +949,9 @@ const generateS78LpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 				mappedLPAQData.lpaq?.supplementaryPlanning?.display.summaryListItem,
 				mappedLPAQData.lpaq?.emergingPlan?.display.summaryListItem,
 				mappedLPAQData.lpaq?.communityInfrastructureLevy?.display.summaryListItem,
-				mappedLPAQData.lpaq?.isInfrastructureLevyFormallyAdopted?.display.summaryListItem
+				mappedLPAQData.lpaq?.isInfrastructureLevyFormallyAdopted?.display.summaryListItem,
+				mappedLPAQData.lpaq?.infrastructureLevyAdoptedDate?.display.summaryListItem,
+				mappedLPAQData.lpaq?.infrastructureLevyExpectedDate?.display.summaryListItem
 			].filter(isDefined)
 		}
 	});

@@ -1,4 +1,4 @@
-import { simpleHtmlComponent } from '#lib/mappers/components/html.js';
+import { simpleHtmlComponent } from '#lib/mappers/index.js';
 
 const subtitleMarkup = `
 <h2>	

@@ -1,5 +1,5 @@
 import { shouldDisplayChangeLinksForLPAQStatus } from '../appeal.mapper.js';
-import { booleanWithDetailsSummaryListItem } from '#lib/mappers/components/boolean.js';
+import { booleanWithDetailsSummaryListItem } from '#lib/mappers/index.js';
 
 /** @type {import('../appeal.mapper.js').SubMapper} */
 export const mapLpaHealthAndSafety = ({
