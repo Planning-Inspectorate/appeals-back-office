@@ -285,12 +285,13 @@ const updateDocumentFileName = async (req, res) => {
 
 	try {
 		const latestDocument = await documentRepository.getDocumentById(documentId);
-		if (latestDocument && latestDocument.name) {
+		if (latestDocument && latestDocument.name && latestDocument.latestDocumentVersion) {
 			if (document.fileName && document.fileName !== latestDocument.name) {
 				const nameChangedMessage = stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_NAME_CHANGED, [
 					latestDocument.name,
 					document.fileName
 				]);
+
 				await logAuditTrail(
 					latestDocument.name,
 					latestDocument.latestDocumentVersion.version,
@@ -299,12 +300,16 @@ const updateDocumentFileName = async (req, res) => {
 					appeal.id,
 					latestDocument.guid
 				);
+
+				await broadcasters.broadcastDocument(
+					latestDocument.guid,
+					latestDocument.latestDocumentVersion.version,
+					EventType.Update
+				);
 			}
 
 			await documentRepository.updateDocumentById(latestDocument.guid, document);
 		}
-
-		await broadcasters.broadcastDocument(documentId, document.fileName, EventType.Update);
 	} catch (error) {
 		if (error) {
 			logger.error(error);
