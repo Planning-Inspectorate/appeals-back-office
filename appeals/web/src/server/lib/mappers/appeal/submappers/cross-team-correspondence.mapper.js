@@ -8,7 +8,7 @@ export const mapCrossTeamCorrespondence = ({ appealDetails, currentRoute, sessio
 		id: 'cross-team-correspondence',
 		text: 'Cross-team correspondence',
 		appealId: appealDetails.appealId,
-		folderInfo: appealDetails.internalCorrespondence?.inspector,
+		folderInfo: appealDetails.internalCorrespondence?.crossTeam,
 		showDocuments: false,
 		editable: userHasPermission(permissionNames.viewCaseDetails, session),
 		uploadUrlTemplate: `${currentRoute}/internal-correspondence/cross-team/upload-documents/${appealDetails.internalCorrespondence?.crossTeam?.folderId}`,
