@@ -44,7 +44,7 @@ import { mapProcedurePreferenceDetails } from './submappers/procedure-preference
 
 export const submaps = {
 	additionalDocuments: mapAdditionalDocuments,
-	InquiryNumberOfWitnesses: mapInquiryNumberOfWitnesses,
+	inquiryNumberOfWitnesses: mapInquiryNumberOfWitnesses,
 	ownersKnown: mapOwnersKnown,
 	procedurePreferenceDuration: mapProcedurePreferenceDuration,
 	procedurePreference: mapProcedurePreference,
@@ -56,7 +56,7 @@ export const submaps = {
 	applicationReference: mapApplicationReference,
 	siteAddress: mapSiteAddress,
 	siteArea: mapSiteArea,
-	InGreenBelt: mapInGreenBelt,
+	inGreenBelt: mapInGreenBelt,
 	applicationDecisionDate: mapApplicationDecisionDate,
 	applicationDate: mapApplicationDate,
 	developmentDescription: mapDevelopmentDescription,
