@@ -1,26 +1,15 @@
+import { textSummaryListItem } from '#lib/mappers/components/index.js';
+
 /** @type {import('../mapper.js').SubMapper} */
 export const mapReviewOutcome = ({ appellantCaseData }) => ({
-	id: 'review-outcome',
-	display: {
-		summaryListItem: {
-			key: {
-				text: 'Appellant case review outcome'
-			},
-			value: {
-				text: appellantCaseData.validation?.outcome || 'Not yet reviewed'
-			},
-			actions: {
-				items: [
-					{
-						text: 'Change',
-						visuallyHiddenText: 'Appellant case review outcome',
-						href: `/appeals-service/appeal-details/${appellantCaseData.appealId}/lpa-questionnaire`,
-						attributes: { 'data-cy': 'change-review-outcome' }
-					}
-				]
-			}
-		}
-	},
+	...textSummaryListItem({
+		id: 'review-outcome',
+		text: 'Appellant case review outcome',
+		editable: true,
+		value: appellantCaseData.validation?.outcome || 'Not yet reviewed',
+		link: `/appeals-service/appeal-details/${appellantCaseData.appealId}/lpa-questionnaire`,
+		cypressDataName: 'change-review-outcome'
+	}),
 	input: {
 		displayName: 'Review outcome',
 		instructions: [
