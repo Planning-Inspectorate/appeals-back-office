@@ -10,10 +10,10 @@ import { capitalize } from 'lodash-es';
 import {
 	mapReasonOptionsToCheckboxItemParameters,
 	mapReasonsToReasonsListHtml
-} from '#lib/mappers/validation-outcome-reasons.mapper.js';
+} from '#lib/validation-outcome-reasons-formatter.js';
 import { buildNotificationBanners } from '#lib/mappers/index.js';
 import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
-import { initialiseAndMapData } from '#lib/mappers/appellantCase.mapper.js';
+import { initialiseAndMapData } from '#lib/mappers/data/appellant-case/mapper.js';
 import { removeSummaryListActions } from '#lib/mappers/index.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';

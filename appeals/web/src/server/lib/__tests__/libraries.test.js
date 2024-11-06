@@ -23,7 +23,7 @@ import {
 	mapReasonOptionsToCheckboxItemParameters,
 	mapReasonsToReasonsListHtml,
 	getNotValidReasonsTextFromRequestBody
-} from '../mappers/validation-outcome-reasons.mapper.js';
+} from '../validation-outcome-reasons-formatter.js';
 import { timeIsBeforeTime, is24HourTimeValid } from '#lib/times.js';
 import { appellantCaseInvalidReasons, baseSession } from '#testing/app/fixtures/referencedata.js';
 import { stringContainsDigitsOnly } from '#lib/string-utilities.js';

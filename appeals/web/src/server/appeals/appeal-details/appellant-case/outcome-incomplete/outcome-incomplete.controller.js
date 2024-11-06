@@ -7,7 +7,7 @@ import * as appellantCaseService from '../appellant-case.service.js';
 import { decisionIncompleteConfirmationPage } from './outcome-incomplete.mapper.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { getNotValidReasonsTextFromRequestBody } from '#lib/mappers/validation-outcome-reasons.mapper.js';
+import { getNotValidReasonsTextFromRequestBody } from '#lib/validation-outcome-reasons-formatter.js';
 
 /**
  *

@@ -1,7 +1,7 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import logger from '#lib/logger.js';
-import { initialiseAndMapAppealData } from '#lib/mappers/appeal/appeal.mapper.js';
-import { initialiseAndMapLPAQData } from '#lib/mappers/lpa-questionnaire/lpa-questionnaire.mapper.js';
+import { initialiseAndMapAppealData } from '#lib/mappers/data/appeal/mapper.js';
+import { initialiseAndMapLPAQData } from '#lib/mappers/data/lpa-questionnaire/mapper.js';
 
 /**
  * @typedef {import('../appeal-details/appeal-details.types.js').WebAppeal} Appeal

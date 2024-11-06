@@ -1,7 +1,7 @@
 import config from '#environment/config.js';
 import { inputInstructionIsRadiosInputInstruction } from '#lib/mappers/index.js';
-import { initialiseAndMapAppealData } from '#lib/mappers/appeal/appeal.mapper.js';
-import { initialiseAndMapLPAQData } from '#lib/mappers/lpa-questionnaire/lpa-questionnaire.mapper.js';
+import { initialiseAndMapAppealData } from '#lib/mappers/data/appeal/mapper.js';
+import { initialiseAndMapLPAQData } from '#lib/mappers/data/lpa-questionnaire/mapper.js';
 import {
 	dayMonthYearHourMinuteToISOString,
 	dayMonthYearHourMinuteToDisplayDate,
@@ -11,7 +11,7 @@ import {
 import {
 	mapReasonOptionsToCheckboxItemParameters,
 	mapReasonsToReasonsListHtml
-} from '#lib/mappers/validation-outcome-reasons.mapper.js';
+} from '#lib/validation-outcome-reasons-formatter.js';
 import { buildNotificationBanners } from '#lib/mappers/index.js';
 import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { isDefined, isFolderInfo } from '#lib/ts-utilities.js';

@@ -4,8 +4,8 @@ import {
 	lpaQuestionnaireDataIncompleteOutcome
 } from '#testing/app/fixtures/referencedata.js';
 import { createAccountInfo } from '#testing/app/app.js';
-import { initialiseAndMapAppealData } from '../appeal/appeal.mapper.js';
-import { initialiseAndMapLPAQData } from '../lpa-questionnaire/lpa-questionnaire.mapper.js';
+import { initialiseAndMapAppealData } from '../data/appeal/mapper.js';
+import { initialiseAndMapLPAQData } from '../data/lpa-questionnaire/mapper.js';
 import { areIdsDefinedAndUnique } from '#testing/lib/testMappers.js';
 import {
 	buildNotificationBanners,
