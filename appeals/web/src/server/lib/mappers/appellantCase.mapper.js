@@ -143,14 +143,6 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		showMoreLabelText: 'Original Development description details'
 	});
 
-	mappedData.changedDevelopmentDescription = booleanSummaryListItem({
-		id: 'changed-development-description',
-		text: 'LPA changed the development description',
-		value: appellantCaseData.developmentDescription?.isChanged,
-		link: `${currentRoute}/lpa-changed-description/change`,
-		editable: userHasUpdateCase
-	});
-
 	mappedData.applicationDecision = textSummaryListItem({
 		id: 'application-decision',
 		text: 'Outcome',
@@ -293,16 +285,6 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		id: 'planning-obligation',
 		text: 'Planning obligation',
 		folderInfo: appellantCaseData.documents.planningObligation
-	});
-
-	mappedData.ownershipCertificateSubmitted = booleanSummaryListItem({
-		id: 'ownership-certificate-submitted',
-		text: 'Ownership certificate or land declaration submitted',
-		value: appellantCaseData.ownershipCertificateSubmitted,
-		defaultText: '',
-		link: `${currentRoute}/ownership-certificate/change`,
-		addCyAttribute: true,
-		editable: userHasUpdateCase
 	});
 
 	mappedData.ownershipCertificate = documentInstruction({
@@ -473,15 +455,6 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		}
 	};
 
-	mappedData.planningObligationInSupport = booleanSummaryListItem({
-		id: 'planning-obligation-in-support',
-		text: 'Planning obligation in support',
-		value: appellantCaseData.planningObligation?.hasObligation,
-		defaultText: '',
-		link: `${currentRoute}/planning-obligation/change`,
-		editable: userHasUpdateCase
-	});
-
 	mappedData.statusPlanningObligation = textSummaryListItem({
 		id: 'planning-obligation-status',
 		text: 'Planning obligation status',
@@ -516,14 +489,6 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		value: appellantCaseData.agriculturalHolding.hasOtherTenants,
 		defaultText: '',
 		link: `${currentRoute}/agricultural-holding/other-tenants/change`,
-		editable: userHasUpdateCase
-	});
-
-	mappedData.appellantCostsApplication = booleanSummaryListItem({
-		id: 'appellant-costs-application',
-		text: 'Applied for award of appeal costs',
-		value: appellantCaseData.appellantCostsAppliedFor,
-		link: `${currentRoute}/appeal-costs-application/change`,
 		editable: userHasUpdateCase
 	});
 

@@ -121,7 +121,6 @@ export function generateHASComponents(
 				mappedAppellantCaseData.applicationDate.display.summaryListItem,
 				mappedAppellantCaseData.applicationForm.display.summaryListItem,
 				mappedAppellantCaseData.developmentDescription.display.summaryListItem,
-				mappedAppellantCaseData.changedDevelopmentDescription.display.summaryListItem,
 				mappedAppellantCaseData.changedDevelopmentDescriptionDocument.display.summaryListItem,
 				mappedAppellantCaseData.applicationDecisionDate.display.summaryListItem,
 				mappedAppellantCaseData.decisionLetter.display.summaryListItem,
@@ -148,7 +147,6 @@ export function generateHASComponents(
 				removeSummaryListActions(mappedAppellantCaseData.appealType.display.summaryListItem),
 				mappedAppellantCaseData.appealStatement.display.summaryListItem,
 				mappedAppellantCaseData.relatedAppeals.display.summaryListItem,
-				mappedAppellantCaseData.appellantCostsApplication.display.summaryListItem,
 				mappedAppellantCaseData.costsDocument.display.summaryListItem
 			]
 		}

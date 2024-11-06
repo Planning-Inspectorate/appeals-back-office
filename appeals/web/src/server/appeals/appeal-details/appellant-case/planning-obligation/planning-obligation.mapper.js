@@ -2,39 +2,6 @@
  * @typedef {import('../../appeal-details.types.js').WebAppeal} Appeal
  */
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { yesNoInput } from '#lib/mappers/index.js';
-
-/**
- * @param {Appeal} appealData
- * @param {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} appellantCaseData
- * @param {{radio: boolean}} storedSessionData
- * @returns {PageContent}
- */
-export const changePlanningObligationPage = (appealData, appellantCaseData, storedSessionData) => {
-	const shortAppealReference = appealShortReference(appealData.appealReference);
-
-	let planningObligation = appellantCaseData.planningObligation?.hasObligation;
-
-	if (storedSessionData?.radio) {
-		planningObligation = storedSessionData.radio;
-	}
-
-	/** @type {PageContent} */
-	const pageContent = {
-		title: 'Change planning obligation in support',
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/appellant-case`,
-		preHeading: `Appeal ${shortAppealReference}`,
-		heading: 'Change planning obligation in support',
-		pageComponents: [
-			yesNoInput({
-				name: 'planningObligationRadio',
-				value: planningObligation
-			})
-		]
-	};
-
-	return pageContent;
-};
 
 /**
  * @param {Appeal} appealData
