@@ -3,7 +3,7 @@ import * as appellantCaseService from '../appellant-case.service.js';
 import { mapInvalidOrIncompleteReasonOptionsToCheckboxItemParameters } from '../appellant-case.mapper.js';
 import { decisionInvalidConfirmationPage } from './outcome-invalid.mapper.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { getNotValidReasonsTextFromRequestBody } from '#lib/mappers/validation-outcome-reasons.mapper.js';
+import { getNotValidReasonsTextFromRequestBody } from '#lib/validation-outcome-reasons-formatter.js';
 
 /**
  *

@@ -1,5 +1,5 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { initialiseAndMapAppealData } from '#lib/mappers/appeal/appeal.mapper.js';
+import { initialiseAndMapAppealData } from '#lib/mappers/data/appeal/mapper.js';
 import { buildNotificationBanners } from '#lib/mappers/index.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { generateAccordionItems } from './accordions/index.js';

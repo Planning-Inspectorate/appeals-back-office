@@ -1,7 +1,7 @@
 import { mapVirusCheckStatus } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 import { dateISOStringToDisplayDate, getTodaysISOString } from '#lib/dates.js';
 import logger from '#lib/logger.js';
-import { generateDecisionDocumentDownloadHtml } from '#lib/mappers/appeal/appeal.mapper.js';
+import { generateDecisionDocumentDownloadHtml } from '#lib/mappers/data/appeal/common.js';
 import { APPEAL_CASE_STATUS, APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
 import { getAppealTypesFromId } from '../change-appeal-type/change-appeal-type.service.js';
 

@@ -2,7 +2,7 @@ import { removeSummaryListActions } from '#lib/mappers/index.js';
 import {
 	documentUploadUrlTemplate,
 	mapDocumentManageUrl
-} from '#lib/mappers/appellantCase.mapper.js';
+} from '#lib/mappers/data/appellant-case/common.js';
 import { isFolderInfo } from '#lib/ts-utilities.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
 

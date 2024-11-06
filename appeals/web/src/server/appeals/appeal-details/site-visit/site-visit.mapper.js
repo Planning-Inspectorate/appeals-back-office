@@ -1,4 +1,4 @@
-import { initialiseAndMapAppealData } from '#lib/mappers/appeal/appeal.mapper.js';
+import { initialiseAndMapAppealData } from '#lib/mappers/data/appeal/mapper.js';
 import { removeSummaryListActions } from '#lib/mappers/index.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { padNumberWithZero } from '#lib/string-utilities.js';
