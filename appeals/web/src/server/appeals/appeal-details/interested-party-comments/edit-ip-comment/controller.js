@@ -1,6 +1,7 @@
 import { ipAddressPage } from '../interested-party-comments.mapper.js';
 import { updateAddress } from './service.js';
 import { checkAddressPage } from './mappers.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -11,15 +12,17 @@ export async function renderEditAddress(request, response) {
 		currentAppeal,
 		currentComment,
 		errors,
-		query: { review }
+		query: { review, editAddress }
 	} = request;
 	const backLinkUrl = review === 'true' ? 'review' : 'view';
+	const operationType = editAddress === 'true' ? 'update' : 'add';
 
 	const pageContent = ipAddressPage(
 		currentAppeal,
 		currentComment?.represented?.address,
 		errors,
-		`${currentComment.id}/${backLinkUrl}`
+		`${currentComment.id}/${backLinkUrl}`,
+		operationType
 	);
 
 	return response.status(errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
@@ -52,16 +55,24 @@ export async function renderCheckAddress(request, response) {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  * */
 export async function postCheckPage(request, response) {
-	const { currentAppeal, currentComment } = request;
+	const { currentAppeal, currentComment, session } = request;
 
 	await updateAddress(
 		request.apiClient,
 		currentAppeal.appealId,
 		currentComment.represented?.id,
-		request.body
+		request.session.editIpComment
 	);
 
 	const redirectPath = request.query.review === 'true' ? 'review' : 'view';
+
+	if (request.session.editIpComment.operationType) {
+		const bannerKey =
+			request.session.editIpComment.operationType === 'add'
+				? 'interestedPartyCommentsAddressAddedSuccess'
+				: 'interestedPartyCommentsAddressUpdatedSuccess';
+		addNotificationBannerToSession(session, bannerKey, currentAppeal.appealId);
+	}
 
 	return response
 		.status(200)

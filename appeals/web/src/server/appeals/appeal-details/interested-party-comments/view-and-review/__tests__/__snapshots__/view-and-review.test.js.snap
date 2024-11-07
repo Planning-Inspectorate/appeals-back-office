@@ -102,7 +102,7 @@ exports[`interested-party-comments GET /review-comment with data should render r
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Address</dt>
                         <dd class="govuk-summary-list__value">Not provided</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/edit/address?review=true"> Add<span class="govuk-visually-hidden"> address</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/edit/address?review=true&amp;editAddress=false"> Add<span class="govuk-visually-hidden"> address</span></a>
                         </dd>
                     </div>
                     <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Submitted</dt>
@@ -171,7 +171,7 @@ exports[`interested-party-comments GET /view-comment with data should render vie
         </div>
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Address</dt>
             <dd class="govuk-summary-list__value">Not provided</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/edit/address?review=false"> Add<span class="govuk-visually-hidden"> address</span></a>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/edit/address?review=false&amp;editAddress=false"> Add<span class="govuk-visually-hidden"> address</span></a>
             </dd>
         </div>
         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Site visit requested</dt>

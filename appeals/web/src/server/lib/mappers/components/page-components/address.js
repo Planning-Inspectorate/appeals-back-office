@@ -9,10 +9,11 @@ import {
  *
  * @param {Object} options
  * @param {import('@pins/appeals.api').Appeals.AppealSite} [options.address]
+ * @param {string} [options.operationType]
  * @param {import('@pins/express').ValidationErrors} [options.errors]
  * @returns {PageComponent[]}
  */
-export function addressInputs({ address, errors }) {
+export function addressInputs({ address, operationType, errors }) {
 	return [
 		{
 			type: 'input',
@@ -83,6 +84,15 @@ export function addressInputs({ address, errors }) {
 				},
 				value: address?.postCode ?? '',
 				errorMessage: errorPostcode(errors)
+			}
+		},
+		{
+			type: 'input',
+			parameters: {
+				id: 'address-operation-type',
+				name: 'operationType',
+				type: 'hidden',
+				value: operationType || ''
 			}
 		}
 	];
