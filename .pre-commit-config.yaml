@@ -27,7 +27,7 @@ repos:
     hooks:
       - id: terraform_fmt
         stages: [pre-commit]
-      # - id: terraform_docs
+      #  - id: terraform_docs
       #   stages: [pre-commit]
       #   args:
       #     - --args=--config=.config/terraform-docs.yml
