@@ -96,6 +96,12 @@ variable "front_office_infra_config" {
   })
 }
 
+variable "health_check_eviction_time_in_min" {
+  description = "The eviction time in minutes for the health check"
+  type        = number
+  default     = 10
+}
+
 variable "horizon_infra_config" {
   description = "Config for the (legacy) Horizon infra"
   type = object({
