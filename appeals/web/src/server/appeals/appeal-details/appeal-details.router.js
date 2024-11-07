@@ -31,7 +31,7 @@ import internalCorrespondenceRouter from './internal-correspondence/internal-cor
 import withdrawalRouter from './withdrawal/withdrawal.router.js';
 import interestedPartyCommentsRouter from './interested-party-comments/interested-party-comments.router.js';
 import { postCaseNote } from '#appeals/appeal-details/case-notes/case-notes.controller.js';
-import { validateCaseNoteTextArea } from '#appeals/appeal-details/appeals-details.validator.js';
+import { validateCaseNoteTextArea } from '#appeals/appeal-details/appeal-details.validator.js';
 
 const router = createRouter();
 
