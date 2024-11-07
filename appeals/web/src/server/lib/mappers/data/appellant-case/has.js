@@ -15,7 +15,6 @@ import { mapInGreenBelt } from './submappers/in-green-belt.js';
 import { mapApplicationDecisionDate } from './submappers/application-decision-date.js';
 import { mapApplicationDate } from './submappers/application-date.js';
 import { mapDevelopmentDescription } from './submappers/development-description.js';
-import { mapChangedDevelopmentDescription } from './submappers/changed-development-description.js';
 import { mapApplicationDecision } from './submappers/application-decision.js';
 import { mapChangedDevelopmentDescriptionDocument } from './submappers/changed-development-description-document.js';
 import { mapLocalPlanningAuthority } from './submappers/local-planning-authority.js';
@@ -28,17 +27,14 @@ import { mapDesignAccessStatement } from './submappers/design-access-statement.j
 import { mapNewPlansDrawings } from './submappers/new-plans-drawings.js';
 import { mapSupportingDocuments } from './submappers/supporting-documents.js';
 import { mapPlanningObligation } from './submappers/planning-obligation.js';
-import { mapOwnershipCertificateSubmitted } from './submappers/ownership-certificate-submitted.js';
 import { mapOwnershipCertificate } from './submappers/ownership-certificate.js';
 import { mapDecisionLetter } from './submappers/decision-letter.js';
 import { mapAppealStatement } from './submappers/appeal-statement.js';
 import { mapOtherNewDocuments } from './submappers/other-new-documents.js';
-import { mapPlanningObligationInSupport } from './submappers/planning-obligation-in-support.js';
 import { mapStatusPlanningObligation } from './submappers/status-planning-obligation.js';
 import { mapPartOfAgriculturalHolding } from './submappers/part-of-agricultural-holding.js';
 import { mapTenantOfAgriculturalHolding } from './submappers/tenant-of-agricultural-holding.js';
 import { mapOtherTenantsOfAgriculturalHolding } from './submappers/other-tenants-of-agricultural-holding.js';
-import { mapAppellantCostsApplication } from './submappers/appellant-costs-application.js';
 import { mapCostsDocument } from './submappers/costs-document.js';
 import { mapProcedurePreferenceDetails } from './submappers/procedure-preference-details.js';
 
@@ -60,7 +56,6 @@ export const submaps = {
 	applicationDecisionDate: mapApplicationDecisionDate,
 	applicationDate: mapApplicationDate,
 	developmentDescription: mapDevelopmentDescription,
-	changedDevelopmentDescription: mapChangedDevelopmentDescription,
 	applicationDecision: mapApplicationDecision,
 	changedDevelopmentDescriptionDocument: mapChangedDevelopmentDescriptionDocument,
 	localPlanningAuthority: mapLocalPlanningAuthority,
@@ -73,17 +68,14 @@ export const submaps = {
 	newPlansDrawings: mapNewPlansDrawings,
 	supportingDocuments: mapSupportingDocuments,
 	planningObligation: mapPlanningObligation,
-	ownershipCertificateSubmitted: mapOwnershipCertificateSubmitted,
 	ownershipCertificate: mapOwnershipCertificate,
 	decisionLetter: mapDecisionLetter,
 	appealStatement: mapAppealStatement,
 	otherNewDocuments: mapOtherNewDocuments,
-	planningObligationInSupport: mapPlanningObligationInSupport,
 	statusPlanningObligation: mapStatusPlanningObligation,
 	partOfAgriculturalHolding: mapPartOfAgriculturalHolding,
 	tenantOfAgriculturalHolding: mapTenantOfAgriculturalHolding,
 	otherTenantsOfAgriculturalHolding: mapOtherTenantsOfAgriculturalHolding,
-	appellantCostsApplication: mapAppellantCostsApplication,
 	costsDocument: mapCostsDocument,
 	procedurePreferenceDetails: mapProcedurePreferenceDetails
 };

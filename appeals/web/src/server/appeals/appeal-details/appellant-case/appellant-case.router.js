@@ -28,10 +28,7 @@ import applicationSubmissionDateRouter from './application-submission-date/appli
 import applicationDecisionDateRouter from './application-decision-date/application-decision-date.router.js';
 import greenBeltRouter from '../green-belt/green-belt.router.js';
 import developmentDescriptionRouter from './development-description/development-description.router.js';
-import lpaChangedDescriptionRouter from './lpa-changed-description/lpa-changed-description.router.js';
 import applicationOutcomeRouter from './application-outcome/application-outcome.router.js';
-import appealCostsApplicationRouter from './appeal-costs-application/appeal-costs-application.router.js';
-import ownershipCertificateRouter from './ownership-certificate/ownership-certificate.router.js';
 import procedurePreferenceRouter from './procedure-preference/procedure-preference.router.js';
 
 const router = createRouter({ mergeParams: true });
@@ -145,28 +142,10 @@ router.use(
 	developmentDescriptionRouter
 );
 router.use(
-	'/lpa-changed-description',
-	validateAppeal,
-	assertUserHasPermission(permissionNames.updateCase),
-	lpaChangedDescriptionRouter
-);
-router.use(
 	'/application-outcome',
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	applicationOutcomeRouter
-);
-router.use(
-	'/appeal-costs-application',
-	validateAppeal,
-	assertUserHasPermission(permissionNames.updateCase),
-	appealCostsApplicationRouter
-);
-router.use(
-	'/ownership-certificate',
-	validateAppeal,
-	assertUserHasPermission(permissionNames.updateCase),
-	ownershipCertificateRouter
 );
 router.use(
 	'/procedure-preference',
