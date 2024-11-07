@@ -65,7 +65,7 @@ export const postConfirmRedactInterestedPartyComment = async (request, response)
 		addNotificationBannerToSession(session, 'interestedPartyCommentsRedactionSuccess', appealId);
 
 		return response.redirect(
-			`/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/view`
+			`/appeals-service/appeal-details/${appealId}/interested-party-comments`
 		);
 	} catch (error) {
 		logger.error(error);
