@@ -23,7 +23,7 @@ const validScanResult = APPEAL_VIRUS_CHECK_STATUS.SCANNED;
  * @param {SessionWithAuth} session
  * @returns {Promise<*>}
  */
-export const createBlobStorageClient = async (session) => {
+const createBlobStorageClient = async (session) => {
 	if (config.useBlobEmulator === true) {
 		return new BlobStorageClient(new BlobServiceClient(config.blobEmulatorSasUrl));
 	} else {
@@ -199,13 +199,14 @@ export const getDocumentDownloadByVersion = async ({ apiClient, params, session 
 };
 
 /**
+ * Create a blob download stream
  *
  * @param {import('@pins/blob-storage-client').BlobStorageClient} blobStorageClient
  * @param {string} blobStorageContainer
  * @param {string} blobStoragePath
  * @returns {Promise<*>}
  */
-export const createBlobDownloadStream = async (
+const createBlobDownloadStream = async (
 	blobStorageClient,
 	blobStorageContainer,
 	blobStoragePath
@@ -213,14 +214,17 @@ export const createBlobDownloadStream = async (
 	// Document URIs are persisted with a prepended slash, but this slash is treated as part of the key by blob storage so we need to remove it
 	const documentKey = blobStoragePath.startsWith('/') ? blobStoragePath.slice(1) : blobStoragePath;
 
-	const blobProperties = await blobStorageClient.getBlobProperties(
-		blobStorageContainer,
-		documentKey
-	);
+	let blobProperties;
+	try {
+		blobProperties = await blobStorageClient.getBlobProperties(blobStorageContainer, documentKey);
 
-	if (!blobProperties) {
+		if (!blobProperties) {
+			// skip download
+			return null;
+		}
+	} catch {
 		// skip download
-		return;
+		return null;
 	}
 
 	const blobDownloadResponseParsed = await blobStorageClient.downloadStream(
@@ -269,17 +273,6 @@ export const getBulkDocumentDownload = async ({ apiClient, params, session }, re
 		return response.status(404);
 	}
 
-	// Tell the browser that this is a zip file.
-	response.setHeader('content-type', 'application/zip');
-	response.setHeader('content-disposition', `attachment; filename=${requestedFilename}`);
-
-	// Create the archive.
-	const archive = archiver('zip', {
-		zlib: { level: 9 } // Sets the compression level.
-	});
-
-	archive.pipe(response);
-
 	const blobStorageClient = await createBlobStorageClient(session);
 
 	const blobStreams = await Promise.all(
@@ -291,6 +284,22 @@ export const getBulkDocumentDownload = async ({ apiClient, params, session }, re
 			)
 		)
 	);
+
+	// TODO Why does returning a response of 404 hang here?
+	// if (blobStreams.every((blobStream) => !blobStream)) {
+	// 	return response.status(404);
+	// }
+
+	// Tell the browser that this is a zip file.
+	response.setHeader('content-type', 'application/zip');
+	response.setHeader('content-disposition', `attachment; filename=${requestedFilename}`);
+
+	// Create the archive.
+	const archive = archiver('zip', {
+		zlib: { level: 9 } // Sets the compression level.
+	});
+
+	archive.pipe(response);
 
 	blobStreams
 		.filter((blobStream) => !!blobStream)
