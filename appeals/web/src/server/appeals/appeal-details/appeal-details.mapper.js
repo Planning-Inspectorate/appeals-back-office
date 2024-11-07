@@ -30,15 +30,6 @@ export async function appealDetailsPage(
 ) {
 	const mappedData = await initialiseAndMapAppealData(appealDetails, currentRoute, session);
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);
-	const zippedFilename = `appeal-${appealDetails.appealReference}.zip`;
-
-	const /**@type {FileDownloadLinkComponent} */ allDocumentsDownloadLink = {
-			type: 'file-download',
-			parameters: {
-				filename: zippedFilename,
-				url: `/documents/${appealDetails.appealId}/bulk-download/${zippedFilename}`
-			}
-		};
 
 	const caseNotes = await generateCaseNotes(appealCaseNotes, request);
 	const accordion = generateAccordionItems(
@@ -52,7 +43,6 @@ export async function appealDetailsPage(
 		...buildNotificationBanners(session, 'appealDetails', appealDetails.appealId),
 		...(await generateStatusTags(mappedData, appealDetails, request)),
 		generateCaseSummary(mappedData),
-		allDocumentsDownloadLink,
 		caseNotes,
 		accordion
 	];

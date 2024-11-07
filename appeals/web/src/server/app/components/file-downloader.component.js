@@ -246,10 +246,9 @@ export const createBlobDownloadStream = async (
 export const getBulkDocumentDownload = async ({ apiClient, params, session }, response) => {
 	const { filename: requestedFilename, caseId } = params;
 
-	// console.log(JSON.stringify({ getBulkDocumentDownload1: { caseId, requestedFilename } }, null, 2));
-
 	const folders = await getFolders(apiClient, caseId);
 
+	// Retrieve an array of all files uploaded fo this appeal
 	const bulkFileInfo = folders
 		?.filter((folder) => folder.documents.length)
 		.flatMap((folder) => {
@@ -265,6 +264,7 @@ export const getBulkDocumentDownload = async ({ apiClient, params, session }, re
 			});
 		});
 
+	// Make sure the request for the zip file returns a 404 if the file is unavailable
 	if (!bulkFileInfo || !bulkFileInfo.length) {
 		return response.status(404);
 	}
@@ -273,7 +273,7 @@ export const getBulkDocumentDownload = async ({ apiClient, params, session }, re
 	response.setHeader('content-type', 'application/zip');
 	response.setHeader('content-disposition', `attachment; filename=${requestedFilename}`);
 
-	// Create archive.
+	// Create the archive.
 	const archive = archiver('zip', {
 		zlib: { level: 9 } // Sets the compression level.
 	});
@@ -292,9 +292,11 @@ export const getBulkDocumentDownload = async ({ apiClient, params, session }, re
 		)
 	);
 
-	blobStreams.forEach((blobStream, index) =>
-		archive.append(blobStream, { name: bulkFileInfo[index].fullName })
-	);
+	blobStreams
+		.filter((blobStream) => !!blobStream)
+		.forEach((blobStream, index) =>
+			archive.append(blobStream, { name: bulkFileInfo[index].fullName })
+		);
 
 	await archive.finalize();
 
