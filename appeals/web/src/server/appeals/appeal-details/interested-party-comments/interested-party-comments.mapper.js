@@ -55,14 +55,15 @@ export async function interestedPartyCommentsPage(
  * @param {{ addressLine1: string, addressLine2: string, town: string, county: string, postCode: string }} address
  * @param {import('@pins/express').ValidationErrors | undefined} errors
  * @param {string} backPath
+ * @param {string} operationType
  * @returns {PageContent}
  * */
-export const ipAddressPage = (appealDetails, address, errors, backPath) => ({
+export const ipAddressPage = (appealDetails, address, errors, backPath, operationType) => ({
 	title: "Interested party's address",
 	backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${backPath}`,
 	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
 	heading: "Interested party's address",
-	pageComponents: addressInputs({ address, errors })
+	pageComponents: addressInputs({ address, operationType, errors })
 });
 
 /**

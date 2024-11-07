@@ -52,7 +52,7 @@ export const repResponse = {
 	rejectionReasons: [
 		{
 			id: 1,
-			name: 'Illegible or Incomplete Documentation',
+			name: 'Received after deadline',
 			hasText: false,
 			text: ['']
 		},

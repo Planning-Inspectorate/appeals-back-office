@@ -114,6 +114,10 @@ exports[`add-ip-comment GET /add/ip-address should match the snapshot 1`] = `
                     <input class="govuk-input govuk-input govuk-input--width-10"
                     id="address-postcode" name="postCode" type="text">
                 </div>
+                <div class="govuk-form-group">
+                    <input class="govuk-input" id="address-operation-type" name="operationType"
+                    type="hidden" value="add">
+                </div>
                 <button type="submit" data-prevent-double-click="true" class="govuk-button"
                 data-module="govuk-button">Continue</button>
             </form>

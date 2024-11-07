@@ -243,9 +243,7 @@ describe('/appeals/:id/representations', () => {
 			const response = await request
 				.patch('/appeals/1/reps/999/rejection-reasons')
 				.send({
-					rejectionReasons: [
-						{ id: 1, name: 'Illegible or Incomplete Documentation', hasText: false, text: [] }
-					]
+					rejectionReasons: [{ id: 1, name: 'Received after deadline', hasText: false, text: [] }]
 				})
 				.set('azureAdUserId', '732652365');
 
@@ -261,9 +259,7 @@ describe('/appeals/:id/representations', () => {
 			const response = await request
 				.patch('/appeals/2/reps/1/rejection-reasons')
 				.send({
-					rejectionReasons: [
-						{ id: 1, name: 'Illegible or Incomplete Documentation', hasText: false, text: [] }
-					]
+					rejectionReasons: [{ id: 1, name: 'Received after deadline', hasText: false, text: [] }]
 				})
 				.set('azureAdUserId', '732652365');
 

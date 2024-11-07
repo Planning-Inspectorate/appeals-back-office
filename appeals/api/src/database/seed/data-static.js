@@ -300,10 +300,6 @@ export const representationRejectionReasons = [
 		hasText: false
 	},
 	{
-		name: 'Illegible or Incomplete Documentation',
-		hasText: false
-	},
-	{
 		name: 'Includes personal and/or medical information',
 		hasText: false
 	},
