@@ -265,6 +265,10 @@ export const getBulkDocumentDownload = async ({ apiClient, params, session }, re
 			});
 		});
 
+	if (!bulkFileInfo || !bulkFileInfo.length) {
+		return response.status(404);
+	}
+
 	// Tell the browser that this is a zip file.
 	response.setHeader('content-type', 'application/zip');
 	response.setHeader('content-disposition', `attachment; filename=${requestedFilename}`);
@@ -277,10 +281,6 @@ export const getBulkDocumentDownload = async ({ apiClient, params, session }, re
 	archive.pipe(response);
 
 	const blobStorageClient = await createBlobStorageClient(session);
-
-	if (!bulkFileInfo || !bulkFileInfo.length) {
-		return response.status(404);
-	}
 
 	const blobStreams = await Promise.all(
 		bulkFileInfo.map((fileInfo) =>
