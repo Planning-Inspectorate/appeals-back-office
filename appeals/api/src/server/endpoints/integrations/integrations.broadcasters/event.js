@@ -15,7 +15,7 @@ import { ODW_SYSTEM_ID, EVENT_TYPE } from '@pins/appeals/constants/common.js';
  * @returns
  */
 export const broadcastEvent = async (eventId, eventType, updateType) => {
-	if (!config.serviceBusEnabled) {
+	if (!config.serviceBusEnabled && config.NODE_ENV !== 'development') {
 		return false;
 	}
 

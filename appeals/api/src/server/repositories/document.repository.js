@@ -9,7 +9,8 @@ import documentRedactionStatusRepository from '#repositories/document-redaction-
 /** @typedef {import('@pins/appeals.api').Schema.Document} Document */
 /** @typedef {import('@pins/appeals.api').Schema.DocumentVersion} DocumentVersion */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateDocumentsRequest} UpdateDocumentsRequest */
-/** @typedef {import('@pins/appeals.api').Appeals.UpdateDocumentsAvCheckRequest} UpdateDocumentAvCheckRequest */
+/** @typedef {import('@pins/appeals.api').Appeals.UpdateDocumentFileNameRequest} UpdateDocumentFileNameRequest */
+/** @typedef {import('@pins/appeals.api').Appeals.UpdateDocumentAvCheckRequest} UpdateDocumentAvCheckRequest */
 
 /**
  * @param {string} guid
@@ -158,26 +159,11 @@ export const updateDocuments = (data) => {
 		})
 	);
 
-	data.forEach((document) => {
-		if (document.fileName) {
-			queries.push(
-				databaseConnector.document.update({
-					data: {
-						name: document.fileName
-					},
-					where: {
-						guid: document.id
-					}
-				})
-			);
-		}
-	});
-
 	return Promise.all(queries);
 };
 
 /**
- * @param {guid} documentId
+ * @param {string} documentId
  * @param {UpdateDocumentFileNameRequest} document
  * @returns
  */
