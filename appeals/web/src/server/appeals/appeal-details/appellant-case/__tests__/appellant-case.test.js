@@ -124,15 +124,11 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'Supporting documents submitted with statement</dt>'
 			);
-			expect(unprettifiedElement.innerHTML).toContain('Planning obligation in support</dt>');
 			expect(unprettifiedElement.innerHTML).toContain('Planning obligation status</dt>');
 			expect(unprettifiedElement.innerHTML).toContain('Planning obligation</dt>');
 			expect(unprettifiedElement.innerHTML).toContain('Part of agricultural holding</dt>');
 			expect(unprettifiedElement.innerHTML).toContain('Tenant of agricultural holding</dt>');
 			expect(unprettifiedElement.innerHTML).toContain('Other tenants</dt>');
-			expect(unprettifiedElement.innerHTML).toContain(
-				'Ownership certificate or land declaration submitted</dt>'
-			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'Ownership certificate or land declaration</dt>'
 			);
@@ -552,28 +548,6 @@ describe('appellant-case', () => {
 			expect(unprettifiedNotificationBannerHTML).toContain('test reason 3</li>');
 		});
 
-		it('should render a "Planning obligation in support updated" notification banner when the planning obligation response is changed', async () => {
-			const appealId = appealData.appealId.toString();
-			const appellantCaseUrl = `/appeals-service/appeal-details/${appealId}/appellant-case`;
-
-			nock('http://test/')
-				.patch(`/appeals/${appealId}/appellant-cases/${appealData.appellantCaseId}`)
-				.reply(200, {});
-
-			await request.post(`${appellantCaseUrl}/planning-obligation/change`).send({
-				planningObligationRadio: 'yes'
-			});
-
-			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
-			const notificationBannerElementHTML = parseHtml(response.text, {
-				rootElement: notificationBannerElement
-			}).innerHTML;
-
-			expect(notificationBannerElementHTML).toMatchSnapshot();
-			expect(notificationBannerElementHTML).toContain('Success</h3>');
-			expect(notificationBannerElementHTML).toContain('Planning obligation in support updated');
-		});
-
 		it('should render a "Planning obligation status updated" notification banner when the planning obligation status is changed', async () => {
 			const appealId = appealData.appealId.toString();
 			const appellantCaseUrl = `/appeals-service/appeal-details/${appealId}/appellant-case`;
@@ -661,36 +635,6 @@ describe('appellant-case', () => {
 			expect(notificationBannerElementHTML).toContain('Success</h3>');
 			expect(notificationBannerElementHTML).toContain(
 				'Other tenants of agricultural holding updated'
-			);
-		});
-
-		it('should render a "Ownership certificate or land declaration submitted updated" notification banner when the separate ownership certificate or agricultural land declaration submitted response is changed', async () => {
-			const appealId = appealData.appealId.toString();
-			const appellantCaseUrl = `/appeals-service/appeal-details/${appealId}/appellant-case`;
-
-			nock('http://test/')
-				.patch(`/appeals/${appealId}/appellant-cases/${appealData.appellantCaseId}`)
-				.reply(200, {});
-
-			await request.post(`${appellantCaseUrl}/ownership-certificate/change`).send({
-				ownershipCertificateRadio: 'yes'
-			});
-
-			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
-			const notificationBannerElementHTML = parseHtml(response.text, {
-				rootElement: notificationBannerElement
-			}).innerHTML;
-
-			expect(notificationBannerElementHTML).toMatchSnapshot();
-
-			const unprettifiedNotificationBannerElementHTML = parseHtml(response.text, {
-				rootElement: notificationBannerElement,
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(unprettifiedNotificationBannerElementHTML).toContain('Success</h3>');
-			expect(unprettifiedNotificationBannerElementHTML).toContain(
-				'Ownership certificate or land declaration submitted updated'
 			);
 		});
 

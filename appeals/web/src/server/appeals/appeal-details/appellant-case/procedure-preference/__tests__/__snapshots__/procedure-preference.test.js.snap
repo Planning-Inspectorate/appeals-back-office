@@ -143,11 +143,6 @@ exports[`procedure-preference GET /appellant-case should render a summary list r
                             data-cy="change-development-description"> Change<span class="govuk-visually-hidden"> Original Development description</span></a>
                         </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA changed the development description</dt>
-                    <dd                     class="govuk-summary-list__value">No</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/lpa-changed-description/change"> Change<span class="govuk-visually-hidden"> LPA changed the development description</span></a>
-                        </dd>
-                </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agreement to change description evidence</dt>
                     <dd                     class="govuk-summary-list__value">No documents available</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70459"
@@ -241,11 +236,6 @@ exports[`procedure-preference GET /appellant-case should render a summary list r
                         data-cy="add-related-appeals"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning obligation in support</dt>
-                    <dd                     class="govuk-summary-list__value">Yes</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/planning-obligation/change"> Change<span class="govuk-visually-hidden"> Planning obligation in support</span></a>
-                        </dd>
-                </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning obligation status</dt>
                     <dd                     class="govuk-summary-list__value">Finalised</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/planning-obligation/status/change"
@@ -257,22 +247,11 @@ exports[`procedure-preference GET /appellant-case should render a summary list r
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-planning-obligation"> Add<span class="govuk-visually-hidden"> Planning obligation</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Applied for award of appeal costs</dt>
-                    <dd                     class="govuk-summary-list__value"></dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/appeal-costs-application/change"> Change<span class="govuk-visually-hidden"> Applied for award of appeal costs</span></a>
-                        </dd>
-                </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Costs document</dt>
                     <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"
                         data-cy="add-costs-document"> Add<span class="govuk-visually-hidden"> Costs document</span></a>
                     </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Ownership certificate or land declaration submitted</dt>
-                    <dd                     class="govuk-summary-list__value">No</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/ownership-certificate/change"
-                            data-cy="change-ownership-certificate-submitted"> Change<span class="govuk-visually-hidden"> Ownership certificate or land declaration submitted</span></a>
-                        </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Ownership certificate or land declaration</dt>
                     <dd                     class="govuk-summary-list__value">No documents available</dd>
@@ -457,11 +436,6 @@ exports[`procedure-preference GET /appellant-case should render a summary list r
                             data-cy="change-development-description"> Change<span class="govuk-visually-hidden"> Original Development description</span></a>
                         </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA changed the development description</dt>
-                    <dd                     class="govuk-summary-list__value">No</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/lpa-changed-description/change"> Change<span class="govuk-visually-hidden"> LPA changed the development description</span></a>
-                        </dd>
-                </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agreement to change description evidence</dt>
                     <dd                     class="govuk-summary-list__value">No documents available</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70459"
@@ -555,11 +529,6 @@ exports[`procedure-preference GET /appellant-case should render a summary list r
                         data-cy="add-related-appeals"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning obligation in support</dt>
-                    <dd                     class="govuk-summary-list__value">Yes</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/planning-obligation/change"> Change<span class="govuk-visually-hidden"> Planning obligation in support</span></a>
-                        </dd>
-                </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning obligation status</dt>
                     <dd                     class="govuk-summary-list__value">Finalised</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/planning-obligation/status/change"
@@ -571,22 +540,11 @@ exports[`procedure-preference GET /appellant-case should render a summary list r
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-planning-obligation"> Add<span class="govuk-visually-hidden"> Planning obligation</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Applied for award of appeal costs</dt>
-                    <dd                     class="govuk-summary-list__value"></dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/appeal-costs-application/change"> Change<span class="govuk-visually-hidden"> Applied for award of appeal costs</span></a>
-                        </dd>
-                </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Costs document</dt>
                     <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"
                         data-cy="add-costs-document"> Add<span class="govuk-visually-hidden"> Costs document</span></a>
                     </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Ownership certificate or land declaration submitted</dt>
-                    <dd                     class="govuk-summary-list__value">No</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/ownership-certificate/change"
-                            data-cy="change-ownership-certificate-submitted"> Change<span class="govuk-visually-hidden"> Ownership certificate or land declaration submitted</span></a>
-                        </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Ownership certificate or land declaration</dt>
                     <dd                     class="govuk-summary-list__value">No documents available</dd>
@@ -771,11 +729,6 @@ exports[`procedure-preference GET /appellant-case should render a summary list r
                             data-cy="change-development-description"> Change<span class="govuk-visually-hidden"> Original Development description</span></a>
                         </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA changed the development description</dt>
-                    <dd                     class="govuk-summary-list__value">No</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/lpa-changed-description/change"> Change<span class="govuk-visually-hidden"> LPA changed the development description</span></a>
-                        </dd>
-                </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agreement to change description evidence</dt>
                     <dd                     class="govuk-summary-list__value">No documents available</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70459"
@@ -869,11 +822,6 @@ exports[`procedure-preference GET /appellant-case should render a summary list r
                         data-cy="add-related-appeals"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning obligation in support</dt>
-                    <dd                     class="govuk-summary-list__value">Yes</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/planning-obligation/change"> Change<span class="govuk-visually-hidden"> Planning obligation in support</span></a>
-                        </dd>
-                </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning obligation status</dt>
                     <dd                     class="govuk-summary-list__value">Finalised</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/planning-obligation/status/change"
@@ -885,22 +833,11 @@ exports[`procedure-preference GET /appellant-case should render a summary list r
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-planning-obligation"> Add<span class="govuk-visually-hidden"> Planning obligation</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Applied for award of appeal costs</dt>
-                    <dd                     class="govuk-summary-list__value"></dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/appeal-costs-application/change"> Change<span class="govuk-visually-hidden"> Applied for award of appeal costs</span></a>
-                        </dd>
-                </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Costs document</dt>
                     <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"
                         data-cy="add-costs-document"> Add<span class="govuk-visually-hidden"> Costs document</span></a>
                     </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Ownership certificate or land declaration submitted</dt>
-                    <dd                     class="govuk-summary-list__value">No</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/ownership-certificate/change"
-                            data-cy="change-ownership-certificate-submitted"> Change<span class="govuk-visually-hidden"> Ownership certificate or land declaration submitted</span></a>
-                        </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Ownership certificate or land declaration</dt>
                     <dd                     class="govuk-summary-list__value">No documents available</dd>
@@ -1085,11 +1022,6 @@ exports[`procedure-preference GET /appellant-case should render a summary list r
                             data-cy="change-development-description"> Change<span class="govuk-visually-hidden"> Original Development description</span></a>
                         </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA changed the development description</dt>
-                    <dd                     class="govuk-summary-list__value">No</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/lpa-changed-description/change"> Change<span class="govuk-visually-hidden"> LPA changed the development description</span></a>
-                        </dd>
-                </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agreement to change description evidence</dt>
                     <dd                     class="govuk-summary-list__value">No documents available</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70459"
@@ -1183,11 +1115,6 @@ exports[`procedure-preference GET /appellant-case should render a summary list r
                         data-cy="add-related-appeals"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning obligation in support</dt>
-                    <dd                     class="govuk-summary-list__value">Yes</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/planning-obligation/change"> Change<span class="govuk-visually-hidden"> Planning obligation in support</span></a>
-                        </dd>
-                </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning obligation status</dt>
                     <dd                     class="govuk-summary-list__value">Finalised</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/planning-obligation/status/change"
@@ -1199,22 +1126,11 @@ exports[`procedure-preference GET /appellant-case should render a summary list r
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-planning-obligation"> Add<span class="govuk-visually-hidden"> Planning obligation</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Applied for award of appeal costs</dt>
-                    <dd                     class="govuk-summary-list__value"></dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/appeal-costs-application/change"> Change<span class="govuk-visually-hidden"> Applied for award of appeal costs</span></a>
-                        </dd>
-                </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Costs document</dt>
                     <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"
                         data-cy="add-costs-document"> Add<span class="govuk-visually-hidden"> Costs document</span></a>
                     </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Ownership certificate or land declaration submitted</dt>
-                    <dd                     class="govuk-summary-list__value">No</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/ownership-certificate/change"
-                            data-cy="change-ownership-certificate-submitted"> Change<span class="govuk-visually-hidden"> Ownership certificate or land declaration submitted</span></a>
-                        </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Ownership certificate or land declaration</dt>
                     <dd                     class="govuk-summary-list__value">No documents available</dd>
@@ -1399,11 +1315,6 @@ exports[`procedure-preference GET /appellant-case should render a summary list r
                             data-cy="change-development-description"> Change<span class="govuk-visually-hidden"> Original Development description</span></a>
                         </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA changed the development description</dt>
-                    <dd                     class="govuk-summary-list__value">No</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/lpa-changed-description/change"> Change<span class="govuk-visually-hidden"> LPA changed the development description</span></a>
-                        </dd>
-                </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agreement to change description evidence</dt>
                     <dd                     class="govuk-summary-list__value">No documents available</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70459"
@@ -1497,11 +1408,6 @@ exports[`procedure-preference GET /appellant-case should render a summary list r
                         data-cy="add-related-appeals"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning obligation in support</dt>
-                    <dd                     class="govuk-summary-list__value">Yes</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/planning-obligation/change"> Change<span class="govuk-visually-hidden"> Planning obligation in support</span></a>
-                        </dd>
-                </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning obligation status</dt>
                     <dd                     class="govuk-summary-list__value">Finalised</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/planning-obligation/status/change"
@@ -1513,22 +1419,11 @@ exports[`procedure-preference GET /appellant-case should render a summary list r
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-planning-obligation"> Add<span class="govuk-visually-hidden"> Planning obligation</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Applied for award of appeal costs</dt>
-                    <dd                     class="govuk-summary-list__value"></dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/appeal-costs-application/change"> Change<span class="govuk-visually-hidden"> Applied for award of appeal costs</span></a>
-                        </dd>
-                </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Costs document</dt>
                     <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"
                         data-cy="add-costs-document"> Add<span class="govuk-visually-hidden"> Costs document</span></a>
                     </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Ownership certificate or land declaration submitted</dt>
-                    <dd                     class="govuk-summary-list__value">No</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/ownership-certificate/change"
-                            data-cy="change-ownership-certificate-submitted"> Change<span class="govuk-visually-hidden"> Ownership certificate or land declaration submitted</span></a>
-                        </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Ownership certificate or land declaration</dt>
                     <dd                     class="govuk-summary-list__value">No documents available</dd>
@@ -1713,11 +1608,6 @@ exports[`procedure-preference GET /appellant-case should render a summary list r
                             data-cy="change-development-description"> Change<span class="govuk-visually-hidden"> Original Development description</span></a>
                         </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA changed the development description</dt>
-                    <dd                     class="govuk-summary-list__value">No</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/lpa-changed-description/change"> Change<span class="govuk-visually-hidden"> LPA changed the development description</span></a>
-                        </dd>
-                </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agreement to change description evidence</dt>
                     <dd                     class="govuk-summary-list__value">No documents available</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70459"
@@ -1811,11 +1701,6 @@ exports[`procedure-preference GET /appellant-case should render a summary list r
                         data-cy="add-related-appeals"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning obligation in support</dt>
-                    <dd                     class="govuk-summary-list__value">Yes</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/planning-obligation/change"> Change<span class="govuk-visually-hidden"> Planning obligation in support</span></a>
-                        </dd>
-                </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning obligation status</dt>
                     <dd                     class="govuk-summary-list__value">Finalised</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/planning-obligation/status/change"
@@ -1827,22 +1712,11 @@ exports[`procedure-preference GET /appellant-case should render a summary list r
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-planning-obligation"> Add<span class="govuk-visually-hidden"> Planning obligation</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Applied for award of appeal costs</dt>
-                    <dd                     class="govuk-summary-list__value"></dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/appeal-costs-application/change"> Change<span class="govuk-visually-hidden"> Applied for award of appeal costs</span></a>
-                        </dd>
-                </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Costs document</dt>
                     <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"
                         data-cy="add-costs-document"> Add<span class="govuk-visually-hidden"> Costs document</span></a>
                     </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Ownership certificate or land declaration submitted</dt>
-                    <dd                     class="govuk-summary-list__value">No</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/ownership-certificate/change"
-                            data-cy="change-ownership-certificate-submitted"> Change<span class="govuk-visually-hidden"> Ownership certificate or land declaration submitted</span></a>
-                        </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Ownership certificate or land declaration</dt>
                     <dd                     class="govuk-summary-list__value">No documents available</dd>
@@ -2027,11 +1901,6 @@ exports[`procedure-preference GET /appellant-case should render a summary list r
                             data-cy="change-development-description"> Change<span class="govuk-visually-hidden"> Original Development description</span></a>
                         </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA changed the development description</dt>
-                    <dd                     class="govuk-summary-list__value">No</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/lpa-changed-description/change"> Change<span class="govuk-visually-hidden"> LPA changed the development description</span></a>
-                        </dd>
-                </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agreement to change description evidence</dt>
                     <dd                     class="govuk-summary-list__value">No documents available</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70459"
@@ -2125,11 +1994,6 @@ exports[`procedure-preference GET /appellant-case should render a summary list r
                         data-cy="add-related-appeals"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning obligation in support</dt>
-                    <dd                     class="govuk-summary-list__value">Yes</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/planning-obligation/change"> Change<span class="govuk-visually-hidden"> Planning obligation in support</span></a>
-                        </dd>
-                </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning obligation status</dt>
                     <dd                     class="govuk-summary-list__value">Finalised</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/planning-obligation/status/change"
@@ -2141,22 +2005,11 @@ exports[`procedure-preference GET /appellant-case should render a summary list r
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-planning-obligation"> Add<span class="govuk-visually-hidden"> Planning obligation</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Applied for award of appeal costs</dt>
-                    <dd                     class="govuk-summary-list__value"></dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/appeal-costs-application/change"> Change<span class="govuk-visually-hidden"> Applied for award of appeal costs</span></a>
-                        </dd>
-                </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Costs document</dt>
                     <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"
                         data-cy="add-costs-document"> Add<span class="govuk-visually-hidden"> Costs document</span></a>
                     </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Ownership certificate or land declaration submitted</dt>
-                    <dd                     class="govuk-summary-list__value">No</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/ownership-certificate/change"
-                            data-cy="change-ownership-certificate-submitted"> Change<span class="govuk-visually-hidden"> Ownership certificate or land declaration submitted</span></a>
-                        </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Ownership certificate or land declaration</dt>
                     <dd                     class="govuk-summary-list__value">No documents available</dd>
@@ -2341,11 +2194,6 @@ exports[`procedure-preference GET /appellant-case should render a summary list r
                             data-cy="change-development-description"> Change<span class="govuk-visually-hidden"> Original Development description</span></a>
                         </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA changed the development description</dt>
-                    <dd                     class="govuk-summary-list__value">No</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/lpa-changed-description/change"> Change<span class="govuk-visually-hidden"> LPA changed the development description</span></a>
-                        </dd>
-                </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agreement to change description evidence</dt>
                     <dd                     class="govuk-summary-list__value">No documents available</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70459"
@@ -2439,11 +2287,6 @@ exports[`procedure-preference GET /appellant-case should render a summary list r
                         data-cy="add-related-appeals"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning obligation in support</dt>
-                    <dd                     class="govuk-summary-list__value">Yes</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/planning-obligation/change"> Change<span class="govuk-visually-hidden"> Planning obligation in support</span></a>
-                        </dd>
-                </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning obligation status</dt>
                     <dd                     class="govuk-summary-list__value">Finalised</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/planning-obligation/status/change"
@@ -2455,22 +2298,11 @@ exports[`procedure-preference GET /appellant-case should render a summary list r
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-planning-obligation"> Add<span class="govuk-visually-hidden"> Planning obligation</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Applied for award of appeal costs</dt>
-                    <dd                     class="govuk-summary-list__value"></dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/appeal-costs-application/change"> Change<span class="govuk-visually-hidden"> Applied for award of appeal costs</span></a>
-                        </dd>
-                </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Costs document</dt>
                     <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"
                         data-cy="add-costs-document"> Add<span class="govuk-visually-hidden"> Costs document</span></a>
                     </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Ownership certificate or land declaration submitted</dt>
-                    <dd                     class="govuk-summary-list__value">No</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/ownership-certificate/change"
-                            data-cy="change-ownership-certificate-submitted"> Change<span class="govuk-visually-hidden"> Ownership certificate or land declaration submitted</span></a>
-                        </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Ownership certificate or land declaration</dt>
                     <dd                     class="govuk-summary-list__value">No documents available</dd>
