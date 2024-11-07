@@ -6,10 +6,9 @@ resource "azurerm_servicebus_namespace" "main" {
   resource_group_name = azurerm_resource_group.primary.name
   location            = module.primary_region.location
 
-  sku                          = var.service_bus_config.sku
-  capacity                     = var.service_bus_config.capacity
-  premium_messaging_partitions = var.service_bus_config.sku == "Premium" ? 1 : 0
-
+  sku                           = var.service_bus_config.sku
+  capacity                      = var.service_bus_config.capacity
+  premium_messaging_partitions  = var.service_bus_config.sku == "Premium" ? 1 : 0
   minimum_tls_version           = "1.2"
   public_network_access_enabled = var.service_bus_config.public_network_access_enabled
   local_auth_enabled            = false
