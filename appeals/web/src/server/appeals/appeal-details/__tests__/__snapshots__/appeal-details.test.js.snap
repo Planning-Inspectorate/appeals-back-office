@@ -12,13 +12,9 @@ exports[`appeal-details GET /:appealId Appeal decision should render a row in th
 
 exports[`appeal-details GET /:appealId Appeal decision should render a row in the case documentation accordion with "View" download link to the decision document in the Actions column, if the appeal status is "complete" and the document virus scan is complete and the scan result indicates the document is safe 1`] = `"<td class="govuk-table__cell appeal-decision-actions"><ul class="govuk-summary-list__actions-list"><li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/documents/2/download/448efec9-43d4-406a-92b7-1aecbdcd5e87/test-document.txt" target="_blank">View</a></li></ul></td>"`;
 
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case documentation accordion with "View" download link to the decision document in the Actions column, if the appeal status is "complete" and the document virus scan is complete and the scan result indicates the document is safe 2`] = `"<td class="govuk-table__cell appeal-decision-actions"><ul class="govuk-summary-list__actions-list"><li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/documents/2/download/448efec9-43d4-406a-92b7-1aecbdcd5e87/test-document.txt" target="_blank">View</a></li></ul></td>"`;
-
 exports[`appeal-details GET /:appealId Appeal decision should render a row in the case documentation accordion with "Virus found" status tag in the Actions column, if the appeal status is "complete" and the document virus scan is complete and the scan result indicates the document is unsafe 1`] = `"<td class="govuk-table__cell appeal-decision-actions"><ul class="govuk-summary-list__actions-list"><li class="govuk-summary-list__actions-list-item"><strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong></li></ul></td>"`;
 
 exports[`appeal-details GET /:appealId Appeal decision should render a row in the case documentation accordion with "Virus scanning" status tag in the Actions column, if the appeal status is "complete" and the document virus scan is pending 1`] = `"<td class="govuk-table__cell appeal-decision-actions"><ul class="govuk-summary-list__actions-list"><li class="govuk-summary-list__actions-list-item"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></li></ul></td>"`;
-
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case documentation accordion with "Virus scanning" status tag in the Actions column, if the appeal status is "complete" and the document virus scan is pending 2`] = `"<td class="govuk-table__cell appeal-decision-actions"><ul class="govuk-summary-list__actions-list"><li class="govuk-summary-list__actions-list-item"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></li></ul></td>"`;
 
 exports[`appeal-details GET /:appealId Appeal decision should render a row in the case documentation accordion with no link in the Actions column, if the appeal status is anything other than "issue_determination" or "complete" 1`] = `"<td class="govuk-table__cell appeal-decision-actions"><ul class="govuk-summary-list__actions-list"></ul></td>"`;
 
@@ -7684,8 +7680,6 @@ exports[`appeal-details GET /:appealId should render the received appeal details
         </div>
 </main>"
 `;
-
-exports[`appeal-details GET /:appealId show more Inspection access (LPA answer) should not render a "show more" component on the "Inspection access (LPA answer)" row if the associated value is less than or equal to 300 characters in length 1`] = `"<td class="govuk-table__cell appeal-decision-actions"><ul class="govuk-summary-list__actions-list"></ul></td>"`;
 
 exports[`appeal-details should not render a back button 1`] = `
 "<body class="govuk-template__body ">
