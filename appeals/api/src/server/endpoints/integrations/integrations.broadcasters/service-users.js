@@ -16,7 +16,7 @@ import { ODW_SYSTEM_ID } from '@pins/appeals/constants/common.js';
  * @returns
  */
 export const broadcastServiceUser = async (userId, updateType, roleName, caseReference) => {
-	if (!config.serviceBusEnabled) {
+	if (!config.serviceBusEnabled && config.NODE_ENV !== 'development') {
 		return false;
 	}
 	const user = await databaseConnector.serviceUser.findUnique({
