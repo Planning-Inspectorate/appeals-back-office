@@ -1,6 +1,6 @@
 export default {
 	setupFiles: ['<rootDir>/setup-tests.js'],
-	testTimeout: 100000,
+	testTimeout: 20000,
 	transform: {},
 	moduleNameMapper: {
 		'^uuid$': 'uuid'
