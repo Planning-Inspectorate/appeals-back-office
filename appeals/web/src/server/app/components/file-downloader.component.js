@@ -285,11 +285,6 @@ export const getBulkDocumentDownload = async ({ apiClient, params, session }, re
 		)
 	);
 
-	// TODO Why does returning a response of 404 hang here?
-	// if (blobStreams.every((blobStream) => !blobStream)) {
-	// 	return response.status(404);
-	// }
-
 	// Tell the browser that this is a zip file.
 	response.setHeader('content-type', 'application/zip');
 	response.setHeader('content-disposition', `attachment; filename=${requestedFilename}`);
@@ -301,11 +296,20 @@ export const getBulkDocumentDownload = async ({ apiClient, params, session }, re
 
 	archive.pipe(response);
 
-	blobStreams
-		.filter((blobStream) => !!blobStream)
-		.forEach((blobStream, index) =>
-			archive.append(blobStream, { name: bulkFileInfo[index].fullName })
-		);
+	const /** @type {string[]} */ missingFiles = [];
+
+	blobStreams.forEach((blobStream, index) => {
+		if (blobStream) {
+			archive.append(blobStream, { name: bulkFileInfo[index].fullName });
+		} else {
+			missingFiles.push(bulkFileInfo[index].fullName);
+		}
+	});
+
+	// Include a "missing files" file at the root of the zip file if required.
+	if (missingFiles.length) {
+		archive.append(Buffer.from(JSON.stringify(missingFiles)), { name: 'missing-files.json' });
+	}
 
 	await archive.finalize();
 
