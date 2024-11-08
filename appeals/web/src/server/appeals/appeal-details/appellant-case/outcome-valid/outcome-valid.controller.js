@@ -93,12 +93,13 @@ export const postValidDate = async (request, response) => {
  */
 const renderValidDatePage = async (request, response, apiErrors) => {
 	const {
-		currentAppeal: { appealId, appealReference }
+		currentAppeal: { appealId, appealReference, createdAt }
 	} = request;
 
-	const dateValidDay = request.body['valid-date-day'];
-	const dateValidMonth = request.body['valid-date-month'];
-	const dateValidYear = request.body['valid-date-year'];
+	const createdDayMonthYear = dateISOStringToDayMonthYearHourMinute(createdAt);
+	const dateValidDay = request.body['valid-date-day'] || createdDayMonthYear.day;
+	const dateValidMonth = request.body['valid-date-month'] || createdDayMonthYear.month;
+	const dateValidYear = request.body['valid-date-year'] || createdDayMonthYear.year;
 
 	let errors = request.errors || apiErrors;
 
