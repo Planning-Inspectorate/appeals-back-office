@@ -34,6 +34,7 @@ export class CaseDetailsPage extends Page {
 		changeSiteOwnership: 'change-site-ownership',
 		changeLpaqDueDate: 'change-lpa-questionnaire-due-date',
 		changeStartDate: 'change-start-case-date',
+		changeStartDate: 'change-start-case-date',
 		startAppealWithdrawal: 'start-appeal-withdrawal'
 	};
 
@@ -298,6 +299,7 @@ export class CaseDetailsPage extends Page {
 		});
 	}
 
+
 	verifyChangeStartDate() {
 		const dateToday = new Date();
 		const formattedDate = dateTimeSection.formatDate(dateToday);
@@ -320,7 +322,7 @@ export class CaseDetailsPage extends Page {
 			.then((dateText) => {
 				expect(dateText.trim()).to.equal(formattedDate);
 			});
-	}
+		}
 
 	verifyAppealRefOnCaseDetails(caseRef) {
 		this.elements.getAppealRefCaseDetails().contains(caseRef);
