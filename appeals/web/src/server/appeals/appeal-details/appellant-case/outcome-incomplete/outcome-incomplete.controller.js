@@ -8,6 +8,12 @@ import { decisionIncompleteConfirmationPage } from './outcome-incomplete.mapper.
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { getNotValidReasonsTextFromRequestBody } from '#lib/validation-outcome-reasons-formatter.js';
+import {
+	dateISOStringToDayMonthYearHourMinute,
+	calculateIncompleteDueDate,
+	getTodaysISOString
+} from '#lib/dates.js';
+import { isAfter, parseISO } from 'date-fns';
 
 /**
  *
@@ -80,13 +86,37 @@ const renderIncompleteReason = async (request, response) => {
  */
 const renderUpdateDueDate = async (request, response) => {
 	const { body, currentAppeal, errors } = request;
-
 	let dueDateDay, dueDateMonth, dueDateYear;
 
 	if (request.session.webAppellantCaseReviewOutcome?.updatedDueDate) {
 		dueDateDay = request.session.webAppellantCaseReviewOutcome.updatedDueDate.day;
 		dueDateMonth = request.session.webAppellantCaseReviewOutcome.updatedDueDate.month;
 		dueDateYear = request.session.webAppellantCaseReviewOutcome.updatedDueDate.year;
+	} else {
+		const appellantCase = await appellantCaseService
+			.getAppellantCaseFromAppealId(
+				request.apiClient,
+				currentAppeal.appealId,
+				currentAppeal.appellantCaseId
+			)
+			.catch((error) => logger.error(error));
+
+		if (appellantCase?.applicationDecisionDate) {
+			const defaultDueDate = calculateIncompleteDueDate(
+				appellantCase.applicationDecisionDate,
+				currentAppeal.appealType
+			);
+
+			if (defaultDueDate && isAfter(defaultDueDate, parseISO(getTodaysISOString()))) {
+				const processedDueDate = dateISOStringToDayMonthYearHourMinute(
+					defaultDueDate.toISOString()
+				);
+
+				dueDateDay = processedDueDate.day;
+				dueDateMonth = processedDueDate.month;
+				dueDateYear = processedDueDate.year;
+			}
+		}
 	}
 
 	if (objectContainsAllKeys(body, ['due-date-day', 'due-date-month', 'due-date-year'])) {

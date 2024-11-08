@@ -1,8 +1,9 @@
 import { formatInTimeZone, utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz';
 import enGB from 'date-fns/locale/en-GB/index.js';
-import { isValid, isBefore, isAfter } from 'date-fns';
+import { isValid, isBefore, isAfter, parseISO, add } from 'date-fns';
 import { padNumberWithZero } from '#lib/string-utilities.js';
 import { DEFAULT_TIMEZONE } from '@pins/appeals/constants/dates.js';
+import { APPEAL_CASE_TYPE } from 'pins-data-model';
 
 /**
  * @typedef {import('../appeals/appeals.types.js').DayMonthYearHourMinute} DayMonthYearHourMinute
@@ -221,4 +222,39 @@ export const getDayFromISODate = (isoDate) => {
 	}
 	const dateInZone = utcToZonedTime(isoDate, DEFAULT_TIMEZONE);
 	return new Intl.DateTimeFormat('en-GB', { weekday: 'long' }).format(dateInZone);
+};
+
+/**
+ *
+ * @param {string} originalDecisionDate
+ * @param {string} appealType
+ * @returns {Date|undefined}
+ */
+export const calculateIncompleteDueDate = (originalDecisionDate, appealType) => {
+	const config = getExtendedDeadlineConfiguration(appealType);
+	if (config) {
+		const dueDate = add(parseISO(originalDecisionDate), config);
+		return dueDate;
+	}
+};
+
+/**
+ *
+ * @param {string} appealType
+ * @returns
+ */
+const getExtendedDeadlineConfiguration = (appealType) => {
+	switch (appealType) {
+		case APPEAL_CASE_TYPE.D:
+			return {
+				weeks: 12
+			};
+		case APPEAL_CASE_TYPE.W:
+			return {
+				months: 6
+			};
+		default: {
+			return null;
+		}
+	}
 };
