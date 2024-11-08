@@ -46,17 +46,21 @@ import { permissionNames } from '#environment/permissions.js';
  * @returns {Promise<PageContent>}
  */
 export async function lpaQuestionnairePage(lpaqDetails, appealDetails, currentRoute, session) {
-	const mappedLpaqDetails = initialiseAndMapLPAQData({
+	const mappedLpaqDetails = await initialiseAndMapLPAQData({
 		lpaQuestionnaireData: lpaqDetails,
 		appealDetails,
 		session,
 		currentRoute
 	});
+
 	const mappedAppealDetails = await initialiseAndMapAppealData(
-		appealDetails,
-		currentRoute,
-		session,
-		true
+		{
+			appealDetails,
+			currentRoute,
+			session,
+			skipAssignedUsersData: true
+		},
+		['siteAddress', 'localPlanningAuthority', 'lpaNeighbouringSites']
 	);
 
 	/** @type {PageComponent[]} */

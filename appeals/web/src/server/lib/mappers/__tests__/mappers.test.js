@@ -34,7 +34,11 @@ describe('appeal-mapper', () => {
 			currentRoute = 'testroute/';
 			// @ts-ignore
 			session = { account: createAccountInfo() };
-			validMappedData = await initialiseAndMapAppealData(appealData, currentRoute, session);
+			validMappedData = await initialiseAndMapAppealData({
+				appealDetails: appealData,
+				currentRoute,
+				session
+			});
 		});
 
 		it('should return a valid MappedAppealInstructions object for valid inputs', async () => {

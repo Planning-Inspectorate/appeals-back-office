@@ -31,11 +31,15 @@ const submaps = {
 };
 
 /**
- * @param {Object} params
- * @param {SingleLPAQuestionnaireResponse} params.lpaQuestionnaireData
- * @param {WebAppeal} params.appealDetails
- * @param {string} params.currentRoute
- * @param {SessionWithAuth} params.session
+ * @typedef {Object} InnerParams
+ * @property {SingleLPAQuestionnaireResponse} lpaQuestionnaireData
+ * @property {WebAppeal} appealDetails
+ * @property {string} currentRoute
+ * @property {SessionWithAuth} session
+ */
+
+/**
+ * @param {InnerParams} params
  * @returns {SubMapperParams}
  */
 const getSubmapperParams = ({ lpaQuestionnaireData, appealDetails, session, currentRoute }) => {
@@ -51,11 +55,7 @@ const getSubmapperParams = ({ lpaQuestionnaireData, appealDetails, session, curr
 };
 
 /**
- * @param {Object} params
- * @param {SingleLPAQuestionnaireResponse} params.lpaQuestionnaireData
- * @param {WebAppeal} params.appealDetails
- * @param {string} params.currentRoute
- * @param {SessionWithAuth} params.session
+ * @param {InnerParams} params
  * @returns {string}
  */
 const getAppealType = ({ appealDetails }) => {

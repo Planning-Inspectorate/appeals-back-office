@@ -53,12 +53,12 @@ import { permissionNames } from '#environment/permissions.js';
  * @returns {Promise<PageContent>}
  */
 export async function appellantCasePage(appellantCaseData, appealDetails, currentRoute, session) {
-	const mappedAppellantCaseData = initialiseAndMapData(
+	const { appellantCase: mappedAppellantCaseData } = await initialiseAndMapData({
 		appellantCaseData,
 		appealDetails,
 		currentRoute,
 		session
-	);
+	});
 
 	/**
 	 * @type {PageComponent}

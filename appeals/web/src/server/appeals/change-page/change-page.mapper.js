@@ -16,7 +16,12 @@ import { initialiseAndMapLPAQData } from '#lib/mappers/data/lpa-questionnaire/ma
  * @returns {Promise<PageContent>}
  */
 export async function appealChangePage(question, appealData, currentRoute, session) {
-	const mappedData = await initialiseAndMapAppealData(appealData, currentRoute, session, true);
+	const mappedData = await initialiseAndMapAppealData({
+		appealDetails: appealData,
+		currentRoute,
+		session,
+		skipAssignedUsersData: true
+	});
 	const instructionsForQuestion = getInstructions(question, mappedData.appeal);
 
 	return mapInstructionsToChangePage(
@@ -34,10 +39,16 @@ export async function appealChangePage(question, appealData, currentRoute, sessi
  * @param {import('@pins/appeals.api').Appeals.SingleLPAQuestionnaireResponse} lpaqData
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
  * @param {string} currentRoute
- * @returns {PageContent}
+ * @returns {Promise<PageContent>}
  */
-export function lpaQuestionnaireChangePage(question, appealData, lpaqData, session, currentRoute) {
-	const mappedData = initialiseAndMapLPAQData({
+export async function lpaQuestionnaireChangePage(
+	question,
+	appealData,
+	lpaqData,
+	session,
+	currentRoute
+) {
+	const mappedData = await initialiseAndMapLPAQData({
 		lpaQuestionnaireData: lpaqData,
 		appealDetails: appealData,
 		session,

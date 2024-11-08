@@ -10,4 +10,7 @@ export type InitialiseAndMapDataFactory = <
 	submaps: Record<string, TSubMapper>,
 	getAppealType: (innerParams: TInnerParams) => string,
 	targetKey: TTargetKey
-) => (innerParams: TInnerParams) => Record<TTargetKey, MappedInstructions>;
+) => (
+	innerParams: TInnerParams,
+	filterKeys?: string[]
+) => Promise<Record<TTargetKey, MappedInstructions>>;

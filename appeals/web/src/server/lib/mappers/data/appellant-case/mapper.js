@@ -3,10 +3,17 @@ import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { userHasPermission } from '../../utils/permissions.mapper.js';
 import { submaps as hasSubmaps } from './has.js';
 import { submaps as s78Submaps } from './s78.js';
+import { initialiseAndMapDataFactory } from '../initialise-and-map-data.js';
+
+/**
+ * @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal
+ * @typedef {import('../../../../app/auth/auth-session.service.js').SessionWithAuth} SessionWithAuth
+ * @typedef {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} AppellantCaseData
+ */
 
 /**
  * @typedef SubMapperParams
- * @property {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} appellantCaseData
+ * @property {AppellantCaseData} appellantCaseData
  * @property {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} appealDetails
  * @property {string} currentRoute
  * @property {boolean} userHasUpdateCase
@@ -23,16 +30,36 @@ const submaps = {
 };
 
 /**
- * @param {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} appellantCaseData
- * @param {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} appealDetails
- * @param {import('../../../../app/auth/auth-session.service.js').SessionWithAuth} session
- * @param {string} currentRoute
- * @returns {MappedInstructions}
+ * @typedef {Object} InnerParams
+ * @property {AppellantCaseData} appellantCaseData
+ * @property {WebAppeal} appealDetails
+ * @property {string} currentRoute
+ * @property {SessionWithAuth} session
  */
-export function initialiseAndMapData(appellantCaseData, appealDetails, currentRoute, session) {
-	if (!appellantCaseData || appellantCaseData === null) {
-		throw new Error('appellantCaseDetails is null or undefined');
-	}
+
+/**
+ * @param {InnerParams} params
+ * @returns {SubMapperParams}
+ */
+const getSubmapperParams = ({ appellantCaseData, appealDetails, session, currentRoute }) => {
+	const userHasUpdateCase = userHasPermission(permissionNames.updateCase, session);
+
+	currentRoute =
+		currentRoute[currentRoute.length - 1] === '/' ? currentRoute.slice(0, -1) : currentRoute;
+
+	return {
+		appellantCaseData,
+		appealDetails,
+		currentRoute,
+		userHasUpdateCase
+	};
+};
+
+/**
+ * @param {InnerParams} params
+ * @returns {string}
+ */
+const getAppealType = ({ appealDetails }) => {
 	if (appealDetails === undefined) {
 		throw new Error('appealDetails is undefined');
 	}
@@ -40,27 +67,12 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 	if (!appealDetails.appealType) {
 		throw new Error('No appealType on appealDetails');
 	}
+	return appealDetails.appealType;
+};
 
-	currentRoute =
-		currentRoute[currentRoute.length - 1] === '/' ? currentRoute.slice(0, -1) : currentRoute;
-
-	const userHasUpdateCase = userHasPermission(permissionNames.updateCase, session);
-
-	const submapperParams = {
-		appellantCaseData,
-		appealDetails,
-		currentRoute,
-		userHasUpdateCase
-	};
-	/** @type {Record<string, SubMapper>} */
-	const submappers = submaps[appealDetails.appealType];
-
-	/** @type {MappedInstructions} */
-	const mappedData = {};
-
-	Object.entries(submappers).forEach(([key, submapper]) => {
-		mappedData[key] = submapper(submapperParams);
-	});
-
-	return mappedData;
-}
+export const initialiseAndMapData = initialiseAndMapDataFactory(
+	getSubmapperParams,
+	submaps,
+	getAppealType,
+	'appellantCase'
+);

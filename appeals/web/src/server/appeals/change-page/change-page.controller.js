@@ -24,7 +24,7 @@ const renderChangePage = async (request, response) => {
 					request.params.appealId,
 					request.params.lpaQuestionnaireId
 				);
-				mappedPageContent = lpaQuestionnaireChangePage(
+				mappedPageContent = await lpaQuestionnaireChangePage(
 					request.params.question,
 					appealData,
 					lpaqData,

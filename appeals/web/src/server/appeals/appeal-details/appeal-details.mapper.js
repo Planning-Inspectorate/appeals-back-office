@@ -28,7 +28,7 @@ export async function appealDetailsPage(
 	request,
 	ipCommentsAwaitingReview
 ) {
-	const mappedData = await initialiseAndMapAppealData(appealDetails, currentRoute, session);
+	const mappedData = await initialiseAndMapAppealData({ appealDetails, currentRoute, session });
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);
 
 	const caseNotes = await generateCaseNotes(appealCaseNotes, request);
