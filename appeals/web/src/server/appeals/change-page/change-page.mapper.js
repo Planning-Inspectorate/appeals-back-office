@@ -37,7 +37,12 @@ export async function appealChangePage(question, appealData, currentRoute, sessi
  * @returns {PageContent}
  */
 export function lpaQuestionnaireChangePage(question, appealData, lpaqData, session, currentRoute) {
-	const mappedData = initialiseAndMapLPAQData(lpaqData, appealData, session, currentRoute);
+	const mappedData = initialiseAndMapLPAQData({
+		lpaQuestionnaireData: lpaqData,
+		appealDetails: appealData,
+		session,
+		currentRoute
+	});
 	const instructionsForQuestion = getInstructions(question, mappedData.lpaq);
 
 	return mapInstructionsToChangePage(

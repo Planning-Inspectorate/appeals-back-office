@@ -88,17 +88,18 @@ describe('lpaQuestionnaire-mapper', () => {
 	 * @type {MappedLPAQInstructions}
 	 */
 	let validMappedData;
-	beforeAll(async () => {
+	beforeAll(() => {
 		currentRoute = 'testroute/';
 		// @ts-ignore
 		session = { account: createAccountInfo() };
-		validMappedData = await initialiseAndMapLPAQData(
+		// @ts-ignore
+		validMappedData = initialiseAndMapLPAQData({
 			// @ts-ignore
-			lpaQuestionnaireDataIncompleteOutcome,
-			appealData,
+			lpaQuestionnaireData: lpaQuestionnaireDataIncompleteOutcome,
+			appealDetails: appealData,
 			session,
 			currentRoute
-		);
+		});
 	});
 	describe('Test 1: Basic functionality', () => {
 		it('should return a valid MappedLPAQInstructions object for valid inputs', async () => {

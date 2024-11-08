@@ -3,6 +3,8 @@ import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { userHasPermission } from '#lib/mappers/index.js';
 import { submaps as hasSubmaps } from './has.js';
 import { submaps as s78Submaps } from './s78.js';
+import { initialiseAndMapDataFactory } from '../initialise-and-map-data.js';
+
 /**
  * @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal
  * @typedef {import('../../../../app/auth/auth-session.service.js').SessionWithAuth} SessionWithAuth
@@ -29,18 +31,34 @@ const submaps = {
 };
 
 /**
- * @param {SingleLPAQuestionnaireResponse} lpaQuestionnaireData
- * @param {WebAppeal} appealDetails
- * @param {string} currentRoute
- * @param {SessionWithAuth} session
- * @returns {{lpaq: MappedInstructions}}
+ * @param {Object} params
+ * @param {SingleLPAQuestionnaireResponse} params.lpaQuestionnaireData
+ * @param {WebAppeal} params.appealDetails
+ * @param {string} params.currentRoute
+ * @param {SessionWithAuth} params.session
+ * @returns {SubMapperParams}
  */
-export function initialiseAndMapLPAQData(
-	lpaQuestionnaireData,
-	appealDetails,
-	session,
-	currentRoute
-) {
+const getSubmapperParams = ({ lpaQuestionnaireData, appealDetails, session, currentRoute }) => {
+	const userHasUpdateCase = userHasPermission(permissionNames.updateCase, session);
+
+	return {
+		lpaQuestionnaireData,
+		appealDetails,
+		currentRoute,
+		session,
+		userHasUpdateCase
+	};
+};
+
+/**
+ * @param {Object} params
+ * @param {SingleLPAQuestionnaireResponse} params.lpaQuestionnaireData
+ * @param {WebAppeal} params.appealDetails
+ * @param {string} params.currentRoute
+ * @param {SessionWithAuth} params.session
+ * @returns {string}
+ */
+const getAppealType = ({ appealDetails }) => {
 	if (appealDetails === undefined) {
 		throw new Error('appealDetails is undefined');
 	}
@@ -48,23 +66,12 @@ export function initialiseAndMapLPAQData(
 	if (!appealDetails.appealType) {
 		throw new Error('No appealType on appealDetails');
 	}
+	return appealDetails.appealType;
+};
 
-	const userHasUpdateCase = userHasPermission(permissionNames.updateCase, session);
-
-	/** @type {{lpaq: MappedInstructions}} */
-	const mappedData = { lpaq: {} };
-
-	const submappers = submaps[appealDetails.appealType];
-
-	Object.entries(submappers).forEach(([key, submapper]) => {
-		mappedData.lpaq[key] = submapper({
-			lpaQuestionnaireData,
-			appealDetails,
-			currentRoute,
-			session,
-			userHasUpdateCase
-		});
-	});
-
-	return mappedData;
-}
+export const initialiseAndMapLPAQData = initialiseAndMapDataFactory(
+	getSubmapperParams,
+	submaps,
+	getAppealType,
+	'lpaq'
+);

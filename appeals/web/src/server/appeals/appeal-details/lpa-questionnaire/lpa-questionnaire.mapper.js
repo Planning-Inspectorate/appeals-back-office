@@ -46,12 +46,12 @@ import { permissionNames } from '#environment/permissions.js';
  * @returns {Promise<PageContent>}
  */
 export async function lpaQuestionnairePage(lpaqDetails, appealDetails, currentRoute, session) {
-	const mappedLpaqDetails = initialiseAndMapLPAQData(
-		lpaqDetails,
+	const mappedLpaqDetails = initialiseAndMapLPAQData({
+		lpaQuestionnaireData: lpaqDetails,
 		appealDetails,
 		session,
 		currentRoute
-	);
+	});
 	const mappedAppealDetails = await initialiseAndMapAppealData(
 		appealDetails,
 		currentRoute,
