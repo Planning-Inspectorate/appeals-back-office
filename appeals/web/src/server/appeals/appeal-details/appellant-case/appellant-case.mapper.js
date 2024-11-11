@@ -225,26 +225,26 @@ export function getValidationOutcomeFromAppellantCase(appellantCaseData) {
 
 /**
  * @param {Appeal} appealData
- * @param {number} [dueDateDay]
- * @param {number} [dueDateMonth]
- * @param {number} [dueDateYear]
+ * @param {number|string} [dueDateDay]
+ * @param {number|string} [dueDateMonth]
+ * @param {number|string} [dueDateYear]
  * @param {boolean} [errorsOnPage]
  * @returns {PageContent}
  */
 export function updateDueDatePage(appealData, dueDateDay, dueDateMonth, dueDateYear, errorsOnPage) {
-	let existingDueDateDayMonthYear;
+	let existingDueDateDayMonthYear = {
+		day: dueDateDay,
+		month: dueDateMonth,
+		year: dueDateYear
+	};
 
-	if (errorsOnPage) {
-		/** @type {DayMonthYearHourMinute} */
-		existingDueDateDayMonthYear = {
-			day: dueDateDay,
-			month: dueDateMonth,
-			year: dueDateYear
-		};
-	} else if (appealData.documentationSummary.appellantCase?.dueDate) {
-		existingDueDateDayMonthYear = dateISOStringToDayMonthYearHourMinute(
+	if (!errorsOnPage && appealData.documentationSummary.appellantCase?.dueDate) {
+		const existingDueDate = dateISOStringToDayMonthYearHourMinute(
 			appealData.documentationSummary.appellantCase?.dueDate
 		);
+		existingDueDateDayMonthYear.day = existingDueDate.day;
+		existingDueDateDayMonthYear.month = existingDueDate.month;
+		existingDueDateDayMonthYear.year = existingDueDate.year;
 	}
 
 	/** @type {PageContent} */

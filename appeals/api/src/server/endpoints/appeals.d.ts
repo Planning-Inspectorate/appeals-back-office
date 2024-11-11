@@ -792,7 +792,7 @@ type GetAuditTrailsResponse = {
 type UpdateDocumentFileNameRequest = {
 	id: string;
 	fileName: string;
-}[];
+};
 
 type UpdateDocumentsRequest = {
 	id: string;
@@ -801,6 +801,7 @@ type UpdateDocumentsRequest = {
 	latestVersion: number;
 	published: boolean;
 	draft: boolean;
+	fileName: string | null;
 }[];
 
 type UpdateDocumentAvCheckRequest = {
@@ -877,7 +878,7 @@ export {
 	UpdateAppellantRequest,
 	UpdateDocumentsRequest,
 	UpdateDocumentFileNameRequest,
-	UpdateDocumentsAvCheckRequest,
+	UpdateDocumentAvCheckRequest,
 	UpdateLPAQuestionnaireValidationOutcomeParams,
 	UpdateLPAQuestionnaireRequest,
 	UpdateTimetableRequest,

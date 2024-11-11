@@ -539,5 +539,73 @@ describe('appeals documents', () => {
 			expect(databaseConnector.document.findUnique).toHaveBeenCalled();
 			expect(response.status).toEqual(200);
 		});
+
+		test('updates AV scan document not yet saved', async () => {
+			jest.clearAllMocks();
+			const response = await request
+				.patch(`/appeals/documents/avcheck`)
+				.send({
+					documents: [
+						{
+							id: documentCreated.guid,
+							version: 1,
+							virusCheckStatus: 'scanned'
+						}
+					]
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(databaseConnector.documentVersionAvScan.upsert).toHaveBeenCalledTimes(1);
+			expect(databaseConnector.documentVersion.update).not.toHaveBeenCalled();
+			expect(response.body).toEqual({
+				documents: [
+					{
+						id: documentCreated.guid,
+						version: 1,
+						virusCheckStatus: 'scanned'
+					}
+				]
+			});
+			expect(response.status).toEqual(200);
+		});
+
+		test('updates AV scan document already saved', async () => {
+			jest.clearAllMocks();
+			databaseConnector.document.findUnique.mockResolvedValue({
+				guid: documentCreated.guid,
+				versions: [
+					{
+						version: 1,
+						virusCheckStatus: 'not scanned'
+					}
+				]
+			});
+			const response = await request
+				.patch(`/appeals/documents/avcheck`)
+				.send({
+					documents: [
+						{
+							id: documentCreated.guid,
+							version: 1,
+							virusCheckStatus: 'scanned'
+						}
+					]
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(databaseConnector.documentVersionAvScan.upsert).toHaveBeenCalledTimes(1);
+			expect(databaseConnector.documentVersion.update).toHaveBeenCalledTimes(1);
+			expect(databaseConnector.document.findUnique).toHaveBeenCalledTimes(1);
+			expect(response.body).toEqual({
+				documents: [
+					{
+						id: documentCreated.guid,
+						version: 1,
+						virusCheckStatus: 'scanned'
+					}
+				]
+			});
+			expect(response.status).toEqual(200);
+		});
 	});
 });

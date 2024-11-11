@@ -6,11 +6,6 @@ import { validateAppeal } from '../../appeal-details.middleware.js';
 const router = createRouter({ mergeParams: true });
 
 router
-	.route('/change')
-	.get(validateAppeal, asyncHandler(controllers.getChangePlanningObligation))
-	.post(validateAppeal, asyncHandler(controllers.postChangePlanningObligation));
-
-router
 	.route('/status/change')
 	.get(validateAppeal, asyncHandler(controllers.getChangePlanningObligationStatus))
 	.post(validateAppeal, asyncHandler(controllers.postChangePlanningObligationStatus));

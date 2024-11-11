@@ -46,11 +46,13 @@ export async function renderCheckAddress(request, response) {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export async function renderIpAddress(request, response) {
+	const operationType = request.query.editAddress === 'true' ? 'update' : 'add';
 	const pageContent = ipAddressPage(
 		request.currentAppeal,
 		request.body,
 		request.errors,
-		'add/check-address'
+		'add/check-address',
+		operationType
 	);
 
 	return response.status(request.errors ? 400 : 200).render('patterns/change-page.pattern.njk', {

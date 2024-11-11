@@ -35,6 +35,10 @@ exports[`neighbouring-sites GET /add should render getAllNeighbouringSite page f
                     <input class="govuk-input govuk-input govuk-input--width-10"
                     id="address-postcode" name="postCode" type="text">
                 </div>
+                <div class="govuk-form-group">
+                    <input class="govuk-input" id="address-operation-type" name="operationType"
+                    type="hidden">
+                </div>
                 <button type="submit" data-prevent-double-click="true" class="govuk-button"
                 data-module="govuk-button">Continue</button>
             </form>
@@ -77,6 +81,10 @@ exports[`neighbouring-sites GET /add should render getAllNeighbouringSite page f
                     <label class="govuk-label" for="address-postcode">Postcode</label>
                     <input class="govuk-input govuk-input govuk-input--width-10"
                     id="address-postcode" name="postCode" type="text">
+                </div>
+                <div class="govuk-form-group">
+                    <input class="govuk-input" id="address-operation-type" name="operationType"
+                    type="hidden">
                 </div>
                 <button type="submit" data-prevent-double-click="true" class="govuk-button"
                 data-module="govuk-button">Continue</button>
@@ -209,6 +217,10 @@ exports[`neighbouring-sites GET /change/site/:siteId should render the change ne
                     <label class="govuk-label" for="address-postcode">Postcode</label>
                     <input class="govuk-input govuk-input govuk-input--width-10"
                     id="address-postcode" name="postCode" type="text" value="NR35 2ND">
+                </div>
+                <div class="govuk-form-group">
+                    <input class="govuk-input" id="address-operation-type" name="operationType"
+                    type="hidden">
                 </div>
                 <button type="submit" data-prevent-double-click="true" class="govuk-button"
                 data-module="govuk-button">Continue</button>
@@ -375,6 +387,10 @@ exports[`neighbouring-sites POST /add should re-render getAllNeighbouringSite pa
                     <input class="govuk-input govuk-input govuk-input--width-10"
                     id="address-postcode" name="postCode" type="text" value="E1 8RU">
                 </div>
+                <div class="govuk-form-group">
+                    <input class="govuk-input" id="address-operation-type" name="operationType"
+                    type="hidden">
+                </div>
                 <button type="submit" data-prevent-double-click="true" class="govuk-button"
                 data-module="govuk-button">Continue</button>
             </form>
@@ -431,6 +447,10 @@ exports[`neighbouring-sites POST /add should re-render getAllNeighbouringSite pa
                     <input class="govuk-input govuk-input govuk-input--width-10"
                     id="address-postcode" name="postCode" type="text" value="E1 8RU">
                 </div>
+                <div class="govuk-form-group">
+                    <input class="govuk-input" id="address-operation-type" name="operationType"
+                    type="hidden">
+                </div>
                 <button type="submit" data-prevent-double-click="true" class="govuk-button"
                 data-module="govuk-button">Continue</button>
             </form>
@@ -485,6 +505,10 @@ exports[`neighbouring-sites POST /add should re-render getAllNeighbouringSite pa
                     <p id="address-postcode-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter a valid postcode</p>
                     <input                     class="govuk-input govuk-input govuk-input--width-10 govuk-input--error"
                     id="address-postcode" name="postCode" type="text" aria-describedby="address-postcode-error">
+                </div>
+                <div class="govuk-form-group">
+                    <input class="govuk-input" id="address-operation-type" name="operationType"
+                    type="hidden">
                 </div>
                 <button type="submit" data-prevent-double-click="true" class="govuk-button"
                 data-module="govuk-button">Continue</button>
@@ -541,6 +565,10 @@ exports[`neighbouring-sites POST /add should re-render getAllNeighbouringSite pa
                     <input                     class="govuk-input govuk-input govuk-input--width-10 govuk-input--error"
                     id="address-postcode" name="postCode" type="text" value="111" aria-describedby="address-postcode-error">
                 </div>
+                <div class="govuk-form-group">
+                    <input class="govuk-input" id="address-operation-type" name="operationType"
+                    type="hidden">
+                </div>
                 <button type="submit" data-prevent-double-click="true" class="govuk-button"
                 data-module="govuk-button">Continue</button>
             </form>
@@ -595,6 +623,10 @@ exports[`neighbouring-sites POST /add should re-render getAllNeighbouringSite pa
                     <p id="address-postcode-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter a valid postcode</p>
                     <input                     class="govuk-input govuk-input govuk-input--width-10 govuk-input--error"
                     id="address-postcode" name="postCode" type="text" aria-describedby="address-postcode-error">
+                </div>
+                <div class="govuk-form-group">
+                    <input class="govuk-input" id="address-operation-type" name="operationType"
+                    type="hidden">
                 </div>
                 <button type="submit" data-prevent-double-click="true" class="govuk-button"
                 data-module="govuk-button">Continue</button>
@@ -651,6 +683,10 @@ exports[`neighbouring-sites POST /add should re-render getAllNeighbouringSite pa
                     <input class="govuk-input govuk-input govuk-input--width-10"
                     id="address-postcode" name="postCode" type="text" value="E1 8RU">
                 </div>
+                <div class="govuk-form-group">
+                    <input class="govuk-input" id="address-operation-type" name="operationType"
+                    type="hidden">
+                </div>
                 <button type="submit" data-prevent-double-click="true" class="govuk-button"
                 data-module="govuk-button">Continue</button>
             </form>
@@ -705,6 +741,10 @@ exports[`neighbouring-sites POST /add should re-render getAllNeighbouringSite pa
                     <label class="govuk-label" for="address-postcode">Postcode</label>
                     <input class="govuk-input govuk-input govuk-input--width-10"
                     id="address-postcode" name="postCode" type="text" value="E1 8RU">
+                </div>
+                <div class="govuk-form-group">
+                    <input class="govuk-input" id="address-operation-type" name="operationType"
+                    type="hidden">
                 </div>
                 <button type="submit" data-prevent-double-click="true" class="govuk-button"
                 data-module="govuk-button">Continue</button>
@@ -762,6 +802,10 @@ exports[`neighbouring-sites POST /change/site/:siteId should re-render changeNei
                     <input class="govuk-input govuk-input govuk-input--width-10"
                     id="address-postcode" name="postCode" type="text" value="E1 8RU">
                 </div>
+                <div class="govuk-form-group">
+                    <input class="govuk-input" id="address-operation-type" name="operationType"
+                    type="hidden">
+                </div>
                 <button type="submit" data-prevent-double-click="true" class="govuk-button"
                 data-module="govuk-button">Continue</button>
             </form>
@@ -818,6 +862,10 @@ exports[`neighbouring-sites POST /change/site/:siteId should re-render changeNei
                     <input class="govuk-input govuk-input govuk-input--width-10"
                     id="address-postcode" name="postCode" type="text" value="E1 8RU">
                 </div>
+                <div class="govuk-form-group">
+                    <input class="govuk-input" id="address-operation-type" name="operationType"
+                    type="hidden">
+                </div>
                 <button type="submit" data-prevent-double-click="true" class="govuk-button"
                 data-module="govuk-button">Continue</button>
             </form>
@@ -872,6 +920,10 @@ exports[`neighbouring-sites POST /change/site/:siteId should re-render changeNei
                     <p id="address-postcode-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter a valid postcode</p>
                     <input                     class="govuk-input govuk-input govuk-input--width-10 govuk-input--error"
                     id="address-postcode" name="postCode" type="text" aria-describedby="address-postcode-error">
+                </div>
+                <div class="govuk-form-group">
+                    <input class="govuk-input" id="address-operation-type" name="operationType"
+                    type="hidden">
                 </div>
                 <button type="submit" data-prevent-double-click="true" class="govuk-button"
                 data-module="govuk-button">Continue</button>
@@ -928,6 +980,10 @@ exports[`neighbouring-sites POST /change/site/:siteId should re-render changeNei
                     <input                     class="govuk-input govuk-input govuk-input--width-10 govuk-input--error"
                     id="address-postcode" name="postCode" type="text" value="111" aria-describedby="address-postcode-error">
                 </div>
+                <div class="govuk-form-group">
+                    <input class="govuk-input" id="address-operation-type" name="operationType"
+                    type="hidden">
+                </div>
                 <button type="submit" data-prevent-double-click="true" class="govuk-button"
                 data-module="govuk-button">Continue</button>
             </form>
@@ -982,6 +1038,10 @@ exports[`neighbouring-sites POST /change/site/:siteId should re-render changeNei
                     <p id="address-postcode-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter a valid postcode</p>
                     <input                     class="govuk-input govuk-input govuk-input--width-10 govuk-input--error"
                     id="address-postcode" name="postCode" type="text" aria-describedby="address-postcode-error">
+                </div>
+                <div class="govuk-form-group">
+                    <input class="govuk-input" id="address-operation-type" name="operationType"
+                    type="hidden">
                 </div>
                 <button type="submit" data-prevent-double-click="true" class="govuk-button"
                 data-module="govuk-button">Continue</button>
@@ -1038,6 +1098,10 @@ exports[`neighbouring-sites POST /change/site/:siteId should re-render changeNei
                     <input class="govuk-input govuk-input govuk-input--width-10"
                     id="address-postcode" name="postCode" type="text" value="E1 8RU">
                 </div>
+                <div class="govuk-form-group">
+                    <input class="govuk-input" id="address-operation-type" name="operationType"
+                    type="hidden">
+                </div>
                 <button type="submit" data-prevent-double-click="true" class="govuk-button"
                 data-module="govuk-button">Continue</button>
             </form>
@@ -1092,6 +1156,10 @@ exports[`neighbouring-sites POST /change/site/:siteId should re-render changeNei
                     <label class="govuk-label" for="address-postcode">Postcode</label>
                     <input class="govuk-input govuk-input govuk-input--width-10"
                     id="address-postcode" name="postCode" type="text" value="E1 8RU">
+                </div>
+                <div class="govuk-form-group">
+                    <input class="govuk-input" id="address-operation-type" name="operationType"
+                    type="hidden">
                 </div>
                 <button type="submit" data-prevent-double-click="true" class="govuk-button"
                 data-module="govuk-button">Continue</button>

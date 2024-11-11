@@ -19,7 +19,7 @@ const entityInfo = {
  * @returns
  */
 export const broadcastDocument = async (documentId, version, updateType) => {
-	if (!config.serviceBusEnabled) {
+	if (!config.serviceBusEnabled && config.NODE_ENV !== 'development') {
 		return false;
 	}
 	const document = await databaseConnector.document.findUnique({

@@ -25,13 +25,13 @@ describe('edit-ip-comment', () => {
 
 	afterEach(teardown);
 
-	const testPageRendering = (review, expectedBackLink) => {
+	const testPageRendering = (review, addEdit, expectedBackLink) => {
 		describe(`GET address (review=${review})`, () => {
 			let response, pageHtml;
 
 			beforeEach(async () => {
 				response = await request.get(
-					`${baseUrl}/2/interested-party-comments/5/edit/address?review=${review}`
+					`${baseUrl}/2/interested-party-comments/5/edit/address?review=${review}&editAddress=${addEdit}`
 				);
 				pageHtml = parseHtml(response.text, { rootElement: 'body' });
 			});
@@ -79,6 +79,42 @@ describe('edit-ip-comment', () => {
 		});
 	};
 
-	testPageRendering('false', '/view');
-	testPageRendering('true', '/review');
+	testPageRendering('false', 'false', '/view');
+	testPageRendering('true', 'false', '/review');
+	testPageRendering('false', 'true', '/view');
+	testPageRendering('true', 'true', '/review');
+
+	describe('GET /edit/check/address', () => {
+		let response, pageHtml;
+
+		beforeEach(async () => {
+			response = await request.get(`${baseUrl}/2/interested-party-comments/5/edit/check/address`);
+			pageHtml = parseHtml(response.text, { rootElement: 'body' });
+		});
+
+		it('should respond with status 200', () => {
+			expect(response.statusCode).toBe(200);
+		});
+
+		it('should match the snapshot', () => {
+			expect(pageHtml.innerHTML).toMatchSnapshot();
+		});
+
+		it('should render the correct heading', () => {
+			const heading = pageHtml.querySelector('h1')?.innerHTML;
+			expect(heading).toBe('Check your answers');
+		});
+
+		it('should render a confirm button', () => {
+			const confirmButton = pageHtml.querySelector('button.govuk-button');
+			expect(confirmButton).not.toBeNull();
+			expect(confirmButton.textContent).toContain('Confirm');
+		});
+
+		it('should render a back link to edit the address', () => {
+			const backLink = pageHtml.querySelector('.govuk-back-link');
+			expect(backLink).not.toBeNull();
+			expect(backLink.getAttribute('href')).toContain('/edit/address');
+		});
+	});
 });
