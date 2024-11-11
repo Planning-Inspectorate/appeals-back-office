@@ -3,7 +3,7 @@ import enGB from 'date-fns/locale/en-GB/index.js';
 import { isValid, isBefore, isAfter, parseISO, add } from 'date-fns';
 import { padNumberWithZero } from '#lib/string-utilities.js';
 import { DEFAULT_TIMEZONE } from '@pins/appeals/constants/dates.js';
-import { APPEAL_CASE_TYPE } from 'pins-data-model';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 
 /**
  * @typedef {import('../appeals/appeals.types.js').DayMonthYearHourMinute} DayMonthYearHourMinute
@@ -245,11 +245,11 @@ export const calculateIncompleteDueDate = (originalDecisionDate, appealType) => 
  */
 const getExtendedDeadlineConfiguration = (appealType) => {
 	switch (appealType) {
-		case APPEAL_CASE_TYPE.D:
+		case APPEAL_TYPE.D:
 			return {
 				weeks: 12
 			};
-		case APPEAL_CASE_TYPE.W:
+		case APPEAL_TYPE.W:
 			return {
 				months: 6
 			};

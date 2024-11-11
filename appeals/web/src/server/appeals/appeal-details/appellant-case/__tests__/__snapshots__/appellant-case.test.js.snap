@@ -3292,7 +3292,7 @@ exports[`appellant-case GET /appellant-case/incomplete/date should render the up
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-day">Day</label>
                         <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                        id="due-date-day" name="due-date-day" type="text" value="9" inputmode="numeric">
+                        id="due-date-day" name="due-date-day" type="text" value="12" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">

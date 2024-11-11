@@ -2,6 +2,7 @@
  * Sample data used for development and testing
  */
 
+import { sub } from 'date-fns';
 import {
 	APPEAL_TYPE_SHORTHAND_FPA,
 	APPEAL_TYPE_SHORTHAND_HAS
@@ -278,7 +279,9 @@ export const appellantCaseList = {
 		hasAdvertisedAppeal: false,
 		originalDevelopmentDescription: 'lorem ipsum',
 		changedDevelopmentDescription: false,
-		isGreenBelt: randomBool()
+		isGreenBelt: randomBool(),
+		applicationDecisionDate: sub(new Date(), { months: 1 }),
+		applicationDate: sub(new Date(), { weeks: 6 })
 	},
 	[APPEAL_TYPE_SHORTHAND_FPA]: {
 		siteAreaSquareMetres: 30.9,
@@ -299,7 +302,9 @@ export const appellantCaseList = {
 		appellantProcedurePreference: 'Hearing',
 		appellantProcedurePreferenceDetails: 'Need for a detailed examination',
 		appellantProcedurePreferenceDuration: 5,
-		inquiryHowManyWitnesses: 1
+		inquiryHowManyWitnesses: 1,
+		applicationDecisionDate: sub(new Date(), { months: 1 }),
+		applicationDate: sub(new Date(), { weeks: 6 })
 	}
 };
 
