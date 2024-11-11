@@ -18,17 +18,22 @@ describe('Change Appeal Type', () => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
-	it('Change appeal type and do not resubmit', { tags: tag.smoke }, () => {
+	it('Change appeal type and resubmit', () => {
+		let futureDate = new Date();
+		futureDate.setDate(futureDate.getDate() + 28);
+
 		cy.createCase().then((caseRef) => {
 			happyPathHelper.assignCaseOfficer(caseRef);
 			caseDetailsPage.clickAccordionByButton('Overview');
 			caseDetailsPage.clickChangeAppealType();
-			caseDetailsPage.selectRadioButtonByValue('(W) Planning appeal');
+			caseDetailsPage.selectRadioButtonByValue('(Q) Planning obligation appeal');
 			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.selectRadioButtonByValue('No');
+			caseDetailsPage.selectRadioButtonByValue('Yes');
 			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.validateBannerMessage('This appeal is awaiting transfer');
-			caseDetailsPage.checkStatusOfCase('Awaiting transfer', 0);
+			dateTimeSection.enterChangeAppealTypeResubmissionDate(futureDate);
+			caseDetailsPage.clickButtonByText('Confirm');
+			caseDetailsPage.clickLinkByText('Go back to case details');
+			caseDetailsPage.checkStatusOfCase('Closed', 0);
 		});
 	});
 });
