@@ -195,12 +195,12 @@ export class CaseDetailsPage extends Page {
 	}
 
 	verifyChangeStartDate() {
-		const date = new Date(); // Note: Months are 0-indexed, so 10 is November
+		const dateToday = new Date(); // Note: Months are 0-indexed, so 10 is November
 		const formattedDate = new Intl.DateTimeFormat('en-GB', {
 			day: 'numeric',
 			month: 'long',
 			year: 'numeric'
-		}).format(date); // Format the date
+		}).format(dateToday); // Format the date
 		cy.get('.appeal-start-date > .govuk-summary-list__value')
 			.invoke('text')
 			.then((dateText) => {
