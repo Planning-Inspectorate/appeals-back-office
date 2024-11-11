@@ -204,3 +204,12 @@ variable "web_app_domain" {
   description = "The domain for the web app"
   type        = string
 }
+
+variable "waf_rate_limits" {
+  description = "Config for Service Bus"
+  type = object({
+    enabled             = bool
+    duration_in_minutes = number
+    threshold           = number
+  })
+}
