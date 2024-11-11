@@ -155,3 +155,9 @@ vnet_config = {
 }
 
 web_app_domain = "back-office-appeals-dev.planninginspectorate.gov.uk"
+
+waf_rate_limits = {
+  enabled             = true
+  duration_in_minutes = 5
+  threshold           = 1500
+}
