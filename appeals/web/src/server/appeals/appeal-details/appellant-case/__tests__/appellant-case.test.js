@@ -1621,7 +1621,7 @@ describe('appellant-case', () => {
 
 		it('should render the update due date page with pre-populated date values if there is no existing due date and applicationDecisionDate is set', async () => {
 			const decisionDate = sub(new Date(), { days: 30 }).toISOString();
-			const expectedDate = calculateIncompleteDueDate(decisionDate, 'W');
+			const expectedDate = calculateIncompleteDueDate(decisionDate, 'Planning appeal');
 			const expectedValues = dateISOStringToDayMonthYearHourMinute(expectedDate?.toISOString());
 
 			nock('http://test/')
@@ -1629,7 +1629,7 @@ describe('appellant-case', () => {
 				.reply(200, {
 					...appealData,
 					appealId: 2,
-					appealType: 'W',
+					appealType: 'Planning appeal',
 					documentationSummary: {
 						...appealData.documentationSummary,
 						appellantCase: {
