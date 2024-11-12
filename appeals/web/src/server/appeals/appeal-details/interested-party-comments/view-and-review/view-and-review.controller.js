@@ -54,14 +54,14 @@ export const renderReviewInterestedPartyComment = render(
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export const renderRejectInterestedPartyComment = async (request, response) => {
+export const renderRejectReason = async (request, response) => {
+	const { currentAppeal, currentComment, apiClient, errors } = request;
+
+	if (!currentAppeal || !currentComment) {
+		return response.status(404).render('app/404.njk');
+	}
+
 	try {
-		const { currentAppeal, currentComment, apiClient, errors } = request;
-
-		if (!currentAppeal || !currentComment) {
-			return response.status(404).render('app/404.njk');
-		}
-
 		const rejectionReasons = await getRepresentationRejectionReasonOptions(apiClient);
 		const mappedRejectionReasons = mapRejectionReasonOptionsToCheckboxItemParameters(
 			currentComment,
@@ -121,7 +121,7 @@ export const postReviewInterestedPartyComment = async (request, response) => {
 
 		if (status === COMMENT_STATUS.INVALID) {
 			return response.redirect(
-				`/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/reject`
+				`/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/reject-reason`
 			);
 		}
 
@@ -136,6 +136,31 @@ export const postReviewInterestedPartyComment = async (request, response) => {
 		logger.error(error);
 		return response.status(500).render('app/500.njk');
 	}
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const postRejectReason = async (request, response) => {
+	const {
+		params: { appealId, commentId },
+		errors,
+		session,
+		body
+	} = request;
+
+	if (errors) {
+		return renderRejectReason(request, response);
+	}
+
+	session.rejectIpComment = { rejectionReason: body.rejectionReason };
+
+	return response
+		.status(200)
+		.redirect(
+			`/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/reject-allow-resubmit`
+		);
 };
 
 /**
