@@ -366,7 +366,7 @@ describe('LPA Questionnaire review', () => {
 			expect(notificationBannerElementHTML).toContain('Column 2 threshold criteria status changed');
 		});
 
-		it('should render an "Environmental statement status changed" success notification banner when meets eia requires environmental statement is changed', async () => {
+		it('should render an "Environmental statement status changed" success notification banner when eia requires environmental statement is changed', async () => {
 			nock('http://test/').get(`/appeals/1`).reply(200, appealData).persist();
 			nock('http://test/')
 				.get(`/appeals/1/lpa-questionnaires/2`)
@@ -388,6 +388,50 @@ describe('LPA Questionnaire review', () => {
 			expect(notificationBannerElementHTML).toMatchSnapshot();
 			expect(notificationBannerElementHTML).toContain('Success');
 			expect(notificationBannerElementHTML).toContain('Environmental statement status changed');
+		});
+
+		it('should render a "Description of development updated" success notification banner when eia development description is changed', async () => {
+			nock('http://test/').get(`/appeals/1`).reply(200, appealData).persist();
+			nock('http://test/')
+				.get(`/appeals/1/lpa-questionnaires/2`)
+				.reply(200, lpaQuestionnaireDataNotValidated)
+				.persist();
+			nock('http://test/').patch(`/appeals/1/lpa-questionnaires/2`).reply(200, {});
+
+			await request.post(`${baseUrl}/eia-development-description/change`).send({
+				eiaDevelopmentDescription: 'agriculture-aquaculture'
+			});
+
+			const response = await request.get(`${baseUrl}`);
+
+			const notificationBannerElementHTML = parseHtml(response.text, {
+				rootElement: notificationBannerElement
+			}).innerHTML;
+			expect(notificationBannerElementHTML).toMatchSnapshot();
+			expect(notificationBannerElementHTML).toContain('Success');
+			expect(notificationBannerElementHTML).toContain('Description of development updated');
+		});
+
+		it('should render a "Development category updated" success notification banner when eia environmental impact schedule is changed', async () => {
+			nock('http://test/').get(`/appeals/1`).reply(200, appealData).persist();
+			nock('http://test/')
+				.get(`/appeals/1/lpa-questionnaires/2`)
+				.reply(200, lpaQuestionnaireDataNotValidated)
+				.persist();
+			nock('http://test/').patch(`/appeals/1/lpa-questionnaires/2`).reply(200, {});
+
+			await request.post(`${baseUrl}/eia-environmental-impact-schedule/change`).send({
+				eiaEnvironmentalImpactSchedule: 'schedule-1'
+			});
+
+			const response = await request.get(`${baseUrl}`);
+
+			const notificationBannerElementHTML = parseHtml(response.text, {
+				rootElement: notificationBannerElement
+			}).innerHTML;
+			expect(notificationBannerElementHTML).toMatchSnapshot();
+			expect(notificationBannerElementHTML).toContain('Success');
+			expect(notificationBannerElementHTML).toContain('Development category updated');
 		});
 	});
 

@@ -321,6 +321,8 @@ interface SingleLPAQuestionnaireResponse {
 	hasExtraConditions?: boolean | null;
 	eiaColumnTwoThreshold?: boolean | null;
 	eiaRequiresEnvironmentalStatement?: boolean | null;
+	eiaEnvironmentalImpactSchedule?: string | null;
+	eiaDevelopmentDescription?: string | null;
 	affectsScheduledMonument?: boolean;
 	hasProtectedSpecies?: boolean;
 	isAonbNationalLandscape?: boolean;
@@ -346,6 +348,8 @@ interface UpdateLPAQuestionnaireRequest {
 	isAffectingNeighbouringSites?: boolean;
 	eiaColumnTwoThreshold?: boolean;
 	eiaRequiresEnvironmentalStatement?: boolean;
+	eiaEnvironmentalImpactSchedule?: string | null;
+	eiaDevelopmentDescription?: string;
 	affectsScheduledMonument?: boolean;
 	hasProtectedSpecies?: boolean;
 	isAonbNationalLandscape?: boolean;

@@ -889,11 +889,13 @@ const generateS78LpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 				}
 			},
 			rows: [
+				mappedLPAQData.lpaq?.eiaEnvironmentalImpactSchedule?.display.summaryListItem,
 				mappedLPAQData.lpaq?.eiaColumnTwoThreshold?.display.summaryListItem,
 				mappedLPAQData.lpaq?.eiaRequiresEnvironmentalStatement?.display.summaryListItem,
 				mappedLPAQData.lpaq?.eiaEnvironmentalStatement?.display.summaryListItem,
 				mappedLPAQData.lpaq?.eiaScreeningOpinion?.display.summaryListItem,
-				mappedLPAQData.lpaq?.eiaScreeningDirection?.display.summaryListItem
+				mappedLPAQData.lpaq?.eiaScreeningDirection?.display.summaryListItem,
+				mappedLPAQData.lpaq?.eiaDevelopmentDescription?.display.summaryListItem
 			].filter(isDefined)
 		}
 	});

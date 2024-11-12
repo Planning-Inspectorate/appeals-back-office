@@ -15,6 +15,8 @@ import { mapTreePreservationPlan } from './submappers/map-tree-preservation-plan
 import { mapIsInfrastructureLevyFormallyAdopted } from './submappers/map-is-infrastructure-levy-formally-adopted.js';
 import { mapInfrastructureLevyAdoptedDate } from './submappers/map-infrastructure-levy-adopted-date.js';
 import { mapInfrastructureLevyExpectedDate } from './submappers/map-infrastructure-levy-expected-date.js';
+import { mapEiaEnvironmentalImpactSchedule } from './submappers/map-eia-environmental-impact-schedule.js';
+import { mapEiaDevelopmentDescription } from './submappers/map-eia-development-description.js';
 
 export const submaps = {
 	...hasSubmaps,
@@ -33,5 +35,7 @@ export const submaps = {
 	isAonbNationalLandscape: mapIsAonbNationalLandscape,
 	isInfrastructureLevyFormallyAdopted: mapIsInfrastructureLevyFormallyAdopted,
 	infrastructureLevyAdoptedDate: mapInfrastructureLevyAdoptedDate,
-	infrastructureLevyExpectedDate: mapInfrastructureLevyExpectedDate
+	infrastructureLevyExpectedDate: mapInfrastructureLevyExpectedDate,
+	eiaEnvironmentalImpactSchedule: mapEiaEnvironmentalImpactSchedule,
+	eiaDevelopmentDescription: mapEiaDevelopmentDescription
 };
