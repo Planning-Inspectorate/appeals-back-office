@@ -68,6 +68,8 @@ const formatLpaQuestionnaire = (appeal, folders = null) => {
 			affectsSheduledMonument: lpaQuestionnaire.affectsScheduledMonument,
 			eiaColumnTwoThreshold: lpaQuestionnaire.eiaColumnTwoThreshold,
 			eiaRequiresEnvironmentalStatement: lpaQuestionnaire.eiaRequiresEnvironmentalStatement,
+			eiaEnvironmentalImpactSchedule: lpaQuestionnaire.eiaEnvironmentalImpactSchedule,
+			eiaDevelopmentDescription: lpaQuestionnaire.eiaDevelopmentDescription,
 			affectsScheduledMonument: lpaQuestionnaire.affectsScheduledMonument,
 			hasProtectedSpecies: lpaQuestionnaire.hasProtectedSpecies,
 			isAonbNationalLandscape: lpaQuestionnaire.isAonbNationalLandscape,

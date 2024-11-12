@@ -30,6 +30,8 @@ import isAonbNationalLandscapeRouter from './is-aonb-national-landscape/is-aonb-
 import isInfrastructureLevyFormallyAdoptedRouter from './is-infrastructure-levy-formally-adopted/is-infrastructure-levy-formally-adopted.router.js';
 import infrastructureLevyAdoptedDateRouter from './infrastructure-levy-adopted-date/infrastructure-levy-adopted-date.router.js';
 import infrastructureLevyExpectedDateRouter from './infrastructure-levy-expected-date/infrastructure-levy-expected-date.router.js';
+import mapEiaEnvironmentalImpactScheduleRouter from './eia-environmental-impact-schedule/eia-environmental-impact-schedule.router.js';
+import mapEiaDevelopmentDescriptionRouter from './eia-development-description/eia-development-description.router.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -158,6 +160,20 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	infrastructureLevyExpectedDateRouter
+);
+
+router.use(
+	'/:lpaQuestionnaireId/eia-environmental-impact-schedule',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	mapEiaEnvironmentalImpactScheduleRouter
+);
+
+router.use(
+	'/:lpaQuestionnaireId/eia-development-description',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	mapEiaDevelopmentDescriptionRouter
 );
 
 router

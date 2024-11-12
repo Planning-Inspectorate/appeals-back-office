@@ -35,7 +35,6 @@ import {
 	calculateIncompleteDueDate
 } from '#lib/dates.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
-import { sub } from 'date-fns';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -1620,7 +1619,7 @@ describe('appellant-case', () => {
 		});
 
 		it('should render the update due date page with pre-populated date values if there is no existing due date and applicationDecisionDate is set', async () => {
-			const decisionDate = sub(new Date(), { days: 30 }).toISOString();
+			const decisionDate = '2024-10-12T11:44:21.173Z';
 			const expectedDate = calculateIncompleteDueDate(decisionDate, 'Planning appeal');
 			const expectedValues = dateISOStringToDayMonthYearHourMinute(expectedDate?.toISOString());
 

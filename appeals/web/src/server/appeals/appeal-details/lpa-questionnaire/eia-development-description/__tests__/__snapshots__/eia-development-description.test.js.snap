@@ -1,0 +1,88 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`eia-development-description GET /change should render the development description change page with "Agriculture aquaculture" radio option checked if eiaDevelopmentDescription is "agriculture-aquaculture" 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change description of development</h1>
+                </div>
+            </div>
+            <form method="POST" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <div class="govuk-radios" data-module="govuk-radios">
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="eiaDevelopmentDescription" name="eiaDevelopmentDescription"
+                            type="radio" value="agriculture-aquaculture" checked>
+                            <label class="govuk-label govuk-radios__label" for="eiaDevelopmentDescription">Agriculture aquaculture</label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="eiaDevelopmentDescription-2" name="eiaDevelopmentDescription"
+                            type="radio" value="change-extensions">
+                            <label class="govuk-label govuk-radios__label" for="eiaDevelopmentDescription-2">Change extensions</label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="eiaDevelopmentDescription-3" name="eiaDevelopmentDescription"
+                            type="radio" value="chemical-industry">
+                            <label class="govuk-label govuk-radios__label" for="eiaDevelopmentDescription-3">Chemical industry</label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="eiaDevelopmentDescription-4" name="eiaDevelopmentDescription"
+                            type="radio" value="energy-industry">
+                            <label class="govuk-label govuk-radios__label" for="eiaDevelopmentDescription-4">Energy industry</label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="eiaDevelopmentDescription-5" name="eiaDevelopmentDescription"
+                            type="radio" value="extractive-industry">
+                            <label class="govuk-label govuk-radios__label" for="eiaDevelopmentDescription-5">Extractive industry</label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="eiaDevelopmentDescription-6" name="eiaDevelopmentDescription"
+                            type="radio" value="food-industry">
+                            <label class="govuk-label govuk-radios__label" for="eiaDevelopmentDescription-6">Food industry</label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="eiaDevelopmentDescription-7" name="eiaDevelopmentDescription"
+                            type="radio" value="infrastructure-projects">
+                            <label class="govuk-label govuk-radios__label" for="eiaDevelopmentDescription-7">Infrastructure projects</label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="eiaDevelopmentDescription-8" name="eiaDevelopmentDescription"
+                            type="radio" value="mineral-industry">
+                            <label class="govuk-label govuk-radios__label" for="eiaDevelopmentDescription-8">Mineral industry</label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="eiaDevelopmentDescription-9" name="eiaDevelopmentDescription"
+                            type="radio" value="other-projects">
+                            <label class="govuk-label govuk-radios__label" for="eiaDevelopmentDescription-9">Other projects</label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="eiaDevelopmentDescription-10" name="eiaDevelopmentDescription"
+                            type="radio" value="production-processing-of-metals">
+                            <label class="govuk-label govuk-radios__label" for="eiaDevelopmentDescription-10">Production processing of metals</label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="eiaDevelopmentDescription-11" name="eiaDevelopmentDescription"
+                            type="radio" value="rubber-industry">
+                            <label class="govuk-label govuk-radios__label" for="eiaDevelopmentDescription-11">Rubber industry</label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="eiaDevelopmentDescription-12" name="eiaDevelopmentDescription"
+                            type="radio" value="textile-industries">
+                            <label class="govuk-label govuk-radios__label" for="eiaDevelopmentDescription-12">Textile industries</label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="eiaDevelopmentDescription-13" name="eiaDevelopmentDescription"
+                            type="radio" value="tourism-leisure">
+                            <label class="govuk-label govuk-radios__label" for="eiaDevelopmentDescription-13">Tourism leisure</label>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;

@@ -32,3 +32,11 @@ export const capitalizeFirstLetter = (str) => {
  * @returns {string}
  */
 export const padNumberWithZero = (num, length = 2) => num.toString().padStart(length, '0');
+
+/**
+ * Convert a snake-case string to the equivalent string with hyphens replaced by spaces
+ *
+ * @param {string} str snake-case input string (eg. `my-test-string`)
+ * @returns {string} space-separated output string (eg. `my test string`)
+ */
+export const snakeCaseToSpaceSeparated = (str) => str.replaceAll('-', ' ');
