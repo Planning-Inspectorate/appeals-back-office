@@ -192,6 +192,37 @@ export const postRejectReason = async (request, response) => {
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
+export const postAllowResubmit = async (request, response) => {
+	const {
+		params: { appealId, commentId },
+		apiClient,
+		errors,
+		session
+	} = request;
+
+	if (errors) {
+		return renderAllowResubmit(request, response);
+	}
+
+	const rejectionReasons = mapRejectionReasonPayload(session.rejectIpComment.rejectionReason);
+
+	try {
+		await updateRejectionReasons(apiClient, appealId, commentId, rejectionReasons);
+		await patchInterestedPartyCommentStatus(apiClient, appealId, commentId, COMMENT_STATUS.INVALID);
+	} catch (error) {
+		logger.error(error);
+		return response.status(500).render('app/500.njk');
+	}
+
+	addNotificationBannerToSession(session, 'interestedPartyCommentsRejectedSuccess', appealId);
+
+	return response.redirect(`/appeals-service/appeal-details/${appealId}/interested-party-comments`);
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
 export const postRejectInterestedPartyComment = async (request, response) => {
 	try {
 		const {

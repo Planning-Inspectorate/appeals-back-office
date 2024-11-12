@@ -49,8 +49,8 @@ export function rejectAllowResubmitPage(appealDetails, comment) {
 		},
 		pageComponents: [
 			yesNoInput({
-				name: 'allow-resubmit',
-				id: 'allow-resubmit'
+				name: 'allowResubmit',
+				id: 'allowResubmit'
 			})
 		]
 	};
