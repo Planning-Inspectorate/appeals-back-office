@@ -7,11 +7,10 @@ import {
 	errorFirstName,
 	errorLastName
 } from '#lib/error-handlers/change-screen-error-handlers.js';
-import { DOCUMENT_STAGE, DOCUMENT_TYPE } from './add-ip-comment.service.js';
+import { DOCUMENT_STAGE, DOCUMENT_TYPE } from '../interested-party-comments.service.js';
 
 /** @typedef {import("../../appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/interested-party-comments/interested-party-comments.types').interestedPartyComment} IpComment */
-
 
 /**
  * @param {Appeal} appealDetails
@@ -133,92 +132,6 @@ export const uploadPage = (appealDetails, errors, providedAddress, folderId) => 
 	errors
 });
 
-/**
- * @param {Appeal} appealDetails
- * @param {import('@pins/express').ValidationErrors | undefined} errors
- * @returns {PageContent}
- * */
-export const redactionStatusPage = (appealDetails, errors) => ({
-	title: 'Select redaction status',
-	backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/upload`,
-	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
-	heading: 'Select redaction status',
-	pageComponents: [
-		{
-			type: 'radios',
-			parameters: {
-				name: 'redactionStatus',
-				idPrefix: 'redaction-status',
-				items: [
-					{
-						value: 'redacted',
-						text: 'Redacted'
-					},
-					{
-						value: 'unredacted',
-						text: 'Unredacted'
-					},
-					{
-						value: 'not-required',
-						text: 'No redaction required'
-					}
-				],
-				errorMessage: errorAddressProvidedRadio(errors)
-			}
-		}
-	]
-});
-
-/**
- * @param {Appeal} appealDetails
- * @param {import('@pins/express').ValidationErrors | undefined} errors
- * @param {{ 'date-day': string, 'date-month': string, 'date-year': string }} date
- * @returns {PageContent}
- * */
-export const dateSubmittedPage = (appealDetails, errors, date) => ({
-	title: 'Enter date submitted',
-	backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/redaction-status`,
-	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
-	heading: 'Enter date submitted',
-	pageComponents: [
-		{
-			type: 'date-input',
-			parameters: {
-				id: 'date',
-				namePrefix: 'date',
-				fieldset: {
-					legend: {
-						text: '',
-						classes: 'govuk-fieldset__legend--m'
-					}
-				},
-				hint: {
-					text: 'For example, 28 10 2024'
-				},
-				items: [
-					{
-						classes: 'govuk-input govuk-date-input__input govuk-input--width-2',
-						name: 'day',
-						value: date['date-day'] || ''
-					},
-					{
-						classes: 'govuk-input govuk-date-input__input govuk-input--width-2',
-						name: 'month',
-						value: date['date-month'] || ''
-					},
-					{
-						classes: 'govuk-input govuk-date-input__input govuk-input--width-4',
-						name: 'year',
-						value: date['date-year'] || ''
-					}
-				],
-				errors
-			}
-		}
-	]
-});
-
-/**
 /**
  * @param {Appeal} appealDetails
  * @param {IpComment} values

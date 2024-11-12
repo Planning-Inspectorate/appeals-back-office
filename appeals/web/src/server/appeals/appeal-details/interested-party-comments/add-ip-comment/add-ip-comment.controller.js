@@ -1,18 +1,23 @@
 import { postDocumentUpload } from '#appeals/appeal-documents/appeal-documents.controller.js';
 import logger from '#lib/logger.js';
 import {
-	checkAddressPage,
-	ipDetailsPage,
-	redactionStatusPage,
-	uploadPage,
-	dateSubmittedPage,
-	checkYourAnswersPage
-} from './add-ip-comment.mapper.js';
+	postDateSubmittedFactory,
+	postRedactionStatusFactory,
+	renderDateSubmittedFactory,
+	renderRedactionStatusFactory
+} from '../common/index.js';
 import { ipAddressPage } from '../interested-party-comments.mapper.js';
-import { getAttachmentsFolder, createIPComment } from './add-ip-comment.service.js';
+import { createIPComment } from './add-ip-comment.service.js';
 import config from '@pins/appeals.web/environment/config.js';
 import { createNewDocument } from '#app/components/file-uploader.component.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import {
+	checkAddressPage,
+	checkYourAnswersPage,
+	ipDetailsPage,
+	uploadPage
+} from './add-ip-comment.mapper.js';
+import { getAttachmentsFolder } from '../interested-party-comments.service.js';
 
 /**
  *
@@ -75,7 +80,6 @@ export async function renderUpload(request, response) {
 	const providedAddress = request.session.addIpComment?.addressProvided === 'yes';
 
 	const { folderId } = await getAttachmentsFolder(request.apiClient, currentAppeal.appealId);
-
 	const pageContent = uploadPage(currentAppeal, errors, providedAddress, folderId);
 
 	return response
@@ -98,33 +102,27 @@ export async function postUpload(request, response) {
 	});
 }
 
-/**
- *
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- */
-export async function renderRedactionStatus(request, response) {
-	const pageContent = redactionStatusPage(request.currentAppeal, request.errors);
+export const renderRedactionStatus = renderRedactionStatusFactory({
+	getBackLinkUrl: (appealDetails) =>
+		`/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/upload`
+});
 
-	return response.status(request.errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
-		errors: request.errors,
-		pageContent
-	});
-}
+export const postRedactionStatus = postRedactionStatusFactory({
+	getRedirectUrl: (appealDetails) =>
+		`/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/date-submitted`,
+	errorHandler: renderRedactionStatus
+});
 
-/**
- *
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- */
-export async function renderDateSubmitted(request, response) {
-	const pageContent = dateSubmittedPage(request.currentAppeal, request.errors, request.body);
+export const renderDateSubmitted = renderDateSubmittedFactory({
+	getBackLinkUrl: (appealDetails) =>
+		`/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/redaction-status`
+});
 
-	return response.status(request.errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
-		errors: request.errors,
-		pageContent
-	});
-}
+export const postDateSubmitted = postDateSubmittedFactory({
+	getRedirectUrl: (appealDetails) =>
+		`/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/check-your-answers`,
+	errorHandler: renderDateSubmitted
+});
 
 /**
  *
@@ -187,43 +185,9 @@ export async function postIpAddress(request, response) {
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export async function postRedactionStatus(request, response) {
-	if (request.errors) {
-		return renderRedactionStatus(request, response);
-	}
-
-	const { currentAppeal } = request;
-
-	return response.redirect(
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/add/date-submitted`
-	);
-}
-
-/**
- *
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- */
-export async function postDateSubmitted(request, response) {
-	if (request.errors) {
-		return renderDateSubmitted(request, response);
-	}
-
-	const { currentAppeal } = request;
-
-	return response.redirect(
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/add/check-your-answers`
-	);
-}
-
-/**
- *
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- */
 export async function postIPComment(request, response) {
 	try {
-		const folderId = request.session.fileUploadInfo?.folderId
+		const folderId = request.session.fileUploadInfo?.folderId;
 
 		const {
 			currentAppeal,
@@ -275,11 +239,10 @@ export async function postIPComment(request, response) {
 			'',
 			'Comment added'
 		);
-		
+
 		return response.redirect(
 			`/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments`
 		);
-
 	} catch (error) {
 		logger.error(
 			error,

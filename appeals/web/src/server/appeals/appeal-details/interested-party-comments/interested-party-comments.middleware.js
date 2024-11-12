@@ -1,4 +1,7 @@
-import { getInterestedPartyComment } from './interested-party-comments.service.js';
+import {
+	getAttachmentsFolder,
+	getInterestedPartyComment
+} from './interested-party-comments.service.js';
 
 /**
  * @type {import('express').RequestHandler}
@@ -15,8 +18,11 @@ export const validateComment = async (req, res, next) => {
 
 		req.currentComment = representation;
 
+		req.currentFolder = await getAttachmentsFolder(req.apiClient, appealId);
+
 		next();
 	} catch (/** @type {any} */ error) {
+		console.log('🚀 ~ validateComment ~ error:', error);
 		switch (error?.response?.statusCode) {
 			case 404:
 				return res.status(404).render('app/404.njk');

@@ -24,6 +24,10 @@ describe('redact', () => {
 			});
 
 		nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
+
+		nock('http://test/')
+			.get('/appeals/2/document-folders?path=representation/representationAttachments')
+			.reply(200, [{ folderId: 1234 }]);
 	});
 
 	afterEach(teardown);
