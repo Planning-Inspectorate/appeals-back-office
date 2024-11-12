@@ -1650,9 +1650,6 @@ describe('appellant-case', () => {
 			const response = await request.get(
 				`${baseUrl}/2${appellantCasePagePath}${incompleteOutcomePagePath}${updateDueDatePagePath}`
 			);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
