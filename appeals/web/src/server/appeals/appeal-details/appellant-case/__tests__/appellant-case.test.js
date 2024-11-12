@@ -2041,45 +2041,6 @@ describe('appellant-case', () => {
 			expect(unprettifiedErrorSummaryHtml).toContain('Date must be a valid date</a>');
 		});
 
-		it('should re-render the update date page with the expected error message if a date that is not a business day was provided', async () => {
-			// post to incomplete reason page controller is necessary to set required data in the session
-			const incompleteReasonPostResponse = await request
-				.post(`${baseUrl}/1${appellantCasePagePath}/${incompleteOutcomePagePath}`)
-				.send({
-					incompleteReason: [incompleteReasonsWithTextIds[0], incompleteReasonsWithTextIds[1]],
-					[`incompleteReason-${incompleteReasonsWithTextIds[0]}`]: [
-						'test reason text 1',
-						'test reason text 2'
-					],
-					[`incompleteReason-${incompleteReasonsWithTextIds[1]}`]: 'test reason text 1'
-				});
-
-			expect(incompleteReasonPostResponse.statusCode).toBe(302);
-
-			const response = await request
-				.post(
-					`${baseUrl}/1${appellantCasePagePath}${incompleteOutcomePagePath}${updateDueDatePagePath}`
-				)
-				.send({
-					'due-date-day': '1',
-					'due-date-month': '12',
-					'due-date-year': '3000'
-				});
-
-			expect(response.statusCode).toBe(200);
-
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-
-			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Date must be a business day</a>');
-		});
-
 		it('should redirect to the check and confirm page if a valid date was provided', async () => {
 			// post to incomplete reason page controller is necessary to set required data in the session
 			const incompleteReasonPostResponse = await request
@@ -2203,7 +2164,7 @@ describe('appellant-case', () => {
 					'due-date-year': '3000'
 				});
 
-			expect(updateDateResponse.statusCode).toBe(200);
+			expect(updateDateResponse.statusCode).toBe(302);
 
 			const response = await request.get(
 				`${baseUrl}/1${appellantCasePagePath}${checkYourAnswersPagePath}`

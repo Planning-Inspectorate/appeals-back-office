@@ -20,7 +20,6 @@ router
 		validators.validateDueDateFields,
 		validators.validateDueDateValid,
 		validators.validateDueDateInFuture,
-		validators.validateDueDateIsBusinessDay,
 		controller.postUpdateDueDate
 	);
 
