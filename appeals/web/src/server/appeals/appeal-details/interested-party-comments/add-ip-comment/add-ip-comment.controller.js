@@ -12,6 +12,7 @@ import { ipAddressPage } from '../interested-party-comments.mapper.js';
 import { getAttachmentsFolder, createIPComment } from './add-ip-comment.service.js';
 import config from '@pins/appeals.web/environment/config.js';
 import { createNewDocument } from '#app/components/file-uploader.component.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 
 /**
  *
@@ -267,6 +268,14 @@ export async function postIPComment(request, response) {
 
 		delete request.session.fileUploadInfo;
 
+		addNotificationBannerToSession(
+			request.session,
+			'changePage',
+			request.currentAppeal.appealId,
+			'',
+			'Comment added'
+		);
+		
 		return response.redirect(
 			`/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments`
 		);

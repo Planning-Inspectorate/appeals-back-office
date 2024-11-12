@@ -117,19 +117,13 @@ export const redactRepresentation = (id, redactedRepresentation, reviewer) =>
 export const createRepresentation = async (appealId, input) => {
 	const { ipDetails, ipAddress } = input;
 
-	const address = await (async () => {
-		if (!ipAddress) {
-			return null;
-		}
-
-		return await addressRepository.createAddress({
+	const address = ipAddress && await addressRepository.createAddress({
 			addressLine1: ipAddress.addressLine1,
 			addressLine2: ipAddress.addressLine2,
 			addressTown: ipAddress.town,
 			addressCounty: ipAddress.county,
 			postcode: ipAddress.postCode
 		});
-	})();
 
 	const represented = await serviceUserRepository.createServiceUser({
 		firstName: ipDetails.firstName,
