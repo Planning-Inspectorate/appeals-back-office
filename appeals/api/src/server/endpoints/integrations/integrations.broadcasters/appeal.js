@@ -15,7 +15,7 @@ import { CASE_RELATIONSHIP_LINKED, CASE_RELATIONSHIP_RELATED } from '#endpoints/
  * @param {string} updateType
  */
 export const broadcastAppeal = async (appealId, updateType = EventType.Update) => {
-	if (!config.serviceBusEnabled) {
+	if (!config.serviceBusEnabled && config.NODE_ENV !== 'development') {
 		return false;
 	}
 

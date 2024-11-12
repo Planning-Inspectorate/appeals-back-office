@@ -52,6 +52,13 @@ export const happyPathHelper = {
 		caseDetailsPage.clickButtonByText('Confirm');
 		caseDetailsPage.clickLinkByText('Go back to case details');
 	},
+
+	changeStartDate(caseRef) {
+		caseDetailsPage.clickChangeStartDate();
+		caseDetailsPage.clickButtonByText('Confirm');
+		caseDetailsPage.clickLinkByText('Go back to case details');
+	},
+
 	validVisitDate() {
 		let visitDate = new Date();
 		visitDate.setMonth(visitDate.getMonth() + 10); // TODO What is a suitable dynamic date to use here?

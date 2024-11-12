@@ -96,7 +96,6 @@ export function generateFPAComponents(
 					mappedAppellantCaseData.applicationDate.display.summaryListItem,
 					mappedAppellantCaseData.applicationForm.display.summaryListItem,
 					mappedAppellantCaseData.developmentDescription.display.summaryListItem,
-					mappedAppellantCaseData.changedDevelopmentDescription.display.summaryListItem,
 					mappedAppellantCaseData.changedDevelopmentDescriptionDocument.display.summaryListItem,
 					mappedAppellantCaseData.designAccessStatement.display.summaryListItem,
 					mappedAppellantCaseData.supportingDocuments.display.summaryListItem,
@@ -140,12 +139,9 @@ export function generateFPAComponents(
 					mappedAppellantCaseData.inquiryNumberOfWitnesses.display.summaryListItem,
 					mappedAppellantCaseData.appealStatement.display.summaryListItem,
 					mappedAppellantCaseData.relatedAppeals.display.summaryListItem,
-					mappedAppellantCaseData.planningObligationInSupport.display.summaryListItem,
 					mappedAppellantCaseData.statusPlanningObligation.display.summaryListItem,
 					mappedAppellantCaseData.planningObligation.display.summaryListItem,
-					mappedAppellantCaseData.appellantCostsApplication.display.summaryListItem,
 					mappedAppellantCaseData.costsDocument.display.summaryListItem,
-					mappedAppellantCaseData.ownershipCertificateSubmitted.display.summaryListItem,
 					mappedAppellantCaseData.ownershipCertificate.display.summaryListItem
 				]
 			}

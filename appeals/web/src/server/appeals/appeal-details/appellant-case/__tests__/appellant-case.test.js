@@ -29,8 +29,13 @@ import {
 import { cloneDeep } from 'lodash-es';
 import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
 import usersService from '#appeals/appeal-users/users-service.js';
-import { dateISOStringToDisplayDate } from '#lib/dates.js';
+import {
+	dateISOStringToDayMonthYearHourMinute,
+	dateISOStringToDisplayDate,
+	calculateIncompleteDueDate
+} from '#lib/dates.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { sub } from 'date-fns';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -124,15 +129,11 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'Supporting documents submitted with statement</dt>'
 			);
-			expect(unprettifiedElement.innerHTML).toContain('Planning obligation in support</dt>');
 			expect(unprettifiedElement.innerHTML).toContain('Planning obligation status</dt>');
 			expect(unprettifiedElement.innerHTML).toContain('Planning obligation</dt>');
 			expect(unprettifiedElement.innerHTML).toContain('Part of agricultural holding</dt>');
 			expect(unprettifiedElement.innerHTML).toContain('Tenant of agricultural holding</dt>');
 			expect(unprettifiedElement.innerHTML).toContain('Other tenants</dt>');
-			expect(unprettifiedElement.innerHTML).toContain(
-				'Ownership certificate or land declaration submitted</dt>'
-			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'Ownership certificate or land declaration</dt>'
 			);
@@ -552,28 +553,6 @@ describe('appellant-case', () => {
 			expect(unprettifiedNotificationBannerHTML).toContain('test reason 3</li>');
 		});
 
-		it('should render a "Planning obligation in support updated" notification banner when the planning obligation response is changed', async () => {
-			const appealId = appealData.appealId.toString();
-			const appellantCaseUrl = `/appeals-service/appeal-details/${appealId}/appellant-case`;
-
-			nock('http://test/')
-				.patch(`/appeals/${appealId}/appellant-cases/${appealData.appellantCaseId}`)
-				.reply(200, {});
-
-			await request.post(`${appellantCaseUrl}/planning-obligation/change`).send({
-				planningObligationRadio: 'yes'
-			});
-
-			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
-			const notificationBannerElementHTML = parseHtml(response.text, {
-				rootElement: notificationBannerElement
-			}).innerHTML;
-
-			expect(notificationBannerElementHTML).toMatchSnapshot();
-			expect(notificationBannerElementHTML).toContain('Success</h3>');
-			expect(notificationBannerElementHTML).toContain('Planning obligation in support updated');
-		});
-
 		it('should render a "Planning obligation status updated" notification banner when the planning obligation status is changed', async () => {
 			const appealId = appealData.appealId.toString();
 			const appellantCaseUrl = `/appeals-service/appeal-details/${appealId}/appellant-case`;
@@ -661,36 +640,6 @@ describe('appellant-case', () => {
 			expect(notificationBannerElementHTML).toContain('Success</h3>');
 			expect(notificationBannerElementHTML).toContain(
 				'Other tenants of agricultural holding updated'
-			);
-		});
-
-		it('should render a "Ownership certificate or land declaration submitted updated" notification banner when the separate ownership certificate or agricultural land declaration submitted response is changed', async () => {
-			const appealId = appealData.appealId.toString();
-			const appellantCaseUrl = `/appeals-service/appeal-details/${appealId}/appellant-case`;
-
-			nock('http://test/')
-				.patch(`/appeals/${appealId}/appellant-cases/${appealData.appellantCaseId}`)
-				.reply(200, {});
-
-			await request.post(`${appellantCaseUrl}/ownership-certificate/change`).send({
-				ownershipCertificateRadio: 'yes'
-			});
-
-			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
-			const notificationBannerElementHTML = parseHtml(response.text, {
-				rootElement: notificationBannerElement
-			}).innerHTML;
-
-			expect(notificationBannerElementHTML).toMatchSnapshot();
-
-			const unprettifiedNotificationBannerElementHTML = parseHtml(response.text, {
-				rootElement: notificationBannerElement,
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(unprettifiedNotificationBannerElementHTML).toContain('Success</h3>');
-			expect(unprettifiedNotificationBannerElementHTML).toContain(
-				'Ownership certificate or land declaration submitted updated'
 			);
 		});
 
@@ -1625,7 +1574,7 @@ describe('appellant-case', () => {
 			nock.cleanAll();
 		});
 
-		it('should render the update due date page without pre-populated date values if there is no existing due date', async () => {
+		it('should render the update due date page without pre-populated date values if there is no existing due date and applicationDecisionDate is not set', async () => {
 			nock('http://test/')
 				.get(`/appeals/2`)
 				.reply(200, {
@@ -1667,6 +1616,54 @@ describe('appellant-case', () => {
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain(
 				'name="due-date-year" type="text" value="'
+			);
+		});
+
+		it('should render the update due date page with pre-populated date values if there is no existing due date and applicationDecisionDate is set', async () => {
+			const decisionDate = sub(new Date(), { days: 30 }).toISOString();
+			const expectedDate = calculateIncompleteDueDate(decisionDate, 'Planning appeal');
+			const expectedValues = dateISOStringToDayMonthYearHourMinute(expectedDate?.toISOString());
+
+			nock('http://test/')
+				.get(`/appeals/2`)
+				.reply(200, {
+					...appealData,
+					appealId: 2,
+					appealType: 'Planning appeal',
+					documentationSummary: {
+						...appealData.documentationSummary,
+						appellantCase: {
+							...appealData.documentationSummary.appellantCase,
+							dueDate: null
+						}
+					}
+				})
+				.persist();
+
+			nock('http://test/')
+				.get('/appeals/2/appellant-cases/0')
+				.reply(200, {
+					...appellantCaseDataNotValidated,
+					applicationDecisionDate: decisionDate
+				});
+
+			const response = await request.get(
+				`${baseUrl}/2${appellantCasePagePath}${incompleteOutcomePagePath}${updateDueDatePagePath}`
+			);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				`name="due-date-day" type="text" value="${expectedValues.day}" inputmode="numeric">`
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				`name="due-date-month" type="text" value="${expectedValues.month}" inputmode="numeric">`
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				`name="due-date-year" type="text" value="${expectedValues.year}" inputmode="numeric">`
 			);
 		});
 
@@ -2296,7 +2293,7 @@ describe('appellant-case', () => {
 	});
 
 	describe('GET /appellant-case/valid/date', () => {
-		it('should render the valid due date page', async () => {
+		it('should render the valid due date page prefilled with the case created date', async () => {
 			const response = await request.get(
 				`${baseUrl}/1${appellantCasePagePath}${validOutcomePagePath}${validDatePagePath}`
 			);
@@ -2311,13 +2308,13 @@ describe('appellant-case', () => {
 				'This is the date all case documentation was received and the appeal was valid.</p>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'name="valid-date-day" type="text" inputmode="numeric">'
+				'name="valid-date-day" type="text" value="21" inputmode="numeric">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'name="valid-date-month" type="text" inputmode="numeric">'
+				'name="valid-date-month" type="text" value="5" inputmode="numeric">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'name="valid-date-year" type="text" inputmode="numeric">'
+				'name="valid-date-year" type="text" value="2023" inputmode="numeric">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'Confirming will inform the relevant parties of the valid date</div>'

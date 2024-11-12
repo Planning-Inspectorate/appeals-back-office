@@ -111,10 +111,10 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "web" {
 
   custom_rule {
     name                           = "RateLimitHttpRequest"
-    enabled                        = true
+    enabled                        = var.waf_rate_limits.enabled
     priority                       = 100
-    rate_limit_duration_in_minutes = 5
-    rate_limit_threshold           = 150
+    rate_limit_duration_in_minutes = var.waf_rate_limits.duration_in_minutes
+    rate_limit_threshold           = var.waf_rate_limits.threshold
     type                           = "RateLimitRule"
     action                         = "Block"
 

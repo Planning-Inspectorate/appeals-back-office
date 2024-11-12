@@ -86,7 +86,9 @@ export function generateCommentSummaryList(
 				items: [
 					{
 						text: hasAddress ? 'Change' : 'Add',
-						href: `/appeals-service/appeal-details/${appealId}/interested-party-comments/${comment.id}/edit/address?review=${isReviewPage}`,
+						href: `/appeals-service/appeal-details/${appealId}/interested-party-comments/${
+							comment.id
+						}/edit/address?review=${isReviewPage}&editAddress=${hasAddress ? 'true' : 'false'}`,
 						visuallyHiddenText: 'address'
 					}
 				]

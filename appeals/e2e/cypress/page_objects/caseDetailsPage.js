@@ -25,7 +25,8 @@ export class CaseDetailsPage extends Page {
 		manageAgreementToChangeDescriptionEvidence: 'manage-agreement-to-change-description-evidence',
 		addCostsDecision: 'add-costs-decision',
 		changeSiteOwnership: 'change-site-ownership',
-		changeLpaqDueDate: 'change-lpa-questionnaire-due-date'
+		changeLpaqDueDate: 'change-lpa-questionnaire-due-date',
+		changeStartDate: 'change-start-case-date'
 	};
 
 	elements = {
@@ -51,7 +52,8 @@ export class CaseDetailsPage extends Page {
 		addCostsDecision: () => cy.getByData(this._cyDataSelectors.addCostsDecision),
 		costDecisionStatus: () => cy.get('.govuk-table__cell appeal-costs-decision-status'),
 		changeSiteOwnership: () => cy.getByData(this._cyDataSelectors.changeSiteOwnership),
-		changeLpaqDueDate: () => cy.getByData(this._cyDataSelectors.changeLpaqDueDate)
+		changeLpaqDueDate: () => cy.getByData(this._cyDataSelectors.changeLpaqDueDate),
+		changeStartDate: () => cy.getByData(this._cyDataSelectors.changeStartDate)
 	};
 	/********************************************************
 	 ************************ Actions ************************
@@ -133,6 +135,10 @@ export class CaseDetailsPage extends Page {
 		this.clickAccordionByText('Timetable');
 		this.elements.changeLpaqDueDate().click();
 	}
+	clickChangeStartDate() {
+		this.clickAccordionByText('Timetable');
+		this.elements.changeStartDate().click();
+	}
 
 	uploadSampleDoc() {
 		cy.get('#upload-file-1').selectFile('cypress/fixtures/sample-file.doc', { force: true });
@@ -186,5 +192,19 @@ export class CaseDetailsPage extends Page {
 					expect(text.trim().toLocaleLowerCase()).to.include(answer.toLocaleLowerCase())
 				);
 		});
+	}
+
+	verifyChangeStartDate() {
+		const dateToday = new Date(); // Note: Months are 0-indexed, so 10 is November
+		const formattedDate = new Intl.DateTimeFormat('en-GB', {
+			day: 'numeric',
+			month: 'long',
+			year: 'numeric'
+		}).format(dateToday); // Format the date
+		cy.get('.appeal-start-date > .govuk-summary-list__value')
+			.invoke('text')
+			.then((dateText) => {
+				expect(dateText.trim()).to.equal(formattedDate);
+			});
 	}
 }

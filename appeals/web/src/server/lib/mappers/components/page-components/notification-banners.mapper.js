@@ -203,8 +203,18 @@ export const notificationBannerDefinitions = {
 	},
 	interestedPartyCommentsRedactionSuccess: {
 		type: 'success',
-		pages: ['viewIpComment'],
+		pages: ['ipComments'],
 		text: 'Comment redacted and accepted'
+	},
+	interestedPartyCommentsAddressAddedSuccess: {
+		type: 'success',
+		pages: ['viewIpComment'],
+		text: 'IP address added'
+	},
+	interestedPartyCommentsAddressUpdatedSuccess: {
+		type: 'success',
+		pages: ['viewIpComment'],
+		text: 'IP address updated'
 	}
 };
 
