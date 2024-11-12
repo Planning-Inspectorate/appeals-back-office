@@ -6,7 +6,7 @@ import {
 	createTownValidator
 } from '#lib/validators/address.validator.js';
 import * as controller from './controller.js';
-import { saveBodyToSession } from './middleware.js';
+import { saveBodyToSession } from '#lib/middleware/save-body-to-session.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -17,7 +17,7 @@ router
 		createAddressLine1Validator(),
 		createTownValidator(),
 		createPostcodeValidator(),
-		saveBodyToSession,
+		saveBodyToSession('editIpComment'),
 		asyncHandler(controller.postEditAddress)
 	);
 

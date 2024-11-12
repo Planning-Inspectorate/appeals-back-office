@@ -133,7 +133,11 @@ export function generateCommentSummaryList(
 					...(comment.attachments?.length > 0
 						? [{ text: 'Manage', href: '#', visuallyHiddenText: 'supporting documents' }]
 						: []),
-					{ text: 'Add', href: '#', visuallyHiddenText: 'supporting documents' }
+					{
+						text: 'Add',
+						href: `/appeals-service/appeal-details/${appealId}/interested-party-comments/${comment.id}/add-document`,
+						visuallyHiddenText: 'supporting documents'
+					}
 				]
 			}
 		},

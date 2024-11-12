@@ -24,6 +24,10 @@ describe('interested-party-comments', () => {
 				appealId: 2,
 				appealStatus: 'statements'
 			});
+
+		nock('http://test/')
+			.get('/appeals/2/document-folders?path=representation/representationAttachments')
+			.reply(200, [{ folderId: 1234 }]);
 	});
 
 	afterEach(teardown);
