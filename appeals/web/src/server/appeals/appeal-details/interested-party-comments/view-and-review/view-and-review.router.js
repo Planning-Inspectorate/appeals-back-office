@@ -25,4 +25,6 @@ router
 		asyncHandler(controller.postRejectReason)
 	);
 
+router.route('/reject-allow-resubmit').get(asyncHandler(controller.renderAllowResubmit));
+
 export default router;

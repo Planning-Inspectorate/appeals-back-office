@@ -333,6 +333,7 @@
  * @property {string} [skipButtonUrl]
  * @property {PageComponent[]} [pageComponents]
  * @property {boolean} [forceRenderSubmitButton]
+ * @property {string} [hint]
  */
 
 /**
