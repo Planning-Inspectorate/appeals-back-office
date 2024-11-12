@@ -5,8 +5,14 @@ import nock from 'nock';
 import supertest from 'supertest';
 import { createTestEnvironment } from '#testing/index.js';
 import { appealData } from '#testing/app/fixtures/referencedata.js';
+import {
+	fileUploadInfo,
+	documentFolderInfo
+} from '#testing/app/fixtures/referencedata.js';
+
 
 const { app, installMockApi, teardown } = createTestEnvironment();
+import supertest from 'supertest';
 const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details';
 
@@ -326,7 +332,7 @@ describe('add-ip-comment', () => {
 
 		it('should redirect on valid today date input', async () => {
 			const response = await request
-				.post(`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted`)
+				.post(`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted/add/check-your-answers`)
 				.send({
 					'date-day': '30',
 					'date-month': '10',
@@ -341,7 +347,7 @@ describe('add-ip-comment', () => {
 
 		it('should redirect on valid yesterday date input', async () => {
 			const response = await request
-				.post(`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted`)
+				.post(`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted/add/check-your-answers`)
 				.send({
 					'date-day': '30',
 					'date-month': '10',
@@ -426,7 +432,7 @@ describe('add-ip-comment', () => {
 		});
 	});
 
-	describe('GET /add/check-your-answers', () => {
+	describe('GET /check-your-answers', () => {
 		const appealId = 2;
 
 		/** @type {*} */
@@ -454,5 +460,76 @@ describe('add-ip-comment', () => {
 		it('should render a summary list', () => {
 			expect(pageHtml.querySelector('dl.govuk-summary-list')).not.toBeNull();
 		});
+	});
+
+	describe('POST /check-your-answers', () => {
+		const appealId = 2;
+
+		beforeEach(() => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+			jest
+				.useFakeTimers({ doNotFake: ['nextTick', 'setImmediate'] })
+		});
+
+		it('should send an API request to create a new document', async () => {
+			const documentFolderInfo = 
+			[
+			  {
+			    "caseId": "2",
+			    "documents": [],
+			    "folderId": 55539,
+			    "path": "representation/representationAttachments"
+			  }
+			]
+
+			nock('http://test/').get(`/appeals/${appealId}/document-folders?path=representation/representationAttachments`).reply(200, documentFolderInfo);
+			nock('http://test/').get(`/appeals/document-redaction-statuses`).reply(200, 1);
+			const addDocumentsResponse = await request
+				.post(`${baseUrl}/2/interested-party-comments/add/upload`)
+				.send({
+					'upload-info': fileUploadInfo
+				});
+				
+			expect(addDocumentsResponse.statusCode).toBe(302);
+		});
+
+		it.only('should createIPComment on successful submission', async () => {
+		const comment = 
+			{
+			  ipDetails: {
+			    firstName: "Kevin",
+			    lastName: "Fowler",
+			    email: "kevin.fowler@email.com"
+			  },
+			  ipAddress: {
+			    addressLine1: "Example line 1",
+			    town: "London",
+			    postCode: "AB1 2CD"
+			  },
+			  attachments: [
+			    "1a14cb3a-35ef-4f93-a597-61010e6b0ad8"
+			  ],
+			  redactionStatus: "unredacted"
+			}
+
+			nock('http://test/').post(`/appeals/${appealId}/comments`, comment).reply(302);
+		
+			return new Promise((resolve) => {
+				request
+					.get(`${baseUrl}/2/interested-party-comments/add`)
+					.expect(302)
+					.expect('Location', `./add/ip-details`)
+					.end(resolve);
+			});
+
+			const postCommentsResponse = await request
+				.post(`${baseUrl}/${appealId}/interested-party-comments/add/check-your-answers`)
+				.send({
+				})
+				.expect(302)
+				.expect('Location', './interested-party-comments');
+	  });
 	});
 });

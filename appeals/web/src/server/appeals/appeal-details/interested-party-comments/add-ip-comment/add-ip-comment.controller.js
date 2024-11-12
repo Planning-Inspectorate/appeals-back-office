@@ -90,7 +90,6 @@ export async function postUpload(request, response) {
 	const { currentAppeal } = request;
 
 	request.currentFolder = await getAttachmentsFolder(request.apiClient, currentAppeal.appealId);
-
 	await postDocumentUpload({
 		request,
 		response,
@@ -222,10 +221,9 @@ export async function postDateSubmitted(request, response) {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export async function postIPComment(request, response) {
-	const documentGuid = request.session.fileUploadInfo?.files[0].GUID
-	const currentFolder = request.session.fileUploadInfo?.folderId
-
 	try {
+		const folderId = request.session.fileUploadInfo?.folderId
+
 		const {
 			currentAppeal,
 			session: { fileUploadInfo }
@@ -246,7 +244,7 @@ export async function postIPComment(request, response) {
 						mimeType: document.mimeType,
 						documentSize: document.size,
 						stage: document.stage,
-						folderId: currentFolder,
+						folderId: folderId,
 						GUID: document.GUID,
 						receivedDate: document.receivedDate,
 						redactionStatusId: document.redactionStatus,
@@ -262,7 +260,7 @@ export async function postIPComment(request, response) {
 
 		await createIPComment(
 			request.session?.addIpComment,
-			documentGuid,
+			request.session.fileUploadInfo?.files[0].GUID,
 			request.apiClient,
 			request.currentAppeal.appealId
 		);

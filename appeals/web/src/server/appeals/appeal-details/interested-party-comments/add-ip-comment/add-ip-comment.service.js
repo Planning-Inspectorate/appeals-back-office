@@ -7,6 +7,7 @@ export const DOCUMENT_TYPE = 'representationAttachments';
  * @returns {Promise<import('@pins/appeals.api').Appeals.FolderInfo>}
  * */
 export const getAttachmentsFolder = async (apiClient, appealId) => {
+
 	const folders = await apiClient
 		.get(`appeals/${appealId}/document-folders?path=${DOCUMENT_STAGE}/${DOCUMENT_TYPE}`)
 		.json();
@@ -42,7 +43,7 @@ export const createIPComment = async (comment, document, apiClient, appealId) =>
 		redactionStatus: comment.redactionStatus
 	};
 
-	const IPcomment = await apiClient.post(`appeals/${appealId}/reps/comments`, { json }).json();
+	const ipComment = await apiClient.post(`appeals/${appealId}/reps/comments`, { json }).json();
 
-	return IPcomment;
+	return ipComment;
 };
