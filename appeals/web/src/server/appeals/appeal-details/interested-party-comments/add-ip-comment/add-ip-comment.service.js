@@ -1,5 +1,6 @@
 export const DOCUMENT_STAGE = 'representation';
 export const DOCUMENT_TYPE = 'representationAttachments';
+/** @typedef {import('#appeals/appeal-details/interested-party-comments/interested-party-comments.types').interestedPartyComment} IpComment */
 
 /**
  * @param {import('got').Got} apiClient
@@ -7,7 +8,6 @@ export const DOCUMENT_TYPE = 'representationAttachments';
  * @returns {Promise<import('@pins/appeals.api').Appeals.FolderInfo>}
  * */
 export const getAttachmentsFolder = async (apiClient, appealId) => {
-
 	const folders = await apiClient
 		.get(`appeals/${appealId}/document-folders?path=${DOCUMENT_STAGE}/${DOCUMENT_TYPE}`)
 		.json();
@@ -19,7 +19,7 @@ export const getAttachmentsFolder = async (apiClient, appealId) => {
 };
 
 /**
- * @param {{ firstName: string, lastName: string, emailAddress: string, addressLine1: string, addressLine2: string, town: string, county: string, postCode: string, redactionStatus: boolean, 'date-day': string, 'date-month': string, 'date-year': string }} comment
+ * @param { IpComment } comment
  * @param {import('got').Got} apiClient
  * @param {string} document
  * @param {number} appealId
