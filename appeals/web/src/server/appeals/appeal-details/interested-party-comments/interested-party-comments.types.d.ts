@@ -57,3 +57,20 @@ export interface RejectionReasons {
 	rejectionReason?: string | string[];
 	[key: string]: string | string[] | undefined;
 }
+
+export interface interestedPartyComment {
+	 firstName: string, 
+	 lastName: string, 
+	 addressProvided: string,
+	 emailAddress: string, 
+	 addressLine1: string, 
+	 addressLine2: string, 
+	 town: string, 
+	 county: string, 
+	 postCode: string, 
+	 redactionStatus: boolean, 
+	 'date-day': string, 
+	 'date-month': string, 
+	 'date-year': string
+}
+
