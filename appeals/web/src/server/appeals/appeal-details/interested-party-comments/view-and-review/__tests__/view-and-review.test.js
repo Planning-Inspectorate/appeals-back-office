@@ -130,7 +130,7 @@ describe('interested-party-comments', () => {
 		});
 	});
 
-	describe('GET /reject-comment', () => {
+	describe('GET /reject-reason', () => {
 		beforeEach(() => {
 			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
 			nock('http://test')
@@ -139,7 +139,7 @@ describe('interested-party-comments', () => {
 		});
 		afterEach(teardown);
 		it('should render reject comment page', async () => {
-			const response = await request.get(`${baseUrl}/2/interested-party-comments/5/reject`);
+			const response = await request.get(`${baseUrl}/2/interested-party-comments/5/reject-reason`);
 
 			expect(response.statusCode).toBe(200);
 
@@ -147,6 +147,27 @@ describe('interested-party-comments', () => {
 			const elementInnerHtml = dom.innerHTML;
 			expect(elementInnerHtml).toMatchSnapshot();
 			expect(elementInnerHtml).toContain('Why are you rejecting the comment?</h1>');
+		});
+	});
+
+	describe('GET /reject-allow-resubmit', () => {
+		beforeEach(() => {
+			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
+		});
+
+		afterEach(teardown);
+
+		it('should render allow resubmit page', async () => {
+			const response = await request.get(
+				`${baseUrl}/2/interested-party-comments/5/reject-allow-resubmit`
+			);
+
+			expect(response.statusCode).toBe(200);
+
+			const dom = parseHtml(response.text);
+			const elementInnerHtml = dom.innerHTML;
+
+			expect(elementInnerHtml).toMatchSnapshot();
 		});
 	});
 });
