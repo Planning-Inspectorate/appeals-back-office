@@ -12,7 +12,6 @@ import {
 
 
 const { app, installMockApi, teardown } = createTestEnvironment();
-import supertest from 'supertest';
 const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details';
 
