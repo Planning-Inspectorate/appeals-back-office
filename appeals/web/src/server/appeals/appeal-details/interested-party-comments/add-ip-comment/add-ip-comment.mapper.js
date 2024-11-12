@@ -10,7 +10,7 @@ import {
 import { DOCUMENT_STAGE, DOCUMENT_TYPE } from './add-ip-comment.service.js';
 
 /** @typedef {import("../../appeal-details.types.js").WebAppeal} Appeal */
-/** @typedef {import('#appeals/appeal-details/interested-party-comments/interested-party-comments.types').interestedPartyComment} ipComment */
+/** @typedef {import('#appeals/appeal-details/interested-party-comments/interested-party-comments.types').interestedPartyComment} IpComment */
 
 
 /**
@@ -221,7 +221,7 @@ export const dateSubmittedPage = (appealDetails, errors, date) => ({
 /**
 /**
  * @param {Appeal} appealDetails
- * @param {ipComment} values
+ * @param {IpComment} values
  * @param {{ files: [{ name:string }] }} fileUpload
  * @param {import('@pins/express').ValidationErrors | undefined} errors
  * @returns {PageContent}

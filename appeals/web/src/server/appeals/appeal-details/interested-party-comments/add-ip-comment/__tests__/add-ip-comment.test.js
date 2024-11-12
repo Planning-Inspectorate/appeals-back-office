@@ -494,7 +494,7 @@ describe('add-ip-comment', () => {
 			expect(addDocumentsResponse.statusCode).toBe(302);
 		});
 
-		it.only('should createIPComment on successful submission', async () => {
+		it('should createIPComment on successful submission', async () => {
 		const comment = 
 			{
 			  ipDetails: {
