@@ -17,12 +17,12 @@ router
 	.post(validateReviewComment, asyncHandler(controller.postReviewInterestedPartyComment));
 
 router
-	.route('/reject')
-	.get(asyncHandler(controller.renderRejectInterestedPartyComment))
+	.route('/reject-reason')
+	.get(asyncHandler(controller.renderRejectReason))
 	.post(
 		validateRejectReason,
 		validateRejectionReasonTextItems,
-		asyncHandler(controller.postRejectInterestedPartyComment)
+		asyncHandler(controller.postRejectReason)
 	);
 
 export default router;
