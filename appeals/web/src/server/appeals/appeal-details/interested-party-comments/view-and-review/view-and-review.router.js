@@ -2,6 +2,7 @@ import { Router as createRouter } from 'express';
 import { asyncHandler } from '@pins/express';
 import * as controller from './view-and-review.controller.js';
 import {
+	validateAllowResubmit,
 	validateRejectionReasonTextItems,
 	validateRejectReason,
 	validateReviewComment
@@ -25,6 +26,9 @@ router
 		asyncHandler(controller.postRejectReason)
 	);
 
-router.route('/reject-allow-resubmit').get(asyncHandler(controller.renderAllowResubmit));
+router
+	.route('/reject-allow-resubmit')
+	.get(asyncHandler(controller.renderAllowResubmit))
+	.post(validateAllowResubmit, asyncHandler(controller.postAllowResubmit));
 
 export default router;
