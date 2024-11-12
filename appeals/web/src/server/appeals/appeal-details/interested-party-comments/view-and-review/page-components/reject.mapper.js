@@ -1,4 +1,7 @@
+import { addBusinessDays } from 'date-fns';
+import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
+import { yesNoInput } from '#lib/mappers/components/page-components/radio.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import("#appeals/appeal-details/interested-party-comments/interested-party-comments.types.js").Representation} Representation */
@@ -20,6 +23,36 @@ export function rejectInterestedPartyCommentPage(appealDetails, comment) {
 		preHeading: `Appeal ${shortReference}`,
 		hint: 'Select all that apply.',
 		headingClasses: 'govuk-heading-l'
+	};
+
+	return pageContent;
+}
+
+/**
+ * @param {Appeal} appealDetails
+ * @param {Representation} comment
+ * @returns {PageContent}
+ * */
+export function rejectAllowResubmitPage(appealDetails, comment) {
+	const shortReference = appealShortReference(appealDetails.appealReference);
+	const deadline = dateISOStringToDisplayDate(addBusinessDays(new Date(), 7).toISOString());
+
+	/** @type {PageContent} */
+	const pageContent = {
+		heading: 'Do you want to allow the interested party to resubmit a comment?',
+		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/reject-reason`,
+		preHeading: `Appeal ${shortReference}`,
+		headingClasses: 'govuk-heading-l',
+		hint: `The interested party can resubmit their comment by ${deadline}.`,
+		submitButtonProperties: {
+			text: 'Continue'
+		},
+		pageComponents: [
+			yesNoInput({
+				name: 'allow-resubmit',
+				id: 'allow-resubmit'
+			})
+		]
 	};
 
 	return pageContent;

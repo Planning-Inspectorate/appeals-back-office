@@ -8,7 +8,8 @@ import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 import {
 	rejectInterestedPartyCommentPage,
 	reviewInterestedPartyCommentPage,
-	viewInterestedPartyCommentPage
+	viewInterestedPartyCommentPage,
+	rejectAllowResubmitPage
 } from './view-and-review.mapper.js';
 import {
 	getRepresentationRejectionReasonOptions,
@@ -74,6 +75,30 @@ export const renderRejectReason = async (request, response) => {
 			errors,
 			pageContent,
 			rejectionReasons: mappedRejectionReasons
+		});
+	} catch (error) {
+		logger.error(error);
+		return response.status(500).render('app/500.njk');
+	}
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * */
+export const renderAllowResubmit = async (request, response) => {
+	const { currentAppeal, currentComment, errors } = request;
+
+	if (!currentAppeal || !currentComment) {
+		return response.status(404).render('app/404.njk');
+	}
+
+	try {
+		const pageContent = rejectAllowResubmitPage(currentAppeal, currentComment);
+
+		return response.status(200).render('patterns/check-and-confirm-page.pattern.njk', {
+			errors,
+			pageContent
 		});
 	} catch (error) {
 		logger.error(error);
