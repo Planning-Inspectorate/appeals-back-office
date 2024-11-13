@@ -17,3 +17,17 @@ data "azurerm_monitor_action_group" "common" {
   resource_group_name = var.common_config.resource_group_name
   name                = each.value
 }
+
+data "azurerm_cdn_frontdoor_profile" "web" {
+  name                = var.tooling_config.frontdoor_name
+  resource_group_name = var.tooling_config.frontdoor_rg
+  provider            = azurerm.tooling
+
+}
+
+data "azurerm_cdn_frontdoor_endpoint" "web" {
+  name                = var.tooling_config.frontdoor_ep_name
+  resource_group_name = var.tooling_config.frontdoor_rg
+  profile_name        = var.tooling_config.frontdoor_name
+  provider            = azurerm.tooling
+}

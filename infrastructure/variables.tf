@@ -191,6 +191,9 @@ variable "tooling_config" {
     network_name            = string
     network_rg              = string
     subscription_id         = string
+    frontdoor_name          = string
+    frontdoor_rg            = string
+    frontdoor_ep_name       = string
   })
 }
 
