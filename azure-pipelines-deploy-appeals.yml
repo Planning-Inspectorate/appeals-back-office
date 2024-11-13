@@ -23,6 +23,10 @@ parameters:
     displayName: Run Database Migration
     type: boolean
     default: true
+  - name: slotDeployment
+    displayName: Deploy apps to slot
+    type: boolean
+    default: false
 
 pr: none
 trigger: none
@@ -61,7 +65,7 @@ extends:
       - name: Deploy Appeals
         deploymentJobs:
           - name: Deploy Appeals API
-            condition: eq(${{ parameters.deployAppealsAPI }}, 'true')
+            condition: eq(${{ parameters.deployAppealsAPI }}, true)
             steps:
               - checkout: self
               - ${{ if eq(parameters.schemaMigration, true) }}:
@@ -96,13 +100,21 @@ extends:
                   appResourceGroup: $(resourceGroup)
                   azurecrName: $(azurecrName)
                   repository: back-office/back-office-appeals-api
+                  ${{ if eq(parameters.slotDeployment, true) }}:
+                    appSlotName: staging
               - script: |
-                  echo "Verifying API Version (using git hash $(resources.pipeline.build.sourceCommit))..."
-                  bash ./packages/scripts/verify_commit_hash.sh "API" "https://pins-app-appeals-bo-api-$(ENVIRONMENT).azurewebsites.net/health" "$(resources.pipeline.build.sourceCommit)" 3
+                  if [[ ${{ parameters.slotDeployment }} == "True" ]]; then
+                    echo "Verifying API Version on slot (using git hash $(resources.pipeline.build.sourceCommit))..."
+                    bash ./packages/scripts/verify_commit_hash.sh "API" "https://pins-app-appeals-bo-api-$(ENVIRONMENT)-staging.azurewebsites.net/health" "$(resources.pipeline.build.sourceCommit)" 3
+                  else
+                    echo "Verifying API Version (using git hash $(resources.pipeline.build.sourceCommit))..."
+                    bash ./packages/scripts/verify_commit_hash.sh "API" "https://pins-app-appeals-bo-api-$(ENVIRONMENT).azurewebsites.net/health" "$(resources.pipeline.build.sourceCommit)" 3
+                  fi
                 displayName: API Verify Version
                 failOnStderr: true
+                continueOnError: false
           - name: Deploy Appeals Web
-            condition: eq(${{ parameters.deployAppealsWeb }}, 'true')
+            condition: eq(${{ parameters.deployAppealsWeb }}, true)
             steps:
               - checkout: self
               - template: ../steps/azure_web_app_deploy.yml
@@ -111,11 +123,19 @@ extends:
                   appResourceGroup: $(resourceGroup)
                   azurecrName: $(azurecrName)
                   repository: back-office/appeals-web
+                  ${{ if eq(parameters.slotDeployment, true) }}:
+                    appSlotName: staging
               - script: |
-                  echo "Verifying Web Version (using git hash $(resources.pipeline.build.sourceCommit))..."
-                  bash ./packages/scripts/verify_commit_hash.sh "Web" "https://pins-app-appeals-bo-web-$(ENVIRONMENT).azurewebsites.net/health" "$(resources.pipeline.build.sourceCommit)" 3
+                  if [[ ${{ parameters.slotDeployment }} == "True" ]]; then
+                    echo "Verifying Web Version on slot (using git hash $(resources.pipeline.build.sourceCommit))..."
+                    bash ./packages/scripts/verify_commit_hash.sh "Web" "https://pins-app-appeals-bo-web-$(ENVIRONMENT)-staging.azurewebsites.net/health" "$(resources.pipeline.build.sourceCommit)" 3
+                  else
+                    echo "Verifying Web Version (using git hash $(resources.pipeline.build.sourceCommit))..."
+                    bash ./packages/scripts/verify_commit_hash.sh "API" "https://pins-app-appeals-bo-web-$(ENVIRONMENT).azurewebsites.net/health" "$(resources.pipeline.build.sourceCommit)" 3
+                  fi
                 displayName: Web Verify Version
                 failOnStderr: true
+                continueOnError: false
           - name: Deploy Function - Appeals Casedata Import
             condition: eq(${{ parameters.deployFunctionAppealsCasedataImport }}, 'true')
             steps:
@@ -149,5 +169,29 @@ extends:
                   appName: pins-func-appeals-bo-doc-processing-$(ENVIRONMENT)
                   resourceGroup: $(resourceGroup)
                   workingDirectory: $(Pipeline.Workspace)/build/function-appeals-document-processing
+          - name: Release Appeals API
+            displayName: Slot swap on API Release
+            condition: and(succeeded(), eq(${{ parameters.slotDeployment }}, true), eq(${{ parameters.deployAppealsAPI }}, true))
+            dependsOn:
+              - Deploy Appeals API
+            steps:
+              - template: ../steps/azure_web_app_slot_swap.yml
+                parameters:
+                  appName: pins-app-appeals-bo-api-$(ENVIRONMENT)
+                  appResourceGroup: $(resourceGroup)
+                  appStagingSlotName: staging
+                  appTargetSlotName: production
+          - name: Release Appeals Web
+            displayName: Slot swap on Web Release
+            condition: and(succeeded(), eq(${{ parameters.slotDeployment }}, true), eq(${{ parameters.deployAppealsWeb }}, true))
+            dependsOn:
+              - Deploy Appeals Web
+            steps:
+              - template: ../steps/azure_web_app_slot_swap.yml
+                parameters:
+                  appName: pins-app-appeals-bo-web-$(ENVIRONMENT)
+                  appResourceGroup: $(resourceGroup)
+                  appStagingSlotName: staging
+                  appTargetSlotName: production
     globalVariables:
       - template: azure-pipelines-variables.yml@self
