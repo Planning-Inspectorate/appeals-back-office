@@ -31,7 +31,10 @@ export const renderSelectReason = async (request, response) => {
 		const rejectionReasons = await getRepresentationRejectionReasonOptions(apiClient);
 		const mappedRejectionReasons = mapRejectionReasonOptionsToCheckboxItemParameters(
 			currentComment,
-			rejectionReasons
+			rejectionReasons,
+      errors
+        ? { optionId: parseInt(errors[''].value.rejectionReason), message: errors[''].msg }
+        : undefined
 		);
 
 		const pageContent = rejectInterestedPartyCommentPage(currentAppeal, currentComment);
