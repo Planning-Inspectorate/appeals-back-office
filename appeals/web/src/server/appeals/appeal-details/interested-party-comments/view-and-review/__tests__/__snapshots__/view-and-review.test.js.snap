@@ -1,37 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`interested-party-comments GET /reject-allow-resubmit should render allow resubmit page 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l">Do you want to allow the interested party to resubmit a comment?</h1>
-                        <div                         class="govuk-hint">The interested party can resubmit their comment by 22 November 2024.</div>
-            </div>
-        </div>
-        <form method="post" novalidate="novalidate">
-            <div class="govuk-form-group">
-                <div class="govuk-radios" data-module="govuk-radios">
-                    <div class="govuk-radios__item">
-                        <input class="govuk-radios__input" id="allowResubmit" name="allowResubmit"
-                        type="radio" value="yes">
-                        <label class="govuk-label govuk-radios__label" for="allowResubmit">Yes</label>
-                    </div>
-                    <div class="govuk-radios__item">
-                        <input class="govuk-radios__input" id="allowResubmit-2" name="allowResubmit"
-                        type="radio" value="no">
-                        <label class="govuk-label govuk-radios__label" for="allowResubmit-2">No</label>
-                    </div>
-                </div>
-            </div>
-            <button class="govuk-button" data-module="govuk-button">Continue</button>
-        </form>
-    </div>
-    </div>
-</main>"
-`;
-
 exports[`interested-party-comments GET /reject-reason should render reject comment page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
