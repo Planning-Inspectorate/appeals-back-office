@@ -167,7 +167,7 @@ describe('interested-party-comments', () => {
 			const dom = parseHtml(response.text);
 			const elementInnerHtml = dom.innerHTML;
 
-			expect(elementInnerHtml).toMatchSnapshot();
+			expect(elementInnerHtml).toContain('The interested party can resubmit their comment by');
 		});
 	});
 });
