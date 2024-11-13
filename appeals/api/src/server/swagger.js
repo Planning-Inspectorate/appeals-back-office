@@ -91,6 +91,10 @@ export const spec = {
 		ValidateDate: {
 			inputDate: '2024-11-10T00:00:00.000Z'
 		},
+		AddBusinessDays: {
+			inputDate: '2024-08-17',
+			numDays: 7
+		},
 		AppellantCaseData: {
 			...validAppellantCase
 		},

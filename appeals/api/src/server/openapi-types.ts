@@ -128,9 +128,16 @@ export interface ValidateDate {
 	inputDate?: string;
 }
 
+export interface AddBusinessDays {
+	/** @example "2024-08-17" */
+	inputDate?: string;
+	/** @example 7 */
+	numDays?: number;
+}
+
 export interface AppellantCaseData {
 	casedata?: {
-		/** @example "19c28ae5-f73c-47f1-844b-6221b18e7dc0" */
+		/** @example "5d75b6f6-f7dc-4b91-b307-a9c4d7d4bae4" */
 		submissionId?: string;
 		/** @example true */
 		advertisedAppeal?: boolean;

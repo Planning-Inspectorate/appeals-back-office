@@ -139,6 +139,26 @@ const recalculateDateIfNotBusinessDay = async (date) => {
 };
 
 /**
+ * @param {string} startDate
+ * @param {number} numDays
+ * @returns {Promise<Date>}
+ * */
+const addDays = async (startDate, numDays) => {
+	const processedDate = setTimeInTimeZone(startDate, DAYTIME_HOUR, DAYTIME_MINUTE);
+
+	const calculatedDate = addBusinessDays(processedDate, numDays);
+
+	const bankHolidays = await fetchBankHolidaysForDivision();
+	const calculatedDateWithoutBankHolidays = addBankHolidayDays(
+		processedDate,
+		calculatedDate,
+		bankHolidays
+	);
+
+	return setTimeInTimeZone(calculatedDateWithoutBankHolidays, 0, 0);
+};
+
+/**
  *
  * @param {string | Date} date
  * @param {Number} hours
@@ -187,4 +207,4 @@ const calculateTimetable = async (appealType, startedAt) => {
 	}
 };
 
-export { calculateTimetable, recalculateDateIfNotBusinessDay, setTimeInTimeZone };
+export { calculateTimetable, recalculateDateIfNotBusinessDay, setTimeInTimeZone, addDays };

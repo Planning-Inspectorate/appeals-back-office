@@ -472,6 +472,36 @@
 				}
 			}
 		},
+		"/appeals/add-business-days": {
+			"post": {
+				"tags": ["Utilities"],
+				"description": "Adds specified number of business days to the given date",
+				"parameters": [],
+				"responses": {
+					"400": {
+						"error": "Must be a business day",
+						"description": "Bad Request"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Date to validate",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/AddBusinessDays"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/AddBusinessDays"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/appeals/appellant-case-incomplete-reasons": {
 			"get": {
 				"tags": ["Appellant Case Incomplete Reasons"],
@@ -4545,6 +4575,22 @@
 					"name": "ValidateDate"
 				}
 			},
+			"AddBusinessDays": {
+				"type": "object",
+				"properties": {
+					"inputDate": {
+						"type": "string",
+						"example": "2024-08-17"
+					},
+					"numDays": {
+						"type": "number",
+						"example": 7
+					}
+				},
+				"xml": {
+					"name": "AddBusinessDays"
+				}
+			},
 			"AppellantCaseData": {
 				"type": "object",
 				"properties": {
@@ -4553,7 +4599,7 @@
 						"properties": {
 							"submissionId": {
 								"type": "string",
-								"example": "19c28ae5-f73c-47f1-844b-6221b18e7dc0"
+								"example": "5d75b6f6-f7dc-4b91-b307-a9c4d7d4bae4"
 							},
 							"advertisedAppeal": {
 								"type": "boolean",
