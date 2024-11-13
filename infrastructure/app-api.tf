@@ -1,6 +1,6 @@
 module "app_api" {
   #checkov:skip=CKV_TF_1: Use of commit hash are not required for our Terraform modules
-  source = "github.com/Planning-Inspectorate/infrastructure-modules.git//modules/node-app-service?ref=1.28"
+  source = "github.com/Planning-Inspectorate/infrastructure-modules.git//modules/node-app-service?ref=1.29"
 
   resource_group_name = azurerm_resource_group.primary.name
   location            = module.primary_region.location
@@ -115,4 +115,18 @@ resource "azurerm_role_assignment" "app_api_service_bus" {
   scope                = azurerm_servicebus_namespace.main.id
   role_definition_name = "Azure Service Bus Data Sender"
   principal_id         = module.app_api.principal_id
+}
+
+## RBAC for secrets (staging slot)
+resource "azurerm_role_assignment" "app_api_staging_secrets_user" {
+  scope                = azurerm_key_vault.main.id
+  role_definition_name = "Key Vault Secrets User"
+  principal_id         = module.app_api.staging_principal_id
+}
+
+## RBAC for service bus (staging slot)
+resource "azurerm_role_assignment" "app_api_staging_service_bus" {
+  scope                = azurerm_servicebus_namespace.main.id
+  role_definition_name = "Azure Service Bus Data Sender"
+  principal_id         = module.app_api.staging_principal_id
 }
