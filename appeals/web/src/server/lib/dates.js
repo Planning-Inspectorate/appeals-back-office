@@ -239,6 +239,22 @@ export const calculateIncompleteDueDate = (originalDecisionDate, appealType) => 
 };
 
 /**
+ * @param {import('got').Got} apiClient
+ * @param {Date} startDate
+ * @param {number} numDays
+ * @returns {Promise<Date>}
+ * */
+export const addBusinessDays = async (apiClient, startDate, numDays) => {
+	const date = await apiClient
+		.post('appeals/add-business-days', {
+			json: { inputDate: startDate.toISOString(), numDays }
+		})
+		.json();
+
+	return new Date(date);
+};
+
+/**
  *
  * @param {string} appealType
  * @returns

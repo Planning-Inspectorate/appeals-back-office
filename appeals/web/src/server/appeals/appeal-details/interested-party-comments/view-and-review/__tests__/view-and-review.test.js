@@ -153,6 +153,9 @@ describe('interested-party-comments', () => {
 	describe('GET /reject-allow-resubmit', () => {
 		beforeEach(() => {
 			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
+			nock('http://test/')
+				.post('/appeals/add-business-days')
+				.reply(200, JSON.stringify('2024-11-13T00:00:00.000Z'));
 		});
 
 		afterEach(teardown);

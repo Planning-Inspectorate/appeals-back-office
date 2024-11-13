@@ -1,5 +1,4 @@
-import { addBusinessDays } from 'date-fns';
-import { dateISOStringToDisplayDate } from '#lib/dates.js';
+import { dateISOStringToDisplayDate, addBusinessDays } from '#lib/dates.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { yesNoInput } from '#lib/mappers/components/page-components/radio.js';
 
@@ -29,13 +28,15 @@ export function rejectInterestedPartyCommentPage(appealDetails, comment) {
 }
 
 /**
+ * @param {import('got').Got} apiClient
  * @param {Appeal} appealDetails
  * @param {Representation} comment
- * @returns {PageContent}
+ * @returns {Promise<PageContent>}
  * */
-export function rejectAllowResubmitPage(appealDetails, comment) {
+export async function rejectAllowResubmitPage(apiClient, appealDetails, comment) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
-	const deadline = dateISOStringToDisplayDate(addBusinessDays(new Date(), 7).toISOString());
+	const deadline = await addBusinessDays(apiClient, new Date(), 7);
+	const deadlineString = dateISOStringToDisplayDate(deadline.toISOString());
 
 	/** @type {PageContent} */
 	const pageContent = {
@@ -43,7 +44,7 @@ export function rejectAllowResubmitPage(appealDetails, comment) {
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/reject-reason`,
 		preHeading: `Appeal ${shortReference}`,
 		headingClasses: 'govuk-heading-l',
-		hint: `The interested party can resubmit their comment by ${deadline}.`,
+		hint: `The interested party can resubmit their comment by ${deadlineString}.`,
 		submitButtonProperties: {
 			text: 'Continue'
 		},
