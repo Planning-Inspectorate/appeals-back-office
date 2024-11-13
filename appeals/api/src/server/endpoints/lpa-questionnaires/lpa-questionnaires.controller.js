@@ -106,20 +106,19 @@ const updateLPAQuestionnaireById = async (req, res) => {
 			  });
 
 		const updatedProperties = Object.keys(body).filter((key) => body[key] !== undefined);
-		let auditTrailDetail = CONSTANTS.AUDIT_TRAIL_LPAQ_UPDATED;
 
-		if (updatedProperties.length === 1) {
-			const updatedProperty = updatedProperties[0];
-			const constantKey = `AUDIT_TRAIL_LPAQ_${camelToScreamingSnake(updatedProperty)}_UPDATED`;
-			// @ts-ignore
-			auditTrailDetail = CONSTANTS[constantKey] || auditTrailDetail;
-		}
-
-		await createAuditTrail({
-			appealId: appeal.id,
-			azureAdUserId: req.get('azureAdUserId'),
-			details: auditTrailDetail
-		});
+		await Promise.all(
+			updatedProperties.map((updatedProperty) =>
+				createAuditTrail({
+					appealId: appeal.id,
+					azureAdUserId: req.get('azureAdUserId'),
+					details:
+						// @ts-ignore
+						CONSTANTS[`AUDIT_TRAIL_LPAQ_${camelToScreamingSnake(updatedProperty)}_UPDATED`] ||
+						CONSTANTS.AUDIT_TRAIL_LPAQ_UPDATED
+				})
+			)
+		);
 
 		await broadcasters.broadcastAppeal(appeal.id);
 	} catch (error) {
