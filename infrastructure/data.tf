@@ -19,15 +19,26 @@ data "azurerm_monitor_action_group" "common" {
 }
 
 data "azurerm_cdn_frontdoor_profile" "web" {
-  name                = var.front_door_config.name
-  resource_group_name = var.front_door_config.rg
-  provider            = azurerm.front_door
+<<<<<<< HEAD
+  name                = var.front_door_config.frontdoor_name
+  resource_group_name = var.front_door_config.frontdoor_rg
+=======
+  name                = var.tooling_config.frontdoor_name
+  resource_group_name = var.tooling_config.frontdoor_rg
+>>>>>>> cba86a98c (test(tooling): Adding FrontDoor tooling)
+  provider            = azurerm.tooling
 
 }
 
-data "azurerm_cdn_frontdoor_endpoint" "shared" {
-  name                = var.front_door_config.ep_name
-  resource_group_name = var.front_door_config.rg
-  profile_name        = var.front_door_config.name
-  provider            = azurerm.front_door
+data "azurerm_cdn_frontdoor_endpoint" "web" {
+<<<<<<< HEAD
+  name                = var.front_door_config.frontdoor_ep_name
+  resource_group_name = var.front_door_config.frontdoor_rg
+  profile_name        = var.front_door_config.frontdoor_name
+=======
+  name                = var.tooling_config.frontdoor_ep_name
+  resource_group_name = var.tooling_config.frontdoor_rg
+  profile_name        = var.tooling_config.frontdoor_name
+>>>>>>> cba86a98c (test(tooling): Adding FrontDoor tooling)
+  provider            = azurerm.tooling
 }

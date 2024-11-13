@@ -25,8 +25,10 @@ provider "azurerm" {
 
 provider "azurerm" {
   alias           = "tooling"
-  subscription_id = var.tooling_config.subscription_id
+<<<<<<< HEAD
+  subscription_id = var.front_door_config.subscription_id
 
+<<<<<<< HEAD
   features {}
 }
 
@@ -35,6 +37,12 @@ provider "azurerm" {
   alias           = "front_door"
   subscription_id = var.front_door_config.use_tooling == true ? var.tooling_config.subscription_id : null
 
+=======
+>>>>>>> c2ef09409 (test(tooling): Adding FrontDoor tooling)
+=======
+  subscription_id = var.tooling_config.subscription_id
+
+>>>>>>> cba86a98c (test(tooling): Adding FrontDoor tooling)
   features {}
 }
 
