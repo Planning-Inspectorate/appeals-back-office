@@ -61,7 +61,6 @@ export const getDocumentUpload = async (request, response) => {
 				? `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/decision/add-document-details/${currentFolder.folderId}`
 				: `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/${costsDocumentType}/add-document-details/${currentFolder.folderId}`,
 		pageHeadingTextOverride: uploadPageHeadingText,
-		allowMultipleFiles: false,
 		documentType: session.costsDocumentType
 	});
 };

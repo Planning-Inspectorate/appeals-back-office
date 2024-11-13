@@ -164,10 +164,11 @@ describe('interested-party-comments', () => {
 
 			expect(response.statusCode).toBe(200);
 
-			const dom = parseHtml(response.text);
-			const elementInnerHtml = dom.innerHTML;
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(elementInnerHtml).toContain('The interested party can resubmit their comment by');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Do you want to allow the interested party to resubmit a comment?</h1>'
+			);
 		});
 	});
 });
