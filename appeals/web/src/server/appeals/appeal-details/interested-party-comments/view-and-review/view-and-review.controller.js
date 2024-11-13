@@ -94,7 +94,11 @@ export const renderAllowResubmit = async (request, response) => {
 	}
 
 	try {
-		const pageContent = rejectAllowResubmitPage(currentAppeal, currentComment);
+		const pageContent = await rejectAllowResubmitPage(
+			request.apiClient,
+			currentAppeal,
+			currentComment
+		);
 
 		return response.status(200).render('patterns/check-and-confirm-page.pattern.njk', {
 			errors,
