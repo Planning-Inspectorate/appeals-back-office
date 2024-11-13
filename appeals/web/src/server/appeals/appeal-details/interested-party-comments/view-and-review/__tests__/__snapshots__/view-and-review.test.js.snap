@@ -7,7 +7,7 @@ exports[`interested-party-comments GET /reject-allow-resubmit should render allo
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
                     <h1                     class="govuk-heading-l">Do you want to allow the interested party to resubmit a comment?</h1>
-                        <div                         class="govuk-hint">The interested party can resubmit their comment by 21 November 2024.</div>
+                        <div                         class="govuk-hint">The interested party can resubmit their comment by 22 November 2024.</div>
             </div>
         </div>
         <form method="post" novalidate="novalidate">

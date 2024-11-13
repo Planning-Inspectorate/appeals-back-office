@@ -1796,6 +1796,77 @@
 						}
 					}
 				}
+			},
+			"patch": {
+				"tags": ["Documents"],
+				"description": "Updates document file name",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "documentId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Document to update filename",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UpdateDocumentFileNameResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/UpdateDocumentFileNameResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Document to update file name",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateDocumentFileNameRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateDocumentFileNameRequest"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/appeals/{appealId}/documents/{documentId}/versions": {
@@ -4467,7 +4538,7 @@
 				"properties": {
 					"inputDate": {
 						"type": "string",
-						"example": "2024-08-17"
+						"example": "2024-11-10T00:00:00.000Z"
 					}
 				},
 				"xml": {
@@ -4482,7 +4553,7 @@
 						"properties": {
 							"submissionId": {
 								"type": "string",
-								"example": "eff637e5-e08a-42b7-8bbb-153a168f1232"
+								"example": "19c28ae5-f73c-47f1-844b-6221b18e7dc0"
 							},
 							"advertisedAppeal": {
 								"type": "boolean",
@@ -8361,6 +8432,38 @@
 				},
 				"xml": {
 					"name": "UpdateDocumentsResponse"
+				}
+			},
+			"UpdateDocumentFileNameRequest": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"example": "987e66e0-1db4-404b-8213-8082919159e9"
+					},
+					"fileName": {
+						"type": "string",
+						"example": "renamed-document.pdf"
+					}
+				},
+				"xml": {
+					"name": "UpdateDocumentFileNameRequest"
+				}
+			},
+			"UpdateDocumentFileNameResponse": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"example": "987e66e0-1db4-404b-8213-8082919159e9"
+					},
+					"fileName": {
+						"type": "string",
+						"example": "renamed-document.pdf"
+					}
+				},
+				"xml": {
+					"name": "UpdateDocumentFileNameResponse"
 				}
 			},
 			"UpdateDocumentsAvCheckRequest": {
