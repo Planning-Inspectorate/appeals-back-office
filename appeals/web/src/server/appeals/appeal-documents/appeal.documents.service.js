@@ -23,6 +23,20 @@ export const getFolder = async (apiClient, appealId, folderId) => {
 
 /**
  * @param {import('got').Got} apiClient
+ * @param {string|number} appealId
+ * @returns {Promise<FolderInfo[]|undefined>}
+ */
+export const getFolders = async (apiClient, appealId) => {
+	try {
+		const bulkLocationInfo = await apiClient.get(`appeals/${appealId}/document-folders`).json();
+		return bulkLocationInfo;
+	} catch {
+		return undefined;
+	}
+};
+
+/**
+ * @param {import('got').Got} apiClient
  * @param {string} appealId
  * @param {string} fileGuid
  * @returns {Promise<DocumentInfo|undefined>}

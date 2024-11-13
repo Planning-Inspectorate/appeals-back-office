@@ -10,6 +10,7 @@ import { mapAppellantHealthAndSafety } from './submappers/appellant-health-and-s
 import { mapAppellantInspectorAccess } from './submappers/appellant-inspector-access.mapper.js';
 import { mapAppellant } from './submappers/appellant.mapper.js';
 import { mapCaseHistory } from './submappers/case-history.mapper.js';
+import { mapDownloadAllDocuments } from './submappers/download-all-docs.mapper.js';
 import { mapCaseOfficer } from './submappers/case-officer.mapper.js';
 import { mapCaseProcedure } from './submappers/case-procedure.mapper.js';
 import { mapCompleteDate } from './submappers/complete-date.mapper.js';
@@ -76,6 +77,7 @@ export const submaps = {
 	crossTeamCorrespondence: mapCrossTeamCorrespondence,
 	inspectorCorrespondence: mapInspectorCorrespondence,
 	caseHistory: mapCaseHistory,
+	downloadAllFiles: mapDownloadAllDocuments,
 	appealWithdrawal: mapAppealWithdrawal,
 	appellantCase: mapAppellantCase,
 	lpaQuestionnaire: mapLpaQuestionnaire,

@@ -14,6 +14,7 @@ import {
 import { handleSignout } from './auth/auth.controller.js';
 import { assertIsAuthenticated } from './auth/auth.guards.js';
 import {
+	getBulkDocumentDownload,
 	getDocumentDownload,
 	getDocumentDownloadByVersion,
 	getUncommittedDocumentDownload
@@ -65,6 +66,10 @@ router.use(assertGroupAccess(...groupIds));
 
 router.route('/').get(viewHomepage);
 router.route('/auth/signout').get(handleSignout);
+
+router
+	.route('/documents/:caseId/bulk-download/:filename?')
+	.get(addApiClientToRequest, asyncHandler(getBulkDocumentDownload));
 
 router
 	.route('/documents/:caseId/download/:guid/:filename?')

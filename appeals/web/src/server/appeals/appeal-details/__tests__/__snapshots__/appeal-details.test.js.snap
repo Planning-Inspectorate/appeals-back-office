@@ -875,6 +875,12 @@ exports[`appeal-details GET /:appealId should not render action links to the man
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit" data-cy="view-case-history"> View<span class="govuk-visually-hidden"> Case history</span></a>
                             </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Download all documents for this appeal</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/documents/1/bulk-download/appeal-APP/Q9999/D/21/351062.zip"
+                                    data-cy="download-download-bulk-docs"> Download<span class="govuk-visually-hidden"> Download all documents for this appeal</span></a>
+                                </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
                             <dd class="govuk-summary-list__value"></dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/start"
@@ -1326,6 +1332,12 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/audit" data-cy="view-case-history"> View<span class="govuk-visually-hidden"> Case history</span></a>
                             </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Download all documents for this appeal</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/documents/1/bulk-download/appeal-APP/Q9999/D/21/351062.zip"
+                                    data-cy="download-download-bulk-docs"> Download<span class="govuk-visually-hidden"> Download all documents for this appeal</span></a>
+                                </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
                             <dd class="govuk-summary-list__value"></dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/withdrawal/start"
@@ -1765,6 +1777,12 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                             <dd class="govuk-summary-list__value"></dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit" data-cy="view-case-history"> View<span class="govuk-visually-hidden"> Case history</span></a>
                             </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Download all documents for this appeal</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/documents/1/bulk-download/appeal-APP/Q9999/D/21/351062.zip"
+                                    data-cy="download-download-bulk-docs"> Download<span class="govuk-visually-hidden"> Download all documents for this appeal</span></a>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
                             <dd class="govuk-summary-list__value"></dd>
@@ -2208,6 +2226,12 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                             <dd class="govuk-summary-list__value"></dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit" data-cy="view-case-history"> View<span class="govuk-visually-hidden"> Case history</span></a>
                             </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Download all documents for this appeal</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/documents/1/bulk-download/appeal-APP/Q9999/D/21/351062.zip"
+                                    data-cy="download-download-bulk-docs"> Download<span class="govuk-visually-hidden"> Download all documents for this appeal</span></a>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
                             <dd class="govuk-summary-list__value"></dd>
@@ -2668,6 +2692,12 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit" data-cy="view-case-history"> View<span class="govuk-visually-hidden"> Case history</span></a>
                             </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Download all documents for this appeal</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/documents/1/bulk-download/appeal-APP/Q9999/D/21/351062.zip"
+                                    data-cy="download-download-bulk-docs"> Download<span class="govuk-visually-hidden"> Download all documents for this appeal</span></a>
+                                </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
                             <dd class="govuk-summary-list__value"></dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/start"
@@ -3115,6 +3145,12 @@ exports[`appeal-details GET /:appealId should render an Issue a decision notific
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/audit" data-cy="view-case-history"> View<span class="govuk-visually-hidden"> Case history</span></a>
                             </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Download all documents for this appeal</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/documents/1/bulk-download/appeal-APP/Q9999/D/21/351062.zip"
+                                    data-cy="download-download-bulk-docs"> Download<span class="govuk-visually-hidden"> Download all documents for this appeal</span></a>
+                                </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
                             <dd class="govuk-summary-list__value"></dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/withdrawal/start"
@@ -3542,6 +3578,12 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                             <dd class="govuk-summary-list__value"></dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit" data-cy="view-case-history"> View<span class="govuk-visually-hidden"> Case history</span></a>
                             </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Download all documents for this appeal</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/documents/1/bulk-download/appeal-APP/Q9999/D/21/351062.zip"
+                                    data-cy="download-download-bulk-docs"> Download<span class="govuk-visually-hidden"> Download all documents for this appeal</span></a>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
                             <dd class="govuk-summary-list__value"></dd>
@@ -3991,6 +4033,12 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/audit" data-cy="view-case-history"> View<span class="govuk-visually-hidden"> Case history</span></a>
                             </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Download all documents for this appeal</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/documents/1/bulk-download/appeal-APP/Q9999/D/21/351062.zip"
+                                    data-cy="download-download-bulk-docs"> Download<span class="govuk-visually-hidden"> Download all documents for this appeal</span></a>
+                                </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
                             <dd class="govuk-summary-list__value"></dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/withdrawal/start"
@@ -4438,6 +4486,12 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             <dd class="govuk-summary-list__value"></dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/audit" data-cy="view-case-history"> View<span class="govuk-visually-hidden"> Case history</span></a>
                             </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Download all documents for this appeal</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/documents/1/bulk-download/appeal-APP/Q9999/D/21/351062.zip"
+                                    data-cy="download-download-bulk-docs"> Download<span class="govuk-visually-hidden"> Download all documents for this appeal</span></a>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
                             <dd class="govuk-summary-list__value"></dd>
@@ -4887,6 +4941,12 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/audit" data-cy="view-case-history"> View<span class="govuk-visually-hidden"> Case history</span></a>
                             </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Download all documents for this appeal</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/documents/1/bulk-download/appeal-APP/Q9999/D/21/351062.zip"
+                                    data-cy="download-download-bulk-docs"> Download<span class="govuk-visually-hidden"> Download all documents for this appeal</span></a>
+                                </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
                             <dd class="govuk-summary-list__value"></dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/withdrawal/start"
@@ -5331,6 +5391,12 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                             <dd class="govuk-summary-list__value"></dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit" data-cy="view-case-history"> View<span class="govuk-visually-hidden"> Case history</span></a>
                             </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Download all documents for this appeal</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/documents/1/bulk-download/appeal-APP/Q9999/D/21/351062.zip"
+                                    data-cy="download-download-bulk-docs"> Download<span class="govuk-visually-hidden"> Download all documents for this appeal</span></a>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
                             <dd class="govuk-summary-list__value"></dd>
@@ -5917,6 +5983,12 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit" data-cy="view-case-history"> View<span class="govuk-visually-hidden"> Case history</span></a>
                             </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Download all documents for this appeal</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/documents/1/bulk-download/appeal-APP/Q9999/D/21/351062.zip"
+                                    data-cy="download-download-bulk-docs"> Download<span class="govuk-visually-hidden"> Download all documents for this appeal</span></a>
+                                </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
                             <dd class="govuk-summary-list__value"></dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/start"
@@ -6374,6 +6446,12 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/audit" data-cy="view-case-history"> View<span class="govuk-visually-hidden"> Case history</span></a>
                             </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Download all documents for this appeal</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/documents/3/bulk-download/appeal-APP/Q9999/D/21/351062.zip"
+                                    data-cy="download-download-bulk-docs"> Download<span class="govuk-visually-hidden"> Download all documents for this appeal</span></a>
+                                </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
                             <dd class="govuk-summary-list__value"></dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/withdrawal/start"
@@ -6801,6 +6879,12 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             <dd class="govuk-summary-list__value"></dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit" data-cy="view-case-history"> View<span class="govuk-visually-hidden"> Case history</span></a>
                             </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Download all documents for this appeal</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/documents/1/bulk-download/appeal-APP/Q9999/D/21/351062.zip"
+                                    data-cy="download-download-bulk-docs"> Download<span class="govuk-visually-hidden"> Download all documents for this appeal</span></a>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
                             <dd class="govuk-summary-list__value"></dd>
@@ -7254,6 +7338,12 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/audit" data-cy="view-case-history"> View<span class="govuk-visually-hidden"> Case history</span></a>
                             </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Download all documents for this appeal</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/documents/2/bulk-download/appeal-APP/Q9999/D/21/351062.zip"
+                                    data-cy="download-download-bulk-docs"> Download<span class="govuk-visually-hidden"> Download all documents for this appeal</span></a>
+                                </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
                             <dd class="govuk-summary-list__value"></dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/withdrawal/start"
@@ -7667,6 +7757,12 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             <dd class="govuk-summary-list__value"></dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/audit" data-cy="view-case-history"> View<span class="govuk-visually-hidden"> Case history</span></a>
                             </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Download all documents for this appeal</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/documents/1/bulk-download/appeal-APP/Q9999/D/21/351062.zip"
+                                    data-cy="download-download-bulk-docs"> Download<span class="govuk-visually-hidden"> Download all documents for this appeal</span></a>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
                             <dd class="govuk-summary-list__value"></dd>
@@ -8236,6 +8332,12 @@ exports[`appeal-details should not render a back button 1`] = `
                                         <dd class="govuk-summary-list__value"></dd>
                                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/audit" data-cy="view-case-history"> View<span class="govuk-visually-hidden"> Case history</span></a>
                                         </dd>
+                                    </div>
+                                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Download all documents for this appeal</dt>
+                                        <dd                                         class="govuk-summary-list__value"></dd>
+                                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/documents/2/bulk-download/appeal-APP/Q9999/D/21/351062.zip"
+                                                data-cy="download-download-bulk-docs"> Download<span class="govuk-visually-hidden"> Download all documents for this appeal</span></a>
+                                            </dd>
                                     </div>
                                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
                                         <dd class="govuk-summary-list__value"></dd>

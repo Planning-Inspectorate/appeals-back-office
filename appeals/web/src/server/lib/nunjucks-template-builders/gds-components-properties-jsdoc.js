@@ -733,3 +733,10 @@
  * @property {string} commentText
  * @property {string} userName
  */
+
+/**
+ * @typedef FileDownloadProperties
+ * @type {Object<string, any>}
+ * @property {string} filename
+ * @property {string} url
+ */
