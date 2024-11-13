@@ -89,7 +89,7 @@ export const spec = {
 			...repResponse
 		},
 		ValidateDate: {
-			inputDate: '2024-08-17'
+			inputDate: '2024-11-10T00:00:00.000Z'
 		},
 		AppellantCaseData: {
 			...validAppellantCase

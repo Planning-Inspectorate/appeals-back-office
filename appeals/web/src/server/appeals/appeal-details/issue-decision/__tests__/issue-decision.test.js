@@ -415,14 +415,15 @@ describe('issue-decision', () => {
 		});
 
 		it('should redirect to the check your decision page if the provided date is fully populated and valid', async () => {
+			nock('http://test/').post(`/appeals/validate-business-date`).reply(200, { result: true });
 			expect(issueDecisionResponse.statusCode).toBe(302);
 			expect(uploadDecisionLetterResponse.statusCode).toBe(302);
 
 			const mockAppealId = '1';
 			const mockLetterDecisionDate = {
-				'decision-letter-date-day': '1',
+				'decision-letter-date-day': '2',
 				'decision-letter-date-month': '1',
-				'decision-letter-date-year': '2023'
+				'decision-letter-date-year': '2024'
 			};
 			const response = await request
 				.post(`${baseUrl}/${mockAppealId}/issue-decision/decision-letter-date`)
@@ -534,6 +535,7 @@ describe('issue-decision', () => {
 		beforeEach(async () => {
 			nock('http://test/').get('/appeals/1').reply(200, inspectorDecisionData);
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').post(`/appeals/validate-business-date`).reply(200, { result: true });
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses);
