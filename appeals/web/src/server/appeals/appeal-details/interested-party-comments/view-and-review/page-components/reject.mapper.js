@@ -185,9 +185,14 @@ export function rejectCheckYourAnswersPage(appealDetails, comment, rejectionReas
 /**
  * @param {Representation} comment
  * @param {RepresentationRejectionReason[]} rejectionReasonOptions
+ * @param {{ optionId: number, message: string }} [error]
  * @returns {import('../../../../../appeals/appeals.types.js').CheckboxItemParameter[]}
  */
-export function mapRejectionReasonOptionsToCheckboxItemParameters(comment, rejectionReasonOptions) {
+export function mapRejectionReasonOptionsToCheckboxItemParameters(
+	comment,
+	rejectionReasonOptions,
+	error
+) {
 	const rejectionReasons = comment.rejectionReasons || [];
 	const rejectionReasonMap = new Map(rejectionReasons.map((reason) => [reason.id, reason]));
 
@@ -196,7 +201,8 @@ export function mapRejectionReasonOptionsToCheckboxItemParameters(comment, rejec
 		return {
 			value: reason.id.toString(),
 			text: reason.name,
-			checked: Boolean(selectedReason),
+			checked: error?.optionId === reason.id || Boolean(selectedReason),
+			error: error?.message,
 			hasText: reason.hasText,
 			textItems: selectedReason?.text || ['']
 		};

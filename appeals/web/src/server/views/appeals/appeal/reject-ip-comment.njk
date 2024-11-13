@@ -28,7 +28,8 @@
 			{%- set addAnotherReasonHtml = addAnotherReason({
 				textItems: option.textItems,
 				inputName: 'rejectionReason-' + option.value,
-				labelText: 'Why the comment is invalid?'
+        labelText: 'Why the comment is invalid?',
+        error: option.error
 			}) -%}
 			{%- set _ = option | addConditionalHtml(addAnotherReasonHtml) -%}
 		{%- endif -%}

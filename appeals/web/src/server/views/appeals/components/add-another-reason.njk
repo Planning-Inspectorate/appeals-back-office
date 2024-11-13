@@ -16,7 +16,10 @@
 					{{ govukInput({
 						classes: 'pins-add-another__item-input govuk-!-margin-0',
 						name: params.inputName,
-						value: textItem
+            value: textItem,
+            errorMessage: {
+              text: params.error
+            } if params.error
 					}) }}
 				</div>
 			</div>
