@@ -89,16 +89,22 @@ variable "front_door_config" {
   description = "Config for the frontdoor in tooling subscription"
   type = object({
 <<<<<<< HEAD
+<<<<<<< HEAD
     name        = string
     rg          = string
     ep_name     = string
     use_tooling = bool
 =======
+=======
+>>>>>>> ff094f424 (test(tooling): modifying tfvars values for frontdoor)
     subscription_id   = string
     frontdoor_name    = string
     frontdoor_rg      = string
     frontdoor_ep_name = string
+<<<<<<< HEAD
 >>>>>>> 15bd89b4a (test(tooling): modifying tfvars values for frontdoor)
+=======
+>>>>>>> ff094f424 (test(tooling): modifying tfvars values for frontdoor)
   })
 }
 
@@ -208,9 +214,6 @@ variable "tooling_config" {
     network_name            = string
     network_rg              = string
     subscription_id         = string
-    frontdoor_name          = string
-    frontdoor_rg            = string
-    frontdoor_ep_name       = string
   })
 }
 

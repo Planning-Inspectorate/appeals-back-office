@@ -26,6 +26,7 @@ provider "azurerm" {
 provider "azurerm" {
   alias           = "tooling"
 <<<<<<< HEAD
+<<<<<<< HEAD
   subscription_id = var.front_door_config.subscription_id
 
 <<<<<<< HEAD
@@ -41,6 +42,9 @@ provider "azurerm" {
 >>>>>>> c2ef09409 (test(tooling): Adding FrontDoor tooling)
 =======
   subscription_id = var.tooling_config.subscription_id
+=======
+  subscription_id = var.front_door_config.subscription_id
+>>>>>>> ff094f424 (test(tooling): modifying tfvars values for frontdoor)
 
 >>>>>>> cba86a98c (test(tooling): Adding FrontDoor tooling)
   features {}

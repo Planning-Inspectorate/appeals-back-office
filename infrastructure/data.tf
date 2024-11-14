@@ -20,17 +20,23 @@ data "azurerm_monitor_action_group" "common" {
 
 data "azurerm_cdn_frontdoor_profile" "web" {
 <<<<<<< HEAD
+<<<<<<< HEAD
   name                = var.front_door_config.frontdoor_name
   resource_group_name = var.front_door_config.frontdoor_rg
 =======
   name                = var.tooling_config.frontdoor_name
   resource_group_name = var.tooling_config.frontdoor_rg
 >>>>>>> cba86a98c (test(tooling): Adding FrontDoor tooling)
+=======
+  name                = var.front_door_config.frontdoor_name
+  resource_group_name = var.front_door_config.frontdoor_rg
+>>>>>>> ff094f424 (test(tooling): modifying tfvars values for frontdoor)
   provider            = azurerm.tooling
 
 }
 
 data "azurerm_cdn_frontdoor_endpoint" "web" {
+<<<<<<< HEAD
 <<<<<<< HEAD
   name                = var.front_door_config.frontdoor_ep_name
   resource_group_name = var.front_door_config.frontdoor_rg
@@ -40,5 +46,10 @@ data "azurerm_cdn_frontdoor_endpoint" "web" {
   resource_group_name = var.tooling_config.frontdoor_rg
   profile_name        = var.tooling_config.frontdoor_name
 >>>>>>> cba86a98c (test(tooling): Adding FrontDoor tooling)
+=======
+  name                = var.front_door_config.frontdoor_ep_name
+  resource_group_name = var.front_door_config.frontdoor_rg
+  profile_name        = var.front_door_config.frontdoor_name
+>>>>>>> ff094f424 (test(tooling): modifying tfvars values for frontdoor)
   provider            = azurerm.tooling
 }
