@@ -98,6 +98,13 @@ documents_config = {
 
 environment = "test"
 
+front_door_config = {
+  subscription_id   = "edb1ff78-90da-4901-a497-7e79f966f8e2"
+  frontdoor_name    = "pins-fd-common-tooling"
+  frontdoor_rg      = "pins-rg-common-tooling"
+  frontdoor_ep_name = "pins-fde-appeals"
+}
+
 front_office_infra_config = {
   deploy_connections = true
   network = {
