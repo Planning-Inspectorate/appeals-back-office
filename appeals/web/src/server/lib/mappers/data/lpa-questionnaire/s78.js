@@ -12,6 +12,7 @@ import { mapHasProtectedSpecies } from './submappers/map-has-protected-species.j
 import { mapIsAonbNationalLandscape } from './submappers/map-is-aonb-national-landscape.js';
 import { mapIsGypsyOrTravellerSite } from './submappers/map-is-gypsy-or-traveller-site.js';
 import { mapTreePreservationPlan } from './submappers/map-tree-preservation-plan.js';
+import { mapHasCommunityInfrastructureLevy } from './submappers/map-has-community-infrastructure-levy.js';
 import { mapIsInfrastructureLevyFormallyAdopted } from './submappers/map-is-infrastructure-levy-formally-adopted.js';
 import { mapInfrastructureLevyAdoptedDate } from './submappers/map-infrastructure-levy-adopted-date.js';
 import { mapInfrastructureLevyExpectedDate } from './submappers/map-infrastructure-levy-expected-date.js';
@@ -33,6 +34,7 @@ export const submaps = {
 	hasProtectedSpecies: mapHasProtectedSpecies,
 	isGypsyOrTravellerSite: mapIsGypsyOrTravellerSite,
 	isAonbNationalLandscape: mapIsAonbNationalLandscape,
+	hasCommunityInfrastructureLevy: mapHasCommunityInfrastructureLevy,
 	isInfrastructureLevyFormallyAdopted: mapIsInfrastructureLevyFormallyAdopted,
 	infrastructureLevyAdoptedDate: mapInfrastructureLevyAdoptedDate,
 	infrastructureLevyExpectedDate: mapInfrastructureLevyExpectedDate,

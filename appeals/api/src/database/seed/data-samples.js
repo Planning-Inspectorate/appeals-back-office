@@ -226,6 +226,8 @@ export function createLPAQuestionnaireForAppealType(appealTypeShorthand) {
 				isGreenBelt: randomBool(),
 				eiaColumnTwoThreshold: randomBool(),
 				eiaRequiresEnvironmentalStatement: randomBool(),
+				hasInfrastructureLevy: randomBool(),
+				isInfrastructureLevyFormallyAdopted: randomBool(),
 				infrastructureLevyAdoptedDate: randomBool() ? new Date(2023, 4, 9) : null,
 				infrastructureLevyExpectedDate: randomBool() ? new Date(2023, 4, 9) : null,
 				eiaEnvironmentalImpactSchedule: (() => {
