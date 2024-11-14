@@ -19,15 +19,15 @@ data "azurerm_monitor_action_group" "common" {
 }
 
 data "azurerm_cdn_frontdoor_profile" "web" {
-  name                = var.tooling_config.frontdoor_name
-  resource_group_name = var.tooling_config.frontdoor_rg
+  name                = var.front_door_config.frontdoor_name
+  resource_group_name = var.front_door_config.frontdoor_rg
   provider            = azurerm.tooling
 
 }
 
 data "azurerm_cdn_frontdoor_endpoint" "web" {
-  name                = var.tooling_config.frontdoor_ep_name
-  resource_group_name = var.tooling_config.frontdoor_rg
-  profile_name        = var.tooling_config.frontdoor_name
+  name                = var.front_door_config.frontdoor_ep_name
+  resource_group_name = var.front_door_config.frontdoor_rg
+  profile_name        = var.front_door_config.frontdoor_name
   provider            = azurerm.tooling
 }

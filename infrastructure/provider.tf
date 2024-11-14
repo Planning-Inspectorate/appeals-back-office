@@ -25,7 +25,7 @@ provider "azurerm" {
 
 provider "azurerm" {
   alias           = "tooling"
-  subscription_id = var.tooling_config.subscription_id
+  subscription_id = var.front_door_config.subscription_id
 
   features {}
 }
