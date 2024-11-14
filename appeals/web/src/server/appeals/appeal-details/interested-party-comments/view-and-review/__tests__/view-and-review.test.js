@@ -130,7 +130,7 @@ describe('interested-party-comments', () => {
 		});
 	});
 
-	describe('GET /reject-reason', () => {
+	describe('GET /reject/select-reason', () => {
 		beforeEach(() => {
 			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
 			nock('http://test')
@@ -139,7 +139,9 @@ describe('interested-party-comments', () => {
 		});
 		afterEach(teardown);
 		it('should render reject comment page', async () => {
-			const response = await request.get(`${baseUrl}/2/interested-party-comments/5/reject-reason`);
+			const response = await request.get(
+				`${baseUrl}/2/interested-party-comments/5/reject/select-reason`
+			);
 
 			expect(response.statusCode).toBe(200);
 
@@ -150,7 +152,7 @@ describe('interested-party-comments', () => {
 		});
 	});
 
-	describe('GET /reject-allow-resubmit', () => {
+	describe('GET /reject/allow-resubmit', () => {
 		beforeEach(() => {
 			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
 			nock('http://test/')
@@ -162,7 +164,7 @@ describe('interested-party-comments', () => {
 
 		it('should render allow resubmit page', async () => {
 			const response = await request.get(
-				`${baseUrl}/2/interested-party-comments/5/reject-allow-resubmit`
+				`${baseUrl}/2/interested-party-comments/5/reject/allow-resubmit`
 			);
 
 			expect(response.statusCode).toBe(200);
@@ -172,6 +174,30 @@ describe('interested-party-comments', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'Do you want to allow the interested party to resubmit a comment?</h1>'
 			);
+		});
+	});
+
+	describe('GET /reject/check-your-answers', () => {
+		beforeEach(() => {
+			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
+			nock('http://test')
+				.get('/appeals/representation-rejection-reasons')
+				.reply(200, representationRejectionReasons);
+		});
+
+		afterEach(teardown);
+
+		it('should render check your answers page', async () => {
+			const response = await request.get(
+				`${baseUrl}/2/interested-party-comments/5/reject/check-your-answers`
+			);
+
+			expect(response.statusCode).toBe(200);
+
+			const dom = parseHtml(response.text);
+			const innerHtml = dom.innerHTML;
+
+			expect(innerHtml).toMatchSnapshot();
 		});
 	});
 });
