@@ -54,6 +54,7 @@ const updateLPAQuestionnaireById = async (req, res) => {
 			hasProtectedSpecies,
 			isAonbNationalLandscape,
 			isGypsyOrTravellerSite,
+			hasInfrastructureLevy,
 			isInfrastructureLevyFormallyAdopted,
 			infrastructureLevyAdoptedDate,
 			infrastructureLevyExpectedDate
@@ -100,6 +101,7 @@ const updateLPAQuestionnaireById = async (req, res) => {
 					hasProtectedSpecies,
 					isAonbNationalLandscape,
 					isGypsyOrTravellerSite,
+					hasInfrastructureLevy,
 					isInfrastructureLevyFormallyAdopted,
 					infrastructureLevyAdoptedDate,
 					infrastructureLevyExpectedDate

@@ -74,6 +74,7 @@ const formatLpaQuestionnaire = (appeal, folders = null) => {
 			hasProtectedSpecies: lpaQuestionnaire.hasProtectedSpecies,
 			isAonbNationalLandscape: lpaQuestionnaire.isAonbNationalLandscape,
 			isGypsyOrTravellerSite: lpaQuestionnaire.isGypsyOrTravellerSite,
+			hasInfrastructureLevy: lpaQuestionnaire.hasInfrastructureLevy,
 			isInfrastructureLevyFormallyAdopted: lpaQuestionnaire.isInfrastructureLevyFormallyAdopted,
 			infrastructureLevyAdoptedDate: lpaQuestionnaire.infrastructureLevyAdoptedDate,
 			infrastructureLevyExpectedDate: lpaQuestionnaire.infrastructureLevyExpectedDate

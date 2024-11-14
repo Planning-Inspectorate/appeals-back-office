@@ -27,6 +27,7 @@ import hasProtectedSpeciesRouter from './has-protected-species/has-protected-spe
 import affectsScheduledMonumentRouter from './affects-scheduled-monument/affects-scheduled-monument.router.js';
 import isGypsyOrTravellerSiteRouter from './is-gypsy-or-traveller-site/is-gypsy-or-traveller-site.router.js';
 import isAonbNationalLandscapeRouter from './is-aonb-national-landscape/is-aonb-national-landscape.router.js';
+import hasCommunityInfrastructureLevyRouter from './has-community-infrastructure-levy/has-community-infrastructure-levy.router.js';
 import isInfrastructureLevyFormallyAdoptedRouter from './is-infrastructure-levy-formally-adopted/is-infrastructure-levy-formally-adopted.router.js';
 import infrastructureLevyAdoptedDateRouter from './infrastructure-levy-adopted-date/infrastructure-levy-adopted-date.router.js';
 import infrastructureLevyExpectedDateRouter from './infrastructure-levy-expected-date/infrastructure-levy-expected-date.router.js';
@@ -139,6 +140,13 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	isAonbNationalLandscapeRouter
+);
+
+router.use(
+	'/:lpaQuestionnaireId/has-community-infrastructure-levy',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	hasCommunityInfrastructureLevyRouter
 );
 
 router.use(
