@@ -44,6 +44,7 @@ router
 		validators.validateVisitDateFields,
 		validators.validateVisitDateValid,
 		validators.validateDueDateInPastOrToday,
+		validators.validateDecisionDateIsBusinessDay,
 		assertUserHasPermission(permissionNames.setCaseOutcome),
 		asyncHandler(controller.postDateDecisionLetter)
 	);

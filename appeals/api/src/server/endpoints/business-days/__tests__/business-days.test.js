@@ -54,4 +54,31 @@ describe('business day validation routes', () => {
 			});
 		});
 	});
+
+	describe('/appeals/add-business-days', () => {
+		describe('POST', () => {
+			test('valid date', async () => {
+				const payload = {
+					inputDate: '2024-11-13T23:59:00.000Z',
+					numDays: 7
+				};
+
+				const response = await request.post('/appeals/add-business-days').send(payload);
+
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual('2024-11-22T00:00:00.000Z');
+			});
+
+			test('invalid date', async () => {
+				const payload = {
+					inputDate: 'not valid',
+					numDays: 7
+				};
+
+				const response = await request.post('/appeals/add-business-days').send(payload);
+
+				expect(response.status).toEqual(400);
+			});
+		});
+	});
 });

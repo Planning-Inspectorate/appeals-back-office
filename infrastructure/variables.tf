@@ -96,6 +96,12 @@ variable "front_office_infra_config" {
   })
 }
 
+variable "health_check_eviction_time_in_min" {
+  description = "The eviction time in minutes for the health check"
+  type        = number
+  default     = 10
+}
+
 variable "horizon_infra_config" {
   description = "Config for the (legacy) Horizon infra"
   type = object({
@@ -203,4 +209,13 @@ variable "vnet_config" {
 variable "web_app_domain" {
   description = "The domain for the web app"
   type        = string
+}
+
+variable "waf_rate_limits" {
+  description = "Config for Service Bus"
+  type = object({
+    enabled             = bool
+    duration_in_minutes = number
+    threshold           = number
+  })
 }

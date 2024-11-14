@@ -5,6 +5,21 @@ import { kebabCase } from 'lodash-es';
  */
 
 /**
+ * @param {RadiosPageComponent} component
+ * @param {string} legendText
+ * @returns
+ */
+function addFieldsetLegendText(component, legendText) {
+	component.parameters.fieldset = {
+		legend: {
+			text: legendText,
+			isPageHeading: false,
+			classes: 'govuk-fieldset__legend--l'
+		}
+	};
+}
+
+/**
  *
  * @param {string} id
  * @param {string} name
@@ -90,13 +105,33 @@ export function yesNoInput({
 		}
 	};
 	if (legendText) {
-		component.parameters.fieldset = {
-			legend: {
-				text: legendText,
-				isPageHeading: false,
-				classes: 'govuk-fieldset__legend--l'
-			}
-		};
+		addFieldsetLegendText(component, legendText);
+	}
+	return component;
+}
+
+/**
+ * @param {Object} params
+ * @param {string} params.name
+ * @param {RadioItem[]} params.items
+ * @param {string} [params.id]
+ * @param {string|null} [params.value]
+ * @param {string} [params.legendText]
+ * @returns {PageComponent}
+ */
+export function radiosInput({ name, items, id, value, legendText }) {
+	/** @type {PageComponent} */
+	const component = {
+		type: 'radios',
+		parameters: {
+			name,
+			id: id || kebabCase(name),
+			items,
+			value
+		}
+	};
+	if (legendText) {
+		addFieldsetLegendText(component, legendText);
 	}
 	return component;
 }

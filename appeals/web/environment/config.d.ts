@@ -22,6 +22,7 @@ export interface BaseEnvironmentConfig {
 export interface EnvironmentConfig extends BaseEnvironmentConfig {
 	// The web application hostname (e.g. back-office-dev.planninginspectorate.gov.uk)
 	appHostname: string;
+	gitSha?: string;
 	appInsightsConnectionString?: string;
 	apiUrl: string;
 	authDisabled: boolean;

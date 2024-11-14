@@ -35,7 +35,11 @@ export function handleHeadHealthCheck(_, response) {
 
 /** @type {import('express').RequestHandler} */
 export function handleHeathCheck(_, response) {
-	response.send('OK');
+	response.status(200).send({
+		status: 'OK',
+		uptime: process.uptime(),
+		commit: config.gitSha
+	});
 }
 
 /** @type {import('express').RequestHandler} */

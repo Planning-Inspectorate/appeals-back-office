@@ -124,13 +124,20 @@ export interface RepResponse {
 }
 
 export interface ValidateDate {
+	/** @example "2024-11-10T00:00:00.000Z" */
+	inputDate?: string;
+}
+
+export interface AddBusinessDays {
 	/** @example "2024-08-17" */
 	inputDate?: string;
+	/** @example 7 */
+	numDays?: number;
 }
 
 export interface AppellantCaseData {
 	casedata?: {
-		/** @example "eff637e5-e08a-42b7-8bbb-153a168f1232" */
+		/** @example "5d75b6f6-f7dc-4b91-b307-a9c4d7d4bae4" */
 		submissionId?: string;
 		/** @example true */
 		advertisedAppeal?: boolean;
@@ -1850,6 +1857,20 @@ export interface UpdateDocumentsResponse {
 		/** @example 1 */
 		redactionStatus?: number;
 	}[];
+}
+
+export interface UpdateDocumentFileNameRequest {
+	/** @example "987e66e0-1db4-404b-8213-8082919159e9" */
+	id?: string;
+	/** @example "renamed-document.pdf" */
+	fileName?: string;
+}
+
+export interface UpdateDocumentFileNameResponse {
+	/** @example "987e66e0-1db4-404b-8213-8082919159e9" */
+	id?: string;
+	/** @example "renamed-document.pdf" */
+	fileName?: string;
 }
 
 export interface UpdateDocumentsAvCheckRequest {

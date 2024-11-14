@@ -4,7 +4,8 @@ import {
 	createDateInputFieldsValidator,
 	createDateInputDateValidityValidator,
 	createDateInputDateInFutureValidator,
-	createDateInputDateInPastOrTodayValidator
+	createDateInputDateInPastOrTodayValidator,
+	createDateInputDateBusinessDayValidator
 } from '#lib/validators/date-input.validator.js';
 import { createTextareaValidator } from '#lib/validators/textarea-validator.js';
 import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
@@ -48,4 +49,8 @@ export const validateCheckDecision = createValidator(
 		.bail()
 		.equals('yes')
 		.withMessage('Please confirm that the decision is ready to be sent to all parties')
+);
+
+export const validateDecisionDateIsBusinessDay = await createDateInputDateBusinessDayValidator(
+	'decision-letter-date'
 );

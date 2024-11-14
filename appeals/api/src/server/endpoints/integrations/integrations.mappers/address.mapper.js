@@ -96,9 +96,9 @@ export const mapNeighbouringAddressOut = (sites) => {
 export const mapSiteAccessDetailsOut = (appeal) => {
 	return {
 		siteAccessDetails: [
-			appeal?.appellantCase?.siteAccessDetails,
-			appeal?.lpaQuestionnaire?.siteAccessDetails
-		].filter((item) => item && item !== null)
+			appeal?.appellantCase?.siteAccessDetails || '',
+			appeal?.lpaQuestionnaire?.siteAccessDetails || ''
+		]
 	};
 };
 
@@ -110,8 +110,8 @@ export const mapSiteAccessDetailsOut = (appeal) => {
 export const mapSiteSafetyDetailsOut = (appeal) => {
 	return {
 		siteSafetyDetails: [
-			appeal?.appellantCase?.siteSafetyDetails,
-			appeal?.lpaQuestionnaire?.siteSafetyDetails
-		].filter((item) => item && item !== null)
+			appeal?.appellantCase?.siteSafetyDetails || '',
+			appeal?.lpaQuestionnaire?.siteSafetyDetails || ''
+		]
 	};
 };

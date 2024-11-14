@@ -889,11 +889,13 @@ const generateS78LpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 				}
 			},
 			rows: [
+				mappedLPAQData.lpaq?.eiaEnvironmentalImpactSchedule?.display.summaryListItem,
 				mappedLPAQData.lpaq?.eiaColumnTwoThreshold?.display.summaryListItem,
 				mappedLPAQData.lpaq?.eiaRequiresEnvironmentalStatement?.display.summaryListItem,
 				mappedLPAQData.lpaq?.eiaEnvironmentalStatement?.display.summaryListItem,
 				mappedLPAQData.lpaq?.eiaScreeningOpinion?.display.summaryListItem,
-				mappedLPAQData.lpaq?.eiaScreeningDirection?.display.summaryListItem
+				mappedLPAQData.lpaq?.eiaScreeningDirection?.display.summaryListItem,
+				mappedLPAQData.lpaq?.eiaDevelopmentDescription?.display.summaryListItem
 			].filter(isDefined)
 		}
 	});
@@ -948,6 +950,7 @@ const generateS78LpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 				mappedLPAQData.lpaq?.developmentPlanPolicies?.display.summaryListItem,
 				mappedLPAQData.lpaq?.supplementaryPlanning?.display.summaryListItem,
 				mappedLPAQData.lpaq?.emergingPlan?.display.summaryListItem,
+				mappedLPAQData.lpaq?.hasCommunityInfrastructureLevy?.display.summaryListItem,
 				mappedLPAQData.lpaq?.communityInfrastructureLevy?.display.summaryListItem,
 				mappedLPAQData.lpaq?.isInfrastructureLevyFormallyAdopted?.display.summaryListItem,
 				mappedLPAQData.lpaq?.infrastructureLevyAdoptedDate?.display.summaryListItem,

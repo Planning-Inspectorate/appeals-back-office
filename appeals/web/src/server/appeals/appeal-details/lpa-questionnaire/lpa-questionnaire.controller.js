@@ -280,8 +280,7 @@ export const getAddDocuments = async (request, response) => {
 		backButtonUrl: `/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}`,
 		nextPageUrl: `/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/${request.params.documentType}/add-document-details/{{folderId}}`,
 		isLateEntry: getValidationOutcomeFromLpaQuestionnaire(lpaQuestionnaireDetails) === 'complete',
-		pageHeadingTextOverride,
-		allowMultipleFiles: false
+		pageHeadingTextOverride
 	});
 };
 

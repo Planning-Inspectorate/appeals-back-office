@@ -130,7 +130,7 @@ describe('interested-party-comments', () => {
 		});
 	});
 
-	describe('GET /reject-comment', () => {
+	describe('GET /reject-reason', () => {
 		beforeEach(() => {
 			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
 			nock('http://test')
@@ -139,7 +139,7 @@ describe('interested-party-comments', () => {
 		});
 		afterEach(teardown);
 		it('should render reject comment page', async () => {
-			const response = await request.get(`${baseUrl}/2/interested-party-comments/5/reject`);
+			const response = await request.get(`${baseUrl}/2/interested-party-comments/5/reject-reason`);
 
 			expect(response.statusCode).toBe(200);
 
@@ -147,6 +147,31 @@ describe('interested-party-comments', () => {
 			const elementInnerHtml = dom.innerHTML;
 			expect(elementInnerHtml).toMatchSnapshot();
 			expect(elementInnerHtml).toContain('Why are you rejecting the comment?</h1>');
+		});
+	});
+
+	describe('GET /reject-allow-resubmit', () => {
+		beforeEach(() => {
+			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
+			nock('http://test/')
+				.post('/appeals/add-business-days')
+				.reply(200, JSON.stringify('2024-11-13T00:00:00.000Z'));
+		});
+
+		afterEach(teardown);
+
+		it('should render allow resubmit page', async () => {
+			const response = await request.get(
+				`${baseUrl}/2/interested-party-comments/5/reject-allow-resubmit`
+			);
+
+			expect(response.statusCode).toBe(200);
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Do you want to allow the interested party to resubmit a comment?</h1>'
+			);
 		});
 	});
 });

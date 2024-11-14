@@ -41,8 +41,7 @@ export const getDocumentUpload = async (request, response) => {
 		appealDetails: currentAppeal,
 		backButtonUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}`,
 		nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/add-document-details/${currentFolder.folderId}`,
-		pageHeadingTextOverride: `Upload ${correspondenceCategory} correspondence`,
-		allowMultipleFiles: false
+		pageHeadingTextOverride: `Upload ${correspondenceCategory} correspondence`
 	});
 };
 

@@ -82,6 +82,8 @@ extends:
               azurecrName: $(azurecrName)
               dockerfilePath: $(Build.SourcesDirectory)/appeals/api/Dockerfile
               repository: back-office/back-office-appeals-api
+              buildArgs:
+                - GIT_SHA=$(Build.SourceVersion)
       - name: Build Appeals BO Web
         condition: >-
           and(
@@ -102,6 +104,8 @@ extends:
               azurecrName: $(azurecrName)
               dockerfilePath: $(Build.SourcesDirectory)/appeals/web/Dockerfile
               repository: back-office/appeals-web
+              buildArgs:
+                - GIT_SHA=$(Build.SourceVersion)
       - name: Build All Functions
         condition: >-
           and(

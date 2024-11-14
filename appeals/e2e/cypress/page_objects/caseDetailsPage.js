@@ -211,6 +211,7 @@ export class CaseDetailsPage extends Page {
 		}).format(dateToday); // Format the date
 		this.elements
 			.getAppealStartDate()
+		cy.get('.appeal-start-date > .govuk-summary-list__value')
 			.invoke('text')
 			.then((dateText) => {
 				expect(dateText.trim()).to.equal(formattedDate);

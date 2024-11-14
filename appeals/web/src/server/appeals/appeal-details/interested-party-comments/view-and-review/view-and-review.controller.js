@@ -8,7 +8,8 @@ import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 import {
 	rejectInterestedPartyCommentPage,
 	reviewInterestedPartyCommentPage,
-	viewInterestedPartyCommentPage
+	viewInterestedPartyCommentPage,
+	rejectAllowResubmitPage
 } from './view-and-review.mapper.js';
 import {
 	getRepresentationRejectionReasonOptions,
@@ -54,14 +55,14 @@ export const renderReviewInterestedPartyComment = render(
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export const renderRejectInterestedPartyComment = async (request, response) => {
+export const renderRejectReason = async (request, response) => {
+	const { currentAppeal, currentComment, apiClient, errors } = request;
+
+	if (!currentAppeal || !currentComment) {
+		return response.status(404).render('app/404.njk');
+	}
+
 	try {
-		const { currentAppeal, currentComment, apiClient, errors } = request;
-
-		if (!currentAppeal || !currentComment) {
-			return response.status(404).render('app/404.njk');
-		}
-
 		const rejectionReasons = await getRepresentationRejectionReasonOptions(apiClient);
 		const mappedRejectionReasons = mapRejectionReasonOptionsToCheckboxItemParameters(
 			currentComment,
@@ -74,6 +75,34 @@ export const renderRejectInterestedPartyComment = async (request, response) => {
 			errors,
 			pageContent,
 			rejectionReasons: mappedRejectionReasons
+		});
+	} catch (error) {
+		logger.error(error);
+		return response.status(500).render('app/500.njk');
+	}
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * */
+export const renderAllowResubmit = async (request, response) => {
+	const { currentAppeal, currentComment, errors } = request;
+
+	if (!currentAppeal || !currentComment) {
+		return response.status(404).render('app/404.njk');
+	}
+
+	try {
+		const pageContent = await rejectAllowResubmitPage(
+			request.apiClient,
+			currentAppeal,
+			currentComment
+		);
+
+		return response.status(200).render('patterns/check-and-confirm-page.pattern.njk', {
+			errors,
+			pageContent
 		});
 	} catch (error) {
 		logger.error(error);
@@ -121,7 +150,7 @@ export const postReviewInterestedPartyComment = async (request, response) => {
 
 		if (status === COMMENT_STATUS.INVALID) {
 			return response.redirect(
-				`/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/reject`
+				`/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/reject-reason`
 			);
 		}
 
@@ -142,41 +171,61 @@ export const postReviewInterestedPartyComment = async (request, response) => {
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export const postRejectInterestedPartyComment = async (request, response) => {
-	try {
-		const {
-			errors,
-			currentAppeal,
-			currentComment,
-			params: { appealId, commentId },
-			body,
-			apiClient,
-			session
-		} = request;
+export const postRejectReason = async (request, response) => {
+	const {
+		currentComment,
+		params: { appealId, commentId },
+		errors,
+		session,
+		body
+	} = request;
 
-		if (!currentAppeal) {
-			logger.error('Current appeal not found.');
-			return response.status(500).render('app/500.njk');
-		}
+	if (errors) {
+		return renderRejectReason(request, response);
+	}
 
-		if (errors) {
-			const pageContent = rejectInterestedPartyCommentPage(currentAppeal, currentComment);
+	session.rejectIpComment = body;
 
-			const rejectionReasons = await getRepresentationRejectionReasonOptions(apiClient);
-			const mappedRejectionReasons = mapRejectionReasonOptionsToCheckboxItemParameters(
-				currentComment,
-				rejectionReasons
+	if (currentComment.represented.email) {
+		return response
+			.status(200)
+			.redirect(
+				`/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/reject-allow-resubmit`
 			);
+	}
 
-			return response.status(200).render('appeals/appeal/reject-ip-comment.njk', {
-				errors,
-				pageContent,
-				rejectionReasons: mappedRejectionReasons
-			});
-		}
+	return postRejectInterestedPartyComment(request, response);
+};
 
-		const rejectionReasons = mapRejectionReasonPayload(body);
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const postAllowResubmit = async (request, response) => {
+	const { errors } = request;
 
+	if (errors) {
+		return renderAllowResubmit(request, response);
+	}
+
+	// TODO: Do something with the allowResubmit value
+	return postRejectInterestedPartyComment(request, response);
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const postRejectInterestedPartyComment = async (request, response) => {
+	const {
+		params: { appealId, commentId },
+		apiClient,
+		session
+	} = request;
+
+	const rejectionReasons = mapRejectionReasonPayload(session.rejectIpComment);
+
+	try {
 		await updateRejectionReasons(apiClient, appealId, commentId, rejectionReasons);
 		await patchInterestedPartyCommentStatus(apiClient, appealId, commentId, COMMENT_STATUS.INVALID);
 

@@ -10,14 +10,6 @@ import * as service from './is-infrastructure-levy-formally-adopted.service.js';
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export const getChangeIsInfrastructureLevyFormallyAdopted = async (request, response) => {
-	return renderChangeIsInfrastructureLevyFormallyAdopted(request, response);
-};
-
-/**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- */
 const renderChangeIsInfrastructureLevyFormallyAdopted = async (request, response) => {
 	try {
 		const { currentAppeal, session, errors, originalUrl, apiClient } = request;
@@ -45,6 +37,13 @@ const renderChangeIsInfrastructureLevyFormallyAdopted = async (request, response
 
 	return response.status(500).render('app/500.njk');
 };
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const getChangeIsInfrastructureLevyFormallyAdopted =
+	renderChangeIsInfrastructureLevyFormallyAdopted;
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request

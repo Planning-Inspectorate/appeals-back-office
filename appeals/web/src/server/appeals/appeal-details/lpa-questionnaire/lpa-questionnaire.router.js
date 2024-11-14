@@ -27,9 +27,12 @@ import hasProtectedSpeciesRouter from './has-protected-species/has-protected-spe
 import affectsScheduledMonumentRouter from './affects-scheduled-monument/affects-scheduled-monument.router.js';
 import isGypsyOrTravellerSiteRouter from './is-gypsy-or-traveller-site/is-gypsy-or-traveller-site.router.js';
 import isAonbNationalLandscapeRouter from './is-aonb-national-landscape/is-aonb-national-landscape.router.js';
+import hasCommunityInfrastructureLevyRouter from './has-community-infrastructure-levy/has-community-infrastructure-levy.router.js';
 import isInfrastructureLevyFormallyAdoptedRouter from './is-infrastructure-levy-formally-adopted/is-infrastructure-levy-formally-adopted.router.js';
 import infrastructureLevyAdoptedDateRouter from './infrastructure-levy-adopted-date/infrastructure-levy-adopted-date.router.js';
 import infrastructureLevyExpectedDateRouter from './infrastructure-levy-expected-date/infrastructure-levy-expected-date.router.js';
+import mapEiaEnvironmentalImpactScheduleRouter from './eia-environmental-impact-schedule/eia-environmental-impact-schedule.router.js';
+import mapEiaDevelopmentDescriptionRouter from './eia-development-description/eia-development-description.router.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -140,6 +143,13 @@ router.use(
 );
 
 router.use(
+	'/:lpaQuestionnaireId/has-community-infrastructure-levy',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	hasCommunityInfrastructureLevyRouter
+);
+
+router.use(
 	'/:lpaQuestionnaireId/is-infrastructure-levy-formally-adopted',
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
@@ -158,6 +168,20 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	infrastructureLevyExpectedDateRouter
+);
+
+router.use(
+	'/:lpaQuestionnaireId/eia-environmental-impact-schedule',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	mapEiaEnvironmentalImpactScheduleRouter
+);
+
+router.use(
+	'/:lpaQuestionnaireId/eia-development-description',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	mapEiaDevelopmentDescriptionRouter
 );
 
 router

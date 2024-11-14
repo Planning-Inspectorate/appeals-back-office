@@ -7,6 +7,10 @@ import {
 	APPEAL_TYPE_SHORTHAND_FPA,
 	APPEAL_TYPE_SHORTHAND_HAS
 } from '../../server/endpoints/constants.js';
+import {
+	APPEAL_EIA_ENVIRONMENTAL_IMPACT_SCHEDULE,
+	APPEAL_EIA_DEVELOPMENT_DESCRIPTION
+} from 'pins-data-model';
 
 /**
  * @returns {boolean}
@@ -222,8 +226,24 @@ export function createLPAQuestionnaireForAppealType(appealTypeShorthand) {
 				isGreenBelt: randomBool(),
 				eiaColumnTwoThreshold: randomBool(),
 				eiaRequiresEnvironmentalStatement: randomBool(),
+				hasInfrastructureLevy: randomBool(),
+				isInfrastructureLevyFormallyAdopted: randomBool(),
 				infrastructureLevyAdoptedDate: randomBool() ? new Date(2023, 4, 9) : null,
-				infrastructureLevyExpectedDate: randomBool() ? new Date(2023, 4, 9) : null
+				infrastructureLevyExpectedDate: randomBool() ? new Date(2023, 4, 9) : null,
+				eiaEnvironmentalImpactSchedule: (() => {
+					const randomNumber = Math.random();
+					return randomNumber < 0.33
+						? null
+						: randomNumber < 0.66
+						? APPEAL_EIA_ENVIRONMENTAL_IMPACT_SCHEDULE.SCHEDULE_1
+						: APPEAL_EIA_ENVIRONMENTAL_IMPACT_SCHEDULE.SCHEDULE_2;
+				})(),
+				eiaDevelopmentDescription: (() => {
+					const developmentDescriptionValues = Object.values(APPEAL_EIA_DEVELOPMENT_DESCRIPTION);
+					return developmentDescriptionValues[
+						Math.floor(Math.random() * developmentDescriptionValues.length)
+					];
+				})()
 			};
 		default:
 			return;

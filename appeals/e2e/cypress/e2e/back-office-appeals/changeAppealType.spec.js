@@ -32,7 +32,7 @@ describe('Change Appeal Type', () => {
 		});
 	});
 
-	it('Change appeal type and resubmit', { tags: tag.smoke }, () => {
+	it('Change appeal type and resubmit', () => {
 		let futureDate = new Date();
 		futureDate.setDate(futureDate.getDate() + 28);
 

@@ -37,10 +37,13 @@ const updateLPAQuestionnaireById = (id, data) => {
 				isAffectingNeighbouringSites: data.isAffectingNeighbouringSites,
 				eiaColumnTwoThreshold: data.eiaColumnTwoThreshold,
 				eiaRequiresEnvironmentalStatement: data.eiaRequiresEnvironmentalStatement,
+				eiaEnvironmentalImpactSchedule: data.eiaEnvironmentalImpactSchedule,
+				eiaDevelopmentDescription: data.eiaDevelopmentDescription,
 				affectsScheduledMonument: data.affectsScheduledMonument,
 				hasProtectedSpecies: data.hasProtectedSpecies,
 				isAonbNationalLandscape: data.isAonbNationalLandscape,
 				isGypsyOrTravellerSite: data.isGypsyOrTravellerSite,
+				hasInfrastructureLevy: data.hasInfrastructureLevy,
 				isInfrastructureLevyFormallyAdopted: data.isInfrastructureLevyFormallyAdopted,
 				infrastructureLevyAdoptedDate: data.infrastructureLevyAdoptedDate,
 				infrastructureLevyExpectedDate: data.infrastructureLevyExpectedDate
