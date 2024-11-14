@@ -1,6 +1,7 @@
 import { dateISOStringToDisplayDate, addBusinessDays } from '#lib/dates.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { yesNoInput } from '#lib/mappers/components/page-components/radio.js';
+import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import("#appeals/appeal-details/interested-party-comments/interested-party-comments.types.js").Representation} Representation */
@@ -41,7 +42,7 @@ export async function rejectAllowResubmitPage(apiClient, appealDetails, comment)
 	/** @type {PageContent} */
 	const pageContent = {
 		heading: 'Do you want to allow the interested party to resubmit a comment?',
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/reject-reason`,
+		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/reject/select-reason`,
 		preHeading: `Appeal ${shortReference}`,
 		headingClasses: 'govuk-heading-l',
 		hint: `The interested party can resubmit their comment by ${deadlineString}.`,
@@ -54,6 +55,128 @@ export async function rejectAllowResubmitPage(apiClient, appealDetails, comment)
 				id: 'allowResubmit'
 			})
 		]
+	};
+
+	return pageContent;
+}
+
+/**
+ * @param {Appeal} appealDetails
+ * @param {Representation} comment
+ * @param {import('@pins/appeals.api').Appeals.RepresentationRejectionReason[]} rejectionReasons
+ * @param {{ rejectionReasons: string[], allowResubmit: boolean }} payload
+ * @returns {PageContent}
+ * */
+export function rejectCheckYourAnswersPage(appealDetails, comment, rejectionReasons, payload) {
+	const shortReference = appealShortReference(appealDetails.appealReference);
+
+	const attachmentsList =
+		comment.attachments.length > 0
+			? buildHtmUnorderedList(
+					comment.attachments.map((a) => `<a href="#">${a.documentVersion.document.name}</a>`)
+			  )
+			: null;
+
+	/** @type {string[]} */
+	const reasonNames = payload.rejectionReasons.map(
+		(reasonId) => rejectionReasons.find((r) => r.id === parseInt(reasonId))?.name ?? ''
+	);
+
+	const rejectionReasonHtml = buildHtmUnorderedList(
+		reasonNames,
+		0,
+		'govuk-list govuk-!-margin-top-0 govuk-!-padding-left-0 govuk-list--bullet'
+	);
+
+	/** @type {PageComponent} */
+	const summaryListComponent = {
+		type: 'summary-list',
+		parameters: {
+			rows: [
+				{
+					key: {
+						text: 'Interested party'
+					},
+					value: {
+						text: comment.represented.name
+					}
+				},
+				{
+					key: {
+						text: 'Comment'
+					},
+					value: {
+						text: comment.originalRepresentation
+					}
+				},
+				{
+					key: {
+						text: 'Supporting documents'
+					},
+					value: attachmentsList ? { html: attachmentsList } : { text: 'Not provided' }
+				},
+				{
+					key: {
+						text: 'Review decision'
+					},
+					value: {
+						text: 'Comment rejected'
+					},
+					actions: {
+						items: [
+							{
+								text: 'Change',
+								href: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/review`
+							}
+						]
+					}
+				},
+				{
+					key: {
+						text: 'Why are you rejecting the comment?'
+					},
+					value: {
+						html: rejectionReasonHtml
+					},
+					actions: {
+						items: [
+							{
+								text: 'Change',
+								href: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/reject/select-reason`
+							}
+						]
+					}
+				},
+				{
+					key: {
+						text: 'Do you want to allow the interested party to resubmit a comment?'
+					},
+					value: {
+						text: payload.allowResubmit ? 'Yes' : 'No'
+					},
+					actions: {
+						items: [
+							{
+								text: 'Change',
+								href: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/reject/allow-resubmit`
+							}
+						]
+					}
+				}
+			]
+		}
+	};
+
+	/** @type {PageContent} */
+	const pageContent = {
+		heading: 'Check details and reject comment',
+		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/reject/allow-resubmit`,
+		preHeading: `Appeal ${shortReference}`,
+		headingClasses: 'govuk-heading-l',
+		submitButtonProperties: {
+			text: 'Reject comment'
+		},
+		pageComponents: [summaryListComponent]
 	};
 
 	return pageContent;
