@@ -15,6 +15,7 @@ export class CaseDetailsPage extends Page {
 		changeInspector: 'change-inspector',
 		reviewAppellantCase: 'review-appellant-case',
 		changeSetVisitType: 'change-set-visit-type',
+		changeScheduleVisit: 'change-schedule-visit',
 		arrangeScheduleVisit: 'arrange-schedule-visit',
 		readyToStart: 'ready-to-start',
 		issueDetermination: 'issue-determination',
@@ -39,6 +40,7 @@ export class CaseDetailsPage extends Page {
 			cy.contains(this.selectors.summaryListValue, answer, { matchCase: false }),
 		reviewAppeallantCase: () => cy.getByData(this._cyDataSelectors.reviewAppellantCase),
 		changeSetVisitType: () => cy.getByData(this._cyDataSelectors.changeSetVisitType),
+		changeScheduleVisit: () => cy.getByData(this._cyDataSelectors.changeScheduleVisit),
 		arrangeScheduleVisit: () => cy.getByData(this._cyDataSelectors.arrangeScheduleVisit),
 		readyToStart: () => cy.getByData(this._cyDataSelectors.readyToStart),
 		issueDecision: () => cy.getByData(this._cyDataSelectors.issueDetermination),
@@ -53,7 +55,8 @@ export class CaseDetailsPage extends Page {
 		costDecisionStatus: () => cy.get('.govuk-table__cell appeal-costs-decision-status'),
 		changeSiteOwnership: () => cy.getByData(this._cyDataSelectors.changeSiteOwnership),
 		changeLpaqDueDate: () => cy.getByData(this._cyDataSelectors.changeLpaqDueDate),
-		changeStartDate: () => cy.getByData(this._cyDataSelectors.changeStartDate)
+		changeStartDate: () => cy.getByData(this._cyDataSelectors.changeStartDate),
+		getAppealStartDate: () => cy.get('.appeal-start-date > .govuk-summary-list__value')
 	};
 	/********************************************************
 	 ************************ Actions ************************
@@ -106,9 +109,14 @@ export class CaseDetailsPage extends Page {
 		this.elements.readyToStart().click();
 	}
 
-	clickChangeVisitTypeHasCaseTimetable() {
+	clickArrangeVisitTypeHasCaseTimetable() {
 		this.clickAccordionByText('Timetable');
 		this.elements.arrangeScheduleVisit().click();
+	}
+
+	clickChangeVisitTypeHasCaseTimetable() {
+		this.clickAccordionByText('Timetable');
+		this.elements.changeScheduleVisit().click();
 	}
 
 	clickIssueDecision() {
@@ -201,7 +209,8 @@ export class CaseDetailsPage extends Page {
 			month: 'long',
 			year: 'numeric'
 		}).format(dateToday); // Format the date
-		cy.get('.appeal-start-date > .govuk-summary-list__value')
+		this.elements
+			.getAppealStartDate()
 			.invoke('text')
 			.then((dateText) => {
 				expect(dateText.trim()).to.equal(formattedDate);

@@ -18,14 +18,13 @@ describe('Schedule site visit', () => {
 	const visitTypeTestCases = ['Accompanied', 'Access required', 'Unaccompanied'];
 
 	visitTypeTestCases.forEach((visitType, index) => {
-		it(`Change to ${visitType} visit from Site details`, { tags: tag.smoke }, () => {
+		it(`Arrange ${visitType} visit from Site details`, { tags: tag.smoke }, () => {
 			let visitDate = happyPathHelper.validVisitDate();
 
 			cy.createCase().then((caseRef) => {
 				happyPathHelper.assignCaseOfficer(caseRef);
 				happyPathHelper.reviewAppellantCase(caseRef);
 				happyPathHelper.startCase(caseRef);
-
 				caseDetailsPage.clickChangeVisitTypeHasSiteDetails();
 				caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch(visitType));
 				dateTimeSection.enterVisitDate(visitDate);
@@ -41,15 +40,14 @@ describe('Schedule site visit', () => {
 			});
 		});
 
-		it(`Change to ${visitType} site visit with time from case timetable`, () => {
+		it(`Arrange ${visitType} site visit with time from case timetable`, () => {
 			let visitDate = happyPathHelper.validVisitDate();
 
 			cy.createCase().then((caseRef) => {
 				happyPathHelper.assignCaseOfficer(caseRef);
 				happyPathHelper.reviewAppellantCase(caseRef);
 				happyPathHelper.startCase(caseRef);
-
-				caseDetailsPage.clickChangeVisitTypeHasCaseTimetable();
+				caseDetailsPage.clickArrangeVisitTypeHasCaseTimetable();
 				caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch(visitType));
 				dateTimeSection.enterVisitDate(visitDate);
 				dateTimeSection.enterVisitStartTime('08', '00');
