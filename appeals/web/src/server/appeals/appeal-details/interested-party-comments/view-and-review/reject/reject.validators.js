@@ -11,10 +11,7 @@ export const validateRejectReason = createValidator(
 		.withMessage('Please select one or more reasons why the comment is invalid')
 );
 
-export const validateRejectionReasonTextItems = createCheckboxTextItemsValidator(
-	'rejectionReason',
-	'appellantCaseNotValidReason'
-);
+export const validateRejectionReasonTextItems = createCheckboxTextItemsValidator('rejectionReason');
 
 export const validateAllowResubmit = createValidator(
 	body('allowResubmit')
