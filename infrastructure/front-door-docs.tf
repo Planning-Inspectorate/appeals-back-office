@@ -1,22 +1,8 @@
-resource "azurerm_cdn_frontdoor_profile" "docs" {
-  name                = "${local.org}-fd-${local.service_name}-docs-${var.environment}"
-  resource_group_name = azurerm_resource_group.primary.name
-  sku_name            = "Standard_AzureFrontDoor"
-
-  tags = local.tags
-}
-
-resource "azurerm_cdn_frontdoor_endpoint" "docs" {
-  name                     = "${local.org}-fd-${local.service_name}-docs-${var.environment}"
-  cdn_frontdoor_profile_id = azurerm_cdn_frontdoor_profile.docs.id
-
-  tags = local.tags
-}
-
 resource "azurerm_cdn_frontdoor_origin_group" "docs" {
   name                     = "${local.org}-fd-${local.service_name}-docs-${var.environment}"
-  cdn_frontdoor_profile_id = azurerm_cdn_frontdoor_profile.docs.id
+  cdn_frontdoor_profile_id = data.azurerm_cdn_frontdoor_profile.web.id
   session_affinity_enabled = true
+  provider                 = azurerm.front_door
 
   health_probe {
     interval_in_seconds = 240
@@ -36,6 +22,7 @@ resource "azurerm_cdn_frontdoor_origin" "docs" {
   name                          = "${local.org}-fd-${local.service_name}-docs-${var.environment}"
   cdn_frontdoor_origin_group_id = azurerm_cdn_frontdoor_origin_group.docs.id
   enabled                       = true
+  provider                      = azurerm.front_door
 
   certificate_name_check_enabled = true
 
@@ -49,8 +36,9 @@ resource "azurerm_cdn_frontdoor_origin" "docs" {
 
 resource "azurerm_cdn_frontdoor_custom_domain" "docs" {
   name                     = "${local.org}-fd-${local.service_name}-docs-${var.environment}"
-  cdn_frontdoor_profile_id = azurerm_cdn_frontdoor_profile.docs.id
+  cdn_frontdoor_profile_id = data.azurerm_cdn_frontdoor_profile.web.id
   host_name                = local.documents.domain
+  provider                 = azurerm.front_door
 
   tls {
     certificate_type    = "ManagedCertificate"
@@ -60,9 +48,10 @@ resource "azurerm_cdn_frontdoor_custom_domain" "docs" {
 
 resource "azurerm_cdn_frontdoor_route" "docs" {
   name                          = "${local.org}-fd-${local.service_name}-docs-${var.environment}"
-  cdn_frontdoor_endpoint_id     = azurerm_cdn_frontdoor_endpoint.docs.id
+  cdn_frontdoor_endpoint_id     = data.azurerm_cdn_frontdoor_endpoint.shared.id
   cdn_frontdoor_origin_group_id = azurerm_cdn_frontdoor_origin_group.docs.id
   cdn_frontdoor_origin_ids      = [azurerm_cdn_frontdoor_origin.docs.id]
+  provider                      = azurerm.front_door
 
   forwarding_protocol    = "MatchRequest"
   https_redirect_enabled = true
@@ -77,4 +66,5 @@ resource "azurerm_cdn_frontdoor_route" "docs" {
 resource "azurerm_cdn_frontdoor_custom_domain_association" "docs" {
   cdn_frontdoor_custom_domain_id = azurerm_cdn_frontdoor_custom_domain.docs.id
   cdn_frontdoor_route_ids        = [azurerm_cdn_frontdoor_route.docs.id]
+  provider                       = azurerm.front_door
 }
