@@ -98,6 +98,13 @@ documents_config = {
 
 environment = "test"
 
+front_door_config = {
+  name        = "pins-fd-common-tooling"
+  rg          = "pins-rg-common-tooling"
+  ep_name     = "pins-fde-appeals"
+  use_tooling = true
+}
+
 front_office_infra_config = {
   deploy_connections = true
   network = {

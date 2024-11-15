@@ -30,6 +30,14 @@ provider "azurerm" {
 }
 
 provider "azurerm" {
+  # either tooling or prod for shared FD instance
+  alias           = "front_door"
+  subscription_id = var.front_door_config.use_tooling == true ? var.tooling_config.subscription_id : null
+
+  features {}
+}
+
+provider "azurerm" {
   alias                           = "horizon"
   subscription_id                 = var.horizon_infra_config.subscription_id
   resource_provider_registrations = "none"

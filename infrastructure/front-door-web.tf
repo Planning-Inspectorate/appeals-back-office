@@ -1,22 +1,8 @@
-resource "azurerm_cdn_frontdoor_profile" "web" {
-  name                = "${local.org}-fd-${local.service_name}-web-${var.environment}"
-  resource_group_name = azurerm_resource_group.primary.name
-  sku_name            = "Premium_AzureFrontDoor"
-
-  tags = local.tags
-}
-
-resource "azurerm_cdn_frontdoor_endpoint" "web" {
-  name                     = "${local.org}-fd-${local.service_name}-web-${var.environment}"
-  cdn_frontdoor_profile_id = azurerm_cdn_frontdoor_profile.web.id
-
-  tags = local.tags
-}
-
 resource "azurerm_cdn_frontdoor_origin_group" "web" {
   name                     = "${local.org}-fd-${local.service_name}-web-${var.environment}"
-  cdn_frontdoor_profile_id = azurerm_cdn_frontdoor_profile.web.id
+  cdn_frontdoor_profile_id = data.azurerm_cdn_frontdoor_profile.web.id
   session_affinity_enabled = true
+  provider                 = azurerm.front_door
 
   health_probe {
     interval_in_seconds = 240
@@ -38,6 +24,7 @@ resource "azurerm_cdn_frontdoor_origin" "web" {
   enabled                       = true
 
   certificate_name_check_enabled = true
+  provider                       = azurerm.front_door
 
   # use the second web app for now in TEST while diagnosing deployment issues
   host_name          = module.app_web.default_site_hostname
@@ -50,8 +37,9 @@ resource "azurerm_cdn_frontdoor_origin" "web" {
 
 resource "azurerm_cdn_frontdoor_custom_domain" "web" {
   name                     = "${local.org}-fd-${local.service_name}-web-${var.environment}"
-  cdn_frontdoor_profile_id = azurerm_cdn_frontdoor_profile.web.id
+  cdn_frontdoor_profile_id = data.azurerm_cdn_frontdoor_profile.web.id
   host_name                = var.web_app_domain
+  provider                 = azurerm.front_door
 
   tls {
     certificate_type    = "ManagedCertificate"
@@ -61,9 +49,10 @@ resource "azurerm_cdn_frontdoor_custom_domain" "web" {
 
 resource "azurerm_cdn_frontdoor_route" "web" {
   name                          = "${local.org}-fd-${local.service_name}-web-${var.environment}"
-  cdn_frontdoor_endpoint_id     = azurerm_cdn_frontdoor_endpoint.web.id
+  cdn_frontdoor_endpoint_id     = data.azurerm_cdn_frontdoor_endpoint.shared.id
   cdn_frontdoor_origin_group_id = azurerm_cdn_frontdoor_origin_group.web.id
   cdn_frontdoor_origin_ids      = [azurerm_cdn_frontdoor_origin.web.id]
+  provider                      = azurerm.front_door
 
   forwarding_protocol    = "MatchRequest"
   https_redirect_enabled = true
@@ -78,6 +67,7 @@ resource "azurerm_cdn_frontdoor_route" "web" {
 resource "azurerm_cdn_frontdoor_custom_domain_association" "web" {
   cdn_frontdoor_custom_domain_id = azurerm_cdn_frontdoor_custom_domain.web.id
   cdn_frontdoor_route_ids        = [azurerm_cdn_frontdoor_route.web.id]
+  provider                       = azurerm.front_door
 }
 
 # WAF policy
@@ -88,6 +78,7 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "web" {
   enabled                           = true
   mode                              = "Prevention"
   custom_block_response_status_code = 403
+  provider                          = azurerm.front_door
 
   tags = local.tags
 
@@ -157,7 +148,8 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "web" {
 
 resource "azurerm_cdn_frontdoor_security_policy" "web" {
   name                     = replace("${local.org}-sec-${local.service_name}-web-${var.environment}", "-", "")
-  cdn_frontdoor_profile_id = azurerm_cdn_frontdoor_profile.web.id
+  cdn_frontdoor_profile_id = data.azurerm_cdn_frontdoor_profile.web.id
+  provider                 = azurerm.front_door
 
   security_policies {
     firewall {
@@ -176,8 +168,9 @@ resource "azurerm_cdn_frontdoor_security_policy" "web" {
 # moinitoring
 resource "azurerm_monitor_diagnostic_setting" "web_front_door" {
   name                       = "${local.org}-fd-mds-${local.service_name}-web-${var.environment}"
-  target_resource_id         = azurerm_cdn_frontdoor_profile.web.id
+  target_resource_id         = data.azurerm_cdn_frontdoor_profile.web.id
   log_analytics_workspace_id = azurerm_log_analytics_workspace.main.id
+  provider                   = azurerm.front_door
 
   enabled_log {
     category = "FrontdoorWebApplicationFirewallLog"

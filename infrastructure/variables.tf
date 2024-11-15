@@ -85,6 +85,16 @@ variable "environment" {
   type        = string
 }
 
+variable "front_door_config" {
+  description = "Config for the frontdoor in tooling subscription"
+  type = object({
+    name        = string
+    rg          = string
+    ep_name     = string
+    use_tooling = bool
+  })
+}
+
 variable "front_office_infra_config" {
   description = "Config for the front office infra"
   type = object({
