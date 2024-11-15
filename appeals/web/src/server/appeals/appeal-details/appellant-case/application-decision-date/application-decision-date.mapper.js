@@ -57,11 +57,11 @@ export const changeApplicationSetDecisionDatePage = (
 	let month = '';
 	let year = '';
 
-	if (storedSessionData) {
+	if (storedSessionData?.day && storedSessionData?.month && storedSessionData?.year) {
 		day = String(storedSessionData.day);
 		month = String(storedSessionData.month);
 		year = String(storedSessionData.year);
-	} else if (!storedSessionData && appellantCaseData.applicationDecisionDate) {
+	} else if (appellantCaseData.applicationDecisionDate) {
 		const formattedApplicationDecisionDate = dateISOStringToDayMonthYearHourMinute(
 			appellantCaseData.applicationDecisionDate
 		);
