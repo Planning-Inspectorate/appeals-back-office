@@ -35,7 +35,7 @@ export function allocationDetailsLevelPage(
 				},
 				parameters: {
 					name: 'allocation-level',
-					id: 'allocation-level',
+					idPrefix: 'allocation-level',
 					value: selectedAllocationLevel || null,
 					items: allocationDetailsData.allocationDetailsLevels.map((item) => ({
 						value: item.level,
@@ -105,6 +105,7 @@ export function allocationDetailsSpecialismPage(
 				type: 'checkboxes',
 				parameters: {
 					name: 'allocation-specialisms',
+					idPrefix: 'allocation-specialisms',
 					classes: 'govuk-checkboxes--small',
 					fieldset: {
 						legend: {

@@ -1540,6 +1540,7 @@ export async function deleteDocumentPage(
 				type: 'radios',
 				parameters: {
 					name: 'delete-file-answer',
+					idPrefix: 'delete-file-answer',
 					items: radioEntries
 				}
 			},

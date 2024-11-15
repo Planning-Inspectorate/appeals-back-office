@@ -30,7 +30,7 @@ export const changeOwnersKnownPage = (appealData, appellantCaseData, storedSessi
 				type: 'radios',
 				parameters: {
 					name: 'ownersKnownRadio',
-					id: 'owners-known-radio',
+					idPrefix: 'owners-known-radio',
 					fieldSet: {
 						legend: {
 							text: `Does the appellant know the other landowners?`,

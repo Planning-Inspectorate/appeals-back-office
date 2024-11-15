@@ -62,42 +62,42 @@ exports[`interested-party-comments GET /reject/select-reason should render rejec
                     <div class="govuk-form-group">
                         <div class="govuk-checkboxes" data-module="govuk-checkboxes">
                             <div class="govuk-checkboxes__item">
-                                <input class="govuk-checkboxes__input" id="rejectionReason" name="rejectionReason"
+                                <input class="govuk-checkboxes__input" id="rejection-reason" name="rejectionReason"
                                 type="checkbox" value="1">
-                                <label class="govuk-label govuk-checkboxes__label" for="rejectionReason">Received after deadline</label>
+                                <label class="govuk-label govuk-checkboxes__label" for="rejection-reason">Received after deadline</label>
                             </div>
                             <div class="govuk-checkboxes__item">
-                                <input class="govuk-checkboxes__input" id="rejectionReason-2" name="rejectionReason"
+                                <input class="govuk-checkboxes__input" id="rejection-reason-2" name="rejectionReason"
                                 type="checkbox" value="2">
-                                <label class="govuk-label govuk-checkboxes__label" for="rejectionReason-2">Includes personal and/or medical information</label>
+                                <label class="govuk-label govuk-checkboxes__label" for="rejection-reason-2">Includes personal and/or medical information</label>
                             </div>
                             <div class="govuk-checkboxes__item">
-                                <input class="govuk-checkboxes__input" id="rejectionReason-3" name="rejectionReason"
+                                <input class="govuk-checkboxes__input" id="rejection-reason-3" name="rejectionReason"
                                 type="checkbox" value="3">
-                                <label class="govuk-label govuk-checkboxes__label" for="rejectionReason-3">Includes inflammatory content</label>
+                                <label class="govuk-label govuk-checkboxes__label" for="rejection-reason-3">Includes inflammatory content</label>
                             </div>
                             <div class="govuk-checkboxes__item">
-                                <input class="govuk-checkboxes__input" id="rejectionReason-4" name="rejectionReason"
+                                <input class="govuk-checkboxes__input" id="rejection-reason-4" name="rejectionReason"
                                 type="checkbox" value="4">
-                                <label class="govuk-label govuk-checkboxes__label" for="rejectionReason-4">Duplicated comment</label>
+                                <label class="govuk-label govuk-checkboxes__label" for="rejection-reason-4">Duplicated comment</label>
                             </div>
                             <div class="govuk-checkboxes__item">
-                                <input class="govuk-checkboxes__input" id="rejectionReason-5" name="rejectionReason"
+                                <input class="govuk-checkboxes__input" id="rejection-reason-5" name="rejectionReason"
                                 type="checkbox" value="5">
-                                <label class="govuk-label govuk-checkboxes__label" for="rejectionReason-5">Not relevant to this appeal</label>
+                                <label class="govuk-label govuk-checkboxes__label" for="rejection-reason-5">Not relevant to this appeal</label>
                             </div>
                             <div class="govuk-checkboxes__item">
-                                <input class="govuk-checkboxes__input" id="rejectionReason-6" name="rejectionReason"
+                                <input class="govuk-checkboxes__input" id="rejection-reason-6" name="rejectionReason"
                                 type="checkbox" value="6">
-                                <label class="govuk-label govuk-checkboxes__label" for="rejectionReason-6">Contains links to web pages</label>
+                                <label class="govuk-label govuk-checkboxes__label" for="rejection-reason-6">Contains links to web pages</label>
                             </div>
                             <div class="govuk-checkboxes__item">
-                                <input class="govuk-checkboxes__input" id="rejectionReason-7" name="rejectionReason"
-                                type="checkbox" value="7" data-aria-controls="conditional-rejectionReason-7">
-                                <label class="govuk-label govuk-checkboxes__label" for="rejectionReason-7">Other</label>
+                                <input class="govuk-checkboxes__input" id="rejection-reason-7" name="rejectionReason"
+                                type="checkbox" value="7" data-aria-controls="conditional-rejection-reason-7">
+                                <label class="govuk-label govuk-checkboxes__label" for="rejection-reason-7">Other</label>
                             </div>
                             <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
-                            id="conditional-rejectionReason-7">
+                            id="conditional-rejection-reason-7">
                                 <div class="pins-add-another" aria-live="polite" data-max-item-count="10">
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">

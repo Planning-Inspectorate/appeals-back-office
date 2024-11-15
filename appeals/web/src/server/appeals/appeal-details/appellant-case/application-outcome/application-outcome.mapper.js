@@ -23,7 +23,7 @@ export const changeApplicationOutcomePage = (appealData, appellantCaseData, stor
 				type: 'radios',
 				parameters: {
 					name: 'application-outcome',
-					id: 'application-outcome',
+					idPrefix: 'application-outcome',
 					fieldSet: {
 						legend: {
 							text: `What was the application decision?`,

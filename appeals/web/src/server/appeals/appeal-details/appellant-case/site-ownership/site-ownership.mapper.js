@@ -31,7 +31,7 @@ export const changeSiteOwnershipPage = (appealData, appellantCaseData, storedSes
 				type: 'radios',
 				parameters: {
 					name: 'siteOwnershipRadio',
-					id: 'site-ownership-radio',
+					idPrefix: 'site-ownership-radio',
 					fieldSet: {
 						legend: {
 							text: `Is the site fully owned or partially owned by the appellant`,

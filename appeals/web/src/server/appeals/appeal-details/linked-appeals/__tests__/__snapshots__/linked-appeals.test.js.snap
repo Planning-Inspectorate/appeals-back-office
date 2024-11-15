@@ -14,14 +14,14 @@ exports[`linked-appeals GET /change-appeal-type/unlink-appeal should render the 
                     <fieldset class="govuk-fieldset">
                         <div class="govuk-radios" data-module="govuk-radios">
                             <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="unlinkAppeal" name="unlinkAppeal"
+                                <input class="govuk-radios__input" id="unlink-appeal" name="unlinkAppeal"
                                 type="radio" value="yes">
-                                <label class="govuk-label govuk-radios__label" for="unlinkAppeal">Yes</label>
+                                <label class="govuk-label govuk-radios__label" for="unlink-appeal">Yes</label>
                             </div>
                             <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="unlinkAppeal-2" name="unlinkAppeal"
+                                <input class="govuk-radios__input" id="unlink-appeal-2" name="unlinkAppeal"
                                 type="radio" value="no">
-                                <label class="govuk-label govuk-radios__label" for="unlinkAppeal-2">No</label>
+                                <label class="govuk-label govuk-radios__label" for="unlink-appeal-2">No</label>
                             </div>
                         </div>
                     </fieldset>
@@ -1090,7 +1090,7 @@ exports[`linked-appeals POST /change-appeal-type/unlink-appeal should re-render 
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#unlinkAppeal">Please choose an option</a>
+                            <li><a href="#unlink-appeal">Please choose an option</a>
                             </li>
                         </ul>
                     </div>
@@ -1110,14 +1110,14 @@ exports[`linked-appeals POST /change-appeal-type/unlink-appeal should re-render 
                     <fieldset class="govuk-fieldset">
                         <div class="govuk-radios" data-module="govuk-radios">
                             <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="unlinkAppeal" name="unlinkAppeal"
+                                <input class="govuk-radios__input" id="unlink-appeal" name="unlinkAppeal"
                                 type="radio" value="yes">
-                                <label class="govuk-label govuk-radios__label" for="unlinkAppeal">Yes</label>
+                                <label class="govuk-label govuk-radios__label" for="unlink-appeal">Yes</label>
                             </div>
                             <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="unlinkAppeal-2" name="unlinkAppeal"
+                                <input class="govuk-radios__input" id="unlink-appeal-2" name="unlinkAppeal"
                                 type="radio" value="no">
-                                <label class="govuk-label govuk-radios__label" for="unlinkAppeal-2">No</label>
+                                <label class="govuk-label govuk-radios__label" for="unlink-appeal-2">No</label>
                             </div>
                         </div>
                     </fieldset>

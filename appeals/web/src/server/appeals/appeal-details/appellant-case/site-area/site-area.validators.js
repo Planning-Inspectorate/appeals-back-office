@@ -1,12 +1,13 @@
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
+import { createTextInputValidator } from '#lib/validators/text-input-validator.js';
 
 export const validateSiteArea = createValidator(
-	body('siteArea')
-		.trim()
-		.notEmpty()
-		.withMessage('Provide the site area')
-		.bail()
-		.isNumeric()
-		.withMessage('Provide a number or decimal')
+	createTextInputValidator(
+		'siteArea',
+		'Enter the site area',
+		9,
+		`Site area must be 9 characters or less`
+	),
+	body('siteArea').trim().isNumeric().withMessage('Site area must be a number or decimal')
 );

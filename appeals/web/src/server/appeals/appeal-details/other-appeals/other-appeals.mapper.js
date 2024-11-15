@@ -29,7 +29,7 @@ export async function addOtherAppealsPage(appealData, appealReferenceInputValue,
 		{
 			type: 'input',
 			parameters: {
-				id: 'addOtherAppealsReference',
+				id: 'add-other-appeals-reference',
 				name: 'addOtherAppealsReference',
 				classes: 'govuk-input--width-10',
 				value: appealReferenceInputValue
@@ -166,7 +166,7 @@ export function confirmOtherAppealsPage(currentAppeal, relatedAppeal, origin) {
 			type: 'radios',
 			parameters: {
 				name: 'relateAppealsAnswer',
-				id: 'relateAppealsAnswer',
+				idPrefix: 'relate-appeals-answer',
 				fieldset: {
 					legend: {
 						text: 'Do you want to relate these appeals?',
@@ -298,6 +298,7 @@ export function removeAppealRelationshipPage(appealData, relatedAppealShortRefer
 		type: 'radios',
 		parameters: {
 			name: 'removeAppealRelationship',
+			idPrefix: 'remove-appeal-relationship',
 			fieldset: {
 				legend: {
 					classes: 'govuk-fieldset__legend--m'

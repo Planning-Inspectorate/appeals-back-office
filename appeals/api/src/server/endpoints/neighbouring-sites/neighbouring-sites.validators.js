@@ -1,37 +1,34 @@
 import { composeMiddleware } from '@pins/express';
 import { validationErrorHandler } from '#middleware/error-handler.js';
 import {
-	validateStringParameter,
 	validateRequiredStringParameter,
 	validateStringParameterAllowingEmpty
 } from '#common/validators/string-parameter.js';
 import validateRegex from '#common/validators/regex-parameter.js';
-import validateNumberParameter, {
+import {
+	validateNumberParameter,
 	validateRequiredNumberParameter
 } from '#common/validators/number-parameter.js';
-import { ERROR_INVALID_POSTCODE } from '#endpoints/constants.js';
-
-const regexUkPostcode = /^([A-Za-z]{1,2}\d[A-Za-z\d]? ?\d[A-Za-z]{2}|GIR ?0A{2})$/gm;
+import { ERROR_INVALID_POSTCODE, UK_POSTCODE_REGEX } from '#endpoints/constants.js';
 
 const createNeighbouringSiteValidator = composeMiddleware(
-	validateRequiredStringParameter('postcode'),
-	validateRequiredStringParameter('addressLine1'),
-	validateRequiredStringParameter('town'),
-	validateStringParameter('addressLine2'),
-	validateStringParameter('country'),
-	validateStringParameter('county'),
-	validateRegex('postcode', regexUkPostcode),
+	validateRequiredStringParameter('addressLine1', 250),
+	validateStringParameterAllowingEmpty('addressLine2', 250),
+	validateRequiredStringParameter('town', 250),
+	validateStringParameterAllowingEmpty('county', 250),
+	validateRequiredStringParameter('postcode', 8),
+	validateRegex('postcode', UK_POSTCODE_REGEX).withMessage(ERROR_INVALID_POSTCODE),
 	validationErrorHandler
 );
 
 const updateNeighbouringSiteValidator = composeMiddleware(
 	validateRequiredNumberParameter('siteId'),
-	validateRequiredStringParameter('address.postcode'),
-	validateRequiredStringParameter('address.addressLine1'),
-	validateRequiredStringParameter('address.town'),
-	validateStringParameterAllowingEmpty('address.addressLine2'),
-	validateStringParameterAllowingEmpty('address.county'),
-	validateRegex('address.postcode', regexUkPostcode).withMessage(ERROR_INVALID_POSTCODE),
+	validateRequiredStringParameter('address.addressLine1', 250),
+	validateStringParameterAllowingEmpty('address.addressLine2', 250),
+	validateRequiredStringParameter('address.town', 250),
+	validateStringParameterAllowingEmpty('address.county', 250),
+	validateRequiredStringParameter('address.postcode', 8),
+	validateRegex('address.postcode', UK_POSTCODE_REGEX).withMessage(ERROR_INVALID_POSTCODE),
 	validationErrorHandler
 );
 

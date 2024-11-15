@@ -1,6 +1,6 @@
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
-import { createCheckboxTextItemsValidator } from '../../../../lib/validators/checkbox-text-items.validator.js';
+import { createCheckboxTextItemsValidator } from '#lib/validators/checkbox-text-items.validator.js';
 
 export const validateInvalidReason = createValidator(
 	body('invalidReason')
@@ -11,7 +11,4 @@ export const validateInvalidReason = createValidator(
 		.withMessage('Please select one or more reasons why the appeal is invalid')
 );
 
-export const validateInvalidReasonTextItems = createCheckboxTextItemsValidator(
-	'invalidReason',
-	'appellantCaseNotValidReason'
-);
+export const validateInvalidReasonTextItems = createCheckboxTextItemsValidator('invalidReason');

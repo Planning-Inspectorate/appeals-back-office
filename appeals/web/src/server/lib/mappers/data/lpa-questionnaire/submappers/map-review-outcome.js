@@ -31,6 +31,7 @@ export const mapReviewOutcome = ({ lpaQuestionnaireData, session }) => ({
 				type: 'radios',
 				properties: {
 					name: 'review-outcome',
+					idPrefix: 'review-outcome',
 					value: lpaQuestionnaireData.validation?.outcome,
 					items: [
 						{

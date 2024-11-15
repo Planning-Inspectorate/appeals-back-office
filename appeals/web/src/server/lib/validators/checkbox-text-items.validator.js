@@ -5,10 +5,9 @@ import { textInputCharacterLimits } from '../../appeals/appeal.constants.js';
 /**
  *
  * @param {string} checkboxIdsBodyKey
- * @param {keyof typeof textInputCharacterLimits} characterLimitKey
  * @returns
  */
-export const createCheckboxTextItemsValidator = (checkboxIdsBodyKey, characterLimitKey) =>
+export const createCheckboxTextItemsValidator = (checkboxIdsBodyKey) =>
 	createValidator(
 		body()
 			.custom((bodyFields) => {
@@ -41,7 +40,7 @@ export const createCheckboxTextItemsValidator = (checkboxIdsBodyKey, characterLi
 			)
 			.bail()
 			.custom((bodyFields) => {
-				const characterLimit = textInputCharacterLimits[characterLimitKey];
+				const characterLimit = textInputCharacterLimits.defaultInputLength;
 				let checkboxIds = bodyFields[checkboxIdsBodyKey];
 
 				if (!Array.isArray(checkboxIds)) {
@@ -67,6 +66,6 @@ export const createCheckboxTextItemsValidator = (checkboxIdsBodyKey, characterLi
 				return true;
 			})
 			.withMessage(
-				`Text in text fields cannot exceed ${textInputCharacterLimits[characterLimitKey]} characters`
+				`Text in text fields cannot exceed ${textInputCharacterLimits.defaultInputLength} characters`
 			)
 	);

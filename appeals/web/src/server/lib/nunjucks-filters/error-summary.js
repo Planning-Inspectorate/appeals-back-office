@@ -1,4 +1,5 @@
 import { errorMessage } from './error-message.js';
+import { kebabCase } from '../../lib/nunjucks-filters/index.js';
 
 /**
  * Map keyed errors to an array compatible with govuk error summary.
@@ -18,6 +19,6 @@ export function mapToErrorSummary(errors) {
 	}
 	return Object.keys(errors).map((errorName) => ({
 		text: errorMessage(errors[errorName])?.text || '',
-		href: `#${errorName}`
+		href: `#${kebabCase(errorName)}`
 	}));
 }

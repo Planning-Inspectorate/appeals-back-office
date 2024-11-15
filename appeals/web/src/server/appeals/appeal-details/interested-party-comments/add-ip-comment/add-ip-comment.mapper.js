@@ -86,6 +86,7 @@ export const checkAddressPage = (appealDetails, errors) => ({
 			type: 'radios',
 			parameters: {
 				name: 'addressProvided',
+				idPrefix: 'address-provided',
 				items: [
 					{
 						value: 'yes',
@@ -145,6 +146,7 @@ export const redactionStatusPage = (appealDetails, errors) => ({
 			type: 'radios',
 			parameters: {
 				name: 'redactionStatus',
+				idPrefix: 'redaction-status',
 				items: [
 					{
 						value: 'redacted',

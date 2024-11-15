@@ -1,15 +1,31 @@
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
+import {
+	createTextInputOptionalValidator,
+	createTextInputValidator
+} from '#lib/validators/text-input-validator.js';
+import { createEmailInputOptionalValidator } from '#lib/validators/email-input.validator.js';
+import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
 
 export const validateChangeServiceUser = createValidator(
-	body('firstName').trim().notEmpty().withMessage('Enter the first name'),
-	body('lastName').trim().notEmpty().withMessage('Enter the last name'),
-	body('emailAddress')
-		.trim()
-		.optional({ checkFalsy: true })
-		.bail()
-		.isEmail()
-		.withMessage('Enter a valid email or clear the email field'),
+	createTextInputValidator(
+		'firstName',
+		'Enter the first name',
+		textInputCharacterLimits.defaultInputLength,
+		`First name must be ${textInputCharacterLimits.defaultInputLength} characters or less`
+	),
+	createTextInputValidator(
+		'lastName',
+		'Enter the last name',
+		textInputCharacterLimits.defaultInputLength,
+		`Last name must be ${textInputCharacterLimits.defaultInputLength} characters or less`
+	),
+	createTextInputOptionalValidator(
+		'organisationName',
+		textInputCharacterLimits.defaultInputLength,
+		`Organisation name must be ${textInputCharacterLimits.defaultInputLength} characters or less`
+	),
+	createEmailInputOptionalValidator('emailAddress'),
 	body('phoneNumber')
 		.trim()
 		.optional({ checkFalsy: true })

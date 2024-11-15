@@ -33,6 +33,7 @@
 	<form method="post" novalidate="novalidate">
 		{{ govukCheckboxes({
 			name: "incompleteReason",
+			idPrefix: "incomplete-reason",
 			items: reasonOptions
 		}) }}
 		{{ govukButton({

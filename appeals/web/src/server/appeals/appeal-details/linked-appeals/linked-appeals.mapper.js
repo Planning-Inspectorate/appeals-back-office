@@ -324,7 +324,7 @@ export function addLinkedAppealCheckAndConfirmPage(
 				type: 'radios',
 				parameters: {
 					name: 'confirmation',
-					id: 'confirmation',
+					idPrefix: 'confirmation',
 					fieldset: {
 						legend: {
 							text: 'Is this the appeal you want to link?',
@@ -361,7 +361,7 @@ export function addLinkedAppealCheckAndConfirmPage(
 				type: 'radios',
 				parameters: {
 					name: 'confirmation',
-					id: 'confirmation',
+					idPrefix: 'confirmation',
 					fieldset: {
 						legend: {
 							text: 'Is this the appeal you want to link?',
@@ -410,7 +410,7 @@ export function addLinkedAppealCheckAndConfirmPage(
 				type: 'radios',
 				parameters: {
 					name: 'confirmation',
-					id: 'confirmation',
+					idPrefix: 'confirmation',
 					fieldset: {
 						legend: {
 							text: 'Is this the appeal you want to link?',
@@ -517,6 +517,7 @@ export function unlinkAppealPage(appealData, childRef, appealId, relationshipId,
 		type: 'radios',
 		parameters: {
 			name: 'unlinkAppeal',
+			idPrefix: 'unlink-appeal',
 			fieldset: {
 				legend: {
 					classes: 'govuk-fieldset__legend--m'

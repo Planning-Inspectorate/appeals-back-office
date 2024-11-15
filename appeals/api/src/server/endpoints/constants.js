@@ -188,6 +188,7 @@ export const ERROR_INVALID_EMAIL = 'must be a valid email';
 export const ERROR_INVALID_FILENAME = 'must be a valid filename';
 
 export const ERROR_INVALID_POSTCODE = 'needs to be a valid and include spaces';
+export const UK_POSTCODE_REGEX = /^([A-Za-z]{1,2}\d[A-Za-z\d]? ?\d[A-Za-z]{2}|GIR ?0A{2})$/gm;
 
 export const UUID_REGEX =
 	/^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/;

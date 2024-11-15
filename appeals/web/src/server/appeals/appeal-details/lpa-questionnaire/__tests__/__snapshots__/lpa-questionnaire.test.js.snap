@@ -1394,11 +1394,11 @@ exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-ques
         <div class="govuk-form-group">
             <div class="govuk-checkboxes" data-module="govuk-checkboxes">
                 <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="incompleteReason" name="incompleteReason"
-                    type="checkbox" value="1" checked data-aria-controls="conditional-incompleteReason">
-                    <label class="govuk-label govuk-checkboxes__label" for="incompleteReason">Documents or information are missing</label>
+                    <input class="govuk-checkboxes__input" id="incomplete-reason" name="incompleteReason"
+                    type="checkbox" value="1" checked data-aria-controls="conditional-incomplete-reason">
+                    <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason">Documents or information are missing</label>
                 </div>
-                <div class="govuk-checkboxes__conditional" id="conditional-incompleteReason">
+                <div class="govuk-checkboxes__conditional" id="conditional-incomplete-reason">
                     <div class="pins-add-another" aria-live="polite" data-max-item-count="10">
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
@@ -1421,11 +1421,11 @@ exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-ques
                     </div>
                 </div>
                 <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="incompleteReason-2" name="incompleteReason"
-                    type="checkbox" value="2" checked data-aria-controls="conditional-incompleteReason-2">
-                    <label class="govuk-label govuk-checkboxes__label" for="incompleteReason-2">Policies are missing</label>
+                    <input class="govuk-checkboxes__input" id="incomplete-reason-2" name="incompleteReason"
+                    type="checkbox" value="2" checked data-aria-controls="conditional-incomplete-reason-2">
+                    <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-2">Policies are missing</label>
                 </div>
-                <div class="govuk-checkboxes__conditional" id="conditional-incompleteReason-2">
+                <div class="govuk-checkboxes__conditional" id="conditional-incomplete-reason-2">
                     <div class="pins-add-another" aria-live="polite" data-max-item-count="10">
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
@@ -1464,11 +1464,11 @@ exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-ques
                     </div>
                 </div>
                 <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="incompleteReason-3" name="incompleteReason"
-                    type="checkbox" value="3" checked data-aria-controls="conditional-incompleteReason-3">
-                    <label class="govuk-label govuk-checkboxes__label" for="incompleteReason-3">Other</label>
+                    <input class="govuk-checkboxes__input" id="incomplete-reason-3" name="incompleteReason"
+                    type="checkbox" value="3" checked data-aria-controls="conditional-incomplete-reason-3">
+                    <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-3">Other</label>
                 </div>
-                <div class="govuk-checkboxes__conditional" id="conditional-incompleteReason-3">
+                <div class="govuk-checkboxes__conditional" id="conditional-incomplete-reason-3">
                     <div class="pins-add-another" aria-live="polite" data-max-item-count="10">
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
@@ -1523,14 +1523,14 @@ exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-ques
                     </div>
                 </div>
                 <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="incompleteReason-4" name="incompleteReason"
+                    <input class="govuk-checkboxes__input" id="incomplete-reason-4" name="incompleteReason"
                     type="checkbox" value="4">
-                    <label class="govuk-label govuk-checkboxes__label" for="incompleteReason-4">Test incomplete reason without text 1</label>
+                    <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-4">Test incomplete reason without text 1</label>
                 </div>
                 <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="incompleteReason-5" name="incompleteReason"
+                    <input class="govuk-checkboxes__input" id="incomplete-reason-5" name="incompleteReason"
                     type="checkbox" value="5">
-                    <label class="govuk-label govuk-checkboxes__label" for="incompleteReason-5">Test incomplete reason without text 2</label>
+                    <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-5">Test incomplete reason without text 2</label>
                 </div>
             </div>
         </div>
@@ -1715,9 +1715,9 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
     <div class="govuk-form-group">
         <div class="govuk-checkboxes" data-module="govuk-checkboxes">
             <div class="govuk-checkboxes__item">
-                <input class="govuk-checkboxes__input" id="additionalDocumentsConfirmation"
+                <input class="govuk-checkboxes__input" id="additional-documents-confirmation"
                 name="additionalDocumentsConfirmation" type="checkbox" value="confirm">
-                <label class="govuk-label govuk-checkboxes__label" for="additionalDocumentsConfirmation">This document doesn&#39;t belong anywhere else</label>
+                <label class="govuk-label govuk-checkboxes__label" for="additional-documents-confirmation">This document doesn&#39;t belong anywhere else</label>
             </div>
         </div>
     </div>
@@ -1768,9 +1768,9 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
     <div class="govuk-form-group">
         <div class="govuk-checkboxes" data-module="govuk-checkboxes">
             <div class="govuk-checkboxes__item">
-                <input class="govuk-checkboxes__input" id="additionalDocumentsConfirmation"
+                <input class="govuk-checkboxes__input" id="additional-documents-confirmation"
                 name="additionalDocumentsConfirmation" type="checkbox" value="confirm">
-                <label class="govuk-label govuk-checkboxes__label" for="additionalDocumentsConfirmation">This document doesn&#39;t belong anywhere else</label>
+                <label class="govuk-label govuk-checkboxes__label" for="additional-documents-confirmation">This document doesn&#39;t belong anywhere else</label>
             </div>
         </div>
     </div>
@@ -1912,9 +1912,9 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
     <div class="govuk-form-group">
         <div class="govuk-checkboxes" data-module="govuk-checkboxes">
             <div class="govuk-checkboxes__item">
-                <input class="govuk-checkboxes__input" id="additionalDocumentsConfirmation"
+                <input class="govuk-checkboxes__input" id="additional-documents-confirmation"
                 name="additionalDocumentsConfirmation" type="checkbox" value="confirm">
-                <label class="govuk-label govuk-checkboxes__label" for="additionalDocumentsConfirmation">This document doesn&#39;t belong anywhere else</label>
+                <label class="govuk-label govuk-checkboxes__label" for="additional-documents-confirmation">This document doesn&#39;t belong anywhere else</label>
             </div>
         </div>
     </div>
@@ -1965,9 +1965,9 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
     <div class="govuk-form-group">
         <div class="govuk-checkboxes" data-module="govuk-checkboxes">
             <div class="govuk-checkboxes__item">
-                <input class="govuk-checkboxes__input" id="additionalDocumentsConfirmation"
+                <input class="govuk-checkboxes__input" id="additional-documents-confirmation"
                 name="additionalDocumentsConfirmation" type="checkbox" value="confirm">
-                <label class="govuk-label govuk-checkboxes__label" for="additionalDocumentsConfirmation">This document doesn&#39;t belong anywhere else</label>
+                <label class="govuk-label govuk-checkboxes__label" for="additional-documents-confirmation">This document doesn&#39;t belong anywhere else</label>
             </div>
         </div>
     </div>
@@ -3602,7 +3602,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Text in text fields cannot exceed 1000 characters</a>
+                            <li><a href="#">Text in text fields cannot exceed 300 characters</a>
                             </li>
                         </ul>
                     </div>
@@ -3619,11 +3619,11 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
         <div class="govuk-form-group">
             <div class="govuk-checkboxes" data-module="govuk-checkboxes">
                 <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="incompleteReason" name="incompleteReason"
-                    type="checkbox" value="1" checked data-aria-controls="conditional-incompleteReason">
-                    <label class="govuk-label govuk-checkboxes__label" for="incompleteReason">Documents or information are missing</label>
+                    <input class="govuk-checkboxes__input" id="incomplete-reason" name="incompleteReason"
+                    type="checkbox" value="1" checked data-aria-controls="conditional-incomplete-reason">
+                    <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason">Documents or information are missing</label>
                 </div>
-                <div class="govuk-checkboxes__conditional" id="conditional-incompleteReason">
+                <div class="govuk-checkboxes__conditional" id="conditional-incomplete-reason">
                     <div class="pins-add-another" aria-live="polite" data-max-item-count="10">
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
@@ -3636,7 +3636,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-1" type="text" value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
+                                        id="" name="incompleteReason-1" type="text" value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
                                     </div>
                                 </div>
                             </div>
@@ -3646,12 +3646,12 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     </div>
                 </div>
                 <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="incompleteReason-2" name="incompleteReason"
-                    type="checkbox" value="2" data-aria-controls="conditional-incompleteReason-2">
-                    <label class="govuk-label govuk-checkboxes__label" for="incompleteReason-2">Policies are missing</label>
+                    <input class="govuk-checkboxes__input" id="incomplete-reason-2" name="incompleteReason"
+                    type="checkbox" value="2" data-aria-controls="conditional-incomplete-reason-2">
+                    <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-2">Policies are missing</label>
                 </div>
                 <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
-                id="conditional-incompleteReason-2">
+                id="conditional-incomplete-reason-2">
                     <div class="pins-add-another" aria-live="polite" data-max-item-count="10">
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
@@ -3690,12 +3690,12 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     </div>
                 </div>
                 <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="incompleteReason-3" name="incompleteReason"
-                    type="checkbox" value="3" data-aria-controls="conditional-incompleteReason-3">
-                    <label class="govuk-label govuk-checkboxes__label" for="incompleteReason-3">Other</label>
+                    <input class="govuk-checkboxes__input" id="incomplete-reason-3" name="incompleteReason"
+                    type="checkbox" value="3" data-aria-controls="conditional-incomplete-reason-3">
+                    <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-3">Other</label>
                 </div>
                 <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
-                id="conditional-incompleteReason-3">
+                id="conditional-incomplete-reason-3">
                     <div class="pins-add-another" aria-live="polite" data-max-item-count="10">
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
@@ -3750,14 +3750,14 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     </div>
                 </div>
                 <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="incompleteReason-4" name="incompleteReason"
+                    <input class="govuk-checkboxes__input" id="incomplete-reason-4" name="incompleteReason"
                     type="checkbox" value="4">
-                    <label class="govuk-label govuk-checkboxes__label" for="incompleteReason-4">Test incomplete reason without text 1</label>
+                    <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-4">Test incomplete reason without text 1</label>
                 </div>
                 <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="incompleteReason-5" name="incompleteReason"
+                    <input class="govuk-checkboxes__input" id="incomplete-reason-5" name="incompleteReason"
                     type="checkbox" value="5">
-                    <label class="govuk-label govuk-checkboxes__label" for="incompleteReason-5">Test incomplete reason without text 2</label>
+                    <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-5">Test incomplete reason without text 2</label>
                 </div>
             </div>
         </div>
@@ -3792,11 +3792,11 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
         <div class="govuk-form-group">
             <div class="govuk-checkboxes" data-module="govuk-checkboxes">
                 <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="incompleteReason" name="incompleteReason"
-                    type="checkbox" value="1" checked data-aria-controls="conditional-incompleteReason">
-                    <label class="govuk-label govuk-checkboxes__label" for="incompleteReason">Documents or information are missing</label>
+                    <input class="govuk-checkboxes__input" id="incomplete-reason" name="incompleteReason"
+                    type="checkbox" value="1" checked data-aria-controls="conditional-incomplete-reason">
+                    <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason">Documents or information are missing</label>
                 </div>
-                <div class="govuk-checkboxes__conditional" id="conditional-incompleteReason">
+                <div class="govuk-checkboxes__conditional" id="conditional-incomplete-reason">
                     <div class="pins-add-another" aria-live="polite" data-max-item-count="10">
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
@@ -3819,12 +3819,12 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     </div>
                 </div>
                 <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="incompleteReason-2" name="incompleteReason"
-                    type="checkbox" value="2" data-aria-controls="conditional-incompleteReason-2">
-                    <label class="govuk-label govuk-checkboxes__label" for="incompleteReason-2">Policies are missing</label>
+                    <input class="govuk-checkboxes__input" id="incomplete-reason-2" name="incompleteReason"
+                    type="checkbox" value="2" data-aria-controls="conditional-incomplete-reason-2">
+                    <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-2">Policies are missing</label>
                 </div>
                 <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
-                id="conditional-incompleteReason-2">
+                id="conditional-incomplete-reason-2">
                     <div class="pins-add-another" aria-live="polite" data-max-item-count="10">
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
@@ -3863,12 +3863,12 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     </div>
                 </div>
                 <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="incompleteReason-3" name="incompleteReason"
-                    type="checkbox" value="3" data-aria-controls="conditional-incompleteReason-3">
-                    <label class="govuk-label govuk-checkboxes__label" for="incompleteReason-3">Other</label>
+                    <input class="govuk-checkboxes__input" id="incomplete-reason-3" name="incompleteReason"
+                    type="checkbox" value="3" data-aria-controls="conditional-incomplete-reason-3">
+                    <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-3">Other</label>
                 </div>
                 <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
-                id="conditional-incompleteReason-3">
+                id="conditional-incomplete-reason-3">
                     <div class="pins-add-another" aria-live="polite" data-max-item-count="10">
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
@@ -3923,14 +3923,14 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     </div>
                 </div>
                 <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="incompleteReason-4" name="incompleteReason"
+                    <input class="govuk-checkboxes__input" id="incomplete-reason-4" name="incompleteReason"
                     type="checkbox" value="4">
-                    <label class="govuk-label govuk-checkboxes__label" for="incompleteReason-4">Test incomplete reason without text 1</label>
+                    <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-4">Test incomplete reason without text 1</label>
                 </div>
                 <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="incompleteReason-5" name="incompleteReason"
+                    <input class="govuk-checkboxes__input" id="incomplete-reason-5" name="incompleteReason"
                     type="checkbox" value="5">
-                    <label class="govuk-label govuk-checkboxes__label" for="incompleteReason-5">Test incomplete reason without text 2</label>
+                    <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-5">Test incomplete reason without text 2</label>
                 </div>
             </div>
         </div>
@@ -3965,11 +3965,11 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
         <div class="govuk-form-group">
             <div class="govuk-checkboxes" data-module="govuk-checkboxes">
                 <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="incompleteReason" name="incompleteReason"
-                    type="checkbox" value="1" checked data-aria-controls="conditional-incompleteReason">
-                    <label class="govuk-label govuk-checkboxes__label" for="incompleteReason">Documents or information are missing</label>
+                    <input class="govuk-checkboxes__input" id="incomplete-reason" name="incompleteReason"
+                    type="checkbox" value="1" checked data-aria-controls="conditional-incomplete-reason">
+                    <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason">Documents or information are missing</label>
                 </div>
-                <div class="govuk-checkboxes__conditional" id="conditional-incompleteReason">
+                <div class="govuk-checkboxes__conditional" id="conditional-incomplete-reason">
                     <div class="pins-add-another" aria-live="polite" data-max-item-count="10">
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
@@ -3992,12 +3992,12 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     </div>
                 </div>
                 <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="incompleteReason-2" name="incompleteReason"
-                    type="checkbox" value="2" data-aria-controls="conditional-incompleteReason-2">
-                    <label class="govuk-label govuk-checkboxes__label" for="incompleteReason-2">Policies are missing</label>
+                    <input class="govuk-checkboxes__input" id="incomplete-reason-2" name="incompleteReason"
+                    type="checkbox" value="2" data-aria-controls="conditional-incomplete-reason-2">
+                    <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-2">Policies are missing</label>
                 </div>
                 <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
-                id="conditional-incompleteReason-2">
+                id="conditional-incomplete-reason-2">
                     <div class="pins-add-another" aria-live="polite" data-max-item-count="10">
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
@@ -4036,12 +4036,12 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     </div>
                 </div>
                 <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="incompleteReason-3" name="incompleteReason"
-                    type="checkbox" value="3" data-aria-controls="conditional-incompleteReason-3">
-                    <label class="govuk-label govuk-checkboxes__label" for="incompleteReason-3">Other</label>
+                    <input class="govuk-checkboxes__input" id="incomplete-reason-3" name="incompleteReason"
+                    type="checkbox" value="3" data-aria-controls="conditional-incomplete-reason-3">
+                    <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-3">Other</label>
                 </div>
                 <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
-                id="conditional-incompleteReason-3">
+                id="conditional-incomplete-reason-3">
                     <div class="pins-add-another" aria-live="polite" data-max-item-count="10">
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
@@ -4096,14 +4096,14 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     </div>
                 </div>
                 <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="incompleteReason-4" name="incompleteReason"
+                    <input class="govuk-checkboxes__input" id="incomplete-reason-4" name="incompleteReason"
                     type="checkbox" value="4">
-                    <label class="govuk-label govuk-checkboxes__label" for="incompleteReason-4">Test incomplete reason without text 1</label>
+                    <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-4">Test incomplete reason without text 1</label>
                 </div>
                 <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="incompleteReason-5" name="incompleteReason"
+                    <input class="govuk-checkboxes__input" id="incomplete-reason-5" name="incompleteReason"
                     type="checkbox" value="5">
-                    <label class="govuk-label govuk-checkboxes__label" for="incompleteReason-5">Test incomplete reason without text 2</label>
+                    <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-5">Test incomplete reason without text 2</label>
                 </div>
             </div>
         </div>
@@ -4138,11 +4138,11 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
         <div class="govuk-form-group">
             <div class="govuk-checkboxes" data-module="govuk-checkboxes">
                 <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="incompleteReason" name="incompleteReason"
-                    type="checkbox" value="1" checked data-aria-controls="conditional-incompleteReason">
-                    <label class="govuk-label govuk-checkboxes__label" for="incompleteReason">Documents or information are missing</label>
+                    <input class="govuk-checkboxes__input" id="incomplete-reason" name="incompleteReason"
+                    type="checkbox" value="1" checked data-aria-controls="conditional-incomplete-reason">
+                    <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason">Documents or information are missing</label>
                 </div>
-                <div class="govuk-checkboxes__conditional" id="conditional-incompleteReason">
+                <div class="govuk-checkboxes__conditional" id="conditional-incomplete-reason">
                     <div class="pins-add-another" aria-live="polite" data-max-item-count="10">
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
@@ -4165,11 +4165,11 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     </div>
                 </div>
                 <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="incompleteReason-2" name="incompleteReason"
-                    type="checkbox" value="2" checked data-aria-controls="conditional-incompleteReason-2">
-                    <label class="govuk-label govuk-checkboxes__label" for="incompleteReason-2">Policies are missing</label>
+                    <input class="govuk-checkboxes__input" id="incomplete-reason-2" name="incompleteReason"
+                    type="checkbox" value="2" checked data-aria-controls="conditional-incomplete-reason-2">
+                    <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-2">Policies are missing</label>
                 </div>
-                <div class="govuk-checkboxes__conditional" id="conditional-incompleteReason-2">
+                <div class="govuk-checkboxes__conditional" id="conditional-incomplete-reason-2">
                     <div class="pins-add-another" aria-live="polite" data-max-item-count="10">
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
@@ -4208,12 +4208,12 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     </div>
                 </div>
                 <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="incompleteReason-3" name="incompleteReason"
-                    type="checkbox" value="3" data-aria-controls="conditional-incompleteReason-3">
-                    <label class="govuk-label govuk-checkboxes__label" for="incompleteReason-3">Other</label>
+                    <input class="govuk-checkboxes__input" id="incomplete-reason-3" name="incompleteReason"
+                    type="checkbox" value="3" data-aria-controls="conditional-incomplete-reason-3">
+                    <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-3">Other</label>
                 </div>
                 <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
-                id="conditional-incompleteReason-3">
+                id="conditional-incomplete-reason-3">
                     <div class="pins-add-another" aria-live="polite" data-max-item-count="10">
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
@@ -4268,14 +4268,14 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     </div>
                 </div>
                 <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="incompleteReason-4" name="incompleteReason"
+                    <input class="govuk-checkboxes__input" id="incomplete-reason-4" name="incompleteReason"
                     type="checkbox" value="4">
-                    <label class="govuk-label govuk-checkboxes__label" for="incompleteReason-4">Test incomplete reason without text 1</label>
+                    <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-4">Test incomplete reason without text 1</label>
                 </div>
                 <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="incompleteReason-5" name="incompleteReason"
+                    <input class="govuk-checkboxes__input" id="incomplete-reason-5" name="incompleteReason"
                     type="checkbox" value="5">
-                    <label class="govuk-label govuk-checkboxes__label" for="incompleteReason-5">Test incomplete reason without text 2</label>
+                    <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-5">Test incomplete reason without text 2</label>
                 </div>
             </div>
         </div>
@@ -4310,11 +4310,11 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
         <div class="govuk-form-group">
             <div class="govuk-checkboxes" data-module="govuk-checkboxes">
                 <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="incompleteReason" name="incompleteReason"
-                    type="checkbox" value="1" checked data-aria-controls="conditional-incompleteReason">
-                    <label class="govuk-label govuk-checkboxes__label" for="incompleteReason">Documents or information are missing</label>
+                    <input class="govuk-checkboxes__input" id="incomplete-reason" name="incompleteReason"
+                    type="checkbox" value="1" checked data-aria-controls="conditional-incomplete-reason">
+                    <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason">Documents or information are missing</label>
                 </div>
-                <div class="govuk-checkboxes__conditional" id="conditional-incompleteReason">
+                <div class="govuk-checkboxes__conditional" id="conditional-incomplete-reason">
                     <div class="pins-add-another" aria-live="polite" data-max-item-count="10">
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
@@ -4337,11 +4337,11 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     </div>
                 </div>
                 <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="incompleteReason-2" name="incompleteReason"
-                    type="checkbox" value="2" checked data-aria-controls="conditional-incompleteReason-2">
-                    <label class="govuk-label govuk-checkboxes__label" for="incompleteReason-2">Policies are missing</label>
+                    <input class="govuk-checkboxes__input" id="incomplete-reason-2" name="incompleteReason"
+                    type="checkbox" value="2" checked data-aria-controls="conditional-incomplete-reason-2">
+                    <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-2">Policies are missing</label>
                 </div>
-                <div class="govuk-checkboxes__conditional" id="conditional-incompleteReason-2">
+                <div class="govuk-checkboxes__conditional" id="conditional-incomplete-reason-2">
                     <div class="pins-add-another" aria-live="polite" data-max-item-count="10">
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
@@ -4380,12 +4380,12 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     </div>
                 </div>
                 <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="incompleteReason-3" name="incompleteReason"
-                    type="checkbox" value="3" data-aria-controls="conditional-incompleteReason-3">
-                    <label class="govuk-label govuk-checkboxes__label" for="incompleteReason-3">Other</label>
+                    <input class="govuk-checkboxes__input" id="incomplete-reason-3" name="incompleteReason"
+                    type="checkbox" value="3" data-aria-controls="conditional-incomplete-reason-3">
+                    <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-3">Other</label>
                 </div>
                 <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
-                id="conditional-incompleteReason-3">
+                id="conditional-incomplete-reason-3">
                     <div class="pins-add-another" aria-live="polite" data-max-item-count="10">
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
@@ -4440,14 +4440,14 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     </div>
                 </div>
                 <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="incompleteReason-4" name="incompleteReason"
+                    <input class="govuk-checkboxes__input" id="incomplete-reason-4" name="incompleteReason"
                     type="checkbox" value="4">
-                    <label class="govuk-label govuk-checkboxes__label" for="incompleteReason-4">Test incomplete reason without text 1</label>
+                    <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-4">Test incomplete reason without text 1</label>
                 </div>
                 <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="incompleteReason-5" name="incompleteReason"
+                    <input class="govuk-checkboxes__input" id="incomplete-reason-5" name="incompleteReason"
                     type="checkbox" value="5">
-                    <label class="govuk-label govuk-checkboxes__label" for="incompleteReason-5">Test incomplete reason without text 2</label>
+                    <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-5">Test incomplete reason without text 2</label>
                 </div>
             </div>
         </div>
@@ -4465,7 +4465,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Text in text fields cannot exceed 1000 characters</a>
+                            <li><a href="#">Text in text fields cannot exceed 300 characters</a>
                             </li>
                         </ul>
                     </div>
@@ -4482,11 +4482,11 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
         <div class="govuk-form-group">
             <div class="govuk-checkboxes" data-module="govuk-checkboxes">
                 <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="incompleteReason" name="incompleteReason"
-                    type="checkbox" value="1" checked data-aria-controls="conditional-incompleteReason">
-                    <label class="govuk-label govuk-checkboxes__label" for="incompleteReason">Documents or information are missing</label>
+                    <input class="govuk-checkboxes__input" id="incomplete-reason" name="incompleteReason"
+                    type="checkbox" value="1" checked data-aria-controls="conditional-incomplete-reason">
+                    <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason">Documents or information are missing</label>
                 </div>
-                <div class="govuk-checkboxes__conditional" id="conditional-incompleteReason">
+                <div class="govuk-checkboxes__conditional" id="conditional-incomplete-reason">
                     <div class="pins-add-another" aria-live="polite" data-max-item-count="10">
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
@@ -4509,11 +4509,11 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     </div>
                 </div>
                 <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="incompleteReason-2" name="incompleteReason"
-                    type="checkbox" value="2" checked data-aria-controls="conditional-incompleteReason-2">
-                    <label class="govuk-label govuk-checkboxes__label" for="incompleteReason-2">Policies are missing</label>
+                    <input class="govuk-checkboxes__input" id="incomplete-reason-2" name="incompleteReason"
+                    type="checkbox" value="2" checked data-aria-controls="conditional-incomplete-reason-2">
+                    <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-2">Policies are missing</label>
                 </div>
-                <div class="govuk-checkboxes__conditional" id="conditional-incompleteReason-2">
+                <div class="govuk-checkboxes__conditional" id="conditional-incomplete-reason-2">
                     <div class="pins-add-another" aria-live="polite" data-max-item-count="10">
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
@@ -4526,7 +4526,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-2" type="text" value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
+                                        id="" name="incompleteReason-2" type="text" value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
                                     </div>
                                 </div>
                             </div>
@@ -4536,12 +4536,12 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     </div>
                 </div>
                 <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="incompleteReason-3" name="incompleteReason"
-                    type="checkbox" value="3" data-aria-controls="conditional-incompleteReason-3">
-                    <label class="govuk-label govuk-checkboxes__label" for="incompleteReason-3">Other</label>
+                    <input class="govuk-checkboxes__input" id="incomplete-reason-3" name="incompleteReason"
+                    type="checkbox" value="3" data-aria-controls="conditional-incomplete-reason-3">
+                    <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-3">Other</label>
                 </div>
                 <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
-                id="conditional-incompleteReason-3">
+                id="conditional-incomplete-reason-3">
                     <div class="pins-add-another" aria-live="polite" data-max-item-count="10">
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
@@ -4596,14 +4596,14 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     </div>
                 </div>
                 <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="incompleteReason-4" name="incompleteReason"
+                    <input class="govuk-checkboxes__input" id="incomplete-reason-4" name="incompleteReason"
                     type="checkbox" value="4">
-                    <label class="govuk-label govuk-checkboxes__label" for="incompleteReason-4">Test incomplete reason without text 1</label>
+                    <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-4">Test incomplete reason without text 1</label>
                 </div>
                 <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="incompleteReason-5" name="incompleteReason"
+                    <input class="govuk-checkboxes__input" id="incomplete-reason-5" name="incompleteReason"
                     type="checkbox" value="5">
-                    <label class="govuk-label govuk-checkboxes__label" for="incompleteReason-5">Test incomplete reason without text 2</label>
+                    <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-5">Test incomplete reason without text 2</label>
                 </div>
             </div>
         </div>
@@ -4621,7 +4621,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#incompleteReason">Please select one or more reasons why the LPA questionnaire is incomplete</a>
+                            <li><a href="#incomplete-reason">Please select one or more reasons why the LPA questionnaire is incomplete</a>
                             </li>
                         </ul>
                     </div>
@@ -4638,11 +4638,11 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
         <div class="govuk-form-group">
             <div class="govuk-checkboxes" data-module="govuk-checkboxes">
                 <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="incompleteReason" name="incompleteReason"
-                    type="checkbox" value="1" checked data-aria-controls="conditional-incompleteReason">
-                    <label class="govuk-label govuk-checkboxes__label" for="incompleteReason">Documents or information are missing</label>
+                    <input class="govuk-checkboxes__input" id="incomplete-reason" name="incompleteReason"
+                    type="checkbox" value="1" checked data-aria-controls="conditional-incomplete-reason">
+                    <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason">Documents or information are missing</label>
                 </div>
-                <div class="govuk-checkboxes__conditional" id="conditional-incompleteReason">
+                <div class="govuk-checkboxes__conditional" id="conditional-incomplete-reason">
                     <div class="pins-add-another" aria-live="polite" data-max-item-count="10">
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
@@ -4665,11 +4665,11 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     </div>
                 </div>
                 <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="incompleteReason-2" name="incompleteReason"
-                    type="checkbox" value="2" checked data-aria-controls="conditional-incompleteReason-2">
-                    <label class="govuk-label govuk-checkboxes__label" for="incompleteReason-2">Policies are missing</label>
+                    <input class="govuk-checkboxes__input" id="incomplete-reason-2" name="incompleteReason"
+                    type="checkbox" value="2" checked data-aria-controls="conditional-incomplete-reason-2">
+                    <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-2">Policies are missing</label>
                 </div>
-                <div class="govuk-checkboxes__conditional" id="conditional-incompleteReason-2">
+                <div class="govuk-checkboxes__conditional" id="conditional-incomplete-reason-2">
                     <div class="pins-add-another" aria-live="polite" data-max-item-count="10">
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
@@ -4708,11 +4708,11 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     </div>
                 </div>
                 <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="incompleteReason-3" name="incompleteReason"
-                    type="checkbox" value="3" checked data-aria-controls="conditional-incompleteReason-3">
-                    <label class="govuk-label govuk-checkboxes__label" for="incompleteReason-3">Other</label>
+                    <input class="govuk-checkboxes__input" id="incomplete-reason-3" name="incompleteReason"
+                    type="checkbox" value="3" checked data-aria-controls="conditional-incomplete-reason-3">
+                    <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-3">Other</label>
                 </div>
-                <div class="govuk-checkboxes__conditional" id="conditional-incompleteReason-3">
+                <div class="govuk-checkboxes__conditional" id="conditional-incomplete-reason-3">
                     <div class="pins-add-another" aria-live="polite" data-max-item-count="10">
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
@@ -4767,14 +4767,14 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     </div>
                 </div>
                 <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="incompleteReason-4" name="incompleteReason"
+                    <input class="govuk-checkboxes__input" id="incomplete-reason-4" name="incompleteReason"
                     type="checkbox" value="4">
-                    <label class="govuk-label govuk-checkboxes__label" for="incompleteReason-4">Test incomplete reason without text 1</label>
+                    <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-4">Test incomplete reason without text 1</label>
                 </div>
                 <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="incompleteReason-5" name="incompleteReason"
+                    <input class="govuk-checkboxes__input" id="incomplete-reason-5" name="incompleteReason"
                     type="checkbox" value="5">
-                    <label class="govuk-label govuk-checkboxes__label" for="incompleteReason-5">Test incomplete reason without text 2</label>
+                    <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-5">Test incomplete reason without text 2</label>
                 </div>
             </div>
         </div>

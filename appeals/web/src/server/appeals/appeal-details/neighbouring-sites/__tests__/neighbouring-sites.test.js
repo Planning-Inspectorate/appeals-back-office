@@ -80,7 +80,9 @@ describe('neighbouring-sites', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Enter the first line of the address</a>');
+			expect(errorSummaryHtml).toContain(
+				'Enter address line 1, typically the building and street</a>'
+			);
 		});
 
 		it('should re-render getAllNeighbouringSite page if addressLine1 is an empty string', async () => {
@@ -110,7 +112,9 @@ describe('neighbouring-sites', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Enter the first line of the address</a>');
+			expect(errorSummaryHtml).toContain(
+				'Enter address line 1, typically the building and street</a>'
+			);
 		});
 
 		it('should re-render getAllNeighbouringSite page if town is null', async () => {
@@ -139,7 +143,7 @@ describe('neighbouring-sites', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Enter the town</a>');
+			expect(errorSummaryHtml).toContain('Enter town or city</a>');
 		});
 
 		it('should re-render getAllNeighbouringSite page if town is an empty string', async () => {
@@ -169,7 +173,7 @@ describe('neighbouring-sites', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Enter the town</a>');
+			expect(errorSummaryHtml).toContain('Enter town or city</a>');
 		});
 
 		it('should re-render getAllNeighbouringSite page if the postcode is null', async () => {
@@ -586,7 +590,9 @@ describe('neighbouring-sites', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Enter the first line of the address</a>');
+			expect(errorSummaryHtml).toContain(
+				'Enter address line 1, typically the building and street</a>'
+			);
 		});
 
 		it('should re-render changeNeighbouringSite page if addressLine1 is an empty string', async () => {
@@ -616,7 +622,9 @@ describe('neighbouring-sites', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Enter the first line of the address</a>');
+			expect(errorSummaryHtml).toContain(
+				'Enter address line 1, typically the building and street</a>'
+			);
 		});
 
 		it('should re-render changeNeighbouringSite page if town is null', async () => {
@@ -645,7 +653,7 @@ describe('neighbouring-sites', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Enter the town</a>');
+			expect(errorSummaryHtml).toContain('Enter town or city</a>');
 		});
 
 		it('should re-render changeNeighbouringSite page if town is an empty string', async () => {
@@ -675,7 +683,7 @@ describe('neighbouring-sites', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Enter the town</a>');
+			expect(errorSummaryHtml).toContain('Enter town or city</a>');
 		});
 
 		it('should re-render changeNeighbouringSite page if the postcode is null', async () => {

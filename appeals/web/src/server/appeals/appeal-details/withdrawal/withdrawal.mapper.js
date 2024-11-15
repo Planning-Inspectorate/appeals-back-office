@@ -253,6 +253,7 @@ export function withdrawalDocumentRedactionStatusPage(
 				type: 'radios',
 				parameters: {
 					name: 'withdrawal-redaction-status',
+					idPrefix: 'withdrawal-redaction-status',
 					items: redactionStatusesItems
 				}
 			}
@@ -344,6 +345,7 @@ export function checkAndConfirmPage(appealData, session) {
 		type: 'checkboxes',
 		parameters: {
 			name: 'confirm-withdrawal',
+			idPrefix: 'confirm-withdrawal',
 			items: [
 				{
 					text: 'The relevant parties can be informed of the appeal withdrawal',

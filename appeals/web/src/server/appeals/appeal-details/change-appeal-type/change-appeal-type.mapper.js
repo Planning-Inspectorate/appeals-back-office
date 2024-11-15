@@ -25,6 +25,7 @@ export function appealTypePage(appealDetails, appealTypes, changeAppeal) {
 		type: 'radios',
 		parameters: {
 			name: 'appealType',
+			idPrefix: 'appeal-type',
 			fieldset: {
 				legend: {
 					classes: 'govuk-fieldset__legend--m'
@@ -76,6 +77,7 @@ export function resubmitAppealPage(appealDetails, changeAppeal) {
 		type: 'radios',
 		parameters: {
 			name: 'appealResubmit',
+			idPrefix: 'appeal-resubmit',
 			fieldset: {
 				legend: {
 					classes: 'govuk-fieldset__legend--m'
@@ -235,6 +237,7 @@ export async function checkTransferPage(
 				type: 'checkboxes',
 				parameters: {
 					name: 'confirm',
+					idPrefix: 'confirm',
 					classes: 'govuk-checkboxes--small',
 					items: [
 						{
