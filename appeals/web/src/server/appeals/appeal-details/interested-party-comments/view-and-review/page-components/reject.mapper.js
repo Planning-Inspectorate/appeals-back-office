@@ -69,6 +69,19 @@ export async function rejectAllowResubmitPage(apiClient, appealDetails, comment)
  * */
 export function rejectCheckYourAnswersPage(appealDetails, comment, rejectionReasons, payload) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
+	const userProvidedEmail = Boolean(comment.represented.email);
+
+	const commentHtml = (() => {
+		if (comment.originalRepresentation) {
+			return `<div class="pins-show-more">${comment.originalRepresentation}</div>`;
+		}
+
+		if (comment.attachments.length > 0) {
+			return 'Added as a document';
+		}
+
+		return '';
+	})();
 
 	const attachmentsList =
 		comment.attachments.length > 0
@@ -106,7 +119,7 @@ export function rejectCheckYourAnswersPage(appealDetails, comment, rejectionReas
 						text: 'Comment'
 					},
 					value: {
-						text: comment.originalRepresentation
+						html: commentHtml
 					}
 				},
 				{
@@ -126,7 +139,8 @@ export function rejectCheckYourAnswersPage(appealDetails, comment, rejectionReas
 						items: [
 							{
 								text: 'Change',
-								href: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/review`
+								href: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/review`,
+								visuallyHiddenText: 'Review decision'
 							}
 						]
 					}
@@ -142,41 +156,60 @@ export function rejectCheckYourAnswersPage(appealDetails, comment, rejectionReas
 						items: [
 							{
 								text: 'Change',
-								href: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/reject/select-reason`
+								href: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/reject/select-reason`,
+								visuallyHiddenText: 'Why are you rejecting the comment?'
 							}
 						]
 					}
 				},
-				{
-					key: {
-						text: 'Do you want to allow the interested party to resubmit a comment?'
-					},
-					value: {
-						text: payload.allowResubmit ? 'Yes' : 'No'
-					},
-					actions: {
-						items: [
+				...(userProvidedEmail
+					? [
 							{
-								text: 'Change',
-								href: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/reject/allow-resubmit`
+								key: {
+									text: 'Do you want to allow the interested party to resubmit a comment?'
+								},
+								value: {
+									text: payload.allowResubmit ? 'Yes' : 'No'
+								},
+								actions: {
+									items: [
+										{
+											text: 'Change',
+											href: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/reject/allow-resubmit`,
+											visuallyHiddenText:
+												'Do you want to allow the interested party to resubmit a comment?'
+										}
+									]
+								}
 							}
-						]
-					}
-				}
+					  ]
+					: [])
 			]
 		}
 	};
 
+	/** @type {PageComponent} */
+	const bottomText = {
+		type: 'html',
+		parameters: {
+			html: userProvidedEmail
+				? '<p>We will send an email to the interested party to explain why you rejected their comment.</p>'
+				: '<p>We will not send an email to explain why you rejected the comment, as the interested party did not give their email address.</p>'
+		}
+	};
+
+	const backLinkPath = userProvidedEmail ? 'allow-resubmit' : 'select-reason';
+
 	/** @type {PageContent} */
 	const pageContent = {
 		heading: 'Check details and reject comment',
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/reject/allow-resubmit`,
+		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/reject/${backLinkPath}`,
 		preHeading: `Appeal ${shortReference}`,
 		headingClasses: 'govuk-heading-l',
 		submitButtonProperties: {
 			text: 'Reject comment'
 		},
-		pageComponents: [summaryListComponent]
+		pageComponents: [summaryListComponent, bottomText]
 	};
 
 	return pageContent;
