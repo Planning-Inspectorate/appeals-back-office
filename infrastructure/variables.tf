@@ -90,10 +90,14 @@ variable "front_door_config" {
   type = object({
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 25b7dff3a (test(tooling): modifying provider)
     name        = string
     rg          = string
     ep_name     = string
     use_tooling = bool
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> ff094f424 (test(tooling): modifying tfvars values for frontdoor)
@@ -105,6 +109,8 @@ variable "front_door_config" {
 >>>>>>> 15bd89b4a (test(tooling): modifying tfvars values for frontdoor)
 =======
 >>>>>>> ff094f424 (test(tooling): modifying tfvars values for frontdoor)
+=======
+>>>>>>> 25b7dff3a (test(tooling): modifying provider)
   })
 }
 

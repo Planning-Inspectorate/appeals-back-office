@@ -21,6 +21,7 @@ data "azurerm_monitor_action_group" "common" {
 data "azurerm_cdn_frontdoor_profile" "web" {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   name                = var.front_door_config.frontdoor_name
   resource_group_name = var.front_door_config.frontdoor_rg
 =======
@@ -52,4 +53,17 @@ data "azurerm_cdn_frontdoor_endpoint" "web" {
   profile_name        = var.front_door_config.frontdoor_name
 >>>>>>> ff094f424 (test(tooling): modifying tfvars values for frontdoor)
   provider            = azurerm.tooling
+=======
+  name                = var.front_door_config.name
+  resource_group_name = var.front_door_config.rg
+  provider            = azurerm.front_door
+
+}
+
+data "azurerm_cdn_frontdoor_endpoint" "shared" {
+  name                = var.front_door_config.ep_name
+  resource_group_name = var.front_door_config.rg
+  profile_name        = var.front_door_config.name
+  provider            = azurerm.front_door
+>>>>>>> 25b7dff3a (test(tooling): modifying provider)
 }

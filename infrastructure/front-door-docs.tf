@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> cba86a98c (test(tooling): Adding FrontDoor tooling)
@@ -19,10 +20,13 @@
 # }
 
 >>>>>>> c2ef09409 (test(tooling): Adding FrontDoor tooling)
+=======
+>>>>>>> 25b7dff3a (test(tooling): modifying provider)
 resource "azurerm_cdn_frontdoor_origin_group" "docs" {
   name                     = "${local.org}-fd-${local.service_name}-docs-${var.environment}"
   cdn_frontdoor_profile_id = data.azurerm_cdn_frontdoor_profile.web.id
   session_affinity_enabled = true
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
   provider                 = azurerm.front_door
@@ -32,6 +36,9 @@ resource "azurerm_cdn_frontdoor_origin_group" "docs" {
 =======
   provider                 = azurerm.tooling
 >>>>>>> cba86a98c (test(tooling): Adding FrontDoor tooling)
+=======
+  provider                 = azurerm.front_door
+>>>>>>> 25b7dff3a (test(tooling): modifying provider)
 
   health_probe {
     interval_in_seconds = 240
@@ -53,6 +60,7 @@ resource "azurerm_cdn_frontdoor_origin" "docs" {
   enabled                        = true
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   provider                       = azurerm.front_door
 =======
   provider                       = azurerm.tooling
@@ -60,6 +68,9 @@ resource "azurerm_cdn_frontdoor_origin" "docs" {
 =======
   provider                       = azurerm.tooling
 >>>>>>> cba86a98c (test(tooling): Adding FrontDoor tooling)
+=======
+  provider                       = azurerm.front_door
+>>>>>>> 25b7dff3a (test(tooling): modifying provider)
   certificate_name_check_enabled = true
 
   host_name          = local.documents.blob_endpont
@@ -76,6 +87,7 @@ resource "azurerm_cdn_frontdoor_custom_domain" "docs" {
   host_name                = local.documents.domain
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   provider                 = azurerm.front_door
 =======
   provider                 = azurerm.tooling
@@ -83,6 +95,9 @@ resource "azurerm_cdn_frontdoor_custom_domain" "docs" {
 =======
   provider                 = azurerm.tooling
 >>>>>>> cba86a98c (test(tooling): Adding FrontDoor tooling)
+=======
+  provider                 = azurerm.front_door
+>>>>>>> 25b7dff3a (test(tooling): modifying provider)
 
   tls {
     certificate_type    = "ManagedCertificate"
@@ -92,6 +107,7 @@ resource "azurerm_cdn_frontdoor_custom_domain" "docs" {
 
 resource "azurerm_cdn_frontdoor_route" "docs" {
   name                          = "${local.org}-fd-${local.service_name}-docs-${var.environment}"
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
   cdn_frontdoor_endpoint_id     = data.azurerm_cdn_frontdoor_endpoint.shared.id
@@ -110,6 +126,12 @@ resource "azurerm_cdn_frontdoor_route" "docs" {
   cdn_frontdoor_origin_ids      = [azurerm_cdn_frontdoor_origin.docs.id]
   provider                      = azurerm.tooling
 >>>>>>> cba86a98c (test(tooling): Adding FrontDoor tooling)
+=======
+  cdn_frontdoor_endpoint_id     = data.azurerm_cdn_frontdoor_endpoint.shared.id
+  cdn_frontdoor_origin_group_id = azurerm_cdn_frontdoor_origin_group.docs.id
+  cdn_frontdoor_origin_ids      = [azurerm_cdn_frontdoor_origin.docs.id]
+  provider                      = azurerm.front_door
+>>>>>>> 25b7dff3a (test(tooling): modifying provider)
 
   forwarding_protocol    = "MatchRequest"
   https_redirect_enabled = true
@@ -126,6 +148,7 @@ resource "azurerm_cdn_frontdoor_custom_domain_association" "docs" {
   cdn_frontdoor_route_ids        = [azurerm_cdn_frontdoor_route.docs.id]
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   provider                       = azurerm.front_door
 =======
   provider                       = azurerm.tooling
@@ -133,4 +156,7 @@ resource "azurerm_cdn_frontdoor_custom_domain_association" "docs" {
 =======
   provider                       = azurerm.tooling
 >>>>>>> cba86a98c (test(tooling): Adding FrontDoor tooling)
+=======
+  provider                       = azurerm.front_door
+>>>>>>> 25b7dff3a (test(tooling): modifying provider)
 }
