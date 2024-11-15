@@ -22,10 +22,7 @@ import validateIncompleteInvalidReasonParameter from '#common/validators/incompl
 import validateEnumParameter from '#common/validators/enum-parameter.js';
 import { APPEAL_KNOWS_OTHER_OWNERS, APPEAL_CASE_PROCEDURE } from 'pins-data-model';
 import validateNumberRangeParameter from '#common/validators/number-range-parameter.js';
-import {
-	validateNumberParameter,
-	validateRequiredDecimalParameter
-} from '#common/validators/number-parameter.js';
+import { validateNumberParameter } from '#common/validators/number-parameter.js';
 
 /** @typedef {import('express').RequestHandler} RequestHandler */
 
@@ -70,7 +67,6 @@ const patchAppellantCaseValidator = composeMiddleware(
 		}),
 	validateStringParameter('applicantFirstName'),
 	validateStringParameter('applicantSurname'),
-	validateRequiredDecimalParameter('siteAreaSquareMetres'),
 	validateBooleanParameter('isSiteFullyOwned'),
 	validateBooleanParameter('isSitePartiallyOwned'),
 	validateBooleanParameter('areAllOwnersKnown'),
