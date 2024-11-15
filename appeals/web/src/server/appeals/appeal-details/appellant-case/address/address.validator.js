@@ -5,7 +5,6 @@ import {
 } from '#lib/validators/address.validator.js';
 import { createTextInputOptionalValidator } from '#lib/validators/text-input-validator.js';
 import { createValidator } from '@pins/express';
-import { body } from 'express-validator';
 
 export const validateChangeSiteAddress = createValidator(
 	createAddressLine1Validator(),
