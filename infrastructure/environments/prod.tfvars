@@ -98,6 +98,13 @@ documents_config = {
 
 environment = "prod"
 
+front_door_config = {
+  name        = "pins-fd-common-prod"
+  rg          = "pins-rg-common-prod"
+  ep_name     = "pins-fde-appeals-prod"
+  use_tooling = false
+}
+
 front_office_infra_config = {
   deploy_connections = true
   network = {
