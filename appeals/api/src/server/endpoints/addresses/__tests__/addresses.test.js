@@ -8,7 +8,7 @@ import {
 	ERROR_MUST_BE_NUMBER,
 	ERROR_MUST_BE_STRING,
 	ERROR_NOT_FOUND,
-	LENGTH_300,
+	LENGTH_250,
 	LENGTH_8
 } from '../../constants.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
@@ -266,14 +266,14 @@ describe('addresses routes', () => {
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}/addresses/${householdAppeal.address.id}`)
 					.send({
-						addressLine1: 'A'.repeat(LENGTH_300 + 1)
+						addressLine1: 'A'.repeat(LENGTH_250 + 1)
 					})
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						addressLine1: stringTokenReplacement(ERROR_MAX_LENGTH_CHARACTERS, [LENGTH_300])
+						addressLine1: stringTokenReplacement(ERROR_MAX_LENGTH_CHARACTERS, [LENGTH_250])
 					}
 				});
 			});
@@ -304,14 +304,14 @@ describe('addresses routes', () => {
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}/addresses/${householdAppeal.address.id}`)
 					.send({
-						addressLine2: 'A'.repeat(LENGTH_300 + 1)
+						addressLine2: 'A'.repeat(LENGTH_250 + 1)
 					})
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						addressLine2: stringTokenReplacement(ERROR_MAX_LENGTH_CHARACTERS, [LENGTH_300])
+						addressLine2: stringTokenReplacement(ERROR_MAX_LENGTH_CHARACTERS, [LENGTH_250])
 					}
 				});
 			});
@@ -361,14 +361,14 @@ describe('addresses routes', () => {
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}/addresses/${householdAppeal.address.id}`)
 					.send({
-						country: 'A'.repeat(LENGTH_300 + 1)
+						country: 'A'.repeat(LENGTH_250 + 1)
 					})
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						country: stringTokenReplacement(ERROR_MAX_LENGTH_CHARACTERS, [LENGTH_300])
+						country: stringTokenReplacement(ERROR_MAX_LENGTH_CHARACTERS, [LENGTH_250])
 					}
 				});
 			});
@@ -399,14 +399,14 @@ describe('addresses routes', () => {
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}/addresses/${householdAppeal.address.id}`)
 					.send({
-						county: 'A'.repeat(LENGTH_300 + 1)
+						county: 'A'.repeat(LENGTH_250 + 1)
 					})
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						county: stringTokenReplacement(ERROR_MAX_LENGTH_CHARACTERS, [LENGTH_300])
+						county: stringTokenReplacement(ERROR_MAX_LENGTH_CHARACTERS, [LENGTH_250])
 					}
 				});
 			});
@@ -513,14 +513,14 @@ describe('addresses routes', () => {
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}/addresses/${householdAppeal.address.id}`)
 					.send({
-						town: 'A'.repeat(LENGTH_300 + 1)
+						town: 'A'.repeat(LENGTH_250 + 1)
 					})
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						town: stringTokenReplacement(ERROR_MAX_LENGTH_CHARACTERS, [LENGTH_300])
+						town: stringTokenReplacement(ERROR_MAX_LENGTH_CHARACTERS, [LENGTH_250])
 					}
 				});
 			});

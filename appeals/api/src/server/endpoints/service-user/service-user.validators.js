@@ -1,10 +1,10 @@
 import { composeMiddleware } from '@pins/express';
 import { validationErrorHandler } from '#middleware/error-handler.js';
 import {
+	validateStringParameter,
 	validateRequiredStringParameter,
 	validateStringParameterAllowingEmpty
 } from '#common/validators/string-parameter.js';
-import validateRegex from '#common/validators/regex-parameter.js';
 import validateIdParameter from '#common/validators/id-parameter.js';
 import {
 	validateNumberParameter,
@@ -12,7 +12,7 @@ import {
 } from '#common/validators/number-parameter.js';
 import { validateEmailParameter } from '#common/validators/email-parameter.js';
 import { validateUserType } from '#common/validators/user-type-parameter.js';
-import { UK_POSTCODE_REGEX, ERROR_INVALID_POSTCODE } from '#endpoints/constants.js';
+import { LENGTH_8, LENGTH_250 } from '#endpoints/constants.js';
 
 export const updateServiceUserValidator = composeMiddleware(
 	validateRequiredNumberParameter('serviceUser.serviceUserId'),
@@ -29,11 +29,11 @@ export const updateServiceUserValidator = composeMiddleware(
 
 export const patchAddressValidator = composeMiddleware(
 	validateIdParameter('serviceUserId'),
-	validateRequiredStringParameter('addressLine1', 250),
-	validateStringParameterAllowingEmpty('addressLine2', 250),
-	validateRequiredStringParameter('town', 250),
-	validateStringParameterAllowingEmpty('county', 250),
-	validateRequiredStringParameter('postcode', 8),
-	validateRegex('postcode', UK_POSTCODE_REGEX).withMessage(ERROR_INVALID_POSTCODE),
+	validateStringParameter('addressLine1', LENGTH_250),
+	validateStringParameterAllowingEmpty('addressLine2', LENGTH_250),
+	validateStringParameter('country', LENGTH_250),
+	validateStringParameterAllowingEmpty('county', LENGTH_250),
+	validateStringParameter('town', LENGTH_250),
+	validateStringParameter('postcode', LENGTH_8),
 	validationErrorHandler
 );

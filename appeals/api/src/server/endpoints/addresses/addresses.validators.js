@@ -2,11 +2,10 @@ import { composeMiddleware } from '@pins/express';
 import { validationErrorHandler } from '#middleware/error-handler.js';
 import validateIdParameter from '#common/validators/id-parameter.js';
 import {
-	validateRequiredStringParameter,
+	validateStringParameter,
 	validateStringParameterAllowingEmpty
 } from '#common/validators/string-parameter.js';
-import validateRegex from '#common/validators/regex-parameter.js';
-import { UK_POSTCODE_REGEX, ERROR_INVALID_POSTCODE } from '#endpoints/constants.js';
+import { LENGTH_8, LENGTH_250 } from '#endpoints/constants.js';
 
 const getAddressValidator = composeMiddleware(
 	validateIdParameter('appealId'),
@@ -17,12 +16,12 @@ const getAddressValidator = composeMiddleware(
 const patchAddressValidator = composeMiddleware(
 	validateIdParameter('appealId'),
 	validateIdParameter('addressId'),
-	validateRequiredStringParameter('addressLine1', 250),
-	validateStringParameterAllowingEmpty('addressLine2', 250),
-	validateRequiredStringParameter('town', 250),
-	validateStringParameterAllowingEmpty('county', 250),
-	validateRequiredStringParameter('postcode', 8),
-	validateRegex('postcode', UK_POSTCODE_REGEX).withMessage(ERROR_INVALID_POSTCODE),
+	validateStringParameter('addressLine1', LENGTH_250),
+	validateStringParameterAllowingEmpty('addressLine2', LENGTH_250),
+	validateStringParameter('town', LENGTH_250),
+	validateStringParameter('country', LENGTH_250),
+	validateStringParameterAllowingEmpty('county', LENGTH_250),
+	validateStringParameter('postcode', LENGTH_8),
 	validationErrorHandler
 );
 
