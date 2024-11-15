@@ -41,12 +41,24 @@ export class DateTimeSection extends Page {
 		this.#setAllDateFields(this.selectorPrefix.dueDate, date);
 	}
 
+	enterWithdrawalDate(day, month, year) {
+		cy.get('#withdrawal-request-date-day').type(day);
+		cy.get('#withdrawal-request-date-month').type(month);
+		cy.get('#withdrawal-request-date-year').type(year);
+	}
+
 	enterValidDate(date) {
 		this.#setAllDateFields(this.selectorPrefix.validDate, date);
 	}
 
 	enterVisitDate(date) {
 		this.#setAllDateFields(this.selectorPrefix.visitDate, date);
+	}
+
+	clearWithdrawalDate() {
+		cy.get('#withdrawal-request-date-day').clear();
+		cy.get('#withdrawal-request-date-month').clear();
+		cy.get('#withdrawal-request-date-year').clear();
 	}
 
 	enterDecisionLetterDate(date) {

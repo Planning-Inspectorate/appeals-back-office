@@ -238,6 +238,11 @@ export class Page {
 			});
 	}
 
+	validateConfirmationPanel(title) {
+		let panelTitle = this.basePageElements.panelTitle().invoke('prop', 'innerText');
+		panelTitle.should('eq', title);
+	}
+
 	validateConfirmationPanelMessage(title, body) {
 		this.basePageElements.panelTitle(title);
 		this.basePageElements.panelBody(body);
