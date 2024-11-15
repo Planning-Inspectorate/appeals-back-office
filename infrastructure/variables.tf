@@ -88,10 +88,10 @@ variable "environment" {
 variable "front_door_config" {
   description = "Config for the frontdoor in tooling subscription"
   type = object({
-    subscription_id   = string
-    frontdoor_name    = string
-    frontdoor_rg      = string
-    frontdoor_ep_name = string
+    name        = string
+    rg          = string
+    ep_name     = string
+    use_tooling = bool
   })
 }
 
