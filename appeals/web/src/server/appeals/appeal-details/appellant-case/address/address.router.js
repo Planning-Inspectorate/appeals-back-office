@@ -8,10 +8,6 @@ const router = createRouter({ mergeParams: true });
 router
 	.route('/change/:addressId')
 	.get(asyncHandler(controllers.getChangeSiteAddress))
-	.post(
-		validators.validateChangeSiteAddress,
-		validators.validatePostCode,
-		asyncHandler(controllers.postChangeSiteAddress)
-	);
+	.post(validators.validateChangeSiteAddress, asyncHandler(controllers.postChangeSiteAddress));
 
 export default router;

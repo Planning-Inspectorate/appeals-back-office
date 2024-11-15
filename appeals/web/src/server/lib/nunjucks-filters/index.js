@@ -9,6 +9,7 @@ export {
 	has,
 	includes,
 	keys,
+	kebabCase,
 	lowerCase,
 	split
 } from 'lodash-es';

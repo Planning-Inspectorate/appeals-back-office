@@ -1,6 +1,7 @@
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { capitalize } from 'lodash-es';
+import { HTTPError } from 'got';
 import { changeServiceUserPage } from './service-user.mapper.js';
 import { updateServiceUser } from './service-user.service.js';
 import { getOriginPathname, isInternalUrl } from '#lib/url-utilities.js';
@@ -102,6 +103,13 @@ export const postChangeServiceUser = async (request, response) => {
 		return response.redirect(backToMenuUrl);
 	} catch (error) {
 		logger.error(error);
+
+		// Check if it's a validation error (400)
+		if (error instanceof HTTPError && error.response.statusCode === 400) {
+			// @ts-ignore
+			request.errors = error.response.body.errors;
+			return renderChangeServiceUser(request, response);
+		}
 	}
 
 	return response.status(500).render('app/500.njk');

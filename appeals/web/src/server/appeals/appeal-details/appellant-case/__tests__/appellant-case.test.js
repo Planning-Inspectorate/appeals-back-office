@@ -1199,7 +1199,7 @@ describe('appellant-case', () => {
 				.send({
 					invalidReason: invalidReasonsWithTextIds[0],
 					[`invalidReason-${invalidReasonsWithTextIds[0]}`]: 'a'.repeat(
-						textInputCharacterLimits.appellantCaseNotValidReason + 1
+						textInputCharacterLimits.defaultInputLength + 1
 					)
 				});
 
@@ -1212,7 +1212,7 @@ describe('appellant-case', () => {
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
 			expect(unprettifiedErrorSummaryHtml).toContain(
-				'Text in text fields cannot exceed 1000 characters</a>'
+				'Text in text fields cannot exceed 300 characters</a>'
 			);
 		});
 
@@ -1223,7 +1223,7 @@ describe('appellant-case', () => {
 					invalidReason: [invalidReasonsWithTextIds[0], invalidReasonsWithTextIds[1]],
 					[`invalidReason-${invalidReasonsWithTextIds[0]}`]: 'test reason text 1',
 					[`invalidReason-${invalidReasonsWithTextIds[0]}`]: 'a'.repeat(
-						textInputCharacterLimits.appellantCaseNotValidReason + 1
+						textInputCharacterLimits.defaultInputLength + 1
 					)
 				});
 
@@ -1236,7 +1236,7 @@ describe('appellant-case', () => {
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
 			expect(unprettifiedErrorSummaryHtml).toContain(
-				'Text in text fields cannot exceed 1000 characters</a>'
+				'Text in text fields cannot exceed 300 characters</a>'
 			);
 		});
 
@@ -1259,7 +1259,7 @@ describe('appellant-case', () => {
 				.send({
 					invalidReason: invalidReasonsWithTextIds[0],
 					[`invalidReason-${invalidReasonsWithTextIds[0]}`]: [
-						'a'.repeat(textInputCharacterLimits.appellantCaseNotValidReason)
+						'a'.repeat(textInputCharacterLimits.defaultInputLength)
 					]
 				});
 
@@ -1288,11 +1288,11 @@ describe('appellant-case', () => {
 				.send({
 					invalidReason: [invalidReasonsWithTextIds[0], invalidReasonsWithTextIds[1]],
 					[`invalidReason-${invalidReasonsWithTextIds[0]}`]: [
-						'a'.repeat(textInputCharacterLimits.appellantCaseNotValidReason)
+						'a'.repeat(textInputCharacterLimits.defaultInputLength)
 					],
 					[`invalidReason-${invalidReasonsWithTextIds[1]}`]: [
-						'a'.repeat(textInputCharacterLimits.appellantCaseNotValidReason),
-						'a'.repeat(textInputCharacterLimits.appellantCaseNotValidReason)
+						'a'.repeat(textInputCharacterLimits.defaultInputLength),
+						'a'.repeat(textInputCharacterLimits.defaultInputLength)
 					]
 				});
 
@@ -1454,7 +1454,7 @@ describe('appellant-case', () => {
 				.send({
 					incompleteReason: incompleteReasonsWithTextIds[0],
 					[`incompleteReason-${incompleteReasonsWithTextIds[0]}`]: 'a'.repeat(
-						textInputCharacterLimits.appellantCaseNotValidReason + 1
+						textInputCharacterLimits.defaultInputLength + 1
 					)
 				});
 
@@ -1467,7 +1467,7 @@ describe('appellant-case', () => {
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
 			expect(unprettifiedErrorSummaryHtml).toContain(
-				'Text in text fields cannot exceed 1000 characters</a>'
+				'Text in text fields cannot exceed 300 characters</a>'
 			);
 		});
 
@@ -1478,7 +1478,7 @@ describe('appellant-case', () => {
 					incompleteReason: [incompleteReasonsWithTextIds[0], incompleteReasonsWithTextIds[1]],
 					[`incompleteReason-${incompleteReasonsWithTextIds[0]}`]: 'test reason text 1',
 					[`incompleteReason-${incompleteReasonsWithTextIds[0]}`]: 'a'.repeat(
-						textInputCharacterLimits.appellantCaseNotValidReason + 1
+						textInputCharacterLimits.defaultInputLength + 1
 					)
 				});
 
@@ -1491,7 +1491,7 @@ describe('appellant-case', () => {
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
 			expect(unprettifiedErrorSummaryHtml).toContain(
-				'Text in text fields cannot exceed 1000 characters</a>'
+				'Text in text fields cannot exceed 300 characters</a>'
 			);
 		});
 
@@ -1514,8 +1514,8 @@ describe('appellant-case', () => {
 				.send({
 					incompleteReason: incompleteReasonsWithTextIds[0],
 					[`incompleteReason-${incompleteReasonsWithTextIds[0]}`]: [
-						'a'.repeat(textInputCharacterLimits.appellantCaseNotValidReason),
-						'a'.repeat(textInputCharacterLimits.appellantCaseNotValidReason)
+						'a'.repeat(textInputCharacterLimits.defaultInputLength),
+						'a'.repeat(textInputCharacterLimits.defaultInputLength)
 					]
 				});
 
@@ -1544,10 +1544,10 @@ describe('appellant-case', () => {
 				.send({
 					incompleteReason: [incompleteReasonsWithTextIds[0], incompleteReasonsWithTextIds[1]],
 					[`incompleteReason-${incompleteReasonsWithTextIds[0]}`]: [
-						'a'.repeat(textInputCharacterLimits.appellantCaseNotValidReason)
+						'a'.repeat(textInputCharacterLimits.defaultInputLength)
 					],
 					[`incompleteReason-${incompleteReasonsWithTextIds[1]}`]: [
-						'a'.repeat(textInputCharacterLimits.appellantCaseNotValidReason),
+						'a'.repeat(textInputCharacterLimits.defaultInputLength),
 						'test reason text 3'
 					]
 				});
@@ -2647,7 +2647,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).not.toContain('Warning</span>');
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<input class="govuk-checkboxes__input" id="additionalDocumentsConfirmation"'
+				'<input class="govuk-checkboxes__input" id="additional-documents-confirmation"'
 			);
 		});
 
@@ -2678,7 +2678,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).toContain('Warning</span>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<input class="govuk-checkboxes__input" id="additionalDocumentsConfirmation"'
+				'<input class="govuk-checkboxes__input" id="additional-documents-confirmation"'
 			);
 		});
 
@@ -2709,7 +2709,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).toContain('Warning</span>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<input class="govuk-checkboxes__input" id="additionalDocumentsConfirmation"'
+				'<input class="govuk-checkboxes__input" id="additional-documents-confirmation"'
 			);
 		});
 
@@ -2740,7 +2740,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).toContain('Warning</span>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<input class="govuk-checkboxes__input" id="additionalDocumentsConfirmation"'
+				'<input class="govuk-checkboxes__input" id="additional-documents-confirmation"'
 			);
 		});
 
@@ -2771,7 +2771,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).not.toContain('Warning</span>');
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<input class="govuk-checkboxes__input" id="additionalDocumentsConfirmation"'
+				'<input class="govuk-checkboxes__input" id="additional-documents-confirmation"'
 			);
 		});
 	});
@@ -2817,7 +2817,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).not.toContain('Warning</span>');
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<input class="govuk-checkboxes__input" id="additionalDocumentsConfirmation"'
+				'<input class="govuk-checkboxes__input" id="additional-documents-confirmation"'
 			);
 		});
 
@@ -2848,7 +2848,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).toContain('Warning</span>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<input class="govuk-checkboxes__input" id="additionalDocumentsConfirmation"'
+				'<input class="govuk-checkboxes__input" id="additional-documents-confirmation"'
 			);
 		});
 
@@ -2879,7 +2879,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).toContain('Warning</span>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<input class="govuk-checkboxes__input" id="additionalDocumentsConfirmation"'
+				'<input class="govuk-checkboxes__input" id="additional-documents-confirmation"'
 			);
 		});
 
@@ -2910,7 +2910,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).toContain('Warning</span>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<input class="govuk-checkboxes__input" id="additionalDocumentsConfirmation"'
+				'<input class="govuk-checkboxes__input" id="additional-documents-confirmation"'
 			);
 		});
 
@@ -2941,7 +2941,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).not.toContain('Warning</span>');
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<input class="govuk-checkboxes__input" id="additionalDocumentsConfirmation"'
+				'<input class="govuk-checkboxes__input" id="additional-documents-confirmation"'
 			);
 		});
 	});

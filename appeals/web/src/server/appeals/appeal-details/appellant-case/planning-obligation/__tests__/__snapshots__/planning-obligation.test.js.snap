@@ -13,19 +13,19 @@ exports[`planning-obligation GET /status/change should render the change plannin
                 <div class="govuk-form-group">
                     <div class="govuk-radios" data-module="govuk-radios">
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="planningObligationStatusRadio"
+                            <input class="govuk-radios__input" id="planning-obligation-status-radio"
                             name="planningObligationStatusRadio" type="radio" value="not_started">
-                            <label class="govuk-label govuk-radios__label" for="planningObligationStatusRadio">Not yet started</label>
+                            <label class="govuk-label govuk-radios__label" for="planning-obligation-status-radio">Not yet started</label>
                         </div>
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="planningObligationStatusRadio-2"
+                            <input class="govuk-radios__input" id="planning-obligation-status-radio-2"
                             name="planningObligationStatusRadio" type="radio" value="finalised" checked>
-                            <label class="govuk-label govuk-radios__label" for="planningObligationStatusRadio-2">Finalised</label>
+                            <label class="govuk-label govuk-radios__label" for="planning-obligation-status-radio-2">Finalised</label>
                         </div>
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="planningObligationStatusRadio-3"
+                            <input class="govuk-radios__input" id="planning-obligation-status-radio-3"
                             name="planningObligationStatusRadio" type="radio" value="not-applicable">
-                            <label class="govuk-label govuk-radios__label" for="planningObligationStatusRadio-3">Not applicable</label>
+                            <label class="govuk-label govuk-radios__label" for="planning-obligation-status-radio-3">Not applicable</label>
                         </div>
                     </div>
                 </div>
@@ -50,20 +50,20 @@ exports[`planning-obligation GET /status/change should render the change plannin
                 <div class="govuk-form-group">
                     <div class="govuk-radios" data-module="govuk-radios">
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="planningObligationStatusRadio"
+                            <input class="govuk-radios__input" id="planning-obligation-status-radio"
                             name="planningObligationStatusRadio" type="radio" value="not_started">
-                            <label class="govuk-label govuk-radios__label" for="planningObligationStatusRadio">Not yet started</label>
+                            <label class="govuk-label govuk-radios__label" for="planning-obligation-status-radio">Not yet started</label>
                         </div>
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="planningObligationStatusRadio-2"
+                            <input class="govuk-radios__input" id="planning-obligation-status-radio-2"
                             name="planningObligationStatusRadio" type="radio" value="finalised">
-                            <label class="govuk-label govuk-radios__label" for="planningObligationStatusRadio-2">Finalised</label>
+                            <label class="govuk-label govuk-radios__label" for="planning-obligation-status-radio-2">Finalised</label>
                         </div>
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="planningObligationStatusRadio-3"
+                            <input class="govuk-radios__input" id="planning-obligation-status-radio-3"
                             name="planningObligationStatusRadio" type="radio" value="not-applicable"
                             checked>
-                            <label class="govuk-label govuk-radios__label" for="planningObligationStatusRadio-3">Not applicable</label>
+                            <label class="govuk-label govuk-radios__label" for="planning-obligation-status-radio-3">Not applicable</label>
                         </div>
                     </div>
                 </div>
@@ -88,19 +88,19 @@ exports[`planning-obligation GET /status/change should render the change plannin
                 <div class="govuk-form-group">
                     <div class="govuk-radios" data-module="govuk-radios">
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="planningObligationStatusRadio"
+                            <input class="govuk-radios__input" id="planning-obligation-status-radio"
                             name="planningObligationStatusRadio" type="radio" value="not_started" checked>
-                            <label class="govuk-label govuk-radios__label" for="planningObligationStatusRadio">Not yet started</label>
+                            <label class="govuk-label govuk-radios__label" for="planning-obligation-status-radio">Not yet started</label>
                         </div>
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="planningObligationStatusRadio-2"
+                            <input class="govuk-radios__input" id="planning-obligation-status-radio-2"
                             name="planningObligationStatusRadio" type="radio" value="finalised">
-                            <label class="govuk-label govuk-radios__label" for="planningObligationStatusRadio-2">Finalised</label>
+                            <label class="govuk-label govuk-radios__label" for="planning-obligation-status-radio-2">Finalised</label>
                         </div>
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="planningObligationStatusRadio-3"
+                            <input class="govuk-radios__input" id="planning-obligation-status-radio-3"
                             name="planningObligationStatusRadio" type="radio" value="not-applicable">
-                            <label class="govuk-label govuk-radios__label" for="planningObligationStatusRadio-3">Not applicable</label>
+                            <label class="govuk-label govuk-radios__label" for="planning-obligation-status-radio-3">Not applicable</label>
                         </div>
                     </div>
                 </div>

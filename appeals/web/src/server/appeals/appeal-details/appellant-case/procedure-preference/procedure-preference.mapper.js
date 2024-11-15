@@ -30,7 +30,7 @@ export const changeProcedurePreferencePage = (appealData, appellantCaseData, sto
 				type: 'radios',
 				parameters: {
 					name: 'procedurePreferenceRadio',
-					id: 'procedure-preference',
+					idPrefix: 'procedure-preference',
 					items: [
 						{
 							value: 'hearing',
@@ -86,7 +86,7 @@ export const changeProcedurePreferenceDetailsPage = (
 				type: 'textarea',
 				parameters: {
 					name: 'procedurePreferenceDetailsTextarea',
-					id: 'procedure-preference-details',
+					id: 'procedure-preference-details-textarea',
 					value: procedurePreferenceDetails || ''
 				}
 			}

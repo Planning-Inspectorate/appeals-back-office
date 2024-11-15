@@ -33,6 +33,7 @@
 	<form method="post" novalidate="novalidate">
 		{{ govukCheckboxes({
 			name: notValidStatus + "Reason",
+			idPrefix: notValidStatus + "-reason",
 			items: reasonOptions
 		}) }}
 		{{ govukButton({

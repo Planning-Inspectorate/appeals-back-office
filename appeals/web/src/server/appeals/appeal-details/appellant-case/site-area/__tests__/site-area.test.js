@@ -58,7 +58,7 @@ describe('change-site-area', () => {
 			}).innerHTML;
 
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Provide the site area</a>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Enter the site area</a>');
 		});
 
 		it('should re-render changeSiteArea page with an error when siteArea is not a number or decimal', async () => {
@@ -88,7 +88,7 @@ describe('change-site-area', () => {
 			}).innerHTML;
 
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Provide a number or decimal</a>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Site area must be a number or decimal</a>');
 		});
 
 		it('should redirect to the appellant-case page when siteArea is valid', async () => {

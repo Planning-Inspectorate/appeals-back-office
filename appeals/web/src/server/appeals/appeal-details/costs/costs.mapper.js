@@ -51,6 +51,7 @@ export function decisionCheckAndConfirmPage(
 			type: 'checkboxes',
 			parameters: {
 				name: 'confirm',
+				idPrefix: 'confirm',
 				items: [
 					{
 						text: 'I will email the relevant parties',

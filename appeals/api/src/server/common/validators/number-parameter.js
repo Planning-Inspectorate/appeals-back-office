@@ -1,5 +1,5 @@
 import { body } from 'express-validator';
-import { ERROR_MUST_BE_NUMBER } from '#endpoints/constants.js';
+import { ERROR_CANNOT_BE_EMPTY_STRING, ERROR_MUST_BE_NUMBER } from '#endpoints/constants.js';
 
 /** @typedef {import('express-validator').ValidationChain} ValidationChain */
 
@@ -7,7 +7,7 @@ import { ERROR_MUST_BE_NUMBER } from '#endpoints/constants.js';
  * @param {string} parameterName
  * @returns {ValidationChain}
  */
-const validateNumberParameter = (parameterName) =>
+export const validateNumberParameter = (parameterName) =>
 	body(parameterName).optional().isInt().withMessage(ERROR_MUST_BE_NUMBER).toInt();
 
 /**
@@ -15,6 +15,28 @@ const validateNumberParameter = (parameterName) =>
  * @returns {ValidationChain}
  */
 export const validateRequiredNumberParameter = (parameterName) =>
-	body(parameterName).isInt().withMessage(ERROR_MUST_BE_NUMBER).toInt();
+	body(parameterName)
+		.notEmpty()
+		.withMessage(ERROR_CANNOT_BE_EMPTY_STRING)
+		.isInt()
+		.withMessage(ERROR_MUST_BE_NUMBER)
+		.toInt();
 
-export default validateNumberParameter;
+/**
+ * @param {string} parameterName
+ * @returns {ValidationChain}
+ */
+export const validateDecimalParameter = (parameterName) =>
+	body(parameterName).optional().isFloat().withMessage(ERROR_MUST_BE_NUMBER).toFloat();
+
+/**
+ * @param {string} parameterName
+ * @returns {ValidationChain}
+ */
+export const validateRequiredDecimalParameter = (parameterName) =>
+	body(parameterName)
+		.notEmpty()
+		.withMessage(ERROR_CANNOT_BE_EMPTY_STRING)
+		.isFloat()
+		.withMessage(ERROR_MUST_BE_NUMBER)
+		.toFloat();

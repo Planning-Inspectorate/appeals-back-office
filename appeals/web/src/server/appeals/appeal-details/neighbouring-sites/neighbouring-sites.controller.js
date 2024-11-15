@@ -1,3 +1,7 @@
+import logger from '#lib/logger.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { getOriginPathname, isInternalUrl } from '#lib/url-utilities.js';
+import { HTTPError } from 'got';
 import {
 	addNeighbouringSiteCheckAndConfirmPage,
 	addNeighbouringSitePage,
@@ -14,9 +18,6 @@ import {
 	changeNeighbouringSiteAffected,
 	removeNeighbouringSite
 } from './neighbouring-sites.service.js';
-import logger from '#lib/logger.js';
-import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { getOriginPathname, isInternalUrl } from '#lib/url-utilities.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -186,6 +187,13 @@ export const postAddNeighbouringSiteCheckAndConfirm = async (request, response) 
 		return response.redirect(origin);
 	} catch (error) {
 		logger.error(error);
+
+		// Check if it's a validation error (400)
+		if (error instanceof HTTPError && error.response.statusCode === 400) {
+			// @ts-ignore
+			request.errors = error.response.body.errors;
+			return renderAddNeighbouringSiteCheckAndConfirm(request, response);
+		}
 	}
 
 	return response.status(500).render('app/500.njk');

@@ -369,7 +369,7 @@ describe('procedure-preference', () => {
 
 			expect(unprettifiedElement.innerHTML).toContain('Change reason for preference</h1>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<textarea class="govuk-textarea" id="procedure-preference-details" name="procedurePreferenceDetailsTextarea" rows="5">Lorem ipsum</textarea>'
+				'<textarea class="govuk-textarea" id="procedure-preference-details-textarea" name="procedurePreferenceDetailsTextarea" rows="5">Lorem ipsum</textarea>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
@@ -390,7 +390,7 @@ describe('procedure-preference', () => {
 
 			expect(unprettifiedElement.innerHTML).toContain('Change reason for preference</h1>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<textarea class="govuk-textarea" id="procedure-preference-details" name="procedurePreferenceDetailsTextarea" rows="5"></textarea>'
+				'<textarea class="govuk-textarea" id="procedure-preference-details-textarea" name="procedurePreferenceDetailsTextarea" rows="5"></textarea>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});

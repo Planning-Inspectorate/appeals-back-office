@@ -1,11 +1,12 @@
 import { createValidator } from '@pins/express';
+import { createTextareaOptionalValidator } from '#lib/validators/textarea-validator.js';
+import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
 import { body } from 'express-validator';
 
-export const validateProcedurePreferenceDetails = createValidator(
-	body('procedurePreferenceDetailsTextarea')
-		.trim()
-		.isLength({ min: 0, max: 1000 })
-		.withMessage('Text must contain 1000 characters or less')
+export const validateProcedurePreferenceDetails = createTextareaOptionalValidator(
+	'procedurePreferenceDetailsTextarea',
+	textInputCharacterLimits.defaultTextareaLength,
+	`Reason for preference must be ${textInputCharacterLimits.defaultTextareaLength} characters or less`
 );
 
 export const validateProcedurePreferenceDuration = createValidator(

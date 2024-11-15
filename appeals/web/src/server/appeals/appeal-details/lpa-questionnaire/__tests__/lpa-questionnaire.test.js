@@ -911,7 +911,7 @@ describe('LPA Questionnaire review', () => {
 			const response = await request.post(`${baseUrl}/incomplete`).send({
 				incompleteReason: incompleteReasonsWithTextIds[0],
 				[`incompleteReason-${incompleteReasonsWithTextIds[0]}`]: 'a'.repeat(
-					textInputCharacterLimits.lpaQuestionnaireNotValidReason + 1
+					textInputCharacterLimits.defaultInputLength + 1
 				)
 			});
 
@@ -925,7 +925,7 @@ describe('LPA Questionnaire review', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Text in text fields cannot exceed 1000 characters</a>');
+			expect(errorSummaryHtml).toContain('Text in text fields cannot exceed 300 characters</a>');
 		});
 
 		it('should re-render the incomplete reason page with the expected error message if multiple incomplete reasons with text were provided but any of the matching text properties exceed the character limit', async () => {
@@ -933,7 +933,7 @@ describe('LPA Questionnaire review', () => {
 				incompleteReason: [incompleteReasonsWithTextIds[0], incompleteReasonsWithTextIds[1]],
 				[`incompleteReason-${incompleteReasonsWithTextIds[0]}`]: 'test reason text 1',
 				[`incompleteReason-${incompleteReasonsWithTextIds[1]}`]: 'a'.repeat(
-					textInputCharacterLimits.lpaQuestionnaireNotValidReason + 1
+					textInputCharacterLimits.defaultInputLength + 1
 				)
 			});
 
@@ -947,7 +947,7 @@ describe('LPA Questionnaire review', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Text in text fields cannot exceed 1000 characters</a>');
+			expect(errorSummaryHtml).toContain('Text in text fields cannot exceed 300 characters</a>');
 		});
 
 		it('should redirect to the check and confirm page if a single incomplete reason without text was provided', async () => {
@@ -965,7 +965,7 @@ describe('LPA Questionnaire review', () => {
 			const response = await request.post(`${baseUrl}/incomplete`).send({
 				incompleteReason: incompleteReasonsWithTextIds[0],
 				[`incompleteReason-${incompleteReasonsWithTextIds[0]}`]: 'a'.repeat(
-					textInputCharacterLimits.lpaQuestionnaireNotValidReason
+					textInputCharacterLimits.defaultInputLength
 				)
 			});
 
@@ -990,11 +990,11 @@ describe('LPA Questionnaire review', () => {
 			const response = await request.post(`${baseUrl}/incomplete`).send({
 				incompleteReason: [incompleteReasonsWithTextIds[0], incompleteReasonsWithTextIds[1]],
 				[`incompleteReason-${incompleteReasonsWithTextIds[0]}`]: [
-					'a'.repeat(textInputCharacterLimits.lpaQuestionnaireNotValidReason),
+					'a'.repeat(textInputCharacterLimits.defaultInputLength),
 					'test reason text 2'
 				],
 				[`incompleteReason-${incompleteReasonsWithTextIds[1]}`]: 'a'.repeat(
-					textInputCharacterLimits.lpaQuestionnaireNotValidReason
+					textInputCharacterLimits.defaultInputLength
 				)
 			});
 
@@ -1632,7 +1632,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).not.toContain('Warning</span>');
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<input class="govuk-checkboxes__input" id="additionalDocumentsConfirmation"'
+				'<input class="govuk-checkboxes__input" id="additional-documents-confirmation"'
 			);
 		});
 
@@ -1665,7 +1665,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).toContain('Warning</span>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<input class="govuk-checkboxes__input" id="additionalDocumentsConfirmation"'
+				'<input class="govuk-checkboxes__input" id="additional-documents-confirmation"'
 			);
 		});
 
@@ -1698,7 +1698,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).toContain('Warning</span>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<input class="govuk-checkboxes__input" id="additionalDocumentsConfirmation"'
+				'<input class="govuk-checkboxes__input" id="additional-documents-confirmation"'
 			);
 		});
 
@@ -1731,7 +1731,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).not.toContain('Warning</span>');
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<input class="govuk-checkboxes__input" id="additionalDocumentsConfirmation"'
+				'<input class="govuk-checkboxes__input" id="additional-documents-confirmation"'
 			);
 		});
 	});
@@ -1776,7 +1776,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).not.toContain('Warning</span>');
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<input class="govuk-checkboxes__input" id="additionalDocumentsConfirmation"'
+				'<input class="govuk-checkboxes__input" id="additional-documents-confirmation"'
 			);
 		});
 
@@ -1809,7 +1809,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).toContain('Warning</span>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<input class="govuk-checkboxes__input" id="additionalDocumentsConfirmation"'
+				'<input class="govuk-checkboxes__input" id="additional-documents-confirmation"'
 			);
 		});
 
@@ -1842,7 +1842,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).toContain('Warning</span>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<input class="govuk-checkboxes__input" id="additionalDocumentsConfirmation"'
+				'<input class="govuk-checkboxes__input" id="additional-documents-confirmation"'
 			);
 		});
 
@@ -1875,7 +1875,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).not.toContain('Warning</span>');
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<input class="govuk-checkboxes__input" id="additionalDocumentsConfirmation"'
+				'<input class="govuk-checkboxes__input" id="additional-documents-confirmation"'
 			);
 		});
 	});

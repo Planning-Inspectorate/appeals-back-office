@@ -1,11 +1,20 @@
-import { createPostcodeValidator } from '#lib/validators/address.validator.js';
+import {
+	createAddressLine1Validator,
+	createTownValidator,
+	createPostcodeValidator
+} from '#lib/validators/address.validator.js';
+import { createTextInputOptionalValidator } from '#lib/validators/text-input-validator.js';
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
 
 export const validateChangeSiteAddress = createValidator(
-	body('addressLine1').trim().notEmpty().withMessage('Enter the first line of the address'),
-	body('town').trim().notEmpty().withMessage('Enter the town'),
+	createAddressLine1Validator(),
+	createTextInputOptionalValidator(
+		'addressLine2',
+		250,
+		'Address line 2 must be 250 characters or less'
+	),
+	createTownValidator(),
+	createTextInputOptionalValidator('county', 250, 'County must be 250 characters or less'),
 	createPostcodeValidator()
 );
-
-export const validatePostCode = createPostcodeValidator();

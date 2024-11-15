@@ -78,8 +78,8 @@ exports[`assign-user GET /assign-user/case-officer should render the assign case
             <form name="assignUserSearch" method="post" novalidate="novalidate" class="govuk-!-margin-bottom-5">
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="searchTerm">Search by name or email address</label>
-                    <input class="govuk-input" id="searchTerm"
+                    for="search-term">Search by name or email address</label>
+                    <input class="govuk-input" id="search-term"
                     name="searchTerm" type="text">
                 </div>
                 <button class="govuk-button" data-module="govuk-button">Search</button>
@@ -133,8 +133,8 @@ exports[`assign-user GET /assign-user/inspector should render the assign inspect
             <form name="assignUserSearch" method="post" novalidate="novalidate" class="govuk-!-margin-bottom-5">
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="searchTerm">Search by name or email address</label>
-                    <input class="govuk-input" id="searchTerm"
+                    for="search-term">Search by name or email address</label>
+                    <input class="govuk-input" id="search-term"
                     name="searchTerm" type="text">
                 </div>
                 <button class="govuk-button" data-module="govuk-button">Search</button>
@@ -410,8 +410,8 @@ exports[`assign-user POST /assign-user/case-officer should re-render the assign 
             <form name="assignUserSearch" method="post" novalidate="novalidate" class="govuk-!-margin-bottom-5">
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="searchTerm">Search by name or email address</label>
-                    <input class="govuk-input" id="searchTerm"
+                    for="search-term">Search by name or email address</label>
+                    <input class="govuk-input" id="search-term"
                     name="searchTerm" type="text" value="bob">
                 </div>
                 <button class="govuk-button" data-module="govuk-button">Search</button>
@@ -441,8 +441,8 @@ exports[`assign-user POST /assign-user/case-officer should re-render the assign 
             <form name="assignUserSearch" method="post" novalidate="novalidate" class="govuk-!-margin-bottom-5">
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="searchTerm">Search by name or email address</label>
-                    <input class="govuk-input" id="searchTerm"
+                    for="search-term">Search by name or email address</label>
+                    <input class="govuk-input" id="search-term"
                     name="searchTerm" type="text" value="john">
                 </div>
                 <button class="govuk-button" data-module="govuk-button">Search</button>
@@ -476,7 +476,7 @@ exports[`assign-user POST /assign-user/case-officer should re-render the assign 
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#searchTerm">Enter a name or email address</a>
+                            <li><a href="#search-term">Enter a name or email address</a>
                             </li>
                         </ul>
                     </div>
@@ -490,8 +490,8 @@ exports[`assign-user POST /assign-user/case-officer should re-render the assign 
             <form name="assignUserSearch" method="post" novalidate="novalidate" class="govuk-!-margin-bottom-5">
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="searchTerm">Search by name or email address</label>
-                    <input class="govuk-input" id="searchTerm"
+                    for="search-term">Search by name or email address</label>
+                    <input class="govuk-input" id="search-term"
                     name="searchTerm" type="text">
                 </div>
                 <button class="govuk-button" data-module="govuk-button">Search</button>
@@ -510,7 +510,7 @@ exports[`assign-user POST /assign-user/case-officer should re-render the assign 
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#searchTerm">Search term must be between 2 and 80 characters in length</a>
+                            <li><a href="#search-term">Search term must be between 2 and 80 characters in length</a>
                             </li>
                         </ul>
                     </div>
@@ -524,8 +524,8 @@ exports[`assign-user POST /assign-user/case-officer should re-render the assign 
             <form name="assignUserSearch" method="post" novalidate="novalidate" class="govuk-!-margin-bottom-5">
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="searchTerm">Search by name or email address</label>
-                    <input class="govuk-input" id="searchTerm"
+                    for="search-term">Search by name or email address</label>
+                    <input class="govuk-input" id="search-term"
                     name="searchTerm" type="text" value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
                 </div>
                 <button class="govuk-button" data-module="govuk-button">Search</button>
@@ -544,7 +544,7 @@ exports[`assign-user POST /assign-user/case-officer should re-render the assign 
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#searchTerm">Search term must be between 2 and 80 characters in length</a>
+                            <li><a href="#search-term">Search term must be between 2 and 80 characters in length</a>
                             </li>
                         </ul>
                     </div>
@@ -558,8 +558,8 @@ exports[`assign-user POST /assign-user/case-officer should re-render the assign 
             <form name="assignUserSearch" method="post" novalidate="novalidate" class="govuk-!-margin-bottom-5">
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="searchTerm">Search by name or email address</label>
-                    <input class="govuk-input" id="searchTerm"
+                    for="search-term">Search by name or email address</label>
+                    <input class="govuk-input" id="search-term"
                     name="searchTerm" type="text" value="a">
                 </div>
                 <button class="govuk-button" data-module="govuk-button">Search</button>
@@ -667,8 +667,8 @@ exports[`assign-user POST /assign-user/inspector should re-render the assign ins
             <form name="assignUserSearch" method="post" novalidate="novalidate" class="govuk-!-margin-bottom-5">
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="searchTerm">Search by name or email address</label>
-                    <input class="govuk-input" id="searchTerm"
+                    for="search-term">Search by name or email address</label>
+                    <input class="govuk-input" id="search-term"
                     name="searchTerm" type="text" value="bob">
                 </div>
                 <button class="govuk-button" data-module="govuk-button">Search</button>
@@ -698,8 +698,8 @@ exports[`assign-user POST /assign-user/inspector should re-render the assign ins
             <form name="assignUserSearch" method="post" novalidate="novalidate" class="govuk-!-margin-bottom-5">
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="searchTerm">Search by name or email address</label>
-                    <input class="govuk-input" id="searchTerm"
+                    for="search-term">Search by name or email address</label>
+                    <input class="govuk-input" id="search-term"
                     name="searchTerm" type="text" value="john">
                 </div>
                 <button class="govuk-button" data-module="govuk-button">Search</button>
@@ -733,7 +733,7 @@ exports[`assign-user POST /assign-user/inspector should re-render the assign ins
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#searchTerm">Enter a name or email address</a>
+                            <li><a href="#search-term">Enter a name or email address</a>
                             </li>
                         </ul>
                     </div>
@@ -747,8 +747,8 @@ exports[`assign-user POST /assign-user/inspector should re-render the assign ins
             <form name="assignUserSearch" method="post" novalidate="novalidate" class="govuk-!-margin-bottom-5">
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="searchTerm">Search by name or email address</label>
-                    <input class="govuk-input" id="searchTerm"
+                    for="search-term">Search by name or email address</label>
+                    <input class="govuk-input" id="search-term"
                     name="searchTerm" type="text">
                 </div>
                 <button class="govuk-button" data-module="govuk-button">Search</button>
@@ -767,7 +767,7 @@ exports[`assign-user POST /assign-user/inspector should re-render the assign ins
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#searchTerm">Search term must be between 2 and 80 characters in length</a>
+                            <li><a href="#search-term">Search term must be between 2 and 80 characters in length</a>
                             </li>
                         </ul>
                     </div>
@@ -781,8 +781,8 @@ exports[`assign-user POST /assign-user/inspector should re-render the assign ins
             <form name="assignUserSearch" method="post" novalidate="novalidate" class="govuk-!-margin-bottom-5">
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="searchTerm">Search by name or email address</label>
-                    <input class="govuk-input" id="searchTerm"
+                    for="search-term">Search by name or email address</label>
+                    <input class="govuk-input" id="search-term"
                     name="searchTerm" type="text" value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
                 </div>
                 <button class="govuk-button" data-module="govuk-button">Search</button>
@@ -801,7 +801,7 @@ exports[`assign-user POST /assign-user/inspector should re-render the assign ins
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#searchTerm">Search term must be between 2 and 80 characters in length</a>
+                            <li><a href="#search-term">Search term must be between 2 and 80 characters in length</a>
                             </li>
                         </ul>
                     </div>
@@ -815,8 +815,8 @@ exports[`assign-user POST /assign-user/inspector should re-render the assign ins
             <form name="assignUserSearch" method="post" novalidate="novalidate" class="govuk-!-margin-bottom-5">
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="searchTerm">Search by name or email address</label>
-                    <input class="govuk-input" id="searchTerm"
+                    for="search-term">Search by name or email address</label>
+                    <input class="govuk-input" id="search-term"
                     name="searchTerm" type="text" value="a">
                 </div>
                 <button class="govuk-button" data-module="govuk-button">Search</button>

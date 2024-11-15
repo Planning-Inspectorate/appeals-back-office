@@ -22,6 +22,7 @@ export function reviewInterestedPartyCommentPage(appealDetails, comment) {
 		type: 'checkboxes',
 		parameters: {
 			name: 'site-visit-request',
+			idPrefix: 'site-visit-request',
 			items: [
 				{
 					text: 'The comment includes a site visit request',
@@ -37,6 +38,7 @@ export function reviewInterestedPartyCommentPage(appealDetails, comment) {
 		type: 'radios',
 		parameters: {
 			name: 'status',
+			idPrefix: 'status',
 			fieldset: {
 				legend: {
 					text: 'What is the outcome of your review?',

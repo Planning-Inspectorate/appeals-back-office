@@ -246,7 +246,9 @@ describe('service-user', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Enter a valid email or clear the email field</a>');
+			expect(errorSummaryHtml).toContain(
+				'Enter an email address in the correct format, like name@example.com</a>'
+			);
 		});
 
 		it('should re-render changeServiceUser with the expected error message if phone number is provided but invalid', async () => {

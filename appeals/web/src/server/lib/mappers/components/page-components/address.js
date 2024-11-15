@@ -45,7 +45,7 @@ export function addressInputs({ address, operationType, errors }) {
 		{
 			type: 'input',
 			parameters: {
-				id: 'address-town',
+				id: 'town',
 				name: 'town',
 				type: 'text',
 				classes: 'govuk-input govuk-input--width-20',
@@ -60,7 +60,7 @@ export function addressInputs({ address, operationType, errors }) {
 		{
 			type: 'input',
 			parameters: {
-				id: 'address-county',
+				id: 'county',
 				name: 'county',
 				type: 'text',
 				classes: 'govuk-input govuk-input--width-20',
@@ -74,7 +74,7 @@ export function addressInputs({ address, operationType, errors }) {
 		{
 			type: 'input',
 			parameters: {
-				id: 'address-postcode',
+				id: 'post-code',
 				name: 'postCode',
 				type: 'text',
 				classes: 'govuk-input govuk-input--width-10',
@@ -89,7 +89,7 @@ export function addressInputs({ address, operationType, errors }) {
 		{
 			type: 'input',
 			parameters: {
-				id: 'address-operation-type',
+				id: 'operation-type',
 				name: 'operationType',
 				type: 'hidden',
 				value: operationType || ''

@@ -60,11 +60,11 @@ describe('edit-ip-comment', () => {
 			});
 
 			it('should render town input', () => {
-				expect(pageHtml.querySelector('input#address-town')).not.toBeNull();
+				expect(pageHtml.querySelector('input#town')).not.toBeNull();
 			});
 
 			it('should render postcode input', () => {
-				expect(pageHtml.querySelector('input#address-postcode')).not.toBeNull();
+				expect(pageHtml.querySelector('input#post-code')).not.toBeNull();
 			});
 
 			it('should render the submit button', () => {

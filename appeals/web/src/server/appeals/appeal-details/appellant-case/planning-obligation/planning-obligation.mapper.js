@@ -33,7 +33,7 @@ export const changePlanningObligationStatusPage = (
 				type: 'radios',
 				parameters: {
 					name: 'planningObligationStatusRadio',
-					id: 'planning-obligation-status-radio',
+					idPrefix: 'planning-obligation-status-radio',
 					fieldSet: {
 						legend: {
 							text: 'What is the status of the planning obligation?',

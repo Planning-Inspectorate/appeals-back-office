@@ -13,14 +13,14 @@ exports[`add-ip-comment GET /add/check-address should match the snapshot 1`] = `
                 <div class="govuk-form-group">
                     <div class="govuk-radios" data-module="govuk-radios">
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="addressProvided" name="addressProvided"
+                            <input class="govuk-radios__input" id="address-provided" name="addressProvided"
                             type="radio" value="yes">
-                            <label class="govuk-label govuk-radios__label" for="addressProvided">Yes</label>
+                            <label class="govuk-label govuk-radios__label" for="address-provided">Yes</label>
                         </div>
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="addressProvided-2" name="addressProvided"
+                            <input class="govuk-radios__input" id="address-provided-2" name="addressProvided"
                             type="radio" value="no">
-                            <label class="govuk-label govuk-radios__label" for="addressProvided-2">No</label>
+                            <label class="govuk-label govuk-radios__label" for="address-provided-2">No</label>
                         </div>
                     </div>
                 </div>
@@ -100,23 +100,23 @@ exports[`add-ip-comment GET /add/ip-address should match the snapshot 1`] = `
                     name="addressLine2" type="text">
                 </div>
                 <div class="govuk-form-group">
-                    <label class="govuk-label" for="address-town">Town or city</label>
+                    <label class="govuk-label" for="town">Town or city</label>
                     <input class="govuk-input govuk-input govuk-input--width-20"
-                    id="address-town" name="town" type="text">
+                    id="town" name="town" type="text">
                 </div>
                 <div class="govuk-form-group">
-                    <label class="govuk-label" for="address-county">County (optional)</label>
+                    <label class="govuk-label" for="county">County (optional)</label>
                     <input class="govuk-input govuk-input govuk-input--width-20"
-                    id="address-county" name="county" type="text">
+                    id="county" name="county" type="text">
                 </div>
                 <div class="govuk-form-group">
-                    <label class="govuk-label" for="address-postcode">Postcode</label>
+                    <label class="govuk-label" for="post-code">Postcode</label>
                     <input class="govuk-input govuk-input govuk-input--width-10"
-                    id="address-postcode" name="postCode" type="text">
+                    id="post-code" name="postCode" type="text">
                 </div>
                 <div class="govuk-form-group">
-                    <input class="govuk-input" id="address-operation-type" name="operationType"
-                    type="hidden" value="add">
+                    <input class="govuk-input" id="operation-type" name="operationType" type="hidden"
+                    value="add">
                 </div>
                 <button type="submit" data-prevent-double-click="true" class="govuk-button"
                 data-module="govuk-button">Continue</button>

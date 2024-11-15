@@ -70,7 +70,7 @@ export const validateStringParameterAllowingEmpty = (parameterName, maxLength = 
  * @param {string} parameterName
  * @returns {ValidationChain}
  */
-export const validateRequiredStringParameter = (parameterName, maxLength = LENGTH_1000) =>
+export const validateRequiredStringParameter = (parameterName, maxLength = LENGTH_300) =>
 	body(parameterName)
 		.isString()
 		.withMessage(ERROR_MUST_BE_STRING)

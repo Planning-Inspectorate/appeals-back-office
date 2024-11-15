@@ -1,13 +1,13 @@
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
 
-const TEXTAREA_MAX_CHARACTERS = 1000;
+const TEXT_INPUT_MAX_CHARACTERS = 300;
 
-export const createTextareaValidator = (
-	fieldName = 'textarea',
+export const createTextInputValidator = (
+	fieldName = 'text',
 	emptyErrorMessage = 'Enter text',
-	maxCharactersAllowed = TEXTAREA_MAX_CHARACTERS,
-	maxCharactersErrorMessage = `Text must be ${TEXTAREA_MAX_CHARACTERS} characters or less`
+	maxCharactersAllowed = TEXT_INPUT_MAX_CHARACTERS,
+	maxCharactersErrorMessage = `Text must be ${TEXT_INPUT_MAX_CHARACTERS} characters or less`
 ) =>
 	createValidator(
 		body(fieldName)
@@ -19,10 +19,10 @@ export const createTextareaValidator = (
 			.withMessage(maxCharactersErrorMessage)
 	);
 
-export const createTextareaOptionalValidator = (
-	fieldName = 'textarea',
-	maxCharactersAllowed = TEXTAREA_MAX_CHARACTERS,
-	maxCharactersErrorMessage = `Text must be ${TEXTAREA_MAX_CHARACTERS} characters or less`
+export const createTextInputOptionalValidator = (
+	fieldName = 'text',
+	maxCharactersAllowed = TEXT_INPUT_MAX_CHARACTERS,
+	maxCharactersErrorMessage = `Text must be ${TEXT_INPUT_MAX_CHARACTERS} characters or less`
 ) =>
 	createValidator(
 		body(fieldName)

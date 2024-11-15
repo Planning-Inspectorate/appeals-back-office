@@ -2357,19 +2357,19 @@ exports[`procedure-preference GET /change should render the change procedure pre
                 <div class="govuk-form-group">
                     <div class="govuk-radios" data-module="govuk-radios">
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="procedurePreferenceRadio" name="procedurePreferenceRadio"
+                            <input class="govuk-radios__input" id="procedure-preference" name="procedurePreferenceRadio"
                             type="radio" value="hearing" checked>
-                            <label class="govuk-label govuk-radios__label" for="procedurePreferenceRadio">Hearing</label>
+                            <label class="govuk-label govuk-radios__label" for="procedure-preference">Hearing</label>
                         </div>
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="procedurePreferenceRadio-2" name="procedurePreferenceRadio"
+                            <input class="govuk-radios__input" id="procedure-preference-2" name="procedurePreferenceRadio"
                             type="radio" value="inquiry">
-                            <label class="govuk-label govuk-radios__label" for="procedurePreferenceRadio-2">Inquiry</label>
+                            <label class="govuk-label govuk-radios__label" for="procedure-preference-2">Inquiry</label>
                         </div>
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="procedurePreferenceRadio-3" name="procedurePreferenceRadio"
+                            <input class="govuk-radios__input" id="procedure-preference-3" name="procedurePreferenceRadio"
                             type="radio" value="written">
-                            <label class="govuk-label govuk-radios__label" for="procedurePreferenceRadio-3">Written</label>
+                            <label class="govuk-label govuk-radios__label" for="procedure-preference-3">Written</label>
                         </div>
                     </div>
                 </div>
@@ -2394,19 +2394,19 @@ exports[`procedure-preference GET /change should render the change procedure pre
                 <div class="govuk-form-group">
                     <div class="govuk-radios" data-module="govuk-radios">
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="procedurePreferenceRadio" name="procedurePreferenceRadio"
+                            <input class="govuk-radios__input" id="procedure-preference" name="procedurePreferenceRadio"
                             type="radio" value="hearing">
-                            <label class="govuk-label govuk-radios__label" for="procedurePreferenceRadio">Hearing</label>
+                            <label class="govuk-label govuk-radios__label" for="procedure-preference">Hearing</label>
                         </div>
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="procedurePreferenceRadio-2" name="procedurePreferenceRadio"
+                            <input class="govuk-radios__input" id="procedure-preference-2" name="procedurePreferenceRadio"
                             type="radio" value="inquiry" checked>
-                            <label class="govuk-label govuk-radios__label" for="procedurePreferenceRadio-2">Inquiry</label>
+                            <label class="govuk-label govuk-radios__label" for="procedure-preference-2">Inquiry</label>
                         </div>
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="procedurePreferenceRadio-3" name="procedurePreferenceRadio"
+                            <input class="govuk-radios__input" id="procedure-preference-3" name="procedurePreferenceRadio"
                             type="radio" value="written">
-                            <label class="govuk-label govuk-radios__label" for="procedurePreferenceRadio-3">Written</label>
+                            <label class="govuk-label govuk-radios__label" for="procedure-preference-3">Written</label>
                         </div>
                     </div>
                 </div>
@@ -2431,19 +2431,19 @@ exports[`procedure-preference GET /change should render the change procedure pre
                 <div class="govuk-form-group">
                     <div class="govuk-radios" data-module="govuk-radios">
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="procedurePreferenceRadio" name="procedurePreferenceRadio"
+                            <input class="govuk-radios__input" id="procedure-preference" name="procedurePreferenceRadio"
                             type="radio" value="hearing">
-                            <label class="govuk-label govuk-radios__label" for="procedurePreferenceRadio">Hearing</label>
+                            <label class="govuk-label govuk-radios__label" for="procedure-preference">Hearing</label>
                         </div>
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="procedurePreferenceRadio-2" name="procedurePreferenceRadio"
+                            <input class="govuk-radios__input" id="procedure-preference-2" name="procedurePreferenceRadio"
                             type="radio" value="inquiry">
-                            <label class="govuk-label govuk-radios__label" for="procedurePreferenceRadio-2">Inquiry</label>
+                            <label class="govuk-label govuk-radios__label" for="procedure-preference-2">Inquiry</label>
                         </div>
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="procedurePreferenceRadio-3" name="procedurePreferenceRadio"
+                            <input class="govuk-radios__input" id="procedure-preference-3" name="procedurePreferenceRadio"
                             type="radio" value="written" checked>
-                            <label class="govuk-label govuk-radios__label" for="procedurePreferenceRadio-3">Written</label>
+                            <label class="govuk-label govuk-radios__label" for="procedure-preference-3">Written</label>
                         </div>
                     </div>
                 </div>
@@ -2466,8 +2466,8 @@ exports[`procedure-preference GET /details/change should render the change reaso
             </div>
             <form method="POST" novalidate="novalidate">
                 <div class="govuk-form-group">
-                    <textarea class="govuk-textarea" id="procedure-preference-details" name="procedurePreferenceDetailsTextarea"
-                    rows="5">Lorem ipsum</textarea>
+                    <textarea class="govuk-textarea" id="procedure-preference-details-textarea"
+                    name="procedurePreferenceDetailsTextarea" rows="5">Lorem ipsum</textarea>
                 </div>
                 <button type="submit" data-prevent-double-click="true" class="govuk-button"
                 data-module="govuk-button">Continue</button>
@@ -2488,8 +2488,8 @@ exports[`procedure-preference GET /details/change should render the change reaso
             </div>
             <form method="POST" novalidate="novalidate">
                 <div class="govuk-form-group">
-                    <textarea class="govuk-textarea" id="procedure-preference-details" name="procedurePreferenceDetailsTextarea"
-                    rows="5"></textarea>
+                    <textarea class="govuk-textarea" id="procedure-preference-details-textarea"
+                    name="procedurePreferenceDetailsTextarea" rows="5"></textarea>
                 </div>
                 <button type="submit" data-prevent-double-click="true" class="govuk-button"
                 data-module="govuk-button">Continue</button>
@@ -2596,7 +2596,7 @@ exports[`procedure-preference POST /details/change should re-render the change r
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#procedurePreferenceDurationInput">Provide the expected length of procedure</a>
+                            <li><a href="#procedure-preference-duration-input">Provide the expected length of procedure</a>
                             </li>
                         </ul>
                     </div>
@@ -2629,7 +2629,7 @@ exports[`procedure-preference POST /duration/change should re-render the change 
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#procedurePreferenceDurationInput">Provide the expected length of procedure</a>
+                            <li><a href="#procedure-preference-duration-input">Provide the expected length of procedure</a>
                             </li>
                         </ul>
                     </div>
@@ -2662,7 +2662,7 @@ exports[`procedure-preference POST /duration/change should re-render the change 
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#procedurePreferenceDurationInput">Expected length of procedure must be a number</a>
+                            <li><a href="#procedure-preference-duration-input">Expected length of procedure must be a number</a>
                             </li>
                         </ul>
                     </div>
@@ -2695,7 +2695,7 @@ exports[`procedure-preference POST /duration/change should re-render the change 
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#procedurePreferenceDurationInput">Expected length of procedure must be a number between 0 and 9</a>
+                            <li><a href="#procedure-preference-duration-input">Expected length of procedure must be a number between 0 and 9</a>
                             </li>
                         </ul>
                     </div>
@@ -2728,7 +2728,7 @@ exports[`procedure-preference POST /inquiry/witnesses/change should re-render th
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#inquiryNumberOfWitnessesInput">Provide the expected number of witnesses</a>
+                            <li><a href="#inquiry-number-of-witnesses-input">Provide the expected number of witnesses</a>
                             </li>
                         </ul>
                     </div>
@@ -2761,7 +2761,7 @@ exports[`procedure-preference POST /inquiry/witnesses/change should re-render th
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#inquiryNumberOfWitnessesInput">Expected number of witnesses must be a number</a>
+                            <li><a href="#inquiry-number-of-witnesses-input">Expected number of witnesses must be a number</a>
                             </li>
                         </ul>
                     </div>
@@ -2794,7 +2794,7 @@ exports[`procedure-preference POST /inquiry/witnesses/change should re-render th
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#inquiryNumberOfWitnessesInput">Expected number of witnesses must be a number between 0 and 9</a>
+                            <li><a href="#inquiry-number-of-witnesses-input">Expected number of witnesses must be a number between 0 and 9</a>
                             </li>
                         </ul>
                     </div>

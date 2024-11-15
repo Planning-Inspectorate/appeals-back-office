@@ -40,7 +40,7 @@ export async function assignUserPage(
 			closing: ''
 		},
 		parameters: {
-			id: 'searchTerm',
+			id: 'search-term',
 			name: 'searchTerm',
 			label: {
 				text: 'Search by name or email address',

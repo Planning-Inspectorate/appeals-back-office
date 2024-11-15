@@ -5,18 +5,10 @@ import {
 	validateCheckAddress,
 	validateCommentSubmittedDateFields,
 	validateCommentSubmittedDateValid,
-	validateRedactionStatus
+	validateRedactionStatus,
+	validateInterestedPartyDetails,
+	validateInterestedPartyAddress
 } from './add-ip-comment.validators.js';
-import {
-	createPostcodeValidator,
-	createAddressLine1Validator,
-	createTownValidator
-} from '#lib/validators/address.validator.js';
-import {
-	createEmailValidator,
-	createFirstNameValidator,
-	createLastNameValidator
-} from '#lib/validators/service-user.validator.js';
 import { createDateInputDateInPastOrTodayValidator } from '#lib/validators/date-input.validator.js';
 import { saveBodyToSession } from './add-ip-comment.middleware.js';
 
@@ -25,13 +17,7 @@ const router = createRouter({ mergeParams: true });
 router
 	.route('/ip-details')
 	.get(asyncHandler(controller.renderIpDetails))
-	.post(
-		createFirstNameValidator(),
-		createLastNameValidator(),
-		createEmailValidator(),
-		saveBodyToSession,
-		asyncHandler(controller.postIpDetails)
-	);
+	.post(validateInterestedPartyDetails, saveBodyToSession, asyncHandler(controller.postIpDetails));
 
 router
 	.route('/check-address')
@@ -41,13 +27,7 @@ router
 router
 	.route('/ip-address')
 	.get(asyncHandler(controller.renderIpAddress))
-	.post(
-		createAddressLine1Validator(),
-		createTownValidator(),
-		createPostcodeValidator(),
-		saveBodyToSession,
-		asyncHandler(controller.postIpAddress)
-	);
+	.post(validateInterestedPartyAddress, saveBodyToSession, asyncHandler(controller.postIpAddress));
 
 router
 	.route('/upload')

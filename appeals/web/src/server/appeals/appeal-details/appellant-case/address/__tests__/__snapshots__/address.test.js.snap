@@ -21,23 +21,22 @@ exports[`site-address GET /add should render updateSiteAddress page 1`] = `
                     name="addressLine2" type="text">
                 </div>
                 <div class="govuk-form-group">
-                    <label class="govuk-label" for="address-town">Town or city</label>
+                    <label class="govuk-label" for="town">Town or city</label>
                     <input class="govuk-input govuk-input govuk-input--width-20"
-                    id="address-town" name="town" type="text">
+                    id="town" name="town" type="text">
                 </div>
                 <div class="govuk-form-group">
-                    <label class="govuk-label" for="address-county">County (optional)</label>
+                    <label class="govuk-label" for="county">County (optional)</label>
                     <input class="govuk-input govuk-input govuk-input--width-20"
-                    id="address-county" name="county" type="text" value="Wandsworth">
+                    id="county" name="county" type="text" value="Wandsworth">
                 </div>
                 <div class="govuk-form-group">
-                    <label class="govuk-label" for="address-postcode">Postcode</label>
+                    <label class="govuk-label" for="post-code">Postcode</label>
                     <input class="govuk-input govuk-input govuk-input--width-10"
-                    id="address-postcode" name="postCode" type="text" value="SW4 0HY">
+                    id="post-code" name="postCode" type="text" value="SW4 0HY">
                 </div>
                 <div class="govuk-form-group">
-                    <input class="govuk-input" id="address-operation-type" name="operationType"
-                    type="hidden">
+                    <input class="govuk-input" id="operation-type" name="operationType" type="hidden">
                 </div>
                 <button type="submit" data-prevent-double-click="true" class="govuk-button"
                 data-module="govuk-button">Continue</button>
@@ -53,7 +52,7 @@ exports[`site-address POST /change/:siteId should re-render updateSiteAddress pa
         <h2 class="govuk-error-summary__title"> There is a problem</h2>
         <div class="govuk-error-summary__body">
             <ul class="govuk-list govuk-error-summary__list">
-                <li><a href="#addressLine1">Enter the first line of the address</a>
+                <li><a href="#address-line-1">Enter address line 1, typically the building and street</a>
                 </li>
             </ul>
         </div>
@@ -67,7 +66,7 @@ exports[`site-address POST /change/:siteId should re-render updateSiteAddress pa
         <h2 class="govuk-error-summary__title"> There is a problem</h2>
         <div class="govuk-error-summary__body">
             <ul class="govuk-list govuk-error-summary__list">
-                <li><a href="#addressLine1">Enter the first line of the address</a>
+                <li><a href="#address-line-1">Enter address line 1, typically the building and street</a>
                 </li>
             </ul>
         </div>
@@ -81,7 +80,7 @@ exports[`site-address POST /change/:siteId should re-render updateSiteAddress pa
         <h2 class="govuk-error-summary__title"> There is a problem</h2>
         <div class="govuk-error-summary__body">
             <ul class="govuk-list govuk-error-summary__list">
-                <li><a href="#postCode">Enter postcode</a>
+                <li><a href="#post-code">Enter postcode</a>
                 </li>
             </ul>
         </div>
@@ -95,7 +94,7 @@ exports[`site-address POST /change/:siteId should re-render updateSiteAddress pa
         <h2 class="govuk-error-summary__title"> There is a problem</h2>
         <div class="govuk-error-summary__body">
             <ul class="govuk-list govuk-error-summary__list">
-                <li><a href="#postCode">Invalid postcode</a>
+                <li><a href="#post-code">Invalid postcode</a>
                 </li>
             </ul>
         </div>
@@ -109,7 +108,7 @@ exports[`site-address POST /change/:siteId should re-render updateSiteAddress pa
         <h2 class="govuk-error-summary__title"> There is a problem</h2>
         <div class="govuk-error-summary__body">
             <ul class="govuk-list govuk-error-summary__list">
-                <li><a href="#postCode">Enter postcode</a>
+                <li><a href="#post-code">Enter postcode</a>
                 </li>
             </ul>
         </div>
@@ -123,7 +122,7 @@ exports[`site-address POST /change/:siteId should re-render updateSiteAddress pa
         <h2 class="govuk-error-summary__title"> There is a problem</h2>
         <div class="govuk-error-summary__body">
             <ul class="govuk-list govuk-error-summary__list">
-                <li><a href="#town">Enter the town</a>
+                <li><a href="#town">Enter town or city</a>
                 </li>
             </ul>
         </div>
@@ -137,7 +136,7 @@ exports[`site-address POST /change/:siteId should re-render updateSiteAddress pa
         <h2 class="govuk-error-summary__title"> There is a problem</h2>
         <div class="govuk-error-summary__body">
             <ul class="govuk-list govuk-error-summary__list">
-                <li><a href="#town">Enter the town</a>
+                <li><a href="#town">Enter town or city</a>
                 </li>
             </ul>
         </div>

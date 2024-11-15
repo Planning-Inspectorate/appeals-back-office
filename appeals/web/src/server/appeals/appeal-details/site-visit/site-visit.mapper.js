@@ -136,7 +136,7 @@ export async function scheduleOrManageSiteVisitPage(
 		type: 'radios',
 		parameters: {
 			name: 'visit-type',
-			id: 'visit-type',
+			idPrefix: 'visit-type',
 			fieldset: {
 				legend: {
 					text: 'Select visit type',
@@ -431,6 +431,7 @@ export function setVisitTypePage(appealDetails, visitType) {
 		type: 'radios',
 		parameters: {
 			name: 'visit-type',
+			idPrefix: 'visit-type',
 			fieldset: {
 				legend: {
 					text: 'Select visit type',

@@ -22,6 +22,7 @@ export function issueDecisionPage(appealDetails, inspectorDecision) {
 		type: 'radios',
 		parameters: {
 			name: 'decision',
+			idPrefix: 'decision',
 			items: [
 				{
 					value: 'Allowed',
@@ -231,6 +232,7 @@ export function checkAndConfirmPage(request, appealData, session) {
 		type: 'checkboxes',
 		parameters: {
 			name: 'ready-to-send',
+			idPrefix: 'ready-to-send',
 			items: [
 				{
 					text: 'This decision is ready to be sent to the relevant parties',
@@ -355,6 +357,7 @@ export function checkAndConfirmInvalidPage(request, appealData, session) {
 		type: 'checkboxes',
 		parameters: {
 			name: 'ready-to-send',
+			idPrefix: 'ready-to-send',
 			items: [
 				{
 					text: 'This decision is ready to be sent to the relevant parties',

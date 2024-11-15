@@ -17,6 +17,7 @@ export const mapReviewOutcome = ({ appellantCaseData }) => ({
 				type: 'radios',
 				properties: {
 					name: 'reviewOutcome',
+					idPrefix: 'review-outcome',
 					value: appellantCaseData.validation?.outcome,
 					fieldset: {
 						legend: {

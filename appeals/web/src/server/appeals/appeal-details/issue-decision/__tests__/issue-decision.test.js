@@ -486,7 +486,7 @@ describe('issue-decision', () => {
 
 		it('should re-render the invalid reason page with the expected error message if the provided invalid reason text exceeds the character limit', async () => {
 			const mockAppealId = '1';
-			const mockReason = 'a'.repeat(textInputCharacterLimits.appellantCaseNotValidReason + 1);
+			const mockReason = 'a'.repeat(textInputCharacterLimits.defaultTextareaLength + 1);
 			const response = await request
 				.post(`${baseUrl}/${mockAppealId}/issue-decision/invalid-reason`)
 				.send({ decisionInvalidReason: mockReason })

@@ -192,6 +192,13 @@ export const postChangeProcedurePreferenceDetails = async (request, response) =>
 		);
 	} catch (error) {
 		logger.error(error);
+
+		// Check if it's a validation error (400)
+		if (error instanceof HTTPError && error.response.statusCode === 400) {
+			// @ts-ignore
+			request.errors = error.response.body.errors;
+			return renderChangeProcedurePreferenceDetails(request, response);
+		}
 	}
 
 	return response.status(500).render('app/500.njk');

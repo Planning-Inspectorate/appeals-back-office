@@ -33,7 +33,7 @@ describe('change-appeal-type', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('What type should this appeal be?</h1>');
 			expect(element.innerHTML).toContain(
-				'<input class="govuk-radios__input" id="appealType" name="appealType" type="radio"'
+				'<input class="govuk-radios__input" id="appeal-type" name="appealType"'
 			);
 			expect(element.innerHTML).toContain('Continue</button>');
 		});
