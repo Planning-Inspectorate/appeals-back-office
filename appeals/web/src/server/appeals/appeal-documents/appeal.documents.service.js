@@ -7,6 +7,20 @@ import logger from '#lib/logger.js';
 /**
  * @param {import('got').Got} apiClient
  * @param {string|number} appealId
+ * @returns {Promise<FolderInfo[]|undefined>}
+ */
+export const getAllCaseFolders = async (apiClient, appealId) => {
+	try {
+		const bulkLocationInfo = await apiClient.get(`appeals/${appealId}/document-folders`).json();
+		return bulkLocationInfo;
+	} catch {
+		return undefined;
+	}
+};
+
+/**
+ * @param {import('got').Got} apiClient
+ * @param {string|number} appealId
  * @param {string|number} folderId
  * @returns {Promise<FolderInfo|undefined>}
  */

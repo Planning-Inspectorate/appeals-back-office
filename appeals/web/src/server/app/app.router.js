@@ -16,7 +16,8 @@ import { assertIsAuthenticated } from './auth/auth.guards.js';
 import {
 	getDocumentDownload,
 	getDocumentDownloadByVersion,
-	getUncommittedDocumentDownload
+	getUncommittedDocumentDownload,
+	getBulkDocumentDownload
 } from './components/file-downloader.component.js';
 import { addApiClientToRequest } from '../lib/middleware/add-apiclient-to-request.js';
 import { APPEAL_START_RANGE } from '@pins/appeals/constants/common.js';
@@ -65,6 +66,10 @@ router.use(assertGroupAccess(...groupIds));
 
 router.route('/').get(viewHomepage);
 router.route('/auth/signout').get(handleSignout);
+
+router
+	.route('/documents/:caseId/bulk-download/:filename?')
+	.get(addApiClientToRequest, asyncHandler(getBulkDocumentDownload));
 
 router
 	.route('/documents/:caseId/download/:guid/:filename?')

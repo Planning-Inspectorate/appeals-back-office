@@ -75,3 +75,29 @@ export function textSummaryListItem({
 		}
 	};
 }
+
+/**
+ * Returns the instructions for an HTML item
+ *
+ * @param {Object} options
+ * @param {string} options.id
+ * @param {string|HtmlProperty} options.value
+ * @param {string} [options.cypressDataName]
+ * @returns {Instructions}
+ */
+export function textHtmlItem({ id, value, cypressDataName = id }) {
+	const html = `
+		<p class="govuk-body govuk-!-margin-bottom-6" id="${id}" data-cy="${cypressDataName}">${value}</p>
+	`;
+	return {
+		id,
+		display: {
+			htmlItem: {
+				type: 'html',
+				parameters: {
+					html
+				}
+			}
+		}
+	};
+}

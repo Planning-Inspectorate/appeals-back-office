@@ -1,19 +1,34 @@
+import archiver from 'archiver';
 import { BlobServiceClient } from '@azure/storage-blob';
 import { BlobStorageClient } from '@pins/blob-storage-client';
 import getActiveDirectoryAccessToken from '../../lib/active-directory-token.js';
 import config from '@pins/appeals.web/environment/config.js';
 import {
 	getFileInfo,
-	getFileVersionsInfo
+	getFileVersionsInfo,
+	getAllCaseFolders
 } from '#appeals/appeal-documents/appeal.documents.service.js';
-import { APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
-
-// TODO: Clean up code
+import { APPEAL_CASE_STAGE, APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
 
 /** @typedef {import('../auth/auth-session.service').SessionWithAuth} SessionWithAuth */
 /** @typedef {import('express').Response} Response */
 
 const validScanResult = APPEAL_VIRUS_CHECK_STATUS.SCANNED;
+
+/**
+ * Create a new blob storage client
+ *
+ * @param {SessionWithAuth} session
+ * @returns {Promise<*>}
+ */
+const createBlobStorageClient = async (session) => {
+	if (config.useBlobEmulator === true) {
+		return new BlobStorageClient(new BlobServiceClient(config.blobEmulatorSasUrl));
+	} else {
+		const accessToken = await getActiveDirectoryAccessToken(session);
+		return BlobStorageClient.fromUrlAndToken(config.blobStorageUrl, accessToken);
+	}
+};
 
 /**
  * Download one document or redirects to its url if filename is provided
@@ -41,15 +56,7 @@ export const getDocumentDownload = async ({ apiClient, params, session }, respon
 		throw new Error('Document cannot be downloaded, incorrect AV scan result');
 	}
 
-	let blobStorageClient = undefined;
-	if (config.useBlobEmulator === true) {
-		blobStorageClient = new BlobStorageClient(new BlobServiceClient(config.blobEmulatorSasUrl));
-	} else {
-		const accessToken = await getActiveDirectoryAccessToken(session);
-		blobStorageClient = BlobStorageClient.fromUrlAndToken(config.blobStorageUrl, accessToken);
-	}
-
-	// Document URIs are persisted with a prepended slash, but this slash is treated as part of the key by blob storage so we need to remove it
+	const blobStorageClient = await createBlobStorageClient(session);
 	const documentKey = blobStoragePath.startsWith('/') ? blobStoragePath.slice(1) : blobStoragePath;
 	const extractedFilename = `${documentKey}`.split(/\/+/).pop();
 
@@ -89,14 +96,7 @@ export const getUncommittedDocumentDownload = async (
 	{ params: { caseReference, guid, filename: requestedFilename, version }, session },
 	response
 ) => {
-	let blobStorageClient = undefined;
-	if (config.useBlobEmulator === true) {
-		blobStorageClient = new BlobStorageClient(new BlobServiceClient(config.blobEmulatorSasUrl));
-	} else {
-		const accessToken = await getActiveDirectoryAccessToken(session);
-		blobStorageClient = BlobStorageClient.fromUrlAndToken(config.blobStorageUrl, accessToken);
-	}
-
+	const blobStorageClient = await createBlobStorageClient(session);
 	const documentKey = `appeal/${caseReference}/${guid}/v${version || 1}/${requestedFilename}`;
 	const extractedFilename = `${documentKey}`.split(/\/+/).pop();
 
@@ -162,15 +162,7 @@ export const getDocumentDownloadByVersion = async ({ apiClient, params, session 
 		throw new Error('Document cannot be downloaded, incorrect AV scan result');
 	}
 
-	let blobStorageClient = undefined;
-	if (config.useBlobEmulator === true) {
-		blobStorageClient = new BlobStorageClient(new BlobServiceClient(config.blobEmulatorSasUrl));
-	} else {
-		const accessToken = await getActiveDirectoryAccessToken(session);
-		blobStorageClient = BlobStorageClient.fromUrlAndToken(config.blobStorageUrl, accessToken);
-	}
-
-	// Document URIs are persisted with a prepended slash, but this slash is treated as part of the key by blob storage so we need to remove it
+	const blobStorageClient = await createBlobStorageClient(session);
 	const documentKey = blobStoragePath.startsWith('/') ? blobStoragePath.slice(1) : blobStoragePath;
 	const extractedFilename = `${documentKey}`.split(/\/+/).pop();
 
@@ -196,5 +188,118 @@ export const getDocumentDownloadByVersion = async ({ apiClient, params, session 
 
 	blobStream.readableStreamBody?.pipe(response);
 
+	return response.status(200);
+};
+
+/**
+ * Create a blob download stream
+ *
+ * @param {import('@pins/blob-storage-client').BlobStorageClient} blobStorageClient
+ * @param {string} blobStorageContainer
+ * @param {string} blobStoragePath
+ * @returns {Promise<Buffer|null>}
+ */
+const createBlobDownloadStream = async (
+	blobStorageClient,
+	blobStorageContainer,
+	blobStoragePath
+) => {
+	const documentKey = blobStoragePath.startsWith('/') ? blobStoragePath.slice(1) : blobStoragePath;
+
+	let blobProperties;
+	try {
+		blobProperties = await blobStorageClient.getBlobProperties(blobStorageContainer, documentKey);
+
+		if (!blobProperties) {
+			return null;
+		}
+	} catch {
+		return null;
+	}
+
+	const blobDownloadResponseParsed = await blobStorageClient.downloadStream(
+		blobStorageContainer,
+		documentKey
+	);
+
+	if (!blobDownloadResponseParsed?.readableStreamBody) {
+		throw new Error(`Document ${documentKey} missing stream body`);
+	}
+
+	// @ts-ignore
+	return blobDownloadResponseParsed.blobDownloadStream;
+};
+
+/**
+ * Build a zipped file and Download
+ *
+ * @param {{apiClient: import('got').Got, params: {caseId: string, filename?: string}, session: SessionWithAuth}} request
+ * @param {Response} response
+ * @returns {Promise<Response>}
+ */
+export const getBulkDocumentDownload = async ({ apiClient, params, session }, response) => {
+	const { filename: requestedFilename, caseId } = params;
+
+	const folders = await getAllCaseFolders(apiClient, caseId);
+	const bulkFileInfo = folders
+		?.filter((folder) => folder.documents.length)
+		.filter((folder) => !folder.path.startsWith(APPEAL_CASE_STAGE.INTERNAL))
+		.flatMap((folder) => {
+			return folder.documents.map((document) => {
+				const { blobStorageContainer, blobStoragePath, documentURI } =
+					document.latestDocumentVersion;
+				return {
+					fullName: `${folder.path}/${document.name}`,
+					blobStorageContainer,
+					blobStoragePath,
+					documentURI
+				};
+			});
+		});
+
+	const timestampTokens = new Date().toISOString().split('T');
+	const dateString = timestampTokens[0].replaceAll('-', '');
+	const timeString = timestampTokens[1].split('.')[0].replaceAll(':', '');
+	const zipFileName = requestedFilename?.replace('.zip', `_${dateString}${timeString}.zip`);
+
+	response.setHeader('content-type', 'application/zip');
+	response.setHeader('content-disposition', `attachment; filename=${zipFileName}`);
+
+	const archive = archiver('zip', {
+		zlib: { level: 9 } // Sets the compression level.
+	});
+
+	archive.pipe(response);
+
+	const /** @type {string[]} */ missingFiles = [];
+
+	if (!bulkFileInfo?.length) {
+		missingFiles.push('No documents found in this case');
+	} else {
+		const blobStorageClient = await createBlobStorageClient(session);
+		const blobStreams = await Promise.all(
+			bulkFileInfo.map((fileInfo) =>
+				createBlobDownloadStream(
+					blobStorageClient,
+					fileInfo.blobStorageContainer,
+					fileInfo.blobStoragePath
+				)
+			)
+		);
+
+		blobStreams.forEach((blobStream, index) => {
+			if (blobStream && blobStream !== null) {
+				archive.append(blobStream, { name: bulkFileInfo[index].fullName });
+			} else {
+				missingFiles.push(bulkFileInfo[index].fullName);
+			}
+		});
+	}
+
+	if (missingFiles.length) {
+		archive.append(Buffer.from(JSON.stringify(missingFiles)), { name: 'missing-files.json' });
+	}
+
+	await archive.finalize();
 	return response.status(200);
 };
