@@ -1,6 +1,6 @@
 resource "azurerm_cdn_frontdoor_origin_group" "web" {
   name                     = "${local.org}-fd-${local.service_name}-web-${var.environment}"
-  cdn_frontdoor_profile_id = data.azurerm_cdn_frontdoor_profile.web.id
+  cdn_frontdoor_profile_id = data.azurerm_cdn_frontdoor_profile.shared.id
   session_affinity_enabled = true
   provider                 = azurerm.front_door
 
@@ -37,7 +37,7 @@ resource "azurerm_cdn_frontdoor_origin" "web" {
 
 resource "azurerm_cdn_frontdoor_custom_domain" "web" {
   name                     = "${local.org}-fd-${local.service_name}-web-${var.environment}"
-  cdn_frontdoor_profile_id = data.azurerm_cdn_frontdoor_profile.web.id
+  cdn_frontdoor_profile_id = data.azurerm_cdn_frontdoor_profile.shared.id
   host_name                = var.web_app_domain
   provider                 = azurerm.front_door
 
@@ -148,7 +148,7 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "web" {
 
 resource "azurerm_cdn_frontdoor_security_policy" "web" {
   name                     = replace("${local.org}-sec-${local.service_name}-web-${var.environment}", "-", "")
-  cdn_frontdoor_profile_id = data.azurerm_cdn_frontdoor_profile.web.id
+  cdn_frontdoor_profile_id = data.azurerm_cdn_frontdoor_profile.shared.id
   provider                 = azurerm.front_door
 
   security_policies {
@@ -168,7 +168,7 @@ resource "azurerm_cdn_frontdoor_security_policy" "web" {
 # moinitoring
 resource "azurerm_monitor_diagnostic_setting" "web_front_door" {
   name                       = "${local.org}-fd-mds-${local.service_name}-web-${var.environment}"
-  target_resource_id         = data.azurerm_cdn_frontdoor_profile.web.id
+  target_resource_id         = data.azurerm_cdn_frontdoor_profile.shared.id
   log_analytics_workspace_id = azurerm_log_analytics_workspace.main.id
   provider                   = azurerm.front_door
 
