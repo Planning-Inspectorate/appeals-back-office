@@ -4,7 +4,7 @@ import { apiPaths } from './apiPaths.js';
 
 const baseUrl = Cypress.config('apiBaseUrl');
 
-const createApiSubmission = (submission, type) => {
+export const createApiSubmission = (submission, type) => {
 	const env = baseUrl.indexOf('test') > -1 ? 'test' : 'dev';
 
 	return {
