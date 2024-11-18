@@ -22,6 +22,7 @@ import { mapCostsLpaCorrespondence } from './submappers/costs-lpa-correspondence
 import { mapCostsLpaWithdrawal } from './submappers/costs-lpa-withdrawal.mapper.js';
 import { mapCrossTeamCorrespondence } from './submappers/cross-team-correspondence.mapper.js';
 import { mapDecision } from './submappers/decision.mapper.js';
+import { mapDownloadCaseFiles } from './submappers/case-files-download.mapper.js';
 import { mapInspectorCorrespondence } from './submappers/inspector-correspondence.mapper.js';
 import { mapInspectorNeighbouringSites } from './submappers/inspector-neighbouring-sites.mapper.js';
 import { mapInspector } from './submappers/inspector.mapper.js';
@@ -88,5 +89,6 @@ export const submaps = {
 	costsLpaCorrespondence: mapCostsLpaCorrespondence,
 	costsDecision: mapCostsDecision,
 	issueDeterminationDate: mapIssueDeterminationDate,
-	completeDate: mapCompleteDate
+	completeDate: mapCompleteDate,
+	downloadCaseFiles: mapDownloadCaseFiles
 };

@@ -32,6 +32,10 @@ export async function appealDetailsPage(
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);
 
 	const caseNotes = await generateCaseNotes(appealCaseNotes, request);
+	const caseDownload = mappedData.appeal.downloadCaseFiles.display.htmlItem
+		? [mappedData.appeal.downloadCaseFiles.display.htmlItem]
+		: [];
+
 	const accordion = generateAccordionItems(
 		appealDetails,
 		mappedData,
@@ -43,6 +47,7 @@ export async function appealDetailsPage(
 		...buildNotificationBanners(session, 'appealDetails', appealDetails.appealId),
 		...(await generateStatusTags(mappedData, appealDetails, request)),
 		generateCaseSummary(mappedData),
+		...caseDownload,
 		caseNotes,
 		accordion
 	];

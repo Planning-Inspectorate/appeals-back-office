@@ -1216,6 +1216,20 @@ describe('appeal-details', () => {
 				expect(submitRequest.isDone()).toBe(true);
 			});
 		});
+		describe('Case download', () => {
+			it('should render the case download link', async () => {
+				const appealId = appealData.appealId.toString();
+				nock('http://test/').get(`/appeals/${appealId}`).reply(200, appealData);
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				const element = parseHtml(response.text, {
+					skipPrettyPrint: true,
+					rootElement: '#download-case-files'
+				}).innerHTML;
+				expect(element).toContain('/documents/1/bulk-download');
+				expect(element).toContain('Download case');
+			});
+		});
 
 		it('should render the received appeal details for a valid appealId with no linked/other appeals', async () => {
 			const appealId = appealData.appealId.toString();
