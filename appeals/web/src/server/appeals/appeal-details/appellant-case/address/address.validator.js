@@ -5,15 +5,21 @@ import {
 } from '#lib/validators/address.validator.js';
 import { createTextInputOptionalValidator } from '#lib/validators/text-input-validator.js';
 import { createValidator } from '@pins/express';
+import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
+const maxLength = textInputCharacterLimits.defaultAddressInputLength;
 
 export const validateChangeSiteAddress = createValidator(
 	createAddressLine1Validator(),
 	createTextInputOptionalValidator(
 		'addressLine2',
-		250,
-		'Address line 2 must be 250 characters or less'
+		maxLength,
+		`Address line 2 must be ${maxLength} characters or less`
 	),
 	createTownValidator(),
-	createTextInputOptionalValidator('county', 250, 'County must be 250 characters or less'),
+	createTextInputOptionalValidator(
+		'county',
+		maxLength,
+		`County must be ${maxLength} characters or less`
+	),
 	createPostcodeValidator()
 );

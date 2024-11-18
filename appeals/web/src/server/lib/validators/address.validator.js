@@ -1,6 +1,8 @@
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
 import { stringIsValidPostcodeFormat } from '#lib/postcode.js';
+import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
+const maxAddressLength = textInputCharacterLimits.defaultAddressInputLength;
 
 export const createPostcodeValidator = (
 	fieldName = 'postCode',
@@ -20,7 +22,7 @@ export const createPostcodeValidator = (
 export const createAddressLine1Validator = (
 	fieldName = 'addressLine1',
 	emptyErrorMessage = 'Enter address line 1, typically the building and street',
-	maxLength = 250
+	maxLength = maxAddressLength
 ) =>
 	createValidator(
 		body(fieldName)
@@ -35,7 +37,7 @@ export const createAddressLine1Validator = (
 export const createTownValidator = (
 	fieldName = 'town',
 	emptyErrorMessage = 'Enter town or city',
-	maxLength = 250
+	maxLength = maxAddressLength
 ) =>
 	createValidator(
 		body(fieldName)

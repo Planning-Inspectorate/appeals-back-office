@@ -8,6 +8,7 @@ export const paginationDefaultSettings = {
 };
 
 export const textInputCharacterLimits = {
+	defaultAddressInputLength: 250,
 	defaultInputLength: 300,
 	defaultTextareaLength: 1000
 };
