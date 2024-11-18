@@ -1,6 +1,6 @@
 resource "azurerm_cdn_frontdoor_origin_group" "docs" {
   name                     = "${local.org}-fd-${local.service_name}-docs-${var.environment}"
-  cdn_frontdoor_profile_id = data.azurerm_cdn_frontdoor_profile.web.id
+  cdn_frontdoor_profile_id = data.azurerm_cdn_frontdoor_profile.shared.id
   session_affinity_enabled = true
   provider                 = azurerm.front_door
 
@@ -36,7 +36,7 @@ resource "azurerm_cdn_frontdoor_origin" "docs" {
 
 resource "azurerm_cdn_frontdoor_custom_domain" "docs" {
   name                     = "${local.org}-fd-${local.service_name}-docs-${var.environment}"
-  cdn_frontdoor_profile_id = data.azurerm_cdn_frontdoor_profile.web.id
+  cdn_frontdoor_profile_id = data.azurerm_cdn_frontdoor_profile.shared.id
   host_name                = local.documents.domain
   provider                 = azurerm.front_door
 

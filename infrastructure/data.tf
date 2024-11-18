@@ -18,7 +18,7 @@ data "azurerm_monitor_action_group" "common" {
   name                = each.value
 }
 
-data "azurerm_cdn_frontdoor_profile" "web" {
+data "azurerm_cdn_frontdoor_profile" "shared" {
   name                = var.front_door_config.name
   resource_group_name = var.front_door_config.rg
   provider            = azurerm.front_door
