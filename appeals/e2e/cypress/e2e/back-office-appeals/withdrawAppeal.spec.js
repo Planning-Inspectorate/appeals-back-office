@@ -19,10 +19,7 @@ describe('Withdraw a Has appeal', () => {
 	});
 
 	it('withdraw appeal', () => {
-		const date = new Date();
-		let day = date.getDate();
-		let month = date.getMonth() + 1;
-		let year = date.getFullYear();
+		const withdrawalDate = new Date();
 
 		cy.createCase().then((caseRef) => {
 			happyPathHelper.assignCaseOfficer(caseRef);
@@ -33,7 +30,7 @@ describe('Withdraw a Has appeal', () => {
 			caseDetailsPage.uploadSampleDoc();
 			caseDetailsPage.clickButtonByText('Continue');
 			dateTimeSection.clearWithdrawalDate();
-			dateTimeSection.enterWithdrawalDate(day, month, year);
+			dateTimeSection.enterWithdrawalRequestDate(withdrawalDate);
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.selectRadioButtonByValue('Redacted');
 			caseDetailsPage.clickButtonByText('Continue');
