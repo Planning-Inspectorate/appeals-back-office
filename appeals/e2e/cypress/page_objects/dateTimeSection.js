@@ -22,7 +22,8 @@ export class DateTimeSection extends Page {
 		validDate: '#valid-date-',
 		visitDate: '#visit-date-',
 		decisionLetterDate: '#decision-letter-date-',
-		changeAppealDate: '#change-appeal-final-date-'
+		changeAppealDate: '#change-appeal-final-date-',
+		withdrawalRequestDate: '#withdrawal-request-date-'
 	};
 
 	// E L E M E N T S
@@ -41,10 +42,14 @@ export class DateTimeSection extends Page {
 		this.#setAllDateFields(this.selectorPrefix.dueDate, date);
 	}
 
-	enterWithdrawalDate(day, month, year) {
+	/*enterWithdrawalDate(day, month, year) {
 		cy.get('#withdrawal-request-date-day').type(day);
 		cy.get('#withdrawal-request-date-month').type(month);
 		cy.get('#withdrawal-request-date-year').type(year);
+	}*/
+
+	enterWithdrawalRequestDate(date) {
+		this.#setAllDateFields(this.selectorPrefix.withdrawalRequestDate, date);
 	}
 
 	enterValidDate(date) {
