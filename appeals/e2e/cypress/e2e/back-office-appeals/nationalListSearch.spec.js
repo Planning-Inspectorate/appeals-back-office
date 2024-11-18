@@ -6,8 +6,10 @@ import { ListCasesPage } from '../../page_objects/listCasesPage';
 import { urlPaths } from '../../support/urlPaths';
 import { appealsApiRequests } from '../../fixtures/appealsApiRequests';
 import { tag } from '../../support/tag';
+import { createApiSubmission } from '../../support/appealsApiClient.js';
 
 const listCasesPage = new ListCasesPage();
+
 describe('All cases search', () => {
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
@@ -33,9 +35,9 @@ describe('All cases search', () => {
 		{ tags: tag.smoke },
 		() => {
 			const postcode = 'XX12 3XX';
-			let requestBody = appealsApiRequests.caseSubmission;
-			requestBody.casedata.siteAddressPostcode = postcode;
 
+			let requestBody = createApiSubmission(appealsApiRequests.caseSubmission, 'appellant');
+			requestBody.casedata.siteAddressPostcode = postcode;
 			cy.createCase(requestBody).then((caseRef) => {
 				const testData = { rowIndex: 0, cellIndex: 1, textToMatch: postcode, strict: false };
 				cy.visit(urlPaths.appealsList);
