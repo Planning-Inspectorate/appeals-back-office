@@ -14,6 +14,8 @@ import {
 	createAddressLine1Validator,
 	createTownValidator
 } from '#lib/validators/address.validator.js';
+import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
+const maxLength = textInputCharacterLimits.defaultAddressInputLength;
 
 export const validateCheckAddress = createValidator(
 	body('addressProvided')
@@ -39,14 +41,14 @@ export const validateInterestedPartyDetails = createValidator(
 	createTextInputValidator(
 		'firstName',
 		'Enter the first name',
-		250,
-		`First name must be 250 characters or less`
+		maxLength,
+		`First name must be ${maxLength} characters or less`
 	),
 	createTextInputValidator(
 		'lastName',
 		'Enter the last name',
-		250,
-		`Last name must be 250 characters or less`
+		maxLength,
+		`Last name must be ${maxLength} characters or less`
 	),
 	createEmailInputOptionalValidator('emailAddress')
 );
@@ -55,10 +57,14 @@ export const validateInterestedPartyAddress = createValidator(
 	createAddressLine1Validator(),
 	createTextInputOptionalValidator(
 		'addressLine2',
-		250,
-		'Address line 2 must be 250 characters or less'
+		maxLength,
+		`Address line 2 must be ${maxLength} characters or less`
 	),
 	createTownValidator(),
-	createTextInputOptionalValidator('county', 250, 'County must be 250 characters or less'),
+	createTextInputOptionalValidator(
+		'county',
+		maxLength,
+		`County must be ${maxLength} characters or less`
+	),
 	createPostcodeValidator()
 );
