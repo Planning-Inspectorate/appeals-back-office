@@ -319,6 +319,8 @@ describe('add-ip-comment', () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}`)
 				.reply(200, { ...appealData, appealId });
+				nock('http://test/').post(`/appeals/${appealId}/reps/comments`).reply(200);
+	      nock('http://test/').post(`/appeals/${appealId}/documents`).reply(200);
 			jest
 				.useFakeTimers({ doNotFake: ['nextTick', 'setImmediate'] })
 				.setSystemTime(new Date('2024-10-30'));
@@ -327,7 +329,7 @@ describe('add-ip-comment', () => {
 		it('should redirect on valid today date input', async () => {
 			const response = await request
 				.post(
-					`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted/add/check-your-answers`
+					`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted`
 				)
 				.send({
 					'date-day': '30',
@@ -337,14 +339,14 @@ describe('add-ip-comment', () => {
 
 			expect(response.statusCode).toBe(302);
 			expect(response.headers.location).toBe(
-				'/appeals-service/appeal-details/2/interested-party-comments'
+				'/appeals-service/appeal-details/2/interested-party-comments/add/check-your-answers'
 			);
 		});
 
 		it('should redirect on valid yesterday date input', async () => {
 			const response = await request
 				.post(
-					`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted/add/check-your-answers`
+					`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted`
 				)
 				.send({
 					'date-day': '30',
@@ -354,7 +356,7 @@ describe('add-ip-comment', () => {
 
 			expect(response.statusCode).toBe(302);
 			expect(response.headers.location).toBe(
-				'/appeals-service/appeal-details/2/interested-party-comments'
+				'/appeals-service/appeal-details/2/interested-party-comments/add/check-your-answers'
 			);
 		});
 
@@ -464,6 +466,8 @@ describe('add-ip-comment', () => {
 		const appealId = 2;
 
 		beforeEach(() => {
+			nock('http://test/').post(`/appeals/${appealId}/reps/comments`).reply(200);
+      nock('http://test/').post(`/appeals/${appealId}/documents`).reply(200);
 			nock('http://test/')
 				.get(`/appeals/${appealId}`)
 				.reply(200, { ...appealData, appealId });
@@ -479,7 +483,7 @@ describe('add-ip-comment', () => {
 					path: 'representation/representationAttachments'
 				}
 			];
-
+			
 			nock('http://test/')
 				.get(`/appeals/${appealId}/document-folders?path=representation/representationAttachments`)
 				.reply(200, documentFolderInfo);
