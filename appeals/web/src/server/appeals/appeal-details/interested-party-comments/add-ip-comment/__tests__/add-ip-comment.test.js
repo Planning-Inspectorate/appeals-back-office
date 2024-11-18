@@ -319,8 +319,6 @@ describe('add-ip-comment', () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}`)
 				.reply(200, { ...appealData, appealId });
-				nock('http://test/').post(`/appeals/${appealId}/reps/comments`).reply(200);
-	      nock('http://test/').post(`/appeals/${appealId}/documents`).reply(200);
 			jest
 				.useFakeTimers({ doNotFake: ['nextTick', 'setImmediate'] })
 				.setSystemTime(new Date('2024-10-30'));
@@ -467,7 +465,7 @@ describe('add-ip-comment', () => {
 
 		beforeEach(() => {
 			nock('http://test/').post(`/appeals/${appealId}/reps/comments`).reply(200);
-      nock('http://test/').post(`/appeals/${appealId}/documents`).reply(200);
+			nock('http://test/').post(`/appeals/${appealId}/documents`).reply(200);
 			nock('http://test/')
 				.get(`/appeals/${appealId}`)
 				.reply(200, { ...appealData, appealId });
