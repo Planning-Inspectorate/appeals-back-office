@@ -27,7 +27,7 @@ export const confirmRedactInterestedPartyCommentPage = (appealDetails, comment, 
 		heading: `Redact comment from ${comment.author}`,
 		headingClasses: 'govuk-heading-l',
 		forceRenderSubmitButton: true,
-		submitButtonText: 'Confirm redaction and accept comment',
+		submitButtonText: 'Confirm redaction',
 		pageComponents
 	};
 
