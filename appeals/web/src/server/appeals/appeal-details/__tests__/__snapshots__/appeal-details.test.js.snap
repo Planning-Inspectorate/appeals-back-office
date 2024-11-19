@@ -68,7 +68,7 @@ exports[`appeal-details GET /:appealId Appeal decision should render a row in th
 
 exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with with "Issue" action link to the issue decision start page, if the appeal status is "issue_determination" 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not yet issued</dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/issue-decision/decision" data-cy="issue-decision"> Issue<span class="govuk-visually-hidden"> Decision</span></a></dd></div>"`;
 
-exports[`appeal-details GET /:appealId Case notes should render the case note details 1`] = `"<details class="govuk-details" data-module="govuk-details"><summary class="govuk-details__summary"><span class="govuk-details__summary-text"> 2 case notes</span></summary><div class="govuk-details__text"><form method="POST" novalidate="novalidate"><div class="govuk-form-group"><textarea class="govuk-textarea" id="comment" name="comment" rows="5"></textarea></div><button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-1" data-module="govuk-button"> Add case note</button></form><div><hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible"><section><p class="govuk-body govuk-!-margin-bottom-1"> A case note you should see.</p><p class="govuk-hint govuk-!-margin-bottom-6"> 11:00am on Tuesday 1 October 2024 by John.Smith</p><hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible"></section><section><p class="govuk-body govuk-!-margin-bottom-1"> A case note you should see.</p><p class="govuk-hint govuk-!-margin-bottom-6"> 11:00am on Tuesday 1 October 2024 by John.Smith</p><hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible"></section></div></div></details>"`;
+exports[`appeal-details GET /:appealId Case notes should render the case note details 1`] = `"<details class="govuk-details" data-module="govuk-details"><summary class="govuk-details__summary"><span class="govuk-details__summary-text"> 2 case notes</span></summary><div class="govuk-details__text"><form method="POST" novalidate="novalidate"><div class="govuk-character-count" data-module="govuk-character-count" data-maxlength="300"><div class="govuk-form-group"><textarea class="govuk-textarea govuk-js-character-count" id="comment" name="comment" rows="5" aria-describedby="comment-info"></textarea></div><div id="comment-info" class="govuk-hint govuk-character-count__message"> You can enter up to 300 characters</div></div><button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-1" data-module="govuk-button"> Add case note</button></form><div><hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible"><section><p class="govuk-body govuk-!-margin-bottom-1"> A case note you should see.</p><p class="govuk-hint govuk-!-margin-bottom-6"> 11:00am on Tuesday 1 October 2024 by John.Smith</p><hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible"></section><section><p class="govuk-body govuk-!-margin-bottom-1"> A case note you should see.</p><p class="govuk-hint govuk-!-margin-bottom-6"> 11:00am on Tuesday 1 October 2024 by John.Smith</p><hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible"></section></div></div></details>"`;
 
 exports[`appeal-details GET /:appealId Notification banners should render a "Appeal ready for validation" important notification banner with a link to validate the appeal when the appeal status is "validation" 1`] = `
 "<div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
@@ -476,8 +476,13 @@ exports[`appeal-details GET /:appealId should not render action links to the man
             </summary>
             <div class="govuk-details__text">
                 <form method="POST" novalidate="novalidate">
-                    <div class="govuk-form-group">
-                        <textarea class="govuk-textarea" id="comment" name="comment" rows="5"></textarea>
+                    <div class="govuk-character-count" data-module="govuk-character-count"
+                    data-maxlength="300">
+                        <div class="govuk-form-group">
+                            <textarea class="govuk-textarea govuk-js-character-count" id="comment"
+                            name="comment" rows="5" aria-describedby="comment-info"></textarea>
+                        </div>
+                        <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 300 characters</div>
                     </div>
                     <button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-1"
                     data-module="govuk-button">Add case note</button>
@@ -934,8 +939,13 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
             </summary>
             <div class="govuk-details__text">
                 <form method="POST" novalidate="novalidate">
-                    <div class="govuk-form-group">
-                        <textarea class="govuk-textarea" id="comment" name="comment" rows="5"></textarea>
+                    <div class="govuk-character-count" data-module="govuk-character-count"
+                    data-maxlength="300">
+                        <div class="govuk-form-group">
+                            <textarea class="govuk-textarea govuk-js-character-count" id="comment"
+                            name="comment" rows="5" aria-describedby="comment-info"></textarea>
+                        </div>
+                        <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 300 characters</div>
                     </div>
                     <button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-1"
                     data-module="govuk-button">Add case note</button>
@@ -1369,8 +1379,13 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
             </summary>
             <div class="govuk-details__text">
                 <form method="POST" novalidate="novalidate">
-                    <div class="govuk-form-group">
-                        <textarea class="govuk-textarea" id="comment" name="comment" rows="5"></textarea>
+                    <div class="govuk-character-count" data-module="govuk-character-count"
+                    data-maxlength="300">
+                        <div class="govuk-form-group">
+                            <textarea class="govuk-textarea govuk-js-character-count" id="comment"
+                            name="comment" rows="5" aria-describedby="comment-info"></textarea>
+                        </div>
+                        <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 300 characters</div>
                     </div>
                     <button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-1"
                     data-module="govuk-button">Add case note</button>
@@ -1812,8 +1827,13 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
             </summary>
             <div class="govuk-details__text">
                 <form method="POST" novalidate="novalidate">
-                    <div class="govuk-form-group">
-                        <textarea class="govuk-textarea" id="comment" name="comment" rows="5"></textarea>
+                    <div class="govuk-character-count" data-module="govuk-character-count"
+                    data-maxlength="300">
+                        <div class="govuk-form-group">
+                            <textarea class="govuk-textarea govuk-js-character-count" id="comment"
+                            name="comment" rows="5" aria-describedby="comment-info"></textarea>
+                        </div>
+                        <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 300 characters</div>
                     </div>
                     <button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-1"
                     data-module="govuk-button">Add case note</button>
@@ -2272,8 +2292,13 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
             </summary>
             <div class="govuk-details__text">
                 <form method="POST" novalidate="novalidate">
-                    <div class="govuk-form-group">
-                        <textarea class="govuk-textarea" id="comment" name="comment" rows="5"></textarea>
+                    <div class="govuk-character-count" data-module="govuk-character-count"
+                    data-maxlength="300">
+                        <div class="govuk-form-group">
+                            <textarea class="govuk-textarea govuk-js-character-count" id="comment"
+                            name="comment" rows="5" aria-describedby="comment-info"></textarea>
+                        </div>
+                        <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 300 characters</div>
                     </div>
                     <button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-1"
                     data-module="govuk-button">Add case note</button>
@@ -2735,8 +2760,13 @@ exports[`appeal-details GET /:appealId should render an Issue a decision notific
             </summary>
             <div class="govuk-details__text">
                 <form method="POST" novalidate="novalidate">
-                    <div class="govuk-form-group">
-                        <textarea class="govuk-textarea" id="comment" name="comment" rows="5"></textarea>
+                    <div class="govuk-character-count" data-module="govuk-character-count"
+                    data-maxlength="300">
+                        <div class="govuk-form-group">
+                            <textarea class="govuk-textarea govuk-js-character-count" id="comment"
+                            name="comment" rows="5" aria-describedby="comment-info"></textarea>
+                        </div>
+                        <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 300 characters</div>
                     </div>
                     <button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-1"
                     data-module="govuk-button">Add case note</button>
@@ -3169,8 +3199,13 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
             </summary>
             <div class="govuk-details__text">
                 <form method="POST" novalidate="novalidate">
-                    <div class="govuk-form-group">
-                        <textarea class="govuk-textarea" id="comment" name="comment" rows="5"></textarea>
+                    <div class="govuk-character-count" data-module="govuk-character-count"
+                    data-maxlength="300">
+                        <div class="govuk-form-group">
+                            <textarea class="govuk-textarea govuk-js-character-count" id="comment"
+                            name="comment" rows="5" aria-describedby="comment-info"></textarea>
+                        </div>
+                        <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 300 characters</div>
                     </div>
                     <button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-1"
                     data-module="govuk-button">Add case note</button>
@@ -3615,8 +3650,13 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
             </summary>
             <div class="govuk-details__text">
                 <form method="POST" novalidate="novalidate">
-                    <div class="govuk-form-group">
-                        <textarea class="govuk-textarea" id="comment" name="comment" rows="5"></textarea>
+                    <div class="govuk-character-count" data-module="govuk-character-count"
+                    data-maxlength="300">
+                        <div class="govuk-form-group">
+                            <textarea class="govuk-textarea govuk-js-character-count" id="comment"
+                            name="comment" rows="5" aria-describedby="comment-info"></textarea>
+                        </div>
+                        <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 300 characters</div>
                     </div>
                     <button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-1"
                     data-module="govuk-button">Add case note</button>
@@ -4066,8 +4106,13 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
             </summary>
             <div class="govuk-details__text">
                 <form method="POST" novalidate="novalidate">
-                    <div class="govuk-form-group">
-                        <textarea class="govuk-textarea" id="comment" name="comment" rows="5"></textarea>
+                    <div class="govuk-character-count" data-module="govuk-character-count"
+                    data-maxlength="300">
+                        <div class="govuk-form-group">
+                            <textarea class="govuk-textarea govuk-js-character-count" id="comment"
+                            name="comment" rows="5" aria-describedby="comment-info"></textarea>
+                        </div>
+                        <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 300 characters</div>
                     </div>
                     <button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-1"
                     data-module="govuk-button">Add case note</button>
@@ -4517,8 +4562,13 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
             </summary>
             <div class="govuk-details__text">
                 <form method="POST" novalidate="novalidate">
-                    <div class="govuk-form-group">
-                        <textarea class="govuk-textarea" id="comment" name="comment" rows="5"></textarea>
+                    <div class="govuk-character-count" data-module="govuk-character-count"
+                    data-maxlength="300">
+                        <div class="govuk-form-group">
+                            <textarea class="govuk-textarea govuk-js-character-count" id="comment"
+                            name="comment" rows="5" aria-describedby="comment-info"></textarea>
+                        </div>
+                        <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 300 characters</div>
                     </div>
                     <button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-1"
                     data-module="govuk-button">Add case note</button>
@@ -4954,8 +5004,13 @@ exports[`appeal-details GET /:appealId should render the case reference for each
             </summary>
             <div class="govuk-details__text">
                 <form method="POST" novalidate="novalidate">
-                    <div class="govuk-form-group">
-                        <textarea class="govuk-textarea" id="comment" name="comment" rows="5"></textarea>
+                    <div class="govuk-character-count" data-module="govuk-character-count"
+                    data-maxlength="300">
+                        <div class="govuk-form-group">
+                            <textarea class="govuk-textarea govuk-js-character-count" id="comment"
+                            name="comment" rows="5" aria-describedby="comment-info"></textarea>
+                        </div>
+                        <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 300 characters</div>
                     </div>
                     <button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-1"
                     data-module="govuk-button">Add case note</button>
@@ -5542,8 +5597,13 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
             </summary>
             <div class="govuk-details__text">
                 <form method="POST" novalidate="novalidate">
-                    <div class="govuk-form-group">
-                        <textarea class="govuk-textarea" id="comment" name="comment" rows="5"></textarea>
+                    <div class="govuk-character-count" data-module="govuk-character-count"
+                    data-maxlength="300">
+                        <div class="govuk-form-group">
+                            <textarea class="govuk-textarea govuk-js-character-count" id="comment"
+                            name="comment" rows="5" aria-describedby="comment-info"></textarea>
+                        </div>
+                        <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 300 characters</div>
                     </div>
                     <button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-1"
                     data-module="govuk-button">Add case note</button>
@@ -5990,8 +6050,13 @@ exports[`appeal-details GET /:appealId should render the received appeal details
             </summary>
             <div class="govuk-details__text">
                 <form method="POST" novalidate="novalidate">
-                    <div class="govuk-form-group">
-                        <textarea class="govuk-textarea" id="comment" name="comment" rows="5"></textarea>
+                    <div class="govuk-character-count" data-module="govuk-character-count"
+                    data-maxlength="300">
+                        <div class="govuk-form-group">
+                            <textarea class="govuk-textarea govuk-js-character-count" id="comment"
+                            name="comment" rows="5" aria-describedby="comment-info"></textarea>
+                        </div>
+                        <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 300 characters</div>
                     </div>
                     <button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-1"
                     data-module="govuk-button">Add case note</button>
@@ -6449,8 +6514,13 @@ exports[`appeal-details GET /:appealId should render the received appeal details
             </summary>
             <div class="govuk-details__text">
                 <form method="POST" novalidate="novalidate">
-                    <div class="govuk-form-group">
-                        <textarea class="govuk-textarea" id="comment" name="comment" rows="5"></textarea>
+                    <div class="govuk-character-count" data-module="govuk-character-count"
+                    data-maxlength="300">
+                        <div class="govuk-form-group">
+                            <textarea class="govuk-textarea govuk-js-character-count" id="comment"
+                            name="comment" rows="5" aria-describedby="comment-info"></textarea>
+                        </div>
+                        <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 300 characters</div>
                     </div>
                     <button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-1"
                     data-module="govuk-button">Add case note</button>
@@ -6881,8 +6951,13 @@ exports[`appeal-details GET /:appealId should render the received appeal details
             </summary>
             <div class="govuk-details__text">
                 <form method="POST" novalidate="novalidate">
-                    <div class="govuk-form-group">
-                        <textarea class="govuk-textarea" id="comment" name="comment" rows="5"></textarea>
+                    <div class="govuk-character-count" data-module="govuk-character-count"
+                    data-maxlength="300">
+                        <div class="govuk-form-group">
+                            <textarea class="govuk-textarea govuk-js-character-count" id="comment"
+                            name="comment" rows="5" aria-describedby="comment-info"></textarea>
+                        </div>
+                        <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 300 characters</div>
                     </div>
                     <button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-1"
                     data-module="govuk-button">Add case note</button>
@@ -7335,8 +7410,13 @@ exports[`appeal-details GET /:appealId should render the received appeal details
             </summary>
             <div class="govuk-details__text">
                 <form method="POST" novalidate="novalidate">
-                    <div class="govuk-form-group">
-                        <textarea class="govuk-textarea" id="comment" name="comment" rows="5"></textarea>
+                    <div class="govuk-character-count" data-module="govuk-character-count"
+                    data-maxlength="300">
+                        <div class="govuk-form-group">
+                            <textarea class="govuk-textarea govuk-js-character-count" id="comment"
+                            name="comment" rows="5" aria-describedby="comment-info"></textarea>
+                        </div>
+                        <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 300 characters</div>
                     </div>
                     <button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-1"
                     data-module="govuk-button">Add case note</button>
@@ -7893,8 +7973,13 @@ exports[`appeal-details should not render a back button 1`] = `
                         </summary>
                         <div class="govuk-details__text">
                             <form method="POST" novalidate="novalidate">
-                                <div class="govuk-form-group">
-                                    <textarea class="govuk-textarea" id="comment" name="comment" rows="5"></textarea>
+                                <div class="govuk-character-count" data-module="govuk-character-count"
+                                data-maxlength="300">
+                                    <div class="govuk-form-group">
+                                        <textarea class="govuk-textarea govuk-js-character-count" id="comment"
+                                        name="comment" rows="5" aria-describedby="comment-info"></textarea>
+                                    </div>
+                                    <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 300 characters</div>
                                 </div>
                                 <button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-1"
                                 data-module="govuk-button">Add case note</button>
