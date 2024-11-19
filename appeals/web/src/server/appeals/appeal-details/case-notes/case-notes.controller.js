@@ -8,16 +8,23 @@ import { viewAppealDetails } from '#appeals/appeal-details/appeal-details.contro
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const postCaseNote = async (request, response) => {
+	request.session.comment = request.body['comment'];
+
 	if (request.errors) {
 		return viewAppealDetails(request, response);
 	}
+
 	const { appealId } = request.params;
-	const comment = request.body['comment'];
 	const currentUrl = getOriginPathname(request);
 
-	const commentResponse = await postAppealCaseNote(request.apiClient, appealId, comment);
+	const commentResponse = await postAppealCaseNote(
+		request.apiClient,
+		appealId,
+		request.session.comment
+	);
 
 	if (commentResponse) {
+		delete request.session.comment;
 		return response.redirect(`${currentUrl}`);
 	}
 

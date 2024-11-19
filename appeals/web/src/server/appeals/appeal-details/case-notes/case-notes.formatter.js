@@ -14,15 +14,18 @@ import { mapUser } from '#appeals/appeal-details/audit/audit.service.js';
  */
 export const caseNotesWithMappedUsers = async (unmappedCaseNotes, session) => {
 	const caseNotes = [...unmappedCaseNotes];
-	return await Promise.all(
-		caseNotes.map(async (caseNote) => {
-			return {
-				date: dateISOStringToDisplayDate(caseNote.createdAt),
-				dayOfWeek: getDayFromISODate(caseNote.createdAt),
-				time: dateISOStringToDisplayTime12hr(caseNote.createdAt),
-				commentText: caseNote.comment,
-				userName: (await mapUser(caseNote.azureAdUserId, session)).split('@')[0]
-			};
-		})
-	);
+	return {
+		sessionComment: session.comment || '',
+		caseNotes: await Promise.all(
+			caseNotes.map(async (caseNote) => {
+				return {
+					date: dateISOStringToDisplayDate(caseNote.createdAt),
+					dayOfWeek: getDayFromISODate(caseNote.createdAt),
+					time: dateISOStringToDisplayTime12hr(caseNote.createdAt),
+					commentText: caseNote.comment,
+					userName: (await mapUser(caseNote.azureAdUserId, session)).split('@')[0]
+				};
+			})
+		)
+	};
 };
