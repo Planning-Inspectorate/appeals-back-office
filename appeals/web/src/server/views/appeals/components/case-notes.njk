@@ -1,11 +1,14 @@
 {%- from "govuk/components/button/macro.njk" import govukButton -%}
-{%- from "govuk/components/textarea/macro.njk" import govukTextarea -%}
+{%- from "govuk/components/character-count/macro.njk" import govukCharacterCount -%}
 
 {%- macro caseNotes(params) -%}
 	<form method="POST" novalidate="novalidate">
-		{{ govukTextarea({
+		{{ govukCharacterCount({
 			name: "comment",
-			id: "comment"
+			id: "comment",
+			maxlength: 300,
+			rows: 5,
+			value: params.sessionComment
 		})}}
 		{{ govukButton({
 			text: "Add case note",

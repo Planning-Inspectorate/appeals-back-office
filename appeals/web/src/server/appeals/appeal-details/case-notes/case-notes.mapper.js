@@ -8,18 +8,21 @@ import { caseNotesWithMappedUsers } from './case-notes.formatter.js';
  * @returns {Promise<PageComponent>}
  */
 export const generateCaseNotes = async (appealCaseNotes, request) => {
-	const caseNotes = await caseNotesWithMappedUsers(appealCaseNotes, request.session);
+	const mappedCaseNotes = await caseNotesWithMappedUsers(appealCaseNotes, request.session);
 
 	return {
 		type: 'details',
 		parameters: {
-			summaryText: `${caseNotes.length} case note${caseNotes.length === 1 ? '' : 's'}`,
+			summaryText: `${mappedCaseNotes.caseNotes.length} case note${
+				mappedCaseNotes.caseNotes.length === 1 ? '' : 's'
+			}`,
 			html: '',
 			pageComponents: [
 				{
 					type: 'case-notes',
 					parameters: {
-						caseNotes: caseNotes
+						caseNotes: mappedCaseNotes.caseNotes,
+						sessionComment: mappedCaseNotes.sessionComment
 					}
 				}
 			]
