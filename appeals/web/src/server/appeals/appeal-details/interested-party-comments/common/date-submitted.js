@@ -1,13 +1,14 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
+import { dateInput } from '#lib/mappers/index.js';
 
 /** @typedef {import("../../appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import("../interested-party-comments.types.js").Representation} Representation */
-/** @typedef {{ 'date-day': string, 'date-month': string, 'date-year': string }} ReqBody */
+/** @typedef {{ 'day': string, 'month': string, 'year': string }} ReqBody */
 
 /**
  * @param {Appeal} appealDetails
  * @param {import('@pins/express').ValidationErrors | undefined} errors
- * @param {{ 'date-day': string, 'date-month': string, 'date-year': string }} date
+ * @param {ReqBody} date
  * @param {string} backLinkUrl
  * @returns {PageContent}
  * */
@@ -16,42 +17,7 @@ export const mapper = (appealDetails, errors, date, backLinkUrl) => ({
 	backLinkUrl,
 	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
 	heading: 'Enter date submitted',
-	pageComponents: [
-		{
-			type: 'date-input',
-			parameters: {
-				id: 'date',
-				namePrefix: 'date',
-				fieldset: {
-					legend: {
-						text: '',
-						classes: 'govuk-fieldset__legend--m'
-					}
-				},
-				hint: {
-					text: 'For example, 28 10 2024'
-				},
-				items: [
-					{
-						classes: 'govuk-input govuk-date-input__input govuk-input--width-2',
-						name: 'day',
-						value: date['date-day'] || ''
-					},
-					{
-						classes: 'govuk-input govuk-date-input__input govuk-input--width-2',
-						name: 'month',
-						value: date['date-month'] || ''
-					},
-					{
-						classes: 'govuk-input govuk-date-input__input govuk-input--width-4',
-						name: 'year',
-						value: date['date-year'] || ''
-					}
-				],
-				errors
-			}
-		}
-	]
+	pageComponents: [dateInput({ id: 'date', name: 'date', value: date })]
 });
 
 /**

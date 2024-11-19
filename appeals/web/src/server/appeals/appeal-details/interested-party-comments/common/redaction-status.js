@@ -1,5 +1,5 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { errorAddressProvidedRadio } from '#lib/error-handlers/change-screen-error-handlers.js';
+import { radiosInput } from '#lib/mappers/index.js';
 
 /** @typedef {import("../../appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import("../interested-party-comments.types.js").Representation} Representation */
@@ -17,27 +17,23 @@ const mapper = (appealDetails, errors, backLinkUrl) => ({
 	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
 	heading: 'Select redaction status',
 	pageComponents: [
-		{
-			type: 'radios',
-			parameters: {
-				name: 'redactionStatus',
-				items: [
-					{
-						value: 'redacted',
-						text: 'Redacted'
-					},
-					{
-						value: 'unredacted',
-						text: 'Unredacted'
-					},
-					{
-						value: 'not-required',
-						text: 'No redaction required'
-					}
-				],
-				errorMessage: errorAddressProvidedRadio(errors)
-			}
-		}
+		radiosInput({
+			name: 'redactionStatus',
+			items: [
+				{
+					value: 'redacted',
+					text: 'Redacted'
+				},
+				{
+					value: 'unredacted',
+					text: 'Unredacted'
+				},
+				{
+					value: 'not-required',
+					text: 'No redaction required'
+				}
+			]
+		})
 	]
 });
 
