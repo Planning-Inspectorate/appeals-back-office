@@ -27,11 +27,11 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'B5480',
 		name: 'Havering',
-		email: 'planning.appeals@havering.gov.uk'
+		email: 'planning_appeals@havering.gov.uk'
 	},
 	{
 		lpaCode: 'L5810',
 		name: 'Richmond',
-		email: 'planningappeals@richmond.gov.uk'
+		email: 'richmondplanningappeals@richmondandwandsworth.gov.uk'
 	}
 ];
