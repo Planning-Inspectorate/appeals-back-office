@@ -1199,22 +1199,52 @@ describe('appeal-details', () => {
 				expect(element).toContain('2 case notes');
 				expect(submitRequest.isDone()).toBe(false);
 			});
-			it('should redirect to 500 page if it fails to post', async () => {
+			it('should not submit and re-render case details with an error if the comment exceeds 300 characters', async () => {
 				nock.cleanAll();
-				const appealId = appealData.appealId;
-				const comment = 'This is a new comment';
+				const appealId = appealData.appealId.toString();
+				const caseNotesResponse = [...caseNotes];
+				const comment = 'a'.repeat(301); // Create a string that's 301 characters long
+
 				nock('http://test/').get(`/appeals/${appealId}`).reply(200, appealData).persist();
-				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+				nock('http://test/')
+					.get(`/appeals/${appealId}/case-notes`)
+					.reply(200, caseNotesResponse)
+					.persist();
 
 				const submitRequest = nock('http://test/')
 					.post(`/appeals/${appealId}/case-notes`)
-					.reply(500);
+					.reply(200, {});
+
 				await request.get(`${baseUrl}/${appealId}`);
 
 				const response = await request.post(`${baseUrl}/${appealId}`).send({ comment: comment });
-				expect(response.statusCode).toBe(500);
-				expect(submitRequest.isDone()).toBe(true);
+				expect(response.statusCode).toBe(200);
+
+				const pageElements = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+				const element = parseHtml(response.text, {
+					skipPrettyPrint: true,
+					rootElement: '.govuk-details'
+				}).innerHTML;
+
+				expect(pageElements).toContain('error-summary');
+				expect(pageElements).toContain('Case note must be 300 characters or less');
+				expect(element).toContain('2 case notes');
+				expect(submitRequest.isDone()).toBe(false);
 			});
+		});
+		it('should redirect to 500 page if it fails to post', async () => {
+			nock.cleanAll();
+			const appealId = appealData.appealId;
+			const comment = 'This is a new comment';
+			nock('http://test/').get(`/appeals/${appealId}`).reply(200, appealData).persist();
+			nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+
+			const submitRequest = nock('http://test/').post(`/appeals/${appealId}/case-notes`).reply(500);
+			await request.get(`${baseUrl}/${appealId}`);
+
+			const response = await request.post(`${baseUrl}/${appealId}`).send({ comment: comment });
+			expect(response.statusCode).toBe(500);
+			expect(submitRequest.isDone()).toBe(true);
 		});
 		describe('Case download', () => {
 			it('should render the case download link', async () => {
