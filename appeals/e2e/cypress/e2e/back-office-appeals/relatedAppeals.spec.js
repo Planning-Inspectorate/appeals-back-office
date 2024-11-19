@@ -32,19 +32,18 @@ describe('related appeals', () => {
 	});
 	it('relate an unrelated appeal to a related appeal', () => {
 		cy.createCase().then((caseRef) => {
-			cy.createCase().then((caseRefToLink) => {
-				cy.createCase().then((caseRefToLink2) => {
+			cy.createCase().then((firstCaseRefToLink) => {
+				cy.createCase().then((secondCaseRefToLink) => {
 					happyPathHelper.assignCaseOfficer(caseRef);
 					caseDetailsPage.clickAccordionByButton('Overview');
 					caseDetailsPage.clickAddRelatedAppeals();
-					caseDetailsPage.fillInput(caseRefToLink);
+					caseDetailsPage.fillInput(firstCaseRefToLink);
 					caseDetailsPage.clickButtonByText('Continue');
 					caseDetailsPage.selectRadioButtonByValue('Yes, relate this appeal to ' + caseRef);
 					caseDetailsPage.clickButtonByText('Continue');
 					caseDetailsPage.validateBannerMessage('This appeal is now related to ' + caseRef);
-					//cy.createCase().then((caseRefToLink) => {
 					caseDetailsPage.clickAddRelatedAppeals();
-					caseDetailsPage.fillInput(caseRefToLink2);
+					caseDetailsPage.fillInput(secondCaseRefToLink);
 					caseDetailsPage.clickButtonByText('Continue');
 					caseDetailsPage.selectRadioButtonByValue('Yes, relate this appeal to ' + caseRef);
 					caseDetailsPage.clickButtonByText('Continue');

@@ -17,6 +17,7 @@ describe('Change start date', () => {
 	});
 
 	it('Change Start date', () => {
+		const dateToday = new Date();
 		cy.createCase().then((caseRef) => {
 			happyPathHelper.assignCaseOfficer(caseRef);
 			happyPathHelper.reviewAppellantCase(caseRef);
