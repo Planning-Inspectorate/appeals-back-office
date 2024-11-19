@@ -1,15 +1,14 @@
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 import {
 	mapRejectionReasonOptionsToCheckboxItemParameters,
 	mapRejectionReasonPayload
 } from '#appeals/appeal-details/interested-party-comments/view-and-review/page-components/reject.mapper.js';
 import {
 	getRepresentationRejectionReasonOptions,
-	updateRejectionReasons
+	updateRejectionReasons,
+	rejectInterestedPartyComment
 } from './reject.service.js';
-import { patchInterestedPartyCommentStatus } from '../view-and-review.service.js';
 import {
 	rejectInterestedPartyCommentPage,
 	rejectAllowResubmitPage,
@@ -32,9 +31,9 @@ export const renderSelectReason = async (request, response) => {
 		const mappedRejectionReasons = mapRejectionReasonOptionsToCheckboxItemParameters(
 			currentComment,
 			rejectionReasons,
-      errors
-        ? { optionId: parseInt(errors[''].value.rejectionReason), message: errors[''].msg }
-        : undefined
+			errors
+				? { optionId: parseInt(errors[''].value.rejectionReason), message: errors[''].msg }
+				: undefined
 		);
 
 		const pageContent = rejectInterestedPartyCommentPage(currentAppeal, currentComment);
@@ -99,7 +98,12 @@ export const postRejectInterestedPartyComment = async (request, response) => {
 
 	try {
 		await updateRejectionReasons(apiClient, appealId, commentId, rejectionReasons);
-		await patchInterestedPartyCommentStatus(apiClient, appealId, commentId, COMMENT_STATUS.INVALID);
+		await rejectInterestedPartyComment(
+			apiClient,
+			appealId,
+			commentId,
+			session.rejectIpComment.allowResubmit === 'yes'
+		);
 
 		addNotificationBannerToSession(session, 'interestedPartyCommentsRejectedSuccess', appealId);
 
