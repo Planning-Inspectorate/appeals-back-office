@@ -37,6 +37,8 @@ export interface RepStatusUpdateRequest {
 	status?: string;
 	/** @example "Some notes" */
 	notes?: string;
+	/** @example true */
+	allowResubmit?: boolean;
 }
 
 export interface CreateRepRequest {
@@ -137,7 +139,7 @@ export interface AddBusinessDays {
 
 export interface AppellantCaseData {
 	casedata?: {
-		/** @example "5d75b6f6-f7dc-4b91-b307-a9c4d7d4bae4" */
+		/** @example "feed9626-4b0a-4c8b-8808-dd1838f7ab7b" */
 		submissionId?: string;
 		/** @example true */
 		advertisedAppeal?: boolean;

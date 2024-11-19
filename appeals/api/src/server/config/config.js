@@ -228,6 +228,9 @@ const { value, error } = schema.validate({
 			},
 			validAppellantCase: {
 				id: environment.GOV_NOTIFY_VALID_APPELLANT_CASE_ID || 'mock-valid-appellant-case-id'
+			},
+			commentRejected: {
+				id: environment.GOV_NOTIFY_COMMENT_REJECTED || 'mock-comment-rejected-id'
 			}
 		},
 		testMailbox: environment.TEST_MAILBOX || 'test@example.com'

@@ -169,6 +169,9 @@ export default joi
 						}),
 						validAppellantCase: joi.object({
 							id: joi.string().required()
+						}),
+						commentRejected: joi.object({
+							id: joi.string().required()
 						})
 					})
 					.required(),

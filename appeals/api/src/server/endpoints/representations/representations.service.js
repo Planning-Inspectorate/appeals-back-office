@@ -2,7 +2,14 @@ import addressRepository from '#repositories/address.repository.js';
 import representationRepository from '#repositories/representation.repository.js';
 import * as documentRepository from '#repositories/document.repository.js';
 import serviceUserRepository from '#repositories/service-user.repository.js';
+import config from '#config/config.js';
+import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
+import { ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL, FRONT_OFFICE_URL } from '#endpoints/constants.js';
+import { addDays } from '#utils/business-days.js';
+import formatDate from '#utils/date-formatter.js';
 
+/** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
+/** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAddressRequest} UpdateAddressRequest */
 
 /**
@@ -117,13 +124,15 @@ export const redactRepresentation = (id, redactedRepresentation, reviewer) =>
 export const createRepresentation = async (appealId, input) => {
 	const { ipDetails, ipAddress } = input;
 
-	const address = ipAddress && await addressRepository.createAddress({
+	const address =
+		ipAddress &&
+		(await addressRepository.createAddress({
 			addressLine1: ipAddress.addressLine1,
 			addressLine2: ipAddress.addressLine2,
 			addressTown: ipAddress.town,
 			addressCounty: ipAddress.county,
 			postcode: ipAddress.postCode
-		});
+		}));
 
 	const represented = await serviceUserRepository.createServiceUser({
 		firstName: ipDetails.firstName,
@@ -161,3 +170,58 @@ export const createRepresentation = async (appealId, input) => {
  */
 export const updateRejectionReasons = async (representationId, rejectionReasons) =>
 	representationRepository.updateRejectionReasons(representationId, rejectionReasons);
+
+/**
+ * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
+ * @param {Appeal} appeal
+ * @param {Representation} comment
+ * @param {boolean} allowResubmit
+ * */
+export const notifyRejection = async (notifyClient, appeal, comment, allowResubmit) => {
+	const siteAddress = appeal.address
+		? formatAddressSingleLine(appeal.address)
+		: 'Address not available';
+
+	const reasons =
+		comment.representationRejectionReasonsSelected?.map((selectedReason) => {
+			if (selectedReason.representationRejectionReason.hasText) {
+				return `Other: ${selectedReason.representationRejectionReasonText}`;
+			}
+
+			return selectedReason.representationRejectionReason.name;
+		}) ?? [];
+
+	const extendedDeadline = await (async () => {
+		if (!allowResubmit) {
+			return null;
+		}
+
+		const date = await addDays(new Date().toISOString(), 7);
+		return formatDate(date, false);
+	})();
+
+	const emailVariables = {
+		appeal_reference_number: appeal.reference,
+		lpa_reference: appeal.applicationReference || '',
+		site_address: siteAddress,
+		url: FRONT_OFFICE_URL,
+		reasons,
+		deadlineExtended: extendedDeadline ? 'true' : 'false',
+		deadline_date: extendedDeadline ?? ''
+	};
+
+	const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
+	if (!recipientEmail) {
+		throw new Error(`no recipient email address found for Appeal: ${appeal.reference}`);
+	}
+
+	try {
+		await notifyClient.sendEmail(
+			config.govNotify.template.commentRejected,
+			recipientEmail,
+			emailVariables
+		);
+	} catch (error) {
+		throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
+	}
+};
