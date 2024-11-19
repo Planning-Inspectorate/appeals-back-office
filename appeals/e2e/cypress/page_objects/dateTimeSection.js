@@ -86,6 +86,14 @@ export class DateTimeSection extends Page {
 		this.updateDueDateElements.enterVisitEndMinute().eq(index).clear().type(text);
 	}
 
+	formatDate(date) {
+		return new Intl.DateTimeFormat('en-GB', {
+			day: 'numeric',
+			month: 'long',
+			year: 'numeric'
+		}).format(date);
+	}
+
 	removeVisitStartTimeHour(index = 0) {
 		this.updateDueDateElements.enterVisitStartHour().eq(index).clear();
 	}
