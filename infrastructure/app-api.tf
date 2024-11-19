@@ -91,6 +91,7 @@ module "app_api" {
     GOV_NOTIFY_SITE_VISIT_SCHEDULE_ACCOMPANIED_LPA_ID                          = var.apps_config.integrations.notify_template_ids.site_visit_schedule_accompanied_lpa_id
     GOV_NOTIFY_SITE_VISIT_SCHEDULE_UNACCOMPANIED_APPELLANT_ID                  = var.apps_config.integrations.notify_template_ids.site_visit_schedule_unaccompanied_appellant_id
     GOV_NOTIFY_VALID_APPELLANT_CASE_ID                                         = var.apps_config.integrations.notify_template_ids.valid_appellant_case_id
+    GOV_NOTIFY_COMMENT_REJECTED                                                = var.apps_config.integrations.notify_template_ids.comment_rejected_id
 
     #feature flags
     FEATURE_FLAG_S78_WRITTEN = var.apps_config.featureFlags.featureFlagS78Written
