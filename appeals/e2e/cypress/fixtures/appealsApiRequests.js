@@ -18,7 +18,7 @@ const appealsApiRequests = {
 			knowsAllOwners: 'Some',
 			knowsOtherOwners: 'Some',
 			lpaCode: 'Q9999',
-			nearbyCaseReferences: ['1000000'],
+			nearbyCaseReferences: [],
 			neighbouringSiteAddresses: [],
 			originalDevelopmentDescription: 'A test description',
 			ownersInformed: true,

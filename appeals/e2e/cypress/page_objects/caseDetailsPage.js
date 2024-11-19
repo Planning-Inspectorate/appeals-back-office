@@ -19,6 +19,7 @@ export class CaseDetailsPage extends Page {
 		readyToStart: 'ready-to-start',
 		issueDetermination: 'issue-determination',
 		addLinkedAppeal: 'add-linked-appeal',
+		addRelatedAppeals: 'add-related-appeals',
 		uploadFile: '#upload-file-1',
 		changeAppealType: 'change-appeal-type',
 		addAgreementToChangeDescriptionEvidence: 'add-agreement-to-change-description-evidence',
@@ -43,6 +44,7 @@ export class CaseDetailsPage extends Page {
 		readyToStart: () => cy.getByData(this._cyDataSelectors.readyToStart),
 		issueDecision: () => cy.getByData(this._cyDataSelectors.issueDetermination),
 		addLinkedAppeal: () => cy.getByData(this._cyDataSelectors.addLinkedAppeal),
+		addRelatedAppeals: () => cy.getByData(this._cyDataSelectors.addRelatedAppeals),
 		uploadFile: () => cy.get(this.selectors.uploadFile),
 		changeAppealType: () => cy.getByData(this._cyDataSelectors.changeAppealType),
 		addAgreementToChangeDescriptionEvidence: () =>
@@ -117,6 +119,10 @@ export class CaseDetailsPage extends Page {
 
 	clickAddLinkedAppeal() {
 		this.elements.addLinkedAppeal().click();
+	}
+
+	clickAddRelatedAppeals() {
+		this.elements.addRelatedAppeals().click();
 	}
 
 	clickChangeAppealType() {
@@ -195,12 +201,8 @@ export class CaseDetailsPage extends Page {
 	}
 
 	verifyChangeStartDate() {
-		const dateToday = new Date(); // Note: Months are 0-indexed, so 10 is November
-		const formattedDate = new Intl.DateTimeFormat('en-GB', {
-			day: 'numeric',
-			month: 'long',
-			year: 'numeric'
-		}).format(dateToday); // Format the date
+		const dateToday = new Date();
+		const formattedDate = dateTimeSection.formatDate(dateToday);
 		cy.get('.appeal-start-date > .govuk-summary-list__value')
 			.invoke('text')
 			.then((dateText) => {
