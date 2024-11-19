@@ -1,12 +1,12 @@
 import { Router as createRouter } from 'express';
 import { asyncHandler } from '@pins/express';
 import {
-	renderAddDocument,
-	postAddDocument,
+	renderDocumentUpload,
+	postDocumentUpload,
 	renderDateSubmitted,
 	renderRedactionStatus,
-	postRedactionStatus,
-	postDateSubmitted
+	postDateSubmitted,
+	postRedactionStatus
 } from './controller/index.js';
 import {
 	validateCommentSubmittedDateFields,
@@ -18,8 +18,8 @@ import { createDateInputDateInPastOrTodayValidator } from '#lib/validators/date-
 
 const router = createRouter({ mergeParams: true });
 
-router.get('/', asyncHandler(renderAddDocument));
-router.post('/', asyncHandler(postAddDocument));
+router.get('/', asyncHandler(renderDocumentUpload));
+router.post('/', asyncHandler(postDocumentUpload));
 
 router.get('/redaction-status', asyncHandler(renderRedactionStatus));
 router.post(

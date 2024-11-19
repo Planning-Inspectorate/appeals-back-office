@@ -13,13 +13,9 @@ export const asyncHandler = (requestHandler) => {
 		try {
 			const p = requestHandler(request, response, next);
 			if (p instanceof Promise) {
-				p.catch((e) => {
-					console.log(e);
-					next(e);
-				});
+				p.catch(next);
 			}
 		} catch (e) {
-			console.log(e);
 			// in case a sync function is passed in
 			next(e);
 		}

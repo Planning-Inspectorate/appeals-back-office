@@ -22,7 +22,6 @@ export const validateComment = async (req, res, next) => {
 
 		next();
 	} catch (/** @type {any} */ error) {
-		console.log('🚀 ~ validateComment ~ error:', error);
 		switch (error?.response?.statusCode) {
 			case 404:
 				return res.status(404).render('app/404.njk');
