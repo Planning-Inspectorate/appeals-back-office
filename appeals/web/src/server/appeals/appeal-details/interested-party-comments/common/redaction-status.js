@@ -46,7 +46,7 @@ const mapper = (appealDetails, errors, backLinkUrl) => ({
  * @param {(appealDetails: Appeal, comment: Representation) => string} options.getBackLinkUrl
  * @returns {import('@pins/express').RenderHandler<{}, {}, ReqBody>}
  */
-export const get =
+export const renderRedactionStatusFactory =
 	({ getBackLinkUrl }) =>
 	(request, response) => {
 		const backLinkUrl = getBackLinkUrl(request.currentAppeal, request.currentComment);
@@ -65,7 +65,7 @@ export const get =
  * @param {import('@pins/express').RenderHandler<{}, {}, ReqBody>} options.errorHandler
  * @returns {import('@pins/express').RenderHandler<{}, {}, ReqBody>}
  */
-export const post =
+export const postRedactionStatusFactory =
 	({ getRedirectUrl, errorHandler }) =>
 	(request, response, next) => {
 		if (request.errors) {
