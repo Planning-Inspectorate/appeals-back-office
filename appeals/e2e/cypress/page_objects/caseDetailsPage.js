@@ -1,7 +1,9 @@
 // @ts-nocheck
 import { Then } from '@badeball/cypress-cucumber-preprocessor';
 import { Page } from './basePage';
+import { DateTimeSection } from './dateTimeSection.js';
 
+const dateTimeSection = new DateTimeSection();
 export class CaseDetailsPage extends Page {
 	/********************************************************
 	 ************************ Locators ***********************
@@ -201,8 +203,7 @@ export class CaseDetailsPage extends Page {
 	}
 
 	verifyChangeStartDate() {
-		const dateToday = new Date();
-		const formattedDate = dateTimeSection.formatDate(dateToday);
+		const formattedDate = dateTimeSection.formatDate();
 		cy.get('.appeal-start-date > .govuk-summary-list__value')
 			.invoke('text')
 			.then((dateText) => {
