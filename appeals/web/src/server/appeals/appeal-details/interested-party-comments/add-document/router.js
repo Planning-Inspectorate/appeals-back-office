@@ -8,13 +8,13 @@ import {
 	postDateSubmitted,
 	postRedactionStatus
 } from './controller/index.js';
-import {
-	validateCommentSubmittedDateFields,
-	validateCommentSubmittedDateValid,
-	validateRedactionStatus
-} from '../add-ip-comment/add-ip-comment.validators.js';
 import { saveBodyToSession } from '#lib/middleware/save-body-to-session.js';
-import { createDateInputDateInPastOrTodayValidator } from '#lib/validators/date-input.validator.js';
+import {
+	createDateInputDateInPastOrTodayValidator,
+	createDateInputDateValidityValidator,
+	createDateInputFieldsValidator
+} from '#lib/validators/date-input.validator.js';
+import { validateRedactionStatus } from '../add-ip-comment/add-ip-comment.validators.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -32,8 +32,8 @@ router.post(
 router.get('/date-submitted', asyncHandler(renderDateSubmitted));
 router.post(
 	'/date-submitted',
-	validateCommentSubmittedDateFields,
-	validateCommentSubmittedDateValid,
+	createDateInputFieldsValidator('', '', 'day', 'month', 'year'),
+	createDateInputDateValidityValidator('', '', 'day', 'month', 'year'),
 	createDateInputDateInPastOrTodayValidator(),
 	saveBodyToSession('addDocument'),
 	asyncHandler(postDateSubmitted)

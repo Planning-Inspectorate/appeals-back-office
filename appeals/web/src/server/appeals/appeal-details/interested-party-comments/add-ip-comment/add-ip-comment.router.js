@@ -1,16 +1,18 @@
-import { Router as createRouter } from 'express';
+import { saveBodyToSession } from '#lib/middleware/save-body-to-session.js';
+import {
+	createDateInputDateInPastOrTodayValidator,
+	createDateInputDateValidityValidator,
+	createDateInputFieldsValidator
+} from '#lib/validators/date-input.validator.js';
 import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
 import * as controller from './add-ip-comment.controller.js';
 import {
 	validateCheckAddress,
-	validateCommentSubmittedDateFields,
-	validateCommentSubmittedDateValid,
-	validateRedactionStatus,
+	validateInterestedPartyAddress,
 	validateInterestedPartyDetails,
-	validateInterestedPartyAddress
+	validateRedactionStatus
 } from './add-ip-comment.validators.js';
-import { createDateInputDateInPastOrTodayValidator } from '#lib/validators/date-input.validator.js';
-import { saveBodyToSession } from '#lib/middleware/save-body-to-session.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -59,9 +61,9 @@ router
 	.route('/date-submitted')
 	.get(asyncHandler(controller.renderDateSubmitted))
 	.post(
-		validateCommentSubmittedDateFields,
-		validateCommentSubmittedDateValid,
-		createDateInputDateInPastOrTodayValidator(),
+		createDateInputFieldsValidator('', '', 'day', 'month', 'year'),
+		createDateInputDateValidityValidator('', '', 'day', 'month', 'year'),
+		createDateInputDateInPastOrTodayValidator('', '', 'day', 'month', 'year'),
 		saveBodyToSession('addIpComment'),
 		asyncHandler(controller.postDateSubmitted)
 	);
