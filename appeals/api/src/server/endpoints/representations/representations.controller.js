@@ -115,7 +115,7 @@ export const addRedactedRepresentation = async (req, res) => {
  */
 export const changeRepresentationStatus = async (req, res) => {
 	const { repId } = req.params;
-	const { status, notes } = req.body;
+	const { status, notes, allowResubmit } = req.body;
 
 	const rep = await representationService.updateRepresentationStatus(
 		Number(repId),
@@ -131,6 +131,8 @@ export const changeRepresentationStatus = async (req, res) => {
 			}
 		});
 	}
+
+	await representationService.notifyRejection(req.notifyClient, req.appeal, rep, allowResubmit);
 
 	return res.send(formatRepresentation(rep));
 };

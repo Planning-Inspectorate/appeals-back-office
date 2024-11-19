@@ -154,6 +154,7 @@ router.patch(
  */
 	getRepresentationUpdateValidator,
 	checkAppealExistsByIdAndAddToRequest,
+	checkRepresentationExistsById,
 	asyncHandler(controller.changeRepresentationStatus)
 );
 

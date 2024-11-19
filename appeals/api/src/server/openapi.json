@@ -4367,6 +4367,10 @@
 					"notes": {
 						"type": "string",
 						"example": "Some notes"
+					},
+					"allowResubmit": {
+						"type": "boolean",
+						"example": true
 					}
 				},
 				"xml": {
@@ -4599,7 +4603,7 @@
 						"properties": {
 							"submissionId": {
 								"type": "string",
-								"example": "5d75b6f6-f7dc-4b91-b307-a9c4d7d4bae4"
+								"example": "feed9626-4b0a-4c8b-8808-dd1838f7ab7b"
 							},
 							"advertisedAppeal": {
 								"type": "boolean",

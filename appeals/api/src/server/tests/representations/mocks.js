@@ -19,7 +19,8 @@ export const repRedactionRequest = {
 
 export const repStatusUpdateRequest = {
 	status: 'valid',
-	notes: 'Some notes'
+	notes: 'Some notes',
+  allowResubmit: true
 };
 
 export const repResponse = {
