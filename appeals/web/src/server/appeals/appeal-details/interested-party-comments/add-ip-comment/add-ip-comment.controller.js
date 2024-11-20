@@ -7,7 +7,7 @@ import {
 	renderRedactionStatusFactory
 } from '../common/index.js';
 import { ipAddressPage } from '../interested-party-comments.mapper.js';
-import { createIPComment } from './add-ip-comment.service.js';
+import { postRepresentationComment } from './add-ip-comment.service.js';
 import config from '@pins/appeals.web/environment/config.js';
 import { createNewDocument } from '#app/components/file-uploader.component.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
@@ -15,6 +15,8 @@ import {
 	checkAddressPage,
 	checkYourAnswersPage,
 	ipDetailsPage,
+	mapFileUploadInfoToMappedDocuments,
+	mapSessionToRepresentationRequest,
 	uploadPage
 } from './add-ip-comment.mapper.js';
 import { getAttachmentsFolder } from '../interested-party-comments.service.js';
@@ -187,62 +189,41 @@ export async function postIpAddress(request, response) {
  */
 export async function postIPComment(request, response) {
 	try {
-		const folderId = request.session.fileUploadInfo?.folderId;
+		const { currentAppeal } = request;
 
-		const {
+		const { folderId } = await getAttachmentsFolder(request.apiClient, currentAppeal.appealId);
+
+		const payload = mapSessionToRepresentationRequest(
 			currentAppeal,
-			session: { fileUploadInfo }
-		} = request;
+			request.session?.addIpComment,
+			request.session?.fileUploadInfo
+		);
 
-		/** @type {import('@pins/appeals/index.js').AddDocumentsRequest} */
-		const addDocumentsRequestPayload = {
-			blobStorageHost:
-				config.useBlobEmulator === true ? config.blobEmulatorSasUrl : config.blobStorageUrl,
-			blobStorageContainer: config.blobStorageDefaultContainer,
-			documents: fileUploadInfo.files.map(
-				(/** @type {import('#lib/ts-utilities.js').FileUploadInfoItem} */ document) => {
-					/** @type {import('@pins/appeals/index.js').MappedDocument} */
-					const mappedDocument = {
-						caseId: currentAppeal.appealId,
-						documentName: document.name,
-						documentType: document.documentType,
-						mimeType: document.mimeType,
-						documentSize: document.size,
-						stage: document.stage,
-						folderId: folderId,
-						GUID: document.GUID,
-						receivedDate: document.receivedDate,
-						redactionStatusId: document.redactionStatus,
-						blobStoragePath: document.blobStoreUrl
-					};
-
-					return mappedDocument;
-				}
-			)
-		};
+		const addDocumentsRequestPayload = mapFileUploadInfoToMappedDocuments(
+			currentAppeal.appealId,
+			folderId,
+			2,
+			config.useBlobEmulator === true ? config.blobEmulatorSasUrl : config.blobStorageUrl,
+			config.blobStorageDefaultContainer,
+			request.session.fileUploadInfo
+		);
 
 		await createNewDocument(request.apiClient, currentAppeal.appealId, addDocumentsRequestPayload);
 
-		await createIPComment(
-			request.session?.addIpComment,
-			request.session.fileUploadInfo?.files[0].GUID,
-			request.apiClient,
-			request.currentAppeal.appealId
-		);
+		await postRepresentationComment(request.apiClient, currentAppeal.appealId, payload);
 
+		delete request.session.addIpComment;
 		delete request.session.fileUploadInfo;
 
 		addNotificationBannerToSession(
 			request.session,
 			'changePage',
-			request.currentAppeal.appealId,
+			currentAppeal.appealId,
 			'',
 			'Comment added'
 		);
 
-		return response.redirect(
-			`/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments`
-		);
+		redirectToIPComments(request, response);
 	} catch (error) {
 		logger.error(
 			error,
@@ -279,10 +260,23 @@ export async function renderCheckYourAnswers(request, response) {
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export async function redirectTopLevel(request, response) {
+export async function redirectToAdd(request, response) {
 	const { currentAppeal } = request;
 
 	return response.redirect(
 		`/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/add/ip-details`
+	);
+}
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export async function redirectToIPComments(request, response) {
+	const { currentAppeal } = request;
+
+	return response.redirect(
+		`/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments`
 	);
 }

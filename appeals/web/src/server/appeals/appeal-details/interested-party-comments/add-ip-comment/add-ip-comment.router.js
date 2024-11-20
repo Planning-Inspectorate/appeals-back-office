@@ -73,6 +73,6 @@ router
 	.get(asyncHandler(controller.renderCheckYourAnswers))
 	.post(asyncHandler(controller.postIPComment));
 
-router.route('/').get(asyncHandler(controller.redirectTopLevel));
+router.route('/').get(asyncHandler(controller.redirectToAdd));
 
 export default router;

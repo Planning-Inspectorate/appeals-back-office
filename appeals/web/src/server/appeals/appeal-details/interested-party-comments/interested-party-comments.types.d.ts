@@ -2,6 +2,7 @@ import { Address } from '@pins/appeals';
 import { NotValidReasonOption, NotValidReasonResponse } from '../appeal-details.types';
 
 export type RepresentationStatus = 'awaiting_review' | 'valid' | 'invalid';
+export type RedactionStatus = 'redacted' | 'unredacted' | 'not-required';
 
 export interface Represented {
 	id: number;
@@ -59,18 +60,28 @@ export interface RejectionReasons {
 }
 
 export interface interestedPartyComment {
-	 firstName: string, 
-	 lastName: string, 
-	 addressProvided: string,
-	 emailAddress: string, 
-	 addressLine1: string, 
-	 addressLine2: string, 
-	 town: string, 
-	 county: string, 
-	 postCode: string, 
-	 redactionStatus: boolean, 
-	 'date-day': string, 
-	 'date-month': string, 
-	 'date-year': string
+	firstName: string;
+	lastName: string;
+	addressProvided: string;
+	emailAddress: string;
+	addressLine1: string;
+	addressLine2: string;
+	town: string;
+	county: string;
+	postCode: string;
+	redactionStatus: boolean;
+	'date-day': string;
+	'date-month': string;
+	'date-year': string;
 }
 
+export interface RepresentationRequest {
+	ipDetails: {
+		firstName: string;
+		lastName: string;
+		email: string;
+	};
+	ipAddress: Address;
+	attachments: any[];
+	redactionStatus: string;
+}

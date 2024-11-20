@@ -492,6 +492,7 @@ describe('add-ip-comment', () => {
 		});
 
 		it('should createIPComment on successful submission', async () => {
+			const appealId = 2;
 			const comment = {
 				ipDetails: {
 					firstName: 'Kevin',
@@ -509,13 +510,10 @@ describe('add-ip-comment', () => {
 
 			nock('http://test/').post(`/appeals/${appealId}/comments`, comment).reply(302);
 
-			return new Promise((resolve) => {
-				request
-					.get(`${baseUrl}/2/interested-party-comments/add`)
-					.expect(302)
-					.expect('Location', `./add/ip-details`)
-					.end(resolve);
-			});
+			const response = await request.get(`${baseUrl}/${appealId}/interested-party-comments/add`);
+
+			expect(response.statusCode).toBe(302);
+			expect(response.headers.location).toContain('/add/ip-details');
 		});
 	});
 });
