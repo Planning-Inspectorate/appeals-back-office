@@ -1,7 +1,6 @@
 import { convertFromBooleanToYesNo } from '#lib/boolean-formatter.js';
 import { buildHtmSpan } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { SHOW_MORE_MAXIMUM_CHARACTERS_BEFORE_HIDING } from '#lib/constants.js';
-import { simpleHtmlComponent } from '../page-components/html.js';
 
 /**
  *
@@ -128,7 +127,12 @@ const formatAnswerAndDetails = (answer, details, withShowMore, showMoreLabelText
 			return {
 				html: '',
 				pageComponents: [
-					simpleHtmlComponent(`${formattedAnswer}<br>`),
+					{
+						type: 'html',
+						parameters: {
+							html: `${formattedAnswer}<br>`
+						}
+					},
 					{
 						type: 'show-more',
 						parameters: {

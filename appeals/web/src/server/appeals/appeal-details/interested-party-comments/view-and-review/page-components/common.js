@@ -12,7 +12,7 @@ import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
  */
 export function generateWithdrawLink() {
 	return wrapComponents(
-		[simpleHtmlComponent('<a class="govuk-link" href="#">Withdraw comment</a>')],
+		[simpleHtmlComponent('a', { class: 'govuk-link', href: '#' }, 'Withdraw comment')],
 		{
 			opening: '<div class="govuk-!-margin-bottom-3">',
 			closing: '</div>'

@@ -8,11 +8,7 @@ import { simpleHtmlComponent } from '#lib/mappers/index.js';
  * @returns {PageComponent[]}
  */
 export const redactInput = (comment, session) => [
-	simpleHtmlComponent(`
-    <h3>	
-      Redacted comment
-    </h3>
-`),
+	simpleHtmlComponent('h3', {}, 'Redacted comment'),
 	{
 		type: 'textarea',
 		parameters: {

@@ -20,7 +20,13 @@ export const redactInterestedPartyCommentPage = (appealDetails, comment, session
 	const pageComponents = [
 		wrapComponents(
 			[
-				simpleHtmlComponent('<p class="govuk-body govuk-!-margin-bottom-0">Original comment:</p>'),
+				simpleHtmlComponent(
+					'p',
+					{
+						class: 'govuk-body govuk-!-margin-bottom-0'
+					},
+					'Original comment:'
+				),
 				{
 					type: 'inset-text',
 					parameters: {
