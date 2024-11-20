@@ -11,6 +11,10 @@ import { DOCUMENT_STAGE, DOCUMENT_TYPE } from '../interested-party-comments.serv
 
 /** @typedef {import("../../appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/interested-party-comments/interested-party-comments.types').interestedPartyComment} IpComment */
+/** @typedef {import('#appeals/appeal-details/interested-party-comments/interested-party-comments.types').Representation} Representation */
+/** @typedef {import('#appeals/appeal-details/interested-party-comments/interested-party-comments.types').RepresentationRequest} RepresentationRequest */
+
+/** @typedef {import('@pins/appeals/index.js').AddDocumentsRequest} AddDocumentsRequest */
 
 /**
  * @param {Appeal} appealDetails
@@ -247,4 +251,67 @@ export const checkYourAnswersPage = (appealDetails, values, fileUpload, errors) 
 			}
 		}
 	]
+});
+
+/**
+ * @param {Appeal} appealDetails
+ * @param {{ firstName: string, lastName: string, addressProvided: string, emailAddress: string, addressLine1: string, addressLine2: string, town: string, county: string, postCode: string, redactionStatus: string, 'date-day': string, 'date-month': string, 'date-year': string }} values
+ * @param {{ files: [{ GUID: string }] }} fileUpload
+ * @returns {RepresentationRequest}
+ */
+export const mapSessionToRepresentationRequest = (appealDetails, values, fileUpload) => ({
+	ipDetails: {
+		firstName: values.firstName,
+		lastName: values.lastName,
+		email: values.emailAddress || ''
+	},
+	ipAddress: {
+		addressLine1: values.addressLine1 || '',
+		addressLine2: values.addressLine2 || '',
+		town: values.town || '',
+		county: values.county || '',
+		postCode: values.postCode
+	},
+	attachments: fileUpload.files.map((file) => file.GUID) || [],
+
+	redactionStatus: values.redactionStatus
+});
+
+/**
+ * @param {number} caseId
+ * @param {number} folderId
+ * @param {number} redactionStatus
+ * @param {string} blobStorageHost
+ * @param {string} blobStorageContainer
+ * @param {{ files: { GUID: string, name: string, documentType: string, size: number, stage: string, mimeType: string, receivedDate: string, redactionStatus: number, blobStoreUrl: string }[] }} fileUploadInfo - The file upload information object.
+ * @returns {AddDocumentsRequest}
+ */
+export const mapFileUploadInfoToMappedDocuments = (
+	caseId,
+	folderId,
+	redactionStatus,
+	blobStorageHost,
+	blobStorageContainer,
+	fileUploadInfo
+) => ({
+	blobStorageHost,
+	blobStorageContainer,
+	documents: fileUploadInfo.files.map(
+		/** @type {import('#lib/ts-utilities.js').FileUploadInfoItem} */
+		(file) =>
+			/** @type {import('@pins/appeals/index.js').MappedDocument} */
+			({
+				caseId,
+				documentName: file.name,
+				documentType: file.documentType,
+				mimeType: file.mimeType,
+				documentSize: file.size,
+				stage: file.stage,
+				folderId,
+				GUID: file.GUID,
+				receivedDate: file.receivedDate,
+				redactionStatusId: redactionStatus || 1,
+				blobStoragePath: file.blobStoreUrl
+			})
+	)
 });

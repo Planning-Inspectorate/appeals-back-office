@@ -174,9 +174,21 @@ const createRepresentation = (data) => databaseConnector.representation.create({
 /**
  * @param {number} repId
  * @param {{ documentGuid: string, version: number }[]} attachments
- * */
-const addAttachments = (repId, attachments) =>
-	databaseConnector.representation.update({
+ */
+const addAttachments = async (repId, attachments) => {
+	await Promise.all(
+		attachments.map((attachment) =>
+			databaseConnector.representationAttachment.create({
+				data: {
+					documentGuid: attachment.documentGuid,
+					version: attachment.version,
+					representationId: repId
+				}
+			})
+		)
+	);
+
+	return databaseConnector.representation.update({
 		where: { id: repId },
 		data: {
 			attachments: {
@@ -186,11 +198,11 @@ const addAttachments = (repId, attachments) =>
 			}
 		}
 	});
+};
 
 /**
  * @param {number} repId
  * @param {Array<{ id: number, text: string[] }>} rejectionReasons
- * @returns {Promise<import('@pins/appeals.api').Schema.Representation | null>}
  */
 const updateRejectionReasons = async (repId, rejectionReasons) => {
 	await databaseConnector.representationRejectionReasonText.deleteMany({
