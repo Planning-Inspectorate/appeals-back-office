@@ -29,7 +29,8 @@ export class CaseDetailsPage extends Page {
 		addCostsDecision: 'add-costs-decision',
 		changeSiteOwnership: 'change-site-ownership',
 		changeLpaqDueDate: 'change-lpa-questionnaire-due-date',
-		changeStartDate: 'change-start-case-date'
+		changeStartDate: 'change-start-case-date',
+		getAppealStartDate: '.appeal-start-date > .govuk-summary-list__value'
 	};
 
 	elements = {
@@ -57,7 +58,8 @@ export class CaseDetailsPage extends Page {
 		costDecisionStatus: () => cy.get('.govuk-table__cell appeal-costs-decision-status'),
 		changeSiteOwnership: () => cy.getByData(this._cyDataSelectors.changeSiteOwnership),
 		changeLpaqDueDate: () => cy.getByData(this._cyDataSelectors.changeLpaqDueDate),
-		changeStartDate: () => cy.getByData(this._cyDataSelectors.changeStartDate)
+		changeStartDate: () => cy.getByData(this._cyDataSelectors.changeStartDate),
+		getAppealStartDate: () => cy.get('.appeal-start-date > .govuk-summary-list__value')
 	};
 	/********************************************************
 	 ************************ Actions ************************
@@ -204,7 +206,8 @@ export class CaseDetailsPage extends Page {
 
 	verifyChangeStartDate() {
 		const formattedDate = dateTimeSection.formatDate();
-		cy.get('.appeal-start-date > .govuk-summary-list__value')
+		this.elements
+			.getAppealStartDate()
 			.invoke('text')
 			.then((dateText) => {
 				expect(dateText.trim()).to.equal(formattedDate);
