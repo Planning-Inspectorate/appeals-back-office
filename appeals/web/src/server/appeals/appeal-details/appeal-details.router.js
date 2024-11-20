@@ -13,7 +13,6 @@ import {
 } from './assign-user/assign-user.router.js';
 import { auditRouter } from './audit/audit.router.js';
 import * as controller from './appeal-details.controller.js';
-import changePageRouter from '../change-page/change-page.router.js';
 import issueDecisionRouter from './issue-decision/issue-decision.router.js';
 import appealTypeChangeRouter from './change-appeal-type/change-appeal-type.router.js';
 import linkedAppealsRouter from './linked-appeals/linked-appeals.router.js';
@@ -82,12 +81,6 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	assignNewUserRouter
-);
-router.use(
-	'/:appealId/change-appeal-details',
-	validateAppeal,
-	assertUserHasPermission(permissionNames.updateCase),
-	changePageRouter
 );
 router.use(
 	'/:appealId/issue-decision',

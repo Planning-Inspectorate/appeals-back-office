@@ -12,7 +12,6 @@ import {
 	validateCaseFolderId,
 	validateCaseDocumentId
 } from '../../appeal-documents/appeal-documents.middleware.js';
-import changePageRouter from '../../change-page/change-page.router.js';
 import inspectorAccessRouter from '../inspector-access/inspector-access.router.js';
 import neighbouringSitesRouter from '../neighbouring-sites/neighbouring-sites.router.js';
 import safetyRisksRouter from '../safety-risks/safety-risks.router.js';
@@ -48,12 +47,6 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	outcomeIncompleteRouter
-);
-router.use(
-	'/:lpaQuestionnaireId/change-lpa-questionnaire',
-	validateAppeal,
-	assertUserHasPermission(permissionNames.updateCase),
-	changePageRouter
 );
 router.use(
 	'/:lpaQuestionnaireId/inspector-access',
