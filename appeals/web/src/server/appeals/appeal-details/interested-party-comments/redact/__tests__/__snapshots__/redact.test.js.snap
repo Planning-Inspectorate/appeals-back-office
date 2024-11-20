@@ -23,7 +23,7 @@ exports[`redact renders the confirm redaction page 1`] = `
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <form action="" method="POST" novalidate>
-                <button class="govuk-button" data-module="govuk-button">Confirm redaction</button>
+                <button class="govuk-button" data-module="govuk-button">Redact and accept comment</button>
             </form>
         </div>
     </div>
@@ -37,35 +37,27 @@ exports[`redact renders the redact page 1`] = `
             <h1             class="govuk-heading-l">Redact comment from Lee Thornton</h1>
         </div>
     </div>
-    <h2> Make redactions</h2>
-    <ol class="govuk-list govuk-list--number">
-        <li>Use the ‘redacted comment’ box to select the words you want to redact.</li>
-        <li>Select ‘redact’ to confirm your redaction. Repeat until you have finished.</li>
-        <li>Select ‘continue’ when you have finished redacting.</li>
-    </ol>
-    <form method="POST">
-        <div class="govuk-grid-row">
-            <div class="govuk-grid-column-one-half">
-                <h3> Redacted comment</h3>
-                <div class="govuk-form-group">
-                    <textarea class="govuk-textarea" id="redact-textarea" name="redactedRepresentation"
-                    rows="5">Awaiting review comment 47</textarea>
-                </div>
+    <div class="govuk-grid-row">
+        <form method="POST" class="govuk-grid-column-two-thirds">
+            <p class="govuk-body govuk-!-margin-bottom-0">Original comment:</p>
+            <div id="original-comment" class="govuk-inset-text govuk-!-margin-top-2">Awaiting review comment 47</div>
+            <h3> Redacted comment</h3>
+            <div class="govuk-form-group">
+                <textarea class="govuk-textarea" id="redact-textarea" name="redactedRepresentation"
+                rows="5">Awaiting review comment 47</textarea>
             </div>
-            <div class="govuk-grid-column-one-half">
-                <h3> Original comment</h3>
-                <p class="govuk-body">Awaiting review comment 47</p>
-            </div>
-            <div class="govuk-grid-column-full">
+            <div>
                 <div class="govuk-button-group">
                     <button class="govuk-button govuk-button--secondary" data-module="govuk-button"
-                    id="redact-button">Redact</button>
+                    id="redact-button">Redact selected text</button>
+                    <button class="govuk-button govuk-button--secondary"
+                    data-module="govuk-button" id="undo-button">Undo all changes</button>
                 </div>
                 <div class="govuk-button-group">
-                    <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                    <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
                 </div>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
 </main>"
 `;

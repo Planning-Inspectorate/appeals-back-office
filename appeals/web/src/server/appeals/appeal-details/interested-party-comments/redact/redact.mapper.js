@@ -1,8 +1,8 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
-import { form } from './components/form/index.js';
-import { instructionsList } from './components/instructions-list.js';
-import { subtitle } from './components/subtitle.js';
+import { wrapComponents, simpleHtmlComponent } from '#lib/mappers/index.js';
+import { redactInput } from './components/redact-input.js';
+import { wrappedButtons } from './components/buttons.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import("#appeals/appeal-details/interested-party-comments/interested-party-comments.types.js").Representation} Representation */
@@ -17,7 +17,28 @@ export const redactInterestedPartyCommentPage = (appealDetails, comment, session
 	const shortReference = appealShortReference(appealDetails.appealReference);
 
 	/** @type {PageComponent[]} */
-	const pageComponents = [subtitle, instructionsList, form(comment, session)];
+	const pageComponents = [
+		wrapComponents(
+			[
+				simpleHtmlComponent('<p class="govuk-body govuk-!-margin-bottom-0">Original comment:</p>'),
+				{
+					type: 'inset-text',
+					parameters: {
+						text: comment.originalRepresentation,
+						id: 'original-comment',
+						classes: 'govuk-!-margin-top-2'
+					}
+				},
+				...redactInput(comment, session),
+				wrappedButtons
+			],
+			{
+				opening:
+					'<div class="govuk-grid-row"><form method="POST" class="govuk-grid-column-two-thirds">',
+				closing: '</form></div>'
+			}
+		)
+	];
 
 	preRenderPageComponents(pageComponents);
 
