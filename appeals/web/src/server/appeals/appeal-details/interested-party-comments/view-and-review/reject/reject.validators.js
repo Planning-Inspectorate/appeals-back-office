@@ -6,9 +6,6 @@ export const validateRejectReason = createValidator(
 	body('rejectionReason')
 		.exists()
 		.withMessage('Please select one or more reasons why the comment is invalid')
-		.bail()
-		.notEmpty()
-		.withMessage('Please select one or more reasons why the comment is invalid')
 );
 
 export const validateRejectionReasonTextItems = createCheckboxTextItemsValidator('rejectionReason');
