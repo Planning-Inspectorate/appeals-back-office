@@ -24,7 +24,7 @@ import neighbouringSitesRepository from '#repositories/neighbouring-sites.reposi
 import { createAppealReference } from '#utils/appeal-reference.js';
 import { FOLDERS } from '@pins/appeals/constants/documents.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
-import { randomBool } from './data-samples.js';
+import { randomBool } from './data-utilities.js';
 import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 import { ODW_SYSTEM_ID } from '@pins/appeals/constants/common.js';
 

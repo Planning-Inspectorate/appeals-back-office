@@ -986,6 +986,9 @@ const generateS78LpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 				}
 			},
 			rows: [
+				mappedLPAQData.lpaq?.procedurePreference?.display.summaryListItem,
+				mappedLPAQData.lpaq?.procedurePreferenceDetails?.display.summaryListItem,
+				mappedLPAQData.lpaq?.procedurePreferenceDuration?.display.summaryListItem,
 				mappedLPAQData.lpaq?.otherAppeals?.display.summaryListItem,
 				mappedLPAQData.lpaq?.extraConditions?.display.summaryListItem
 			].filter(isDefined)

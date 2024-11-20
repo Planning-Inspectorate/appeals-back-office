@@ -9,19 +9,19 @@ import {
 } from '../../server/endpoints/constants.js';
 import {
 	APPEAL_EIA_ENVIRONMENTAL_IMPACT_SCHEDULE,
-	APPEAL_EIA_DEVELOPMENT_DESCRIPTION
+	APPEAL_EIA_DEVELOPMENT_DESCRIPTION,
+	APPEAL_LPA_PROCEDURE_PREFERENCE,
+	APPEAL_APPELLANT_PROCEDURE_PREFERENCE
 } from 'pins-data-model';
-
-/**
- * @returns {boolean}
- */
-export const randomBool = () => Math.random() < 0.5;
+import { randomBool, randomEnumValue, randomArrayValue } from './data-utilities.js';
 
 /**
  * @typedef {import('@pins/appeals.api').Schema.LPAQuestionnaire} LPAQuestionnaire
  * @typedef {import('@pins/appeals.api').Schema.AppellantCase} AppellantCase
  * @typedef {import('@pins/appeals.api').Appeals.AppealSite} AppealSite
  */
+
+const procedureDurationPossibleValues = [1, 2, 5, 10, 99, null];
 
 export const personList = [
 	{
@@ -230,20 +230,11 @@ export function createLPAQuestionnaireForAppealType(appealTypeShorthand) {
 				isInfrastructureLevyFormallyAdopted: randomBool(),
 				infrastructureLevyAdoptedDate: randomBool() ? new Date(2023, 4, 9) : null,
 				infrastructureLevyExpectedDate: randomBool() ? new Date(2023, 4, 9) : null,
-				eiaEnvironmentalImpactSchedule: (() => {
-					const randomNumber = Math.random();
-					return randomNumber < 0.33
-						? null
-						: randomNumber < 0.66
-						? APPEAL_EIA_ENVIRONMENTAL_IMPACT_SCHEDULE.SCHEDULE_1
-						: APPEAL_EIA_ENVIRONMENTAL_IMPACT_SCHEDULE.SCHEDULE_2;
-				})(),
-				eiaDevelopmentDescription: (() => {
-					const developmentDescriptionValues = Object.values(APPEAL_EIA_DEVELOPMENT_DESCRIPTION);
-					return developmentDescriptionValues[
-						Math.floor(Math.random() * developmentDescriptionValues.length)
-					];
-				})()
+				eiaEnvironmentalImpactSchedule: randomEnumValue(APPEAL_EIA_ENVIRONMENTAL_IMPACT_SCHEDULE),
+				eiaDevelopmentDescription: randomEnumValue(APPEAL_EIA_DEVELOPMENT_DESCRIPTION, false),
+				lpaProcedurePreference: randomEnumValue(APPEAL_LPA_PROCEDURE_PREFERENCE),
+				lpaProcedurePreferenceDetails: randomArrayValue(['Need for a detailed examination', null]),
+				lpaProcedurePreferenceDuration: randomArrayValue(procedureDurationPossibleValues)
 			};
 		default:
 			return;
@@ -319,9 +310,12 @@ export const appellantCaseList = {
 		otherTenantsAgriculturalHolding: false,
 		informedTenantsAgriculturalHolding: false,
 		ownershipCertificateSubmitted: false,
-		appellantProcedurePreference: 'Hearing',
-		appellantProcedurePreferenceDetails: 'Need for a detailed examination',
-		appellantProcedurePreferenceDuration: 5,
+		appellantProcedurePreference: randomEnumValue(APPEAL_APPELLANT_PROCEDURE_PREFERENCE),
+		appellantProcedurePreferenceDetails: randomArrayValue([
+			'Need for a detailed examination',
+			null
+		]),
+		appellantProcedurePreferenceDuration: randomArrayValue(procedureDurationPossibleValues),
 		inquiryHowManyWitnesses: 1,
 		applicationDecisionDate: sub(new Date(), { months: 1 }),
 		applicationDate: sub(new Date(), { weeks: 6 })

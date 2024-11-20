@@ -18,6 +18,9 @@ import { mapInfrastructureLevyAdoptedDate } from './submappers/map-infrastructur
 import { mapInfrastructureLevyExpectedDate } from './submappers/map-infrastructure-levy-expected-date.js';
 import { mapEiaEnvironmentalImpactSchedule } from './submappers/map-eia-environmental-impact-schedule.js';
 import { mapEiaDevelopmentDescription } from './submappers/map-eia-development-description.js';
+import { mapProcedurePreference } from './submappers/map-procedure-preference.js';
+import { mapProcedurePreferenceDetails } from './submappers/map-procedure-preference-details.js';
+import { mapProcedurePreferenceDuration } from './submappers/map-procedure-preference-duration.js';
 
 export const submaps = {
 	...hasSubmaps,
@@ -39,5 +42,8 @@ export const submaps = {
 	infrastructureLevyAdoptedDate: mapInfrastructureLevyAdoptedDate,
 	infrastructureLevyExpectedDate: mapInfrastructureLevyExpectedDate,
 	eiaEnvironmentalImpactSchedule: mapEiaEnvironmentalImpactSchedule,
-	eiaDevelopmentDescription: mapEiaDevelopmentDescription
+	eiaDevelopmentDescription: mapEiaDevelopmentDescription,
+	procedurePreference: mapProcedurePreference,
+	procedurePreferenceDetails: mapProcedurePreferenceDetails,
+	procedurePreferenceDuration: mapProcedurePreferenceDuration
 };
